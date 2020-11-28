@@ -2,7 +2,7 @@ return {
   name='Zero-K',
   description='Zero-K',
   shortname='ZK',
-  version='$VERSION',
+  version='Future Wars v0.0.0.1',
   mutator='1',
   game='Zero-K',
   shortGame='ZK',
