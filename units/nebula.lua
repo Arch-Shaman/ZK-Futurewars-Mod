@@ -64,14 +64,14 @@ return { nebula = {
   weapons                = {
 
     {
-      def                = [[MISSILE]],
+      def                = [[MISSILETOP]],
       mainDir            = [[0 1 0]], -- top
       maxAngleDif        = 210,
       badTargetCategory  = [[FIXEDWING]],
       onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
     },
     {
-      def                = [[MISSILE]],
+      def                = [[MISSILEBOTTOM]],
       mainDir            = [[0 -1 0]], -- bottom
       maxAngleDif        = 210,
       badTargetCategory  = [[FIXEDWING]],
@@ -144,7 +144,7 @@ return { nebula = {
 		weaponVelocity          = 330,
 	},
 	
-	MISSILE = {
+	MISSILETOP = {
 		burst = 2,
 		burstRate = 0.5,
 		name                    = [[Typhoon Missile Barrage]],
@@ -206,6 +206,73 @@ return { nebula = {
 		tracks                  = true,
 		turnRate                = 40000,
 		weaponAcceleration      = 200,
+      		trajectoryHeight        = 0.60,
+		weaponType              = [[MissileLauncher]],
+		weaponVelocity          = 650,
+    },
+	MISSILEBOTTOM = {
+		burst = 2,
+		burstRate = 0.5,
+		name                    = [[Typhoon Missile Barrage]],
+		areaOfEffect            = 0,
+		sprayAngle				= 800,
+		accuracy				= 800,
+		dance					= 200,
+		burst					= 6,
+		projectiles				= 2,
+		burstRate				= 4/30,
+		avoidFriendly           = true,
+		canattackground         = true,
+		cegTag                  = [[missiletrailblue]],
+		collideFriendly         = false,
+		craterBoost             = 1,
+		craterMult              = 2,
+		--cylinderTargeting       = 6,
+
+		customParams        	  = {
+			burst = Shared.BURST_RELIABLE,
+			light_color = [[0.5 0.6 0.6]],
+			reaim_time = 60, -- Fast update not required (maybe dangerous)
+			--CAS--
+			numprojectiles = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+			projectile = "nebula_ag",
+			clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+			use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
+			spawndist = 160, -- at what distance should we spawn the projectile(s)? REQUIRED.
+			timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
+			vradius = "-4,0,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+			--spreadradius = 6, -- used in clusters. OPTIONAL. Default: 100.
+			--useheight = 1,
+			--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
+			--proxy = 1, -- check for nearby units?
+			--proxydist = 100, -- how far to check for units? Default: spawndist
+		},
+
+		damage                  = {
+			default = 30*8,
+		},
+
+		edgeEffectiveness		= 0.2,
+		explosionGenerator      = [[custom:WEAPEXP_PUFF]],
+		fireStarter             = 70,
+		flightTime              = 7,
+		impulseBoost            = 0,
+		impulseFactor           = 0.4,
+		interceptedByShieldType = 2,
+		model                   = [[wep_m_avalanche.s3o]],
+		noSelfDamage            = true,
+		range                   = 900,
+		reloadtime              = 6,
+		smokeTrail              = true,
+		soundHit                = [[weapon/missile/sabot_fire]],
+		soundStart              = [[weapon/missile/large_missile_fire]],
+		startVelocity           = 100,
+		texture2                = [[darksmoketrail]],
+		tolerance               = 22000,
+		tracks                  = true,
+		turnRate                = 40000,
+		weaponAcceleration      = 200,
+      		trajectoryHeight        = 0.15,
 		weaponType              = [[MissileLauncher]],
 		weaponVelocity          = 650,
     },
