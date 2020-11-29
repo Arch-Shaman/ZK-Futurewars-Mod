@@ -65,8 +65,6 @@ for i=1, #WeaponDefs do
 		config[i] = {type = tonumber(curRef.isflak)} -- 1 = 2d, 2 = 3d, 3 = timed explosion
 		if config[i].type == 3 then
 			config[i]["timer"] = tonumber(curRef.flaktime)
-		else
-			config[i]["timer"] = 0
 		end
 	end
 	wd = nil
@@ -94,14 +92,14 @@ local function ExplodeProjectile(id,wd,x,y,z)
 	projectiles[id] = nil
 end
 
-local function CheckProjectile(id,wd)
+local function CheckProjectile(id, wd)
 	--spEcho(id .. " : " .. tostring(wd))
 	local x,y,z = spGetProjectilePosition(id)
 	if x == nil then
 		projectiles[id] = nil
 		return
 	end
-	if config[wd]["timer"] > 0 then
+	if config[wd].type == 3 then
 		projectiles[id].timer = projectiles[id].timer - 2
 		local explode = 100 - random(10,80) + projectiles[id].timer
 		if debug then spEcho("Explode: " .. explode) end
@@ -162,8 +160,8 @@ end
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	if config[weaponDefID] then
-		if config[weaponDefID]["timer"] > 0 then
-			projectiles[proID] = {timer = config[weaponDefID]["timer"] * 30, defid = weaponDefID}
+		if config[weaponDefID].type == 3 then
+			projectiles[proID] = {timer = config[weaponDefID]["timer"], defid = weaponDefID}
 			--spEcho("Timed demo charge for " .. proID)
 		else
 			projectiles[proID] = {distance = 999999999, defid = weaponDefID} -- distance stored here 

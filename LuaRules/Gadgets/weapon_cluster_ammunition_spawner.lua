@@ -60,6 +60,7 @@ local spAreTeamsAllied = Spring.AreTeamsAllied
 local spGetUnitIsCloaked = Spring.GetUnitIsCloaked
 local SetWatchWeapon = Script.SetWatchWeapon
 local spSetProjectileAlwaysVisible = Spring.SetProjectileAlwaysVisible
+local spGetProjectileIsIntercepted = Spring.GetProjectileIsIntercepted
 local random = math.random
 local sqrt = math.sqrt
 local byte = string.byte
@@ -271,30 +272,19 @@ local function distance2d(x1,y1,x2,y2)
 	return sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)))
 end
 
-local function RegisterSubProjectiles(p,me)
+local function RegisterSubProjectiles(p, me)
 	if config[me] then
-		projectiles[p] = me
+		projectiles[p] = {def = me, intercepted = false}
 		if config[me]["alwaysvisible"] then
-			spSetProjectileAlwaysVisible(p,true)
-		end
-	end
-end
-
-function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
-	debugEcho("ProjectileCreated: " .. tostring(proID, proOwnerID, weaponDefID))
-	if weaponDefID == nil then
-		weaponDefID = spGetProjectileDefID(proID)
-	end
-	if config[weaponDefID] then
-		debugEcho("Registered projectile " .. proID)
-		projectiles[proID] = weaponDefID 
-		if config[weaponDefID]["alwaysvisible"] then
-			spSetProjectileAlwaysVisible(proID,true)
+			spSetProjectileAlwaysVisible(p, true)
 		end
 	end
 end
 
 local function SpawnSubProjectiles(id, wd)
+	if id == nil then
+		return
+	end
 	local projectileattributes = {pos = {0,0,0}, speed = {0,0,0}, owner = 0, team = 0, ttl= 0,gravity = 0,tracking = false,}
 	debugEcho("Fire the submunitions!")
 	local x,y,z = spGetProjectilePosition(id)
@@ -329,6 +319,7 @@ local function SpawnSubProjectiles(id, wd)
 	spSpawnExplosion(x,y,z,0,0,0,{weaponDef = wd, owner = spGetProjectileOwnerID(id), craterAreaOfEffect = WeaponDefs[wd].craterAreaOfEffect, damageAreaOfEffect = WeaponDefs[wd].damageAreaOfEffect, edgeEffectiveness = WeaponDefs[wd].edgeEffectiveness, explosionSpeed = WeaponDefs[wd].explosionSpeed, impactOnly = WeaponDefs[wd].impactOnly, ignoreOwner = WeaponDefs[wd].noSelfDamage, damageGround = true})
 	spPlaySoundFile(WeaponDefs[wd].hitSound[1].name,WeaponDefs[wd].hitSound[1].volume,x,y,z)
 	spDeleteProjectile(id)
+	projectiles[id] = nil -- dead
 	-- Create the projectiles --
 	for i=1, config[wd]["numprojectiles"] do
 		local p
@@ -378,11 +369,13 @@ end
 
 local function CheckProjectile(id)
 	debugEcho("CheckProjectile " .. id)
-	local wd = spGetProjectileDefID(id)
-	if wd == nil or wd ~= projectiles[id] then
+	local targettype, targetID = spGetProjectileTarget(id)
+	if targettype == nil then
 		projectiles[id] = nil
 		return
 	end
+	local wd = projectiles[id].def
+	projectiles[id].intercepted = spGetProjectileIsIntercepted(id)
 	local isMissile = false -- check for missile status. When the missile times out, the subprojectiles will be spawned if allowed.
 	if WeaponDefs[wd]["flightTime"] ~= nil and WeaponDefs[wd].type == "Missile" then
 		isMissile = true
@@ -400,7 +393,6 @@ local function CheckProjectile(id)
 	local distance
 	local x2,y2,z2 = spGetProjectilePosition(id)
 	local x1,y1,z1
-	local targettype,targetID,targetPos = spGetProjectileTarget(id)
 	debugEcho("Attack type: " .. targettype .. "\nTarget: " .. tostring(targetID))
 	--debugEcho("Key: 'g' = " .. byte("g") .. "\n'u' = " .. byte("u") .. "\n'f' = " .. byte("f") .. "\n'p' = " .. byte("p"))
 	if config[wd].useheight and config[wd].useheight ~= 0 then -- this spawns at the selected height when vy < 0
@@ -453,17 +445,34 @@ local function CheckProjectile(id)
 		end
 		if unittest(units,spGetProjectileOwnerID(id)) == true then
 			debugEcho("Unit passed unittest. Passed to SpawnSubProjectiles")
-			SpawnSubProjectiles(id,wd)
+			SpawnSubProjectiles(id, wd)
 		end
 	end
 end
 
-local function gadget:ProjectileDestroyed(proID)
+function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
+	debugEcho("ProjectileCreated: " .. tostring(proID, proOwnerID, weaponDefID))
+	if weaponDefID == nil then
+		weaponDefID = spGetProjectileDefID(proID)
+	end
+	if config[weaponDefID] and not projectiles[proID] then
+		debugEcho("Registered projectile " .. proID)
+		projectiles[proID] = {def = weaponDefID, intercepted = false}
+		if config[weaponDefID]["alwaysvisible"] then
+			spSetProjectileAlwaysVisible(proID,true)
+		end
+	end
+end
+
+function gadget:ProjectileDestroyed(proID)
+	if projectiles[proID] and not projectiles[proID].intercepted then
+		local wd = projectiles[proID].def
+		SpawnSubProjectiles(id, wd)
+	end
+end
 
 function gadget:GameFrame(f)
-	if f%5 == 4 then
-		for id,_ in pairs(projectiles) do
-			CheckProjectile(id)
-		end
+	for id, _ in pairs(projectiles) do
+		CheckProjectile(id)
 	end
 end
