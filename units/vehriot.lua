@@ -18,7 +18,7 @@ return { vehriot = {
 
   customParams        = {
     selection_scale   = 0.85,
-    aim_lookahead     = 100,
+    aim_lookahead     = 150,
   },
 
   explodeAs           = [[BIG_UNITEX]],
@@ -28,7 +28,7 @@ return { vehriot = {
   idleAutoHeal        = 5,
   idleTime            = 1800,
   leaveTracks         = true,
-  maxDamage           = 1020,
+  maxDamage           = 1100,
   maxSlope            = 18,
   maxVelocity         = 2.1,
   maxWaterDepth       = 22,
@@ -49,7 +49,7 @@ return { vehriot = {
     },
 
   },
-  sightDistance       = 350,
+  sightDistance       = 390, -- should really be 389 but I like round numbers.
   trackOffset         = 7,
   trackStrength       = 6,
   trackStretch        = 1,
@@ -91,11 +91,11 @@ return { vehriot = {
         light_color = [[0.8 0.76 0.38]],
         light_radius = 150,
 		isFlak = 3,
-		flaktime = 1/30,
+		flaktime = -25,
       },
 
       damage                  = {
-        default = 40,
+        default = 45,
       },
 
       edgeEffectiveness       = 0.5,
@@ -132,23 +132,22 @@ return { vehriot = {
         smoothradius = [[60]],
         smoothmult   = [[0.08]],
         force_ignore_ground = [[1]],
-		numprojectiles = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+		numprojectiles = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 		projectile = "vehriot_secondary",
 		--spreadradius = 4, -- used in clusters. OPTIONAL. Default: 100.
 		clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 		use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-		spawndist = 100, -- at what distance should we spawn the projectile(s)? REQUIRED.
+		spawndist = 120, -- at what distance should we spawn the projectile(s)? REQUIRED.
 		timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 		vradius = "-4,0,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 		groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-		proxy = 0, -- check for nearby units?
-		proxydist = 100, -- how far to check for units? Default: spawndist
+		proxy = 1, -- check for nearby units?
 		reaim_time = 60, -- Fast update not required (maybe dangerous)
         light_camera_height = 1500,
       },
       
       damage                  = {
-        default = 40*6,
+        default = 45*8,
       },
 
       edgeEffectiveness       = 0.75,
@@ -157,8 +156,8 @@ return { vehriot = {
       impulseFactor           = 0.6,
       interceptedByShieldType = 1,
       noSelfDamage            = true,
-      range                   = 280,
-      reloadtime              = 1.7 + 2/30,
+      range                   = 310,
+      reloadtime              = 1.5,
       soundHit                = [[weapon/cluster_light]],
       soundStart              = [[weapon/cannon/outlaw_gun]],
       soundStartVolume        = 3,
