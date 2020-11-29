@@ -49,6 +49,13 @@ local abs = math.abs
 local pi = math.pi
 local blanktable = {}
 
+local ground = byte("g")
+local feature = byte("f")
+local unit = byte("u")
+local projectile = byte("p")
+
+local lastlocation = {}
+
 for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
@@ -95,7 +102,7 @@ local function CheckProjectile(id,wd)
 		return
 	end
 	if config[wd]["timer"] > 0 then
-		projectiles[id].timer = projectiles[id].timer - 5
+		projectiles[id].timer = projectiles[id].timer - 2
 		local explode = 100 - random(10,80) + projectiles[id].timer
 		if debug then spEcho("Explode: " .. explode) end
 		if explode <= 0  then
@@ -109,17 +116,34 @@ local function CheckProjectile(id,wd)
 	local x2,y2,z2
 	olddistance = projectiles[id].distance
 	--spEcho("Target: " .. target .. "(" .. ttype .. ")")
-	if ttype == byte("g") then
-		if vy < -0.5 then ExplodeProjectile(id,wd,x,y,z) end
-	elseif ttype == byte("u") then
-		if not spValidUnitID(target) or spGetUnitIsCloaked(target) then
-			projectiles[id] = nil
+	if ttype == ground then
+		local gy = spGetGroundHeight(x, z)
+		if vy < -0.5 and y - gy < 10 then 
 			ExplodeProjectile(id,wd,x,y,z)
 		end
-		x2,y2,z2 = spGetUnitPosition(target)
-	elseif ttype == byte("f") then
+		return
+	elseif ttype == unit then
+		if not spValidUnitID(target) then
+			ExplodeProjectile(id,wd,x,y,z)
+			return
+		end
+		if not spGetUnitIsCloaked(target) then
+			x2,y2,z2 = spGetUnitPosition(target)
+			if lastlocation[target] then
+				lastlocation[target][1] = x2
+				lastlocation[target][2] = y2
+				lastlocation[target][3] = z2
+			else
+				lastlocation[target] = {[1] = x2, [2] = y2, [3] = z2}
+			end
+		else
+			x2 = lastlocation[target][1]
+			y2 = lastlocation[target][2]
+			z2 = lastlocation[target][3]
+		end
+	elseif ttype == feature then
 		x2,y2,z2 = spGetFeaturePosition(target)
-	elseif ttype == byte("p") then
+	elseif ttype == projectile then
 		x2,y2,z2 = spGetProjectilePosition(target)
 	else
 		projectiles[id] = nil
@@ -150,9 +174,13 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	end
 end
 
+function gadget:UnitDestroyed(unitID)
+	lastlocation[unitID] = nil
+end
+
 function gadget:GameFrame(f)
-	if f%5 == 1 then
-		for id,data in pairs(projectiles) do
+	if f%2 == 1 then
+		for id, data in pairs(projectiles) do
 			CheckProjectile(id,data.defid)
 		end
 	end
