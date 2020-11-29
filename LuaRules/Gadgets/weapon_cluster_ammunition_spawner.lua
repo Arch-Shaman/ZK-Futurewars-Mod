@@ -69,6 +69,10 @@ local abs = math.abs
 local strfind = string.find
 local gmatch = string.gmatch
 
+local ground = byte("g")
+local unit = byte("u")
+local projectile = byte("p")
+local feature = byte("f")
 
 --variables--
 local config = {} -- projectile configuration data
@@ -362,9 +366,11 @@ local function SpawnSubProjectiles(id, wd)
 		end
 		debugEcho("Projectile Speed: " .. projectileattributes["speed"][1],projectileattributes["speed"][2],projectileattributes["speed"][3])
 		p = spSpawnProjectile(me, projectileattributes)
-		if ttype ~= byte("g") then
+		if ttype ~= ground then
 			debugEcho("setting target for " .. p .. " = " .. target)
 			spSetProjectileTarget(p, target,ttype)
+		else
+			spSetProjectileTarget(p, target[1], target[2], target[3])
 		end
 		RegisterSubProjectiles(p,me)
 	end
@@ -396,7 +402,7 @@ local function CheckProjectile(id)
 	local x1,y1,z1
 	local targettype,targetID,targetPos = spGetProjectileTarget(id)
 	debugEcho("Attack type: " .. targettype .. "\nTarget: " .. tostring(targetID))
-	debugEcho("Key: 'g' = " .. byte("g") .. "\n'u' = " .. byte("u") .. "\n'f' = " .. byte("f") .. "\n'p' = " .. byte("p"))
+	--debugEcho("Key: 'g' = " .. byte("g") .. "\n'u' = " .. byte("u") .. "\n'f' = " .. byte("f") .. "\n'p' = " .. byte("p"))
 	if config[wd].useheight and config[wd].useheight ~= 0 then -- this spawns at the selected height when vy < 0
 		debugEcho("Useheight check")
 		if y2 - spGetGroundHeight(x2,z2) < config[wd].spawndist and vy < 0 then
@@ -405,7 +411,7 @@ local function CheckProjectile(id)
 			return
 		end
 	end
-	if targettype == byte("g") then -- this is an undocumented case. Aircraft bombs when targeting ground returns 103 or byte(49).
+	if targettype == ground then -- this is an undocumented case. Aircraft bombs when targeting ground returns 103 or byte(49).
 		x1 = targetID[1]
 		y1 = targetID[2]
 		z1 = targetID[3]
@@ -415,11 +421,11 @@ local function CheckProjectile(id)
 		x1 = x2
 		y1 = spGetGroundHeight(x2,z2)
 		z1 = z2
-	elseif targettype == byte("u") or targettype == 117 then
+	elseif targettype == unit or targettype == 117 then
 		x1,y1,z1 = spGetUnitPosition(targetID)
-	elseif targettype == byte("f") then
+	elseif targettype == feature then
 		x1,y1,z1 = spGetFeaturePosition(targetID)
-	elseif targettype == byte("p") then
+	elseif targettype == projectile then
 		x1,y1,z1 = spGetProjectilePosition(targetID)
 	end
 	if use3d then
@@ -451,6 +457,8 @@ local function CheckProjectile(id)
 		end
 	end
 end
+
+local function gadget:ProjectileDestroyed(proID)
 
 function gadget:GameFrame(f)
 	if f%5 == 4 then

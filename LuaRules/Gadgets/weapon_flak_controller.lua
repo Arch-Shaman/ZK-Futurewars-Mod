@@ -80,7 +80,7 @@ for name,data in pairs(config) do
 end
 
 local function distance3d(x1,y1,z1,x2,y2,z2)
-	return sqrt((x2-x1)^2+(y2-y1)^2+(z2-z1)^2)
+	return sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1))+((z2-z1)*(z2-z1)))
 end
 
 local function distance2d(x1,y1,x2,y2)
@@ -112,23 +112,20 @@ local function CheckProjectile(id,wd)
 	end
 	local ttype,target = spGetProjectileTarget(id)
 	local vx,vy,vz = spGetProjectileVelocity(id)
-	local olddistance = 0
+	local olddistance = projectiles[id].distance or 0
 	local x2,y2,z2
-	olddistance = projectiles[id].distance
 	--spEcho("Target: " .. target .. "(" .. ttype .. ")")
 	if ttype == ground then
-		local gy = spGetGroundHeight(x, z)
-		if vy < -0.5 and y - gy < 10 then 
-			ExplodeProjectile(id,wd,x,y,z)
-		end
-		return
+		x2 = target[1]
+		y2 = target[2]
+		z2 = target[3]
 	elseif ttype == unit then
 		if not spValidUnitID(target) then
 			ExplodeProjectile(id,wd,x,y,z)
 			return
 		end
 		if not spGetUnitIsCloaked(target) then
-			x2,y2,z2 = spGetUnitPosition(target)
+			x2,y2,z2 = spGetUnitPosition(target, false, true)
 			if lastlocation[target] then
 				lastlocation[target][1] = x2
 				lastlocation[target][2] = y2
@@ -158,7 +155,7 @@ local function CheckProjectile(id,wd)
 		projectiles[id] = nil
 		return
 	end
-	if olddistance < projectiles[id].distance or projectiles[id].distance <= WeaponDefs[wd].damageAreaOfEffect/4 then
+	if olddistance < projectiles[id].distance and projectiles[id].distance >= WeaponDefs[wd].damageAreaOfEffect/2 then
 		ExplodeProjectile(id,wd,x,y,z)
 	end
 end
