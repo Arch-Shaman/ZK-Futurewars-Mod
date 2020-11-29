@@ -247,12 +247,12 @@ for i=1, #WeaponDefs do
 end
 spEcho("CAS: done processing weapondefs")
 
-local function unittest(tab,self)
+local function unittest(tab, self, teamID)
 	if #tab == 0 or (#tab == 1 and tab[1] == self) then
 		return false
 	end
 	for i=1, #tab do
-		if not spAreTeamsAllied(spGetUnitTeam(tab[i]),spGetUnitTeam(self)) and not spGetUnitIsCloaked(tab[i]) then -- condition: enemy unit that isn't cloaked.
+		if not spAreTeamsAllied(spGetUnitTeam(tab[i]), teamID) and not spGetUnitIsCloaked(tab[i]) then -- condition: enemy unit that isn't cloaked.
 			return true
 		end
 	end
@@ -260,7 +260,7 @@ local function unittest(tab,self)
 end
 
 if debug then 
-	for name,data in pairs(config) do
+	for name, data in pairs(config) do
 		spEcho(name .. " : ON")
 		for k,v in pairs(data) do
 			spEcho(k .. " = " .. tostring(v))
@@ -443,7 +443,7 @@ local function CheckProjectile(id)
 		else 
 			units = spGetUnitsInCylinder(x2,z2,config[wd]["proxydist"])
 		end
-		if unittest(units,spGetProjectileOwnerID(id)) == true then
+		if unittest(units, projectiles[id].owner, projectiles[id].teamID)) == true then
 			debugEcho("Unit passed unittest. Passed to SpawnSubProjectiles")
 			SpawnSubProjectiles(id, wd)
 		end
@@ -457,7 +457,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	end
 	if config[weaponDefID] and not projectiles[proID] then
 		debugEcho("Registered projectile " .. proID)
-		projectiles[proID] = {def = weaponDefID, intercepted = false}
+		projectiles[proID] = {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetUnitTeam(proOwnerID)}
 		if config[weaponDefID]["alwaysvisible"] then
 			spSetProjectileAlwaysVisible(proID,true)
 		end
