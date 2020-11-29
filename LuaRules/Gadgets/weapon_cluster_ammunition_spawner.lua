@@ -443,7 +443,7 @@ local function CheckProjectile(id)
 		else 
 			units = spGetUnitsInCylinder(x2,z2,config[wd]["proxydist"])
 		end
-		if unittest(units, projectiles[id].owner, projectiles[id].teamID)) == true then
+		if unittest(units, projectiles[id].owner, projectiles[id].teamID) then
 			debugEcho("Unit passed unittest. Passed to SpawnSubProjectiles")
 			SpawnSubProjectiles(id, wd)
 		end
