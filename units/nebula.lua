@@ -36,9 +36,9 @@ return { nebula = {
   footprintZ             = 5,
   hoverAttack            = true,
   iconType               = [[nebula]],
-  idleAutoHeal           = 200,
+  idleAutoHeal           = 440,
   idleTime               = 1800,
-  maxDamage              = 20000,
+  maxDamage              = 44000,
   maxVelocity            = 1.1,
   minCloakDistance       = 150,
   noAutoFire             = false,
@@ -94,9 +94,6 @@ return { nebula = {
 
     {
       def         = [[SHIELD]],
-    },
-	{
-      def         = [[INNERSHIELD]],
     },
   },
 
