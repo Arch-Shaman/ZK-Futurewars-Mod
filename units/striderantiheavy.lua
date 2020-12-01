@@ -21,7 +21,8 @@ return { striderantiheavy = {
 
   customParams           = {
     modelradius    = [[21]],
-	jump_range         = 400,
+	canjump            = 1,
+	jump_range         = 650,
     jump_speed         = 8,
     jump_reload        = 20,
     jump_from_midair   = 1,

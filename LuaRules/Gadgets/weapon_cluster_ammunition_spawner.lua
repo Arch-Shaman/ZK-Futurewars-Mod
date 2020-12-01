@@ -319,7 +319,6 @@ local function SpawnSubProjectiles(id, wd)
 	spSpawnExplosion(x,y,z,0,0,0,{weaponDef = wd, owner = spGetProjectileOwnerID(id), craterAreaOfEffect = WeaponDefs[wd].craterAreaOfEffect, damageAreaOfEffect = WeaponDefs[wd].damageAreaOfEffect, edgeEffectiveness = WeaponDefs[wd].edgeEffectiveness, explosionSpeed = WeaponDefs[wd].explosionSpeed, impactOnly = WeaponDefs[wd].impactOnly, ignoreOwner = WeaponDefs[wd].noSelfDamage, damageGround = true})
 	spPlaySoundFile(WeaponDefs[wd].hitSound[1].name,WeaponDefs[wd].hitSound[1].volume,x,y,z)
 	spDeleteProjectile(id)
-	projectiles[id] = nil -- dead
 	-- Create the projectiles --
 	for i=1, config[wd]["numprojectiles"] do
 		local p
@@ -365,12 +364,13 @@ local function SpawnSubProjectiles(id, wd)
 		end
 		RegisterSubProjectiles(p,me)
 	end
+	projectiles[id].dead = true
 end
 
 local function CheckProjectile(id)
 	debugEcho("CheckProjectile " .. id)
 	local targettype, targetID = spGetProjectileTarget(id)
-	if targettype == nil then
+	if targettype == nil or projectiles[id].dead then
 		projectiles[id] = nil
 		return
 	end
