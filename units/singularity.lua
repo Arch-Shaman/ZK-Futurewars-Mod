@@ -74,7 +74,7 @@ return { singularity = {
 		singularity = [[1]],
 		singuradius = [[300]],
 		singulifespan = [[300]],
-		singustrength = [[50]],
+		singustrength = [[17]],
         restrict_in_widgets = 1,
 
         stats_hide_dps = 1, -- one use

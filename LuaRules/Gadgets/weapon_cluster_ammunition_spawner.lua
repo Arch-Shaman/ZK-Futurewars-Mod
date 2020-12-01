@@ -60,6 +60,7 @@ local spAreTeamsAllied = Spring.AreTeamsAllied
 local spGetUnitIsCloaked = Spring.GetUnitIsCloaked
 local SetWatchWeapon = Script.SetWatchWeapon
 local spSetProjectileAlwaysVisible = Spring.SetProjectileAlwaysVisible
+local spGetProjectileIsIntercepted = Spring.GetProjectileIsIntercepted
 local random = math.random
 local sqrt = math.sqrt
 local byte = string.byte
@@ -69,14 +70,18 @@ local abs = math.abs
 local strfind = string.find
 local gmatch = string.gmatch
 
+local ground = byte("g")
+local unit = byte("u")
+local projectile = byte("p")
+local feature = byte("f")
 
 --variables--
 local config = {} -- projectile configuration data
 local projectiles = {} -- stuff we need to act on.
 local debug = false
 -- functions --
-local function distance3d(x1,y1,z1,x2,y2,z2)
-	return sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1))+((z2-z1)*(z2-z1)))
+local function distance3d(x1, y1, z1, x2, y2, z2)
+	return sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)) + ((z2 - z1) * (z2 - z1)))
 end
 
 local function debugEcho(str)
@@ -242,12 +247,12 @@ for i=1, #WeaponDefs do
 end
 spEcho("CAS: done processing weapondefs")
 
-local function unittest(tab,self)
+local function unittest(tab, self, teamID)
 	if #tab == 0 or (#tab == 1 and tab[1] == self) then
 		return false
 	end
 	for i=1, #tab do
-		if not spAreTeamsAllied(spGetUnitTeam(tab[i]),spGetUnitTeam(self)) and not spGetUnitIsCloaked(tab[i]) then -- condition: enemy unit that isn't cloaked.
+		if not spAreTeamsAllied(spGetUnitTeam(tab[i]), teamID) and not spGetUnitIsCloaked(tab[i]) then -- condition: enemy unit that isn't cloaked.
 			return true
 		end
 	end
@@ -255,7 +260,7 @@ local function unittest(tab,self)
 end
 
 if debug then 
-	for name,data in pairs(config) do
+	for name, data in pairs(config) do
 		spEcho(name .. " : ON")
 		for k,v in pairs(data) do
 			spEcho(k .. " = " .. tostring(v))
@@ -267,30 +272,19 @@ local function distance2d(x1,y1,x2,y2)
 	return sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)))
 end
 
-local function RegisterSubProjectiles(p,me)
+local function RegisterSubProjectiles(p, me)
 	if config[me] then
-		projectiles[p] = me
+		projectiles[p] = {def = me, intercepted = false}
 		if config[me]["alwaysvisible"] then
-			spSetProjectileAlwaysVisible(p,true)
-		end
-	end
-end
-
-function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
-	debugEcho("ProjectileCreated: " .. tostring(proID, proOwnerID, weaponDefID))
-	if weaponDefID == nil then
-		weaponDefID = spGetProjectileDefID(proID)
-	end
-	if config[weaponDefID] then
-		debugEcho("Registered projectile " .. proID)
-		projectiles[proID] = weaponDefID 
-		if config[weaponDefID]["alwaysvisible"] then
-			spSetProjectileAlwaysVisible(proID,true)
+			spSetProjectileAlwaysVisible(p, true)
 		end
 	end
 end
 
 local function SpawnSubProjectiles(id, wd)
+	if id == nil then
+		return
+	end
 	local projectileattributes = {pos = {0,0,0}, speed = {0,0,0}, owner = 0, team = 0, ttl= 0,gravity = 0,tracking = false,}
 	debugEcho("Fire the submunitions!")
 	local x,y,z = spGetProjectilePosition(id)
@@ -362,21 +356,26 @@ local function SpawnSubProjectiles(id, wd)
 		end
 		debugEcho("Projectile Speed: " .. projectileattributes["speed"][1],projectileattributes["speed"][2],projectileattributes["speed"][3])
 		p = spSpawnProjectile(me, projectileattributes)
-		if ttype ~= byte("g") then
+		if ttype ~= ground then
 			debugEcho("setting target for " .. p .. " = " .. target)
 			spSetProjectileTarget(p, target,ttype)
+		else
+			spSetProjectileTarget(p, target[1], target[2], target[3])
 		end
 		RegisterSubProjectiles(p,me)
 	end
+	projectiles[id].dead = true
 end
 
 local function CheckProjectile(id)
 	debugEcho("CheckProjectile " .. id)
-	local wd = spGetProjectileDefID(id)
-	if wd == nil or wd ~= projectiles[id] then
+	local targettype, targetID = spGetProjectileTarget(id)
+	if targettype == nil or projectiles[id].dead then
 		projectiles[id] = nil
 		return
 	end
+	local wd = projectiles[id].def
+	projectiles[id].intercepted = spGetProjectileIsIntercepted(id)
 	local isMissile = false -- check for missile status. When the missile times out, the subprojectiles will be spawned if allowed.
 	if WeaponDefs[wd]["flightTime"] ~= nil and WeaponDefs[wd].type == "Missile" then
 		isMissile = true
@@ -394,9 +393,8 @@ local function CheckProjectile(id)
 	local distance
 	local x2,y2,z2 = spGetProjectilePosition(id)
 	local x1,y1,z1
-	local targettype,targetID,targetPos = spGetProjectileTarget(id)
 	debugEcho("Attack type: " .. targettype .. "\nTarget: " .. tostring(targetID))
-	debugEcho("Key: 'g' = " .. byte("g") .. "\n'u' = " .. byte("u") .. "\n'f' = " .. byte("f") .. "\n'p' = " .. byte("p"))
+	--debugEcho("Key: 'g' = " .. byte("g") .. "\n'u' = " .. byte("u") .. "\n'f' = " .. byte("f") .. "\n'p' = " .. byte("p"))
 	if config[wd].useheight and config[wd].useheight ~= 0 then -- this spawns at the selected height when vy < 0
 		debugEcho("Useheight check")
 		if y2 - spGetGroundHeight(x2,z2) < config[wd].spawndist and vy < 0 then
@@ -405,7 +403,7 @@ local function CheckProjectile(id)
 			return
 		end
 	end
-	if targettype == byte("g") then -- this is an undocumented case. Aircraft bombs when targeting ground returns 103 or byte(49).
+	if targettype == ground then -- this is an undocumented case. Aircraft bombs when targeting ground returns 103 or byte(49).
 		x1 = targetID[1]
 		y1 = targetID[2]
 		z1 = targetID[3]
@@ -415,11 +413,11 @@ local function CheckProjectile(id)
 		x1 = x2
 		y1 = spGetGroundHeight(x2,z2)
 		z1 = z2
-	elseif targettype == byte("u") or targettype == 117 then
+	elseif targettype == unit or targettype == 117 then
 		x1,y1,z1 = spGetUnitPosition(targetID)
-	elseif targettype == byte("f") then
+	elseif targettype == feature then
 		x1,y1,z1 = spGetFeaturePosition(targetID)
-	elseif targettype == byte("p") then
+	elseif targettype == projectile then
 		x1,y1,z1 = spGetProjectilePosition(targetID)
 	end
 	if use3d then
@@ -445,17 +443,36 @@ local function CheckProjectile(id)
 		else 
 			units = spGetUnitsInCylinder(x2,z2,config[wd]["proxydist"])
 		end
-		if unittest(units,spGetProjectileOwnerID(id)) == true then
+		if unittest(units, projectiles[id].owner, projectiles[id].teamID) then
 			debugEcho("Unit passed unittest. Passed to SpawnSubProjectiles")
-			SpawnSubProjectiles(id,wd)
+			SpawnSubProjectiles(id, wd)
 		end
 	end
 end
 
-function gadget:GameFrame(f)
-	if f%5 == 4 then
-		for id,_ in pairs(projectiles) do
-			CheckProjectile(id)
+function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
+	debugEcho("ProjectileCreated: " .. tostring(proID, proOwnerID, weaponDefID))
+	if weaponDefID == nil then
+		weaponDefID = spGetProjectileDefID(proID)
+	end
+	if config[weaponDefID] and not projectiles[proID] then
+		debugEcho("Registered projectile " .. proID)
+		projectiles[proID] = {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetUnitTeam(proOwnerID)}
+		if config[weaponDefID]["alwaysvisible"] then
+			spSetProjectileAlwaysVisible(proID,true)
 		end
+	end
+end
+
+function gadget:ProjectileDestroyed(proID)
+	if projectiles[proID] and not projectiles[proID].intercepted then
+		local wd = projectiles[proID].def
+		SpawnSubProjectiles(id, wd)
+	end
+end
+
+function gadget:GameFrame(f)
+	for id, _ in pairs(projectiles) do
+		CheckProjectile(id)
 	end
 end
