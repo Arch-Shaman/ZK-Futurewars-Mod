@@ -80,8 +80,8 @@ local config = {} -- projectile configuration data
 local projectiles = {} -- stuff we need to act on.
 local debug = false
 -- functions --
-local function distance3d(x1,y1,z1,x2,y2,z2)
-	return sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1))+((z2-z1)*(z2-z1)))
+local function distance3d(x1, y1, z1, x2, y2, z2)
+	return sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)) + ((z2 - z1) * (z2 - z1)))
 end
 
 local function debugEcho(str)
