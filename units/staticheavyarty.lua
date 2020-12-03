@@ -155,7 +155,7 @@ return {
 				reloadtime              = 0.5,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
-				soundHit                = [[weapon/cannon/cannon_hit2]],
+				soundHit                = [[weapon/cannon/rhino4]],
 				soundStart              = [[weapon/heavy_emg]],
 				stages                  = 10,
 				turret                  = true,
@@ -165,7 +165,7 @@ return {
 	
 			PLASMA = {
 				name                    = [[3 Round Cluster Barrage]],
-				highTrajectory		  = 1,
+				highTrajectory		= 1,
 				areaOfEffect            = 0,
 				avoidFeature            = false,
 				avoidGround             = false,
@@ -209,7 +209,7 @@ return {
 				reloadtime              = 30,
 				mygravity				= 0.20,
 				soundHit                = [[weapon/cluster_heavy]],
-				soundStart              = [[weapon/cannon/big_begrtha_gun_fire]],
+				soundStart              = [[weapon/cannon/large_cannon_fire]],
 				turret                  = true,
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 1440,
