@@ -4,9 +4,9 @@ return { striderdetriment = {
   description            = [[Ultimate Assault Strider]],
   acceleration           = 0.328,
   activateWhenBuilt      = true,
-  autoheal               = 125,
+  autoheal               = 200,
   brakeRate              = 1.435,
-  buildCostMetal         = 20000,
+  buildCostMetal         = 22500,
   builder                = false,
   buildPic               = [[striderdetriment.png]],
   canGuard               = true,
@@ -41,8 +41,8 @@ return { striderdetriment = {
   script                 = [[striderdetriment.lua]],
   selfDestructAs         = [[NUCLEAR_MISSILE]],
   selfDestructCountdown  = 10,
-  sightDistance          = 1600,
-  sonarDistance          = 1600,
+  sightDistance          = 1700,
+  sonarDistance          = 1700,
   trackOffset            = 0,
   trackStrength          = 8,
   trackStretch           = 0.8,
@@ -55,7 +55,7 @@ return { striderdetriment = {
 
     {
       def                = [[GAUSS]],
-      onlyTargetCategory = [[LAND SINK TURRET SUB SHIP SWIM FLOAT HOVER]],
+      onlyTargetCategory = [[LAND SINK TURRET SUB SHIP SWIM FLOAT HOVER GUNSHIP]],
     },
 
     {
@@ -80,6 +80,8 @@ return { striderdetriment = {
 			force_ignore_ground = [[1]],
 			light_color = [[3 2.33 1.5]],
 			light_radius = 150,
+			isFlak = 3,
+			flaktime = -1/30,
 		},
       
 			damage                  = {
