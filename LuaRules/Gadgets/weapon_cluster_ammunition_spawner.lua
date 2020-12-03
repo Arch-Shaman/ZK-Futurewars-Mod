@@ -95,155 +95,123 @@ spEcho("CAS: Scanning weapondefs")
 for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
-	if curRef and curRef.projectile then -- found it!
+	if curRef.projectile or curRef.submunition_tablesize then
 		spEcho("CAS: Discovered " .. i .. "(" .. wd.name .. ")")
-		if type(curRef.projectile) == "string" then -- reason we use it like this is to provide an error if something doesn't seem right.
-			if WeaponDefNames[curRef.projectile] then
-				if type(curRef.spawndist) == "string" then -- all ok
-					SetWatchWeapon(i, true)
-					debugEcho("CAS: Enabled watch for " .. i)
-					config[i] = {}
-					if wd.type == "AircraftBomb" then
-						config[i]["isBomb"] = true
-					else
-						config[i]["isBomb"] = false
-					end
-					config[i]["projectile"] = WeaponDefNames[curRef.projectile].id -- transform into an id
-					config[i]["spawndist"] = tonumber(curRef.spawndist)
-					if wd.type == "StarburstLauncher" then
-						config[i]["launcher"] = true
-					else
-						config[i]["launcher"] = false
-					end
-					if type(curRef.timeoutspawn) ~= "string" then
-						config[i]["timeoutspawn"] = 1
-					else
-						config[i]["timeoutspawn"] = tonumber(curRef.timeoutspawn)
-					end
-					if type(curRef.numprojectiles) ~= "string" then
-						config[i]["numprojectiles"] = 1
-					else
-						config[i]["numprojectiles"] = tonumber(curRef.numprojectiles)
-					end
-					if type(curRef.use2ddist) ~= "string" then
-						config[i]["use2ddist"] = 0
-						spEcho("CAS: Set 2ddist to false for " .. name)
-					else
-						config[i]["use2ddist"] = tonumber(curRef.use2ddist)
-					end
-					if type(curRef.keepmomentum) ~= "string" then
-						config[i]["keepmomentum"] = 1
-					else
-						config[i]["keepmomentum"] = tonumber(curRef.keepmomentum)
-					end
-					if type(curRef.spreadradius) ~= "string" then
-						config[i]["spreadmin"] = -100
-						config[i]["spreadmax"] = 100
-					else
-						if strfind(curRef.spreadradius,",") then -- projectile offsetting.
-							config[i]["spreadmin"], config[i]["spreadmax"] = curRef.spreadradius:match("([^,]+),([^,]+)")
-							config[i]["spreadmin"] = tonumber(config[i]["spreadmin"])
-							config[i]["spreadmax"] = tonumber(config[i]["spreadmax"])
-							if config[i]["spreadmax"] == "" or config[i]["spreadmax"] == nil then
-								config[i]["spreadmax"] = config[i]["spreadmin"] * -1
+		config[i] = {}
+		config[i]["isBomb"] = (wd.type == "AircraftBomb")
+		config[i]["launcher"] = (wd.type == "StarburstLauncher")
+		config[i]["proxy"] = curRef["proxydist"] ~= nil
+		config[i]["proxydistance"] = tonumber(curRef.proxydist) or 0
+		config[i]["keepmomentum"] = tonumber(curRef.keepmomentum) or false
+		config[i]["timeoutspawn"] = curRef.timeoutspawn ~= nil
+		config[i]["use2ddist"] = curRef.use2ddist ~= nil
+		config[i]["alwaysvisible"] = curRef.alwaysvisible ~= nil
+		config[i]["useheight"] = curRef.useheight ~= nil
+		config[i]["spawndist"] = tonumber(curRef.spawndist) or 100
+		if curRef.timedcharge then
+			config[i]["type"] = "timedcharge"
+		else
+			config[i]["type"] = "normal
+		end
+		local tablesize = tonumber(curRef.submunition_tablesize) or 1
+		config[i]["subprojectilecount"] = tablesize
+		local projectiles = {}
+		if tablesize > 1 then
+			local nomore = false
+			for p = 1, tablesize do
+				local projectileref = curRef[p .. "_projectile"]
+				if WeaponDefNames[projectileref] and not nomore then
+					projectiles[p] = {}
+					projectiles[p].projectile = WeaponDefNames[projectileref].id
+					projectiles[p].count = tonumber(curRef[p .. "_numprojectiles"]) or 1
+					if curRef.vlist then
+							projectiles[p]["vlist"] = {}
+							local x,y,z
+							for w in gmatch(curRef[p .. "_vlist"],"%S+") do -- string should be "x,y,z/x,y,z/x,y,z,/x,y,z/etc
+								x,y,z = w:match("([^,]+),([^,]+),([^,]+)")
+								projectiles[p]["vlist"][#projectiles[p]["vlist"] + 1] = {tonumber(x),tonumber(y),tonumber(z)}
 							end
-							if config[i]["spreadmin"] > config[i]["spreadmax"] then
-								local mi = config[i]["spreadmax"]
-								local ma = config[i]["spreadmin"]
-								config[i]["spreadmin"] = mi
-								config[i]["spreadmax"] = ma
-								spEcho("[CAS] WARNING: Illegal min,max value for spread on projectile ID " .. i .. " (" .. wd.name .. ").\n These values have been automatically switched, but you should fix your config!\nValues got:" .. config[i]["spreadmax"],config[i]["spreadmin"])
-							end
-						else
-							config[i]["spreadmin"] = -abs(tonumber(curRef.spreadradius))
-							config[i]["spreadmax"] = abs(tonumber(curRef.spreadradius))
 						end
 					end
-					if type(curRef.vradius) ~= "string" then
-						config[i]["veldata"] = {min = {-4.2,-4.2,-4.2}, max = {4.2,4.2,4.2}}
+					if not curRef[p .. "_vradius"] then
+						projectiles[p]["veldata"] = {min = {-4.2,-4.2,-4.2}, max = {4.2,4.2,4.2}}
 					else
-						if strfind(curRef.vradius,",") then -- projectile velocity offsets
-							config[i]["veldata"] = {min = {}, max = {}}
-							config[i]["veldata"].min[1],config[i]["veldata"].min[2], config[i]["veldata"].min[3],config[i]["veldata"].max[1],config[i]["veldata"].max[2],config[i]["veldata"].max[3]  = curRef.vradius:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
+						if strfind(curRef[p .. "_vradius"], ",") then -- projectile velocity offsets
+							projectiles[p]["veldata"] = {min = {}, max = {}}
+							projectiles[p]["veldata"].min[1],projectiles[p]["veldata"].min[2], projectiles[p]["veldata"].min[3],projectiles[p]["veldata"].max[1],projectiles[p]["veldata"].max[2],projectiles[p]["veldata"].max[3]  = curRef[p .."_vradius"]:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
 							for j=1, 3 do
-								config[i]["veldata"].min[j] = tonumber(config[i]["veldata"].min[j])
-								config[i]["veldata"].max[j] = tonumber(config[i]["veldata"].max[j])
-								if config[i].veldata.min[j] > config[i].veldata.max[j] then
-									local mi = config[i]["veldata"].min[j]
-									local ma = config[i]["veldata"].max[j]
-									config[i]["veldata"].min[j] = mi
-									config[i]["veldata"].max[j] = ma
+								projectiles[p]["veldata"].min[j] = tonumber(projectiles[p]["veldata"].min[j])
+								projectiles[p]["veldata"].max[j] = tonumber(projectiles[p]["veldata"].max[j])
+								if projectiles[p].veldata.min[j] > projectiles[p].veldata.max[j] then
+									local mi = projectiles[p]["veldata"].min[j]
+									local ma = projectiles[p]["veldata"].max[j]
+									projectiles[p]["veldata"].min[j] = mi
+									projectiles[p]["veldata"].max[j] = ma
 									spEcho("[CAS] WARNING: Illegal min,max value for velocity on projectile ID " .. i .. " (" .. wd.name .. ").\n These values have been automatically switched, but you should fix your config!\nValues got:" .. config[i]["veldata"].min[j],config[i]["veldata"].max[j])
 								end
 							end
 						else
-							config[i].veldata = {min = {}, max = {}}
+							projectiles[p].veldata = {min = {}, max = {}}
 							for j=1,3 do
-								config[i]["veldata"].min[j] = -abs(tonumber(curRef.vradius))
-								config[i]["veldata"].max[j] = abs(tonumber(curRef.vradius))
+								projectiles[p]["veldata"].min[j] = -abs(tonumber(curRef.vradius)) or -1
+								projectiles[p]["veldata"].max[j] = abs(tonumber(curRef.vradius)) or 1
 							end
 						end
 					end
-					if type(curRef.proxy) ~= "string" then
-						config[i]["proxy"] = 0
-					else
-						config[i]["proxy"] = tonumber(curRef.proxy)
-					end
-					if type(curRef.proxydist) ~= "string" then
-						config[i]["proxydist"] = config[i]["spawndist"]
-					else
-						config[i]["proxydist"] = tonumber(curRef.proxydist)
-					end
-					if type(curRef.clusterpos) ~= "string" then
-						config[i]["clusterpos"] = "no"
-					else
-						config[i]["clusterpos"] = curRef.clusterpos
-					end
-					if type(curRef.clustervec) ~= "string" then
-						config[i]["clustervec"] = "no"
-					else
-						config[i]["clustervec"] = curRef.clustervec
-					end
-					if type(curRef.alwaysvisible) ~= "string" then
-						config[i]["alwaysvisible"] = false
-					else
-						config[i]["alwaysvisible"] = curRef.alwaysvisible
-					end
-					if type(curRef.useheight) ~= "string" then
-						config[i]["useheight"] = 0
-					else
-						config[i]["useheight"] = tonumber(curRef.useheight)
-					end
-					if curRef.timedcharge and curRef.timedcharge > 0 then
-						config[i]["type"] = "timedcharge"
-					else
-						config[i]["type"] = "normal"
-					end
-					if curRef.keepmomentum and curRef.keepmomentum == 0 then
-						config[i]["keepmomentum"] = false
-					else
-						config[i]["keepmomentum"] = true
-					end
-					if type(curRef.vlist) == "string" then
-						config[i]["vlist"] = {}
+					config[i].projectiles = projectiles
+				else
+					nomore = true
+					config[i] = nil
+					spEcho("Bad config for " .. i .. "," ..  p .. "!")
+				end
+			end
+			config[i].projectiles = projectiles
+		else
+			if WeaponDefNames[curRef.projectile] then
+				projectiles[1] = {}
+				projectiles[1].projectile = WeaponDefNames[curRef.projectile].id
+				projectiles[1].count = tonumber(curRef.numprojectiles) or 1
+				if curRef.vlist then
+						projectiles[1]["vlist"] = {}
 						local x,y,z
 						for w in gmatch(curRef.vlist,"%S+") do -- string should be "x,y,z/x,y,z/x,y,z,/x,y,z/etc
 							x,y,z = w:match("([^,]+),([^,]+),([^,]+)")
-							config[i]["vlist"][#config[i]["vlist"]+1] = {tonumber(x),tonumber(y),tonumber(z)}
+							projectiles[1]["vlist"][#projectiles[1]["vlist"] + 1] = {tonumber(x),tonumber(y),tonumber(z)}
 						end
 					end
-				else
-					spEcho("Error: " .. i .. "(" .. WeaponDefs[i].name .. "): spawndist is not present.")
 				end
+				if not curRef.vradius then
+					projectiles[1]["veldata"] = {min = {-4.2,-4.2,-4.2}, max = {4.2,4.2,4.2}}
+				else
+					if strfind(curRef.vradius,",") then -- projectile velocity offsets
+						projectiles[1]["veldata"] = {min = {}, max = {}}
+						projectiles[1]["veldata"].min[1],projectiles[1]["veldata"].min[2], projectiles[1]["veldata"].min[3],projectiles[1]["veldata"].max[1],projectiles[1]["veldata"].max[2],projectiles[1]["veldata"].max[3]  = curRef.vradius:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
+						for j=1, 3 do
+							projectiles[1]["veldata"].min[j] = tonumber(projectiles[1]["veldata"].min[j])
+							projectiles[1]["veldata"].max[j] = tonumber(projectiles[1]["veldata"].max[j])
+							if projectiles[1].veldata.min[j] > projectiles[1].veldata.max[j] then
+								local mi = projectiles[1]["veldata"].min[j]
+								local ma = projectiles[1]["veldata"].max[j]
+								projectiles[1]["veldata"].min[j] = mi
+								projectiles[1]["veldata"].max[j] = ma
+								spEcho("[CAS] WARNING: Illegal min,max value for velocity on projectile ID " .. i .. " (" .. wd.name .. ").\n These values have been automatically switched, but you should fix your config!\nValues got:" .. config[i]["veldata"].min[j],config[i]["veldata"].max[j])
+							end
+						end
+					else
+						config[i].veldata = {min = {}, max = {}}
+						for j=1,3 do
+							projectiles[1]["veldata"].min[j] = -abs(tonumber(curRef.vradius))
+							projectiles[1]["veldata"].max[j] = abs(tonumber(curRef.vradius))
+						end
+					end
+				end
+				config[i].projectiles = projectiles
 			else
-				spEcho("Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a valid weapondef name.")
+				config[i] = nil
+				spEcho("CAS: Invalid projectile for " .. i)
 			end
-		else
-			spEcho("Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a string.")
 		end
 	end
-	wd = nil
-	curRef = nil
 end
 spEcho("CAS: done processing weapondefs")
 
@@ -281,7 +249,7 @@ local function RegisterSubProjectiles(p, me)
 	end
 end
 
-local function SpawnSubProjectiles(id, wd)
+local function SpawnSubProjectiles(id, wd, subid)
 	if id == nil then
 		return
 	end
@@ -290,18 +258,18 @@ local function SpawnSubProjectiles(id, wd)
 	local x,y,z = spGetProjectilePosition(id)
 	local vx,vy,vz = spGetProjectileVelocity(id)
 	local ttype,target = spGetProjectileTarget(id)
-	local r = config[wd]["spreadradius"]
-	local vr = config[wd]["veldata"]
-	local me = config[wd]["projectile"]
-	local projectilecount = config[wd]["numprojectiles"]
+	local r = config[wd].projectiles[subid]["spreadradius"]
+	local vr = config[wd].projectiles[subid]["veldata"]
+	local me = config[wd].projectiles[subid].projectile
+	local projectilecount = config[wd].projectiles[subid].count
 	local step = {0,0,0}
 	for i=1, 3 do
 		step[i] = (vr.max[i] - vr.min[i])/projectilecount
 	end
 	debugEcho("Velocity: " ..tostring(config[wd].clusterpos),tostring(config[wd].clustervec))
 	debugEcho("step: " .. tostring(step))
-	local positioning = config[wd].clusterpos or "none"
-	local vectoring = config[wd].clustervec or "none"
+	local positioning = config[wd].projectile[subid].clusterpos or "none"
+	local vectoring = config[wd].projectile[subid].clustervec or "none"
 	-- update projectile attributes --
 	projectileattributes["gravity"] = -WeaponDefs[wd].myGravity or -1
 	projectileattributes["owner"] = spGetProjectileOwnerID(id)
@@ -332,8 +300,7 @@ local function SpawnSubProjectiles(id, wd)
 			if strfind(positioning,"z") then
 				projectileattributes["pos"][3] = z+random(-r,r)
 			end
-		end
-		if strfind(vectoring,"random") then
+		elseif strfind(vectoring,"random") then
 			if strfind(vectoring,"x") then
 				projectileattributes["speed"][1] = vx+random(vr.min[1],vr.max[1])
 			end
