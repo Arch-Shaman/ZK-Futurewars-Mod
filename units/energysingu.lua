@@ -80,7 +80,7 @@ return { energysingu = {
 		singularity = [[1]],
 		singuradius = [[1280]],
 		singulifespan = [[300]],
-		singustrength = [[70]],
+		singustrength = [[17]],
 		
 	  },
       --explosionGenerator = "custom:grav_danger_spikes",
@@ -90,7 +90,7 @@ return { energysingu = {
       name               = "Naked Singularity",
       soundHit           = "explosion/ex_ultra1",
       damage = {
-        default = 9500,
+        default = 2700,
       },
     },
   },
