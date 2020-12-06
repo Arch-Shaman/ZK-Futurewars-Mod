@@ -26,7 +26,7 @@ local unitDef = {
 		aimposoffset   = [[0 3 0]],
 		modelradius    = [[10]],
 		refuelturnradius = [[120]],
-
+		fighter_pullup_dist = 380,
 		combat_slowdown = 1.3,
 		selection_scale = 1.4,
 	},
