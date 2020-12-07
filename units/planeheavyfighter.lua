@@ -86,8 +86,7 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 6,
-				subs    = 6/8,
+				default = 4,
 			},
 
 			explosionGenerator      = [[custom:FLASHPLOSION]],
@@ -105,7 +104,7 @@ local unitDef = {
 			size                    = 1.75,
 			sizeDecay               = 0,
 			soundStart              = [[weapon/brrt2fixed.wav]],
-			soundStartVolume        = 0.45,
+			soundStartVolume        = 0.25,
 			sprayAngle              = 80,
 			stages                  = 10,
 			tolerance               = 5000,
