@@ -164,7 +164,7 @@ local function ProcessUnits(sx, sy, sz, radius, strength, list, rev)
 		if vy < 0.18 then
 			Spring.AddUnitImpulse(unitID, 0, 1, 0) -- 'unglue' the unit
 		end
-		Spring.SetUnitVelocity(unitID, ex + vx, ey + vy, ez + vz)
+		spSetUnitVelocity(unitID, ex + vx, ey + vy, ez + vz)
 		GG.SetUnitFallDamageImmunity(unitID, spGetGameFrame() + 2)
 		--spSetUnitVelocity(unitID, vx, vy, vz)
 	end
