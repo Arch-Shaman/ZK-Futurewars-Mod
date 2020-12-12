@@ -30,6 +30,8 @@ end
 
 local sqrt = math.sqrt
 local max = math.max
+local min = math.min
+local abs = math.abs
 local spGetProjectilePosition = Spring.GetProjectilePosition
 local spGetProjectileVelocity = Spring.GetProjectileVelocity
 local spGetProjectileDefID = Spring.GetProjectileDefID
@@ -44,64 +46,91 @@ local spSetProjectileGravity = Spring.SetProjectileGravity
 local spGetFeaturesInSphere = Spring.GetFeaturesInSphere
 local spGetFeaturePosition = Spring.GetFeaturePosition
 local spSetFeatureVelocity = Spring.SetFeatureVelocity
+local spGetFeatureVelocity = Spring.GetFeatureVelocity
 local spGetGameFrame = Spring.GetGameFrame
 local spSetFeatureMoveControl = Spring.SetFeatureMoveCtrl
+local spGetUnitMass = Spring.GetUnitMass
+local spGetFeatureMass = Spring.GetFeatureMass
+local spEcho = Spring.Echo
 local gravity = Game.gravity
 
-local function Distance3d(x1, y1, z1, x2, y2, z2)
-	return sqrt(((x2 - x1)*(x2 - x1)) + ((y2 - y1)*(y2 - y1)) + ((z2 - z1)*(z2 - z1)))
+local projectiles = {}
+
+local function Distance3d(x1,y1,z1,x2,y2,z2) -- TODO: make this the spring utilities thing.
+	return sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2) + (z1 - z2)*(z1 - z2))
 end
 
 local function GetIsBeamWeapon(projectileID)
 	local weapondef = WeaponDefs[spGetProjectileDefID(projectileID)]
+	if weapondef == nil or weapondef.type == nil then -- fix for death particle things
+		return false
+	end
 	return weapondef.type == "BeamLaser"
 end
 
+local function GetEffectStrength(radius, strength, distance, mass)
+	local mass = mass or 1
+	local strength = strength
+	if mass <= 1 then
+		strength = strength/30 -- convert from elmo/sec
+	end
+	mass = max(mass, 0.01) -- prevent divbyzero
+	local distance = max(distance, 0.01) -- gate to prevent divbyzero
+	return min(((radius/distance) * strength)^(1/1.05), 2 * strength) / mass
+end
+
+local function GetFinalEffectStrength(radius, strength, distance, mass)
+	local strength = strength
+	if mass <= 1 then
+		strength = 10 -- affect projectiles weakly.
+	end
+	local distance = max(distance, 0.01)
+	return max(- ((radius/distance) * strength)^(1/1.05), -2 * strength) / mass
+end
+
 local function ProcessProjectiles(sx, sy, sz, radius, strength, list, rev)
+	local frame = spGetGameFrame() + 1
 	for i = 1, #list do
 		local projectileID = list[i]
 		local px, py, pz = spGetProjectilePosition(projectileID)
-		local distance = Distance3d(sx, px, sy, py, sz, pz)
-		if distance <= radius and not GetIsBeamWeapon(projectileID) then -- this is affected.
-			spSetProjectileMoveControl(projectileID, true)
-			local effectstrength
-			if not rev then
-				effectstrength = max(distance/radius, 0.05) * strength
-			else
-				effectstrength = - radius/(max(distance, 0.01)) * strength * 2
-			end
+		local distance = Distance3d(sx, sy, sz, px, py, pz)
+		local radiussqr = radius * radius
+		--spEcho("Distance: " .. distance .. "\nBeamWeapon: " .. tostring(GetIsBeamWeapon(projectileID)))
+		if distance <= radiussqr and not GetIsBeamWeapon(projectileID) then -- this is affected.
+			--spSetProjectileMoveControl(projectileID, true)
 			local vx, vy, vz = spGetProjectileVelocity(projectileID)
+			--spEcho("projectileID: " .. projectileID .. "\nVelocity: " .. vx .. "," .. vy .. "," .. vz)
 			local ex, ey, ez = 0, 0, 0 -- effect's velocity change
-			if sx - px >= 0 then
-				ex = effectstrength
-			elseif sx - px < 0 then
-				ex = -effectstrength
-			end
-			if sy - py >= 0 then
-				ey = effectstrength
-			elseif sy - py < 0 then
-				ey = -effectstrength
-			end
-			if sz - pz >= 0 then
-				ez = effectstrength
-			elseif sz - pz < 0 then
-				ez = -effectstrength
-			end
-			if distance < 10 and not rev then
-				vx = 0
-				vy = 0
-				vz = 0
+			if rev then
+				ex = GetFinalEffectStrength(radius, strength, abs(sx - px), 1)
+				ey = GetFinalEffectStrength(radius, strength, abs(sy - py), 1)
+				ez = GetFinalEffectStrength(radius, strength, abs(sz - pz), 1)
 			else
-				vx = vx + ex
-				vy = vy + ey
-				vz = vz + ez
+				ex = GetEffectStrength(radius, strength, abs(sx - px), 1)
+				ey = GetEffectStrength(radius, strength, abs(sy - py), 1)
+				ez = GetEffectStrength(radius, strength, abs(sz - pz), 1)
 			end
-			spSetProjectileVelocity(projectileID, vx, vy, vz)
-			spSetProjectileGravity(projectileID, 0)
-		end
-		if rev then
-			spSetProjectileMoveControl(projectileID, false)
-			spSetProjectileGravity(projectileID, gravity)
+			if sx - px < 0 then
+				ex = - ex
+			elseif sx - px == 0 and not rev then
+				ex = 0
+				vx = 0
+			end
+			if sy - py < 0 then
+				ey = - ey
+			elseif sy - py == 0 and not rev then
+				ey = 0
+				vy = 0
+			end
+			if sz - pz < 0 then
+				ez = -ez
+			elseif sz - pz == 0 and not rev then
+				ez = 0
+				vz = 0
+			end
+			spSetProjectileVelocity(projectileID, ex + vx, ey + vy, ez + vz)
+			--spSetProjectileGravity(projectileID, -ey)
+			--projectiles[projectileID] = frame
 		end
 	end
 end
@@ -110,89 +139,74 @@ local function ProcessUnits(sx, sy, sz, radius, strength, list, rev)
 	for i = 1, #list do
 		local unitID = list[i]
 		local vx, vy, vz = spGetUnitVelocity(unitID)
-		local ux, uy, uz = spGetUnitPosition(unitID)
-		local distance = Distance3d(sx, ux, sy, uy, sz, uz)
-		local effect = strength * (distance/radius)
-		if not rev then
-			effect = sqrt(max(radius/distance, 0.05) * strength)
+		local px, py, pz = spGetUnitPosition(unitID)
+		local ex, ey, ez = 0, 0, 0 -- effect's velocity change
+		local mass = spGetUnitMass(unitID)
+		if rev then
+			ex = GetFinalEffectStrength(radius, strength, abs(sx - px), mass)
+			ey = GetFinalEffectStrength(radius, strength, abs(sy - py), mass)
+			ez = GetFinalEffectStrength(radius, strength, abs(sz - pz), mass)
 		else
-			if distance < 40 then
-				distance = distance / 20
-			end
-			effect = - radius/(max(distance, 0.01)) * strength * 2
+			ex = GetEffectStrength(radius, strength, abs(sx - px), mass)
+			ey = GetEffectStrength(radius, strength, abs(sy - py), mass)
+			ez = GetEffectStrength(radius, strength, abs(sz - pz), mass)
 		end
-		local ex, ey, ez = 0, 0, 0
-		if sx - ux > 0 then
-			ex = effect
-		elseif sx - ux < 0 then
-			ex = -effect
+		if sx - px < 0 then
+			ex = - ex
 		end
-		if sy - uy > 0 then
-			ey = effect
-		elseif sy - uy < 0 then
-			ey = -effect
+		if sy - py < 0 then
+			ey = - ey
 		end
-		if sz - uz > 0 then
-			ez = effect
-		elseif sy - uy < 0 then
-			ez = -effect
+		if sz - pz < 0 then
+			ez = -ez
 		end
-		if distance < 10 and not rev then
-			vx = 0
-			vy = 0
-			vz = 0
-			spSetUnitVelocity(unitID, vx, vy, vz)
-		--else
-			--vx = vx + ex
-			--vy = vy + ey
-			--vz = vz + ez
+		--spEcho("Wanted velocity: " .. ex .. "," .. ey .. "," .. ez)
+		if vy < 0.18 then
+			Spring.AddUnitImpulse(unitID, 0, 1, 0) -- 'unglue' the unit
 		end
-		Spring.AddUnitImpulse(unitID, ex, ey, ez)
-		GG.SetUnitFallDamageImmunity(unitID, Spring.GetGameFrame() + 2)
+		Spring.SetUnitVelocity(unitID, ex + vx, ey + vy, ez + vz)
+		GG.SetUnitFallDamageImmunity(unitID, spGetGameFrame() + 2)
 		--spSetUnitVelocity(unitID, vx, vy, vz)
 	end
 end
 
-local function ProcessFeatures(sx, sy, sz, radius, strength, list, rev)
+local function ProcessFeatures(sx, sy, sz, radius, strength, list, rev, sid)
+	local frame = spGetGameFrame() + 1
 	for i = 1, #list do
 		local featureID = list[i]
-		local vx, vy, vz = 0, 0, 0
-		local ux, uy, uz = spGetFeaturePosition(featureID)
+		local vx, vy, vz = spGetFeatureVelocity(featureID)
+		local px, py, pz = spGetFeaturePosition(featureID)
 		local ex, ey, ez = 0, 0, 0
-		local distance = Distance3d(sx, ux, sy, uy, sz, uz)
-		local effect = strength * (distance/radius)
-		if not rev then
-			effect = sqrt(max(radius/distance, 0.05) * strength)
-			spSetFeatureMoveControl(featureID,false,1,1,1,1,1,1,1,1,1)
-			spSetFeatureMoveControl(featureID,true,0,1,0)
-		else
-			if distance < 40 then
-				distance = distance / 20
-			end
-			effect = - radius/(max(distance, 0.01)) * strength
-		end
-		local ex, ey, ez = 0, 0, 0
-		spSetFeatureMoveControl(featureID, true)
-		if sx - ux > 0 then
-			ex = effect
-		elseif sx - ux < 0 then
-			ex = -effect
-		end
-		if sy - uy > 0 then
-			ey = effect
-		elseif sy - uy < 0 then
-			ey = -effect
-		end
-		if sz - uz > 0 then
-			ez = effect
-		elseif sy - uy < 0 then
-			ez = -effect
-		end
-		spSetFeatureVelocity(featureID, ex, ey, ez)
+		local mass = spGetFeatureMass(featureID) or 1
 		if rev then
-			spSetFeatureMoveControl(featureID,false,0,0,0,0,0,0,0,0,0)
+			ex = GetFinalEffectStrength(radius, strength, abs(sx - px), mass)
+			ey = GetFinalEffectStrength(radius, strength, abs(sy - py), mass)
+			ez = GetFinalEffectStrength(radius, strength, abs(sz - pz), mass)
+		else
+			ex = GetEffectStrength(radius, strength, abs(sx - px), mass)
+			ey = GetEffectStrength(radius, strength, abs(sy - py), mass)
+			ez = GetEffectStrength(radius, strength, abs(sz - pz), mass)
 		end
-		--spSetUnitVelocity(unitID, vx, vy, vz)
+		if sx - px < 0 then
+			ex = - ex
+		elseif sx - px == 0 and not rev then
+			ex = 0
+			vx = 0
+		end
+		if sy - py < 0 then
+			ey = - ey
+		elseif sy - py == 0 and not rev then
+			ey = 0
+			vy = 0
+		end
+		if sz - pz < 0 then
+			ez = -ez
+		elseif sz - pz == 0 and not rev then
+			ez = 0
+			vz = 0
+		end
+		spSetFeatureMoveControl(featureID,false,1,1,1,1,1,1,1,1,1)
+		spSetFeatureVelocity(featureID, ex + vx, ey + vy, ez + vz)
 	end
 end
 
@@ -223,9 +237,9 @@ local function ProcessSingularity(singu)
 	if #features > 0 then
 		ProcessFeatures(sx, sy, sz, radius, strength, features, lifespan == 0)
 	end
-	if lifespan%30 == 0 then
-		Spring.Echo("Projectiles: " .. #projectiles .. ", " .. #features) 
-	end
+	--if lifespan%30 == 0 then
+		--Spring.Echo("Projectiles: " .. #projectiles .. ", " .. #features) 
+	--end
 end
 	
 
@@ -245,6 +259,13 @@ function gadget:GameFrame(f)
 			singularities[id] = nil
 		end
 	end
+	--for projectile, frame in pairs(projectiles) do
+		--if f == frame then
+			--projectiles[projectile] = nil
+			--spSetProjectileGravity(projectile, gravity)
+			--spSetProjectileMoveControl(projectile, false)
+		--end
+	--end
 end
 
 local function AddSingularity(x, y, z, strength, radius, lifespan)
