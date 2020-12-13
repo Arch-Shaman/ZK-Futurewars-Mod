@@ -24,7 +24,7 @@ local singuexplosion = {weapondef = WeaponDefNames["energysingu_singularity"].id
 for i = 1, #WeaponDefs do
 	local cp = WeaponDefs[i].customParams
 	if cp and cp.singularity then
-		singularitydefs[i] = {radius = tonumber(cp.singuradius) or 400, lifespan = math.max(tonumber(cp.singulifespan) or 300, 10), strength = tonumber(cp.singustrength) or 20}
+		singularitydefs[i] = {radius = tonumber(cp.singuradius) or 400, lifespan = math.max(tonumber(cp.singulifespan) or 300, 10), strength = tonumber(cp.singustrength) or 20, height = tonumber(cp.singuheight) or 0}
 	end
 end
 
@@ -280,6 +280,6 @@ GG.AddSingularity = AddSingularity
 
 function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, ProjectileID)
 	if singularitydefs[weaponDefID] and ProjectileID then
-		singularities[ProjectileID] = {position = {[1] = px, [2] = py + 200, [3] = pz}, lifespan = singularitydefs[weaponDefID].lifespan, strength = singularitydefs[weaponDefID].strength, radius = singularitydefs[weaponDefID].radius}
+		singularities[ProjectileID] = {position = {[1] = px, [2] = py + singularitydefs[weaponDefID].height, [3] = pz}, lifespan = singularitydefs[weaponDefID].lifespan, strength = singularitydefs[weaponDefID].strength, radius = singularitydefs[weaponDefID].radius}
 	end
 end
