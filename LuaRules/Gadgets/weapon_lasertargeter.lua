@@ -162,6 +162,20 @@ function gadget:ProjectileDestroyed(proID)
 	end
 end
 
+function GG.GetLaserTarget(proID)
+	if prolist[proID] then
+		local target = missiles[prolist[proID]].target
+		if missiles[prolist[proID]].state == "normal" then
+			return target[1], target[2], target[3]
+		else
+			local x, _, z = spGetProjectilePosition(proID)
+			return x, spGetGroundHeight(x,z), z
+		end
+	else
+		return nil
+	end
+end
+
 function gadget:GameFrame(f)
 	if f%3 == 0 then
 		for id, data in pairs(missiles) do
