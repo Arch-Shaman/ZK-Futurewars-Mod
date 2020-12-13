@@ -68,8 +68,6 @@ unitDef = {
 		--model                   = [[wep_b_fabby.s3o]],
 		damage                  = {
 			default = 25,
-			planes  = 25,
-			subs    = 2.5,
 		},
 		customParams              = {
       			setunitsonfire = "1",
@@ -101,11 +99,11 @@ unitDef = {
       name                    = [[Napalm Missile]],
       cegTag                  = [[napalmtrail]],
       areaOfEffect            = 512,
-	  craterAreaOfEffect      = 64,
+      craterAreaOfEffect      = 0,
       avoidFriendly           = false,
       collideFriendly         = false,
-      craterBoost             = 4,
-      craterMult              = 3.5,
+      craterBoost             = 0,
+      craterMult              = 0,
 
       customParams        	  = {
 		numprojectiles = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
