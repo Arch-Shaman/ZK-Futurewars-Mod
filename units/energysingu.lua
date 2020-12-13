@@ -80,7 +80,8 @@ return { energysingu = {
 		singularity = [[1]],
 		singuradius = [[1280]],
 		singulifespan = [[300]],
-		singustrength = [[17]],
+		singustrength = [[44]],
+		singuheight = [[200]],
 		
 	  },
       --explosionGenerator = "custom:grav_danger_spikes",
