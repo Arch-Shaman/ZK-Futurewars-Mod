@@ -57,6 +57,7 @@ return {
 		sightDistance          = 1200,
 		turnRate               = 100,
 		upright                = true,
+		turninplace			   = false,
 		workerTime             = 0,
 		weapons                = {
 
