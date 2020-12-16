@@ -235,9 +235,9 @@
 		"helptext" : "The Trisula is a fairly fast, sturdy combatant armed with a scatter beam weapon that can erase multiple small targets or slag a single large one."
 	},
 	"vehriot" : {
-		"name" : "Ripper",
+		"name" : "Striker",
 		"description" : "Riot Rover",
-		"helptext" : "The Ripper's riot cannon is effective at destroying swarms of raiders and halting enemy advances. The projectile does not arc, so Rippers should avoid clumping and be arranged in a line formation wherever possible. Due to their lack of speed and range, most skirmishers are effective against them. The Ripper's cannon flattens terrain to enable allied vehicles passage over harsh terrain."
+		"helptext" : "The Striker is armed with a canister cannon. It can shred a single target or spread its damage across multiple nearby targets."
 	},
 	"staticshield" : {
 		"name" : "Aegis",
