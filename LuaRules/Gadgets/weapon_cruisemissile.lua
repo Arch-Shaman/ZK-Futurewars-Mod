@@ -39,11 +39,11 @@ for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
 	if curRef and curRef.cruisealt and curRef.cruisedist then -- found it!
-		config[i] = {altitude = tonumber(curRef.cruisealt), distance = tonumber(curRef.cruisedist), track = false, instantcruise = curRef.instantcruise ~= nil}
+		config[i] = {altitude = tonumber(curRef.cruisealt), distance = tonumber(curRef.cruisedist), track = false, airlaunched = curRef.airlaunched ~= nil}
 		if curRef.cruisetracking then
 			config[i].track = true
 		end
-		if (config[i].altitude or config[i].instantcruise) and config[i].distance then
+		if config[i].altitude and config[i].distance then
 			Script.SetWatchWeapon(i, true)
 		else
 			config[i] = nil
@@ -116,10 +116,6 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local _, py = spGetProjectilePosition(proID)
 		py = math.max(py, ty)
 		missiles[proID] = {target = target, type = type, cruising = false, takeoff = true, lastknownposition = last, configid = wep, started = false, allyteam = allyteam, wantedalt = py + config[wep].altitude}
-		if config[weaponDefID].instantcruise then
-			missiles[proID].cruising = true
-			missiles[proID].takeoff = false
-		end
 	end
 end
 
@@ -141,7 +137,7 @@ function gadget:GameFrame(f)
 			if data.takeoff then -- begin ascent phase
 				spSetProjectileTarget(projectile, cx, wantedalt, cz)
 			end
-			if data.takeoff and cy >= wantedalt - 20 then -- end ascent
+			if data.takeoff and ((cy >= wantedalt - 20 and not missileconfig.airlaunched) or (cy <= wantedalt + 20 and missileconfig.airlaunched)) then -- end ascent
 				missiles[projectile].takeoff = false
 				missiles[projectile].cruising = true
 			end
