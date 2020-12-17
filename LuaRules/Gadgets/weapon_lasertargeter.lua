@@ -57,12 +57,8 @@ local missiles = {} -- id = {missiles = {projIDs},target = {x,y,z}, numMissiles 
 local config = {} -- targeter or tracker
 local prolist = {} -- reverse lookup: proID = ownerID
 
-local function debugecho(str)
-	if debug then spEcho(str) end
-end
-
 for wid = 1, #WeaponDefs do
-	debugecho(wid .. ": " .. tostring(WeaponDefs[wid].type) .. "\ntracker: " .. tostring(WeaponDefs[wid].customParams.tracker))
+	--debugecho(wid .. ": " .. tostring(WeaponDefs[wid].type) .. "\ntracker: " .. tostring(WeaponDefs[wid].customParams.tracker))
 	if (WeaponDefs[wid].type == "MissileLauncher" or WeaponDefs[wid].type == "StarburstLauncher") and WeaponDefs[wid].customParams.tracker then
 		config[wid] = 'tracker'
 		SetWatchWeapon(wid, true)
@@ -98,7 +94,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 end
 
 function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, projectileID)
-	debugecho("Explosion: " .. tostring(weaponDefID, px, py, pz, AttackerID, projectileID))
+	--debugecho("Explosion: " .. tostring(weaponDefID, px, py, pz, AttackerID, projectileID))
 	if config[weaponDefID] == 'targeter' then
 		--spSetUnitPosition(missiles[AttackerID].target,px,py,pz)
 		missiles[AttackerID].target[1] = px
@@ -108,19 +104,21 @@ function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, projectileID)
 			local x = missiles[AttackerID].target[1]
 			local y = missiles[AttackerID].target[2]
 			local z = missiles[AttackerID].target[3]
-			debugecho("position is: " .. tostring(x) .. ", " .. tostring(y) .. "," .. tostring(z))
+			spEcho("position is: " .. tostring(x) .. ", " .. tostring(y) .. "," .. tostring(z))
+			spEcho("Set " .. AttackerID .. " target: " .. tostring(px) .. "," .. tostring(py) .. "," .. tostring(pz))
 		end
-		debugecho("Set " .. AttackerID .. " target: " .. tostring(px) .. "," .. tostring(py) .. "," .. tostring(pz))
 		local ux,uy,uz = spGetUnitPosition(AttackerID)
-		debugecho("UnitPosition: " .. ux .. "," .. uy .. "," .. uz)
+		if debug then
+			spEcho("UnitPosition: " .. ux .. "," .. uy .. "," .. uz)
+		end
 		missiles[AttackerID].lastframe = spGetGameFrame()
 	end
 end
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID) -- proOwnerID is the unitID that fired the projectile
-	debugecho("ProjectileCreated: " .. tostring(proID, proOwnerID, weaponDefID))
+	--debugecho("ProjectileCreated: " .. tostring(proID, proOwnerID, weaponDefID))
 	if config[weaponDefID] and not missiles[proOwnerID] then
-		debugecho("added UnitID#" .. proOwnerID)
+		--debugecho("added UnitID#" .. proOwnerID)
 		--local fakeid = spCreateUnit("missiletarget",0,0,0,0,gaiaID,false,false)
 		--movectrlOn(fakeid)
 		missiles[proOwnerID] = {missiles = {}, target = {[1] = 0, [2] = 0, [3] = 0}, numMissiles = 0, lastframe = spGetGameFrame(), state = "normal"}
@@ -135,15 +133,17 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID) -- proOwnerID 
 		end
 		missiles[proOwnerID].lastframe = spGetGameFrame()]]
 	if config[weaponDefID] and config[weaponDefID] == 'tracker' then
-		debugecho("Added " .. proID .. " to " .. proOwnerID)
+		if debug then
+			spEcho("Added " .. proID .. " to " .. proOwnerID)
+		end
 		--local x,y,z = spGetProjectilePosition(proID)
 		--local vx,vy,vz = spGetProjectileVelocity(proID)
 		--debugecho("velocity: " .. vx .. "," .. vy .. "," .. vz)
 		--vy = vy + 10
 		--spDeleteProjectile(proID)
 		--local nproID = spSpawnProjectile(weaponDefID, {pos = {x,y,z}, speed = {vx,vy,vz}, team = spGetUnitTeam(proOwnerID), owner = proOwnerID, tracking = missiles[proOwnerID].target})
-		local success = spSetProjectileTarget(proID, missiles[proOwnerID].target[1], missiles[proOwnerID].target[2], missiles[proOwnerID].target[3])
-		debugecho(tostring(success))
+		spSetProjectileTarget(proID, missiles[proOwnerID].target[1], missiles[proOwnerID].target[2], missiles[proOwnerID].target[3])
+		--debugecho(tostring(success))
 		missiles[proOwnerID].missiles[proID] = true
 		missiles[proOwnerID].numMissiles = missiles[proOwnerID].numMissiles + 1
 		prolist[proID] = proOwnerID
@@ -152,7 +152,7 @@ end
 
 function gadget:ProjectileDestroyed(proID)
 	if prolist[proID] then
-		debugecho("destroyed " .. proID)
+		--debugecho("destroyed " .. proID)
 		missiles[prolist[proID]].missiles[proID] = nil
 		missiles[prolist[proID]].numMissiles = missiles[prolist[proID]].numMissiles - 1
 		prolist[proID] = nil
@@ -182,9 +182,13 @@ function gadget:GameFrame(f)
 					if not GG.GetMissileCruising(pid) then
 						local x,y,z = spGetProjectilePosition(pid)
 						y = spGetGroundHeight(x,z)
-						debugecho("Setting " .. pid .. " lost target:" .. x .. "," .. y .. "," .. z)
+						if debug then
+							spEcho("Setting " .. pid .. " lost target:" .. x .. "," .. y .. "," .. z)
+						end
 						local success = spSetProjectileTarget(pid, x, y, z)
-						debugecho("Success: " .. tostring(success))
+						if debug then
+							spEcho("Success: " .. tostring(success))
+						end
 					end
 				end
 			elseif f - data.lastframe < 10 and data.state ~= "normal" and data.numMissiles > 0 then
@@ -198,14 +202,18 @@ function gadget:GameFrame(f)
 				end
 			end
 			if not spGetValidUnitID(id) and data.numMissiles == 0 then
-				debugecho("removing " .. id)
+				--debugecho("removing " .. id)
 				--spDestroyUnit(data.target)
 				for pid,_ in pairs(data.missiles) do
 					local x,y,z = spGetProjectilePosition(pid)
 					y = spGetGroundHeight(x,z)
-					debugecho("Setting " .. pid .. " lost target:" .. x .. "," .. y .. "," .. z)
+					if debug then
+						spEcho("Setting " .. pid .. " lost target:" .. x .. "," .. y .. "," .. z)
+					end
 					local success = spSetProjectileTarget(pid, x, y, z)
-					debugecho("Success: " .. tostring(success))
+					if debug then
+						spEcho("Success: " .. tostring(success))
+					end
 				end
 				missiles[id] = nil
 			end
