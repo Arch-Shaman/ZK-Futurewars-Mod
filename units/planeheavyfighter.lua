@@ -74,7 +74,7 @@ local unitDef = {
 			alphaDecay              = 0.1,
 			areaOfEffect            = 8,
 			burst                   = 2,
-			burstrate               = 0.03333334,
+			burstrate               = 1/30,
 			colormap                = [[1 0.95 0.4 1   1 0.95 0.4 1    0 0 0 0.01    1 0.7 0.2 1]],
 			craterBoost             = 0,
 			craterMult              = 0,
@@ -86,7 +86,7 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 4,
+				default = 6.1,
 			},
 
 			explosionGenerator      = [[custom:FLASHPLOSION]],
@@ -98,13 +98,13 @@ local unitDef = {
 			noGap                   = false,
 			noSelfDamage            = true,
 			range                   = 900,
-			reloadtime              = 1/30,
+			reloadtime              = 3/30,
 			rgbColor                = [[1 0.95 0.4]],
 			separation              = 1.5,
 			size                    = 1.75,
 			sizeDecay               = 0,
 			soundStart              = [[weapon/brrt2fixed.wav]],
-			soundStartVolume        = 0.25,
+			soundStartVolume        = 0.15,
 			sprayAngle              = 80,
 			stages                  = 10,
 			tolerance               = 5000,
