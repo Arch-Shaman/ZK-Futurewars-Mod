@@ -102,6 +102,7 @@ return {
 				reloadtime              = 5/30,
 				rgbColor                = [[1 0.27059 0]],
 				soundStart              = [[weapon/laser/orange_micropulse]],
+				soundstartvolume	= 25,
 				thickness               = 2.55,
 				tolerance               = 10000,
 				turret                  = true,
