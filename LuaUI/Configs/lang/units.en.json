@@ -1172,7 +1172,7 @@
 	"bomberstrike" : {
 		"name" : "Heretic",
 		"description" : "Standoff Bomber (Anti-Structure)",
-		"helptext" : "The Kestrel launches short-range surface attack missiles that can also hit submarines. It is the best bomber for picking off single mobile targets."
+		"helptext" : "The Heretic launches a nuclear ALCM that can be fired from a safe distance. Be warned: it's terrible against fast moving mobile units. It can however, bypass terraformed walls."
 	},
 	"staticrearm" : {
 		"name" : "Airpad",
