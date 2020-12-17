@@ -1,8 +1,8 @@
 return { 
 	bomberstrike = {
 		unitname            = [[bomberstrike]],
-		name                = [[Striker]],
-		description         = [[Strategic Anti-Heavy Bomber]],
+		name                = [[Heretic]],
+		description         = [[ALCM Bomber (Anti-Structure)]],
 		brakerate           = 0.4,
 		buildCostMetal      = 1200,
 		builder             = false,
@@ -65,9 +65,8 @@ return {
 				name                    = [[Air Launched Cruise Missile]],
 				areaOfEffect            = 192,
 				cegTag                  = [[tactrail]],
-				avoidGround 			= false,
-				avoidFeature			= false,
-				collideFriendly 		= false,
+				avoidGround = false,
+				collideFriendly = false,
 				craterBoost             = 5,
 				craterMult              = 2.5,
 				customParams = {
@@ -101,7 +100,7 @@ return {
 				tolerance               = 4000,
 				tracks                  = true,
 				trajectoryHeight        = 0,
-				fireTolerance			= 8192,
+				fireTolerance		= 10192,
 				turnRate                = 25000,
 				turret                  = false,
 				weaponAcceleration      = 250,
