@@ -620,9 +620,9 @@
 		"helptext" : "Armed with a small defensive tower, the Welder can defend itself against light enemy attacks."
 	},
 	"shieldarty" : {
-		"name" : "Racketeer",
-		"description" : "Disarming Artillery",
-		"helptext" : "The Racketeer launches long range missiles that can disarm key enemy defenses or units before assaulting them. Only one Racketeer is needed to keep a target disarmed, so pick a different target for each Racketeer. It is excellent at depleting the energy of enemy shields and rendering large units harmless."
+		"name" : "Preserver",
+		"description" : "Disarming Cruise Artillery",
+		"helptext" : "The Preserver launches long range cruise missiles that can disarm key enemy defenses or units before assaulting them. It is only modestly shielded itself, however, its high shield regen makes it ideal for supporting other shield units."
 	},
 	"roost" : {
 		"name" : "Roost",

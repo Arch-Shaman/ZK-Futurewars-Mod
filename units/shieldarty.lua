@@ -12,7 +12,7 @@ return {
 		canPatrol              = true,
 		category               = [[LAND]],
 		corpse                 = [[DEAD]],
-
+		activateWhenBuilt	   = true,
 		customParams           = {},
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 2,
@@ -60,6 +60,7 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
+				avoidground				= false,
 				customParams        = {
 					burst = Shared.BURST_RELIABLE,
 					disarmDamageMult = 1,
@@ -68,7 +69,7 @@ return {
 
 					light_camera_height = 1500,
 					light_color = [[1 1 1]],
-					cruisealt = 700,
+					cruisealt = 400,
 					cruisedist = 200,
 					cruisetracking = true,
 				},
@@ -101,6 +102,27 @@ return {
 				weaponAcceleration      = 275,
 				weaponType              = [[StarburstLauncher]],
 				weaponVelocity          = 800,
+			},
+			SHIELD = {
+				name                    = [[Energy Shield]],	
+				damage                  = {	
+					default = 10,	
+				},	
+				exteriorShield          = true,	
+				shieldAlpha             = 0.2,	
+				shieldBadColor          = [[1 0.1 0.1 1]],	
+				shieldGoodColor         = [[0.1 0.1 1 1]],	
+				shieldInterceptType     = 3,	
+				shieldPower             = 600,	
+				shieldPowerRegen        = 40,	
+				shieldPowerRegenEnergy  = 3,	
+				shieldRadius            = 120,	
+				shieldRepulser          = false,	
+				shieldStartingPower     = 600,	
+				smartShield             = true,	
+				visibleShield           = false,	
+				visibleShieldRepulse    = false,	
+				weaponType              = [[Shield]],	
 			},
 		},
 
