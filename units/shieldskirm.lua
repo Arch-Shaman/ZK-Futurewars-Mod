@@ -77,8 +77,9 @@ return {
 					light_radius = 250,
 				},
 				damage                  = {
-					default = 125,
+					default = 150,
 				},
+				explosionGenerator      = [[custom:xamelimpact]],
 				fireStarter             = 70,
 				flightTime              = 2.45,
 				impulseBoost            = 0,
@@ -110,7 +111,7 @@ return {
 					burst = Shared.BURST_RELIABLE,
 					light_camera_height = 1800,
 					cruisealt			= 75,
-					cruisedist			= 350,
+					cruisedist			= 290,
 					numprojectiles = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile = "shieldskirm_fragment",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
@@ -123,7 +124,7 @@ return {
 					useheight = 1,
 				},
 				damage                  = {
-					default = 375,
+					default = 450,
 				},
 				fireStarter             = 70,
 				flightTime              = 3.5,
