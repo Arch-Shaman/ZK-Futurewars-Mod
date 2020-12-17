@@ -502,7 +502,7 @@
 	"shieldaa" : {
 		"name" : "Sentinel",
 		"description" : "Shielded Anti-Air",
-		"helptext" : "The Chaperon replaced the Vandal during the first Coalition Wars. In this iteration, it received heavier missiles, a mobile radar, and a personal shield. These missiles contain light electromagnetic payloads that can disarm a target."
+		"helptext" : "The Sentinel replaced the Vandal during the first Coalition Wars. In this iteration, it received heavier missiles, a mobile radar, and a personal shield. These missiles contain light electromagnetic payloads that can disarm a target."
 	},
 	"hoverriot" : {
 		"name" : "Mace",
