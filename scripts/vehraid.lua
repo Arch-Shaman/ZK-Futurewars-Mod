@@ -15,7 +15,7 @@ local base, body, turret, sleeve, barrel, firepoint,
 	'gs1l', 'gs2l'
 )
 
-local moving, reloading, mainHead, wheelTurnSpeed
+local moving, wheelTurnSpeed
 
 local smokePiece = {turret, body}
 
