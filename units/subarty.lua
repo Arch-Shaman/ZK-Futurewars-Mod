@@ -1,4 +1,5 @@
-return subarty = {
+return {
+	subarty = {
   unitname               = [[subarty]],
   name                   = [[Serpent]],
   description            = [[Sniper Submarine]],
@@ -161,4 +162,5 @@ return subarty = {
 
   },
 
+}
 }
