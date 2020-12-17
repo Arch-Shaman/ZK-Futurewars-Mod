@@ -50,6 +50,9 @@ return {
 				def                = [[EMP_ROCKET]],
 				onlyTargetCategory = [[FIXEDWING GUNSHIP SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 			},
+			{
+				def                = [[SHIELD]],
+			},
 		},
 
 		weaponDefs             = {
