@@ -610,9 +610,9 @@
 		"helptext" : "The Lotus is a basic turret. A versatile, solid anti-ground weapon, it does well versus scouts as well as being able to take on one or two raiders. Falls relatively easily to skirmishers, artillery or assault units unless supported."
 	},
 	"cloakskirm" : {
-		"name" : "Ronin",
-		"description" : "Skirmisher Bot (Direct-Fire)",
-		"helptext" : "The Ronin's low damage, low speed unguided rockets are redeemed by their range. They are most effective in a line formation, firing at maximum range and kiting the enemy. Counter them by attacking them with fast units which can close range and dodge their missiles."
+		"name" : "Waylayer",
+		"description" : "Ambush Skirmisher (Laser-Guided)",
+		"helptext" : "The Waylayer is equiped with a personal cloaking device that allows it to set up ambushes with its laser guided missiles. Developed as a blackops unit during the 3rd siege of Throne, it was one of the first ambushers to be designed. Be aware of its lower hp compared to its predecessor, Ronin. It is highly reliant on its speed and cloaking to get itself in favorable positions."
 	},
 	"tankcon" : {
 		"name" : "Welder",

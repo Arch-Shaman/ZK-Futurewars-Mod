@@ -1,8 +1,8 @@
 return { 
 	cloakskirm = {
 		unitname               = [[cloakskirm]],
-		name                   = [[Ronin]],
-		description            = [[Skirmisher Bot (Direct-Fire)]],
+		name                   = [[Waylayer]],
+		description            = [[Ambusher Skirmish Bot (Laser-Guided)]],
 		acceleration           = 0.9,
 		brakeRate              = 1.2,
 		buildCostMetal         = 90,
@@ -15,6 +15,13 @@ return {
 		collisionVolumeScales  = [[26 39 26]],
 		collisionVolumeType    = [[CylY]],
 		corpse                 = [[DEAD]],
+		stealth = true,
+		activateWhenBuilt = true,
+		onOffable = true,
+		initCloaked = true,
+		cloakCostMoving = 0.4,
+		cloakTimeout = 400,
+		cloakCost    = 0.1,
 
 		customParams           = {
 			modelradius    = [[18]],
@@ -29,11 +36,12 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 420,
+		maxDamage              = 360,
 		maxSlope               = 36,
-		maxVelocity            = 2.3,
+		maxVelocity            = 2.6,
 		maxWaterDepth          = 20,
-		minCloakDistance       = 75,
+		minCloakDistance       = 200,
+		
 		movementClass          = [[KBOT2]],
 		noChaseCategory        = [[TERRAFORM FIXEDWING SUB]],
 		objectName             = [[sphererock.s3o]],
@@ -58,13 +66,11 @@ return {
 
 			{
 				def                = [[BOT_ROCKET]],
-				badTargetCategory  = [[FIXEDWING]],
-				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
+				onlyTargetCategory = [[LOWFLYING LAND SINK TURRET SHIP SWIM FLOAT HOVER]],
 			},
 			{
 				def                = [[TRACKER]],
-				badTargetCategory  = [[FIXEDWING]],
-				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
+				onlyTargetCategory = [[LOWFLYING LAND SINK TURRET SHIP SWIM FLOAT HOVER]],
 			},
 
 		},
@@ -88,7 +94,7 @@ return {
 					tracker = 1,
 				},
 				damage                  = {
-					default = 180,
+					default = 240,
 				},
 
 				fireStarter             = 70,
@@ -100,8 +106,8 @@ return {
 				noSelfDamage            = true,
 				tolerance               = 65536/4,
 				turnRate                = 9000,
-				range                   = 520,
-				reloadtime              = 3.5,
+				range                   = 460,
+				reloadtime              = 4,
 				smokeTrail              = false,
 				soundHit                = [[weapon/missile/sabot_hit]],
 				soundHitVolume          = 8,
@@ -121,7 +127,7 @@ return {
 				coreThickness           = 0.5,
 				craterBoost             = 0,
 				craterMult              = 0,
-
+				cylinderTargeting       = 1,
 				customParams            = {
 					targeter = 1,
 					--burst = Shared.BURST_RELIABLE,
@@ -129,6 +135,7 @@ return {
 					stats_hide_reload = 1,
 					light_color = [[1.25 0 0]],
 					light_radius = 120,
+					combatrange = 460,
 				},
 				damage                  = {
 					default = 0.00,
@@ -144,7 +151,7 @@ return {
 				leadLimit               = 18,
 				minIntensity            = 0.01,
 				noSelfDamage            = true,
-				range                   = 520,
+				range                   = 465,
 				reloadtime              = 1/15,
 				sweapfire = false,
 				rgbColor                = [[0.3 0 0]],

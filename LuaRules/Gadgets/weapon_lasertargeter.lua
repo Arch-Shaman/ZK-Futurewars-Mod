@@ -91,14 +91,11 @@ GG.GetLaserTrackingEnabled = GetMissileTracking
 
 if debug then PrintConfig() end
 
---[[function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
-	if config[weaponDefID] and config[weaponDefID] == 'tracker' then
-		local x,y,z = spGetUnitPosition(unitID)
-		missiles[attackerID].target = {x,y,z}
-		x,y,z = nil
-		return damage,1
+function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID)
+	if config[weaponDefID] and config[weaponDefID] == 'targeter' then
+		return 0, 0
 	end
-end]] -- May not be needed?
+end
 
 function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, projectileID)
 	debugecho("Explosion: " .. tostring(weaponDefID, px, py, pz, AttackerID, projectileID))
