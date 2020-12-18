@@ -142,8 +142,8 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local allyteam = spGetUnitAllyTeam(proOwnerID)
 		local _, py = spGetProjectilePosition(proID)
 		py = math.max(py, ty)
-		missiles[proID] = {target = target, type = type, cruising = false, takeoff = true, lastknownposition = last, configid = wep, started = false, allyteam = allyteam, wantedalt = py + config[wep].altitude}
-		if config.permoffset then
+		missiles[proID] = {target = target, type = type, cruising = false, takeoff = true, lastknownposition = last, configid = wep, started = false, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0}
+		if config.radius then
 			local ox, oz = GetRandomizedOffset(wep)
 			missiles[proID].offset = {x = ox, z = oz}
 		end
@@ -160,14 +160,17 @@ function gadget:GameFrame(f)
 			local cx, cy, cz = spGetProjectilePosition(projectile)
 			local x, y, z = GetMissileDestination(projectile, data.allyteam)
 			local projectiledef = data.configid
+			local missileconfig = config[projectiledef]
+			missiles[projectile].updates = data.updates + 1
 			if data.offset then
 				x = x + data.offset.x
 				z = z + data.offset.z
 				y = spGetGroundHeight(x, z)
-			elseif config[projectiledef].radius then
-				x, y, z = GetRandomizedDestination(projectiledef, x, z)
 			end
-			local missileconfig = config[projectiledef]
+			if not missileconfig.permoffset and missileconfig.radius and data.updates%15 == 0 then
+				local ox, oz = GetRandomizedOffset(projectiledef)
+				missiles[proID].offset
+			end
 			local wantedalt = data.wantedalt
 			local mindist = missileconfig.distance
 			local distance = Distance(cx, x, cz, z)
