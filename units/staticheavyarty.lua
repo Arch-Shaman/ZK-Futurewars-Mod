@@ -3,7 +3,7 @@ return {
 		unitname                      = [[staticheavyarty]],
 		name                          = [[Big Bertha]],
 		description                   = [[Canister Barrage Artillery]],
-		buildCostMetal                = 6000,
+		buildCostMetal                = 9000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 6,
