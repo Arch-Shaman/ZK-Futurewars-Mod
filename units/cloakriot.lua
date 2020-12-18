@@ -41,7 +41,7 @@ return {
 		maxSlope               = 36,
 		maxVelocity            = 1.71,
 		maxWaterDepth          = 22,
-		minCloakDistance       = 75,
+		minCloakDistance       = 230,
 		movementClass          = [[KBOT3]],
 		noChaseCategory        = [[TERRAFORM FIXEDWING SUB]],
 		objectName             = [[Spherewarrior.s3o]],

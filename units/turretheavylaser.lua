@@ -74,7 +74,7 @@ return {
 				name                    = [[Medium Range Plasma Cannon]],
 				areaOfEffect            = 49,
 				burst                   = 6,
-				burstRate               = 0.5,
+				burstRate               = 7/30,
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting 		= 0.8,
@@ -97,7 +97,7 @@ return {
 				soundStart              = [[weapon/cannon/cannon_fire4]],
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 255,
+				weaponVelocity          = 700,
 			},
 
 		},

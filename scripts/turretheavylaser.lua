@@ -106,12 +106,9 @@ function script.Shot(num)
 	if index == 0 then
 		index = #flares
 	end
-	firing = true
 	EmitSfx(flares[index], GG.Script.UNIT_SFX2)
-	Sleep(100)
 	local rz = select(3, Spring.UnitScript.GetPieceRotation(spindle))
 	Turn(spindle, z_axis, rz + math.rad(120),SPINDLE_TURN_SPEED)
-	firing = false
 end
 
 function script.BlockShot(num, targetID)
