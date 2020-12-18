@@ -635,9 +635,9 @@
 		"helptext" : "The esoteric Engineer chassis uses a more unorthodox weapon set. Though lacking armor or speed, this chassis is still favored due to its intrinsic buildpower bonus."
 	},
 	"cloakraid" : {
-		"name" : "Glaive",
-		"description" : "Light Raider Bot",
-		"helptext" : "Light and cheap, the Glaive makes short work of enemy skirmishers, artillery and economy, but should avoid and outmanouver riot units and defenses, where it is not as strong. Damaged Glaives regenerate when out of combat."
+		"name" : "Lurker",
+		"description" : "Ambush Raider Bot",
+		"helptext" : "The lurker was a response to heavy defenses as the aging glaive design faired poorly against defenses. Armed with a new heavy burst rifle, the Lurker hides in the shadows until its opportunity arises."
 	},
 	"gunshipaa" : {
 		"name" : "Trident",
