@@ -17,7 +17,6 @@ return {
 		corpse                 = [[DEAD]],
 		stealth = true,
 		activateWhenBuilt = true,
-		onOffable = true,
 		initCloaked = true,
 		cloakCostMoving = 0.4,
 		cloakTimeout = 400,
