@@ -1,7 +1,7 @@
 return { 
 	factorycloak = {
 		unitname                      = [[factorycloak]],
-		name                          = [[Cloakbot Factory]],
+		name                          = [[Ambusher Factory]],
 		description                   = [[Produces Cloaked, Mobile Robots]],
 		buildCostMetal                = Shared.FACTORY_COST,
 		buildDistance                 = Shared.FACTORY_PLATE_RANGE,
