@@ -81,6 +81,8 @@ return {
 				areaOfEffect            = 24,
 				colormap                = [[1 0.95 0.4 1   1 0.95 0.4 1    0 0 0 0.01    1 0.7 0.2 1]],
 				craterBoost             = 0,
+				burst					= 6,
+				burstrate				= 4/30,
 				craterMult              = 0,
 				cylinderTargeting 		= 1,
 				customParams        = {
@@ -90,7 +92,7 @@ return {
 				},
 
 				damage                  = {
-					default = 30.2,
+					default = 30.1,
 				},
 
 				explosionGenerator      = [[custom:EMG_HIT_HE]],
@@ -103,7 +105,7 @@ return {
 				noGap                   = false,
 				noSelfDamage            = true,
 				range                   = 270,
-				reloadtime              = 2/30,
+				reloadtime              = 1.5,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
 				size                    = 3,
