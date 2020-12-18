@@ -32,10 +32,11 @@ return {
 		moveState              = 0,
 		noChaseCategory        = [[TERRAFORM LAND SINK TURRET SHIP SWIM FLOAT SUB HOVER]],
 		objectName             = [[crasher.s3o]],
+		radarDistance          = 1400,
+		radarEmitHeight        = 32,
 		script                 = [[shieldaa.lua]],
 		selfDestructAs         = [[BIG_UNITEX]],
 		sfxtypes               = {
-
 			explosiongenerators = {
 				[[custom:CRASHMUZZLE]],
 			},
@@ -74,17 +75,19 @@ return {
 
 				customParams              = {
 					burst = Shared.BURST_RELIABLE,
-
+					disarmDamageMult = 1.5,
+					disarmDamageOnly = 0,
+					disarmTimer      = 3, -- seconds
 					isaa = [[1]],
 					light_color = [[0.5 0.6 0.6]],
 					light_radius = 380,
 				},
 
 				damage                  = {
-					default = 6.0,
-					planes  = 60.1,
+					default = 7.0,
+					planes  = 70.1,
 				},
-				explosionGenerator      = [[custom:FLASH2]],
+				explosionGenerator      = [[custom:mixed_white_lightning_bomb_small]],
 				fireStarter             = 70,
 				flightTime              = 3,
 				impulseBoost            = 0,
@@ -95,7 +98,7 @@ return {
 				range                   = 880,
 				reloadtime              = 2,
 				smokeTrail              = true,
-				soundHit                = [[weapon/missile/rocket_hit]],
+				soundHit                = [[weapon/missile/small_lightning_missile]],
 				soundStart              = [[weapon/missile/missile_fire7]],
 				startVelocity           = 650,
 				texture2                = [[AAsmoketrail]],
