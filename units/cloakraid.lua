@@ -14,6 +14,7 @@ return {
 		initCloaked = true,
 		cloakCostMoving = 0.3,
 		cloakTimeout = 600,
+		cloakCost    = 0.1,
 		canPatrol              = true,
 		category               = [[LAND TOOFAST]],
 		collisionVolumeOffsets = [[0 -2 0]],

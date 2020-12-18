@@ -250,6 +250,7 @@ function script.FireWeapon(num)
 		Spin(magazine, y_axis, 2)
 		EmitSfx(ejector, 1024)
 		EmitSfx(flare, 1025)
+		ammo = ammo - 1
 		-- Generic attributes testing.
 		--GG.Attributes.RemoveEffect(unitID, math.floor(math.random()*10))
 		--GG.Attributes.AddEffect(unitID, math.floor(math.random()*10), {
