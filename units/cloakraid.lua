@@ -68,7 +68,6 @@ return {
 
 			{
 				def                = [[EMG]],
-				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
 
@@ -83,7 +82,7 @@ return {
 				colormap                = [[1 0.95 0.4 1   1 0.95 0.4 1    0 0 0 0.01    1 0.7 0.2 1]],
 				craterBoost             = 0,
 				craterMult              = 0,
-
+				cylinderTargeting 		= 1,
 				customParams        = {
 					light_camera_height = 1200,
 					light_color = [[0.8 0.76 0.38]],
@@ -103,7 +102,7 @@ return {
 				leadLimit               = 0,
 				noGap                   = false,
 				noSelfDamage            = true,
-				range                   = 240,
+				range                   = 270,
 				reloadtime              = 2/30,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
@@ -112,7 +111,7 @@ return {
 				soundhit			    = [[weapon/cannon/cannon_hit1]],
 				soundStart              = [[weapon/heavy_machinegun]],
 				soundStartVolume        = 4,
-				sprayAngle              = 1180,
+				sprayAngle              = 380,
 				stages                  = 10,
 				tolerance               = 5000,
 				turret                  = true,

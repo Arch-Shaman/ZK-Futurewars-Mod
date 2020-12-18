@@ -50,6 +50,7 @@ local aiming = false
 local maxammo = 10
 local ammo = 4
 local reloadtime = 333
+local reloading = true
 
 --signals
 local SIG_Idle = 1
@@ -61,14 +62,11 @@ local function GetSpeedMod()
 end
 
 local function ReloadThread()
-	while true do
-		if ammo < maxammo then
-			Sleep(reloadtime)
-			ammo = ammo + 1
-		else
-			Sleep(33)
-		end
-	end
+	repeat
+		Sleep(reloadtime)
+		ammo = ammo + 1
+	until ammo == maxammo
+	reloading = false
 end
 
 function script.Create()
@@ -202,6 +200,10 @@ function script.StopMoving()
 	StartThread(StopWalk)
 end
 
+function script.BlockShot(num, targetID)
+	return ammo == 0
+end
+
 local function RestoreAfterDelay()
 	Sleep(2000)
 	aiming = false
@@ -226,7 +228,7 @@ function script.AimFromWeapon(num)
 end
 
 function script.AimWeapon(num, heading, pitch)
-	if ammo == 0 and num == 1 then
+	if ammo == 0 then
 		return false
 	end
 	Signal(SIG_Aim)
@@ -253,6 +255,9 @@ function script.FireWeapon(num)
 	EmitSfx(ejector, 1024)
 	EmitSfx(flare, 1025)
 	ammo = ammo - 1
+	if not reloading then
+		StartThread(ReloadThread)
+	end
 	-- Generic attributes testing.
 	--GG.Attributes.RemoveEffect(unitID, math.floor(math.random()*10))
 	--GG.Attributes.AddEffect(unitID, math.floor(math.random()*10), {
