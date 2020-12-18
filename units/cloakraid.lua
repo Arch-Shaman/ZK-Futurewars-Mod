@@ -79,8 +79,6 @@ return {
 				name                    = [[Heavy Burst EMG]],
 				alphaDecay              = 0.1,
 				areaOfEffect            = 24,
-				burst                   = 4,
-				burstrate               = 2/30,
 				colormap                = [[1 0.95 0.4 1   1 0.95 0.4 1    0 0 0 0.01    1 0.7 0.2 1]],
 				craterBoost             = 0,
 				craterMult              = 0,
@@ -88,11 +86,11 @@ return {
 				customParams        = {
 					light_camera_height = 1200,
 					light_color = [[0.8 0.76 0.38]],
-					light_radius = 120,
+					light_radius = 60,
 				},
 
 				damage                  = {
-					default = 60.2,
+					default = 30.2,
 				},
 
 				explosionGenerator      = [[custom:EMG_HIT_HE]],
@@ -105,12 +103,12 @@ return {
 				noGap                   = false,
 				noSelfDamage            = true,
 				range                   = 240,
-				reloadtime              = 1.1,
+				reloadtime              = 2/30,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
 				size                    = 3,
 				sizeDecay               = 0,
-				soundhit			  = [[weapon/cannon/cannon_hit1]]
+				soundhit			    = [[weapon/cannon/cannon_hit1]],
 				soundStart              = [[weapon/heavy_machinegun]],
 				soundStartVolume        = 4,
 				sprayAngle              = 1180,
