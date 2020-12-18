@@ -82,7 +82,7 @@ return {
 					light_beam_mult = 8,
 				},
 				damage                  = {
-					default = 35,
+					default = 45,
 				},
 				duration                = 0.3,
 				dynDamageExp            = 1,
