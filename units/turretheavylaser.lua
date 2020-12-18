@@ -1,7 +1,7 @@
 return { 
 	turretheavylaser = {
 		unitname                      = [[turretheavylaser]],
-		name                          = [[Rampant]],
+		name                          = [[Rampart]],
 		description                   = [[Medium Range Plasma Bombarder]],
 		acceleration                  = 0,
 		brakeRate                     = 0,
