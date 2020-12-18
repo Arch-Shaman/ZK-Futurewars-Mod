@@ -65,9 +65,9 @@
 		"helptext" : "The Imp relies on its speed and small size to dodge inaccurate weapons, especially those of assaults and many skirmishers. It can paralyze heavy units or packs of lighter raiders which cannot kill it before it is already in range. Reavers or Glaives can then eliminate the helpless enemies without risk. Counter with defenses or single cheap units to set off a premature detonation. This unit cloaks when otherwise idle."
 	},
 	"shieldriot" : {
-		"name" : "Preserver",
+		"name" : "Keeper",
 		"description" : "Shielded Riot Bot",
-		"helptext" : "The Preserver emits an electromagnetic disruption pulse in a wide circle around it that damages and slows enemy units. Friendly units are unaffected."
+		"helptext" : "The Keeper emits an electromagnetic disruption pulse in a wide circle around it that damages and slows enemy units. Friendly units are unaffected."
 	},
 	"chickenc" : {
 		"name" : "Basilisk",
@@ -770,9 +770,9 @@
 		"helptext" : "The slow all-terrain Funnelweb features an extremely powerful wide-area shield and high nano power for post-battle utility. It is otherwise unarmed."
 	},
 	"cloakriot" : {
-		"name" : "Reaver",
-		"description" : "Riot Bot",
-		"helptext" : "The Reaver's devastating heavy Energy Machine Gun is effective versus most enemy units, in particular raiders. It performs poorly versus static defense, so do not use it as an assault unit. Counter by staying out of their range, as they are slow. Reavers quickly regenerate damage when out of combat."
+		"name" : "Assailant",
+		"description" : "Stealthy Machine Gun Bot",
+		"helptext" : "The Assailant's mixture of deadly machine gun fire and cloaking is bound to ruin somebody's day. WIP description."
 	},
 	"chickenspire" : {
 		"name" : "Chicken Spire",
