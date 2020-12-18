@@ -1155,9 +1155,9 @@
 		"helptext" : "The Gull is a small, aggressive drone armed with an energy MG."
 	},
 	"turretheavylaser" : {
-		"name" : "Stinger",
-		"description" : "High-Energy Laser Tower",
-		"helptext" : "The Stinger is a medium laser turret. Its three rotating laser guns can kill almost any small unit, but its low rate of fire makes it vulnerable to swarms when unassisted."
+		"name" : "Rampart",
+		"description" : "Medium Range Plasma Bombarder",
+		"helptext" : "The Rampant is a medium plasma turret. Its three rotating guns can kill almost any small unit, but its low rate of fire makes it vulnerable to swarms when unassisted."
 	},
 	"hoversonic" : {
 		"name" : "Morningstar",
