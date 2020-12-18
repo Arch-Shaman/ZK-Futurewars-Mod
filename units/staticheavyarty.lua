@@ -3,7 +3,7 @@ return {
 		unitname                      = [[staticheavyarty]],
 		name                          = [[Big Bertha]],
 		description                   = [[Canister Barrage Artillery]],
-		buildCostMetal                = 9000,
+		buildCostMetal                = 7000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 6,
@@ -74,10 +74,6 @@ return {
 				craterMult              = 0.3,
 
 				customParams        = {
-					gatherradius     = [[240]],
-					smoothradius     = [[120]],
-					smoothmult       = [[0.5]],
-					quickgather      = [[1]],
 					lups_noshockwave = [[1]],
 					light_camera_height = 1600,
 					light_color = [[0.8 0.76 0.38]],
@@ -120,7 +116,7 @@ return {
 			tritary = {
 				name                    = [[Heavy Fragmentation]],
 				alphaDecay              = 0.7,
-				areaOfEffect            = 140,
+				areaOfEffect            = 192,
 				craterBoost             = 0.15,
 				craterMult              = 0.3,
 
@@ -170,7 +166,7 @@ return {
 					gatherradius = [[128]],
 					smoothradius = [[96]],
 					smoothmult   = [[0.4]],
-					numprojectiles = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile = "staticheavyarty_secondary",
 					--spreadradius = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
