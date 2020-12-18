@@ -2,7 +2,7 @@ return {
 	turretheavylaser = {
 		unitname                      = [[turretheavylaser]],
 		name                          = [[Rampart]],
-		description                   = [[Medium Range Plasma Bombarder]],
+		description                   = [[Medium Range Plasma Bombarder (Needs Grid: 8E)]],
 		acceleration                  = 0,
 		brakeRate                     = 0,
 		buildCostMetal                = 450,
