@@ -127,12 +127,6 @@ return {
 				craterMult              = 0.3,
 
 				customParams        = {
-					gatherradius     = [[240]],
-					detachmentradius = [[320]],
-					smoothradius     = [[120]],
-					smoothmult       = [[0.5]],
-					movestructures = [[1]],
-					quickgather      = [[1]],
 					lups_noshockwave = [[1]],
 					light_camera_height = 1600,
 					light_color = [[0.8 0.76 0.38]],
