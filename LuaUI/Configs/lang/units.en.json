@@ -1115,9 +1115,9 @@
 		"helptext" : "The Sunlance's heavy disruptor beam cripples even the heaviest assault unit and will stop any armored assault dead in its tracks."
 	},
 	"shieldassault" : {
-		"name" : "Thug",
-		"description" : "Shielded Assault Bot",
-		"helptext" : "Weak on its own, the Thug makes an excellent screen for Outlaws and Rogues. The linking shield gives Thugs strength in numbers, but can be defeated by AoE weapons or focus fire."
+		"name" : "Ward",
+		"description" : "Shielded Skirmisher/Assault Bot",
+		"helptext" : "The Ward replaced the aging Thug design after its miserable failure against the Coalition. Its deficient plasma cannons were replaced with a heavier accelerator resulting in improved range and damage. The Ward has high shield regeneration, but that comes at a premium."
 	},
 	"amphriot" : {
 		"name" : "Scallop",
