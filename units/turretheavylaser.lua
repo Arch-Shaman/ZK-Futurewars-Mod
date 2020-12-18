@@ -20,6 +20,7 @@ return {
 
 		customParams                  = {
 			aimposoffset   = [[0 15 0]],
+			keeptooltip = [[any string i want]],
 			neededlink  = 8,
 			pylonrange  = 50,
 		},
