@@ -84,7 +84,7 @@ return {
 					light_camera_height = 1600,
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 110,
-					numprojectiles = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile = "staticheavyarty_tritary",
 					--spreadradius = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -96,7 +96,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 145*8,
+					default = 145*2*4,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -134,7 +134,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 145,
+					default = 145*2,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -200,7 +200,7 @@ return {
 				sprayAngle				= 120,
 				noSelfDamage            = true,
 				range                   = 8000,
-				reloadtime              = 30,
+				reloadtime              = 40,
 				mygravity				= 0.20,
 				soundHit                = [[weapon/cluster_heavy]],
 				soundStart              = [[weapon/cannon/large_cannon_fire]],
