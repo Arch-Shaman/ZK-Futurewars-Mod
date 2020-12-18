@@ -22,7 +22,12 @@ targettypes[string.byte('g')] = 'ground'
 targettypes[unit] = 'unit'
 targettypes[string.byte('p')] = 'projectile'
 targettypes[string.byte('f')] = 'feature'
+local random = math.random
+local rad = math.rad
+local sin = math.sin
+local cos = math.cos
 
+local spGetGroundHeight = Spring.GetGroundHeight
 local spValidUnitID = Spring.ValidUnitID
 local spIsUnitInLos = Spring.IsUnitInLos
 local spGetUnitPosition = Spring.GetUnitPosition
@@ -39,7 +44,7 @@ for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
 	if curRef and curRef.cruisealt and curRef.cruisedist then -- found it!
-		config[i] = {altitude = tonumber(curRef.cruisealt), distance = tonumber(curRef.cruisedist), track = false, airlaunched = curRef.airlaunched ~= nil}
+		config[i] = {altitude = tonumber(curRef.cruisealt), distance = tonumber(curRef.cruisedist), track = false, airlaunched = curRef.airlaunched ~= nil, radius = tostring(curRef.cruiserandomradius), permoffset = curRef.cruise_permoffset ~= nil}
 		if curRef.cruisetracking then
 			config[i].track = true
 		end
@@ -61,6 +66,28 @@ local function GetTargetType(num)
 	return targettypes[num] or '?'
 end
 
+local function GetRandomizedDestination(weaponDefID, x, z)
+	local radius = config[weaponDefID].radius
+	if radius then
+		local distance = random(0, radius)
+		local heading = rad(random(0, 360))
+		local fx = x + (radius * sin(heading))
+		local fz = z + (radius * cos(heading))
+		return fx, spGetGroundHeight(fx, fz), fz
+	end
+end
+
+local function GetRandomizedOffset(weaponDefID)
+	local radius = config[weaponDefID].radius
+	if radius then
+		local distance = random(0, radius)
+		local heading = rad(random(0, 360))
+		local fx = (radius * sin(heading))
+		local fz = (radius * cos(heading))
+		return fx, fz
+	end
+end
+
 local function GetMissileDestination(num, allyteam)
 	local missile = missiles[num]
 	if missile.type == 'ground' then
@@ -78,7 +105,6 @@ local function GetMissileDestination(num, allyteam)
 		end
 	end
 end
-		
 
 local function IsMissileCruiseDone(id)
 	return not missiles[id] == nil
@@ -90,6 +116,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	local wep = weaponDefID or spGetProjectileDefID(proID) -- needed for bursts.
 	if config[wep] then
 		local type, target = spGetProjectileTarget(proID)
+		local config = config[wep]
 		local ty = 0
 		--spEcho("Type: " .. type)
 		type = GetTargetType(type)
@@ -116,6 +143,10 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local _, py = spGetProjectilePosition(proID)
 		py = math.max(py, ty)
 		missiles[proID] = {target = target, type = type, cruising = false, takeoff = true, lastknownposition = last, configid = wep, started = false, allyteam = allyteam, wantedalt = py + config[wep].altitude}
+		if config.permoffset then
+			local ox, oz = GetRandomizedOffset(wep)
+			missiles[proID].offset = {x = ox, z = oz}
+		end
 	end
 end
 
@@ -129,6 +160,13 @@ function gadget:GameFrame(f)
 			local cx, cy, cz = spGetProjectilePosition(projectile)
 			local x, y, z = GetMissileDestination(projectile, data.allyteam)
 			local projectiledef = data.configid
+			if data.offset then
+				x = x + data.offset.x
+				z = z + data.offset.z
+				y = spGetGroundHeight(x, z)
+			elseif config[projectiledef].radius then
+				x, y, z = GetRandomizedDestination(projectiledef, x, z)
+			end
 			local missileconfig = config[projectiledef]
 			local wantedalt = data.wantedalt
 			local mindist = missileconfig.distance
