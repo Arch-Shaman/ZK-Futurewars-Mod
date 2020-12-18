@@ -72,9 +72,9 @@ return {
 
 			LASER = {
 				name                    = [[Medium Range Plasma Cannon]],
-				areaOfEffect            = 32,
-				burst                   = 3,
-				burstRate               = 0.2,
+				areaOfEffect            = 49,
+				burst                   = 6,
+				burstRate               = 0.5,
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting 		= 0.8,
@@ -83,16 +83,16 @@ return {
 				},
 
 				damage                  = {
-					default = 160,
+					default = 120,
 				},
 
-				explosionGenerator      = [[custom:DEFAULT]],
+				explosionGenerator      = [[custom:TESS]],
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 680,
-				reloadtime              = 4.6,
+				reloadtime              = 4.5,
 				soundHit                = [[weapon/cannon/reaper_hit]],
 				soundStart              = [[weapon/cannon/cannon_fire4]],
 				turret                  = true,

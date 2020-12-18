@@ -70,8 +70,6 @@ return {
 				alphaDecay              = 0.7,
 				areaOfEffect            = 0,
 				burnblow                = true,
-				burst                   = 3,
-				burstrate               = 0.1,
 				craterBoost             = 0.15,
 				craterMult              = 0.3,
 
@@ -158,7 +156,7 @@ return {
 			},
 	
 			PLASMA = {
-				name                    = [[3 Round Cluster Barrage]],
+				name                    = [[Cluster Barrage]],
 				highTrajectory		= 1,
 				areaOfEffect            = 0,
 				avoidFeature            = false,
@@ -166,8 +164,6 @@ return {
 				cegTag                  = [[vulcanfx]],
 				craterBoost             = 0,
 				craterMult              = 0,
-				burst					= 3,
-				burstrate				= 1.2,
 				customParams            = {
 					restrict_in_widgets = 1,
 
@@ -200,7 +196,7 @@ return {
 				sprayAngle				= 120,
 				noSelfDamage            = true,
 				range                   = 8000,
-				reloadtime              = 40,
+				reloadtime              = 25,
 				mygravity				= 0.20,
 				soundHit                = [[weapon/cluster_heavy]],
 				soundStart              = [[weapon/cannon/large_cannon_fire]],
