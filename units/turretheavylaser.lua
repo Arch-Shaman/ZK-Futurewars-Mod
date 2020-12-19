@@ -34,7 +34,7 @@ return {
 		idleTime                      = 1800,
 		levelGround                   = false,
 		losEmitHeight                 = 80,
-		maxDamage                     = 6100,
+		maxDamage                     = 7000,
 		maxSlope                      = 36,
 		maxVelocity                   = 0,
 		minCloakDistance              = 150,
