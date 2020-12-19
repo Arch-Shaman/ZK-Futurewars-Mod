@@ -111,7 +111,7 @@ function TrackThread()
 		end
 		if tracking >= trackneeded and not trackingcomplete then
 			local x,y,z = Spring.GetUnitPosition(unitID)
-			Spring.PlaySoundFile("weapons/trackercompleted.wav", 1.0, x, y, z, 1, 1, 1, 1)
+			Spring.PlaySoundFile("weapon/trackercompleted.wav", 1.0, x, y, z, 1, 1, 1, 1)
 			Sleep(250)
 			trackingcomplete = true
 		end

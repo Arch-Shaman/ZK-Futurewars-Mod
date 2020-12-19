@@ -107,10 +107,11 @@ return { vehheavyarty = {
       soundStart              = [[weapon/missile/missile_launch]],
       tolerance               = 4000,
       turnrate                = 18000,
+	  startVelocity           = 80,
       weaponAcceleration      = 315,
 	  tracks = true, -- doesn't actually track. Needed for cruise missile.
-      weaponType              = [[Missile]],
-      weaponVelocity          = 2000,
+      weaponType              = [[StarburstLauncher]],
+      weaponVelocity          = 800,
     },
 
   },

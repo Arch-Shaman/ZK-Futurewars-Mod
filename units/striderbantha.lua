@@ -4,7 +4,7 @@ local unitDef = {
 	description            = [[Ultraheavy Siege]],
 	acceleration           = 0.1047,
 	brakeRate              = 0.2212,
-	buildCostMetal         = 10000,
+	buildCostMetal         = 12500,
 	builder                = false,
 	buildPic               = [[striderbantha.png]],
 	canGuard               = true,
@@ -164,8 +164,6 @@ local unitDef = {
 			},
 			damage                  = {
 				default = 0.00,
-				planes  = 0.00,
-				subs    = 0.00,
 			},
 			--explosionGenerator      = [[custom:flash1red]],
 			fireTolerance           = 8192, -- 45 degrees
