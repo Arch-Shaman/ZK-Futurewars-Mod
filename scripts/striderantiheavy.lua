@@ -78,10 +78,13 @@ local function BeginJumpThread()
 	Turn(luparm, x_axis, math.rad(45), math.rad(400))
 	Turn(ruparm, x_axis, math.rad(45), math.rad(400))
 	Turn(lthigh, x_axis, math.rad(-45), math.rad(400))
-	Turn(rthigh, x_axis, math.rad(-45), math.rad(400))
+	Turn(rthigh, x_axis, math.rad(45), math.rad(400))
+	Turn(head, y_axis, math.rad(15), math.rad(400))
 end
 
-function preJump() 
+function preJump()
+	WaitForTurn(lthigh, x_axis)
+	WaitForTurn(rthigh, x_axis)
 	bJumping = true
 end
 
@@ -91,20 +94,15 @@ end
 
 function jumping(percent)
 	GG.PokeDecloakUnit(unitID, unitDefID)
+	if bJumping then
+		Turn(head, y_axis, math.rad(math.min((60 - percent), 15)), math.rad(400))
+	end
 	if percent < 40 then
 		EmitSfx(jump, 1027)
 	end
 	if percent > 70 and bJumping then
 		bJumping = false
-		Turn(luparm, x_axis, math.rad(-90), math.rad(400))
-		Turn(ruparm, x_axis, math.rad(-45), math.rad(400))
-		Turn(rloarm, x_axis, math.rad(-90), math.rad(400))
-		Turn(lthigh, x_axis, math.rad(-30), math.rad(400))
-		Turn(lleg, x_axis, math.rad(110), math.rad(400))
-		Turn(rthigh, z_axis, math.rad(-(-20)), math.rad(400))
-		Turn(rthigh, x_axis, math.rad(-80), math.rad(400))
-		Turn(rleg, x_axis, math.rad(-10), math.rad(400))
-		EmitSfx(jump, 1027)
+		StartThread(RestorePose)
 	end
 end
 
@@ -112,7 +110,9 @@ function halfJump()
 end
 
 
-function endJump() end
+function endJump() 
+	Turn(head, y_axis, math.rad(0), math.rad(400))
+end
 
 
 --[[Bladestat()
