@@ -92,14 +92,13 @@ unitDef = {
 		stats_hide_reload = 1,
 		light_color = [[1.25 0 0]],
 		light_radius = 120,
+		norealdamage = 1,
       },
       damage                  = {
-        default = 0.01,
-        planes  = 0.01,
-        subs    = 0.01,
+        default = 0,
       },
 
-      explosionGenerator      = [[custom:flash1red]],
+      --explosionGenerator      = [[custom:flash1red]],
 	  fireTolerance           = 8192, -- 45 degrees
       impactOnly              = true,
       impulseBoost            = 0,

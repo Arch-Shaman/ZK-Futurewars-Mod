@@ -14,12 +14,13 @@ if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
 	return
 end
 
-local config = {}
+local config = {} -- stores the config for weapondefs.
 local missiles = {}
 local targettypes = {}
-local unit = string.byte('u')
+
+-- speed ups --
 targettypes[string.byte('g')] = 'ground'
-targettypes[unit] = 'unit'
+targettypes[string.byte('u')] = 'unit'
 targettypes[string.byte('p')] = 'projectile'
 targettypes[string.byte('f')] = 'feature'
 local random = math.random
@@ -39,7 +40,7 @@ local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spGetProjectilePosition = Spring.GetProjectilePosition
 local spEcho = Spring.Echo
 
-
+-- proccess config --
 for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing

@@ -772,7 +772,7 @@
 	"cloakriot" : {
 		"name" : "Assailant",
 		"description" : "Stealthy Machine Gun Bot",
-		"helptext" : "The Assailant's mixture of deadly machine gun fire and cloaking is bound to ruin somebody's day. WIP description."
+		"helptext" : "Designed as a specops riot, the Assailant is armed with a deadly machine gun. It's quite similiar to the older Reaver model, but cloaks. Unfortunately, the micro plasma generator draws a lot of power, so now it can only autorepair while cloaked."
 	},
 	"chickenspire" : {
 		"name" : "Chicken Spire",
@@ -900,9 +900,9 @@
 		"helptext" : "A small flying chicken scout with spore."
 	},
 	"cloakheavyraid" : {
-		"name" : "Scythe",
-		"description" : "Cloaked Raider Bot",
-		"helptext" : "The Scythe isn't particularly tough in a stand-up fight, but its cloaking device lets it slip past enemy defenses to stab at the enemy's economy. Damaged Scythes can quickly regenerate when out of combat."
+		"name" : "Assassin",
+		"description" : "Stealthy Raider",
+		"helptext" : "The Assassin is a derivative of the Scythe. It's slightly faster and regens while cloaked. It also deals more damage with its blade, however, these improvements come at the cost of a slightly worse cloaking device. It must now step out of the shadows to attack."
 	},
 	"jumpblackhole" : {
 		"name" : "Placeholder",

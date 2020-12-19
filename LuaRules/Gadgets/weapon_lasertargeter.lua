@@ -56,6 +56,7 @@ local gaiaID = Spring.GetGaiaTeamID()
 local missiles = {} -- id = {missiles = {projIDs},target = {x,y,z}, numMissiles = 0, fake = uid}
 local config = {} -- targeter or tracker
 local prolist = {} -- reverse lookup: proID = ownerID
+local fakeweapons = {}
 
 for wid = 1, #WeaponDefs do
 	--debugecho(wid .. ": " .. tostring(WeaponDefs[wid].type) .. "\ntracker: " .. tostring(WeaponDefs[wid].customParams.tracker))
@@ -65,6 +66,9 @@ for wid = 1, #WeaponDefs do
 	elseif WeaponDefs[wid].customParams.targeter then
 		config[wid] = 'targeter'
 		SetWatchWeapon(wid, true)
+	end
+	if WeaponDefs[wid].customParams.norealdamage or WeaponDefs[wid].customParams.targeter then
+		fakeweapons[wid] = true
 	end
 end
 
@@ -88,7 +92,7 @@ GG.GetLaserTrackingEnabled = GetMissileTracking
 if debug then PrintConfig() end
 
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID)
-	if config[weaponDefID] and config[weaponDefID] == 'targeter' then
+	if fakeweapons[weaponDefID] then
 		return 0, 0
 	end
 end
