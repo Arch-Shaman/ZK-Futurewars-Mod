@@ -45,7 +45,7 @@ for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
 	if curRef and curRef.cruisealt and curRef.cruisedist then -- found it!
-		config[i] = {altitude = tonumber(curRef.cruisealt), randomizationtype = curRef.cruise_randomizationtype or "?", distance = tonumber(curRef.cruisedist), track = false, airlaunched = curRef.airlaunched ~= nil, radius = tostring(curRef.cruiserandomradius), permoffset = curRef.cruise_permoffset ~= nil, finaltracking = curRef.cruise_nolock == nil}
+		config[i] = {altitude = tonumber(curRef.cruisealt), randomizationtype = curRef.cruise_randomizationtype or "?", distance = tonumber(curRef.cruisedist), track = false, airlaunched = curRef.airlaunched ~= nil, radius = tonumber(curRef.cruiserandomradius), permoffset = curRef.cruise_permoffset ~= nil, finaltracking = curRef.cruise_nolock == nil}
 		if curRef.cruisetracking then
 			config[i].track = true
 		end

@@ -81,8 +81,8 @@ return {
 					cruisedist = 240,
 					cruisetracking = 1,
 					light_camera_height = 2500,
-					light_color = [[1.3 0.5 1.6]],
-					light_radius = 220,
+        			light_color = [[0.90 0.65 0.30]],
+        			light_radius = 250,
 				},
 				damage                  = {
 					default = 250.1,

@@ -20,6 +20,7 @@ local RELOAD_PENALTY = tonumber(UnitDefs[unitDefID].customParams.reload_move_pen
 
 local SIG_Aim = 1
 local SIG_Walk = 2
+local lastfire = 0
 
 -- future-proof running animation against balance tweaks
 local runspeed = 25 * (UnitDefs[unitDefID].speed / 69)
@@ -159,8 +160,8 @@ function script.AimWeapon(num, heading, pitch)
 
 	Turn (hips, x_axis, 0)
 	Turn (chest, x_axis, 0)
-	Turn (gun, x_axis, -pitch, math.rad(320))
-	Turn (turner, y_axis, heading + math.rad(5), math.rad(320))
+	Turn (gun, x_axis, -pitch, math.rad(420))
+	Turn (turner, y_axis, heading + math.rad(5), math.rad(420))
 
 	WaitForTurn (turner, y_axis)
 	WaitForTurn (gun, x_axis)
@@ -174,13 +175,19 @@ function script.FireWeapon(num)
 	if num == 1 then
 		EmitSfx (exhaust, 1024)
 	end
+	if num == 2 then
+		lastfire = Spring.GetGameFrame()
+	end
 	--StartThread(ReloadPenaltyAndAnimation)
 end
 
 function script.BlockShot(num, targetID)
 	if Spring.ValidUnitID(targetID) and num == 1 then
+		if Spring.GetGameFrame() - 10 > lastfire then -- should have fired targeting laser before.
+			return true
+		end 
 		local distMult = (Spring.GetUnitSeparation(unitID, targetID) or 0)/450
-		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 180.1, 75 * distMult, false, false, true)
+		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 240, 75 * distMult, false, false, true)
 	end
 	return false
 end

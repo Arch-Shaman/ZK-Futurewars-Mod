@@ -740,23 +740,23 @@ local function weapons2Table(cells, ws, unitID)
 			cells[#cells+1] = ' - Cruise Missile:'
 			cells[#cells+1] = ''
 			cells[#cells+1] = 'Cruise Height: '
-			cells[#cells+1] = cp.cruisealt .. ' elmos AGL'
+			cells[#cells+1] = cp.cruisealt .. ' elmo AGL'
 			cells[#cells+1] = 'Begins descent: ' 
-			cells[#cells+1] = wd.customParams.cruisedist .. ' elmos from target'
+			cells[#cells+1] = wd.customParams.cruisedist .. ' elmo from target'
 			if cp.cruisetracking and cp.cruise_nolock == nil then
 				local turnrate = wd.turnRate * 30 * 180 / math.pi
 				cells[#cells+1] = 'Tracks target: ' 
 				cells[#cells+1] =  numformat(turnrate, 1) .. ' deg/s'
 			end
 			if cp.cruisetracking and cp.cruise_nolock then
-				cells[#cells+1] = 'Guided Cruise phase, but unguided descent phase'
+				cells[#cells+1] = 'Guided Cruise, unguided descent'
 				cells[#cells+1] = ''
 			end
 			if wd.customParams.cruise_randomizationtype == "circle" then
-				cells[#cells+1] = 'Strikes random point ' .. cp.cruiserandomradius .. ' elmos around the target'
+				cells[#cells+1] = 'Has circular spread (' .. cp.cruiserandomradius .. ' elmo around the target)'
 				cells[#cells+1] = ''
 			elseif wd.customParams.cruiserandomradius then
-				cells[#cells+1] = 'Strikes random point within ' .. cp.cruiserandomradius .. ' of the target'
+				cells[#cells+1] = 'Strikes within ' .. cp.cruiserandomradius .. ' elmo of the target'
 				cells[#cells+1] = ''
 			end
 		end
@@ -826,9 +826,9 @@ local function weapons2Table(cells, ws, unitID)
 			cells[#cells+1] = 'Duration:'
 			cells[#cells+1] = numformat(cp.singulifespan/30, 1) .. "s"
 			cells[#cells+1] = 'Strength:'
-			cells[#cells+1] = numformat(cp.singustrength/30, 1) .. "elmo/s pull"
+			cells[#cells+1] = numformat(cp.singustrength, 1) .. "elmo/s pull"
 			cells[#cells+1] = 'Radius:'
-			cells[#cells+1] = cp.singuradius .. " elmos"
+			cells[#cells+1] = cp.singuradius .. " elmo"
 		end
 		if wd.trajectoryHeight > 0 then
 			cells[#cells+1] = ' - Arcing shot:'
@@ -1003,8 +1003,6 @@ local function printAbilities(ud, unitID)
 			cells[#cells+1] = ' - No decloak while shooting'
 			cells[#cells+1] = ''
 		end
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
 	end
 
 	if cp.idle_cloak then
@@ -1016,18 +1014,18 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = ''
 		cells[#cells+1] = ' - Decloak radius: '
 		cells[#cells+1] = numformat(ud.decloakDistance) .. " elmo"
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
 	end
 
 	if cp.cloakregen then
-		cells[#cells+1] = " - HP Regen while Cloaked: " .. cp.cloakregen .. "/sec"
-		cells[#cells+1] = ''
+		cells[#cells+1] = " - Cloaked Regen:"
+		cells[#cells+1] = cp.cloakregen .. "HP/s"
 	end
 	if cp.recloaktime then
-		cells[#cells+1] = " - Recloaks after: " .. numformat(cp.recloaktime / 30, 1) .. "s without area cloaker"
-		cells[#cells+1] = ''
+		cells[#cells+1] = " - Recloaks after: "
+		cells[#cells+1] = numformat(cp.recloaktime / 30, 1) .. "s without area cloaker"
 	end
+	cells[#cells+1] = ''
+	cells[#cells+1] = ''
 	local radarRadius = unitID and Spring.GetUnitRulesParam(unitID, "radarRangeOverride") or ud.radarRadius
 	local jammerRadius = unitID and Spring.GetUnitRulesParam(unitID, "jammingRangeOverride") or ud.jammerRadius
 	
