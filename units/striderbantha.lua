@@ -208,7 +208,7 @@ local unitDef = {
 
 			customParams            = {
 				tracker = 1,
-				combatrange = 1500,
+				combatrange = 2000,
 				numprojectiles = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 				projectile = "striderbantha_secondary",
 				--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
