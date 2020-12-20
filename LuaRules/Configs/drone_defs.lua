@@ -37,7 +37,7 @@ local carrierDefNames = {
 		},
 	},
 	factoryveh = {
-		spawnPieces = {"pad", 'CoverMid'},
+		spawnPieces = {'Train', 'CoverL1', 'CoverR1'},
 		{
 			drone = UnitDefNames.dronelight.id, 
 			reloadTime = 15, 
@@ -64,13 +64,13 @@ local carrierDefNames = {
 	vehscout = {
 		spawnPieces = {"turret"},
 		{
-			drone = UnitDefNames.droneheavyslow.id, 
-			reloadTime = 15, 
+			drone = UnitDefNames.dronelight.id, 
+			reloadTime = 30, 
 			maxDrones = 1, 
 			spawnSize = 1, 
-			range = 1000,
-			maxChaseRange = 1500,
-			buildTime = 8, 
+			range = 500,
+			maxChaseRange = 600,
+			buildTime = 15, 
 			maxBuild = 1,
 			offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
 		},
@@ -79,29 +79,29 @@ local carrierDefNames = {
 		spawnPieces = {"turret"},
 		{
 			drone = UnitDefNames.dronelight.id, 
-			reloadTime = 15, 
+			reloadTime = 20, 
 			maxDrones = 2, 
 			spawnSize = 1, 
-			range = 1000,
-			maxChaseRange = 1500,
+			range = 700,
+			maxChaseRange = 800,
 			buildTime = 6, 
 			maxBuild = 1,
 			offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
 		},
 		{
 			drone = UnitDefNames.droneheavyslow.id,
-			reloadTime = 15,
+			reloadTime = 20,
 			maxDrones = 1,
 			spawnSize = 1,
-			range = 1000,
-			maxChaseRange = 1500,
+			range = 700,
+			maxChaseRange = 800,
 			buildTime = 3,
 			maxBuild = 1,
 			offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0} --shift colvol to avoid collision.
 		},
 	},
 	plateveh = {
-		spawnPieces = {"pad"},
+		spawnPieces = {"train"},
 		{
 			drone = UnitDefNames.dronelight.id, 
 			reloadTime = 15, 
