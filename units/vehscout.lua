@@ -69,7 +69,7 @@ return {
 
 			DISRUPTOR      = {
 				name                    = [[Disruptor Pulse Bomb]],
-				areaOfEffect            = 90,
+				areaOfEffect            = 120,
 				accuracy                = 256,
 				burst					= 3,
 				burstrate				= 0.5,
