@@ -211,7 +211,7 @@ function gadget:GameFrame(f)
 				if distance <= mindist then -- end of cruise phase
 					data.cruising = false
 					if missileconfig.track and missileconfig.finaltracking and data.type == "unit" then
-						spSetProjectileTarget(projectile, data.target, unit)
+						spSetProjectileTarget(projectile, data.target, targettypes.unit)
 					else
 						spSetProjectileTarget(projectile, x, y, z)
 					end
