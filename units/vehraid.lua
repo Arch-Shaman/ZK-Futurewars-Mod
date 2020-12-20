@@ -1,7 +1,7 @@
 return { 
 	vehraid = {
 		unitname               = [[vehraid]],
-		name                   = [[Scorcher]],
+		name                   = [[Sunbeam]],
 		description            = [[Raider Rover]],
 		acceleration           = 0.342,
 		brakeRate              = 0.84,
@@ -71,7 +71,7 @@ return {
 				coreThickness           = 1,
 				craterBoost             = 0,
 				craterMult              = 0,
-				cylinderTargeting 		= 0.3,
+				cylinderTargeting 		= 0.6,
 				customParams        = {
 					light_camera_height = 1500,
 					light_color = [[0.9 0.4 0.12]],
