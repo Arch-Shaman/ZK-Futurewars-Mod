@@ -35,8 +35,6 @@ return {
 		footprintX             = 3,
 		footprintZ             = 3,
 		iconType               = [[kbotriot]],
-		idleAutoHeal           = 0,
-		idleTime               = 0,
 		leaveTracks            = true,
 		maxDamage              = 820,
 		maxSlope               = 36,

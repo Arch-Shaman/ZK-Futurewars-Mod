@@ -106,7 +106,7 @@ unitDef = {
       craterMult              = 0,
 
       customParams        	  = {
-		numprojectiles = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+		numprojectiles = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 		projectile = "napalmmissile_weapon2",
 		spreadradius = 4, -- used in clusters. OPTIONAL. Default: 100.
 		clustervec = "evenxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -169,7 +169,7 @@ unitDef = {
       craterMult              = 3.5,
 
       customParams        	  = {
-		numprojectiles = 20, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+		numprojectiles = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 		projectile = "napalmmissile_secondary",
 		spreadradius = 4, -- used in clusters. OPTIONAL. Default: 100.
 		clustervec = "randomxz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.

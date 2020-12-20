@@ -28,6 +28,8 @@ local turning = false
 local trackingcomplete = false
 local reloadtime = WeaponDefs[UnitDef.weapons[1].weaponDef].reload * 1000
 local lastfire = 0
+local currentframe = 0
+local lasttracking = 0
 
 local function Tilt()
 	while true do
@@ -84,7 +86,7 @@ end
 function TurnThread()
 	if turning and not Spring.GetUnitIsCloaked(unitID) then
 		local x,y,z = Spring.GetUnitPosition(unitID)
-		Spring.PlaySoundFile("turretslow.wav", 0.5,x,y,z,0.1,0.1,0.1,1)
+		GG.PlayFogHiddenSound("Sounds/ambient/turretslow.wav", 38.5,x,y,z,0.1,0.1,0.1,1)
 		Sleep(600)
 	else
 		Sleep(100)
@@ -103,7 +105,9 @@ end
 
 function TrackThread()
 	while true do
-		if lastfire + 6 <= Spring.GetGameFrame() and tracking > 0 then
+		Spring.GetGameFrame()
+		if lastfire <= Spring.GetGameFrame() - 4 and tracking > 0 then
+			trackingcomplete = false
 			tracking = tracking - 4
 			if tracking < 0 then
 				tracking = 0
@@ -111,11 +115,20 @@ function TrackThread()
 		end
 		if tracking >= trackneeded and not trackingcomplete then
 			local x,y,z = Spring.GetUnitPosition(unitID)
-			Spring.PlaySoundFile("weapon/trackercompleted.wav", 1.0, x, y, z, 1, 1, 1, 1)
-			Sleep(250)
+			Spring.PlaySoundFile("Sounds/weapon/laser/trackercompleted.wav", 20.0, x, y, z, 1, 1, 1, 1)
+			Sleep(150)
+			Spring.PlaySoundFile("Sounds/weapon/laser/trackercompleted.wav", 20.0, x, y, z, 1, 1, 1, 1)
+			Sleep(150)
+			Spring.PlaySoundFile("Sounds/weapon/laser/trackercompleted.wav", 20.0, x, y, z, 1, 1, 1, 1)
+			Sleep(75)
+			Spring.PlaySoundFile("Sounds/weapon/laser/trackercompleted.wav", 20.0, x, y, z, 1, 1, 1, 1)
+			Sleep(75)
+			Spring.PlaySoundFile("Sounds/weapon/laser/trackercompleted.wav", 20.0, x, y, z, 1, 1, 1, 1)
+			Sleep(25)
 			trackingcomplete = true
 		end
 		Sleep(33)
+		lasttracking = tracking
 	end
 end
 

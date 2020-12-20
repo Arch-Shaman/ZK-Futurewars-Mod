@@ -159,6 +159,10 @@ return {
 					cruisealt = 440,
 					airlaunched = 1,
 					cruisedist = [[300]],
+					cruiserandomradius = 100,
+					cruise_randomizationtype = "circular",
+					cruise_nolock = 1,
+					cruisetracking = 1,
 					--CAS--
 					numprojectiles = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile = "nebula_ag",
@@ -225,9 +229,13 @@ return {
 					burst = Shared.BURST_RELIABLE,
 					light_color = [[0.5 0.6 0.6]],
 					reaim_time = 60, -- Fast update not required (maybe dangerous)
-					cruisealt = 400,
+					cruisealt = 440,
 					airlaunched = 1,
 					cruisedist = [[300]],
+					cruiserandomradius = 50,
+					cruise_randomizationtype = "circular",
+					cruise_nolock = 1,
+					cruisetracking = 1,
 					--CAS--
 					numprojectiles = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile = "nebula_ag",

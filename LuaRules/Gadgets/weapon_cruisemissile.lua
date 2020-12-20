@@ -93,8 +93,8 @@ local function GetRandomizedOffsetOnCircle(weaponDefID)
 	local radius = config[weaponDefID].radius
 	if radius then
 		local heading = rad(random(0, 360))
-		local fx = (distance * sin(heading))
-		local fz = (distance * cos(heading))
+		local fx = (radius * sin(heading))
+		local fz = (radius * cos(heading))
 		return fx, fz
 	end
 end
@@ -193,7 +193,7 @@ function gadget:GameFrame(f)
 				y = spGetGroundHeight(x, z)
 			end
 			if not missileconfig.permoffset and missileconfig.radius and data.updates%15 == 0 then
-				ProccessOffset(configid, projectile)
+				ProccessOffset(data.configid, projectile)
 			end
 			local wantedalt = data.wantedalt
 			local mindist = missileconfig.distance
