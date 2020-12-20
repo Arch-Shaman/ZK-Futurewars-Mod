@@ -238,6 +238,7 @@ return {
         [3]  = 1,
       },
     },
+   },
   ["riotballgrav"] = {
     usedefaultexplosions = false,
     groundflash = {
