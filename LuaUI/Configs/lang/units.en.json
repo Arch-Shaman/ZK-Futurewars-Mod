@@ -760,9 +760,9 @@
 		"helptext" : "The Anarchid is like a Starlight, but a Spider"
 	},
 	"vehraid" : {
-		"name" : "Scorcher",
-		"description" : "Raider Rover",
-		"helptext" : "Capable of taking damage and dishing it out, the Scorcher is a versatile unit that remains very useful for more than just raiding, though it pays the price in manueverability and in cost. Though able to hold its own in combat, it is no match for anti-swarm and riot units or defenses. The Scorcher's heatray deals more damage up close."
+		"name" : "Sunbeam",
+		"description" : "Scorching Hot Raider",
+		"helptext" : "With the advances in energy containment, the Sunbeam replaced the Scorcher. It now fires a direct energy laser that heats up a target instantly. The heating effect is better up close."
 	},
 	"striderfunnelweb" : {
 		"name" : "Funnelweb",
