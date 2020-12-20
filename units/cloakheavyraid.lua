@@ -34,9 +34,9 @@ return {
 		iconType               = [[stealth]],
 		initCloaked            = true,
 		leaveTracks            = true,
-		maxDamage              = 700,
+		maxDamage              = 620,
 		maxSlope               = 36,
-		maxVelocity            = 3.4,
+		maxVelocity            = 3.8,
 		maxWaterDepth          = 22,
 		minCloakDistance       = 145,
 		movementClass          = [[KBOT2]],
@@ -93,7 +93,7 @@ return {
 				},
       
 				damage                  = {
-					default = 300.1,
+					default = 380.1,
 				},
 
 				explosionGenerator      = [[custom:BEAMWEAPON_HIT_ORANGE]],
