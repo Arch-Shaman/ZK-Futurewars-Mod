@@ -99,7 +99,7 @@ return {
 				noSelfDamage            = true,
 				myGravity               = 0.18,
 				rgbcolor                = [[0.9 0.1 0.9]],
-				range                   = 150,
+				range                   = 300,
 				reloadtime              = 2,
 				rgbColor                = [[0.3 0 0.4]],
 				soundHit				= [[weapon/aoe_aura2]],
