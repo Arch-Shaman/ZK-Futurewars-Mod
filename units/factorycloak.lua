@@ -43,7 +43,7 @@ return {
 			shared_energy_gen = 1,
 			parent_of_plate   = [[platecloak]],
 			area_cloak = 1,
-			area_cloak_upkeep = 8,
+			area_cloak_upkeep = 2,
 			area_cloak_radius = 600,
 			area_cloak_decloak_distance = 75,
 			area_cloak_self = 0,
