@@ -230,7 +230,7 @@ return {
 			circlealpha        = 0.4,
 			circlegrowth       = 7,
 			flashalpha         = 0.5,
-			flashsize          = 180,
+			flashsize          = 45,
 			ttl                = 64,
 			color = {
 				[1]  = 1,
