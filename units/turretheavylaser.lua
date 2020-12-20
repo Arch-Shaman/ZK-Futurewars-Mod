@@ -52,7 +52,7 @@ return {
 			},
 
 		},
-		sightDistance                 = 730, -- Range*1.1 + 48 for radar overshoot
+		sightDistance                 = 796, -- Range*1.1 + 48 for radar overshoot
 		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
 		workerTime                    = 0,
@@ -74,8 +74,8 @@ return {
 			LASER = {
 				name                    = [[Medium Range Plasma Cannon]],
 				areaOfEffect            = 64,
-				burst                   = 6,
-				burstRate               = 6/30,
+				burst                   = 3,
+				burstRate               = 3/30,
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting 		= 0.8,
@@ -94,7 +94,7 @@ return {
 				noSelfDamage            = true,
 				range                   = 680,
 				heightBoostFactor 		= 1.1,
-				reloadtime              = 4.5,
+				reloadtime              = 2,
 				soundHit                = [[weapon/cannon/reaper_hit]],
 				soundStart              = [[weapon/cannon/cannon_fire4]],
 				turret                  = true,
