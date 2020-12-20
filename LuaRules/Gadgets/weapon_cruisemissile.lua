@@ -21,6 +21,7 @@ local targettypes = {}
 -- speed ups --
 targettypes[string.byte('g')] = 'ground'
 targettypes[string.byte('u')] = 'unit'
+targettypes["unit"] = string.byte('u')
 targettypes[string.byte('p')] = 'projectile'
 targettypes[string.byte('f')] = 'feature'
 local random = math.random

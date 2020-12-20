@@ -700,9 +700,9 @@
 		"helptext" : "The Jack is a melee assault walker with jumpjets. A few Jacks can easily level most fortification lines. Its small range and very low speed make it very vulnerable to skirmishers."
 	},
 	"vehscout" : {
-		"name" : "Dart",
-		"description" : "Disruptor Raider/Scout Rover",
-		"helptext" : "Cheap and fast, the Dart is deadly in the first minutes of the game if your opponent is caught off-guard. Use missile towers, LLTs or any quick units to stop them."
+		"name" : "Flare",
+		"description" : "Disruptive Scout",
+		"helptext" : "The Flare replaced the Dart in the early turn of the century. Now repurposed as a light drone carrier and disruptor, it enables other rovers to fight more effectively. Be warned though, it won't win battles on its own and is fairly costly."
 	},
 	"factoryhover" : {
 		"name" : "Hovercraft Platform",
