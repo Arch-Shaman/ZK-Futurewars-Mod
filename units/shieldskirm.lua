@@ -6,7 +6,7 @@ return {
 		activatewhenbuilt	   = true,
 		acceleration           = 0.75,
 		brakeRate              = 1.2,
-		buildCostMetal         = 120,
+		buildCostMetal         = 180,
 		buildPic               = [[shieldskirm.png]],
 		canGuard               = true,
 		canMove                = true,
@@ -75,6 +75,8 @@ return {
 					light_camera_height = 1600,
 					light_color = [[0.90 0.65 0.30]],
 					light_radius = 250,
+					isflak = 3,
+					flaktime = 1/30,
 				},
 				damage                  = {
 					default = 150,

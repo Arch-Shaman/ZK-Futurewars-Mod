@@ -105,7 +105,6 @@ return {
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
 					isFlak = 3,
-					flaktime = 8,
 					reaim_time = 8, -- COB
 					light_color = [[1.4 0.8 0.3]],
 					isFlak = 3,

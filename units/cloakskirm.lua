@@ -162,7 +162,7 @@ return {
 				texture3                = [[flare]],
 				texture4                = [[smallflare]],
 				thickness               = 2,
-				tolerance               = 10000,
+				tolerance               = 65536/4,
 				turret                  = true,
 				weaponType              = [[BeamLaser]],
 				weaponVelocity          = 1500,

@@ -69,7 +69,7 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 4,
 				craterMult              = 2.25,
-				burst					= 4,
+				burst					= 6,
 				burstrate				= 0.1,
 				customparams = {
 					burst = Shared.BURST_UNRELIABLE,
@@ -83,7 +83,7 @@ return {
         			light_radius = 250,
 				},
 				damage                  = {
-					default = 250.1,
+					default = 220.1,
 				},
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
 				fireStarter             = 70,
@@ -93,7 +93,7 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
 				model                   = [[wep_m_maverick.s3o]],
-				range                   = 800,
+				range                   = 700,
 				reloadtime              = 12,
 				smokeTrail              = true,
 				soundHit                = [[weapon/missile/rapid_rocket_hit]],

@@ -1156,7 +1156,7 @@
 	},
 	"turretheavylaser" : {
 		"name" : "Rampart",
-		"description" : "Medium Range Plasma Bombarder",
+		"description" : "Medium Range Plasma Bombarder (Needs 8E Grid)",
 		"helptext" : "The Rampant is a medium plasma turret. Its three rotating guns can kill almost any small unit, but its low rate of fire makes it vulnerable to swarms when unassisted."
 	},
 	"hoversonic" : {
