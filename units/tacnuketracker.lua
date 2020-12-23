@@ -1,7 +1,7 @@
 return { tacnuketracker = {
   unitname                      = [[tacnuketracker]],
   name                          = [[Eos]],
-  description                   = [[Tactical Nuke]],
+  description                   = [[Tactical Nuke (Developer)]],
   buildCostMetal                = 600,
   builder                       = false,
   buildingGroundDecalDecaySpeed = 30,
