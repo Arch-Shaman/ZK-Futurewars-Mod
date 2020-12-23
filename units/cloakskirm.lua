@@ -18,7 +18,7 @@ return {
 		stealth = true,
 		activateWhenBuilt = true,
 		initCloaked = true,
-		cloakCostMoving = 0.4,
+		cloakCostMoving = 1,
 		cloakCost    = 0.1,
 
 		customParams           = {

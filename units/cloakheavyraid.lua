@@ -17,8 +17,8 @@ return {
 		selectionVolumeOffsets = [[0 0 0]],
 		selectionVolumeScales  = [[32 32 32]],
 		selectionVolumeType    = [[ellipsoid]],
-		cloakCost              = 0.5,
-		cloakCostMoving        = 4.2,
+		cloakCost              = 0.3,
+		cloakCostMoving        = 3.0,
 		corpse                 = [[DEAD]],
 
 		customParams           = {

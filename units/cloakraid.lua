@@ -13,7 +13,7 @@ return {
 		activateWhenBuilt = true,
 		initCloaked = true,
 		cloakCostMoving = 0.3,
-		cloakCost    = 0.1,
+		cloakCost    = 0,
 		canPatrol              = true,
 		category               = [[LAND TOOFAST]],
 		collisionVolumeOffsets = [[0 -2 0]],

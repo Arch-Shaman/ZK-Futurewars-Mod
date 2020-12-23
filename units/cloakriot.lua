@@ -22,7 +22,7 @@ return {
 		activateWhenBuilt = true,
 		initCloaked = true,
 		cloakCostMoving = 3,
-		cloakCost    = 0.6,
+		cloakCost    = 0.3,
 		customParams           = {
 			modelradius       = [[7]],
 			cus_noflashlight  = 1,
