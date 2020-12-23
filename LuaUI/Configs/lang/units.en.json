@@ -365,9 +365,9 @@
 		"helptext" : "The Eclipse's imposing hull can weather significant punishment while steadily blazing to deliver its massive payload of devastation, but the unguided bomb has problems with hitting mobile targets, and big size makes it an easy target."
 	},
 	"cloakassault" : {
-		"name" : "Knight",
-		"description" : "Lightning Assault Bot",
-		"helptext" : "Slowly and steadily, groups of Knights can shrug off heavy fire as they make their way towards enemy fortifications, until they can field their short-range lightning cannon, which damages and stuns entrenched foes. Counter with anything that can reliably kite it, making sure that you don't get paralyzed (in which case you are as good as dead.)"
+		"name" : "Snare",
+		"description" : "Shock and Awe Ambusher",
+		"helptext" : "The Snare was designed along side the Sunbeam with the advances of plasma containment. Unlike its cousin the Sunbeam, the Snare uses its plasma containment unit to generate balls of lightning that can temporarily fry the electronics of enemy bots. Beware: it's mildly inaccurate and may end up hurting allies."
 	},
 	"energysolar" : {
 		"name" : "Solar Collector",
