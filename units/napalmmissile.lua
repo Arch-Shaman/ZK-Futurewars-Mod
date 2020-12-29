@@ -68,8 +68,6 @@ unitDef = {
 		--model                   = [[wep_b_fabby.s3o]],
 		damage                  = {
 			default = 25,
-			planes  = 25,
-			subs    = 2.5,
 		},
 		customParams              = {
       			setunitsonfire = "1",
@@ -101,14 +99,14 @@ unitDef = {
       name                    = [[Napalm Missile]],
       cegTag                  = [[napalmtrail]],
       areaOfEffect            = 512,
-	  craterAreaOfEffect      = 64,
+      craterAreaOfEffect      = 0,
       avoidFriendly           = false,
       collideFriendly         = false,
-      craterBoost             = 4,
-      craterMult              = 3.5,
+      craterBoost             = 0,
+      craterMult              = 0,
 
       customParams        	  = {
-		numprojectiles = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+		numprojectiles = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 		projectile = "napalmmissile_weapon2",
 		spreadradius = 4, -- used in clusters. OPTIONAL. Default: 100.
 		clustervec = "evenxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -171,7 +169,7 @@ unitDef = {
       craterMult              = 3.5,
 
       customParams        	  = {
-		numprojectiles = 20, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+		numprojectiles = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 		projectile = "napalmmissile_secondary",
 		spreadradius = 4, -- used in clusters. OPTIONAL. Default: 100.
 		clustervec = "randomxz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.

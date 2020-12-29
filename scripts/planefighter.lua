@@ -17,7 +17,7 @@ local flare = {
 
 
 local fast = 4
-local slow = 0.55
+local slow = 0.75
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitMoveTypeData = Spring.GetUnitMoveTypeData
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
@@ -71,6 +71,7 @@ function SpeedThread()
 			end
 			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", fast)
 			SetAirMoveTypeData(unitID, "maxAcc", 1)
+			GG.UpdateUnitAttributes(unitID)
 			Sleep(330)
 			reloading = false
 			block = false

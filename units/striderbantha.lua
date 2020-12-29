@@ -1,10 +1,10 @@
 local unitDef = {
 	unitname               = [[striderbantha]],
-	name                   = [[Paladin]],
+	name                   = [[Mogul]],
 	description            = [[Ultraheavy Siege]],
 	acceleration           = 0.1047,
 	brakeRate              = 0.2212,
-	buildCostMetal         = 10000,
+	buildCostMetal         = 20000,
 	builder                = false,
 	buildPic               = [[striderbantha.png]],
 	canGuard               = true,
@@ -95,7 +95,6 @@ local unitDef = {
       
 			damage                  = {
 				default = 1000,
-				subs    = 50,
 			},
 			edgeEffectiveness = 0.2,
 			explosionGenerator      = [[custom:TESS]],
@@ -164,8 +163,6 @@ local unitDef = {
 			},
 			damage                  = {
 				default = 0.00,
-				planes  = 0.00,
-				subs    = 0.00,
 			},
 			--explosionGenerator      = [[custom:flash1red]],
 			fireTolerance           = 8192, -- 45 degrees
@@ -202,8 +199,8 @@ local unitDef = {
 			accuracy                = 512,
 			avoidFeature            = false,
 			avoidFriendly           = false,
-			burst                   = 12,
-			burstrate               = 0.2,
+			burst                   = 8,
+			burstrate               = 0.7,
 			cegTag                  = [[tactrail]],
 			--commandFire             = true,
 			craterBoost             = 0,
@@ -211,21 +208,21 @@ local unitDef = {
 
 			customParams            = {
 				tracker = 1,
-				combatrange = 1500,
-				numprojectiles = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+				combatrange = 2000,
+				numprojectiles = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 				projectile = "striderbantha_secondary",
 				--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
 				clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 				use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-				spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
+				spawndist = 400, -- at what distance should we spawn the projectile(s)? REQUIRED.
 				timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-				vradius = "-20,9,-20,20,10,20", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+				vradius = "-8,2,-8,8,10,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 				light_color = [[0.65 0.65 0.18]],
 				light_radius = 380,
 				useheight = 1,
 			},
 			damage                  = {
-				default        = 1250,
+				default        = 5*1000,
 			},
 			dance                   = 20,
 			edgeEffectiveness       = 0.5,
@@ -239,7 +236,7 @@ local unitDef = {
 			model                   = [[banthamissile.s3o]],
 			noSelfDamage            = true,
 			range                   = 2900,
-			reloadtime              = 22,
+			reloadtime              = 30,
 			smokeTrail              = false,
 			soundHit                = [[explosion/ex_large9.wav]],
 			soundStart              = [[weapon/missile/bantha_launch.wav]],
@@ -252,9 +249,9 @@ local unitDef = {
 			turret                  = true,
 			weaponAcceleration      = 100,
 			weaponType              = [[StarburstLauncher]],
-			weaponTimer			  = 5,
+			weaponTimer			    = 5,
 			weaponVelocity          = 850,
-			--wobble                  = 18000,
+			--wobble                = 18000,
 		},	
 		LIGHTNING      = {
 			name                    = [[Plasmatic Bomb]],

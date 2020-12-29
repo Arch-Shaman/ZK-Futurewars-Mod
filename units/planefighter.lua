@@ -1,7 +1,7 @@
 local unitDef = {
 	unitname               = [[planefighter]],
-	name                   = [[Proliferator]],
-	description            = [[Fighter-Bomber]],
+	name                   = [[Deserter]],
+	description            = [[Early Response Fighter-Bomber]],
 	brakerate              = 0.4,
 	buildCostMetal         = 150,
 	buildPic               = [[planefighter.png]],
@@ -30,7 +30,7 @@ local unitDef = {
 		--refuelturnradius = [[80]],
 		requireammo    = [[1]],
 		fighter_pullup_dist = 300,
-
+		reammoseconds    = [[3]],
 		midposoffset   = [[0 3 0]],
 		modelradius    = [[5]],
 		refuelturnradius = [[80]],
@@ -109,7 +109,6 @@ local unitDef = {
 
 			damage                  = {
 				default = 4,
-				subs    = 0.25,
 			},
 
 			explosionGenerator      = [[custom:FLASHPLOSION]],
@@ -153,7 +152,7 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 55,
+				default = 60,
 			},
 			groundbounce = false,
 			--bounceslip = 0.25,
@@ -197,18 +196,18 @@ local unitDef = {
 			--spreadradius = 6, -- used in clusters. OPTIONAL. Default: 100.
 			clustervec = "randomxz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 			use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-			spawndist = 140, -- at what distance should we spawn the projectile(s)? REQUIRED.
+			spawndist = 100, -- at what distance should we spawn the projectile(s)? REQUIRED.
+			useheight = 1,
 			timeoutspawn = 0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-			vradius = 6, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+			vradius = 5, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 			--useheight = 1,
-			damage_vs_shield = [[165]],
 			--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 			--proxy = 1, -- check for nearby units?
 			--proxydist = 100, -- how far to check for units? Default: spawndist
 		},
 
 		damage                  = {
-			default = 100,
+			default = 60*3,
 		},
 
 		edgeEffectiveness		= 0.2,

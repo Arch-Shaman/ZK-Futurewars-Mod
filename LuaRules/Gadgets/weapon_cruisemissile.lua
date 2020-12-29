@@ -14,15 +14,22 @@ if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
 	return
 end
 
-local config = {}
+local config = {} -- stores the config for weapondefs.
 local missiles = {}
 local targettypes = {}
-local unit = string.byte('u')
+
+-- speed ups --
 targettypes[string.byte('g')] = 'ground'
-targettypes[unit] = 'unit'
+targettypes[string.byte('u')] = 'unit'
+targettypes["unit"] = string.byte('u')
 targettypes[string.byte('p')] = 'projectile'
 targettypes[string.byte('f')] = 'feature'
+local random = math.random
+local rad = math.rad
+local sin = math.sin
+local cos = math.cos
 
+local spGetGroundHeight = Spring.GetGroundHeight
 local spValidUnitID = Spring.ValidUnitID
 local spIsUnitInLos = Spring.IsUnitInLos
 local spGetUnitPosition = Spring.GetUnitPosition
@@ -34,12 +41,12 @@ local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spGetProjectilePosition = Spring.GetProjectilePosition
 local spEcho = Spring.Echo
 
-
+-- proccess config --
 for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
 	if curRef and curRef.cruisealt and curRef.cruisedist then -- found it!
-		config[i] = {altitude = tonumber(curRef.cruisealt), distance = tonumber(curRef.cruisedist), track = false}
+		config[i] = {altitude = tonumber(curRef.cruisealt), randomizationtype = curRef.cruise_randomizationtype or "?", distance = tonumber(curRef.cruisedist), track = false, airlaunched = curRef.airlaunched ~= nil, radius = tonumber(curRef.cruiserandomradius), permoffset = curRef.cruise_permoffset ~= nil, finaltracking = curRef.cruise_nolock == nil}
 		if curRef.cruisetracking then
 			config[i].track = true
 		end
@@ -61,6 +68,38 @@ local function GetTargetType(num)
 	return targettypes[num] or '?'
 end
 
+local function GetRandomizedDestination(weaponDefID, x, z)
+	local radius = config[weaponDefID].radius
+	if radius then
+		local distance = random(0, radius)
+		local heading = rad(random(0, 360))
+		local fx = x + (distance * sin(heading))
+		local fz = z + (distance * cos(heading))
+		return fx, spGetGroundHeight(fx, fz), fz
+	end
+end
+
+local function GetRandomizedOffset(weaponDefID)
+	local radius = config[weaponDefID].radius
+	if radius then
+		local distance = random(0, radius)
+		local heading = rad(random(0, 360))
+		local fx = (distance * sin(heading))
+		local fz = (distance * cos(heading))
+		return fx, fz
+	end
+end
+
+local function GetRandomizedOffsetOnCircle(weaponDefID)
+	local radius = config[weaponDefID].radius
+	if radius then
+		local heading = rad(random(0, 360))
+		local fx = (radius * sin(heading))
+		local fz = (radius * cos(heading))
+		return fx, fz
+	end
+end
+
 local function GetMissileDestination(num, allyteam)
 	local missile = missiles[num]
 	if missile.type == 'ground' then
@@ -78,9 +117,24 @@ local function GetMissileDestination(num, allyteam)
 		end
 	end
 end
-		
 
-local function IsMissileCruiseDone(id)
+local function ProccessOffset(wep, proID) -- send the offset request to the proper area. This way we don't have to update it anywhere else its being used.
+	local ox, oz
+	if config[wep].randomizationtype == "circular" then
+		ox, oz = GetRandomizedOffsetOnCircle(wep)
+	else
+		ox, oz = GetRandomizedOffset(wep)
+	end
+	if missiles[proID].offset then
+		missiles[proID].offset.x = ox
+		missiles[proID].offset.z = oz
+	else
+		missiles[proID].offset = {x = ox, z = oz}
+	end
+end
+
+
+local function IsMissileCruiseDone(id) -- other gadgets can look up if the missile is done with its cruise phase.
 	return not missiles[id] == nil
 end
 
@@ -115,7 +169,10 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local allyteam = spGetUnitAllyTeam(proOwnerID)
 		local _, py = spGetProjectilePosition(proID)
 		py = math.max(py, ty)
-		missiles[proID] = {target = target, type = type, cruising = false, takeoff = true, lastknownposition = last, configid = wep, started = false, allyteam = allyteam, wantedalt = py + config[wep].altitude}
+		missiles[proID] = {target = target, type = type, cruising = false, takeoff = true, lastknownposition = last, configid = wep, started = false, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0}
+		if config[wep].radius then
+			ProccessOffset(wep, proID)
+		end
 	end
 end
 
@@ -130,6 +187,15 @@ function gadget:GameFrame(f)
 			local x, y, z = GetMissileDestination(projectile, data.allyteam)
 			local projectiledef = data.configid
 			local missileconfig = config[projectiledef]
+			missiles[projectile].updates = data.updates + 1
+			if data.offset then
+				x = x + data.offset.x
+				z = z + data.offset.z
+				y = spGetGroundHeight(x, z)
+			end
+			if not missileconfig.permoffset and missileconfig.radius and data.updates%15 == 0 then
+				ProccessOffset(data.configid, projectile)
+			end
 			local wantedalt = data.wantedalt
 			local mindist = missileconfig.distance
 			local distance = Distance(cx, x, cz, z)
@@ -137,7 +203,7 @@ function gadget:GameFrame(f)
 			if data.takeoff then -- begin ascent phase
 				spSetProjectileTarget(projectile, cx, wantedalt, cz)
 			end
-			if data.takeoff and cy >= wantedalt - 20 then -- end ascent
+			if data.takeoff and ((cy >= wantedalt - 20 and not missileconfig.airlaunched) or (cy <= wantedalt + 20 and missileconfig.airlaunched)) then -- end ascent
 				missiles[projectile].takeoff = false
 				missiles[projectile].cruising = true
 			end
@@ -145,16 +211,14 @@ function gadget:GameFrame(f)
 				spSetProjectileTarget(projectile, x, cy, z)
 				if distance <= mindist then -- end of cruise phase
 					data.cruising = false
-					if missileconfig.track and data.type == "unit" then
-						spSetProjectileTarget(projectile, data.target, unit)
+					if missileconfig.track and missileconfig.finaltracking and data.type == "unit" then
+						spSetProjectileTarget(projectile, data.target, targettypes.unit)
 					else
 						spSetProjectileTarget(projectile, x, y, z)
 					end
 					missiles[projectile] = nil -- good night.
 				end
 			end
-			data.lastdistance = distance
 		end
 	end
 end
-
