@@ -105,10 +105,9 @@ end
 
 function TrackThread()
 	while true do
-		Spring.GetGameFrame()
-		if lastfire <= Spring.GetGameFrame() - 4 and tracking > 0 then
+		if Spring.GetGameFrame() > lastfire + 6 and tracking > 0 then
 			trackingcomplete = false
-			tracking = tracking - 4
+			tracking = tracking - 2
 			if tracking < 0 then
 				tracking = 0
 			end
