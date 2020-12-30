@@ -1,3 +1,5 @@
+local aimTime = 300 -- in frames
+
 return { turretsunlance = {
   unitname                      = [[turretsunlance]],
   name                          = [[Sunlance]],
@@ -18,6 +20,7 @@ return { turretsunlance = {
     keeptooltip    = [[any string I want]],
     neededlink     = 25,
     pylonrange     = 50,
+    specialreloadtime = tostring(aimTime),
   },
 
   explodeAs                     = [[LARGE_BUILDINGEX]],
@@ -67,6 +70,8 @@ return { turretsunlance = {
       avoidFeature            = false,
       avoidGround             = false,
       cegTag                  = [[vulcanfx]],
+      craterBoost             = 0,
+      craterMult              = 0,
 
       customParams            = {
         restrict_in_widgets = 1,
@@ -77,7 +82,7 @@ return { turretsunlance = {
         
         light_color = [[2.4 1.5 0.6]],
         
-        aimdelay = 300, -- in frames
+        aimdelay = aimTime,
       },
       
       damage                  = {
