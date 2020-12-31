@@ -64,42 +64,37 @@ return { turretsunlance = {
   weaponDefs                    = {
 
     PLASMA = {
-      name                    = [[Very Heavy Plasma Cannon]],
+      name                    = [[Precision Plasma Cannon]],
       accuracy                = 0,
-      areaOfEffect            = 176,
+      areaOfEffect            = 32,
       avoidFeature            = false,
-      avoidGround             = false,
-      cegTag                  = [[vulcanfx]],
+      avoidGround             = true,
       craterBoost             = 0,
       craterMult              = 0,
 
       customParams            = {
         restrict_in_widgets = 1,
-
-        gatherradius = [[128]],
-        smoothradius = [[96]],
-        smoothmult   = [[0.4]],
-        
-        light_color = [[2.4 1.5 0.6]],
-        
         aimdelay = aimTime,
+        burst = Shared.BURST_RELIABLE,
+        light_color = [[3 2.33 1.5]],
+        light_radius = 150,
       },
       
       damage                  = {
-        default = 2002.4,
+        default = 1001.2,
         subs    = 100,
       },
 
-      explosionGenerator      = [[custom:lrpc_expl]],
+      explosionGenerator      = [[custom:DOT_Pillager_Explo]],
       fireTolerance           = 1820, -- 10 degrees
       impulseBoost            = 0.5,
       impulseFactor           = 0.2,
       interceptedByShieldType = 1,
       noSelfDamage            = true,
       range                   = 5600,
-      reloadtime              = 0.8,
-      soundHit                = [[weapon/cannon/lrpc_hit]],
-      soundStart              = [[weapon/cannon/big_begrtha_gun_fire]],
+      reloadtime              = 2,
+      soundHit                = [[weapon/cannon/supergun_bass_boost]],
+      soundStart              = [[explosion/ex_large5]],
       turret                  = true,
       weaponType              = [[Cannon]],
       weaponVelocity          = 880,

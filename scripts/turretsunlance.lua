@@ -15,7 +15,6 @@ end
 local SIG_AIM = 1
 
 function script.AimWeapon(num, heading, pitch)
-  Spring.Log("Sunlance", "warning", "aiming weapon at " .. heading .. ", " .. pitch) -- TODO remove once over
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
 	Turn(turret, y_axis, heading, math.rad(80))
