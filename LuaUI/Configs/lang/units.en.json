@@ -165,9 +165,9 @@
 		"helptext" : "The Flail launches a single large, short-medium range SAM that does heavy damage."
 	},
 	"cloakarty" : {
-		"name" : "Sling",
-		"description" : "Light Artillery Bot",
-		"helptext" : "The Sling has a long range plasma cannon that allows indirect fire over obstacles, and outranges static defenses up to heavy laser towers. Although effective versus mobile units, it should be guarded in order to prevent raiders and other fast units from closing range."
+		"name" : "Sparky",
+		"description" : "Light EMP Artillery Bot",
+		"helptext" : "The Sparky replaced the Sling after the shift in Cloakbot doctrine. Now armed with an annoyingly EMP, swarms of Slings can effectively gun down defences. However, its armor has degraded significantly in favor of speed."
 	},
 	"chickend" : {
 		"name" : "Chicken Tube",
