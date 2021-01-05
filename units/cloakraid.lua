@@ -9,6 +9,7 @@ return {
 		buildPic               = [[cloakraid.png]],
 		canGuard               = true,
 		canMove                = true,
+		canCloak			   = true,
 		stealth = true,
 		activateWhenBuilt = true,
 		initCloaked = true,

@@ -10,6 +10,7 @@ return {
 		canGuard               = true,
 		canMove                = true,
 		canPatrol              = true,
+		canCloak			   = true,
 		category               = [[LAND]],
 		collisionVolumeOffsets = [[0 -5 0]],
 		collisionVolumeScales  = [[26 39 26]],
