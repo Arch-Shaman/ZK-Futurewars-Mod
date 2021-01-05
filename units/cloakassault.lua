@@ -108,7 +108,7 @@ return {
 				impulseFactor           = 0,
 				intensity               = 12,
 				interceptedByShieldType = 1,
-				paralyzeTime            = 0.5,
+				paralyzeTime            = 1,
 				range                   = 320,
 				reloadtime              = 5,
 				size = 0.3,
