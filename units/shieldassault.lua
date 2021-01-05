@@ -125,7 +125,7 @@ return {
 				interceptedByShieldType = 1,
 				range                   = 420,
 				reloadtime              = 3 + 1/3,
-				soundHit                = [[shotgun_impactv5]],
+				soundHit                = [[impacts/shotgun_impactv5]],
 				soundStart              = [[weapon/cannon/cannon_fire4]],
 				turret                  = true,
 				weaponType              = [[Cannon]],
