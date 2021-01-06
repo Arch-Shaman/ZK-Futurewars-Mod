@@ -162,7 +162,7 @@ return {
 				noSelfDamage            = true,
 				range                   = 280,
 				reloadtime              = 1.7 + 2/30,
-				soundHit                = [[weapon/cluster_light]],
+				soundHit                = [[weapon/clusters/cluster_light]],
 				soundStart              = [[weapon/cannon/outlaw_gun]],
 				soundStartVolume        = 3,
 				turret                  = true,
