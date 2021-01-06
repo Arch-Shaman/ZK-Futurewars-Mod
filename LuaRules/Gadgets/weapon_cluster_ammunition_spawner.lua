@@ -115,6 +115,9 @@ for i=1, #WeaponDefs do
 					else
 						config[i]["launcher"] = false
 					end
+					if curRef.timeddeploy then
+						config[i].timer = tonumber(curRef.timeddeploy) or 5
+					end
 					if type(curRef.timeoutspawn) ~= "string" then
 						config[i]["timeoutspawn"] = 1
 					else
@@ -374,6 +377,13 @@ local function CheckProjectile(id)
 		projectiles[id] = nil
 		return
 	end
+	if projectiles[id].ttl then -- timed weapons don't need anything fancy.
+		if projectiles[id].ttl <= 0 then
+			SpawnSubProjectiles(id,wd)
+		else
+			return
+		end
+	end
 	local wd = projectiles[id].def
 	projectiles[id].intercepted = spGetProjectileIsIntercepted(id)
 	local isMissile = false -- check for missile status. When the missile times out, the subprojectiles will be spawned if allowed.
@@ -457,7 +467,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	end
 	if config[weaponDefID] and not projectiles[proID] then
 		debugEcho("Registered projectile " .. proID)
-		projectiles[proID] = {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetUnitTeam(proOwnerID)}
+		projectiles[proID] = {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetUnitTeam(proOwnerID), ttl = config[i].timer}
 		if config[weaponDefID]["alwaysvisible"] then
 			spSetProjectileAlwaysVisible(proID,true)
 		end
@@ -473,6 +483,9 @@ end
 
 function gadget:GameFrame(f)
 	for id, _ in pairs(projectiles) do
+		if projectiles[id].ttl then
+			projectiles[id].ttl = projectiles[id].ttl - 1
+		end
 		CheckProjectile(id)
 	end
 end
