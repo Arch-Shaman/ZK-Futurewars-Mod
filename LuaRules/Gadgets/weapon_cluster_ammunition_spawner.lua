@@ -382,6 +382,7 @@ local function CheckProjectile(id)
 		projectiles[id] = nil
 		return
 	end
+	local wd = projectiles[id].def
 	if projectiles[id].ttl then -- timed weapons don't need anything fancy.
 		if projectiles[id].ttl <= 0 then
 			SpawnSubProjectiles(id,wd)
@@ -389,7 +390,6 @@ local function CheckProjectile(id)
 			return
 		end
 	end
-	local wd = projectiles[id].def
 	spEcho("wd: " .. tostring(wd))
 	projectiles[id].intercepted = spGetProjectileIsIntercepted(id)
 	local isMissile = false -- check for missile status. When the missile times out, the subprojectiles will be spawned if allowed.
