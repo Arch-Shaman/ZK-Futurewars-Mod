@@ -560,9 +560,9 @@
 		"helptext" : "The somewhat suicidal Claymore is armed with a heavy depthcharge launcher and has no qualms about dropping it on land."
 	},
 	"gunshipkrow" : {
-		"name" : "Krow",
-		"description" : "Flying Fortress",
-		"helptext" : "The Krow may be expensive and ponderous, but its incredible armor allows it to fly into all but the thickest anti-air defenses and engage enemies with its three laser cannons. Best of all, it can unleash a deluge of carpet bombs to devastate anything underneath it."
+		"name" : "Purifier",
+		"description" : "Flying Battlestation",
+		"helptext" : "The expensive and extremely durable Purifier was built off a krow chassis. Now sporting an even heavier armament, the Purifier's sole purpose is to destroy anything that stands in front or under it. Armed with 3 scatterguns and a clusterbomb autofab system, it is sure to ruin the day of ground loving plebs that dwell below it."
 	},
 	"neebcomm" : {
 		"name" : "Neeb Comm",

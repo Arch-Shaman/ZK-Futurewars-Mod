@@ -1,8 +1,8 @@
 return { 
 	gunshipkrow = {
 		unitname               = [[gunshipkrow]],
-		name                   = [[Krow]],
-		description            = [[Flying Fortress]],
+		name                   = [[Purifier]],
+		description            = [[Flying Battlestation]],
 		acceleration           = 0.09,
 		activateWhenBuilt      = true,
 		airStrafe              = 0,
@@ -49,7 +49,7 @@ return {
 		sfxtypes               = {
 
 			explosiongenerators = {
-				[[custom:BEAMWEAPON_MUZZLE_RED]],
+				[[custom:beamweapon_muzzle_green]],
 				[[custom:DOT_Pillager_Explo]],
 			},
 
@@ -79,7 +79,7 @@ return {
 			},
 
 			{
-				def                = [[CLUSTERBOMB]],
+				def                = [[CLUSTERBOMBER]],
 				mainDir            = [[0 0 1]],
 				maxAngleDif        = 360,
 			},
@@ -96,14 +96,19 @@ return {
 		weaponDefs             = {
 
 			KROWLASER  = {
-				name                    = [[Laserbeam]],
-				areaOfEffect            = 8,
+				name                    = [[High Intensity Scattergun]],
+				areaOfEffect            = 30,
 				avoidFeature            = false,
 				canattackground         = true,
 				collideFriendly         = false,
-				coreThickness           = 0.5,
+				coreThickness           = 0.8,
 				craterBoost             = 0,
 				craterMult              = 0,
+				projectiles				= 7,
+				burst					= 2,
+				burstRate				= 10/30,
+				sprayangle				= 1390,
+				edgeeffectiveness		= 0.05,
 
 				customParams        = {
 					light_camera_height = 1800,
@@ -114,27 +119,68 @@ return {
 					default = 37.8,
 				},
 
-				duration                = 0.02,
-				explosionGenerator      = [[custom:BEAMWEAPON_HIT_RED]],
+				duration                = 0.1,
+				explosionGenerator      = [[custom:beamlaser_hit_emerald]],
 				fireStarter             = 50,
-				impactOnly              = true,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
-				range                   = 450,
-				reloadtime              = 0.2,
-				rgbColor                = [[1 0 0]],
-				soundHit                = [[weapon/laser/lasercannon_hit]],
-				soundStart              = [[weapon/laser/heavylaser_fire2]],
+				range                   = 620,
+				reloadtime              = 1.8,
+				rgbColor                = [[0.043 0.7 0.274]],
+				soundHit                = [[weapon/laser/emerald_hit]],
+				soundStart              = [[weapon/laser/emerald_fire]],
 				soundStartVolume        = 0.7,
-				soundTrigger            = true,
-				thickness               = 3.25,
+				soundTrigger            = false,
+				thickness               = 4.25,
 				tolerance               = 10000,
 				turret                  = true,
 				weaponType              = [[LaserCannon]],
-				weaponVelocity          = 2300,
+				weaponVelocity          = 880,
 			},
+			CLUSTERBOMBER = {
+				name                    = [[Heavy Cluster Bomb]],
+				accuracy                = 200,
+				areaOfEffect            = 128,
+				burst                   = 45,
+				burstRate               = 0.066, -- real value in script; here for widgets
+				commandFire             = true,
+				craterBoost             = 0,
+				craterMult              = 0,
+				customParams			= {
+					numprojectiles = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					projectile = "gunshipkrow_clusterbomb",
+					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
+					clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
+					proxy = 0, -- check for nearby units?
+					useheight = 1,
+					spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					vradius = "-12,0,-12,12,4,12", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					groundimpact = 1,
+				},
+				damage                  = {
+					default = 250*4,
+				},
 
+				explosionGenerator      = [[custom:WEAPEXP_PUFF]],
+				fireStarter             = 180,
+				impulseBoost            = 0,
+				impulseFactor           = 0.2,
+				interceptedByShieldType = 2,
+				model                   = [[hovermissile.s3o]],
+				range                   = 200,
+				reloadtime              = 30, -- if you change this redo the value in oneclick_weapon_defs EMPIRICALLY
+				smokeTrail              = true,
+				soundHit                = [[weapon/cannon/cannonfire_001]],
+				soundHitVolume          = 8,
+				soundStart              = [[weapon/cannon/mini_cannon]],
+				soundStartVolume        = 2,
+				sprayangle              = 1800,
+				turret                  = true,
+				weaponType              = [[Cannon]],
+				weaponVelocity          = 200,
+			},
 			CLUSTERBOMB = {
 				name                    = [[Cluster Bomb]],
 				accuracy                = 200,
@@ -142,8 +188,8 @@ return {
 				burst                   = 75,
 				burstRate               = 0.066, -- real value in script; here for widgets
 				commandFire             = true,
-				craterBoost             = 1,
-				craterMult              = 2,
+				craterBoost             = 10,
+				craterMult              = 3,
 
 				damage                  = {
 					default = 250,
