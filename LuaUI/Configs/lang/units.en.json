@@ -15,9 +15,9 @@
 		"helptext" : "The Longbow replaced the Harpy after a paradigm shift demanded further air support. The Longbow fills a role between airborn skirmisher and artillery. Its rockets are fairly inaccurate and large groups can saturate an area, but beware: up close, it's inaccurate."
 	},
 	"factorycloak" : {
-		"name" : "Cloakbot Factory",
+		"name" : "Ambusher Factory",
 		"description" : "Produces Cloaked, Mobile Robots",
-		"helptext" : "Emphasizing guile over brute force, the Cloakbot Factory makes good use of stealth, mobility and EMP weapons to strike at the enemy's weak points. Key units:  Glaive, Ronin, Reaver, Knight, Sling"
+		"helptext" : "Emphasizing stealth and burst damage over brute force and durability, the Ambusher Factory makes good use of stealth, mobility and EMP weapons to strike at the enemy's weak points. Comes equipped with a strong radar jammer and cloakfield. Key units:  Glaive, Ronin, Reaver, Knight, Sling"
 	},
 	"amphlaunch" : {
 		"name" : "Lobster",
@@ -385,7 +385,7 @@
 		"helptext" : "The Shield Bot Factory is tough yet flexible and the factory itself comes with a big area shield, useful for recharging other shield units. Its units are built to take the pain and dish it back out, without compromising mobility. Clever use of unit combos is well rewarded. Key units: Bandit, Thug, Outlaw, Rogue, Racketeer."
 	},
 	"platecloak" : {
-		"name" : "Cloakbot Plate",
+		"name" : "Ambusher Plate",
 		"description" : "Parallel Unit Production",
 		"helptext" : "Construction plates increase the production capacity of nearby factories by acting as an independent build queue. Plates are the cheapest way to increase unit production, eschewing the versatility of Caretaker for greater efficiency. Be warned, a plate will not function without a nearby factory of the appropriate type."
 	},
