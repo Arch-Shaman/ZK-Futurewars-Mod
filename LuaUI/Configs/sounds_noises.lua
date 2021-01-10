@@ -974,6 +974,16 @@ local sounds = {
 			[1] = "bomber_select",
 		},
 	},
+	bombercluster = {
+		ok = {
+			volume = 0.72,
+			[1] = "bomber_move",
+		},
+		select = {
+			volume = 1.1,
+			[1] = "bomber_select",
+		},
+	},
 	bomberstrike = {
 		ok = {
 			volume = 0.72,

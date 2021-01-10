@@ -909,6 +909,11 @@
 		"description" : "Black Hole Launcher",
 		"helptext" : "The Placeholder is a support unit. Its projectiles create a vacuum that sucks in nearby units, clustering and holding them in place to help finish them off."
 	},
+	"bombercluster" : {
+		"name" : "Divinity",
+		"description" : "Cluster Bomber",
+		"helptext" : "The Divinity's sole purpose is to deliver its payload of 3 cluster bombs to a position where it will rain destruction upon the enemy. Very useful against enemy defenses and clusters of slow to medium speed units."
+	},
 	"vehcon" : {
 		"name" : "Mason",
 		"description" : "Construction Rover",
