@@ -106,6 +106,7 @@ return {
 				craterMult              = 0,
 				projectiles				= 7,
 				burst					= 2,
+				cylinderTargeting		= 1,
 				burstRate				= 10/30,
 				sprayangle				= 1390,
 				edgeeffectiveness		= 0.05,
