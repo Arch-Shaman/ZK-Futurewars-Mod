@@ -915,9 +915,9 @@
 		"helptext" : "The Divinity's sole purpose is to deliver its payload of 3 cluster bombs to a position where it will rain destruction upon the enemy. Very useful against enemy defenses and clusters of slow to medium speed units."
 	},
 	"vehcon" : {
-		"name" : "Mason",
+		"name" : "Bloom",
 		"description" : "Construction Rover",
-		"helptext" : "Highly mobile and capable of taking a beating, the Mason can quickly expand over a large area. Also comes with defensive drones to ensure its safety."
+		"helptext" : "Highly mobile and capable of taking a beating, the Bloom can quickly expand over a large area. Also comes with defensive drones to ensure its safety."
 	},
 	"amphtele" : {
 		"name" : "Djinn",
