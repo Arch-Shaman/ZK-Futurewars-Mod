@@ -80,24 +80,13 @@ local carrierDefNames = {
 		{
 			drone = UnitDefNames.dronelight.id, 
 			reloadTime = 10, 
-			maxDrones = 2, 
+			maxDrones = 3, 
 			spawnSize = 1, 
 			range = 300,
 			maxChaseRange = 600,
 			buildTime = 15, 
 			maxBuild = 1,
 			offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
-		},
-		{
-			drone = UnitDefNames.droneheavyslow.id,
-			reloadTime = 40,
-			maxDrones = 1,
-			spawnSize = 1,
-			range = 300,
-			maxChaseRange = 600,
-			buildTime = 15,
-			maxBuild = 1,
-			offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0} --shift colvol to avoid collision.
 		},
 	},
 	plateveh = {
