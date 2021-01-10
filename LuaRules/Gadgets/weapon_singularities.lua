@@ -52,6 +52,7 @@ local spSetFeatureMoveControl = Spring.SetFeatureMoveCtrl
 local spGetUnitMass = Spring.GetUnitMass
 local spGetFeatureMass = Spring.GetFeatureMass
 local spEcho = Spring.Echo
+local spGetUnitDefID = Spring.GetUnitDefID
 local gravity = Game.gravity
 
 local projectiles = {}
@@ -142,31 +143,34 @@ local function ProcessUnits(sx, sy, sz, radius, strength, list, rev)
 		local px, py, pz = spGetUnitPosition(unitID)
 		local ex, ey, ez = 0, 0, 0 -- effect's velocity change
 		local mass = spGetUnitMass(unitID)
-		if rev then
-			ex = GetFinalEffectStrength(radius, strength, abs(sx - px), mass)
-			ey = GetFinalEffectStrength(radius, strength, abs(sy - py), mass)
-			ez = GetFinalEffectStrength(radius, strength, abs(sz - pz), mass)
-		else
-			ex = GetEffectStrength(radius, strength, abs(sx - px), mass)
-			ey = GetEffectStrength(radius, strength, abs(sy - py), mass)
-			ez = GetEffectStrength(radius, strength, abs(sz - pz), mass)
+		local unitdefID = spGetUnitDefID(unitID)
+		if not (UnitDefs[unitdefID].isBuilding or UnitDefs[unitdefID].isImmobile) then
+			if rev then
+				ex = GetFinalEffectStrength(radius, strength, abs(sx - px), mass)
+				ey = GetFinalEffectStrength(radius, strength, abs(sy - py), mass)
+				ez = GetFinalEffectStrength(radius, strength, abs(sz - pz), mass)
+			else
+				ex = GetEffectStrength(radius, strength, abs(sx - px), mass)
+				ey = GetEffectStrength(radius, strength, abs(sy - py), mass)
+				ez = GetEffectStrength(radius, strength, abs(sz - pz), mass)
+			end
+			if sx - px < 0 then
+				ex = - ex
+			end
+			if sy - py < 0 then
+				ey = - ey
+			end
+			if sz - pz < 0 then
+				ez = -ez
+			end
+			--spEcho("Wanted velocity: " .. ex .. "," .. ey .. "," .. ez)
+			if vy < 0.18 then
+				Spring.AddUnitImpulse(unitID, 0, 1, 0) -- 'unglue' the unit
+			end
+			spSetUnitVelocity(unitID, ex + vx, ey + vy, ez + vz)
+			GG.SetUnitFallDamageImmunity(unitID, spGetGameFrame() + 2)
+			--spSetUnitVelocity(unitID, vx, vy, vz)
 		end
-		if sx - px < 0 then
-			ex = - ex
-		end
-		if sy - py < 0 then
-			ey = - ey
-		end
-		if sz - pz < 0 then
-			ez = -ez
-		end
-		--spEcho("Wanted velocity: " .. ex .. "," .. ey .. "," .. ez)
-		if vy < 0.18 then
-			Spring.AddUnitImpulse(unitID, 0, 1, 0) -- 'unglue' the unit
-		end
-		spSetUnitVelocity(unitID, ex + vx, ey + vy, ez + vz)
-		GG.SetUnitFallDamageImmunity(unitID, spGetGameFrame() + 2)
-		--spSetUnitVelocity(unitID, vx, vy, vz)
 	end
 end
 
