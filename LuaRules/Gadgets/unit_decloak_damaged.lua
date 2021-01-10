@@ -168,6 +168,24 @@ end
 
 GG.PokeDecloakUnit = PokeDecloakUnit
 
+local function BlockRecloaking(unitID, frames)
+	if recloakUnit[unitID] and recloakUnit < frames then
+		recloakUnit[unitID] = frames
+	elseif recloakUnit[unitID] == nil then
+		recloakUnit[unitID] = frames
+		spSetUnitRulesParam(unitID, "cannotcloak", 1, alliedTrueTable)
+		spSetUnitCloak(unitID, 0)
+	end
+end
+
+GG.BlockCloakForUnit = BlockRecloaking
+
+local function GetTimeToRecloak(unitID)
+	return recloakUnit[unitID]
+end
+
+GG.GetTimeToRecloak = GetTimeToRecloak
+
 function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer,
                             weaponID, attackerID, attackerDefID, attackerTeam)
 	if  (damage > 0 or spIsWeaponPureStatusEffect(weaponID)) and
