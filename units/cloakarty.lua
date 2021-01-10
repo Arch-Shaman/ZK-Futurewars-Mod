@@ -107,7 +107,7 @@ return {
 				reloadtime              = 6,
 				size					= 0.01,
 				soundHit                = [[weapon/cannon/emp_arty_hit]],
-				soundStart              = [[weapon/cannon/emp_arty_fire]],
+				soundStart              = [[weapon/cannon/emparty_fire]],
 				turret                  = true,
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 220,
