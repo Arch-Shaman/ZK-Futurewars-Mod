@@ -1,4 +1,4 @@
-return {
+unitDef = {
 	unitname               = [[striderrazorback]],
 	name                   = [[Razorback]],
 	description            = [[Assault/Riot Strider]],
@@ -152,7 +152,7 @@ return {
 			lineOfSight             = true,
 			noSelfDamage            = true,
 			range                   = 400,
-			reloadtime              = 0.03,
+			reloadtime              = 0.03333334,
 			renderType              = 4,
 			rgbColor                = [[1 0.95 0.4]],
 			separation              = 1.5,
@@ -233,3 +233,5 @@ return {
 		},
 	},
 }
+
+return { striderrazorback = unitDef }
