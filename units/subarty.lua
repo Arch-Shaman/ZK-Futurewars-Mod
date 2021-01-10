@@ -85,7 +85,7 @@ return {
 				burnblow                = true,
 				canattackground         = false,
 				collideFriendly         = false,
-				cegtag				    = [[custom:ariel_splosh]],
+				cegtag				    = [[serpent_trail]],
 				craterBoost             = 0,
 				craterMult              = 0,
 
@@ -93,7 +93,7 @@ return {
 					default = 900.5,
 				},
 
-				explosionGenerator      = [[custom:TORPEDO_HIT]],
+				explosionGenerator      = [[custom:serpent_hit]],
 				fireSubmersed           = true,
 				flightTime              = 20,
 				impactOnly              = true,
@@ -116,7 +116,7 @@ return {
 				waterWeapon             = true,
 				weaponAcceleration      = 25,
 				weaponType              = [[TorpedoLauncher]],
-				weaponVelocity          = 250,
+				weaponVelocity          = 120,
 			},
 		},
 		featureDefs            = {
