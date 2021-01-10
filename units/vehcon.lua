@@ -5,7 +5,7 @@ return {
 		description            = [[Construction Rover]],
 		acceleration           = 0.4,
 		brakeRate              = 18.0,
-		buildCostMetal         = 180,
+		buildCostMetal         = 150,
 		buildDistance          = 180,
 		builder                = true,
 
