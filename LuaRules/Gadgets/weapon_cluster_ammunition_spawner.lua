@@ -390,7 +390,7 @@ local function CheckProjectile(id)
 			return
 		end
 	end
-	spEcho("wd: " .. tostring(wd))
+	--spEcho("wd: " .. tostring(wd))
 	projectiles[id].intercepted = spGetProjectileIsIntercepted(id)
 	local isMissile = false -- check for missile status. When the missile times out, the subprojectiles will be spawned if allowed.
 	if WeaponDefs[wd]["flightTime"] ~= nil and WeaponDefs[wd].type == "Missile" then
