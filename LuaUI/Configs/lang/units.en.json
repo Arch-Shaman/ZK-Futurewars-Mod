@@ -712,7 +712,7 @@
 	"gunshipassault" : {
 		"name" : "Dusk",
 		"description" : "Heavy Canister Assault/Raider",
-		"helptext" : "The Black Dusk fires two canister rockets that airburst over targets. It has decent armor (much more than its predecessor the Revenant) but costs slightly more due to the complex missile nanofabricator. While the fragmentation rounds are excellent against heavies, they tend to lose out against raiders."
+		"helptext" : "The Black Dusk fires two canister rockets that airburst over targets. It has decent armor (much more than its predecessor, the Revenant) but costs slightly more due to the complex missile nanofabricator. While the fragmentation rounds are excellent against heavies, they tend to lose out against raiders."
 	},
 	"tankriot" : {
 		"name" : "Ogre",
