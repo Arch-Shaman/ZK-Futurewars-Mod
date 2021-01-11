@@ -382,7 +382,7 @@ local function CheckProjectile(id)
 		projectiles[id] = nil
 		return
 	end
-	local wd = projectiles[id].def
+	local wd = projectiles[id].def or spGetProjectileDefID(id)
 	if projectiles[id].ttl then -- timed weapons don't need anything fancy.
 		if projectiles[id].ttl <= 0 then
 			SpawnSubProjectiles(id,wd)
