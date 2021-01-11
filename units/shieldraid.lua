@@ -84,7 +84,7 @@ return {
 				},
       
 				damage                  = {
-					default = 7.51,
+					default = 6.8,
 				},
 
 				duration                = 2/30,
