@@ -163,14 +163,14 @@ return {
 					cruise_nolock = 1,
 					cruisetracking = 1,
 					--CAS--
-					numprojectiles = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile = "nebula_ag",
-					clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+					numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					projectile1 = "nebula_ag",
+					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 160, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius = "-4,0,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					--spreadradius = 6, -- used in clusters. OPTIONAL. Default: 100.
+					vradius1 = "-4,0,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					--spreadradius1 = 6, -- used in clusters. OPTIONAL. Default: 100.
 					--useheight = 1,
 					--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					--proxy = 1, -- check for nearby units?
@@ -236,14 +236,14 @@ return {
 					cruise_nolock = 1,
 					cruisetracking = 1,
 					--CAS--
-					numprojectiles = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile = "nebula_ag",
-					clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+					numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					projectile1 = "nebula_ag",
+					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 160, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius = "-4,0,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					--spreadradius = 6, -- used in clusters. OPTIONAL. Default: 100.
+					vradius1 = "-4,0,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					--spreadradius1 = 6, -- used in clusters. OPTIONAL. Default: 100.
 					--useheight = 1,
 					--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					--proxy = 1, -- check for nearby units?
@@ -324,14 +324,14 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				customParams = {
-					numprojectiles = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile = "nebula_fragment",
-					--spreadradius = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+					numprojectiles1 = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					projectile1 = "nebula_fragment",
+					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
+					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 185, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius = "-6,0,-6,6,1,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-6,0,-6,6,1,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?	
 				},

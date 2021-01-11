@@ -78,14 +78,14 @@ return {
 					light_camera_height = 1600,
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 110,
-					numprojectiles = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile = "staticheavyarty_tritary",
-					--spreadradius = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+					numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					projectile1 = "staticheavyarty_tritary",
+					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
+					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 600, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius = "-8,-2,-8,8,3,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-8,-2,-8,8,3,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
 				},
 				
@@ -166,13 +166,13 @@ return {
 					gatherradius = [[128]],
 					smoothradius = [[96]],
 					smoothmult   = [[0.4]],
-					numprojectiles = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile = "staticheavyarty_secondary",
-					--spreadradius = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					projectile1 = "staticheavyarty_secondary",
+					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
+					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 2200, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius = "-5,-5,-5,5,5,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-5,-5,-5,5,5,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
 					light_camera_height = 1500,
 					light_color = [[0.8 0.76 0.38]],

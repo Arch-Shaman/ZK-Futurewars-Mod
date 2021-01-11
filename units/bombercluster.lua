@@ -125,15 +125,15 @@ return {
 					light_color = [[1.1 0.9 0.45]],
 					light_radius = 220,
 					--torp_underwater = [[bomberprec_a_torpedo]],
-					numprojectiles = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile = "bombercluster_bomblet",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+					numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					projectile1 = "bombercluster_bomblet",
+					--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
+					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					proxy = 0, -- check for nearby units?
 					useheight = 1,
 					spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius = "-6,0,-6,6,2,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-6,0,-6,6,2,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1,
 					reaim_time = 60, -- see what the hell this does.
 				},
