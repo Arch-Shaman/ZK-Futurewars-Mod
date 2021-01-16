@@ -1110,9 +1110,9 @@
 		"helptext" : "The diminutive Kodachi is a unique raider. Its small yet agile chassis has enough armor and speed to get it close enough to fire its weapon, a napalm bomb. The Kodachi should run in, get a shot off, and withdraw before it takes significant damage. Damaged Kodachis regenerate out of combat."
 	},
 	"cloakcon" : {
-		"name" : "Conjurer",
+		"name" : "Mirage",
 		"description" : "Cloaked Construction Bot",
-		"helptext" : "The Conjurer packs a short-ranged jammer and a cloaking device for stealthy expansion and base maintenance. It can also enable a short-range cloaking field, which unlike the aforementioned abilities costs energy to maintain."
+		"helptext" : "The Mirage packs a medium-ranged jammer and a cloaking device for stealthy expansion and base maintenance. It can also enable a medium-range cloaking field, which unlike the aforementioned abilities costs energy to maintain."
 	},
 	"turretsunlance" : {
 		"name" : "Sunlance",
