@@ -7,9 +7,9 @@ return {
 		buildCostMetal                = 500,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
-		buildingGroundDecalSizeX      = 4,
-		buildingGroundDecalSizeY      = 4,
-		buildingGroundDecalType       = [[staticheavyradar_aoplane.dds]],
+		buildingGroundDecalSizeX      = 9,
+		buildingGroundDecalSizeY      = 9,
+		buildingGroundDecalType       = [[staticenergyrtg_aoplane.dds]],
 		buildPic                      = [[staticenergyrtg.png]],
 		category                      = [[UNARMED FLOAT]],
 		collisionVolumeOffsets        = [[0 -8 0]],
@@ -18,7 +18,6 @@ return {
 		corpse                        = [[DEAD]],
 
 		customParams                  = {
-			modelradius    = [[16]],
 			removewait     = 1,
 			removestop     = 1,
 			priority_misc  = 2, -- High
@@ -28,9 +27,9 @@ return {
 		},
 		explodeAs                     = [[SMALL_BUILDINGEX]],
 		floater                       = true,
-		footprintX                    = 2,
-		footprintZ                    = 2,
-		iconType                      = [[advradar]],
+		footprintX                    = 6,
+		footprintZ                    = 6,
+		iconType                      = [[staticenergyrtg]],
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
