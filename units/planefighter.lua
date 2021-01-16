@@ -152,7 +152,7 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 60,
+				default = 150,
 			},
 			groundbounce = false,
 			--bounceslip = 0.25,
@@ -199,7 +199,7 @@ local unitDef = {
 			spawndist = 100, -- at what distance should we spawn the projectile(s)? REQUIRED.
 			useheight = 1,
 			timeoutspawn = 0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-			vradius = 5, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+			vradius = 3, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 			--useheight = 1,
 			--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 			--proxy = 1, -- check for nearby units?
@@ -207,7 +207,7 @@ local unitDef = {
 		},
 
 		damage                  = {
-			default = 60*3,
+			default = 150*3,
 		},
 
 		edgeEffectiveness		= 0.2,
