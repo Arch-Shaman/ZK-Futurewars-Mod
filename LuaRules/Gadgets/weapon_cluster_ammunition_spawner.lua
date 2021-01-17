@@ -250,6 +250,8 @@ for i=1, #WeaponDefs do
 						end
 						fragnum = fragnum + 1
 					end
+					config[i].fragcount =  fragnum - 1
+					Spring.Echo("Frag count: " .. fragnum - 1)
 				else
 					spEcho("Error: " .. i .. "(" .. WeaponDefs[i].name .. "): spawndist is not present.")
 				end
@@ -304,43 +306,41 @@ local function SpawnSubProjectiles(id, wd)
 		return
 	end
 	--spawn all the subprojectiles
-	local fragnum = 1
-	while (config[wd]["frags"][fragnum]["projectile"]) do
-		local projectileattributes = {pos = {0,0,0}, speed = {0,0,0}, owner = 0, team = 0, ttl= 0,gravity = 0,tracking = false,}
-		if debug then
-			spEcho("Fire the submunitions!")
-		end
-		local x,y,z = spGetProjectilePosition(id)
-		local vx,vy,vz = spGetProjectileVelocity(id)
-		local ttype,target = spGetProjectileTarget(id)
-		local r = config[wd]["frags"][fragnum]["spreadradius"]
-		local vr = config[wd]["frags"][fragnum]["veldata"]
-		local me = config[wd]["frags"][fragnum]["projectile"]
-		local projectilecount = config[wd]["frags"][fragnum]["numprojectiles"]
-		local step = {0,0,0}
+	local projectileattributes = {pos = {0,0,0}, speed = {0,0,0}, owner = 0, team = 0, ttl= 0,gravity = 0,tracking = false,}
+	if debug then
+		spEcho("Fire the submunitions!")
+	end
+	local x,y,z = spGetProjectilePosition(id)
+	local vx,vy,vz = spGetProjectileVelocity(id)
+	local ttype,target = spGetProjectileTarget(id)
+	-- update projectile attributes --
+	projectileattributes["owner"] = spGetProjectileOwnerID(id)
+	projectileattributes["team"] = spGetUnitTeam(projectileattributes["owner"])
+	projectileattributes["pos"][1] = x
+	projectileattributes["pos"][2] = y
+	projectileattributes["pos"][3] = z
+	projectileattributes["speed"][1] = vx
+	projectileattributes["speed"][2] = vy
+	projectileattributes["speed"][3] = vz
+	local step = {0,0,0}
+	-- Create the projectiles --
+	for j = 1, config[wd].fragcount do
+		local me = config[wd]["frags"][j]["projectile"]
+		local r = config[wd]["frags"][j]["spreadradius"]
+		local vr = config[wd]["frags"][j]["veldata"]
+		local projectilecount = config[wd]["frags"][j]["numprojectiles"]
 		for i=1, 3 do
 			step[i] = (vr.max[i] - vr.min[i])/projectilecount
 		end
 		if debug then
-			spEcho("Velocity: " ..tostring(config[wd]["frags"][fragnum].clusterpos),tostring(config[wd]["frags"][fragnum].clustervec) .. "\nstep: " .. tostring(step))
+			spEcho("Velocity: " ..tostring(config[wd]["frags"][j].clusterpos),tostring(config[wd]["frags"][j].clustervec) .. "\nstep: " .. tostring(step))
 		end
-		local positioning = config[wd]["frags"][fragnum].clusterpos or "none"
-		local vectoring = config[wd]["frags"][fragnum].clustervec or "none"
-		-- update projectile attributes --
-		projectileattributes["gravity"] = -WeaponDefs[wd].myGravity or -1
-		projectileattributes["owner"] = spGetProjectileOwnerID(id)
-		projectileattributes["team"] = spGetUnitTeam(projectileattributes["owner"])
-		projectileattributes["ttl"] = WeaponDefs[wd].flightTime
-		projectileattributes["tracking"] = WeaponDefs[wd].tracks or false
-		projectileattributes["pos"][1] = x
-		projectileattributes["pos"][2] = y
-		projectileattributes["pos"][3] = z
-		projectileattributes["speed"][1] = vx
-		projectileattributes["speed"][2] = vy
-		projectileattributes["speed"][3] = vz
-		projectileattributes["tracking"] = tracks
-		-- Create the projectiles --
-		for i=1, config[wd]["frags"][fragnum]["numprojectiles"] do
+		projectileattributes["ttl"] = WeaponDefs[me].flightTime
+		projectileattributes["tracking"] = WeaponDefs[me].tracks or false
+		projectileattributes["gravity"] = -WeaponDefs[me].myGravity or -1
+		local positioning = config[wd]["frags"][j].clusterpos or "none"
+		local vectoring = config[wd]["frags"][j].clustervec or "none"
+		for i = 1, projectilecount do
 			local p
 			if strfind(positioning,"random") then
 				if strfind(positioning,"x") then
@@ -388,7 +388,6 @@ local function SpawnSubProjectiles(id, wd)
 			end
 			RegisterSubProjectiles(p,me)
 		end
-		fragnum = fragnum + 1
 	end
 	-- create the explosion --
 	spSpawnExplosion(x,y,z,0,0,0,{weaponDef = wd, owner = spGetProjectileOwnerID(id), craterAreaOfEffect = WeaponDefs[wd].craterAreaOfEffect, damageAreaOfEffect = 0, edgeEffectiveness = 0, explosionSpeed = WeaponDefs[wd].explosionSpeed, impactOnly = WeaponDefs[wd].impactOnly, ignoreOwner = WeaponDefs[wd].noSelfDamage, damageGround = true})
@@ -409,12 +408,12 @@ local function CheckProjectile(id)
 	local wd = projectiles[id].def or spGetProjectileDefID(id)
 	if projectiles[id].ttl then -- timed weapons don't need anything fancy.
 		if projectiles[id].ttl <= 0 then
-			SpawnSubProjectiles(id,wd)
+			SpawnSubProjectiles(id, wd)
 		else
 			return
 		end
 	end
-	spEcho("wd: " .. tostring(wd))
+	--spEcho("wd: " .. tostring(wd))
 	projectiles[id].intercepted = spGetProjectileIsIntercepted(id)
 	local isMissile = false -- check for missile status. When the missile times out, the subprojectiles will be spawned if allowed.
 	if WeaponDefs[wd]["flightTime"] ~= nil and WeaponDefs[wd].type == "Missile" then
