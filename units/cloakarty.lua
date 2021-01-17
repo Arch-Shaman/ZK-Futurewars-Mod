@@ -80,7 +80,7 @@ return {
 				cegtag					= [[artillery_spark_small]],
 				craterBoost             = 0,
 				craterMult              = 0,
-				highTrajectory			= 1,
+				--highTrajectory			= 1,
 				burst					= 1,
 
 				customParams        = {
@@ -110,7 +110,7 @@ return {
 				soundStart              = [[weapon/cannon/emparty_fire]],
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 220,
+				weaponVelocity          = 235,
 			},
 		},
 

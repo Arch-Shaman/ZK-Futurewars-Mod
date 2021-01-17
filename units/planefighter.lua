@@ -152,7 +152,7 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 60,
+				default = 45,
 			},
 			groundbounce = false,
 			--bounceslip = 0.25,
@@ -191,7 +191,8 @@ local unitDef = {
 			light_color = [[0.5 0.6 0.6]],
 			reaim_time = 60, -- Fast update not required (maybe dangerous)
 			--CAS--
-			numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+
+			numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 			projectile1 = "planefighter_ag",
 			--spreadradius1 = 6, -- used in clusters. OPTIONAL. Default: 100.
 			clustervec1 = "randomxz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -199,7 +200,7 @@ local unitDef = {
 			spawndist = 100, -- at what distance should we spawn the projectile(s)? REQUIRED.
 			useheight = 1,
 			timeoutspawn = 0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-			vradius1 = 5, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+			vradius1 = 3, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 			--useheight = 1,
 			--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 			--proxy = 1, -- check for nearby units?
@@ -207,7 +208,7 @@ local unitDef = {
 		},
 
 		damage                  = {
-			default = 60*3,
+			default = 45*3,
 		},
 
 		edgeEffectiveness		= 0.2,

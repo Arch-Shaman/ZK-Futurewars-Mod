@@ -6,7 +6,7 @@ return {
 		acceleration        = 0.75,
 		activateWhenBuilt   = true,
 		brakeRate           = 1.32,
-		buildCostMetal      = 200,
+		buildCostMetal      = 280,
 		buildPic            = [[shieldassault.png]],
 		canGuard            = true,
 		canMove             = true,
@@ -83,14 +83,18 @@ return {
 				damage                  = {
 					default = 10,
 				},
+				
+				customParams			= {
+					shield_recharge_delay   = 10,
+				},
 
 				exteriorShield          = true,
 				shieldAlpha             = 0.2,
 				shieldBadColor          = [[1 0.1 0.1 1]],
 				shieldGoodColor         = [[0.1 0.1 1 1]],
 				shieldInterceptType     = 3,
-				shieldPower             = 1400,
-				shieldPowerRegen        = 35,
+				shieldPower             = 4000,
+				shieldPowerRegen        = 34,
 				shieldPowerRegenEnergy  = 2.8,
 				shieldRadius            = 80,
 				shieldRepulser          = false,

@@ -84,7 +84,7 @@ return {
 				},
       
 				damage                  = {
-					default = 7.51,
+					default = 6.8,
 				},
 
 				duration                = 2/30,
@@ -119,8 +119,8 @@ return {
 				shieldGoodColor         = [[0.1 0.1 1 1]],	
 				shieldInterceptType     = 3,	
 				shieldPower             = 300,	
-				shieldPowerRegen        = 14,	
-				shieldPowerRegenEnergy  = 0.3,
+				shieldPowerRegen        = 10,	
+				shieldPowerRegenEnergy  = 0.2,
 				shieldRadius            = 60,	
 				shieldRepulser          = false,	
 				shieldStartingPower     = 280,	

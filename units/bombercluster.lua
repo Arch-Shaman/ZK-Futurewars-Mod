@@ -189,6 +189,8 @@ return {
 				soundStartVolume        = 2,
 				sprayangle              = 14400,
 				turret                  = true,
+				tolerance				= 32000,
+				firetolerance			= 32000,
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 400,
 			},
