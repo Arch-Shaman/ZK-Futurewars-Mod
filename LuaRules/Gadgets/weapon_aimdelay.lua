@@ -1,7 +1,7 @@
 function gadget:GetInfo()
 	return {
 		name      = "Weapon Aim Delay",
-		desc      = "After aiming at a new target, the weapon muwt wait before firing again",
+		desc      = "After aiming at a new target, the weapon must wait before firing again",
 		author    = "ThornEel",
 		date      = "12/28/2020",
 		license   = "CC-0",
@@ -28,40 +28,46 @@ local LOS_ACCESS = {inlos = true}
 
 --local unitDefsArray = {}
 local unitDelayedArray = {}
+local spSetUnitRulesParam = Spring.SetUnitRulesParam
+local frame = -1
 
 
 local function isCloseEnough(heading1, heading2, pitch1, pitch2)
-  if (heading1 == false or heading2 == false or pitch1 == false or pitch2 == false) then
-    return false
-  end
-  if (abs(heading1 - heading2) > allowedHeadingError) then
-    return false
-  end
-  if (abs(pitch1 - pitch2) > allowedPitchError) then
-    return false
-  end
-  return true
+	if (heading1 == false or heading2 == false or pitch1 == false or pitch2 == false) then
+		return false
+	end
+	if (abs(heading1 - heading2) > allowedHeadingError) then
+		return false
+	end
+	if (abs(pitch1 - pitch2) > allowedPitchError) then
+		return false
+	end
+	return true
 end
 
 
 function GG.AimDelay_AttemptToFire(unitID, weaponNum, heading, pitch, delay)
-  
-  unitDelayedArray[unitID] = unitDelayedArray[unitID] or {}
-  unitDelayedArray[unitID][weaponNum] = unitDelayedArray[unitID][weaponNum] or {
-    heading = false,
-    pitch = false,
-    delayedUntil = 0,
-  }
-  local weaponDelay = unitDelayedArray[unitID][weaponNum]
-  
-  if (not isCloseEnough(weaponDelay.heading, heading, weaponDelay.pitch, pitch)) then
-    weaponDelay.delayedUntil = Spring.GetGameFrame() + delay
-    weaponDelay.heading = heading
-    weaponDelay.pitch = pitch
-      Spring.SetUnitRulesParam(unitID, "specialReloadFrame", weaponDelay.delayedUntil, LOS_ACCESS)
-    return false
-  end
-  
-  return (Spring.GetGameFrame() >= weaponDelay.delayedUntil)
-  
+	
+	unitDelayedArray[unitID] = unitDelayedArray[unitID] or {}
+	unitDelayedArray[unitID][weaponNum] = unitDelayedArray[unitID][weaponNum] or {
+		heading = false,
+		pitch = false,
+		delayedUntil = 0,
+	}
+	local weaponDelay = unitDelayedArray[unitID][weaponNum]
+	
+	if (not isCloseEnough(weaponDelay.heading, heading, weaponDelay.pitch, pitch)) then
+		weaponDelay.delayedUntil = Spring.GetGameFrame() + delay
+		weaponDelay.heading = heading
+		weaponDelay.pitch = pitch
+		spSetUnitRulesParam(unitID, "specialReloadFrame", weaponDelay.delayedUntil, LOS_ACCESS)
+		return false
+	end
+	
+	return (frame >= weaponDelay.delayedUntil)
+	
+end
+
+function gadget:GameFrame(f)
+	frame = f -- this is so we're not calling spGetGameFrame multiple times in a single frame. We now get it more or less for free.
 end
