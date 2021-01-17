@@ -121,15 +121,15 @@ return { striderdetriment = {
 		smoothradius     = [[120]],
         smoothmult       = [[0.8]],
 		muzzleEffectFire = [[custom:RAIDMUZZLE]],
-		numprojectiles = 7, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-		projectile = "striderdetriment_secondary",
-		--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-		clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+		numprojectiles1 = 7, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+		projectile1 = "striderdetriment_secondary",
+		--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
+		clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 		use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 		proxy = 1, -- check for nearby units?
 		proxydist = 200, -- how far to check for units? Default: spawndist
 		spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
-		vradius = "-6,-4,-6,2,3,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+		vradius1 = "-6,-4,-6,2,3,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
       },
 
       damage                  = {

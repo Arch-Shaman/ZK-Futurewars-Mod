@@ -114,15 +114,15 @@ return {
 					light_camera_height = 1800,
 					cruisealt			= 75,
 					cruisedist			= 340,
-					numprojectiles = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile = "shieldskirm_fragment",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+					numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					projectile1 = "shieldskirm_fragment",
+					--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
+					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 70, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					airlaunched = 1,
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius = "-2,0,-2,2,1,2", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-2,0,-2,2,1,2", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1,
 				},
 				damage                  = {
