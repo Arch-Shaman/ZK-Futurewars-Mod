@@ -245,9 +245,9 @@
 		"helptext" : "The Aegis protects a modest area with its bubble shield that stops incoming projectiles (but not AoE effects). The shield has a significant energy upkeep and does not block very powerful weapons."
 	},
 	"turretaaclose" : {
-		"name" : "Hacksaw",
-		"description" : "Burst Anti-Air Turret",
-		"helptext" : "The Hacksaw's twin missiles brutally punish any aircraft that enters their range, but take a considerable amount of time to reload, making them less than ideal against light targets."
+		"name" : "Duster",
+		"description" : "Laser guided SAM",
+		"helptext" : "The Duster's quad missiles brutally punish any aircraft that enters their range, but take a considerable amount of time to aim, making them less than ideal against fast targets."
 	},
 	"chicken_rafflesia" : {
 		"name" : "Rafflesia",
