@@ -1,14 +1,14 @@
 local output, minoutput, decaytime, decaymult
-local base = Piece 'Base'
-local fin0 = Piece 'Fin0'
-local fin1 = Piece 'Fin1'
-local fin2 = Piece 'Fin2'
-local fin3 = Piece 'Fin3'
-local fin4 = Piece 'Fin4'
-local fin5 = Piece 'Fin5'
-local fin6 = Piece 'Fin6'
-local fin7 = Piece 'Fin7'
-local tower = Piece 'Tower'
+local base = piece 'Base'
+local fin0 = piece 'Fin0'
+local fin1 = piece 'Fin1'
+local fin2 = piece 'Fin2'
+local fin3 = piece 'Fin3'
+local fin4 = piece 'Fin4'
+local fin5 = piece 'Fin5'
+local fin6 = piece 'Fin6'
+local fin7 = piece 'Fin7'
+local tower = piece 'Tower'
 
 do -- this is to confine UnitDefID to this area.
 	local UnitDefID = Spring.GetUnitDefID(unitID) -- so we don't have to set it to nil or have a useless variable floating about.
