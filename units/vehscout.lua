@@ -88,7 +88,7 @@ return {
 				},
       
 				damage                  = {
-					default = 20,
+					default = 15,
 				},
   
 				explosionGenerator      = [[custom:riotballplus2_purple_small]],
@@ -101,7 +101,7 @@ return {
 				noSelfDamage            = true,
 				myGravity               = 0.18,
 				rgbcolor                = [[0.9 0.1 0.9]],
-				range                   = 350,
+				range                   = 300,
 				reloadtime              = 4,
 				rgbColor                = [[0.3 0 0.4]],
 				soundHit				= [[weapon/aoe_aura2]],
