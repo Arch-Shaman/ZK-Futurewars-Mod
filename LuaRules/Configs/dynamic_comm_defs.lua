@@ -518,6 +518,21 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "efficiency",
+		humanName = "Efficient Resourcing",
+		description = "By upgrading the Support comm's resource allocation algorithms, some extra metal and energy can be squeezed out of the chassis's resource generator.",
+		image = moduleImagePath .. "module_efficency.png",
+		limit = 4,
+		requireChassis = {"support"},
+		cost = 100 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.metalIncome = (sharedData.metalIncome or 0) + 0.5
+			sharedData.energyIncome = (sharedData.energyIncome or 0) + 2
+		end
+	},
+	{
 		name = "commweapon_personal_shield",
 		humanName = "Personal Shield",
 		description = "Personal Shield - A small, protective bubble shield.",
