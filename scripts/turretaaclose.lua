@@ -10,6 +10,7 @@ local launcher1 = piece 'launcher1'
 local launcher2 = piece 'launcher2'
 local firepoint1 = piece 'firepoint1'
 local firepoint2 = piece 'firepoint2'
+local laser = piece 'laseremit1'
 
 local lastfire = -1
 local lasttarget = 0
@@ -139,10 +140,13 @@ end
 
 
 function script.AimFromWeapon()
-	return turret
+	return laser
 end
 
-function script.QueryWeapon(piecenum)
+function script.QueryWeapon(num, piecenum)
+	if num == 2 then
+		return laser
+	end
 	return gun[shot].firepoint
 end
 
