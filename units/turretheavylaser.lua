@@ -48,7 +48,7 @@ return {
 
 			explosiongenerators = {
 				[[custom:HLTRADIATE0]],
-				[[custom:beamlaser_hit_blue]],
+				[[custom:RAIDMUZZLE]],
 			},
 
 		},
