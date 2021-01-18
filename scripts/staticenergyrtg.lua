@@ -19,35 +19,35 @@ do -- this is to confine UnitDefID to this area.
 end
 
 local function DecayThread()
-    while output ~= minoutput do
-        Sleep(decaytime)
-        output = output * decaymult
-        Spring.SetUnitResourcing(unitID, "e", output)
-    end
+	while output ~= minoutput do
+		Sleep(decaytime)
+		output = output * decaymult
+		Spring.SetUnitResourcing(unitID, "e", output)
+	end
 end
 
 function script.Create()
-    StartThread(DecayThread)
+	StartThread(DecayThread)
 end
 
 function script.Killed(recentDamage, maxHealth)
-    local severity = recentDamage/maxHealth
-    if severity < 0.5 then
-        Explode(fin0, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
-		Explode(fin3, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
-		Explode(fin5, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
-        return 1
-    else
+	local severity = recentDamage/maxHealth
+	if severity < 0.5 then
 		Explode(fin0, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
-		Explode(fin1, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
-		Explode(fin2, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
 		Explode(fin3, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
-		Explode(fin4, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
 		Explode(fin5, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
-		Explode(fin6, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
-		Explode(fin7, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
+		return 1
+	else
+		Explode(fin0, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
+		Explode(fin1, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
+		Explode(fin2, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
+		Explode(fin3, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
+		Explode(fin4, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
+		Explode(fin5, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
+		Explode(fin6, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
+		Explode(fin7, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
 		Explode(tower, SFX.SHATTER)
 		Explode(base, SFX.SHATTER)
-        return 2
-    end
+		return 2
+	end
 end
