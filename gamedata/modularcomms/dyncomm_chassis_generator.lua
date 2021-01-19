@@ -1,20 +1,18 @@
 local chassisDefs = {
 	{
-		name = "dynstrike1",
+		name = "dynstrike1", -- 24/31 (UPDATE ME AS YOU ADD MORE WEAPONS)
 		weapons = {
-			"commweapon_peashooter",
-			"commweapon_missilelauncher", -- 415
-			"commweapon_missilelauncher", -- 415
+			"commweapon_missilelauncher", -- 415 TODO: REMOVE
+			"commweapon_missilelauncher", -- 415 TODO: REMOVE
 			"commweapon_beamlaser",
 			"commweapon_lparticlebeam",
-			"commweapon_shotgun",
+			"commweapon_shotgun", -- TODO: REPLACE
 			"commweapon_shotgun_disrupt",
-			"commweapon_disruptor",
+			"commweapon_disruptor", -- TODO: REMOVE
 			"commweapon_heavymachinegun",
 			"commweapon_heavymachinegun_disrupt",
 			"commweapon_lightninggun",
 			"commweapon_lightninggun_improved",
-			"commweapon_peashooter",
 			"commweapon_beamlaser",
 			"commweapon_lparticlebeam",
 			"commweapon_shotgun",
@@ -32,9 +30,8 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynrecon1",
+		name = "dynrecon1", -- 14/31
 		weapons = {
-			"commweapon_peashooter",
 			"commweapon_beamlaser",
 			"commweapon_lparticlebeam",
 			"commweapon_disruptor",
@@ -48,13 +45,13 @@ local chassisDefs = {
 			"commweapon_disruptorbomb",
 			"commweapon_concussion",
 			"commweapon_heatray",
+			"commweapon_heatray",
 			-- Space for shield
 		}
 	},
 	{
-		name = "dynsupport1",
+		name = "dynsupport1", -- 17/31
 		weapons = {
-			"commweapon_peashooter",
 			"commweapon_capray",
 			"commweapon_capray",
 			"commweapon_beamlaser",
@@ -66,7 +63,8 @@ local chassisDefs = {
 			"commweapon_heavy_disruptor",
 			"commweapon_lightninggun",
 			"commweapon_lightninggun_improved",
-			--"commweapon_missilelauncher",
+			"commweapon_disruptorprojector",
+			"commweapon_disruptorprojector",
 			"commweapon_shockrifle",
 			"commweapon_multistunner",
 			"commweapon_multistunner_improved",
@@ -75,9 +73,8 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynassault1",
+		name = "dynassault1", --23/31
 		weapons = {
-			"commweapon_peashooter",
 			"commweapon_rocketlauncher", -- 430
 			"commweapon_rocketlauncher_napalm", -- 430
 			"commweapon_rocketlauncher", -- 430

@@ -336,6 +336,28 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "commweapon_disruptorprojector",
+		humanName = "Disruptor Projector (Area Slow)",
+		description = "Deals some damage and slows targets in a small area. Low DPS. Can be converted into a heavy AOE slow beam. (NYI)",
+		image = moduleImagePath .. "commweapon_disruptorprojector.png",
+		limit = 2,
+		cost = 20 * COST_MULT,
+		requireChassis = {"support"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = "commweapon_disruptorprojector"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+	{
 		name = "commweapon_hparticlebeam",
 		humanName = "Heavy Particle Beam",
 		description = "Heavy Particle Beam - Replaces other weapons. Short range, high-power beam weapon with moderate reload time",
