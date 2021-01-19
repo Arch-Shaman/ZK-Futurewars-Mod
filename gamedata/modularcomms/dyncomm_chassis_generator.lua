@@ -56,6 +56,7 @@ local chassisDefs = {
 		weapons = {
 			"commweapon_peashooter",
 			"commweapon_capray",
+			"commweapon_capray",
 			"commweapon_beamlaser",
 			"commweapon_shotgun",
 			"commweapon_shotgun_disrupt",
@@ -65,7 +66,7 @@ local chassisDefs = {
 			"commweapon_heavy_disruptor",
 			"commweapon_lightninggun",
 			"commweapon_lightninggun_improved",
-			"commweapon_missilelauncher",
+			--"commweapon_missilelauncher",
 			"commweapon_shockrifle",
 			"commweapon_multistunner",
 			"commweapon_multistunner_improved",
