@@ -55,6 +55,7 @@ local chassisDefs = {
 		name = "dynsupport1",
 		weapons = {
 			"commweapon_peashooter",
+			"commweapon_capray",
 			"commweapon_beamlaser",
 			"commweapon_shotgun",
 			"commweapon_shotgun_disrupt",

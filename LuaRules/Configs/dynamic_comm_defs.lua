@@ -292,6 +292,28 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "commweapon_capray",
+		humanName = "Virus Uplink (Capture)",
+		description = "Can capture units.",
+		image = moduleImagePath .. "commweapon_shotgun.png",
+		limit = 2,
+		cost = 40 * COST_MULT,
+		requireChassis = {"support"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = "commweapon_capray"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+	{
 		name = "commweapon_shotgun",
 		humanName = "Shotgun",
 		description = "Shotgun: Can hammer a single large target or shred several small ones",
