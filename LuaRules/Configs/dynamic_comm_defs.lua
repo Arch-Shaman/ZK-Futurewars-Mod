@@ -294,7 +294,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_capray",
 		humanName = "Virus Uplink (Capture)",
-		description = "Can capture units.",
+		description = "Captures units at the cost of being completely helpless afterwards.",
 		image = moduleImagePath .. "commweapon_capray.png",
 		limit = 2,
 		cost = 40 * COST_MULT,
