@@ -1295,7 +1295,7 @@ local chassisDefs = {
 				upgradeSlots = {
 					{
 						defaultModule = moduleDefNames.commweapon_beamlaser,
-						slotAllows = "adv_weapon",
+						slotAllows = {"adv_weapon", "basic_weapon"},
 					},
 					{
 						defaultModule = moduleDefNames.nullmodule,
