@@ -105,7 +105,6 @@ local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, dama
 	if string.find(weapon1, "commweapon_capray") or (weapon2 and string.find(weapon2, "commweapon_capray")) then
 		Spring.SetUnitRulesParam(unitID, "postCaptureReload", WeaponDefNames["0_commweapon_capray"].customParams["post_capture_reload"] or 240)
 		GG.MorphedMastermind(unitID)
-		Spring.Echo("Capture ray!")
 	end
 	local chassis = Spring.GetUnitRulesParam(unitID, "comm_chassis")
 	

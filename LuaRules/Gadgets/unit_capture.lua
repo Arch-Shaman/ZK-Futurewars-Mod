@@ -483,7 +483,7 @@ local function AddNewMastermind(unitID)
 	local teamID = Spring.GetUnitTeam(unitID)
 	local unitDef = Spring.GetUnitDefID(unitID)
 	if controllers[unitID] == nil then
-		Spring.Echo("Adding new mastermind.")
+		--Spring.Echo("Adding new mastermind.")
 		gadget:UnitCreated(unitID, unitDef, teamID, true)
 	end
 end
@@ -491,11 +491,11 @@ end
 GG.MorphedMastermind = AddNewMastermind
 
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeamID)
-	Spring.Echo("Capture: UnitDestroyed: " .. unitID)
+	--Spring.Echo("Capture: UnitDestroyed: " .. unitID)
 	local morphedTo = Spring.GetUnitRulesParam(unitID, "wasMorphedTo")
-	if morphedTo then
+	--[[if morphedTo then
 		Spring.Echo("Detected morph: " .. unitID .. " -> " .. morphedTo)
-	end
+	end]]
 	if controllers[unitID] and morphedTo == nil then
 		-- This was a mastermind, transfer captured units
 		local unitByID = controllers[unitID].unitByID
@@ -511,7 +511,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeamID)
 		controllers[unitID] = nil
 	end
 	if controllers[unitID] and morphedTo then
-		Spring.Echo("Moving mastermind!")
+		--Spring.Echo("Moving mastermind!")
 		controllers[morphedTo] = controllers[unitID]
 		local unitByID = controllers[unitID].unitByID
 		local i = 1
@@ -813,7 +813,7 @@ function gadget:UnitDestroyed (unitID)
 end
 
 local function UpdateUnit(_, unitID, controllerID)
-	Spring.Echo("Updating " .. tostring(unitID) .. " -> " .. tostring(controllerID))
+	--Spring.Echo("Updating " .. tostring(unitID) .. " -> " .. tostring(controllerID))
 	drawingUnits[unitID] = controllerID
 end
 
