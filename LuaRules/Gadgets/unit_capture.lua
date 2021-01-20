@@ -480,16 +480,22 @@ function gadget:UnitCreated(unitID, unitDefID, teamID, isOverride)
 end
 
 local function AddNewMastermind(unitID)
-	Spring.Echo("Adding new mastermind.")
 	local teamID = Spring.GetUnitTeam(unitID)
 	local unitDef = Spring.GetUnitDefID(unitID)
-	gadget:UnitCreated(unitID, unitDef, teamID, true)
+	if controllers[unitID] == nil then
+		Spring.Echo("Adding new mastermind.")
+		gadget:UnitCreated(unitID, unitDef, teamID, true)
+	end
 end
 
 GG.MorphedMastermind = AddNewMastermind
 
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeamID)
+	Spring.Echo("Capture: UnitDestroyed: " .. unitID)
 	local morphedTo = Spring.GetUnitRulesParam(unitID, "wasMorphedTo")
+	if morphedTo then
+		Spring.Echo("Detected morph: " .. unitID .. " -> " .. morphedTo)
+	end
 	if controllers[unitID] and morphedTo == nil then
 		-- This was a mastermind, transfer captured units
 		local unitByID = controllers[unitID].unitByID
@@ -503,12 +509,20 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeamID)
 			end
 		end
 		controllers[unitID] = nil
-	elseif controllers[unitID] and morphedTo ~= nil then -- this commander morphed.
-		controllers[morphedTo] = controllers[unitID]
-		AddNewMastermind(morphedTo)
-		recusivelyTransfer(unitID, unitTeamID, Spring.GetUnitAllyTeam(morphedTo), morphedTo, true)
 	end
-	
+	if controllers[unitID] and morphedTo then
+		Spring.Echo("Moving mastermind!")
+		controllers[morphedTo] = controllers[unitID]
+		local unitByID = controllers[unitID].unitByID
+		local i = 1
+		while i <= unitByID.count do -- update this.
+			local targetunitID = unitByID.data[i]
+			capturedUnits[targetunitID].controllerID = morphedTo
+			spSetUnitRulesParam(unitID, "capture_controller", morphedTo, LOS_ACCESS)
+			SendToUnsynced("updateunit", targetunitID, morphedTo)
+			i = i + 1
+		end
+	end
 	if capturedUnits[unitID] then
 		-- This was a captured unit, update our references
 		if capturedUnits[unitID].controllerID then
@@ -796,6 +810,15 @@ function gadget:UnitDestroyed (unitID)
 	if morphedTo then
 		gadget:UnitGiven(morphedTo)
 	end
+end
+
+local function UpdateUnit(_, unitID, controllerID)
+	Spring.Echo("Updating " .. tostring(unitID) .. " -> " .. tostring(controllerID))
+	drawingUnits[unitID] = controllerID
+end
+
+function gadget:Initialize()
+	gadgetHandler:AddSyncAction("updateunit", UpdateUnit)
 end
 
 --------------------------------------------------------------------------------
