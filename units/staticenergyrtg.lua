@@ -1,8 +1,8 @@
 return { 
 	staticenergyrtg = {
 		unitname                      = [[staticenergyrtg]],
-		name                          = [[Radioisotope Thermoelectric Generator]],
-		description                   = [[Small Powerplant (+10e, decays over time) - HAZARDOUS]],
+		name                          = [[RTG]],
+		description                   = [[Medium Powerplant (+10e, decays over time) - HAZARDOUS]],
 		activateWhenBuilt             = true,
 		buildCostMetal                = 100,
 		builder                       = false,
@@ -46,6 +46,7 @@ return {
 		onoffable                     = true,
 		selfDestructAs                = [[ATOMIC_BLAST]],
 		useBuildingGroundDecal        = true,
+		modelCenterOffset			  = [[0,70,0]],
 		yardMap                       = [[oooo]],
 		
 		featureDefs                   = {
