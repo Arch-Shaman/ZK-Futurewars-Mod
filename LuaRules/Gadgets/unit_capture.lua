@@ -59,6 +59,10 @@ local spSetUnitRulesParam   = Spring.SetUnitRulesParam
 local spFindUnitCmdDesc     = Spring.FindUnitCmdDesc
 local spEditUnitCmdDesc     = Spring.EditUnitCmdDesc
 local spInsertUnitCmdDesc   = Spring.InsertUnitCmdDesc
+local spGetUnitRulesParams  = Spring.GetUnitRulesParams
+local spSetUnitWeaponState  = Spring.SetUnitWeaponState
+local spGetUnitWeaponState  = Spring.GetUnitWeaponState
+local spGetUnitRulesParam   = Spring.GetUnitRulesParam
 
 local LOS_ACCESS = {inlos = true}
 
@@ -310,12 +314,38 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 			local gameFrame = spGetGameFrame()
 			local captureReloadMult = (((not build) or build == 1) and 1) or (build*0.5)
 			local frame = gameFrame + math.floor(controllers[attackerID].postCaptureReload*captureReloadMult)
-			spSetUnitRulesParam(attackerID, "selfReloadSpeedChange", 0, LOS_ACCESS)
-			spSetUnitRulesParam(attackerID, "captureRechargeFrame", frame, LOS_ACCESS)
-			GG.UpdateUnitAttributes(attackerID, gameFrame)
-			reloading[frame] = reloading[frame] or {count = 0, data = {}}
-			reloading[frame].count = reloading[frame].count + 1
-			reloading[frame].data[reloading[frame].count] = attackerID
+			local weapon1 = spGetUnitRulesParam(attackerID, "comm_weapon_name_1")
+			local weapon2 = spGetUnitRulesParam(attackerID, "comm_weapon_name_2")
+			--Spring.Echo(tostring(weapon1) .. "," .. tostring(weapon2))
+			if weapon1 or weapon2 then -- commander
+				local num1, num2
+				if weapon1:find("commweapon_capray") then
+					num1 = spGetUnitRulesParam(attackerID, "comm_weapon_num_1")
+				end
+				if weapon2 and weapon2:find("commweapon_capray") then -- check for dual wield or second slot capray.
+					num2 = spGetUnitRulesParam(attackerID, "comm_weapon_num_2")
+				end
+				if num1 and num2 then
+					local reload1 = spGetUnitWeaponState(attackerID, num1, 'reloadState')
+					local reload2 = spGetUnitWeaponState(attackerID, num2, 'reloadState')
+					if reload1 - gameFrame < 10 then
+						spSetUnitWeaponState(attackerID, num1, "reloadState", frame)
+					else
+						spSetUnitWeaponState(attackerID, num2, "reloadState", frame)
+					end
+				elseif num1 then
+					spSetUnitWeaponState(attackerID, num1, "reloadState", frame)
+				elseif num2 then
+					spSetUnitWeaponState(attackerID, num2, "reloadState", frame)
+				end
+			else -- domi
+				spSetUnitRulesParam(attackerID, "selfReloadSpeedChange", 0, LOS_ACCESS)
+				spSetUnitRulesParam(attackerID, "captureRechargeFrame", frame, LOS_ACCESS)
+				GG.UpdateUnitAttributes(attackerID, gameFrame)
+				reloading[frame] = reloading[frame] or {count = 0, data = {}}
+				reloading[frame].count = reloading[frame].count + 1
+				reloading[frame].data[reloading[frame].count] = attackerID
+			end
 		end
 		
 		-- destroy the unit if the controller is set to destroy units
