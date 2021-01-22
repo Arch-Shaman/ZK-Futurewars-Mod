@@ -10,26 +10,6 @@ local fin6 = piece 'Fin6'
 local fin7 = piece 'Fin7'
 local tower = piece 'Tower'
 
-do -- this is to confine UnitDefID to this area.
-	local UnitDefID = Spring.GetUnitDefID(unitID) -- so we don't have to set it to nil or have a useless variable floating about.
-	output = UnitDefs[unitDefID].energyMake
-	minoutput = UnitDefs[unitDefID].customParams["decay_minoutput"]
-	decaytime = UnitDefs[unitDefID].customParams["decay_time"] * 1000
-	decaymult = 1 - UnitDefs[unitDefID].customParams["decay_rate"]
-end
-
-local function DecayThread()
-	while output ~= minoutput do
-		Sleep(decaytime)
-		output = output * decaymult
-		Spring.SetUnitResourcing(unitID, "e", output)
-	end
-end
-
-function script.Create()
-	StartThread(DecayThread)
-end
-
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
 	if severity < 0.5 then
