@@ -2,7 +2,7 @@ return {
 	staticenergyrtg = {
 		unitname                      = [[staticenergyrtg]],
 		name                          = [[Radioisotope Thermoelectric Generator]],
-		description                   = [[Powerplant (+10 with 2%/min decay) - HAZARDOUS]],
+		description                   = [[Small Powerplant (+10e, decays over time) - HAZARDOUS]],
 		activateWhenBuilt             = true,
 		buildCostMetal                = 100,
 		builder                       = false,
