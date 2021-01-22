@@ -23,7 +23,7 @@ return {
 			priority_misc  = 2, -- High
 			decay_time     = 2,
 			decay_minoutput= 1.2,
-			decay_rate     = .025,
+			decay_rate     = 0.025,
 			modelradius    = [[60]],
 			pylonrange = 200,
 		},
