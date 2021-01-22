@@ -22,7 +22,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 30,
+		default = 22,
 	},
 
 	explosionGenerator      = [[custom:NONE]],
@@ -34,7 +34,7 @@ local weaponDef = {
 	largeBeamLaser          = true,
 	laserFlareSize          = 0,
 	minIntensity            = 1,
-	range                   = 450,
+	range                   = 400,
 	reloadtime              = 1/30,
 	rgbColor                = [[0 0.8 0.2]],
 	scrollSpeed             = 2,
