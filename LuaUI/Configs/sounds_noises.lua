@@ -1289,6 +1289,12 @@ local sounds = {
 			[1] = "building_select2",
 		},
 	},
+	staticenergyrtg = {
+		select = {
+			volume = 0.7,
+			[1] = "rtg_select",
+		},
+	},
 	energywind = {
 		select = {
 			volume = 0.75,
