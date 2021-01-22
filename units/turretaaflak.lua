@@ -84,7 +84,7 @@ return { turretaaflak = {
 					--spreadradius1 = 3, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 400, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 300, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					vradius1 = "-1,-1,-1,1,1,1", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?
@@ -92,8 +92,8 @@ return { turretaaflak = {
 				},
 
 				damage  = {
-					default = 28*4,
-					planes  = 180*4,
+					default = 12*4,
+					planes  = 120*4,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.25,
@@ -102,7 +102,7 @@ return { turretaaflak = {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 2000,
+				range                   = 1600,
 				reloadtime              = 1/3,
 				size                    = 8,
 				soundHit                = [[weapon/cannon/cannon_fire4]],
@@ -135,8 +135,8 @@ return { turretaaflak = {
 				},
 
 				damage = {
-					default = 18,
-					planes  = 180,
+					default = 12,
+					planes  = 120,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.3,
