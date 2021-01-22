@@ -38,6 +38,8 @@ if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
 	return
 end
 
+local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+
 --Speedups--
 local spEcho = Spring.Echo
 local spGetGameFrame = Spring.GetGameFrame
@@ -80,7 +82,7 @@ local feature = byte("f")
 
 --variables--
 local config = {} -- projectile configuration data
-local projectiles = {} -- stuff we need to act on.
+local projectiles = IterableMap.New() -- stuff we need to act on.
 local debug = false
 -- functions --
 local function distance3d(x1, y1, z1, x2, y2, z2)
@@ -294,7 +296,7 @@ end
 
 local function RegisterSubProjectiles(p, me)
 	if config[me] then
-		projectiles[p] = {def = me, intercepted = false, ttl = config[me].timer}
+		IterableMap.Add(projectiles, p, {def = me, intercepted = false, ttl = config[me].timer})
 		if config[me]["alwaysvisible"] then
 			spSetProjectileAlwaysVisible(p, true)
 		end
@@ -393,42 +395,47 @@ local function SpawnSubProjectiles(id, wd)
 	spSpawnExplosion(x,y,z,0,0,0,{weaponDef = wd, owner = spGetProjectileOwnerID(id), craterAreaOfEffect = WeaponDefs[wd].craterAreaOfEffect, damageAreaOfEffect = 0, edgeEffectiveness = 0, explosionSpeed = WeaponDefs[wd].explosionSpeed, impactOnly = WeaponDefs[wd].impactOnly, ignoreOwner = WeaponDefs[wd].noSelfDamage, damageGround = true})
 	spPlaySoundFile(WeaponDefs[wd].hitSound[1].name,WeaponDefs[wd].hitSound[1].volume,x,y,z)
 	spDeleteProjectile(id)
-	projectiles[id].dead = true
+	local projectiledata = IterableMap.Get(projectiles, id)
+	projectiledata.dead = true
 end
 
 local function CheckProjectile(id)
 	if debug then 
 		spEcho("CheckProjectile " .. id)
 	end
+	local projectile = IterableMap.Get(projectiles, id)
 	local targettype, targetID = spGetProjectileTarget(id)
-	if targettype == nil or projectiles[id].dead then
-		projectiles[id] = nil
+	if targettype == nil or projectile.dead then
+		if debug then spEcho("projectile " .. id .. " deleted.") end
+		IterableMap.Remove(projectiles, id)
 		return
 	end
-	local wd = projectiles[id].def or spGetProjectileDefID(id)
-	if projectiles[id].ttl then -- timed weapons don't need anything fancy.
-		if projectiles[id].ttl <= 0 then
+	local wd = projectile.def or spGetProjectileDefID(id)
+	if projectile.ttl then -- timed weapons don't need anything fancy.
+		if projectile.ttl <= 0 then
 			SpawnSubProjectiles(id, wd)
 		else
 			return
 		end
 	end
 	--spEcho("wd: " .. tostring(wd))
-	projectiles[id].intercepted = spGetProjectileIsIntercepted(id)
+	projectile.intercepted = spGetProjectileIsIntercepted(id)
 	local isMissile = false -- check for missile status. When the missile times out, the subprojectiles will be spawned if allowed.
 	if WeaponDefs[wd]["flightTime"] ~= nil and WeaponDefs[wd].type == "Missile" then
 		isMissile = true
 	end
+	local myConfig = config[wd]
 	local vx,vy,vz = spGetProjectileVelocity(id)
-	if config[wd].launcher and vy > -0.000001 then
+	if myConfig.launcher and vy > -0.000001 then
 		return
 	end
 	--spEcho("CheckProjectile: " .. id .. ", " .. wd)
-	if isMissile and debug then spEcho("ttl: " .. spGetProjectileTimeToLive(id)) end
-	if isMissile and config[wd].timeoutspawn and spGetProjectileTimeToLive(id) == 0 then
+	local ttl = spGetProjectileTimeToLive(id)
+	if isMissile and debug then spEcho("ttl: " .. tostring(ttl)) end
+	if isMissile and myConfig.timeoutspawn and ttl == 0 then
 		SpawnSubProjectiles(id,wd)
 	end
-	local use3d = (config[wd].use2ddist == 0)
+	local use3d = (myConfig.use2ddist == 0)
 	local distance
 	local x2,y2,z2 = spGetProjectilePosition(id)
 	local x1,y1,z1
@@ -436,11 +443,11 @@ local function CheckProjectile(id)
 		spEcho("Attack type: " .. targettype .. "\nTarget: " .. tostring(targetID))
 	end
 	--debugEcho("Key: 'g' = " .. byte("g") .. "\n'u' = " .. byte("u") .. "\n'f' = " .. byte("f") .. "\n'p' = " .. byte("p"))
-	if config[wd].useheight and config[wd].useheight ~= 0 then -- this spawns at the selected height when vy < 0
+	if myConfig.useheight and myConfig.useheight ~= 0 then -- this spawns at the selected height when vy < 0
 		if debug then
 			spEcho("Useheight check")
 		end
-		if y2 - spGetGroundHeight(x2,z2) < config[wd].spawndist and vy < 0 then
+		if y2 - spGetGroundHeight(x2,z2) < myConfig.spawndist and vy < 0 then
 			SpawnSubProjectiles(id,wd)
 		else
 			return
@@ -474,24 +481,24 @@ local function CheckProjectile(id)
 	end
 	local height = y2 - spGetGroundHeight(x2,z2)
 	if debug then
-		spEcho("d: " .. distance .. "\nisBomb: " .. tostring(config[wd]["isBomb"]) .. "\nVelocity: (" .. vx,vy,vz .. ")" .. "\nH: " .. height .. "\nexplosion dist: " .. height - config[wd].spawndist)
+		spEcho("d: " .. distance .. "\nisBomb: " .. tostring(myConfig["isBomb"]) .. "\nVelocity: (" .. vx,vy,vz .. ")" .. "\nH: " .. height .. "\nexplosion dist: " .. height - myConfig.spawndist)
 	end
-	if distance < config[wd].spawndist and not config[wd]["isBomb"] then -- bombs ignore distance and explode based on height. This is due to bomb ground attacks being absolutely fucked in current spring build.
+	if distance < myConfig.spawndist and not myConfig["isBomb"] then -- bombs ignore distance and explode based on height. This is due to bomb ground attacks being absolutely fucked in current spring build.
 		SpawnSubProjectiles(id,wd)
 		if debug then
 			spEcho("distance")
 		end
-	elseif config[wd]["isBomb"] and height <= config[wd].spawndist then
+	elseif myConfig["isBomb"] and height <= myConfig.spawndist then
 		SpawnSubProjectiles(id,wd)
 		if debug then
 			spEcho("bomb engage")
 		end
-	elseif config[wd].groundimpact == 1 and vy < -1 and height <= config[wd].spawndist then
+	elseif myConfig.groundimpact == 1 and vy < -1 and height <= myConfig.spawndist then
 		if debug then
 			spEcho("ground impact")
 		end
 		SpawnSubProjectiles(id,wd)
-	elseif config[wd]["proxy"] == 1 then
+	elseif myConfig["proxy"] == 1 then
 		local units
 		if use3d then
 			units = spGetUnitsInSphere(x2,y2,z2,config[wd]["proxydist"])
@@ -514,11 +521,12 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	if weaponDefID == nil then
 		weaponDefID = spGetProjectileDefID(proID)
 	end
-	if config[weaponDefID] and not projectiles[proID] then
+	local projectiledata = IterableMap.Get(projectiles, proID)
+	if config[weaponDefID] and not projectiledata then
 		if debug then
 			spEcho("Registered projectile " .. proID)
 		end
-		projectiles[proID] = {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetUnitTeam(proOwnerID), ttl = config[weaponDefID].timer}
+		IterableMap.Add(projectiles, proID, {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetUnitTeam(proOwnerID), ttl = config[weaponDefID].timer})
 		if config[weaponDefID]["alwaysvisible"] then
 			spSetProjectileAlwaysVisible(proID,true)
 		end
@@ -526,15 +534,17 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 end
 
 function gadget:ProjectileDestroyed(proID)
-	if projectiles[proID] and not projectiles[proID].intercepted then
-		local wd = projectiles[proID].def
+	local projectiledata = IterableMap.Get(projectiles, proID)
+	if projectiledata and not projectiledata.intercepted then
+		local wd = projectiledata.def
 		SpawnSubProjectiles(id, wd)
 	end
 end
 
 function gadget:GameFrame(f)
-	for id, _ in pairs(projectiles) do
-		if projectiles[id].ttl then
+	for id, data in IterableMap.Iterator(projectiles) do
+		spEcho(id .. ": Updating.")
+		if data.ttl then
 			projectiles[id].ttl = projectiles[id].ttl - 1
 		end
 		CheckProjectile(id)
