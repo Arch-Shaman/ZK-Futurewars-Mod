@@ -421,7 +421,7 @@ function script.AimWeapon(num, heading, pitch)
 		Turn(larm, x_axis, -pitch, math.rad(40))
 		WaitForTurn(torso, y_axis)
 		WaitForTurn(larm, x_axis)
-	elseif num == 2 then -- Right gunpod
+	--[[elseif num == 9 then -- Right gunpod
 		rightTorsoHeading = heading
 		if leftTorsoHeading then
 			heading = AngleAverageShortest(rightTorsoHeading, leftTorsoHeading)
@@ -447,7 +447,7 @@ function script.AimWeapon(num, heading, pitch)
 		Turn(rarmcannon, y_axis, armAngle, math.rad(20))
 		Turn(rarm, x_axis, -pitch, math.rad(40))
 		WaitForTurn(torso, y_axis)
-		WaitForTurn(rarm, x_axis)
+		WaitForTurn(rarm, x_axis)]]
 	elseif num == 3 then -- Shoulder Cannon
 		manualfireAimOverride = 60
 		Turn(torso, y_axis, heading, math.rad(90))
@@ -455,7 +455,7 @@ function script.AimWeapon(num, heading, pitch)
 		Turn(shouldercannon, x_axis, -pitch+math.rad(90),  math.rad(90))
 		Move(shouldercannon, y_axis, -2, 0.7)
 		WaitForTurn(shouldercannon, x_axis)
-	elseif num == 4 then
+	elseif num == 2 then
 		Turn(aaturret, y_axis, heading - lastTorsoHeading, math.rad(360))
 		Turn(aagun, x_axis, -pitch, math.rad(240))
 		WaitForTurn(aaturret, y_axis)
