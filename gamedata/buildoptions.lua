@@ -9,6 +9,7 @@ local buildOpts = {
 	[[energypylon]],
 	[[staticcon]],
 	[[staticrearm]],
+	[[staticenergyrtg]],
 	[[factoryshield]],
 	[[factorycloak]],
 	[[factoryveh]],
