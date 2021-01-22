@@ -501,11 +501,11 @@ local function CheckProjectile(id)
 	elseif myConfig["proxy"] == 1 then
 		local units
 		if use3d then
-			units = spGetUnitsInSphere(x2,y2,z2,config[wd]["proxydist"])
+			units = spGetUnitsInSphere(x2,y2,z2, myConfig["proxydist"])
 		else 
-			units = spGetUnitsInCylinder(x2,z2,config[wd]["proxydist"])
+			units = spGetUnitsInCylinder(x2,z2, myConfig["proxydist"])
 		end
-		if unittest(units, projectiles[id].owner, projectiles[id].teamID) then
+		if unittest(units, projectile.owner, projectile.teamID) then
 			if debug then
 				spEcho("Unit passed unittest. Passed to SpawnSubProjectiles")
 			end
