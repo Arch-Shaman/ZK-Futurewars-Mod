@@ -543,7 +543,7 @@ end
 
 function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(projectiles) do
-		spEcho(id .. ": Updating.")
+		if debug then spEcho(id .. ": Updating.") end
 		if data.ttl then
 			projectiles[id].ttl = projectiles[id].ttl - 1
 		end
