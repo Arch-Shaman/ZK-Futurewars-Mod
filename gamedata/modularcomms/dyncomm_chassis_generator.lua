@@ -50,14 +50,15 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynsupport1", -- 17/31
+		name = "dynsupport1", -- 18/31
 		weapons = {
 			"commweapon_capray",
 			"commweapon_capray",
 			"commweapon_beamlaser",
-			"commweapon_shotgun",
-			"commweapon_shotgun_disrupt",
+			"commweapon_beamlaser",
 			"commweapon_lparticlebeam",
+			"commweapon_lparticlebeam",
+			"commweapon_disruptor",
 			"commweapon_disruptor",
 			"commweapon_hparticlebeam",
 			"commweapon_heavy_disruptor",
