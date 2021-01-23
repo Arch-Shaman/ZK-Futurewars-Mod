@@ -116,6 +116,7 @@ local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, dama
 	Spring.SetUnitRulesParam(unitID, "comm_range_mult", rangeMult,  INLOS)
 	damageMult = damageMult or Spring.GetUnitRulesParam(unitID, "comm_damage_mult") or 1
 	Spring.SetUnitRulesParam(unitID, "comm_damage_mult", damageMult,  INLOS)
+	Spring.SetUnitRulesParam(unitID, "comm_damage_mult", damageMult,  INLOS)
 	
 	local env = Spring.UnitScript.GetScriptEnv(unitID)
 	Spring.UnitScript.CallAsUnit(unitID, env.dyncomm.UpdateWeapons, weapon1, weapon2, shield, rangeMult, damageMult)
@@ -163,7 +164,6 @@ local function ApplyModuleEffects(unitID, data, totalCost, images)
 	data.metalIncome = (data.metalIncome or 0)
 	data.energyIncome = (data.energyIncome or 0)
 	Spring.SetUnitRulesParam(unitID, "buildpower_mult", buildPowerMult, INLOS)
-	
 	if data.metalIncome and GG.Overdrive then
 		Spring.SetUnitRulesParam(unitID, "comm_income_metal", data.metalIncome, INLOS)
 		Spring.SetUnitRulesParam(unitID, "comm_income_energy", data.energyIncome, INLOS)
@@ -208,7 +208,21 @@ local function ApplyModuleEffects(unitID, data, totalCost, images)
 	local _, maxHealth = Spring.GetUnitHealth(unitID)
 	local effectiveMass = (((totalCost/2) + (maxHealth/8))^0.6)*6.5
 	Spring.SetUnitRulesParam(unitID, "massOverride", effectiveMass, INLOS)
-	
+	if data.shieldmax then
+		Spring.Echo("Has shield!")
+		local maxshield = data.shieldmax
+		local shieldregen = data.shieldregen
+		local regenbonus = data.shieldrechargebonus or 0
+		local hpbonus = data.shieldchargebonus or 0
+		Spring.Echo("Maxshield: " .. tostring(maxshield) .. " with " .. tostring(shieldregen) .. " regen")
+		regenbonus = regenbonus + 1
+		hpbonus = hpbonus + 1
+		maxshield = maxshield * hpbonus
+		shieldregen = shieldregen * regenbonus
+		Spring.Echo("New shield stats: " .. tostring(maxshield) .. ", " .. tostring(shieldregen))
+		Spring.SetUnitRulesParam(unitID, "comm_shield_max", maxshield, INLOS)
+		Spring.SetUnitRulesParam(unitID, "comm_shield_recharge", shieldregen, INLOS)
+	end
 	ApplyWeaponData(unitID, data.weapon1, data.weapon2, data.shield, data.rangeMult, data.damageMult)
 	
 	-- Do this all the time as it will be needed almost always.
@@ -263,7 +277,7 @@ local function GetModuleEffectsData(moduleList, level, chassis)
 			moduleDef.applicationFunction(moduleByDefID, moduleEffectData)
 		end
 	end
-	
+	Spring.Echo("Got data: " .. tostring(moduleEffectData.shieldchargebonus) .. ", " .. tostring(moduleEffectData.shieldrechargebonus))
 	local levelFunction = chassisDefs[chassis or 1].levelDefs[math.min(chassisDefs[chassis or 1].maxNormalLevel, level or 1)].chassisApplicationFunction
 	if levelFunction then
 		levelFunction(moduleByDefID, moduleEffectData)

@@ -563,8 +563,8 @@ local moduleDefs = {
 	},
 	{
 		name = "efficiency",
-		humanName = "Efficient Resourcing",
-		description = "By upgrading the Support comm's resource allocation algorithms, some extra metal and energy can be squeezed out of the chassis's resource generator.",
+		humanName = "Efficient\nResourcing",
+		description = "Efficient Resourcing:\nBy upgrading the Support comm's resource allocation algorithms, some extra metal and energy can be squeezed out of the chassis's resource generator.",
 		image = moduleImagePath .. "module_efficency.png",
 		limit = 4,
 		requireChassis = {"support"},
@@ -577,18 +577,127 @@ local moduleDefs = {
 		end
 	},
 	{
-		name = "commweapon_personal_shield",
-		humanName = "Personal Shield",
-		description = "Personal Shield - A small, protective bubble shield.",
-		image = moduleImagePath .. "module_personal_shield.png",
-		limit = 1,
-		cost = 300 * COST_MULT,
-		prohibitingModules = {"module_personal_cloak"},
+		name = "shieldhardener_support",
+		humanName = "Shield Retrofit",
+		description = "Shield Hardener:\nRefits the shield projectors with more efficient components increasing shield strength and regen.\n+15% shield HP\n+10% Regen.",
+		image = moduleImagePath .. "module_supportshield.png",
+		limit = 8,
+		requireChassis = {"support"},
+		requireOneOf = {"commweapon_areashieldsupport"},
+		cost = 200 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
+			local shieldchargebonus = sharedData.shieldchargebonus or 0
+			sharedData.shieldchargebonus = shieldchargebonus + 0.35
+			local shieldrechargebonus = sharedData.rechargebonus or 0
+			sharedData.shieldrechargebonus = shieldrechargebonus + 0.1
+		end
+	},
+	{
+		name = "shieldcapacitor",
+		humanName = "Shield Capacitor",
+		description = "Shield Capacitor:\nRefits the shield projectors with more efficient components increasing shield strength.\n+25% shield HP",
+		image = moduleImagePath .. "module_shieldhardener.png",
+		limit = 8,
+		requireChassis = {"assault", "knight", "recon"},
+		prohibitingModules = {"shieldgenerator"},
+		requireOneOf = {"commweapon_personal_shield", "commweapon_areashield"},
+		cost = 300 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			local shieldchargebonus = sharedData.shieldchargebonus or 0
+			sharedData.shieldchargebonus = shieldchargebonus + 0.25
+		end
+	},
+	{
+		name = "shieldgenerator",
+		humanName = "Shield Generator",
+		description = "Shield Generator:\nRefits the shield projectors with more efficient generators increasing shield recharge.\n+10% shield regen",
+		image = moduleImagePath .. "module_shieldhardener.png",
+		limit = 8,
+		requireChassis = {"assault", "knight", "recon"},
+		prohibitingModules = {"shieldcapacitor"},
+		requireOneOf = {"commweapon_personal_shield", "commweapon_areashield", "commweapon_personal_shield_recon"},
+		cost = 300 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			local shieldchargebonus = sharedData.shieldrechargebonus or 0
+			sharedData.shieldrechargebonus = shieldchargebonus + 0.1
+		end
+	},
+	{
+		name = "commweapon_areashieldsupport",
+		humanName = "Improved Area Shield",
+		description = "Improved Area Shield\nProjects a large shield equipped with better projectors.\n+60% Shield HP and +20% recharge over baseline area shield. -33% cost.",
+		image = moduleImagePath .. "module_personal_shield.png",
+		limit = 1,
+		cost = 200 * COST_MULT,
+		prohibitingModules = {"module_jammer"},
+		requireChassis = {"support"},
+		requireLevel = 1,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
 			-- Do not override area shield
-			sharedData.shield = sharedData.shield or "commweapon_personal_shield"
+			sharedData.shield = "commweapon_areashield"
+			sharedData.shieldmax = 5600
+			sharedData.shieldregen = 60
+		end
+	},
+	{
+		name = "commweapon_personal_shield_recon",
+		humanName = "Light Personal Shield",
+		description = "Light Personal Shield\nProjects a small shield equipped with light projectors. Diverts some power to servos to increase speed.\n Increases speed by +2.\n -37.5% shield hp and -40% recharge over baseline.",
+		image = moduleImagePath .. "commweapon_recon_shield.png",
+		limit = 1,
+		cost = 200 * COST_MULT,
+		prohibitingModules = {"commweapon_personal_shield"},
+		requireChassis = {"Recon"},
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.shield = "commweapon_personal_shield"
+			sharedData.shieldmax = 1250
+			sharedData.shieldregen = 12
+			sharedData.speedMod = (sharedData.speedMod or 0) + 2
+		end
+	},
+	{
+		name = "commweapon_personal_shield",
+		humanName = "Personal Shield",
+		description = "Personal Shield\nProjects a small shield.\nShield HP: 1500\nShield Regen: 15\nReduces speed by 1.",
+		image = moduleImagePath .. "commweapon_personal_shield.png",
+		limit = 1,
+		cost = 200 * COST_MULT,
+		prohibitingModules = {"commweapon_personal_shield_recon"},
+		requireChassis = {"Recon", "assault", "knight"},
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.shield = "commweapon_personal_shield"
+			sharedData.shieldmax = 2000
+			sharedData.shieldregen = 20
+			sharedData.speedMod = (sharedData.speedMod or 0) - 1
+		end
+	},
+	{
+		name = "commweapon_personal_shield_guardian",
+		humanName = "Heavy Personal Shield",
+		description = "Heavy Personal Shield\nA frontline personal shield with increased regen and hp. Slightly reduces speed.\nShield HP: 4000\nShield Regen: 40\nReduces speed by 3.",
+		image = moduleImagePath .. "module_shieldhardener.png",
+		limit = 1,
+		cost = 200 * COST_MULT,
+		prohibitingModules = {"commweapon_personal_shield"},
+		requireChassis = {"assault", "knight"},
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.shield = "commweapon_personal_shield"
+			sharedData.shieldmax = 4000
+			sharedData.shieldregen = 40
+			sharedData.speedMod = (sharedData.speedMod or 0) -4
 		end
 	},
 	{
@@ -598,13 +707,15 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_areashield.png",
 		limit = 1,
 		cost = 250 * COST_MULT,
-		requireChassis = {"assault", "support", "knight"},
+		requireChassis = {"knight", "assault"},
 		requireOneOf = {"commweapon_personal_shield"},
 		prohibitingModules = {"module_personal_cloak"},
 		requireLevel = 3,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			sharedData.shield = "commweapon_areashield"
+			sharedData.shieldmax = 3500
+			sharedData.shieldregen = 50
 		end
 	},
 	{
@@ -650,6 +761,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_jammer.png",
 		limit = 1,
 		cost = 200 * COST_MULT,
+		prohibitingModules = {"commweapon_areashieldsupport"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -680,6 +792,7 @@ local moduleDefs = {
 		cost = 400 * COST_MULT,
 		prohibitingModules = {"commweapon_personal_shield", "commweapon_areashield"},
 		requireLevel = 2,
+		requireChassis = {"recon", "knight", "assault"},
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			sharedData.decloakDistance = math.max(sharedData.decloakDistance or 0, 150)
