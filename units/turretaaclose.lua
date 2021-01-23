@@ -147,7 +147,7 @@ return {
 				sweapfire = false,
 				rgbColor                = [[0.8 0 0]],
 				rgbColor2				  = [[0.5 0 0]],
-				soundStart              = [[weapon/laser/tracker]],
+				soundStart              = [[weapon/laser/archertracker]],
 				--soundHit		= [[trackercompleted.wav]]
 				soundStartVolume        = 15,
 				texture1                = [[tracker]],
