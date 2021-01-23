@@ -30,7 +30,7 @@ return {
 		},
 		energyMake                    = 10,
   		energyUse                     = 0,
-		explodeAs                     = [[SMALL_BUILDINGEX]],
+		explodeAs                     = [[ATOMIC_BLAST]],
 		floater                       = true,
 		footprintX                    = 6,
 		footprintZ                    = 6,
@@ -47,7 +47,7 @@ return {
 		selfDestructAs                = [[ATOMIC_BLAST]],
 		useBuildingGroundDecal        = true,
 		modelCenterOffset			  = [[0,70,0]],
-		yardMap                       = [[oooo]],
+		yardMap                       = [[oooooooooooooooooooooooooooooooooooo]],
 		
 		featureDefs                   = {
 			
