@@ -24,10 +24,12 @@ end
 
 local spSetUnitHealth = Spring.SetUnitHealth
 local spDestroyUnit = Spring.DestroyUnit
+local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local params = {health = 1, build = 1}
 
 function gadget:UnitReverseBuilt(unitID, unitDefID, unitTeam)
 	if wantedunits[unitDefID] then
+		spSetUnitRulesParam(unitID, "dangerous", 1)
 		spSetUnitHealth(unitID, params)
 		spDestroyUnit(unitID, true)
 	end
