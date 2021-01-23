@@ -281,7 +281,7 @@ local function AddSingularity(x, y, z, strength, radius, lifespan)
 	local n = 0
 	repeat
 		n = -math.random(1, 336559)
-	until IterableMap.Get(singularities, n) == nil
+	until IterableMap.InMap(singularities, n) == false
 	IterableMap.Add(singularities, n, {position = {[1] = x, [2] = y, [3] = z}, lifespan = lifespan, strength = strength, radius = radius})
 end
 
