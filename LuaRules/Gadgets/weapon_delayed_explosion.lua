@@ -1,4 +1,4 @@
-function gadget:GetInfo()
+--[[function gadget:GetInfo()
 	return {
 		name      = "Delayed AOE damage",
 		desc      = "Implements delayed AOE damage for projectiles",
@@ -105,4 +105,4 @@ function gadget:GameFrame(f)
 			end
 		end
 	end
-end
+end]]
