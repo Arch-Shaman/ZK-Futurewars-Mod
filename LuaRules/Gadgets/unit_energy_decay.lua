@@ -34,7 +34,6 @@ local INLOS = {inlos = true}
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetGameFrame = Spring.GetGameFrame
 local spSetUnitResourcing = Spring.SetUnitResourcing
-local BASETABLE = {currentrate = 1, nextupdate = 0, def = 0}
 local spEcho = Spring.Echo
 local debug = false
 local max = math.max
@@ -43,37 +42,35 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	if config[unitDefID] then
 		if debug then spEcho("Added decayer " .. unitID) end
 		local config = config[unitDefID]
-		local data = BASETABLE
-		data.def = unitDefID
-		data.nextupdate = spGetGameFrame() + config.time
-		IterableMap.Add(decayers, unitID, data)
+		IterableMap.Add(decayers, unitID, {currentrate = 1, nextupdate = spGetGameFrame() + config.time, def = unitDefID})
 	end
 end
 
 function gadget:UnitDestroyed(unitID)
-	local data = IterableMap.Get(decayers, unitID)
-	if data then
+	if IterableMap.InMap(decayers, unitID) then
 		IterableMap.Remove(decayers, unitID)
 	end
 end
 
 function gadget:UnitReverseBuilt(unitID, unitDefID, unitTeam)
-	local data = IterableMap.Get(decayers, unitID)
-	if data then
+	if IterableMap.InMap(decayers, unitID) then
+		if debug then spEcho("reverse built removed " .. unitID) end
 		IterableMap.Remove(decayers, unitID)
 	end
 end
 
 function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(decayers) do
+		--spEcho(id .. " next update: " .. data.nextupdate)
 		if data.nextupdate == f then
 			local config = config[data.def]
 			local newrate = max(data.currentrate * (1 - config.rate), config.minoutput)
-			--spEcho(newrate)
 			if debug then spEcho(id .. ": Decayed from " .. data.currentrate * 100 .. "% -> " .. newrate * 100 .. "%") end
 			data.currentrate = newrate
 			spSetUnitRulesParam(id, "selfIncomeChange", data.currentrate)
 			GG.UpdateUnitAttributes(id)
+			GG.UpdateUnitAttributes(id)
+			--if debug then spEcho("Updated " .. id) end
 			if data.currentrate == config.minoutput then
 				IterableMap.Remove(decayers, id)
 			else
