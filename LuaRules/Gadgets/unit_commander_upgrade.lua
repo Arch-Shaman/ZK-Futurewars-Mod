@@ -362,7 +362,9 @@ local function Upgrades_CreateUpgradedUnit(defName, x, y, z, face, unitTeam, isB
 	internalCreationModuleEffectData = moduleEffectData
 	
 	local unitID = Spring.CreateUnit(defName, x, y, z, face, unitTeam, isBeingBuilt)
-	
+	if moduleEffectData.wantsfireatradar then
+		GG.AddUnitRadarTargeting(unitID)
+	end
 	-- Unset the variables which need to be present at unit creation
 	interallyCreatedUnit = false
 	internalCreationUpgradeDef = nil

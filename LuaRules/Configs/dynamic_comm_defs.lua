@@ -400,10 +400,12 @@ local moduleDefs = {
 			if sharedData.weapon1 and (sharedData.weapon1 == "commweapon_disruptorprojector" or sharedData.weapon1 == "commweapon_beamlaser") then
 				sharedData.weapon1 = sharedData.weapon1 .. "_heavy"
 				conversions = conversions - 1
+				sharedData.wantsfireatradar = true
 			end
 			if sharedData.weapon2 and (sharedData.weapon2 == "commweapon_disruptorprojector" or sharedData.weapon2 == "commweapon_beamlaser") and conversions > 0 then
 				sharedData.weapon2 = sharedData.weapon2 .. "_heavy"
 				conversions = conversions - 1
+				sharedData.wantsfireatradar = true
 			end
 			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_lparticlebeam" and conversions > 0 then
 				conversions = conversions - 1
@@ -432,10 +434,12 @@ local moduleDefs = {
 			if sharedData.weapon1 and (sharedData.weapon1 == "commweapon_disruptorprojector" or sharedData.weapon1 == "commweapon_beamlaser") then
 				sharedData.weapon1 = sharedData.weapon1 .. "_heavy"
 				conversions = conversions - 1
+				sharedData.wantsfireatradar = true
 			end
 			if sharedData.weapon2 and (sharedData.weapon2 == "commweapon_disruptorprojector" or sharedData.weapon2 == "commweapon_beamlaser") and conversions > 0 then
 				sharedData.weapon2 = sharedData.weapon2 .. "_heavy"
 				conversions = conversions - 1
+				sharedData.wantsfireatradar = true
 			end
 			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_lparticlebeam" and conversions > 0 then
 				conversions = conversions - 1
@@ -462,6 +466,7 @@ local moduleDefs = {
 			if sharedData.noMoreWeapons then
 				return
 			end
+			sharedData.wantsfireatradar = true
 			if not sharedData.weapon1 then
 				sharedData.weapon1 = weaponName
 			else
