@@ -114,7 +114,7 @@ return {
 					smoothmult   = [[0.25]],
 					force_ignore_ground = [[1]],
 
-					script_reload = [[2.4]],
+					script_reload = [[3.4]],
 					script_burst = [[4]],
 					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "tankriot_fragment",

@@ -8,21 +8,18 @@ local scriptReload = include("scriptReload.lua")
 
 local base, turret, sleeve = piece ('base', 'turret', 'sleeve')
 
-local missiles = {
-	piece ('dummy1'),
-	piece ('dummy2'),
-	piece ('dummy1'),
-	piece ('dummy2'),
+local firepoint1 = piece('dummy1')
+local firepoint2 = piece('dummy2')
+
+local gun = {
+	[0] = {firepoint = firepoint1, loaded = true},
+	[1] = {firepoint = firepoint1, loaded = true},
+	[2] = {firepoint = firepoint2, loaded = true},
+	[3] = {firepoint = firepoint2, loaded = true},
 }
 
-local isLoaded = {
-	true,
-	true,
-	true,
-	true,
-}
-
-local RELOAD_TIME = 2.4 * 30
+local gameSpeed = Game.gameSpeed
+local RELOAD_TIME = 3.4 * gameSpeed
 
 local SIG_AIM = 1
 local SIG_MOVE = 2
@@ -37,6 +34,7 @@ local ROCK_MIN = 0.001 --If around axis rock is not greater than this amount, ro
 local ROCK_MAX = 1.5
 
 local hpi = math.pi*0.5
+local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
 
 local rockData = {
 	[x_axis] = {
@@ -87,7 +85,7 @@ local gunHeading = 0
 local disarmed = false
 local stuns = {false, false, false}
 local isAiming = false
-local currentMissile = 1
+local shot = 0
 local smokePiece = {base, turret}
 
 local function RestoreAfterDelay()
@@ -143,7 +141,7 @@ function script.AimFromWeapon()
 end
 
 function script.QueryWeapon()
-	return missiles[currentMissile]
+	return gun[shot].firepoint
 end
 
 function script.AimWeapon(num, heading, pitch)
@@ -152,7 +150,7 @@ function script.AimWeapon(num, heading, pitch)
 
 	isAiming = true
 
-	while disarmed do
+	while disarmed or currentMissile == 1 do
 		Sleep (34)
 	end
 
@@ -169,59 +167,66 @@ function script.AimWeapon(num, heading, pitch)
 	return true
 end
 
-local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
+
 
 local function reload(num)
 	scriptReload.GunStartReload(num)
-	isLoaded[num] = false
+	gun[num].loaded = false
+
 	SleepAndUpdateReload(num, RELOAD_TIME)
-	isLoaded[num] = true
+	gun[num].loaded = true
 end
 
 local function ReloadThread(missile)
-	Hide (missiles[missile])
-	Move (missiles[missile], z_axis, -5)
-	Sleep (1000)
-	Show (missiles[missile])
-	Move (missiles[missile], z_axis, 0.8, 5.5)
-end
-
-function script.FireWeapon()
-	StartThread(ReloadThread, currentMissile)
-	StartThread(GG.ScriptRock.Rock, dynamicRockData[z_axis], gunHeading, ROCK_FIRE_FORCE)
-	StartThread(GG.ScriptRock.Rock, dynamicRockData[x_axis], gunHeading - hpi, ROCK_FIRE_FORCE)
-end
-
-function script.EndBurst()
-	StartThread(reload, currentMissile)
-	currentMissile = currentMissile + 1
-	if currentMissile == #missiles then
-		currentMissile = 1
+	if missile%2 == 1 then
+		Hide (gun[missile].firepoint)
+		Move (gun[missile].firepoint, z_axis, -5)
+		Sleep (1000)
+		Show (gun[missile].firepoint)
+		Move (gun[missile].firepoint, z_axis, 0.8, 5.5)
+	else
+		Move(gun[missile].firepoint, z_axis, -5)
+		Move(gun[missile].firepoint, z_axis, 3.8, 5.5)
 	end
 end
+
+function script.Shot(num)
+	if num == 1 then
+		--EmitSfx(gun[shot].firepoint, GG.Script.UNIT_SFX1)
+		StartThread(reload, shot)
+		StartThread(ReloadThread, shot)
+		shot = (shot + 1)%4
+		StartThread(GG.ScriptRock.Rock, dynamicRockData[z_axis], gunHeading, ROCK_FIRE_FORCE)
+		StartThread(GG.ScriptRock.Rock, dynamicRockData[x_axis], gunHeading - hpi, ROCK_FIRE_FORCE)
+	end
+end
+
+--function script.EndBurst()
+	--StartThread(reload, currentMissile)
+--end
 
 function script.BlockShot(num, targetID)
-	if isLoaded[currentMissile] then
-		if not targetID then
-			return false
-		end
-		local distMult = (Spring.GetUnitSeparation(unitID, targetID) or 0) * 0.083
-		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 240.5, distMult)
+	if not targetID then
+		return false
 	end
-	return true
+	if num == 1 and gun[shot].loaded then
+		local distMult = (Spring.GetUnitSeparation(unitID, targetID) or 0) * 0.083
+		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 181.2, distMult)
+	elseif num == 1 and not gun[shot].loaded then
+		return true
+	end
 end
 
 function script.Create()
-	scriptReload.SetupScriptReload(2, RELOAD_TIME)
+	scriptReload.SetupScriptReload(4, RELOAD_TIME)
 	dynamicRockData = GG.ScriptRock.InitializeRock(rockData)
 	InitiailizeTrackControl(trackData)
-
 	while (select(5, Spring.GetUnitHealth(unitID)) < 1) do
 		Sleep (250)
 	end
 
-	Move(missiles[1], z_axis, 0.8)
-	Move(missiles[2], z_axis, 0.8)
+	Move(gun[1].firepoint, z_axis, 0.8)
+	Move(gun[3].firepoint, z_axis, 0.8)
 
 	StartThread (GG.Script.SmokeUnit, unitID, smokePiece)
 end
@@ -229,8 +234,8 @@ end
 function script.Killed (recentDamage, maxHealth)
 	local severity = recentDamage / maxHealth
 	if (severity < 0.5) then
-		if (math.random() < 2*severity) then Explode (missiles[1], SFX.FALL + SFX.FIRE) end
-		if (math.random() < 2*severity) then Explode (missiles[2], SFX.FALL + SFX.SMOKE) end
+		if (math.random() < 2*severity) then Explode (firepoint1, SFX.FALL + SFX.FIRE) end
+		if (math.random() < 2*severity) then Explode (firepoint2, SFX.FALL + SFX.SMOKE) end
 		return 1
 	elseif (severity < 0.75) then
 		if (math.random() < severity) then
@@ -238,16 +243,16 @@ function script.Killed (recentDamage, maxHealth)
 		end
 		Explode(sleeve, SFX.FALL)
 		Explode(trackData.tracks[1], SFX.SHATTER)
-		Explode(missiles[1], SFX.FALL + SFX.SMOKE)
-		Explode(missiles[2], SFX.FALL + SFX.SMOKE + SFX.FIRE)
+		Explode(firepoint1, SFX.FALL + SFX.SMOKE)
+		Explode(firepoint2, SFX.FALL + SFX.SMOKE + SFX.FIRE)
 		return 2
 	else
 		Explode(base, SFX.SHATTER)
 		Explode(turret, SFX.FALL + SFX.SMOKE + SFX.FIRE)
 		Explode(sleeve, SFX.FALL + SFX.SMOKE + SFX.FIRE)
 		Explode(trackData.tracks[1], SFX.SHATTER)
-		Explode(missiles[1], SFX.FALL + SFX.SMOKE)
-		Explode(missiles[2], SFX.FALL + SFX.SMOKE + SFX.FIRE)
+		Explode(firepoint1, SFX.FALL + SFX.SMOKE)
+		Explode(firepoint2, SFX.FALL + SFX.SMOKE + SFX.FIRE)
 		return 2
 	end
 end
