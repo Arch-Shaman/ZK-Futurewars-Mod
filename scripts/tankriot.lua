@@ -19,12 +19,12 @@ local gun = {
 }
 
 local gameSpeed = Game.gameSpeed
-local RELOAD_TIME = 3.4 * gameSpeed
 
 local SIG_AIM = 1
 local SIG_MOVE = 2
 local SIG_ROCK_X = 4
 local SIG_ROCK_Z = 8
+local loaded = 4
 
 local ROCK_FIRE_FORCE = 0.06
 local ROCK_SPEED = 18 --Number of half-cycles per second around x-axis.
@@ -87,6 +87,8 @@ local stuns = {false, false, false}
 local isAiming = false
 local shot = 0
 local smokePiece = {base, turret}
+local gameSpeed = Game.gameSpeed
+local RELOAD_TIME = 3.4 * gameSpeed
 
 local function RestoreAfterDelay()
 	SetSignalMask (SIG_AIM)
@@ -150,10 +152,13 @@ function script.AimWeapon(num, heading, pitch)
 
 	isAiming = true
 
-	while disarmed or currentMissile == 1 do
+	while disarmed do
 		Sleep (34)
 	end
-
+	--Spring.Echo("Loaded " .. shot .. ": " .. tostring(gun[shot].loaded))
+	if not gun[shot].loaded then
+		return false
+	end
 	local slowMult = (Spring.GetUnitRulesParam (unitID, "baseSpeedMult") or 1)
 	Turn (turret, y_axis, heading, math.rad(200)*slowMult)
 	Turn (sleeve, x_axis, -pitch, math.rad(200)*slowMult)
@@ -172,9 +177,12 @@ end
 local function reload(num)
 	scriptReload.GunStartReload(num)
 	gun[num].loaded = false
-
-	SleepAndUpdateReload(num, RELOAD_TIME)
+	SleepAndUpdateReload(num, 3.4 * 30)
 	gun[num].loaded = true
+	if scriptReload.GunLoaded(num) then
+		shot = 0
+	end
+	loaded = loaded + 1
 end
 
 local function ReloadThread(missile)
@@ -186,35 +194,37 @@ local function ReloadThread(missile)
 		Move (gun[missile].firepoint, z_axis, 0.8, 5.5)
 	else
 		Move(gun[missile].firepoint, z_axis, -5)
-		Move(gun[missile].firepoint, z_axis, 3.8, 5.5)
+		Move(gun[missile].firepoint, z_axis, 2.8, 5.5)
 	end
 end
 
 function script.Shot(num)
 	if num == 1 then
 		--EmitSfx(gun[shot].firepoint, GG.Script.UNIT_SFX1)
-		StartThread(reload, shot)
+		--StartThread(reload, shot)
 		StartThread(ReloadThread, shot)
-		shot = (shot + 1)%4
 		StartThread(GG.ScriptRock.Rock, dynamicRockData[z_axis], gunHeading, ROCK_FIRE_FORCE)
 		StartThread(GG.ScriptRock.Rock, dynamicRockData[x_axis], gunHeading - hpi, ROCK_FIRE_FORCE)
 	end
 end
 
---function script.EndBurst()
-	--StartThread(reload, currentMissile)
---end
+function script.EndBurst()
+	StartThread(reload, shot)
+	shot = shot + 1
+	if shot == 4 then
+		shot = 0
+	end
+end
 
 function script.BlockShot(num, targetID)
-	if not targetID then
+	if not targetID and gun[shot].loaded then
 		return false
 	end
 	if num == 1 and gun[shot].loaded then
 		local distMult = (Spring.GetUnitSeparation(unitID, targetID) or 0) * 0.083
 		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 181.2, distMult)
-	elseif num == 1 and not gun[shot].loaded then
-		return true
 	end
+	return true
 end
 
 function script.Create()
@@ -225,8 +235,8 @@ function script.Create()
 		Sleep (250)
 	end
 
-	Move(gun[1].firepoint, z_axis, 0.8)
-	Move(gun[3].firepoint, z_axis, 0.8)
+	Move(firepoint1, z_axis, 0.8)
+	Move(firepoint2, z_axis, 0.8)
 
 	StartThread (GG.Script.SmokeUnit, unitID, smokePiece)
 end
