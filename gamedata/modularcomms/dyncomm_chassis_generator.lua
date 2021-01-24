@@ -50,27 +50,33 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynsupport1", -- 19/31
+		name = "dynsupport1", -- 24/31
 		weapons = {
 			"commweapon_capray",
 			"commweapon_capray",
 			"commweapon_beamlaser",
 			"commweapon_beamlaser",
+			"commweapon_beamlaser_heavy",
+			"commweapon_beamlaser_heavy",
 			"commweapon_lparticlebeam",
 			"commweapon_lparticlebeam",
-			"commweapon_disruptor",
+			"commweapon_disruptor", -- TODO: replace with EMP weapon
 			"commweapon_disruptor",
 			"commweapon_hparticlebeam",
-			"commweapon_heavy_disruptor",
+			"commweapon_hparticlebeam",
+			"commweapon_heavy_disruptor", -- TODO: replace with EMP
 			"commweapon_lightninggun",
 			"commweapon_lightninggun_improved",
 			"commweapon_disruptorprojector",
 			"commweapon_disruptorprojector",
 			"commweapon_shockrifle",
 			"commweapon_shockrifle",
-			"commweapon_multistunner",
+			"commweapon_multistunner", -- TODO: replace with EMP bomb.
 			"commweapon_multistunner_improved",
 			"commweapon_disruptorbomb",
+			"commweapon_disruptorprojector_heavy",
+			"commweapon_disruptorprojector_heavy",
+			--
 			-- Space for shield
 		}
 	},

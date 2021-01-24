@@ -160,6 +160,26 @@ local moduleDefs = {
 			end
 		end
 	},
+	--[[{
+		name = "commweapon_hparticlebeam",
+		humanName = "Heavy Particle Beam",
+		description = "Heavy Particle Beam - Replaces other weapons. Short range, high-power beam weapon with moderate reload time. May be bugged?",
+		image = moduleImagePath .. "conversion_hparticlebeam.png",
+		limit = 1,
+		cost = 100 * COST_MULT,
+		requireChassis = {"support", "knight"},
+		requireLevel = 1,
+		slotType = "adv_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_heavy_disruptor") or "commweapon_hparticlebeam"
+			sharedData.weapon1 = weaponName
+			sharedData.weapon2 = nil
+			sharedData.noMoreWeapons = true
+		end
+	},]]
 	--{
 	--	name = "commweapon_hpartillery",
 	--	humanName = "Plasma Artillery",
@@ -358,42 +378,56 @@ local moduleDefs = {
 		end
 	},
 	{
-		name = "commweapon_hparticlebeam",
-		humanName = "Heavy Particle Beam",
-		description = "Heavy Particle Beam - Replaces other weapons. Short range, high-power beam weapon with moderate reload time",
-		image = moduleImagePath .. "conversion_hparticlebeam.png",
-		limit = 1,
-		cost = 100 * COST_MULT,
-		requireChassis = {"support", "knight"},
-		requireLevel = 1,
-		slotType = "adv_weapon",
+		name = "module_heavyprojector",
+		humanName = "High Frequency Beam Kit",
+		description = "High Frequency Beam Kit\nConverts a disruptor or beam into a heavier version.",
+		image = moduleImagePath .. "module_beamamplifier.png",
+		limit = 2,
+		cost = 220 * COST_MULT,
+		requireChassis = {"support"},
+		requireOneOf = {"commweapon_disruptorprojector", "nullbasicweapon", "commweapon_lparticlebeam"},
+		requireLevel = 2,
+		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			if sharedData.noMoreWeapons then
-				return
+			--local weaponName = "commweapon_disruptorprojector_heavy"
+			local conversions = 1
+			if sharedData.weapon1 and (sharedData.weapon1 == "commweapon_disruptorprojector" or sharedData.weapon1 == "commweapon_beamlaser") then
+				sharedData.weapon1 = sharedData.weapon1 .. "_heavy"
+				conversions = conversions - 1
 			end
-			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_heavy_disruptor") or "commweapon_hparticlebeam"
-			sharedData.weapon1 = weaponName
-			sharedData.weapon2 = nil
-			sharedData.noMoreWeapons = true
+			if sharedData.weapon2 and (sharedData.weapon2 == "commweapon_disruptorprojector" or sharedData.weapon2 == "commweapon_beamlaser") and conversions > 0 then
+				sharedData.weapon2 = sharedData.weapon2 .. "_heavy"
+				conversions = conversions - 1
+			end
+			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_lparticlebeam" and conversions > 0 then
+				conversions = conversions - 1
+				sharedData.weapon1 = "commweapon_hparticlebeam"
+			end
+			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_lparticlebeam" and conversions > 0 then
+				conversions = conversions - 1
+				sharedData.weapon2 = "commweapon_hparticlebeam"
+			end
 		end
 	},
 	{
 		name = "commweapon_shockrifle",
 		humanName = "Shock Rifle",
-		description = "Shock Rifle - Replaces other weapons. Long range sniper rifle",
-		image = moduleImagePath .. "conversion_shockrifle.png",
-		limit = 1,
+		description = "Shock Rifle\n Long range sniper rifle. Long reload time, high damage, long range.",
+		image = moduleImagePath .. "commweapon_shockrifle.png",
+		limit = 2,
 		cost = 100 * COST_MULT,
 		requireChassis = {"support", "knight"},
 		requireLevel = 1,
-		slotType = "adv_weapon",
+		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
 			end
-			sharedData.weapon1 = "commweapon_shockrifle"
-			sharedData.weapon2 = nil
-			sharedData.noMoreWeapons = true
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
 		end
 	},
 	{
