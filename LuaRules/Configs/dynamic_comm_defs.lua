@@ -239,10 +239,14 @@ local moduleDefs = {
 				return
 			end
 			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_disruptor") or "commweapon_lparticlebeam"
-			if not sharedData.weapon1 then
+			if not sharedData.weapon1 and not modules[moduleDefNames.module_heavyprojector] then
 				sharedData.weapon1 = weaponName
-			else
+			elseif not sharedData.weapon1 and modules[moduleDefNames.module_heavyprojector] then
+				sharedData.weapon1 = "commweapon_heavy_disruptor"
+			elseif not modules[moduleDefNames.module_heavyprojector_second] then
 				sharedData.weapon2 = weaponName
+			else
+				sharedData.weapon2 = "commweapon_heavy_disruptor"
 			end
 		end
 	},
