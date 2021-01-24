@@ -34,9 +34,9 @@ local chassisDefs = {
 		weapons = {
 			"commweapon_beamlaser",
 			"commweapon_beamlaser",
+			"commweapon_lparticlebeam", -- TODO: Remove
 			"commweapon_lparticlebeam",
-			"commweapon_lparticlebeam",
-			"commweapon_disruptor",
+			"commweapon_disruptor", -- TODO: Remove
 			"commweapon_disruptor",
 			"commweapon_shotgun",
 			"commweapon_shotgun",
@@ -44,7 +44,7 @@ local chassisDefs = {
 			"commweapon_shotgun_disrupt",
 			"commweapon_flamethrower",
 			"commweapon_flamethrower",
-			"commweapon_heavymachinegun",
+			"commweapon_heavymachinegun", -- TODO: Replace with EMG
 			"commweapon_heavymachinegun",
 			"commweapon_heavymachinegun_disrupt",
 			"commweapon_heavymachinegun_disrupt",
