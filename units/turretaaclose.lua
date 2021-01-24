@@ -43,7 +43,7 @@ return {
 		},
 
 		},
-		sightDistance                 = 600,
+		sightDistance                 = 1025,
 		useBuildingGroundDecal        = true,
 		waterline                     = 10,
 		workerTime                    = 0,
