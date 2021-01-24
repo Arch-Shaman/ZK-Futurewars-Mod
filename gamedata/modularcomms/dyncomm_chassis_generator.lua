@@ -30,15 +30,23 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynrecon1", -- 14/31
+		name = "dynrecon1", -- 22/31
 		weapons = {
 			"commweapon_beamlaser",
+			"commweapon_beamlaser",
+			"commweapon_lparticlebeam",
 			"commweapon_lparticlebeam",
 			"commweapon_disruptor",
+			"commweapon_disruptor",
+			"commweapon_shotgun",
 			"commweapon_shotgun",
 			"commweapon_shotgun_disrupt",
+			"commweapon_shotgun_disrupt",
+			"commweapon_flamethrower",
 			"commweapon_flamethrower",
 			"commweapon_heavymachinegun",
+			"commweapon_heavymachinegun",
+			"commweapon_heavymachinegun_disrupt",
 			"commweapon_heavymachinegun_disrupt",
 			"commweapon_napalmgrenade",
 			"commweapon_clusterbomb",
