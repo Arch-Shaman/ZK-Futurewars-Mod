@@ -80,7 +80,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_beamlaser.png",
 		limit = 2,
 		cost = 5 * COST_MULT,
-		requireChassis = {"knight"}, --[[ can fit on any chassis, but is already
+		requireChassis = {"knight", "support"}, --[[ can fit on any chassis, but is already
 		                                  baseline for multiplayer comms, so we
 		                                  don't offer it for them ]]
 		requireLevel = 1,
@@ -382,11 +382,43 @@ local moduleDefs = {
 		humanName = "High Frequency Beam Kit",
 		description = "High Frequency Beam Kit\nConverts a disruptor or beam into a heavier version.",
 		image = moduleImagePath .. "module_beamamplifier.png",
-		limit = 2,
+		limit = 1,
 		cost = 220 * COST_MULT,
 		requireChassis = {"support"},
-		requireOneOf = {"commweapon_disruptorprojector", "nullbasicweapon", "commweapon_lparticlebeam"},
+		requireOneOf = {"commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_lparticlebeam"},
 		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			--local weaponName = "commweapon_disruptorprojector_heavy"
+			local conversions = 1
+			if sharedData.weapon1 and (sharedData.weapon1 == "commweapon_disruptorprojector" or sharedData.weapon1 == "commweapon_beamlaser") then
+				sharedData.weapon1 = sharedData.weapon1 .. "_heavy"
+				conversions = conversions - 1
+			end
+			if sharedData.weapon2 and (sharedData.weapon2 == "commweapon_disruptorprojector" or sharedData.weapon2 == "commweapon_beamlaser") and conversions > 0 then
+				sharedData.weapon2 = sharedData.weapon2 .. "_heavy"
+				conversions = conversions - 1
+			end
+			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_lparticlebeam" and conversions > 0 then
+				conversions = conversions - 1
+				sharedData.weapon1 = "commweapon_hparticlebeam"
+			end
+			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_lparticlebeam" and conversions > 0 then
+				conversions = conversions - 1
+				sharedData.weapon2 = "commweapon_hparticlebeam"
+			end
+		end
+	},
+	{
+		name = "module_heavyprojector_second",
+		humanName = "High Frequency Beam Kit",
+		description = "High Frequency Beam Kit\nConverts a disruptor or beam into a heavier version.",
+		image = moduleImagePath .. "module_beamamplifier.png",
+		limit = 1,
+		cost = 220 * COST_MULT,
+		requireChassis = {"support"},
+		requireOneOf = {"commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_lparticlebeam"},
+		requireLevel = 4,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			--local weaponName = "commweapon_disruptorprojector_heavy"
@@ -420,6 +452,7 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
+			local weaponName = "commweapon_shockrifle"
 			if sharedData.noMoreWeapons then
 				return
 			end

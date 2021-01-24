@@ -193,6 +193,7 @@ local resources = {
 			ecmnoise = "Shaman/lasers/ecmnoise.png",
 			disruptor = "Shaman/lasers/disruptor.png",
 			targetarrow = "Shaman/lasers/trackerarrow.png",
+			purplenovaexplo = "Shaman/purplenova.tga",
 			csmoke0 = 'smoke/smoke00.tga',
 			csmoke1 = 'smoke/smoke01.tga',
 			csmoke2 = 'smoke/smoke02.tga',

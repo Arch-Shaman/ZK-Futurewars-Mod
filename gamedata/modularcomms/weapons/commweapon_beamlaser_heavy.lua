@@ -1,7 +1,7 @@
 local name = "commweapon_beamlaser_heavy"
 local weaponDef = {
-	name                    = [[Heavy Beam Projector]],
-	areaOfEffect            = 220,
+	name                    = [[Heavy Beam Laser]],
+	areaOfEffect            = 14,
 	beamTime                = 1.1,
 	coreThickness           = 0.5,
 	craterBoost             = 0,
@@ -20,14 +20,14 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 200.1,
+		default = 1400.1,
 	},
 
 	duration                = 0.1,
 	edgeEffectiveness       = 0.05,
-	explosionGenerator      = [[custom:heavybeamgreenimpact]],
+	explosionGenerator      = [[custom:heavybeamgreenimpactsmall]],
 	fireStarter             = 70,
-	impactOnly              = false,
+	impactOnly              = true,
 	impulseBoost            = 0,
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 1,
@@ -35,8 +35,8 @@ local weaponDef = {
 	laserFlareSize          = 5.5,
 	minIntensity            = 1,
 	noSelfDamage            = true,
-	range                   = 400,
-	reloadtime              = 1.5,
+	range                   = 650,
+	reloadtime              = 10.5,
 	rgbColor                = [[0 0.8 0]],
 	soundStart              = [[weapon/laser/heavybeamlaser]],
 	soundTrigger            = true,
@@ -44,7 +44,7 @@ local weaponDef = {
 	texture2                = [[flare]],
 	texture3                = [[flare]],
 	texture4                = [[smallflare]],
-	thickness               = 2.2,
+	thickness               = 16.937384685954,
 	tolerance               = 10000,
 	turret                  = true,
 	weaponType              = [[BeamLaser]],
