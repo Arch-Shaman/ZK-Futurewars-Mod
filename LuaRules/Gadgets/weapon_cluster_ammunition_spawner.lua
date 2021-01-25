@@ -66,6 +66,7 @@ local spGetUnitIsCloaked = Spring.GetUnitIsCloaked
 local SetWatchWeapon = Script.SetWatchWeapon
 local spSetProjectileAlwaysVisible = Spring.SetProjectileAlwaysVisible
 local spGetProjectileIsIntercepted = Spring.GetProjectileIsIntercepted
+local spGetProjectileTeamID = Spring.GetProjectileTeamID
 local random = math.random
 local sqrt = math.sqrt
 local byte = string.byte
@@ -317,7 +318,7 @@ local function SpawnSubProjectiles(id, wd)
 	local ttype,target = spGetProjectileTarget(id)
 	-- update projectile attributes --
 	projectileattributes["owner"] = spGetProjectileOwnerID(id)
-	projectileattributes["team"] = spGetUnitTeam(projectileattributes["owner"])
+	projectileattributes["team"] = spGetProjectileTeamID(id)
 	projectileattributes["pos"][1] = x
 	projectileattributes["pos"][2] = y
 	projectileattributes["pos"][3] = z
