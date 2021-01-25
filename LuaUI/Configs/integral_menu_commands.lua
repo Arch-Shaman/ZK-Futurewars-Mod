@@ -289,9 +289,9 @@ local factory_commands = {
 
 local econ_commands = {
 	staticmex         = {order = 1, row = 1, col = 1},
-	energywind        = {order = 2, row = 2, col = 1},
-	energysolar       = {order = 3, row = 2, col = 2},
-	staticenergyrtg   = {order = 4, row = 2, col = 3},
+	staticenergyrtg   = {order = 2, row = 1, col = 2},
+	energywind        = {order = 3, row = 2, col = 1},
+	energysolar       = {order = 4, row = 2, col = 2},
 	energygeo         = {order = 5, row = 2, col = 4},
 	energyfusion      = {order = 6, row = 2, col = 5},
 	energysingu       = {order = 7, row = 2, col = 6},
