@@ -215,9 +215,9 @@
 		"helptext" : "Angler is amphibious anti-air bot designed to counter the factory's nemesis - Raven. Two of them together can float to the surface and kill a single Raven."
 	},
 	"tankaa" : {
-		"name" : "Ettin",
-		"description" : "Flak Anti-Air Tank",
-		"helptext" : "The Ettin's flak cannon makes quick work of enemy gunships, and is also fairly effective against planes."
+		"name" : "Pestle",
+		"description" : "Canister Flak AA Tank",
+		"helptext" : "The Pestle's canisters of flak explosives create an aerial area of denial effect. It's less effective than a Crucible as the canister had to be downsized to fit on a mobile chassis."
 	},
 	"asteroid" : {
 		"name" : "Asteroid",
