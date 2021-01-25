@@ -37,6 +37,7 @@ return { turretaaflak = {
 		noAutoFire                    = false,
 		noChaseCategory               = [[FIXEDWING LAND SINK TURRET SHIP SATELLITE SWIM GUNSHIP FLOAT SUB HOVER]],
 		objectName                    = [[corflak.s3o]],
+		script                        = [[turretaaflak.lua]],
 		selfDestructAs                = [[MEDIUM_BUILDINGEX]],
 
 		sfxtypes               = {
