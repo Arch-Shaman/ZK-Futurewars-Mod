@@ -482,9 +482,8 @@ local function GetActiveTeam(teamID, allyTeamID)
 	return teamID
 end
 
-function gadget:UnitCreated(unitID, unitDefID, teamID, isOverride)
-	local isOverride = isOverride or false
-	if captureUnitDefs[unitDefID] or isOverride or Spring.GetUnitRulesParam(unitID, "postCaptureReload") then
+function gadget:UnitCreated(unitID, unitDefID, teamID)
+	if captureUnitDefs[unitDefID] or Spring.GetUnitRulesParam(unitID, "postCaptureReload") then
 		controllers[unitID] = {
 			postCaptureReload = Spring.GetUnitRulesParam(unitID, "postCaptureReload") or captureUnitDefs[unitDefID].postCaptureReload,
 			units = {},
