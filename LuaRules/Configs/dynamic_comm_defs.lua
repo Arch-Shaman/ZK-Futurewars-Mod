@@ -79,8 +79,8 @@ local moduleDefs = {
 		description = "Beam Laser: An effective short-range cutting tool",
 		image = moduleImagePath .. "commweapon_beamlaser.png",
 		limit = 2,
-		cost = 5 * COST_MULT,
-		requireChassis = {"knight", "support"}, --[[ can fit on any chassis, but is already
+		cost = 0 * COST_MULT,
+		requireChassis = {"knight"}, --[[ can fit on any chassis, but is already
 		                                  baseline for multiplayer comms, so we
 		                                  don't offer it for them ]]
 		requireLevel = 1,
@@ -92,6 +92,48 @@ local moduleDefs = {
 			if not sharedData.weapon1 then
 				sharedData.weapon1 = "commweapon_beamlaser"
 			else
+				sharedData.weapon2 = "commweapon_beamlaser"
+			end
+		end
+	},
+	{
+		name = "commweapon_beamlaser",
+		humanName = "Beam Laser",
+		description = "Beam Laser: An effective short-range cutting tool",
+		image = moduleImagePath .. "commweapon_beamlaser.png",
+		limit = 1,
+		cost = 0 * COST_MULT,
+		requireChassis = {"support"}, --[[ can fit on any chassis, but is already
+		                                  baseline for multiplayer comms, so we
+		                                  don't offer it for them ]]
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = "commweapon_beamlaser"
+			end
+		end
+	},
+	{
+		name = "commweapon_beamlaser2",
+		humanName = "Beam Laser",
+		description = "Beam Laser: An effective short-range cutting tool",
+		image = moduleImagePath .. "commweapon_beamlaser.png",
+		limit = 1,
+		cost = 0 * COST_MULT,
+		requireChassis = {"support"}, --[[ can fit on any chassis, but is already
+		                                  baseline for multiplayer comms, so we
+		                                  don't offer it for them ]]
+		requireLevel = 3,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			if not sharedData.weapon2 then
 				sharedData.weapon2 = "commweapon_beamlaser"
 			end
 		end
@@ -229,10 +271,38 @@ local moduleDefs = {
 		humanName = "Light Particle Beam",
 		description = "Light Particle Beam: Fast, light pulsed energy weapon",
 		image = moduleImagePath .. "commweapon_lparticlebeam.png",
-		limit = 2,
+		limit = 1,
 		cost = 5 * COST_MULT,
 		requireChassis = {"support", "recon", "strike", "knight"},
 		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local hasfirstconverter = modules[moduleDefNames.conversion_disruptor]
+			local hassecondconverter = modules[moduleDefNames.module_heavyprojector_second]
+			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_disruptor") or "commweapon_lparticlebeam"
+			if not sharedData.weapon1 and not hasfirstconverter then
+				sharedData.weapon1 = weaponName
+			elseif not sharedData.weapon1 and hasfirstconverter then
+				sharedData.weapon1 = "commweapon_heavy_disruptor"
+			elseif hassecondconverter then
+				sharedData.weapon2 = "commweapon_heavy_disruptor"
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+	{
+		name = "commweapon_lparticlebeam2",
+		humanName = "Light Particle Beam",
+		description = "Light Particle Beam: Fast, light pulsed energy weapon",
+		image = moduleImagePath .. "commweapon_lparticlebeam.png",
+		limit = 1,
+		cost = 5 * COST_MULT,
+		requireChassis = {"support", "recon", "strike", "knight"},
+		requireLevel = 3,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
@@ -366,10 +436,32 @@ local moduleDefs = {
 		humanName = "Disruptor Projector (Area Slow)",
 		description = "Deals some damage and slows targets in a small area. Low DPS. Can be converted into a heavy AOE slow beam. (NYI)",
 		image = moduleImagePath .. "commweapon_disruptorprojector.png",
-		limit = 2,
+		limit = 1,
 		cost = 20 * COST_MULT,
 		requireChassis = {"support"},
 		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = "commweapon_disruptorprojector"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+	{
+		name = "commweapon_disruptorprojector2",
+		humanName = "Disruptor Projector (Area Slow)",
+		description = "Deals some damage and slows targets in a small area. Low DPS. Can be converted into a heavy AOE slow beam. (NYI)",
+		image = moduleImagePath .. "commweapon_disruptorprojector.png",
+		limit = 2,
+		cost = 20 * COST_MULT,
+		requireChassis = {"support"},
+		requireLevel = 3,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
@@ -389,7 +481,7 @@ local moduleDefs = {
 		description = "High Frequency Beam Kit\nConverts a disruptor or beam into a heavier version.",
 		image = moduleImagePath .. "module_beamamplifier.png",
 		limit = 1,
-		cost = 220 * COST_MULT,
+		cost = 250 * COST_MULT,
 		requireChassis = {"support"},
 		requireOneOf = {"commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_lparticlebeam"},
 		requireLevel = 2,
@@ -425,7 +517,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 220 * COST_MULT,
 		requireChassis = {"support"},
-		requireOneOf = {"commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_lparticlebeam"},
+		requireOneOf = {"commweapon_disruptorprojector2", "commweapon_beamlaser2", "commweapon_lparticlebeam2"},
 		requireLevel = 4,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -453,7 +545,7 @@ local moduleDefs = {
 	},
 	{
 		name = "commweapon_shockrifle",
-		humanName = "Shock Rifle",
+		humanName = "Sniper Rifle",
 		description = "Shock Rifle\n Long range sniper rifle. Long reload time, high damage, long range.",
 		image = moduleImagePath .. "commweapon_shockrifle.png",
 		limit = 2,
