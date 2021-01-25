@@ -70,17 +70,16 @@ unitDef = {
 			default = 25,
 		},
 		customParams              = {
-      			setunitsonfire = "1",
-      			burntime = 30,
-     			area_damage = 1,
-     			area_damage_radius = 108,
+      		setunitsonfire = "1",
+      		burntime = 30,
+     		area_damage = 1,
+     		area_damage_radius = 108,
    			area_damage_dps = 18,
-    			area_damage_duration = 16,
+    		area_damage_duration = 16,
 			light_camera_height = 2500,
 			light_color = [[0.25 0.13 0.05]],
 			light_radios = 460,
 			lups_napalm_fx = 1,
-			 
 		},
 		explosionGenerator      = [[custom:napalm_koda]],
 		fireStarter             = 250,
@@ -121,6 +120,8 @@ unitDef = {
 		reaim_time = 60, -- Fast update not required (maybe dangerous)
         setunitsonfire = "1",
         burntime = 90,
+		cruisealt = 1300,
+		cruisedist = 400,
 
         restrict_in_widgets = 1,
 
@@ -153,7 +154,7 @@ unitDef = {
       tolerance               = 4000,
       turnrate                = 18000,
       weaponAcceleration      = 180,
-      weaponTimer             = 16,
+	  tracks = true,
       weaponType              = [[StarburstLauncher]],
       weaponVelocity          = 1200,
     },
