@@ -108,6 +108,7 @@ local moduleDefs = {
 		                                  don't offer it for them ]]
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		prohibitingModules = {"commweapon_capray", "commweapon_lightninggun", "commweapon_disruptorprojector", "commweapon_lparticlebeam", "commweapon_shockrifle"},
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -274,6 +275,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 5 * COST_MULT,
 		requireChassis = {"support", "recon", "strike", "knight"},
+		prohibitingModules = {"commweapon_capray", "commweapon_lightninggun", "commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_shockrifle"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -439,6 +441,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 20 * COST_MULT,
 		requireChassis = {"support"},
+		prohibitingModules = {"commweapon_capray", "commweapon_lightninggun", "commweapon_beamlaser", "commweapon_lparticlebeam", "commweapon_shockrifle"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -494,18 +497,9 @@ local moduleDefs = {
 				conversions = conversions - 1
 				sharedData.wantsfireatradar = true
 			end
-			if sharedData.weapon2 and (sharedData.weapon2 == "commweapon_disruptorprojector" or sharedData.weapon2 == "commweapon_beamlaser") and conversions > 0 then
-				sharedData.weapon2 = sharedData.weapon2 .. "_heavy"
-				conversions = conversions - 1
-				sharedData.wantsfireatradar = true
-			end
 			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_lparticlebeam" and conversions > 0 then
 				conversions = conversions - 1
 				sharedData.weapon1 = "commweapon_hparticlebeam"
-			end
-			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_lparticlebeam" and conversions > 0 then
-				conversions = conversions - 1
-				sharedData.weapon2 = "commweapon_hparticlebeam"
 			end
 		end
 	},
@@ -523,19 +517,10 @@ local moduleDefs = {
 		applicationFunction = function (modules, sharedData)
 			--local weaponName = "commweapon_disruptorprojector_heavy"
 			local conversions = 1
-			if sharedData.weapon1 and (sharedData.weapon1 == "commweapon_disruptorprojector" or sharedData.weapon1 == "commweapon_beamlaser") then
-				sharedData.weapon1 = sharedData.weapon1 .. "_heavy"
-				conversions = conversions - 1
-				sharedData.wantsfireatradar = true
-			end
 			if sharedData.weapon2 and (sharedData.weapon2 == "commweapon_disruptorprojector" or sharedData.weapon2 == "commweapon_beamlaser") and conversions > 0 then
 				sharedData.weapon2 = sharedData.weapon2 .. "_heavy"
 				conversions = conversions - 1
 				sharedData.wantsfireatradar = true
-			end
-			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_lparticlebeam" and conversions > 0 then
-				conversions = conversions - 1
-				sharedData.weapon1 = "commweapon_hparticlebeam"
 			end
 			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_lparticlebeam" and conversions > 0 then
 				conversions = conversions - 1
