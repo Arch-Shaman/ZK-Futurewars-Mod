@@ -484,29 +484,17 @@ end
 
 function gadget:UnitCreated(unitID, unitDefID, teamID, isOverride)
 	local isOverride = isOverride or false
-	if not captureUnitDefs[unitDefID] and not isOverride then
-		return
-	end
-	if captureUnitDefs[unitDefID] then
+	if captureUnitDefs[unitDefID] or isOverride or Spring.GetUnitRulesParam(unitID, "postCaptureReload") then
 		controllers[unitID] = {
-			postCaptureReload = captureUnitDefs[unitDefID].postCaptureReload,
+			postCaptureReload = Spring.GetUnitRulesParam(unitID, "postCaptureReload") or captureUnitDefs[unitDefID].postCaptureReload,
 			units = {},
 			unitByID = {count = 0, data = {}},
 			killSubordinates = false,
 		}
-	else
-		controllers[unitID] = {
-			postCaptureReload = Spring.GetUnitRulesParam(unitID, "postCaptureReload"),
-			units = {},
-			unitByID = {count = 0, data = {}},
-			killSubordinates = false,
-		}
+		spSetUnitRulesParam(unitID,"cantfire",0, LOS_ACCESS)
+		spInsertUnitCmdDesc(unitID, unitKillSubordinatesCmdDesc)
+		KillToggleCommand(unitID, {0}, {})
 	end
-	
-	spSetUnitRulesParam(unitID,"cantfire",0, LOS_ACCESS)
-	
-	spInsertUnitCmdDesc(unitID, unitKillSubordinatesCmdDesc)
-	KillToggleCommand(unitID, {0}, {})
 end
 
 local function AddNewMastermind(unitID)
