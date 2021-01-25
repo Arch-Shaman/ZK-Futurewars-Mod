@@ -11,8 +11,6 @@ local weaponDef = {
 		is_unit_weapon = 1,
 		slot = [[5]],
 		muzzleEffectShot = [[custom:BEAMWEAPON_MUZZLE_GREEN]],
-		stats_hide_damage = 1, -- continuous laser
-		stats_hide_reload = 1,
 		
 		light_color = [[0 0.5 0]],
 		light_radius = 120,
@@ -20,7 +18,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 1400.1,
+		default = 1300.1,
 	},
 
 	duration                = 0.1,
@@ -36,10 +34,11 @@ local weaponDef = {
 	minIntensity            = 1,
 	noSelfDamage            = true,
 	range                   = 650,
-	reloadtime              = 10.5,
+	reloadtime              = 13,
 	rgbColor                = [[0 0.8 0]],
 	soundStart              = [[weapon/laser/heavybeamlaser]],
 	soundTrigger            = true,
+	sweepFire 				= true,
 	texture1                = [[largelaser]],
 	texture2                = [[flare]],
 	texture3                = [[flare]],
