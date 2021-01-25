@@ -5,7 +5,7 @@ return {
 		description            = [[Ambush Raider Bot]],
 		acceleration           = 1.5,
 		brakeRate              = 2.4,
-		buildCostMetal         = 65,
+		buildCostMetal         = 75,
 		buildPic               = [[cloakraid.png]],
 		canGuard               = true,
 		canMove                = true,
@@ -27,7 +27,7 @@ return {
 			cus_noflashlight   = 1,
 			aim_lookahead      = 80,
 			cloakregen		   = 10,
-			recloaktime 	   = 240,
+			recloaktime 	   = 270,
 		},
 
 		explodeAs              = [[SMALL_UNITEX]],
