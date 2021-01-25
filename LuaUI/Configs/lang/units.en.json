@@ -225,9 +225,9 @@
 		"helptext" : "Asteroids can be manipulated to fall onto the planet by the Meteor Controller; they serve primarily as a weapon to crush the units they fall on, but they can also be reclaimed for resources."
 	},
 	"planeheavyfighter" : {
-		"name" : "Raptor",
+		"name" : "Hades",
 		"description" : "Air Superiority Fighter",
-		"helptext" : "The Raptor specializes in bringing down anything else that flies. It is sturdy enough to take limited AA fire, although it has no ground attack capability."
+		"helptext" : "The Hades replaced the aging Raptor loadout as a flexible fighter was needed. It can attack ground targets with its chaingun or it can use it to splash bombers."
 	},
 	"staticenergyrtg" : {
 		"name" : "RTG",
