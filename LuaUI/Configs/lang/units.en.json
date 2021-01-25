@@ -890,9 +890,9 @@
 		"helptext" : "Inside the heavily armored shell of the Lucifer lies the devastating Tachyon Accelerator. This fearsome weapon is capable of delivering pinpoint damage at extreme ranges, provided you keep it connected to a power source. Remember that the Lucifer is strictly a support weapon; leave it unguarded and it will be swamped with raiders. When under attack by long range artillery or bombers the main gun can retract to reduce incoming damage to a quarter."
 	},
 	"jumparty" : {
-		"name" : "Firewalker",
-		"description" : "Saturation Artillery Walker",
-		"helptext" : "The Firewalker's medium range mortars immolate a small area, denying use of that terrain for brief periods of time. The bot itself is somewhat clumsy and slow to maneuver."
+		"name" : "Firewall",
+		"description" : "Area Denial Artillery (Line)",
+		"helptext" : "The Firewall shoots a canister of unstable napalm mixture that breaks off in a line formation as it approaches its target. This allows it to create lines of napalm, effectively denying an area to an approaching enemy."
 	},
 	"spideraa" : {
 		"name" : "Tarantula",

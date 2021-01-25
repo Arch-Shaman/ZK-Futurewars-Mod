@@ -196,9 +196,9 @@ for i=1, #WeaponDefs do
 						end
 						local keepmomentum = curRef["keepmomentum" .. fragnum]
 						if type(keepmomentum) ~= "string" then
-							config[i]["frags"][fragnum]["keepmomentum"] = 1
+							config[i]["frags"][fragnum]["keepmomentum"] = true
 						else
-							config[i]["frags"][fragnum]["keepmomentum"] = tonumber(keepmomentum)
+							config[i]["frags"][fragnum]["keepmomentum"] = tonumber(keepmomentum) == 1
 						end
 						local spreadradius = curRef["spreadradius" .. fragnum]
 						if type(spreadradius) ~= "string" then
@@ -324,24 +324,26 @@ local function SpawnSubProjectiles(id, wd)
 	projectileattributes["speed"][1] = vx
 	projectileattributes["speed"][2] = vy
 	projectileattributes["speed"][3] = vz
+	local projectileConfig = config[wd].frags
 	local step = {0,0,0}
 	-- Create the projectiles --
 	for j = 1, config[wd].fragcount do
-		local me = config[wd]["frags"][j]["projectile"]
-		local r = config[wd]["frags"][j]["spreadradius"]
-		local vr = config[wd]["frags"][j]["veldata"]
-		local projectilecount = config[wd]["frags"][j]["numprojectiles"]
+		local me = projectileConfig[j]["projectile"]
+		local r = projectileConfig[j]["spreadradius"]
+		local vr = projectileConfig[j]["veldata"]
+		local projectilecount = projectileConfig[j]["numprojectiles"]
 		for i=1, 3 do
 			step[i] = (vr.max[i] - vr.min[i])/projectilecount
 		end
 		if debug then
-			spEcho("Velocity: " ..tostring(config[wd]["frags"][j].clusterpos),tostring(config[wd]["frags"][j].clustervec) .. "\nstep: " .. tostring(step))
+			spEcho("Velocity: " ..tostring(projectileConfig[j].clusterpos),tostring(projectileConfig[j].clustervec) .. "\nstep: " .. tostring(step))
 		end
 		projectileattributes["ttl"] = WeaponDefs[me].flightTime
 		projectileattributes["tracking"] = WeaponDefs[me].tracks or false
 		projectileattributes["gravity"] = -WeaponDefs[me].myGravity or -1
-		local positioning = config[wd]["frags"][j].clusterpos or "none"
-		local vectoring = config[wd]["frags"][j].clustervec or "none"
+		local positioning = projectileConfig[j].clusterpos or "none"
+		local vectoring = projectileConfig[j].clustervec or "none"
+		local keepmomentum = projectileConfig[j].keepmomentum
 		for i = 1, projectilecount do
 			local p
 			if strfind(positioning,"random") then
@@ -356,24 +358,30 @@ local function SpawnSubProjectiles(id, wd)
 				end
 			end
 			if strfind(vectoring,"random") then
+				local vxf, vyf, vzf = vx, vy, vz
+				if not keepmomentum then
+					vxf = 0
+					vyf = 0
+					vzf = 0
+				end
 				if strfind(vectoring,"x") then
-					projectileattributes["speed"][1] = vx+random(vr.min[1],vr.max[1])
+					projectileattributes["speed"][1] = vxf+random(vr.min[1],vr.max[1])
 				end
 				if strfind(vectoring,"y") then
-					projectileattributes["speed"][2] = vy+random(vr.min[2],vr.max[2])
+					projectileattributes["speed"][2] = vyf+random(vr.min[2],vr.max[2])
 				end
 				if strfind(vectoring,"z") then
-					projectileattributes["speed"][3] = vz+random(vr.min[3],vr.max[3])
+					projectileattributes["speed"][3] = vzf+random(vr.min[3],vr.max[3])
 				end
 			elseif strfind(vectoring,"even") then
 				if strfind(vectoring,"x") then
-					projectileattributes["speed"][1] = vx+(vr.min[1]+(step[1]*(i-1)))
+					projectileattributes["speed"][1] = vxf+(vr.min[1]+(step[1]*(i-1)))
 				end
 				if strfind(vectoring,"y") then
-					projectileattributes["speed"][2] = vy+(vr.min[2]+(step[2]*(i-1)))
+					projectileattributes["speed"][2] = vyf+(vr.min[2]+(step[2]*(i-1)))
 				end
 				if strfind(vectoring,"z") then
-					projectileattributes["speed"][3] = vz+(vr.min[3]+(step[3]*(i-1)))
+					projectileattributes["speed"][3] = vzf+(vr.min[3]+(step[3]*(i-1)))
 				end
 			end
 			if debug then
