@@ -25,9 +25,9 @@
 		"helptext" : "Lacking armaments of its own, the Lobsters response to threats is to throw other units at the problem. Though originally intended for rapid coastline deployement, the Lobster has a variety of uses and can even offensively throw enemies units."
 	},
 	"tankarty" : {
-		"name" : "Emissary",
-		"description" : "General-Purpose Artillery",
-		"helptext" : "The heavy, long-ranging gun of the Emissary makes it the unit of choice for standoff shelling of enemy mobiles or structures. As always, it should be wary of anything that gets close to it."
+		"name" : "Polisher",
+		"description" : "Indirect Fire Artillery",
+		"helptext" : "The Polisher is an indirect artillery piece generally suited for backline duties. Its shell explodes in the air before impacting the ground, dealing some area damage. Suitable against extremely slow heavies and tight clusters of defenses."
 	},
 	"staticmissilesilo" : {
 		"name" : "Missile Silo",
@@ -720,9 +720,9 @@
 		"helptext" : "The Black Dusk fires two canister rockets that airburst over targets. It has decent armor (much more than its predecessor, the Revenant) but costs slightly more due to the complex missile nanofabricator. While the fragmentation rounds are excellent against heavies, they tend to lose out against raiders."
 	},
 	"tankriot" : {
-		"name" : "Ogre",
+		"name" : "Cobbler",
 		"description" : "Heavy Riot Support Tank",
-		"helptext" : "Remarkably mobile for a riot platform, the Ogre packs twin high-velocity fragmentation missiles that are devastating to light units and aircraft alike, although they have limited range. Like other riot units, the Ogre does not have the range and speed to hold its own against most skirmishers. The missile is quite effective at flattening terrain so it is particularly useful at knocking down walls that Welders cannot reach."
+		"helptext" : "The Cobbler is a heavy riot support tank with canister rockets that spew projectiles across an area. Its fabricators can hold up to 4 missiles at a time, though it must slowly rebuild them."
 	},
 	"staticantinuke" : {
 		"name" : "Antinuke",
