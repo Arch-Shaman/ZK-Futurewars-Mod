@@ -357,13 +357,13 @@ local function SpawnSubProjectiles(id, wd)
 					projectileattributes["pos"][3] = z+random(-r,r)
 				end
 			end
+			local vxf, vyf, vzf = vx, vy, vz
+			if not keepmomentum then
+				vxf = 0
+				vyf = 0
+				vzf = 0
+			end
 			if strfind(vectoring,"random") then
-				local vxf, vyf, vzf = vx, vy, vz
-				if not keepmomentum then
-					vxf = 0
-					vyf = 0
-					vzf = 0
-				end
 				if strfind(vectoring,"x") then
 					projectileattributes["speed"][1] = vxf+random(vr.min[1],vr.max[1])
 				end
