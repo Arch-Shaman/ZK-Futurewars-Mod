@@ -1049,12 +1049,14 @@ local function printAbilities(ud, unitID)
 	end
 
 	if cp.canjump and (not cp.no_jump_handling) then
+		local rangebonus = (Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus") or 0) + 1
+		local reloadbonus = 1 - (Spring.GetUnitRulesParam(unitID, "comm_jumpreload_bonus") or 0)
 		cells[#cells+1] = 'Jumping'
 		cells[#cells+1] = ''
 		cells[#cells+1] = ' - Range:'
-		cells[#cells+1] = cp.jump_range .. " elmo"
+		cells[#cells+1] = numformat(cp.jump_range * rangebonus, 0) .. " elmo"
 		cells[#cells+1] = ' - Reload: '
-		cells[#cells+1] = cp.jump_reload .. 's'
+		cells[#cells+1] = numformat(cp.jump_reload * reloadbonus, 1) .. 's'
 		cells[#cells+1] = ' - Speed:'
 		cells[#cells+1] = numformat(30*tonumber(cp.jump_speed)) .. " elmo/s"
 		cells[#cells+1] = ' - Midair jump:'
