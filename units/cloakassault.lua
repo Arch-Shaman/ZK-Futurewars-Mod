@@ -88,7 +88,7 @@ return {
 				cegtag					= [[antagonist_spark]],
 
 				customParams            = {
-					extra_damage = 680,
+					extra_damage = 756,
 
 					light_camera_height = 2000,
 					light_color = [[0.85 0.85 1.2]],
@@ -98,7 +98,7 @@ return {
 				cylinderTargeting      = 0,
 
 				damage                  = {
-					default        = 240,
+					default        = 275,
 				},
 
 				duration                = 10,
