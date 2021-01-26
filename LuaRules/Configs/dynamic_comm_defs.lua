@@ -274,8 +274,36 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_lparticlebeam.png",
 		limit = 1,
 		cost = 5 * COST_MULT,
-		requireChassis = {"support", "recon", "strike", "knight"},
+		requireChassis = {"support"},
 		prohibitingModules = {"commweapon_capray", "commweapon_lightninggun", "commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_shockrifle"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local hasfirstconverter = modules[moduleDefNames.conversion_disruptor]
+			local hassecondconverter = modules[moduleDefNames.module_heavyprojector_second]
+			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_disruptor") or "commweapon_lparticlebeam"
+			if not sharedData.weapon1 and not hasfirstconverter then
+				sharedData.weapon1 = weaponName
+			elseif not sharedData.weapon1 and hasfirstconverter then
+				sharedData.weapon1 = "commweapon_heavy_disruptor"
+			elseif hassecondconverter then
+				sharedData.weapon2 = "commweapon_heavy_disruptor"
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+	{
+		name = "commweapon_lparticlebeam_normal",
+		humanName = "Light Particle Beam",
+		description = "Light Particle Beam: Fast, light pulsed energy weapon",
+		image = moduleImagePath .. "commweapon_lparticlebeam.png",
+		limit = 2,
+		cost = 5 * COST_MULT,
+		requireChassis = {"recon", "strike", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -303,7 +331,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_lparticlebeam.png",
 		limit = 1,
 		cost = 5 * COST_MULT,
-		requireChassis = {"support", "recon", "strike", "knight"},
+		requireChassis = {"support"},
 		requireLevel = 3,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
