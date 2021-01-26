@@ -922,7 +922,7 @@ local moduleDefs = {
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			local rangebonus = sharedData.jumprangebonus or 0
-			sharedData.jumprangebonus = reloadbonus + 0.5
+			sharedData.jumprangebonus = rangebonus + 0.5
 		end
 	},
 	{
