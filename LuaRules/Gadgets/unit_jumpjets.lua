@@ -573,7 +573,7 @@ function gadget:CommandFallback(unitID, unitDefID, teamID, cmdID, cmdParams, cmd
 	local x, y, z = spGetUnitPosition(unitID)
 	local distSqr = GetDist2Sqr({x, y, z}, cmdParams)
 	local jumpDef = jumpDefs[unitDefID]
-	local range   = jumpDef.range
+	local range   = jumpDef.range * (1 + (spGetUnitRulesParam(unitID, "comm_jumprange_bonus") or 0))
 
 	if (distSqr < (range*range)) then
 		if (Spring.GetUnitRulesParam(unitID, "jumpReload") >= 1) and Spring.GetUnitRulesParam(unitID,"disarmed") ~= 1 then
