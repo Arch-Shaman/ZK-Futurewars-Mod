@@ -133,7 +133,7 @@ return { turretaaflak = {
 					isaa = [[1]],
 					light_radius = 0,
 					isFlak = 3,
-					flaktime = 1/30,
+					flaktime = -5,
 				},
 
 				damage = {
