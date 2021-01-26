@@ -392,7 +392,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_capray",
 		humanName = "Virus Uplink (Capture)",
-		description = "Captures units at the cost of being completely helpless afterwards.",
+		description = "Virus Uplink\nUploads a capture virus onto enemy units, giving control over to you. The uplink must recharge after capturing a unit.",
 		image = moduleImagePath .. "commweapon_capray.png",
 		limit = 2,
 		cost = 40 * COST_MULT,
@@ -531,7 +531,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_shockrifle",
 		humanName = "Sniper Rifle",
-		description = "Shock Rifle\n Long range sniper rifle. Long reload time, high damage, long range.",
+		description = "Sniper Rifle\n Long range sniper rifle. Long reload time, high damage, long range.",
 		image = moduleImagePath .. "commweapon_shockrifle.png",
 		limit = 2,
 		cost = 100 * COST_MULT,
