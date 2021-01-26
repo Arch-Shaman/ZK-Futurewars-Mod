@@ -170,6 +170,13 @@ local function ApplyModuleEffects(unitID, data, totalCost, images)
 		GG.Overdrive.AddUnitResourceGeneration(unitID, data.metalIncome, data.energyIncome, true)
 	end
 	
+	if data.jumpreloadbonus then
+		Spring.SetUnitRulesParam(unitID, "comm_jumpreload_bonus", data.jumpreloadbonus, INLOS)
+	end
+	if data.jumprangebonus then
+		Spring.SetUnitRulesParam(unitID, "comm_jumprange_bonus", data.jumprangebonus, INLOS)
+	end
+	
 	if data.healthBonus then
 		local health, maxHealth = Spring.GetUnitHealth(unitID)
 		local newHealth = math.max(health + data.healthBonus, 1)

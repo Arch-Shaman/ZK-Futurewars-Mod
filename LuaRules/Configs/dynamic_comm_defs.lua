@@ -876,6 +876,56 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "module_jumpreload",
+		humanName = "Efficient Jumpjets",
+		description = "Efficient Jumpjets\nReduces jumpjet cooldown by 20%.",
+		image = moduleImagePath .. "module_jumpjetrecharge.png",
+		limit = 4,
+		cost = 200 * COST_MULT,
+		requireChassis = {"recon"},
+		prohibitingModules = {"module_jumprange", "module_jumpretrofit"},
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			local reloadbonus = sharedData.jumpreloadbonus or 0
+			sharedData.jumpreloadbonus = reloadbonus + 0.2
+		end
+	},
+	{
+		name = "module_jumpretrofit",
+		humanName = "Improved Jumpjets",
+		description = "Improved Jumpjets\nIncreases jumpjet range by 20%.\nDecreases jumpjet reload by 7.5%",
+		image = moduleImagePath .. "module_jumpjetretrofit.png",
+		limit = 4,
+		cost = 220 * COST_MULT,
+		requireChassis = {"recon"},
+		prohibitingModules = {"module_jumpreload", "module_jumprange"},
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			local rangebonus = sharedData.jumprangebonus or 0
+			local reloadbonus = sharedData.jumpreloadbonus or 0
+			sharedData.jumprangebonus = rangebonus + 0.2
+			sharedData.jumpreloadbonus = reloadbonus + 0.075
+		end
+	},
+	{
+		name = "module_jumprange",
+		humanName = "High Performance Jumpjets",
+		description = "High Performance Jumpjets\nIncreases jumpjet range by 50%.",
+		image = moduleImagePath .. "module_jumpjetpower.png",
+		limit = 4,
+		cost = 200 * COST_MULT,
+		requireChassis = {"recon"},
+		prohibitingModules = {"module_jumpreload", "module_jumpretrofit"},
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			local rangebonus = sharedData.jumprangebonus or 0
+			sharedData.jumprangebonus = reloadbonus + 0.5
+		end
+	},
+	{
 		name = "module_jumpjet",
 		humanName = "Jumpjets",
 		description = "Jumpjets - Leap over obstacles and out of danger.",
