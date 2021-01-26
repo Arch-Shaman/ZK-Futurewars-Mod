@@ -216,13 +216,14 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 	local startHeight      = spGetGroundHeight(start[1],start[3])
 	start[2] = math.max(start[2], startHeight)
 	
+	local reloadmult	   = math.max(1 - (spGetUnitRulesParam(unitID, "comm_jumpreload_bonus") or 0), 0)
 	local unitDefID        = spGetUnitDefID(unitID)
 	local jumpDef          = jumpDefs[unitDefID]
 	local defSpeed         = jumpDef.speed
 	local delay            = jumpDef.delay
 	local height           = jumpDef.height
 	local cannotJumpMidair = jumpDef.cannotJumpMidair
-	local reloadTime       = (jumpDef.reload or 0)*30
+	local reloadTime       = math.ceil((jumpDef.reload or 0)*30 * reloadmult)
 	local teamID           = spGetUnitTeam(unitID)
 	
 	if (not mustJump) and ((cannotJumpMidair and abs(startHeight - start[2]) > 1) or (start[2] < -UnitDefs[unitDefID].maxWaterDepth)) then
