@@ -1014,20 +1014,20 @@ local moduleDefs = {
 	{
 		name = "module_ablative_armor",
 		humanName = "Ablative Armour Plates",
-		description = "Ablative Armour Plates - Provides " .. 600*HP_MULT .. " health. Limit: 8",
+		description = "Ablative Armour Plates - Provides " .. 1000*HP_MULT .. " health. Limit: 8",
 		image = moduleImagePath .. "module_ablative_armor.png",
 		limit = 8,
 		cost = 150 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			sharedData.healthBonus = (sharedData.healthBonus or 0) + 600*HP_MULT
+			sharedData.healthBonus = (sharedData.healthBonus or 0) + 1000*HP_MULT
 		end
 	},
 	{
 		name = "module_heavy_armor",
 		humanName = "High Density Plating",
-		description = "High Density Plating - Provides " .. 1600*HP_MULT .. " health but reduces speed by 3. " ..
+		description = "High Density Plating - Provides " .. 2750*HP_MULT .. " health but reduces speed by 2. " ..
 		"Limit: 8, Requires Ablative Armour Plates",
 		image = moduleImagePath .. "module_heavy_armor.png",
 		limit = 8,
@@ -1036,8 +1036,8 @@ local moduleDefs = {
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			sharedData.healthBonus = (sharedData.healthBonus or 0) + 1600*HP_MULT
-			sharedData.speedMod = (sharedData.speedMod or 0) - 3
+			sharedData.healthBonus = (sharedData.healthBonus or 0) + 2750*HP_MULT
+			sharedData.speedMod = (sharedData.speedMod or 0) - 2
 		end
 	},
 	{
