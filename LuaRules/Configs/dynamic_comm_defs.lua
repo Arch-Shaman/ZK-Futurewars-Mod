@@ -74,7 +74,7 @@ local moduleDefs = {
 	
 	-- Weapons
 	{
-		name = "commweapon_beamlaser",
+		name = "commweapon_beamlaser1",
 		humanName = "Beam Laser",
 		description = "Beam Laser: An effective short-range cutting tool",
 		image = moduleImagePath .. "commweapon_beamlaser.png",
