@@ -5,7 +5,6 @@ local buildOpts = {
 	[[energysingu]],
 	[[energywind]],
 	[[energygeo]],
-	[[staticstorage]],
 	[[energypylon]],
 	[[staticcon]],
 	[[staticrearm]],

@@ -340,6 +340,9 @@ end
 local BP2RES = 0
 local BP2RES_FACTORY = 0
 local BP2TERRASPEED = 1000 --used to be 60 in most of the cases
+local factorybonus = 500
+local platebonus = 250
+local conbonus = 10
 --local SEISMICSIG = 4 --used to be 4 in most of the cases
 for name, ud in pairs (UnitDefs) do
 	local cost = math.max (ud.buildcostenergy or 0, ud.buildcostmetal or 0, ud.buildtime or 0) --one of these should be set in actual unitdef file
@@ -353,6 +356,22 @@ for name, ud in pairs (UnitDefs) do
 	
 	--setting uniform M/E storage
 	local storage = math.max (ud.metalstorage or 0, ud.energystorage or 0)
+	if name:find("factory") then
+		storage = factorybonus
+	end
+	if name:find("plate") then
+		storage = platebonus
+	end
+	if name == "striderfunnelweb" then
+		storage = 1200
+	end
+	if ud.workertime and name:find("con") and not name:find("dyn") then
+		storage = storage + (ud.workertime * conbonus)
+		if name:find("static") then
+			storage = 250
+		end
+	end
+	
 	if storage > 0 then
 		if not ud.metalstorage then ud.metalstorage = storage end
 		if not ud.energystorage then ud.energystorage = storage end
