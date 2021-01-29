@@ -29,6 +29,11 @@ local disarmed = false
 local SIG_AIM = 2
 
 ----------------------------------------------------------------------------------------------
+-- Localising Functions
+
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+
+----------------------------------------------------------------------------------------------
 -- Local Animation Functions
 
 local function RestoreAfterDelay()
@@ -50,6 +55,8 @@ function script.Create()
 	GG.SetupAimPosTerraform(unitID, ud.floatOnWater, midpos, aimpos, midTable.midy + 15, midTable.midy + 60, 15, 48)
 	
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+	
+	Spring.SetUnitRulesParam(unitID,"lowpower",1, {inlos = true}) -- no "optamisaions" since this will only run once per unit.
 end
 
 ----------------------------------------------------------------------------------------------
@@ -98,7 +105,7 @@ function script.AimWeapon(num, heading, pitch)
 	WaitForTurn(basetop, y_axis)
 	WaitForTurn(housing, x_axis)
 	StartThread (RestoreAfterDelay)
-	return true
+	return (spGetUnitRulesParam(unitID, "lowpower") == 0)
 end
 
 function script.Shot(num)
