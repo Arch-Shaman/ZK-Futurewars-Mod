@@ -9,5 +9,5 @@ return {
 	modtype=1,
 	depend = {
 		[[rapid://zk:stable]],
-	}
+	},
 }
