@@ -115,7 +115,6 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
       
-
 				customParams = {
 					reaim_time = 1,	
 					smoothradius     = [[120]],
@@ -131,7 +130,6 @@ return {
 					spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					vradius1 = "-6,-4,-6,2,3,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 				},
-
 
 				damage                  = {
 					default = 720.1*7,

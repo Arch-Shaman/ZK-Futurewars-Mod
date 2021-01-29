@@ -131,7 +131,6 @@ return {
 					light_color = [[1.4 1 0.7]],
 					light_radius = 320,
 				},
-
       
 				damage                  = {
 					default = 30.2 * 6,
