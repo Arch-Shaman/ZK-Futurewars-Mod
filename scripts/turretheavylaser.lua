@@ -29,6 +29,11 @@ local disarmed = false
 local SIG_AIM = 2
 
 ----------------------------------------------------------------------------------------------
+-- Localising Functions
+
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+
+----------------------------------------------------------------------------------------------
 -- Local Animation Functions
 
 local function RestoreAfterDelay()
@@ -98,7 +103,7 @@ function script.AimWeapon(num, heading, pitch)
 	WaitForTurn(basetop, y_axis)
 	WaitForTurn(housing, x_axis)
 	StartThread (RestoreAfterDelay)
-	return true
+	return (spGetUnitRulesParam(unitID, "lowpower") == 0)
 end
 
 function script.Shot(num)
