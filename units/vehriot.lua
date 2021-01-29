@@ -91,8 +91,7 @@ return {
 					light_camera_height = 1600,
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 40,
-					isFlak = 3,
-					flaktime = 1/30,
+					isFlak = 2,
 				},
 				
 				damage                  = {
@@ -140,7 +139,7 @@ return {
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 100, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-4,0,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-4,-1,-4,4,0,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 0, -- check for nearby units?
 					proxydist = 100, -- how far to check for units? Default: spawndist

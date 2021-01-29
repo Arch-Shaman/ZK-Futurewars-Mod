@@ -1049,12 +1049,14 @@ local function printAbilities(ud, unitID)
 	end
 
 	if cp.canjump and (not cp.no_jump_handling) then
+		local rangebonus = (Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus") or 0) + 1
+		local reloadbonus = 1 - (Spring.GetUnitRulesParam(unitID, "comm_jumpreload_bonus") or 0)
 		cells[#cells+1] = 'Jumping'
 		cells[#cells+1] = ''
 		cells[#cells+1] = ' - Range:'
-		cells[#cells+1] = cp.jump_range .. " elmo"
+		cells[#cells+1] = numformat(cp.jump_range * rangebonus, 0) .. " elmo"
 		cells[#cells+1] = ' - Reload: '
-		cells[#cells+1] = cp.jump_reload .. 's'
+		cells[#cells+1] = numformat(cp.jump_reload * reloadbonus, 1) .. 's'
 		cells[#cells+1] = ' - Speed:'
 		cells[#cells+1] = numformat(30*tonumber(cp.jump_speed)) .. " elmo/s"
 		cells[#cells+1] = ' - Midair jump:'
@@ -1086,7 +1088,7 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = ''
 	end
 
-	if (ud.idleTime < 1800) or (cp.amph_regen) or (cp.armored_regen) then
+	if (ud.idleTime < 1800) or (cp.amph_regen) or (cp.armored_regen) or (cp.nanoregen) then
 		cells[#cells+1] = 'Improved regeneration'
 		cells[#cells+1] = ''
 		if ud.idleTime < 1800 then
@@ -1100,6 +1102,16 @@ local function printAbilities(ud, unitID)
 				local dynamic_regen = unitID and Spring.GetUnitRulesParam(unitID, "comm_autorepair_rate") or cp.idle_regen
 				cells[#cells+1] = numformat(dynamic_regen) .. ' HP/s'
 			end
+		end
+		if cp.nanoregen then
+			cells[#cells+1] = " - Nanite Regeneration:"
+			cells[#cells+1] = ''
+			cells[#cells+1] = "Base Regeneration:"
+			cells[#cells+1] = cp.nanoregen .. "HP/s"
+			cells[#cells+1] = "Max Regeneration:"
+			cells[#cells+1] = cp.nanoregen * cp.nano_maxregen .. "HP/s"
+			cells[#cells+1] = "Max Regen below:"
+			cells[#cells+1] = cp.nano_maxregen / ud.health
 		end
 		if cp.amph_regen then
 			cells[#cells+1] = ' - Water regen: '

@@ -55,7 +55,50 @@ return {
 		turninplace            = 0,
 		turnRate               = 1000,
 		workerTime             = 5,
+		weapons = {
+			{
+				def                = [[carriertargeting]],
+				badTargetCategory  = [[SINK]],
+				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
+			},
+		},
+		weaponDefs             = {
+			carriertargeting   = {
+				name                    = [[Fake Targeting Weapon]],
+				areaOfEffect            = 8,
+				collideFriendly         = false,
+				craterBoost             = 0,
+				craterMult              = 0,
 
+				damage                  = {
+					default = 1E-06,
+				},
+
+				explosionGenerator      = [[custom:NONE]],
+				fireStarter             = 0,
+				flightTime              = 1,
+				impactOnly              = true,
+				interceptedByShieldType = 1,
+				range                   = 300,
+				reloadtime              = 1.233,
+				size                    = 1E-06,
+				smokeTrail              = false,
+
+				textures                = {
+					[[null]],
+					[[null]],
+					[[null]],
+				},
+
+				turnrate                = 1000000000,
+				turret                  = true,
+				weaponAcceleration      = 20000,
+				weaponTimer             = 0.5,
+				weaponType              = [[StarburstLauncher]],
+				weaponVelocity          = 20000,
+			},
+		},
+		
 		featureDefs            = {
 
 			DEAD  = {
@@ -71,7 +114,6 @@ return {
 				footprintZ       = 3,
 				object           = [[debris3x3b.s3o]],
 			},
-
 		},
 	} 
 }

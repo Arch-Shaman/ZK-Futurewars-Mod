@@ -634,6 +634,7 @@ local function GetUnitRegenString(unitID, ud)
 					regen = regen + (spGetUnitRulesParam(unitID, "comm_autorepair_rate") or ud.customParams.idle_regen)
 				end
 				regen = regen + (spGetUnitRulesParam(unitID, "cloakregen") or 0)
+				regen = regen + (spGetUnitRulesParam(unitID, "nanoregen") or 0)
 				if ud.customParams.amph_regen then
 					local x,y,z = Spring.GetUnitPosition(unitID)
 					local h = Spring.GetGroundHeight(x,z) or y

@@ -111,7 +111,7 @@ return {
 					flaktime = 1/30,
 				},
 				damage                  = {
-					default = 30,
+					default = 60,
 				},
 				groundbounce = false,
 				--bounceslip = 0.25,
@@ -163,7 +163,7 @@ return {
 					cruise_nolock = 1,
 					cruisetracking = 1,
 					--CAS--
-					numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "nebula_ag",
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
@@ -178,7 +178,7 @@ return {
 				},
 
 				damage                  = {
-					default = 30*8,
+					default = 60*4,
 				},
 
 				edgeEffectiveness		= 0.2,

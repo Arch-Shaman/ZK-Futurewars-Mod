@@ -88,7 +88,7 @@ return {
 				cegtag					= [[antagonist_spark]],
 
 				customParams            = {
-					extra_damage = 600,
+					extra_damage = 756,
 
 					light_camera_height = 2000,
 					light_color = [[0.85 0.85 1.2]],
@@ -98,7 +98,7 @@ return {
 				cylinderTargeting      = 0,
 
 				damage                  = {
-					default        = 200,
+					default        = 275,
 				},
 
 				duration                = 10,
@@ -110,7 +110,7 @@ return {
 				intensity               = 12,
 				interceptedByShieldType = 1,
 				paralyzeTime            = 1,
-				range                   = 320,
+				range                   = 340,
 				reloadtime              = 5,
 				size = 0.3,
 				gravity					= 0.02,
@@ -122,7 +122,7 @@ return {
 				turret                  = true,
 				waterweapon             = false,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 250,
+				weaponVelocity          = 270,
 			},
 		},
 

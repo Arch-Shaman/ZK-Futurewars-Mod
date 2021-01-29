@@ -14,7 +14,9 @@ if not (gadgetHandler:IsSyncedCode()) then
 	return
 end
 
-local singularities = {} -- {position = {x,y,z}, lifespan = frames, def = weapondefID}
+local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+
+local singularities = IterableMap.New() -- {position = {x,y,z}, lifespan = frames, def = weapondefID}
 local ignoreexplosion = {}
 
 local singularitydefs = {}
@@ -54,6 +56,8 @@ local spGetFeatureMass = Spring.GetFeatureMass
 local spEcho = Spring.Echo
 local spGetUnitDefID = Spring.GetUnitDefID
 local gravity = Game.gravity
+local spSpawnCEG = Spring.SpawnCEG
+local spPlaySoundFile = Spring.PlaySoundFile
 
 local projectiles = {}
 
@@ -214,20 +218,21 @@ local function ProcessFeatures(sx, sy, sz, radius, strength, list, rev, sid)
 	end
 end
 
-local function ProcessSingularity(singu)
-	local sx = singularities[singu].position[1]
-	local sy = singularities[singu].position[2]
-	local sz = singularities[singu].position[3]
-	local lifespan = singularities[singu].lifespan
-	local radius = singularities[singu].radius
-	local strength = singularities[singu].strength
+local function ProcessSingularity(singu, data)
+	--local data = IterableMap.Get(singularities, singu)
+	local sx = data.position[1]
+	local sy = data.position[2]
+	local sz = data.position[3]
+	local lifespan = data.lifespan
+	local radius = data.radius
+	local strength = data.strength
 	if lifespan == 1 then
-		Spring.SpawnCEG("opticblast_charge", sx, sy, sz, 0, 0, 0 , radius, 3000)
+		spSpawnCEG("opticblast_charge", sx, sy, sz, 0, 0, 0 , radius, 3000)
 	elseif lifespan%15 == 0 and lifespan > 20 then
-		Spring.SpawnCEG("black_hole_singu", sx, sy, sz, 0, 0, 0 , radius, 0)
+		spSpawnCEG("black_hole_singu", sx, sy, sz, 0, 0, 0 , radius, 0)
 	end
 	if lifespan < 20 and lifespan%4 == 0 then
-		Spring.SpawnCEG("riotballgrav", sx, sy, sz, 0, 0, 0, radius, 0)
+		spSpawnCEG("riotballgrav", sx, sy, sz, 0, 0, 0, radius, 0)
 	end
 	local units = spGetUnitsInSphere(sx, sy, sz, radius)
 	if #units > 0 then
@@ -248,19 +253,19 @@ end
 	
 
 function gadget:GameFrame(f)
-	for id, data in pairs(singularities) do
+	for id, data in IterableMap.Iterator(singularities) do
 		if data.lifespan > 0 then
-			ProcessSingularity(id)
+			ProcessSingularity(id, data)
 			data.lifespan = data.lifespan - 1
 			if data.lifespan%30 == 0 and data.lifespan > 50 then
-				Spring.PlaySoundFile("sounds\\blackholeloop.ogg", 15, data.position[1], data.position[2], data.position[3])
+				spPlaySoundFile("sounds\\blackholeloop.ogg", 15, data.position[1], data.position[2], data.position[3])
 			elseif data.lifespan == 15 then
-				Spring.PlaySoundFile("sounds\\blackhole_final.ogg", 30, data.position[1], data.position[2], data.position[3])
+				spPlaySoundFile("sounds\\blackhole_final.ogg", 30, data.position[1], data.position[2], data.position[3])
 			elseif data.lifespan == 1 then
-				Spring.PlaySoundFile("sounds\\explosions\\ex_burn1.wav", 12, data.position[1], data.position[2], data.position[3])
+				spPlaySoundFile("sounds\\explosions\\ex_burn1.wav", 12, data.position[1], data.position[2], data.position[3]) -- needs replacement file?
 			end
 		else
-			singularities[id] = nil
+			IterableMap.Remove(singularities, id)
 		end
 	end
 	--for projectile, frame in pairs(projectiles) do
@@ -276,14 +281,15 @@ local function AddSingularity(x, y, z, strength, radius, lifespan)
 	local n = 0
 	repeat
 		n = -math.random(1, 336559)
-	until singularities[n] == nil
-	singularities[n] = {position = {[1] = x, [2] = y, [3] = z}, lifespan = lifespan, strength = strength, radius = radius}
+	until IterableMap.InMap(singularities, n) == false
+	IterableMap.Add(singularities, n, {position = {[1] = x, [2] = y, [3] = z}, lifespan = lifespan, strength = strength, radius = radius})
 end
 
 GG.AddSingularity = AddSingularity
 
 function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, ProjectileID)
 	if singularitydefs[weaponDefID] and ProjectileID then
-		singularities[ProjectileID] = {position = {[1] = px, [2] = py + singularitydefs[weaponDefID].height, [3] = pz}, lifespan = singularitydefs[weaponDefID].lifespan, strength = singularitydefs[weaponDefID].strength, radius = singularitydefs[weaponDefID].radius}
+		local def = singularitydefs[weaponDefID]
+		IterableMap.Add(singularities, ProjectileID, {position = {[1] = px, [2] = py + def.height, [3] = pz}, lifespan = def.lifespan, strength = def.strength, radius = def.radius})
 	end
 end

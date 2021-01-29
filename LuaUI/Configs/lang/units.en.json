@@ -25,9 +25,9 @@
 		"helptext" : "Lacking armaments of its own, the Lobsters response to threats is to throw other units at the problem. Though originally intended for rapid coastline deployement, the Lobster has a variety of uses and can even offensively throw enemies units."
 	},
 	"tankarty" : {
-		"name" : "Emissary",
-		"description" : "General-Purpose Artillery",
-		"helptext" : "The heavy, long-ranging gun of the Emissary makes it the unit of choice for standoff shelling of enemy mobiles or structures. As always, it should be wary of anything that gets close to it."
+		"name" : "Polisher",
+		"description" : "Indirect Fire Artillery",
+		"helptext" : "The Polisher is an indirect artillery piece generally suited for backline duties. Its shell explodes in the air before impacting the ground, dealing some area damage. Suitable against extremely slow heavies and tight clusters of defenses."
 	},
 	"staticmissilesilo" : {
 		"name" : "Missile Silo",
@@ -215,9 +215,9 @@
 		"helptext" : "Angler is amphibious anti-air bot designed to counter the factory's nemesis - Raven. Two of them together can float to the surface and kill a single Raven."
 	},
 	"tankaa" : {
-		"name" : "Ettin",
-		"description" : "Flak Anti-Air Tank",
-		"helptext" : "The Ettin's flak cannon makes quick work of enemy gunships, and is also fairly effective against planes."
+		"name" : "Pestle",
+		"description" : "Canister Flak AA Tank",
+		"helptext" : "The Pestle's canisters of flak explosives create an aerial area of denial effect. It's less effective than a Crucible as the canister had to be downsized to fit on a mobile chassis."
 	},
 	"asteroid" : {
 		"name" : "Asteroid",
@@ -225,9 +225,14 @@
 		"helptext" : "Asteroids can be manipulated to fall onto the planet by the Meteor Controller; they serve primarily as a weapon to crush the units they fall on, but they can also be reclaimed for resources."
 	},
 	"planeheavyfighter" : {
-		"name" : "Raptor",
+		"name" : "Hades",
 		"description" : "Air Superiority Fighter",
-		"helptext" : "The Raptor specializes in bringing down anything else that flies. It is sturdy enough to take limited AA fire, although it has no ground attack capability."
+		"helptext" : "The Hades replaced the aging Raptor loadout as a flexible fighter was needed. It can attack ground targets with its chaingun or it can use it to splash bombers."
+	},
+	"staticenergyrtg" : {
+		"name" : "RTG",
+		"description" : "Medium Powerplant (+10e, decays over time) - HAZARDOUS",
+		"helptext" : "The Radioisotope Thermoelectric Generator uses decaying radioactive particles from standard metal to generate energy. Once constructed, it becomes unstable and starts decaying in energy output. It's useful for getting out of an economic pinch, but don't rely on them for your energy needs -- they're worse than solars and are explosive."
 	},
 	"hoverskirm2" : {
 		"name" : "Trisula",
@@ -245,9 +250,9 @@
 		"helptext" : "The Aegis protects a modest area with its bubble shield that stops incoming projectiles (but not AoE effects). The shield has a significant energy upkeep and does not block very powerful weapons."
 	},
 	"turretaaclose" : {
-		"name" : "Hacksaw",
-		"description" : "Burst Anti-Air Turret",
-		"helptext" : "The Hacksaw's twin missiles brutally punish any aircraft that enters their range, but take a considerable amount of time to reload, making them less than ideal against light targets."
+		"name" : "Duster",
+		"description" : "Laser guided SAM",
+		"helptext" : "The Duster's quad missiles brutally punish any aircraft that enters their range, but take a considerable amount of time to aim, making them less than ideal against fast targets."
 	},
 	"chicken_rafflesia" : {
 		"name" : "Rafflesia",
@@ -715,9 +720,9 @@
 		"helptext" : "The Black Dusk fires two canister rockets that airburst over targets. It has decent armor (much more than its predecessor, the Revenant) but costs slightly more due to the complex missile nanofabricator. While the fragmentation rounds are excellent against heavies, they tend to lose out against raiders."
 	},
 	"tankriot" : {
-		"name" : "Ogre",
+		"name" : "Cobbler",
 		"description" : "Heavy Riot Support Tank",
-		"helptext" : "Remarkably mobile for a riot platform, the Ogre packs twin high-velocity fragmentation missiles that are devastating to light units and aircraft alike, although they have limited range. Like other riot units, the Ogre does not have the range and speed to hold its own against most skirmishers. The missile is quite effective at flattening terrain so it is particularly useful at knocking down walls that Welders cannot reach."
+		"helptext" : "The Cobbler is a heavy riot support tank with canister rockets that spew projectiles across an area. Its fabricators can hold up to 4 missiles at a time, though it must slowly rebuild them."
 	},
 	"staticantinuke" : {
 		"name" : "Antinuke",
@@ -885,9 +890,9 @@
 		"helptext" : "Inside the heavily armored shell of the Lucifer lies the devastating Tachyon Accelerator. This fearsome weapon is capable of delivering pinpoint damage at extreme ranges, provided you keep it connected to a power source. Remember that the Lucifer is strictly a support weapon; leave it unguarded and it will be swamped with raiders. When under attack by long range artillery or bombers the main gun can retract to reduce incoming damage to a quarter."
 	},
 	"jumparty" : {
-		"name" : "Firewalker",
-		"description" : "Saturation Artillery Walker",
-		"helptext" : "The Firewalker's medium range mortars immolate a small area, denying use of that terrain for brief periods of time. The bot itself is somewhat clumsy and slow to maneuver."
+		"name" : "Firewall",
+		"description" : "Area Denial Artillery (Line)",
+		"helptext" : "The Firewall shoots a canister of unstable napalm mixture that breaks off in a line formation as it approaches its target. This allows it to create lines of napalm, effectively denying an area to an approaching enemy."
 	},
 	"spideraa" : {
 		"name" : "Tarantula",

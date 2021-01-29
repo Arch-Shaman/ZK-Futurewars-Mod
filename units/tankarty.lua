@@ -81,7 +81,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 100.1,
+					default = 175.1,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -131,7 +131,7 @@ return {
 					light_radius = 40,
 				},
 				damage                  = {
-					default = 600.6,
+					default = 1050.6,
 				},
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],

@@ -1,20 +1,18 @@
 local chassisDefs = {
 	{
-		name = "dynstrike1",
+		name = "dynstrike1", -- 24/31 (UPDATE ME AS YOU ADD MORE WEAPONS)
 		weapons = {
-			"commweapon_peashooter",
-			"commweapon_missilelauncher", -- 415
-			"commweapon_missilelauncher", -- 415
+			"commweapon_missilelauncher", -- 415 TODO: REMOVE
+			"commweapon_missilelauncher", -- 415 TODO: REMOVE
 			"commweapon_beamlaser",
 			"commweapon_lparticlebeam",
-			"commweapon_shotgun",
+			"commweapon_shotgun", -- TODO: REPLACE
 			"commweapon_shotgun_disrupt",
-			"commweapon_disruptor",
+			"commweapon_disruptor", -- TODO: REMOVE
 			"commweapon_heavymachinegun",
 			"commweapon_heavymachinegun_disrupt",
 			"commweapon_lightninggun",
 			"commweapon_lightninggun_improved",
-			"commweapon_peashooter",
 			"commweapon_beamlaser",
 			"commweapon_lparticlebeam",
 			"commweapon_shotgun",
@@ -32,50 +30,68 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynrecon1",
+		name = "dynrecon1", -- 22/31
 		weapons = {
-			"commweapon_peashooter",
 			"commweapon_beamlaser",
+			"commweapon_beamlaser",
+			"commweapon_lparticlebeam", -- TODO: Remove
 			"commweapon_lparticlebeam",
+			"commweapon_disruptor", -- TODO: Remove
 			"commweapon_disruptor",
 			"commweapon_shotgun",
+			"commweapon_shotgun",
+			"commweapon_shotgun_disrupt",
 			"commweapon_shotgun_disrupt",
 			"commweapon_flamethrower",
+			"commweapon_flamethrower",
+			"commweapon_heavymachinegun", -- TODO: Replace with EMG
 			"commweapon_heavymachinegun",
+			"commweapon_heavymachinegun_disrupt",
 			"commweapon_heavymachinegun_disrupt",
 			"commweapon_napalmgrenade",
 			"commweapon_clusterbomb",
 			"commweapon_disruptorbomb",
 			"commweapon_concussion",
 			"commweapon_heatray",
+			"commweapon_heatray",
 			-- Space for shield
 		}
 	},
 	{
-		name = "dynsupport1",
+		name = "dynsupport1", -- 25/31
 		weapons = {
-			"commweapon_peashooter",
+			"commweapon_capray",
+			"commweapon_capray",
 			"commweapon_beamlaser",
-			"commweapon_shotgun",
-			"commweapon_shotgun_disrupt",
+			"commweapon_beamlaser",
+			"commweapon_beamlaser_heavy",
+			"commweapon_beamlaser_heavy",
 			"commweapon_lparticlebeam",
+			"commweapon_lparticlebeam",
+			"commweapon_disruptor", -- TODO: replace with EMP weapon
 			"commweapon_disruptor",
 			"commweapon_hparticlebeam",
+			"commweapon_hparticlebeam",
+			"commweapon_heavy_disruptor", -- TODO: replace with EMP
 			"commweapon_heavy_disruptor",
 			"commweapon_lightninggun",
 			"commweapon_lightninggun_improved",
-			"commweapon_missilelauncher",
+			"commweapon_disruptorprojector",
+			"commweapon_disruptorprojector",
 			"commweapon_shockrifle",
-			"commweapon_multistunner",
+			"commweapon_shockrifle",
+			"commweapon_multistunner", -- TODO: replace with EMP bomb.
 			"commweapon_multistunner_improved",
 			"commweapon_disruptorbomb",
+			"commweapon_disruptorprojector_heavy",
+			"commweapon_disruptorprojector_heavy",
+			--
 			-- Space for shield
 		}
 	},
 	{
-		name = "dynassault1",
+		name = "dynassault1", --23/31
 		weapons = {
-			"commweapon_peashooter",
 			"commweapon_rocketlauncher", -- 430
 			"commweapon_rocketlauncher_napalm", -- 430
 			"commweapon_rocketlauncher", -- 430
