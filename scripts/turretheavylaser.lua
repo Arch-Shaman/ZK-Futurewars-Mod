@@ -55,8 +55,6 @@ function script.Create()
 	GG.SetupAimPosTerraform(unitID, ud.floatOnWater, midpos, aimpos, midTable.midy + 15, midTable.midy + 60, 15, 48)
 	
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-	
-	Spring.SetUnitRulesParam(unitID,"lowpower",1, {inlos = true}) -- no "optamisaions" since this will only run once per unit.
 end
 
 ----------------------------------------------------------------------------------------------
