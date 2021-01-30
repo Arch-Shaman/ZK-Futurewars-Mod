@@ -85,7 +85,7 @@ return {
 				cylinderTargeting       = 1,
 				burst					= 2,
 				burstRate				= 2/30,
-				
+				predictBoost			= 0.1,
 
 				customParams              = {
 					isaa = [[1]],
@@ -101,7 +101,7 @@ return {
 				beamDecay 				= 0.38,
 				beamBurst				= true,
 				beamTTL					= 1,
-				leadLimit 				= 400,
+				leadLimit 				= 800,
 				explosionGenerator      = [[custom:flash_teal7]],
 				fireStarter             = 100,
 				impactOnly              = true,
@@ -121,7 +121,7 @@ return {
 				tolerance               = 8192,
 				turret                  = true,
 				weaponType              = [[LaserCannon]],
-				weaponVelocity          = 1200,
+				weaponVelocity          = 1500,
 			},
 		},
 
