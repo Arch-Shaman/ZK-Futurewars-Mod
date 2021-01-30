@@ -47,7 +47,7 @@ return {
 		maxVelocity                   = 0,
 		minCloakDistance              = 150,
 		movementClass                 = [[KBOT2]],
-		objectName                    = [[armsenan.s3o]],
+		objectName                    = [[repairer.s3o]],
 		script                        = [[staticrepair.lua]],
 		selfDestructAs                = [[NANOBOOM2]],
 		showNanoSpray                 = false,
