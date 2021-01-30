@@ -4,7 +4,7 @@ return {
 		name                = [[Divinity]],
 		description         = [[Cluster Bomber]],
 		brakerate           = 0.4,
-		buildCostMetal      = 600,
+		buildCostMetal      = 625,
 		builder             = false,
 		buildPic            = [[bomberprec.png]],
 		canFly              = true,
