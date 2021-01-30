@@ -8,7 +8,7 @@ return {
 		airStrafe              = 0,
 		bankingAllowed         = false,
 		brakeRate              = 0.48,
-		buildCostMetal         = 10000,
+		buildCostMetal         = 14000,
 		builder                = false,
 		buildPic               = [[nebula.png]],
 		canFly                 = true,
