@@ -54,8 +54,6 @@ local feature = byte("f")
 local unit = byte("u")
 local projectile = byte("p")
 
-local lastlocation = {}
-
 for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
@@ -124,17 +122,13 @@ local function CheckProjectile(id, wd)
 		end
 		if not spGetUnitIsCloaked(target) then
 			x2,y2,z2 = spGetUnitPosition(target, false, true)
-			if lastlocation[target] then
-				lastlocation[target][1] = x2
-				lastlocation[target][2] = y2
-				lastlocation[target][3] = z2
-			else
-				lastlocation[target] = {[1] = x2, [2] = y2, [3] = z2}
-			end
+			projectiles[id].targetlastposition[1] = x2
+			projectiles[id].targetlastposition[2] = y2
+			projectiles[id].targetlastposition[3] = z2
 		else
-			x2 = lastlocation[target][1]
-			y2 = lastlocation[target][2]
-			z2 = lastlocation[target][3]
+			x2 = projectiles[id].targetlastposition[1]
+			y2 = projectiles[id].targetlastposition[2]
+			z2 = projectiles[id].targetlastposition[3]
 		end
 	elseif ttype == feature then
 		x2,y2,z2 = spGetFeaturePosition(target)
@@ -164,13 +158,9 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 			projectiles[proID] = {timer = config[weaponDefID]["timer"], defid = weaponDefID}
 			--spEcho("Timed demo charge for " .. proID)
 		else
-			projectiles[proID] = {distance = 999999999, defid = weaponDefID} -- distance stored here 
+			projectiles[proID] = {distance = 999999999, defid = weaponDefID, targetlastposition = {}} -- distance stored here 
 		end
 	end
-end
-
-function gadget:UnitDestroyed(unitID)
-	lastlocation[unitID] = nil
 end
 
 function gadget:GameFrame(f)

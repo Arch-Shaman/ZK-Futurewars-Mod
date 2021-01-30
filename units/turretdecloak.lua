@@ -22,10 +22,8 @@ return {
   
 		customParams = {
 			modelradius    = [[16]],
-			keeptooltip = [[any string i want]],
+
 			priority_misc  = 2, -- High
-			neededlink  = 30,
-			pylonrange  = 30,
 		},
   
 		energyUse                     = 16,
@@ -82,7 +80,7 @@ return {
 				},
 
 				edgeeffectiveness       = 0.4,
-				explosionGenerator      = [[custom:decloakblast_600]],
+				explosionGenerator      = [[custom:scanner_ping]],
 				explosionSpeed          = 12,
 				impulseBoost            = 0,
 				impulseFactor           = 0,

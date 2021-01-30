@@ -214,6 +214,16 @@
 		"description" : "Amphibious Anti-Air Bot",
 		"helptext" : "Angler is amphibious anti-air bot designed to counter the factory's nemesis - Raven. Two of them together can float to the surface and kill a single Raven."
 	},
+	"staticrepair" : {
+		"name" : "Rejuvenator",
+		"description" : "Repair station",
+		"helptext" : "The rejuvenator is a specialized form of caretaker. It cannot assist in construction, but it can repair things at long range and at 3x the speed of a caretaker, as well as resurrect nearby wrecks."
+	},
+	"turretdecloak" : {
+		"name" : "Clarity",
+		"description" : "Anti-Cloak field",
+		"helptext" : "The Clarity emits a disruptive electromagnetic pulse that interferes with enemy cloakfields. It does not affect your units."
+	},
 	"tankaa" : {
 		"name" : "Pestle",
 		"description" : "Canister Flak AA Tank",

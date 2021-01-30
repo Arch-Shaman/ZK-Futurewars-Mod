@@ -154,7 +154,7 @@ return {
 				startVelocity			  = 250,
 				weaponAcceleration      = 250,
 				weaponType              = [[MissileLauncher]],
-				weaponVelocity          = 950,
+				weaponVelocity          = 750,
 			},
 
 		},
