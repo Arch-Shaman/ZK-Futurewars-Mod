@@ -100,7 +100,7 @@ return {
 				tolerance               = 16000,
 				tracks                  = true,
 				trajectoryHeight        = 0,
-				fireTolerance		= 10192*2,
+				fireTolerance		= 10192*3,
 				turnRate                = 25000,
 				turret                  = false,
 				weaponAcceleration      = 250,

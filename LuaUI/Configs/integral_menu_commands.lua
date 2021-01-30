@@ -308,7 +308,7 @@ local defense_commands = {
 	turretemp         = {order = 3, row = 1, col = 4},
 	turretgauss       = {order = 5, row = 1, col = 5},
 	turretheavylaser  = {order = 6, row = 1, col = 6},
-
+	
 	turretaaclose     = {order = 9, row = 2, col = 1},
 	turretaalaser     = {order = 10, row = 2, col = 2},
 	turretaaflak      = {order = 11, row = 2, col = 3},
@@ -324,6 +324,7 @@ local defense_commands = {
 
 local special_commands = {
 	staticradar       = {order = 10, row = 1, col = 1},
+	turretdecloak	  = {order = 1, row = 1, col = 6},
 	staticjammer      = {order = 12, row = 1, col = 2},
 	staticheavyradar  = {order = 14, row = 1, col = 3},
 	staticmissilesilo = {order = 15, row = 1, col = 4},

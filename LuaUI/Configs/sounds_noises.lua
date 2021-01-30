@@ -1582,6 +1582,12 @@ local sounds = {
 	},
 	
 	-- Land Turrets
+	turretdecloak = {
+		select = {
+			volume = 0.7,
+			[1] = "turretdecloak_select",
+		},
+	},
 	turretlaser = {
 		ok = {
 			volume = 0.9,

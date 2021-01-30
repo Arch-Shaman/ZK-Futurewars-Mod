@@ -35,6 +35,7 @@ local buildOpts = {
 	[[staticradar]],
 	[[staticshield]],
 	[[staticjammer]],
+	[[turretdecloak]],
 	[[turretmissile]],
 	[[turretlaser]],
 	[[turretimpulse]],
