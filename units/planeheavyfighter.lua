@@ -3,7 +3,7 @@ local unitDef = {
 	name                   = [[Raptor]],
 	description            = [[Air Superiority Fighter]],
 	brakerate              = 0.4,
-	buildCostMetal         = 300,
+	buildCostMetal         = 375,
 	buildPic               = [[planeheavyfighter.png]],
 	canFly                 = true,
 	canGuard               = true,
@@ -111,8 +111,8 @@ local unitDef = {
 			weaponVelocity          = 900,
 		},
 		AA = {
-			burst = 6,
-			burstRate = 5/30,
+			burst = 2,
+			burstRate = 10/30,
 			name                    = [[ATA Sidewinder]],
 			areaOfEffect            = 96,
 			avoidFriendly           = true,
@@ -129,8 +129,8 @@ local unitDef = {
 				reaim_time = 60, -- Fast update not required (maybe dangerous)
 			},
 			damage                  = {
-				default = 2.5,
-				planes  = 60.1,
+				default = 8.1*3,
+				planes  = 80.1*3,
 			},
 			explosionGenerator      = [[custom:sonic]],
 			fireStarter             = 70,
