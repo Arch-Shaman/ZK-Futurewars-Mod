@@ -160,6 +160,8 @@ return {
 				cegTag                  = [[vulcanfx]],
 				craterBoost             = 0,
 				craterMult              = 0,
+				burst			= 2,
+				burstrate		= 2,
 				customParams            = {
 					restrict_in_widgets = 1,
 
@@ -192,7 +194,7 @@ return {
 				mygravity				= 0.25,
 				sprayAngle				= 120,
 				noSelfDamage            = true,
-				range                   = 8000,
+				range                   = 6000,
 				reloadtime              = 25,
 				soundHit                = [[weapon/clusters/cluster_heavy]],
 				soundStart              = [[weapon/cannon/large_cannon_fire]],

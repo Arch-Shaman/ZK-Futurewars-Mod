@@ -95,7 +95,7 @@ return {
 
 				damage                  = {
 					default = 0.1,
-					planes  = 15.1,
+					planes  = 20.1,
 				},
 				duration                = 0.075,
 				beamDecay 				= 0.38,
