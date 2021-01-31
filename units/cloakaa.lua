@@ -95,7 +95,7 @@ return {
 
 				damage                  = {
 					default = 0.1,
-					planes  = 20.1,
+					planes  = 22.1,
 				},
 				duration                = 0.075,
 				beamDecay 				= 0.38,
@@ -121,7 +121,7 @@ return {
 				tolerance               = 8192,
 				turret                  = true,
 				weaponType              = [[LaserCannon]],
-				weaponVelocity          = 1500,
+				weaponVelocity          = 1700,
 			},
 		},
 
