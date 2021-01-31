@@ -2,7 +2,7 @@ return { turretaalaser = {
   unitname                      = [[turretaalaser]],
   name                          = [[Razor]],
   description                   = [[Hardened Anti-Air Laser]],
-  buildCostMetal                = 280,
+  buildCostMetal                = 260,
   builder                       = false,
   buildingGroundDecalDecaySpeed = 30,
   buildingGroundDecalSizeX      = 6,
@@ -75,7 +75,7 @@ return { turretaalaser = {
 				},
       
 				damage                  = {
-					default = 32.1,
+					default = 45.1,
 				},
 
 				duration                = 2/30,
