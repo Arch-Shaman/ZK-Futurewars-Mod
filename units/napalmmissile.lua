@@ -110,7 +110,7 @@ unitDef = {
 		spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 		clustervec1 = "evenxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 		use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-		spawndist = 1800, -- at what distance should we spawn the projectile(s)? REQUIRED.
+		spawndist = 1000, -- at what distance should we spawn the projectile(s)? REQUIRED.
 		timeoutspawn = 0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 		vradius1 = 4, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 		groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
@@ -120,7 +120,7 @@ unitDef = {
 		reaim_time = 60, -- Fast update not required (maybe dangerous)
         setunitsonfire = "1",
         burntime = 90,
-		cruisealt = 1300,
+		cruisealt = 1500,
 		cruisedist = 400,
 
         restrict_in_widgets = 1,
