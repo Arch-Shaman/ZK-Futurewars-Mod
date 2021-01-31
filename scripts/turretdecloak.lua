@@ -64,13 +64,10 @@ local function Go()
 			local gameFrame = spGetGameFrame()
 			local reloadMult = spGetUnitRulesParam(unitID, "totalReloadSpeedChange") or 1.0
 			local reloadFrame = gameFrame + WAVE_RELOAD / reloadMult
-			for i = 1, 3 do
-				Sleep((1000/Game.gameSpeed) * 10)
-				while (not active) or not spinning do
-					Sleep(100)
-				end
-				EmitSfx(spinner, 4096)
+			while (not active) or not spinning do
+				Sleep(100)
 			end
+			EmitSfx(spinner, 4096)
 			spSetUnitWeaponState(unitID, 1, {reloadFrame = reloadFrame})
 		end
 	end
