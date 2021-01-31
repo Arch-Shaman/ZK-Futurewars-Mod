@@ -22,7 +22,7 @@ return {
 		collisionVolumeScales  = [[40 50 220]],
 		collisionVolumeType    = [[box]],
 		corpse                 = [[DEAD]],
-		cruiseAlt              = 440,
+		cruiseAlt              = 280,
 
 		customParams           = {
 			cantuseairpads = 1,
@@ -378,10 +378,10 @@ return {
 				shieldBadColor          = [[1 0.1 0.1 1]],
 				shieldGoodColor         = [[0.1 0.1 1 1]],
 				shieldInterceptType     = 3,
-				shieldPower             = 40400,
-				shieldPowerRegen        = 4040,
+				shieldPower             = 30000,
+				shieldPowerRegen        = 3000,
 				shieldPowerRegenEnergy  = 90,
-				shieldRadius            = 800,
+				shieldRadius            = 600,
 				shieldRepulser          = false,
 				smartShield             = true,
 				visibleShield           = false,
