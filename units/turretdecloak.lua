@@ -63,8 +63,6 @@ return {
 				areaOfEffect            = 1200,
 				craterBoost             = 0,
 				craterMult              = 0,
-				burst					= 3,
-				burstrate				= 10/30,
 				damage                  = {
 					default = 1,
 				},
@@ -88,7 +86,7 @@ return {
 				myGravity               = 10,
 				noSelfDamage            = true,
 				range                   = 10,
-				reloadtime              = 2.5,
+				reloadtime              = 2.0,
 				soundHitVolume          = 1,
 				turret                  = true,
 				weaponType              = [[Cannon]],
