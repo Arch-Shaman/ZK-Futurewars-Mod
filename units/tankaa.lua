@@ -87,17 +87,16 @@ return {
 					--spreadradius1 = 3, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 100, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					vradius1 = "-1,-1,-1,1,1,1", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?
-					proxydist = 200, -- how far to check for units? Default: spawndist
-					damage_vs_shield = [[90]]
+					damage_vs_shield = [[160]]
 				},
 
 				damage  = {
 					default = 8*3,
-					planes  = 60*3,
+					planes  = 80*3,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.25,
@@ -106,7 +105,7 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 1100,
+				range                   = 1200,
 				reloadtime              = 1/3,
 				myGravity				= 0.03,
 				size                    = 8,
