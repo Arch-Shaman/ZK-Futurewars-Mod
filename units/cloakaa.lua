@@ -5,7 +5,7 @@ return {
 		description            = [[Cloaked Anti-Air Bot]],
 		acceleration           = 1.5,
 		brakeRate              = 1.92,
-		buildCostMetal         = 150,
+		buildCostMetal         = 135,
 		buildPic               = [[cloakaa.png]],
 		canGuard               = true,
 		canMove                = true,
