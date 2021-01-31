@@ -5,7 +5,7 @@ return {
 		description            = [[Canister Flak AA Tank]],
 		acceleration           = 0.36,
 		brakeRate              = 1.8,
-		buildCostMetal         = 600,
+		buildCostMetal         = 540,
 		builder                = false,
 		buildPic               = [[tankaa.png]],
 		canGuard               = true,
