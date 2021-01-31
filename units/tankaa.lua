@@ -91,7 +91,7 @@ return {
 					vradius1 = "-1,-1,-1,1,1,1", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?
-					proxydist = 300, -- how far to check for units? Default: spawndist
+					proxydist = 200, -- how far to check for units? Default: spawndist
 					damage_vs_shield = [[90]]
 				},
 
@@ -106,7 +106,7 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 800,
+				range                   = 1100,
 				reloadtime              = 1/3,
 				myGravity				= 0.03,
 				size                    = 8,
@@ -136,7 +136,7 @@ return {
 					isaa = [[1]],
 					light_radius = 0,
 					isFlak = 3,
-					flaktime = -4,
+					flaktime = -15,
 				},
 
 				damage = {
