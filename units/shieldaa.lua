@@ -65,8 +65,6 @@ return {
 			ARMKBOT_MISSILE = {
 				name                    = [[Homing Missiles]],
 				areaOfEffect            = 48,
-				burst					= 2,
-				burstrate				= 0.5,
 				canattackground         = false,
 				cegTag                  = [[missiletrailblue]],
 				craterBoost             = 1,
@@ -84,8 +82,8 @@ return {
 				},
 
 				damage                  = {
-					default = 7.0,
-					planes  = 70.1,
+					default = 15.0,
+					planes  = 150.1,
 				},
 				explosionGenerator      = [[custom:mixed_white_lightning_bomb_small]],
 				fireStarter             = 70,

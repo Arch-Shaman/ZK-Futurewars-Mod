@@ -7,7 +7,7 @@ return {
 		activateWhenBuilt      = true,
 		autoheal               = 200,
 		brakeRate              = 1.435,
-		buildCostMetal         = 26000,
+		buildCostMetal         = 25000,
 		builder                = false,
 		buildPic               = [[striderdetriment.png]],
 		canGuard               = true,

@@ -169,7 +169,7 @@ end
 GG.PokeDecloakUnit = PokeDecloakUnit
 
 local function BlockRecloaking(unitID, frames)
-	if recloakUnit[unitID] and recloakUnit < frames then
+	if recloakUnit[unitID] and recloakUnit[unitID] < frames then
 		recloakUnit[unitID] = frames
 	elseif recloakUnit[unitID] == nil then
 		recloakUnit[unitID] = frames

@@ -1582,6 +1582,18 @@ local sounds = {
 	},
 	
 	-- Land Turrets
+	staticrepair = {
+		select = {
+			volume = 0.7,
+			[1] = "staticrepair_select",
+		},
+	},
+	turretdecloak = {
+		select = {
+			volume = 0.7,
+			[1] = "turretdecloak_select",
+		},
+	},
 	turretlaser = {
 		ok = {
 			volume = 0.9,

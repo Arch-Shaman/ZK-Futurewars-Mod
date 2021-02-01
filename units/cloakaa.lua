@@ -5,7 +5,7 @@ return {
 		description            = [[Cloaked Anti-Air Bot]],
 		acceleration           = 1.5,
 		brakeRate              = 1.92,
-		buildCostMetal         = 150,
+		buildCostMetal         = 135,
 		buildPic               = [[cloakaa.png]],
 		canGuard               = true,
 		canMove                = true,
@@ -85,7 +85,7 @@ return {
 				cylinderTargeting       = 1,
 				burst					= 2,
 				burstRate				= 2/30,
-				
+				predictBoost			= 0.1,
 
 				customParams              = {
 					isaa = [[1]],
@@ -95,13 +95,13 @@ return {
 
 				damage                  = {
 					default = 0.1,
-					planes  = 15.1,
+					planes  = 22.1,
 				},
 				duration                = 0.075,
 				beamDecay 				= 0.38,
 				beamBurst				= true,
 				beamTTL					= 1,
-				leadLimit 				= 400,
+				leadLimit 				= 800,
 				explosionGenerator      = [[custom:flash_teal7]],
 				fireStarter             = 100,
 				impactOnly              = true,
@@ -121,7 +121,7 @@ return {
 				tolerance               = 8192,
 				turret                  = true,
 				weaponType              = [[LaserCannon]],
-				weaponVelocity          = 1200,
+				weaponVelocity          = 1700,
 			},
 		},
 

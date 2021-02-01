@@ -4,7 +4,7 @@ return {
 		name                = [[Divinity]],
 		description         = [[Cluster Bomber]],
 		brakerate           = 0.4,
-		buildCostMetal      = 600,
+		buildCostMetal      = 625,
 		builder             = false,
 		buildPic            = [[bomberprec.png]],
 		canFly              = true,
@@ -70,7 +70,6 @@ return {
 			{
 				def                = [[BOMBSABOT]],
 				mainDir            = [[0 -1 0]],
-				maxAngleDif        = 150,
 				onlyTargetCategory = [[LAND TURRET SHIP SWIM FLOAT HOVER]],
 			},
 		},
@@ -154,7 +153,7 @@ return {
 				soundHit                = [[weapon/cannon/cannonfire_001]],
 				soundStart              = [[weapon/bomb_drop]],
 				startVelocity           = 100,
-				tolerance               = 65536/4, -- 90 degrees
+				tolerance               = 65536/2, -- 180 degrees
 				accuracy		= 2800,
 				sprayangle		= 300,
 				turnRate                = 2500,

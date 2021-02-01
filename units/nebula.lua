@@ -8,7 +8,7 @@ return {
 		airStrafe              = 0,
 		bankingAllowed         = false,
 		brakeRate              = 0.48,
-		buildCostMetal         = 10000,
+		buildCostMetal         = 14000,
 		builder                = false,
 		buildPic               = [[nebula.png]],
 		canFly                 = true,
@@ -22,7 +22,7 @@ return {
 		collisionVolumeScales  = [[40 50 220]],
 		collisionVolumeType    = [[box]],
 		corpse                 = [[DEAD]],
-		cruiseAlt              = 440,
+		cruiseAlt              = 280,
 
 		customParams           = {
 			cantuseairpads = 1,
@@ -96,7 +96,7 @@ return {
 	
 			AG = {
 				name                    = [[Plasma Submunition]],
-				accuracy                = 180,
+				accuracy                = 60,
 				areaOfEffect            = 96,
 				avoidFeature            = false,
 				avoidGround             = false,
@@ -118,7 +118,7 @@ return {
 				--bouncerebound = 0.1,
 				--numbounce = 10,
 				edgeEffectiveness       = 0.5,
-				explosionGenerator      = [[custom:flakplosion]],
+				explosionGenerator      = [[custom:EMG_HIT_HE]],
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
@@ -182,7 +182,7 @@ return {
 				},
 
 				edgeEffectiveness		= 0.2,
-				explosionGenerator      = [[custom:WEAPEXP_PUFF]],
+				explosionGenerator      = [[custom:NONE]],
 				fireStarter             = 70,
 				flightTime              = 7,
 				impulseBoost            = 0,
@@ -255,7 +255,7 @@ return {
 				},
 
 				edgeEffectiveness		= 0.2,
-				explosionGenerator      = [[custom:WEAPEXP_PUFF]],
+				explosionGenerator      = [[custom:NONE]],
 				fireStarter             = 70,
 				flightTime              = 7,
 				impulseBoost            = 0,
@@ -299,7 +299,7 @@ return {
 				},
 		  
 				damage                  = {
-					default = 18.2,
+					default = 18.2 * 2,
 				},
 
 				edgeEffectiveness       = 0.75,
@@ -324,7 +324,7 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				customParams = {
-					numprojectiles1 = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "nebula_fragment",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -336,7 +336,7 @@ return {
 					proxy = 1, -- check for nearby units?	
 				},
 				damage                  = {
-					default = 18.2 * 12,
+					default = 18.2 * 2 * 6,
 				},
 
 				explosionGenerator      = [[custom:plasma_hit_32]],
@@ -378,10 +378,10 @@ return {
 				shieldBadColor          = [[1 0.1 0.1 1]],
 				shieldGoodColor         = [[0.1 0.1 1 1]],
 				shieldInterceptType     = 3,
-				shieldPower             = 40400,
-				shieldPowerRegen        = 4040,
+				shieldPower             = 30000,
+				shieldPowerRegen        = 3000,
 				shieldPowerRegenEnergy  = 90,
-				shieldRadius            = 800,
+				shieldRadius            = 600,
 				shieldRepulser          = false,
 				smartShield             = true,
 				visibleShield           = false,

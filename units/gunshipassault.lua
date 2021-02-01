@@ -72,7 +72,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 45,
+					default = 40,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -127,7 +127,7 @@ return {
 				},
 
 				damage                  = {
-					default = 45*6,
+					default = 40*6,
 				},
 
 				dance                   = 30,
@@ -147,14 +147,14 @@ return {
 				soundStart              = [[weapon/missile/heavy_missile_fire]],
 				startVelocity           = 150,
 				tolerance               = 15000,
-				tracks                  = true,
+				tracks                  = false,
 				turnRate                = 2800,
 				turret                  = true,
 				trajectoryHeight        = 0.55,
-				startVelocity			  = 100,
-				weaponAcceleration      = 150,
+				startVelocity			  = 250,
+				weaponAcceleration      = 250,
 				weaponType              = [[MissileLauncher]],
-				weaponVelocity          = 950,
+				weaponVelocity          = 750,
 			},
 
 		},

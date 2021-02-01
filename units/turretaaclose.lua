@@ -84,8 +84,8 @@ return {
 				},
 
 				damage                  = {
-					default = 50.1,
-					planes  = 300.1,
+					default = 40.1,
+					planes  = 400.1,
 				},
 
 				explosionGenerator      = [[custom:FLASH2]],
@@ -103,7 +103,7 @@ return {
 				smokeTrail              = true,
 				soundHit                = [[explosion/ex_med11]],
 				soundStart              = [[weapon/missile/missile_fire3]],
-				startVelocity           = 320,
+				startVelocity           = 420,
 				texture2                = [[AAsmoketrail]],
 				tracks                  = true,
 				turnRate                = 130000,

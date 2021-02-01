@@ -2,7 +2,7 @@ return { turretaalaser = {
   unitname                      = [[turretaalaser]],
   name                          = [[Razor]],
   description                   = [[Hardened Anti-Air Laser]],
-  buildCostMetal                = 280,
+  buildCostMetal                = 260,
   builder                       = false,
   buildingGroundDecalDecaySpeed = 30,
   buildingGroundDecalSizeX      = 6,
@@ -60,52 +60,44 @@ return { turretaalaser = {
 
   weaponDefs                    = {
 
-    AAGUN = {
-      name                    = [[Anti-Air Laser]],
-      accuracy                = 50,
-      areaOfEffect            = 8,
-      canattackground         = false,
-      collideFriendly         = false,
-      coreThickness           = 0.5,
-      craterBoost             = 0,
-      craterMult              = 0,
-      cylinderTargeting       = 1,
+    AAGUN  = {
+				name                    = [[High Intensity Micropulse Laser]],
+				areaOfEffect            = 8,
+				accuracy				= 250,
+				coreThickness           = 0.5,
+				beamTime                = 1/30,
+				craterBoost             = 0,
+				craterMult              = 0,
+				
+				customParams        = {
+					light_camera_height = 1200,
+					light_radius = 20,
+				},
+      
+				damage                  = {
+					default = 45.1,
+				},
 
-      customParams              = {
-        isaa = [[1]],
-        
-        light_camera_height = 2600,
-        light_radius = 220,
-      },
-
-      damage                  = {
-        default = 1.49,
-        planes  = 14.9,
-        subs    = 0.8,
-      },
-
-      duration                = 0.02,
-      edgeEffectiveness       = 1,
-      explosionGenerator      = [[custom:flash1orange]],
-      fireStarter             = 10,
-      impactOnly              = true,
-      impulseFactor           = 0,
-      interceptedByShieldType = 1,
-      lodDistance             = 10000,
-      proximityPriority       = 4,
-      range                   = 1040,
-      reloadtime              = 0.1,
-      rgbColor                = [[1 0 0]],
-      soundHit                = [[weapon/laser/lasercannon_hit]],
-      soundStart              = [[weapon/laser/lasercannon_fire]],
-      soundTrigger            = true,
-      thickness               = 2.25,
-      tolerance               = 1000,
-      turnRate                = 48000,
-      turret                  = true,
-      weaponType              = [[LaserCannon]],
-      weaponVelocity          = 1500,
-    },
+				duration                = 2/30,
+				explosionGenerator      = [[custom:beamweapon_hit_orange]],
+				fireStarter             = 50,
+				impactOnly              = true,
+				impulseBoost            = 0,
+				impulseFactor           = 0.4,
+				interceptedByShieldType = 1,
+				leadLimit               = 0,
+				noSelfDamage            = true,
+				range                   = 1000,
+				reloadtime              = 6/30,
+				rgbColor                = [[1 0.40059 0]],
+				soundStart              = [[weapon/laser/heavy_pulser]],
+				soundstartvolume	    = 85,
+				thickness               = 2.55,
+				tolerance               = 10000,
+				turret                  = true,
+				weaponType              = [[BeamLaser]],
+				weaponVelocity          = 880,
+			},
 
   },
 
