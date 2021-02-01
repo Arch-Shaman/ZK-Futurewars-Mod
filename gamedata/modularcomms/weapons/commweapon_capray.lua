@@ -19,6 +19,8 @@ local weaponDef = {
 
 		light_radius = 120,
 		light_color = [[0 0.6 0.15]],
+		
+		reload_override = 12,
 	},
 
 	damage                  = {
