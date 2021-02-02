@@ -845,9 +845,9 @@
 		"helptext" : "The Zenith collects meteorites from the sky (up to 300), which it can send anywhere to break things or provide a small reclaimable source of metal."
 	},
 	"vehaa" : {
-		"name" : "Crasher",
+		"name" : "Gatekeeper",
 		"description" : "Fast Anti-Air Rover",
-		"helptext" : "The Crasher is a speedy solution to enemy bomber attacks, and also works well against gunships."
+		"helptext" : "The Gatekeeper's improved disruptor missile slows air targets down for other AA units to finish the job."
 	},
 	"spiderskirm" : {
 		"name" : "Recluse",

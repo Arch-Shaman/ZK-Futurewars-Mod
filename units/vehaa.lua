@@ -1,11 +1,11 @@
 return { 
 	vehaa = {
 		unitname               = [[vehaa]],
-		name                   = [[Crasher]],
-		description            = [[Fast Anti-Air Rover]],
+		name                   = [[Gatekeeper]],
+		description            = [[Anti-Air Rover]],
 		acceleration           = 0.36,
 		brakeRate              = 1.8,
-		buildCostMetal         = 220,
+		buildCostMetal         = 200,
 		builder                = false,
 		buildPic               = [[vehaa.png]],
 		canGuard               = true,
@@ -29,7 +29,7 @@ return {
 		idleTime               = 1800,
 		leaveTracks            = true,
 		maneuverleashlength    = [[30]],
-		maxDamage              = 900,
+		maxDamage              = 1100,
 		maxSlope               = 18,
 		maxVelocity            = 3.7,
 		maxWaterDepth          = 22,
@@ -45,11 +45,11 @@ return {
 		sfxtypes               = {
 
 			explosiongenerators = {
-				[[custom:STORMMUZZLE]],
+				[[custom:rapiermuzzle]],
 				[[custom:STORMBACK]],
 			},
 		},
-		sightDistance          = 660,
+		sightDistance          = 760,
 		trackOffset            = 6,
 		trackStrength          = 5,
 		trackStretch           = 1,
@@ -69,32 +69,32 @@ return {
 
 		},
 		weaponDefs                    = {
-
 			MISSILE = {
 				name                    = [[Heavy Missile]],
-				areaOfEffect            = 32,
+				areaOfEffect            = 120,
 				canattackground         = false,
-				cegTag                  = [[missiletrailblue]],
+				cegTag                  = [[missiletrailpurple]],
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting       = 1,
 				customParams              = {
 					burst = Shared.BURST_RELIABLE,
-
 					isaa = [[1]],
 					light_color = [[0.5 0.6 0.6]],
+					timeslow_damagefactor = 0.5,
 				},
 
 				damage                  = {
-					default = 29.01,
-					planes  = 290.1,
+					default = 50.01,
+					planes  = 500.1,
 				},
-
-				explosionGenerator      = [[custom:FLASH2]],
+				
+				edgeeffectiveness		= 0.2,
+				explosionGenerator      = [[custom:riotballplus2_purple_small_darker]],
 				fixedlauncher           = true,
 				fireStarter             = 70,
 				flightTime              = 3,
-				impactOnly              = true,
+				impactOnly              = false,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
@@ -105,8 +105,8 @@ return {
 				smokeTrail              = true,
 				soundHit                = [[weapon/missile/sabot_hit]],
 				soundStart              = [[weapon/missile/missile_fire]],
-				startVelocity           = 300,
-				texture2                = [[AAsmoketrail]],
+				startVelocity           = 500,
+				texture2                = [[purpletrail]],
 				tolerance               = 9000,
 				tracks                  = true,
 				turnRate                = 63000,
@@ -115,7 +115,6 @@ return {
 				weaponType              = [[MissileLauncher]],
 				weaponVelocity          = 700,
 			},
-
 		},
 		featureDefs            = {
 
