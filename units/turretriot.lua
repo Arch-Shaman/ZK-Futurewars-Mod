@@ -1,10 +1,10 @@
 return { 
 	turretriot = {
 		unitname                      = [[turretriot]],
-		name                          = [[Stardust]],
-		description                   = [[Anti-Swarm Turret]],
+		name                          = [[Bombard]],
+		description                   = [[Anti-Swarm Turret (Needs 4E Grid)]],
 		activateWhenBuilt             = true,
-		buildCostMetal                = 220,
+		buildCostMetal                = 200,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 5,
@@ -20,7 +20,9 @@ return {
 		customParams                  = {
 			aimposoffset   = [[0 12 0]],
 			midposoffset   = [[0 4 0]],
-			aim_lookahead  = 200,
+			aim_lookahead  = 100,
+			neededlink  = 4,
+			pylonrange  = 30,
 		},
 
 		explodeAs                     = [[LARGE_BUILDINGEX]],
@@ -29,7 +31,7 @@ return {
 		footprintZ                    = 3,
 		iconType                      = [[defenseriot]],
 		levelGround                   = false,
-		maxDamage                     = 1500,
+		maxDamage                     = 1600,
 		maxSlope                      = 18,
 		minCloakDistance              = 150,
 		noChaseCategory               = [[FIXEDWING LAND SHIP SWIM GUNSHIP SUB HOVER]],
@@ -45,7 +47,7 @@ return {
 
 		},
 
-		sightDistance                 = 499, -- Range*1.1 + 48 for radar overshoot
+		sightDistance                 = 351, -- Range*1.1 + 48 for radar overshoot
 		useBuildingGroundDecal        = true,
 		yardMap                       = [[ooo ooo ooo]],
 		weapons                       = {
@@ -61,25 +63,27 @@ return {
 		},
 
 		weaponDefs                    = {
-
-			turretriot_WEAPON = {
-				name                    = [[Pulse Autocannon]],
-				accuracy                = 2300,
+			secondary = {
+				name                    = [[Fragment]],
+				accuracy                = 350,
 				alphaDecay              = 0.7,
 				areaOfEffect            = 96,
-				avoidFeature            = false,
 				burnblow                = true,
+				burst                   = 3,
+				burstrate               = 0.1,
 				craterBoost             = 0.15,
 				craterMult              = 0.3,
 
-				customparams = {
+				customParams        = {
+					light_camera_height = 1600,
 					light_color = [[0.8 0.76 0.38]],
-					light_radius = 180,
-					proximity_priority = 5, -- Don't use this unless required as it causes O(N^2) seperation checks per slow update.
+					light_radius = 40,
+					isFlak = 3,
+					flaktime = -15,
 				},
-
+				
 				damage                  = {
-					default = 45,
+					default = 22,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -90,13 +94,62 @@ return {
 				intensity               = 0.7,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 410,
-				reloadtime              = 0.1,
+				range                   = 275,
+				reloadtime              = 0.5,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
 				soundHit                = [[weapon/cannon/emg_hit]],
 				soundStart              = [[weapon/heavy_emg]],
-				soundStartVolume        = 0.5,
+				stages                  = 10,
+				turret                  = true,
+				weaponType              = [[Cannon]],
+				weaponVelocity          = 550,
+			},
+			turretriot_WEAPON = {
+				name                    = [[Canister Autocannon]],
+				accuracy                = 200,
+				alphaDecay              = 0.7,
+				areaOfEffect            = 96,
+				avoidFeature            = false,
+				burnblow                = true,
+				craterBoost             = 0.15,
+				craterMult              = 0.3,
+
+				customparams = {
+					light_color = [[0.8 0.76 0.38]],
+					light_radius = 180,
+					--proximity_priority = 5, -- Don't use this unless required as it causes O(N^2) seperation checks per slow update.
+					numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					projectile1 = "turretriot_secondary",
+					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
+					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
+					spawndist = 95, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
+					vradius1 = "-1,-1,-1,1,1,1", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					proxy = 1, -- check for nearby units?
+				},
+
+				damage                  = {
+					default = 66,
+				},
+
+				edgeEffectiveness       = 0.5,
+				explosionGenerator      = [[custom:NONE]],
+				firestarter             = 70,
+				impulseBoost            = 0,
+				impulseFactor           = 0.4,
+				intensity               = 0.7,
+				interceptedByShieldType = 1,
+				noSelfDamage            = true,
+				range                   = 380,
+				reloadtime              = 5/30,
+				rgbColor                = [[1 0.95 0.4]],
+				separation              = 1.5,
+				soundHit                = [[weapon/clusters/cluster_light]],
+				soundHitVolume			= 0.7,
+				soundStart              = [[weapon/heavy_emg]],
+				soundStartVolume        = 2.5,
 				stages                  = 10,
 				turret                  = true,
 				weaponType              = [[Cannon]],

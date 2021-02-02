@@ -765,9 +765,9 @@
 		"helptext" : "The Radar tower provides early warning of enemy units and their movements over a moderate distance at virtually no cost. It has a very small but steady energy cost and will automatically shut down if you run out of energy. Radar Towers can morph to Sparrows - light scout planes - to enhance their ability to gather intel. Radar coverage is blocked by terrain such as mountains."
 	},
 	"turretriot" : {
-		"name" : "Stardust",
-		"description" : "Anti-Swarm Turret",
-		"helptext" : "The Stardust sports a powerful autocannon. While it has a short range and is thus even more vulnerable to skirmishers than the LLT, its high rate of fire and AoE allow it to quickly chew up swarms of lighter units."
+		"name" : "Bombard",
+		"description" : "Anti-Swarm Turret (needs 4E grid)",
+		"helptext" : "The Bombard packs a powerful and accurate canister autocannon that rapidly shreds incoming units. It requires a small electrical grid though to power its rapid fabricators."
 	},
 	"spideranarchid" : {
 		"name" : "Anarchid",
