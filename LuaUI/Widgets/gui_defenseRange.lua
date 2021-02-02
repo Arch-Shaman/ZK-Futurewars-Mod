@@ -615,6 +615,7 @@ local function SetupChiliStuff()
 	pics.nuke   = WG.Chili.Image:New { x = 0, y = 24*3, file = 'LuaUI/Images/defense_ranges/nuke.png'   }
 	pics.shield = WG.Chili.Image:New { x = 0, y = 24*4, file = 'LuaUI/Images/defense_ranges/shield.png' }
 	pics.radar  = WG.Chili.Image:New { x = 0, y = 24*5, file = 'LuaUI/Images/defense_ranges/radar.png'  }
+	pics.cloak  = WG.Chili.Image:New { x = 0, y = 24*6, file = 'LuaUI/Images/defense_ranges/cloak.png'  }
 
 	pics.ally  = WG.Chili.Image:New { x = 24*1, y = 0, file = 'LuaUI/Images/defense_ranges/defense_ally.png'  }
 	pics.enemy = WG.Chili.Image:New { x = 24*2, y = 0, file = 'LuaUI/Images/defense_ranges/defense_enemy.png' }
@@ -635,11 +636,14 @@ local function SetupChiliStuff()
 	checkboxes.allynuke    = WG.Chili.Checkbox:New { x = 26, y = 76, }
 	checkboxes.enemynuke   = WG.Chili.Checkbox:New { x = 50, y = 76, }
 	checkboxes.specnuke    = WG.Chili.Checkbox:New { x = 74, y = 76, }
+	checkboxes.allycloak   = WG.Chili.Checkbox:New { x = 26, y = 100,}
+	checkboxes.enemycloak  = WG.Chili.Checkbox:New { x = 50, y = 100,}
+	checkboxes.speccloak   = WG.Chili.Checkbox:New { x = 74, y = 100,}
 	-- no allyshield
-	checkboxes.enemyshield = WG.Chili.Checkbox:New { x = 50, y = 100, }
+	checkboxes.enemyshield = WG.Chili.Checkbox:New { x = 50, y = 124, }
 	-- no specshield
 	-- no allyradar
-	checkboxes.enemyradar  = WG.Chili.Checkbox:New { x = 50, y = 124, }
+	checkboxes.enemyradar  = WG.Chili.Checkbox:New { x = 50, y = 148, }
 	-- no specradar
 
 	local function OnCheckboxChangeFunc(self)
