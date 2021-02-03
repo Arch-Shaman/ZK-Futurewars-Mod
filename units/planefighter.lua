@@ -261,9 +261,8 @@ local unitDef = {
 		},
 
 		damage                  = {
-			default = 2.5,
-			planes  = 25,
-			subs    = 2.5/8,
+			default = 7.5,
+			planes  = 75,
 		},
 
 		explosionGenerator      = [[custom:WEAPEXP_PUFF]],
