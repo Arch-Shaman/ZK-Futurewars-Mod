@@ -462,6 +462,28 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "commweapon_canister_cannon",
+		humanName = "Canister Cannon",
+		description = "Canister Cannon:\nReleases tiny fragments at a certain range. May impact multiple units.",
+		image = moduleImagePath .. "commweapon_canister.png",
+		limit = 2,
+		cost = 5 * COST_MULT,
+		requireChassis = {"assault"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = "commweapon_canistercannon"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+	{
 		name = "commweapon_disruptorprojector",
 		humanName = "Disruptor Projector (Area Slow)",
 		description = "Deals some damage and slows targets in a small area. Low DPS. Can be converted into a heavy AOE slow beam.",
