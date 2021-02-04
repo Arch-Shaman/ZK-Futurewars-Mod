@@ -7,7 +7,7 @@ return {
 		airStrafe           = 0,
 		brakeRate           = 0.2,
 		buildCostMetal      = 600,
-		buildDistance       = 180,
+		buildDistance       = 360,
 		builder             = true,
 
 		buildoptions        = {
