@@ -20,7 +20,7 @@ return {
 			[[staticjammer]],
 			[[turretdecloak]],
 			[[cloakcon]],
-			[[spiderscout]],
+			[[jumpbomb]],
 			[[cloakraid]],
 			[[cloakheavyraid]],
 			[[cloaksnipe]],
