@@ -35,6 +35,19 @@ include("LuaRules/Configs/customcmds.h.lua")
 --------------------------------------------------------------------------------
 -- Various module configs
 
+local defaultweapon = {
+	[1] = "commweapon_heavymachinegun", -- strike
+	[2] = "commweapon_heatray", -- recon
+	[3] = "commweapon_beamlaser", -- support
+	[4] = "commweapon_canistercannon", -- bombard
+	[5] = "commweapon_beamlaser", -- knight
+	[6] = "commweapon_riotcannon", -- presumably battle comm at some point
+}
+
+local function GetCommanderChassisDefaultWeapon(type)
+	return defaultweapon[type]
+end
+
 local commanderCloakShieldDef = {
 	draw = true,
 	init = true,
@@ -91,7 +104,7 @@ local function SetUnitRulesModuleCounts(unitID, counts)
 	end
 end
 
-local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, damageMult)
+local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, damageMult, chassis)
 	if (not weapon2) and weapon1 then
 		local unitDefID = Spring.GetUnitDefID(unitID)
 		local weaponName = "0_" .. weapon1
@@ -101,15 +114,14 @@ local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, dama
 			weapon1 = "commweapon_beamlaser"
 		end
 	end
-	weapon1 = weapon1 or "commweapon_beamlaser"
+	--Spring.Echo("Chassis: " .. tostring(chassis))
+	weapon1 = weapon1 or GetCommanderChassisDefaultWeapon(chassis)
 	if string.find(weapon1, "commweapon_capray") or (weapon2 and string.find(weapon2, "commweapon_capray")) then
 		Spring.SetUnitRulesParam(unitID, "postCaptureReload", WeaponDefNames["0_commweapon_capray"].customParams["post_capture_reload"] or 240)
 		GG.MorphedMastermind(unitID)
 	end
-	local chassis = Spring.GetUnitRulesParam(unitID, "comm_chassis")
-	
-	if chassis and chassisDefs[chassis] and chassisDefs[chassis].secondPeashooter and (not weapon2) and Spring.GetUnitRulesParam(unitID, "comm_level") > 2 then
-		weapon2 = "commweapon_beamlaser"
+	if not weapon2 and Spring.GetUnitRulesParam(unitID, "comm_level") > 2 then
+		weapon2 = GetCommanderChassisDefaultWeapon(chassis)
 	end
 	
 	rangeMult = rangeMult or Spring.GetUnitRulesParam(unitID, "comm_range_mult") or 1
@@ -121,7 +133,7 @@ local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, dama
 	Spring.UnitScript.CallAsUnit(unitID, env.dyncomm.UpdateWeapons, weapon1, weapon2, shield, rangeMult, damageMult)
 end
 
-local function ApplyModuleEffects(unitID, data, totalCost, images)
+local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	local ud = UnitDefs[Spring.GetUnitDefID(unitID)]
 	
 	-- Update ApplyModuleEffectsFromUnitRulesParams if any non-unitRulesParams changes are made.
@@ -216,7 +228,7 @@ local function ApplyModuleEffects(unitID, data, totalCost, images)
 	local effectiveMass = (((totalCost/2) + (maxHealth/8))^0.6)*6.5
 	Spring.SetUnitRulesParam(unitID, "massOverride", effectiveMass, INLOS)
 	
-	ApplyWeaponData(unitID, data.weapon1, data.weapon2, data.shield, data.rangeMult, data.damageMult)
+	ApplyWeaponData(unitID, data.weapon1, data.weapon2, data.shield, data.rangeMult, data.damageMult, chassis)
 	
 	-- Do this all the time as it will be needed almost always.
 	GG.UpdateUnitAttributes(unitID)
@@ -320,7 +332,7 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 	end
 	SetUnitRulesModuleCounts(unitID, counts)
 	
-	ApplyModuleEffects(unitID, moduleEffectData, totalCost, images or {})
+	ApplyModuleEffects(unitID, moduleEffectData, totalCost, images or {}, chassis)
 	
 	if staticLevel then
 		-- Newly created commander, set to full health
@@ -450,6 +462,9 @@ local function Upgrades_CreateStarterDyncomm(dyncommID, x, y, z, facing, teamID,
 	local baseUnitDefID = commProfileInfo.baseUnitDefID or chassisData.baseUnitDef
 	
 	local moduleList = {moduleDefNames.econ, moduleDefNames.module_radarnet}
+	if commProfileInfo.chassis == "strike" then
+		moduleList[#moduleList + 1] = moduleDefNames.module_personal_cloak
+	end
 	local moduleCost = 0
 	for i = 1, #moduleList do
 		moduleCost = moduleCost + moduleDefs[moduleList[i]].cost
