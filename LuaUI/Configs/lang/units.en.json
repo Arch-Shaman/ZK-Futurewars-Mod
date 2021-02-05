@@ -872,7 +872,7 @@
 	"dynstrike1" : {
 		"name" : "Ambush Commander",
 		"description" : "Stealthy Commander",
-		"helptext" : "The Ambush Commander is a flexible, speedy stealthy commander that can wield the fearsome Disintegrator. It is, however, locked out of support modules."
+		"helptext" : "The Ambush Commander is a flexible, speedy stealthy commander that can wield the fearsome Disintegrator. It is, however, locked out of support modules. It has an inherent cloaking device and excels at hit and run tactics."
 	},
 	"empmissile" : {
 		"name" : "Shockley",
