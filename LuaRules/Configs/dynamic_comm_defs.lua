@@ -1225,6 +1225,8 @@ local chassisDefs = {
 				morphBaseCost = 0,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.decloakDistance = math.max(sharedData.decloakDistance or 0, 150)
+					sharedData.personalCloak = true -- !!FREE!! cloak
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynstrike0"].id
