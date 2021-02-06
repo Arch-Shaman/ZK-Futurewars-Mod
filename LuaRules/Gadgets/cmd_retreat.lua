@@ -515,7 +515,7 @@ function gadget:UnitCreated(unitID, unitDefID, teamID, builderID, _, _)
 		end
 		Spring.Echo("Has shields: " .. tostring(shields[unitDefID] ~= nil))
 		if shields[unitDefID] then
-			spInsertUnitCmdDesc(unitID, CommandOrder + 1, commandShield)
+			spInsertUnitCmdDesc(unitID, CommandOrder, commandShield)
 		end
 	end
 end
