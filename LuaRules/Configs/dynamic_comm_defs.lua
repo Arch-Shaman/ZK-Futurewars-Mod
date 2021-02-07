@@ -462,6 +462,28 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "commweapon_canister_cannon",
+		humanName = "Canister Cannon",
+		description = "Canister Cannon:\nReleases tiny fragments at a certain range. May impact multiple units.",
+		image = moduleImagePath .. "commweapon_canister.png",
+		limit = 2,
+		cost = 5 * COST_MULT,
+		requireChassis = {"assault"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = "commweapon_canistercannon"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+	{
 		name = "commweapon_disruptorprojector",
 		humanName = "Disruptor Projector (Area Slow)",
 		description = "Deals some damage and slows targets in a small area. Low DPS. Can be converted into a heavy AOE slow beam.",
@@ -767,6 +789,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 300 * COST_MULT,
 		prohibitingModules = {"module_personal_cloak"},
+		requireChassis = {"support", "recon", "assault", "knight"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -835,6 +858,7 @@ local moduleDefs = {
 		cost = 200 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
+		requireChassis = {"support", "recon", "assault", "knight"},
 		applicationFunction = function (modules, sharedData)
 			if not sharedData.cloakFieldRange then
 				sharedData.radarJammingRange = 500
@@ -857,17 +881,18 @@ local moduleDefs = {
 	{
 		name = "module_personal_cloak",
 		humanName = "Personal Cloak",
-		description = "Personal Cloak - A personal cloaking device. Reduces speed by 8.",
+		description = "Personal Cloak - A personal cloaking device. Reduces speed by 2.",
 		image = moduleImagePath .. "module_personal_cloak.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
 		prohibitingModules = {"commweapon_personal_shield", "commweapon_areashield"},
+		requireChassis = {"recon", "assault", "knight"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			sharedData.decloakDistance = math.max(sharedData.decloakDistance or 0, 150)
 			sharedData.personalCloak = true
-			sharedData.speedMod = (sharedData.speedMod or 0) - 8
+			sharedData.speedMod = (sharedData.speedMod or 0) - 2
 		end
 	},
 	{
@@ -877,7 +902,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_cloak_field.png",
 		limit = 1,
 		cost = 600 * COST_MULT,
-		requireChassis = {"support", "strike", "knight"},
+		requireChassis = {"support", "knight"},
 		requireOneOf = {"module_jammer"},
 		requireLevel = 3,
 		slotType = "module",
@@ -1203,6 +1228,8 @@ local chassisDefs = {
 				morphBaseCost = 0,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.decloakDistance = 100
+					sharedData.personalCloak = true -- !!FREE!! cloak
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynstrike0"].id

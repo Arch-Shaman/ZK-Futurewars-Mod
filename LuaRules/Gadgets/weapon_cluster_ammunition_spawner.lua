@@ -43,6 +43,7 @@ local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 --Speedups--
 local spEcho = Spring.Echo
 local spGetGameFrame = Spring.GetGameFrame
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetProjectilePosition = Spring.GetProjectilePosition
 local spGetProjectileTarget = Spring.GetProjectileTarget
 local spGetProjectileTimeToLive = Spring.GetProjectileTimeToLive
@@ -67,6 +68,7 @@ local SetWatchWeapon = Script.SetWatchWeapon
 local spSetProjectileAlwaysVisible = Spring.SetProjectileAlwaysVisible
 local spGetProjectileIsIntercepted = Spring.GetProjectileIsIntercepted
 local spGetProjectileTeamID = Spring.GetProjectileTeamID
+local spSetProjectileDamages = Spring.SetProjectileDamages
 local random = math.random
 local sqrt = math.sqrt
 local byte = string.byte
@@ -164,7 +166,11 @@ for i=1, #WeaponDefs do
 							config[i]["vlist"][#config[i]["vlist"]+1] = {tonumber(x),tonumber(y),tonumber(z)}
 						end
 					end
-					
+					if wd.name:find("commweapon") then
+						config[i].commweapon = true
+					else
+						config[i].commweapon = false
+					end
 					--sonny projectile defs
 					
 					--the basic idea is this. instead of pulling let say curRef.projectile we pull curRef.projectile1 or curRef.projectile2 for the different
@@ -254,7 +260,7 @@ for i=1, #WeaponDefs do
 						fragnum = fragnum + 1
 					end
 					config[i].fragcount =  fragnum - 1
-					Spring.Echo("Frag count: " .. fragnum - 1)
+					spEcho("Frag count: " .. fragnum - 1)
 				else
 					spEcho("Error: " .. i .. "(" .. WeaponDefs[i].name .. "): spawndist is not present.")
 				end
@@ -295,16 +301,28 @@ local function distance2d(x1,y1,x2,y2)
 	return sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)))
 end
 
-local function RegisterSubProjectiles(p, me)
+local function RegisterSubProjectiles(p, me, commbonus)
 	if config[me] then
-		IterableMap.Add(projectiles, p, {def = me, intercepted = false, ttl = config[me].timer})
+		IterableMap.Add(projectiles, p, {def = me, intercepted = false, ttl = config[me].timer, commbonus = commbonus})
 		if config[me]["alwaysvisible"] then
 			spSetProjectileAlwaysVisible(p, true)
 		end
 	end
 end
 
-local function SpawnSubProjectiles(id, wd)
+local function ReplaceSubProjectile(wd, bonus)
+	local name = WeaponDefs[wd].name
+	local str = name:sub(2,-1)
+	local num = bonus/.1
+	num = tostring(num):sub(1,1)
+	if debug then
+		spEcho("replacing with " .. num)
+	end
+	str = num .. str
+	return WeaponDefNames[str].id
+end
+
+local function SpawnSubProjectiles(id, wd, commbonus)
 	if id == nil then
 		return
 	end
@@ -330,6 +348,9 @@ local function SpawnSubProjectiles(id, wd)
 	-- Create the projectiles --
 	for j = 1, config[wd].fragcount do
 		local me = projectileConfig[j]["projectile"]
+		if config[wd].commweapon then
+			me = ReplaceSubProjectile(me, commbonus)
+		end
 		local r = projectileConfig[j]["spreadradius"]
 		local vr = projectileConfig[j]["veldata"]
 		local projectilecount = projectileConfig[j]["numprojectiles"]
@@ -397,7 +418,7 @@ local function SpawnSubProjectiles(id, wd)
 			else
 				spSetProjectileTarget(p, target[1], target[2], target[3])
 			end
-			RegisterSubProjectiles(p,me)
+			RegisterSubProjectiles(p,me, commbonus)
 		end
 	end
 	-- create the explosion --
@@ -422,7 +443,7 @@ local function CheckProjectile(id)
 	local wd = projectile.def or spGetProjectileDefID(id)
 	if projectile.ttl then -- timed weapons don't need anything fancy.
 		if projectile.ttl <= 0 then
-			SpawnSubProjectiles(id, wd)
+			SpawnSubProjectiles(id, wd, projectile.commbonus)
 		else
 			return
 		end
@@ -442,7 +463,7 @@ local function CheckProjectile(id)
 	local ttl = spGetProjectileTimeToLive(id)
 	if isMissile and debug then spEcho("ttl: " .. tostring(ttl)) end
 	if isMissile and myConfig.timeoutspawn and ttl == 0 then
-		SpawnSubProjectiles(id,wd)
+		SpawnSubProjectiles(id,wd, projectile.commbonus)
 	end
 	local use3d = (myConfig.use2ddist == 0)
 	local distance
@@ -457,7 +478,7 @@ local function CheckProjectile(id)
 			spEcho("Useheight check")
 		end
 		if y2 - spGetGroundHeight(x2,z2) < myConfig.spawndist and vy < 0 then
-			SpawnSubProjectiles(id,wd)
+			SpawnSubProjectiles(id,wd, projectile.commbonus)
 		else
 			return
 		end
@@ -493,12 +514,12 @@ local function CheckProjectile(id)
 		spEcho("d: " .. distance .. "\nisBomb: " .. tostring(myConfig["isBomb"]) .. "\nVelocity: (" .. vx,vy,vz .. ")" .. "\nH: " .. height .. "\nexplosion dist: " .. height - myConfig.spawndist)
 	end
 	if distance < myConfig.spawndist and not myConfig["isBomb"] then -- bombs ignore distance and explode based on height. This is due to bomb ground attacks being absolutely fucked in current spring build.
-		SpawnSubProjectiles(id,wd)
+		SpawnSubProjectiles(id, wd, projectile.commbonus)
 		if debug then
 			spEcho("distance")
 		end
 	elseif myConfig["isBomb"] and height <= myConfig.spawndist then
-		SpawnSubProjectiles(id,wd)
+		SpawnSubProjectiles(id,wd, projectile.commbonus)
 		if debug then
 			spEcho("bomb engage")
 		end
@@ -506,7 +527,7 @@ local function CheckProjectile(id)
 		if debug then
 			spEcho("ground impact")
 		end
-		SpawnSubProjectiles(id,wd)
+		SpawnSubProjectiles(id,wd, projectile.commbonus)
 	elseif myConfig["proxy"] == 1 then
 		local units
 		if use3d then
@@ -518,7 +539,7 @@ local function CheckProjectile(id)
 			if debug then
 				spEcho("Unit passed unittest. Passed to SpawnSubProjectiles")
 			end
-			SpawnSubProjectiles(id, wd)
+			SpawnSubProjectiles(id, wd, projectile.commbonus)
 		end
 	end
 end
@@ -535,7 +556,15 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		if debug then
 			spEcho("Registered projectile " .. proID)
 		end
-		IterableMap.Add(projectiles, proID, {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetUnitTeam(proOwnerID), ttl = config[weaponDefID].timer})
+		local commbonus
+		if config[weaponDefID].commweapon then
+			commbonus = spGetUnitRulesParam(proOwnerID, "comm_damage_mult") or 1
+			commbonus = commbonus - 1
+			if debug then
+				spEcho("Damage mult: " .. commbonus)
+			end
+		end
+		IterableMap.Add(projectiles, proID, {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetUnitTeam(proOwnerID), ttl = config[weaponDefID].timer, commbonus = commbonus})
 		if config[weaponDefID]["alwaysvisible"] then
 			spSetProjectileAlwaysVisible(proID,true)
 		end
@@ -546,7 +575,7 @@ function gadget:ProjectileDestroyed(proID)
 	local projectiledata = IterableMap.Get(projectiles, proID)
 	if projectiledata and not projectiledata.intercepted then
 		local wd = projectiledata.def
-		SpawnSubProjectiles(id, wd)
+		SpawnSubProjectiles(id, wd, projectiledata.commbonus)
 	end
 end
 

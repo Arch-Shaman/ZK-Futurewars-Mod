@@ -684,7 +684,10 @@ local function weapons2Table(cells, ws, unitID)
 			cells[#cells+1] = ' - Range:'
 			cells[#cells+1] = numformat(range * ((unitID and Spring.GetUnitRulesParam(unitID, "comm_range_mult")) or 1),2) .. " elmo"
 		end
-
+		if wd.customParams.puredecloaktime then
+			cells[#cells+1] = ' - Forces decloak for'
+			cells[#cells+1] = numformat(wd.customParams.puredecloaktime / 30, 1) .. "s"
+		end
 		local aoe = wd.impactOnly and 0 or wd.damageAreaOfEffect
 		if aoe > 15 and show_aoe then
 			cells[#cells+1] = ' - AoE radius:'

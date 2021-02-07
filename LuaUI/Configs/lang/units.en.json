@@ -645,8 +645,8 @@
 		"helptext" : "Roosts such as this one are the hatching grounds of the Thunderbirds."
 	},
 	"dynsupport1" : {
-		"name" : "Engineer Commander",
-		"description" : "Econ/Support Commander",
+		"name" : "Support Commander",
+		"description" : "Economy/Support Commander",
 		"helptext" : "The esoteric Engineer chassis uses a more unorthodox weapon set. Though lacking armor or speed, this chassis is still favored due to its intrinsic buildpower bonus."
 	},
 	"cloakraid" : {
@@ -765,9 +765,9 @@
 		"helptext" : "The Radar tower provides early warning of enemy units and their movements over a moderate distance at virtually no cost. It has a very small but steady energy cost and will automatically shut down if you run out of energy. Radar Towers can morph to Sparrows - light scout planes - to enhance their ability to gather intel. Radar coverage is blocked by terrain such as mountains."
 	},
 	"turretriot" : {
-		"name" : "Stardust",
-		"description" : "Anti-Swarm Turret",
-		"helptext" : "The Stardust sports a powerful autocannon. While it has a short range and is thus even more vulnerable to skirmishers than the LLT, its high rate of fire and AoE allow it to quickly chew up swarms of lighter units."
+		"name" : "Bombard",
+		"description" : "Anti-Swarm Turret (needs 4E grid)",
+		"helptext" : "The Bombard packs a powerful and accurate canister autocannon that rapidly shreds incoming units. It requires a small electrical grid though to power its rapid fabricators."
 	},
 	"spideranarchid" : {
 		"name" : "Anarchid",
@@ -820,9 +820,14 @@
 		"helptext" : "The Dante is a heavy combat unit that specializes in getting close and melting its target. Its flamethrower and twin heatrays aren't extraordinary, but its incendiary rockets can be fired in a salvo of twenty that devastates a wide swath of terrain."
 	},
 	"dynassault1" : {
+		"name" : "Bombardment Commander",
+		"description" : "Heavy Ranged Commander",
+		"helptext" : "The Bombard Chassis emphasizes range and firepower at the expense of speed and support equipment."
+	},
+	"dynriot1" : {
 		"name" : "Guardian Commander",
-		"description" : "Heavy Combat Commander",
-		"helptext" : "The Guardian Chassis emphasizes armor and firepower at the expense of speed and support equipment."
+		"description" : "Crowd Control Commander",
+		"helptext" : "The Guardian Chassis emphasizes close range fire power and area of effect to effectively control raiders. It can also specialize in assaulting positions."
 	},
 	"chickenbroodqueen" : {
 		"name" : "Chicken Brood Queen",
@@ -845,9 +850,9 @@
 		"helptext" : "The Zenith collects meteorites from the sky (up to 300), which it can send anywhere to break things or provide a small reclaimable source of metal."
 	},
 	"vehaa" : {
-		"name" : "Crasher",
+		"name" : "Gatekeeper",
 		"description" : "Fast Anti-Air Rover",
-		"helptext" : "The Crasher is a speedy solution to enemy bomber attacks, and also works well against gunships."
+		"helptext" : "The Gatekeeper's improved disruptor missile slows air targets down for other AA units to finish the job."
 	},
 	"spiderskirm" : {
 		"name" : "Recluse",
@@ -865,9 +870,9 @@
 		"helptext" : "This is Djinn's entry beacon. Right-click it to teleport units to the parent Djinn."
 	},
 	"dynstrike1" : {
-		"name" : "Strike Commander",
-		"description" : "Mobile Assault Commander",
-		"helptext" : "The Strike Commander is a well-balanced command platform that can mount most modules, with decent speed, armor, and regeneration."
+		"name" : "Ambush Commander",
+		"description" : "Stealthy Commander",
+		"helptext" : "The Ambush Commander is a flexible, speedy stealthy commander that can wield the fearsome Disintegrator. It is, however, locked out of support modules. It has an inherent cloaking device and excels at hit and run tactics."
 	},
 	"empmissile" : {
 		"name" : "Shockley",

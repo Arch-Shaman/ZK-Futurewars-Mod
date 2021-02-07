@@ -7,8 +7,8 @@ local aim = piece "post"
 local emitnano = piece "nano"
 
 --local vars
-local smokePiece = { aim, base}
-local nanoPieces = { nano }
+local smokePiece = { aim, body}
+local nanoPieces = { emitnano }
 
 local nanoTurnSpeedHori = 0.5 * math.pi
 local nanoTurnSpeedVert = 0.3 * math.pi

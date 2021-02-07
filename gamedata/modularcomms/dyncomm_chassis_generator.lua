@@ -1,10 +1,9 @@
 local chassisDefs = {
 	{
-		name = "dynstrike1", -- 24/31 (UPDATE ME AS YOU ADD MORE WEAPONS)
+		name = "dynstrike1", -- 22/31 (UPDATE ME AS YOU ADD MORE WEAPONS)
 		weapons = {
 			"commweapon_missilelauncher", -- 415 TODO: REMOVE
 			"commweapon_missilelauncher", -- 415 TODO: REMOVE
-			"commweapon_beamlaser",
 			"commweapon_lparticlebeam",
 			"commweapon_shotgun", -- TODO: REPLACE
 			"commweapon_shotgun_disrupt",
@@ -13,7 +12,6 @@ local chassisDefs = {
 			"commweapon_heavymachinegun_disrupt",
 			"commweapon_lightninggun",
 			"commweapon_lightninggun_improved",
-			"commweapon_beamlaser",
 			"commweapon_lparticlebeam",
 			"commweapon_shotgun",
 			"commweapon_shotgun_disrupt",
@@ -30,10 +28,8 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynrecon1", -- 22/31
+		name = "dynrecon1", -- 20/31
 		weapons = {
-			"commweapon_beamlaser",
-			"commweapon_beamlaser",
 			"commweapon_lparticlebeam", -- TODO: Remove
 			"commweapon_lparticlebeam",
 			"commweapon_disruptor", -- TODO: Remove
@@ -90,20 +86,19 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynassault1", --23/31
+		name = "dynassault1", --22/31
 		weapons = {
 			"commweapon_rocketlauncher", -- 430
 			"commweapon_rocketlauncher_napalm", -- 430
 			"commweapon_rocketlauncher", -- 430
 			"commweapon_rocketlauncher_napalm", -- 430
-			"commweapon_beamlaser",
+			"commweapon_canistercannon",
+			"commweapon_canistercannon",
 			"commweapon_heatray",
 			"commweapon_heavymachinegun",
 			"commweapon_flamethrower",
 			"commweapon_riotcannon",
 			"commweapon_riotcannon_napalm",
-			"commweapon_peashooter",
-			"commweapon_beamlaser",
 			"commweapon_heatray",
 			"commweapon_heavymachinegun",
 			"commweapon_flamethrower",
@@ -119,7 +114,7 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynknight1",
+		name = "dynknight1", -- don't care.
 		weapons = {
 			-- Aiming from earlier weapons is overridden by 
 			"commweapon_peashooter",

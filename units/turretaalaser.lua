@@ -75,7 +75,7 @@ return { turretaalaser = {
 				},
       
 				damage                  = {
-					default = 45.1,
+					default = 50.1,
 				},
 
 				duration                = 2/30,
@@ -91,7 +91,7 @@ return { turretaalaser = {
 				reloadtime              = 6/30,
 				rgbColor                = [[1 0.40059 0]],
 				soundStart              = [[weapon/laser/heavy_pulser]],
-				soundstartvolume	    = 85,
+				soundstartvolume	    = 135,
 				thickness               = 2.55,
 				tolerance               = 10000,
 				turret                  = true,

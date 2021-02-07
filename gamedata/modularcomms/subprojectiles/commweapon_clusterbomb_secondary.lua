@@ -14,7 +14,7 @@ local weaponDef = {
 	customParams            = {
 		is_unit_weapon = 1,
 		miscEffectFire = [[custom:RIOT_SHELL_H]],
-
+		commsubmunition = 1,
 		light_camera_height = 2500,
 		light_color = [[0.22 0.19 0.05]],
 		light_radios = 380,
@@ -22,7 +22,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 300,
+		default = 500,
 	},
 
 	explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
@@ -36,6 +36,7 @@ local weaponDef = {
 	reloadtime              = 30,
 	smokeTrail              = true,
 	soundHit                = [[explosion/ex_med6]],
+	soundStart              = [[weapon/cannon/cannonfire_001]],
 	soundHitVolume          = 8,
 	soundTrigger            = true,
 	sprayangle              = 2500,

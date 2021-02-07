@@ -8,7 +8,7 @@ local AngleSubtractShortest = Spring.Utilities.Vector.AngleSubtractShortest
 -- pieces
 
 local pelvis, torso, head, shouldercannon, shoulderflare = piece('pelvis', 'torso', 'head', 'shouldercannon', 'shoulderflare')
-local aaturret, aagun, aaflare1, aaflare2, headlaser1, headlaser2, headlaser3 = piece('AAturret', 'AAguns', 'AAflare1', 'AAflare2', 'headlaser1', 'headlaser2', 'headlaser3')
+local aaturret, aagun, aagunleft, aagunright, aaflare1, aaflare2, headlaser1, headlaser2, headlaser3 = piece('AAturret', 'BothAA', 'LeftAA', 'RightAA', 'AAflare2', 'headlaser1', 'headlaser2', 'headlaser3')
 local larm, larmcannon, larmbarrel1, larmflare1, larmbarrel2, larmflare2, larmbarrel3, larmflare3 = piece('larm', 'larmcannon', 'larmbarrel1', 'larmflare1',
 	'larmbarrel2', 'larmflare2', 'larmbarrel3', 'larmflare3')
 local rarm, rarmcannon, rarmbarrel1, rarmflare1, rarmbarrel2, rarmflare2, rarmbarrel3, rarmflare3 = piece('rarm', 'rarmcannon', 'rarmbarrel1', 'rarmflare1',

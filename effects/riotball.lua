@@ -253,6 +253,23 @@ return {
 			},
 		},
 	},
+	["riotballplus2_purple_small_darker"] = {
+		usedefaultexplosions = false,
+		sphere = {
+			air                = true,
+			class              = [[CSpherePartSpawner]],
+			count              = 1,
+			ground             = true,
+			water              = true,
+			underwater 		 = true,
+			properties = {
+				alpha              = 0.5,
+				color              = [[1,0,1]],
+				expansionspeed     = 6,
+				ttl                = 5,
+			},
+		},
+	},
 	["riotballplus2_purple_small60"] = {
 		usedefaultexplosions = false,
 		groundflash = {
