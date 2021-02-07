@@ -169,7 +169,10 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 		Spring.SetUnitCloak(unitID, false, data.decloakDistance)
 		Spring.SetUnitRulesParam(unitID, "comm_decloak_distance", data.decloakDistance, INLOS)
 	end
-	
+	if data.personaljammer then
+		Spring.SetUnitStealth(unitID, true)
+		Spring.SetUnitRulesParam(unitID, "comm_jammed", 1, INLOS)
+	end
 	if data.personalCloak then
 		Spring.SetUnitRulesParam(unitID, "comm_personal_cloak", 1, INLOS)
 	end
