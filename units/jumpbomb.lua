@@ -54,7 +54,7 @@ return {
 		maxSlope               = 36,
 		maxVelocity            = 2.0,
 		maxWaterDepth          = 15,
-		minCloakDistance       = 100,
+		minCloakDistance       = 125,
 		movementClass          = [[SKBOT2]],
 		noAutoFire             = false,
 		noChaseCategory        = [[FIXEDWING LAND SINK TURRET SHIP SATELLITE SWIM GUNSHIP FLOAT SUB HOVER]],
