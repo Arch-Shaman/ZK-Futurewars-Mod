@@ -6,7 +6,6 @@ local weaponDef = {
 	craterMult              = 0,
 	cegTag                  = [[gauss_tag_l]],
 	customParams            = {
-		burst = Shared.BURST_RELIABLE,
 		gatherradius = [[105]],
         smoothradius = [[70]],
         smoothmult   = [[0.4]],
@@ -33,7 +32,7 @@ local weaponDef = {
 	soundStart              = [[weapon/cannon/plasma_fire]],
 	turret                  = true,
 	weaponType              = [[Cannon]],
-	weaponVelocity          = 270,
+	weaponVelocity          = 300,
 	waterweapon				= true,
 }
 

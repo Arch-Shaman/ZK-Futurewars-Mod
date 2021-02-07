@@ -6,7 +6,6 @@ local weaponDef = {
 	craterMult              = 0,
 	cegTag                  = [[cyclopstrail]],
 	customParams            = {
-		burst = Shared.BURST_RELIABLE,
 		gatherradius = [[105]],
         smoothradius = [[70]],
         smoothmult   = [[0.4]],
@@ -19,7 +18,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 1000,
+		default = 850,
 	},
 
 	edgeEffectiveness       = 0.5,
@@ -34,7 +33,7 @@ local weaponDef = {
 	soundStart              = [[weapon/cannon/heavy_disrupter]],
 	turret                  = true,
 	weaponType              = [[Cannon]],
-	weaponVelocity          = 270,
+	weaponVelocity          = 300,
 	waterweapon				= true,
 }
 
