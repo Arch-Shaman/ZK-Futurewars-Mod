@@ -784,7 +784,7 @@ local function addUnit(defName, path)
 		local hasshield = 0
 		for w = 1, #weapons do
 			local wep = weapons[w].weaponDef
-			if WeaponDefs[wep].shieldPower and WeaponDefs[wep].shieldPower > 0 and shields[i] == nil then
+			if WeaponDefs[wep].shieldPower and WeaponDefs[wep].shieldPower > 0 then
 				options[defName .. "_retreatpercent_shield"] = {
 					name = "  Retreat at value (Shield)",
 					desc = "Values: inherit from factory, no retreat, 30%, 50%, 80% shield remaining",
