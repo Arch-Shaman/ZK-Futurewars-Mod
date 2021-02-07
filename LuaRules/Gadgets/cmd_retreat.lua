@@ -39,11 +39,24 @@ local CommandDesc = {
 	params      = { 'Retreat Off', 'Retreat Off', 'Retreat 30%', 'Retreat 65%', 'Retreat 99%' },
 }
 local StateCount = #CommandDesc.params-1
+local commandShield = {
+	id          = CMD_RETREATSHIELD,
+	type        = CMDTYPE.ICON_MODE,
+	name        = 'Shield HP Retreat',
+	action      = 'retreat',
+	tooltip     = Tooltips[DefaultState + 1],
+	params      = { 'Retreat Off', 'Retreat Off', 'Retreat 30%', 'Retreat 50%', 'Retreat 80%' },
+}
 
 local thresholdMap = {
 	0.3,
 	0.65,
 	0.99,
+}
+local shieldmap = {
+	0.3,
+	0.5,
+	0.8,
 }
 
 --------------------------------------------------------------------------------
@@ -63,6 +76,8 @@ local spGetUnitRulesParam 	= Spring.GetUnitRulesParam
 local spSetUnitRulesParam 	= Spring.SetUnitRulesParam
 local spFindUnitCmdDesc 	= Spring.FindUnitCmdDesc
 local spGetUnitIsStunned 	= Spring.GetUnitIsStunned
+local spGetUnitDefID		= Spring.GetUnitDefID
+local spGetUnitShieldState  = Spring.GetUnitShieldState
 
 local CMD_INSERT = CMD.INSERT
 local CMD_REMOVE = CMD.REMOVE
@@ -89,9 +104,11 @@ local retreatState = {} -- stores the the current state of the retreat command f
 local retreatables = {} -- unit has the ability to retreat (so it should have a retreat state command available)
 local isPlane = {}
 local havens = {}
+local shieldmax = {}
 local RADIUS = 160 --retreat zone radius
 local DIAM = RADIUS * 2
 local RADSQ = RADIUS * RADIUS
+local shields = {}
 
 local ignoreAllowCommand = false
 
@@ -100,6 +117,18 @@ for unitDefID, unitDef in pairs(UnitDefs) do
 	local movetype = Spring.Utilities.getMovetype(unitDef)
 	if movetype == 1 and not Spring.Utilities.tobool(unitDef.customParams.cantuseairpads) then
 		gunshipDefs[unitDefID] = true
+	end
+end
+
+for i = 1, #UnitDefs do
+	local def = UnitDefs[i]
+	local weapons = def.weapons
+	for w = 1, #weapons do
+		local wep = weapons[w].weaponDef
+		if WeaponDefs[wep].shieldPower and WeaponDefs[wep].shieldPower > 0 and shields[i] == nil then
+			shields[i] = WeaponDefs[wep].shieldPower
+			--Spring.Echo("Added shield retreat to " .. i .. " ( has " .. tostring(WeaponDefs[wep].shieldPower) .. ")")
+		end
 	end
 end
 
@@ -351,6 +380,9 @@ end
 
 -- mark this unit as wanting to retreat (or not wanting to)
 local function SetWantRetreat(unitID, want)
+	if UnitDefs[spGetUnitDefID(unitID)].speed == 0 then
+		return
+	end
 	if wantRetreat[unitID] ~= want then
 		Spring.SetUnitRulesParam(unitID, "retreat", want and 1 or 0, alliedTrueTable)
 		if not want then
@@ -366,23 +398,32 @@ end
 -- is our health low enough that we want to retreat?
 local function CheckSetWantRetreat(unitID)
 	local health, maxHealth, _, capture = spGetUnitHealth(unitID)
+	local shieldmax = shields[spGetUnitDefID(unitID)]
+	local _, currentcharge = spGetUnitShieldState(unitID)
+	--Spring.Echo("Current Charge: " .. tostring(currentcharge))
 	if not health then
 		ResetRetreatData(unitID)
 		retreatables[unitID] = nil
 		return
 	end
 	
-	if not retreatState[unitID] or retreatState[unitID] == 0 then
+	if not retreatState[unitID] or (retreatState[unitID].hp == 0 and retreatState[unitID].shield == 0) then
 		return
 	end
-	
 	local healthRatio = health / maxHealth
-	local threshold = thresholdMap[retreatState[unitID]]
+	local threshold = thresholdMap[retreatState[unitID].hp] or 0
+	local shieldthreshold
+	local shieldratio = 0.1
+	if currentcharge then
+		shieldthreshold = shieldmap[retreatState[unitID].shield] or 0
+		shieldratio = currentcharge/shieldmax
+		--Spring.Echo("Shield is " .. shieldratio * 100 .. "%. Threshold is " .. shieldthreshold .. ". Enabled: " .. tostring(enabled))
+	end
 	local _,_,inBuild = spGetUnitIsStunned(unitID)
-
-	if (healthRatio < threshold or capture >= threshold) and (not inBuild) then
+	local wantshieldretreat = shieldmax ~= nil and (shieldratio < shieldthreshold)
+	if (healthRatio < threshold or capture >= 1 - threshold or wantshieldretreat) and (not inBuild) then
 		SetWantRetreat(unitID, true)
-	elseif healthRatio >= 1 and capture == 0 then
+	elseif healthRatio >= 1 and capture == 0 and not wantshieldretreat then
 		SetWantRetreat(unitID, nil)
 	end
 end
@@ -400,7 +441,29 @@ local function SetRetreatState(unitID, state, retID)
 			tooltip = Tooltips[state]
 		})
 		spSetUnitRulesParam(unitID, 'retreatState', state, alliedTrueTable)
-		retreatState[unitID] = state
+		if retreatState[unitID] == nil then
+			retreatState[unitID] = {hp = state, shield = 0}
+		else
+			retreatState[unitID].hp = state
+		end
+		SetWantRetreat(unitID, nil)
+	end
+end
+
+local function SetShieldRetreatState(unitID, state, retID)
+	local cmdDescID = spFindUnitCmdDesc(unitID, retID)
+	if (cmdDescID) then
+		CommandDesc.params[1] = state
+		spEditUnitCmdDesc(unitID, cmdDescID, {
+			params = CommandDesc.params,
+			tooltip = Tooltips[state]
+		})
+		spSetUnitRulesParam(unitID, 'retreatshieldState', state, alliedTrueTable)
+		if retreatState[unitID] == nil then
+			retreatState[unitID] = {hp = 0, shield = state}
+		else
+			retreatState[unitID].shield = state
+		end
 		SetWantRetreat(unitID, nil)
 	end
 end
@@ -412,15 +475,29 @@ function RetreatCommand(unitID, cmdID, cmdParams, cmdOptions)
 	elseif state == 0 then  --note: this means that to set "Retreat Off" (state = 0) you need to use the "right" modifier, whether the command is given by the player using an ui button or by Lua
 		state = 1
 	end
-	retreatables[unitID] = state ~= 0 or wantRetreat[unitID] or isRetreating[unitID]
+	local shieldretreat = retreatState[unitID] and retreatState[unitID].shield ~= 0
+	retreatables[unitID] = (state ~= 0 or shieldretreat) or wantRetreat[unitID] or isRetreating[unitID]
 	state = state % StateCount
 	SetRetreatState(unitID, state, cmdID)
+end
+
+function RetreatCommandShield(unitID, cmdID, cmdParams, cmdOptions)
+	local state = cmdParams[1]
+	if cmdOptions.right then
+		state = 0
+	elseif state == 0 then  --note: this means that to set "Retreat Off" (state = 0) you need to use the "right" modifier, whether the command is given by the player using an ui button or by Lua
+		state = 1
+	end
+	local shieldretreat = retreatState[unitID] and retreatState[unitID].shield ~= 0
+	retreatables[unitID] = (state ~= 0 or shieldretreat) or wantRetreat[unitID] or isRetreating[unitID]
+	state = state % StateCount
+	SetShieldRetreatState(unitID, state, cmdID)
 end
 
 local function PeriodicUnitCheck(unitID)
 	CheckSetWantRetreat(unitID)
 	CheckRetreat(unitID)
-	if retreatState[unitID] == 0 and not (wantRetreat[unitID] or isRetreating[unitID]) then
+	if retreatState[unitID].hp == 0 and retreatState[unitID].shield == 0 and not (wantRetreat[unitID] or isRetreating[unitID]) then
 		retreatables[unitID] = nil
 	end
 end
@@ -439,6 +516,11 @@ function gadget:UnitCreated(unitID, unitDefID, teamID, builderID, _, _)
 			isPlane[unitID] = true
 		else
 			isPlane[unitID] = nil
+		end
+		Spring.Echo("Has shields: " .. tostring(shields[unitDefID] ~= nil))
+		if shields[unitDefID] then
+			commandShield.params[1] = DefaultState
+			spInsertUnitCmdDesc(unitID, CommandOrder, commandShield)
 		end
 	end
 end
@@ -514,6 +596,10 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
 	if cmdID == CMD_RETREAT then
 		RetreatCommand(unitID, cmdID, cmdParams, cmdOptions)
 		return false  -- command was used
+	end
+	if cmdID == CMD_RETREATSHIELD then
+		RetreatCommandShield(unitID, cmdID, cmdParams, cmdOptions)
+		return false -- used.
 	end
 
 	if isRetreating[unitID] and not ignoreAllowCommand and not cmdOptions.shift and interruptingCommands[cmdID] then
