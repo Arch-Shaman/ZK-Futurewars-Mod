@@ -225,6 +225,28 @@ local moduleDefs = {
 			end
 		end
 	},
+	{
+		name = "commweapon_tankbuster",
+		humanName = "Tank Buster Cannon",
+		description = "Tank Buster Cannon\n Extremely hard hitting, low fire rate antiheavy cannon.",
+		image = moduleImagePath .. "commweapon_assaultcannon.png",
+		limit = 2,
+		cost = 50 * COST_MULT,
+		requireChassis = {"strike"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_buster_disrupt") or "commweapon_tankbuster"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
 	--[[{
 		name = "commweapon_hparticlebeam",
 		humanName = "Heavy Particle Beam",
@@ -381,7 +403,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_missilelauncher.png",
 		limit = 2,
 		cost = 5 * COST_MULT,
-		requireChassis = {"strike", "knight"},
+		requireChassis = {"knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
