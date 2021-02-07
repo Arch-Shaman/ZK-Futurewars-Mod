@@ -163,8 +163,7 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 		end
 	end
 	if data.sightrangebonus then
-		Spring.SetUnitRulesParam(unitID, "sightRangeOverride", 500 * data.sightrangebonus)
-		Spring.SetUnitRulesParam(unitID, "sonarRangeOverride", 500 * data.sightrangebonus)
+		Spring.SetUnitRulesParam(unitID, "sightBonus", data.sightrangebonus, INLOS)
 	end
 	if data.decloakDistance then
 		Spring.SetUnitCloak(unitID, false, data.decloakDistance)
