@@ -30,6 +30,7 @@ local weaponDef = {
 	reloadtime              = 5,
 	soundHit                = [[weapon/cannon/megaarty_hit]],
 	soundStart              = [[weapon/cannon/plasma_fire]],
+	soundstartvolume		= 8,
 	turret                  = true,
 	weaponType              = [[Cannon]],
 	weaponVelocity          = 300,

@@ -52,7 +52,7 @@ local carrierDefNames = {
 		{
 			drone = UnitDefNames.droneheavyslow.id,
 			reloadTime = 30,
-			maxDrones = 3,
+			maxDrones = 2,
 			spawnSize = 1,
 			range = 1000,
 			maxChaseRange = 1500,

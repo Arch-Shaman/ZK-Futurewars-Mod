@@ -10,27 +10,27 @@ local chassisDefs = {
 			"commweapon_shotgun", -- TODO: REPLACE
 			"commweapon_shotgun_disrupt",
 			"commweapon_disruptor", -- TODO: REMOVE
-			"commweapon_heavymachinegun",
-			"commweapon_heavymachinegun_disrupt",
+			"commweapon_heavyrifle",
+			"commweapon_heavyrifle_disrupt",
 			"commweapon_lightninggun",
 			"commweapon_lightninggun_improved",
 			"commweapon_lparticlebeam",
 			"commweapon_shotgun",
 			"commweapon_shotgun_disrupt",
 			"commweapon_disruptor",
-			"commweapon_heavymachinegun",
-			"commweapon_heavymachinegun_disrupt",
+			"commweapon_heavyrifle",
+			"commweapon_heavyrifle_disrupt",
 			"commweapon_lightninggun",
 			"commweapon_lightninggun_improved",
 			"commweapon_multistunner",
 			"commweapon_multistunner_improved",
-			"commweapon_disruptorbomb",
+			"commweapon_sunburst",
 			"commweapon_disintegrator",
 			-- Space for shield
 		}
 	},
 	{
-		name = "dynrecon1", -- 20/31
+		name = "dynrecon1", -- 19/31
 		weapons = {
 			"commweapon_lparticlebeam", -- TODO: Remove
 			"commweapon_lparticlebeam",
@@ -48,7 +48,6 @@ local chassisDefs = {
 			"commweapon_emg_disrupt",
 			"commweapon_napalmgrenade",
 			"commweapon_clusterbomb",
-			"commweapon_disruptorbomb",
 			"commweapon_concussion",
 			"commweapon_heatray",
 			"commweapon_heatray",
@@ -88,7 +87,7 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynassault1", --22/31
+		name = "dynassault1", --21/31
 		weapons = {
 			"commweapon_rocketlauncher", -- 430
 			"commweapon_rocketlauncher_napalm", -- 430
@@ -108,7 +107,6 @@ local chassisDefs = {
 			"commweapon_riotcannon_napalm",
 			"commweapon_hpartillery",
 			"commweapon_hpartillery_napalm",
-			"commweapon_disintegrator",
 			"commweapon_napalmgrenade",
 			"commweapon_slamrocket",
 			"commweapon_clusterbomb",

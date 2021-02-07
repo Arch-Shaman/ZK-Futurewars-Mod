@@ -1,7 +1,7 @@
-local name = "commweapon_emg"
+local name = "commweapon_heavyrifle"
 local weaponDef = {
-	name                    = [[Medium EMG Rifle]],
-	areaOfEffect            = 8,
+	name                    = [[Heavy Rifle]],
+	areaOfEffect            = 48,
 	craterBoost             = 0,
 	craterMult              = 0,
 
@@ -16,7 +16,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 27.1,
+		default = 125.1,
 	},
 
 	edgeEffectiveness       = 0.5,
@@ -25,13 +25,13 @@ local weaponDef = {
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 1,
 	myGravity               = 0.1,
-	range                   = 300,
-	reloadtime              = .1,
+	range                   = 370,
+	reloadtime              = .5,
 	soundHit                = [[weapon/cannon/cannon_hit1]],
-	soundStart              = [[weapon/heavy_machinegun]],
+	soundStart              = [[weapon/cannon/med_rifle_fire]],
 	turret                  = true,
 	weaponType              = [[Cannon]],
-	weaponVelocity          = 580,
+	weaponVelocity          = 420,
 }
 
 return name, weaponDef

@@ -17,6 +17,7 @@ end
 local units = {}
 local wantedunits = {}
 local updaterate = 15
+local overrides = {}
 
 -- speed ups --
 local spGetUnitHealth = Spring.GetUnitHealth
@@ -36,15 +37,21 @@ for i = 1, #UnitDefs do
 	end
 end
 
+local function AddOverride(unitID, amount)
+	overrides[unitID] = amount / (30 / updaterate)
+end
+
+GG.AddCloakRegenOverride = AddOverride
+
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
 	units[unitID] = nil
 end
 
 function gadget:UnitCloaked(unitID, unitDefID, unitTeam)
-	if wantedunits[unitDefID] then
+	if wantedunits[unitDefID] or overrides[unitID] then
 		local health, maxhp = spGetUnitHealth(unitID)
 		if health < maxhp then
-			units[unitID] = wantedunits[unitDefID]
+			units[unitID] = wantedunits[unitDefID] or overrides[unitID]
 		end
 	end
 end

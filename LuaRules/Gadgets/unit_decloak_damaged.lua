@@ -72,6 +72,7 @@ local currentFrame = 0
 local cloakUnitDefID = {}
 local commDefID = {}
 local overrides = {}
+local overridesforunit = {}
 for i = 1, #UnitDefs do
 	local ud = UnitDefs[i]
 	if ud.canCloak and not ud.customParams.dynamic_comm then
@@ -93,6 +94,12 @@ local waterUnitCount = 0
 local waterUnitMap = {}
 local waterUnits = {}
 local waterUnitCloakBlocked = {}
+
+local function AddUnitOverride(unitID, time)
+	overridesforunit[unitID] = time
+end
+
+GG.CloakAddOverride = AddUnitOverride
 
 local function AddWaterUnit(unitID)
 	if waterUnitMap[unitID] then
@@ -136,8 +143,14 @@ local function GetProximityDecloakTime(unitID, unitDefID)
 	if areacloak == nil or areacloak == false then
 		areacloak = 0
 	end
-	if areacloak == 0 and overrides[unitDefID] then
-		return overrides[unitDefID]
+	if areacloak == 0 and (overrides[unitDefID] or overridesforunit[unitID]) then
+		local ret = 0
+		if (overrides[unitDefID] and overridesforunit[unitID]) or (overrides[unitDefID] == nil and overridesforunit[unitID]) then
+			ret = overridesforunit[unitID]
+		else
+			ret = overrides[unitDefID]
+		end
+		return ret
 	elseif areacloak > 0 and overrides[unitDefID] then
 		return PERSONAL_PROXIMITY_DECLOAK_TIME
 	end
@@ -146,12 +159,13 @@ end
 
 local function GetActionDecloakTime(unitID, unitDefID)
 	unitDefID = unitDefID or spGetUnitDefID(unitID)
-	if commDefID[unitDefID] and GG.Upgrades_UnitCanCloak(unitID) then
+	if commDefID[unitDefID] and GG.Upgrades_UnitCanCloak(unitID) and not overridesforunit[unitID] then
 		return PERSONAL_DECLOAK_TIME
 	end
 	local areacloak = spGetUnitRulesParam(unitID, "areacloaked")
-	if (areacloak == nil or areacloak == 0) and overrides[unitDefID] then
-		return overrides[unitDefID]
+	local override = overridesforunit[unitID] or overrides[unitDefID] or false 
+	if (areacloak == nil or areacloak == 0) and override then
+		return override
 	elseif areacloak and areacloak > 0 and overrides[unitDefID] then
 		return PERSONAL_DECLOAK_TIME
 	end

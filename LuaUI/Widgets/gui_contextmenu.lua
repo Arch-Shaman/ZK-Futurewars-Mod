@@ -1019,13 +1019,15 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = numformat(ud.decloakDistance) .. " elmo"
 	end
 
-	if cp.cloakregen then
+	if cp.cloakregen or Spring.GetUnitRulesParam(unitID, "commcloakregen") then
+		local cloakregen = Spring.GetUnitRulesParam(unitID, "commcloakregen") or cp.cloakregen
 		cells[#cells+1] = " - Cloaked Regen:"
-		cells[#cells+1] = cp.cloakregen .. "HP/s"
+		cells[#cells+1] = cloakregen .. "HP/s"
 	end
-	if cp.recloaktime then
+	if cp.recloaktime or Spring.GetUnitRulesParam(unitID, "commrecloaktime") then
+		local recloaktime = Spring.GetUnitRulesParam(unitID, "commrecloaktime") or cp.recloaktime
 		cells[#cells+1] = " - Recloaks after: "
-		cells[#cells+1] = numformat(cp.recloaktime / 30, 1) .. "s without area cloaker"
+		cells[#cells+1] = numformat(recloaktime / 30, 1) .. "s without area cloaker"
 	end
 	cells[#cells+1] = ''
 	cells[#cells+1] = ''
@@ -1527,13 +1529,15 @@ local function printunitinfo(ud, buttonWidth, unitID)
 	end
 	
 	if ud.losRadius > 0 then
+		local sight = Spring.GetUnitRulesParam(unitID, "sightRangeOverride") or ud.losRadius
 		statschildren[#statschildren+1] = Label:New{ caption = 'Sight: ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = numformat(ud.losRadius) .. " elmo", textColor = color.stats_fg, }
+		statschildren[#statschildren+1] = Label:New{ caption = numformat(sight) .. " elmo", textColor = color.stats_fg, }
 	end
 
-	if (ud.sonarRadius > 0) then
+	if (ud.sonarRadius > 0 or Spring.GetUnitRulesParam(unitID, "sonarRadiusOverride")) then
+		local sonar = Spring.GetUnitRulesParam(unitID, "sonarRangeOverride") or ud.sonarRadius
 		statschildren[#statschildren+1] = Label:New{ caption = 'Sonar: ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = numformat(ud.sonarRadius) .. " elmo", textColor = color.stats_fg, }
+		statschildren[#statschildren+1] = Label:New{ caption = numformat(sonar) .. " elmo", textColor = color.stats_fg, }
 	end
 
 	if ud.wantedHeight > 0 then
