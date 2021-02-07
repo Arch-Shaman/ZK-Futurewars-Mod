@@ -413,7 +413,7 @@ local function CheckSetWantRetreat(unitID)
 	local healthRatio = health / maxHealth
 	local threshold = thresholdMap[retreatState[unitID].hp] or 0
 	local shieldthreshold
-	local shieldratio = 0.1
+	local shieldratio = 1
 	if currentcharge then
 		shieldthreshold = shieldmap[retreatState[unitID].shield] or 0
 		shieldratio = currentcharge/shieldmax
@@ -423,7 +423,7 @@ local function CheckSetWantRetreat(unitID)
 	local wantshieldretreat = shieldmax ~= nil and (shieldratio < shieldthreshold)
 	if (healthRatio < threshold or capture >= 1 - threshold or wantshieldretreat) and (not inBuild) then
 		SetWantRetreat(unitID, true)
-	elseif healthRatio >= 1 and capture == 0 and not wantshieldretreat then
+	elseif healthRatio >= 1 and capture == 0 and shieldratio >= 1 then
 		SetWantRetreat(unitID, nil)
 	end
 end
