@@ -3,7 +3,7 @@ local weaponDef = {
 	name                    = [[Concussion Shell]],
 	alphaDecay              = 0.12,
 	areaOfEffect            = 192,
-	--cegTag                  = [[gauss_tag_m]],
+	cegTag                  = [[gauss_tag_m]],
 	commandfire             = true,
 	craterBoost             = 1,
 	craterMult              = 2,
@@ -38,7 +38,7 @@ local weaponDef = {
 	soundStart              = [[weapon/gauss_fire]],
 	stages                  = 32,
 	turret                  = true,
-	waterbounce             = 1,
+	waterweapon				= true,
 	weaponType              = [[Cannon]],
 	weaponVelocity          = 1000,
 }
