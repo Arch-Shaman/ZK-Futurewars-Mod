@@ -166,7 +166,7 @@ local moduleDefs = {
 		description = "Heatray: Rapidly melts anything at short range; steadily loses all of its damage over distance",
 		image = moduleImagePath .. "commweapon_heatray.png",
 		limit = 2,
-		cost = 5 * COST_MULT,
+		cost = 0 * COST_MULT,
 		requireChassis = {"assault", "knight", "recon"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
@@ -188,7 +188,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_heavymachinegun.png",
 		limit = 2,
 		cost = 5 * COST_MULT,
-		requireChassis = {"recon", "assault", "strike", "knight"},
+		requireChassis = {"assault", "strike", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -196,6 +196,28 @@ local moduleDefs = {
 				return
 			end
 			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_heavymachinegun_disrupt") or "commweapon_heavymachinegun"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+	{
+		name = "commweapon_emg",
+		humanName = "Medium EMG Rifle",
+		description = "Medium EMG Rifle\n Fast firing medium damage assault rifle. Single target only.",
+		image = moduleImagePath .. "commweapon_emg.png",
+		limit = 2,
+		cost = 5 * COST_MULT,
+		requireChassis = {"recon"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_emg_disrupt") or "commweapon_emg"
 			if not sharedData.weapon1 then
 				sharedData.weapon1 = weaponName
 			else
