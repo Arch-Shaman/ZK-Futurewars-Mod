@@ -8,7 +8,7 @@ return { singularity = {
   buildingGroundDecalSizeX      = 3,
   buildingGroundDecalSizeY      = 3,
   buildingGroundDecalType       = [[seismic_aoplane.dds]],
-  buildPic                      = [[seismic.png]],
+  buildPic                      = [[singularity.png]],
   category                      = [[SINK UNARMED]],
   collisionVolumeOffsets        = [[0 15 0]],
   collisionVolumeScales         = [[20 50 20]],
@@ -27,7 +27,7 @@ return { singularity = {
   maxDamage                     = 1000,
   maxSlope                      = 18,
   minCloakDistance              = 150,
-  objectName                    = [[wep_seismic.s3o]],
+  objectName                    = [[missilesingu.dae]],
   script                        = [[cruisemissile.lua]],
   selfDestructAs                = [[SEISMIC_WEAPON]],
 
