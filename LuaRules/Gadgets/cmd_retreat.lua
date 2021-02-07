@@ -127,7 +127,7 @@ for i = 1, #UnitDefs do
 		local wep = weapons[w].weaponDef
 		if WeaponDefs[wep].shieldPower and WeaponDefs[wep].shieldPower > 0 and shields[i] == nil then
 			shields[i] = WeaponDefs[wep].shieldPower
-			Spring.Echo("Added shield retreat to " .. i .. " ( has " .. tostring(WeaponDefs[wep].shieldPower) .. ")")
+			--Spring.Echo("Added shield retreat to " .. i .. " ( has " .. tostring(WeaponDefs[wep].shieldPower) .. ")")
 		end
 	end
 end
@@ -380,6 +380,9 @@ end
 
 -- mark this unit as wanting to retreat (or not wanting to)
 local function SetWantRetreat(unitID, want)
+	if UnitDefs[spGetUnitDefID(unitID)].speed == 0 then
+		return
+	end
 	if wantRetreat[unitID] ~= want then
 		Spring.SetUnitRulesParam(unitID, "retreat", want and 1 or 0, alliedTrueTable)
 		if not want then
@@ -396,7 +399,8 @@ end
 local function CheckSetWantRetreat(unitID)
 	local health, maxHealth, _, capture = spGetUnitHealth(unitID)
 	local shieldmax = shields[spGetUnitDefID(unitID)]
-	local en, currentcharge = spGetUnitShieldState(unitID)
+	local _, currentcharge = spGetUnitShieldState(unitID)
+	--Spring.Echo("Current Charge: " .. tostring(currentcharge))
 	if not health then
 		ResetRetreatData(unitID)
 		retreatables[unitID] = nil
@@ -406,20 +410,20 @@ local function CheckSetWantRetreat(unitID)
 	if not retreatState[unitID] or (retreatState[unitID].hp == 0 and retreatState[unitID].shield == 0) then
 		return
 	end
-	
 	local healthRatio = health / maxHealth
-	local threshold = thresholdMap[retreatState[unitID].hp]
+	local threshold = thresholdMap[retreatState[unitID].hp] or 0
 	local shieldthreshold
+	local shieldratio = 0.1
 	if currentcharge then
-		shieldthreshold = shieldmap[retreatState[unitID].shield]
-	else
-		shieldthreshold = 0
+		shieldthreshold = shieldmap[retreatState[unitID].shield] or 0
+		shieldratio = currentcharge/shieldmax
+		--Spring.Echo("Shield is " .. shieldratio * 100 .. "%. Threshold is " .. shieldthreshold .. ". Enabled: " .. tostring(enabled))
 	end
 	local _,_,inBuild = spGetUnitIsStunned(unitID)
-	local wantshieldretreat = shieldmax ~= nil and (not enabled or currentcharge < shieldthreshold)
+	local wantshieldretreat = shieldmax ~= nil and (shieldratio < shieldthreshold)
 	if (healthRatio < threshold or capture >= 1 - threshold or wantshieldretreat) and (not inBuild) then
 		SetWantRetreat(unitID, true)
-	elseif healthRatio >= 1 and capture == 0 then
+	elseif healthRatio >= 1 and capture == 0 and not wantshieldretreat then
 		SetWantRetreat(unitID, nil)
 	end
 end
@@ -515,6 +519,7 @@ function gadget:UnitCreated(unitID, unitDefID, teamID, builderID, _, _)
 		end
 		Spring.Echo("Has shields: " .. tostring(shields[unitDefID] ~= nil))
 		if shields[unitDefID] then
+			commandShield.params[1] = DefaultState
 			spInsertUnitCmdDesc(unitID, CommandOrder, commandShield)
 		end
 	end
