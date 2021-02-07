@@ -517,7 +517,7 @@ function gadget:UnitCreated(unitID, unitDefID, teamID, builderID, _, _)
 		else
 			isPlane[unitID] = nil
 		end
-		Spring.Echo("Has shields: " .. tostring(shields[unitDefID] ~= nil))
+		--Spring.Echo("Has shields: " .. tostring(shields[unitDefID] ~= nil))
 		if shields[unitDefID] then
 			commandShield.params[1] = DefaultState
 			spInsertUnitCmdDesc(unitID, CommandOrder, commandShield)
