@@ -1,7 +1,7 @@
 return { 
 	shieldfelon = {
 		unitname            = [[shieldfelon]],
-		name                = [[Felon]],
+		name                = [[Guardian]],
 		description         = [[Shielded Riot/Skirmisher Bot]],
 		acceleration        = 0.75,
 		activateWhenBuilt   = true,
