@@ -284,8 +284,9 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 		end
 	end
 	Spring.SetUnitMaxRange(unitID, maxRange)
-	
-	Spring.SetUnitRulesParam(unitID, "sightRangeOverride", math.max(500, math.min(600, maxRange*1.1)), INLOS)
+	local sightbonus = Spring.GetUnitRulesParam(unitID, "sightBonus") or 1
+	Spring.SetUnitRulesParam(unitID, "sightRangeOverride", math.max(500, math.min(600, maxRange*1.1)) * sightbonus, INLOS)
+	Spring.SetUnitRulesParam(unitID, "sonarRangeOverride", math.max(500, math.min(600, maxRange*1.1)) * sightbonus, INLOS)
 	
 	if otherRange then
 		Spring.SetUnitRulesParam(unitID, "secondary_range", otherRange, INLOS)

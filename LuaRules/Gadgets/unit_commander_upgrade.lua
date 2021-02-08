@@ -36,7 +36,7 @@ include("LuaRules/Configs/customcmds.h.lua")
 -- Various module configs
 
 local defaultweapon = {
-	[1] = "commweapon_heavymachinegun", -- strike
+	[1] = "commweapon_heavyrifle", -- strike
 	[2] = "commweapon_heatray", -- recon
 	[3] = "commweapon_beamlaser", -- support
 	[4] = "commweapon_canistercannon", -- bombard
@@ -141,7 +141,14 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 		local speedMult = (data.speedMod + ud.speed)/ud.speed
 		Spring.SetUnitRulesParam(unitID, "upgradesSpeedMult", speedMult, INLOS)
 	end
-	
+	if data.cloakregen then
+		GG.AddCloakRegenOverride(unitID, data.cloakregen)
+		Spring.SetUnitRulesParam(unitID, "commcloakregen", data.cloakregen)
+	end
+	if data.recloaktime then
+		GG.CloakAddOverride(unitID, data.recloaktime)
+		Spring.SetUnitRulesParam(unitID, "commrecloaktime", data.recloaktime)
+	end
 	if data.radarRange then
 		Spring.SetUnitRulesParam(unitID, "radarRangeOverride", data.radarRange, INLOS)
 	end
@@ -155,12 +162,17 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 			Spring.RemoveUnitCmdDesc(unitID, onOffCmd)
 		end
 	end
-	
+	if data.sightrangebonus then
+		Spring.SetUnitRulesParam(unitID, "sightBonus", data.sightrangebonus, INLOS)
+	end
 	if data.decloakDistance then
 		Spring.SetUnitCloak(unitID, false, data.decloakDistance)
 		Spring.SetUnitRulesParam(unitID, "comm_decloak_distance", data.decloakDistance, INLOS)
 	end
-	
+	if data.personaljammer then
+		Spring.SetUnitStealth(unitID, true)
+		Spring.SetUnitRulesParam(unitID, "comm_jammed", 1, INLOS)
+	end
 	if data.personalCloak then
 		Spring.SetUnitRulesParam(unitID, "comm_personal_cloak", 1, INLOS)
 	end

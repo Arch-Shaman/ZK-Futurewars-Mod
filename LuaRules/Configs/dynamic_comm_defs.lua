@@ -166,7 +166,7 @@ local moduleDefs = {
 		description = "Heatray: Rapidly melts anything at short range; steadily loses all of its damage over distance",
 		image = moduleImagePath .. "commweapon_heatray.png",
 		limit = 2,
-		cost = 5 * COST_MULT,
+		cost = 0 * COST_MULT,
 		requireChassis = {"assault", "knight", "recon"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
@@ -188,7 +188,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_heavymachinegun.png",
 		limit = 2,
 		cost = 5 * COST_MULT,
-		requireChassis = {"recon", "assault", "strike", "knight"},
+		requireChassis = {"assault", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -196,6 +196,72 @@ local moduleDefs = {
 				return
 			end
 			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_heavymachinegun_disrupt") or "commweapon_heavymachinegun"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+	{
+		name = "commweapon_heavyrifle",
+		humanName = "Heavy Rifle",
+		description = "Heavy Rifle:\n Medium range and medium damage assault rifle for hunting down light units.",
+		image = moduleImagePath .. "commweapon_emg.png",
+		limit = 2,
+		cost = 5 * COST_MULT,
+		requireChassis = {"strike"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_heavyrifle_disrupt") or "commweapon_heavyrifle"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+	{
+		name = "commweapon_emg",
+		humanName = "Medium EMG Rifle",
+		description = "Medium EMG Rifle\n Fast firing medium damage assault rifle. Single target only.",
+		image = moduleImagePath .. "commweapon_emg.png",
+		limit = 2,
+		cost = 5 * COST_MULT,
+		requireChassis = {"recon"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_emg_disrupt") or "commweapon_emg"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+	{
+		name = "commweapon_tankbuster",
+		humanName = "Tank Buster Cannon",
+		description = "Tank Buster Cannon\n Extremely hard hitting, low fire rate antiheavy cannon.",
+		image = moduleImagePath .. "commweapon_assaultcannon.png",
+		limit = 2,
+		cost = 50 * COST_MULT,
+		requireChassis = {"strike"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_buster_disrupt") or "commweapon_tankbuster"
 			if not sharedData.weapon1 then
 				sharedData.weapon1 = weaponName
 			else
@@ -359,7 +425,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_missilelauncher.png",
 		limit = 2,
 		cost = 5 * COST_MULT,
-		requireChassis = {"strike", "knight"},
+		requireChassis = {"knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -650,7 +716,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_disintegrator.png",
 		limit = 1,
 		cost = 100 * COST_MULT,
-		requireChassis = {"assault", "strike", "knight"},
+		requireChassis = {"strike", "knight"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -665,13 +731,32 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "commweapon_sunburst",
+		humanName = "Sunburst Cannon",
+		description = "Sunburst Cannon\nManually fired weapon that ruin's a single target's day with a high damage shot. Quick reload.\nStrike only.",
+		image = moduleImagePath .. "commweapon_sunburst.png",
+		limit = 1,
+		cost = 100 * COST_MULT,
+		requireChassis = {"strike", "knight"},
+		requireLevel = 3,
+		slotType = "adv_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			if not sharedData.weapon2 then
+				sharedData.weapon2 = "commweapon_sunburst"
+			end
+		end
+	},
+	{
 		name = "commweapon_disruptorbomb",
 		humanName = "Disruptor Bomb",
 		description = "Disruptor Bomb - Manually fired bomb that slows enemies in a large area.",
 		image = moduleImagePath .. "commweapon_disruptorbomb.png",
 		limit = 1,
 		cost = 100 * COST_MULT,
-		requireChassis = {"recon", "support", "strike", "knight"},
+		requireChassis = {"support", "knight"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -828,12 +913,12 @@ local moduleDefs = {
 	{
 		name = "conversion_disruptor",
 		humanName = "Disruptor Ammo",
-		description = "Disruptor Ammo - Heavy Machine Gun, Shotgun and Particle Beams deal slow damage. Reduced direct damage.",
+		description = "Disruptor Ammo - Heavy Machine Gun, Tank Buster, EMG, Shotgun and Particle Beams deal slow damage. Reduced direct damage.",
 		image = moduleImagePath .. "weaponmod_disruptor_ammo.png",
 		limit = 1,
 		cost = 300 * COST_MULT,
 		requireChassis = {"strike", "recon", "support", "knight"},
-		requireOneOf = {"commweapon_heavymachinegun", "commweapon_shotgun", "commweapon_hparticlebeam", "commweapon_lparticlebeam"},
+		requireOneOf = {"commweapon_heavymachinegun", "commweapon_heavyrifle", "commweapon_tankbuster", "commweapon_emg", "commweapon_shotgun", "commweapon_hparticlebeam", "commweapon_lparticlebeam"},
 		requireLevel = 2,
 		slotType = "module",
 	},
@@ -858,10 +943,26 @@ local moduleDefs = {
 		cost = 200 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
-		requireChassis = {"support", "recon", "assault", "knight"},
+		requireChassis = {"support", "knight"},
 		applicationFunction = function (modules, sharedData)
 			if not sharedData.cloakFieldRange then
 				sharedData.radarJammingRange = 500
+			end
+		end
+	},
+	{
+		name = "module_personaljammer",
+		humanName = "Personal Radar Jammer",
+		description = "Personal Radar Jammer:\nHides you from radar.",
+		image = moduleImagePath .. "module_jammer.png",
+		limit = 1,
+		cost = 200 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+		requireChassis = {"recon", "strike"},
+		applicationFunction = function (modules, sharedData)
+			if not sharedData.cloakFieldRange then
+				sharedData.personaljammer = true
 			end
 		end
 	},
@@ -879,9 +980,37 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "module_radaramplifier",
+		humanName = "Radar Amplifier",
+		description = "Radar Amplifier:\nIncreases radar by 10%.\nRecon Only (Limit: 8)",
+		image = moduleImagePath .. "module_fieldradar.png",
+		limit = 8,
+		requireChassis = {"recon"},
+		cost = 75 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.radarRange = (sharedData.radarRange or 1800) + 180
+		end
+	},
+	{
+		name = "module_visionenhancer",
+		humanName = "Enhanced Sensors",
+		description = "Enhanced Sensors:\nIncreases sight radius by 15%.\nRecon Only (Limit: 8)",
+		image = moduleImagePath .. "module_radarnet2.png",
+		limit = 8,
+		requireChassis = {"recon"},
+		cost = 125 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.sightrangebonus = (sharedData.sightrangebonus or 1) + .15
+		end
+	},
+	{
 		name = "module_personal_cloak",
 		humanName = "Personal Cloak",
-		description = "Personal Cloak - A personal cloaking device. Reduces speed by 2.",
+		description = "Personal Cloak:\n A personal cloaking device.\nReduces speed by 2.\nRecon and Bombard only.",
 		image = moduleImagePath .. "module_personal_cloak.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
@@ -892,13 +1021,14 @@ local moduleDefs = {
 		applicationFunction = function (modules, sharedData)
 			sharedData.decloakDistance = math.max(sharedData.decloakDistance or 0, 150)
 			sharedData.personalCloak = true
+			sharedData.recloaktime = 300
 			sharedData.speedMod = (sharedData.speedMod or 0) - 2
 		end
 	},
 	{
 		name = "module_cloak_field",
 		humanName = "Cloaking Field",
-		description = "Cloaking Field - Cloaks all nearby units.",
+		description = "Cloaking Field\nCloaks all nearby units.\nReduces speed by 3.\nSupport only.",
 		image = moduleImagePath .. "module_cloak_field.png",
 		limit = 1,
 		cost = 600 * COST_MULT,
@@ -912,12 +1042,14 @@ local moduleDefs = {
 			sharedData.cloakFieldRange = 350
 			sharedData.cloakFieldUpkeep = 15
 			sharedData.radarJammingRange = 350
+			sharedData.recloaktime = 300
+			sharedData.speedMod = (sharedData.speedMod or 0) - 3
 		end
 	},
 	{
 		name = "module_resurrect",
 		humanName = "Lazarus Device",
-		description = "Lazarus Device - Upgrade nanolathe to allow resurrection.",
+		description = "Lazarus Device:\nUpgrade nanolathe to allow resurrection.\nSupport only.",
 		image = moduleImagePath .. "module_resurrect.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
@@ -931,7 +1063,7 @@ local moduleDefs = {
 	{
 		name = "module_jumpreload",
 		humanName = "Efficient Jumpjets",
-		description = "Efficient Jumpjets\nReduces jumpjet cooldown by 20%.",
+		description = "Efficient Jumpjets:\nReduces jumpjet cooldown by 20%.\nRecon only.\nMutually Exclusive with: Improved Jumpjets & High Performance Jumpjets.",
 		image = moduleImagePath .. "module_jumpjetrecharge.png",
 		limit = 4,
 		cost = 200 * COST_MULT,
@@ -947,7 +1079,7 @@ local moduleDefs = {
 	{
 		name = "module_jumpretrofit",
 		humanName = "Improved Jumpjets",
-		description = "Improved Jumpjets\nIncreases jumpjet range by 20%.\nDecreases jumpjet reload by 7.5%",
+		description = "Improved Jumpjets:\nIncreases jumpjet range by 20%.\nDecreases jumpjet reload by 7.5%\nRecon only.\nMutually Exclusive with: High Performance Jumpjets & Efficient Jumpjets.",
 		image = moduleImagePath .. "module_jumpjetretrofit.png",
 		limit = 4,
 		cost = 220 * COST_MULT,
@@ -965,7 +1097,7 @@ local moduleDefs = {
 	{
 		name = "module_jumprange",
 		humanName = "High Performance Jumpjets",
-		description = "High Performance Jumpjets\nIncreases jumpjet range by 50%.",
+		description = "High Performance Jumpjets:\nIncreases jumpjet range by 50%.\nRecon only.\nMutually Exclusive with: Improved Jumpjets & Efficient Jumpjets.",
 		image = moduleImagePath .. "module_jumpjetpower.png",
 		limit = 4,
 		cost = 200 * COST_MULT,
@@ -997,10 +1129,11 @@ local moduleDefs = {
 	{
 		name = "module_companion_drone",
 		humanName = "Companion Drone",
-		description = "Companion Drone - Commander spawns protective drones. Limit: 8",
+		description = "Companion Drone:\nAdds a protective drone.\nSupport and Bombard only (Limit: 8)",
 		image = moduleImagePath .. "module_companion_drone.png",
 		limit = 8,
-		cost = 300 * COST_MULT,
+		cost = 100 * COST_MULT,
+		requireChassis = {"assault", "support", "knight"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -1010,10 +1143,10 @@ local moduleDefs = {
 	{
 		name = "module_battle_drone",
 		humanName = "Battle Drone",
-		description = "Battle Drone - Commander spawns heavy drones. Limit: 8, Requires Companion Drone",
+		description = "Battle Drone:\nCommander spawns heavy drones.\nSupport and Bombard only (Limit: 8, Requires 1 Companion Drone)",
 		image = moduleImagePath .. "module_battle_drone.png",
 		limit = 8,
-		cost = 500 * COST_MULT,
+		cost = 250 * COST_MULT,
 		requireChassis = {"assault", "support", "knight"},
 		requireOneOf = {"module_companion_drone"},
 		requireLevel = 3,
@@ -1025,7 +1158,7 @@ local moduleDefs = {
 	{
 		name = "module_autorepair",
 		humanName = "Autorepair",
-		description = "Autorepair - Commander self-repairs at +10 hp/s. Reduces Health by " .. 100*HP_MULT .. ". Limit: 8",
+		description = "Autorepair:\nCommander self-repairs at +10 hp/s. Reduces Health by " .. 100*HP_MULT .. ".(Limit: 8)",
 		image = moduleImagePath .. "module_autorepair.png",
 		limit = 8,
 		cost = 150 * COST_MULT,
@@ -1039,36 +1172,37 @@ local moduleDefs = {
 	{
 		name = "module_ablative_armor",
 		humanName = "Ablative Armour Plates",
-		description = "Ablative Armour Plates - Provides " .. 1000*HP_MULT .. " health. Limit: 8",
+		description = "Ablative Armour Plates - Provides " .. 1250*HP_MULT .. " health. (Limit: 8)",
 		image = moduleImagePath .. "module_ablative_armor.png",
 		limit = 8,
-		cost = 150 * COST_MULT,
+		cost = 200 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			sharedData.healthBonus = (sharedData.healthBonus or 0) + 1000*HP_MULT
+			sharedData.healthBonus = (sharedData.healthBonus or 0) + 1250*HP_MULT
 		end
 	},
 	{
 		name = "module_heavy_armor",
 		humanName = "High Density Plating",
-		description = "High Density Plating - Provides " .. 2750*HP_MULT .. " health but reduces speed by 2. " ..
-		"Limit: 8, Requires Ablative Armour Plates",
+		description = "High Density Plating:\nProvides " .. 3000*HP_MULT .. " health but reduces speed by 2. " ..
+		"\nAmbusher and Guardian Only. (Limit: 8, Requires Ablative Armour Plates)",
 		image = moduleImagePath .. "module_heavy_armor.png",
 		limit = 8,
-		cost = 400 * COST_MULT,
+		cost = 300 * COST_MULT,
 		requireOneOf = {"module_ablative_armor"},
+		requireChassis = {"strike", "assault"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			sharedData.healthBonus = (sharedData.healthBonus or 0) + 2750*HP_MULT
+			sharedData.healthBonus = (sharedData.healthBonus or 0) + 3000*HP_MULT
 			sharedData.speedMod = (sharedData.speedMod or 0) - 2
 		end
 	},
 	{
 		name = "module_dmg_booster",
 		humanName = "Damage Booster",
-		description = "Damage Booster - Increases damage by 10% but reduces speed by 1.  Limit: 8",
+		description = "Damage Booster:\nIncreases damage by 10% but reduces speed by 1. (Limit: 8)",
 		image = moduleImagePath .. "module_dmg_booster.png",
 		limit = 8,
 		cost = 150 * COST_MULT,
@@ -1083,34 +1217,79 @@ local moduleDefs = {
 	{
 		name = "module_high_power_servos",
 		humanName = "High Power Servos",
-		description = "High Power Servos - Increases speed by 3. Limit: 8",
+		description = "High Power Servos\nIncreases speed by 2. (Limit: 8)",
 		image = moduleImagePath .. "module_high_power_servos.png",
 		limit = 8,
 		cost = 150 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			sharedData.speedMod = (sharedData.speedMod or 0) + 3
+			sharedData.speedMod = (sharedData.speedMod or 0) + 2
+		end
+	},
+	{
+		name = "module_high_power_servos_improved",
+		humanName = "Strike Servos",
+		description = "Strike Servos\nIncreases speed by 4, decreases health by " .. 300*HP_MULT .. "\nRecon and Ambusher only. (Limit: 8)",
+		image = moduleImagePath .. "module_strike_servos.png",
+		limit = 8,
+		cost = 100 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+		requireChassis = {"strike", "recon"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.speedMod = (sharedData.speedMod or 0) + 4
+			sharedData.healthBonus = (sharedData.healthBonus or 0) - 300*HP_MULT
+		end
+	},
+	{
+		name = "module_cloakregen",
+		humanName = "Nanobot Sleeve",
+		description = "Nanobot Sleeve:\nIncreases regen while cloaked by 20.\nStrike only (Limit: 8)",
+		image = moduleImagePath .. "module_cloakregen.png",
+		limit = 8,
+		cost = 50 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+		requireChassis = {"strike"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.cloakregen = (sharedData.cloakregen or 0) + 20
 		end
 	},
 	{
 		name = "module_adv_targeting",
 		humanName = "Adv. Targeting System",
-		description = "Advanced Targeting System - Increases range by 7.5% but reduces speed by 1. Limit: 8",
+		description = "Advanced Targeting System:\nIncreases range by 7.5% but reduces speed by 1. (Limit: 8)",
 		image = moduleImagePath .. "module_adv_targeting.png",
 		limit = 8,
 		cost = 150 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
+		requireChassis = {"strike", "recon", "support", "riot"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.075
 			sharedData.speedMod = (sharedData.speedMod or 0) - 1
 		end
 	},
 	{
+		name = "module_adv_targeting",
+		humanName = "Adv. Targeting System",
+		description = "Improved Targeting System:\nIncreases range by 10% but reduces speed by 2.\nBombard only.(Limit: 8)",
+		image = moduleImagePath .. "module_adv_targeting.png",
+		limit = 8,
+		cost = 150 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+		requireChassis = {"assault"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.1
+			sharedData.speedMod = (sharedData.speedMod or 0) - 2
+		end
+	},
+	{
 		name = "module_adv_nano",
 		humanName = "CarRepairer's Nanolathe",
-		description = "CarRepairer's Nanolathe - Increases build power by 4. Limit: 8",
+		description = "CarRepairer's Nanolathe:\nIncreases build power by 4. (Limit: 8)",
 		image = moduleImagePath .. "module_adv_nano.png",
 		limit = 8,
 		cost = 150 * COST_MULT,
@@ -1217,7 +1396,7 @@ end
 local chassisDefs = {
 	{
 		name = "strike",
-		humanName = "Strike",
+		humanName = "Ambusher",
 		baseUnitDef = UnitDefNames and UnitDefNames["dynstrike0"].id,
 		extraLevelCostFunction = extraLevelCostFunction,
 		maxNormalLevel = 5,
@@ -1228,8 +1407,11 @@ local chassisDefs = {
 				morphBaseCost = 0,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.decloakDistance = 100
+					sharedData.decloakDistance = 200
+					sharedData.cloakregen = (sharedData.cloakregen or 0) + 10
 					sharedData.personalCloak = true -- !!FREE!! cloak
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
+					sharedData.recloaktime = (sharedData.recloaktime or 300)
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynstrike0"].id
@@ -1241,6 +1423,10 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[1],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.decloakDistance = 180
+					sharedData.cloakregen = (sharedData.cloakregen or 0) + 20
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
+					sharedData.recloaktime = (sharedData.recloaktime or 300) - 30
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynstrike1_" .. GetStrikeCloneModulesString(modulesByDefID)].id
@@ -1260,7 +1446,11 @@ local chassisDefs = {
 				morphBuildPower = 15,
 				morphBaseCost = morphCosts[2] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
-					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.decloakDistance = 160
+					sharedData.cloakregen = (sharedData.cloakregen or 0) + 30
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
+					sharedData.recloaktime = (sharedData.recloaktime or 300) - 60
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynstrike2_" .. GetStrikeCloneModulesString(modulesByDefID)].id
@@ -1280,7 +1470,11 @@ local chassisDefs = {
 				morphBuildPower = 20,
 				morphBaseCost = morphCosts[3] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
-					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 16
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.decloakDistance = 140
+					sharedData.cloakregen = (sharedData.cloakregen or 0) + 40
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
+					sharedData.recloaktime = (sharedData.recloaktime or 300) - 90
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynstrike3_" .. GetStrikeCloneModulesString(modulesByDefID)].id
@@ -1304,7 +1498,11 @@ local chassisDefs = {
 				morphBuildPower = 25,
 				morphBaseCost = morphCosts[4] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
-					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 25
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.decloakDistance = 120
+					sharedData.cloakregen = (sharedData.cloakregen or 0) + 50
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
+					sharedData.recloaktime = (sharedData.recloaktime or 300) - 120
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynstrike4_" .. GetStrikeCloneModulesString(modulesByDefID)].id
@@ -1328,7 +1526,11 @@ local chassisDefs = {
 				morphBuildPower = 30,
 				morphBaseCost = morphCosts[5] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
-					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 35
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.decloakDistance = 100
+					sharedData.cloakregen = (sharedData.cloakregen or 0) + 60
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
+					sharedData.recloaktime = (sharedData.recloaktime or 300) - 150
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynstrike5_" .. GetStrikeCloneModulesString(modulesByDefID)].id
@@ -1362,6 +1564,7 @@ local chassisDefs = {
 				morphBaseCost = 0,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.speedMod = (sharedData.speedMod or 0) + 2
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynrecon0"].id
@@ -1373,6 +1576,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[1],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.speedMod = (sharedData.speedMod or 0) + 4
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynrecon1_" .. GetReconCloneModulesString(modulesByDefID)].id
@@ -1393,6 +1597,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[2] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.speedMod = (sharedData.speedMod or 0) + 6
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynrecon2_" .. GetReconCloneModulesString(modulesByDefID)].id
@@ -1413,6 +1618,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[3] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynrecon3_" .. GetReconCloneModulesString(modulesByDefID)].id
@@ -1437,6 +1643,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[4] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.speedMod = (sharedData.speedMod or 0) + 10
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynrecon4_" .. GetReconCloneModulesString(modulesByDefID)].id
@@ -1461,6 +1668,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[5] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.speedMod = (sharedData.speedMod or 0) + 12
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynrecon5_" .. GetReconCloneModulesString(modulesByDefID)].id
@@ -1484,7 +1692,7 @@ local chassisDefs = {
 	},
 	{
 		name = "support",
-		humanName = "Engineer",
+		humanName = "Support",
 		baseUnitDef = UnitDefNames and UnitDefNames["dynsupport0"].id,
 		extraLevelCostFunction = extraLevelCostFunction,
 		maxNormalLevel = 5,
@@ -1621,7 +1829,7 @@ local chassisDefs = {
 	},
 	{
 		name = "assault",
-		humanName = "Guardian",
+		humanName = "Bombard",
 		baseUnitDef = UnitDefNames and UnitDefNames["dynassault0"].id,
 		extraLevelCostFunction = extraLevelCostFunction,
 		maxNormalLevel = 5,
@@ -1632,7 +1840,7 @@ local chassisDefs = {
 				morphBaseCost = 0,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.drones = (sharedData.drones or 0) + 1
+					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.05
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynassault0"].id
@@ -1644,7 +1852,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[1],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.drones = (sharedData.drones or 0) + 1
+					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.1
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynassault1_" .. GetAssaultCloneModulesString(modulesByDefID)].id
@@ -1665,7 +1873,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[2] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.drones = (sharedData.drones or 0) + 2
+					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.15
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynassault2_" .. GetAssaultCloneModulesString(modulesByDefID)].id
@@ -1686,8 +1894,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[3] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.drones = (sharedData.drones or 0) + 2
-					sharedData.droneheavyslows = (sharedData.droneheavyslows or 0) + 1
+					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.2
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynassault3_" .. GetAssaultCloneModulesString(modulesByDefID)].id
@@ -1712,8 +1919,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[4] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.drones = (sharedData.drones or 0) + 3
-					sharedData.droneheavyslows = (sharedData.droneheavyslows or 0) + 1
+					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.25
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynassault4_" .. GetAssaultCloneModulesString(modulesByDefID)].id
@@ -1738,8 +1944,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[5] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.drones = (sharedData.drones or 0) + 3
-					sharedData.droneheavyslows = (sharedData.droneheavyslows or 0) + 2
+					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.3
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynassault5_" .. GetAssaultCloneModulesString(modulesByDefID)].id

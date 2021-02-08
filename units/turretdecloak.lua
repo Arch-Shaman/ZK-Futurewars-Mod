@@ -2,11 +2,11 @@ return {
 	turretdecloak = {
 		unitname                      = [[turretdecloak]],
 		name                          = [[Clarity]],
-		description                   = [[Cloak Detection System (Needs Grid: 30E)]],
+		description                   = [[Cloak Detection System]],
 		acceleration                  = 0,
 		activateWhenBuilt             = true,
 		brakeRate                     = 0,
-		buildCostMetal                = 350,
+		buildCostMetal                = 240,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 4,
@@ -26,7 +26,7 @@ return {
 			priority_misc  = 2, -- High
 		},
   
-		energyUse                     = 16,
+		energyUse                     = 6,
 		explodeAs                     = [[SMALL_BUILDINGEX]],
 		floater                       = true,
 		footprintX                    = 2,
