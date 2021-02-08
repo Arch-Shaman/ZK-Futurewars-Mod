@@ -1145,9 +1145,9 @@
 		"helptext" : "The Sunlance's heavy disruptor beam cripples even the heaviest assault unit and will stop any armored assault dead in its tracks."
 	},
 	"shieldassault" : {
-		"name" : "Ward",
+		"name" : "Vindicator",
 		"description" : "Shielded Skirmisher/Assault Bot",
-		"helptext" : "The Ward replaced the aging Thug design after its miserable failure against the Coalition. Its deficient plasma cannons were replaced with a heavier accelerator resulting in improved range and damage. The Ward has high shield regeneration, but that comes at a premium."
+		"helptext" : "The steward replaced the aging Thug design after its miserable failure against the Coalition. Its deficient plasma cannons were replaced with a heavier accelerator resulting in improved range and damage. The Ward has high shield regeneration, but that comes at a premium."
 	},
 	"amphriot" : {
 		"name" : "Scallop",
