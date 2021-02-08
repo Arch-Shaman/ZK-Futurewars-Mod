@@ -1,7 +1,7 @@
 return { 
 	shieldassault = {
 		unitname            = [[shieldassault]],
-		name                = [[Ward]],
+		name                = [[Vindicator]],
 		description         = [[Shielded Skirmisher/Assault Bot]],
 		acceleration        = 0.75,
 		activateWhenBuilt   = true,
