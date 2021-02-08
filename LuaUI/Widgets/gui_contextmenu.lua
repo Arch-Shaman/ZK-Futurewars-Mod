@@ -1254,7 +1254,7 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = numformat(100*tonumber(cp.combat_slowdown)) .. "%"
 	end
 
-	if ud.stealth or (unitID and Spring.GetUnitRulesParam(unitID, comm_jammed)) then
+	if ud.stealth or (unitID and Spring.GetUnitRulesParam(unitID, "comm_jammed")) then
 		cells[#cells+1] = 'Invisible to radar'
 		cells[#cells+1] = ''
 	end
