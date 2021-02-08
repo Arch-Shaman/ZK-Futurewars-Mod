@@ -4,7 +4,7 @@ return { spiderskirm = {
   description            = [[Skirmisher Spider (Indirect Fire)]],
   acceleration           = 0.78,
   brakeRate              = 4.68,
-  buildCostMetal         = 280,
+  buildCostMetal         = 340,
   buildPic               = [[spiderskirm.png]],
   canGuard               = true,
   canMove                = true,
@@ -68,7 +68,7 @@ return { spiderskirm = {
       craterMult              = 0,
 
       customParams        = {
-		numprojectiles1 = 14, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+		numprojectiles1 = 13, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 		projectile1 = "spiderskirm_particlebeam",
 		--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
 		clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -88,7 +88,7 @@ return { spiderskirm = {
       },
 
       damage                  = {
-        default = 134,
+        default = 174,
       },
 
       edgeEffectiveness       = 0.5,
@@ -100,14 +100,14 @@ return { spiderskirm = {
       model                   = [[recluse_missile.s3o]],
       noSelfDamage            = true,
       predictBoost            = 0.75,
-      range                   = 570,
+      range                   = 590,
       reloadtime              = 6,
       smokeTrail              = true,
       soundHit                = [[explosion/ex_small13]],
       soundStart              = [[weapon/missile/missile_fire4]],
       soundTrigger            = true,
       startVelocity           = 150,
-      trajectoryHeight        = 1.5,
+      trajectoryHeight        = 1.7,
       turnRate                = 4000,
       turret                  = true,
       weaponAcceleration      = 150,
@@ -132,7 +132,7 @@ return { spiderskirm = {
       },
 
       damage                  = {
-        default = 69.42,
+        default = 95.42,
       },
 
 
