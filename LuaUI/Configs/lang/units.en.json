@@ -541,7 +541,7 @@
 	},
 	"vehsupport" : {
 		"name" : "Fractal",
-		"description" : "Deployable HEAT Missile Rover (must stop to fire)",
+		"description" : "Fire Support HEAT Rover (must stop to fire)",
 		"helptext" : "The Fractal's main gun practically shoots another gun - A powerful partical shotgun whose recoil tears itself and the missile it is mounted on into pieces while dealing large amounts of damage at whatever it's aimed at. It is weak against area shields which can intercept the missile before it can fire it's shotgun."
 	},
 	"grebe" : {
@@ -802,7 +802,7 @@
 	"factoryspider" : {
 		"name" : "Spider Factory",
 		"description" : "Produces Spiders",
-		"helptext" : "Optimized for rough terrain, the Spider Factory relies primarily on range and maneuverability rather than brute force. Key units: Flea, Twilight, Hermit, Crab"
+		"helptext" : "Optimized for rough terrain, the Spider Factory relies primarily on range and maneuverability rather than brute force. Key units: Flea, Recluse, Hermit, Crab"
 	},
 	"chicken_dragon" : {
 		"name" : "White Dragon",
@@ -855,9 +855,9 @@
 		"helptext" : "The Gatekeeper's improved disruptor missile slows air targets down for other AA units to finish the job."
 	},
 	"spiderskirm" : {
-		"name" : "Twilight",
-		"description" : "Skirmisher Spider (HEAT)",
-		"helptext" : "An all terrain HEAT battery - It's missiles are armed with a special warhead which resembles more of a one-use shotgun than anything else. It can shred apart armies while staying behind cover as the trajectory of it's missiles allows it to fire over walls."
+		"name" : "Recluse",
+		"description" : "Skirmisher Spider (Indirect Fire)",
+		"helptext" : "An all terrain missile launching unit. Climb walls with this spider walker and take your enemy by surprise. The unguided rockets cannot hit a rapidly jinking target, but they have a fairly long range."
 	},
 	"fakeunit_los" : {
 		"name" : "LOS Provider",
