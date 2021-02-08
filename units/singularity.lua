@@ -29,7 +29,7 @@ return {
 		maxSlope                      = 18,
 		minCloakDistance              = 150,
 		objectName                    = [[missilesingu.dae]],
-		script                        = [[cruisemissile.lua]],
+		script                        = [[singularity.lua]],
 		selfDestructAs                = [[SEISMIC_WEAPON]],
 
 		sfxtypes                      = {
