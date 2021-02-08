@@ -1025,9 +1025,9 @@
 		"helptext" : "The Vanquisher cruiser boasts excellent armor and lethal close-in firepower. Its gauss cannons slice through surface targets like butter, while its missiles support it against enemies above and below the water surface. Its short range and lack of anti-air firepower leaves it vulnerable to standoff units and aircraft."
 	},
 	"shieldfelon" : {
-		"name" : "Felon",
+		"name" : "Guardian",
 		"description" : "Shielded Riot/Skirmisher Bot",
-		"helptext" : "The Felon draws energy from its shield, discharging it in accurate bursts. Link it to other shields to increase its rate of fire."
+		"helptext" : "The Guardian draws energy from its shield, discharging it in accurate bursts. Link it to other shields to increase its rate of fire. Do be warned that it cannot hit high flying targets."
 	},
 	"seismic" : {
 		"name" : "Quake",
