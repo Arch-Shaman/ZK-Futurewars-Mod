@@ -159,7 +159,7 @@ local function DrawActiveCommandRanges()
 		dz = sin(rotY)
 	end
 	
-	for i = 1, (options.missile_silo_advanced.value and 6 or 3) do
+	for i = 1, (options.missile_silo_advanced.value and 6 or 4) do
 		local radius = drawRadius[i]
 		
 		glLineWidth(radius.width)
