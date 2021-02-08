@@ -71,6 +71,9 @@ return {
 				def                = [[CORTRUCK_MISSILE]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
+			{
+				def 			   = [[PARTICLEBEAM]],
+			},
 		},
 		weaponDefs             = {
 
@@ -129,9 +132,8 @@ return {
 				weaponType              = [[MissileLauncher]],
 				weaponVelocity          = 545,
 			},
-	
 			PARTICLEBEAM = {
-				name                    = [[HEAT Fragment]],
+				name                    = [[Bogus Fragment]],
 				beamDecay               = 0.85,
 				beamTime                = 0.1,
 				beamttl                 = 45,

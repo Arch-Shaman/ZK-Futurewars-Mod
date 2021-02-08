@@ -54,7 +54,7 @@ return {
 
 			SEISMIC_WEAPON = {
 				name                    = [[Singularity]],
-				areaOfEffect            = 300,
+				areaOfEffect            = 500,
 				avoidFriendly           = false,
 				cegTag                  = [[waketrail]],
 				collideFriendly         = false,
@@ -62,15 +62,16 @@ return {
 				craterMult              = 1,
 				customParams            = {
 					singularity = [[1]],
-					singuradius = [[300]],
+					singuradius = [[500]],
 					singulifespan = [[540]],
-					singustrength = [[35]],
-					singuheight = [[150]],
+					singustrength = [[100]],
+					detachmentradius = [[500]],
+					singuheight = [[300]],
 					restrict_in_widgets = 1,
 					stats_hide_dps = 1, -- one use
 					stats_hide_reload = 1,
 					cruisealt = 1300,
-					cruisedist = 400,
+					cruisedist = 200,
 					light_color = [[1.2 1.6 0.55]],
 					light_radius = 550,
 				},
@@ -82,6 +83,8 @@ return {
 				explosionGenerator      = [[custom:FLASHSMALLUNITEX]],
 				fireStarter             = 0,
 				flightTime              = 100,
+				impulsefactor			= 2,
+				impulseboost			= 200,
 				interceptedByShieldType = 1,
 				model                   = [[missilesingu.dae]],
 				noSelfDamage            = true,

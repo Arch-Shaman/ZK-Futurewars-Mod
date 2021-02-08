@@ -1527,18 +1527,27 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		statschildren[#statschildren+1] = Label:New{ caption = 'Energy: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = (energy > 0 and '+' or '') .. numformat(energy,2) .. " E/s", textColor = color.stats_fg, }
 	end
-	
-	if ud.losRadius > 0 then
-		local sight = (unitID and Spring.GetUnitRulesParam(unitID, "sightRangeOverride")) or ud.losRadius
+	do
+		local sonar
+		if unitID then
+			sonar = Spring.GetUnitRulesParam(unitID, "sonarRadiusOverride") or ud.sonarRadius
+		else
+			sonar = ud.sonarRadius
+		end
+		if sonar > 0 then
+			statschildren[#statschildren+1] = Label:New{ caption = 'Sonar: ', textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = numformat(sonar) .. " elmo", textColor = color.stats_fg, }
+		end
+		local sight
+		if unitID then
+			sight = Spring.GetUnitRulesParam(unitID, "sightRangeOverride") or ud.losRadius
+		else
+			sight = ud.losRadius
+		end
 		statschildren[#statschildren+1] = Label:New{ caption = 'Sight: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = numformat(sight) .. " elmo", textColor = color.stats_fg, }
 	end
-
-	if (ud.sonarRadius > 0 or Spring.GetUnitRulesParam(unitID, "sonarRadiusOverride")) then
-		local sonar = Spring.GetUnitRulesParam(unitID, "sonarRangeOverride") or ud.sonarRadius
-		statschildren[#statschildren+1] = Label:New{ caption = 'Sonar: ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = numformat(sonar) .. " elmo", textColor = color.stats_fg, }
-	end
+	
 
 	if ud.wantedHeight > 0 then
 		statschildren[#statschildren+1] = Label:New{ caption = 'Altitude: ', textColor = color.stats_fg, }

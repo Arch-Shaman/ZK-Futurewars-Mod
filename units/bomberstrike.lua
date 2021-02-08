@@ -36,7 +36,7 @@ return {
 		idleTime            = 1800,
 		maxAcc              = 0.5,
 		maxAileron          = 0.02,
-		maxDamage           = 1020,
+		maxDamage           = 1600,
 		maxElevator         = 0.01,
 		maxRudder           = 0.007,
 		maxFuel             = 1000000,
