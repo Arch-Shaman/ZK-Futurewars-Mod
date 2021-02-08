@@ -47,11 +47,9 @@ function script.QueryWeapon()
 end
 
 function script.Create()
-	Turn(base, x_axis, math.rad(-90))
-	Move(base, z_axis, 40)
-	local x,y,z = Spring.GetUnitPosition(unitID)
-	Spring.SetUnitPosition(unitID, x, y+60, z) -- hopefully make it more selectable.
-	-- I don't know why this works, okay, it just does. -- Shaman.
+	Turn(base, x_axis, math.rad(-90)) -- fix orientation
+	Move(base, z_axis, 40) -- move it to the right a bit
+	Move(base, y_axis, 40) -- Move up a bit.
 end
 
 function script.HitByWeapon(x, z, weaponDefID, damage)
