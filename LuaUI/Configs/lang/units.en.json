@@ -540,9 +540,9 @@
 		"helptext" : "The metal extractor is the primary means of getting metal. If you have excess energy, metal extractors will automatically use it to extract more metal."
 	},
 	"vehsupport" : {
-		"name" : "Fencer",
-		"description" : "Deployable Missile Rover (must stop to fire)",
-		"helptext" : "Keep the Fencer at maximum range to harass the opponent's units. The Fencer's missiles track, so they are ideal to kill fast-moving raiders and crawling bombs. It is able to hit air, but is only really useful against fighters. Cannot fire over obstacles, and does poorly if enemies, particularly assault units, are allowed to close range. Unlike skirmishers, the Fencer cannot fire while moving."
+		"name" : "Fractal",
+		"description" : "Fire Support HEAT Rover (must stop to fire)",
+		"helptext" : "The Fractal's main gun practically shoots another gun - A powerful partical shotgun whose recoil tears itself and the missile it is mounted on into pieces while dealing large amounts of damage at whatever it's aimed at. It is weak against area shields which can intercept the missile before it can fire it's shotgun."
 	},
 	"grebe" : {
 		"name" : "Grebe",
@@ -905,9 +905,9 @@
 		"helptext" : "The Hermit can take an incredible beating, and is useful as a shield for the weaker, more-damaging Recluses."
 	},
 	"turretantiheavy" : {
-		"name" : "Lucifer",
-		"description" : "Tachyon Projector - Power by connecting to a 50 energy grid",
-		"helptext" : "Inside the heavily armored shell of the Lucifer lies the devastating Tachyon Accelerator. This fearsome weapon is capable of delivering pinpoint damage at extreme ranges, provided you keep it connected to a power source. Remember that the Lucifer is strictly a support weapon; leave it unguarded and it will be swamped with raiders. When under attack by long range artillery or bombers the main gun can retract to reduce incoming damage to a quarter."
+		"name" : "Azimuth",
+		"description" : "Anti-Heavy Tachyonic Artillary - Requires Line-Of-Sight and 225 grid to fire",
+		"helptext" : "Refered to by many as a 'Long-range Ultimatum', the Azimuth certainly lives up to it's nickname. It's weapon creates a feedback loop between it and it's target, allowing it to gain more firepower the longer it is locked on. Do not try to fight it with brute force, as it's damage output can and will surpass even that of the now antique Starlight planetary energy chisel. Instead you should fight it with swarms of weaker units, as it has a long recalibration time between shots, or by killing the unit which is spotting for it."
 	},
 	"jumparty" : {
 		"name" : "Firewall",
