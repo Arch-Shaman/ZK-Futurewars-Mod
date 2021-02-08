@@ -50,7 +50,7 @@ return {
 		kamikazeDistance       = 25,
 		kamikazeUseLOS         = true,
 		maneuverleashlength    = [[140]],
-		maxDamage              = 400,
+		maxDamage              = 300,
 		maxSlope               = 36,
 		maxVelocity            = 2.0,
 		maxWaterDepth          = 15,
