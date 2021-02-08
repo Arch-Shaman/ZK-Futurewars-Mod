@@ -40,6 +40,8 @@ return {
 		sightDistance                 = 0,
 		useBuildingGroundDecal        = false,
 		yardMap                       = [[o]],
+		selectionVolumeScales  = [[20 50 20]],
+		selectionVolumeType    = [[box]],
 		weapons                       = {
 			{
 				def                = [[SEISMIC_WEAPON]],
