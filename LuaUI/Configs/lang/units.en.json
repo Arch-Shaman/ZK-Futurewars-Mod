@@ -869,6 +869,11 @@
 		"description" : "Teleport Bridge Entry Beacon, right click to teleport.",
 		"helptext" : "This is Djinn's entry beacon. Right-click it to teleport units to the parent Djinn."
 	},
+	"singularity" : {
+		"name" : "Wake",
+		"description" : "Compact Singularity Device",
+		"helptext" : "The Wake is a compact singularity generator that pulls matter towards its detonation point. Projectiles, wrecks, trees, rocks, units, it doesn't matter; it will all be sucked into a compact point then spit out when the singularity collapses."
+	},
 	"dynstrike1" : {
 		"name" : "Ambush Commander",
 		"description" : "Stealthy Commander",

@@ -2,7 +2,7 @@ return {
 	singularity = {
 		unitname                      = [[singularity]],
 		name                          = [[Wake]],
-		description                   = [[Singularity Missile]],
+		description                   = [[Compact Singularity Device]],
 		buildCostMetal                = 700,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
