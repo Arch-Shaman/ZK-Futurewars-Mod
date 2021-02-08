@@ -196,7 +196,7 @@
 	},
 	"subscout" : {
 		"name" : "Lancelet",
-		"description" : "Scout/Suicide Minisub",
+		"description" : "Suicide Minisub",
 		"helptext" : "The Lancelet is basically a large smart torpedo with scouting functionality. It can remain hidden in the depths to observe enemy movements, then detonate its explosive charge to sink unwary ships."
 	},
 	"staticstorage" : {
