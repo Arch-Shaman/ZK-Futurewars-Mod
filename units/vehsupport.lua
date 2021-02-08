@@ -111,7 +111,7 @@ return { vehsupport = {
       },
 
       damage                  = {
-        default = 55.02,
+        default = 60.02,
       },
 
       explosionGenerator      = [[custom:FLASH2]],
@@ -127,6 +127,7 @@ return { vehsupport = {
       soundHit                = [[explosion/ex_med17]],
       soundStart              = [[weapon/missile/missile_fire11]],
       startVelocity           = 450,
+      trajectoryHeight        = 0.4,
       texture2                = [[lightsmoketrail]],
       tolerance               = 8000,
       tracks                  = true,
@@ -155,7 +156,7 @@ return { vehsupport = {
       },
 
       damage                  = {
-        default = 34,
+        default = 42,
       },
 
 
