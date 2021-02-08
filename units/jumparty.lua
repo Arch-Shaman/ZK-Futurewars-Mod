@@ -76,8 +76,8 @@ return {
 					burntime = 60,
 
 					area_damage = 1,
-					area_damage_radius = 40,
-					area_damage_dps = 15,
+					area_damage_radius = 60,
+					area_damage_dps = 25,
 					area_damage_duration = 14,
 
 					--lups_heat_fx = [[firewalker]],
@@ -86,7 +86,7 @@ return {
 					light_radius = 500,
 				},
 				damage                  = {
-					default = 25,
+					default = 40,
 				},
 
 				explosionGenerator      = [[custom:napalm_firewalker_small]],
@@ -131,16 +131,16 @@ return {
 					vradius1 = "-2,-4,-2,2,0,2", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
 					clustercharges = -1,
-					clusterdelay = 8,
+					clusterdelay = 7,
 					timeddeploy = 40,
 					
 					setunitsonfire = "1",
 					burntime = 200,
 
 					area_damage = 1,
-					area_damage_radius = 180,
-					area_damage_dps = 100,
-					area_damage_duration = 18,
+					area_damage_radius = 100,
+					area_damage_dps = 50,
+					area_damage_duration = 14,
 					
 				},
 				damage                  = {
