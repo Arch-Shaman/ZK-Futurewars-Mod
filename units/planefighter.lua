@@ -173,186 +173,186 @@ local unitDef = {
 			weaponVelocity          = 330,
 		},
 
-	MISSILE_AG = {
-		burst = 2,
-		burstRate = 0.5,
-		name                    = [[Hurricane Surface Attack Missile]],
-		areaOfEffect            = 96,
-		avoidFriendly           = true,
-		canattackground         = true,
-		cegTag                  = [[missiletrailblue]],
-		collideFriendly         = false,
-		craterBoost             = 1,
-		craterMult              = 2,
-		--cylinderTargeting       = 6,
+		MISSILE_AG = {
+			burst = 2,
+			burstRate = 0.5,
+			name                    = [[Hurricane Surface Attack Missile]],
+			areaOfEffect            = 96,
+			avoidFriendly           = true,
+			canattackground         = true,
+			cegTag                  = [[missiletrailblue]],
+			collideFriendly         = false,
+			craterBoost             = 1,
+			craterMult              = 2,
+			--cylinderTargeting       = 6,
 
-		customParams        	  = {
-			burst = Shared.BURST_RELIABLE,
-			light_color = [[0.5 0.6 0.6]],
-			reaim_time = 60, -- Fast update not required (maybe dangerous)
-			--CAS--
+			customParams        	  = {
+				burst = Shared.BURST_RELIABLE,
+				light_color = [[0.5 0.6 0.6]],
+				reaim_time = 60, -- Fast update not required (maybe dangerous)
+				--CAS--
 
-			numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-			projectile1 = "planefighter_ag",
-			--spreadradius1 = 6, -- used in clusters. OPTIONAL. Default: 100.
-			clustervec1 = "randomxz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-			use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-			spawndist = 100, -- at what distance should we spawn the projectile(s)? REQUIRED.
-			useheight = 1,
-			timeoutspawn = 0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-			vradius1 = 3, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-			--useheight = 1,
-			--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-			--proxy = 1, -- check for nearby units?
-			--proxydist = 100, -- how far to check for units? Default: spawndist
+				numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+				projectile1 = "planefighter_ag",
+				--spreadradius1 = 6, -- used in clusters. OPTIONAL. Default: 100.
+				clustervec1 = "randomxz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+				use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
+				spawndist = 100, -- at what distance should we spawn the projectile(s)? REQUIRED.
+				useheight = 1,
+				timeoutspawn = 0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
+				vradius1 = 3, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+				--useheight = 1,
+				--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
+				--proxy = 1, -- check for nearby units?
+				--proxydist = 100, -- how far to check for units? Default: spawndist
+			},
+
+			damage                  = {
+				default = 45*3,
+			},
+
+			edgeEffectiveness		= 0.2,
+			explosionGenerator      = [[custom:WEAPEXP_PUFF]],
+			fireStarter             = 70,
+			flightTime              = 7,
+			impulseBoost            = 0,
+			impulseFactor           = 0.4,
+			interceptedByShieldType = 2,
+			metalpershot            = 0,
+			model                   = [[wep_m_avalanche.s3o]],
+			noSelfDamage            = true,
+			range                   = 700,
+			reloadtime              = 5.2,
+			smokeTrail              = true,
+			soundHit                = [[weapon/missile/sabot_fire]],
+			soundStart              = [[weapon/missile/large_missile_fire]],
+			startVelocity           = 100,
+			texture2                = [[darksmoketrail]],
+			tolerance               = 22000,
+			tracks                  = true,
+			turnRate                = 40000,
+			weaponAcceleration      = 200,
+			weaponType              = [[MissileLauncher]],
+			weaponVelocity          = 350,
 		},
 
-		damage                  = {
-			default = 45*3,
+		AA = {
+			burst = 2,
+			burstRate = 0.5,
+			name                    = [[ATA Sidewinder]],
+			areaOfEffect            = 96,
+			avoidFriendly           = true,
+			canattackground         = false,
+			cegTag                  = [[missiletrailblue]],
+			collideFriendly         = false,
+			craterBoost             = 1,
+			craterMult              = 2,
+			--cylinderTargeting       = 6,
+
+			customParams        	  = {
+				burst = Shared.BURST_RELIABLE,
+				isaa = [[1]],
+				light_color = [[0.5 0.6 0.6]],
+				reaim_time = 60, -- Fast update not required (maybe dangerous)
+				--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
+				--proxy = 1, -- check for nearby units?
+				--proxydist = 100, -- how far to check for units? Default: spawndist
+				--damage_vs_shield = [[475]],
+			},
+
+			damage                  = {
+				default = 7.5,
+				planes  = 75,
+			},
+
+			explosionGenerator      = [[custom:WEAPEXP_PUFF]],
+			fireStarter             = 70,
+			flightTime              = 7,
+			impulseBoost            = 0,
+			impulseFactor           = 0.4,
+			interceptedByShieldType = 2,
+			metalpershot            = 0,
+			model                   = [[wep_m_avalanche.s3o]],
+			noSelfDamage            = true,
+			range                   = 700,
+			reloadtime              = 5.2,
+			smokeTrail              = true,
+			soundHit                = [[weapon/missile/rocket_hit]],
+			soundStart               = [[weapon/missile/sidewinder]],
+			startVelocity           = 100,
+			texture2                = [[AAsmoketrail]],
+			tolerance               = 22000,
+			tracks                  = true,
+			turnRate                = 10000,
+			weaponAcceleration      = 200,
+			weaponType              = [[MissileLauncher]],
+			weaponVelocity          = 550,
 		},
-
-		edgeEffectiveness		= 0.2,
-		explosionGenerator      = [[custom:WEAPEXP_PUFF]],
-		fireStarter             = 70,
-		flightTime              = 7,
-		impulseBoost            = 0,
-		impulseFactor           = 0.4,
-		interceptedByShieldType = 2,
-		metalpershot            = 0,
-		model                   = [[wep_m_avalanche.s3o]],
-		noSelfDamage            = true,
-		range                   = 700,
-		reloadtime              = 5.2,
-		smokeTrail              = true,
-		soundHit                = [[weapon/missile/sabot_fire]],
-		soundStart              = [[weapon/missile/large_missile_fire]],
-		startVelocity           = 100,
-		texture2                = [[darksmoketrail]],
-		tolerance               = 22000,
-		tracks                  = true,
-		turnRate                = 40000,
-		weaponAcceleration      = 200,
-		weaponType              = [[MissileLauncher]],
-		weaponVelocity          = 350,
-    },
-
-	AA = {
-		burst = 2,
-		burstRate = 0.5,
-		name                    = [[ATA Sidewinder]],
-		areaOfEffect            = 96,
-		avoidFriendly           = true,
-		canattackground         = false,
-		cegTag                  = [[missiletrailblue]],
-		collideFriendly         = false,
-		craterBoost             = 1,
-		craterMult              = 2,
-		--cylinderTargeting       = 6,
-
-		customParams        	  = {
-			burst = Shared.BURST_RELIABLE,
-			isaa = [[1]],
-			light_color = [[0.5 0.6 0.6]],
-			reaim_time = 60, -- Fast update not required (maybe dangerous)
-			--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-			--proxy = 1, -- check for nearby units?
-			--proxydist = 100, -- how far to check for units? Default: spawndist
-			--damage_vs_shield = [[475]],
-		},
-
-		damage                  = {
-			default = 7.5,
-			planes  = 75,
-		},
-
-		explosionGenerator      = [[custom:WEAPEXP_PUFF]],
-		fireStarter             = 70,
-		flightTime              = 7,
-		impulseBoost            = 0,
-		impulseFactor           = 0.4,
-		interceptedByShieldType = 2,
-		metalpershot            = 0,
-		model                   = [[wep_m_avalanche.s3o]],
-		noSelfDamage            = true,
-		range                   = 700,
-		reloadtime              = 5.2,
-		smokeTrail              = true,
-		soundHit                = [[weapon/missile/rocket_hit]],
-		soundStart               = [[weapon/missile/sidewinder]],
-		startVelocity           = 100,
-		texture2                = [[AAsmoketrail]],
-		tolerance               = 22000,
-		tracks                  = true,
-		turnRate                = 10000,
-		weaponAcceleration      = 200,
-		weaponType              = [[MissileLauncher]],
-		weaponVelocity          = 550,
-    },
 	
-    MISSILE_AA = {
-		burst = 2,
-		burstRate = 0.5,
-		name                    = [[ATA Sidewinder]],
-		areaOfEffect            = 96,
-		avoidFriendly           = true,
-		canattackground         = false,
-		cegTag                  = [[missiletrailblue]],
-		collideFriendly         = false,
-		craterBoost             = 1,
-		craterMult              = 2,
-		--cylinderTargeting       = 6,
+		MISSILE_AA = {
+			burst = 2,
+			burstRate = 0.5,
+			name                    = [[ATA Sidewinder]],
+			areaOfEffect            = 96,
+			avoidFriendly           = true,
+			canattackground         = false,
+			cegTag                  = [[missiletrailblue]],
+			collideFriendly         = false,
+			craterBoost             = 1,
+			craterMult              = 2,
+			--cylinderTargeting       = 6,
 
-		customParams        	  = {
-			burst = Shared.BURST_RELIABLE,
-			isaa = [[1]],
-			light_color = [[0.5 0.6 0.6]],
-			reaim_time = 60, -- Fast update not required (maybe dangerous)
-			--CAS--
-			numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-			projectile1 = "proliferator_aa",
-			spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
-			clustervec1 = "evenx", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-			use2ddist = 1, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-			spawndist = 870, -- at what distance should we spawn the projectile(s)? REQUIRED.
-			timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-			vradius1 = 5, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-			--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-			--proxy = 1, -- check for nearby units?
-			--proxydist = 100, -- how far to check for units? Default: spawndist
-			--damage_vs_shield = [[475]],
+			customParams        	  = {
+				burst = Shared.BURST_RELIABLE,
+				isaa = [[1]],
+				light_color = [[0.5 0.6 0.6]],
+				reaim_time = 60, -- Fast update not required (maybe dangerous)
+				--CAS--
+				numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+				projectile1 = "proliferator_aa",
+				spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
+				clustervec1 = "evenx", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+				use2ddist = 1, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
+				spawndist = 870, -- at what distance should we spawn the projectile(s)? REQUIRED.
+				timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
+				vradius1 = 5, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+				--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
+				--proxy = 1, -- check for nearby units?
+				--proxydist = 100, -- how far to check for units? Default: spawndist
+				--damage_vs_shield = [[475]],
+			},
+
+			damage                  = {
+				default = 135,
+				planes  = 135,
+				subs    = 135,
+			},
+
+			explosionGenerator      = [[custom:WEAPEXP_PUFF]],
+			fireStarter             = 70,
+			flightTime              = 7,
+			impulseBoost            = 0,
+			impulseFactor           = 0.4,
+			interceptedByShieldType = 2,
+			metalpershot            = 0,
+			model                   = [[wep_m_avalanche.s3o]],
+			noSelfDamage            = true,
+			range                   = 700,
+			reloadtime              = 5.2,
+			smokeTrail              = true,
+			soundHit                = [[weapon/missile/rocket_hit]],
+			soundStart               = [[weapon/missile/sidewinder]],
+			startVelocity           = 100,
+			texture2                = [[AAsmoketrail]],
+			tolerance               = 22000,
+			tracks                  = true,
+			turnRate                = 40000,
+			weaponAcceleration      = 200,
+			weaponType              = [[MissileLauncher]],
+			weaponVelocity          = 550,
 		},
 
-		damage                  = {
-			default = 135,
-			planes  = 135,
-			subs    = 135,
-		},
-
-		explosionGenerator      = [[custom:WEAPEXP_PUFF]],
-		fireStarter             = 70,
-		flightTime              = 7,
-		impulseBoost            = 0,
-		impulseFactor           = 0.4,
-		interceptedByShieldType = 2,
-		metalpershot            = 0,
-		model                   = [[wep_m_avalanche.s3o]],
-		noSelfDamage            = true,
-		range                   = 700,
-		reloadtime              = 5.2,
-		smokeTrail              = true,
-		soundHit                = [[weapon/missile/rocket_hit]],
-		soundStart               = [[weapon/missile/sidewinder]],
-		startVelocity           = 100,
-		texture2                = [[AAsmoketrail]],
-		tolerance               = 22000,
-		tracks                  = true,
-		turnRate                = 40000,
-		weaponAcceleration      = 200,
-		weaponType              = [[MissileLauncher]],
-		weaponVelocity          = 550,
-    },
-
-  },
+	},
 
 
 	featureDefs            = {
