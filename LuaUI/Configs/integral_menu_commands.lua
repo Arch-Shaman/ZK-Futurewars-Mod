@@ -241,6 +241,7 @@ local factoryUnitPosDef = {
 		shipassault       = unitTypes.ASSAULT,
 		-- No Ship HEAVY_SOMETHING (yet)
 		subraider         = unitTypes.SPECIAL,
+		subscout		  = unitTypes.UTILITY,
 	},
 	pw_bomberfac = {
 		bomberriot        = unitTypes.RIOT,
