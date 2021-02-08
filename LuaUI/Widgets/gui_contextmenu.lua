@@ -1529,7 +1529,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 	end
 	
 	if ud.losRadius > 0 then
-		local sight = Spring.GetUnitRulesParam(unitID, "sightRangeOverride") or ud.losRadius
+		local sight = (unitID and Spring.GetUnitRulesParam(unitID, "sightRangeOverride")) or ud.losRadius
 		statschildren[#statschildren+1] = Label:New{ caption = 'Sight: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = numformat(sight) .. " elmo", textColor = color.stats_fg, }
 	end
