@@ -82,7 +82,7 @@ return {
 				shieldBadColor          = [[1 0.1 0.1 1]],
 				shieldGoodColor         = [[0.1 0.1 1 1]],
 				shieldInterceptType     = 3,
-				shieldPower             = 1600,
+				shieldPower             = 1400,
 				shieldPowerRegen        = 10,
 				shieldPowerRegenEnergy  = 0,
 				shieldRadius            = 120,
