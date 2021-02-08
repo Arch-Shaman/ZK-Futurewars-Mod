@@ -1840,7 +1840,7 @@ local chassisDefs = {
 				morphBaseCost = 0,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.05
+					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.075
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynassault0"].id
@@ -1852,7 +1852,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[1],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.1
+					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.15
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynassault1_" .. GetAssaultCloneModulesString(modulesByDefID)].id
@@ -1873,7 +1873,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[2] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.15
+					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.225
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynassault2_" .. GetAssaultCloneModulesString(modulesByDefID)].id
@@ -1894,7 +1894,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[3] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.2
+					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.3
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynassault3_" .. GetAssaultCloneModulesString(modulesByDefID)].id
@@ -1919,7 +1919,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[4] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.25
+					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.375
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynassault4_" .. GetAssaultCloneModulesString(modulesByDefID)].id
@@ -1944,7 +1944,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[5] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.3
+					sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.45
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynassault5_" .. GetAssaultCloneModulesString(modulesByDefID)].id
