@@ -15,25 +15,13 @@ end
 --------------------------------------------------------------------------------
 -- Config
 
-options_path = 'Settings/Interface/Building Placement'
-options_order = { 'missile_silo_advanced'}
-options = {
-	missile_silo_advanced = {
-		name = "Advanced Missile Silo ranges",
-		type = 'bool',
-		value = false,
-		noHotkey = true,
-		desc = 'When placing a Missile Silo, show at what range the missiles will fall vertically, ie. are unblockable by terrain geometry and walls. Also, show how far away from the nominal range you can reach through AoE.',
-	},
-}
-
 local drawRadius = {}
 
 --large textSize & opacity for large radius/tiny text & opacity for small radius, help increase text visibility during zoom-out/zoom-in
 drawRadius[1] = {
 	range = 3500,
 	color = {1,0.2,0.2,1},
-	text = "Tacnuke and EMP",
+	text = "Tacnuke, Singularity, and EMP",
 	width = 1,
 	miniWidth = 1,
 	textSize = 180,
@@ -58,32 +46,12 @@ drawRadius[3] = {
 }
 drawRadius[4] = {
 	range = 4200,
-	color = {0,0.4,0.7,0.5},
+	color = {0.25,0.4,0.7,1},
 	text = "Singularity",
-	width = 1,
+	width = 2,
 	miniWidth = 1,
-	textSize = 60,
+	textSize = 260,
 	--stipple = {4,4095},
-}
-
-drawRadius[5] = {
-	range = 600,
-	color = {0.4,1,0.2,0.5},
-	text = "Seismic and Tacnuke vertical",
-	width = 1,
-	miniWidth = 1,
-	textSize = 60,
-	--stipple = {4,4095},
-}
-
-drawRadius[6] = {
-	range = 1500,
-	color = {0.2,0.2,1,0.75},
-	text = "EMP vertical",
-	width = 1,
-	miniWidth = 1,
-	textSize = 120,
-	--stipple = {4,1000},
 }
 
 
@@ -159,7 +127,7 @@ local function DrawActiveCommandRanges()
 		dz = sin(rotY)
 	end
 	
-	for i = 1, (options.missile_silo_advanced.value and 6 or 4) do
+	for i = 1, #drawRadius do
 		local radius = drawRadius[i]
 		
 		glLineWidth(radius.width)
@@ -200,7 +168,7 @@ local function DrawActiveCommandRangesMinimap(minimapX, minimapY)
 	glTranslate(0,minimapY,0)
 	glScale(minimapX/mapX, -minimapY/mapZ, 1)
 	
-	for i = 1, (options.missile_silo_advanced.value and 5 or 2) do
+	for i = 1, #drawRadius do
 		local radius = drawRadius[i]
 		
 		glLineWidth(radius.miniWidth)
@@ -232,8 +200,7 @@ local function languageChanged ()
 	drawRadius[1].text = WG.Translate("interface", "tacnuke_and_emp")
 	drawRadius[2].text = WG.Translate("interface", "seismic")
 	drawRadius[3].text = WG.Translate("interface", "emp_aoe")
-	drawRadius[4].text = WG.Translate("interface", "emp_vertical")
-	drawRadius[5].text = WG.Translate("interface", "tacnuke_vertical")
+	drawRadius[4].text = WG.Translate("interface", "singularity")
 end
 
 function widget:Initialize()
