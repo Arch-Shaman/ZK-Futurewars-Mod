@@ -441,7 +441,7 @@ local function SpawnSubProjectiles(id, wd)
 				p = spSpawnProjectile(me, projectileattributes)
 				--if projectileattributes["tracking"] then
 				if ttype ~= ground then
-					if true then
+					if debug then
 						spEcho("setting target for " .. p .. " = " .. target)
 					end
 					spSetProjectileTarget(p, target,ttype)
