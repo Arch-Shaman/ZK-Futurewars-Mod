@@ -51,8 +51,8 @@ return {
 		weaponDefs                    = {
 
 			SEISMIC_WEAPON = {
-				name                    = [[Seismic Missile]],
-				areaOfEffect            = 640,
+				name                    = [[Singularity]],
+				areaOfEffect            = 300,
 				avoidFriendly           = false,
 				cegTag                  = [[seismictrail]],
 				collideFriendly         = false,
@@ -62,11 +62,13 @@ return {
 					singularity = [[1]],
 					singuradius = [[300]],
 					singulifespan = [[540]],
-					singustrength = [[20]],
+					singustrength = [[35]],
+					singuheight = [[150]],
 					restrict_in_widgets = 1,
 					stats_hide_dps = 1, -- one use
 					stats_hide_reload = 1,
-					
+					cruisealt = 1300,
+					cruisedist = 400,
 					light_color = [[1.2 1.6 0.55]],
 					light_radius = 550,
 				},
@@ -75,7 +77,7 @@ return {
 					default = 10,
 				},
 				edgeEffectiveness       = 0.4,
-				explosionGenerator      = [[custom:bull_fade]],
+				explosionGenerator      = [[custom:FLASHSMALLUNITEX]],
 				fireStarter             = 0,
 				flightTime              = 100,
 				interceptedByShieldType = 1,
@@ -90,7 +92,7 @@ return {
 				turnrate                = 18000,
 				waterWeapon             = true,
 				weaponAcceleration      = 180,
-				weaponTimer             = 3,
+				tracks = true,
 				weaponType              = [[StarburstLauncher]],
 				weaponVelocity          = 1200,
 			},
