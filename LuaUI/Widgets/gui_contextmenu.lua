@@ -1525,7 +1525,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 
 	if energy ~= 0 then
 		if ud.customParams.realenergy then
-			energy = ud.customParams.realenergy
+			energy = tonumber(ud.customParams.realenergy)
 		end
 		statschildren[#statschildren+1] = Label:New{ caption = 'Energy: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = (energy > 0 and '+' or '') .. numformat(energy,2) .. " E/s", textColor = color.stats_fg, }
