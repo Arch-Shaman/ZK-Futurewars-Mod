@@ -38,7 +38,7 @@ return {
 		movementClass          = [[AKBOT4]],
 		noAutoFire             = false,
 		noChaseCategory        = [[TERRAFORM SATELLITE SUB]],
-		objectName             = [[detriment.dae]],
+		objectName             = [[detriment.s3o]],
 		script                 = [[striderdetriment.lua]],
 		selfDestructAs         = [[NUCLEAR_MISSILE]],
 		selfDestructCountdown  = 10,
