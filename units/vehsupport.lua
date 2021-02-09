@@ -106,7 +106,7 @@ return {
 				},
 
 				damage                  = {
-					default = 60.02,
+					default = 118.02,
 				},
 
 				explosionGenerator      = [[custom:FLASH2]],
@@ -148,7 +148,7 @@ return {
 					bogus = 1,
 				},
 				damage                  = {
-					default = 42,
+					default = 84,
 				},
 				dynDamageExp            = 1,
 				dynDamageInverted       = false,
