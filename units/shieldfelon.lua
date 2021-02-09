@@ -99,10 +99,10 @@ return {
 				areaOfEffect            = 8,
 				craterBoost             = 0,
 				craterMult              = 0,
-				cylinderTargeting       = 0.25,
+				cylinderTargeting       = 0.3,
 
 				customParams            = {
-					shield_drain = 100,
+					shield_drain = 90,
 
 					light_camera_height = 2500,
 					light_color = [[0.66 0.32 0.90]],
