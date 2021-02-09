@@ -136,7 +136,7 @@ return {
 				weaponVelocity          = 1400,
 			},
 			BOGUS_PHASER = {
-				name                    = [[!!BOGUS!!]],
+				name                    = [[Bogus Laser]],
 				areaOfEffect            = 20,
 				avoidFeature            = false,
 				avoidNeutral            = false,
