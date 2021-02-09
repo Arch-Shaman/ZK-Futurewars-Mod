@@ -440,6 +440,7 @@ local function SetRetreatState(unitID, state, retID)
 			params = CommandDesc.params,
 			tooltip = Tooltips[state]
 		})
+		state = state or 0
 		spSetUnitRulesParam(unitID, 'retreatState', state, alliedTrueTable)
 		if retreatState[unitID] == nil then
 			retreatState[unitID] = {hp = state, shield = 0}
@@ -459,6 +460,7 @@ local function SetShieldRetreatState(unitID, state, retID)
 			tooltip = Tooltips[state]
 		})
 		spSetUnitRulesParam(unitID, 'retreatshieldState', state, alliedTrueTable)
+		state = state or 0
 		if retreatState[unitID] == nil then
 			retreatState[unitID] = {hp = 0, shield = state}
 		else
@@ -497,7 +499,7 @@ end
 local function PeriodicUnitCheck(unitID)
 	CheckSetWantRetreat(unitID)
 	CheckRetreat(unitID)
-	if retreatState[unitID].hp == 0 and retreatState[unitID].shield == 0 and not (wantRetreat[unitID] or isRetreating[unitID]) then
+	if (retreatState[unitID] == nil or (retreatState[unitID].hp == 0 and retreatState[unitID].shield == 0)) and not (wantRetreat[unitID] or isRetreating[unitID]) then
 		retreatables[unitID] = nil
 	end
 end
@@ -522,12 +524,14 @@ function gadget:UnitCreated(unitID, unitDefID, teamID, builderID, _, _)
 			commandShield.params[1] = DefaultState
 			spInsertUnitCmdDesc(unitID, CommandOrder, commandShield)
 		end
+		retreatState[unitID] = {hp = 0, shield = 0}
 	end
 end
 
 function gadget:UnitDestroyed(unitID)
 	ResetRetreatData(unitID)
 	retreatables[unitID] = nil
+	retreatState[unitID] = nil
 end
 
 function gadget:RecvSkirmishAIMessage(aiTeam, dataStr)
