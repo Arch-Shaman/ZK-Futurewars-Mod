@@ -22,7 +22,8 @@ return {
 			midposoffset   = [[0 4 0]],
 			aim_lookahead  = 100,
 			neededlink  = 4,
-			pylonrange  = 30,
+			pylonrange  = 70,
+			keeptooltip = [[any string i want]],
 		},
 
 		explodeAs                     = [[LARGE_BUILDINGEX]],
