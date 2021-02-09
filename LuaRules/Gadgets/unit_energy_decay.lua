@@ -42,7 +42,7 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	if config[unitDefID] then
 		if debug then spEcho("Added decayer " .. unitID) end
 		local config = config[unitDefID]
-		IterableMap.Add(decayers, unitID, {currentrate = 1, nextupdate = spGetGameFrame() + config.time, def = unitDefID})
+		IterableMap.Add(decayers, unitID, {currentrate = 10, nextupdate = spGetGameFrame() + config.time, def = unitDefID})
 	end
 end
 
@@ -65,7 +65,7 @@ function gadget:GameFrame(f)
 		if data.nextupdate == f then
 			local config = config[data.def]
 			local newrate = max(data.currentrate * (1 - config.rate), config.minoutput)
-			if debug then spEcho(id .. ": Decayed from " .. data.currentrate * 100 .. "% -> " .. newrate * 100 .. "%") end
+			if debug then spEcho(id .. ": Decayed from " .. data.currentrate * 10 .. "% -> " .. newrate * 10 .. "%") end
 			data.currentrate = newrate
 			spSetUnitRulesParam(id, "selfIncomeChange", data.currentrate)
 			GG.UpdateUnitAttributes(id)
