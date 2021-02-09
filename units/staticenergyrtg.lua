@@ -48,6 +48,7 @@ return {
 		selfDestructAs                = [[ATOMIC_BLAST]],
 		useBuildingGroundDecal        = true,
 		modelCenterOffset			  = [[0,70,0]],
+		sightDistance                 = 200,
 		yardMap                       = [[oooooooooooooooooooooooooooooooooooo]],
 		
 		featureDefs                   = {
