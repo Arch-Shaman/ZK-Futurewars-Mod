@@ -115,7 +115,7 @@ local function ReCacheReloadTimes()
 			local WeaponDefID = ud.weapons[i].weaponDef;
 			local WeaponDef   = WeaponDefs[ WeaponDefID ];
 			local reload = tonumber(WeaponDef.customParams.post_capture_reload) or WeaponDef.reload
-			if (reload > (options.minReloadTime.value or 0)) then
+			if (((WeaponDef.customParams and tonumber(WeaponDef.customParams.reload_override)) or reload) > (options.minReloadTime.value or 0)) then
 				ud.reloadTime[#ud.reloadTime+1]    = WeaponDef.reload;
 				ud.primaryWeapon[#ud.primaryWeapon+1] = i;
 				ud.reloadOverride[#ud.reloadOverride+1] = tonumber(WeaponDef.customParams.reload_override)
