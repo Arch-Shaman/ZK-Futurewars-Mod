@@ -24,6 +24,7 @@ local SpetUnitWeaponState = Spring.SetUnitWeaponState
 local spGetUnitTeam = Spring.GetUnitTeam
 local spIsUnitInLos = Spring.IsUnitInLos
 local abs = math.abs
+local huge = math.huge
 
 -- Signal definitions
 local SIG_AIM = 2
@@ -42,6 +43,12 @@ local lastPitch
 local registeredGroundFire = false
 local registeredTarget = false
 local firingTime = 0
+
+--[[
+TO DO:
+
+	 - reduce the amount of times spGetUnitTeam is called (how though?)
+]]--
 
 local function Open()
 	Signal(SIG_OPEN)
@@ -162,11 +169,14 @@ local beam_duration = WeaponDefs[UnitDef.weapons[1].weaponDef].beamtime * 1000
 function script.FireWeapon()
 	Signal(SIG_FIRING)
 	SetSignalMask(SIG_FIRING)
-	EmitSfx(fire, 1024)
+	--EmitSfx(fire, 1024)
 	firing = true
 	turnrateMod = 2
 	firingTime = firingTime + 1
 	local d = (firingTime / 30 + 1) ^ 0.67
+	if d > 3 then
+		d = 3
+	end
 	SpSetUnitRulesParam(unitID, "CEGdOverride2", d, inlosTrueTable)
 	local timeout = SpGetGameFrame()
 	timeout = timeout + beam_duration * 3
@@ -177,18 +187,28 @@ function script.FireWeapon()
 end
 
 function script.BlockShot(num, targetID)
-	if num == 1 then
+	if firing then
 		if registeredTarget then
 			if target ~= targetID and registeredTarget then
-				--spEcho("target: " .. (target or "nil") .. " targetID : " .. (targetID or "nil"))
+				spEcho("target: " .. (target or "nil") .. " targetID : " .. (targetID or "nil"))
 				StartReload()
 			end
 		else
-		registeredTarget = true
+			registeredTarget = true
 		end
-		target = targetID
 	end
-	return reloading and targetID and spIsUnitInLos(targetID, spGetUnitTeam(unitID))
+	--spEcho("Is unit is Los: " .. ((spIsUnitInLos(targetID, spGetUnitTeam(unitID)) and "true") or "false"))
+	--spEcho("Is ground fire: " .. ((targetID and "true") or "false"))
+	--spEcho("Final Verdict: " .. (((targetID and not spIsUnitInLos(targetID, spGetUnitTeam(unitID))) and "true") or "false"))
+	return targetID and not spIsUnitInLos(targetID, spGetUnitTeam(unitID))
+end
+
+function script.TargetWeight(num, targetUnitID)
+	if spIsUnitInLos(targetUnitID, spGetUnitTeam(unitID)) then
+		return 1
+	else
+		return huge
+	end
 end
 
 function StartReload()
