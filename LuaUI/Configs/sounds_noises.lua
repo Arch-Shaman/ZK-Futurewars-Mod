@@ -1934,7 +1934,7 @@ for udid, ud in pairs(UnitDefs) do
 	soundDef = applyCustomParamSound(soundDef, "ok"    , cp)
 	soundDef = applyCustomParamSound(soundDef, "select", cp)
 	soundDef = applyCustomParamSound(soundDef, "build" , cp)
-	soundDef = applyCommanderSound(soundDef, cp, ud.name)
+	--soundDef = applyCommanderSound(soundDef, cp, ud.name)
 	
 	if soundDef then
 		OverrideVolume(soundDef.ok)
