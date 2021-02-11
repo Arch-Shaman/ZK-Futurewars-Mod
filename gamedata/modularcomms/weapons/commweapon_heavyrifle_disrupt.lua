@@ -25,7 +25,7 @@ local weaponDef = {
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 1,
 	myGravity               = 0.1,
-	range                   = 370,
+	range                   = 320,
 	reloadtime              = .5,
 	rgbColor				= "0.9 0.1 0.9",
 	soundHit                = [[weapon/aoe_aura2]],
@@ -33,7 +33,7 @@ local weaponDef = {
 	soundstartvolume		= 12,
 	turret                  = true,
 	weaponType              = [[Cannon]],
-	weaponVelocity          = 420,
+	weaponVelocity          = 450,
 }
 
 return name, weaponDef

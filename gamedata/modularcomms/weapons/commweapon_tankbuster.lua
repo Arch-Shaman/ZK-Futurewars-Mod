@@ -1,6 +1,6 @@
 local name = "commweapon_tankbuster"
 local weaponDef = {
-	name                    = [[Medium Tankbuster Cannon]],
+	name                    = [[Tankbuster Cannon]],
 	areaOfEffect            = 32,
 	craterBoost             = 0,
 	craterMult              = 0,
@@ -18,7 +18,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 1000,
+		default = 1200,
 	},
 
 	edgeEffectiveness       = 0.5,
@@ -33,7 +33,7 @@ local weaponDef = {
 	soundstartvolume		= 8,
 	turret                  = true,
 	weaponType              = [[Cannon]],
-	weaponVelocity          = 300,
+	weaponVelocity          = 420,
 	waterweapon				= true,
 }
 

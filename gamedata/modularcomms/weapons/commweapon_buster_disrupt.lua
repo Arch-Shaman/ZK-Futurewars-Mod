@@ -18,7 +18,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 850,
+		default = 1020,
 	},
 
 	edgeEffectiveness       = 0.5,
@@ -33,7 +33,7 @@ local weaponDef = {
 	soundStart              = [[weapon/cannon/heavy_disrupter]],
 	turret                  = true,
 	weaponType              = [[Cannon]],
-	weaponVelocity          = 300,
+	weaponVelocity          = 420,
 	waterweapon				= true,
 }
 

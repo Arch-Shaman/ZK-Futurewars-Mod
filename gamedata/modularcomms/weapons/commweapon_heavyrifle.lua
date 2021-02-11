@@ -25,13 +25,13 @@ local weaponDef = {
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 1,
 	myGravity               = 0.1,
-	range                   = 370,
+	range                   = 320,
 	reloadtime              = .5,
 	soundHit                = [[weapon/cannon/cannon_hit1]],
 	soundStart              = [[weapon/cannon/med_rifle_fire]],
 	turret                  = true,
 	weaponType              = [[Cannon]],
-	weaponVelocity          = 420,
+	weaponVelocity          = 450,
 }
 
 return name, weaponDef
