@@ -139,13 +139,14 @@ local function CheckProjectile(id, wd)
 		spEcho("Weird projectile: " .. id)
 		return
 	end
+	if x2 == nil or y2 == nil or z2 == nil then
+		ExplodeProjectile(id,wd,x,y,z)
+		return
+	end
 	if config[wd].type == 1 then
 		projectiles[id].distance = distance2d(x,z,x2,z2)
-	elseif config[wd].type == 2 then
-		projectiles[id].distance = distance3d(x,y,z,x2,y2,z2)
 	else
-		projectiles[id] = nil
-		return
+		projectiles[id].distance = distance3d(x,y,z,x2,y2,z2)
 	end
 	if olddistance < projectiles[id].distance and projectiles[id].distance >= WeaponDefs[wd].damageAreaOfEffect/2 then
 		ExplodeProjectile(id,wd,x,y,z)
