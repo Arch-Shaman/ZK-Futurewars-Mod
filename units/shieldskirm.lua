@@ -112,18 +112,14 @@ return {
 				customParams        = {
 					burst = Shared.BURST_RELIABLE,
 					light_camera_height = 1800,
-					cruisealt			= 75,
-					cruisedist			= 340,
 					numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "shieldskirm_fragment",
 					--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 70, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					airlaunched = 1,
+					spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-2,0,-2,2,1,2", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					useheight = 1,
+					vradius1 = "-2,-3,-2,2,-1,2", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 				},
 				damage                  = {
 					default = 450,
@@ -145,7 +141,7 @@ return {
 				soundStartVolume        = 7,
 				startVelocity           = 192,
 				tracks                  = true,
-				trajectoryHeight        = 0.45,
+				trajectoryHeight        = 0.55,
 				turnrate                = 12000,
 				turret                  = true,
 				weaponType              = [[MissileLauncher]],
