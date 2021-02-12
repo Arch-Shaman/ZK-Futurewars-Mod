@@ -11,8 +11,8 @@ function widget:GetInfo()
 end
 
 local delays = {
-	damage = 12*30,
-	capture = 12*30,
+	damage = 8*30,
+	capture = 8*30,
 	critical = 8*30,
 	criticalcapture = 8*30,
 }
@@ -20,7 +20,6 @@ local delays = {
 local globalcooldown = 0
 local lastwarning = {}
 local commanders = {}
-local frame = -1
 local criticalratio = 0.12
 local criticalcaptureratio = 0.8
 
@@ -31,19 +30,17 @@ local spGetUnitHealth = Spring.GetUnitHealth
 local spSetLastMessagePosition = Spring.SetLastMessagePosition
 local spGetUnitPosition = Spring.GetUnitPosition
 local spEcho = Spring.Echo
+local spGetGameFrame = Spring.GetGameFrame
 local max = math.max
 local sounddir = 'sounds/reply/advisor/'
 
 local function PlaySound(file, vol)
 	spPlaySoundFile(sounddir .. file, vol, 'userinterface')
+	globalcooldown = spGetGameFrame() + 120 -- 4s before next warning
 end
 
 local function AddToConsole(str)
 	spEcho("game_message: " .. str)
-end
-
-function widget:GameFrame(f)
-	frame = f
 end
 
 function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
@@ -86,35 +83,32 @@ function widget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		local hp, maxhp, _, capture = spGetUnitHealth(unitID)
 		local x, y, z = Spring.GetUnitPosition(unitID)
 		local myname = spGetUnitRulesParam(unitID, "comm_name") or "Unknown Commander"
+		local frame = spGetGameFrame()
 		if damage > 0 then
 			local hpratio = hp/maxhp
-			if hpratio < criticalratio and lastwarning[unitID].critical < frame and globalcooldown < frame then
-				PlaySound('systemfailureimminent.wav', 1)
-				lastwarning[unitID].critical = frame + delays.critical
-				globalcooldown = frame + 270 -- 4s before next warning
+			if hpratio < criticalratio and frame >= lastwarning[unitID].critical and frame >= globalcooldown then
+				PlaySound('systemfailureimminent.wav', 350)
+				lastwarning[unitID].critical = spGetGameFrame() + delays.critical
 				AddToConsole(myname .. " is low on HP!")
 				spSetLastMessagePosition(x, y, z)
-			elseif hpratio > criticalratio and lastwarning[unitID].damage < frame and globalcooldown < frame then
-				PlaySound('armordamage.wav', 1)
+			elseif hpratio >= criticalratio and frame >= lastwarning[unitID].damage and frame >= globalcooldown then
+				PlaySound('armordamage.wav', 350)
 				lastwarning[unitID].damage = frame + delays.damage
-				globalcooldown = frame + 270 -- 4s before next warning
 				AddToConsole(myname .. " is under attack.")
 				spSetLastMessagePosition(x, y, z)
 			end
 		elseif capture > lastcapture then -- we're getting captured!
 			commanders[unitID] = capture
-			if lastwarning[unitID].capture < frame and capture < criticalcaptureratio and globalcooldown < frame then
-				PlaySound('alertcapture.wav', 1)
+			if frame >= lastwarning[unitID].capture and capture < criticalcaptureratio and frame >= globalcooldown then
+				PlaySound('alertcapture.wav', 350)
 				lastwarning[unitID].capture = frame + delays.capture
-				globalcooldown = frame + 270 -- 4s before next warning
 				AddToConsole(myname .. " is being captured.")
 				spSetLastMessagePosition(x, y, z)
-			elseif lastwarning[unitID].criticalcapture < frame and capture > criticalcaptureratio and globalcooldown < frame then
-				PlaySound('alertcapturecritical.wav', 1)
+			elseif frame >= lastwarning[unitID].criticalcapture and capture >= criticalcaptureratio and frame >= globalcooldown then
+				PlaySound('alertcapturecritical.wav', 350)
 				lastwarning[unitID].criticalcapture = frame + delays.criticalcapture
 				AddToConsole(myname .. " is about to be captured!")
 				spSetLastMessagePosition(x, y, z)
-				globalcooldown = frame + 270 -- 4s before next warning
 			end
 		end
 	end
