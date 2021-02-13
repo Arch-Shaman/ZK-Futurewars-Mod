@@ -241,7 +241,7 @@
 	},
 	"staticenergyrtg" : {
 		"name" : "RTG",
-		"description" : "Medium Powerplant (+15e, decays over time) - HAZARDOUS",
+		"description" : "Medium Powerplant (+18e, decays over time) - HAZARDOUS",
 		"helptext" : "The Radioisotope Thermoelectric Generator uses decaying radioactive particles from standard metal to generate energy. Once constructed, it becomes unstable and starts decaying in energy output. It's useful for getting out of an economic pinch, but don't rely on them for your energy needs -- they're worse than solars and are explosive."
 	},
 	"hoverskirm2" : {
