@@ -92,7 +92,7 @@ return {
 				},
 
 				damage                  = {
-					default = 20.1,
+					default = 30.1,
 				},
 
 				explosionGenerator      = [[custom:EMG_HIT_HE]],
@@ -105,7 +105,7 @@ return {
 				noGap                   = false,
 				noSelfDamage            = true,
 				range                   = 220,
-				reloadtime              = 1.5,
+				reloadtime              = 1.8,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
 				size                    = 3,
