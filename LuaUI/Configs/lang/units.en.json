@@ -707,7 +707,7 @@
 	"spideremp" : {
 		"name" : "Venom",
 		"description" : "Lightning Riot Spider",
-		"helptext" : "The Venom is an all-terrain unit designed to paralyze enemies so other units can easily destroy them. It moves particularly fast for a riot unit and in addition to paralysis it does a small amount of damage. Works well in tandem with the Recluse to keep enemies from closing range with the fragile skirmisher."
+		"helptext" : "The Venom is an all-terrain unit designed to paralyze enemies so other units can easily destroy them. It moves particularly fast for a riot unit and in addition to paralysis it does a small amount of damage. Works well in tandem with the Twilight to keep enemies from closing range with the fragile skirmisher."
 	},
 	"jumpassault" : {
 		"name" : "Jack",
@@ -802,7 +802,7 @@
 	"factoryspider" : {
 		"name" : "Spider Factory",
 		"description" : "Produces Spiders",
-		"helptext" : "Optimized for rough terrain, the Spider Factory relies primarily on range and maneuverability rather than brute force. Key units: Flea, Recluse, Hermit, Crab"
+		"helptext" : "Optimized for rough terrain, the Spider Factory relies primarily on range and maneuverability rather than brute force. Key units: Flea, Twilight, Hermit, Crab"
 	},
 	"chicken_dragon" : {
 		"name" : "White Dragon",
@@ -855,9 +855,9 @@
 		"helptext" : "The Gatekeeper's improved disruptor missile slows air targets down for other AA units to finish the job."
 	},
 	"spiderskirm" : {
-		"name" : "Recluse",
-		"description" : "Skirmisher Spider (Indirect Fire)",
-		"helptext" : "An all terrain missile launching unit. Climb walls with this spider walker and take your enemy by surprise. The unguided rockets cannot hit a rapidly jinking target, but they have a fairly long range."
+		"name" : "Twilight",
+		"description" : "Skirmisher Spider (Indirect Line Fire)",
+		"helptext" : "Staying true to the Spider Factory's doctrine, the Twilight and it's missiles armament can function in even the roughest of terrrain. It's missiles are launched at a very high angle to avoid obstructions and rain disruptor bombs upon their target."
 	},
 	"fakeunit_los" : {
 		"name" : "LOS Provider",
