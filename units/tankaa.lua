@@ -87,7 +87,7 @@ return {
 					--spreadradius1 = 3, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 100, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 80, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					vradius1 = "-1,-1,-1,1,1,1", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?
@@ -134,8 +134,7 @@ return {
 					reaim_time = 8, -- COB
 					isaa = [[1]],
 					light_radius = 0,
-					isFlak = 3,
-					flaktime = -15,
+					isFlak = 1,
 				},
 
 				damage = {
@@ -143,7 +142,7 @@ return {
 					planes  = 60,
 				},
 				--interceptor = 2,
-				edgeEffectiveness       = 0.75,
+				edgeEffectiveness       = 0.9,
 				duration                = 0.02,
 				explosionGenerator      = [[custom:flakplosion]],
 				fireStarter             = 50,
