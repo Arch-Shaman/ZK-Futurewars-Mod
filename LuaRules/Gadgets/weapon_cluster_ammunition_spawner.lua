@@ -76,6 +76,7 @@ local random = math.random
 local sqrt = math.sqrt
 local byte = string.byte
 local abs = math.abs
+local atan2 = math.atan2
 local pi = math.pi
 local halfpi = pi/2
 local abs = math.abs -- CAS GOES TO THE GYM AND HAS DOUBLE ABS
@@ -374,6 +375,7 @@ local function SpawnSubProjectiles(id, wd)
 		local r = projectileConfig[j]["spreadradius"]
 		local vr = projectileConfig[j]["veldata"]
 		local projectilecount = projectileConfig[j]["numprojectiles"]
+		
 		for i=1, 3 do
 			step[i] = (vr.max[i] - vr.min[i])/projectilecount
 		end
@@ -433,9 +435,9 @@ local function SpawnSubProjectiles(id, wd)
 				local dy = projectileattributes["speed"][2] - 1 --hackity hax
 				local dz = projectileattributes["speed"][3]
 				--do not question the arctangent
-				local dirX = math.atan2(dx, sqrt(dy*dy+dz*dz))
-				local dirY = math.atan2(dy, sqrt(dx*dx+dz*dz))
-				local dirZ = math.atan2(dz, sqrt(dx*dx+dy*dy))
+				local dirX = atan2(dx, sqrt(dy*dy+dz*dz))
+				local dirY = atan2(dy, sqrt(dx*dx+dz*dz))
+				local dirZ = atan2(dz, sqrt(dx*dx+dy*dy))
 				spSpawnSFX(projectileattributes["owner"], projectileConfig[j].spawnsfx, projectileattributes["pos"][1], projectileattributes["pos"][2], projectileattributes["pos"][3], dirX, dirY, dirZ, true)
 			else
 				p = spSpawnProjectile(me, projectileattributes)
