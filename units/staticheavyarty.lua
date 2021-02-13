@@ -21,7 +21,7 @@ return {
 			modelradius    = [[35]],
 			selectionscalemult = 1,
 			
-			
+    			keeptooltip    = [[any string I want]],
     			neededlink     = 170,
    			pylonrange     = 100,
 		},
