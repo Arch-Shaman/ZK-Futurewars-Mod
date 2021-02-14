@@ -103,10 +103,13 @@ return {
 					vradius1 = "0,0,0,0,0,0", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 0,
 					spawnsfx1 = 2049,
+					
+					stats_custom_tooltip_1 = " - Damage decreases vs smaller targets",
+					damage_vs_shield = 84*8*0.25,
 				},
 
 				damage                  = {
-					default = 118.02,
+					default = 84*8,
 				},
 
 				explosionGenerator      = [[custom:FLASH2]],

@@ -21,6 +21,7 @@ local weaponDef = {
 		spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
 		timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 		vradius1 = "-2,-1,-2,2,0,2", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+		dyndamage = "Never gonna give you up...",
 		light_camera_height = 2500,
 		light_color = [[0.22 0.19 0.05]],
 		light_radius = 380,

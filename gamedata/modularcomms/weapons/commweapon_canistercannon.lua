@@ -26,6 +26,7 @@ local weaponDef = {
 		groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 		proxy = 1, -- check for nearby units?
 		proxydist = 100, -- how far to check for units? Default: spawndist
+		dyndamage = "Never gonna let you down...",
 		reaim_time = 60, -- Fast update not required (maybe dangerous)
 		light_camera_height = 1500,
 		light_color = [[0.8 0.76 0.38]],
