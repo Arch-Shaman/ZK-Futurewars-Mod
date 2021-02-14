@@ -1129,12 +1129,12 @@ local moduleDefs = {
 	{
 		name = "module_companion_drone",
 		humanName = "Companion Drone",
-		description = "Companion Drone:\nAdds a protective drone.\nSupport and Bombard only (Limit: 8)",
+		description = "Companion Drone:\nAdds a protective drone.\nSupport only (Limit: 8)",
 		image = moduleImagePath .. "module_companion_drone.png",
 		limit = 8,
-		cost = 100 * COST_MULT,
-		requireChassis = {"assault", "support", "knight"},
-		requireLevel = 2,
+		cost = 50 * COST_MULT,
+		requireChassis = {"support", "knight"},
+		requireLevel = 1,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			sharedData.drones = (sharedData.drones or 0) + 1
@@ -1143,13 +1143,13 @@ local moduleDefs = {
 	{
 		name = "module_battle_drone",
 		humanName = "Battle Drone",
-		description = "Battle Drone:\nCommander spawns heavy drones.\nSupport and Bombard only (Limit: 8, Requires 1 Companion Drone)",
+		description = "Battle Drone:\nCommander spawns heavy drones.\nSupport only (Limit: 8, Requires 1 Companion Drone)",
 		image = moduleImagePath .. "module_battle_drone.png",
 		limit = 8,
-		cost = 250 * COST_MULT,
-		requireChassis = {"assault", "support", "knight"},
+		cost = 125 * COST_MULT,
+		requireChassis = {"support", "knight"},
 		requireOneOf = {"module_companion_drone"},
-		requireLevel = 3,
+		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			sharedData.droneheavyslows = (sharedData.droneheavyslows or 0) + 1
@@ -1175,7 +1175,7 @@ local moduleDefs = {
 		description = "Ablative Armour Plates - Provides " .. 1250*HP_MULT .. " health. (Limit: 8)",
 		image = moduleImagePath .. "module_ablative_armor.png",
 		limit = 8,
-		cost = 200 * COST_MULT,
+		cost = 150 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -1185,18 +1185,18 @@ local moduleDefs = {
 	{
 		name = "module_heavy_armor",
 		humanName = "High Density Plating",
-		description = "High Density Plating:\nProvides " .. 3000*HP_MULT .. " health but reduces speed by 2. " ..
-		"\nAmbusher and Guardian Only. (Limit: 8, Requires Ablative Armour Plates)",
+		description = "High Density Plating:\nProvides " .. 3000*HP_MULT .. " health but reduces speed by 1. " ..
+		"\nGuardian Only. (Limit: 8, Requires Ablative Armour Plates)",
 		image = moduleImagePath .. "module_heavy_armor.png",
 		limit = 8,
-		cost = 300 * COST_MULT,
+		cost = 200 * COST_MULT,
 		requireOneOf = {"module_ablative_armor"},
-		requireChassis = {"strike", "assault"},
+		requireChassis = {"assault"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			sharedData.healthBonus = (sharedData.healthBonus or 0) + 3000*HP_MULT
-			sharedData.speedMod = (sharedData.speedMod or 0) - 2
+			sharedData.speedMod = (sharedData.speedMod or 0) - 1
 		end
 	},
 	{
@@ -1205,7 +1205,7 @@ local moduleDefs = {
 		description = "Damage Booster:\nIncreases damage by 10% but reduces speed by 1. (Limit: 8)",
 		image = moduleImagePath .. "module_dmg_booster.png",
 		limit = 8,
-		cost = 150 * COST_MULT,
+		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -1220,7 +1220,7 @@ local moduleDefs = {
 		description = "High Power Servos\nIncreases speed by 2. (Limit: 8)",
 		image = moduleImagePath .. "module_high_power_servos.png",
 		limit = 8,
-		cost = 150 * COST_MULT,
+		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -1248,7 +1248,7 @@ local moduleDefs = {
 		description = "Nanobot Sleeve:\nIncreases regen while cloaked by 20.\nStrike only (Limit: 8)",
 		image = moduleImagePath .. "module_cloakregen.png",
 		limit = 8,
-		cost = 50 * COST_MULT,
+		cost = 75 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"strike"},
@@ -1262,7 +1262,7 @@ local moduleDefs = {
 		description = "Advanced Targeting System:\nIncreases range by 7.5% but reduces speed by 1. (Limit: 8)",
 		image = moduleImagePath .. "module_adv_targeting.png",
 		limit = 8,
-		cost = 150 * COST_MULT,
+		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"strike", "recon", "support", "riot"},
@@ -1277,7 +1277,7 @@ local moduleDefs = {
 		description = "Improved Targeting System:\nIncreases range by 10% but reduces speed by 2.\nBombard only.(Limit: 8)",
 		image = moduleImagePath .. "module_adv_targeting.png",
 		limit = 8,
-		cost = 150 * COST_MULT,
+		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"assault"},
@@ -1288,15 +1288,30 @@ local moduleDefs = {
 	},
 	{
 		name = "module_adv_nano",
-		humanName = "CarRepairer's Nanolathe",
-		description = "CarRepairer's Nanolathe:\nIncreases build power by 4. (Limit: 8)",
+		humanName = "Advanced Nanolathe",
+		description = "Advanced Nanolathe:\nIncreases build power by 2.5 (+5 for support).\nLimit: 8",
 		image = moduleImagePath .. "module_adv_nano.png",
 		limit = 8,
-		cost = 150 * COST_MULT,
+		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
+		requireChassis = {"assault", "strike", "recon"},
 		applicationFunction = function (modules, sharedData)
-			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 4
+			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 2.5
+		end
+	},
+	{
+		name = "module_adv_nano_support",
+		humanName = "Advanced Nanolathe",
+		description = "Advanced Nanolathe:\nIncreases build power by 5 (+2.5 for others).\nLimit: 8",
+		image = moduleImagePath .. "module_adv_nano.png",
+		limit = 8,
+		cost = 100 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+		requireChassis = {"support"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 5
 		end
 	},
 	
@@ -1384,13 +1399,13 @@ end
 local morphCosts = {
 	75,
 	100,
-	650,
-	200,
-	300,
+	125,
+	150,
+	175,
 }
 
 local function extraLevelCostFunction(level)
-	return (level - 2) * 100 * COST_MULT
+	return math.max(300, level * 25 + 50) * COST_MULT
 end
 
 local chassisDefs = {
@@ -1410,7 +1425,7 @@ local chassisDefs = {
 					sharedData.decloakDistance = 200
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 10
 					sharedData.personalCloak = true -- !!FREE!! cloak
-					sharedData.speedMod = (sharedData.speedMod or 0) + 8
+					sharedData.speedMod = (sharedData.speedMod or 0) + 2
 					sharedData.recloaktime = (sharedData.recloaktime or 300)
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1425,7 +1440,7 @@ local chassisDefs = {
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.decloakDistance = 180
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 20
-					sharedData.speedMod = (sharedData.speedMod or 0) + 8
+					sharedData.speedMod = (sharedData.speedMod or 0) + 2
 					sharedData.recloaktime = (sharedData.recloaktime or 300) - 30
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1449,7 +1464,7 @@ local chassisDefs = {
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.decloakDistance = 160
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 30
-					sharedData.speedMod = (sharedData.speedMod or 0) + 8
+					sharedData.speedMod = (sharedData.speedMod or 0) + 2
 					sharedData.recloaktime = (sharedData.recloaktime or 300) - 60
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1473,7 +1488,7 @@ local chassisDefs = {
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.decloakDistance = 140
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 40
-					sharedData.speedMod = (sharedData.speedMod or 0) + 8
+					sharedData.speedMod = (sharedData.speedMod or 0) + 2
 					sharedData.recloaktime = (sharedData.recloaktime or 300) - 90
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1501,7 +1516,7 @@ local chassisDefs = {
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.decloakDistance = 120
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 50
-					sharedData.speedMod = (sharedData.speedMod or 0) + 8
+					sharedData.speedMod = (sharedData.speedMod or 0) + 2
 					sharedData.recloaktime = (sharedData.recloaktime or 300) - 120
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1529,7 +1544,7 @@ local chassisDefs = {
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.decloakDistance = 100
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 60
-					sharedData.speedMod = (sharedData.speedMod or 0) + 8
+					sharedData.speedMod = (sharedData.speedMod or 0) + 2
 					sharedData.recloaktime = (sharedData.recloaktime or 300) - 150
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
