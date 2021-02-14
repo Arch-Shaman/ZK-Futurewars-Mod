@@ -58,7 +58,7 @@ return {
 		featureDefs         = {
 
 			DEAD  = {
-				blocking         = false,
+				blocking         = true,
 				featureDead      = [[HEAP]],
 				footprintX       = 3,
 				footprintZ       = 3,

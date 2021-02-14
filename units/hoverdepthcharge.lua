@@ -228,5 +228,5 @@ return {
 				object           = [[debris3x3c.s3o]],
 			},
 		},
-	} 
+	}
 }
