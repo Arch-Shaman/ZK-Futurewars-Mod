@@ -67,14 +67,14 @@ function gadget:GameFrame(f)
 		--spEcho(id .. " next update: " .. data.nextupdate)
 		if data.nextupdate == f then
 			local config = config[data.def]
-			local newrate = max(data.currentrate * (1 - config.rate), config.minoutput)
+			local newrate = max(data.currentrate * (1 - config.rate), 1)
 			if debug then spEcho(id .. ": Decayed from " .. data.currentrate * 10 .. "% -> " .. newrate * 10 .. "%") end
 			data.currentrate = newrate
 			spSetUnitRulesParam(id, "selfIncomeChange", data.currentrate)
 			GG.UpdateUnitAttributes(id)
 			GG.UpdateUnitAttributes(id)
 			--if debug then spEcho("Updated " .. id) end
-			if data.currentrate == config.minoutput then
+			if data.currentrate == 1 then
 				IterableMap.Remove(decayers, id)
 			else
 				data.nextupdate = f + config.time
