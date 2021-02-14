@@ -79,6 +79,7 @@ local random = math.random
 local sqrt = math.sqrt
 local byte = string.byte
 local abs = math.abs
+local atan2 = math.atan2
 local pi = math.pi
 local halfpi = pi/2
 local abs = math.abs -- CAS GOES TO THE GYM AND HAS DOUBLE ABS
