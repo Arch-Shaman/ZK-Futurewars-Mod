@@ -105,7 +105,7 @@ return {
 					spawnsfx1 = 2049,
 					
 					stats_custom_tooltip_1 = " - Damage decreases vs smaller targets",
-					damage_vs_shield = 69*7*0.25,
+					damage_vs_shield = 69*7*0.5,
 				},
 
 				damage                  = {
