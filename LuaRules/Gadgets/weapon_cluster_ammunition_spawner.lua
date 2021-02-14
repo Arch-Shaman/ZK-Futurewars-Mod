@@ -35,6 +35,7 @@ end
 		clusterdelay = num -- number of frames between each spawn.
 		clusterdelaytype = 0/-1 -- { 0 - after being triggered, keep clustering until clustercharge runs out.
 									-1 - only cluster if trigger conditions met AND delay has run out.
+		dyndamage = string / nil -- if any non-nil value, this weapon will have commander dynamic damage
 	}
 ]]
 
@@ -72,16 +73,18 @@ local spSetProjectileAlwaysVisible = Spring.SetProjectileAlwaysVisible
 local spGetProjectileIsIntercepted = Spring.GetProjectileIsIntercepted
 local spGetProjectileTeamID = Spring.GetProjectileTeamID
 local spSpawnSFX = Spring.SpawnSFX
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+
 local random = math.random
 local sqrt = math.sqrt
 local byte = string.byte
 local abs = math.abs
-local atan2 = math.atan2
 local pi = math.pi
 local halfpi = pi/2
 local abs = math.abs -- CAS GOES TO THE GYM AND HAS DOUBLE ABS
 local strfind = string.find
 local gmatch = string.gmatch
+local floor = math.floor
 
 local ground = byte("g")
 local unit = byte("u")
@@ -191,6 +194,10 @@ for i=1, #WeaponDefs do
 							config[i]["vlist"][#config[i]["vlist"]+1] = {tonumber(x),tonumber(y),tonumber(z)}
 						end
 					end
+					if type(curRef.dyndamage) == "string" then
+						config[i]["dynDamage"] = true
+					end
+					
 					
 					--sonny projectile defs
 					
@@ -375,7 +382,6 @@ local function SpawnSubProjectiles(id, wd)
 		local r = projectileConfig[j]["spreadradius"]
 		local vr = projectileConfig[j]["veldata"]
 		local projectilecount = projectileConfig[j]["numprojectiles"]
-		
 		for i=1, 3 do
 			step[i] = (vr.max[i] - vr.min[i])/projectilecount
 		end
@@ -388,6 +394,10 @@ local function SpawnSubProjectiles(id, wd)
 		local positioning = projectileConfig[j].clusterpos or "none"
 		local vectoring = projectileConfig[j].clustervec or "none"
 		local keepmomentum = projectileConfig[j].keepmomentum
+		if config[wd].dynDamage then
+			local spawnMult = spGetUnitRulesParam(projectileattributes["owner"], "comm_damage_mult")
+			projectilecount = floor(spawnMult * projectilecount + random())
+		end
 		for i = 1, projectilecount do
 			local p
 			if strfind(positioning,"random") then
@@ -435,12 +445,9 @@ local function SpawnSubProjectiles(id, wd)
 				local dy = projectileattributes["speed"][2] - 1 --hackity hax
 				local dz = projectileattributes["speed"][3]
 				--do not question the arctangent
-				local dy2 = dy*dy
-				local dz2 = dz*dz
-				local dx2 = dx*dx
-				local dirX = atan2(dx, sqrt(dy2 + dz2))
-				local dirY = atan2(dy, sqrt(dx2 + dz2))
-				local dirZ = atan2(dz, sqrt(dx2 + dy2))
+				local dirX = math.atan2(dx, sqrt(dy*dy+dz*dz))
+				local dirY = math.atan2(dy, sqrt(dx*dx+dz*dz))
+				local dirZ = math.atan2(dz, sqrt(dx*dx+dy*dy))
 				spSpawnSFX(projectileattributes["owner"], projectileConfig[j].spawnsfx, projectileattributes["pos"][1], projectileattributes["pos"][2], projectileattributes["pos"][3], dirX, dirY, dirZ, true)
 			else
 				p = spSpawnProjectile(me, projectileattributes)
