@@ -105,12 +105,11 @@ return {
 					spawnsfx1 = 2049,
 					
 					stats_custom_tooltip_1 = " - Damage decreases vs smaller targets",
-					shield_mult = 0.25,
+					damage_vs_shield = 84*8*0.25,
 				},
 
 				damage                  = {
 					default = 84*8,
-					shield = 84*8*0.25
 				},
 
 				explosionGenerator      = [[custom:FLASH2]],
