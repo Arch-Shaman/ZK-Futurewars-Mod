@@ -25,7 +25,7 @@ return {
 			decay_minoutput= 1.8,
 			decay_rate     = 0.025,
 			modelradius    = [[60]],
-			pylonrange = 220,
+			pylonrange = 100,
 			realenergy = 18,
 			dangerous_reclaim = [[gimme that radioactive goodness]],
 		},
