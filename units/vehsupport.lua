@@ -90,7 +90,7 @@ return {
 				customParams        = {
 					light_camera_height = 2000,
 					light_radius = 200,
-					numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 7, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "vehsupport_particlebeam",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -105,11 +105,11 @@ return {
 					spawnsfx1 = 2049,
 					
 					stats_custom_tooltip_1 = " - Damage decreases vs smaller targets",
-					damage_vs_shield = 84*8*0.25,
+					damage_vs_shield = 69*7*0.25,
 				},
 
 				damage                  = {
-					default = 84*8,
+					default = 69*7,
 				},
 
 				explosionGenerator      = [[custom:FLASH2]],
