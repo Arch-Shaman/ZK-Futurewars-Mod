@@ -147,7 +147,7 @@ return {
 				customParams            = {
 					light_color = [[0.9 0.22 0.22]],
 					light_radius = 80,
-
+					damage_vs_shield = 84 * 0.25,
 					bogus = 1,
 				},
 				damage                  = {
