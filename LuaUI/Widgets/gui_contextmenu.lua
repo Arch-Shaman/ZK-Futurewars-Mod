@@ -1557,7 +1557,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 	do
 		local sonar
 		if unitID then
-			sonar = Spring.GetUnitRulesParam(unitID, "sonarRadiusOverride") or ud.sonarRadius
+			sonar = Spring.GetUnitRulesParam(unitID, "sonarRangeOverride") or ud.sonarRadius
 		else
 			sonar = ud.sonarRadius
 		end
