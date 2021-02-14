@@ -86,7 +86,7 @@ return {
 				},
 
 				damage                  = {
-					default = 42*7,
+					default = 69*7,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -118,7 +118,7 @@ return {
 			DISRUPTORBOMB = {
 				name                    = [[Fake Disruption Cannon]],
 				accuracy                = 200,
-				areaOfEffect            = 90,
+				areaOfEffect            = 120,
 				cegTag                  = [[beamweapon_muzzle_purple]],
 				craterBoost             = 1,
 				craterMult              = 2,
@@ -130,10 +130,10 @@ return {
 				},
 
 				damage                  = {
-					default = 42,
+					default = 69,
 				},
 
-				explosionGenerator      = [[custom:riotballplus2_purple_small140]],
+				explosionGenerator      = [[custom:riotballplus2_purple_small120]],
 				fireStarter             = 180,
 				impactOnly              = false,
 				impulseBoost            = 0,
