@@ -942,7 +942,16 @@ local function weapons2Table(cells, ws, unitID)
 			cells[#cells+1] = ' - Inaccuracy vs moving targets'
 			cells[#cells+1] = '' -- actual value doesn't say much as it's a multiplier for the target speed
 		end
-
+		
+		if cp.stats_custom_tooltip_1 then
+		local q = 1
+			while cp["stats_custom_tooltip_" .. q] do
+			cells[#cells+1] = cp["stats_custom_tooltip_" .. q] or ""
+			cells[#cells+1] = cp["stats_custom_tooltip_entry_" .. q] or ""
+			q = q + 1
+			end
+		end
+		
 		if wd.targetable and ((wd.targetable == 1) or (wd.targetable == true)) then
 			cells[#cells+1] = ' - Can be shot down by antinukes'
 			cells[#cells+1] = ''
