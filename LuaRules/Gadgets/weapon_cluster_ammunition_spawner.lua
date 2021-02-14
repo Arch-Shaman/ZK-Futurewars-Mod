@@ -446,9 +446,12 @@ local function SpawnSubProjectiles(id, wd)
 				local dy = projectileattributes["speed"][2] - 1 --hackity hax
 				local dz = projectileattributes["speed"][3]
 				--do not question the arctangent
-				local dirX = math.atan2(dx, sqrt(dy*dy+dz*dz))
-				local dirY = math.atan2(dy, sqrt(dx*dx+dz*dz))
-				local dirZ = math.atan2(dz, sqrt(dx*dx+dy*dy))
+				local dx2 = dx*dx	
+				local dy2 = dy*dy
+				local dz2 = dz*dz
+				local dirX = atan2(dx, sqrt(dy2 + dz2))
+				local dirY = atan2(dy, sqrt(dx2 + dz2))
+				local dirZ = atan2(dz, sqrt(dx2 + dy2))
 				spSpawnSFX(projectileattributes["owner"], projectileConfig[j].spawnsfx, projectileattributes["pos"][1], projectileattributes["pos"][2], projectileattributes["pos"][3], dirX, dirY, dirZ, true)
 			else
 				p = spSpawnProjectile(me, projectileattributes)
