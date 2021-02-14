@@ -658,9 +658,22 @@ local function weapons2Table(cells, ws, unitID)
 			cells[#cells+1] = ' - Reloadtime:'
 			cells[#cells+1] = numformat (reloadtime,2) .. 's'
 		end
+		
 		if show_dps then
 			cells[#cells+1] = ' - DPS:'
 			cells[#cells+1] = dps_str
+			if cp.dmg_scaling then
+				cells[#cells+1] = '    - Increases by:'
+				cells[#cells+1] = numformat(tonumber(cp.dmg_scaling) * 100 * 30) .. "%/s"
+
+				if tonumber(cp.dmg_scaling_max) < 10000 then
+					cells[#cells+1] = '    - Caps out at:'
+					cells[#cells+1] = numformat(tonumber(cp.dmg_scaling_max) * 100) .. "%"
+				else
+					cells[#cells+1] = '    - Never caps out'
+					cells[#cells+1] = ""
+				end
+			end
 		end
 
 		if (wd.interceptedByShieldType == 0) then
