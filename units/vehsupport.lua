@@ -104,7 +104,7 @@ return {
 					groundimpact = 0,
 					spawnsfx1 = 2049,
 					
-					custom_tooltip_1 = " - Damage decreases vs smaller targets",
+					stats_custom_tooltip_1 = " - Damage decreases vs smaller targets",
 					shield_mult = 0.25,
 				},
 
