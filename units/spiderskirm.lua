@@ -86,7 +86,7 @@ return {
 				},
 
 				damage                  = {
-					default = 135,
+					default = 42*7,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -126,6 +126,7 @@ return {
 				customparams = {
 					timeslow_damagefactor = 1.7,
 					bogus = 1,
+					nofriendlyfire = 1,
 				},
 
 				damage                  = {
