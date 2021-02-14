@@ -151,9 +151,10 @@ return {
 					bogus = 1,
 				},
 				damage                  = {
-					default = 84,
+					default = 69,
 				},
 				dynDamageExp            = 1,
+				dynDamageRange          = 175,
 				dynDamageInverted       = false,
 				explosionGenerator      = [[custom:flash1red]],
 				fireStarter             = 100,
