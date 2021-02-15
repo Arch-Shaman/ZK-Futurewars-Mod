@@ -3,7 +3,7 @@ return {
 		unitname                      = [[singularity]],
 		name                          = [[Wake]],
 		description                   = [[Compact Singularity Device]],
-		buildCostMetal                = 700,
+		buildCostMetal                = 1000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 3,
