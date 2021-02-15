@@ -155,6 +155,7 @@ return {
 				soundStart              = [[weapon/bomb_drop]],
 				startVelocity           = 100,
 				tolerance               = 65536/2, -- 180 degrees
+				fireTolerance		= 65536/2,
 				accuracy		= 2800,
 				sprayangle		= 300,
 				turnRate                = 2500,
