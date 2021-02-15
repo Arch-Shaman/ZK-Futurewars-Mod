@@ -149,6 +149,7 @@ return {
 				leadLimit               = 20,
 				mygravity		= 0.25,
 				reloadtime              = 5,
+				range			= 50,
 				texture2                = [[darksmoketrail]],
 				soundHit                = [[weapon/cannon/cannonfire_001]],
 				soundStart              = [[weapon/bomb_drop]],
