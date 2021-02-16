@@ -6,7 +6,7 @@ return {
 		acceleration                  = 0,
 		activateWhenBuilt             = true,
 		brakeRate                     = 0,
-		buildCostMetal                = 525,
+		buildCostMetal                = 500,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 4,
@@ -27,7 +27,7 @@ return {
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 900,
+		maxDamage                     = 1000,
 		maxSlope                      = 36,
 		maxVelocity                   = 0,
 		minCloakDistance              = 150,
@@ -41,19 +41,15 @@ return {
 		useBuildingGroundDecal        = true,
 		workerTime                    = 0,
 		yardMap                       = [[oooo]],
-
 		customParams        = {
 			removewait     = 1,
-
 			morphto = [[shieldshield]],
-			morphtime = [[30]],
-
+			morphtime = [[10]],
 			priority_misc = 1, -- Medium
 			unarmed       = true,
 			addfight       = 1,
 			addpatrol      = 1,
 		},
-
 		weapons                       = {
 
 			{
@@ -63,7 +59,6 @@ return {
 
 		},
 		weaponDefs                    = {
-
 			COR_SHIELD_SMALL = {
 				name                    = [[Energy Shield]],
 				craterMult              = 0,
@@ -80,8 +75,8 @@ return {
 				shieldGoodColor         = [[0.1 0.1 1 1]],
 				shieldInterceptType     = 3,
 				shieldPower             = 6000,
-				shieldPowerRegen        = 50,
-				shieldPowerRegenEnergy  = 9,
+				shieldPowerRegen        = 60,
+				shieldPowerRegenEnergy  = 10,
 				shieldRadius            = 450,
 				shieldRepulser          = false,
 				smartShield             = true,
@@ -89,10 +84,8 @@ return {
 				visibleShieldRepulse    = false,
 				weaponType              = [[Shield]],
 			},
-
 		},
 		featureDefs                   = {
-
 			DEAD = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
