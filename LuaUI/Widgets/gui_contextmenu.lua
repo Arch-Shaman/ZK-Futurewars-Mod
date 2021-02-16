@@ -1235,7 +1235,10 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = ''
 		cells[#cells+1] = ''
 	end
-
+	if cp.dangerous_reclaim then
+		cells[#cells+1] = 'Explodes upon reclamation attempt'
+		cells[#cells+1] = ''
+	end
 	if cp.floattoggle then
 		cells[#cells+1] = 'Floating'
 		cells[#cells+1] = ''
