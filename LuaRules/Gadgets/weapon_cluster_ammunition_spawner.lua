@@ -347,7 +347,8 @@ end
 
 local function RegisterSubProjectiles(p, me)
 	if config[me] then
-		IterableMap.Add(projectiles, p, {def = me, intercepted = false, ttl = ((config[me].timer and (frame + config[me].timer)) or nil), delay = 0, charges = config[me].clustercharges}) --frame is set to current frame in gameframe
+		local damagemult = spGetUnitRulesParam(spGetProjectileOwnerID(p), "comm_damage_mult")
+		IterableMap.Add(projectiles, p, {def = me, intercepted = false, ttl = ((config[me].timer and (frame + config[me].timer)) or nil), delay = 0, charges = config[me].clustercharges, commdamagemult = damagemult}) --frame is set to current frame in gameframe
 		if config[me]["alwaysvisible"] then
 			spSetProjectileAlwaysVisible(p, true)
 		end
@@ -359,6 +360,7 @@ local function SpawnSubProjectiles(id, wd)
 		return
 	end
 	--spawn all the subprojectiles
+	local projectiledata = IterableMap.Get(projectiles, id)
 	local projectileattributes = projectileattributesCache
 	if debug then
 		spEcho("Fire the submunitions!")
@@ -396,8 +398,13 @@ local function SpawnSubProjectiles(id, wd)
 		local vectoring = projectileConfig[j].clustervec or "none"
 		local keepmomentum = projectileConfig[j].keepmomentum
 		if config[wd].dynDamage then
-			local spawnMult = spGetUnitRulesParam(projectileattributes["owner"], "comm_damage_mult")
-			projectilecount = floor(spawnMult * projectilecount + random())
+			local spawnMult = projectiledata.commdamagemult or 1
+			if debug then
+				spEcho("SpawnMult: " .. spawnMult)
+			end
+			if spawnMult > 1 then
+				projectilecount = floor(spawnMult * projectilecount + random())
+			end
 		end
 		for i = 1, projectilecount do
 			local p
