@@ -30,7 +30,7 @@ return {
 			removestop     = 1,
 		},
   
-		energyUse                     = 0.8,
+		energyUse                     = 0.5,
 		explodeAs                     = [[SMALL_BUILDINGEX]],
 		floater                       = true,
 		footprintX                    = 2,
@@ -50,7 +50,8 @@ return {
 		radarDistance                 = 2100,
 		radarEmitHeight               = 32,
 		selfDestructAs                = [[SMALL_BUILDINGEX]],
-		sightDistance                 = 800,
+		sightDistance                 = 600,
+		sonarDistance       		  = 600,
 		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
 		workerTime                    = 0,
@@ -64,7 +65,6 @@ return {
 
 		},
 		featureDefs                   = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -72,15 +72,12 @@ return {
 				footprintZ       = 2,
 				object           = [[ARADARLVL1_dead.s3o]],
 			},
-
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
 				object           = [[debris2x2c.s3o]],
 			},
-
 		},
 	} 
 }

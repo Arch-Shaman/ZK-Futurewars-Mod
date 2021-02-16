@@ -23,7 +23,7 @@ return {
 			priority_misc  = 2, -- High
 			isradar        = 1,
 		},
-		energyUse                     = 3,
+		energyUse                     = 1.5,
 		explodeAs                     = [[SMALL_BUILDINGEX]],
 		floater                       = true,
 		footprintX                    = 2,
@@ -42,6 +42,7 @@ return {
 		radarEmitHeight               = 150,
 		selfDestructAs                = [[SMALL_BUILDINGEX]],
 		sightDistance                 = 1700,
+		sonarDistance       		  = 1700,
 		useBuildingGroundDecal        = true,
 		yardMap                       = [[oooo]],
 		featureDefs                   = {
@@ -52,7 +53,6 @@ return {
 				footprintZ       = 2,
 				object           = [[novaradar_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
