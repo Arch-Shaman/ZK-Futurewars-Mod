@@ -4,7 +4,7 @@ return {
 		name                          = [[Cornea]],
 		description                   = [[Area Cloaker/Jammer]],
 		activateWhenBuilt             = true,
-		buildCostMetal                = 420,
+		buildCostMetal                = 500,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 4,
@@ -21,14 +21,12 @@ return {
 
 		customParams                  = {
 			removewait     = 1,
-
 			morphto = [[cloakjammer]],
-			morphtime = 30,
-
+			morphtime = 10,
 			area_cloak = 1,
-			area_cloak_upkeep = 12,
-			area_cloak_radius = 550,
-
+			area_cloak_upkeep = 6,
+			area_cloak_radius = 750,
+			area_cloak_decloak_distance = 100,
 			priority_misc  = 1,
 			addfight       = 1,
 			addpatrol      = 1,
@@ -49,10 +47,10 @@ return {
 		noAutoFire                    = false,
 		objectName                    = [[radarjammer.dae]],
 		onoffable                     = true,
-		radarDistanceJam              = 550,
+		radarDistanceJam              = 750,
 		script                        = [[staticjammer.lua]],
 		selfDestructAs                = [[BIG_UNITEX]],
-		sightDistance                 = 250,
+		sightDistance                 = 200,
 		useBuildingGroundDecal        = true,
 		yardMap                       = [[oo oo]],
 		featureDefs                   = {

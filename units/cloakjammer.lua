@@ -6,22 +6,19 @@ return {
 		acceleration           = 0.75,
 		activateWhenBuilt      = true,
 		brakeRate              = 4.5,
-		buildCostMetal         = 600,
+		buildCostMetal         = 500,
 		buildPic               = [[cloakjammer.png]],
 		canMove                = true,
 		category               = [[LAND UNARMED]],
 		corpse                 = [[DEAD]],
 
 		customParams           = {
-
 			morphto = [[staticjammer]],
-			morphtime = 30,
-
+			morphtime = 10,
 			area_cloak = 1,
-			area_cloak_upkeep = 15,
+			area_cloak_upkeep = 16,
 			area_cloak_radius = 440,
 			area_cloak_decloak_distance = 150,
-    
 			priority_misc = 1,
 			cus_noflashlight = 1,
 		},
@@ -33,7 +30,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 600,
+		maxDamage              = 700,
 		maxSlope               = 36,
 		maxVelocity            = 1.9,
 		minCloakDistance       = 180,
