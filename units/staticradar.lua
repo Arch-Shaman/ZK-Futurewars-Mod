@@ -22,7 +22,7 @@ return {
 		
 		customParams = {
 			morphto        = [[staticheavyradar]],
-			morphtime      = 45,
+			morphtime      = 30,
 			modelradius    = [[16]],
 			priority_misc  = 2, -- High
 			isradar        = 1,
