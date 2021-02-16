@@ -19,7 +19,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 2500,
+		default = 2250,
 	},
 
 	explosionGenerator      = [[custom:blue_explosion]],
@@ -31,7 +31,7 @@ local weaponDef = {
 	noExplode               = false,
 	noSelfDamage            = true,
 	range                   = 500,
-	reloadtime              = 7.5,
+	reloadtime              = 10,
 	rgbColor                = [[0.5 0.5 1]],
 	separation              = 0.5,
 	size                    = 10,

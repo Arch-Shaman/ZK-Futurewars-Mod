@@ -18,7 +18,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 1200,
+		default = 1250,
 	},
 
 	edgeEffectiveness       = 0.5,
@@ -26,14 +26,14 @@ local weaponDef = {
 	impulseBoost            = 0,
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 1,
-	range                   = 350,
+	range                   = 400,
 	reloadtime              = 5,
 	soundHit                = [[weapon/cannon/megaarty_hit]],
 	soundStart              = [[weapon/cannon/plasma_fire]],
 	soundstartvolume		= 8,
 	turret                  = true,
 	weaponType              = [[Cannon]],
-	weaponVelocity          = 420,
+	weaponVelocity          = 480,
 	waterweapon				= true,
 }
 
