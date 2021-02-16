@@ -13,7 +13,7 @@ return {
 		buildingGroundDecalSizeY      = 4,
 		buildingGroundDecalType       = [[staticradar_aoplane.dds]],
 		buildPic                      = [[staticradar.png]],
-		canMove                       = true,
+		canMove                       = false,
 		category                      = [[FLOAT UNARMED]],
 		collisionVolumeOffsets        = [[0 -32 0]],
 		collisionVolumeScales         = [[32 90 32]],
