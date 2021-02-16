@@ -6,7 +6,7 @@ return {
 		acceleration                  = 0,
 		activateWhenBuilt             = true,
 		brakeRate                     = 0,
-		buildCostMetal                = 240,
+		buildCostMetal                = 350,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 4,
@@ -26,7 +26,7 @@ return {
 			priority_misc  = 2, -- High
 		},
   
-		energyUse                     = 6,
+		energyUse                     = 0,
 		explodeAs                     = [[SMALL_BUILDINGEX]],
 		floater                       = true,
 		footprintX                    = 2,
@@ -35,14 +35,13 @@ return {
 		idleAutoHeal                  = 10,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 2600,
+		maxDamage                     = 1750,
 		maxSlope                      = 36,
 		maxVelocity                   = 0,
-		minCloakDistance              = 150,
 		noAutoFire                    = false,
 		objectName                    = [[turretdecloak.3do]],
 		script                        = [[turretdecloak.lua]],
-		onoffable                     = true,
+		onoffable                     = false,
 		selfDestructAs                = [[SMALL_BUILDINGEX]],
 		sightDistance                 = 600,
 		turnRate                      = 0,
@@ -60,7 +59,7 @@ return {
 		weaponDefs = {
 			DECLOAK    = {
 				name                    = [[Cloak Disruptor Pulse]],
-				areaOfEffect            = 1200,
+				areaOfEffect            = 1000,
 				craterBoost             = 0,
 				craterMult              = 0,
 				damage                  = {
