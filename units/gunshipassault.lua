@@ -32,7 +32,6 @@ return {
 		iconType            = [[heavygunshipassault]],
 		maxDamage           = 7250,
 		maxVelocity         = 5.3,
-		minCloakDistance    = 250,
 		noAutoFire          = false,
 		noChaseCategory     = [[TERRAFORM FIXEDWING SATELLITE GUNSHIP SUB]],
 		objectName          = [[Black_Dawn.s3o]],

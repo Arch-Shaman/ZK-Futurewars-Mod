@@ -34,7 +34,6 @@ return {
 		maxSlope               = 18,
 		maxVelocity            = 3.7,
 		maxWaterDepth          = 22,
-		minCloakDistance       = 75,
 		movementClass          = [[TANK2]],
 		noAutoFire             = false,
 		noChaseCategory        = [[TERRAFORM FIXEDWING SATELLITE SUB]],

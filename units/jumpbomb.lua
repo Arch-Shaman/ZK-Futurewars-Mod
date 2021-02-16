@@ -35,6 +35,7 @@ return {
 			selection_scale = 1, -- Maybe change later
 			cloakregen	= 20,
 			recloaktime = 300,
+			cloaker_bestowed_radius = 75,
 		},
 
 		explodeAs              = [[jumpbomb_DEATH]],

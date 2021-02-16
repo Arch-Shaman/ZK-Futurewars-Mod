@@ -31,6 +31,7 @@ return {
 			aim_lookahead     = 120,
 			cloakregen		  = 15,
 			recloaktime 	  = 300,
+			cloaker_bestowed_radius = 92,
 		},
 		explodeAs              = [[SMALL_UNITEX]],
 		footprintX             = 3,

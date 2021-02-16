@@ -43,7 +43,6 @@ local unitDef = {
 	maxDamage              = 1800,
 	maxRudder              = 0.006,
 	maxVelocity            = 8,
-	minCloakDistance       = 75,
 	mygravity              = 1,
 	noChaseCategory        = [[TERRAFORM]],
 	objectName             = [[fighter2.s3o]],

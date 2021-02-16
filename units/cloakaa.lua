@@ -24,6 +24,7 @@ return {
 			cus_noflashlight = 1,
 			cloakregen	= 10,
 			recloaktime 	   = 240,
+			cloaker_bestowed_radius = 75,
 		},
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 2,

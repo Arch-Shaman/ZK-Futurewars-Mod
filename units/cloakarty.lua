@@ -22,6 +22,7 @@ return {
 			selection_scale    = 0.85,
 			cloakregen		   = 10,
 			recloaktime 	   = 330,
+			cloaker_bestowed_radius = 75,
 		},
 		initCloaked 		   = true,
 		cloakCostMoving 	   = 0.5,

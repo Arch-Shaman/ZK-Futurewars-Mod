@@ -30,7 +30,6 @@ return {
 		maxDamage                     = 1000,
 		maxSlope                      = 36,
 		maxVelocity                   = 0,
-		minCloakDistance              = 150,
 		noAutoFire                    = false,
 		objectName                    = [[m-8.s3o]],
 		onoffable                     = true,

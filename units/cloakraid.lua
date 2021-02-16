@@ -28,6 +28,7 @@ return {
 			aim_lookahead      = 80,
 			cloakregen		   = 10,
 			recloaktime 	   = 300,
+			cloaker_bestowed_radius = 75,
 		},
 
 		explodeAs              = [[SMALL_UNITEX]],

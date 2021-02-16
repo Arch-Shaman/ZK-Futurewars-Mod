@@ -29,7 +29,6 @@ return {
 		maxSlope               = 72,
 		maxVelocity            = 2.1,
 		maxWaterDepth          = 22,
-		minCloakDistance       = 75,
 		movementClass          = [[TKBOT3]],
 		noChaseCategory        = [[TERRAFORM FIXEDWING GUNSHIP SATELLITE SUB]],
 		objectName             = [[recluse.s3o]],

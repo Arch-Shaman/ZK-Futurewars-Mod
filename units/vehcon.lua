@@ -38,7 +38,6 @@ return {
 		maxSlope               = 18,
 		maxVelocity            = 2.4,
 		maxWaterDepth          = 22,
-		minCloakDistance       = 75,
 		movementClass          = [[TANK2]],
 		noAutoFire             = false,
 		noChaseCategory        = [[TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET]],

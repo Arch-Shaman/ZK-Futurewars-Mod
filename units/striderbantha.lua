@@ -36,7 +36,6 @@ local unitDef = {
 	maxSlope               = 36,
 	maxVelocity            = 1.25,
 	maxWaterDepth          = 22,
-	minCloakDistance       = 75,
 	movementClass          = [[KBOT4]],
 	noAutoFire             = false,
 	noChaseCategory        = [[FIXEDWING SATELLITE SUB]],
@@ -349,7 +348,6 @@ local unitDef = {
 		},
 	},
 	featureDefs            = {
-
 		DEAD  = {
 			blocking         = true,
 			featureDead      = [[HEAP]],
@@ -363,9 +361,7 @@ local unitDef = {
 			footprintZ       = 4,
 			object           = [[debris4x4b.s3o]],
 		},
-
 	},
-
 }
 
 return { striderbantha = unitDef }

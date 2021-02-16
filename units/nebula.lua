@@ -39,7 +39,6 @@ return {
 		idleTime               = 1800,
 		maxDamage              = 44000,
 		maxVelocity            = 1.1,
-		minCloakDistance       = 150,
 		noAutoFire             = false,
 		noChaseCategory        = [[TERRAFORM FIXEDWING SATELLITE SUB]],
 		objectName             = [[nebula.s3o]],

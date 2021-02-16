@@ -39,7 +39,6 @@ return {
 		maxElevator         = 0.02,
 		maxRudder           = 0.018,
 		maxVelocity         = 12,
-		minCloakDistance    = 75,
 		noAutoFire          = false,
 		noChaseCategory     = [[TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET]],
 		objectName          = [[armpnix.s3o]],

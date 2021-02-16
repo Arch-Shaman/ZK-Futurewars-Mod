@@ -5,7 +5,7 @@ return {
 		description            = [[Shock and Awe Ambusher]],
 		acceleration           = 0.6,
 		brakeRate              = 3.6,
-		buildCostMetal         = 400,
+		buildCostMetal         = 350,
 		buildPic               = [[cloakassault.png]],
 		canGuard               = true,
 		canMove                = true,
@@ -27,6 +27,7 @@ return {
 			cus_noflashlight = 1,
 			cloakregen		   = 20,
 			recloaktime 	   = 330,
+			cloaker_bestowed_radius = 75,
 		},
 
 		explodeAs              = [[BIG_UNITEX]],

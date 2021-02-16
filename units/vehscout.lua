@@ -36,7 +36,6 @@ return {
 		maxSlope               = 18,
 		maxVelocity            = 5.09,
 		maxWaterDepth          = 22,
-		minCloakDistance       = 75,
 		movementClass          = [[TANK2]],
 		moveState              = 0,
 		noAutoFire             = false,

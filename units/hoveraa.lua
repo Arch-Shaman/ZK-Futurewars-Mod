@@ -34,7 +34,6 @@ return {
 		maxDamage           = 950,
 		maxSlope            = 36,
 		maxVelocity         = 3.5,
-		minCloakDistance    = 75,
 		movementClass       = [[HOVER3]],
 		moveState           = 0,
 		noAutoFire          = false,

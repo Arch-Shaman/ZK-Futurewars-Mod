@@ -33,7 +33,6 @@ return {
 		maxSlope              = 36,
 		maxVelocity           = 2,
 		maxWaterDepth         = 22,
-		minCloakDistance      = 75,
 		movementClass         = [[KBOT2]],
 		noAutoFire            = false,
 		noChaseCategory       = [[FIXEDWING SATELLITE GUNSHIP SUB TURRET UNARMED]],

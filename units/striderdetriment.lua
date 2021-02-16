@@ -34,7 +34,6 @@ return {
 		maxSlope               = 37,
 		maxVelocity            = 1.0,
 		maxWaterDepth          = 5000,
-		minCloakDistance       = 150,
 		movementClass          = [[AKBOT4]],
 		noAutoFire             = false,
 		noChaseCategory        = [[TERRAFORM SATELLITE SUB]],

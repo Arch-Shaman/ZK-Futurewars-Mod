@@ -19,13 +19,11 @@ return {
 		selectionVolumeScales  = [[45 45 45]],
 		selectionVolumeType    = [[ellipsoid]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			modelradius    = [[13]],
 			aimposoffset   = [[0 10 0]],
 			chase_everything = [[1]], -- Does not get stupidtarget added to noChaseCats
 		},
-
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 3,
 		footprintZ             = 3,
@@ -37,7 +35,6 @@ return {
 		maxSlope               = 18,
 		maxVelocity            = 2.8,
 		maxWaterDepth          = 22,
-		minCloakDistance       = 75,
 		movementClass          = [[TANK3]],
 		moveState              = 0,
 		noAutoFire             = false,
@@ -76,7 +73,6 @@ return {
 			},
 		},
 		weaponDefs             = {
-
 			CORTRUCK_MISSILE = {
 				name                    = [[Frostshard HEAT Missiles]],
 				areaOfEffect            = 48,
@@ -86,7 +82,6 @@ return {
 				cegTag                  = [[missiletrailgreen]],
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams        = {
 					light_camera_height = 2000,
 					light_radius = 200,
@@ -103,15 +98,12 @@ return {
 					vradius1 = "0,0,0,0,0,0", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 0,
 					spawnsfx1 = 2049,
-					
 					stats_custom_tooltip_1 = " - Damage decreases vs smaller targets",
 					damage_vs_shield = 63*7*0.5,
 				},
-
 				damage                  = {
 					default = 63*7,
 				},
-
 				explosionGenerator      = [[custom:FLASH2]],
 				fireStarter             = 70,
 				flightTime              = 3,
@@ -177,7 +169,6 @@ return {
 
 		},
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -185,7 +176,6 @@ return {
 				footprintZ       = 3,
 				object           = [[cormist_dead_new.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,

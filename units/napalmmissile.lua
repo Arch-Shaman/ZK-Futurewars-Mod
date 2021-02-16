@@ -1,60 +1,55 @@
 unitDef = {
-  unitname                      = [[napalmmissile]],
-  name                          = [[Inferno]],
-  description                   = [[Napalm Missile]],
-  buildCostMetal                = 1000,
-  builder                       = false,
-  buildingGroundDecalDecaySpeed = 30,
-  buildingGroundDecalSizeX      = 3,
-  buildingGroundDecalSizeY      = 3,
-  buildingGroundDecalType       = [[napalmmissile_aoplane.dds]],
-  buildPic                      = [[napalmmissile.png]],
-  category                      = [[SINK UNARMED]],
-  collisionVolumeOffsets        = [[0 15 0]],
-  collisionVolumeScales         = [[20 60 20]],
-  collisionVolumeType	        = [[CylY]],
+	unitname                      = [[napalmmissile]],
+	name                          = [[Inferno]],
+	description                   = [[Napalm Missile]],
+	buildCostMetal                = 1000,
+	builder                       = false,
+	buildingGroundDecalDecaySpeed = 30,
+	buildingGroundDecalSizeX      = 3,
+	buildingGroundDecalSizeY      = 3,
+	buildingGroundDecalType       = [[napalmmissile_aoplane.dds]],
+	buildPic                      = [[napalmmissile.png]],
+	category                      = [[SINK UNARMED]],
+	collisionVolumeOffsets        = [[0 15 0]],
+	collisionVolumeScales         = [[20 60 20]],
+	collisionVolumeType	        = [[CylY]],
 
-  customParams                  = {
-    mobilebuilding = [[1]],
-  },
+	customParams                  = {
+		mobilebuilding = [[1]],
+	},
 
-  explodeAs                     = [[WEAPON]],
-  footprintX                    = 1,
-  footprintZ                    = 1,
-  iconType                      = [[cruisemissilesmall]],
-  idleAutoHeal                  = 5,
-  idleTime                      = 1800,
-  maxDamage                     = 1000,
-  maxSlope                      = 18,
-  minCloakDistance              = 150,
-  objectName                    = [[wep_napalm.s3o]],
-  script                        = [[cruisemissile.lua]],
-  selfDestructAs                = [[WEAPON]],
+	explodeAs                     = [[WEAPON]],
+	footprintX                    = 1,
+	footprintZ                    = 1,
+	iconType                      = [[cruisemissilesmall]],
+	idleAutoHeal                  = 5,
+	idleTime                      = 1800,
+	maxDamage                     = 1000,
+	maxSlope                      = 18,
+	minCloakDistance              = 150,
+	objectName                    = [[wep_napalm.s3o]],
+	script                        = [[cruisemissile.lua]],
+	selfDestructAs                = [[WEAPON]],
 
-  sfxtypes                      = {
+	sfxtypes                      = {
 
-    explosiongenerators = {
-      [[custom:RAIDMUZZLE]],
-    },
+		explosiongenerators = {
+			[[custom:RAIDMUZZLE]],
+		},
 
-  },
-
-  sightDistance                 = 0,
-  useBuildingGroundDecal        = false,
-  yardMap                       = [[o]],
-
-  weapons                       = {
-
-    {
-      def                = [[WEAPON]],
-      badTargetCategory  = [[SWIM LAND SHIP HOVER]],
-      onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP]],
-    },
-
-  },
+	},
+	sightDistance                 = 0,
+	useBuildingGroundDecal        = false,
+	yardMap                       = [[o]],
+	weapons                       = {
+		{
+			def                = [[WEAPON]],
+			badTargetCategory  = [[SWIM LAND SHIP HOVER]],
+			onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP]],
+		},
+	},
 
   weaponDefs                    = {
-	
 	SECONDARY = {
 		name 			= "Napalm",
 		cegTag                  = [[flamer]],
@@ -220,12 +215,8 @@ unitDef = {
       weaponType              = [[StarburstLauncher]],
       weaponVelocity          = 1200,
     },
-
   },
-
-  featureDefs                   = {
-  },
-
+  featureDefs                   = {},
 }
 
 return { napalmmissile = unitDef }

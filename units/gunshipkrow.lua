@@ -39,7 +39,6 @@ return {
 		maneuverleashlength    = [[500]],
 		maxDamage              = 36000,
 		maxVelocity            = 3.5,
-		minCloakDistance       = 150,
 		noAutoFire             = false,
 		noChaseCategory        = [[TERRAFORM FIXEDWING SATELLITE SUB]],
 		objectName             = [[krow.s3o]],
