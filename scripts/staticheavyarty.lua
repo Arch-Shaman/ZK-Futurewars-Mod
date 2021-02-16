@@ -13,6 +13,7 @@ include "pieceControl.lua"
 include "QueryWeaponFixHax.lua"
 
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 
 -- Signal definitions
 local SIG_AIM = 2
