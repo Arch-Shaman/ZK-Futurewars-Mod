@@ -26,6 +26,8 @@ return {
 			modelradius    = [[16]],
 			priority_misc  = 2, -- High
 			isradar        = 1,
+			removewait     = 1,
+			removestop     = 1,
 		},
   
 		energyUse                     = 0.8,
