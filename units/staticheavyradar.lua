@@ -41,8 +41,8 @@ return {
 		radarDistance                 = 5000,
 		radarEmitHeight               = 150,
 		selfDestructAs                = [[SMALL_BUILDINGEX]],
-		sightDistance                 = 1700,
-		sonarDistance       		  = 1700,
+		sightDistance                 = 1800,
+		sonarDistance       		  = 1800,
 		useBuildingGroundDecal        = true,
 		yardMap                       = [[oooo]],
 		featureDefs                   = {
