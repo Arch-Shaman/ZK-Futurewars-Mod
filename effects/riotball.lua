@@ -370,7 +370,7 @@ return {
 			},
 		},
 	},
-	["riotballplus2_purple_small1120"] = {
+	["riotballplus2_purple_small120"] = {
 		usedefaultexplosions = false,
 		groundflash = {
 			alwaysvisible      = true,
