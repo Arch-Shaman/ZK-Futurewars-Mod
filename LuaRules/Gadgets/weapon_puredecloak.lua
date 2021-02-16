@@ -10,6 +10,11 @@ function gadget:GetInfo()
 	}
 end
 
+--[[ 
+				WARNING:
+ALL DECLOAK DAMAGE MUST BE 1 FOR THIS TO WORK.
+]]
+
 if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
 	return
 end
@@ -23,7 +28,7 @@ end
 
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 	if config[weaponDefID] and damage > 0 then
-		GG.BlockCloakForUnit(unitID, config[weaponDefID])
+		GG.BlockCloakForUnit(unitID, config[weaponDefID] * damage)
 		return 0, 0
 	end
 end
