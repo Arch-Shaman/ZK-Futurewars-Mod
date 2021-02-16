@@ -1101,8 +1101,8 @@
 	},
 	"staticheavyradar" : {
 		"name" : "Advanced Radar",
-		"description" : "Long-Range Radar",
-		"helptext" : "The advanced Radar Tower has a considerably greater range than the basic version."
+		"description" : "Over-the-Horizon Radar",
+		"helptext" : "The Advanced Radar tower utilizes OTH (Over-the-Horizon) technology to vastly increase radar coverage and sight. It is less sensitive to terrain than the basic model, with the ability to see over small hills."
 	},
 	"amphimpulse" : {
 		"name" : "Archer",
