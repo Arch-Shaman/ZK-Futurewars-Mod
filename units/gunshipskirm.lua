@@ -88,7 +88,7 @@ return {
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
 				fireStarter             = 70,
 				flightTime              = 6,
-				impactOnly              = true,
+				impactOnly              = false,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
