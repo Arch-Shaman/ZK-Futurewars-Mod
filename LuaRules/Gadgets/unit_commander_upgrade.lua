@@ -28,7 +28,17 @@ local internalCreationModuleEffectData
 local unitCreatedShield, unitCreatedShieldNum, unitCreatedCloak, unitCreatedJammingRange, unitCreatedCloakShield, unitCreatedWeaponNums
 
 local moduleDefs, chassisDefs, upgradeUtilities, LEVEL_BOUND, chassisDefByBaseDef, moduleDefNames, chassisDefNames =  include("LuaRules/Configs/dynamic_comm_defs.lua")
-	
+
+local spSetUnitRulesParam = Spring.SetUnitRulesParam
+local spGetUnitDefID = Spring.GetUnitDefID
+local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spSetUnitHealth = Spring.SetUnitHealth
+local spSetUnitCloak = Spring.SetUnitCloak
+local spRemoveUnitCmdDesc = Spring.RemoveUnitCmdDesc
+local spSetUnitStealth = Spring.SetUnitStealth
+local spGetUnitHealth = Spring.GetUnitHealth
+
 include("LuaRules/Configs/customcmds.h.lua")
 
 --------------------------------------------------------------------------------
@@ -78,8 +88,8 @@ local commAreaShield = WeaponDefNames["shieldshield_cor_shield_small"]
 
 local commAreaShieldDefID = {
 	maxCharge = commAreaShield.shieldPower,
-	perUpdateCost = 2*tonumber(commAreaShield.customParams.shield_drain)/TEAM_SLOWUPDATE_RATE,
-	chargePerUpdate = 2*tonumber(commAreaShield.customParams.shield_rate)/TEAM_SLOWUPDATE_RATE,
+	perUpdateCost = 2 * tonumber(commAreaShield.customParams.shield_drain)/TEAM_SLOWUPDATE_RATE,
+	chargePerUpdate = 2 * tonumber(commAreaShield.customParams.shield_rate)/TEAM_SLOWUPDATE_RATE,
 	perSecondCost = tonumber(commAreaShield.customParams.shield_drain)
 }
 
@@ -95,18 +105,18 @@ local moduleSlotTypeMap = {
 local function SetUnitRulesModule(unitID, counts, moduleDefID)
 	local slotType = moduleSlotTypeMap[moduleDefs[moduleDefID].slotType]
 	counts[slotType] = counts[slotType] + 1
-	Spring.SetUnitRulesParam(unitID, "comm_" .. slotType .. "_" .. counts[slotType], moduleDefID, INLOS)
+	spSetUnitRulesParam(unitID, "comm_" .. slotType .. "_" .. counts[slotType], moduleDefID, INLOS)
 end
 
 local function SetUnitRulesModuleCounts(unitID, counts)
 	for name, value in pairs(counts) do
-		Spring.SetUnitRulesParam(unitID, "comm_" .. name .. "_count", value, INLOS)
+		spSetUnitRulesParam(unitID, "comm_" .. name .. "_count", value, INLOS)
 	end
 end
 
 local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, damageMult, chassis)
 	if (not weapon2) and weapon1 then
-		local unitDefID = Spring.GetUnitDefID(unitID)
+		local unitDefID = spGetUnitDefID(unitID)
 		local weaponName = "0_" .. weapon1
 		local wd = WeaponDefNames[weaponName]
 		if wd and wd.customParams and wd.customParams.manualfire then
@@ -117,112 +127,114 @@ local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, dama
 	--Spring.Echo("Chassis: " .. tostring(chassis))
 	weapon1 = weapon1 or GetCommanderChassisDefaultWeapon(chassis)
 	if string.find(weapon1, "commweapon_capray") or (weapon2 and string.find(weapon2, "commweapon_capray")) then
-		Spring.SetUnitRulesParam(unitID, "postCaptureReload", WeaponDefNames["0_commweapon_capray"].customParams["post_capture_reload"] or 240)
+		spSetUnitRulesParam(unitID, "postCaptureReload", WeaponDefNames["0_commweapon_capray"].customParams["post_capture_reload"] or 240)
 		GG.MorphedMastermind(unitID)
 	end
-	if not weapon2 and Spring.GetUnitRulesParam(unitID, "comm_level") > 2 then
+	if not weapon2 and spGetUnitRulesParam(unitID, "comm_level") > 2 then
 		weapon2 = GetCommanderChassisDefaultWeapon(chassis)
 	end
 	
-	rangeMult = rangeMult or Spring.GetUnitRulesParam(unitID, "comm_range_mult") or 1
-	Spring.SetUnitRulesParam(unitID, "comm_range_mult", rangeMult,  INLOS)
-	damageMult = damageMult or Spring.GetUnitRulesParam(unitID, "comm_damage_mult") or 1
-	Spring.SetUnitRulesParam(unitID, "comm_damage_mult", damageMult,  INLOS)
+	rangeMult = rangeMult or spGetUnitRulesParam(unitID, "comm_range_mult") or 1
+	spSetUnitRulesParam(unitID, "comm_range_mult", rangeMult,  INLOS)
+	damageMult = damageMult or spGetUnitRulesParam(unitID, "comm_damage_mult") or 1
+	spSetUnitRulesParam(unitID, "comm_damage_mult", damageMult,  INLOS)
 	
 	local env = Spring.UnitScript.GetScriptEnv(unitID)
 	Spring.UnitScript.CallAsUnit(unitID, env.dyncomm.UpdateWeapons, weapon1, weapon2, shield, rangeMult, damageMult)
 end
 
 local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
-	local ud = UnitDefs[Spring.GetUnitDefID(unitID)]
+	local ud = UnitDefs[spGetUnitDefID(unitID)]
 	
 	-- Update ApplyModuleEffectsFromUnitRulesParams if any non-unitRulesParams changes are made.
 	if data.speedMod then
 		local speedMult = (data.speedMod + ud.speed)/ud.speed
-		Spring.SetUnitRulesParam(unitID, "upgradesSpeedMult", speedMult, INLOS)
+		spSetUnitRulesParam(unitID, "upgradesSpeedMult", speedMult, INLOS)
 	end
 	if data.cloakregen then
 		GG.AddCloakRegenOverride(unitID, data.cloakregen)
-		Spring.SetUnitRulesParam(unitID, "commcloakregen", data.cloakregen)
+		spSetUnitRulesParam(unitID, "commcloakregen", data.cloakregen)
 	end
 	if data.recloaktime then
 		GG.CloakAddOverride(unitID, data.recloaktime)
-		Spring.SetUnitRulesParam(unitID, "commrecloaktime", data.recloaktime)
+		spSetUnitRulesParam(unitID, "commrecloaktime", data.recloaktime)
 	end
 	if data.radarRange then
-		Spring.SetUnitRulesParam(unitID, "radarRangeOverride", data.radarRange, INLOS)
+		spSetUnitRulesParam(unitID, "radarRangeOverride", data.radarRange, INLOS)
 	end
+	local reloadbonus = data.reloadbonus or 1
+	spSetUnitRulesParam(unitID, "reloadBonus", reloadbonus, INLOS)
 	
 	if data.radarJammingRange then
-		Spring.SetUnitRulesParam(unitID, "jammingRangeOverride", data.radarJammingRange, INLOS)
-		Spring.SetUnitRulesParam(unitID, "comm_jamming_cost", COMMANDER_JAMMING_COST, INLOS)
+		spSetUnitRulesParam(unitID, "jammingRangeOverride", data.radarJammingRange, INLOS)
+		spSetUnitRulesParam(unitID, "comm_jamming_cost", COMMANDER_JAMMING_COST, INLOS)
 	else
-		local onOffCmd = Spring.FindUnitCmdDesc(unitID, CMD.ONOFF)
+		local onOffCmd = spFindUnitCmdDesc(unitID, CMD.ONOFF)
 		if onOffCmd then
-			Spring.RemoveUnitCmdDesc(unitID, onOffCmd)
+			spRemoveUnitCmdDesc(unitID, onOffCmd)
 		end
 	end
 	if data.sightrangebonus then
-		Spring.SetUnitRulesParam(unitID, "sightBonus", data.sightrangebonus, INLOS)
+		spSetUnitRulesParam(unitID, "sightBonus", data.sightrangebonus, INLOS)
 	end
 	if data.decloakDistance then
-		Spring.SetUnitCloak(unitID, false, data.decloakDistance)
-		Spring.SetUnitRulesParam(unitID, "comm_decloak_distance", data.decloakDistance, INLOS)
+		spSetUnitCloak(unitID, false, data.decloakDistance)
+		spSetUnitRulesParam(unitID, "comm_decloak_distance", data.decloakDistance, INLOS)
 	end
 	if data.personaljammer then
-		Spring.SetUnitStealth(unitID, true)
-		Spring.SetUnitRulesParam(unitID, "comm_jammed", 1, INLOS)
+		spSetUnitStealth(unitID, true)
+		spSetUnitRulesParam(unitID, "comm_jammed", 1, INLOS)
 	end
 	if data.personalCloak then
-		Spring.SetUnitRulesParam(unitID, "comm_personal_cloak", 1, INLOS)
+		spSetUnitRulesParam(unitID, "comm_personal_cloak", 1, INLOS)
 	end
 	
 	if data.areaCloak then
-		Spring.SetUnitRulesParam(unitID, "comm_area_cloak", 1, INLOS)
-		Spring.SetUnitRulesParam(unitID, "comm_area_cloak_upkeep", data.cloakFieldUpkeep, INLOS)
-		Spring.SetUnitRulesParam(unitID, "comm_area_cloak_radius", data.cloakFieldRange, INLOS)
+		spSetUnitRulesParam(unitID, "comm_area_cloak", 1, INLOS)
+		spSetUnitRulesParam(unitID, "comm_area_cloak_upkeep", data.cloakFieldUpkeep, INLOS)
+		spSetUnitRulesParam(unitID, "comm_area_cloak_radius", data.cloakFieldRange, INLOS)
 	end
 	
 	local buildPowerMult = ((data.bonusBuildPower or 0) + ud.buildSpeed)/ud.buildSpeed
 	data.metalIncome = (data.metalIncome or 0)
 	data.energyIncome = (data.energyIncome or 0)
-	Spring.SetUnitRulesParam(unitID, "buildpower_mult", buildPowerMult, INLOS)
+	spSetUnitRulesParam(unitID, "buildpower_mult", buildPowerMult, INLOS)
 	
 	if data.metalIncome and GG.Overdrive then
-		Spring.SetUnitRulesParam(unitID, "comm_income_metal", data.metalIncome, INLOS)
-		Spring.SetUnitRulesParam(unitID, "comm_income_energy", data.energyIncome, INLOS)
+		spSetUnitRulesParam(unitID, "comm_income_metal", data.metalIncome, INLOS)
+		spSetUnitRulesParam(unitID, "comm_income_energy", data.energyIncome, INLOS)
 		GG.Overdrive.AddUnitResourceGeneration(unitID, data.metalIncome, data.energyIncome, true)
 	end
 	
 	if data.jumpreloadbonus then
-		Spring.SetUnitRulesParam(unitID, "comm_jumpreload_bonus", data.jumpreloadbonus, INLOS)
+		spSetUnitRulesParam(unitID, "comm_jumpreload_bonus", data.jumpreloadbonus, INLOS)
 	end
 	if data.jumprangebonus then
-		Spring.SetUnitRulesParam(unitID, "comm_jumprange_bonus", data.jumprangebonus, INLOS)
+		spSetUnitRulesParam(unitID, "comm_jumprange_bonus", data.jumprangebonus, INLOS)
 	end
 	
 	if data.healthBonus then
-		local health, maxHealth = Spring.GetUnitHealth(unitID)
+		local health, maxHealth = spGetUnitHealth(unitID)
 		local newHealth = math.max(health + data.healthBonus, 1)
 		local newMaxHealth = math.max(maxHealth + data.healthBonus, 1)
-		Spring.SetUnitHealth(unitID, newHealth)
+		spSetUnitHealth(unitID, newHealth)
 		Spring.SetUnitMaxHealth(unitID, newMaxHealth)
 	end
 	
 	if data.skinOverride then
-		Spring.SetUnitRulesParam(unitID, "comm_texture", data.skinOverride, INLOS)
+		spSetUnitRulesParam(unitID, "comm_texture", data.skinOverride, INLOS)
 	end
 	
 	if data.bannerOverhead then
-		Spring.SetUnitRulesParam(unitID, "comm_banner_overhead", images.overhead or "fakeunit", INLOS)
+		spSetUnitRulesParam(unitID, "comm_banner_overhead", images.overhead or "fakeunit", INLOS)
 	end
 	
 	if data.drones or data.droneheavyslows then
 		if data.drones then
-			Spring.SetUnitRulesParam(unitID, "carrier_count_drone", data.drones, INLOS)
+			spSetUnitRulesParam(unitID, "carrier_count_drone", data.drones, INLOS)
 		end
 		if data.droneheavyslows then
-			Spring.SetUnitRulesParam(unitID, "carrier_count_droneheavyslow", data.droneheavyslows, INLOS)
+			spSetUnitRulesParam(unitID, "carrier_count_droneheavyslow", data.droneheavyslows, INLOS)
 		end
 		if GG.Drones_InitializeDynamicCarrier then
 			GG.Drones_InitializeDynamicCarrier(unitID)
@@ -230,15 +242,15 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	end
 	
 	if data.autorepairRate then
-		Spring.SetUnitRulesParam(unitID, "comm_autorepair_rate", data.autorepairRate, INLOS)
+		spSetUnitRulesParam(unitID, "comm_autorepair_rate", data.autorepairRate, INLOS)
 		if GG.SetUnitIdleRegen then
 			GG.SetUnitIdleRegen(unitID, 0, data.autorepairRate / 2)
 		end
 	end
 	
-	local _, maxHealth = Spring.GetUnitHealth(unitID)
+	local _, maxHealth = spGetUnitHealth(unitID)
 	local effectiveMass = (((totalCost/2) + (maxHealth/8))^0.6)*6.5
-	Spring.SetUnitRulesParam(unitID, "massOverride", effectiveMass, INLOS)
+	spSetUnitRulesParam(unitID, "massOverride", effectiveMass, INLOS)
 	
 	ApplyWeaponData(unitID, data.weapon1, data.weapon2, data.shield, data.rangeMult, data.damageMult, chassis)
 	
@@ -247,38 +259,38 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 end
 
 local function ApplyModuleEffectsFromUnitRulesParams(unitID)
-	if not Spring.GetUnitRulesParam(unitID, "jammingRangeOverride") then
-		local onOffCmd = Spring.FindUnitCmdDesc(unitID, CMD.ONOFF)
+	if not spGetUnitRulesParam(unitID, "jammingRangeOverride") then
+		local onOffCmd = spFindUnitCmdDesc(unitID, CMD.ONOFF)
 		if onOffCmd then
-			Spring.RemoveUnitCmdDesc(unitID, onOffCmd)
+			spRemoveUnitCmdDesc(unitID, onOffCmd)
 		end
 	end
 	
-	local decloakDist = Spring.GetUnitRulesParam(unitID, "comm_decloak_distance")
+	local decloakDist = spGetUnitRulesParam(unitID, "comm_decloak_distance")
 	if decloakDist then
-		Spring.SetUnitCloak(unitID, false, decloakDist)
+		spSetUnitCloak(unitID, false, decloakDist)
 	end
 	
 	if GG.Overdrive then
-		local mInc = Spring.GetUnitRulesParam(unitID, "comm_income_metal")
-		local eInc = Spring.GetUnitRulesParam(unitID, "comm_income_energy")
+		local mInc = spGetUnitRulesParam(unitID, "comm_income_metal")
+		local eInc = spGetUnitRulesParam(unitID, "comm_income_energy")
 		GG.Overdrive.AddUnitResourceGeneration(unitID, mInc or 0, eInc or 0, true, true)
 	end
 	
-	if Spring.GetUnitRulesParam(unitID, "carrier_count_drone") or Spring.GetUnitRulesParam(unitID, "carrier_count_droneheavyslow") then
+	if spGetUnitRulesParam(unitID, "carrier_count_drone") or spGetUnitRulesParam(unitID, "carrier_count_droneheavyslow") then
 		if GG.Drones_InitializeDynamicCarrier then
 			GG.Drones_InitializeDynamicCarrier(unitID)
 		end
 	end
 	
-	local autoRegen = Spring.GetUnitRulesParam(unitID, "comm_autorepair_rate")
+	local autoRegen = spGetUnitRulesParam(unitID, "comm_autorepair_rate")
 	if autoRegen and GG.SetUnitIdleRegen then
 		GG.SetUnitIdleRegen(unitID, 0, autoRegen / 2)
 	end
 	
-	ApplyWeaponData(unitID, Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1"),
-		Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2"),
-		Spring.GetUnitRulesParam(unitID, "comm_shield_name"))
+	ApplyWeaponData(unitID, spGetUnitRulesParam(unitID, "comm_weapon_name_1"),
+		spGetUnitRulesParam(unitID, "comm_weapon_name_2"),
+		spGetUnitRulesParam(unitID, "comm_shield_name"))
 	
 	-- Do this all the time as it will be needed almost always.
 	GG.UpdateUnitAttributes(unitID)
@@ -312,20 +324,20 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 	end
 	
 	-- Start setting required unitRulesParams
-	Spring.SetUnitRulesParam(unitID, "comm_level",         level, INLOS)
-	Spring.SetUnitRulesParam(unitID, "comm_chassis",       chassis, INLOS)
-	Spring.SetUnitRulesParam(unitID, "comm_name",          name, INLOS)
-	Spring.SetUnitRulesParam(unitID, "comm_cost",          totalCost, INLOS)
-	Spring.SetUnitRulesParam(unitID, "comm_baseUnitDefID", baseUnitDefID, INLOS)
-	Spring.SetUnitRulesParam(unitID, "comm_baseWreckID",   baseWreckID, INLOS)
-	Spring.SetUnitRulesParam(unitID, "comm_baseHeapID",    baseHeapID, INLOS)
+	spSetUnitRulesParam(unitID, "comm_level",         level, INLOS)
+	spSetUnitRulesParam(unitID, "comm_chassis",       chassis, INLOS)
+	spSetUnitRulesParam(unitID, "comm_name",          name, INLOS)
+	spSetUnitRulesParam(unitID, "comm_cost",          totalCost, INLOS)
+	spSetUnitRulesParam(unitID, "comm_baseUnitDefID", baseUnitDefID, INLOS)
+	spSetUnitRulesParam(unitID, "comm_baseWreckID",   baseWreckID, INLOS)
+	spSetUnitRulesParam(unitID, "comm_baseHeapID",    baseHeapID, INLOS)
 	
 	if profileID then
-		Spring.SetUnitRulesParam(unitID, "comm_profileID",     profileID, INLOS)
+		spSetUnitRulesParam(unitID, "comm_profileID",     profileID, INLOS)
 	end
 	
 	if staticLevel then -- unmorphable
-		Spring.SetUnitRulesParam(unitID, "comm_staticLevel",   staticLevel, INLOS)
+		spSetUnitRulesParam(unitID, "comm_staticLevel",   staticLevel, INLOS)
 	end
 	
 	Spring.SetUnitCosts(unitID, {
@@ -348,8 +360,8 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 	
 	if staticLevel then
 		-- Newly created commander, set to full health
-		local _, maxHealth = Spring.GetUnitHealth(unitID)
-		Spring.SetUnitHealth(unitID, maxHealth)
+		local _, maxHealth = spGetUnitHealth(unitID)
+		spSetUnitHealth(unitID, maxHealth)
 	end
 end
 
@@ -514,7 +526,7 @@ local function Upgrades_CreateStarterDyncomm(dyncommID, x, y, z, facing, teamID,
 end
 
 function gadget:UnitCreated(unitID, unitDefID, unitTeam)
-	if Spring.GetUnitRulesParam(unitID, "comm_level") then
+	if spGetUnitRulesParam(unitID, "comm_level") then
 		return
 	end
 	
@@ -606,13 +618,13 @@ local function Upgrades_GetValidAndMorphAttributes(unitID, params)
 		return false
 	end
 	
-	if Spring.GetUnitRulesParam(unitID, "comm_staticLevel") then
+	if spGetUnitRulesParam(unitID, "comm_staticLevel") then
 		return false
 	end
 	
 	-- Make sure level and chassis match.
-	local level = Spring.GetUnitRulesParam(unitID, "comm_level")
-	local chassis = Spring.GetUnitRulesParam(unitID, "comm_chassis")
+	local level = spGetUnitRulesParam(unitID, "comm_level")
+	local chassis = spGetUnitRulesParam(unitID, "comm_chassis")
 	if level ~= pLevel or chassis ~= pChassis then
 		return false
 	end
@@ -637,9 +649,9 @@ local function Upgrades_GetValidAndMorphAttributes(unitID, params)
 	local alreadyOwned = {}
 	local fullModuleList = {}
 	
-	local moduleCount = Spring.GetUnitRulesParam(unitID, "comm_module_count")
+	local moduleCount = spGetUnitRulesParam(unitID, "comm_module_count")
 	for i = 1, moduleCount do
-		local module = Spring.GetUnitRulesParam(unitID, "comm_module_" .. i)
+		local module = spGetUnitRulesParam(unitID, "comm_module_" .. i)
 		alreadyOwned[#alreadyOwned + 1] = module
 		fullModuleList[#fullModuleList + 1] = module
 	end
@@ -688,14 +700,14 @@ local function Upgrades_GetValidAndMorphAttributes(unitID, params)
 	
 	-- Add Decorations, they are modules but not part of the previous checks.
 	-- Assumed to be valid here because they cannot be added by this function.
-	local decCount = Spring.GetUnitRulesParam(unitID, "comm_decoration_count")
+	local decCount = spGetUnitRulesParam(unitID, "comm_decoration_count")
 	for i = 1, decCount do
-		local decoration = Spring.GetUnitRulesParam(unitID, "comm_decoration_" .. i)
+		local decoration = spGetUnitRulesParam(unitID, "comm_decoration_" .. i)
 		fullModuleList[#fullModuleList + 1] = decoration
 	end
 	
 	local images = {}
-	local bannerOverhead = Spring.GetUnitRulesParam(unitID, "comm_banner_overhead")
+	local bannerOverhead = spGetUnitRulesParam(unitID, "comm_banner_overhead")
 	if bannerOverhead then
 		images.overhead = bannerOverhead
 	end
@@ -714,16 +726,16 @@ local function Upgrades_GetValidAndMorphAttributes(unitID, params)
 	
 	local morphDef = {
 		upgradeDef = {
-			name = Spring.GetUnitRulesParam(unitID, "comm_name"),
+			name = spGetUnitRulesParam(unitID, "comm_name"),
 			totalCost = cost + Spring.Utilities.GetUnitCost(unitID),
 			level = newLevel,
 			chassis = chassis,
 			moduleList = fullModuleList,
-			baseUnitDefID = Spring.GetUnitRulesParam(unitID, "comm_baseUnitDefID"),
-			baseWreckID = Spring.GetUnitRulesParam(unitID, "comm_baseWreckID"),
-			baseHeapID = Spring.GetUnitRulesParam(unitID, "comm_baseHeapID"),
+			baseUnitDefID = spGetUnitRulesParam(unitID, "comm_baseUnitDefID"),
+			baseWreckID = spGetUnitRulesParam(unitID, "comm_baseWreckID"),
+			baseHeapID = spGetUnitRulesParam(unitID, "comm_baseHeapID"),
 			images = images,
-			profileID = Spring.GetUnitRulesParam(unitID, "comm_profileID"),
+			profileID = spGetUnitRulesParam(unitID, "comm_profileID"),
 		},
 		combatMorph = true,
 		metal = cost,
@@ -746,8 +758,8 @@ end
 --------------------------------------------------------------------------------
 
 function GG.Upgrades_UnitShieldDef(unitID)
-	local shieldDefID = (unitCreatedShield or Spring.GetUnitRulesParam(unitID, "comm_shield_id")) or false
-	local shieldNum = (unitCreatedShieldNum or Spring.GetUnitRulesParam(unitID, "comm_shield_num")) or false
+	local shieldDefID = (unitCreatedShield or spGetUnitRulesParam(unitID, "comm_shield_id")) or false
+	local shieldNum = (unitCreatedShieldNum or spGetUnitRulesParam(unitID, "comm_shield_num")) or false
 	local shieldDef = false
 	if shieldDefID and WeaponDefs[shieldDefID].shieldRadius > 200 then
 		shieldDef = commAreaShieldDefID
@@ -757,15 +769,15 @@ function GG.Upgrades_UnitShieldDef(unitID)
 end
 
 function GG.Upgrades_UnitCanCloak(unitID)
-	return unitCreatedCloak or Spring.GetUnitRulesParam(unitID, "comm_personal_cloak")
+	return unitCreatedCloak or spGetUnitRulesParam(unitID, "comm_personal_cloak")
 end
 
 function GG.Upgrades_UnitJammerEnergyDrain(unitID)
-	return unitCreatedJammingRange or Spring.GetUnitRulesParam(unitID, "comm_jamming_cost")
+	return unitCreatedJammingRange or spGetUnitRulesParam(unitID, "comm_jamming_cost")
 end
 
 function GG.Upgrades_UnitCloakShieldDef(unitID)
-	return (unitCreatedCloakShield or Spring.GetUnitRulesParam(unitID, "comm_area_cloak")) and commanderCloakShieldDef
+	return (unitCreatedCloakShield or spGetUnitRulesParam(unitID, "comm_area_cloak")) and commanderCloakShieldDef
 end
 
 function GG.Upgrades_WeaponNumMap(num)
@@ -784,7 +796,7 @@ function gadget:Initialize()
 	
 	-- load active units
 	for _, unitID in ipairs(Spring.GetAllUnits()) do
-		local unitDefID = Spring.GetUnitDefID(unitID)
+		local unitDefID = spGetUnitDefID(unitID)
 		local teamID = Spring.GetUnitTeam(unitID)
 		gadget:UnitCreated(unitID, unitDefID, teamID)
 	end
@@ -797,7 +809,7 @@ end
 
 function gadget:Load(zip)
 	for _, unitID in ipairs(Spring.GetAllUnits()) do
-		if Spring.GetUnitRulesParam(unitID, "comm_level") then
+		if spGetUnitRulesParam(unitID, "comm_level") then
 			ApplyModuleEffectsFromUnitRulesParams(unitID)
 		end
 	end
