@@ -151,7 +151,7 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 45,
+				default = 50,
 			},
 			groundbounce = false,
 			--bounceslip = 0.25,
@@ -191,7 +191,7 @@ local unitDef = {
 				reaim_time = 60, -- Fast update not required (maybe dangerous)
 				--CAS--
 
-				numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+				numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 				projectile1 = "planefighter_ag",
 				--spreadradius1 = 6, -- used in clusters. OPTIONAL. Default: 100.
 				clustervec1 = "randomxz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -207,7 +207,7 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 45*3,
+				default = 50*3,
 			},
 
 			edgeEffectiveness		= 0.2,
