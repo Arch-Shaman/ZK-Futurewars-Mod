@@ -600,7 +600,7 @@ local function SetupChiliStuff()
 		x         =  50,
 		y         = 150,
 		width     = 120,
-		height    = 168,
+		height    = 200,
 		padding = {12, 12, 12, 12},
 		dockable  = true,
 		dockableSavePositionOnly = true,
