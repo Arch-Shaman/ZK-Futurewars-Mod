@@ -69,7 +69,7 @@ return {
 			{
 				def                = [[BOMBSABOT]],
 				mainDir            = [[0 -1 0]],
-				onlyTargetCategory = [[LAND TURRET SHIP SWIM FLOAT HOVER]],
+				onlyTargetCategory = [[LAND TURRET SHIP SWIM FLOAT HOVER UNARMED]],
 			},
 		},
 		weaponDefs          = {
