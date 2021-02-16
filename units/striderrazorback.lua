@@ -49,7 +49,6 @@ unitDef = {
 	objectName             = [[ARMRAZ]],
 	seismicSignature       = 4,
 	selfDestructAs         = [[CRAWL_BLASTSML]],
-
 	sfxtypes               = {
 
 		explosiongenerators = {
@@ -58,14 +57,11 @@ unitDef = {
 		},
 
 	},
-
-	side                   = [[ARM]],
 	sightDistance          = 578,
 	smoothAnim             = true,
 	turnRate               = 515,
 	upright                = true,
 	workerTime             = 0,
-
 	weapons                = {
 
 		{
@@ -92,7 +88,6 @@ unitDef = {
 
 
 	weaponDefs             = {
-
 		LASER         = {
 			name                    = [[High Intensity Laserbeam]],
 			areaOfEffect            = 8,
