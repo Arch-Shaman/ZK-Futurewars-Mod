@@ -22,7 +22,7 @@ return {
 			priority_misc = 1,
 			cus_noflashlight = 1,
 		},
-		energyUse              = 1.5,
+		energyUse              = 3,
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 2,
 		footprintZ             = 2,

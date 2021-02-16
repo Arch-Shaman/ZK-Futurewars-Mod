@@ -24,7 +24,7 @@ return {
 			morphto = [[cloakjammer]],
 			morphtime = 10,
 			area_cloak = 1,
-			area_cloak_upkeep = 6,
+			area_cloak_upkeep = 8,
 			area_cloak_radius = 750,
 			area_cloak_decloak_distance = 100,
 			priority_misc  = 1,
