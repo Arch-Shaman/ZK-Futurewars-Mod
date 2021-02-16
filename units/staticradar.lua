@@ -24,8 +24,6 @@ return { staticradar = {
     morphtime      = 45,
     modelradius    = [[16]],
     priority_misc  = 2, -- High
-    addfight       = 1,
-    addpatrol      = 1,
     isradar        = 1,
   },
   
