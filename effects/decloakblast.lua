@@ -1,5 +1,5 @@
 return {
-	["decloakblast_600"] = {
+	["decloakblast_500"] = {
 		usedefaultexplosions = false,
 		sphere = {
 			air                = true,
@@ -11,7 +11,7 @@ return {
 			properties = {
 				alpha              = 0.5,
 				color              = [[0.49,0.44,0.36]],
-				expansionspeed     = 12,
+				expansionspeed     = 10,
 				ttl                = 25,
 			},
 		},
