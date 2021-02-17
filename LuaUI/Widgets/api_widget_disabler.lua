@@ -51,8 +51,8 @@ local badwidgets = {
 		type = 'user', -- Shaman's widget.
 	},
 	[5] = {
-		name = "Autollt",
-		reason = "Network hostility. DO NOT USE.",
+		name = "AutoLLT",
+		reason = "Inefficient network usage which may lead to lag/game crash. Use Clarity instead (it's guaranteed to decloak stuff)",
 		type = 'user', -- Hot garbage.
 	},
 }
