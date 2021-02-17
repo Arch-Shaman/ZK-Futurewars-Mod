@@ -246,7 +246,7 @@ options = {
 		value = true,
 	},
 	allycloak = {
-		name = 'Show Ally Nuke Defence',
+		name = 'Show Ally Anti-Cloak Defence',
 		type = 'bool',
 		value = false,
 	},
@@ -276,7 +276,7 @@ options = {
 		value = false,
 	},
 	enemycloak = {
-		name = 'Show Enemy Anti-Cloak',
+		name = 'Show Enemy Anti-Cloak Defence',
 		type = 'bool',
 		value = true,
 	},
@@ -296,7 +296,7 @@ options = {
 		value = true,
 	},
 	speccloak = {
-		name = 'Show Anti-Cloak as Spectator',
+		name = 'Show Anti-Cloak Defence as Spectator',
 		type = 'bool',
 		value = true,
 	},
