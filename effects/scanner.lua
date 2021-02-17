@@ -30,7 +30,7 @@ return {
 				pos                = [[0, 0, 0]],
 				sidetexture        = [[shockwave]],
 				size               = 1,
-				sizegrowth         = 600,
+				sizegrowth         = 500,
 				ttl                = 60,
 			},
 		},
