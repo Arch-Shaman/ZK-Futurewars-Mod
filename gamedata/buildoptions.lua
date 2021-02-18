@@ -59,6 +59,8 @@ local buildOpts = {
 	[[mahlazer]],
 	[[raveparty]],
 	[[zenith]],
+	[[gunshiptrans]],
+	[[gunshipheavytrans]],
 }
 
 return buildOpts
