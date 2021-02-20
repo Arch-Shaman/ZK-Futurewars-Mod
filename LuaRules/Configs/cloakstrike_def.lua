@@ -14,22 +14,6 @@ local defaultStates = {
 local defaultWeapon = {cloakedWeaponStates = {}, decloakedWeaponStates = {}, cloakedWeaponDamages = {[0] = 10000, [1] = 10000, [2] = 10000, [3] = 10000, [4] = 10000, [5] = 10000}, decloakedWeaponDamages = {[0] = 10000, [1] = 10000, [2] = 10000, [3] = 10000, [4] = 10000, [5] = 10000},}
 
 local cpDefsCache = {}
-local function printFullTable(printValue, filler)
-	local spEcho = Spring.Echo
-	if not filler then
-		spEcho("TABLE:")
-		filler = "\t"
-	end
-	for key, value in pairs(printValue) do
-		if type(value) == "table" then
-			spEcho(filler .. "[ " .. key .. " ] = {")
-			printFullTable(value, (filler .. "\t"))
-			spEcho(filler .. "}")
-		else
-		spEcho(filler .. "[ " .. key .. " ] = " .. (value or "nil"))
-		end
-	end
-end
 
 for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
