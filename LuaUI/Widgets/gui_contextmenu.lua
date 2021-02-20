@@ -105,7 +105,6 @@ local colorPurple = {0.9, 0.2, 1, 1}
 local colorDisarm = {0.5, 0.5, 0.5, 1}
 local colorCapture = {0.6, 1, 0.6, 1}
 
-
 local valkMaxCost = tonumber(UnitDefNames.gunshiptrans.customParams.transportcost)
 local valkMaxSize = UnitDefNames.gunshiptrans.transportSize * 2
 
@@ -610,7 +609,6 @@ local function weapons2Table(cells, ws, unitID)
 			shield_dam_str = shield_dam_str .. " x " .. math.floor(100*cp.shield_mult) .. '%'
 		end
 		
-		
 		local show_damage = not cp.stats_hide_damage
 		local show_dps = not cp.stats_hide_dps
 		local show_reload = not cp.stats_hide_reload
@@ -660,6 +658,7 @@ local function weapons2Table(cells, ws, unitID)
 			cells[#cells+1] = ' - Reloadtime:'
 			cells[#cells+1] = numformat (reloadtime,2) .. 's'
 		end
+		
 		if show_dps then
 			cells[#cells+1] = ' - DPS:'
 			cells[#cells+1] = dps_str
@@ -933,7 +932,7 @@ local function weapons2Table(cells, ws, unitID)
 			cells[#cells+1] = ' - Shield drain:'
 			cells[#cells+1] = cp.shield_drain .. " HP/shot"
 		end
-		
+
 		if cp.aim_delay then
 			cells[#cells+1] = ' - Aiming time:'
 			cells[#cells+1] = numformat(tonumber(cp.aim_delay)/1000) .. "s"
@@ -944,7 +943,6 @@ local function weapons2Table(cells, ws, unitID)
 			cells[#cells+1] = '' -- actual value doesn't say much as it's a multiplier for the target speed
 		end
 		
-		
 		if cp.stats_custom_tooltip_1 then
 		local q = 1
 			while cp["stats_custom_tooltip_" .. q] do
@@ -953,7 +951,7 @@ local function weapons2Table(cells, ws, unitID)
 			q = q + 1
 			end
 		end
-
+		
 		if wd.targetable and ((wd.targetable == 1) or (wd.targetable == true)) then
 			cells[#cells+1] = ' - Can be shot down by antinukes'
 			cells[#cells+1] = ''
@@ -1028,7 +1026,7 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = numformat(decloakDistance) .. " elmo"
 		if cp.cloakstrike_amp then
 			cells[#cells+1] = ' - Damage multipler when cloaked:'
-			cells[#cells+1] = "x" .. cloakstrike_amp
+			cells[#cells+1] = "x" .. cp.cloakstrike_amp
 			if ud.decloakOnFire then
 				cells[#cells+1] = ' - Loses multipler alongside cloak when shooting'
 				cells[#cells+1] = ''
@@ -1245,7 +1243,10 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = ''
 		cells[#cells+1] = ''
 	end
-
+	if cp.dangerous_reclaim then
+		cells[#cells+1] = 'Explodes upon reclamation attempt'
+		cells[#cells+1] = ''
+	end
 	if cp.floattoggle then
 		cells[#cells+1] = 'Floating'
 		cells[#cells+1] = ''
@@ -1557,15 +1558,26 @@ local function printunitinfo(ud, buttonWidth, unitID)
 
 	if energy ~= 0 then
 		if ud.customParams.realenergy then
-			energy = ud.customParams.realenergy
+			energy = tonumber(ud.customParams.realenergy)
 		end
 		statschildren[#statschildren+1] = Label:New{ caption = 'Energy: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = (energy > 0 and '+' or '') .. numformat(energy,2) .. " E/s", textColor = color.stats_fg, }
+		if ud.customParams and ud.customParams["decay_rate"] then
+			statschildren[#statschildren+1] = Label:New{ caption = 'Decays Over time: ', textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = ' Rate: ', textColor = color.stats_fg, }
+			local decayrate = tonumber(ud.customParams["decay_rate"]) * 100
+			local mindecay = tonumber(ud.customParams["decay_minoutput"]) or 0
+			local decaytime = tonumber(ud.customParams["decay_time"]) or 1
+			statschildren[#statschildren+1] = Label:New{ caption =  numformat(decayrate, 1) .. "%/" .. numformat(decaytime, 1) .. "s", textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = ' Minimum Output: ', textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = numformat(mindecay, 1), textColor = color.stats_fg, }
+		end
 	end
 	do
 		local sonar
 		if unitID then
-			sonar = Spring.GetUnitRulesParam(unitID, "sonarRadiusOverride") or ud.sonarRadius
+			sonar = Spring.GetUnitRulesParam(unitID, "sonarRangeOverride") or ud.sonarRadius
 		else
 			sonar = ud.sonarRadius
 		end
