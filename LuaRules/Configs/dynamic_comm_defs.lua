@@ -231,7 +231,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_emg.png",
 		limit = 2,
 		cost = 0 * COST_MULT,
-		requireChassis = {"strike"},
+		requireChassis = {"strike", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -253,7 +253,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_emg.png",
 		limit = 2,
 		cost = 75 * COST_MULT,
-		requireChassis = {"recon"},
+		requireChassis = {"recon", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -275,7 +275,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_assaultcannon.png",
 		limit = 2,
 		cost = 100 * COST_MULT,
-		requireChassis = {"strike"},
+		requireChassis = {"strike", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -361,7 +361,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_lparticlebeam.png",
 		limit = 1,
 		cost = 100 * COST_MULT,
-		requireChassis = {"support"},
+		requireChassis = {"support", "knight"},
 		prohibitingModules = {"commweapon_capray", "commweapon_lightninggun", "commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_shockrifle"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
@@ -418,7 +418,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_lparticlebeam.png",
 		limit = 1,
 		cost = 100 * COST_MULT,
-		requireChassis = {"support"},
+		requireChassis = {"support", "knight"},
 		requireLevel = 3,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -511,7 +511,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_capray.png",
 		limit = 2,
 		cost = 100 * COST_MULT,
-		requireChassis = {"support"},
+		requireChassis = {"support", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -555,7 +555,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_canister.png",
 		limit = 2,
 		cost = 0 * COST_MULT,
-		requireChassis = {"assault"},
+		requireChassis = {"assault", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -577,7 +577,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_disruptorprojector.png",
 		limit = 1,
 		cost = 75 * COST_MULT,
-		requireChassis = {"support"},
+		requireChassis = {"support", "knight"},
 		prohibitingModules = {"commweapon_capray", "commweapon_lightninggun", "commweapon_beamlaser", "commweapon_lparticlebeam", "commweapon_shockrifle"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
@@ -600,7 +600,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_disruptorprojector.png",
 		limit = 2,
 		cost = 75 * COST_MULT,
-		requireChassis = {"support"},
+		requireChassis = {"support", "knight"},
 		requireLevel = 3,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -622,7 +622,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_beamamplifier.png",
 		limit = 1,
 		cost = 300 * COST_MULT,
-		requireChassis = {"support"},
+		requireChassis = {"support", "knight"},
 		requireOneOf = {"commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_lparticlebeam"},
 		requireLevel = 2,
 		slotType = "module",
@@ -647,7 +647,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_beamamplifier.png",
 		limit = 1,
 		cost = 300 * COST_MULT,
-		requireChassis = {"support"},
+		requireChassis = {"support", "knight"},
 		requireOneOf = {"commweapon_disruptorprojector2", "commweapon_beamlaser2", "commweapon_lparticlebeam2"},
 		requireLevel = 4,
 		slotType = "module",
@@ -878,7 +878,7 @@ local moduleDefs = {
 		description = "By upgrading the Support comm's resource allocation algorithms, some extra metal and energy can be squeezed out of the chassis's resource generator.",
 		image = moduleImagePath .. "module_efficency.png",
 		limit = 4,
-		requireChassis = {"support"},
+		requireChassis = {"support", "knight"},
 		cost = 125 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
@@ -1006,7 +1006,7 @@ local moduleDefs = {
 		description = "Radar Amplifier:\nIncreases radar by 10%.\nRecon Only (Limit: 8)",
 		image = moduleImagePath .. "module_fieldradar.png",
 		limit = 8,
-		requireChassis = {"recon"},
+		requireChassis = {"recon", "knight"},
 		cost = 75 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
@@ -1020,7 +1020,7 @@ local moduleDefs = {
 		description = "Enhanced Sensors:\nIncreases sight radius by 15%.\nRecon Only (Limit: 8)",
 		image = moduleImagePath .. "module_radarnet2.png",
 		limit = 8,
-		requireChassis = {"recon"},
+		requireChassis = {"recon", "knight"},
 		cost = 125 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
@@ -1088,7 +1088,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_jumpjetrecharge.png",
 		limit = 4,
 		cost = 200 * COST_MULT,
-		requireChassis = {"recon"},
+		requireChassis = {"recon", "knight"},
 		prohibitingModules = {"module_jumprange", "module_jumpretrofit"},
 		requireLevel = 2,
 		slotType = "module",
@@ -1104,7 +1104,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_jumpjetretrofit.png",
 		limit = 4,
 		cost = 220 * COST_MULT,
-		requireChassis = {"recon"},
+		requireChassis = {"recon", "knight"},
 		prohibitingModules = {"module_jumpreload", "module_jumprange"},
 		requireLevel = 2,
 		slotType = "module",
@@ -1122,7 +1122,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_jumpjetpower.png",
 		limit = 4,
 		cost = 200 * COST_MULT,
-		requireChassis = {"recon"},
+		requireChassis = {"recon", "knight"},
 		prohibitingModules = {"module_jumpreload", "module_jumpretrofit"},
 		requireLevel = 2,
 		slotType = "module",
@@ -1138,7 +1138,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_jumpjet.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
-		requireChassis = {"knight"},
+		requireChassis = {"knight", "knight"},
 		requireLevel = 3,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -1212,7 +1212,7 @@ local moduleDefs = {
 		limit = 8,
 		cost = 200 * COST_MULT,
 		requireOneOf = {"module_ablative_armor"},
-		requireChassis = {"assault"},
+		requireChassis = {"assault", "knight"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -1257,7 +1257,7 @@ local moduleDefs = {
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
-		requireChassis = {"strike", "recon"},
+		requireChassis = {"strike", "recon", "knight"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.speedMod = (sharedData.speedMod or 0) + 4
 			sharedData.healthBonus = (sharedData.healthBonus or 0) - 300*HP_MULT
@@ -1272,7 +1272,7 @@ local moduleDefs = {
 		cost = 75 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
-		requireChassis = {"strike"},
+		requireChassis = {"strike", "knight"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.cloakregen = (sharedData.cloakregen or 0) + 20
 		end
@@ -1286,7 +1286,7 @@ local moduleDefs = {
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
-		requireChassis = {"strike", "recon", "support", "riot"},
+		requireChassis = {"strike", "recon", "support", "riot", "knight"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.075
 			sharedData.speedMod = (sharedData.speedMod or 0) - 1
@@ -1301,7 +1301,7 @@ local moduleDefs = {
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
-		requireChassis = {"assault"},
+		requireChassis = {"assault", "knight"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.1
 			sharedData.speedMod = (sharedData.speedMod or 0) - 2
@@ -1316,7 +1316,7 @@ local moduleDefs = {
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
-		requireChassis = {"assault", "strike", "recon"},
+		requireChassis = {"assault", "strike", "recon", "knight"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 2.5
 		end
@@ -1330,7 +1330,7 @@ local moduleDefs = {
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
-		requireChassis = {"support"},
+		requireChassis = {"support", "knight"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 5
 		end
@@ -1426,7 +1426,7 @@ local morphCosts = {
 }
 
 local function extraLevelCostFunction(level)
-	return math.max(300, level * 25 + 50) * COST_MULT
+	return (level + 2) * 25 * COST_MULT
 end
 
 local chassisDefs = {
@@ -1446,7 +1446,7 @@ local chassisDefs = {
 					sharedData.decloakDistance = 200
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 10
 					sharedData.personalCloak = true -- !!FREE!! cloak
-					sharedData.speedMod = (sharedData.speedMod or 0) + 2
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
 					sharedData.recloaktime = (sharedData.recloaktime or 300)
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1461,7 +1461,7 @@ local chassisDefs = {
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.decloakDistance = 180
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 20
-					sharedData.speedMod = (sharedData.speedMod or 0) + 2
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
 					sharedData.recloaktime = (sharedData.recloaktime or 300) - 30
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1485,7 +1485,7 @@ local chassisDefs = {
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.decloakDistance = 160
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 30
-					sharedData.speedMod = (sharedData.speedMod or 0) + 2
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
 					sharedData.recloaktime = (sharedData.recloaktime or 300) - 60
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1509,7 +1509,7 @@ local chassisDefs = {
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.decloakDistance = 140
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 40
-					sharedData.speedMod = (sharedData.speedMod or 0) + 2
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
 					sharedData.recloaktime = (sharedData.recloaktime or 300) - 90
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1537,7 +1537,7 @@ local chassisDefs = {
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.decloakDistance = 120
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 50
-					sharedData.speedMod = (sharedData.speedMod or 0) + 2
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
 					sharedData.recloaktime = (sharedData.recloaktime or 300) - 120
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1565,7 +1565,7 @@ local chassisDefs = {
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.decloakDistance = 100
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 60
-					sharedData.speedMod = (sharedData.speedMod or 0) + 2
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
 					sharedData.recloaktime = (sharedData.recloaktime or 300) - 150
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -2169,15 +2169,22 @@ for i = 1, #moduleDefs do
 	local data = moduleDefs[i]
 	
 	-- Required modules are a list of moduleDefIDs
-	if data.requireOneOf then
+	if data.requiredModules then
 		local newRequire = {}
-		for j = 1, #data.requireOneOf do
-			local reqModuleID = moduleDefNames[data.requireOneOf[j]]
-			if reqModuleID then
-				newRequire[#newRequire + 1] = reqModuleID
+		for j = 1, #data.requiredModules do
+			if type(data.requiredModules[j]) == "table" then
+				local reqModuleID = moduleDefNames[data.requiredModules[j][1]]
+				if reqModuleID then
+					newRequire[#newRequire + 1] = {reqModuleID, data.requiredModules[j][2]}
+				end
+			else
+				local reqModuleID = moduleDefNames[data.requiredModules[j]]
+				if reqModuleID then
+					newRequire[#newRequire + 1] = reqModuleID
+				end
 			end
 		end
-		data.requireOneOf = newRequire
+		data.requiredModules = newRequire
 	end
 	
 	-- Prohibiting modules are a list of moduleDefIDs too
@@ -2260,13 +2267,27 @@ local function ModuleIsValid(level, chassis, slotAllows, moduleDefID, alreadyOwn
 	end
 	
 	-- Check that requirements are met
-	if data.requireOneOf then
+	if data.requiredModules then
 		local foundRequirement = false
-		for j = 1, #data.requireOneOf do
+		for j = 1, #data.requiredModules do
 			-- Modules should not depend on themselves so this check is simplier than the
 			-- corresponding chcek in the replacement set generator.
-			local reqDefID = data.requireOneOf[j]
-			if (alreadyOwned[reqDefID] or (alreadyOwned2 and alreadyOwned2[reqDefID])) then
+			local reqDefID
+			local threshold
+			if type(data.requiredModules[j]) == "table" then
+				reqDefID = data.requiredModules[j][1]
+				threshold = data.requiredModules[j][2]
+			else
+				reqDefID =  data.requiredModules[j]
+				threshold = 0
+			end
+			--Spring.Echo(type(data.requiredModules[j]))
+			--Spring.Echo(data.requiredModules[j])
+			--Spring.Echo(reqDefID)
+			--Spring.Echo(moduleDefs[reqDefID].humanName)
+			--Spring.Echo(threshold)
+			--Spring.Echo((alreadyOwned[reqDefID] or 0) + ((alreadyOwned2 and alreadyOwned2[reqDefID]) or 0))
+			if ((alreadyOwned[reqDefID] or 0) + ((alreadyOwned2 and alreadyOwned2[reqDefID]) or 0)) > (threshold or 0) then
 				foundRequirement = true
 				break
 			end
