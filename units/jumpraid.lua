@@ -181,7 +181,7 @@ return {
 					area_damage = 1,
 					area_damage_radius = 70,
 					area_damage_dps = 40,
-					area_damage_duration = 7,
+					area_damage_duration = 12,
 					
 					stats_damage = (40*24) + 220,
 					shield_damage = (40*24) + 220,
@@ -279,7 +279,7 @@ return {
 					area_damage = 1,
 					area_damage_radius = 48,
 					area_damage_dps = 15,
-					area_damage_duration = 5,
+					area_damage_duration = 10,
 
 					--lups_heat_fx = [[firewalker]],
 					light_camera_height = 2500,
