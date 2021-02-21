@@ -185,6 +185,7 @@ return {
 					
 					stats_damage = (40*24) + 220,
 					shield_damage = (40*24) + 220,
+					stats_shield_damage = (40*24) + 220,
 				},
 
 				damage                  = {
