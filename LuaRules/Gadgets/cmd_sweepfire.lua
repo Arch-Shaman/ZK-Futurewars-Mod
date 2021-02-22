@@ -194,8 +194,9 @@ local function AddUnit(unitID, cmdParams)
 	end
 	local defid = spGetUnitDefID(unitID)
 	local configuration = config[defid]
-	local tx, tz = cmdParams[1], cmdParams[3]
-	local x, z = spGetUnitPosition(unitID)
+	local tx = cmdParams[1]
+	local tz = cmdParams[3]
+	local x, _, z = spGetUnitPosition(unitID)
 	local data = {weaponstates = {}, nextupdate = 0, unitdef = defid, initialangle = CalculateAngle(x, z, tx, tz)}
 	for i = 1, #configuration do
 		data.weaponstates[i] = {reversed = false, currentoffset = 0}
