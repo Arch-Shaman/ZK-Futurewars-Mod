@@ -313,7 +313,7 @@ function gadget:GameFrame(f)
 						nextupdate = potential
 					end
 					if reload == nil or reload < f then -- we're ready to go
-						UpdateOffset(unitID, weaponnum)
+						UpdateOffset(id, weaponnum)
 						local wantedangle = data.weaponstates[weaponnum].currentoffset + data.initialangle
 						UpdateFiringPoint(id, weaponnum, wantedangle, data.unitdef)
 					end
