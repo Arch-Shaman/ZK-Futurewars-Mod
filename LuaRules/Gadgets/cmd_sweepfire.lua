@@ -222,7 +222,8 @@ local function AddUnit(unitID, cmdParams)
 	local x, _, z = spGetUnitPosition(unitID)
 	local data = {sweeping = false, weaponstates = {}, nextupdate = 0, unitdef = defid, initialangle = CalculateAngle(x, z, tx, tz)}
 	for i = 1, #configuration do
-		data.weaponstates[i] = {reversed = false, currentoffset = 0}
+		local rev = random(0,4) >= 2
+		data.weaponstates[i] = {reversed = rev, currentoffset = rad(random(-5, 5))}
 	end
 	IterableMap.Add(UnitData, unitID, data)
 end
@@ -252,8 +253,13 @@ end
 local function UpdateUnitInfo(unitID, cmdParams)
 	local tx, tz = cmdParams[1], cmdParams[3]
 	local x, z = spGetUnitPosition(unitID)
-	data = IterableMap.Get(UnitData, unitID)
+	local data = IterableMap.Get(UnitData, unitID)
 	data.initialangle = CalculateAngle(x, z, tx, tz)
+	local configuration = config[data.unitdef]
+	for i = 1, #configuration do
+		local rev = random(0,4) >= 2
+		data.weaponstates[i].reversed = rev
+	end
 end
 
 local function RemoveUnit(unitID)
