@@ -143,7 +143,7 @@ for i=1, #WeaponDefs do
 					end
 					if type(curRef.use2ddist) ~= "string" then
 						config[i]["use2ddist"] = 0
-						spEcho("CAS: Set 2ddist to false for " .. name)
+						spEcho("CAS: Set 2ddist to false for " .. wd.name)
 					else
 						config[i]["use2ddist"] = tonumber(curRef.use2ddist)
 					end
