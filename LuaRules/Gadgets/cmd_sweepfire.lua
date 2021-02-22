@@ -46,7 +46,7 @@ local headingtorad = (math.pi * 2 / 65536)
 -- Defs --
 
 spEcho("Sweapfire: Loading defs..")
-local config = VFS.Include("LuaRules/Configs/sweapfire_defs.lua")
+local config, minelayerdefs = VFS.Include("LuaRules/Configs/sweapfire_defs.lua")
 -- descriptions --
 
 local sweapfire_desc = {
@@ -83,8 +83,10 @@ local function PrintConfig()
 	local str = ''
 	for id, data in pairs(config) do
 		str = str .. '\n\t' .. id .. ':'
-		for k, v in pairs(data) do
-			str = str .. '\n\t\t' .. k .. ': ' .. tostring(v)
+		for i = 1, #data do
+			for k, v in pairs(data[i]) do
+				str = str .. '\n\t\t' .. k .. ': ' .. tostring(v)
+			end
 		end
 	end
 	DebugEcho("Starting Game with configuration: " .. str)
@@ -154,9 +156,16 @@ end
 
 local function ForceFireAtPoint(unitID, x, z, weaponID)
 	GG.SetTemporaryPosTarget(unitID, x, spGetGroundHeight(x, z), z, false, 1, weaponID)
+end
+
+local function UpdateOffset(unitID, weaponID)
 	local data = IterableMap.Get(UnitData, unitID)
 	local configuration = config[data.unitdef][weaponID]
-	local offset = data.weaponstates[weaponID].currentoffset + (((data.weaponstates[weaponID].reversed and -1) or 1) * configuration.step)
+	local currentoffset = data.weaponstates[weaponID].currentoffset
+	local offset = currentoffset + (((data.weaponstates[weaponID].reversed and -1) or 1) * configuration.step)
+	if debug then
+		DebugEcho(unitID .. " Offset: " .. currentoffset .. " -> " .. offset)
+	end
 	data.weaponstates[weaponID].currentoffset = offset
 	if abs(offset) >= configuration.maxangle then
 		data.weaponstates[weaponID].reversed = not data.weaponstates[weaponID].reversed
@@ -164,13 +173,14 @@ local function ForceFireAtPoint(unitID, x, z, weaponID)
 end
 
 local function UpdateFiringPoint(unitID, weapon, angle, unitdef)
-	--local heading = GetUnitHeading(unitID)
-	--local wantedangle = angle + heading
 	local x, y, z = spGetUnitPosition(unitID, true)
 	local range = GetUnitRange(unitID, weapon, 1)
 	local myconfig = config[unitdef][weapon]
 	if myconfig.minelayer then
 		range = random(ceil(range * 0.4), range)
+		if debug then
+			DebugEcho("New range: " .. range)
+		end
 	end
 	local tx, tz = GetFiringPoint(range, x, z, angle)
 	ForceFireAtPoint(unitID, tx, tz, weapon)
@@ -257,7 +267,7 @@ GG.AddSweepFireToUnit = ForceUnitHaveSweepFire
 function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID) -- inject command.
 	if config[unitDefID] then
 		local def = config[unitDefID]
-		if def.minelayer then
+		if minelayerdefs[unitDefID] then
 			spInsertUnitCmdDesc(unitID, CommandOrder, minelayer_desc)
 		else
 			spInsertUnitCmdDesc(unitID, CommandOrder, sweapfire_desc)
@@ -303,6 +313,7 @@ function gadget:GameFrame(f)
 						nextupdate = potential
 					end
 					if reload == nil or reload < f then -- we're ready to go
+						UpdateOffset(unitID, weaponnum)
 						local wantedangle = data.weaponstates[weaponnum].currentoffset + data.initialangle
 						UpdateFiringPoint(id, weaponnum, wantedangle, data.unitdef)
 					end

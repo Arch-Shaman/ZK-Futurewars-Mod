@@ -1,4 +1,5 @@
 local sweepfireDefs = {}
+local minelayerdefs = {}
 
 for i = 1, #UnitDefs do
 	local unitdef = UnitDefs[i]
@@ -19,7 +20,10 @@ for i = 1, #UnitDefs do
 			}
 			num = num + 1
 		end
+		if cp.sweepfire_minelayer then
+			minelayerdefs[i] = true
+		end
 	end
 end
 
-return sweepfireDefs
+return sweepfireDefs, minelayerdefs
