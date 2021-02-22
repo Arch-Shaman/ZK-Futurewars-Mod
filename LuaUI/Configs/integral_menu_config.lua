@@ -77,7 +77,11 @@ local commandDisplayConfig = {
 	[CMD_JUMP] = {texture = imageDir .. 'Bold/jump.png'},
 
 	[CMD_FIND_PAD] = {texture = imageDir .. 'Bold/rearm.png', tooltip = "Resupply: Return to nearest Airpad for repairs and, for bombers, ammo."},
-
+	
+	[CMD_SWEEPFIRE] = {texture = imageDir .. 'sweepfire.png', tooltip = "Sweepfire: Sets a direction for sweeping an area with attack commands."},
+	[CMD_SWEEPFIRE_MINES] = {texture = imageDir .. 'sweepfire.png', tooltip = "Lay Mines: Sets a direction for randomly laying mines in."},
+	[CMD_SWEEPFIRE_CANCEL] = {texture = imageDir .. 'sweepfire_cancel.png', tooltip = "Lay Mines: Sets a direction for randomly laying mines in."},
+	
 	[CMD_EXCLUDE_PAD] = {texture = imageDir .. 'Bold/excludeairpad.png', tooltip = "Exclude Airpad: Toggle whether any of your aircraft use the targeted airpad."},
 
 	[CMD_EMBARK] = {texture = imageDir .. 'Bold/embark.png'},
