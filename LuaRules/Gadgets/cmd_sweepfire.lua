@@ -128,7 +128,14 @@ end
 local function GetUnitRange(unitID, weaponNum, runs)
 	local x, y, z = spGetUnitPosition(unitID)
 	local unitDefID = spGetUnitDefID(unitID)
-	local originalrange = WeaponDefs[UnitDefs[unitDefID].weapons[weaponNum].weaponDef].range
+	local weapondef = WeaponDefs[UnitDefs[unitDefID].weapons[weaponNum].weaponDef]
+	local originalrange = weapondef.range
+	if weapondef.type == "BeamLaser" then
+		return originalrange * 0.9 -- for whatever reason lotus doesn't like to attack at maxrange.
+	end
+	if weapondef.type ~= "Cannon" then
+		return originalrange
+	end
 	if runs == nil or runs == 1 then
 		local oy = GetLowestHeightOnCircle(x, z, originalrange, 9)
 		return spUtilitiesGetEffectiveWeaponRange(unitDefID, y - oy, weaponNum)
@@ -143,7 +150,7 @@ end
 
 local function CalculateAngle(x, z, targetx, targetz) -- first set of coords: center, second: point
 	--local heading = GetUnitHeading(unitID)
-	local angle = Spring.Utilities.Vector.Angle(targetx - x, targetz - z)
+	local angle = atan2(targetz - z, targetx - x )
 	if debug then
 		DebugEcho("Initial heading: " .. deg(angle))
 	end
@@ -188,7 +195,10 @@ end
 
 local function GetWeaponIsFiringAtSomething(unitID, weaponID)
 	local type, isUserTarget = spGetUnitWeaponTarget(unitID, weaponID)
-	return (type and type == 1) or isUserTarget
+	if debug then
+		DebugEcho("isUser: " .. tostring(isUserTarget) .. "\ntype: " .. tostring(type) .. "\nReturn: " .. tostring(type == 1 or isUserTarget == true))
+	end
+	return type == 1 or isUserTarget == true
 end
 
 
@@ -204,10 +214,13 @@ local function AddUnit(unitID, cmdParams)
 	end
 	local defid = spGetUnitDefID(unitID)
 	local configuration = config[defid]
+	if configuration == nil then
+		return -- some other unit got batched in.
+	end
 	local tx = cmdParams[1]
 	local tz = cmdParams[3]
 	local x, _, z = spGetUnitPosition(unitID)
-	local data = {weaponstates = {}, nextupdate = 0, unitdef = defid, initialangle = CalculateAngle(x, z, tx, tz)}
+	local data = {sweeping = false, weaponstates = {}, nextupdate = 0, unitdef = defid, initialangle = CalculateAngle(x, z, tx, tz)}
 	for i = 1, #configuration do
 		data.weaponstates[i] = {reversed = false, currentoffset = 0}
 	end
@@ -215,6 +228,9 @@ local function AddUnit(unitID, cmdParams)
 end
 
 local function CheckUnitHasTargetInRange(unitID, range)
+	if debug then
+		DebugEcho("HasTargetInRange: " .. tostring(spGetUnitNearestEnemy(unitID, range, true) ~= nil))
+	end
 	return spGetUnitNearestEnemy(unitID, range, true) ~= nil
 end
 
@@ -303,6 +319,7 @@ function gadget:GameFrame(f)
 		if data.nextupdate <= f then
 			local wantssweep = CheckUnitNeedsSweeping(id, data.unitdef)
 			if wantssweep then -- we have no target, so we can sweep away.
+				data.sweeping = true
 				local configuration = overrides[id] or config[data.unitdef]
 				local nextupdate = math.huge
 				for w = 1, #configuration do
@@ -312,14 +329,22 @@ function gadget:GameFrame(f)
 					if potential < nextupdate then
 						nextupdate = potential
 					end
-					if reload == nil or reload < f then -- we're ready to go
+					if reload == nil or reload <= f then -- we're ready to go
 						UpdateOffset(id, weaponnum)
+						nextupdate = f + ((configuration[w].fastupdate and 0) or 3)
+						if debug then
+							DebugEcho("Next update: " .. nextupdate)
+						end
 						local wantedangle = data.weaponstates[weaponnum].currentoffset + data.initialangle
 						UpdateFiringPoint(id, weaponnum, wantedangle, data.unitdef)
 					end
 				end
 				data.nextupdate = nextupdate
 			else
+				if data.sweeping then
+					GG.RemoveTemporaryPosTarget(id)
+					data.sweeping = false
+				end
 				data.nextupdate = f + 10 -- check again later.
 			end
 		end

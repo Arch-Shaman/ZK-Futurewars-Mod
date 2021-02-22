@@ -483,6 +483,10 @@ function GG.SetTemporaryPosTarget(unitID, tx, ty, tz, userCommand, lingerTime, w
 	})
 end
 
+function GG.RemoveTemporaryPosTarget(unitID)
+	removeUnit(unitID)
+end
+
 --------------------------------------------------------------------------------
 -- Target update
 

@@ -17,6 +17,7 @@ for i = 1, #UnitDefs do
 				step = math.rad(tonumber(cp.sweepfire_step) or 15),
 				maxangle = math.rad(tonumber(cp.sweepfire_maxangle) or 45),
 				weaponNum = w,
+				fastupdate = cp.sweepfire_fastupdate ~= nil,
 			}
 			num = num + 1
 		end
