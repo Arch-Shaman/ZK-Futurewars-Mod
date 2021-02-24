@@ -310,13 +310,13 @@ local moduleDefs = {
 			sharedData.noMoreWeapons = true
 		end
 	},]]
-	--[[{
+	{
 		name = "commweapon_hpartillery",
 		humanName = "Plasma Artillery",
 		description = "Plasma Artillery",
 		image = moduleImagePath .. "commweapon_assaultcannon.png",
 		limit = 2,
-		cost = 100 * COST_MULT,
+		cost = 150 * COST_MULT,
 		requireChassis = {"assault"},
 		requireLevel = 1,
 		slotType = "adv_weapon",
@@ -331,7 +331,7 @@ local moduleDefs = {
 				sharedData.weapon2 = weaponName
 			end
 		end
-	},]]
+	},
 	{
 		name = "commweapon_lightninggun",
 		humanName = "Lightning Rifle",
