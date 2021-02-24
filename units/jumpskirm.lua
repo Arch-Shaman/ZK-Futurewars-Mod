@@ -35,7 +35,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
-		maxDamage           = 600,
+		maxDamage           = 660,
 		maxSlope            = 36,
 		maxVelocity         = 1.9,
 		maxWaterDepth       = 22,
@@ -77,8 +77,6 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				cegtag					= [[cyclopstrail]],
-				burst					= 2,
-				burstrate				= 0.5,
 				customparams = {
 					burst = Shared.BURST_RELIABLE,
 					timeslow_damagefactor = 4,
@@ -87,7 +85,7 @@ return {
 					light_radius = 320,
 				},
 				damage                  = {
-					default = 270.1,
+					default = 540.1,
 				},
 				--explosionGenerator      = [[custom:flash2purple]],
 				fireStarter             = 30,
