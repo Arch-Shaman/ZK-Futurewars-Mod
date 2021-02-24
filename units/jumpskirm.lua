@@ -68,7 +68,7 @@ return {
 		},
 		weaponDefs          = {
 			DISRUPTOR_BEAM = {
-				name                    = [[Dual Disruptor Cannon]],
+				name                    = [[Disruptor Cannon]],
 				areaOfEffect            = 32,
 				beamdecay               = 0.9,
 				beamTime                = 2/30,
