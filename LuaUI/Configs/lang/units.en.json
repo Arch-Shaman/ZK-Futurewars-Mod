@@ -1136,8 +1136,8 @@
 	},
 	"cloakcon" : {
 		"name" : "Mirage",
-		"helptext" : "Cloaked Construction Bot",
-		"description" : "The Mirage packs a medium-ranged jammer and a cloaking device for stealthy expansion and base maintenance. It can also enable a medium-range cloaking field, which unlike the aforementioned abilities costs energy to maintain."
+		"description" : "Cloaked Construction Bot",
+		"helptext" : "The Mirage packs a medium-ranged jammer and a cloaking device for stealthy expansion and base maintenance. It can also enable a medium-range cloaking field, which unlike the aforementioned abilities costs energy to maintain."
 	},
 	"turretsunlance" : {
 		"name" : "Sunlance",
