@@ -1,7 +1,7 @@
 return { 
 	jumpraid = {
 		unitname              = [[jumpraid]],
-		name                  = [[Pyro]],
+		name                  = [[Arsonist]],
 		description           = [[Raider/Riot Jumper]],
 		acceleration          = 1.2,
 		brakeRate             = 7.2,

@@ -1067,7 +1067,7 @@
 	"factoryjump" : {
 		"name" : "Jumpbot Factory",
 		"description" : "Produces Jumpjet Equipped Robots",
-		"helptext" : "The esoteric Jumpbot Factory offers unique tactical options for rapidly closing the distance in a knife fight, or getting over hills and rivers to cut a path through enemy lines. Key units: Pyro, Moderator, Jack, Firewalker, Jugglenaut"
+		"helptext" : "The esoteric Jumpbot Factory offers unique tactical options for rapidly closing the distance in a knife fight, or getting over hills and rivers to cut a path through enemy lines. Key units: Arsonist, Moderator, Jack, Firewalker, Jugglenaut"
 	},
 	"jumpsumo" : {
 		"name" : "Jugglenaut",
@@ -1120,9 +1120,9 @@
 		"helptext" : "The Aspis protects surrounding units with its area shield by destroying enemy projectiles and will automatically connect to other shield-equipped units to share charge. The area shield will not stop units and only intercepts projectiles on its perimeter, so enemies can get under the shield and shoot at the units inside. Recharging and maintaining area shields costs energy."
 	},
 	"jumpraid" : {
-		"name" : "Pyro",
+		"name" : "Arsonist",
 		"description" : "Raider/Riot Jumper",
-		"helptext" : "The Pyro is a cheap, fast walker with a flamethrower. The flamethrower deals increased damage to large units and can hit multiple targets at the same time. When killed, the Pyro sets surrounding units on fire. Additionally, Pyros also come with jetpacks, allowing them to jump over obstacles or get the drop on enemies."
+		"helptext" : "The Arsonist is a moderately cheap, fast walker with a flamethrower and a volatile grenade. The flamethrower deals increased damage to large units and can hit multiple targets at the same time. When killed, the Arsonist sets surrounding units on fire. Additionally, Arsonists also come with jetpacks, allowing them to jump over obstacles or get the drop on enemies."
 	},
 	"tankheavyarty" : {
 		"name" : "Tremor",
