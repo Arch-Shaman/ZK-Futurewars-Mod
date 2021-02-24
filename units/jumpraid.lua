@@ -96,7 +96,6 @@ return {
 
 
 		weaponDefs            = {
-
 			FLAMETHROWER = {
 				name                    = [[Primary Flamethrower]],
 				areaOfEffect            = 64,
@@ -128,7 +127,6 @@ return {
 				
 				damage                  = {
 					default = 7.4,
-					subs    = 0.01,
 				},
 			
 				duration                = 0.01,
@@ -194,7 +192,6 @@ return {
 				
 				damage                  = {
 					default = 5.2,
-					subs    = 0.01,
 				},
 			
 				duration                = 0.01,
@@ -413,7 +410,6 @@ return {
 		},
 
 		featureDefs           = {
-		
 			DEAD  = {
 			blocking         = false,
 			featureDead      = [[HEAP]],
@@ -421,16 +417,12 @@ return {
 			footprintZ       = 2,
 			object           = [[m-5_dead.s3o]],
 			},
-		
-			
 			HEAP  = {
 			blocking         = false,
 			footprintX       = 2,
 			footprintZ       = 2,
 			object           = [[debris2x2c.s3o]],
 			},
-		
 		},
-
 	}
 }
