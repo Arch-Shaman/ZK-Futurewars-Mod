@@ -310,28 +310,28 @@ local moduleDefs = {
 			sharedData.noMoreWeapons = true
 		end
 	},]]
-	--{
-	--	name = "commweapon_hpartillery",
-	--	humanName = "Plasma Artillery",
-	--	description = "Plasma Artillery",
-	--	image = moduleImagePath .. "commweapon_assaultcannon.png",
-	--	limit = 2,
-	--	cost = 300 * COST_MULT,
-	--	requireChassis = {"assault"},
-	--	requireLevel = 3,
-	--	slotType = "adv_weapon",
-	--	applicationFunction = function (modules, sharedData)
-	--		if sharedData.noMoreWeapons then
-	--			return
-	--		end
-	--		local weaponName = (modules[moduleDefNames.weaponmod_napalm_warhead] and "commweapon_hpartillery_napalm") or "commweapon_hpartillery"
-	--		if not sharedData.weapon1 then
-	--			sharedData.weapon1 = weaponName
-	--		else
-	--			sharedData.weapon2 = weaponName
-	--		end
-	--	end
-	--},
+	--[[{
+		name = "commweapon_hpartillery",
+		humanName = "Plasma Artillery",
+		description = "Plasma Artillery",
+		image = moduleImagePath .. "commweapon_assaultcannon.png",
+		limit = 2,
+		cost = 100 * COST_MULT,
+		requireChassis = {"assault"},
+		requireLevel = 1,
+		slotType = "adv_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = (modules[moduleDefNames.weaponmod_napalm_warhead] and "commweapon_hpartillery_napalm") or "commweapon_hpartillery"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},]]
 	{
 		name = "commweapon_lightninggun",
 		humanName = "Lightning Rifle",

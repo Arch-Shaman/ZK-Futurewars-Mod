@@ -87,7 +87,7 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynassault1", --21/31
+		name = "dynassault1", --23/31
 		weapons = {
 			"commweapon_rocketlauncher", -- 430
 			"commweapon_rocketlauncher_napalm", -- 430
@@ -106,6 +106,8 @@ local chassisDefs = {
 			"commweapon_riotcannon",
 			"commweapon_riotcannon_napalm",
 			"commweapon_hpartillery",
+			"commweapon_hpartillery",
+			"commweapon_hpartillery_napalm",
 			"commweapon_hpartillery_napalm",
 			"commweapon_napalmgrenade",
 			"commweapon_slamrocket",
