@@ -77,7 +77,7 @@ return {
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP FIXEDWING]],
 			},
 			{
-				def                = [[FLAMETHROWER]],
+				def                = [[BOGUS_FAKE_TARGETER]],
 				badTargetCategory  = [[FIREPROOF]],
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP FIXEDWING]],
 			},
@@ -122,8 +122,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 5.2,
-					subs    = 0.01,
+					default = 10.1,
 				},
 			
 				duration                = 0.01,
@@ -150,7 +149,26 @@ return {
 				weaponType              = [[LaserCannon]],
 				weaponVelocity          = 800,
 			},
+			 BOGUS_FAKE_TARGETER = {
+				name                    = [[Bogus Fake Targeter]],
+				avoidGround             = false, -- avoid nothing, else attempts to move out to clear line of fine
+				avoidFriendly           = false,
+				avoidFeature            = false,
+				avoidNeutral            = false,
 
+				damage                  = {
+					default = 11.34,
+				},
+
+				explosionGenerator      = [[custom:FLASHPLOSION]],
+				noSelfDamage            = true,
+				range                   = 300,
+				reloadtime              = 1,
+				tolerance               = 5000,
+				turret                  = true,
+				weaponType              = [[StarburstLauncher]],
+				weaponVelocity          = 500,
+			},
 			COCKTAIL = {
 				name                    = [[Molotov Cocktail]], --CREDITS: Cliver5
 				areaOfEffect            = 48,
@@ -176,7 +194,7 @@ return {
 					vradius1 = "-1.5,4,-1.5,1.5,6,1.5",
 					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
 					onexplode = "by the power of god, disco and hentai...", -- if true, this projectile will cluster when it explodes
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 80, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					
 					area_damage = 1,
 					area_damage_radius = 70,
@@ -256,7 +274,7 @@ return {
 				reloadtime              = 12,
 				rgbColor                = [[1 0.5 0.2]],
 				size                    = 5,
-				--soundHit                = [[weapon/burn_mixed]],
+				soundHit                = [[weapon/burn_mixed]],
 				soundStart              = [[weapon/cannon/wolverine_fire]],
 				soundStartVolume        = 3.2,
 				sprayangle              = 2500,
@@ -278,9 +296,9 @@ return {
 					burntime = 60,
 					
 					area_damage = 1,
-					area_damage_radius = 48,
+					area_damage_radius = 64,
 					area_damage_dps = 15,
-					area_damage_duration = 10,
+					area_damage_duration = 16,
 
 					--lups_heat_fx = [[firewalker]],
 					light_camera_height = 2500,
@@ -302,7 +320,7 @@ return {
 				reloadtime              = 12,
 				rgbColor                = [[1 0.5 0.2]],
 				size                    = 5,
-				soundHit                = [[weapon/burn_mixed]],
+				soundHit                = [[weapon/clusters/napalm_break]],
 				soundStart              = [[weapon/cannon/wolverine_fire]],
 				soundStartVolume        = 3.2,
 				sprayangle              = 2500,

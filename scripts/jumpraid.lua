@@ -333,7 +333,9 @@ local function RestoreAfterDelay()
 end
 
 function script.AimWeapon(num, heading, pitch)
-
+	if num == 2 then
+		return false
+	end
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
 	firing = true
@@ -345,6 +347,10 @@ function script.AimWeapon(num, heading, pitch)
 	WaitForTurn(low_head, x_axis)
 	StartThread(RestoreAfterDelay)
 	return true
+end
+
+function script.BlockShot(num)
+	return num == 2
 end
 
 function script.FireWeapon(num)
