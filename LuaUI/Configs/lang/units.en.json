@@ -1122,7 +1122,7 @@
 	"jumpraid" : {
 		"name" : "Arsonist",
 		"description" : "Raider/Riot Jumper",
-		"helptext" : "The Arsonist is a moderately cheap, fast walker with a flamethrower and a volatile grenade. The flamethrower deals increased damage to large units and can hit multiple targets at the same time. When killed, the Arsonist sets surrounding units on fire. Additionally, Arsonists also come with jetpacks, allowing them to jump over obstacles or get the drop on enemies."
+		"helptext" : "Armed with the best chemistry has to offer, and designed with the sole goal of burning down all in it's path. The Arsonist is a fearsome foe. It's primary flamethrower melts through metal like butter while it's sweeping flamethrowers set all alight with indiscrimination. And when you think it cannot get worse, teh Arsonist shall show the ace up it's sleeve - A molotov cocktain weapon, a weapon that got it's name not because of it's design or shape, but because of it's sheer brutal effectiveness."
 	},
 	"tankheavyarty" : {
 		"name" : "Tremor",
