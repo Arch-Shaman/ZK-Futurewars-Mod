@@ -1,7 +1,7 @@
 return { 
 	jumpraid = {
 		unitname              = [[jumpraid]],
-		name                  = [[Pyro]],
+		name                  = [[Arsonist]],
 		description           = [[Raider/Riot Jumper]],
 		acceleration          = 1.2,
 		brakeRate             = 7.2,
@@ -369,7 +369,7 @@ return {
 				reloadtime              = 12,
 				rgbColor                = [[1 0.5 0.2]],
 				size                    = 5,
-				soundHit                = [[weapon/burn_mixed]],
+				soundHit                = [[weapon/clusters/napalm_break]],
 				soundStart              = [[weapon/cannon/wolverine_fire]],
 				soundStartVolume        = 3.2,
 				sprayangle              = 2500,
