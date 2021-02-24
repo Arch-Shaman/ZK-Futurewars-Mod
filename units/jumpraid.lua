@@ -185,6 +185,11 @@ return {
 					light_beam_mult = 5,
 				
 					combatrange = 220,
+					
+					stats_custom_tooltip_1 = " - Sweeping Arc:",
+					stats_custom_tooltip_entry_1 = "80 deg",
+					stats_custom_tooltip_2 = " - Sweeping Speed:",
+					stats_custom_tooltip_entry_2 = "60 deg/s",
 				},
 				
 				damage                  = {
