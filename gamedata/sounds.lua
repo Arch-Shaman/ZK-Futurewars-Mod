@@ -11,7 +11,7 @@ local Sounds = {
 		--   file = "sounds/button9.wav",
 		--},
 		MapPoint = {
-			file = "sounds/ping.wav",
+			file = "sounds/beep4_decrackled.wav",
 			maxconcurrent = 3,
 		},
 		--[[
