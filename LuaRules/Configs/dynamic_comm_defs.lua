@@ -623,7 +623,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 300 * COST_MULT,
 		requireChassis = {"support", "knight"},
-		requiredModules = {"commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_lparticlebeam"},
+		requireOneOf = {"commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_lparticlebeam"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -648,7 +648,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 300 * COST_MULT,
 		requireChassis = {"support", "knight"},
-		requiredModules = {"commweapon_disruptorprojector2", "commweapon_beamlaser2", "commweapon_lparticlebeam2"},
+		requireOneOf = {"commweapon_disruptorprojector2", "commweapon_beamlaser2", "commweapon_lparticlebeam2"},
 		requireLevel = 4,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -911,7 +911,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 250 * COST_MULT,
 		requireChassis = {"assault", "support", "knight"},
-		requiredModules = {"commweapon_personal_shield"},
+		requireOneOf = {"commweapon_personal_shield"},
 		prohibitingModules = {"module_personal_cloak"},
 		requireLevel = 3,
 		slotType = "module",
@@ -927,7 +927,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 350 * COST_MULT,
 		requireChassis = {"assault", "knight"},
-		requiredModules = {"commweapon_rocketlauncher", "commweapon_hpartillery", "commweapon_riotcannon"},
+		requireOneOf = {"commweapon_rocketlauncher", "commweapon_hpartillery", "commweapon_riotcannon"},
 		requireLevel = 2,
 		slotType = "module",
 	},
@@ -939,7 +939,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 300 * COST_MULT,
 		requireChassis = {"strike", "recon", "support", "knight"},
-		requiredModules = {"commweapon_heavymachinegun", "commweapon_heavyrifle", "commweapon_tankbuster", "commweapon_emg", "commweapon_shotgun", "commweapon_hparticlebeam", "commweapon_lparticlebeam"},
+		requireOneOf = {"commweapon_heavymachinegun", "commweapon_heavyrifle", "commweapon_tankbuster", "commweapon_emg", "commweapon_shotgun", "commweapon_hparticlebeam", "commweapon_lparticlebeam"},
 		requireLevel = 2,
 		slotType = "module",
 	},
@@ -951,7 +951,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 300 * COST_MULT,
 		requireChassis = {"support", "strike", "recon", "knight"},
-		requiredModules = {"commweapon_lightninggun", "commweapon_multistunner"},
+		requireOneOf = {"commweapon_lightninggun", "commweapon_multistunner"},
 		requireLevel = 2,
 		slotType = "module",
 	},
@@ -1054,7 +1054,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 600 * COST_MULT,
 		requireChassis = {"support", "knight"},
-		requiredModules = {"module_jammer"},
+		requireOneOf = {"module_jammer"},
 		requireLevel = 3,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -1169,7 +1169,7 @@ local moduleDefs = {
 		limit = 8,
 		cost = 125 * COST_MULT,
 		requireChassis = {"support", "knight"},
-		requiredModules = {"module_companion_drone"},
+		requireOneOf = {"module_companion_drone"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -1211,7 +1211,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_heavy_armor.png",
 		limit = 8,
 		cost = 200 * COST_MULT,
-		requiredModules = {"module_ablative_armor"},
+		requireOneOf = {"module_ablative_armor"},
 		requireChassis = {"assault", "knight"},
 		requireLevel = 2,
 		slotType = "module",
@@ -1426,7 +1426,7 @@ local morphCosts = {
 }
 
 local function extraLevelCostFunction(level)
-	return math.max(300, level * 25 + 50) * COST_MULT
+	return (level + 2) * 25 * COST_MULT
 end
 
 local chassisDefs = {
@@ -1446,7 +1446,7 @@ local chassisDefs = {
 					sharedData.decloakDistance = 200
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 10
 					sharedData.personalCloak = true -- !!FREE!! cloak
-					sharedData.speedMod = (sharedData.speedMod or 0) + 2
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
 					sharedData.recloaktime = (sharedData.recloaktime or 300)
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1461,7 +1461,7 @@ local chassisDefs = {
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.decloakDistance = 180
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 20
-					sharedData.speedMod = (sharedData.speedMod or 0) + 2
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
 					sharedData.recloaktime = (sharedData.recloaktime or 300) - 30
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1485,7 +1485,7 @@ local chassisDefs = {
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.decloakDistance = 160
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 30
-					sharedData.speedMod = (sharedData.speedMod or 0) + 2
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
 					sharedData.recloaktime = (sharedData.recloaktime or 300) - 60
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1509,7 +1509,7 @@ local chassisDefs = {
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.decloakDistance = 140
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 40
-					sharedData.speedMod = (sharedData.speedMod or 0) + 2
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
 					sharedData.recloaktime = (sharedData.recloaktime or 300) - 90
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1537,7 +1537,7 @@ local chassisDefs = {
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.decloakDistance = 120
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 50
-					sharedData.speedMod = (sharedData.speedMod or 0) + 2
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
 					sharedData.recloaktime = (sharedData.recloaktime or 300) - 120
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1565,7 +1565,7 @@ local chassisDefs = {
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.decloakDistance = 100
 					sharedData.cloakregen = (sharedData.cloakregen or 0) + 60
-					sharedData.speedMod = (sharedData.speedMod or 0) + 2
+					sharedData.speedMod = (sharedData.speedMod or 0) + 8
 					sharedData.recloaktime = (sharedData.recloaktime or 300) - 150
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
