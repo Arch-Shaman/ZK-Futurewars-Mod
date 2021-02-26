@@ -6,7 +6,7 @@ function gadget:GetInfo()
 		date      = "3/21/2020",
 		license   = "CC-0",
 		layer     = 32,
-		enabled   = true,
+		enabled   = false,
 	}
 end
 
@@ -17,7 +17,7 @@ end
 local config = {}
 local proj = {}
 local watchdefs = {}
---[[
+
 Delayed: time it takes for the explosion to be delayed. [required]
 wepd: the weapondef of the explosion when the timer goes off
 damageair: damage % dealt to air units (post processing)
@@ -27,7 +27,7 @@ damageslow: amount of slow damage to deal (absolute)
 damagesub: damage % dealt to subs
 damagefrequency: frequency (in frames) to deal damage. leave 0 for one off.
 damageduration: duration for this explosion to be active.
-]]
+
 
 for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
