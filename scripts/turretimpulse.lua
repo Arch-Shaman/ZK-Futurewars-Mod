@@ -70,7 +70,7 @@ end
 
 function script.AimWeapon(num, heading, pitch)
 	Turn(turret, y_axis, heading, TURRET_AIM_SPEED)
-	Turn(turret, x_axis, -1 * pitch, TURRET_AIM_SPEED)
+	Turn(turret, x_axis, -pitch, TURRET_AIM_SPEED)
 	WaitForTurn(turret, y_axis)
 	WaitForTurn(turret, x_axis)
 	return true
