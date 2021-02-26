@@ -308,13 +308,13 @@ local unitDef = {
 				reaim_time = 60, -- Fast update not required (maybe dangerous)
 				--CAS--
 				numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-				projectile1 = "proliferator_aa",
-				spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
-				clustervec1 = "evenx", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-				use2ddist = 1, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-				spawndist = 870, -- at what distance should we spawn the projectile(s)? REQUIRED.
-				timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-				vradius1 = 5, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+				--projectile1 = "proliferator_aa",
+				--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
+				--clustervec1 = "evenx", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+				--use2ddist = 1, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
+				--spawndist = 870, -- at what distance should we spawn the projectile(s)? REQUIRED.
+				--timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
+				--vradius1 = 5, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 				--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 				--proxy = 1, -- check for nearby units?
 				--proxydist = 100, -- how far to check for units? Default: spawndist
@@ -322,9 +322,8 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 135,
+				default = 13.5,
 				planes  = 135,
-				subs    = 135,
 			},
 
 			explosionGenerator      = [[custom:WEAPEXP_PUFF]],
