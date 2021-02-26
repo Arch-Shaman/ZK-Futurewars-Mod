@@ -39,7 +39,7 @@ return {
 		maxSlope               = 36,
 		maxVelocity            = 3.8,
 		maxWaterDepth          = 22,
-		minCloakDistance       = 145,
+		minCloakDistance       = 100,
 		movementClass          = [[KBOT2]],
 		moveState              = 0,
 		noChaseCategory        = [[TERRAFORM FIXEDWING SUB]],
