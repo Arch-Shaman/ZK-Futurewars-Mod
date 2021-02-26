@@ -169,12 +169,12 @@ local function CheckUnit(unitID, data, currenttarget)
 			spEcho("Target: " .. currenttarget .. "\nVy: " .. vy .. "\ndist: " .. distance .. "\nder: " .. der)
 		end
 		if not holdatrange[targetdef] then
-			if (der < -30 and vy >= 1) or (distance < 150 and der < -20) then
+			if (der < -5 and vy >= 1) or (distance < 150 and der < -5) then
 				if mystate ~= true then
 					SetState(unitID, mystate, true) -- push
 				end
 				return
-			elseif data.state and distance > 300 and vy < 0.5 and der < 10 and der > -5 then
+			elseif data.state and distance > 300 and vy < 0.5 and der < 5 and der > -5 then
 				if mystate then
 					SetState(unitID, mystate, false) -- pull
 				end
