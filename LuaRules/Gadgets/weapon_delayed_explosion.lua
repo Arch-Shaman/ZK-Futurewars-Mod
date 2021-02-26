@@ -1,10 +1,10 @@
---[[function gadget:GetInfo()
+function gadget:GetInfo()
 	return {
 		name      = "Delayed AOE damage",
 		desc      = "Implements delayed AOE damage for projectiles",
 		author    = "_Shaman",
 		date      = "3/21/2020",
-		license   = "Death to nonbelievers v92",
+		license   = "CC-0",
 		layer     = 32,
 		enabled   = true,
 	}
@@ -13,7 +13,7 @@ end
 if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
 	return
 end
-
+--[[
 local config = {}
 local proj = {}
 local watchdefs = {}
