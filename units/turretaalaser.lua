@@ -59,6 +59,7 @@ return {
 				craterMult              = 0,
 				
 				customParams        = {
+					isaa = [[1]],
 					light_camera_height = 1200,
 					light_radius = 20,
 				},
