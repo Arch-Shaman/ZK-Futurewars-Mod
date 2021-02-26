@@ -56,7 +56,7 @@ local debugmode = false --THIS WILL SPAM THE LIVING HELL OUT OF THE INFOLOGS
 ---------------------------------------------------------------------
 
 spEcho("Syphon/Phaser Handler: Scanning weapondefs")
-spEcho("Math.Huge is" .. math.huge)
+--spEcho("Math.Huge is" .. math.huge)
 
 for q=1, #WeaponDefs do
 	local Wdef = WeaponDefs[q]
@@ -72,9 +72,9 @@ for q=1, #WeaponDefs do
 end
 
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
-if debugmode then
-	spEcho("something got hurt. It still has " .. SpGetUnitHealth(unitID).. " hp remaining.")
-end
+	if debugmode then
+		spEcho("something got hurt. It still has " .. SpGetUnitHealth(unitID).. " hp remaining.")
+	end
 	if phasers[weaponDefID] and unitTeam ~= attackerTeam then
 		if debugmode then
 			spEcho("the attacker is a phaser")
