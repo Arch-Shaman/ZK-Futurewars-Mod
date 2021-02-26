@@ -164,7 +164,7 @@ local function CheckUnit(unitID, data, currenttarget)
 		local der = distance - data.distance
 		local x, y, z = spGetUnitPosition(currenttarget)
 		local x2, y2, z2 = spGetUnitPosition(unitID)
-		local h = y - spGetGroundHeight(x, z)
+		local heightFromGround = y - spGetGroundHeight(x, z)
 		local heightdifference = y - y2
 		data.distance = distance
 		if lasttarget ~= currenttarget then
@@ -172,21 +172,27 @@ local function CheckUnit(unitID, data, currenttarget)
 		end
 		local vx, vy, vz = spGetUnitVelocity(currenttarget)
 		if debug and Spring.GetGameFrame()%4 == 0 then
-			spEcho("Target: " .. currenttarget .. "\nVy: " .. vy .. "\ndist: " .. distance .. "\nder: " .. der .. "\nheight info: " .. h .. " ( " .. heightdifference .. " )")
+			spEcho("Target: " .. currenttarget .. "\nVy: " .. vy .. "\ndist: " .. distance .. "\nder: " .. der .. "\nheight info: " .. heightFromGround .. " ( " .. heightdifference .. " )")
 		end
+		-- we use heightdifference here to tell when a target is above or at level with the newton. This is a cheap means of figuring out when we can launch them.
+		-- distance is used to tell when the unit is careening towards us (BAD, we don't want to take collision damage!)
+		-- VY is to tell when a unit is sent upwards (meaning: going to space)
+		-- Most of the time this will result in units either being smashed repeatedly into terrain (lol) or going into space. Both are beneficial to us anyways.
 		if not holdatrange[targetdef] then
-			if (distance < 200 and der < -5) or (heightdifference >= 0 and h >= 10) or der < -15 then
+			if (distance < 200 and der < -5) or (heightdifference >= 0 and heightFromGround >= 10) or der < -15 then
 				if mystate ~= true then
 					SetState(unitID, mystate, true) -- push
 				end
 				return
-			elseif distance > 250 and vy < 0.5 and not (heightdifference > 0 and h > 10) then
+			elseif distance > 250 and vy < 0.5 and not (heightdifference > 0 and heightFromGround > 10) then
 				if mystate then
 					SetState(unitID, mystate, false) -- pull
 				end
 				return
 			end
 		else
+			-- now this on the other hand, since Seperation is 3d distance (eww) we're kinda fucked when things go over our heads.
+			-- 2d distance leads to a totally ineffectual response so this is here to stay, unfortunately.
 			if distance > 370 and mystate then
 				SetState(unitID, mystate, false)
 			elseif distance < 370 and not mystate then
@@ -196,15 +202,7 @@ local function CheckUnit(unitID, data, currenttarget)
 	end
 end
 
---[[function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
-	if wanteddefs[unitDefID] then
-		spInsertUnitCmdDesc(unitID, unitAICmdDesc)
-		local cmdDesc = spGetUnitCmdDesc(unitID, cmdDescID, cmdDescID)
-		spEditUnitCmdDesc(unitID, cmdDescID, {params = {0, 'AI Off','AI On'}})
-	end
-end]] -- probably handled by unitAI.
-
-function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
+function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced) -- we get unitAI cmd from tactical ai. this just plugs it into this script.
 	if (cmdID ~= CMD_UNIT_AI) then
 		return true  -- command was not used
 	end
@@ -222,18 +220,18 @@ function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(newtons) do
 		data.state = GetUnitIsActive(id)
 		local weapon = 2
-		if not data.state then
+		if not data.state then -- weapon 1 is pull while weapon 2 is push.
 			weapon = 1
 		end
-		local type, _, currenttarget = spGetUnitWeaponTarget(id, weapon)
-		local newtonteam = spGetUnitTeam(id)
+		local type, _, currenttarget = spGetUnitWeaponTarget(id, weapon) -- sometimes weapons have different targets, for... reasons i don't fully understand.
+		local newtonteam = spGetUnitTeam(id) -- so all this code here is just safety stuff.
 		local isally = true
-		if type == 1 and currenttarget then
+		if type == 1 and currenttarget then -- we want to only care about UNITS which are type 1. 0 is no target (afaik) and 2 is ground.
 			local targetteam = spGetUnitTeam(currenttarget)
 			isally = spAreTeamsAllied(newtonteam, targetteam)
 		end
-		if type == 1 and currenttarget and (handleallies or not isally) then -- only handle enemies
-			CheckUnit(id, data, currenttarget)
+		if type == 1 and currenttarget and (handleallies or not isally) then -- we only care about shooting enemies (since newtons MAY be in newton fire zones).
+			CheckUnit(id, data, currenttarget) -- note: newton fire zone automatically turns off the ai anyways, but we don't want to have our stuff smash into terrain (BAD)
 		end
 	end
 end
