@@ -72,6 +72,8 @@ local spAreTeamsAllied = Spring.AreTeamsAllied
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spGetUnitLosState = Spring.GetUnitLosState
 local spGetUnitHealth = Spring.GetUnitHealth
+local spGetUnitPosition = Spring.GetUnitPosition
+local spGetGroundHeight = Spring.GetGroundHeight
 local spEcho = Spring.Echo
 
 local pushparam = {1}
@@ -151,7 +153,7 @@ local function CheckUnit(unitID, data, currenttarget)
 			SetState(unitID, mystate, false)
 		end
 		return
-	elseif (inlos and alwayspush[targetdef]) or (hpratio <= 0.25 and not (inlos and alwayspull[targetdef])) then
+	elseif (inlos and alwayspush[targetdef]) or (hpratio <= 0.25 and not (inlos and (alwayspull[targetdef] or holdatrange[targetdef]))) then
 		if mystate ~= true then
 			SetState(unitID, mystate, true) -- push
 		end
@@ -160,30 +162,34 @@ local function CheckUnit(unitID, data, currenttarget)
 	if inlos then
 		local distance = spGetUnitSeparation(unitID, currenttarget)
 		local der = distance - data.distance
+		local x, y, z = spGetUnitPosition(currenttarget)
+		local x2, y2, z2 = spGetUnitPosition(unitID)
+		local h = y - spGetGroundHeight(x, z)
+		local heightdifference = y - y2
 		data.distance = distance
 		if lasttarget ~= currenttarget then
 			der = 0
 		end
 		local vx, vy, vz = spGetUnitVelocity(currenttarget)
-		if debug then
-			spEcho("Target: " .. currenttarget .. "\nVy: " .. vy .. "\ndist: " .. distance .. "\nder: " .. der)
+		if debug and Spring.GetGameFrame()%4 == 0 then
+			spEcho("Target: " .. currenttarget .. "\nVy: " .. vy .. "\ndist: " .. distance .. "\nder: " .. der .. "\nheight info: " .. h .. " ( " .. heightdifference .. " )")
 		end
 		if not holdatrange[targetdef] then
-			if (der < -5 and vy >= 1) or (distance < 150 and der < -5) then
+			if (distance < 200 and der < -5) or (heightdifference >= 0 and h >= 10) or der < -15 then
 				if mystate ~= true then
 					SetState(unitID, mystate, true) -- push
 				end
 				return
-			elseif data.state and distance > 300 and vy < 0.5 and der < 5 and der > -5 then
+			elseif distance > 250 and vy < 0.5 and not (heightdifference > 0 and h > 10) then
 				if mystate then
 					SetState(unitID, mystate, false) -- pull
 				end
 				return
 			end
 		else
-			if distance > 300 and mystate then
+			if distance > 370 and mystate then
 				SetState(unitID, mystate, false)
-			elseif distance < 300 and not mystate then
+			elseif distance < 370 and not mystate then
 				SetState(unitID, mystate, true)
 			end
 		end
