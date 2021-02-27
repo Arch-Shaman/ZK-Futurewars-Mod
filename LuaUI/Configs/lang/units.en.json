@@ -995,9 +995,9 @@
 		"helptext" : "This Cruiser packs a powerful, long-range artillery cannon, useful for bombarding fixed emplacements and shore targets. Beware of aircraft, submarines and raider ships."
 	},
 	"shipaa" : {
-		"name" : "Zephyr",
+		"name" : "Undercurrent",
 		"description" : "Anti-Air Frigate",
-		"helptext" : "With its powerful twin anti-air laser batteries, this Anti-Air Frigate protects your fleet from aerial attackers. As always, it is useless against targets that aren't airborne."
+		"helptext" : "With its powerful twin anti-air laser batteries, the Undercurrent protects your fleet from aerial attackers. Its twin high intensity lasers can burn through nearby aircraft at astonishing rates, but is less useful against distant targets."
 	},
 	"shipheavyarty" : {
 		"name" : "Shogun",

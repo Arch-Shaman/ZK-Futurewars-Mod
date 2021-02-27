@@ -1,7 +1,7 @@
 return { 
 	shipaa = {
 		unitname               = [[shipaa]],
-		name                   = [[Zephyr]],
+		name                   = [[Undercurrent]],
 		description            = [[Anti-Air Frigate]],
 		acceleration           = 0.3,
 		activateWhenBuilt      = true,
@@ -79,7 +79,7 @@ return {
 				},
       
 				damage                  = {
-					default = 15.4,
+					default = 16.1,
 				},
 				cylinderTargeting 		= 100,
 				dynDamageExp            = 1,
