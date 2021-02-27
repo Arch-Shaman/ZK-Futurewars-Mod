@@ -190,7 +190,7 @@ function script.BlockShot(num, targetID)
 	if firing then
 		if registeredTarget then
 			if target ~= targetID and registeredTarget then
-				spEcho("target: " .. (target or "nil") .. " targetID : " .. (targetID or "nil"))
+				--spEcho("target: " .. (target or "nil") .. " targetID : " .. (targetID or "nil"))
 				StartReload()
 			end
 		else
