@@ -75,7 +75,7 @@ return {
 					light_camera_height = 2500,
 					light_color = [[1 0.8 0.2]],
 					cruisealt = 600,
-					cruisedist = 300,
+					cruisedist = 340,
 				},
 
 				damage         = {
@@ -102,7 +102,7 @@ return {
 				soundHit                = [[weapon/missile/vlaunch_hit]],
 				soundStart              = [[weapon/missile/missile_launch]],
 				tolerance               = 4000,
-				turnrate                = 20000,
+				turnrate                = 22500,
 				startVelocity           = 80,
 				weaponAcceleration      = 315,
 				tracks = true, -- doesn't actually track. Needed for cruise missile.
