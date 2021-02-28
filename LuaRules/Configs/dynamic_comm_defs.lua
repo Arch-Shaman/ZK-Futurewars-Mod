@@ -319,7 +319,7 @@ local moduleDefs = {
 		cost = 150 * COST_MULT,
 		requireChassis = {"assault"},
 		requireLevel = 1,
-		slotType = "adv_weapon",
+		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
