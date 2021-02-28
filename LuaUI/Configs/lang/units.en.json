@@ -815,9 +815,9 @@
 		"helptext" : "The Spiker's razor sharp projectiles can pierce even the thickest armor. While it doesn't have much health, it remains a potent threat to both air and ground units. Counter with anything that can reliably outrange it."
 	},
 	"striderdante" : {
-		"name" : "Dante",
+		"name" : "Vulcan",
 		"description" : "Assault/Riot Strider",
-		"helptext" : "The Dante is a heavy combat unit that specializes in getting close and melting its target. Its flamethrower and twin heatrays aren't extraordinary, but its incendiary rockets can be fired in a salvo of twenty that devastates a wide swath of terrain."
+		"helptext" : "The Vulcan is a heavy combat unit that specializes in getting close and melting its target. Its wide-area flamethrower and overkill amounts of heatrays aren't extraordinary, but its incendiary rockets can be fired in a salvo of twenty that devastates a wide swath of terrain."
 	},
 	"dynassault1" : {
 		"name" : "Bombardment Commander",
