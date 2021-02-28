@@ -115,6 +115,9 @@ return {
 					light_beam_mult_frames = 5,
 					light_beam_mult = 5,
 					reaim_time = 1,
+					
+					stats_custom_tooltip_1 = " - Coverage:",
+					stats_custom_tooltip_entry_1 = "60deg",
 				},
 				
 				damage                  = {
@@ -150,7 +153,7 @@ return {
 		
 			
 			HEATRAY = {
-				name                    = [[Heat Ray]],
+				name                    = [[Rotary Heatray Array]],
 				areaOfEffect            = 20,
 				beamtime				= 1/30,
 				coreThickness           = 1.4,
@@ -167,6 +170,13 @@ return {
 					light_beam_mult_frames = 9,
 					light_beam_mult = 8,
 					stats_hide_damage = 1,
+					
+					stats_custom_tooltip_1 = " - Rotary Beams:",
+					stats_custom_tooltip_entry_1 = "4 per weapon",
+					stats_custom_tooltip_2 = " - Rotary Beam Angle:",
+					stats_custom_tooltip_entry_2 = "10deg",
+					stats_custom_tooltip_3 = " - Beam Rotation Speed:",
+					stats_custom_tooltip_entry_3 = "100deg/s",
 				},
 				damage                  = {
 					default = 20,
