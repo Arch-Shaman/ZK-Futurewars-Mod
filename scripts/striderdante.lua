@@ -441,11 +441,19 @@ function script.Shot(num)
 end
 
 function script.BlockShot(num, targetID)
-	if num ~= 1 then
-		return false
+	if num == 2 then
+		if not targetID or spValidUnitID(targetID) then --try and fix a bug I caught in testing
+			return false
+		else
+			return true
+		end
+	else
+		if num ~= 1 then
+			return false
+		end
+		local reloadState = Spring.GetUnitWeaponState(unitID, 3, 'reloadState')
+		return not (reloadState and (reloadState < 0 or reloadState < Spring.GetGameFrame()))
 	end
-	local reloadState = Spring.GetUnitWeaponState(unitID, 3, 'reloadState')
-	return not (reloadState and (reloadState < 0 or reloadState < Spring.GetGameFrame()))
 end
 
 function script.FireWeapon(num)
