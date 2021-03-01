@@ -64,6 +64,20 @@ local function lowerkeys(t)
 	return tn
 end
 
+local function Explode(div, str)
+	if div == '' then
+		return false
+	end
+	local pos, arr = 0, {}
+	-- for each divider found
+	for st, sp in function() return string.find(str, div, pos, true) end do
+		table.insert(arr, string.sub(str, pos, st - 1)) -- Attach chars left of current divider
+		pos = sp + 1 -- Jump past current divider
+	end
+	table.insert(arr,string.sub(str,pos)) -- Attach chars right of last divider
+	return arr
+end
+
 local function GetDimensions(scale)
 	if not scale then
 		return false
@@ -79,20 +93,6 @@ local function GetDimensions(scale)
 		largest = math.max(largest, (dimensions and dimensions[i] and tonumber(dimensions[i])) or 0)
 	end
 	return dimensions, largest
-end
-
-local function Explode(div, str)
-	if div == '' then
-		return false
-	end
-	local pos, arr = 0, {}
-	-- for each divider found
-	for st, sp in function() return string.find(str, div, pos, true) end do
-		table.insert(arr, string.sub(str, pos, st - 1)) -- Attach chars left of current divider
-		pos = sp + 1 -- Jump past current divider
-	end
-	table.insert(arr,string.sub(str,pos)) -- Attach chars right of last divider
-	return arr
 end
 
 --deep not safe with circular tables! defaults To false
