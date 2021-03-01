@@ -18,7 +18,7 @@ local weaponDef = {
 		noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
 		spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
 		timeddeploy = 20,
-
+		commsubmunition = 1,
 		--lups_heat_fx = [[firewalker]],
 		light_camera_height = 2500,
 		light_color = [[0.25 0.13 0.05]],

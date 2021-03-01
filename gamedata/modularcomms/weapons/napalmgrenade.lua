@@ -1,7 +1,7 @@
 local name = "commweapon_napalmgrenade"
 local weaponDef = {
 	name                    = [[Hellfire Grenade]], --CREDITS: Cliver5
-	areaOfEffect            = 48,
+	areaOfEffect            = 256,
 	avoidFeature            = true,
 	--cegTag                  = [[missiletrailred]],
 	commandFire             = true,
@@ -21,12 +21,12 @@ local weaponDef = {
 		clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 		keepmomentum1 = 0,
 		timeoutspawn = 0,
-		vradius1 = "-1.5,4,-1.5,1.5,6,1.5",
+		vradius1 = "-4.5,4,-4.5,4.5,6,4.5",
 		noairburst = "by your powers combined", -- if true, this projectile will skip all airburst checks
 		onexplode = "how can this fail", -- if true, this projectile will cluster when it explodes
 		spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
 		area_damage = 1,
-		area_damage_radius = 70,
+		area_damage_radius = 128,
 		area_damage_dps = 40,
 		area_damage_duration = 12,
 	},
@@ -42,18 +42,18 @@ local weaponDef = {
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 2,
 	model                   = [[wep_b_fabby.s3o]], --TODO: replace with SharkGameDev's better model. delete this once it's done.
-	range                   = 340,
-	reloadtime              = 45,
+	range                   = 440,
+	reloadtime              = 14,
 	smokeTrail              = true,
-	soundHit                = [[weapon/cannon/wolverine_hit]],
+	soundHit                = [[weapon/missile/nalpalm_missile_hit]],
 	soundHitVolume          = 8,
-	soundStart              = [[weapon/cannon/cannon_fire3]],
+	SoundStart				= [[weapon/cannon/light_launcher]],
 	trajectoryHeight        = 1,
 	texture2                = [[lightsmoketrail]],
 	tolerance               = 8000,
 	turret                  = true,
 	weaponType              = [[Cannon]],
-	weaponVelocity          = 255,
+	weaponVelocity          = 400,
 }
 
 return name, weaponDef
