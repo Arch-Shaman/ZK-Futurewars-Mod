@@ -58,9 +58,11 @@ return {
 					stats_hide_reload = 1,
 					light_color = [[1.35 1.35 0.36]],
 					light_radius = 450,
+					cruisealt = 1300,
+					cruisedist = 400,
 				},
 				damage                  = {
-					default = 30002.4,
+					default = 30000.1,
 				},
 				edgeEffectiveness       = 1,
 				explosionGenerator      = [[custom:EMPMISSILE_EXPLOSION]],
@@ -78,14 +80,13 @@ return {
 				soundHit                = [[weapon/missile/emp_missile_hit]],
 				soundStart              = [[weapon/missile/tacnuke_launch]],
 				tolerance               = 4000,
-				tracks                  = false,
-				turnrate                = 12000,
+				tracks                  = true,
+				turnrate                = 18000,
 				weaponAcceleration      = 180,
-				weaponTimer             = 5,
 				weaponType              = [[StarburstLauncher]],
 				weaponVelocity          = 1200,
 			},
 		},
 		featureDefs            = {},
-	} 
+	}	 
 }
