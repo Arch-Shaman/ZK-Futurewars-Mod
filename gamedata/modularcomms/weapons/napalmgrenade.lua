@@ -9,6 +9,8 @@ local weaponDef = {
 	craterMult              = 0,
 
 	customParams        = {
+		is_unit_weapon = 1,
+		slot = [[3]],
 		light_camera_height = 3500,
 		light_color = [[0.75 0.4 0.15]],
 		light_radius = 220,
@@ -52,6 +54,6 @@ local weaponDef = {
 	turret                  = true,
 	weaponType              = [[Cannon]],
 	weaponVelocity          = 255,
-},
-		
+}
+
 return name, weaponDef

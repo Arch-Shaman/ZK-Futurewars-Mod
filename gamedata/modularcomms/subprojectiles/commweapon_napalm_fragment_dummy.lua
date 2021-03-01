@@ -10,7 +10,7 @@ local weaponDef = {
 	customParams              = {
 
 		numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-		projectile1 = "commweapon_napalm_fragment",
+		projectile1 = "commweapon_napalmgrenade_fragment",
 		--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
 		clustervec1 = "derpderpderpderpderpderpderpderpderpderp", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 		keepmomentum1 = 1,

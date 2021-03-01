@@ -1,5 +1,5 @@
-local name = "commweapon_napalm_fragment"
-NAPALM_FRAGMENT = {
+local name = "commweapon_napalmgrenade_fragment"
+weaponDef = {
 	name                    = [[Napalm Fragment]],
 	accuracy                = 400,
 	areaOfEffect            = 162,
