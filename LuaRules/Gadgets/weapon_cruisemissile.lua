@@ -28,6 +28,8 @@ local random = math.random
 local rad = math.rad
 local sin = math.sin
 local cos = math.cos
+local sqrt = math.sqrt
+local max = math.max
 
 local spGetGroundHeight = Spring.GetGroundHeight
 local spValidUnitID = Spring.ValidUnitID
@@ -57,13 +59,13 @@ for i=1, #WeaponDefs do
 		config[i].permoffset = curRef.cruise_permoffset ~= nil
 		config[i].finaltracking = curRef.cruise_nolock == nil
 		SetWatchWeapon(i, true)
-	else
+	elseif curRef.cruisealt ~= nil or curRef.cruisedist ~= nil then
 		spEcho("[Cruise Missiles] Bad def " .. WeaponDefs[i].name .. " (Missing Altitude or Distance field)")
 	end
 end
 
 local function Distance(x1, x2, y1, y2)
-	return math.sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)))
+	return sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)))
 end
 
 
@@ -171,7 +173,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		end
 		local allyteam = spGetUnitAllyTeam(proOwnerID)
 		local _, py = spGetProjectilePosition(proID)
-		py = math.max(py, ty)
+		py = max(py, ty)
 		missiles[proID] = {target = target, type = type, cruising = false, takeoff = true, lastknownposition = last, configid = wep, started = false, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0}
 		if config[wep].radius then
 			ProccessOffset(wep, proID)
