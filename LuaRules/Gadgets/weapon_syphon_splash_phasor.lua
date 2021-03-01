@@ -62,7 +62,9 @@ for q=1, #WeaponDefs do
 	local Wdef = WeaponDefs[q]
 	local params = Wdef.customParams
 	if params and params.dmg_scaling then
-		spEcho("SPH: Pharsing Weapon. ID:" .. q .. " Name:".. Wdef.name)
+		if debugmode then
+			spEcho("SPH: Pharsing Weapon. ID:" .. q .. " Name:".. Wdef.name)
+		end
 		phasers[q] = {}
 		phasers[q].scaling = tonumber(params.dmg_scaling) or 1
 		phasers[q].scalingMax = tonumber(params.dmg_scaling_max) or math.huge
