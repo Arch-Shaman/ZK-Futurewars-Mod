@@ -112,7 +112,7 @@ unitDef = {
 				reaim_time = 60, -- Fast update not required (maybe dangerous)
 				setunitsonfire = "1",
 				burntime = 90,
-				cruisealt = 1500,
+				cruisealt = 1300,
 				cruisedist = 400,
 
 				restrict_in_widgets = 1,
