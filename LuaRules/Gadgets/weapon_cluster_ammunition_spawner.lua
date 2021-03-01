@@ -115,80 +115,34 @@ for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
 	if curRef and curRef.projectile1 then -- found it!
-		spEcho("CAS: Discovered " .. i .. "(" .. wd.name .. ")")
+		if debug then
+			spEcho("CAS: Discovered " .. i .. "(" .. wd.name .. ")")
+		end
 		if type(curRef.projectile1) == "string" then -- reason we use it like this is to provide an error if something doesn't seem right.
 			if WeaponDefNames[curRef.projectile1] then
 				if type(curRef.spawndist) == "string" then -- all ok
 					SetWatchWeapon(i, true)
 					if debug then
-						spEcho("CAS: Enabled watch for " .. i)
+						spEcho("[CAS] Enabled watch for " .. i)
 					end
 					--Mommy projectile Defs
 					config[i] = {}
-					if wd.type == "AircraftBomb" then
-						config[i]["isBomb"] = true
-					else
-						config[i]["isBomb"] = false
-					end
 					config[i]["spawndist"] = tonumber(curRef.spawndist)
-					if wd.type == "StarburstLauncher" then
-						config[i]["launcher"] = true
-					else
-						config[i]["launcher"] = false
-					end
 					if curRef.timeddeploy then
 						config[i].timer = tonumber(curRef.timeddeploy) or 5
 					end
-					if type(curRef.timeoutspawn) ~= "string" then
-						config[i]["timeoutspawn"] = 1
-					else
-						config[i]["timeoutspawn"] = tonumber(curRef.timeoutspawn)
-					end
 					if type(curRef.use2ddist) ~= "string" then
 						config[i]["use2ddist"] = 0
-						spEcho("CAS: Set 2ddist to false for " .. wd.name)
+						if debug then
+							spEcho("[CAS] Set 2ddist to false for " .. wd.name)
+						end
 					else
 						config[i]["use2ddist"] = tonumber(curRef.use2ddist)
-					end
-					if type(curRef.proxy) ~= "string" then
-						config[i]["proxy"] = 0
-					else
-						config[i]["proxy"] = tonumber(curRef.proxy)
-					end
-					if type(curRef.proxydist) ~= "string" then
-						config[i]["proxydist"] = config[i]["spawndist"]
-					else
-						config[i]["proxydist"] = tonumber(curRef.proxydist)
-					end
-					if type(curRef.alwaysvisible) ~= "string" then
-						config[i]["alwaysvisible"] = false
-					else
-						config[i]["alwaysvisible"] = curRef.alwaysvisible
-					end
-					if type(curRef.useheight) ~= "string" then
-						config[i]["useheight"] = 0
-					else
-						config[i]["useheight"] = tonumber(curRef.useheight)
 					end
 					if curRef.timedcharge and curRef.timedcharge > 0 then
 						config[i]["type"] = "timedcharge"
 					else
 						config[i]["type"] = "normal"
-					end
-					if type(curRef.clustercharges) ~= "string" then
-						config[i]["clustercharges"] = 1
-					else
-						config[i]["clustercharges"] = tonumber(curRef.clustercharges)
-					end
-					if type(curRef.clusterdelay) ~= "string" then
-						config[i]["clusterdelay"] = 5
-					else
-						config[i]["clusterdelay"] = tonumber(curRef.clusterdelay)
-					end
-					if type(curRef.clusterdelaytype) ~= "string" then
-						config[i]["clusterdelaytype"] = 0
-					else
-						config[i]["clusterdelaytype"] = tonumber(curRef.clusterdelaytype)
 					end
 					if type(curRef.vlist) == "string" then
 						config[i]["vlist"] = {}
@@ -198,19 +152,19 @@ for i=1, #WeaponDefs do
 							config[i]["vlist"][#config[i]["vlist"]+1] = {tonumber(x),tonumber(y),tonumber(z)}
 						end
 					end
-					if type(curRef.dyndamage) == "string" then
-						config[i]["dynDamage"] = true
-					end
-					if curRef.noairburst == nil then
-						config[i]["airburst"] = true
-					else
-						config[i]["airburst"] = false
-					end
-					if curRef.onexplode then
-						config[i]["onExplode"] = true
-					else
-						config[i]["onExplode"] = false
-					end
+					config[i]["isBomb"] = wd.type == "AircraftBomb"
+					config[i]["launcher"] = wd.type == "StarburstLauncher"
+					config[i]["timeoutspawn"] = tonumber(curRef.timeoutspawn) or 1
+					config[i]["proxy"] = tonumber(curRef.proxy) or 0
+					config[i]["proxydist"] = tonumber(curRef.proxydist) or config[i]["spawndist"] or 0
+					config[i]["alwaysvisible"] = curRef.alwaysvisible ~= nil
+					config[i]["clustercharges"] = tonumber(curRef.clustercharges) or 1
+					config[i]["clusterdelay"] = tonumber(curRef.clusterdelay) or 5
+					config[i]["clusterdelaytype"] = tonumber(curRef.clusterdelaytype) or 0
+					config[i]["useheight"] = tonumber(curRef.useheight) or 0
+					config[i]["dynDamage"] = type(curRef.dyndamage) == "string"
+					config[i]["airburst"] = curRef.noairburst == nil
+					config[i]["onExplode"] = curRef.onexplode ~= nil
 					
 					
 					--sonny projectile defs
@@ -321,15 +275,17 @@ for i=1, #WeaponDefs do
 						fragnum = fragnum + 1
 					end
 					config[i].fragcount =  fragnum - 1
-					Spring.Echo("Frag count: " .. fragnum - 1)
+					if debug then
+						Spring.Echo("[CAS] Frag count: " .. fragnum - 1)
+					end
 				else
-					spEcho("Error: " .. i .. "(" .. WeaponDefs[i].name .. "): spawndist is not present.")
+					spEcho("[CAS] Error: " .. i .. "(" .. WeaponDefs[i].name .. "): spawndist is not present.")
 				end
 			else
-				spEcho("Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a valid weapondef name.")
+				spEcho("[CAS] Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a valid weapondef name.")
 			end
 		else
-			spEcho("Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a string.")
+			spEcho("[CAS] Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a string.")
 		end
 	end
 	wd = nil
