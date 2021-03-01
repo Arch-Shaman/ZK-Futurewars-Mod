@@ -122,7 +122,6 @@ return {
 				
 				damage                  = {
 					default = 25,
-					subs    = 0.15,
 				},
 			
 				duration                  = 0.01,
@@ -237,7 +236,6 @@ return {
 				
 				damage                  = {
 					default = 120.8,
-					subs    = 6,
 				},
 			
 				edgeEffectiveness       = 0.75,
@@ -396,7 +394,6 @@ return {
 				
 				damage                  = {
 					default = 120.8,
-					subs    = 6,
 				},
 			
 				dance                   = 15,
