@@ -46,5 +46,4 @@ local weaponDef = {
 }
 
 return name, weaponDef
-
 -- NOTE: This weapon is a SECONDARY STAGE PROJECTILE. It is not intended for use as an actual weapon!
