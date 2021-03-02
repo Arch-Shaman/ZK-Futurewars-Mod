@@ -875,7 +875,7 @@ local moduleDefs = {
 	{
 		name = "efficiency",
 		humanName = "Efficient Resourcing",
-		description = "By upgrading the Support comm's resource allocation algorithms, some extra metal and energy can be squeezed out of the chassis's resource generator.",
+		description = "Efficient Resourcing:\nBy upgrading the Support comm's resource allocation algorithms, some extra metal and energy can be squeezed out of the chassis's resource generator.",
 		image = moduleImagePath .. "module_efficency.png",
 		limit = 4,
 		requireChassis = {"support"},
@@ -885,6 +885,35 @@ local moduleDefs = {
 		applicationFunction = function (modules, sharedData)
 			sharedData.metalIncome = (sharedData.metalIncome or 0) + 0.5
 			sharedData.energyIncome = (sharedData.energyIncome or 0) + 2
+		end
+	},
+	{
+		name = "alphastrike",
+		humanName = "Alpha Strike",
+		description = "Alpha Strike:\nIncreases damage by 25% at the cost of 10% reload speed.\nStrike Only.\nDisables Fast Reloader. (Limit: 8.)",
+		image = moduleImagePath .. "module_alphastrike.png",
+		limit = 8,
+		requireChassis = {"strike"},
+		cost = 150 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.reloadmult = (sharedData.reloadmult or 1) + 0.10
+			sharedData.damageMult = (sharedData.damageMult or 1) + 0.25
+		end
+	},
+	{
+		name = "fastreloader",
+		humanName = "Quick Reloader",
+		description = "Quick Reloader:\nDecreases Reload time by 5%.\nBombard only. (Limit: 8.)",
+		image = moduleImagePath .. "module_alphastrike.png",
+		limit = 8,
+		requireChassis = {"assault"},
+		cost = 200 * COST_MULT,
+		requireLevel = 4,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.reloadmult = (sharedData.reloadmult or 1) - 0.05
 		end
 	},
 	{

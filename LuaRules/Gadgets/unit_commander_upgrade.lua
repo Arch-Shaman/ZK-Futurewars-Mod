@@ -174,6 +174,10 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 			spRemoveUnitCmdDesc(unitID, onOffCmd)
 		end
 	end
+	if data.reloadmult then
+		spSetUnitRulesParam(unitID, "selfReloadSpeedChange", reloadmult, INLOS)
+		spSetUnitRulesParam(unitID, "commander_reloadmult", reloadmult, INLOS)
+	end
 	if data.sightrangebonus then
 		spSetUnitRulesParam(unitID, "sightBonus", data.sightrangebonus, INLOS)
 	end

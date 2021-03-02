@@ -533,7 +533,11 @@ local function weapons2Table(cells, ws, unitID)
 
 		-- get reloadtime and calculate dps
 		local reloadtime = tonumber(cp.script_reload) or wd.reload
-		
+		local reloadmult = 1
+		if unitID then
+			reloadmult = Spring.GetUnitRulesParam(unitID, "commander_reloadmult") or 1
+		end
+		reloadtime = reloadtime * reloadmult
 		local dps  = math.floor(dam /reloadtime + 0.5)
 		local dpsw = math.floor(damw/reloadtime + 0.5)
 		local dpss = math.floor(dams/reloadtime + 0.5)
@@ -657,8 +661,16 @@ local function weapons2Table(cells, ws, unitID)
 		elseif show_reload then
 			cells[#cells+1] = ' - Reloadtime:'
 			cells[#cells+1] = numformat (reloadtime,2) .. 's'
+			if reloadmult ~= 1 then
+				local txt
+				if reloadmult > 1 then
+					txt = "+" .. numformat((reloadmult - 1) *100, 1) .. "%"
+				else
+					txt = "-" .. numformat((1 - reloadmult) * 100, 1) .. "%"
+				end
+				cells[#cells] = cells[#cells] .. " (" .. txt .. ")"
+			end
 		end
-		
 		if show_dps then
 			cells[#cells+1] = ' - DPS:'
 			cells[#cells+1] = dps_str
