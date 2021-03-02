@@ -134,6 +134,9 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 1,
 				craterMult              = 2,
+				customParams            = {
+					combatrange = 270,
+				},
 				damage                  = {
 					default = 400.01,
 				},
