@@ -163,7 +163,7 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 		spSetUnitRulesParam(unitID, "radarRangeOverride", data.radarRange, INLOS)
 	end
 	local reloadbonus = data.reloadbonus or 1
-	spSetUnitRulesParam(unitID, "reloadBonus", reloadbonus, INLOS)
+	spSetUnitRulesParam(unitID, "reloadBonus", reloadbonus, INLOS) -- this goes to recon's jumpjet.
 	
 	if data.radarJammingRange then
 		spSetUnitRulesParam(unitID, "jammingRangeOverride", data.radarJammingRange, INLOS)
