@@ -5,7 +5,7 @@ return {
 		description         = [[Assault/Riot Strider]],
 		acceleration        = 0.295,
 		brakeRate           = 1.435,
-		buildCostMetal      = 4500,
+		buildCostMetal      = 5250,
 		builder             = false,
 		buildPic            = [[striderdante.png]],
 		canGuard            = true,
@@ -14,10 +14,7 @@ return {
 		canPatrol           = true,
 		category            = [[LAND]],
 		corpse              = [[DEAD]],
-		
-		customParams        = {
-		},
-		
+		customParams        = {},
 		explodeAs           = [[CRAWL_BLASTSML]],
 		footprintX          = 4,
 		footprintZ          = 4,
@@ -37,9 +34,7 @@ return {
 		objectName          = [[dante.s3o]],
 		script              = [[striderdante.lua]],
 		selfDestructAs      = [[CRAWL_BLASTSML]],
-		
 		sfxtypes            = {
-		
 			explosiongenerators = {
 				[[custom:SLASHMUZZLE]],
 				[[custom:SLASHREARMUZZLE]],
@@ -55,40 +50,28 @@ return {
 		turnRate            = 597,
 		upright             = true,
 		workerTime          = 0,
-		
 		weapons             = {
-		
 			{
 				def                = [[NAPALM_ROCKETS]],
 				badTargetCategory  = [[FIXEDWING GUNSHIP]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-		
-		
 			{
 				def                = [[HEATRAY]],
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-		
-		
 			{
 				def                = [[NAPALM_ROCKETS_SALVO]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-		
-		
 			{
 				def                = [[DANTE_FLAMER]],
 				badTargetCategory  = [[FIREPROOF]],
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP FIXEDWING]],
 			},
-		
 		},
-		
-		
 		weaponDefs          = {
-		
 			DANTE_FLAMER         = {
 				name                    = [[Wide-Coverage Flamethrower]],
 				areaOfEffect            = 96,
@@ -426,10 +409,7 @@ return {
 			},
 		
 		},
-		
-		
 		featureDefs         = {
-		
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -437,8 +417,6 @@ return {
 				footprintZ       = 3,
 				object           = [[dante_dead.s3o]],
 			},
-		
-		
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 4,
