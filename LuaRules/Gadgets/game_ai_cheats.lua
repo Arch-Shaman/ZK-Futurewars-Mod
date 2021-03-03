@@ -23,8 +23,10 @@ local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local INLOS = {inlos = true}
 local handledunits = {}
 
-donthandle[UnitDefNames["staticenergyrtg"].id] = true -- let the gadget handle it.
-donthandle[UnitDefNames["staticmex"].id] = true -- let the gadget handle it.
+donthandle[UnitDefNames["staticenergyrtg"].id] = true   -- handled by unit_energy_decay
+donthandle[UnitDefNames["staticmex"].id] = true         -- handled by overdrive gadget
+donthandle[UnitDefNames["energyfusion"].id] = true      -- handled by unit_energy_decay
+donthandle[UnitDefNames["energysingu"].id] = true       -- handled by unit_energy_decay
 do
 	local modoptions = Spring.GetModOptions()
 	cheatparam = modoptions and modoptions["ai_resourcecheat"] or 1
