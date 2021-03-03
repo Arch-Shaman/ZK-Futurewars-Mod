@@ -62,9 +62,12 @@ end
 function gadget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
 	if aiteams[oldTeam] and not donthandle[unitDefID] and not aiteams[newTeam] then
 		if UnitDefs[unitDefID].isBuilder then -- undo
-			local bpmult = spGetUnitRulesParam(unitID, "buildpower_mult")
-			bpmult = bpmult / cheatparam
-			spSetUnitRulesParam(unitID, "buildpower_mult", bpmult, INLOS)
+			local bpmult = spGetUnitRulesParam(unitID, "buildpower_mult") or 1
+			if bpmult ~= 1 then
+				bpmult = bpmult / cheatparam
+				spSetUnitRulesParam(unitID, "buildpower_mult", bpmult, INLOS)
+				GG.UpdateUnitAttributes(unitID)
+			end
 		end
 		if (UnitDefs[unitDefID].energyMake or 0) > 0 or (UnitDefs[unitDefID].metalMake or 0) > 0 then
 			spSetUnitRulesParam(unitID, "selfIncomeChange", cheatparam, INLOS)
