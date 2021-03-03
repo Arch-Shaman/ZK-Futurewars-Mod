@@ -27,7 +27,6 @@ return {
 			decay_rate     = 0.025,
 			modelradius    = [[60]],
 			pylonrange = 100,
-			realenergy = 18,
 			dangerous_reclaim = [[gimme that radioactive goodness]],
 		},
 		energyMake                    = 1.8,
