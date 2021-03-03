@@ -29,7 +29,7 @@ donthandle[UnitDefNames["energyfusion"].id] = true      -- handled by unit_energ
 donthandle[UnitDefNames["energysingu"].id] = true       -- handled by unit_energy_decay
 do
 	local modoptions = Spring.GetModOptions()
-	cheatparam = modoptions and modoptions["ai_resourcecheat"] or 1
+	cheatparam = modoptions and tonumber(modoptions["ai_resourcecheat"]) or 1
 	local allyteams = Spring.GetAllyTeamList()
 	for a = 1, #allyteams do
 		local allyteam = allyteams[a]
