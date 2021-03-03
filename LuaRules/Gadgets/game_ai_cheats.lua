@@ -10,6 +10,10 @@ function gadget:GetInfo()
 	}
 end
 
+if not gadgetHandler:IsSyncedCode() then
+	return
+end
+
 local cheatparam
 local cheatlevel
 local aiteams = {}
