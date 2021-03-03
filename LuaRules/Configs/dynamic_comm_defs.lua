@@ -754,7 +754,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_sunburst",
 		humanName = "Sunburst Cannon",
-		description = "Sunburst Cannon\nManually fired weapon that ruin's a single target's day with a high damage shot. Quick reload.\nStrike only. Water Capable.",
+		description = "Sunburst Cannon\nManually fired weapon that ruin's a single target's day with a high damage shot. Quick reload.\nAmbusher only. Water Capable.",
 		image = moduleImagePath .. "commweapon_sunburst.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
@@ -1266,7 +1266,7 @@ local moduleDefs = {
 	{
 		name = "module_cloakregen",
 		humanName = "Nanobot Sleeve",
-		description = "Nanobot Sleeve:\nIncreases regen while cloaked by 20.\nStrike only (Limit: 8)",
+		description = "Nanobot Sleeve:\nIncreases regen while cloaked by 20.\nAmbusher only (Limit: 8)",
 		image = moduleImagePath .. "module_cloakregen.png",
 		limit = 8,
 		cost = 75 * COST_MULT,
