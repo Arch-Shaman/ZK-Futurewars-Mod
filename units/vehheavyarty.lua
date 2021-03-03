@@ -96,7 +96,7 @@ return {
 				interceptedByShieldType = 2,
 				model                   = [[wep_merl.s3o]],
 				noSelfDamage            = true,
-				range                   = 1800,
+				range                   = 1600,
 				reloadtime              = 10,
 				smokeTrail              = false,
 				soundHit                = [[weapon/missile/vlaunch_hit]],
