@@ -61,6 +61,7 @@ local rotor_2_4 = piece 'rotor_2_4'
 local smokePiece = {torso, pelvis, flagellum}
 local flamethrowerEmits = {fix, fix_n15, fix_n22, fix_n30, fix_n7, fix_p15, fix_p22, fix_p30, fix_p7}
 local heatrayEmits = {rotor_1_1, rotor_1_2, rotor_1_3, rotor_1_4, flame1, rotor_2_1, rotor_2_2, rotor_2_3, rotor_2_4, flame2}
+local spValidUnitID = Spring.ValidUnitID
 
 local weaponPieces = {
 	{aimFrom = torso, query = {rf1, lf1, rf2, lf2, rf3, lf3}, index = 1},
