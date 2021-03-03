@@ -75,6 +75,7 @@ local spGetUnitHealth = Spring.GetUnitHealth
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetGroundHeight = Spring.GetGroundHeight
 local spEcho = Spring.Echo
+local spValidUnitID = Spring.ValidUnitID
 
 local pushparam = {1}
 local pullparam = {0}
@@ -89,8 +90,13 @@ local unitAICmdDesc = {
 }
 
 local function GetUnitIsActive(unitID)
-	local states = spGetUnitStates(unitID)
-	return states["active"]
+	if spValidUnitID(unitID) then
+		local states = spGetUnitStates(unitID)
+		return states["active"]
+	else
+		spEcho("[NewtonAI]: Bad state")
+		return false
+	end
 end
 
 local function SetState(unitID, state, wanted)
@@ -218,20 +224,24 @@ end
 
 function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(newtons) do
-		data.state = GetUnitIsActive(id)
-		local weapon = 2
-		if not data.state then -- weapon 1 is pull while weapon 2 is push.
-			weapon = 1
-		end
-		local type, _, currenttarget = spGetUnitWeaponTarget(id, weapon) -- sometimes weapons have different targets, for... reasons i don't fully understand.
-		local newtonteam = spGetUnitTeam(id) -- so all this code here is just safety stuff.
-		local isally = true
-		if type == 1 and currenttarget then -- we want to only care about UNITS which are type 1. 0 is no target (afaik) and 2 is ground.
-			local targetteam = spGetUnitTeam(currenttarget)
-			isally = spAreTeamsAllied(newtonteam, targetteam)
-		end
-		if type == 1 and currenttarget and (handleallies or not isally) then -- we only care about shooting enemies (since newtons MAY be in newton fire zones).
-			CheckUnit(id, data, currenttarget) -- note: newton fire zone automatically turns off the ai anyways, but we don't want to have our stuff smash into terrain (BAD)
+		if not spValidUnitID(unitID) then
+			RemoveUnit(unitID)
+		else
+			data.state = GetUnitIsActive(id)
+			local weapon = 2
+			if not data.state then -- weapon 1 is pull while weapon 2 is push.
+				weapon = 1
+			end
+			local type, _, currenttarget = spGetUnitWeaponTarget(id, weapon) -- sometimes weapons have different targets, for... reasons i don't fully understand.
+			local newtonteam = spGetUnitTeam(id) -- so all this code here is just safety stuff.
+			local isally = true
+			if type == 1 and currenttarget then -- we want to only care about UNITS which are type 1. 0 is no target (afaik) and 2 is ground.
+				local targetteam = spGetUnitTeam(currenttarget)
+				isally = spAreTeamsAllied(newtonteam, targetteam)
+			end
+			if type == 1 and currenttarget and (handleallies or not isally) then -- we only care about shooting enemies (since newtons MAY be in newton fire zones).
+				CheckUnit(id, data, currenttarget) -- note: newton fire zone automatically turns off the ai anyways, but we don't want to have our stuff smash into terrain (BAD)
+			end
 		end
 	end
 end
