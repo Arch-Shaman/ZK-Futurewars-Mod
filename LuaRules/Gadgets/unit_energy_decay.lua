@@ -33,6 +33,25 @@ for i=1, #UnitDefs do
 	end
 end
 
+local cheatparam
+local aiteams = {}
+
+do
+	local modoptions = Spring.GetModOptions()
+	cheatparam = modoptions and modoptions["ai_resourcecheat"] or 1
+	local allyteams = Spring.GetAllyTeamList()
+	for a = 1, #allyteams do
+		local allyteam = allyteams[a]
+		local teamlist = Spring.GetTeamList(allyteam)
+		for t = 1, #teamlist do
+			local team = teamlist[t]
+			if select(4, Spring.GetTeamInfo(team)) then
+				aiteams[team] = true
+			end
+		end
+	end
+end
+
 local INLOS = {inlos = true}
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetGameFrame = Spring.GetGameFrame
@@ -45,9 +64,13 @@ local min = math.min
 function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	if config[unitDefID] then
 		if debug then spEcho("Added decayer " .. unitID) end
+		local mult = 1
+		if aiteams[unitTeam] then
+			mult = cheatparam
+		end
 		local config = config[unitDefID]
-		IterableMap.Add(decayers, unitID, {currentrate = config.initialrate, nextupdate = spGetGameFrame() + config.time, def = unitDefID})
-		spSetUnitRulesParam(unitID, "selfIncomeChange", config.initialrate)
+		IterableMap.Add(decayers, unitID, {currentrate = config.initialrate, nextupdate = spGetGameFrame() + config.time, def = unitDefID, mult = mult})
+		spSetUnitRulesParam(unitID, "selfIncomeChange", config.initialrate * mult)
 		GG.UpdateUnitAttributes(unitID)
 		GG.UpdateUnitAttributes(unitID)
 	end
@@ -66,6 +89,17 @@ function gadget:UnitReverseBuilt(unitID, unitDefID, unitTeam)
 	end
 end
 
+function gadget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
+	if IterableMap.InMap(decayers, unitID) then
+		local data = IterableMap.Get(decayers, unitID)
+		if aiteams[newTeam] then
+			data.mult = cheatparam
+		else
+			data.mult = 1
+		end
+	end
+end
+
 function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(decayers) do
 		--spEcho(id .. " next update: " .. data.nextupdate)
@@ -79,7 +113,7 @@ function gadget:GameFrame(f)
 			end
 			if debug then spEcho(id .. ": Decayed from " .. data.currentrate * 10 .. "% -> " .. newrate * 10 .. "%") end
 			data.currentrate = newrate
-			spSetUnitRulesParam(id, "selfIncomeChange", data.currentrate)
+			spSetUnitRulesParam(id, "selfIncomeChange", data.currentrate * data.mult)
 			GG.UpdateUnitAttributes(id)
 			GG.UpdateUnitAttributes(id)
 			--if debug then spEcho("Updated " .. id) end

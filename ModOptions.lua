@@ -121,7 +121,7 @@ local options = {
 	{
 		key    = 'ai_resourcecheat',
 		name   = 'AI Cheat Multiplier',
-		desc   = "Multiplies AI resources, allowing them to cheat. Also impacts buildspeed.",
+		desc   = "Multiplies AI resources, allowing them to cheat. Also impacts buildspeed. Note: AI will become crazy at high mults!",
 		type   = 'number',
 		section= 'a_important',
 		def = 1,
