@@ -2,7 +2,7 @@ return {
 	energysingu = {
 		unitname                      = [[energysingu]],
 		name                          = [[Singularity Reactor]],
-		description                   = [[Large Powerplant (+225) - HAZARDOUS]],
+		description                   = [[Large Powerplant (+225, appreciates) - HAZARDOUS]],
 		acceleration                  = 0,
 		activateWhenBuilt             = true,
 		brakeRate                     = 0,
@@ -27,9 +27,14 @@ return {
 			removewait     = 1,
 			removestop     = 1,
 			selectionscalemult = 1.15,
+			decay_rate = -0.005,
+			decay_time = 2,
+			decay_maxoutput = 1.8,
+			decay_initialrate = 0.9,
+			
 		},
 
-		energyMake                    = 225,
+		energyMake                    = 250,
 		energyUse                     = 0,
 		explodeAs                     = [[SINGULARITY]],
 		footprintX                    = 7,
