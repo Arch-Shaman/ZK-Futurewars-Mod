@@ -41,8 +41,8 @@
 	},
 	"energyfusion" : {
 		"name" : "Fusion Reactor",
-		"description" : "Medium Powerplant (+35)",
-		"helptext" : "Fusion reactors provide a good amount of steady energy output at a fair price. They are attractive targets and not very well-armored, so keep them well-protected. When killed, fusion reactors will cause heavy damage to nearby units."
+		"description" : "Medium Powerplant: +28e, increases over time",
+		"helptext" : "Fusion reactors provide a good amount of steady energy output at a fair price. They are attractive targets and not very well-armored, so keep them well-protected. Fusion reactors increase their output over time as they heat up, so keep them well protector (or hunt them down quickly)."
 	},
 	"chickenlandqueen" : {
 		"name" : "Chicken Queen",
@@ -286,8 +286,8 @@
 	},
 	"energysingu" : {
 		"name" : "Singularity Reactor",
-		"description" : "Large Powerplant (+225) - HAZARDOUS",
-		"helptext" : "The Singularity Reactor generates massive amount of energy using a controlled black hole - which is about as safe as it sounds. When the reactor is destroyed, the black hole implodes violently, dragging units inside. An entire continent on which this is built should be considered unsafe ground."
+		"description" : "Large Powerplant: +225e, increases over time (HAZARDOUS)",
+		"helptext" : "The Singularity Reactor generates massive amount of energy using a controlled black hole - which is about as safe as it sounds. Singularity reactors naturally increase their output over time, making them attractive targets to take out early on. When the reactor is destroyed, the black hole implodes violently, dragging units inside."
 	},
 	"bomberdisarm" : {
 		"name" : "Thunderbird",

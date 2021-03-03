@@ -2,7 +2,7 @@ return {
 	energysingu = {
 		unitname                      = [[energysingu]],
 		name                          = [[Singularity Reactor]],
-		description                   = [[Large Powerplant (+225, appreciates) - HAZARDOUS]],
+		description                   = [[Large Powerplant: +225E, increases over time (HAZARDOUS)]],
 		acceleration                  = 0,
 		activateWhenBuilt             = true,
 		brakeRate                     = 0,

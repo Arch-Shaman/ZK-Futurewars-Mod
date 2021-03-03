@@ -2,7 +2,7 @@ return {
 	staticenergyrtg = {
 		unitname                      = [[staticenergyrtg]],
 		name                          = [[RTG]],
-		description                   = [[Medium Powerplant (+18e, decays over time) - HAZARDOUS]],
+		description                   = [[Medium Powerplant: +18e, decays over time (HAZARDOUS)]],
 		activateWhenBuilt             = true,
 		buildCostMetal                = 150,
 		builder                       = false,

@@ -2,7 +2,7 @@ return {
 	energyfusion = {
 		unitname                      = [[energyfusion]],
 		name                          = [[Fusion Reactor]],
-		description                   = [[Medium Powerplant (+28, increases over time)]],
+		description                   = [[Medium Powerplant: +28e, increases over time]],
 		activateWhenBuilt             = true,
 		buildCostMetal                = 1000,
 		builder                       = false,
