@@ -39,7 +39,7 @@ return {
 		corpse                        = [[DEAD]],
 
 		customParams                  = {
-			aimposoffset   = [[-28 0 -28]],
+			aimposoffset   = [[0 0 -38]],
 			midposoffset   = [[0 0 -10]],
 			canjump  = [[1]],
 			no_jump_handling = [[1]],
