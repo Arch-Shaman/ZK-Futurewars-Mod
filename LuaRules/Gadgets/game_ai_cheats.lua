@@ -29,7 +29,7 @@ donthandle[UnitDefNames["energyfusion"].id] = true      -- handled by unit_energ
 donthandle[UnitDefNames["energysingu"].id] = true       -- handled by unit_energy_decay
 do
 	local modoptions = Spring.GetModOptions()
-	cheatparam = modoptions and tonumber(modoptions["ai_resourcecheat"]) or 1
+	cheatparam = tonumber(modoptions["ai_resourcecheat"]) or 1
 	local allyteams = Spring.GetAllyTeamList()
 	for a = 1, #allyteams do
 		local allyteam = allyteams[a]
@@ -83,7 +83,7 @@ function gadget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
 end
 
 function gadget:GameStart()
-	if cheatparam > 1.0 then
+	if cheatparam > 1 then
 		local bonus = (cheatparam - 1)/.1
 		for team, _ in pairs(aiteams) do
 			local allyteam = select(6, Spring.GetTeamInfo(team))
