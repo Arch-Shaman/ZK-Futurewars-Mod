@@ -3,7 +3,7 @@ return {
 		unitname                      = [[singularity]],
 		name                          = [[Wake]],
 		description                   = [[Compact Singularity Device]],
-		buildCostMetal                = 1000,
+		buildCostMetal                = 1350,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 3,
@@ -54,7 +54,7 @@ return {
 
 			SEISMIC_WEAPON = {
 				name                    = [[Singularity]],
-				areaOfEffect            = 500,
+				areaOfEffect            = 400,
 				avoidFriendly           = false,
 				cegTag                  = [[waketrail]],
 				collideFriendly         = false,
@@ -62,11 +62,11 @@ return {
 				craterMult              = 1,
 				customParams            = {
 					singularity = [[1]],
-					singuradius = [[500]],
+					singuradius = [[400]],
 					singulifespan = [[540]],
-					singustrength = [[100]],
+					singustrength = [[75]],
 					detachmentradius = [[500]],
-					singuheight = [[300]],
+					singuheight = [[250]],
 					restrict_in_widgets = 1,
 					stats_hide_dps = 1, -- one use
 					stats_hide_reload = 1,
