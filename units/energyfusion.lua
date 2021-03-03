@@ -2,7 +2,7 @@ return {
 	energyfusion = {
 		unitname                      = [[energyfusion]],
 		name                          = [[Fusion Reactor]],
-		description                   = [[Medium Powerplant: +28e, increases over time]],
+		description                   = [[Powerplant: +28e, increases over time]],
 		activateWhenBuilt             = true,
 		buildCostMetal                = 1000,
 		builder                       = false,
@@ -18,10 +18,10 @@ return {
 			pylonrange = 150,
 			removewait = 1,
 			removestop = 1,
-			decay_rate = -0.025,
-			decay_time = 2,
+			decay_rate = -0.0175,
+			decay_time = 4,
 			decay_maxoutput = 2.4,
-			initialrate = 0.8,
+			decay_initialrate = 0.8,
 		},
 
 		energyMake                    = 35,

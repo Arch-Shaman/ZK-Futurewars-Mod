@@ -1563,6 +1563,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		statschildren[#statschildren+1] = Label:New{ caption = 'Energy: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = (energy > 0 and '+' or '') .. numformat(energy,2) .. " E/s", textColor = color.stats_fg, }
 		if ud.customParams and ud.customParams["decay_rate"] then
+			local baseoutput = ud.customParams.income_energy
 			local decayrate = tonumber(ud.customParams["decay_rate"]) * 100
 			local mindecay = tonumber(ud.customParams["decay_minoutput"]) or 0
 			local decaytime = tonumber(ud.customParams["decay_time"]) or 1
@@ -1574,15 +1575,15 @@ local function printunitinfo(ud, buttonWidth, unitID)
 			end
 			statschildren[#statschildren+1] = Label:New{ caption = txt, textColor = color.stats_fg, }
 			statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = ' Rate: ', textColor = color.stats_fg, }
-			local timetoreach = 
+			statschildren[#statschildren+1] = Label:New{ caption = '- Rate: ', textColor = color.stats_fg, }
+			local timetoreach = 0 -- TODO: add time to reach max/min output.
 			if decayrate > 0 then
-				txt = "Minimum Output:"
-				mindecay = mindecay * ud.energyMake
+				txt = "- Minimum Output:"
+				mindecay = mindecay * baseoutput
 			else
-				txt = "Maximum Output:"
+				txt = "- Maximum Output:"
 				mindecay = tonumber(ud.customParams["decay_maxoutput"]) or 0
-				mindecay = mindecay * ud.energyMake
+				mindecay = mindecay * baseoutput
 			end
 			decayrate = math.abs(decayrate)
 			statschildren[#statschildren+1] = Label:New{ caption =  numformat(decayrate, 1) .. "%/" .. numformat(decaytime, 1) .. "s", textColor = color.stats_fg, }

@@ -41,7 +41,7 @@
 	},
 	"energyfusion" : {
 		"name" : "Fusion Reactor",
-		"description" : "Medium Powerplant: +28e, increases over time",
+		"description" : "Powerplant: +28e, increases over time",
 		"helptext" : "Fusion reactors provide a good amount of steady energy output at a fair price. They are attractive targets and not very well-armored, so keep them well-protected. Fusion reactors increase their output over time as they heat up, so keep them well protector (or hunt them down quickly)."
 	},
 	"chickenlandqueen" : {
@@ -241,7 +241,7 @@
 	},
 	"staticenergyrtg" : {
 		"name" : "RTG",
-		"description" : "Medium Powerplant (+18e, decays over time) - HAZARDOUS",
+		"description" : "Powerplant: +18e, decays over time (HAZARDOUS)",
 		"helptext" : "The Radioisotope Thermoelectric Generator uses decaying radioactive particles from standard metal to generate energy. Once constructed, it becomes unstable and starts decaying in energy output. It's useful for getting out of an economic pinch, but don't rely on them for your energy needs -- they're worse than solars and are explosive."
 	},
 	"hoverskirm2" : {
@@ -286,7 +286,7 @@
 	},
 	"energysingu" : {
 		"name" : "Singularity Reactor",
-		"description" : "Large Powerplant: +225e, increases over time (HAZARDOUS)",
+		"description" : "Powerplant: +225e, increases over time (HAZARDOUS)",
 		"helptext" : "The Singularity Reactor generates massive amount of energy using a controlled black hole - which is about as safe as it sounds. Singularity reactors naturally increase their output over time, making them attractive targets to take out early on. When the reactor is destroyed, the black hole implodes violently, dragging units inside."
 	},
 	"bomberdisarm" : {
@@ -316,7 +316,7 @@
 	},
 	"energyheavygeo" : {
 		"name" : "Advanced Geothermal",
-		"description" : "Large Powerplant (+100) - HAZARDOUS",
+		"description" : "Powerplant: +100e (HAZARDOUS)",
 		"helptext" : "The Advanced Geothermal Powerplant produces a massive amount of energy. It requires protection, though, as destroying it results in a devastating explosion."
 	},
 	"staticcon" : {
@@ -386,7 +386,7 @@
 	},
 	"energysolar" : {
 		"name" : "Solar Collector",
-		"description" : "Small Powerplant (+2)",
+		"description" : "Powerplant: +2e",
 		"helptext" : "Solar collectors are the least cost-efficient of the energy structures, but they are also the most reliable and sturdy. When attacked, solars will curl up into armored form for 8 seconds, which reduces incoming damage to a quarter and offers excellent protection against raiders."
 	},
 	"gunshipheavyskirm" : {
@@ -676,7 +676,7 @@
 	},
 	"energygeo" : {
 		"name" : "Geothermal Generator",
-		"description" : "Medium Powerplant (+25)",
+		"description" : "Powerplant: +25e",
 		"helptext" : "Geothermal plants are highly efficient energy sources that can only be built on geovents on the map. They explode quite violently when destroyed, so avoid placing anything directly adjacent."
 	},
 	"jumpcon" : {
