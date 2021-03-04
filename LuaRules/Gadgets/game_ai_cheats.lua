@@ -70,7 +70,7 @@ function gadget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
 			end
 		end
 		if (UnitDefs[unitDefID].energyMake or 0) > 0 or (UnitDefs[unitDefID].metalMake or 0) > 0 then
-			spSetUnitRulesParam(unitID, "selfIncomeChange", cheatparam, INLOS)
+			spSetUnitRulesParam(unitID, "selfIncomeChange", 1, INLOS)
 		end
 	elseif aiteams[newTeam] and not donthandle[unitDefID] then
 		if UnitDefs[unitDefID].isBuilder then
