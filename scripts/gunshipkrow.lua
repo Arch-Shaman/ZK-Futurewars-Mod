@@ -276,7 +276,7 @@ local function ClusterBombThread()
 end
 
 local function DeathLaserThread()
-	Sleep(1500)	
+	Sleep(750)	
 	local sleepTime = 33
 	for i=1, 16 do
 		local px, py, pz = Spring.GetUnitPosition(unitID)
