@@ -76,7 +76,7 @@ return {
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-
+			
 			{
 				def                = [[CLUSTERBOMBER]],
 				mainDir            = [[0 0 1]],
@@ -89,6 +89,13 @@ return {
 				maxAngleDif        = 180,
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
+			},
+			
+			
+			{
+				def                = [[ATA]],
+				mainDir            = [[0 0 1]],
+				maxAngleDif        = 360,
 			},
 
 		},
@@ -167,7 +174,7 @@ return {
 					groundimpact = 1,
 				},
 				damage                  = {
-					default = 250*4,
+					default = 175*3,
 				},
 
 				explosionGenerator      = [[custom:WEAPEXP_PUFF]],
@@ -199,7 +206,7 @@ return {
 				craterMult              = 3,
 
 				damage                  = {
-					default = 250,
+					default = 175,
 				},
 
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
@@ -220,6 +227,49 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 400,
 			},
+			ATA = {
+				name                    = [[Pleb Annihilator]],
+				areaOfEffect            = 255,
+				beamTime                = 5.25,
+				commandFire             = true,
+				coreThickness           = 1,
+				craterBoost             = 4,
+				craterMult              = 12,
+      
+				customParams            = {
+					light_color = [[1.25 0.8 1.75]],
+					light_radius = 480,
+				},
+				damage                  = {
+					default = 15750,
+				},
+
+				explosionGenerator      = [[custom:ataalaser_flattened]],
+				fireTolerance           = 8192, -- 45 degrees
+				impactOnly              = false,
+				impulseBoost            = 0,
+				impulseFactor           = 0.4,
+				interceptedByShieldType = 1,
+				largeBeamLaser          = true,
+				laserFlareSize          = 10,
+				leadLimit               = 18,
+				minIntensity            = 1,
+				noSelfDamage            = true,
+				range                   = 300,
+				reloadtime              = 30,
+				rgbColor                = [[0.25 0 1]],
+				soundStart              = [[weapon/laser/heavy_laser6]],
+				soundStartVolume        = 45,
+				texture1                = [[largelaser]],
+				texture2                = [[flare]],
+				texture3                = [[flare]],
+				texture4                = [[smallflare]],
+				thickness               = 33.8747693719086,
+				tolerance               = 10000,
+				turret                  = true,
+				weaponType              = [[BeamLaser]],
+				weaponVelocity          = 1500,
+    },
 		},
 
 
