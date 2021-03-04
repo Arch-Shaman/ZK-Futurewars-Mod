@@ -276,14 +276,15 @@ local function ClusterBombThread()
 end
 
 local function DeathLaserThread()
-	--Sleep(750)	
+	local px, py, pz = Spring.GetUnitPosition(unitID)
+	GG.PlayFogHiddenSound("sounds/weapon/laser/death_laser_charge.wav", 100, px, py, pz)
+	Sleep(2500)
 	local sleepTime = 33
 	for i=1, 16 do
-		local px, py, pz = Spring.GetUnitPosition(unitID)
 		Spring.PlaySoundFile("sounds/weapon/laser/laser_burn10.wav", 1600, px, py, pz)
 		for q=1, 10 do
 			if not stunned_or_inbuild then
-				EmitSfx(subemit[0], GG.Script.FIRE_W5)
+				EmitSfx(subemit[0], GG.Script.FIRE_W4)
 			end
 			Sleep(sleepTime/slowState)
 		end
