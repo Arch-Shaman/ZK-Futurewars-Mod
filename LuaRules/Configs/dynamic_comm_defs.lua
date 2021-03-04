@@ -813,6 +813,28 @@ local moduleDefs = {
 			end
 		end
 	},
+		{
+		name = "commweapon_gaussrepeater",
+		humanName = "Gauss Repeater",
+		description = "Gauss Repeater\nA penetrating, rapid fire short range rifle for raiding while underwater.\nRecon only.",
+		image = moduleImagePath .. "commweapon_gaussrifle.png",
+		limit = 1,
+		cost = 100 * COST_MULT,
+		requireChassis = {"recon"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = "commweapon_gaussrepeater"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
 	{
 		name = "commweapon_napalmgrenade",
 		humanName = "Hellfire Grenade",

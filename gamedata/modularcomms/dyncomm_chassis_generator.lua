@@ -30,7 +30,7 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynrecon1", -- 19/31
+		name = "dynrecon1", -- 21/31
 		weapons = {
 			"commweapon_lparticlebeam", -- TODO: Remove
 			"commweapon_lparticlebeam",
@@ -51,6 +51,8 @@ local chassisDefs = {
 			"commweapon_concussion",
 			"commweapon_heatray",
 			"commweapon_heatray",
+			"commweapon_gaussrepeater",
+			"commweapon_gaussrepeater",
 			-- Space for shield
 		}
 	},
