@@ -169,12 +169,12 @@ return {
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					proxy = 0, -- check for nearby units?
 					useheight = 1,
-					spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 140, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					vradius1 = "-12,0,-12,12,4,12", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1,
 				},
 				damage                  = {
-					default = 150*4,
+					default = 175*3,
 				},
 
 				explosionGenerator      = [[custom:WEAPEXP_PUFF]],
@@ -206,7 +206,7 @@ return {
 				craterMult              = 3,
 
 				damage                  = {
-					default = 150,
+					default = 175,
 				},
 
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
@@ -241,7 +241,7 @@ return {
 					light_radius = 480,
 				},
 				damage                  = {
-					default = 11500,
+					default = 15750,
 				},
 
 				explosionGenerator      = [[custom:ataalaser_flattened]],
