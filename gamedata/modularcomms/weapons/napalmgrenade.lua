@@ -1,12 +1,12 @@
-local name = "commweapon_napalmgrenade"
+local name = "commweapon_clustergrenade"
 local weaponDef = {
-	name                    = [[Hellfire Grenade]], --CREDITS: Cliver5
+	name                    = [[Cluster Grenade]],
 	areaOfEffect            = 256,
 	avoidFeature            = true,
-	--cegTag                  = [[missiletrailred]],
+	cegTag                  = [[RAVENTRAIL_Light]],
 	commandFire             = true,
-	craterBoost             = 0,
-	craterMult              = 0,
+	craterBoost             = 20,
+	craterMult              = 1,
 
 	customParams        = {
 		is_unit_weapon = 1,
@@ -16,7 +16,7 @@ local weaponDef = {
 		light_radius = 220,
 		manualfire = 1,
 		numprojectiles1 = 24, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-		projectile1 = "commweapon_napalm_fragment_dummy",
+		projectile1 = "commweapon_clustergrenade_fragment_dummy",
 		--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
 		clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 		keepmomentum1 = 0,
@@ -25,19 +25,14 @@ local weaponDef = {
 		noairburst = "by your powers combined", -- if true, this projectile will skip all airburst checks
 		onexplode = "how can this fail", -- if true, this projectile will cluster when it explodes
 		spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
-		area_damage = 1,
-		area_damage_radius = 128,
-		area_damage_dps = 40,
-		area_damage_duration = 12,
 	},
 
 	damage                  = {
-		default = 1440,
+		default = 1920,
 	},
 
-	explosionGenerator      = [[custom:napalm_hellfire]],
+	explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
 	fireStarter             = 70,
-	flightTime              = 3,
 	impulseBoost            = 0,
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 2,
@@ -45,7 +40,7 @@ local weaponDef = {
 	range                   = 440,
 	reloadtime              = 14,
 	smokeTrail              = true,
-	soundHit                = [[weapon/missile/nalpalm_missile_hit]],
+	soundHit                = [[weapon/clusters/cluster_grenade_hit]],
 	soundHitVolume          = 8,
 	SoundStart				= [[weapon/cannon/light_launcher]],
 	trajectoryHeight        = 1,
