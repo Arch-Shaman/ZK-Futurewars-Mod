@@ -94,3 +94,10 @@ function gadget:GameStart()
 		end
 	end
 end
+
+if cheatparam == 1 then
+	Spring.Echo("[Handicaps] Shutdown due to no mult.")
+	gadgetHandler:RemoveCallIn("UnitGiven")
+	gadgetHandler:RemoveCallIn("UnitFinished")
+	gadgetHandler:RemoveCallIn("GameStart")
+end

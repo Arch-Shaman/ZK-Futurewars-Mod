@@ -125,3 +125,7 @@ function gadget:GameFrame(f)
 		end
 	end
 end
+
+if cheatparam == 1 then
+	gadgetHandler:RemoveCallIn("UnitGiven")
+end
