@@ -22,7 +22,7 @@ return {
 		collisionVolumeScales  = [[86 22 86]],
 		collisionVolumeType    = [[cylY]],
 		corpse                 = [[DEAD]],
-		cruiseAlt              = 400,
+		cruiseAlt              = 250,
 
 		customParams           = {
 			modelradius    = [[10]],
@@ -162,7 +162,7 @@ return {
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					proxy = 0, -- check for nearby units?
 					useheight = 1,
-					spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 140, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					vradius1 = "-12,0,-12,12,4,12", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1,
 				},
