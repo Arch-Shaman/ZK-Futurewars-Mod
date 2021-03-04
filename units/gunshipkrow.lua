@@ -77,11 +77,11 @@ return {
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
 			
-			{
-				def                = [[CLUSTERBOMBER]],
-				mainDir            = [[0 0 1]],
-				maxAngleDif        = 360,
-			},
+			--{
+				--def                = [[CLUSTERBOMBER]],
+				--mainDir            = [[0 0 1]],
+				--maxAngleDif        = 360,
+			--},
 
 			{
 				def                = [[KROWLASER]],
@@ -241,7 +241,7 @@ return {
 					light_radius = 480,
 				},
 				damage                  = {
-					default = 15750,
+					default = 16800,
 				},
 
 				explosionGenerator      = [[custom:ataalaser_flattened]],

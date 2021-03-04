@@ -276,7 +276,7 @@ local function ClusterBombThread()
 end
 
 local function DeathLaserThread()
-	Sleep(750)	
+	--Sleep(750)	
 	local sleepTime = 33
 	for i=1, 16 do
 		local px, py, pz = Spring.GetUnitPosition(unitID)
@@ -294,7 +294,7 @@ end
 
 function ClusterBomb()
 	stunned_or_inbuild = Spring.GetUnitIsStunned(unitID) or (Spring.GetUnitRulesParam(unitID,"disarmed") == 1)
-	StartThread(ClusterBombThread)
+	--StartThread(ClusterBombThread)
 	StartThread(DeathLaserThread)
 	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", SLOWDOWN_FACTOR)
 	GG.UpdateUnitAttributes(unitID)
