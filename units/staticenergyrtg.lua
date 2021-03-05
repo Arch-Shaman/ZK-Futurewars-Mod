@@ -35,7 +35,7 @@ return {
 		floater                       = true,
 		footprintX                    = 6,
 		footprintZ                    = 6,
-		iconType                      = [[energysingu]],
+		iconType                      = [[energyrtg]],
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
