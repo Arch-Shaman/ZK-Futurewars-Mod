@@ -81,6 +81,12 @@ local SPECIAL_FIRE_COUNT = 75
 
 local SLOWDOWN_FACTOR = 0.75
 local UNIT_SPEED = UnitDefNames["gunshipkrow"].speed*SLOWDOWN_FACTOR/30
+local lasermax
+
+do
+	local weapondef = WeaponDefNames["gunshipkrow_ata"]
+	lasermax = math.ceil((weapondef.beamtime * 1000) / 33)
+end
 
 local sound_index = 0
 
@@ -275,21 +281,27 @@ local function ClusterBombThread()
 	GG.UpdateUnitAttributes(unitID)
 end
 
+
+
 local function DeathLaserThread()
 	local px, py, pz = Spring.GetUnitPosition(unitID)
-	GG.PlayFogHiddenSound("sounds/weapon/laser/death_laser_charge.wav", 100, px, py, pz)
-	Sleep(2500)
+	GG.PlayFogHiddenSound("sounds/weapon/laser/death_laser_charge.wav", 1600, px, py, pz)
+	Sleep(2443)
+	frame = Spring.GetGameFrame()
+	Spring.SetUnitWeaponState(unitID, 3, "reloadFrame", (30*30) + frame)
 	local sleepTime = 33
-	for i=1, 16 do
-		Spring.PlaySoundFile("sounds/weapon/laser/laser_burn10.wav", 1600, px, py, pz)
-		for q=1, 10 do
-			if not stunned_or_inbuild then
-				EmitSfx(subemit[0], GG.Script.FIRE_W4)
-			end
-			Sleep(sleepTime/slowState)
+	local lased = 0
+	while lased < lasermax do
+		px, py, pz = Spring.GetUnitPosition(unitID)
+		GG.PlayFogHiddenSound("sounds/weapon/laser/laser_burn10.wav", 1600, px, py, pz)
+		if not stunned_or_inbuild then
+			EmitSfx(subemit[0], GG.Script.FIRE_W3)
+			lased = lased + 1 -- prevent dgun from being eaten.
 		end
+		Sleep(sleepTime/slowState)
 	end
 	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
+	Spring.SetUnitRulesParam(unitID, "selfTurnSpeedChange", 1)
 	GG.UpdateUnitAttributes(unitID)
 end
 
@@ -297,6 +309,7 @@ function ClusterBomb()
 	stunned_or_inbuild = Spring.GetUnitIsStunned(unitID) or (Spring.GetUnitRulesParam(unitID,"disarmed") == 1)
 	--StartThread(ClusterBombThread)
 	StartThread(DeathLaserThread)
+	Spring.SetUnitRulesParam(unitID, "selfTurnSpeedChange", 1.5) -- make it more usable
 	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", SLOWDOWN_FACTOR)
 	GG.UpdateUnitAttributes(unitID)
 	--local vx, vy, vz = Spring.GetUnitVelocity(unitID)

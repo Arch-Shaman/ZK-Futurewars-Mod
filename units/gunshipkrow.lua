@@ -76,13 +76,16 @@ return {
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-			
+			{
+				def                = [[ATA]],
+				mainDir            = [[0 0 1]],
+				maxAngleDif        = 360,
+			},
 			--{
 				--def                = [[CLUSTERBOMBER]],
 				--mainDir            = [[0 0 1]],
 				--maxAngleDif        = 360,
 			--},
-
 			{
 				def                = [[KROWLASER]],
 				mainDir            = [[0 0.1 -0.38]],
@@ -90,17 +93,10 @@ return {
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-			
-			
-			{
-				def                = [[ATA]],
-				mainDir            = [[0 0 1]],
-				maxAngleDif        = 360,
-			},
 
 		},
 		weaponDefs             = {
-
+			
 			KROWLASER  = {
 				name                    = [[High Intensity Scattergun]],
 				areaOfEffect            = 30,
@@ -120,6 +116,7 @@ return {
 				customParams        = {
 					light_camera_height = 1800,
 					light_radius = 160,
+					combatrange	= 300,
 				},
 
 				damage                  = {
@@ -228,34 +225,34 @@ return {
 				weaponVelocity          = 400,
 			},
 			ATA = {
-				name                    = [[Pleb Annihilator]],
+				name                    = [[Annihilator Beam]],
 				areaOfEffect            = 255,
-				beamTime                = 5.25,
+				beamTime                = 10,
 				commandFire             = true,
-				coreThickness           = 1,
-				craterBoost             = 4,
-				craterMult              = 12,
+				coreThickness           = 3,
+				craterBoost             = 8,
+				craterMult              = 15,
       
 				customParams            = {
 					light_color = [[1.25 0.8 1.75]],
 					light_radius = 480,
 				},
 				damage                  = {
-					default = 16800,
+					default = 37500,
 				},
 
 				explosionGenerator      = [[custom:ataalaser_flattened]],
 				fireTolerance           = 8192, -- 45 degrees
 				impactOnly              = false,
-				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseBoost            = 10,
+				impulseFactor           = 2,
 				interceptedByShieldType = 1,
 				largeBeamLaser          = true,
-				laserFlareSize          = 10,
+				laserFlareSize          = 7.5,
 				leadLimit               = 18,
 				minIntensity            = 1,
 				noSelfDamage            = true,
-				range                   = 300,
+				range                   = 1000,
 				reloadtime              = 30,
 				rgbColor                = [[0.25 0 1]],
 				soundStart              = [[weapon/laser/heavy_laser6]],
