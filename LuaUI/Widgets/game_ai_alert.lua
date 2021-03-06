@@ -18,7 +18,7 @@ local function Echo(str)
 end
 
 local aiteams = {}
-local debug = true
+local debug = false
 local botowners = {}
 local namestocheck = {}
 local nametoid = {}
