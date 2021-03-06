@@ -112,12 +112,18 @@ local function SetState(unitID, state, wanted)
 end
 
 local function AddUnit(unitID)
+	if debug then
+		spEcho("[NewtonAI]: Add Unit " .. unitID)
+	end
 	local state = GetUnitIsActive(unitID)
 	local def = UnitDefs[spGetUnitDefID(unitID)].name
 	IterableMap.Add(newtons, unitID, {state = state, distance = 0, lasttarget = 0,}) -- distance here is so we can get a rate of change.
 end
 
 local function RemoveUnit(unitID)
+	if debug then
+		spEcho("[NewtonAI] Removing Unit " .. unitID)
+	end
 	IterableMap.Remove(newtons, unitID)
 end
 
@@ -223,24 +229,27 @@ function gadget:UnitDestroyed(unitID)
 end
 
 function gadget:GameFrame(f)
-	for id, data in IterableMap.Iterator(newtons) do
+	for unitID, data in IterableMap.Iterator(newtons) do
 		if not spValidUnitID(unitID) then
+			if debug then
+				spEcho("[NewtonAI] Invalid unit detected.")
+			end
 			RemoveUnit(unitID)
 		else
-			data.state = GetUnitIsActive(id)
+			data.state = GetUnitIsActive(unitID)
 			local weapon = 2
 			if not data.state then -- weapon 1 is pull while weapon 2 is push.
 				weapon = 1
 			end
-			local type, _, currenttarget = spGetUnitWeaponTarget(id, weapon) -- sometimes weapons have different targets, for... reasons i don't fully understand.
-			local newtonteam = spGetUnitTeam(id) -- so all this code here is just safety stuff.
+			local type, _, currenttarget = spGetUnitWeaponTarget(unitID, weapon) -- sometimes weapons have different targets, for... reasons i don't fully understand.
+			local newtonteam = spGetUnitTeam(unitID) -- so all this code here is just safety stuff.
 			local isally = true
 			if type == 1 and currenttarget then -- we want to only care about UNITS which are type 1. 0 is no target (afaik) and 2 is ground.
 				local targetteam = spGetUnitTeam(currenttarget)
 				isally = spAreTeamsAllied(newtonteam, targetteam)
 			end
 			if type == 1 and currenttarget and (handleallies or not isally) then -- we only care about shooting enemies (since newtons MAY be in newton fire zones).
-				CheckUnit(id, data, currenttarget) -- note: newton fire zone automatically turns off the ai anyways, but we don't want to have our stuff smash into terrain (BAD)
+				CheckUnit(unitID, data, currenttarget) -- note: newton fire zone automatically turns off the ai anyways, but we don't want to have our stuff smash into terrain (BAD)
 			end
 		end
 	end
