@@ -324,7 +324,7 @@ local moduleDefs = {
 			if sharedData.noMoreWeapons then
 				return
 			end
-			local weaponName = (modules[moduleDefNames.weaponmod_napalm_warhead] and "commweapon_hpartillery_napalm") or "commweapon_hpartillery"
+			local weaponName = (modules[moduleDefNames.weaponmod_napalm_warhead] and "commweapon_artillery_heavy_napalm") or "commweapon_artillery_heavy"
 			if not sharedData.weapon1 then
 				sharedData.weapon1 = weaponName
 			else
