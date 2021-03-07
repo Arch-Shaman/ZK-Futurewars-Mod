@@ -47,9 +47,6 @@ return {
 		script                        = [[turretantiheavy.lua]],
 		selfdestructas                = [[ESTOR_BUILDING]],
 		sfxtypes               = {
-			explosiongenerators = {
-				[[custom:ATAALASERFIRE]],
-			},
 		},
 		sightDistance                 = 560,
 		useBuildingGroundDecal        = true,
