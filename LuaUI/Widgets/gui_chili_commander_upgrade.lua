@@ -330,6 +330,17 @@ local function ModuleIsValid(level, chassis, slotAllows, slotIndex)
 	return upgradeUtilities.ModuleIsValid(level, chassis, slotAllows, moduleDefID, alreadyOwnedModulesByDefID, currentModulesByDefID)
 end
 
+local function CountModulesInSet(set, ignoreSlot)
+	local count = 0
+	for i = 1, #set do
+		local req = set[i]
+		count = count + (alreadyOwnedModulesByDefID[req] or 0)
+		              + (currentModulesByDefID[req] or 0)
+		              - (currentModulesBySlot[ignoreSlot] == req and 1 or 0)
+	end
+	return count
+end
+
 local function GetNewReplacementSet(level, chassis, slotAllows, ignoreSlot)
 	local replacementSet = {}
 	local haveEmpty = false
@@ -340,37 +351,16 @@ local function GetNewReplacementSet(level, chassis, slotAllows, ignoreSlot)
 			local accepted = true
 			
 			-- Check whether required modules are present, not counting ignored slot
-			if data.requireOneOf then
-				local foundRequirement = false
-				for j = 1, #data.requireOneOf do
-					local req = data.requireOneOf[j]
-					if (alreadyOwnedModulesByDefID[req] or
-						(currentModulesByDefID[req] and
-							(currentModulesBySlot[ignoreSlot] ~= req or
-							currentModulesByDefID[req] > 1))) then
-						
-						foundRequirement = true
-						break
-					end
-				end
-				if not foundRequirement then
-					accepted = false
-				end
+			if data.requireOneOf and CountModulesInSet(data.requireOneOf, ignoreSlot) < 1 then
+				accepted = false
+			end
+			if data.requireTwoOf and CountModulesInSet(data.requireTwoOf, ignoreSlot) < 2 then
+				accepted = false
 			end
 			
 			-- Check whether prohibited modules are present, not counting ignored slot
-			if accepted and data.prohibitingModules then
-				for j = 1, #data.prohibitingModules do
-					local prohibit = data.prohibitingModules[j]
-					if (alreadyOwnedModulesByDefID[prohibit] or
-						(currentModulesByDefID[prohibit] and
-							(currentModulesBySlot[ignoreSlot] ~= prohibit or
-							currentModulesByDefID[prohibit] > 1))) then
-						
-						accepted = false
-						break
-					end
-				end
+			if accepted and data.prohibitingModules and CountModulesInSet(data.prohibitingModules, ignoreSlot) > 0 then
+				accepted = false
 			end
 
 			-- cheapass hack to prevent cremcom dual wielding same weapon (not supported atm)
