@@ -2,7 +2,7 @@ return {
 	["ataalaser_flattened"] = {
 		groundsmoke = {
 			class              = [[CSimpleParticleSystem]],
-			count              = 4,
+			count              = 2,
 			ground             = true,
 			unit               = true,
 			properties = {
@@ -81,7 +81,7 @@ return {
 		stacheln1 = {
 			air                = true,
 			class              = [[explspike]],
-			count              = 10,
+			count              = 8,
 			ground             = true,
 			water              = true,
 			properties = {
@@ -109,7 +109,7 @@ return {
 				emitrotspread      = 50,
 				emitvector         = [[0,1,0]],
 				gravity            = [[0,0, 0]],
-				numparticles       = 7,
+				numparticles       = 5,
 				particlelife       = 27,
 				particlelifespread = 34,
 				particlesize       = 30,
