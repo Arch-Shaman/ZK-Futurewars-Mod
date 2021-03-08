@@ -85,7 +85,7 @@ local lasermax
 
 do
 	local weapondef = WeaponDefNames["gunshipkrow_ata"]
-	lasermax = math.ceil((weapondef.beamtime * 1000) / 33)
+	lasermax = math.ceil((weapondef.beamtime * 1000) / 33 / 5)
 end
 
 local sound_index = 0
@@ -291,14 +291,16 @@ local function DeathLaserThread()
 	Spring.SetUnitWeaponState(unitID, 3, "reloadFrame", (30*30) + frame)
 	local sleepTime = 33
 	local lased = 0
-	while lased < lasermax do
+	for lased = 0, lasermax do
 		px, py, pz = Spring.GetUnitPosition(unitID)
 		GG.PlayFogHiddenSound("sounds/weapon/laser/laser_burn10.wav", 1600, px, py, pz)
-		if not stunned_or_inbuild then
-			EmitSfx(subemit[0], GG.Script.FIRE_W3)
-			lased = lased + 1 -- prevent dgun from being eaten.
+		if not (Spring.GetUnitIsStunned(unitID) or (Spring.GetUnitRulesParam(unitID,"disarmed") == 1)) then
+			Sleep(200)
 		end
-		Sleep(sleepTime/slowState)
+		for i=1, 5 do
+			EmitSfx(subemit[0], GG.Script.FIRE_W3)
+			Sleep(sleepTime/slowState)
+		end
 	end
 	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
 	Spring.SetUnitRulesParam(unitID, "selfTurnSpeedChange", 1)
