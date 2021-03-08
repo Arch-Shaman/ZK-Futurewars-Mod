@@ -7,7 +7,6 @@ function widget:GetInfo()
 		license   = "CC-0",
 		layer     = -7,
 		enabled   = true,
-		alwaysStart = true,
 	}
 end
 
@@ -18,13 +17,14 @@ local function Echo(str)
 end
 
 local aiteams = {}
-local debug = false
+local debugmode = false
 local botowners = {}
 local namestocheck = {}
 local nametoid = {}
 local wantstate = false
 local checkplayers = {}
 local loaded = {}
+local find = string.find
 do
 	local teamlist = Spring.GetTeamList()
 	for t = 1, #teamlist do
@@ -42,7 +42,7 @@ do
 				loaded[hostname] = false
 			end
 			botowners[hostname][#botowners[hostname] + 1] = name
-			if debug then
+			if debugmode then
 				spEcho("[AI Notice] Discovered " .. name .. " for " .. hostname)
 			end
 		end
@@ -57,10 +57,10 @@ end
 local function GetLeaver(str)
 	for i = 1, #namestocheck do
 		local name = namestocheck[i] 
-		if debug then
-			spEcho("Checking " .. name)
+		if debugmode then
+			spEcho("[AI Notice] Checking " .. name)
 		end
-		if str:find(name .. " ") then -- prevent Shaman, ShamanDev multidetection.
+		if find(str, name .. " ") then -- prevent Shaman, ShamanDev multidetection.
 			return name
 		end
 	end
@@ -76,7 +76,7 @@ local function ReportLeaver(aihost, reason)
 end
 
 function widget:AddConsoleLine(msg, priority)
-	if msg:find("Game::Load") then
+	if find(msg, "Game::Load") then
 		for i = 1, #namestocheck do
 			local name = namestocheck[i]
 			if msg:find("\"" .. name .. "\"") then
@@ -85,12 +85,12 @@ function widget:AddConsoleLine(msg, priority)
 			end
 		end
 	end
-	if msg:find("left the game:") then -- determine who left
-		if debug then
+	if find(msg, "left the game:") then -- determine who left
+		if debugmode then
 			spEcho("[AI Notice] Detected leaver!")
 		end
 		local aihost = GetLeaver(msg)
-		if debug then
+		if debugmode then
 			spEcho("[AI Notice] Got " .. aihost)
 		end
 		if aihost ~= "?" then -- some ais are broken now.
@@ -105,7 +105,7 @@ end
 
 
 function widget:GameStart()
-	if debug then
+	if debugmode then
 		spEcho("[AI Notice] Checking game start")
 	end
 	local ignoreowners = {}
