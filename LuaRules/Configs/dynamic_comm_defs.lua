@@ -34,6 +34,26 @@ local moduleImagePath = "unitpics/"
 -- Module Definitions
 ------------------------------------------------------------------------
 
+local function ApplyHighFrequencyBeamKit(modules, sharedData)
+	local upgrade = {
+		["commweapon_disruptorprojector"] = "commweapon_disruptorprojector_heavy",
+		["commweapon_beamlaser"] = "commweapon_beamlaser_heavy",
+		["commweapon_lparticlebeam"] = "commweapon_hparticlebeam",
+		["commweapon_disruptor"] = "commweapon_heavy_disruptor",
+	}
+	local wantsfireatradar = {
+		["commweapon_disruptorprojector_heavy"] = true,
+		["commweapon_beamlaser_heavy"] = true,
+	}
+	if sharedData.weapon1 and upgrade[sharedData.weapon1] then
+		sharedData.weapon1 = upgrade[sharedData.weapon1]
+		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon1]
+	elseif sharedData.weapon2 and upgrade[sharedData.weapon2] then
+		sharedData.weapon2 = upgrade[sharedData.weapon2]
+		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon2]
+	end
+end
+
 local moduleDefNames = {}
 
 local moduleDefs = {
@@ -74,15 +94,13 @@ local moduleDefs = {
 	
 	-- Weapons
 	{
-		name = "commweapon_beamlaser1",
+		name = "commweapon_beamlaser",
 		humanName = "Beam Laser",
 		description = "Beam Laser: An effective short-range cutting tool",
 		image = moduleImagePath .. "commweapon_beamlaser.png",
 		limit = 2,
 		cost = 0 * COST_MULT,
-		requireChassis = {"knight"}, --[[ can fit on any chassis, but is already
-		                                  baseline for multiplayer comms, so we
-		                                  don't offer it for them ]]
+		requireChassis = {"support", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -92,49 +110,6 @@ local moduleDefs = {
 			if not sharedData.weapon1 then
 				sharedData.weapon1 = "commweapon_beamlaser"
 			else
-				sharedData.weapon2 = "commweapon_beamlaser"
-			end
-		end
-	},
-	{
-		name = "commweapon_beamlaser",
-		humanName = "Beam Laser",
-		description = "Beam Laser: An effective short-range cutting tool",
-		image = moduleImagePath .. "commweapon_beamlaser.png",
-		limit = 1,
-		cost = 0 * COST_MULT,
-		requireChassis = {"support"}, --[[ can fit on any chassis, but is already
-		                                  baseline for multiplayer comms, so we
-		                                  don't offer it for them ]]
-		requireLevel = 1,
-		slotType = "basic_weapon",
-		prohibitingModules = {"commweapon_capray", "commweapon_lightninggun", "commweapon_disruptorprojector", "commweapon_lparticlebeam", "commweapon_shockrifle"},
-		applicationFunction = function (modules, sharedData)
-			if sharedData.noMoreWeapons then
-				return
-			end
-			if not sharedData.weapon1 then
-				sharedData.weapon1 = "commweapon_beamlaser"
-			end
-		end
-	},
-	{
-		name = "commweapon_beamlaser2",
-		humanName = "Beam Laser",
-		description = "Beam Laser: An effective short-range cutting tool",
-		image = moduleImagePath .. "commweapon_beamlaser.png",
-		limit = 1,
-		cost = 0 * COST_MULT,
-		requireChassis = {"support"}, --[[ can fit on any chassis, but is already
-		                                  baseline for multiplayer comms, so we
-		                                  don't offer it for them ]]
-		requireLevel = 3,
-		slotType = "basic_weapon",
-		applicationFunction = function (modules, sharedData)
-			if sharedData.noMoreWeapons then
-				return
-			end
-			if not sharedData.weapon2 then
 				sharedData.weapon2 = "commweapon_beamlaser"
 			end
 		end
@@ -324,7 +299,7 @@ local moduleDefs = {
 			if sharedData.noMoreWeapons then
 				return
 			end
-			local weaponName = (modules[moduleDefNames.weaponmod_napalm_warhead] and "commweapon_hpartillery_napalm") or "commweapon_hpartillery"
+			local weaponName = (modules[moduleDefNames.weaponmod_napalm_warhead] and "commweapon_artillery_heavy_napalm") or "commweapon_artillery_heavy"
 			if not sharedData.weapon1 then
 				sharedData.weapon1 = weaponName
 			else
@@ -359,81 +334,18 @@ local moduleDefs = {
 		humanName = "Light Particle Beam",
 		description = "Light Particle Beam: Fast, light pulsed energy weapon",
 		image = moduleImagePath .. "commweapon_lparticlebeam.png",
-		limit = 1,
-		cost = 100 * COST_MULT,
-		requireChassis = {"support"},
-		prohibitingModules = {"commweapon_capray", "commweapon_lightninggun", "commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_shockrifle"},
-		requireLevel = 1,
-		slotType = "basic_weapon",
-		applicationFunction = function (modules, sharedData)
-			if sharedData.noMoreWeapons then
-				return
-			end
-			local hasfirstconverter = modules[moduleDefNames.conversion_disruptor]
-			local hassecondconverter = modules[moduleDefNames.module_heavyprojector_second]
-			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_disruptor") or "commweapon_lparticlebeam"
-			if not sharedData.weapon1 and not hasfirstconverter then
-				sharedData.weapon1 = weaponName
-			elseif not sharedData.weapon1 and hasfirstconverter then
-				sharedData.weapon1 = "commweapon_heavy_disruptor"
-			elseif hassecondconverter then
-				sharedData.weapon2 = "commweapon_heavy_disruptor"
-			else
-				sharedData.weapon2 = weaponName
-			end
-		end
-	},
-	{
-		name = "commweapon_lparticlebeam_normal",
-		humanName = "Light Particle Beam",
-		description = "Light Particle Beam: Fast, light pulsed energy weapon",
-		image = moduleImagePath .. "commweapon_lparticlebeam.png",
 		limit = 2,
 		cost = 100 * COST_MULT,
-		requireChassis = {"recon", "strike", "knight"},
+		requireChassis = {"support", "recon", "strike", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
 			end
-			local hasfirstconverter = modules[moduleDefNames.conversion_disruptor]
-			local hassecondconverter = modules[moduleDefNames.module_heavyprojector_second]
 			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_disruptor") or "commweapon_lparticlebeam"
-			if not sharedData.weapon1 and not hasfirstconverter then
+			if not sharedData.weapon1 then
 				sharedData.weapon1 = weaponName
-			elseif not sharedData.weapon1 and hasfirstconverter then
-				sharedData.weapon1 = "commweapon_heavy_disruptor"
-			elseif hassecondconverter then
-				sharedData.weapon2 = "commweapon_heavy_disruptor"
-			else
-				sharedData.weapon2 = weaponName
-			end
-		end
-	},
-	{
-		name = "commweapon_lparticlebeam2",
-		humanName = "Light Particle Beam",
-		description = "Light Particle Beam: Fast, light pulsed energy weapon",
-		image = moduleImagePath .. "commweapon_lparticlebeam.png",
-		limit = 1,
-		cost = 100 * COST_MULT,
-		requireChassis = {"support"},
-		requireLevel = 3,
-		slotType = "basic_weapon",
-		applicationFunction = function (modules, sharedData)
-			if sharedData.noMoreWeapons then
-				return
-			end
-			local hasfirstconverter = modules[moduleDefNames.conversion_disruptor]
-			local hassecondconverter = modules[moduleDefNames.module_heavyprojector_second]
-			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_disruptor") or "commweapon_lparticlebeam"
-			if not sharedData.weapon1 and not hasfirstconverter then
-				sharedData.weapon1 = weaponName
-			elseif not sharedData.weapon1 and hasfirstconverter then
-				sharedData.weapon1 = "commweapon_heavy_disruptor"
-			elseif hassecondconverter then
-				sharedData.weapon2 = "commweapon_heavy_disruptor"
 			else
 				sharedData.weapon2 = weaponName
 			end
@@ -575,33 +487,10 @@ local moduleDefs = {
 		humanName = "Disruptor Projector (Area Slow)",
 		description = "Deals some damage and slows targets in a small area. Low DPS. Can be converted into a heavy AOE slow beam.",
 		image = moduleImagePath .. "commweapon_disruptorprojector.png",
-		limit = 1,
-		cost = 75 * COST_MULT,
-		requireChassis = {"support"},
-		prohibitingModules = {"commweapon_capray", "commweapon_lightninggun", "commweapon_beamlaser", "commweapon_lparticlebeam", "commweapon_shockrifle"},
-		requireLevel = 1,
-		slotType = "basic_weapon",
-		applicationFunction = function (modules, sharedData)
-			if sharedData.noMoreWeapons then
-				return
-			end
-			local weaponName = "commweapon_disruptorprojector"
-			if not sharedData.weapon1 then
-				sharedData.weapon1 = weaponName
-			else
-				sharedData.weapon2 = weaponName
-			end
-		end
-	},
-	{
-		name = "commweapon_disruptorprojector2",
-		humanName = "Disruptor Projector (Area Slow)",
-		description = "Deals some damage and slows targets in a small area. Low DPS. Can be converted into a heavy AOE slow beam.",
-		image = moduleImagePath .. "commweapon_disruptorprojector.png",
 		limit = 2,
 		cost = 75 * COST_MULT,
 		requireChassis = {"support"},
-		requireLevel = 3,
+		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
@@ -626,19 +515,7 @@ local moduleDefs = {
 		requireOneOf = {"commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_lparticlebeam"},
 		requireLevel = 2,
 		slotType = "module",
-		applicationFunction = function (modules, sharedData)
-			--local weaponName = "commweapon_disruptorprojector_heavy"
-			local conversions = 1
-			if sharedData.weapon1 and (sharedData.weapon1 == "commweapon_disruptorprojector" or sharedData.weapon1 == "commweapon_beamlaser") then
-				sharedData.weapon1 = sharedData.weapon1 .. "_heavy"
-				conversions = conversions - 1
-				sharedData.wantsfireatradar = true
-			end
-			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_lparticlebeam" and conversions > 0 then
-				conversions = conversions - 1
-				sharedData.weapon1 = "commweapon_hparticlebeam"
-			end
-		end
+		applicationFunction = ApplyHighFrequencyBeamKit
 	},
 	{
 		name = "module_heavyprojector_second",
@@ -648,22 +525,10 @@ local moduleDefs = {
 		limit = 1,
 		cost = 300 * COST_MULT,
 		requireChassis = {"support"},
-		requireOneOf = {"commweapon_disruptorprojector2", "commweapon_beamlaser2", "commweapon_lparticlebeam2"},
+		requireTwoOf = {"commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_lparticlebeam"},
 		requireLevel = 4,
 		slotType = "module",
-		applicationFunction = function (modules, sharedData)
-			--local weaponName = "commweapon_disruptorprojector_heavy"
-			local conversions = 1
-			if sharedData.weapon2 and (sharedData.weapon2 == "commweapon_disruptorprojector" or sharedData.weapon2 == "commweapon_beamlaser") and conversions > 0 then
-				sharedData.weapon2 = sharedData.weapon2 .. "_heavy"
-				conversions = conversions - 1
-				sharedData.wantsfireatradar = true
-			end
-			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_lparticlebeam" and conversions > 0 then
-				conversions = conversions - 1
-				sharedData.weapon2 = "commweapon_hparticlebeam"
-			end
-		end
+		applicationFunction = ApplyHighFrequencyBeamKit
 	},
 	{
 		name = "commweapon_shockrifle",
@@ -1058,7 +923,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 400 * COST_MULT,
 		prohibitingModules = {"commweapon_personal_shield", "commweapon_areashield"},
-		requireChassis = {"recon", "assault", "knight"},
+		requireChassis = {"recon", "assault", "strike", "knight"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -2191,29 +2056,18 @@ for i = 1, #moduleDefs do
 	local data = moduleDefs[i]
 	
 	-- Required modules are a list of moduleDefIDs
-	if data.requireOneOf then
-		local newRequire = {}
-		for j = 1, #data.requireOneOf do
-			local reqModuleID = moduleDefNames[data.requireOneOf[j]]
-			if reqModuleID then
-				newRequire[#newRequire + 1] = reqModuleID
+	for _,list in pairs{"requireOneOf", "requireTwoOf", "prohibitingModules"} do
+		if data[list] then
+			local newRequire = {}
+			for j = 1, #data[list] do
+				local reqModuleID = moduleDefNames[data[list][j]]
+				if reqModuleID then
+					newRequire[#newRequire + 1] = reqModuleID
+				end
 			end
+			data[list] = newRequire
 		end
-		data.requireOneOf = newRequire
 	end
-	
-	-- Prohibiting modules are a list of moduleDefIDs too
-	if data.prohibitingModules then
-		local newProhibit = {}
-		for j = 1, #data.prohibitingModules do
-			local reqModuleID = moduleDefNames[data.prohibitingModules[j]]
-			if reqModuleID then
-				newProhibit[#newProhibit + 1] = reqModuleID
-			end
-		end
-		data.prohibitingModules = newProhibit
-	end
-	
 	
 	-- Required chassis is a map indexed by chassisDefID
 	if data.requireChassis then
@@ -2274,6 +2128,16 @@ end
 -- Utility Functions
 ------------------------------------------------------------------------
 
+local function CountModulesInSet(set, owned, owned2)
+	local count = 0
+	for i = 1, #set do
+		local req = set[i]
+		count = count + (owned[req] or 0)
+		              + (owned2 and owned2[req] or 0)
+	end
+	return count
+end
+
 local function ModuleIsValid(level, chassis, slotAllows, moduleDefID, alreadyOwned, alreadyOwned2)
 	local data = moduleDefs[moduleDefID]
 	if (not slotAllows[data.slotType]) or (data.requireLevel or 0) > level or
@@ -2282,32 +2146,16 @@ local function ModuleIsValid(level, chassis, slotAllows, moduleDefID, alreadyOwn
 	end
 	
 	-- Check that requirements are met
-	if data.requireOneOf then
-		local foundRequirement = false
-		for j = 1, #data.requireOneOf do
-			-- Modules should not depend on themselves so this check is simplier than the
-			-- corresponding chcek in the replacement set generator.
-			local reqDefID = data.requireOneOf[j]
-			if (alreadyOwned[reqDefID] or (alreadyOwned2 and alreadyOwned2[reqDefID])) then
-				foundRequirement = true
-				break
-			end
-		end
-		if not foundRequirement then
-			return false
-		end
+	if data.requireOneOf and CountModulesInSet(data.requireOneOf, alreadyOwned, alreadyOwned2) < 1 then
+		return false
+	end
+	if data.requireTwoOf and CountModulesInSet(data.requireTwoOf, alreadyOwned, alreadyOwned2) < 2 then
+		return false
 	end
 	
 	-- Check that nothing prohibits this module
-	if data.prohibitingModules then
-		for j = 1, #data.prohibitingModules do
-			-- Modules cannot prohibit themselves otherwise this check makes no sense.
-			local probihitDefID = data.prohibitingModules[j]
-			if (alreadyOwned[probihitDefID] or (alreadyOwned2 and alreadyOwned2[probihitDefID])) then
-				return false
-			end
-		end
-	
+	if data.prohibitingModules and CountModulesInSet(data.prohibitingModules, alreadyOwned, alreadyOwned2) > 0 then
+		return false
 	end
 
 	-- cheapass hack to prevent cremcom dual wielding same weapon (not supported atm)

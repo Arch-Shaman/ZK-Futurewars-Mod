@@ -22,7 +22,7 @@ local weaponDef = {
 	},
 
 	fireStarter             = 180,
-	flightTime              = 3,
+	flightTime              = 4,
 	impulseBoost            = 0,
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 2,

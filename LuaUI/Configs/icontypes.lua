@@ -1048,6 +1048,11 @@ local icontypes = {
     bitmap='icons/energyheavygeo.png',
     size=2.4,
   },
+
+  energyrtg = {
+    bitmap='icons/energyrtg.png',
+    size=2,
+  },
   
   pylon = {
     bitmap='icons/pylon.dds',
