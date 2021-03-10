@@ -83,12 +83,12 @@ return {
 		weaponDefs             = {
 			BLAST    = {
 				name                    = [[Disruptor Pulser]],
-				areaOfEffect            = 550,
+				areaOfEffect            = 575,
 				craterBoost             = 0,
 				craterMult              = 0,
 
 				damage                  = {
-					default = 40.1,
+					default = 45.1,
 				},
 
 				customParams           = {
@@ -96,18 +96,19 @@ return {
 					lups_explodespeed = 1,
 					lups_explodelife = 0.6,
 					nofriendlyfire = 1,
-					timeslow_damagefactor = 1.75,
+					timeslow_damagefactor = 1.9,
+					featuredamagemult = 0,
 				},
 
-				edgeeffectiveness       = 0.5,
+				edgeeffectiveness       = 0.8,
 				explosionGenerator      = [[custom:NONE]],
 				explosionSpeed          = 12,
-				impulseBoost            = 12.5,
-				impulseFactor           = 7.5,
+				impulseBoost            = 20,
+				impulseFactor           = 12,
 				interceptedByShieldType = 1,
 				myGravity               = 10,
 				noSelfDamage            = true,
-				range                   = 90,
+				range                   = 110,
 				reloadtime              = 0.5,
 				soundHitVolume          = 1,
 				turret                  = true,
@@ -167,7 +168,7 @@ return {
 				flightTime              = 1,
 				impactOnly              = true,
 				interceptedByShieldType = 1,
-				range                   = 90,
+				range                   = 110,
 				reloadtime              = 0.933,
 				size                    = 1E-06,
 				smokeTrail              = false,
