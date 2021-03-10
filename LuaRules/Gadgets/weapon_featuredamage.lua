@@ -27,9 +27,9 @@ for w = 1, #WeaponDefs do
 end
 
 function gadget:FeaturePreDamaged(featureID, featureDefID, featureTeam, damage, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
-	Spring.Echo("A feature was damaged")
+	--Spring.Echo("A feature was damaged")
 	if damagemult[weaponDefID] then
-		Spring.Echo("Damaged Feature!")
+		--Spring.Echo("Damaged Feature!")
 		return damagemult[weaponDefID].damage * damage, damagemult[weaponDefID].impulse
 	end
 	return damage, 1
