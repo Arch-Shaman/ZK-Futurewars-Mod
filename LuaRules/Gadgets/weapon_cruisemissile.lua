@@ -143,6 +143,15 @@ local function IsMissileCruiseDone(id) -- other gadgets can look up if the missi
 	return not missiles[id] == nil
 end
 
+local function ForceUpdate(id, x, y, z)
+	if missiles[id] then
+		missiles[id].target[1] = x
+		missiles[id].target[2] = y
+		missiles[id].target[3] = z
+	end
+end
+
+GG.ForceCruiseUpdate = ForceUpdate
 GG.GetMissileCruising = IsMissileCruiseDone
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)

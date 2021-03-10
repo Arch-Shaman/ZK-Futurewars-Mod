@@ -51,7 +51,7 @@ local commandDisplayConfig = {
 	[CMD_RAW_MOVE] = { texture = imageDir .. 'Bold/move.png'},
 	[CMD.PATROL] = { texture = imageDir .. 'Bold/patrol.png', tooltip = "Patrol: Attack Move back and forth between one or more waypoints."},
 	[CMD.WAIT] = { texture = imageDir .. 'Bold/wait.png', tooltip = "Wait: Pause the units command queue and have it hold its current position."},
-
+	[CMD_SUBMUNITION_TARGET] = { texture = imageDir .. 'Bold/attack.png', tooltip = "Set Submunition Target: Adds a target for this unit's payload delivery. If not set, they'll randomly select a location."},
 	[CMD.REPAIR] = {texture = imageDir .. 'Bold/repair.png', tooltip = "Repair: Assist construction or repair a unit. Click and drag for area repair."},
 	[CMD.RECLAIM] = {texture = imageDir .. 'Bold/reclaim.png', tooltip = "Reclaim: Take resources from a wreck. Click and drag for area reclaim."},
 	[CMD.RESURRECT] = {texture = imageDir .. 'Bold/resurrect.png', tooltip = "Resurrect: Spend energy to turn a wreck into a unit."},

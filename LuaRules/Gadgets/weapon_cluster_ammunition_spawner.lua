@@ -46,6 +46,7 @@ if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
 end
 
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+include("LuaRules/Configs/customcmds.h.lua")
 
 --Speedups--
 local spEcho = Spring.Echo
@@ -76,6 +77,8 @@ local spGetProjectileIsIntercepted = Spring.GetProjectileIsIntercepted
 local spGetProjectileTeamID = Spring.GetProjectileTeamID
 local spSpawnSFX = Spring.SpawnSFX
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc
+local spSetUnitRulesParam = Spring.SetUnitRulesParam
 
 
 local random = math.random
@@ -89,209 +92,47 @@ local abs = math.abs -- CAS GOES TO THE GYM AND HAS DOUBLE ABS
 local strfind = string.find
 local gmatch = string.gmatch
 local floor = math.floor
+local rad = math.rad
+local sin = math.sin
+local cos = math.cos
 
+local CommandOrder = 123456
 local ground = byte("g")
 local unit = byte("u")
 local projectile = byte("p")
 local feature = byte("f")
+local ALLIES = {allied = true}
 
 local projectileattributesCache = {pos = {0,0,0}, speed = {0,0,0}, owner = 0, team = 0, ttl= 0,gravity = 0,tracking = false,}
 --projectileattributesCache["end"] = {0,0,0}
 
 local frame
 
+local setprojectiletargetcmddesc = {
+	id      = CMD_SUBMUNITION_TARGET,
+	type    = CMDTYPE.ICON_UNIT_OR_MAP,
+	name    = 'Set Warhead Target',
+	action  = 'attack',
+	tooltip	= 'Authorize a nuclear strike at this position. You have up to 3 nukes to use per missile. Unselected targets will pick a random nearby location. (This command will cycle between all 3 of them)',
+}
+
 --variables--
-local config = {} -- projectile configuration data
+spEcho("CAS: Scanning weapondefs")
+local config = VFS.Include("LuaRules/Configs/submunition_config.lua") -- projectile configuration data
+spEcho("CAS: done processing weapondefs")
+
 local projectiles = IterableMap.New() -- stuff we need to act on.
+local targettable = {} -- holds individual warhead info. form: unitID = {[1] = {x,y,z}, etc}
+local projectiletargets = {} -- proID = {[1] = {}, [2] = {}, etc}
+local forceupdatetargets = {count = 0, data = {}} -- proID = {x, y, z}
 local debug = false
+local wanteddefs = VFS.Include("LuaRules/Configs/setprojectiletargetdefs.lua") or {}
+local mapx = Game.mapSizeX
+local mapz = Game.mapSizeZ
 -- functions --
 local function distance3d(x1, y1, z1, x2, y2, z2)
 	return sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)) + ((z2 - z1) * (z2 - z1)))
 end
-
-spEcho("CAS: Scanning weapondefs")
-
-for i=1, #WeaponDefs do
-	local wd = WeaponDefs[i]
-	local curRef = wd.customParams -- hold table for referencing
-	if curRef and curRef.projectile1 then -- found it!
-		if debug then
-			spEcho("CAS: Discovered " .. i .. "(" .. wd.name .. ")")
-		end
-		if type(curRef.projectile1) == "string" then -- reason we use it like this is to provide an error if something doesn't seem right.
-			if WeaponDefNames[curRef.projectile1] then
-				if type(curRef.spawndist) == "string" then -- all ok
-					SetWatchWeapon(i, true)
-					if debug then
-						spEcho("[CAS] Enabled watch for " .. i)
-					end
-					--Mommy projectile Defs
-					config[i] = {}
-					config[i]["spawndist"] = tonumber(curRef.spawndist)
-					if curRef.timeddeploy then
-						config[i].timer = tonumber(curRef.timeddeploy) or 5
-					end
-					if type(curRef.use2ddist) ~= "string" then
-						config[i]["use2ddist"] = 0
-						if debug then
-							spEcho("[CAS] Set 2ddist to false for " .. wd.name)
-						end
-					else
-						config[i]["use2ddist"] = tonumber(curRef.use2ddist)
-					end
-					if curRef.timedcharge and curRef.timedcharge > 0 then
-						config[i]["type"] = "timedcharge"
-					else
-						config[i]["type"] = "normal"
-					end
-					if type(curRef.vlist) == "string" then
-						config[i]["vlist"] = {}
-						local x,y,z
-						for w in gmatch(curRef.vlist,"%S+") do -- string should be "x,y,z/x,y,z/x,y,z,/x,y,z/etc
-							x,y,z = w:match("([^,]+),([^,]+),([^,]+)")
-							config[i]["vlist"][#config[i]["vlist"]+1] = {tonumber(x),tonumber(y),tonumber(z)}
-						end
-					end
-					config[i]["isBomb"] = wd.type == "AircraftBomb"
-					config[i]["launcher"] = wd.type == "StarburstLauncher"
-					config[i]["timeoutspawn"] = tonumber(curRef.timeoutspawn) or 1
-					config[i]["proxy"] = tonumber(curRef.proxy) or 0
-					config[i]["proxydist"] = tonumber(curRef.proxydist) or config[i]["spawndist"] or 0
-					config[i]["alwaysvisible"] = curRef.alwaysvisible ~= nil
-					config[i]["clustercharges"] = tonumber(curRef.clustercharges) or 1
-					config[i]["clusterdelay"] = tonumber(curRef.clusterdelay) or 5
-					config[i]["clusterdelaytype"] = tonumber(curRef.clusterdelaytype) or 0
-					config[i]["useheight"] = tonumber(curRef.useheight) or 0
-					config[i]["dynDamage"] = type(curRef.dyndamage) == "string"
-					config[i]["airburst"] = curRef.noairburst == nil
-					config[i]["onExplode"] = curRef.onexplode ~= nil
-					
-					
-					--sonny projectile defs
-					
-					--the basic idea is this. instead of pulling let say curRef.projectile we pull curRef.projectile1 or curRef.projectile2 for the different
-					--projectiles that the bullet splits into
-					
-					config[i]["frags"] = {}
-					
-					local fragnum = 1
-					while (curRef["projectile" .. fragnum]) do
-						config[i]["frags"][fragnum] = {}
-						local projectile = curRef["projectile" .. fragnum]
-						config[i]["frags"][fragnum]["projectile"] = WeaponDefNames[projectile].id -- transform into an id
-						local clusterpos = curRef["clusterpos" .. fragnum]
-						if type(clusterpos) ~= "string" then
-							config[i]["frags"][fragnum]["clusterpos"] = "no"
-						else
-							config[i]["frags"][fragnum]["clusterpos"] = clusterpos
-						end
-						local clustervec = curRef["clustervec" .. fragnum]
-						if type(clustervec) ~= "string" then
-							config[i]["frags"][fragnum]["clustervec"] = "no"
-						else
-							config[i]["frags"][fragnum]["clustervec"] = clustervec
-						end
-						local numprojectiles = curRef["numprojectiles" .. fragnum]
-						if type(numprojectiles) ~= "string" then
-							config[i]["frags"][fragnum]["numprojectiles"] = 1
-						else
-							config[i]["frags"][fragnum]["numprojectiles"] = tonumber(numprojectiles)
-						end
-						local spreadradius = curRef["spreadradius" .. fragnum]
-						if type(spreadradius) ~= "string" then
-							config[i]["frags"][fragnum]["spreadmin"] = -100
-							config[i]["frags"][fragnum]["spreadmax"] = 100
-						else
-							if strfind(spreadradius,",") then -- projectile offsetting.
-								config[i]["frags"][fragnum]["spreadmin"], config[i]["frags"][fragnum]["spreadmax"] = spreadradius:match("([^,]+),([^,]+)")
-								config[i]["frags"][fragnum]["spreadmin"] = tonumber(config[i]["frags"][fragnum]["spreadmin"])
-								config[i]["frags"][fragnum]["spreadmax"] = tonumber(config[i]["frags"][fragnum]["spreadmax"])
-								if config[i]["frags"][fragnum]["spreadmax"] == "" or config[i]["frags"][fragnum]["spreadmax"] == nil then
-									config[i]["frags"][fragnum]["spreadmax"] = config[i]["frags"][fragnum]["spreadmin"] * -1
-								end
-								if config[i]["frags"][fragnum]["spreadmin"] > config[i]["frags"][fragnum]["spreadmax"] then
-									local mi = config[i]["frags"][fragnum]["spreadmax"]
-									local ma = config[i]["frags"][fragnum]["spreadmin"]
-									config[i]["frags"][fragnum]["spreadmin"] = mi
-									config[i]["frags"][fragnum]["spreadmax"] = ma
-									spEcho("[CAS] WARNING: Illegal min,max value for spread on projectile ID " .. i .. " (" .. wd.name .. ").\n These values have been automatically switched, but you should fix your config!\nValues got:" .. config[i]["frags"][fragnum]["spreadmax"],config[i]["frags"][fragnum]["spreadmin"])
-								end
-							else
-								config[i]["frags"][fragnum]["spreadmin"] = -abs(tonumber(spreadradius))
-								config[i]["frags"][fragnum]["spreadmax"] = abs(tonumber(spreadradius))
-							end
-						end
-						local vradius = curRef["vradius" .. fragnum]
-						if type(vradius) ~= "string" then
-							config[i]["frags"][fragnum]["veldata"] = {min = {-4.2,-4.2,-4.2}, max = {4.2,4.2,4.2}}
-						else
-							if strfind(vradius,",") then -- projectile velocity offsets
-								config[i]["frags"][fragnum]["veldata"] = {min = {}, max = {}}
-								config[i]["frags"][fragnum]["veldata"].min[1],config[i]["frags"][fragnum]["veldata"].min[2], config[i]["frags"][fragnum]["veldata"].min[3],config[i]["frags"][fragnum]["veldata"].max[1],config[i]["frags"][fragnum]["veldata"].max[2],config[i]["frags"][fragnum]["veldata"].max[3]  = vradius:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
-								for j=1, 3 do
-									config[i]["frags"][fragnum]["veldata"].min[j] = tonumber(config[i]["frags"][fragnum]["veldata"].min[j])
-									config[i]["frags"][fragnum]["veldata"].max[j] = tonumber(config[i]["frags"][fragnum]["veldata"].max[j])
-									if config[i]["frags"][fragnum].veldata.min[j] > config[i]["frags"][fragnum].veldata.max[j] then
-										local mi = config[i]["frags"][fragnum]["veldata"].min[j]
-										local ma = config[i]["frags"][fragnum]["veldata"].max[j]
-										config[i]["frags"][fragnum]["veldata"].min[j] = mi
-										config[i]["frags"][fragnum]["veldata"].max[j] = ma
-										spEcho("[CAS] WARNING: Illegal min,max value for velocity on projectile ID " .. i .. " (" .. wd.name .. ").\n These values have been automatically switched, but you should fix your config!\nValues got:" .. config[i]["frags"][fragnum]["veldata"].min[j],config[i]["frags"][fragnum]["veldata"].max[j])
-									end
-								end
-							else
-								config[i]["frags"][fragnum].veldata = {min = {}, max = {}}
-								for j=1,3 do
-									config[i]["frags"][fragnum]["veldata"].min[j] = -abs(tonumber(vradius))
-									config[i]["frags"][fragnum]["veldata"].max[j] = abs(tonumber(vradius))
-								end
-							end
-						end
-						config[i]["frags"][fragnum]["veldata"].diff = {}
-						for j=1,3 do
-							config[i]["frags"][fragnum]["veldata"].diff[j] = config[i]["frags"][fragnum]["veldata"].max[j] - config[i]["frags"][fragnum]["veldata"].min[j]
-						end
-						local keepmomentum = curRef["keepmomentum" .. fragnum]
-						if type(keepmomentum) ~= "string" then
-							config[i]["frags"][fragnum]["keepmomentum"] = {1,1,1}
-						else
-							if strfind(keepmomentum,",") then -- projectile velocity offsets
-								config[i]["frags"][fragnum]["keepmomentum"] = {}
-								config[i]["frags"][fragnum]["keepmomentum"][1],config[i]["frags"][fragnum]["keepmomentum"][2], config[i]["frags"][fragnum]["keepmomentum"][3] = keepmomentum:match("([^,]+),([^,]+),([^,]+)")
-								for j=1, 3 do
-									config[i]["frags"][fragnum]["keepmomentum"][j] = tonumber(config[i]["frags"][fragnum]["keepmomentum"][j])
-								end
-							else
-								config[i]["frags"][fragnum].keepmomentum = {}
-								for j=1,3 do
-									config[i]["frags"][fragnum]["keepmomentum"][j] = tonumber(keepmomentum)
-								end
-							end
-						end
-						local spawnsfx = curRef["spawnsfx" .. fragnum]
-						if spawnsfx then
-							config[i]["frags"][fragnum]["spawnsfx"] = tonumber(spawnsfx)
-						end
-						fragnum = fragnum + 1
-					end
-					config[i].fragcount =  fragnum - 1
-					if debug then
-						Spring.Echo("[CAS] Frag count: " .. fragnum - 1)
-					end
-				else
-					spEcho("[CAS] Error: " .. i .. "(" .. WeaponDefs[i].name .. "): spawndist is not present.")
-				end
-			else
-				spEcho("[CAS] Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a valid weapondef name.")
-			end
-		else
-			spEcho("[CAS] Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a string.")
-		end
-	end
-	wd = nil
-	curRef = nil
-end
-spEcho("CAS: done processing weapondefs")
 
 local function unittest(tab, self, teamID)
 	if #tab == 0 or (#tab == 1 and tab[1] == self) then
@@ -318,6 +159,19 @@ local function distance2d(x1,y1,x2,y2)
 	return sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)))
 end
 
+local function RegisterForceUpdate(id, x, y, z)
+	local count = forceupdatetargets.count + 1
+	forceupdatetargets.count = count
+	if forceupdatetargets.data[count] then
+		forceupdatetargets.data[count].id = id
+		forceupdatetargets.data[count].x = x
+		forceupdatetargets.data[count].y = y
+		forceupdatetargets.data[count].z = z
+	else
+		forceupdatetargets.data[count] = {id = id, x = x, y = y, z = z}
+	end
+end
+
 local function RegisterSubProjectiles(p, me)
 	if config[me] then
 		local damagemult = spGetUnitRulesParam(spGetProjectileOwnerID(p), "comm_damage_mult")
@@ -326,6 +180,26 @@ local function RegisterSubProjectiles(p, me)
 			spSetProjectileAlwaysVisible(p, true)
 		end
 	end
+end
+
+local function GetRandomAttackPoint(x, z, radius)
+	local distance = random(0, radius)
+	local heading = rad(random(0, 360))
+	local target = {}
+	target[1] = x + (distance * sin(heading))
+	target[3] = z + (distance * cos(heading))
+	if target[1] > mapx then -- clamp inside the map
+		target[1] = mapx
+	elseif target[1] < 0 then
+		target[1] = 0
+	end
+	if target[3] > mapz then -- ditto
+		target[3] = mapz
+	elseif target[3] < 0 then
+		target[3] = 0
+	end
+	target[2] = spGetGroundHeight(target[1], target[3])
+	return target
 end
 
 local function SpawnSubProjectiles(id, wd)
@@ -342,7 +216,8 @@ local function SpawnSubProjectiles(id, wd)
 	local vx,vy,vz = spGetProjectileVelocity(id)
 	local ttype,target = spGetProjectileTarget(id)
 	-- update projectile attributes --
-	projectileattributes["owner"] = spGetProjectileOwnerID(id)
+	local owner = spGetProjectileOwnerID(id)
+	projectileattributes["owner"] = owner
 	projectileattributes["team"] = spGetProjectileTeamID(id)
 	projectileattributes["pos"][1] = x
 	projectileattributes["pos"][2] = y
@@ -351,6 +226,12 @@ local function SpawnSubProjectiles(id, wd)
 	projectileattributes["speed"][2] = vy
 	projectileattributes["speed"][3] = vz
 	local projectileConfig = config[wd].frags
+	local targetoverride
+	local forceupdate = false
+	if projectiletargets[id] then
+		targetoverride = projectiletargets[id] or {}
+		forceupdate = true
+	end
 	local step = {0,0,0}
 	-- Create the projectiles --
 	for j = 1, config[wd].fragcount do
@@ -359,6 +240,10 @@ local function SpawnSubProjectiles(id, wd)
 		local dr = projectileConfig[j]["spreadmax"] - mr
 		local vr = projectileConfig[j]["veldata"]
 		local projectilecount = projectileConfig[j]["numprojectiles"]
+		if config[wd].usertargetable then
+			target = targetoverride[j] or GetRandomAttackPoint(x, z, 2000)
+			ttype = ground
+		end
 		for i=1, 3 do
 			step[i] = (vr.diff[i])/projectilecount
 		end
@@ -439,11 +324,11 @@ local function SpawnSubProjectiles(id, wd)
 				--if projectileattributes["tracking"] then
 				if ttype ~= ground then
 					if debug then
-						spEcho("setting target for " .. p .. " = " .. target)
+						spEcho("setting target for " .. p .. " = " .. tostring(target)) -- safety
 					end
 					spSetProjectileTarget(p, target,ttype)
 				else
-					spSetProjectileTarget(p, target[1], target[2], target[3])
+					RegisterForceUpdate(p, target[1], target[2], target[3])
 				end
 				--end
 			end
@@ -471,6 +356,13 @@ local function SpawnSubProjectiles(id, wd)
 			projectileConfig.clusterdelaytype = 1
 		end
 	end
+	if config[wd].usertargetable then
+		targettable[owner].count = targettable[owner].count - 1
+		if targettable[owner].count == 0 and targettable[owner].dead then
+			targettable[owner] = nil
+		end
+	end
+	projectiletargets[id] = nil
 end
 
 local function CheckProjectile(id)
@@ -610,9 +502,46 @@ local function CheckProjectile(id)
 	end
 end
 
+local function UpdateAttackOrder(unitID, pos)
+	local count = #targettable[unitID]
+	if type(pos) ~= "table" then
+		local new = {}
+		new[1], new[2], new[3] = spGetUnitPosition(pos)
+		pos = new
+	end
+	if count == 3 then
+		local newtable = {}
+		newtable[1] = {x = pos[1], z = pos[3]}
+		newtable[2] = targettable[unitID][1]
+		newtable[3] = targettable[unitID][2]
+		targettable[unitID] = newtable
+	else
+		local newtable = {}
+		newtable[1] = {x = pos[1], y = pos[2], z = pos[3]}
+		if #targettable[unitID] > 0 then
+			for i = 1, #targettable[unitID] do
+				newtable[#newtable + 1] = targettable[unitID][i]
+			end
+			targettable[unitID] = newtable
+		end
+	end
+	for i = 1, #targettable[unitID] do
+		spSetUnitRulesParam(unitID, "subprojectile_target_" .. i .. "_x", targettable[unitID].x, ALLIES)
+		spSetUnitRulesParam(unitID, "subprojectile_target_" .. i .. "_z", targettable[unitID].z, ALLIES)
+	end
+	spSetUnitRulesParam(unitID, "subprojectile_target_count", #targettable[unitID], ALLIES)
+end
+
+GG.Submunitions = {}
+GG.Submunitions.AddProjectileTarget = UpdateAttackOrder
+
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	if debug then
 		spEcho("ProjectileCreated: " .. tostring(proID, proOwnerID, weaponDefID))
+	end
+	proOwnerID = spGetProjectileOwnerID(proID)
+	if targettable[proOwnerID] then
+		projectiletargets[proID] = targettable[proOwnerID]
 	end
 	if weaponDefID == nil then
 		weaponDefID = spGetProjectileDefID(proID)
@@ -653,9 +582,37 @@ function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, ProjectileID)
 end
 
 function gadget:GameFrame(f)
-	frame = spGetGameFrame()
+	frame = f
+	if forceupdatetargets.count > 0 then
+		for i = 1, forceupdatetargets.count do
+			local data = forceupdatetargets.data[i]
+			spSetProjectileTarget(data.id, data.x, data.y, data.z)
+			GG.ForceCruiseUpdate(data.id, data.x, data.y, data.z)
+		end
+		forceupdatetargets.count = 0
+	end
 	for id, data in IterableMap.Iterator(projectiles) do
 		if debug then spEcho(id .. ": Updating.") end
 		CheckProjectile(id)
 	end
+end
+
+function gadget:UnitCreated(unitID, unitDefID)
+	if wanteddefs[unitDefID] then
+		targettable[unitID] = {} -- note: count is for the active projectiles so we know when to delete the table.
+		spInsertUnitCmdDesc(unitID, CommandOrder, setprojectiletargetcmddesc)
+	end
+end
+
+function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions)
+	if cmdID ~= CMD_SUBMUNITION_TARGET then
+		return true
+	else
+		UpdateAttackOrder(unitID, cmdParams)
+		return false
+	end
+end
+
+function gadget:UnitDestroyed(unitID)
+	targettable[unitID] = nil
 end
