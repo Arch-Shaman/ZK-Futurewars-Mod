@@ -228,7 +228,7 @@ local function SpawnSubProjectiles(id, wd)
 	local projectileConfig = config[wd].frags
 	local targetoverride
 	local forceupdate = false
-	if projectiletargets[id] then
+	if config[wd].usertarget then
 		targetoverride = projectiletargets[id] or {}
 		forceupdate = true
 	end
@@ -240,7 +240,7 @@ local function SpawnSubProjectiles(id, wd)
 		local dr = projectileConfig[j]["spreadmax"] - mr
 		local vr = projectileConfig[j]["veldata"]
 		local projectilecount = projectileConfig[j]["numprojectiles"]
-		if config[wd].usertargetable then
+		if config[wd].usertarget then
 			target = targetoverride[j] or GetRandomAttackPoint(x, z, 2000)
 			ttype = ground
 		end
@@ -539,7 +539,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	if debug then
 		spEcho("ProjectileCreated: " .. tostring(proID, proOwnerID, weaponDefID))
 	end
-	proOwnerID = spGetProjectileOwnerID(proID)
+	--proOwnerID = spGetProjectileOwnerID(proID)
 	if targettable[proOwnerID] then
 		projectiletargets[proID] = targettable[proOwnerID]
 	end
