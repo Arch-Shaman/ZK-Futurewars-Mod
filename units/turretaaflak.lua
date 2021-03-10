@@ -67,7 +67,6 @@ return { turretaaflak = {
 
 			ARMFLAK_GUN = {
 				name                    = [[Flak Canister]],
-				accuracy                = 900,
 				areaOfEffect            = 0,
 				burnblow                = true,
 				canattackground         = false,
