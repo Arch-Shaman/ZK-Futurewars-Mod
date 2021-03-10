@@ -66,7 +66,7 @@
 	},
 	"shieldriot" : {
 		"name" : "Sentry",
-		"description" : "Shielded Riot Bot",
+		"description" : "Shielded Wave Projector",
 		"helptext" : "The Sentry emits an electromagnetic disruption pulse in a wide circle around it that damages and slows enemy units. Friendly units are unaffected."
 	},
 	"chickenc" : {

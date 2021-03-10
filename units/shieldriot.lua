@@ -88,7 +88,7 @@ return {
 				craterMult              = 0,
 
 				damage                  = {
-					default = 65.1,
+					default = 40.1,
 				},
 
 				customParams           = {
@@ -108,7 +108,7 @@ return {
 				myGravity               = 10,
 				noSelfDamage            = true,
 				range                   = 90,
-				reloadtime              = 0.933,
+				reloadtime              = 0.5,
 				soundHitVolume          = 1,
 				turret                  = true,
 				weaponType              = [[Cannon]],
