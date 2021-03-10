@@ -34,7 +34,7 @@ function gadget:UnitCloaked(unitID, unitDefID, unitTeam)
 		for paramName, value in pairs(strikedefs["cloakedRulesParam"]) do
 			spSetUnitRulesParam(unitID, paramName, value)
 		end
-		spSetUnitRulesParam(unitID, "cloakstrike_active", "Stuff is an idiot")
+		spSetUnitRulesParam(unitID, "cloakstrike_active", "Stuff is awesome") -- :P
 		if strikedefs["updateAttributes"] then
 			GG.UpdateUnitAttributes(unitID)
 		end
