@@ -41,6 +41,8 @@ function gadget:UnitCloaked(unitID, unitDefID, unitTeam)
 	end
 end
 
+--decloakedWeaponDamages
+
 function gadget:UnitDecloaked(unitID, unitDefID, unitTeam)
 	if cloakstrike_defs[unitDefID] then
 		persisting_strikes_cache["unitDefID"] = unitDefID
@@ -48,6 +50,10 @@ function gadget:UnitDecloaked(unitID, unitDefID, unitTeam)
 		persisting_strikes[unitID] = persisting_strikes_cache
 		for paramName, value in pairs(cloakstrike_defs[unitDefID]["decloakedRulesParam"]) do
 			spSetUnitRulesParam(unitID, paramName, value)
+		end
+		for num, data in pairs(cloakstrike_defs[unitDefID]["WeaponStats"]) do
+			spSetUnitWeaponState(unitID, num, data["decloakedWeaponStates"])
+			spSetUnitWeaponDamages(unitID, num, data["decloakedWeaponDamages"])
 		end
 		if cloakstrike_defs[unitDefID]["updateAttributes"] then
 			GG.UpdateUnitAttributes(unitID)
