@@ -290,7 +290,7 @@ function AutoAttack_Thread()
 			health, _, _, _, build = spGetUnitHealth(unitID)
 		end
 		local reloaded = select(2, spGetUnitWeaponState(unitID,3))
-		if reloaded and health > 0 and build => 1 then
+		if reloaded and health > 0 and build >= 1 then
 			local height = select(5, Spring.GetUnitPosition(unitID, true))
 			if height > -8 then -- Matches offset of AimFromWeapon position for FAKEGUN2
 				local gameFrame = spGetGameFrame()
