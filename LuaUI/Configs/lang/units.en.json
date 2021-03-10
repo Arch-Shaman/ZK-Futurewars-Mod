@@ -65,9 +65,9 @@
 		"helptext" : "The Imp relies on its speed and small size to dodge inaccurate weapons, especially those of assaults and many skirmishers. It can paralyze heavy units or packs of lighter raiders which cannot kill it before it is already in range. Reavers or Glaives can then eliminate the helpless enemies without risk. Counter with defenses or single cheap units to set off a premature detonation. This unit cloaks when otherwise idle."
 	},
 	"shieldriot" : {
-		"name" : "Keeper",
+		"name" : "Sentry",
 		"description" : "Shielded Riot Bot",
-		"helptext" : "The Keeper emits an electromagnetic disruption pulse in a wide circle around it that damages and slows enemy units. Friendly units are unaffected."
+		"helptext" : "The Sentry emits an electromagnetic disruption pulse in a wide circle around it that damages and slows enemy units. Friendly units are unaffected."
 	},
 	"chickenc" : {
 		"name" : "Basilisk",
