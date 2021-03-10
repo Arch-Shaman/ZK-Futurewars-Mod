@@ -114,7 +114,7 @@ return {
 				soundStartVolume	= 1,
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 700,
+				weaponVelocity          = 900,
 				--coverage = 2200,
 			},
 	
@@ -141,7 +141,7 @@ return {
 					planes  = 60,
 				},
 				--interceptor = 2,
-				edgeEffectiveness       = 0.9,
+				edgeEffectiveness       = 0.95,
 				duration                = 0.02,
 				explosionGenerator      = [[custom:flakplosion]],
 				fireStarter             = 50,
