@@ -241,7 +241,7 @@ return {
 					default = 37500,
 				},
 
-				explosionGenerator      = [[custom:ataalaser_flattened]],
+				explosionGenerator      = [[custom:craterpuncher]],
 				fireTolerance           = 8192, -- 45 degrees
 				impactOnly              = false,
 				impulseBoost            = 10,
