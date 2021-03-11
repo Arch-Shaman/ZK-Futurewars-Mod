@@ -294,7 +294,7 @@ local function DeathLaserThread()
 	for lased = 0, lasermax do
 		px, py, pz = Spring.GetUnitPosition(unitID)
 		GG.PlayFogHiddenSound("sounds/weapon/laser/laser_burn10.wav", 1600, px, py, pz)
-		if not (Spring.GetUnitIsStunned(unitID) or (Spring.GetUnitRulesParam(unitID,"disarmed") == 1)) then
+		if (Spring.GetUnitIsStunned(unitID) or (Spring.GetUnitRulesParam(unitID,"disarmed") == 1)) then
 			Sleep(200)
 		end
 		for i=1, 5 do
