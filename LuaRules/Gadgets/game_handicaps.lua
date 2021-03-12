@@ -79,6 +79,10 @@ end
 GG.GetTeamHandicap = GetTeamHandicap
 GG.GetAllyTeamHandicap = GetAllyTeamHandicap
 
+local function HasIncome(unitDefID)
+	return (tonumber(UnitDefs[unitDefID].customParams.income_energy) or 0) > 0 or (tonumber(UnitDefs[unitDefID].customParams.income_metal) or 0) > 0
+end
+
 function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	if handicaps[unitTeam] ~= 1 and not donthandle[unitDefID] then
 		local cheatparam = handicaps[unitTeam]
@@ -90,7 +94,7 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 			spSetUnitRulesParam(unitID, "buildpower_mult", wantedbp * cheatparam, INLOS)
 			GG.UpdateUnitAttributes(unitID)
 		end
-		if (UnitDefs[unitDefID].customParams.income_energy or 0) > 0 or (UnitDefs[unitDefID].customParams.income_metal or 0) > 0 then
+		if HasIncome(unitDefID) then
 			spSetUnitRulesParam(unitID, "selfIncomeChange", cheatparam, INLOS)
 			GG.UpdateUnitAttributes(unitID)
 		end
@@ -105,7 +109,7 @@ function gadget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
 			spSetUnitRulesParam(unitID, "buildpower_mult", originalbp * mult, INLOS)
 			GG.UpdateUnitAttributes(unitID)
 		end
-		if (UnitDefs[unitDefID].customParams.income_energy or 0) > 0 or (UnitDefs[unitDefID].customParams.income_metal or 0) > 0 then
+		if HasIncome(unitDefID) then
 			spSetUnitRulesParam(unitID, "selfIncomeChange", mult, INLOS)
 			GG.UpdateUnitAttributes(unitID)
 		end
