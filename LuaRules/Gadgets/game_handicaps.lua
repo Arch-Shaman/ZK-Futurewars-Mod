@@ -90,7 +90,7 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 			spSetUnitRulesParam(unitID, "buildpower_mult", wantedbp * cheatparam, INLOS)
 			GG.UpdateUnitAttributes(unitID)
 		end
-		if UnitDefs[unitDefID].customParams.income_energy > 0 or UnitDefs[unitDefID].customParams.income_metal > 0 then
+		if (UnitDefs[unitDefID].customParams.income_energy or 0) > 0 or (UnitDefs[unitDefID].customParams.income_metal or 0) > 0 then
 			spSetUnitRulesParam(unitID, "selfIncomeChange", cheatparam, INLOS)
 			GG.UpdateUnitAttributes(unitID)
 		end
