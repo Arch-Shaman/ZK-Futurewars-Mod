@@ -6,17 +6,17 @@ for unitDefID, unitDef in pairs(UnitDefs) do
 end
 
 ploppables = {
-  "factoryhover",
-  "factoryveh",
-  "factorytank",
-  "factoryshield",
-  "factorycloak",
-  "factoryamph",
-  "factoryjump",
-  "factoryspider",
-  "factoryship",
-  "factoryplane",
-  "factorygunship",
+	"factoryhover",
+	"factoryveh",
+	"factorytank",
+	"factoryshield",
+	"factorycloak",
+	"factoryamph",
+	"factoryjump",
+	"factoryspider",
+	"factoryship",
+	"factoryplane",
+	"factorygunship",
 }
 
 ploppableDefs = {}
