@@ -397,7 +397,7 @@ local function SpawnStartUnit(teamID, playerID, isAI, bonusSpawn, notAtTheStartO
 		local wantedmetal = teamInfo.start_metal or (START_METAL + metal)
 		Spring.SetTeamResource(teamID, "energy", wantedenergy * mult)
 		Spring.SetTeamResource(teamID, "metal", wantedmetal * mult)
-
+		GG.SetupCommanderStorage(unitID)
 		if GG.Overdrive then
 			GG.Overdrive.AddInnateIncome(allyTeamID, INNATE_INC_METAL, INNATE_INC_ENERGY)
 		end
