@@ -111,8 +111,8 @@ end
 if VFS.FileExists("mission.lua") then -- this is a mission, we just want to set starting storage (and enable facplopping)
 	function gadget:Initialize()
 		for _, teamID in ipairs(Spring.GetTeamList()) do
-			Spring.SetTeamResource(teamID, "es", START_STORAGE + HIDDEN_STORAGE)
-			Spring.SetTeamResource(teamID, "ms", START_STORAGE + HIDDEN_STORAGE)
+			Spring.SetTeamResource(teamID, "es", (START_STORAGE * GG.GetTeamHandicap(teamID)) + HIDDEN_STORAGE)
+			Spring.SetTeamResource(teamID, "ms", (START_STORAGE * GG.GetTeamHandicap(teamID)) + HIDDEN_STORAGE)
 		end
 	end
 
@@ -393,8 +393,8 @@ local function SpawnStartUnit(teamID, playerID, isAI, bonusSpawn, notAtTheStartO
 		local metal, metalStore = Spring.GetTeamResources(teamID, "metal")
 		local energy, energyStore = Spring.GetTeamResources(teamID, "energy")
 		local mult = GG.GetTeamHandicap(teamID)
-		Spring.SetTeamResource(teamID, "energy", teamInfo.start_energy * mult or ((START_ENERGY + energy) * mult)
-		Spring.SetTeamResource(teamID, "metal", teamInfo.start_metal * mult or ((START_METAL + metal) * mult)
+		Spring.SetTeamResource(teamID, "energy", teamInfo.start_energy * mult or ((START_ENERGY + energy) * mult))
+		Spring.SetTeamResource(teamID, "metal", teamInfo.start_metal * mult or ((START_METAL + metal) * mult))
 
 		if GG.Overdrive then
 			GG.Overdrive.AddInnateIncome(allyTeamID, INNATE_INC_METAL, INNATE_INC_ENERGY)
@@ -520,7 +520,7 @@ function gadget:GameStart()
 			local mult = GG.GetTeamHandicap(teamNum)
 			local pregameUnitStorage = (campaignBattleID and GetPregameUnitStorage(team)) or 0
 			Spring.SetTeamResource(team, "es", (pregameUnitStorage * mult) + HIDDEN_STORAGE)
-			Spring.SetTeamResource(team, "ms", pregameUnitStorage * mult) + HIDDEN_STORAGE)
+			Spring.SetTeamResource(team, "ms", (pregameUnitStorage * mult) + HIDDEN_STORAGE)
 			Spring.SetTeamResource(team, "energy", 0)
 			Spring.SetTeamResource(team, "metal", 0)
 		end
