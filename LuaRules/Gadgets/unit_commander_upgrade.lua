@@ -200,6 +200,7 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	local storageamount = ud.energyStorage + extrastorage
 	data.metalIncome = (data.metalIncome or 0)
 	data.energyIncome = (data.energyIncome or 0)
+	spSetUnitRulesParam(unitID, "basebuildpower_mult", buildPowerMult, INLOS)
 	spSetUnitRulesParam(unitID, "buildpower_mult", buildPowerMult, INLOS)
 	spSetUnitRulesParam(unitID, "commander_storage_override", storageamount, INLOS)
 	GG.SetupCommanderStorage(unitID)

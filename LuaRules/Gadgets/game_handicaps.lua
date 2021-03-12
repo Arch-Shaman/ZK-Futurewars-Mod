@@ -21,12 +21,12 @@ local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local INLOS = {inlos = true}
 local wantedon = false
-local previouslyhandled = {}
 
 donthandle[UnitDefNames["staticenergyrtg"].id] = true   -- handled by unit_energy_decay
 donthandle[UnitDefNames["staticmex"].id] = true         -- handled by overdrive gadget
 donthandle[UnitDefNames["energyfusion"].id] = true      -- handled by unit_energy_decay
 donthandle[UnitDefNames["energysingu"].id] = true       -- handled by unit_energy_decay
+donthandle[UnitDefNames["energysolar"].id] = true       -- handled by unitscript
 
 Spring.Echo("Setting up team handicaps.")
 do
@@ -83,12 +83,14 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	if handicaps[unitTeam] ~= 1 and not donthandle[unitDefID] then
 		local cheatparam = handicaps[unitTeam]
 		if UnitDefs[unitDefID].isBuilder then
-			local bpmult = spGetUnitRulesParam(unitID, "buildpower_mult") or 1
-			spSetUnitRulesParam(unitID, "buildpower_mult", bpmult * cheatparam, INLOS)
+			local wantedbp = 1
+			if spGetUnitRulesParam(unitID, "basebuildpower_mult") then
+				wantedbp = spGetUnitRulesParam(unitID, "basebuildpower_mult")
+			end
+			spSetUnitRulesParam(unitID, "buildpower_mult", wantedbp * cheatparam, INLOS)
 			GG.UpdateUnitAttributes(unitID)
-			previouslyhandled[unitID] = bpmult
 		end
-		if UnitDefs[unitDefID].energyMake > 0 or UnitDefs[unitDefID].metalMake then
+		if UnitDefs[unitDefID].customParams.income_energy > 0 or UnitDefs[unitDefID].customParams.income_metal > 0 then
 			spSetUnitRulesParam(unitID, "selfIncomeChange", cheatparam, INLOS)
 			GG.UpdateUnitAttributes(unitID)
 		end
@@ -99,7 +101,7 @@ function gadget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
 	if handicaps[newTeam] ~= handicaps[oldTeam] and not donthandle[unitDefID] then
 		local mult = handicaps[newTeam]
 		if UnitDefs[unitDefID].isBuilder then -- undo
-			local originalbp = previouslyhandled[unitID] or 1
+			local originalbp = spGetUnitRulesParam(unitID, "basebuildpower_mult") or 1
 			spSetUnitRulesParam(unitID, "buildpower_mult", originalbp * mult, INLOS)
 			GG.UpdateUnitAttributes(unitID)
 		end

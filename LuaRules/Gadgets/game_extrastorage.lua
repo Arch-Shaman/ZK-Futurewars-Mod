@@ -61,7 +61,7 @@ local function SetupCommanderStorage(unitID)
 	end
 	local storageamount = spGetUnitRulesParam(unitID, "commander_storage_override") or 0
 	local oldstorage = UnitDefs[spGetUnitDefID(unitID)].energyStorage
-	local mult = GG.GetTeamHandicap(newTeam)
+	local mult = GG.GetTeamHandicap(unitID)
 	storageamount = storageamount * mult
 	if storageamount - oldstorage ~= 0 then
 		AddUnitStorage(unitID, storageamount - oldstorage)
