@@ -1197,7 +1197,7 @@ local moduleDefs = {
 	{
 		name = "module_adv_nano",
 		humanName = "Advanced Nanolathe",
-		description = "Advanced Nanolathe:\nIncreases build power by 2.5 (+5 for support).\nLimit: 8",
+		description = "Advanced Nanolathe:\nIncreases build power by 2.5 (+5 for support). Increases storage by 25 (50 for support).\nLimit: 8",
 		image = moduleImagePath .. "module_adv_nano.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1206,12 +1206,13 @@ local moduleDefs = {
 		requireChassis = {"assault", "strike", "recon"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 2.5
+			sharedData.extrastorage = (sharedData.extrastorage or 0) + 25
 		end
 	},
 	{
 		name = "module_adv_nano_support",
 		humanName = "Advanced Nanolathe",
-		description = "Advanced Nanolathe:\nIncreases build power by 5 (+2.5 for others).\nLimit: 8",
+		description = "Advanced Nanolathe:\nIncreases build power by 5 (+2.5 for others). Increases storage by 50 (25 for others).\nLimit: 8",
 		image = moduleImagePath .. "module_adv_nano.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1220,6 +1221,7 @@ local moduleDefs = {
 		requireChassis = {"support"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 5
+			sharedData.extrastorage = (sharedData.extrastorage or 0) + 50
 		end
 	},
 	
@@ -1636,6 +1638,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[1],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 2
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 50
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1657,6 +1660,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[2] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 4
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 100
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1678,6 +1682,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[3] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 6
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 150
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1703,6 +1708,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[4],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 9
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 200
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1728,6 +1734,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[5],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 12
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 250
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
