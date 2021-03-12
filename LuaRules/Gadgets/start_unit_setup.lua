@@ -393,8 +393,10 @@ local function SpawnStartUnit(teamID, playerID, isAI, bonusSpawn, notAtTheStartO
 		local metal, metalStore = Spring.GetTeamResources(teamID, "metal")
 		local energy, energyStore = Spring.GetTeamResources(teamID, "energy")
 		local mult = GG.GetTeamHandicap(teamID)
-		Spring.SetTeamResource(teamID, "energy", teamInfo.start_energy * mult or ((START_ENERGY + energy) * mult))
-		Spring.SetTeamResource(teamID, "metal", teamInfo.start_metal * mult or ((START_METAL + metal) * mult))
+		local wantedenergy = teamInfo.start_energy or (START_ENERGY + energy)
+		local wantedmetal = teamInfo.start_metal or (START_METAL + metal)
+		Spring.SetTeamResource(teamID, "energy", wantedenergy * mult)
+		Spring.SetTeamResource(teamID, "metal", wantedmetal * mult)
 
 		if GG.Overdrive then
 			GG.Overdrive.AddInnateIncome(allyTeamID, INNATE_INC_METAL, INNATE_INC_ENERGY)
