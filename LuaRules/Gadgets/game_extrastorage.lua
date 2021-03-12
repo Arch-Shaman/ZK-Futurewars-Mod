@@ -66,7 +66,7 @@ local function SetupCommanderStorage(unitID)
 	local mult = GG.GetTeamHandicap(unitID)
 	storageamount = storageamount * mult
 	if storageamount - oldstorage ~= 0 then
-		SetUnitStorage(unitID, storageamount)
+		AddUnitStorage(unitID, storageamount - oldstorage)
 	end
 end
 
@@ -120,9 +120,7 @@ end
 function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	local storage = UnitDefs[unitDefID].energyStorage or 0
 	if storage > 0 then
-		if spGetUnitRulesParam(unitID, "comm_staticLevel") or spGetUnitRulesParam(unitID, "comm_level") then
-			SetupCommanderStorage(unitID)
-		else
+		if not (spGetUnitRulesParam(unitID, "comm_staticLevel") or spGetUnitRulesParam(unitID, "comm_level")) then
 			SetupUnitStorage(unitID)
 		end
 	end
