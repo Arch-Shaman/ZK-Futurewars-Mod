@@ -58,13 +58,11 @@ local function SetUnitStorage(unitID, amount)
 end
 
 local function SetupCommanderStorage(unitID)
-	if handledunits[unitID] then
-		return
-	end
 	local storageamount = spGetUnitRulesParam(unitID, "commander_storage_override") or 0
 	local oldstorage = UnitDefs[spGetUnitDefID(unitID)].energyStorage
-	local mult = GG.GetTeamHandicap(unitID)
+	local mult = GG.GetTeamHandicap(spGetUnitTeam(unitID))
 	storageamount = storageamount * mult
+	--Spring.Echo("Setting up commander storage for " .. unitID .. " (" .. storageamount .. ")")
 	if storageamount - oldstorage ~= 0 then
 		AddUnitStorage(unitID, storageamount - oldstorage)
 	end

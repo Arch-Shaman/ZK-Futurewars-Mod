@@ -102,6 +102,12 @@ local Sounds = {
 			pitchmod = 0.1,
 			gainmod = 0.05,
 		},
+		Teleport2 = {
+			file = "sounds/misc/teleport2.wav",
+			maxconcurrent = 20,
+			gain = 1.0,
+			pitch = 1.0,
+		},
 	},
 }
 

@@ -335,7 +335,7 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 	spSetUnitRulesParam(unitID, "comm_baseUnitDefID", baseUnitDefID, INLOS)
 	spSetUnitRulesParam(unitID, "comm_baseWreckID",   baseWreckID, INLOS)
 	spSetUnitRulesParam(unitID, "comm_baseHeapID",    baseHeapID, INLOS)
-	
+	spSetUnitRulesParam(unitID, "commander_storage_override", 500, INLOS)
 	if profileID then
 		spSetUnitRulesParam(unitID, "comm_profileID",     profileID, INLOS)
 	end
@@ -359,7 +359,7 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 		SetUnitRulesModule(unitID, counts, moduleDefID)
 	end
 	SetUnitRulesModuleCounts(unitID, counts)
-	
+	GG.SetupCommanderStorage(unitID)
 	ApplyModuleEffects(unitID, moduleEffectData, totalCost, images or {}, chassis)
 	
 	if staticLevel then
@@ -404,7 +404,7 @@ local function Upgrades_CreateUpgradedUnit(defName, x, y, z, face, unitTeam, isB
 	end
 	
 	interallyCreatedUnit = true
-	
+	moduleEffectData.extrastorage = 0
 	internalCreationUpgradeDef = upgradeDef
 	internalCreationModuleEffectData = moduleEffectData
 	
@@ -412,6 +412,7 @@ local function Upgrades_CreateUpgradedUnit(defName, x, y, z, face, unitTeam, isB
 	if moduleEffectData.wantsfireatradar then
 		GG.AddUnitRadarTargeting(unitID)
 	end
+	GG.SetupCommanderStorage(unitID)
 	-- Unset the variables which need to be present at unit creation
 	interallyCreatedUnit = false
 	internalCreationUpgradeDef = nil

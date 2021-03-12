@@ -5,7 +5,7 @@ function gadget:GetInfo()
 		author    = "Licho, CarRepairer, Google Frog, SirMaverick",
 		date      = "2008-2010",
 		license   = "GNU GPL, v2 or later",
-		layer     = -1, -- Before terraforming gadget (for facplop terraforming)
+		layer     = -2, -- Before terraforming gadget (for facplop terraforming)
 		enabled   = true  --  loaded by default?
 	}
 end
@@ -55,7 +55,7 @@ if (gadgetHandler:IsSyncedCode()) then
 --------------------------------------------------------------------------------
 -- Functions shared between missions and non-missions
 
-local function CheckOrderRemoval() -- FIXME: maybe we can remove polling every frame and just remove the orders directly
+--[[local function CheckOrderRemoval() -- FIXME: maybe we can remove polling every frame and just remove the orders directly
 	if not ordersToRemove then
 		return
 	end
@@ -66,9 +66,9 @@ local function CheckOrderRemoval() -- FIXME: maybe we can remove polling every f
 		end
 	end
 	ordersToRemove = nil
-end
+end]]
 
-local function CheckFacplopUse(unitID, unitDefID, teamID, builderID)
+--[[local function CheckFacplopUse(unitID, unitDefID, teamID, builderID)
 	if ploppableDefs[unitDefID] and (select(5, Spring.GetUnitHealth(unitID)) < 0.1) and (builderID and Spring.GetUnitRulesParam(builderID, "facplop") == 1) then
 		-- (select(5, Spring.GetUnitHealth(unitID)) < 0.1) to prevent ressurect from spending facplop.
 		Spring.SetUnitRulesParam(builderID,"facplop",0, {inlos = true})
@@ -102,17 +102,17 @@ local function CheckFacplopUse(unitID, unitDefID, teamID, builderID)
 
 		-- Spring.PlaySoundFile("sounds/misc/teleport2.wav", 10, x, y, z) -- FIXME: performance loss, possibly preload?
 	end
-end
+end]]
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- Mission Handling
 
-if VFS.FileExists("mission.lua") then -- this is a mission, we just want to set starting storage (and enable facplopping)
+--[[if VFS.FileExists("mission.lua") then -- this is a mission, we just want to set starting storage (and enable facplopping)
 	function gadget:Initialize()
 		for _, teamID in ipairs(Spring.GetTeamList()) do
-			Spring.SetTeamResource(teamID, "es", (START_STORAGE * GG.GetTeamHandicap(teamID)) + HIDDEN_STORAGE)
-			Spring.SetTeamResource(teamID, "ms", (START_STORAGE * GG.GetTeamHandicap(teamID)) + HIDDEN_STORAGE)
+			Spring.SetTeamResource(teamID, "es", START_STORAGE + HIDDEN_STORAGE)
+			Spring.SetTeamResource(teamID, "ms", START_STORAGE + HIDDEN_STORAGE)
 		end
 	end
 
@@ -132,7 +132,7 @@ if VFS.FileExists("mission.lua") then -- this is a mission, we just want to set 
 	end
 
 	return
-end
+end]]
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -175,9 +175,9 @@ local loadGame = false	-- was this loaded from a savegame?
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
+--[[function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
 	CheckFacplopUse(unitID, unitDefID, teamID, builderID)
-end
+end]]
 
 local function InitUnsafe()
 	
@@ -310,7 +310,7 @@ local function SpawnStartUnit(teamID, playerID, isAI, bonusSpawn, notAtTheStartO
 	if not teamID then
 		return
 	end
-	local _,_,_,_,_,allyTeamID,teamInfo = Spring.GetTeamInfo(teamID, true)
+	local _, _, _, _, _, allyTeamID, teamInfo = Spring.GetTeamInfo(teamID, true)
 	if teamInfo and teamInfo.nocommander then
 		waitingForComm[teamID] = nil
 		return
@@ -342,6 +342,7 @@ local function SpawnStartUnit(teamID, playerID, isAI, bonusSpawn, notAtTheStartO
 	end
 
 	if startUnit then
+	
 		-- replace with shuffled position
 		local x,y,z = GetStartPos(teamID, teamInfo, isAI)
 		
@@ -373,7 +374,7 @@ local function SpawnStartUnit(teamID, playerID, isAI, bonusSpawn, notAtTheStartO
 		
 		if Spring.GetGameFrame() <= 1 then
 			Spring.SpawnCEG("gate", x, y, z)
-			-- Spring.PlaySoundFile("sounds/misc/teleport2.wav", 10, x, y, z) -- performance loss
+			Spring.PlaySoundFile("Teleport2", 10, x, y, z) -- no longer perf loss
 		end
 
 		if not bonusSpawn then
@@ -387,24 +388,17 @@ local function SpawnStartUnit(teamID, playerID, isAI, bonusSpawn, notAtTheStartO
 		end
 
 		-- add facplop
-		local teamLuaAI = Spring.GetTeamLuaAI(teamID)
+		--local teamLuaAI = Spring.GetTeamLuaAI(teamID)
 		local udef = UnitDefs[Spring.GetUnitDefID(unitID)]
-
-		local metal, metalStore = Spring.GetTeamResources(teamID, "metal")
-		local energy, energyStore = Spring.GetTeamResources(teamID, "energy")
-		local mult = GG.GetTeamHandicap(teamID)
-		local wantedenergy = teamInfo.start_energy or (START_ENERGY + energy)
-		local wantedmetal = teamInfo.start_metal or (START_METAL + metal)
-		Spring.SetTeamResource(teamID, "energy", wantedenergy * mult)
-		Spring.SetTeamResource(teamID, "metal", wantedmetal * mult)
-		GG.SetupCommanderStorage(unitID)
+		Script.LuaRules.GiveStartResources(teamID)
+		Spring.SetUnitRulesParam(unitID, "commander_storage_override", 0, {inlos = true})
 		if GG.Overdrive then
 			GG.Overdrive.AddInnateIncome(allyTeamID, INNATE_INC_METAL, INNATE_INC_ENERGY)
 		end
 
 		if (udef.customParams.level and udef.name ~= "chickenbroodqueen") and
 			((not campaignBattleID) or GG.GalaxyCampaignHandler.HasFactoryPlop(teamID)) then
-			Spring.SetUnitRulesParam(unitID, "facplop", 1, {inlos = true})
+			GG.GiveFacplop(unitID)
 		end
 		
 		local name = "noname" -- Backup for when player does not choose a commander and then resigns.
@@ -462,7 +456,7 @@ local function StartUnitPicked(playerID, name)
 		end
 		]]
 	end
-	GG.startUnits[teamID] = GetStartUnit(teamID) -- ctf compatibility
+	GG.startUnits[teamID] = GetStartUnit(teamID) -- ctf compatibility (ctf no longer exists, but a debug command uses it.)
 end
 
 local function workAroundSpecsInTeamZero(playerlist, team)
@@ -499,13 +493,13 @@ local function IsTeamResigned(team)
 	return true
 end
 
-local function GetPregameUnitStorage(teamID)
+--[[local function GetPregameUnitStorage(teamID)
 	local storage = 0
 	for i = 1, #storageUnits do
 		storage = storage + Spring.GetTeamUnitDefCount(teamID, storageUnits[i].unitDefID) * storageUnits[i].storeAmount
 	end
 	return storage
-end
+end]]
 
 function gadget:GameStart()
 	if Spring.Utilities.tobool(Spring.GetGameRulesParam("loadedGame")) then
@@ -518,14 +512,13 @@ function gadget:GameStart()
 		
 		-- clear resources
 		-- actual resources are set depending on spawned unit and setup
-		if not loadGame then
-			local mult = GG.GetTeamHandicap(teamNum)
+		--[[if not loadGame then
 			local pregameUnitStorage = (campaignBattleID and GetPregameUnitStorage(team)) or 0
-			Spring.SetTeamResource(team, "es", (pregameUnitStorage * mult) + HIDDEN_STORAGE)
-			Spring.SetTeamResource(team, "ms", (pregameUnitStorage * mult) + HIDDEN_STORAGE)
+			Spring.SetTeamResource(team, "es", pregameUnitStorage + HIDDEN_STORAGE)
+			Spring.SetTeamResource(team, "ms", pregameUnitStorage + HIDDEN_STORAGE)
 			Spring.SetTeamResource(team, "energy", 0)
 			Spring.SetTeamResource(team, "metal", 0)
-		end
+		end]]
 
 		--check if player resigned before game started
 		local _,playerID,_,isAI = spGetTeamInfo(team, false)
@@ -601,12 +594,14 @@ end
 GG.SetStartLocation = SetStartLocation
 
 function gadget:RecvLuaMsg(msg, playerID)
-	if msg:find("faction:",1,true) then
+	--[[if msg:find("faction:",1,true) then -- useless code. nothing interacts with this.
 		local side = msg:sub(9)
 		playerSides[playerID] = side
 		commChoice[playerID] = nil	-- unselect existing custom comm, if any
 		StartUnitPicked(playerID, side)
-	elseif msg:find("customcomm:",1,true) then
+	else]]
+	
+	if msg:find("customcomm:",1,true) then
 		local name = msg:sub(12)
 		commChoice[playerID] = name
 		StartUnitPicked(playerID, name)
@@ -646,7 +641,7 @@ function gadget:RecvLuaMsg(msg, playerID)
 end
 
 function gadget:GameFrame(n)
-	CheckOrderRemoval()
+	--CheckOrderRemoval()
 	if n == (COMM_SELECT_TIMEOUT) then
 		for team in pairs(waitingForComm) do
 			local _,playerID = spGetTeamInfo(team, false)
