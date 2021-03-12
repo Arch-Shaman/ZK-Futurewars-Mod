@@ -25,12 +25,12 @@ local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local INLOS = {inlos = true}
 
 local function AddTeamStorage(teamID, amount)
-	local _, es = spGetTeamResources(unitteam, "energy")
-	local _, ms = spGetTeamResources(unitteam, "metal")
+	local _, es = spGetTeamResources(teamID, "energy")
+	local _, ms = spGetTeamResources(teamID, "metal")
 	es = es + amount
 	ms = ms + amount
-	spSetTeamResource(unitteam, "es", es)
-	spSetTeamResource(unitteam, "ms", ms)
+	spSetTeamResource(teamID, "es", es)
+	spSetTeamResource(teamID, "ms", ms)
 end
 
 local function AddUnitStorage(unitID, amount)
@@ -63,8 +63,7 @@ local function SetupCommanderStorage(unitID)
 	local oldstorage = UnitDefs[spGetUnitDefID(unitID)].energyStorage
 	local mult = GG.GetTeamHandicap(newTeam)
 	storageamount = storageamount * mult
-	end
-	if storageammount - oldstorage ~= 0 then
+	if storageamount - oldstorage ~= 0 then
 		AddUnitStorage(unitID, storageamount - oldstorage)
 	end
 end
