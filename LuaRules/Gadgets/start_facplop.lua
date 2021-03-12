@@ -93,7 +93,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 			if debugMode then
 				spEcho("No facplops remaining. Disabling UnitCreated.")
 			end
-			gadgetHandler:RemoveCallin('UnitCreated')
+			gadgetHandler:RemoveCallIn('UnitCreated')
 		end
 	end
 end
