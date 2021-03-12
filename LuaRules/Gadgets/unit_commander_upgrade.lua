@@ -201,10 +201,8 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	data.metalIncome = (data.metalIncome or 0)
 	data.energyIncome = (data.energyIncome or 0)
 	spSetUnitRulesParam(unitID, "buildpower_mult", buildPowerMult, INLOS)
-	if storageamount ~= 500 then
-		spSetUnitRulesParam(unitID, "commander_storage_override", storageamount, INLOS)
-		GG.SetupCommanderStorage(unitID)
-	end
+	spSetUnitRulesParam(unitID, "commander_storage_override", storageamount, INLOS)
+	GG.SetupCommanderStorage(unitID)
 	if data.metalIncome and GG.Overdrive then
 		spSetUnitRulesParam(unitID, "comm_income_metal", data.metalIncome, INLOS)
 		spSetUnitRulesParam(unitID, "comm_income_energy", data.energyIncome, INLOS)
