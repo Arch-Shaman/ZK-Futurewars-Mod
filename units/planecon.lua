@@ -3,11 +3,11 @@ return {
 		unitname            = [[planecon]],
 		name                = [[Crane]],
 		description         = [[Construction Aircraft]],
-		acceleration        = 0.1,
+		acceleration        = 0.22,
 		airStrafe           = 0,
-		brakeRate           = 0.08,
-		buildCostMetal      = 200,
-		buildDistance       = 160,
+		brakeRate           = 0.44,
+		buildCostMetal      = 280,
+		buildDistance       = 180,
 		selectionVolumeOffsets = [[0 0 0]],
 		selectionVolumeScales  = [[42 42 42]],
 		selectionVolumeType    = [[ellipsoid]],
@@ -32,6 +32,10 @@ return {
 			airstrafecontrol = [[0]],
 			modelradius    = [[10]],
 			midposoffset   = [[0 4 0]],
+			specialreloadtime = [[1200]],
+			boost_speed_mult = 3.5,
+			boost_accel_mult = 6,
+			boost_duration = 40, -- frames
 		},
 
 		energyUse           = 0,
@@ -43,8 +47,8 @@ return {
 		iconType            = [[builderair]],
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
-		maxDamage           = 260,
-		maxVelocity         = 6,
+		maxDamage           = 1120,
+		maxVelocity         = 4,
 		minCloakDistance    = 75,
 		noAutoFire          = false,
 		noChaseCategory     = [[TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET]],
@@ -54,8 +58,15 @@ return {
 		showNanoSpray       = false,
 		sightDistance       = 375,
 		turnRate            = 500,
-		workerTime          = 5,
-
+		workerTime          = 7.5,
+		sfxtypes               = {
+			explosiongenerators = {
+				[[custom:MUZZLE_ORANGE]],
+				[[custom:FF_PUFF]],
+				[[custom:BEAMWEAPON_MUZZLE_RED]],
+				[[custom:FLAMER]],
+			},
+		},
 		featureDefs         = {
 
 			DEAD  = {
@@ -65,8 +76,6 @@ return {
 				footprintZ       = 2,
 				object           = [[crane_d.dae]],
 			},
-
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
