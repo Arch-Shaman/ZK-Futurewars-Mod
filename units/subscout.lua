@@ -20,7 +20,6 @@ return {
 		customParams          = {
 			fireproof = [[1]],
 			turnatfullspeed = [[1]],
-			sink_on_emp    = 0,
 		},
 
 		explodeAs             = [[SUBSCOUT_DEATH]],
@@ -33,7 +32,7 @@ return {
 		kamikaze              = true,
 		kamikazeDistance      = 40,
 		maxDamage             = 400,
-		maxVelocity           = 3.8,
+		maxVelocity           = 4.5,
 		minCloakDistance      = 75,
 		minWaterDepth         = 5,
 		movementClass         = [[UBOAT3]],
