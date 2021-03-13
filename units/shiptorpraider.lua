@@ -33,7 +33,7 @@ return {
 		idleTime            = 1800,
 		maneuverleashlength = [[1280]],
 		maxDamage           = 850,
-		maxVelocity         = 3.2,
+		maxVelocity         = 2.5,
 		minWaterDepth       = 5,
 		movementClass       = [[BOAT3]],
 		noAutoFire          = false,
