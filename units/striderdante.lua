@@ -14,7 +14,9 @@ return {
 		canPatrol           = true,
 		category            = [[LAND]],
 		corpse              = [[DEAD]],
-		customParams        = {},
+		customParams        = {
+			fireproof = [[1]],
+		},
 		explodeAs           = [[CRAWL_BLASTSML]],
 		footprintX          = 4,
 		footprintZ          = 4,
