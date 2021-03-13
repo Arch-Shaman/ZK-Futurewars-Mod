@@ -51,7 +51,7 @@ local defaultweapon = {
 	[3] = "commweapon_beamlaser", -- support
 	[4] = "commweapon_canistercannon", -- bombard
 	[5] = "commweapon_beamlaser", -- knight
-	[6] = "commweapon_riotcannon", -- presumably battle comm at some point
+	[6] = "commweapon_canistercannon", -- presumably battle comm at some point
 }
 
 local function GetCommanderChassisDefaultWeapon(type)
@@ -158,6 +158,9 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	if data.recloaktime then
 		GG.CloakAddOverride(unitID, data.recloaktime)
 		spSetUnitRulesParam(unitID, "commrecloaktime", data.recloaktime)
+	end
+	if data.jumpspeedbonus then
+		spSetUnitRulesParam(unitID, "comm_jumpspeed_bonus", data.jumpspeedbonus)
 	end
 	if data.radarRange then
 		spSetUnitRulesParam(unitID, "radarRangeOverride", data.radarRange, INLOS)
