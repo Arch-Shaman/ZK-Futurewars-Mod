@@ -175,7 +175,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local _, py = spGetProjectilePosition(proID)
 		py = max(py, ty)
 		missiles[proID] = {target = target, type = type, cruising = false, takeoff = true, lastknownposition = last, configid = wep, started = false, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0}
-		spEcho("Wanted Altitude: " .. missiles[proID].wantedalt)
+		--spEcho("Wanted Altitude: " .. missiles[proID].wantedalt)
 		if config[wep].radius then
 			ProccessOffset(wep, proID)
 		end
