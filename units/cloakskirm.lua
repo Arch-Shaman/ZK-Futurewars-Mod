@@ -5,7 +5,7 @@ return {
 		description            = [[Ambusher Skirmish Bot (Laser-Guided)]],
 		acceleration           = 0.9,
 		brakeRate              = 1.2,
-		buildCostMetal         = 100,
+		buildCostMetal         = 130,
 		buildPic               = [[cloakskirm.png]],
 		canGuard               = true,
 		canMove                = true,
@@ -94,7 +94,7 @@ return {
 					tracker = 1,
 				},
 				damage                  = {
-					default = 240,
+					default = 230,
 				},
 
 				fireStarter             = 70,
