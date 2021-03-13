@@ -374,7 +374,7 @@ local function SpawnStartUnit(teamID, playerID, isAI, bonusSpawn, notAtTheStartO
 		
 		if Spring.GetGameFrame() <= 1 then
 			Spring.SpawnCEG("gate", x, y, z)
-			Spring.PlaySoundFile("Teleport2", 10, x, y, z) -- no longer perf loss
+			Spring.PlaySoundFile("Teleport2", 10) -- no longer perf loss
 		end
 
 		if not bonusSpawn then

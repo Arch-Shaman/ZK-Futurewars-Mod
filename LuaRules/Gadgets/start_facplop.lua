@@ -88,7 +88,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		end
 		str = str .. ",END_PLOP"
 		spSendCommands("wbynum 255 " .. str)]]
-		spPlaySoundFile("Teleport2", 10, x, y, z) -- this is fine now because of preloading
+		GG.PlayFogHiddenSound("Teleport2", 10, x, y, z) -- this is fine now because of preloading
 		if facplopsremaining == 0 and not CampaignSafety then
 			if debugMode then
 				spEcho("No facplops remaining. Disabling UnitCreated.")

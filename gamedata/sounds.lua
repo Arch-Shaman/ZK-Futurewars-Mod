@@ -107,6 +107,7 @@ local Sounds = {
 			maxconcurrent = 20,
 			gain = 1.0,
 			pitch = 1.0,
+			preload = true,
 		},
 	},
 }
