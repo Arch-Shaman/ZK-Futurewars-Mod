@@ -960,9 +960,9 @@
 		"helptext" : "Cheap, fast, and fragile, this Picket Ship is a good scout and spotter for more expensive ships. In numbers, their disarming missiles are effective against larger targets."
 	},
 	"shiptorpraider" : {
-		"name" : "Hunter",
-		"description" : "Torpedo-Boat (Raider)",
-		"helptext" : "The Torpedo Boat is a mobile raider and anti-submarine unit. It is effective against underwater units and large vessels."
+		"name" : "Swell",
+		"description" : "Anti-Submarine Skirmisher",
+		"helptext" : "The Swell fires a 3 round burst of medium torpedos. While they may track, they're only able to hit their target as long as its far away. At shorter range, one can dodge their attacks by strafing it."
 	},
 	"shipskirm" : {
 		"name" : "Mistral",
