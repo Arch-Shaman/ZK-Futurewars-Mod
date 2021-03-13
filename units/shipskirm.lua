@@ -99,7 +99,7 @@ return {
 				startVelocity           = 50,
 				weaponAcceleration		= 200,
 				tracks                  = true,
-				trajectoryHeight        = 1.0,
+				trajectoryHeight        = 0.66,
 				turnrate                = 22000,
 				turret                  = true,
 				weaponType              = [[MissileLauncher]],
