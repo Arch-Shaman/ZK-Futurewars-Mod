@@ -12,6 +12,7 @@ local rfleg = piece 'rfleg'
 local lrleg = piece 'lrleg'
 local lfleg = piece 'lfleg'
 local digger = piece 'digger'
+local movingData = {}
 
 include "constants.lua"
 include 'reliableStartMoving.lua'
@@ -235,7 +236,6 @@ end
 local function WalkControl()
 	Signal(SIG_WALK)
 	SetSignalMask(SIG_WALK)
-	
 	while true do
 		if aiming then
 			WalkLegs()
@@ -246,95 +246,19 @@ local function WalkControl()
 	end
 end
 
---[[local function Burrow()
-	Signal(SIG_WALK)
-	Signal(SIG_BURROW)
-	SetSignalMask(SIG_BURROW)
-	burrowed = true
-	EmitSfx(digger, dirtfling)
-	burrowed = true
-	
-	Turn( rrleg   , x_axis, 0, 1 )
-	Turn( rrupleg , x_axis, 0, 2 )
-	Move( rrupleg , y_axis, 0, 2 )
-	
-	Turn( rfleg   , x_axis, 0, 1 )
-	Turn( rfupleg , x_axis, 0, 2 )
-	Move( rfupleg , y_axis, 0, 2 )
-	
-	Turn( lrleg   , x_axis, 0, 1 )
-	Turn( lrupleg , x_axis, 0, 2 )
-	Move( lrupleg , y_axis, 0, 2 )
-	
-	Turn( lfleg   , x_axis, 0, 1 )
-	Turn( lfupleg , x_axis, 0, 2 )
-	Move( lfupleg , y_axis, 0, 2 )
-	
-	Turn( head , x_axis, 0, math.rad(52) )
-	Move(body, y_axis, 0, 9)
-	Turn(body, x_axis, 0, 9)
-	
-	GG.SetWantedCloaked(unitID, 1)
-	local down = false
-	while true do
-		local cloaked = Spring.GetUnitIsCloaked(unitID)
-		if down ~= cloaked then
-			if cloaked then
-				Move( body , y_axis, -7.5, 7.5 )
-				Turn( body , x_axis, math.rad(-20), math.rad(20) )
-			else
-				Move(body, y_axis, 0, 9)
-				Turn(body, x_axis, 0, 9)
-			end
-			down = cloaked
-		end
-		Sleep(500)
-	end
-end
-
-local function UnBurrow()
-	Signal(SIG_BURROW)
-	SetSignalMask(SIG_BURROW)
-	burrowed = false
-	GG.SetWantedCloaked(unitID, 0)
-	--Spring.SetUnitStealth(false)
-	Move(body, y_axis, 0, 9)
-	Turn(body, x_axis, 0, 9)
-
-	--[[
-	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 0.2)
-	Spring.SetUnitRulesParam(unitID, "selfTurnSpeedChange", 5)
-	GG.UpdateUnitAttributes(unitID)
-	
-	Sleep(600)
-	
-	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
-	Spring.SetUnitRulesParam(unitID, "selfTurnSpeedChange", 1)
-	GG.UpdateUnitAttributes(unitID)
-	]]
-	EmitSfx(digger, dirtfling)
-	StartThread(WalkControl)
-end]]
-
 function script.StartMoving()
-	--Signal(SIG_BURROW)
-	--if burrowed then
-		--StartThread(UnBurrow)
-	--else
-		--StartThread(WalkControl)
-	--end
+	movingData.moving = true
+	StartThread(WalkControl)
 end
 
 function script.StopMoving()
-	--StartThread(Burrow)
+	Signal(SIG_WALK)
+	movingData.moving = false
 end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, {body})
-	StartThread(GG.StartStopMovingControl, unitID, script.StartMoving, script.StopMoving, nil, true)
-	--if not Spring.GetUnitIsStunned(unitID) then
-		--Burrow()
-	--end
+	StartThread(GG.StartStopMovingControl, unitID, script.StartMoving, script.StopMoving, nil, true, movingData)
 end
 
 local function RestoreAfterDelay()
