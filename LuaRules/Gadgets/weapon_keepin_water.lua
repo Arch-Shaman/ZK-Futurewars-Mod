@@ -24,7 +24,7 @@ for i = 1, #WeaponDefs do
 	local customparams = WeaponDefs[i].customParams
 	if customparams.keepinwater then
 		config[i] = true
-		Script.SetWatchWeapon(i)
+		Script.SetWatchWeapon(i, true)
 	end
 end
 
