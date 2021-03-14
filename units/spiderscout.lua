@@ -34,7 +34,7 @@ return {
 		leaveTracks         = true,
 		maxDamage           = 275,
 		maxSlope            = 72,
-		maxVelocity         = 4.3,
+		maxVelocity         = 4.7,
 		maxWaterDepth       = 15,
 		minCloakDistance    = 75,
 		movementClass       = [[TKBOT2]],
@@ -78,15 +78,16 @@ return {
 				craterMult              = 0,
 
 				customParams            = {
-					light_color = [[0.8 0.8 0]],
+					light_color = [[1 0.2 1]],
 					light_radius = 50,
+					timeslow_damagefactor = 1.3676, -- 120 DPS slow
 				},
 
 				damage                  = {
-					default = 9.5,
+					default = 40.1,
 				},
 
-				explosionGenerator      = [[custom:beamweapon_hit_yellow_tiny]],
+				explosionGenerator      = [[custom:beamweapon_hit_purple_tiny]],
 				fireStarter             = 50,
 				impactOnly              = true,
 				impulseBoost            = 0,
@@ -95,15 +96,15 @@ return {
 				laserFlareSize          = 3.22,
 				minIntensity            = 1,
 				noSelfDamage            = true,
-				range                   = 170,
-				reloadtime              = 0.1,
-				rgbColor                = [[1 1 0]],
+				range                   = 225,
+				reloadtime              = 0.4,
+				rgbColor                = [[1 0.2 1]],
 				soundStart              = [[weapon/laser/small_laser_fire]],
 				soundTrigger            = true,
 				thickness               = 2.14476105895272,
 				tolerance               = 10000,
 				turret                  = true,
-				weaponType              = [[BeamLaser]],
+				weaponType              = [[LaserCannon]],
 				weaponVelocity          = 600,
 			},
 		},
