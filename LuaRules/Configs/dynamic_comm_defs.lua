@@ -589,9 +589,9 @@ local moduleDefs = {
 				return
 			end
 			if not sharedData.weapon1 then
-				sharedData.weapon1 = "commweapon_clusterbomb"
+				sharedData.weapon1 = "commweapon_minefieldinacan"
 			else
-				sharedData.weapon2 = "commweapon_clusterbomb"
+				sharedData.weapon2 = "commweapon_minefieldinacan"
 			end
 		end
 	},
