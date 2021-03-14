@@ -80,6 +80,10 @@ return {
 					light_fade_offset = 10,
 					light_beam_mult_frames = 9,
 					light_beam_mult = 8,
+					sweepfire = 1,
+					sweepfire_maxangle = 30,
+					sweepfire_step = 1.5,
+					sweepfire_fastupdate = 1,
 				},
 				damage                  = {
 					default = 45,

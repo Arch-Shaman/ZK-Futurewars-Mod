@@ -142,6 +142,10 @@ return {
 					area_damage_dps = 50,
 					area_damage_duration = 14,
 					
+					sweepfire = 1,
+					sweepfire_maxangle = 12,
+					sweepfire_step = 6,
+					
 				},
 				damage                  = {
 					default = 300,
@@ -165,8 +169,8 @@ return {
 				soundHit                = [[weapon/clusters/cluster_light_napalm]],
 				soundStart              = [[weapon/missile/air_launched_missile]],
 				soundStartVolume        = 3.2,
-				sprayangle              = 500,
-				accuracy				= 500,
+				sprayangle              = 1200,
+				accuracy				= 1200,
 				trajectoryHeight		= 0.5,
 				turret                  = true,
 				weaponAcceleration		= 420,

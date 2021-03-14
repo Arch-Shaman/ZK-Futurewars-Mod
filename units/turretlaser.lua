@@ -72,7 +72,7 @@ return {
 					stats_hide_damage = 1, -- continuous laser
 					stats_hide_reload = 1,
 					sweepfire = 1,
-					sweepfire_maxangle = 180,
+					sweepfire_maxangle = 30,
 					sweepfire_step = 1.5,
 					sweepfire_fastupdate = 1,
 					light_color = [[0.4 1.1 1.1]],
