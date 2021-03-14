@@ -259,6 +259,7 @@ local function UpdateUnitInfo(unitID, cmdParams)
 	for i = 1, #configuration do
 		local rev = random(0,4) >= 2
 		data.weaponstates[i].reversed = rev
+		data.currentoffset = rad(random(-5, 5))
 	end
 end
 
