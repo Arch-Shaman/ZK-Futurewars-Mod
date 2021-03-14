@@ -1,17 +1,16 @@
 return { 
 	spiderscout = {
 		unitname            = [[spiderscout]],
-		name                = [[Flea]],
-		description         = [[Ultralight Scout Spider (Burrows)]],
+		name                = [[Wolf]],
+		description         = [[Light Scout/Raider Spider]],
 		acceleration        = 2.1,
 		brakeRate           = 12.6,
-		buildCostMetal      = 25,
+		buildCostMetal      = 60,
 		buildPic            = [[spiderscout.png]],
 		canGuard            = true,
 		canMove             = true,
 		canPatrol           = true,
 		category            = [[LAND TOOFAST]],
-		cloakCost           = 0,
 		collisionVolumeOffsets = [[0 0 0]],
 		collisionVolumeScales  = [[20 20 20]],
 		collisionVolumeType    = [[ellipsoid]],
@@ -22,7 +21,6 @@ return {
 
 		customParams        = {
 			modelradius        = [[10]],
-			idle_cloak         = 1,
 			selection_scale    = 1, -- Maybe change later
 			aim_lookahead      = 80,
 		},
@@ -34,11 +32,11 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
-		maxDamage           = 40,
+		maxDamage           = 275,
 		maxSlope            = 72,
-		maxVelocity         = 4.8,
+		maxVelocity         = 4.3,
 		maxWaterDepth       = 15,
-		minCloakDistance    = 200,
+		minCloakDistance    = 75,
 		movementClass       = [[TKBOT2]],
 		moveState           = 0,
 		noChaseCategory     = [[TERRAFORM FIXEDWING SATELLITE SUB]],
@@ -85,7 +83,7 @@ return {
 				},
 
 				damage                  = {
-					default = 9.8,
+					default = 9.5,
 				},
 
 				explosionGenerator      = [[custom:beamweapon_hit_yellow_tiny]],
@@ -97,8 +95,8 @@ return {
 				laserFlareSize          = 3.22,
 				minIntensity            = 1,
 				noSelfDamage            = true,
-				range                   = 150,
-				reloadtime              = 0.233,
+				range                   = 170,
+				reloadtime              = 0.1,
 				rgbColor                = [[1 1 0]],
 				soundStart              = [[weapon/laser/small_laser_fire]],
 				soundTrigger            = true,

@@ -35,9 +35,9 @@
 		"helptext" : "The Missile Silo constructs and holds up to four different cruise missiles, each with a unique warhead. It offers excellent standoff strike capability for offensive and defensive purposes."
 	},
 	"spiderscout" : {
-		"name" : "Flea",
-		"description" : "Ultralight Scout Spider (Burrows)",
-		"helptext" : "The Flea can hide in inaccessible locations where its sophisticated sensor suite allows it to see further than it can be seen. It can be used in small groups to effectively raid mexes early on, and in maps with tall cliffs can attack from unexpected angles. It does very little damage and dies to any form of opposition."
+		"name" : "Wolf",
+		"description" : "Light Scout/Raider Spider",
+		"helptext" : "The Wolf is a combination scout and raider that has moderately high dps for its cost. It can be used in small groups to effectively raid mexes early on, and in maps with tall cliffs can attack from unexpected angles."
 	},
 	"energyfusion" : {
 		"name" : "Fusion Reactor",
