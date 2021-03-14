@@ -77,9 +77,10 @@ return {
 					spawns_expire = 60,
 					spawn_blocked_by_shield = 1,
 					sweepfire_minelayer = 1,
-					sweepfire_maxangle = 90,
+					sweepfire_maxangle = 30,
 					sweepfire_step = 10,
 					light_radius = 0,
+					nofriendlyfire = "needs hax",
 				},
 
 				damage                  = {
