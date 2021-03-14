@@ -34,6 +34,26 @@ local moduleImagePath = "unitpics/"
 -- Module Definitions
 ------------------------------------------------------------------------
 
+local function ApplyHighFrequencyBeamKit(modules, sharedData)
+	local upgrade = {
+		["commweapon_disruptorprojector"] = "commweapon_disruptorprojector_heavy",
+		["commweapon_beamlaser"] = "commweapon_beamlaser_heavy",
+		["commweapon_lparticlebeam"] = "commweapon_hparticlebeam",
+		["commweapon_disruptor"] = "commweapon_heavy_disruptor",
+	}
+	local wantsfireatradar = {
+		["commweapon_disruptorprojector_heavy"] = true,
+		["commweapon_beamlaser_heavy"] = true,
+	}
+	if sharedData.weapon1 and upgrade[sharedData.weapon1] then
+		sharedData.weapon1 = upgrade[sharedData.weapon1]
+		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon1]
+	elseif sharedData.weapon2 and upgrade[sharedData.weapon2] then
+		sharedData.weapon2 = upgrade[sharedData.weapon2]
+		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon2]
+	end
+end
+
 local moduleDefNames = {}
 
 local moduleDefs = {
@@ -74,15 +94,13 @@ local moduleDefs = {
 	
 	-- Weapons
 	{
-		name = "commweapon_beamlaser1",
+		name = "commweapon_beamlaser",
 		humanName = "Beam Laser",
 		description = "Beam Laser: An effective short-range cutting tool",
 		image = moduleImagePath .. "commweapon_beamlaser.png",
 		limit = 2,
 		cost = 0 * COST_MULT,
-		requireChassis = {"knight"}, --[[ can fit on any chassis, but is already
-		                                  baseline for multiplayer comms, so we
-		                                  don't offer it for them ]]
+		requireChassis = {"support", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -92,49 +110,6 @@ local moduleDefs = {
 			if not sharedData.weapon1 then
 				sharedData.weapon1 = "commweapon_beamlaser"
 			else
-				sharedData.weapon2 = "commweapon_beamlaser"
-			end
-		end
-	},
-	{
-		name = "commweapon_beamlaser",
-		humanName = "Beam Laser",
-		description = "Beam Laser: An effective short-range cutting tool",
-		image = moduleImagePath .. "commweapon_beamlaser.png",
-		limit = 1,
-		cost = 0 * COST_MULT,
-		requireChassis = {"support"}, --[[ can fit on any chassis, but is already
-		                                  baseline for multiplayer comms, so we
-		                                  don't offer it for them ]]
-		requireLevel = 1,
-		slotType = "basic_weapon",
-		prohibitingModules = {"commweapon_capray", "commweapon_lightninggun", "commweapon_disruptorprojector", "commweapon_lparticlebeam", "commweapon_shockrifle"},
-		applicationFunction = function (modules, sharedData)
-			if sharedData.noMoreWeapons then
-				return
-			end
-			if not sharedData.weapon1 then
-				sharedData.weapon1 = "commweapon_beamlaser"
-			end
-		end
-	},
-	{
-		name = "commweapon_beamlaser2",
-		humanName = "Beam Laser",
-		description = "Beam Laser: An effective short-range cutting tool",
-		image = moduleImagePath .. "commweapon_beamlaser.png",
-		limit = 1,
-		cost = 0 * COST_MULT,
-		requireChassis = {"support"}, --[[ can fit on any chassis, but is already
-		                                  baseline for multiplayer comms, so we
-		                                  don't offer it for them ]]
-		requireLevel = 3,
-		slotType = "basic_weapon",
-		applicationFunction = function (modules, sharedData)
-			if sharedData.noMoreWeapons then
-				return
-			end
-			if not sharedData.weapon2 then
 				sharedData.weapon2 = "commweapon_beamlaser"
 			end
 		end
@@ -231,7 +206,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_emg.png",
 		limit = 2,
 		cost = 0 * COST_MULT,
-		requireChassis = {"strike", "knight"},
+		requireChassis = {"strike"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -253,7 +228,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_emg.png",
 		limit = 2,
 		cost = 75 * COST_MULT,
-		requireChassis = {"recon", "knight"},
+		requireChassis = {"recon"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -275,7 +250,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_assaultcannon.png",
 		limit = 2,
 		cost = 100 * COST_MULT,
-		requireChassis = {"strike", "knight"},
+		requireChassis = {"strike"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -310,28 +285,28 @@ local moduleDefs = {
 			sharedData.noMoreWeapons = true
 		end
 	},]]
-	--{
-	--	name = "commweapon_hpartillery",
-	--	humanName = "Plasma Artillery",
-	--	description = "Plasma Artillery",
-	--	image = moduleImagePath .. "commweapon_assaultcannon.png",
-	--	limit = 2,
-	--	cost = 300 * COST_MULT,
-	--	requireChassis = {"assault"},
-	--	requireLevel = 3,
-	--	slotType = "adv_weapon",
-	--	applicationFunction = function (modules, sharedData)
-	--		if sharedData.noMoreWeapons then
-	--			return
-	--		end
-	--		local weaponName = (modules[moduleDefNames.weaponmod_napalm_warhead] and "commweapon_hpartillery_napalm") or "commweapon_hpartillery"
-	--		if not sharedData.weapon1 then
-	--			sharedData.weapon1 = weaponName
-	--		else
-	--			sharedData.weapon2 = weaponName
-	--		end
-	--	end
-	--},
+	{
+		name = "commweapon_hpartillery",
+		humanName = "Plasma Artillery",
+		description = "Plasma Artillery",
+		image = moduleImagePath .. "commweapon_assaultcannon.png",
+		limit = 2,
+		cost = 150 * COST_MULT,
+		requireChassis = {"assault"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = (modules[moduleDefNames.weaponmod_napalm_warhead] and "commweapon_artillery_heavy_napalm") or "commweapon_artillery_heavy"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
 	{
 		name = "commweapon_lightninggun",
 		humanName = "Lightning Rifle",
@@ -359,81 +334,18 @@ local moduleDefs = {
 		humanName = "Light Particle Beam",
 		description = "Light Particle Beam: Fast, light pulsed energy weapon",
 		image = moduleImagePath .. "commweapon_lparticlebeam.png",
-		limit = 1,
-		cost = 100 * COST_MULT,
-		requireChassis = {"support", "knight"},
-		prohibitingModules = {"commweapon_capray", "commweapon_lightninggun", "commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_shockrifle"},
-		requireLevel = 1,
-		slotType = "basic_weapon",
-		applicationFunction = function (modules, sharedData)
-			if sharedData.noMoreWeapons then
-				return
-			end
-			local hasfirstconverter = modules[moduleDefNames.conversion_disruptor]
-			local hassecondconverter = modules[moduleDefNames.module_heavyprojector_second]
-			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_disruptor") or "commweapon_lparticlebeam"
-			if not sharedData.weapon1 and not hasfirstconverter then
-				sharedData.weapon1 = weaponName
-			elseif not sharedData.weapon1 and hasfirstconverter then
-				sharedData.weapon1 = "commweapon_heavy_disruptor"
-			elseif hassecondconverter then
-				sharedData.weapon2 = "commweapon_heavy_disruptor"
-			else
-				sharedData.weapon2 = weaponName
-			end
-		end
-	},
-	{
-		name = "commweapon_lparticlebeam_normal",
-		humanName = "Light Particle Beam",
-		description = "Light Particle Beam: Fast, light pulsed energy weapon",
-		image = moduleImagePath .. "commweapon_lparticlebeam.png",
 		limit = 2,
 		cost = 100 * COST_MULT,
-		requireChassis = {"recon", "strike", "knight"},
+		requireChassis = {"support", "recon", "strike", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
 			end
-			local hasfirstconverter = modules[moduleDefNames.conversion_disruptor]
-			local hassecondconverter = modules[moduleDefNames.module_heavyprojector_second]
 			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_disruptor") or "commweapon_lparticlebeam"
-			if not sharedData.weapon1 and not hasfirstconverter then
+			if not sharedData.weapon1 then
 				sharedData.weapon1 = weaponName
-			elseif not sharedData.weapon1 and hasfirstconverter then
-				sharedData.weapon1 = "commweapon_heavy_disruptor"
-			elseif hassecondconverter then
-				sharedData.weapon2 = "commweapon_heavy_disruptor"
-			else
-				sharedData.weapon2 = weaponName
-			end
-		end
-	},
-	{
-		name = "commweapon_lparticlebeam2",
-		humanName = "Light Particle Beam",
-		description = "Light Particle Beam: Fast, light pulsed energy weapon",
-		image = moduleImagePath .. "commweapon_lparticlebeam.png",
-		limit = 1,
-		cost = 100 * COST_MULT,
-		requireChassis = {"support", "knight"},
-		requireLevel = 3,
-		slotType = "basic_weapon",
-		applicationFunction = function (modules, sharedData)
-			if sharedData.noMoreWeapons then
-				return
-			end
-			local hasfirstconverter = modules[moduleDefNames.conversion_disruptor]
-			local hassecondconverter = modules[moduleDefNames.module_heavyprojector_second]
-			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_disruptor") or "commweapon_lparticlebeam"
-			if not sharedData.weapon1 and not hasfirstconverter then
-				sharedData.weapon1 = weaponName
-			elseif not sharedData.weapon1 and hasfirstconverter then
-				sharedData.weapon1 = "commweapon_heavy_disruptor"
-			elseif hassecondconverter then
-				sharedData.weapon2 = "commweapon_heavy_disruptor"
 			else
 				sharedData.weapon2 = weaponName
 			end
@@ -511,7 +423,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_capray.png",
 		limit = 2,
 		cost = 100 * COST_MULT,
-		requireChassis = {"support", "knight"},
+		requireChassis = {"support"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -555,7 +467,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_canister.png",
 		limit = 2,
 		cost = 0 * COST_MULT,
-		requireChassis = {"assault", "knight"},
+		requireChassis = {"assault"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -575,33 +487,10 @@ local moduleDefs = {
 		humanName = "Disruptor Projector (Area Slow)",
 		description = "Deals some damage and slows targets in a small area. Low DPS. Can be converted into a heavy AOE slow beam.",
 		image = moduleImagePath .. "commweapon_disruptorprojector.png",
-		limit = 1,
-		cost = 75 * COST_MULT,
-		requireChassis = {"support", "knight"},
-		prohibitingModules = {"commweapon_capray", "commweapon_lightninggun", "commweapon_beamlaser", "commweapon_lparticlebeam", "commweapon_shockrifle"},
-		requireLevel = 1,
-		slotType = "basic_weapon",
-		applicationFunction = function (modules, sharedData)
-			if sharedData.noMoreWeapons then
-				return
-			end
-			local weaponName = "commweapon_disruptorprojector"
-			if not sharedData.weapon1 then
-				sharedData.weapon1 = weaponName
-			else
-				sharedData.weapon2 = weaponName
-			end
-		end
-	},
-	{
-		name = "commweapon_disruptorprojector2",
-		humanName = "Disruptor Projector (Area Slow)",
-		description = "Deals some damage and slows targets in a small area. Low DPS. Can be converted into a heavy AOE slow beam.",
-		image = moduleImagePath .. "commweapon_disruptorprojector.png",
 		limit = 2,
 		cost = 75 * COST_MULT,
-		requireChassis = {"support", "knight"},
-		requireLevel = 3,
+		requireChassis = {"support"},
+		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
@@ -622,23 +511,11 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_beamamplifier.png",
 		limit = 1,
 		cost = 300 * COST_MULT,
-		requireChassis = {"support", "knight"},
-		requiredModules = {"commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_lparticlebeam"},
+		requireChassis = {"support"},
+		requireOneOf = {"commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_lparticlebeam"},
 		requireLevel = 2,
 		slotType = "module",
-		applicationFunction = function (modules, sharedData)
-			--local weaponName = "commweapon_disruptorprojector_heavy"
-			local conversions = 1
-			if sharedData.weapon1 and (sharedData.weapon1 == "commweapon_disruptorprojector" or sharedData.weapon1 == "commweapon_beamlaser") then
-				sharedData.weapon1 = sharedData.weapon1 .. "_heavy"
-				conversions = conversions - 1
-				sharedData.wantsfireatradar = true
-			end
-			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_lparticlebeam" and conversions > 0 then
-				conversions = conversions - 1
-				sharedData.weapon1 = "commweapon_hparticlebeam"
-			end
-		end
+		applicationFunction = ApplyHighFrequencyBeamKit
 	},
 	{
 		name = "module_heavyprojector_second",
@@ -647,23 +524,11 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_beamamplifier.png",
 		limit = 1,
 		cost = 300 * COST_MULT,
-		requireChassis = {"support", "knight"},
-		requiredModules = {"commweapon_disruptorprojector2", "commweapon_beamlaser2", "commweapon_lparticlebeam2"},
+		requireChassis = {"support"},
+		requireTwoOf = {"commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_lparticlebeam"},
 		requireLevel = 4,
 		slotType = "module",
-		applicationFunction = function (modules, sharedData)
-			--local weaponName = "commweapon_disruptorprojector_heavy"
-			local conversions = 1
-			if sharedData.weapon2 and (sharedData.weapon2 == "commweapon_disruptorprojector" or sharedData.weapon2 == "commweapon_beamlaser") and conversions > 0 then
-				sharedData.weapon2 = sharedData.weapon2 .. "_heavy"
-				conversions = conversions - 1
-				sharedData.wantsfireatradar = true
-			end
-			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_lparticlebeam" and conversions > 0 then
-				conversions = conversions - 1
-				sharedData.weapon2 = "commweapon_hparticlebeam"
-			end
-		end
+		applicationFunction = ApplyHighFrequencyBeamKit
 	},
 	{
 		name = "commweapon_shockrifle",
@@ -754,7 +619,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_sunburst",
 		humanName = "Sunburst Cannon",
-		description = "Sunburst Cannon\nManually fired weapon that ruin's a single target's day with a high damage shot. Quick reload.\nStrike only. Water Capable.",
+		description = "Sunburst Cannon\nManually fired weapon that ruin's a single target's day with a high damage shot. Quick reload.\nAmbusher only. Water Capable.",
 		image = moduleImagePath .. "commweapon_sunburst.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
@@ -806,6 +671,28 @@ local moduleDefs = {
 				return
 			end
 			local weaponName = (modules[moduleDefNames.weaponmod_stun_booster] and "commweapon_multistunner_improved") or "commweapon_multistunner"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+		{
+		name = "commweapon_gaussrepeater",
+		humanName = "Gauss Repeater",
+		description = "Gauss Repeater\nA penetrating, rapid fire short range rifle for raiding while underwater.\nRecon only.",
+		image = moduleImagePath .. "commweapon_gaussrifle.png",
+		limit = 2,
+		cost = 100 * COST_MULT,
+		requireChassis = {"recon"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = "commweapon_gaussrepeater"
 			if not sharedData.weapon1 then
 				sharedData.weapon1 = weaponName
 			else
@@ -878,7 +765,7 @@ local moduleDefs = {
 		description = "By upgrading the Support comm's resource allocation algorithms, some extra metal and energy can be squeezed out of the chassis's resource generator.",
 		image = moduleImagePath .. "module_efficency.png",
 		limit = 4,
-		requireChassis = {"support", "knight"},
+		requireChassis = {"support"},
 		cost = 125 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
@@ -911,7 +798,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 250 * COST_MULT,
 		requireChassis = {"assault", "support", "knight"},
-		requiredModules = {"commweapon_personal_shield"},
+		requireOneOf = {"commweapon_personal_shield"},
 		prohibitingModules = {"module_personal_cloak"},
 		requireLevel = 3,
 		slotType = "module",
@@ -927,7 +814,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 350 * COST_MULT,
 		requireChassis = {"assault", "knight"},
-		requiredModules = {"commweapon_rocketlauncher", "commweapon_hpartillery", "commweapon_riotcannon"},
+		requireOneOf = {"commweapon_rocketlauncher", "commweapon_hpartillery", "commweapon_riotcannon"},
 		requireLevel = 2,
 		slotType = "module",
 	},
@@ -939,7 +826,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 300 * COST_MULT,
 		requireChassis = {"strike", "recon", "support", "knight"},
-		requiredModules = {"commweapon_heavymachinegun", "commweapon_heavyrifle", "commweapon_tankbuster", "commweapon_emg", "commweapon_shotgun", "commweapon_hparticlebeam", "commweapon_lparticlebeam"},
+		requireOneOf = {"commweapon_heavymachinegun", "commweapon_heavyrifle", "commweapon_tankbuster", "commweapon_emg", "commweapon_shotgun", "commweapon_hparticlebeam", "commweapon_lparticlebeam"},
 		requireLevel = 2,
 		slotType = "module",
 	},
@@ -951,7 +838,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 300 * COST_MULT,
 		requireChassis = {"support", "strike", "recon", "knight"},
-		requiredModules = {"commweapon_lightninggun", "commweapon_multistunner"},
+		requireOneOf = {"commweapon_lightninggun", "commweapon_multistunner"},
 		requireLevel = 2,
 		slotType = "module",
 	},
@@ -1006,7 +893,7 @@ local moduleDefs = {
 		description = "Radar Amplifier:\nIncreases radar by 10%.\nRecon Only (Limit: 8)",
 		image = moduleImagePath .. "module_fieldradar.png",
 		limit = 8,
-		requireChassis = {"recon", "knight"},
+		requireChassis = {"recon"},
 		cost = 75 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
@@ -1020,7 +907,7 @@ local moduleDefs = {
 		description = "Enhanced Sensors:\nIncreases sight radius by 15%.\nRecon Only (Limit: 8)",
 		image = moduleImagePath .. "module_radarnet2.png",
 		limit = 8,
-		requireChassis = {"recon", "knight"},
+		requireChassis = {"recon"},
 		cost = 125 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
@@ -1036,7 +923,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 400 * COST_MULT,
 		prohibitingModules = {"commweapon_personal_shield", "commweapon_areashield"},
-		requireChassis = {"recon", "assault", "knight"},
+		requireChassis = {"recon", "assault", "strike", "knight"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -1054,7 +941,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 600 * COST_MULT,
 		requireChassis = {"support", "knight"},
-		requiredModules = {"module_jammer"},
+		requireOneOf = {"module_jammer"},
 		requireLevel = 3,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -1084,33 +971,37 @@ local moduleDefs = {
 	{
 		name = "module_jumpreload",
 		humanName = "Efficient Jumpjets",
-		description = "Efficient Jumpjets:\nReduces jumpjet cooldown by 20%.\nRecon only.\nMutually Exclusive with: Improved Jumpjets & High Performance Jumpjets.",
+		description = "Efficient Jumpjets:\nReduces jumpjet cooldown by 20%.\nIncreases jump speed slightly.\nRecon only.\nMutually Exclusive with: Improved Jumpjets & High Performance Jumpjets.",
 		image = moduleImagePath .. "module_jumpjetrecharge.png",
 		limit = 4,
 		cost = 200 * COST_MULT,
-		requireChassis = {"recon", "knight"},
+		requireChassis = {"recon"},
 		prohibitingModules = {"module_jumprange", "module_jumpretrofit"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			local reloadbonus = sharedData.jumpreloadbonus or 0
 			sharedData.jumpreloadbonus = reloadbonus + 0.2
+			local speedbonus = sharedData.jumpspeedbonus or 0
+			sharedData.jumpspeedbonus = speedbonus + 0.25
 		end
 	},
 	{
 		name = "module_jumpretrofit",
 		humanName = "Improved Jumpjets",
-		description = "Improved Jumpjets:\nIncreases jumpjet range by 20%.\nDecreases jumpjet reload by 7.5%\nRecon only.\nMutually Exclusive with: High Performance Jumpjets & Efficient Jumpjets.",
+		description = "Improved Jumpjets:\nIncreases jumpjet range by 20%.\nIncreases jump speed moderately.\nDecreases jumpjet reload by 7.5%\nRecon only.\nMutually Exclusive with: High Performance Jumpjets & Efficient Jumpjets.",
 		image = moduleImagePath .. "module_jumpjetretrofit.png",
 		limit = 4,
 		cost = 220 * COST_MULT,
-		requireChassis = {"recon", "knight"},
+		requireChassis = {"recon"},
 		prohibitingModules = {"module_jumpreload", "module_jumprange"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			local rangebonus = sharedData.jumprangebonus or 0
 			local reloadbonus = sharedData.jumpreloadbonus or 0
+			local speedbonus = sharedData.jumpspeedbonus or 0
+			sharedData.jumpspeedbonus = speedbonus + 0.5
 			sharedData.jumprangebonus = rangebonus + 0.2
 			sharedData.jumpreloadbonus = reloadbonus + 0.075
 		end
@@ -1118,17 +1009,19 @@ local moduleDefs = {
 	{
 		name = "module_jumprange",
 		humanName = "High Performance Jumpjets",
-		description = "High Performance Jumpjets:\nIncreases jumpjet range by 50%.\nRecon only.\nMutually Exclusive with: Improved Jumpjets & Efficient Jumpjets.",
+		description = "High Performance Jumpjets:\nIncreases jumpjet range by 50%.\nIncreases jump speed signifcantly.\nRecon only.\nMutually Exclusive with: Improved Jumpjets & Efficient Jumpjets.",
 		image = moduleImagePath .. "module_jumpjetpower.png",
 		limit = 4,
 		cost = 200 * COST_MULT,
-		requireChassis = {"recon", "knight"},
+		requireChassis = {"recon"},
 		prohibitingModules = {"module_jumpreload", "module_jumpretrofit"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			local rangebonus = sharedData.jumprangebonus or 0
 			sharedData.jumprangebonus = rangebonus + 0.5
+			local speedbonus = sharedData.jumpspeedbonus or 0
+			sharedData.jumpspeedbonus = speedbonus + 0.75
 		end
 	},
 	{
@@ -1138,7 +1031,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_jumpjet.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
-		requireChassis = {"knight", "knight"},
+		requireChassis = {"knight"},
 		requireLevel = 3,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -1169,7 +1062,7 @@ local moduleDefs = {
 		limit = 8,
 		cost = 125 * COST_MULT,
 		requireChassis = {"support", "knight"},
-		requiredModules = {"module_companion_drone"},
+		requireOneOf = {"module_companion_drone"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -1211,8 +1104,8 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_heavy_armor.png",
 		limit = 8,
 		cost = 200 * COST_MULT,
-		requiredModules = {"module_ablative_armor"},
-		requireChassis = {"assault", "knight"},
+		requireOneOf = {"module_ablative_armor"},
+		requireChassis = {"assault"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -1257,7 +1150,7 @@ local moduleDefs = {
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
-		requireChassis = {"strike", "recon", "knight"},
+		requireChassis = {"strike", "recon"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.speedMod = (sharedData.speedMod or 0) + 4
 			sharedData.healthBonus = (sharedData.healthBonus or 0) - 300*HP_MULT
@@ -1266,13 +1159,13 @@ local moduleDefs = {
 	{
 		name = "module_cloakregen",
 		humanName = "Nanobot Sleeve",
-		description = "Nanobot Sleeve:\nIncreases regen while cloaked by 20.\nStrike only (Limit: 8)",
+		description = "Nanobot Sleeve:\nIncreases regen while cloaked by 20.\nAmbusher only (Limit: 8)",
 		image = moduleImagePath .. "module_cloakregen.png",
 		limit = 8,
 		cost = 75 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
-		requireChassis = {"strike", "knight"},
+		requireChassis = {"strike"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.cloakregen = (sharedData.cloakregen or 0) + 20
 		end
@@ -1286,7 +1179,7 @@ local moduleDefs = {
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
-		requireChassis = {"strike", "recon", "support", "riot", "knight"},
+		requireChassis = {"strike", "recon", "support", "riot"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.075
 			sharedData.speedMod = (sharedData.speedMod or 0) - 1
@@ -1301,7 +1194,7 @@ local moduleDefs = {
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
-		requireChassis = {"assault", "knight"},
+		requireChassis = {"assault"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.1
 			sharedData.speedMod = (sharedData.speedMod or 0) - 2
@@ -1310,29 +1203,31 @@ local moduleDefs = {
 	{
 		name = "module_adv_nano",
 		humanName = "Advanced Nanolathe",
-		description = "Advanced Nanolathe:\nIncreases build power by 2.5 (+5 for support).\nLimit: 8",
+		description = "Advanced Nanolathe:\nIncreases build power by 2.5 (+5 for support). Increases storage by 25 (50 for support).\nLimit: 8",
 		image = moduleImagePath .. "module_adv_nano.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
-		requireChassis = {"assault", "strike", "recon", "knight"},
+		requireChassis = {"assault", "strike", "recon"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 2.5
+			sharedData.extrastorage = (sharedData.extrastorage or 0) + 25
 		end
 	},
 	{
 		name = "module_adv_nano_support",
 		humanName = "Advanced Nanolathe",
-		description = "Advanced Nanolathe:\nIncreases build power by 5 (+2.5 for others).\nLimit: 8",
+		description = "Advanced Nanolathe:\nIncreases build power by 5 (+2.5 for others). Increases storage by 50 (25 for others).\nLimit: 8",
 		image = moduleImagePath .. "module_adv_nano.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
-		requireChassis = {"support", "knight"},
+		requireChassis = {"support"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 5
+			sharedData.extrastorage = (sharedData.extrastorage or 0) + 50
 		end
 	},
 	
@@ -1749,6 +1644,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[1],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 2
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 50
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1770,6 +1666,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[2] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 4
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 100
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1791,6 +1688,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[3] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 6
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 150
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1816,6 +1714,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[4],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 9
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 200
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1841,6 +1740,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[5],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 12
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 250
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -2169,36 +2069,18 @@ for i = 1, #moduleDefs do
 	local data = moduleDefs[i]
 	
 	-- Required modules are a list of moduleDefIDs
-	if data.requiredModules then
-		local newRequire = {}
-		for j = 1, #data.requiredModules do
-			if type(data.requiredModules[j]) == "table" then
-				local reqModuleID = moduleDefNames[data.requiredModules[j][1]]
-				if reqModuleID then
-					newRequire[#newRequire + 1] = {reqModuleID, data.requiredModules[j][2]}
-				end
-			else
-				local reqModuleID = moduleDefNames[data.requiredModules[j]]
+	for _,list in pairs{"requireOneOf", "requireTwoOf", "prohibitingModules"} do
+		if data[list] then
+			local newRequire = {}
+			for j = 1, #data[list] do
+				local reqModuleID = moduleDefNames[data[list][j]]
 				if reqModuleID then
 					newRequire[#newRequire + 1] = reqModuleID
 				end
 			end
+			data[list] = newRequire
 		end
-		data.requiredModules = newRequire
 	end
-	
-	-- Prohibiting modules are a list of moduleDefIDs too
-	if data.prohibitingModules then
-		local newProhibit = {}
-		for j = 1, #data.prohibitingModules do
-			local reqModuleID = moduleDefNames[data.prohibitingModules[j]]
-			if reqModuleID then
-				newProhibit[#newProhibit + 1] = reqModuleID
-			end
-		end
-		data.prohibitingModules = newProhibit
-	end
-	
 	
 	-- Required chassis is a map indexed by chassisDefID
 	if data.requireChassis then
@@ -2259,6 +2141,16 @@ end
 -- Utility Functions
 ------------------------------------------------------------------------
 
+local function CountModulesInSet(set, owned, owned2)
+	local count = 0
+	for i = 1, #set do
+		local req = set[i]
+		count = count + (owned[req] or 0)
+		              + (owned2 and owned2[req] or 0)
+	end
+	return count
+end
+
 local function ModuleIsValid(level, chassis, slotAllows, moduleDefID, alreadyOwned, alreadyOwned2)
 	local data = moduleDefs[moduleDefID]
 	if (not slotAllows[data.slotType]) or (data.requireLevel or 0) > level or
@@ -2267,46 +2159,16 @@ local function ModuleIsValid(level, chassis, slotAllows, moduleDefID, alreadyOwn
 	end
 	
 	-- Check that requirements are met
-	if data.requiredModules then
-		local foundRequirement = false
-		for j = 1, #data.requiredModules do
-			-- Modules should not depend on themselves so this check is simplier than the
-			-- corresponding chcek in the replacement set generator.
-			local reqDefID
-			local threshold
-			if type(data.requiredModules[j]) == "table" then
-				reqDefID = data.requiredModules[j][1]
-				threshold = data.requiredModules[j][2]
-			else
-				reqDefID =  data.requiredModules[j]
-				threshold = 0
-			end
-			--Spring.Echo(type(data.requiredModules[j]))
-			--Spring.Echo(data.requiredModules[j])
-			--Spring.Echo(reqDefID)
-			--Spring.Echo(moduleDefs[reqDefID].humanName)
-			--Spring.Echo(threshold)
-			--Spring.Echo((alreadyOwned[reqDefID] or 0) + ((alreadyOwned2 and alreadyOwned2[reqDefID]) or 0))
-			if ((alreadyOwned[reqDefID] or 0) + ((alreadyOwned2 and alreadyOwned2[reqDefID]) or 0)) > (threshold or 0) then
-				foundRequirement = true
-				break
-			end
-		end
-		if not foundRequirement then
-			return false
-		end
+	if data.requireOneOf and CountModulesInSet(data.requireOneOf, alreadyOwned, alreadyOwned2) < 1 then
+		return false
+	end
+	if data.requireTwoOf and CountModulesInSet(data.requireTwoOf, alreadyOwned, alreadyOwned2) < 2 then
+		return false
 	end
 	
 	-- Check that nothing prohibits this module
-	if data.prohibitingModules then
-		for j = 1, #data.prohibitingModules do
-			-- Modules cannot prohibit themselves otherwise this check makes no sense.
-			local probihitDefID = data.prohibitingModules[j]
-			if (alreadyOwned[probihitDefID] or (alreadyOwned2 and alreadyOwned2[probihitDefID])) then
-				return false
-			end
-		end
-	
+	if data.prohibitingModules and CountModulesInSet(data.prohibitingModules, alreadyOwned, alreadyOwned2) > 0 then
+		return false
 	end
 
 	-- cheapass hack to prevent cremcom dual wielding same weapon (not supported atm)

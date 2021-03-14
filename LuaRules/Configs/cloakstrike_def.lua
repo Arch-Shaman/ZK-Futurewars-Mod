@@ -3,15 +3,70 @@
 local StrikeWepDefs = {}
 
 local StrikeWepDefNames = {
+	cloakheavyraid = {
+		persistance = 30, 
+		cloakRecharge = 2, 
+		maxRecharge = 60, 
+		attackDecharge = -1, 
+		WeaponStats = {
+			[1] = {
+				cloakedWeaponStates = {}, 
+				decloakedWeaponStates = {}, 
+				cloakedWeaponDamages = {
+					[0] = 855, 
+					[1] = 855, 
+					[2] = 855, 
+					[3] = 855, 
+					[4] = 855, 
+					[5] = 855,
+				}, 
+				decloakedWeaponDamages = {
+					[0] = 285, 
+					[1] = 285, 
+					[2] = 285, 
+					[3] = 285, 
+					[4] = 285, 
+					[5] = 285,
+				},
+			}
+		}, 
+		cloakedRulesParam = {
+			selfMoveSpeedChange = 1.25,
+		}, 
+		decloakedRulesParam = {
+			selfMoveSpeedChange = 0.75,
+		}, 
+		updateAttributes = true,
+	}
+}
 
-}
---[[	cloakheavyraid = {
-		persistance = 30, cloakRecharge = 2, maxRecharge = 60, attackDecharge = -1, WeaponStats = {[1] = {cloakedWeaponStates = {}, decloakedWeaponStates = {}, cloakedWeaponDamages = {[0] = 10000, [1] = 10000, [2] = 10000, [3] = 10000, [4] = 10000, [5] = 10000}, decloakedWeaponDamages = {[0] = 10000, [1] = 10000, [2] = 10000, [3] = 10000, [4] = 10000, [5] = 10000},}},
-	},]]--
 local defaultStates = {
-		persistance = 30, cloakRecharge = 2, maxRecharge = 60, attackDecharge = -1, WeaponStats = {},
+	persistance = 30, 
+	cloakRecharge = 2, 
+	maxRecharge = 60, 
+	attackDecharge = -1, 
+	WeaponStats = {},
 }
-local defaultWeapon = {cloakedWeaponStates = {}, decloakedWeaponStates = {}, cloakedWeaponDamages = {[0] = 10000, [1] = 10000, [2] = 10000, [3] = 10000, [4] = 10000, [5] = 10000}, decloakedWeaponDamages = {[0] = 10000, [1] = 10000, [2] = 10000, [3] = 10000, [4] = 10000, [5] = 10000},}
+local defaultWeapon = {
+	cloakedWeaponStates = {}, 
+	decloakedWeaponStates = {}, 
+	cloakedWeaponDamages = {
+		[0] = 10000, 
+		[1] = 10000, 
+		[2] = 10000, 
+		[3] = 10000, 
+		[4] = 10000, 
+		[5] = 10000,
+	}, 
+	decloakedWeaponDamages = {
+		[0] = 10000, 
+		[1] = 10000, 
+		[2] = 10000, 
+		[3] = 10000, 
+		[4] = 10000, 
+		[5] = 10000,
+	},
+}
 
 local cpDefsCache = {}
 

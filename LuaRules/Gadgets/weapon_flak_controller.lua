@@ -58,20 +58,22 @@ for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
 	if curRef and curRef.isflak then -- found it!
-		spEcho("FlakCon: Discovered " .. i .. "(" .. wd.name .. ")")
+		if debug then
+			spEcho("FlakCon: Discovered " .. i .. "(" .. wd.name .. ")")
+		end
 		Script.SetWatchWeapon(i, true)
 		config[i] = {type = tonumber(curRef.isflak)} -- 1 = 2d, 2 = 3d, 3 = timed explosion
 		if config[i].type == 3 then
 			config[i]["timer"] = tonumber(curRef.flaktime)
 		end
 	end
-	wd = nil
-	curRef = nil
 end
 spEcho("FlakCon: done.")
-for name,data in pairs(config) do
-	for k,v in pairs(data) do
-		spEcho(k .. ": " .. tostring(v))
+if debug then
+	for name,data in pairs(config) do
+		for k,v in pairs(data) do
+			spEcho(k .. ": " .. tostring(v))
+		end
 	end
 end
 

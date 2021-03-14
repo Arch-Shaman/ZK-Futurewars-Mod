@@ -40,7 +40,7 @@ return {
 		maxElevator         = 0.01,
 		maxRudder           = 0.007,
 		maxFuel             = 1000000,
-		maxVelocity         = 6.1,
+		maxVelocity         = 6.5,
 		noChaseCategory     = [[TERRAFORM FIXEDWING SATELLITE GUNSHIP]],
 		objectName          = [[bomberstrike.s3o]],
 		script              = [[bomberstrike.lua]],

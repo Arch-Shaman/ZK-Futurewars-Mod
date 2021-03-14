@@ -1,53 +1,77 @@
--- reloadTime is in seconds
-
-local StrikeWepDefs = {}
-
-local StrikeWepDefNames = {
-
-}
---[[	cloakheavyraid = {
-		persistance = 30, cloakRecharge = 2, maxRecharge = 60, attackDecharge = -1, WeaponStats = {[1] = {cloakedWeaponStates = {}, decloakedWeaponStates = {}, cloakedWeaponDamages = {[0] = 10000, [1] = 10000, [2] = 10000, [3] = 10000, [4] = 10000, [5] = 10000}, decloakedWeaponDamages = {[0] = 10000, [1] = 10000, [2] = 10000, [3] = 10000, [4] = 10000, [5] = 10000},}},
-	},]]--
-local defaultStates = {
-		persistance = 30, cloakRecharge = 2, maxRecharge = 60, attackDecharge = -1, WeaponStats = {},
-}
-local defaultWeapon = {cloakedWeaponStates = {}, decloakedWeaponStates = {}, cloakedWeaponDamages = {[0] = 10000, [1] = 10000, [2] = 10000, [3] = 10000, [4] = 10000, [5] = 10000}, decloakedWeaponDamages = {[0] = 10000, [1] = 10000, [2] = 10000, [3] = 10000, [4] = 10000, [5] = 10000},}
-
-local cpDefsCache = {}
-
-for i=1, #WeaponDefs do
-	local wd = WeaponDefs[i]
-	local cp = wd.customParams
-	if cp.cloakstrike_amp then
-		cpDefsCache[i] = {wd.damages[0], cp.cloakstrike_amp}
-	end
+function gadget:GetInfo()
+	return {
+		name      = "Cloak-strike",
+		desc      = "Now you see me, Now you don't, And now you're dead",
+		author    = "Stuff/HTMLPhoton",
+		date      = "9/03/2021",
+		license   = "GNU GPL, v2 or later",
+		layer     = 0,
+		enabled   = true  --  loaded by default?
+	}
 end
 
-for i=1, #UnitDefs do
-	local ud = UnitDefs[i]
-	local myStates = defaultStates
-	local hasCSWep = false
-	for n=1, #ud.weapons do
-		local wdefid = ud.weapons[n].weaponDef
-		if cpDefsCache[wdefid] then
-			local defaultdmg = cpDefsCache[wdefid][1]
-			local cloakeddmg = cpDefsCache[wdefid][2] * defaultdmg
-			for m=0,5 do --changing defaultWeapon since there is no reason to create a new table
-				defaultWeapon["cloakedWeaponDamages"][m] = cloakeddmg
-				defaultWeapon["decloakedWeaponDamages"][m] = defaultdmg
-			end
-			myStates["WeaponStats"][n] = defaultWeapon
-			hasCSWep = true
+if (not gadgetHandler:IsSyncedCode()) then
+	return false  --  silent removal
+end
+
+local spSetUnitWeaponState = Spring.SetUnitWeaponState
+local spSetUnitWeaponDamages = Spring.SetUnitWeaponDamages
+local spSetUnitRulesParam = Spring.SetUnitRulesParam
+
+local cloakstrike_defs = include("LuaRules/Configs/cloakstrike_def.lua")
+local persisting_strikes = {}
+local persisting_strikes_cache = {unitDefID = 0, timer = 0,}
+local frame = 0
+
+function gadget:UnitCloaked(unitID, unitDefID, unitTeam)
+	if cloakstrike_defs[unitDefID] then
+		local strikedefs = cloakstrike_defs[unitDefID]
+		persisting_strikes[unitID] = nil
+		for num, data in pairs(strikedefs["WeaponStats"]) do
+			spSetUnitWeaponState(unitID, num, data["cloakedWeaponStates"])
+			spSetUnitWeaponDamages(unitID, num, data["cloakedWeaponDamages"])
+		end
+		for paramName, value in pairs(strikedefs["cloakedRulesParam"]) do
+			spSetUnitRulesParam(unitID, paramName, value)
+		end
+		spSetUnitRulesParam(unitID, "cloakstrike_active", "Stuff is awesome") -- :P
+		if strikedefs["updateAttributes"] then
+			GG.UpdateUnitAttributes(unitID)
 		end
 	end
-	if hasCSWep then
-		StrikeWepDefNames[ud.name] = myStates
-	end
 end
-for name, data in pairs(StrikeWepDefNames) do
-	if UnitDefNames[name] then
-		StrikeWepDefs[UnitDefNames[name].id] = data
+
+--decloakedWeaponDamages
+
+function gadget:UnitDecloaked(unitID, unitDefID, unitTeam)
+	if cloakstrike_defs[unitDefID] then
+		persisting_strikes_cache["unitDefID"] = unitDefID
+		persisting_strikes_cache["timer"] = frame + cloakstrike_defs[unitDefID]["persistance"]
+		persisting_strikes[unitID] = persisting_strikes_cache
+		for paramName, value in pairs(cloakstrike_defs[unitDefID]["decloakedRulesParam"]) do
+			spSetUnitRulesParam(unitID, paramName, value)
+		end
+		for num, data in pairs(cloakstrike_defs[unitDefID]["WeaponStats"]) do
+			spSetUnitWeaponState(unitID, num, data["decloakedWeaponStates"])
+			spSetUnitWeaponDamages(unitID, num, data["decloakedWeaponDamages"])
+		end
+		if cloakstrike_defs[unitDefID]["updateAttributes"] then
+			GG.UpdateUnitAttributes(unitID)
+		end
 	end
 end
 
-return StrikeWepDefs
+function gadget:GameFrame(f)
+	frame = f
+	if f%5 == 0 then
+		for unitID, data in pairs(persisting_strikes) do
+			if data["timer"] <= f then
+				for num, stats in pairs(cloakstrike_defs[data["unitDefID"]]["WeaponStats"]) do
+					spSetUnitWeaponState(unitID, num, data["decloakedWeaponStates"])
+					spSetUnitWeaponDamages(unitID, num, data["decloakedWeaponDamages"])
+				end
+				spSetUnitRulesParam(unitID, "cloakstrike_active", nil)
+			end
+		end
+	end
+end

@@ -26,7 +26,10 @@ for i=1, #UnitDefs do
 			time = tonumber(cp["decay_time"]) * 30,
 			minoutput = tonumber(cp["decay_minoutput"]) or 0,
 			baseoutput = UnitDefs[i].energyMake,
+			maxoutput = tonumber(cp["decay_maxoutput"]) or 10,
+			initialrate = tonumber(cp["decay_initialrate"]) or 10,
 		}
+		config[i].appreciates = config[i].rate < 0
 	end
 end
 
@@ -37,13 +40,15 @@ local spSetUnitResourcing = Spring.SetUnitResourcing
 local spEcho = Spring.Echo
 local debug = false
 local max = math.max
+local min = math.min
 
 function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	if config[unitDefID] then
 		if debug then spEcho("Added decayer " .. unitID) end
+		local mult = GG.GetTeamHandicap(unitTeam) or 1
 		local config = config[unitDefID]
-		IterableMap.Add(decayers, unitID, {currentrate = 10, nextupdate = spGetGameFrame() + config.time, def = unitDefID})
-		spSetUnitRulesParam(unitID, "selfIncomeChange", 10)
+		IterableMap.Add(decayers, unitID, {currentrate = config.initialrate, nextupdate = spGetGameFrame() + config.time, def = unitDefID, mult = mult})
+		spSetUnitRulesParam(unitID, "selfIncomeChange", config.initialrate * mult)
 		GG.UpdateUnitAttributes(unitID)
 		GG.UpdateUnitAttributes(unitID)
 	end
@@ -62,23 +67,39 @@ function gadget:UnitReverseBuilt(unitID, unitDefID, unitTeam)
 	end
 end
 
+function gadget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
+	if IterableMap.InMap(decayers, unitID) then
+		local data = IterableMap.Get(decayers, unitID)
+		data.mult = GG.GetTeamHandicap(newTeam)
+	end
+end
+
 function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(decayers) do
 		--spEcho(id .. " next update: " .. data.nextupdate)
 		if data.nextupdate == f then
 			local config = config[data.def]
-			local newrate = max(data.currentrate * (1 - config.rate), 1)
+			local newrate
+			if config.appreciates then
+				newrate = min(data.currentrate * (1 - config.rate), config.maxoutput)
+			else -- depreciates
+				newrate = max(data.currentrate * (1 - config.rate), 1)
+			end
 			if debug then spEcho(id .. ": Decayed from " .. data.currentrate * 10 .. "% -> " .. newrate * 10 .. "%") end
 			data.currentrate = newrate
-			spSetUnitRulesParam(id, "selfIncomeChange", data.currentrate)
+			spSetUnitRulesParam(id, "selfIncomeChange", data.currentrate * data.mult)
 			GG.UpdateUnitAttributes(id)
 			GG.UpdateUnitAttributes(id)
 			--if debug then spEcho("Updated " .. id) end
-			if data.currentrate == 1 then
+			if (not config.appreciates and data.currentrate == 1) or (config.appreciates and data.currentrate == config.maxoutput) then
 				IterableMap.Remove(decayers, id)
 			else
 				data.nextupdate = f + config.time
 			end
 		end
 	end
+end
+
+if cheatparam == 1 then
+	gadgetHandler:RemoveCallIn("UnitGiven")
 end

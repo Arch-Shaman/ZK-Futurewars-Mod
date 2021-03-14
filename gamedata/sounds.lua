@@ -11,7 +11,7 @@ local Sounds = {
 		--   file = "sounds/button9.wav",
 		--},
 		MapPoint = {
-			file = "sounds/ping.wav",
+			file = "sounds/beep4_decrackled.wav",
 			maxconcurrent = 3,
 		},
 		--[[
@@ -101,6 +101,13 @@ local Sounds = {
 			file = "sounds/jump_land.wav",
 			pitchmod = 0.1,
 			gainmod = 0.05,
+		},
+		Teleport2 = {
+			file = "sounds/misc/teleport2.wav",
+			maxconcurrent = 20,
+			gain = 1.0,
+			pitch = 1.0,
+			preload = true,
 		},
 	},
 }

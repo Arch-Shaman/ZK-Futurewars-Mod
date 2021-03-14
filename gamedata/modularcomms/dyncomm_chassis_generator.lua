@@ -30,7 +30,7 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynrecon1", -- 19/31
+		name = "dynrecon1", -- 21/31
 		weapons = {
 			"commweapon_lparticlebeam", -- TODO: Remove
 			"commweapon_lparticlebeam",
@@ -51,6 +51,8 @@ local chassisDefs = {
 			"commweapon_concussion",
 			"commweapon_heatray",
 			"commweapon_heatray",
+			"commweapon_gaussrepeater",
+			"commweapon_gaussrepeater",
 			-- Space for shield
 		}
 	},
@@ -87,7 +89,7 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynassault1", --21/31
+		name = "dynassault1", --23/31
 		weapons = {
 			"commweapon_rocketlauncher", -- 430
 			"commweapon_rocketlauncher_napalm", -- 430
@@ -105,8 +107,10 @@ local chassisDefs = {
 			"commweapon_flamethrower",
 			"commweapon_riotcannon",
 			"commweapon_riotcannon_napalm",
-			"commweapon_hpartillery",
-			"commweapon_hpartillery_napalm",
+			"commweapon_artillery_heavy",
+			"commweapon_artillery_heavy",
+			"commweapon_artillery_heavy_napalm",
+			"commweapon_artillery_heavy_napalm",
 			"commweapon_napalmgrenade",
 			"commweapon_slamrocket",
 			"commweapon_clusterbomb",
@@ -138,8 +142,8 @@ local chassisDefs = {
 			"commweapon_multistunner",
 			"commweapon_multistunner_improved",
 			"commweapon_peashooter",
-			"commweapon_hpartillery",
-			"commweapon_hpartillery_napalm",
+			"commweapon_artillery_heavy",
+			"commweapon_artillery_heavy_napalm",
 			"commweapon_disintegrator",
 			"commweapon_napalmgrenade",
 			"commweapon_slamrocket",

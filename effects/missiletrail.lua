@@ -5,6 +5,8 @@
 -- torptrailpurple
 -- missiletrailblue
 -- missiletrailbluebig
+-- missiletrailgravattract
+-- missiletrailgravrepel
 -- moderatortrail
 -- chainsawtrail
 -- cruisetrail
@@ -447,6 +449,82 @@ local cegs = {
 				dir                = [[-6 r12,-6 r12,-6 r12]],
 				length             = 4,
 				width              = 4,
+			},
+		},
+	},
+	["missiletrailgravattract"] = {
+		alwaysvisible      = false,
+		usedefaultexplosions = false,
+		largeflash = {
+			air                = true,
+			class              = [[CBitmapMuzzleFlame]],
+			count              = 1,
+			ground             = true,
+			underwater         = 1,
+			water              = true,
+			properties = {
+				colormap           = [[0.4 0.2 1 0.01 0 0 1 0.01 0 0 0 0.01]],
+				dir                = [[dir]],
+				frontoffset        = 0,
+				fronttexture       = [[muzzlefront]],
+				length             = -20,
+				sidetexture        = [[muzzleside]],
+				size               = -9,
+				sizegrowth         = 0.75,
+				ttl                = 1,
+			},
+		},
+		spikes = {
+			air                = true,
+			class              = [[explspike]],
+			count              = 4,
+			ground             = true,
+			water              = true,
+			properties = {
+				alpha              = 1,
+				alphadecay         = 0.3,
+				color              = [[0 0 1]],
+				dir                = [[-6 r12,-6 r12,-6 r12]],
+				length             = 8,
+				width              = 8,
+			},
+		},
+	},
+	["missiletrailgravrepel"] = {
+		alwaysvisible      = false,
+		usedefaultexplosions = false,
+		largeflash = {
+			air                = true,
+			class              = [[CBitmapMuzzleFlame]],
+			count              = 1,
+			ground             = true,
+			underwater         = 1,
+			water              = true,
+			properties = {
+				colormap           = [[1 0.2 0.4 0.01 1 0 0 0.01 0 0 0 0.01]],
+				dir                = [[dir]],
+				frontoffset        = 0,
+				fronttexture       = [[muzzlefront]],
+				length             = -20,
+				sidetexture        = [[muzzleside]],
+				size               = -9,
+				sizegrowth         = 0.75,
+				ttl                = 1,
+			},
+		},
+		spikes = {
+			air                = true,
+			class              = [[explspike]],
+			count              = 4,
+			ground             = true,
+			water              = true,
+			properties = {
+				alpha              = 1,
+				alphadecay         = 0.3,
+				color              = [[1 0 0]],
+				dir                = [[-6 r12,-6 r12,-6 r12]],
+				length             = 8,
+				width              = 8,
 			},
 		},
 	},

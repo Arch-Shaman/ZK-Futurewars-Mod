@@ -88,14 +88,14 @@ return {
 					light_camera_height = 1400,
 					light_color = [[0.3 0.3 0.7]],
 					light_radius = 100,
-					extra_damage = 420,
+					extra_damage = 400,
 				},
 
 				damage                  = {
-					default = 210,
+					default = 200,
 				},
 
-				edgeEffectiveness       = 0.1,
+				edgeEffectiveness       = 0.05,
 				paralyzeTime            = 1,
 				explosionGenerator      = [[custom:hammer_artillery_hit]],
 				impactOnly              = false,
@@ -104,7 +104,7 @@ return {
 				interceptedByShieldType = 1,
 				myGravity               = 0.07,
 				noSelfDamage            = true,
-				range                   = 900,
+				range                   = 800,
 				reloadtime              = 6,
 				size					= 0.01,
 				soundHit                = [[weapon/cannon/emp_arty_hit]],

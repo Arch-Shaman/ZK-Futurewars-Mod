@@ -34,7 +34,12 @@ local ANGULAR_SPEED = math.rad(160)
 local SIG_MOVE = 2
 local SIG_AIM = 4
 
-local weapons = {fireptl, fireptr, firept}
+local sweeping = false
+local sweepdir = 1
+
+local SPRAY_SPEED = math.rad(60)
+local SPRAY_ANGLE = math.rad(40)
+
 
 -- JUMPING
 
@@ -321,7 +326,7 @@ function script.AimFromWeapon()
 end
 
 function script.QueryWeapon(num)
-	return weapons[num]
+	return firept
 end
 
 local function RestoreAfterDelay()
@@ -347,13 +352,32 @@ function script.AimWeapon(num, heading, pitch)
 	return true
 end
 
-function script.FireWeapon(num)
-	if num == 3 then
-		EmitSfx(firept, 1025)
+local function SweepThread()
+	sweeping = true
+	Turn(fireptl, y_axis, SPRAY_ANGLE * sweepdir, SPRAY_SPEED)
+	Turn(fireptr, y_axis, SPRAY_ANGLE * (0 - sweepdir), SPRAY_SPEED)
+	WaitForTurn(fireptl, y_axis)
+	if sweepdir > 0 then
+		sweepdir = -1
 	else
-		EmitSfx(weapons[num], 1026)
+		sweepdir = 1
+	end
+	sweeping = false
+end
+
+function script.FireWeapon(num)
+	if num == 1 then
+		EmitSfx(firept, 1026)
+		if not sweeping then
+			StartThread(SweepThread)
+		end
+		EmitSfx(fireptl, 2049)
+		EmitSfx(fireptr, 2051)
+	else
+		EmitSfx(firept, 1027)
 	end
 end
+
 
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage / maxHealth

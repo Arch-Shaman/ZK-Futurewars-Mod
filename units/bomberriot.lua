@@ -87,8 +87,6 @@ unitDef = {
 			--model                   = [[wep_b_fabby.s3o]],
 			damage                  = {
 				default = 25,
-				planes  = 25,
-				subs    = 2.5,
 			},
 			customParams              = {
 					setunitsonfire = "1",

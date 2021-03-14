@@ -35,14 +35,14 @@
 		"helptext" : "The Missile Silo constructs and holds up to four different cruise missiles, each with a unique warhead. It offers excellent standoff strike capability for offensive and defensive purposes."
 	},
 	"spiderscout" : {
-		"name" : "Flea",
-		"description" : "Ultralight Scout Spider (Burrows)",
-		"helptext" : "The Flea can hide in inaccessible locations where its sophisticated sensor suite allows it to see further than it can be seen. It can be used in small groups to effectively raid mexes early on, and in maps with tall cliffs can attack from unexpected angles. It does very little damage and dies to any form of opposition."
+		"name" : "Wolf",
+		"description" : "Light Scout/Raider Spider",
+		"helptext" : "The Wolf is a combination scout and raider that has moderately high dps for its cost. It can be used in small groups to effectively raid mexes early on, and in maps with tall cliffs can attack from unexpected angles."
 	},
 	"energyfusion" : {
 		"name" : "Fusion Reactor",
-		"description" : "Medium Powerplant (+35)",
-		"helptext" : "Fusion reactors provide a good amount of steady energy output at a fair price. They are attractive targets and not very well-armored, so keep them well-protected. When killed, fusion reactors will cause heavy damage to nearby units."
+		"description" : "Powerplant: +28e, increases over time",
+		"helptext" : "Fusion reactors provide a good amount of steady energy output at a fair price. They are attractive targets and not very well-armored, so keep them well-protected. Fusion reactors increase their output over time as they heat up, so keep them well protector (or hunt them down quickly)."
 	},
 	"chickenlandqueen" : {
 		"name" : "Chicken Queen",
@@ -65,9 +65,9 @@
 		"helptext" : "The Imp relies on its speed and small size to dodge inaccurate weapons, especially those of assaults and many skirmishers. It can paralyze heavy units or packs of lighter raiders which cannot kill it before it is already in range. Reavers or Glaives can then eliminate the helpless enemies without risk. Counter with defenses or single cheap units to set off a premature detonation. This unit cloaks when otherwise idle."
 	},
 	"shieldriot" : {
-		"name" : "Keeper",
-		"description" : "Shielded Riot Bot",
-		"helptext" : "The Keeper emits an electromagnetic disruption pulse in a wide circle around it that damages and slows enemy units. Friendly units are unaffected."
+		"name" : "Sentry",
+		"description" : "Shielded Wave Projector",
+		"helptext" : "The Sentry emits an electromagnetic disruption pulse in a wide circle around it that damages and slows enemy units. Friendly units are unaffected."
 	},
 	"chickenc" : {
 		"name" : "Basilisk",
@@ -241,7 +241,7 @@
 	},
 	"staticenergyrtg" : {
 		"name" : "RTG",
-		"description" : "Medium Powerplant (+18e, decays over time) - HAZARDOUS",
+		"description" : "Powerplant: +18e, decays over time (HAZARDOUS)",
 		"helptext" : "The Radioisotope Thermoelectric Generator uses decaying radioactive particles from standard metal to generate energy. Once constructed, it becomes unstable and starts decaying in energy output. It's useful for getting out of an economic pinch, but don't rely on them for your energy needs -- they're worse than solars and are explosive."
 	},
 	"hoverskirm2" : {
@@ -286,8 +286,8 @@
 	},
 	"energysingu" : {
 		"name" : "Singularity Reactor",
-		"description" : "Large Powerplant (+225) - HAZARDOUS",
-		"helptext" : "The Singularity Reactor generates massive amount of energy using a controlled black hole - which is about as safe as it sounds. When the reactor is destroyed, the black hole implodes violently, dragging units inside. An entire continent on which this is built should be considered unsafe ground."
+		"description" : "Powerplant: +225e, increases over time (HAZARDOUS)",
+		"helptext" : "The Singularity Reactor generates massive amount of energy using a controlled black hole - which is about as safe as it sounds. Singularity reactors naturally increase their output over time, making them attractive targets to take out early on. When the reactor is destroyed, the black hole implodes violently, dragging units inside."
 	},
 	"bomberdisarm" : {
 		"name" : "Thunderbird",
@@ -316,7 +316,7 @@
 	},
 	"energyheavygeo" : {
 		"name" : "Advanced Geothermal",
-		"description" : "Large Powerplant (+100) - HAZARDOUS",
+		"description" : "Powerplant: +100e (HAZARDOUS)",
 		"helptext" : "The Advanced Geothermal Powerplant produces a massive amount of energy. It requires protection, though, as destroying it results in a devastating explosion."
 	},
 	"staticcon" : {
@@ -386,7 +386,7 @@
 	},
 	"energysolar" : {
 		"name" : "Solar Collector",
-		"description" : "Small Powerplant (+2)",
+		"description" : "Powerplant: +2e",
 		"helptext" : "Solar collectors are the least cost-efficient of the energy structures, but they are also the most reliable and sturdy. When attacked, solars will curl up into armored form for 8 seconds, which reduces incoming damage to a quarter and offers excellent protection against raiders."
 	},
 	"gunshipheavyskirm" : {
@@ -676,7 +676,7 @@
 	},
 	"energygeo" : {
 		"name" : "Geothermal Generator",
-		"description" : "Medium Powerplant (+25)",
+		"description" : "Powerplant: +25e",
 		"helptext" : "Geothermal plants are highly efficient energy sources that can only be built on geovents on the map. They explode quite violently when destroyed, so avoid placing anything directly adjacent."
 	},
 	"jumpcon" : {
@@ -815,9 +815,9 @@
 		"helptext" : "The Spiker's razor sharp projectiles can pierce even the thickest armor. While it doesn't have much health, it remains a potent threat to both air and ground units. Counter with anything that can reliably outrange it."
 	},
 	"striderdante" : {
-		"name" : "Dante",
+		"name" : "Vulcan",
 		"description" : "Assault/Riot Strider",
-		"helptext" : "The Dante is a heavy combat unit that specializes in getting close and melting its target. Its flamethrower and twin heatrays aren't extraordinary, but its incendiary rockets can be fired in a salvo of twenty that devastates a wide swath of terrain."
+		"helptext" : "The Vulcan is a heavy combat unit that specializes in getting close and melting its target. Its wide-area flamethrower and overkill amounts of heatrays aren't extraordinary, but its incendiary rockets can be fired in a salvo of twenty that devastates a wide swath of terrain."
 	},
 	"dynassault1" : {
 		"name" : "Bombardment Commander",
@@ -960,14 +960,14 @@
 		"helptext" : "Cheap, fast, and fragile, this Picket Ship is a good scout and spotter for more expensive ships. In numbers, their disarming missiles are effective against larger targets."
 	},
 	"shiptorpraider" : {
-		"name" : "Hunter",
-		"description" : "Torpedo-Boat (Raider)",
-		"helptext" : "The Torpedo Boat is a mobile raider and anti-submarine unit. It is effective against underwater units and large vessels."
+		"name" : "Swell",
+		"description" : "Anti-Submarine Skirmisher",
+		"helptext" : "The Swell fires a 3 round burst of medium torpedos. While they may track, they're only able to hit their target as long as its far away. At shorter range, one can dodge their attacks by strafing it."
 	},
 	"shipskirm" : {
-		"name" : "Mistral",
-		"description" : "Rocket Boat (Skirmisher)",
-		"helptext" : "This Rocket Boat fires a salvo of four medium-range rockets, useful for bombarding sea and shore targets. Beware of subs and anything with enough speed to get close."
+		"name" : "Crest",
+		"description" : "Cruise Artillery Platform",
+		"helptext" : "This Rocket Boat fires a cruise missile at long range to bombard distant targets."
 	},
 	"subraider" : {
 		"name" : "Seawolf",
@@ -995,9 +995,9 @@
 		"helptext" : "This Cruiser packs a powerful, long-range artillery cannon, useful for bombarding fixed emplacements and shore targets. Beware of aircraft, submarines and raider ships."
 	},
 	"shipaa" : {
-		"name" : "Zephyr",
+		"name" : "Undercurrent",
 		"description" : "Anti-Air Frigate",
-		"helptext" : "With its powerful twin anti-air laser batteries, this Anti-Air Frigate protects your fleet from aerial attackers. As always, it is useless against targets that aren't airborne."
+		"helptext" : "With its powerful twin anti-air laser batteries, the Undercurrent protects your fleet from aerial attackers. Its twin high intensity lasers can burn through nearby aircraft at astonishing rates, but is less useful against distant targets."
 	},
 	"shipheavyarty" : {
 		"name" : "Shogun",
@@ -1067,7 +1067,7 @@
 	"factoryjump" : {
 		"name" : "Jumpbot Factory",
 		"description" : "Produces Jumpjet Equipped Robots",
-		"helptext" : "The esoteric Jumpbot Factory offers unique tactical options for rapidly closing the distance in a knife fight, or getting over hills and rivers to cut a path through enemy lines. Key units: Pyro, Moderator, Jack, Firewalker, Jugglenaut"
+		"helptext" : "The esoteric Jumpbot Factory offers unique tactical options for rapidly closing the distance in a knife fight, or getting over hills and rivers to cut a path through enemy lines. Key units: Arsonist, Moderator, Jack, Firewalker, Jugglenaut"
 	},
 	"jumpsumo" : {
 		"name" : "Jugglenaut",
@@ -1120,9 +1120,9 @@
 		"helptext" : "The Aspis protects surrounding units with its area shield by destroying enemy projectiles and will automatically connect to other shield-equipped units to share charge. The area shield will not stop units and only intercepts projectiles on its perimeter, so enemies can get under the shield and shoot at the units inside. Recharging and maintaining area shields costs energy."
 	},
 	"jumpraid" : {
-		"name" : "Pyro",
+		"name" : "Arsonist",
 		"description" : "Raider/Riot Jumper",
-		"helptext" : "The Pyro is a cheap, fast walker with a flamethrower. The flamethrower deals increased damage to large units and can hit multiple targets at the same time. When killed, the Pyro sets surrounding units on fire. Additionally, Pyros also come with jetpacks, allowing them to jump over obstacles or get the drop on enemies."
+		"helptext" : "Armed with the best chemistry has to offer, and designed with the sole goal of burning down all in it's path. The Arsonist is a fearsome foe. It's primary flamethrower melts through metal like butter while it's sweeping flamethrowers set all alight with indiscrimination. And when you think it cannot get worse, teh Arsonist shall show the ace up it's sleeve - A molotov cocktain weapon, a weapon that got it's name not because of it's design or shape, but because of it's sheer brutal effectiveness."
 	},
 	"tankheavyarty" : {
 		"name" : "Tremor",

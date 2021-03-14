@@ -1,7 +1,7 @@
 return { 
 	jumpraid = {
 		unitname              = [[jumpraid]],
-		name                  = [[Pyro]],
+		name                  = [[Arsonist]],
 		description           = [[Raider/Riot Jumper]],
 		acceleration          = 1.2,
 		brakeRate             = 7.2,
@@ -35,7 +35,7 @@ return {
 		idleAutoHeal          = 5,
 		idleTime              = 1800,
 		leaveTracks           = true,
-		maxDamage             = 700,
+		maxDamage             = 880,
 		maxSlope              = 36,
 		maxVelocity           = 3,
 		maxWaterDepth         = 22,
@@ -77,23 +77,27 @@ return {
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP FIXEDWING]],
 			},
 			{
-				def                = [[FLAMETHROWER]],
-				badTargetCategory  = [[FIREPROOF]],
-				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP FIXEDWING]],
+				def                = [[SWEEPER]],
+				badTargetCategory  = [[]],
+				onlyTargetCategory = [[]],
 			},
 			{
 				def                = [[COCKTAIL]],
 				badTargetCategory  = [[FIREPROOF]],
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP]],
 			},
+			{
+				def                = [[SWEEPER]],
+				badTargetCategory  = [[]],
+				onlyTargetCategory = [[]],
+			},
 
 		},
 
 
 		weaponDefs            = {
-
 			FLAMETHROWER = {
-				name                    = [[Flamethrower]],
+				name                    = [[Primary Flamethrower]],
 				areaOfEffect            = 64,
 				avoidGround             = false,
 				avoidFeature            = false,
@@ -108,8 +112,8 @@ return {
 				customParams            = {
 					flamethrower = [[1]],
 					setunitsonfire = "1",
-					burnchance = "0.2", -- Per-impact
-					burntime = [[450]],
+					burnchance = "0.4", -- Per-impact
+					burntime = [[150]],
 					
 					light_camera_height = 2800,
 					light_color = [[0.6 0.39 0.18]],
@@ -122,8 +126,72 @@ return {
 				},
 				
 				damage                  = {
+					default = 7.4,
+				},
+			
+				duration                = 0.01,
+				explosionGenerator      = [[custom:SMOKE]],
+				fallOffRate             = 1,
+				fireStarter             = 100,
+				heightMod               = 1,
+				impulseBoost            = 0,
+				impulseFactor           = 0,
+				intensity               = 0.3,
+				interceptedByShieldType = 1,
+				leadLimit               = 10,
+				noExplode               = true,
+				noSelfDamage            = true,
+				range                   = 280,
+				reloadtime              = 0.133,
+				rgbColor                = [[1 1 1]],
+				soundStart              = [[weapon/flamethrower]],
+				soundTrigger            = true,
+				texture1                = [[flame]],
+				thickness               = 0,
+				tolerance               = 5000,
+				turret                  = true,
+				weaponType              = [[LaserCannon]],
+				weaponVelocity          = 800,
+			},
+
+
+			SWEEPER = {
+				name                    = [[Sweeping Flamethrower]],
+				areaOfEffect            = 64,
+				avoidGround             = false,
+				avoidFeature            = false,
+				avoidFriendly           = true,
+				collideFeature          = false,
+				collideGround           = false,
+				canattackground         = false,
+				coreThickness           = 0,
+				craterBoost             = 0,
+				craterMult              = 0,
+				cegTag                  = [[flamer]],
+			
+				customParams            = {
+					flamethrower = [[1]],
+					setunitsonfire = "1",
+					burnchance = "1", -- Per-impact
+					burntime = [[600]],
+					
+					light_camera_height = 2800,
+					light_color = [[0.6 0.39 0.18]],
+					light_radius = 260,
+					light_fade_time = 10,
+					light_beam_mult_frames = 5,
+					light_beam_mult = 5,
+				
+					combatrange = 220,
+					
+					stats_custom_tooltip_1 = " - Sweeping Arc:",
+					stats_custom_tooltip_entry_1 = "80 deg",
+					stats_custom_tooltip_2 = " - Sweeping Speed:",
+					stats_custom_tooltip_entry_2 = "60 deg/s",
+				},
+				
+				damage                  = {
 					default = 5.2,
-					subs    = 0.01,
 				},
 			
 				duration                = 0.01,
@@ -150,7 +218,8 @@ return {
 				weaponType              = [[LaserCannon]],
 				weaponVelocity          = 800,
 			},
-
+			
+			
 			COCKTAIL = {
 				name                    = [[Molotov Cocktail]], --CREDITS: Cliver5
 				areaOfEffect            = 48,
@@ -199,8 +268,8 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
 				model                   = [[wep_b_fabby.s3o]], --TODO: replace with SharkGameDev's better model. delete this once it's done.
-				range                   = 320,
-				reloadtime              = 30,
+				range                   = 340,
+				reloadtime              = 45,
 				smokeTrail              = true,
 				soundHit                = [[weapon/cannon/wolverine_hit]],
 				soundHitVolume          = 8,
@@ -302,7 +371,7 @@ return {
 				reloadtime              = 12,
 				rgbColor                = [[1 0.5 0.2]],
 				size                    = 5,
-				soundHit                = [[weapon/burn_mixed]],
+				soundHit                = [[weapon/clusters/napalm_break]],
 				soundStart              = [[weapon/cannon/wolverine_fire]],
 				soundStartVolume        = 3.2,
 				sprayangle              = 2500,
@@ -324,7 +393,7 @@ return {
 		
 					area_damage = 1,
 					area_damage_radius = 128,
-					area_damage_dps = 20,
+					area_damage_dps = 80,
 					area_damage_duration = 13.3,
 				},
 		
@@ -341,7 +410,6 @@ return {
 		},
 
 		featureDefs           = {
-		
 			DEAD  = {
 			blocking         = false,
 			featureDead      = [[HEAP]],
@@ -349,16 +417,12 @@ return {
 			footprintZ       = 2,
 			object           = [[m-5_dead.s3o]],
 			},
-		
-			
 			HEAP  = {
 			blocking         = false,
 			footprintX       = 2,
 			footprintZ       = 2,
 			object           = [[debris2x2c.s3o]],
 			},
-		
 		},
-
 	}
 }

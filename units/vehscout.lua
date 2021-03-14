@@ -71,7 +71,7 @@ return {
 				areaOfEffect            = 120,
 				accuracy                = 256,
 				burst					= 3,
-				burstrate				= 0.5,
+				burstrate				= 1/3,
 				coreThickness           = 0.25,
 				craterBoost             = 0,
 				craterMult              = 0,
@@ -87,7 +87,7 @@ return {
 				},
       
 				damage                  = {
-					default = 15,
+					default = 16.1,
 				},
   
 				explosionGenerator      = [[custom:riotballplus2_purple_small]],
@@ -119,7 +119,7 @@ return {
 		featureDefs            = {
 
 			DEAD  = {
-				blocking         = false,
+				blocking         = true,
 				featureDead      = [[HEAP]],
 				footprintX       = 2,
 				footprintZ       = 2,

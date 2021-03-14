@@ -1,66 +1,55 @@
-return { turretaalaser = {
-  unitname                      = [[turretaalaser]],
-  name                          = [[Razor]],
-  description                   = [[Hardened Anti-Air Laser]],
-  buildCostMetal                = 260,
-  builder                       = false,
-  buildingGroundDecalDecaySpeed = 30,
-  buildingGroundDecalSizeX      = 6,
-  buildingGroundDecalSizeY      = 6,
-  buildingGroundDecalType       = [[turretaalaser_aoplane.dds]],
-  buildPic                      = [[turretaalaser.png]],
-  category                      = [[FLOAT UNARMED STUPIDTARGET]],
-  collisionVolumeOffsets        = [[0 0 0]],
-  collisionVolumeScales         = [[50 36 50]],
-  collisionVolumeType            = [[CylY]],
-  corpse                        = [[DEAD]],
-
-  customParams                  = {
-  },
-
-  damageModifier                = 0.25,
-  explodeAs                     = [[SMALL_BUILDINGEX]],
-  floater                       = true,
-  footprintX                    = 3,
-  footprintZ                    = 3,
-  iconType                      = [[defenseaa]],
-  levelGround                   = false,
-  maxDamage                     = 3000,
-  maxSlope                      = 18,
-  minCloakDistance              = 150,
-  noAutoFire                    = false,
-  noChaseCategory               = [[FIXEDWING LAND SINK TURRET SHIP SATELLITE SWIM GUNSHIP FLOAT SUB HOVER]],
-  objectName                    = [[aapopup.dae]],
-  selfDestructAs                = [[SMALL_BUILDINGEX]],
-
-  sfxtypes                      = {
-
-    explosiongenerators = {
-      [[custom:BEAMWEAPON_MUZZLE_RED]],
-    },
-
-  },
-
-  script                        = [[turretaalaser.lua]],
-  sightDistance                 = 660,
-  useBuildingGroundDecal        = true,
-  workerTime                    = 0,
-  yardMap                       = [[ooooooooo]],
-
-  weapons                       = {
-
-    {
-      def                = [[AAGUN]],
-      --badTargetCategory  = [[FIXEDWING]],
-      onlyTargetCategory = [[FIXEDWING GUNSHIP]],
-    },
-
-  },
-
-
-  weaponDefs                    = {
-
-    AAGUN  = {
+return { 
+	turretaalaser = {
+		unitname                      = [[turretaalaser]],
+		name                          = [[Razor]],
+		description                   = [[Hardened Anti-Air Laser]],
+		buildCostMetal                = 260,
+		builder                       = false,
+		buildingGroundDecalDecaySpeed = 30,
+		buildingGroundDecalSizeX      = 6,
+		buildingGroundDecalSizeY      = 6,
+		buildingGroundDecalType       = [[turretaalaser_aoplane.dds]],
+		buildPic                      = [[turretaalaser.png]],
+		category                      = [[FLOAT UNARMED STUPIDTARGET]],
+		collisionVolumeOffsets        = [[0 0 0]],
+		collisionVolumeScales         = [[50 36 50]],
+		collisionVolumeType            = [[CylY]],
+		corpse                        = [[DEAD]],
+		customParams                  = {},
+		damageModifier                = 0.25,
+		explodeAs                     = [[SMALL_BUILDINGEX]],
+		floater                       = true,
+		footprintX                    = 3,
+		footprintZ                    = 3,
+		iconType                      = [[defenseaa]],
+		levelGround                   = false,
+		maxDamage                     = 3000,
+		maxSlope                      = 18,
+		minCloakDistance              = 150,
+		noAutoFire                    = false,
+		noChaseCategory               = [[FIXEDWING LAND SINK TURRET SHIP SATELLITE SWIM GUNSHIP FLOAT SUB HOVER]],
+		objectName                    = [[aapopup.dae]],
+		selfDestructAs                = [[SMALL_BUILDINGEX]],
+		sfxtypes                      = {
+			explosiongenerators = {
+				[[custom:BEAMWEAPON_MUZZLE_RED]],
+			},
+		},
+		script                        = [[turretaalaser.lua]],
+		sightDistance                 = 660,
+		useBuildingGroundDecal        = true,
+		workerTime                    = 0,
+		yardMap                       = [[ooooooooo]],
+		weapons                       = {
+			{
+				def                = [[AAGUN]],
+				--badTargetCategory  = [[FIXEDWING]],
+				onlyTargetCategory = [[FIXEDWING GUNSHIP]],
+			},
+		},
+		
+		weaponDefs                    = {
+			AAGUN  = {
 				name                    = [[High Intensity Micropulse Laser]],
 				areaOfEffect            = 8,
 				accuracy				= 250,
@@ -70,6 +59,7 @@ return { turretaalaser = {
 				craterMult              = 0,
 				
 				customParams        = {
+					isaa = [[1]],
 					light_camera_height = 1200,
 					light_radius = 20,
 				},
@@ -98,27 +88,21 @@ return { turretaalaser = {
 				weaponType              = [[BeamLaser]],
 				weaponVelocity          = 880,
 			},
-
-  },
-
-
-  featureDefs                   = {
-
-    DEAD  = {
-      blocking         = true,
-      featureDead      = [[HEAP]],
-      footprintX       = 3,
-      footprintZ       = 3,
-      object           = [[aapopup_dead.s3o]],
-    },
-
-    HEAP  = {
-      blocking         = false,
-      footprintX       = 3,
-      footprintZ       = 3,
-      object           = [[debris3x3a.s3o]],
-    },
-
-  },
-
-} }
+		},
+		featureDefs                   = {
+			DEAD  = {
+				blocking         = true,
+				featureDead      = [[HEAP]],
+				footprintX       = 3,
+				footprintZ       = 3,
+				object           = [[aapopup_dead.s3o]],
+			},
+			HEAP  = {
+				blocking         = false,
+				footprintX       = 3,
+				footprintZ       = 3,
+				object           = [[debris3x3a.s3o]],
+			},
+		},
+	} 
+}

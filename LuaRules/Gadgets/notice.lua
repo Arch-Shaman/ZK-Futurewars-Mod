@@ -5,7 +5,7 @@ function gadget:GetInfo()
 		author    = "Shaman",
 		date      = "12/19/2020",
 		license   = "CC-0",
-		layer     = math.huge,
+		layer     = -math.huge,
 		enabled   = true,
 	}
 end

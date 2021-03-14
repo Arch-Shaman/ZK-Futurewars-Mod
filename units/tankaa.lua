@@ -68,7 +68,6 @@ return {
 
 			FLAK = {
 				name                    = [[Flak Canister]],
-				accuracy                = 900,
 				areaOfEffect            = 0,
 				burnblow                = true,
 				canattackground         = false,
@@ -87,7 +86,7 @@ return {
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 80, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-1,-1,-1,1,1,1", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-3,-1,-3,3,1,3", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?
 					damage_vs_shield = [[160]]
@@ -114,7 +113,7 @@ return {
 				soundStartVolume	= 1,
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 700,
+				weaponVelocity          = 900,
 				--coverage = 2200,
 			},
 	
@@ -141,7 +140,7 @@ return {
 					planes  = 60,
 				},
 				--interceptor = 2,
-				edgeEffectiveness       = 0.9,
+				edgeEffectiveness       = 0.95,
 				duration                = 0.02,
 				explosionGenerator      = [[custom:flakplosion]],
 				fireStarter             = 50,

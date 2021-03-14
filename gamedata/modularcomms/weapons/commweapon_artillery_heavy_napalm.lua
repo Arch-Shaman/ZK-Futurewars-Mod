@@ -22,7 +22,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 320,
+		default = 1125,
 	},
 
 	edgeEffectiveness       = 0.5,
@@ -31,7 +31,7 @@ local weaponDef = {
 	impulseBoost            = 0,
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 1,
-	myGravity               = 0.1,
+	myGravity               = 0.05,
 	range                   = 800,
 	reloadtime              = 8,
 	rgbcolor                = [[1 0.5 0.2]],

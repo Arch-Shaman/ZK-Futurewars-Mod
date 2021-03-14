@@ -28,6 +28,8 @@ local random = math.random
 local rad = math.rad
 local sin = math.sin
 local cos = math.cos
+local sqrt = math.sqrt
+local max = math.max
 
 local spGetGroundHeight = Spring.GetGroundHeight
 local spValidUnitID = Spring.ValidUnitID
@@ -39,28 +41,31 @@ local spGetProjectileDefID = Spring.GetProjectileDefID
 local spGetProjectileTarget = Spring.GetProjectileTarget
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spGetProjectilePosition = Spring.GetProjectilePosition
+local SetWatchWeapon = Script.SetWatchWeapon
 local spEcho = Spring.Echo
 
 -- proccess config --
 for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
-	if curRef and curRef.cruisealt and curRef.cruisedist then -- found it!
-		config[i] = {altitude = tonumber(curRef.cruisealt), randomizationtype = curRef.cruise_randomizationtype or "?", distance = tonumber(curRef.cruisedist), track = false, airlaunched = curRef.airlaunched ~= nil, radius = tonumber(curRef.cruiserandomradius), permoffset = curRef.cruise_permoffset ~= nil, finaltracking = curRef.cruise_nolock == nil}
-		if curRef.cruisetracking then
-			config[i].track = true
-		end
-		if config[i].altitude and config[i].distance then
-			Script.SetWatchWeapon(i, true)
-		else
-			config[i] = nil
-			Spring.Echo("[Cruise Missiles] Bad def " .. WeaponDefs[i].name .. " (Missing Altitude or Distance field)")
-		end
+	if tonumber(curRef.cruisealt) ~= nil and tonumber(curRef.cruisedist) ~= nil then -- found it!
+		config[i] = {}
+		config[i].altitude = tonumber(curRef.cruisealt)
+		config[i].randomizationtype = curRef.cruise_randomizationtype or "?"
+		config[i].distance = tonumber(curRef.cruisedist)
+		config[i].track = curRef.cruisetracking ~= nil
+		config[i].airlaunched = curRef.airlaunched ~= nil
+		config[i].radius = tonumber(curRef.cruiserandomradius)
+		config[i].permoffset = curRef.cruise_permoffset ~= nil
+		config[i].finaltracking = curRef.cruise_nolock == nil
+		SetWatchWeapon(i, true)
+	elseif curRef.cruisealt ~= nil or curRef.cruisedist ~= nil then
+		spEcho("[Cruise Missiles] Bad def " .. WeaponDefs[i].name .. " (Missing Altitude or Distance field)")
 	end
 end
 
 local function Distance(x1, x2, y1, y2)
-	return math.sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)))
+	return sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)))
 end
 
 
@@ -168,8 +173,9 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		end
 		local allyteam = spGetUnitAllyTeam(proOwnerID)
 		local _, py = spGetProjectilePosition(proID)
-		py = math.max(py, ty)
+		py = max(py, ty)
 		missiles[proID] = {target = target, type = type, cruising = false, takeoff = true, lastknownposition = last, configid = wep, started = false, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0}
+		--spEcho("Wanted Altitude: " .. missiles[proID].wantedalt)
 		if config[wep].radius then
 			ProccessOffset(wep, proID)
 		end

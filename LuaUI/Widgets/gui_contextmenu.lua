@@ -1557,20 +1557,37 @@ local function printunitinfo(ud, buttonWidth, unitID)
 	local energy = (isCommander and (Spring.GetUnitRulesParam(unitID, "wanted_energyIncome") or 0) or ((ud.energyMake or 0) - (ud.customParams.upkeep_energy or 0) + (ud.customParams.income_energy or 0)))
 
 	if energy ~= 0 then
-		if ud.customParams.realenergy then
-			energy = tonumber(ud.customParams.realenergy)
+		if ud.customParams and ud.customParams["decay_rate"] then
+			energy = energy * (tonumber(ud.customParams["decay_initialrate"]) or 10)
 		end
 		statschildren[#statschildren+1] = Label:New{ caption = 'Energy: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = (energy > 0 and '+' or '') .. numformat(energy,2) .. " E/s", textColor = color.stats_fg, }
 		if ud.customParams and ud.customParams["decay_rate"] then
-			statschildren[#statschildren+1] = Label:New{ caption = 'Decays Over time: ', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = ' Rate: ', textColor = color.stats_fg, }
+			local baseoutput = ud.customParams.income_energy
 			local decayrate = tonumber(ud.customParams["decay_rate"]) * 100
 			local mindecay = tonumber(ud.customParams["decay_minoutput"]) or 0
 			local decaytime = tonumber(ud.customParams["decay_time"]) or 1
+			local txt = ""
+			if decayrate > 0 then
+				txt = "Output decays over time:"
+			else
+				txt = "Output increases over time:"
+			end
+			statschildren[#statschildren+1] = Label:New{ caption = txt, textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = '- Rate: ', textColor = color.stats_fg, }
+			local timetoreach = 0 -- TODO: add time to reach max/min output.
+			if decayrate > 0 then
+				txt = "- Minimum Output:"
+				mindecay = mindecay * baseoutput
+			else
+				txt = "- Maximum Output:"
+				mindecay = tonumber(ud.customParams["decay_maxoutput"]) or 0
+				mindecay = mindecay * baseoutput
+			end
+			decayrate = math.abs(decayrate)
 			statschildren[#statschildren+1] = Label:New{ caption =  numformat(decayrate, 1) .. "%/" .. numformat(decaytime, 1) .. "s", textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = ' Minimum Output: ', textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = txt, textColor = color.stats_fg, }
 			statschildren[#statschildren+1] = Label:New{ caption = numformat(mindecay, 1), textColor = color.stats_fg, }
 		end
 	end

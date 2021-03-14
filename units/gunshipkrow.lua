@@ -22,7 +22,7 @@ return {
 		collisionVolumeScales  = [[86 22 86]],
 		collisionVolumeType    = [[cylY]],
 		corpse                 = [[DEAD]],
-		cruiseAlt              = 400,
+		cruiseAlt              = 250,
 
 		customParams           = {
 			modelradius    = [[10]],
@@ -76,13 +76,16 @@ return {
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-
 			{
-				def                = [[CLUSTERBOMBER]],
+				def                = [[ATA]],
 				mainDir            = [[0 0 1]],
 				maxAngleDif        = 360,
 			},
-
+			--{
+				--def                = [[CLUSTERBOMBER]],
+				--mainDir            = [[0 0 1]],
+				--maxAngleDif        = 360,
+			--},
 			{
 				def                = [[KROWLASER]],
 				mainDir            = [[0 0.1 -0.38]],
@@ -93,7 +96,7 @@ return {
 
 		},
 		weaponDefs             = {
-
+			
 			KROWLASER  = {
 				name                    = [[High Intensity Scattergun]],
 				areaOfEffect            = 30,
@@ -113,6 +116,7 @@ return {
 				customParams        = {
 					light_camera_height = 1800,
 					light_radius = 160,
+					combatrange	= 300,
 				},
 
 				damage                  = {
@@ -162,12 +166,12 @@ return {
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					proxy = 0, -- check for nearby units?
 					useheight = 1,
-					spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 140, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					vradius1 = "-12,0,-12,12,4,12", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1,
 				},
 				damage                  = {
-					default = 250*4,
+					default = 175*3,
 				},
 
 				explosionGenerator      = [[custom:WEAPEXP_PUFF]],
@@ -199,7 +203,7 @@ return {
 				craterMult              = 3,
 
 				damage                  = {
-					default = 250,
+					default = 175,
 				},
 
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
@@ -220,6 +224,49 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 400,
 			},
+			ATA = {
+				name                    = [[Annihilator Beam]],
+				areaOfEffect            = 255,
+				beamTime                = 10,
+				commandFire             = true,
+				coreThickness           = 3,
+				craterBoost             = 8,
+				craterMult              = 15,
+      
+				customParams            = {
+					light_color = [[1.25 0.8 1.75]],
+					light_radius = 480,
+				},
+				damage                  = {
+					default = 37500,
+				},
+
+				explosionGenerator      = [[custom:craterpuncher]],
+				fireTolerance           = 8192, -- 45 degrees
+				impactOnly              = false,
+				impulseBoost            = 10,
+				impulseFactor           = 2,
+				interceptedByShieldType = 1,
+				largeBeamLaser          = true,
+				laserFlareSize          = 7.5,
+				leadLimit               = 18,
+				minIntensity            = 1,
+				noSelfDamage            = true,
+				range                   = 1000,
+				reloadtime              = 30,
+				rgbColor                = [[0.25 0 1]],
+				soundStart              = [[weapon/laser/heavy_laser6]],
+				soundStartVolume        = 45,
+				texture1                = [[largelaser]],
+				texture2                = [[flare]],
+				texture3                = [[flare]],
+				texture4                = [[smallflare]],
+				thickness               = 33.8747693719086,
+				tolerance               = 10000,
+				turret                  = true,
+				weaponType              = [[BeamLaser]],
+				weaponVelocity          = 1500,
+    },
 		},
 
 

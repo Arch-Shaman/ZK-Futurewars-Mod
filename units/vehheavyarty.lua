@@ -75,7 +75,7 @@ return {
 					light_camera_height = 2500,
 					light_color = [[1 0.8 0.2]],
 					cruisealt = 600,
-					cruisedist = 240,
+					cruisedist = 340,
 				},
 
 				damage         = {
@@ -96,13 +96,13 @@ return {
 				interceptedByShieldType = 2,
 				model                   = [[wep_merl.s3o]],
 				noSelfDamage            = true,
-				range                   = 1800,
+				range                   = 1600,
 				reloadtime              = 10,
 				smokeTrail              = false,
 				soundHit                = [[weapon/missile/vlaunch_hit]],
 				soundStart              = [[weapon/missile/missile_launch]],
 				tolerance               = 4000,
-				turnrate                = 18000,
+				turnrate                = 22500,
 				startVelocity           = 80,
 				weaponAcceleration      = 315,
 				tracks = true, -- doesn't actually track. Needed for cruise missile.
