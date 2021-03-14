@@ -240,7 +240,7 @@ return {
 				damage                  = {
 					default = 37500,
 				},
-
+				cameraShake				= 1500,
 				explosionGenerator      = [[custom:craterpuncher]],
 				fireTolerance           = 8192, -- 45 degrees
 				impactOnly              = false,
