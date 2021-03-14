@@ -240,15 +240,15 @@ return {
 				damage                  = {
 					default = 37500,
 				},
-
+				cameraShake				= 1500,
 				explosionGenerator      = [[custom:craterpuncher]],
 				fireTolerance           = 8192, -- 45 degrees
 				impactOnly              = false,
-				impulseBoost            = 10,
-				impulseFactor           = 2,
+				impulseBoost            = 0,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				largeBeamLaser          = true,
-				laserFlareSize          = 7.5,
+				laserFlareSize          = 4.5,
 				leadLimit               = 18,
 				minIntensity            = 1,
 				noSelfDamage            = true,
