@@ -25,6 +25,7 @@ local spGetGroundHeight = Spring.GetGroundHeight
 local spGetUnitWeaponTarget = Spring.GetUnitWeaponTarget
 local spGetUnitWeaponState = Spring.GetUnitWeaponState
 local spGetUnitHeading = Spring.GetUnitHeading
+local spGetGameFrame = Spring.GetGameFrame
 local spUtilitiesGetEffectiveWeaponRange = Spring.Utilities.GetEffectiveWeaponRange
 local cos = math.cos
 local sin = math.sin
@@ -220,7 +221,7 @@ local function AddUnit(unitID, cmdParams)
 	local tx = cmdParams[1]
 	local tz = cmdParams[3]
 	local x, _, z = spGetUnitPosition(unitID)
-	local data = {sweeping = false, weaponstates = {}, nextupdate = 0, unitdef = defid, initialangle = CalculateAngle(x, z, tx, tz)}
+	local data = {sweeping = false, weaponstates = {}, nextupdate = spGetGameFrame() + 30, unitdef = defid, initialangle = CalculateAngle(x, z, tx, tz)}
 	for i = 1, #configuration do
 		local rev = random(0,4) >= 2
 		data.weaponstates[i] = {reversed = rev, currentoffset = rad(random(-5, 5))}
