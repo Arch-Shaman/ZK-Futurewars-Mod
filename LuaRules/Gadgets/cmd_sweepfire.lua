@@ -107,6 +107,10 @@ local function GetUnitHeading(unitID)
 	return HeadingToRad(spGetUnitHeading(unitID))
 end
 
+local function GetWeaponDefID(def, weaponnum)
+	return WeaponDefs[UnitDefs[def].weapons[weaponnum].weaponDef].id
+end
+
 local function GetLowestHeightOnCircle(x, z, radius, points)
 	local anglepercheck = rad(360 / (points + 1))
 	local currentangle = 0
@@ -129,8 +133,13 @@ end
 local function GetUnitRange(unitID, weaponNum, runs)
 	local x, y, z = spGetUnitPosition(unitID)
 	local unitDefID = spGetUnitDefID(unitID)
-	local weapondef = WeaponDefs[UnitDefs[unitDefID].weapons[weaponNum].weaponDef]
+	local weapondefid = UnitDefs[unitDefID].weapons[weaponNum].weaponDef
+	local weapondef = WeaponDefs[weapondefid]
 	local originalrange = weapondef.range
+	--spEcho("Maxrangemult: " .. tostring(config[weapondefid].maxrangemult))
+	if config[unitDefID][weaponNum].maxrangemult and config[unitDefID][weaponNum].maxrangemult ~= 1 then
+		return originalrange * config[unitDefID][weaponNum].maxrangemult
+	end
 	if weapondef.type == "BeamLaser" then
 		return originalrange * 0.9 -- for whatever reason lotus doesn't like to attack at maxrange.
 	end
@@ -165,6 +174,7 @@ end
 local function ForceFireAtPoint(unitID, x, z, weaponID)
 	GG.SetTemporaryPosTarget(unitID, x, spGetGroundHeight(x, z), z, false, 1, weaponID)
 end
+
 
 local function UpdateOffset(unitID, weaponID)
 	local data = IterableMap.Get(UnitData, unitID)
@@ -221,7 +231,7 @@ local function AddUnit(unitID, cmdParams)
 	local tx = cmdParams[1]
 	local tz = cmdParams[3]
 	local x, _, z = spGetUnitPosition(unitID)
-	local data = {sweeping = false, weaponstates = {}, nextupdate = spGetGameFrame() + 30, unitdef = defid, initialangle = CalculateAngle(x, z, tx, tz)}
+	local data = {sweeping = false, weaponstates = {}, nextupdate = 0, unitdef = defid, initialangle = CalculateAngle(x, z, tx, tz)}
 	for i = 1, #configuration do
 		local rev = random(0,4) >= 2
 		data.weaponstates[i] = {reversed = rev, currentoffset = rad(random(-5, 5))}
@@ -338,6 +348,9 @@ function gadget:GameFrame(f)
 						nextupdate = potential
 					end
 					if reload == nil or reload <= f then -- we're ready to go
+						if configuration[w].centerreadjust then
+							data.initialangle = GetUnitHeading(id)
+						end
 						UpdateOffset(id, weaponnum)
 						nextupdate = f + ((configuration[w].fastupdate and 0) or 3)
 						if debug then

@@ -133,6 +133,7 @@ return {
 					sweepfire_maxangle = 30,
 					sweepfire_step = 3,
 					sweepfire_fastupdate = 1,
+					sweepfire_maxrangemult = 0.98,
 				},
 
 				damage                  = {

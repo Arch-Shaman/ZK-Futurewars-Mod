@@ -92,6 +92,10 @@ return {
 					light_camera_height = 1600,
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 150,
+					sweepfire = 1,
+					sweepfire_maxangle = 15,
+					sweepfire_step = 5,
+					sweepfire_maxrangemult = 0.98,
 				},
 
 				damage                  = {

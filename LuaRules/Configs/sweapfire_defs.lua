@@ -18,6 +18,8 @@ for i = 1, #UnitDefs do
 				maxangle = math.rad(tonumber(cp.sweepfire_maxangle) or 45),
 				weaponNum = w,
 				fastupdate = cp.sweepfire_fastupdate ~= nil,
+				maxrangemult = tonumber(cp.sweepfire_maxrangemult) or 1,
+				centerreadjust = cp.sweepfire_headingadjust ~= nil,
 			}
 			num = num + 1
 		end

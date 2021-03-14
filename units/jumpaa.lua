@@ -151,7 +151,7 @@ return {
 				fireStarter             = 90,
 				impactOnly              = true,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = -1,
 				interceptedByShieldType = 1,
 				leadLimit               = 0.1,
 				lodDistance             = 10000,
