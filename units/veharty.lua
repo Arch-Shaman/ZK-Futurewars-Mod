@@ -65,7 +65,7 @@ return {
 		weaponDefs          = {
 			MINE = {
 				name                    = [[Light Mine Artillery]],
-				accuracy                = 1500,
+				accuracy                = 300,
 				areaOfEffect            = 96,
 				craterBoost             = 0,
 				craterMult              = 0,
