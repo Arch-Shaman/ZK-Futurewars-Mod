@@ -1,6 +1,6 @@
 local chassisDefs = {
 	{
-		name = "dynstrike1", -- 24/31 (UPDATE ME AS YOU ADD MORE WEAPONS)
+		name = "dynstrike1", -- 25/31 (UPDATE ME AS YOU ADD MORE WEAPONS)
 		weapons = {
 			"commweapon_tankbuster",
 			"commweapon_tankbuster",
@@ -26,11 +26,12 @@ local chassisDefs = {
 			"commweapon_multistunner_improved",
 			"commweapon_sunburst",
 			"commweapon_disintegrator",
+			"commweapon_minefieldinacan",
 			-- Space for shield
 		}
 	},
 	{
-		name = "dynrecon1", -- 21/31
+		name = "dynrecon1", -- 22/31
 		weapons = {
 			"commweapon_lparticlebeam", -- TODO: Remove
 			"commweapon_lparticlebeam",
@@ -53,6 +54,7 @@ local chassisDefs = {
 			"commweapon_heatray",
 			"commweapon_gaussrepeater",
 			"commweapon_gaussrepeater",
+			"commweapon_minefieldinacan",
 			-- Space for shield
 		}
 	},

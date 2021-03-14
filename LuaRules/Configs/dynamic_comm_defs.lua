@@ -574,6 +574,27 @@ local moduleDefs = {
 			end
 		end
 	},
+		{
+		name = "commweapon_minefieldinacan",
+		humanName = "Minefield In A Can",
+		description = "Minefield In A Can:\nA canister full of surprises, waiting for your enemies.\nStrike and Recon only.",
+		image = moduleImagePath .. "conversion_partillery.png",
+		limit = 1,
+		cost = 300 * COST_MULT,
+		requireChassis = {"recon", "strike"},
+		requireLevel = 3,
+		slotType = "adv_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = "commweapon_clusterbomb"
+			else
+				sharedData.weapon2 = "commweapon_clusterbomb"
+			end
+		end
+	},
 	{
 		name = "commweapon_concussion",
 		humanName = "Concussion Shell",
