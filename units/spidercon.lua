@@ -56,7 +56,13 @@ return {
 		trackWidth             = 54,
 		turnRate               = 1400,
 		workerTime             = 7.5,
-
+		
+		sfxtypes            = {
+			explosiongenerators = {
+				[[custom:digdig]],
+			},
+		},
+		
 		featureDefs            = {
 
 			DEAD  = {
