@@ -15,8 +15,8 @@ if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
 end
 
 local config = {}
-local projectiles = IterableMap.New()
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local projectiles = IterableMap.New()
 local spGetProjectilePosition = Spring.GetProjectilePosition
 local spSetProjectileGravity = Spring.SetProjectileGravity 
 
@@ -30,7 +30,7 @@ end
 
 function gadget:GameFrame(f)
 	if f%5 == 0 then
-		for id, _ in IterableMap.Iterator(projectiles)
+		for id, _ in IterableMap.Iterator(projectiles) do
 			local _, y, _ = spGetProjectilePosition(id)
 			if y <= -5 then
 				spSetProjectileGravity(id, -500)
