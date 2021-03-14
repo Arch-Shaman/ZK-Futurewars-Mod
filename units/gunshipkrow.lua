@@ -266,10 +266,9 @@ return {
 				turret                  = true,
 				weaponType              = [[BeamLaser]],
 				weaponVelocity          = 1500,
-    },
+				waterweapon				= true,
+			},
 		},
-
-
 		featureDefs            = {
 
 			DEAD  = {
