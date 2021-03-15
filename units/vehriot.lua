@@ -1,7 +1,7 @@
 return { 
 	vehriot = {
 		unitname            = [[vehriot]],
-		name                = [[Ripper]],
+		name                = [[Striker]],
 		description         = [[Riot Rover]],
 		acceleration        = 0.159,
 		brakeRate           = 1.24,
@@ -131,14 +131,14 @@ return {
 					smoothradius = [[60]],
 					smoothmult   = [[0.08]],
 					force_ignore_ground = [[1]],
-					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "vehriot_secondary",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 100, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-4,-1,-4,4,0,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-6,-2,-6,6,0,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 0, -- check for nearby units?
 					proxydist = 100, -- how far to check for units? Default: spawndist
@@ -149,7 +149,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 40*6,
+					default = 40*12,
 				},
 				
 				edgeEffectiveness       = 0.75,
