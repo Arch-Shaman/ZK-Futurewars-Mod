@@ -143,7 +143,7 @@ function script.Shot(num) -- Moved off FireWeapon for modders/tweakunits mostly.
 	EmitSfx(firepoint, 1025)
 	StartThread(BarrelRecoil)
 end
-	
+
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, {body, turret})
 	StartThread(Suspension)
