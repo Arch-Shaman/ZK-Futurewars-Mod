@@ -49,8 +49,8 @@ local spGetUnitVelocity = Spring.GetUnitVelocity
 
 function SprintThread()
 	for i=1, SPEEDUP_DURATION do
-		EmitSfx(rwheel4, 1027)
-		EmitSfx(lwheel4, 1027)
+		EmitSfx(rwheel4, 1026)
+		EmitSfx(lwheel4, 1026)
 		Sleep(33)
 	end
 	
