@@ -1,5 +1,6 @@
 local sweepfireDefs = {}
 local minelayerdefs = {}
+local reverseweaponids = {}
 
 for i = 1, #UnitDefs do
 	local unitdef = UnitDefs[i]
@@ -11,6 +12,7 @@ for i = 1, #UnitDefs do
 		if cp.sweepfire_minelayer or cp.sweepfire then
 			if sweepfireDefs[i] == nil then
 				sweepfireDefs[i] = {}
+				reverseweaponids[i] = {}
 			end
 			sweepfireDefs[i][num + 1] = {
 				minelayer = cp.sweepfire_minelayer ~= nil,
@@ -20,6 +22,7 @@ for i = 1, #UnitDefs do
 				fastupdate = cp.sweepfire_fastupdate ~= nil,
 				maxrangemult = tonumber(cp.sweepfire_maxrangemult) or 1,
 				centerreadjust = cp.sweepfire_headingadjust ~= nil,
+				reverseweaponids[i][w] = num + 1
 			}
 			num = num + 1
 		end
@@ -29,4 +32,4 @@ for i = 1, #UnitDefs do
 	end
 end
 
-return sweepfireDefs, minelayerdefs
+return sweepfireDefs, minelayerdefs, reverseweaponids

@@ -47,7 +47,7 @@ local headingtorad = (math.pi * 2 / 65536)
 -- Defs --
 
 spEcho("Sweapfire: Loading defs..")
-local config, minelayerdefs = VFS.Include("LuaRules/Configs/sweapfire_defs.lua")
+local config, minelayerdefs, reverseweaponids = VFS.Include("LuaRules/Configs/sweapfire_defs.lua")
 -- descriptions --
 
 local sweapfire_desc = {
@@ -111,6 +111,10 @@ local function GetWeaponDefID(def, weaponnum)
 	return WeaponDefs[UnitDefs[def].weapons[weaponnum].weaponDef].id
 end
 
+local function ReverseLookup(def, weaponum)
+	return reverseweaponids[def][weaponum]
+end
+
 local function GetLowestHeightOnCircle(x, z, radius, points)
 	local anglepercheck = rad(360 / (points + 1))
 	local currentangle = 0
@@ -136,9 +140,10 @@ local function GetUnitRange(unitID, weaponNum, runs)
 	local weapondefid = UnitDefs[unitDefID].weapons[weaponNum].weaponDef
 	local weapondef = WeaponDefs[weapondefid]
 	local originalrange = weapondef.range
+	local config = config[unitDefID][ReverseLookup(unitDefID, weaponNum)]
 	--spEcho("Maxrangemult: " .. tostring(config[weapondefid].maxrangemult))
-	if config[unitDefID][weaponNum].maxrangemult and config[unitDefID][weaponNum].maxrangemult ~= 1 then
-		return originalrange * config[unitDefID][weaponNum].maxrangemult
+	if config.maxrangemult and config.maxrangemult ~= 1 then
+		return originalrange * config.maxrangemult
 	end
 	if weapondef.type == "BeamLaser" then
 		return originalrange * 0.9 -- for whatever reason lotus doesn't like to attack at maxrange.
