@@ -25,7 +25,7 @@ local SUSPENSION_BOUND = 3
 local SPEEDUP_FACTOR = tonumber (UnitDef.customParams.boost_speed_mult)
 local SPEEDUP_DURATION = tonumber (UnitDef.customParams.boost_duration)
 local POSTSPRINT_SPEED = tonumber (UnitDef.customParams.boost_postsprint_speed)
-local POSTSPRINT_DURATION = tonumber (UnitDef.customParam.boost_postsprint_duration)
+local POSTSPRINT_DURATION = tonumber (UnitDef.customParams.boost_postsprint_duration)
 
 -- speedups --
 local cos = math.cos
@@ -68,6 +68,20 @@ function Sprint()
 	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", SPEEDUP_FACTOR)
 	-- Spring.MoveCtrl.SetAirMoveTypeData(unitID, "maxAcc", 3)
 	GG.UpdateUnitAttributes(unitID)
+end
+
+local CMD_ONECLICK_WEAPON = Spring.Utilities.CMD.ONECLICK_WEAPON
+
+local function RetreatThread()
+	Sleep(800)
+	local specialReloadState = Spring.GetUnitRulesParam(unitID,"specialReloadFrame")
+	if (not specialReloadState or (specialReloadState <= Spring.GetGameFrame())) then
+		Spring.GiveOrderToUnit(unitID, CMD.INSERT, {0, CMD_ONECLICK_WEAPON, CMD.OPT_INTERNAL,}, CMD.OPT_ALT)
+	end
+end
+
+function RetreatFunction()
+	StartThread(RetreatThread)
 end
 
 local function Suspension() -- Shamelessly stolen and adapted from Ripper. Perhaps this should be an include or something?
