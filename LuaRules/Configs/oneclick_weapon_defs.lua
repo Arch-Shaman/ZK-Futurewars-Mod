@@ -45,7 +45,7 @@ local oneClickWepDefNames = {
 		{ functionToCall = "Sprint", reloadTime = 1200, name = "Speed Boost", tooltip = "Speed boost (5x for 1 second)", useSpecialReloadFrame = true, texture = "LuaUI/Images/Commands/Bold/sprint.png",},
 	},
 	vehassault = {
-		{ functionToCall = "Sprint", reloadTime = 600, name = "Pursuit", tooltip = "Increase speed by 3x for 1s, followed by a slowdown of 25% for 1s.\n20s cooldown.", useSpecialReloadFrame = true, texture = "LuaUI/Images/Commands/Bold/sprint.png",},
+		{ functionToCall = "Sprint", reloadTime = 600, name = "Pursuit", tooltip = "Increase speed by 3x for 1.5s, followed by a slowdown of 50% for 3s.\n20s cooldown.", useSpecialReloadFrame = true, texture = "LuaUI/Images/Commands/Bold/sprint.png",},
 	},
 	--planescout = {
 	--	{ functionToCall = "Cloak", reloadTime = 600, name = "Temp Cloak", tooltip = "Cloaks for 5 seconds", useSpecialReloadFrame = true},
