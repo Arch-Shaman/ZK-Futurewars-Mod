@@ -4,7 +4,7 @@ return {
 		name                   = [[Claw]],
 		description            = [[Badger Mine]],
 		acceleration           = 0,
-		activateWhenBuilt      = false,
+		activateWhenBuilt      = true,
 		brakeRate              = 0,
 		buildCostMetal         = 5,
 		builder                = false,
@@ -12,6 +12,7 @@ return {
 		canGuard               = false,
 		canMove                = false,
 		canPatrol              = false,
+		cantBeTransported      = true,
 		category               = [[FLOAT MINE STUPIDTARGET]],
 		cloakCost              = 0,
 		collisionVolumeOffsets = [[0 -4 0]],
@@ -21,9 +22,8 @@ return {
 		customParams           = {
 			dontcount = [[1]],
 			mobilebuilding = [[1]],
-			idle_cloak = 1,
 		},
-
+		
 		explodeAs              = [[NOWEAPON]],
 		footprintX             = 1,
 		footprintZ             = 1,
@@ -49,7 +49,6 @@ return {
 		turnRate               = 0,
 		waterline              = 1,
 		workerTime             = 0,
-		yardMap                = [[y]],
 
 		weapons                = {
 
