@@ -98,7 +98,7 @@ local cmds = {
 	WANTED_SPEED = 38825,
 	SWEEPFIRE = 38886, -- cmd_sweepfire gadget
 	SWEEPFIRE_MINES = 38888,
-	SWEEPFIRE_CANCEL = 38887, -- ditto.
+	SWEEPFIRE_CANCEL = 38887,
 	AIR_STRAFE = 39381,
 	-- terraform
 	RAMP = 39734,
@@ -107,8 +107,8 @@ local cmds = {
 	SMOOTH = 39738,
 	RESTORE = 39739,
 	BUMPY = 39740,
-	TERRAFORM_INTERNAL = 39801,
 	
+	TERRAFORM_INTERNAL = 39801,
 }
 -- not included here, just listed
 --[[
