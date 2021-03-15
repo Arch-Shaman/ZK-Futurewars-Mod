@@ -1,7 +1,7 @@
 return { 
 	vehriot = {
 		unitname            = [[vehriot]],
-		name                = [[Ripper]],
+		name                = [[Striker]],
 		description         = [[Riot Rover]],
 		acceleration        = 0.159,
 		brakeRate           = 1.24,
@@ -131,7 +131,7 @@ return {
 					smoothradius = [[60]],
 					smoothmult   = [[0.08]],
 					force_ignore_ground = [[1]],
-					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "vehriot_secondary",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
