@@ -126,7 +126,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 7.4,
+					default = 6.8,
 				},
 			
 				duration                = 0.01,
@@ -173,7 +173,7 @@ return {
 					flamethrower = [[1]],
 					setunitsonfire = "1",
 					burnchance = "1", -- Per-impact
-					burntime = [[600]],
+					burntime = [[540]],
 					
 					light_camera_height = 2800,
 					light_color = [[0.6 0.39 0.18]],
@@ -191,7 +191,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 5.2,
+					default = 4.7,
 				},
 			
 				duration                = 0.01,
@@ -252,13 +252,13 @@ return {
 					area_damage_dps = 40,
 					area_damage_duration = 12,
 					
-					stats_damage = (40*24) + 220,
-					shield_damage = (40*24) + 220,
-					stats_shield_damage = (40*24) + 220,
+					stats_damage = (35*24) + 200,
+					shield_damage = (35*24) + 200,
+					stats_shield_damage = (35*24) + 200,
 				},
 
 				damage                  = {
-					default = 220,
+					default = 200,
 				},
 
 				explosionGenerator      = [[custom:napalm_hellfire]],
@@ -357,7 +357,7 @@ return {
 					light_radius = 500,
 				},
 				damage                  = {
-					default = 40,
+					default = 35,
 				},
 
 				explosionGenerator      = [[custom:napalm_firewalker_small]],
