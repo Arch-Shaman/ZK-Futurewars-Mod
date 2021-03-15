@@ -254,14 +254,19 @@ end
 local function CheckUnitNeedsSweeping(unitID, def)
 	local range = 0
 	for i = 1, #UnitDefs[def].weapons do
-		local myrange = GetUnitRange(unitID, i, 1)
-		local isfiring = GetWeaponIsFiringAtSomething(unitID, i)
-		if isfiring then
-			return false
+		if config[def][ReverseLookup(def, i)] ~= nil then
+			local myrange = GetUnitRange(unitID, i, 1)
+			local isfiring = GetWeaponIsFiringAtSomething(unitID, i)
+			if isfiring then
+				return false
+			end
+			if myrange > range then
+				range = myrange
+			end
 		end
-		if myrange > range then
-			range = myrange
-		end
+	end
+	if range == nil then
+		return false
 	end
 	return not CheckUnitHasTargetInRange(unitID, range)
 end
