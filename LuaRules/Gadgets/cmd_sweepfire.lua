@@ -70,7 +70,7 @@ local minelayer_desc = {
 
 -- Variables --
 local UnitData = IterableMap.New()
-local debug = true
+local debug = false
 local CommandOrder = 123456
 local overrides = {}
 
