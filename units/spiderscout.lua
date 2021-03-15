@@ -81,6 +81,10 @@ return {
 					light_color = [[1 0.2 1]],
 					light_radius = 50,
 					timeslow_damagefactor = 1.3676, -- 120 DPS slow
+					sweepfire = 1,
+					sweepfire_maxangle = 15,
+					sweepfire_step = 1.5,
+					sweepfire_fastupdate = 1,
 				},
 
 				damage                  = {

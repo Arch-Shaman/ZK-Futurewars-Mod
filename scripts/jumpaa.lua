@@ -127,8 +127,8 @@ function script.AimWeapon(num, heading, pitch)
 	--if num == 1 then
 		Signal(SIG_AIM1)
 		SetSignalMask(SIG_AIM1)
-		Turn(torso, y_axis, heading, math.rad(600))
-		Turn(launcher, x_axis, -pitch, math.rad(300))
+		Turn(torso, y_axis, heading, math.rad(800))
+		Turn(launcher, x_axis, -pitch, math.rad(600))
 		WaitForTurn(torso, y_axis)
 		WaitForTurn(launcher, x_axis)
 		--return true

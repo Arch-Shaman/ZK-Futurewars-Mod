@@ -129,6 +129,11 @@ return {
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 					vradius1 = "-1,-1,-1,1,1,1", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					proxy = 1, -- check for nearby units?
+					sweepfire = 1,
+					sweepfire_maxangle = 30,
+					sweepfire_step = 3,
+					sweepfire_fastupdate = 1,
+					sweepfire_maxrangemult = 0.98,
 				},
 
 				damage                  = {

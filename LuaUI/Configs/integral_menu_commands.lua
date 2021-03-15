@@ -23,6 +23,8 @@ local cmdPosDef = {
 	[CMD_JUMP]          = {pos = 1, priority = 6},
 	[CMD_AREA_GUARD]    = {pos = 1, priority = 10},
 	[CMD.AREA_ATTACK]   = {pos = 1, priority = 11},
+	[CMD_SWEEPFIRE]     = {pos = 7, priority = 12},
+	[CMD_SWEEPFIRE_CANCEL] = {pos = 8, priority = 12}, 
 	
 	[CMD_UPGRADE_UNIT]  = {pos = 7, priority = -8},
 	[CMD_UPGRADE_STOP]  = {pos = 7, priority = -7},
