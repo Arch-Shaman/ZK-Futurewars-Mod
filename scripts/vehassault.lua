@@ -22,7 +22,10 @@ local fired = false
 local mainhead = 0
 
 local SUSPENSION_BOUND = 3
-
+local SPEEDUP_FACTOR = tonumber (UnitDef.customParams.boost_speed_mult)
+local SPEEDUP_DURATION = tonumber (UnitDef.customParams.boost_duration)
+local POSTSPRINT_SPEED = tonumber (UnitDef.customParams.boost_postsprint_speed)
+local POSTSPRINT_DURATION = tonumber (UnitDef.customParam.boost_postsprint_duration)
 
 -- speedups --
 local cos = math.cos
@@ -43,6 +46,29 @@ end
 
 local xtiltv, ztiltv = 0, 0
 local spGetUnitVelocity = Spring.GetUnitVelocity
+
+function SprintThread()
+	for i=1, SPEEDUP_DURATION do
+		EmitSfx(rwheel4, 1027)
+		EmitSfx(lwheel4, 1027)
+		Sleep(33)
+	end
+	
+	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", POSTSPRINT_SPEED)
+	GG.UpdateUnitAttributes(unitID)
+	Sleep(POSTSPRINT_DURATION * 33)
+	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
+	GG.UpdateUnitAttributes(unitID)
+	-- Spring.MoveCtrl.SetAirMoveTypeData(unitID, "maxAcc", 0.5)
+	GG.UpdateUnitAttributes(unitID)
+end
+
+function Sprint()
+	StartThread(SprintThread)
+	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", SPEEDUP_FACTOR)
+	-- Spring.MoveCtrl.SetAirMoveTypeData(unitID, "maxAcc", 3)
+	GG.UpdateUnitAttributes(unitID)
+end
 
 local function Suspension() -- Shamelessly stolen and adapted from Ripper. Perhaps this should be an include or something?
 	local xtilt, ztilt = 0, 0

@@ -22,6 +22,10 @@ return {
 			aimposoffset   = [[0 8 0]],
 			midposoffset   = [[0 3 0]],
 			modelradius    = [[21]],
+			boost_postsprint_speed = 0.75,
+			boost_postsprint_duration = 30,
+			boost_speed_mult = 3,
+			boost_duration = 30,
 		},
 
 		explodeAs              = [[BIG_UNITEX]],
@@ -33,7 +37,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 1920,
 		maxSlope               = 18,
-		maxVelocity            = 2.95,
+		maxVelocity            = 3,
 		maxWaterDepth          = 22,
 		movementClass          = [[TANK3]],
 		noAutoFire             = false,
@@ -67,11 +71,10 @@ return {
 		},
 		weaponDefs             = {
 			PLASMA = {
-				name                    = [[Light Plasma Cannon]],
+				name                    = [[Plasma Cannon]],
 				areaOfEffect            = 32,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams        = {
 					light_camera_height = 1500,
 				},
@@ -81,17 +84,18 @@ return {
 				},
 
 				explosionGenerator      = [[custom:INGEBORG]],
+				mygravity				= 0.05,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 320,
-				reloadtime              = 2,
+				reloadtime              = 1.7,
 				soundHit                = [[weapon/cannon/cannon_hit2]],
 				soundStart              = [[weapon/cannon/medplasma_fire]],
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 225,
+				weaponVelocity          = 360,
 			},
 		},
 		featureDefs            = {
