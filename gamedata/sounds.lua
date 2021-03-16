@@ -110,7 +110,7 @@ local Sounds = {
 			preload = true,
 		},
 		SiloLaunch = {
-			file = "weapon/missile/tacnuke_launch.wav",
+			file = "sounds/weapon/missile/tacnuke_launch.wav",
 			gain = 1.0,
 			pitch = 1.0,
 			priority = 0,
