@@ -106,7 +106,7 @@ return {
 			},
 			crblmssl = {
 				name                    = [[Nuclear MIRV]],
-				areaOfEffect            = 1920,
+				areaOfEffect            = 0, --1920,
 				cegTag                  = [[NUCKLEARMINI]],
 				collideFriendly         = false,
 				collideFeature          = false,
@@ -129,6 +129,14 @@ return {
 					reaim_time = 60, -- Fast update not required (maybe dangerous)
 					light_color = [[2.92 2.64 1.76]],
 					light_radius = 3000,
+					
+					
+					stats_custom_tooltip_1 = " - Carries MIRV Warheads",
+					stats_custom_tooltip_entry_1 = "",
+					stats_custom_tooltip_2 = "    - Warhead Count:",
+					stats_custom_tooltip_entry_2 = "3",
+					stats_custom_tooltip_2 = "    - Warhead Range:",
+					stats_custom_tooltip_entry_2 = "1000 elmos",
 				},
 				damage                  = {
 					default = 36000.1,
