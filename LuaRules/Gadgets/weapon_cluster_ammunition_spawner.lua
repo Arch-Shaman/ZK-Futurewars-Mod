@@ -128,7 +128,7 @@ local projectiles = IterableMap.New() -- stuff we need to act on.
 local targettable = {} -- holds individual warhead info. form: unitID = {[1] = {x,y,z}, etc}
 local projectiletargets = {} -- proID = {[1] = {}, [2] = {}, etc}
 local forceupdatetargets = {count = 0, data = {}} -- proID = {x, y, z}
-local debug = true
+local debug = false
 local wanteddefs = VFS.Include("LuaRules/Configs/setprojectiletargetdefs.lua") or {}
 local mapx = Game.mapSizeX
 local mapz = Game.mapSizeZ
