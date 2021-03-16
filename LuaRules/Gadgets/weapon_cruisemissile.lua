@@ -143,6 +143,15 @@ local function IsMissileCruiseDone(id) -- other gadgets can look up if the missi
 	return not missiles[id] == nil
 end
 
+local function ForceUpdate(id, x, y, z)
+	if missiles[id] then
+		missiles[id].target[1] = x
+		missiles[id].target[2] = y
+		missiles[id].target[3] = z
+	end
+end
+
+GG.ForceCruiseUpdate = ForceUpdate
 GG.GetMissileCruising = IsMissileCruiseDone
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
@@ -175,7 +184,6 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local _, py = spGetProjectilePosition(proID)
 		py = max(py, ty)
 		missiles[proID] = {target = target, type = type, cruising = false, takeoff = true, lastknownposition = last, configid = wep, started = false, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0}
-		--spEcho("Wanted Altitude: " .. missiles[proID].wantedalt)
 		if config[wep].radius then
 			ProccessOffset(wep, proID)
 		end

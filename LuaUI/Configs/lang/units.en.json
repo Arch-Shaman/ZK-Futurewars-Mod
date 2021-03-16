@@ -490,9 +490,9 @@
 		"helptext" : "The Chainsaw is a long range anti-air turret, dealing out massive damage, able to knock bombers out of the sky very quickly. It can't take very much damage in return, though, and does poorly when attacked directly."
 	},
 	"staticnuke" : {
-		"name" : "Trinity",
-		"description" : "Strategic Nuclear Launcher, Drains 18 m/s, 3 minute stockpile",
-		"helptext" : "The Trinity launches devastating nuclear missiles that can obliterate entire bases. However, it is easily defeated by enemy anti-nuke systems, which must be removed from the desired target area beforehand."
+		"name" : "Oblivion",
+		"description" : "Strategic MIRV Launcher, Drains 25 m/s, 4 minute stockpile",
+		"helptext" : "Oblivion, the pinnacle of human engineering. The abesolute wizardry that it takes to cram 3 Hawking Bombs into a missile that can still fly across interplanetary space at fractions of the speed of light in unimagenable, yet somehow, some way, it was done."
 	},
 	"hovershotgun" : {
 		"name" : "Punisher",

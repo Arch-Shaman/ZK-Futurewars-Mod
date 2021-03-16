@@ -128,7 +128,7 @@ local projectiles = IterableMap.New() -- stuff we need to act on.
 local targettable = {} -- holds individual warhead info. form: unitID = {[1] = {x,y,z}, etc}
 local projectiletargets = {} -- proID = {[1] = {}, [2] = {}, etc}
 local forceupdatetargets = {count = 0, data = {}} -- proID = {x, y, z}
-local debug = true
+local debug = false
 local wanteddefs = VFS.Include("LuaRules/Configs/setprojectiletargetdefs.lua") or {}
 local mapx = Game.mapSizeX
 local mapz = Game.mapSizeZ
@@ -582,7 +582,9 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local newUnitTargets = {}
 		--select the targets and add them to projTargets
 		for i=1, #unitTargets do
-			spEcho("CAS: distance between MIRV target and warhead target: " .. ((unitTargets[i][1]-x)^2+(unitTargets[i][3]-z)^2))
+			if debug then
+				spEcho("CAS: distance between MIRV target and warhead target: " .. ((unitTargets[i][1]-x)^2+(unitTargets[i][3]-z)^2))
+			end
 			if ((unitTargets[i][1]-x)^2+(unitTargets[i][3]-z)^2) <= wanteddefs[proOwnerDefID]["range2"] then
 				selectableTargets = selectableTargets - 1
 				selectedTargets[i] = true

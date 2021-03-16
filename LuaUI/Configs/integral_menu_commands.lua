@@ -20,6 +20,7 @@ local cmdPosDef = {
 	[CMD_RAW_MOVE]      = {pos = 1, priority = 3},
 	[CMD.PATROL]        = {pos = 1, priority = 4},
 	[CMD.ATTACK]        = {pos = 1, priority = 5},
+	[CMD_SUBMUNITION_TARGET] = {pos = 1, priority = 6},
 	[CMD_JUMP]          = {pos = 1, priority = 6},
 	[CMD_AREA_GUARD]    = {pos = 1, priority = 10},
 	[CMD.AREA_ATTACK]   = {pos = 1, priority = 11},
