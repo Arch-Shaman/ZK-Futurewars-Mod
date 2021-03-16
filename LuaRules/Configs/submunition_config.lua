@@ -5,14 +5,14 @@ for i=1, #WeaponDefs do
 	local curRef = wd.customParams -- hold table for referencing
 	if curRef and curRef.projectile1 then -- found it!
 		if debug then
-			spEcho("CAS: Discovered " .. i .. "(" .. wd.name .. ")")
+			Spring.Echo("CAS: Discovered " .. i .. "(" .. wd.name .. ")")
 		end
 		if type(curRef.projectile1) == "string" then -- reason we use it like this is to provide an error if something doesn't seem right.
 			if WeaponDefNames[curRef.projectile1] then
 				if type(curRef.spawndist) == "string" then -- all ok
 					Script.SetWatchWeapon(i, true)
 					if debug then
-						spEcho("[CAS] Enabled watch for " .. i)
+						Spring.Echo("[CAS] Enabled watch for " .. i)
 					end
 					--Mommy projectile Defs
 					config[i] = {}
@@ -23,7 +23,7 @@ for i=1, #WeaponDefs do
 					if type(curRef.use2ddist) ~= "string" then
 						config[i]["use2ddist"] = 0
 						if debug then
-							spEcho("[CAS] Set 2ddist to false for " .. wd.name)
+							Spring.Echo("[CAS] Set 2ddist to false for " .. wd.name)
 						end
 					else
 						config[i]["use2ddist"] = tonumber(curRef.use2ddist)
@@ -36,7 +36,7 @@ for i=1, #WeaponDefs do
 					if type(curRef.vlist) == "string" then
 						config[i]["vlist"] = {}
 						local x,y,z
-						for w in gmatch(curRef.vlist,"%S+") do -- string should be "x,y,z/x,y,z/x,y,z,/x,y,z/etc
+						for w in string.gmatch(curRef.vlist,"%S+") do -- string should be "x,y,z/x,y,z/x,y,z,/x,y,z/etc
 							x,y,z = w:match("([^,]+),([^,]+),([^,]+)")
 							config[i]["vlist"][#config[i]["vlist"]+1] = {tonumber(x),tonumber(y),tonumber(z)}
 						end
@@ -103,7 +103,7 @@ for i=1, #WeaponDefs do
 									local ma = config[i]["frags"][fragnum]["spreadmin"]
 									config[i]["frags"][fragnum]["spreadmin"] = mi
 									config[i]["frags"][fragnum]["spreadmax"] = ma
-									spEcho("[CAS] WARNING: Illegal min,max value for spread on projectile ID " .. i .. " (" .. wd.name .. ").\n These values have been automatically switched, but you should fix your config!\nValues got:" .. config[i]["frags"][fragnum]["spreadmax"],config[i]["frags"][fragnum]["spreadmin"])
+									Spring.Echo("[CAS] WARNING: Illegal min,max value for spread on projectile ID " .. i .. " (" .. wd.name .. ").\n These values have been automatically switched, but you should fix your config!\nValues got:" .. config[i]["frags"][fragnum]["spreadmax"],config[i]["frags"][fragnum]["spreadmin"])
 								end
 							else
 								config[i]["frags"][fragnum]["spreadmin"] = -math.abs(tonumber(spreadradius))
@@ -125,7 +125,7 @@ for i=1, #WeaponDefs do
 										local ma = config[i]["frags"][fragnum]["veldata"].max[j]
 										config[i]["frags"][fragnum]["veldata"].min[j] = mi
 										config[i]["frags"][fragnum]["veldata"].max[j] = ma
-										spEcho("[CAS] WARNING: Illegal min,max value for velocity on projectile ID " .. i .. " (" .. wd.name .. ").\n These values have been automatically switched, but you should fix your config!\nValues got:" .. config[i]["frags"][fragnum]["veldata"].min[j],config[i]["frags"][fragnum]["veldata"].max[j])
+										Spring.Echo("[CAS] WARNING: Illegal min,max value for velocity on projectile ID " .. i .. " (" .. wd.name .. ").\n These values have been automatically switched, but you should fix your config!\nValues got:" .. config[i]["frags"][fragnum]["veldata"].min[j],config[i]["frags"][fragnum]["veldata"].max[j])
 									end
 								end
 							else
@@ -168,13 +168,13 @@ for i=1, #WeaponDefs do
 						Spring.Echo("[CAS] Frag count: " .. fragnum - 1)
 					end
 				else
-					spEcho("[CAS] Error: " .. i .. "(" .. WeaponDefs[i].name .. "): spawndist is not present.")
+					Spring.Echo("[CAS] Error: " .. i .. "(" .. WeaponDefs[i].name .. "): spawndist is not present.")
 				end
 			else
-				spEcho("[CAS] Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a valid weapondef name.")
+				Spring.Echo("[CAS] Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a valid weapondef name.")
 			end
 		else
-			spEcho("[CAS] Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a string.")
+			Spring.Echo("[CAS] Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a string.")
 		end
 	end
 	wd = nil
