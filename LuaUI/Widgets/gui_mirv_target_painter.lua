@@ -116,7 +116,7 @@ local function DrawWorldFunc()
 		--spEcho(TargetCount)
 		if TargetCount > 0 then
 			--glDepthTest(true)
-			gl.LineWidth(10)
+			gl.LineWidth(12)
 			glAlphaTest(GL_GREATER, 0)
 			glColor(1,1,1,0.8)
 			glTexture('LuaUI/Images/commands/Bold/nuke.png')
@@ -130,21 +130,25 @@ local function DrawWorldFunc()
 				
 				--spEcho("targetX: " .. targetX .. ", targetY: " .. targetY .. ", targetZ: " .. targetZ)
 				
+				glTexture(false)
+				gl.LineWidth(6)
+				glColor(1,0.5,0,0.5)
+								
+				glBeginEnd(GL_LINES, VertexListCircle, targetX, targetY, targetZ, 800, math.rad(10))
+				
+				
 				if drawMIRVCircle and drawnTargets > 0 and (targetX-x)^2+(targetZ-z)^2 < def.range2 then
 					local vertices = {{targetX, targetY, targetZ}, mousePos}
 					
-					glTexture(false)
 					gl.LineWidth(10)
 					glColor(0,1,0,0.6)
 					glBeginEnd(GL_LINES, VertexList, vertices)
-					--Spring.Utilities.TableEcho(vertices)
-					glColor(1,1,1,1)
-					--spEcho("darn son")
-					glTexture(true)
 					
 					drawnTargets = drawnTargets - 1
 				end
 				
+				glColor(1,1,1,1)
+				glTexture(true)
 				gl.PushMatrix()
 				glTranslate(targetX, max(targetY, 0.0), targetZ)
 				--glBillboard()
