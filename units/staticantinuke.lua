@@ -2,7 +2,7 @@ return {
 	staticantinuke = {
 		unitname                      = [[staticantinuke]],
 		name                          = [[Antinuke]],
-		description                   = [[Strategic Nuke Interception System]],
+		description                   = [[Nuclear Interceptor (Needs Grid: 175E)]],
 		acceleration                  = 0,
 		activateWhenBuilt             = true,
 		brakeRate                     = 0,
@@ -28,6 +28,9 @@ return {
 			nuke_coverage  = 2500,
 			modelradius      = [[50]],
 			selectionscalemult = 1,
+			neededlink  = 175,
+			pylonrange  = 450,
+			keeptooltip = "by janitor's request, please don't remove the tooltips Machine God.",
 		},
 		
 		explodeAs                     = [[LARGE_BUILDINGEX]],
@@ -52,14 +55,10 @@ return {
 		yardmap                       = [[oooooooooooooooooooooooooooooooooooooooo]],
 		floater                       = true,
 		weapons                       = {
-
 			{
 				def = [[AMD_ROCKET]],
 			},
-
 		},
-
-
 		weaponDefs                    = {
 
 			AMD_ROCKET = {
@@ -111,7 +110,6 @@ return {
 			},
 		},
 		featureDefs                   = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -119,8 +117,6 @@ return {
 				footprintZ       = 8,
 				object           = [[antinuke_dead.s3o]],
 			},
-
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 5,

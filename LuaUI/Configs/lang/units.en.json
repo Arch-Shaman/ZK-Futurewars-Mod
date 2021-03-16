@@ -736,8 +736,8 @@
 	},
 	"staticantinuke" : {
 		"name" : "Antinuke",
-		"description" : "Strategic Nuke Interception System",
-		"helptext" : "The Antinuke automatically intercepts enemy nuclear ICBMs aimed within its coverage radius."
+		"description" : "Nuclear Interceptor (Needs Grid: 175E)",
+		"helptext" : "The Antinuke automatically intercepts enemy nuclear ICBMs aimed within its coverage radius. WARNING: Does not work on MIRVs traveling in space. Only works on MIRV warheads!"
 	},
 	"staticheavyarty" : {
 		"name" : "Big Bertha",
