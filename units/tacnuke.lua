@@ -87,7 +87,7 @@ return {
 				reloadtime              = 10,
 				smokeTrail              = false,
 				soundHit                = [[explosion/mini_nuke]],
-				soundStart              = [[weapon/missile/tacnuke_launch]],
+				soundStart              = [[SiloLaunch]],
 				tolerance               = 4000,
 				turnrate                = 18000,
 				tracks = true,
