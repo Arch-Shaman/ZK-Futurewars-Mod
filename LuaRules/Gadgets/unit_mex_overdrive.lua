@@ -43,26 +43,6 @@ local spAddTeamResource   = Spring.AddTeamResource
 local spUseTeamResource   = Spring.UseTeamResource
 local spSetTeamResource   = Spring.SetTeamResource
 local spGetTeamInfo       = Spring.GetTeamInfo
-
--- CHEATS --
-local aimult = 1
-local aiteams = {}
-do
-	local modoptions = Spring.GetModOptions()
-	aimult = modoptions and modoptions["ai_resourcecheat"] or 1
-	cheatoption = modoptions and modoptions["ai_cheatoption"] or "none"
-	local allyteams = Spring.GetAllyTeamList()
-	for a = 1, #allyteams do
-		local allyteam = allyteams[a]
-		local teamlist = Spring.GetTeamList(allyteam)
-		for t = 1, #teamlist do
-			local team = teamlist[t]
-			if select(4, Spring.GetTeamInfo(team)) then
-				aiteams[team] = true
-			end
-		end
-	end
-end
 	
 
 -------------------------------------------------------------------------------------
@@ -1574,16 +1554,15 @@ local function TransferMexRefund(unitID, newTeamID)
 end
 
 local function AddMex(unitID, teamID, metalMake)
-	if aiteams[teamID] then
-		metalMake = metalMake * aimult
-	end
 	if (metalMake or 0) <= 0 then
 		return
 	end
 	local allyTeamID = spGetUnitAllyTeam(unitID)
 	if (allyTeamID) then
 		mexByID[unitID] = {gridID = 0, allyTeamID = allyTeamID}
-
+		local newteam = spGetUnitTeam(unitID)
+		local mult = GG.GetTeamHandicap(newteam) or 1
+		metalMake = metalMake * mult
 		if teamID and enableMexPayback then
 			-- share goes down to 0 linearly, so halved to average it over refund duration
 			local refundTime = MEX_REFUND_VALUE / ((MEX_REFUND_SHARE / 2) * metalMake)
@@ -1774,10 +1753,9 @@ function externalFunctions.AddUnitResourceGeneration(unitID, metal, energy, shar
 		return
 	end
 	local teamID = Spring.GetUnitTeam(unitID)
-	if aiteams[teamID] then
-		metal = metal * aimult
-		energy = energy * aimult
-	end
+	local mult = GG.GetTeamHandicap(teamID) or 1
+	metal = metal * mult
+	energy = energy * mult
 	local allyTeamID = Spring.GetUnitAllyTeam(unitID)
 
 	if not teamID or not generator[allyTeamID] or not generator[allyTeamID][teamID] then
@@ -1805,6 +1783,7 @@ function externalFunctions.AddInnateIncome(allyTeamID, metal, energy)
 	if not (allyTeamID and allyTeamInfo[allyTeamID]) then
 		return
 	end
+	local mult = GG.GetAllyTeamHandicap(allyTeamID)
 	allyTeamInfo[allyTeamID].innateMetal = (allyTeamInfo[allyTeamID].innateMetal or 0) + metal
 	allyTeamInfo[allyTeamID].innateEnergy = (allyTeamInfo[allyTeamID].innateEnergy or 0) + energy
 	Spring.SetGameRulesParam("OD_allyteam_metal_innate_" .. allyTeamID, allyTeamInfo[allyTeamID].innateMetal)

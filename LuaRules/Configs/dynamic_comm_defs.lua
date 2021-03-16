@@ -574,6 +574,27 @@ local moduleDefs = {
 			end
 		end
 	},
+		{
+		name = "commweapon_minefieldinacan",
+		humanName = "Minefield In A Can",
+		description = "Minefield In A Can:\nA canister full of surprises, waiting for your enemies.\nStrike and Recon only.",
+		image = moduleImagePath .. "conversion_partillery.png",
+		limit = 1,
+		cost = 300 * COST_MULT,
+		requireChassis = {"recon", "strike"},
+		requireLevel = 3,
+		slotType = "adv_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = "commweapon_minefieldinacan"
+			else
+				sharedData.weapon2 = "commweapon_minefieldinacan"
+			end
+		end
+	},
 	{
 		name = "commweapon_concussion",
 		humanName = "Concussion Shell",
@@ -971,7 +992,7 @@ local moduleDefs = {
 	{
 		name = "module_jumpreload",
 		humanName = "Efficient Jumpjets",
-		description = "Efficient Jumpjets:\nReduces jumpjet cooldown by 20%.\nRecon only.\nMutually Exclusive with: Improved Jumpjets & High Performance Jumpjets.",
+		description = "Efficient Jumpjets:\nReduces jumpjet cooldown by 20%.\nIncreases jump speed slightly.\nRecon only.\nMutually Exclusive with: Improved Jumpjets & High Performance Jumpjets.",
 		image = moduleImagePath .. "module_jumpjetrecharge.png",
 		limit = 4,
 		cost = 200 * COST_MULT,
@@ -982,12 +1003,14 @@ local moduleDefs = {
 		applicationFunction = function (modules, sharedData)
 			local reloadbonus = sharedData.jumpreloadbonus or 0
 			sharedData.jumpreloadbonus = reloadbonus + 0.2
+			local speedbonus = sharedData.jumpspeedbonus or 0
+			sharedData.jumpspeedbonus = speedbonus + 0.25
 		end
 	},
 	{
 		name = "module_jumpretrofit",
 		humanName = "Improved Jumpjets",
-		description = "Improved Jumpjets:\nIncreases jumpjet range by 20%.\nDecreases jumpjet reload by 7.5%\nRecon only.\nMutually Exclusive with: High Performance Jumpjets & Efficient Jumpjets.",
+		description = "Improved Jumpjets:\nIncreases jumpjet range by 20%.\nIncreases jump speed moderately.\nDecreases jumpjet reload by 7.5%\nRecon only.\nMutually Exclusive with: High Performance Jumpjets & Efficient Jumpjets.",
 		image = moduleImagePath .. "module_jumpjetretrofit.png",
 		limit = 4,
 		cost = 220 * COST_MULT,
@@ -998,6 +1021,8 @@ local moduleDefs = {
 		applicationFunction = function (modules, sharedData)
 			local rangebonus = sharedData.jumprangebonus or 0
 			local reloadbonus = sharedData.jumpreloadbonus or 0
+			local speedbonus = sharedData.jumpspeedbonus or 0
+			sharedData.jumpspeedbonus = speedbonus + 0.5
 			sharedData.jumprangebonus = rangebonus + 0.2
 			sharedData.jumpreloadbonus = reloadbonus + 0.075
 		end
@@ -1005,7 +1030,7 @@ local moduleDefs = {
 	{
 		name = "module_jumprange",
 		humanName = "High Performance Jumpjets",
-		description = "High Performance Jumpjets:\nIncreases jumpjet range by 50%.\nRecon only.\nMutually Exclusive with: Improved Jumpjets & Efficient Jumpjets.",
+		description = "High Performance Jumpjets:\nIncreases jumpjet range by 50%.\nIncreases jump speed signifcantly.\nRecon only.\nMutually Exclusive with: Improved Jumpjets & Efficient Jumpjets.",
 		image = moduleImagePath .. "module_jumpjetpower.png",
 		limit = 4,
 		cost = 200 * COST_MULT,
@@ -1016,6 +1041,8 @@ local moduleDefs = {
 		applicationFunction = function (modules, sharedData)
 			local rangebonus = sharedData.jumprangebonus or 0
 			sharedData.jumprangebonus = rangebonus + 0.5
+			local speedbonus = sharedData.jumpspeedbonus or 0
+			sharedData.jumpspeedbonus = speedbonus + 0.75
 		end
 	},
 	{
@@ -1197,7 +1224,7 @@ local moduleDefs = {
 	{
 		name = "module_adv_nano",
 		humanName = "Advanced Nanolathe",
-		description = "Advanced Nanolathe:\nIncreases build power by 2.5 (+5 for support).\nLimit: 8",
+		description = "Advanced Nanolathe:\nIncreases build power by 2.5 (+5 for support). Increases storage by 25 (50 for support).\nLimit: 8",
 		image = moduleImagePath .. "module_adv_nano.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1206,12 +1233,13 @@ local moduleDefs = {
 		requireChassis = {"assault", "strike", "recon"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 2.5
+			sharedData.extrastorage = (sharedData.extrastorage or 0) + 25
 		end
 	},
 	{
 		name = "module_adv_nano_support",
 		humanName = "Advanced Nanolathe",
-		description = "Advanced Nanolathe:\nIncreases build power by 5 (+2.5 for others).\nLimit: 8",
+		description = "Advanced Nanolathe:\nIncreases build power by 5 (+2.5 for others). Increases storage by 50 (25 for others).\nLimit: 8",
 		image = moduleImagePath .. "module_adv_nano.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1220,6 +1248,7 @@ local moduleDefs = {
 		requireChassis = {"support"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 5
+			sharedData.extrastorage = (sharedData.extrastorage or 0) + 50
 		end
 	},
 	
@@ -1636,6 +1665,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[1],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 2
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 50
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1657,6 +1687,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[2] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 4
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 100
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1678,6 +1709,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[3] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 6
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 150
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1703,6 +1735,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[4],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 9
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 200
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -1728,6 +1761,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[5],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 12
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 250
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)

@@ -123,7 +123,7 @@ return {
 				turret                  = true,
 				waterweapon             = false,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 270,
+				weaponVelocity          = 330,
 			},
 		},
 

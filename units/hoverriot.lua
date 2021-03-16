@@ -69,7 +69,10 @@ return {
 				customparams = {
 					stats_hide_damage = 1, -- continuous laser
 					stats_hide_reload = 1,
-
+					sweepfire = 1,
+					sweepfire_maxangle = 15,
+					sweepfire_step = 1.5,
+					sweepfire_fastupdate = 1,
 					light_color = [[0.25 1 0.25]],
 					light_radius = 120,
 				},

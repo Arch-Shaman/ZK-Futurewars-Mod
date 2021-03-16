@@ -78,7 +78,7 @@ return {
 				reloadtime              = 3,
 				smokeTrail              = false,
 				soundHit                = [[weapon/missile/emp_missile_hit]],
-				soundStart              = [[weapon/missile/tacnuke_launch]],
+				soundStart              = [[SiloLaunch]],
 				tolerance               = 4000,
 				tracks                  = true,
 				turnrate                = 18000,

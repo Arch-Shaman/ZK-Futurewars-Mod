@@ -51,7 +51,7 @@ local defaultweapon = {
 	[3] = "commweapon_beamlaser", -- support
 	[4] = "commweapon_canistercannon", -- bombard
 	[5] = "commweapon_beamlaser", -- knight
-	[6] = "commweapon_riotcannon", -- presumably battle comm at some point
+	[6] = "commweapon_canistercannon", -- presumably battle comm at some point
 }
 
 local function GetCommanderChassisDefaultWeapon(type)
@@ -159,6 +159,9 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 		GG.CloakAddOverride(unitID, data.recloaktime)
 		spSetUnitRulesParam(unitID, "commrecloaktime", data.recloaktime)
 	end
+	if data.jumpspeedbonus then
+		spSetUnitRulesParam(unitID, "comm_jumpspeed_bonus", data.jumpspeedbonus)
+	end
 	if data.radarRange then
 		spSetUnitRulesParam(unitID, "radarRangeOverride", data.radarRange, INLOS)
 	end
@@ -196,10 +199,14 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	end
 	
 	local buildPowerMult = ((data.bonusBuildPower or 0) + ud.buildSpeed)/ud.buildSpeed
+	local extrastorage = data.extrastorage or 0
+	local storageamount = ud.energyStorage + extrastorage
 	data.metalIncome = (data.metalIncome or 0)
 	data.energyIncome = (data.energyIncome or 0)
+	spSetUnitRulesParam(unitID, "basebuildpower_mult", buildPowerMult, INLOS)
 	spSetUnitRulesParam(unitID, "buildpower_mult", buildPowerMult, INLOS)
-	
+	spSetUnitRulesParam(unitID, "commander_storage_override", storageamount, INLOS)
+	GG.SetupCommanderStorage(unitID)
 	if data.metalIncome and GG.Overdrive then
 		spSetUnitRulesParam(unitID, "comm_income_metal", data.metalIncome, INLOS)
 		spSetUnitRulesParam(unitID, "comm_income_energy", data.energyIncome, INLOS)
@@ -331,7 +338,7 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 	spSetUnitRulesParam(unitID, "comm_baseUnitDefID", baseUnitDefID, INLOS)
 	spSetUnitRulesParam(unitID, "comm_baseWreckID",   baseWreckID, INLOS)
 	spSetUnitRulesParam(unitID, "comm_baseHeapID",    baseHeapID, INLOS)
-	
+	spSetUnitRulesParam(unitID, "commander_storage_override", 500, INLOS)
 	if profileID then
 		spSetUnitRulesParam(unitID, "comm_profileID",     profileID, INLOS)
 	end
@@ -355,7 +362,7 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 		SetUnitRulesModule(unitID, counts, moduleDefID)
 	end
 	SetUnitRulesModuleCounts(unitID, counts)
-	
+	GG.SetupCommanderStorage(unitID)
 	ApplyModuleEffects(unitID, moduleEffectData, totalCost, images or {}, chassis)
 	
 	if staticLevel then
@@ -400,7 +407,7 @@ local function Upgrades_CreateUpgradedUnit(defName, x, y, z, face, unitTeam, isB
 	end
 	
 	interallyCreatedUnit = true
-	
+	moduleEffectData.extrastorage = 0
 	internalCreationUpgradeDef = upgradeDef
 	internalCreationModuleEffectData = moduleEffectData
 	
@@ -408,6 +415,7 @@ local function Upgrades_CreateUpgradedUnit(defName, x, y, z, face, unitTeam, isB
 	if moduleEffectData.wantsfireatradar then
 		GG.AddUnitRadarTargeting(unitID)
 	end
+	GG.SetupCommanderStorage(unitID)
 	-- Unset the variables which need to be present at unit creation
 	interallyCreatedUnit = false
 	internalCreationUpgradeDef = nil

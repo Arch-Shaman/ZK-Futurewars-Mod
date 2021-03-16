@@ -212,14 +212,14 @@ end
 local function Jump(unitID, goal, origCmdParams, mustJump)
 	goal[2]                = spGetGroundHeight(goal[1],goal[3])
 	local start            = {spGetUnitPosition(unitID)}
-
+	local speedbonus = spGetUnitRulesParam(unitID, "comm_jumpspeed_bonus") or 0
 	local startHeight      = spGetGroundHeight(start[1],start[3])
 	start[2] = math.max(start[2], startHeight)
 	
 	local reloadmult	   = math.max(1 - (spGetUnitRulesParam(unitID, "comm_jumpreload_bonus") or 0), 0)
 	local unitDefID        = spGetUnitDefID(unitID)
 	local jumpDef          = jumpDefs[unitDefID]
-	local defSpeed         = jumpDef.speed
+	local defSpeed         = jumpDef.speed + speedbonus
 	local delay            = jumpDef.delay
 	local height           = jumpDef.height
 	local cannotJumpMidair = jumpDef.cannotJumpMidair

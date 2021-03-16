@@ -83,7 +83,7 @@ return {
 				colormap                = [[1 0.95 0.4 1   1 0.95 0.4 1    0 0 0 0.01    1 0.7 0.2 1]],
 				craterBoost             = 0,
 				burst					= 6,
-				burstrate				= 4/30,
+				burstrate				= 3/30,
 				craterMult              = 0,
 				cylinderTargeting 		= 1,
 				customParams        = {

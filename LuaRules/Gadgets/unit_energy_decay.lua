@@ -33,25 +33,6 @@ for i=1, #UnitDefs do
 	end
 end
 
-local cheatparam
-local aiteams = {}
-
-do
-	local modoptions = Spring.GetModOptions()
-	cheatparam = modoptions and modoptions["ai_resourcecheat"] or 1
-	local allyteams = Spring.GetAllyTeamList()
-	for a = 1, #allyteams do
-		local allyteam = allyteams[a]
-		local teamlist = Spring.GetTeamList(allyteam)
-		for t = 1, #teamlist do
-			local team = teamlist[t]
-			if select(4, Spring.GetTeamInfo(team)) then
-				aiteams[team] = true
-			end
-		end
-	end
-end
-
 local INLOS = {inlos = true}
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetGameFrame = Spring.GetGameFrame
@@ -64,10 +45,7 @@ local min = math.min
 function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	if config[unitDefID] then
 		if debug then spEcho("Added decayer " .. unitID) end
-		local mult = 1
-		if aiteams[unitTeam] then
-			mult = cheatparam
-		end
+		local mult = GG.GetTeamHandicap(unitTeam) or 1
 		local config = config[unitDefID]
 		IterableMap.Add(decayers, unitID, {currentrate = config.initialrate, nextupdate = spGetGameFrame() + config.time, def = unitDefID, mult = mult})
 		spSetUnitRulesParam(unitID, "selfIncomeChange", config.initialrate * mult)
@@ -92,11 +70,7 @@ end
 function gadget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
 	if IterableMap.InMap(decayers, unitID) then
 		local data = IterableMap.Get(decayers, unitID)
-		if aiteams[newTeam] then
-			data.mult = cheatparam
-		else
-			data.mult = 1
-		end
+		data.mult = GG.GetTeamHandicap(newTeam)
 	end
 end
 

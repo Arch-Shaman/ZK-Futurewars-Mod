@@ -119,6 +119,13 @@ local options = {
 		},
 	},
 	{
+		key    = 'resource_handicap',
+		name   = 'Resource Handicap',
+		desc   = "Multiplies a team's resources and BP by a certain amount. Split by a space. EG: 1 1 1 2 gives normal income to teams 1 to 3, but 4 has a 2.0 resource multiplier.",
+		type   = 'string',
+		def    = '',
+	},
+	{
 		key    = 'ai_resourcecheat',
 		name   = 'AI Cheat Multiplier',
 		desc   = "Multiplies AI resources, allowing them to cheat. Also impacts buildspeed. Note: AI will become crazy at high mults!",

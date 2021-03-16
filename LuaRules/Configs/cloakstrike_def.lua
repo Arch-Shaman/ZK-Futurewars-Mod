@@ -31,10 +31,10 @@ local StrikeWepDefNames = {
 			}
 		}, 
 		cloakedRulesParam = {
-			selfMoveSpeedChange = 1.5,
+			selfMoveSpeedChange = 1.25,
 		}, 
 		decloakedRulesParam = {
-			selfMoveSpeedChange = 1,
+			selfMoveSpeedChange = 0.75,
 		}, 
 		updateAttributes = true,
 	}
