@@ -79,6 +79,7 @@ local spSpawnSFX = Spring.SpawnSFX
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
+local spGetUnitDefID = Spring.GetUnitDefID
 
 
 local random = math.random
@@ -108,12 +109,14 @@ local projectileattributesCache = {pos = {0,0,0}, speed = {0,0,0}, owner = 0, te
 
 local frame
 
+local targetCancelRadius = 50*50
+
 local setprojectiletargetcmddesc = {
 	id      = CMD_SUBMUNITION_TARGET,
 	type    = CMDTYPE.ICON_UNIT_OR_MAP,
 	name    = 'Set Warhead Target',
 	action  = 'attack',
-	tooltip	= 'Authorize a nuclear strike at this position. You have up to 3 nukes to use per missile. Unselected targets will pick a random nearby location. (This command will cycle between all 3 of them)',
+	tooltip	= 'Add a stratigetical warhead target at this position. Each missile carries 3 wraheads. Unselected warheads will be targeted at a nearby random location (Issue on exsiting target to cancel target)',
 }
 
 --variables--
@@ -125,7 +128,7 @@ local projectiles = IterableMap.New() -- stuff we need to act on.
 local targettable = {} -- holds individual warhead info. form: unitID = {[1] = {x,y,z}, etc}
 local projectiletargets = {} -- proID = {[1] = {}, [2] = {}, etc}
 local forceupdatetargets = {count = 0, data = {}} -- proID = {x, y, z}
-local debug = false
+local debug = true
 local wanteddefs = VFS.Include("LuaRules/Configs/setprojectiletargetdefs.lua") or {}
 local mapx = Game.mapSizeX
 local mapz = Game.mapSizeZ
@@ -183,7 +186,7 @@ local function RegisterSubProjectiles(p, me)
 end
 
 local function GetRandomAttackPoint(x, z, radius)
-	local distance = random(0, radius)
+	local distance = sqrt(random(0, radius*radius))
 	local heading = rad(random(0, 360))
 	local target = {}
 	target[1] = x + (distance * sin(heading))
@@ -228,6 +231,7 @@ local function SpawnSubProjectiles(id, wd)
 	local projectileConfig = config[wd].frags
 	local targetoverride
 	local forceupdate = false
+	local ownerDefID = spGetUnitDefID(projectileattributes["owner"])
 	if config[wd].usertarget then
 		targetoverride = projectiletargets[id] or {}
 		forceupdate = true
@@ -240,10 +244,6 @@ local function SpawnSubProjectiles(id, wd)
 		local dr = projectileConfig[j]["spreadmax"] - mr
 		local vr = projectileConfig[j]["veldata"]
 		local projectilecount = projectileConfig[j]["numprojectiles"]
-		if config[wd].usertarget then
-			target = targetoverride[j] or GetRandomAttackPoint(x, z, 2000)
-			ttype = ground
-		end
 		for i=1, 3 do
 			step[i] = (vr.diff[i])/projectilecount
 		end
@@ -266,6 +266,10 @@ local function SpawnSubProjectiles(id, wd)
 			end
 		end
 		for i = 1, projectilecount do
+			if config[wd].usertarget then
+				target = targetoverride[i] or GetRandomAttackPoint(x, z, wanteddefs[ownerDefID]["range"])
+				ttype = ground
+			end
 			local p
 			if strfind(positioning,"random") then
 				if strfind(positioning,"x") then
@@ -328,6 +332,9 @@ local function SpawnSubProjectiles(id, wd)
 					end
 					spSetProjectileTarget(p, target,ttype)
 				else
+					if debug then
+						spEcho("CAS: setting target for " .. p .. " = (" .. target[1] .. ", " .. target[2] .. ", " .. target[3] .. ")")
+					end
 					RegisterForceUpdate(p, target[1], target[2], target[3])
 				end
 				--end
@@ -383,6 +390,7 @@ local function CheckProjectile(id)
 				spEcho("Locked in spawning")
 			end
 			SpawnSubProjectiles(id,wd)
+			return
 		else
 			if projectile.ttl then -- timed weapons don't need anything fancy.
 				if projectile.ttl <= frame then
@@ -390,6 +398,7 @@ local function CheckProjectile(id)
 						spEcho("Spawn by ttl")
 					end
 					SpawnSubProjectiles(id, wd)
+					return
 				else
 					return
 				end
@@ -414,6 +423,7 @@ local function CheckProjectile(id)
 						spEcho("Spawn by timeoutspawn")
 					end
 					SpawnSubProjectiles(id,wd)
+					return
 				end
 				local use3d = (myConfig.use2ddist == 0)
 				local distance
@@ -432,6 +442,7 @@ local function CheckProjectile(id)
 							spEcho("Spawn by ground height")
 						end
 						SpawnSubProjectiles(id,wd)
+						return
 					else
 						return
 					end
@@ -471,16 +482,19 @@ local function CheckProjectile(id)
 					if debug then
 						spEcho("distance")
 					end
+					return
 				elseif myConfig["isBomb"] and height <= myConfig.spawndist then
 					SpawnSubProjectiles(id,wd)
 					if debug then
 						spEcho("bomb engage")
 					end
+					return
 				elseif myConfig.groundimpact == 1 and vy < -1 or myConfig.groundimpact == 2 and height <= myConfig.spawndist then
 					if debug then
 						spEcho("ground impact")
 					end
 					SpawnSubProjectiles(id,wd)
+					return
 				elseif myConfig["proxy"] == 1 then
 					local units
 					if use3d then
@@ -493,6 +507,7 @@ local function CheckProjectile(id)
 							spEcho("Unit passed unittest. Passed to SpawnSubProjectiles")
 						end
 						SpawnSubProjectiles(id, wd)
+						return
 					end
 				end
 			end
@@ -503,32 +518,42 @@ local function CheckProjectile(id)
 end
 
 local function UpdateAttackOrder(unitID, pos)
-	local count = #targettable[unitID]
 	if type(pos) ~= "table" then
 		local new = {}
 		new[1], new[2], new[3] = spGetUnitPosition(pos)
 		pos = new
 	end
-	if count == 3 then
-		local newtable = {}
-		newtable[1] = {x = pos[1], z = pos[3]}
-		newtable[2] = targettable[unitID][1]
-		newtable[3] = targettable[unitID][2]
-		targettable[unitID] = newtable
-	else
-		local newtable = {}
-		newtable[1] = {x = pos[1], y = pos[2], z = pos[3]}
-		if #targettable[unitID] > 0 then
-			for i = 1, #targettable[unitID] do
-				newtable[#newtable + 1] = targettable[unitID][i]
-			end
-			targettable[unitID] = newtable
+	
+	local unitTargets = targettable[unitID] or {}
+	local count = #unitTargets
+	local removeTarget = false
+	for i=1, count do
+		if (unitTargets[i][1]-pos[1])^2 + (unitTargets[i][3]-pos[3])^2 < targetCancelRadius then
+			removeTarget = i
+			break
 		end
 	end
-	for i = 1, #targettable[unitID] do
-		spSetUnitRulesParam(unitID, "subprojectile_target_" .. i .. "_x", targettable[unitID].x, ALLIES)
-		spSetUnitRulesParam(unitID, "subprojectile_target_" .. i .. "_z", targettable[unitID].z, ALLIES)
+	if removeTarget then
+		for i=removeTarget, count-1 do
+			unitTargets[i] = unitTargets[i+1]
+		end
+		unitTargets[count] = nil
+		for i = 1, count-1 do
+			spSetUnitRulesParam(unitID, "subprojectile_target_" .. i .. "_x", unitTargets[i][1], ALLIES)
+			spSetUnitRulesParam(unitID, "subprojectile_target_" .. i .. "_z", unitTargets[i][3], ALLIES)
+		end
+	else
+		unitTargets[count+1] = {pos[1], pos[2], pos[3]}
+		spSetUnitRulesParam(unitID, "subprojectile_target_" .. count+1 .. "_x", pos[1], ALLIES)
+		spSetUnitRulesParam(unitID, "subprojectile_target_" .. count+1 .. "_z", pos[3], ALLIES)
 	end
+	
+	if debug then
+		spEcho("CAS: updating targets for unit " .. unitID .. ", new targets list:")
+		Spring.Utilities.TableEcho(unitTargets)
+	end
+	
+	targettable[unitID] = unitTargets
 	spSetUnitRulesParam(unitID, "subprojectile_target_count", #targettable[unitID], ALLIES)
 end
 
@@ -539,9 +564,62 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	if debug then
 		spEcho("ProjectileCreated: " .. tostring(proID, proOwnerID, weaponDefID))
 	end
-	--proOwnerID = spGetProjectileOwnerID(proID)
-	if targettable[proOwnerID] then
-		projectiletargets[proID] = targettable[proOwnerID]
+	local proOwnerDefID = spGetUnitDefID(proOwnerID)
+	if targettable[proOwnerID] and config[weaponDefID] and config[weaponDefID]["usertarget"] then
+		local unitTargets = targettable[proOwnerID]
+		local ttype, target = spGetProjectileTarget(proID)
+		local x,y,z
+		if ttype == unit then
+			x,y,z = spGetUnitPosition(target)
+		else
+			x,y,z = target[1], target[2], target[3]
+		end
+		spSetProjectileTarget(proID, x, y, z)
+		
+		local selectableTargets = wanteddefs[proOwnerDefID]["targets"]
+		local selectedTargets = {}
+		local projTargets = {}
+		local newUnitTargets = {}
+		--select the targets and add them to projTargets
+		for i=1, #unitTargets do
+			spEcho("CAS: distance between MIRV target and warhead target: " .. ((unitTargets[i][1]-x)^2+(unitTargets[i][3]-z)^2))
+			if ((unitTargets[i][1]-x)^2+(unitTargets[i][3]-z)^2) <= wanteddefs[proOwnerDefID]["range2"] then
+				selectableTargets = selectableTargets - 1
+				selectedTargets[i] = true
+				projTargets[#projTargets+1] = unitTargets[i]
+				if selectableTargets <= 0 then
+					break
+				end
+			end
+		end
+		--remove the selected targets from unitTargets
+		for i=1, #unitTargets do
+			if not selectedTargets[i] then
+				newUnitTargets[#newUnitTargets+1] = unitTargets[i]
+			end
+		end
+		--update unitrulesparam
+		if #newUnitTargets > 0 then
+			for i = 1, #newUnitTargets do
+				spSetUnitRulesParam(proOwnerID, "subprojectile_target_" .. i .. "_x", newUnitTargets[i][1], ALLIES)
+				spSetUnitRulesParam(proOwnerID, "subprojectile_target_" .. i .. "_z", newUnitTargets[i][3], ALLIES)
+			end
+		end
+		spSetUnitRulesParam(proOwnerID, "subprojectile_target_count", #newUnitTargets, ALLIES)
+		
+		if debug then
+			spEcho("CAS: MIRV launched by unit " .. proOwnerID)
+			spEcho("CAS: Unit Targets:")
+			Spring.Utilities.TableEcho(unitTargets)
+			spEcho("CAS: New Unit Targets:")
+			Spring.Utilities.TableEcho(newUnitTargets)
+			spEcho("CAS: MIRV Targets")
+			Spring.Utilities.TableEcho(projTargets)
+		end
+		
+		--update the main tables
+		targettable[proOwnerID] = newUnitTargets
+		projectiletargets[proID] = projTargets
 	end
 	if weaponDefID == nil then
 		weaponDefID = spGetProjectileDefID(proID)
