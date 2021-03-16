@@ -135,8 +135,8 @@ return {
 					stats_custom_tooltip_entry_1 = "",
 					stats_custom_tooltip_2 = "    - Warhead Count:",
 					stats_custom_tooltip_entry_2 = "3",
-					stats_custom_tooltip_2 = "    - Warhead Range:",
-					stats_custom_tooltip_entry_2 = "1000 elmos",
+					stats_custom_tooltip_3 = "    - Warhead Range:",
+					stats_custom_tooltip_entry_3 = "1000 elmos",
 				},
 				damage                  = {
 					default = 36000.1,
