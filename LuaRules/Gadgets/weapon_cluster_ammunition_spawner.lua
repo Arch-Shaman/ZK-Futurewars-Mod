@@ -116,7 +116,7 @@ local setprojectiletargetcmddesc = {
 	type    = CMDTYPE.ICON_UNIT_OR_MAP,
 	name    = 'Set Warhead Target',
 	action  = 'attack',
-	tooltip	= 'Add a stratigetical warhead target at this position. Each missile carries 3 wraheads. Unselected warheads will be targeted at a nearby random location (Issue on exsiting target to cancel target)',
+	tooltip	= 'Adds a payload target at the selected position. Payloads without a target will be targeted at a random nearby location (Issue on exsiting target to cancel target)',
 }
 
 --variables--
