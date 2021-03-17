@@ -115,7 +115,7 @@ local setprojectiletargetcmddesc = {
 	id      = CMD_SUBMUNITION_TARGET,
 	type    = CMDTYPE.ICON_UNIT_OR_MAP,
 	name    = 'Set Warhead Target',
-	action  = 'attack',
+	action  = 'subprojectileattack',
 	tooltip	= 'Adds a payload target at the selected position. Payloads without a target will be targeted at a random nearby location (Issue on exsiting target to cancel target)',
 }
 
