@@ -527,10 +527,12 @@ local function UpdateAttackOrder(unitID, pos)
 	local unitTargets = targettable[unitID] or {}
 	local count = #unitTargets
 	local removeTarget = false
-	for i=1, count do
-		if (unitTargets[i][1]-pos[1])^2 + (unitTargets[i][3]-pos[3])^2 < targetCancelRadius then
-			removeTarget = i
-			break
+	if count > 0 then
+		for i=1, count do
+			if unitTargets[i] and (unitTargets[i][1]-pos[1])^2 + (unitTargets[i][3]-pos[3])^2 < targetCancelRadius then
+				removeTarget = i
+				break
+			end
 		end
 	end
 	if removeTarget then
