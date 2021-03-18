@@ -90,7 +90,7 @@ return {
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
-				myGravity               = 0.45,
+				myGravity               = 0.49,
 				--projectiles             = 10,
 				range                   = 370,
 				reloadtime              = 0.067,
