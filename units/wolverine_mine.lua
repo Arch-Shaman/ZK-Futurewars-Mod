@@ -21,12 +21,9 @@ return {
 
 		customParams           = {
 			dontcount = [[1]],
-			mobilebuilding = [[1]],
 		},
 		
 		explodeAs              = [[NOWEAPON]],
-		footprintX             = 1,
-		footprintZ             = 1,
 		iconType               = [[mine]],
 		idleAutoHeal           = 10,
 		idleTime               = 300,
