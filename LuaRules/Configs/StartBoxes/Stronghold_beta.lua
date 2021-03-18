@@ -104,7 +104,7 @@ local team1box = {
 	{6303, 8057},
 }
 
-local team1flexbox = {
+local team5box = {
 	{6396, 5345},
 	{6459, 5352},
 	{6542, 5359},
@@ -487,7 +487,7 @@ local team2box = {
 	{142, 2306},
 }
 
-local team2flexbox = {
+local team6box = {
 	{126, 3891},
 	{196, 3878},
 	{243, 3885},
@@ -818,17 +818,256 @@ local team4box = {
 	{783, 7709},
 }
 
+local team7box = {
+	{4603, 2261},
+	{4593, 2145},
+	{4566, 2084},
+	{4527, 2035},
+	{4439, 1983},
+	{4404, 1917},
+	{4361, 1885},
+	{4261, 1887},
+	{4227, 1823},
+	{4167, 1771},
+	{4162, 1706},
+	{4096, 1598},
+	{4102, 1567},
+	{4209, 1450},
+	{4252, 1419},
+	{4268, 1341},
+	{4259, 1300},
+	{4307, 1242},
+	{4331, 1222},
+	{4377, 1208},
+	{4436, 1187},
+	{4474, 1132},
+	{4487, 1103},
+	{4567, 1078},
+	{4617, 1061},
+	{4646, 1083},
+	{4687, 1053},
+	{4690, 1019},
+	{4673, 975},
+	{4603, 959},
+	{4615, 865},
+	{4619, 821},
+	{4571, 734},
+	{4552, 678},
+	{4492, 651},
+	{4481, 639},
+	{4515, 605},
+	{4517, 549},
+	{4516, 449},
+	{4347, 233},
+	{4410, 210},
+	{4432, 183},
+	{4450, 152},
+	{4475, 133},
+	{4505, 134},
+	{4521, 153},
+	{4536, 171},
+	{4552, 177},
+	{4563, 181},
+	{4577, 222},
+	{4613, 232},
+	{4642, 226},
+	{4653, 216},
+	{4678, 212},
+	{4678, 246},
+	{4676, 275},
+	{4693, 299},
+	{4686, 334},
+	{4721, 369},
+	{4724, 403},
+	{4836, 451},
+	{4857, 480},
+	{4943, 478},
+	{4952, 538},
+	{4970, 586},
+	{5013, 636},
+	{5086, 653},
+	{5193, 725},
+	{5240, 760},
+	{5296, 756},
+	{5309, 753},
+	{5284, 800},
+	{5252, 829},
+	{5239, 903},
+	{5234, 981},
+	{5245, 1018},
+	{5269, 1035},
+	{5276, 1067},
+	{5288, 1074},
+	{5266, 1090},
+	{5228, 1105},
+	{5194, 1086},
+	{5084, 1100},
+	{5042, 1142},
+	{5035, 1183},
+	{5065, 1243},
+	{5076, 1269},
+	{5129, 1288},
+	{5165, 1292},
+	{5177, 1276},
+	{5190, 1288},
+	{5212, 1300},
+	{5221, 1311},
+	{5208, 1385},
+	{5207, 1406},
+	{5316, 1507},
+	{5339, 1617},
+	{5328, 1651},
+	{5324, 1684},
+	{5333, 1738},
+	{5346, 1747},
+	{5328, 1800},
+	{5309, 1812},
+	{5241, 1789},
+	{5140, 1815},
+	{4707, 2260},
+	{4671, 2305},
+	{4668, 2286},
+}
+
+local team8box = {
+	{3437, 8030},
+	{3449, 8036},
+	{3483, 8020},
+	{3492, 8007},
+	{3550, 7988},
+	{3580, 7974},
+	{3619, 7956},
+	{3673, 7977},
+	{3697, 7988},
+	{3704, 8003},
+	{3774, 8011},
+	{3727, 7949},
+	{3675, 7885},
+	{3605, 7779},
+	{3600, 7700},
+	{3613, 7622},
+	{3630, 7592},
+	{3558, 7561},
+	{3502, 7412},
+	{3516, 7311},
+	{3522, 7253},
+	{3493, 7232},
+	{3388, 7228},
+	{3377, 7215},
+	{3396, 7184},
+	{3465, 7185},
+	{3544, 7180},
+	{3561, 7166},
+	{3636, 7153},
+	{3696, 7060},
+	{3759, 7035},
+	{3803, 7034},
+	{3834, 7001},
+	{3859, 6962},
+	{3855, 6922},
+	{3864, 6885},
+	{3884, 6841},
+	{3927, 6792},
+	{4044, 6672},
+	{4048, 6629},
+	{4008, 6617},
+	{3985, 6610},
+	{3977, 6547},
+	{3970, 6485},
+	{3921, 6436},
+	{3879, 6395},
+	{3791, 6362},
+	{3718, 6344},
+	{3692, 6282},
+	{3695, 6248},
+	{3634, 6233},
+	{3543, 6104},
+	{3550, 6025},
+	{3476, 5939},
+	{3393, 6054},
+	{3196, 6258},
+	{3022, 6425},
+	{2937, 6444},
+	{2880, 6437},
+	{2842, 6415},
+	{2815, 6401},
+	{2792, 6409},
+	{2784, 6444},
+	{2802, 6533},
+	{2797, 6562},
+	{2813, 6582},
+	{2810, 6620},
+	{2802, 6658},
+	{2795, 6676},
+	{2793, 6757},
+	{2847, 6769},
+	{2866, 6782},
+	{2867, 6801},
+	{2897, 6807},
+	{2911, 6823},
+	{2917, 6853},
+	{2930, 6919},
+	{2925, 6950},
+	{2983, 6946},
+	{3019, 6964},
+	{3063, 7005},
+	{3080, 7052},
+	{3079, 7098},
+	{3020, 7143},
+	{2959, 7142},
+	{2916, 7153},
+	{2869, 7152},
+	{2861, 7190},
+	{2867, 7250},
+	{2882, 7327},
+	{2858, 7379},
+	{2805, 7489},
+	{2898, 7494},
+	{2922, 7527},
+	{2960, 7548},
+	{2974, 7583},
+	{3001, 7597},
+	{3051, 7594},
+	{3117, 7626},
+	{3149, 7648},
+	{3157, 7693},
+	{3172, 7754},
+	{3187, 7765},
+	{3223, 7781},
+	{3270, 7810},
+	{3300, 7810},
+	{3323, 7821},
+	{3340, 7837},
+	{3351, 7853},
+	{3391, 7875},
+	{3425, 7909},
+	{3424, 7931},
+	{3415, 7966},
+	{3429, 7969},
+	{3447, 8005},
+	{3441, 8023},
+}
+
 local names = {}
-names[1] = "Northwest"
-names[2] = "Southeast"
+names[1] = "Southeast"
+names[2] = "Northwest"
 names[3] = "Northeast"
 names[4] = "Southwest"
+names[5] = "East"
+names[6] = "West"
+names[7] = "South"
+names[8] = "North"
 
 local shorts = {}
-shorts[1] = "NW"
-shorts[2] = "SE"
+shorts[1] = "SE"
+shorts[2] = "NW"
 shorts[3] = "NE"
 shorts[4] = "SW"
+shorts[5] = "E"
+shorts[6] = "W"
+shorts[7] = "S"
+shorts[8] = "N"
+
 
 local team1boxstart = {
 	{6995, 7529},
@@ -850,14 +1089,24 @@ local team4boxstart = {
 	{656, 6943},
 }
 
-local team1flexstart = {
+local team5boxstart = {
 	{6643, 4557},
 	{7588, 4932},
 }
 
-local team2flexstart = {
-	[1] = {1524, 3622},
-	[2] = {691, 3292},
+local team6boxstart = {
+	{1524, 3622},
+	{691, 3292},
+}
+
+local team7boxstart = {
+	{4452, 1623},
+	{4912, 783},
+}
+
+local  team8boxstart = {
+	{3560, 6720},
+	{3138, 7367},
 }
 
 local boxes = {}
@@ -867,10 +1116,10 @@ end
 
 
 -- give everyone a startbox and startpoints. --
-boxes[1].startpoints = team1boxstart
-boxes[2].startpoints = team2boxstart
-boxes[1].boxes[1] = team1box
-boxes[2].boxes[1] = team2box
+boxes[0].startpoints = team1boxstart
+boxes[1].startpoints = team2boxstart
+boxes[0].boxes[1] = team1box
+boxes[1].boxes[1] = team2box
 
 local function MergeStarts(t1, t2)
 	local ret = t1
@@ -882,38 +1131,117 @@ end
 
 -- check for FFA
 local isFFA = Spring.Utilities.Gametype.isFFA()
-
+local isSmallTeams = Spring.Utilities.Gametype.isSmallTeams()
+local teamcount = 0
+do
+	local allyteams = Spring.GetAllyTeamList()
+	for a = 1, #allyteams - 1 do -- Presumes last allyteamID is gaia.
+		local allyid = allyteams[a]
+		if #Spring.GetTeamList(allyid) > 0 then
+			teamcount = teamcount + 1
+		end
+	end
+end
+local r = math.random(1, 10)
 if not isFFA then -- give extra boxes in big teams/coop
 	local count1 = #Spring.GetTeamList(1)
 	local count2 = #Spring.GetTeamList(2)
 	local players = math.max(count1, count2)
-	if players > 4 then
-		local team1 = MergeStarts(team1boxstart, team1flexstart)
-		team1 = MergeStarts(team1, team3boxstart)
-		local team2 = MergeStarts(team2boxstart, team2flexstart)
-		team2 = MergeStarts(team2, team4boxstart)
-		boxes[1].startpoints = team1
-		boxes[2].startpoints = team2
-		boxes[1].boxes[2] = team1flexbox
-		boxes[1].boxes[3] = team3box
-		boxes[2].boxes[2] = team2flexbox
-		boxes[2].boxes[3] = team4box
-	elseif players > 2 then
-		local team1 = MergeStarts(team1boxstart, team1flexstart)
-		local team2 = MergeStarts(team2boxstart, team2flexstart)
-		boxes[1].startpoints = team1
-		boxes[2].startpoints = team2
-		boxes[1].boxes[2] = team1flexbox
-		boxes[2].boxes[2] = team2flexbox
+	if not isSmallTeams then
+		local team1, team2
+		if r <= 3 then -- SvS
+			team1 = MergeStarts(team1boxstart, team5boxstart)
+			team1 = MergeStarts(team1, team3boxstart)
+			team2 = MergeStarts(team2boxstart, team6boxstart)
+			team2 = MergeStarts(team2, team4boxstart)
+			boxes[0].boxes[2] = team5box
+			boxes[0].boxes[3] = team3box
+			boxes[1].boxes[2] = team6box
+			boxes[1].boxes[3] = team4box
+			boxes[0].nameLong = names[5]
+			boxes[1].nameLong = names[6]
+			boxes[0].nameShort = shorts[5]
+			boxes[1].nameShort = shorts[6]
+		elseif r <= 6 then -- TvB
+			team1 = MergeStarts(team1boxstart, team8boxstart)
+			team1 = MergeStarts(team1, team4boxstart)
+			team2 = MergeStarts(team2boxstart, team7boxstart)
+			team2 = MergeStarts(team2, team6boxstart)
+			boxes[0].boxes[2] = team8box
+			boxes[0].boxes[3] = team4box
+			boxes[1].boxes[2] = team7box
+			boxes[1].boxes[3] = team6box
+			boxes[0].nameLong = names[8]
+			boxes[0].nameShort = shorts[8]
+			boxes[1].nameLong = names[7]
+			boxes[1].nameShort = shorts[7]
+		else -- SW vs NE
+			team1 = MergeStarts(team1boxstart, team5boxstart)
+			team1 = MergeStarts(team1, team7boxstart)
+			team2 = MergeStarts(team2boxstart, team8boxstart)
+			team2 = MergeStarts(team2, team6boxstart)
+			boxes[0].boxes[2] = team5box
+			boxes[0].boxes[3] = team7box
+			boxes[1].boxes[2] = team8box
+			boxes[1].boxes[3] = team6box
+		end
+		boxes[0].startpoints = team1
+		boxes[1].startpoints = team2
+	elseif isSmallTeams then
+		if r >= 5 then
+			local team1 = MergeStarts(team1boxstart, team5boxstart)
+			local team2 = MergeStarts(team2boxstart, team6boxstart)
+			boxes[0].startpoints = team1
+			boxes[1].startpoints = team2
+			boxes[0].boxes[2] = team5box
+			boxes[1].boxes[2] = team6box
+		else
+			local team1 = MergeStarts(team1boxstart, team8boxstart)
+			local team2 = MergeStarts(team2boxstart, team7boxstart)
+			boxes[0].startpoints = team1
+			boxes[1].startpoints = team2
+			boxes[0].boxes[2] = team8box
+			boxes[1].boxes[2] = team7box
+		end
 	end
-else -- add boxes to allyteam 3 and 4.
-	boxes[3] = {startpoints = {}, nameLong = names[3], nameShort = shorts[3], boxes = {}}
-	boxes[4] = {startpoints = {}, nameLong = names[4], nameShort = shorts[4], boxes = {}}
-	boxes[3].boxes[1] = team3box
-	boxes[4].boxes[1] = team4box
-	boxes[3].startpoints = team3boxstart
-	boxes[4].startpoints = team4boxstart
-	return boxes, {4}
+else -- 8 way FFA.
+	for i = 2, 3 do
+		boxes[i] = {startpoints = {}, nameLong = names[i], nameShort = shorts[i], boxes = {}}
+		boxes[i] = {startpoints = {}, nameLong = names[i], nameShort = shorts[i], boxes = {}}
+	end
+	if teamcount > 4 then
+		for i = 4, 7 do
+			boxes[i] = {startpoints = {}, nameLong = names[i], nameShort = shorts[i], boxes = {}}
+			boxes[i] = {startpoints = {}, nameLong = names[i], nameShort = shorts[i], boxes = {}}
+		end
+		boxes[4].boxes[1] = team5box
+		boxes[5].boxes[1] = team6box
+		boxes[6].boxes[1] = team7box
+		boxes[7].boxes[1] = team8box
+		boxes[4].startpoints = team5boxstart
+		boxes[5].startpoints = team6boxstart
+		boxes[6].startpoints = team7boxstart
+		boxes[7].startpoints = team8boxstart
+		return boxes, {8}
+	else
+		
+		if r > 5 then
+			boxes[2].boxes[1] = team3box
+			boxes[3].boxes[1] = team4box
+			boxes[2].startpoints = team3boxstart
+			boxes[3].startpoints = team4boxstart
+		else
+			boxes[0].boxes[1] = team5box
+			boxes[1].boxes[1] = team6box
+			boxes[2].boxes[1] = team7box
+			boxes[3].boxes[1] = team8box
+			boxes[0].startpoints = team5boxstart
+			boxes[1].startpoints = team6boxstart
+			boxes[2].startpoints = team7boxstart
+			boxes[3].startpoints = team8boxstart
+		end
+		return boxes, {4}
+	end
 end
 
 return boxes, {2}
