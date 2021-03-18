@@ -895,9 +895,9 @@
 		"helptext" : "The Conch is a sturdy constructor that can build or reclaim in the deep sea as well as it does on land."
 	},
 	"spiderriot" : {
-		"name" : "Redback",
-		"description" : "Riot Spider",
-		"helptext" : "A rapid fire spider which excels at picking off fast units."
+		"name" : "Commando",
+		"description" : "Heavy Riot Spider",
+		"helptext" : "It is said that necessity is the mother of invention, and the inventors of the Commando All-Terrain Riot Spider were certainly in a greate need of it. Driven into the mountains and surrounded on all sides by zombie nanite infected units, the first Commando Spiders were built from nothing but scrap. But they proved to be such a sucess that almost every military force in the galaxy has a copy of their their blueprints."
 	},
 	"spiderassault" : {
 		"name" : "Hermit",
