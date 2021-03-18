@@ -8,6 +8,7 @@ local base, door1, door2, brace, missile, aimpoint = piece('base', 'door1', 'doo
 local smokePiece = {base}
 
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local wantedstate = true
 
 --------------------------------------------------------------------------------
 -- signals
@@ -40,15 +41,15 @@ local function Close()
 	Turn(brace, x_axis, 0, math.rad(45))
 	WaitForTurn(brace, x_axis)
 	Show(missile)
-	open = false
 	Turn(door1, z_axis, 0, math.rad(45))
 	Turn(door2, z_axis, 0, math.rad(45))
 	WaitForTurn(door1, z_axis)
-
+	open = false
 end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+	StartThread(Open)
 end
 
 local function RestoreAfterDelay()
@@ -66,14 +67,22 @@ function script.AimWeapon(weaponNum, heading, pitch)
 	while not open or (spGetUnitRulesParam(unitID, "lowpower") == 1) do
 		Sleep(100)
 	end
-	StartThread(RestoreAfterDelay)
+	--StartThread(RestoreAfterDelay)
 	return true
+end
+
+function script.BlockShot()
+	return spGetUnitRulesParam(unitID, "lowpower") == 1 or not open
 end
 
 function script.FireWeapon(weaponNum)
 	Hide(missile)
 	Sleep(500)
 	if open then Close() end
+	while open do
+		Sleep(33)
+	end
+	StartThread(Open)
 end
 
 function script.Killed(recentDamage, maxHealth)
