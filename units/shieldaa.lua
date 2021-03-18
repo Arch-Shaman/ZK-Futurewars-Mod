@@ -93,7 +93,7 @@ return {
 				model                   = [[wep_m_fury.s3o]],
 				noSelfDamage            = true,
 				range                   = 880,
-				reloadtime              = 2,
+				reloadtime              = 1,
 				smokeTrail              = true,
 				soundHit                = [[weapon/missile/small_lightning_missile]],
 				soundStart              = [[weapon/missile/missile_fire7]],
