@@ -76,7 +76,7 @@ return {
 					cruiserandomradius = 50,
 					cruisealt = 200,
 					airlaunched = 1, -- don't ask me why.
-					cruisedist = 320,
+					cruisedist = 420,
 				},
 
 				damage                  = {
@@ -99,8 +99,8 @@ return {
 				startVelocity           = 50,
 				weaponAcceleration		= 200,
 				tracks                  = true,
-				trajectoryHeight        = 0.66,
-				turnrate                = 22000,
+				trajectoryHeight        = 0.4,
+				turnrate                = 14000,
 				turret                  = true,
 				weaponType              = [[MissileLauncher]],
 				weaponVelocity          = 300,
