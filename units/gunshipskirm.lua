@@ -84,7 +84,7 @@ return {
         			light_radius = 250,
 				},
 				damage                  = {
-					default = 220.1,
+					default = 230.1,
 				},
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
 				fireStarter             = 70,
@@ -94,7 +94,7 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
 				model                   = [[wep_m_maverick.s3o]],
-				range                   = 680,
+				range                   = 780,
 				reloadtime              = 12,
 				smokeTrail              = true,
 				soundHit                = [[weapon/missile/rapid_rocket_hit]],
