@@ -12,7 +12,6 @@ return {
 		canGuard               = false,
 		canMove                = false,
 		canPatrol              = false,
-		cantBeTransported      = true,
 		category               = [[FLOAT MINE STUPIDTARGET]],
 		cloakCost              = 0,
 		collisionVolumeOffsets = [[0 -4 0]],
@@ -21,9 +20,12 @@ return {
 
 		customParams           = {
 			dontcount = [[1]],
+			mobilebuilding = [[1]],
 		},
 		
 		explodeAs              = [[NOWEAPON]],
+		footprintX             = 1,
+		footprintZ             = 1,
 		iconType               = [[mine]],
 		idleAutoHeal           = 10,
 		idleTime               = 300,
@@ -45,7 +47,7 @@ return {
 		turnRate               = 0,
 		waterline              = 1,
 		workerTime             = 0,
-
+		yardMap                = [[y]],
 		weapons                = {
 
 			{
