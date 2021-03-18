@@ -184,6 +184,10 @@ for i = 1, #chassisDefs do
 		unitDef[key] = data
 	end
 	
+	if name:find("dynstrike") then
+		cloakcost = 2.5
+	end
+	
 	for j = 1, 7 do
 		unitDef.sfxtypes.explosiongenerators[j] = unitDef.sfxtypes.explosiongenerators[j] or [[custom:NONE]]
 	end
