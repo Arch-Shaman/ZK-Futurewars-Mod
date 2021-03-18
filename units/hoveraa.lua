@@ -76,8 +76,8 @@ return {
 				craterBoost             = 1,
 				craterMult              = 2,
 				cylinderTargeting       = 1,
-				burst					= 3,
-				burstRate				= 0.4,
+				burst					= 7,
+				burstRate				= 0.166,
 
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
@@ -103,7 +103,7 @@ return {
 				model                   = [[hovermissile.s3o]],
 				noSelfDamage            = true,
 				range                   = 800,
-				reloadtime              = 5.2,
+				reloadtime              = 7,
 				smokeTrail              = true,
 				soundHit                = [[weapon/missile/vlaunch_hit]],
 				soundStart              = [[weapon/missile/missile_fire8]],
