@@ -85,7 +85,7 @@ return {
 
 				damage                  = {
 					default = 50.01,
-					planes  = 500.1,
+					planes  = 700.1,
 				},
 				
 				edgeeffectiveness		= 0.2,
