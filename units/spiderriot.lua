@@ -6,7 +6,7 @@ return {
 		acceleration           = 0.66,
 		--autoheal               = 30,
 		brakeRate              = 3.96,
-		buildCostMetal         = 420,
+		buildCostMetal         = 460,
 		buildPic               = [[spiderriot.png]],
 		canGuard               = true,
 		canMove                = true,
@@ -19,8 +19,8 @@ return {
 		
 		customParams           = {
 			aimposoffset   = [[0 10 0]],
-			nanoregen = 15,
-			nano_maxregen = 4,
+			nanoregen = 10,
+			nano_maxregen = 3,
 			aim_lookahead = 80,
 		},
 		
@@ -29,11 +29,11 @@ return {
 		footprintZ             = 3,
 		highTrajectory         = 2,
 		iconType               = [[spiderriot]],
-		idleAutoHeal           = 40,
-		idleTime               = 600,
+		idleAutoHeal           = 20,
+		idleTime               = 900,
 		leaveTracks            = true,
 		losEmitHeight          = 40,
-		maxDamage              = 1550,
+		maxDamage              = 1100,
 		maxSlope               = 72,
 		maxVelocity            = 1.8,
 		maxWaterDepth          = 22,
@@ -65,7 +65,7 @@ return {
 		
 			NAPALM_SPRAYER = {
 				name                    = [[Napalm Machine Gun]],
-				accuracy                = 400,
+				accuracy                = 500,
 				areaOfEffect            = 128,
 				avoidFeature            = false,
 				craterBoost             = 1,
@@ -82,7 +82,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 36,
+					default = 20,
 				},
 			
 				explosionGenerator      = [[custom:napalm_phoenix]],
