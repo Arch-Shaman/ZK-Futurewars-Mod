@@ -59,6 +59,10 @@ local Sounds = {
 			pitchmod = 0.4,
 			gainmod = 0.2,
 		},
+		NoSound = {
+			file = "sounds/nosound.wav",
+			maxconcurrent = 1,
+		},
 		DefaultsForSounds = { -- this are default settings
 			file = "ThisEntryMustBePresent.wav",
 			gain = 1.0,
