@@ -20,7 +20,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 900,
+		default = 1100,
 	},
 
 	edgeEffectiveness       = 0.5,
@@ -28,7 +28,7 @@ local weaponDef = {
 	impulseBoost            = 250,
 	impulseFactor           = 1.2,
 	interceptedByShieldType = 1,
-	range                   = 450,
+	range                   = 475,
 	reloadtime              = 10,
 	rgbColor                = [[1 0.6 0]],
 	separation              = 0.5,
