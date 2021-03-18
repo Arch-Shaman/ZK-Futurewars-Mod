@@ -88,6 +88,7 @@ return {
 				},
 
 				explosionGenerator      = [[custom:dirt]],
+				explosionScar		= false,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
