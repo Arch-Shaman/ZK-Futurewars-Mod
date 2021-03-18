@@ -115,13 +115,13 @@ return {
 				craterMult              = 6,
 				customParams              = {
 					restrict_in_widgets = 1,
-					cruisealt = 6000,
+					cruisealt = 7500,
 					cruisedist = 400,
 					numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "staticnuke_warhead",
 					spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					spawndist = 5000, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 7000, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 					vradius1 = 0, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1,
@@ -157,7 +157,6 @@ return {
 				startVelocity           = 100,
 				stockpile               = true,
 				stockpileTime           = 10^5,
-				targetable              = 1,
 				texture1                = [[null]], --flare
 				tolerance               = 4000,
 				weaponAcceleration      = 100,
