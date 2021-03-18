@@ -94,7 +94,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 			end
 			gadgetHandler:RemoveCallIn('UnitCreated')
 		end
-		spGiveOrderToUnit(builderID, CMD.REMOVE, cmdTag, CMD.OPT_CTRL) -- This seems to cause a recursion error sometimes
+		--spGiveOrderToUnit(builderID, CMD.REMOVE, cmdTag, CMD.OPT_CTRL) -- This seems to cause a recursion error sometimes
 	end
 end
 
