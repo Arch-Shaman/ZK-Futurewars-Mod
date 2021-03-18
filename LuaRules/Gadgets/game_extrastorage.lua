@@ -71,7 +71,7 @@ end
 local function ResetUnitStorage(unitID)
 	local extrastorage = spGetUnitRulesParam(unitID, "extra_storage") or 0
 	if extrastorage > 0 then
-		local unitteam = spGetUnitTeamID(unitID)
+		local unitteam = spGetUnitTeam(unitID)
 		AddTeamStorage(unitteam, -extrastorage)
 		spSetUnitRulesParam(unitID, "extra_storage", nil)
 		handledunits[unitID] = nil
