@@ -5,7 +5,7 @@ return {
 		description         = [[Light Scout/Raider Spider]],
 		acceleration        = 2.1,
 		brakeRate           = 12.6,
-		buildCostMetal      = 60,
+		buildCostMetal      = 65,
 		buildPic            = [[spiderscout.png]],
 		canGuard            = true,
 		canMove             = true,
@@ -32,7 +32,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
-		maxDamage           = 275,
+		maxDamage           = 240,
 		maxSlope            = 72,
 		maxVelocity         = 4.2,
 		maxWaterDepth       = 15,
@@ -88,7 +88,7 @@ return {
 				},
 
 				damage                  = {
-					default = 40.1,
+					default = 35.1,
 				},
 
 				explosionGenerator      = [[custom:beamweapon_hit_purple_tiny]],
@@ -100,7 +100,7 @@ return {
 				laserFlareSize          = 3.22,
 				minIntensity            = 1,
 				noSelfDamage            = true,
-				range                   = 200,
+				range                   = 190,
 				reloadtime              = 0.4,
 				rgbColor                = [[1 0.2 1]],
 				soundStart              = [[weapon/laser/small_laser_fire]],
@@ -109,7 +109,7 @@ return {
 				tolerance               = 10000,
 				turret                  = true,
 				weaponType              = [[LaserCannon]],
-				weaponVelocity          = 600,
+				weaponVelocity          = 500,
 			},
 		},
 
