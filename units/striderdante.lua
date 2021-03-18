@@ -21,7 +21,7 @@ return {
 		footprintX          = 4,
 		footprintZ          = 4,
 		iconType            = [[t3riot]],
-		idleAutoHeal        = 600,
+		idleAutoHeal        = 50,
 		idleTime            = 600,
 		leaveTracks         = true,
 		losEmitHeight       = 50,
