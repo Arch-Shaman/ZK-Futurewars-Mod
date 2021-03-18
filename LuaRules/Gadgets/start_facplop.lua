@@ -70,7 +70,6 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		spSetUnitRulesParam(builderID, "facplop", 0, IN_LOS)
 		spSetUnitRulesParam(unitID, "ploppee", 1, PRIVATE)
 		local _, _, cmdTag = spGetUnitCurrentCommand(builderID)
-		spGiveOrderToUnit(builderID, CMD.REMOVE, cmdTag, CMD.OPT_ALT)
 		local _, maxHealth = spGetUnitHealth(unitID)
 		SETHEALTH.health = maxHealth
 		spSetUnitHealth(unitID, SETHEALTH)
@@ -95,6 +94,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 			end
 			gadgetHandler:RemoveCallIn('UnitCreated')
 		end
+		spGiveOrderToUnit(builderID, CMD.REMOVE, cmdTag, CMD.OPT_CTRL) -- This seems to cause a recursion error sometimes
 	end
 end
 
