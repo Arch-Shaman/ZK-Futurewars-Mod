@@ -6,7 +6,7 @@ return {
 		acceleration                  = 0,
 		activateWhenBuilt             = true,
 		brakeRate                     = 0,
-		buildCostMetal                = 3000,
+		buildCostMetal                = 1800,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 6,
