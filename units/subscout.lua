@@ -31,7 +31,7 @@ return {
 		idleTime              = 1800,
 		kamikaze              = true,
 		kamikazeDistance      = 40,
-		maxDamage             = 400,
+		maxDamage             = 200,
 		maxVelocity           = 4.5,
 		minCloakDistance      = 75,
 		minWaterDepth         = 5,
