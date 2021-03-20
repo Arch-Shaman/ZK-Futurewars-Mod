@@ -1,7 +1,7 @@
 return { 
 	striderdetriment = {
 		unitname               = [[striderdetriment]],
-		name                   = [[Detriment]],
+		name                   = [[Titan]],
 		description            = [[Ultimate Assault Strider]],
 		acceleration           = 0.328,
 		activateWhenBuilt      = true,
