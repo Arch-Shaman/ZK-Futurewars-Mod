@@ -5,7 +5,7 @@ return {
 		description            = [[Medium Laser Raider Gunship]],
 		acceleration           = 0.2,
 		brakeRate              = 0.4,
-		buildCostMetal         = 180,
+		buildCostMetal         = 200,
 		builder                = false,
 		buildPic               = [[gunshipraid.png]],
 		canFly                 = true,
@@ -54,15 +54,15 @@ return {
 			{
 				def                = [[LASER]],
 				mainDir            = [[0 0 1]],
-				maxAngleDif        = 150,
+				maxAngleDif        = 180,
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-			{
-				def                = [[LASER_OVERDRIVE]],
-				mainDir            = [[0 0 1]],
-				maxAngleDif        = 150,
-				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
-			},
+			--{
+				--def                = [[LASER_OVERDRIVE]],
+				--mainDir            = [[0 0 1]],
+				--maxAngleDif        = 180,
+				--onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
+			--},
 		},
 
 		weaponDefs             = {
@@ -81,7 +81,7 @@ return {
 
 					light_color = [[0.8941 0.7647 0.1255]],
 					light_radius = 175,
-					underwaterdamagereduction = 1,
+					underwaterdamagereduction = 0.2,
 					combatrange = 250,
 				},
 
@@ -129,7 +129,7 @@ return {
 
 					light_color = [[0.8941 0.7647 0.1255]],
 					light_radius = 175,
-					underwaterdamagereduction = 1,
+					underwaterdamagereduction = 0.1,
 					combatrange = 250,
 				},
 
@@ -157,7 +157,7 @@ return {
 				texture3                = [[flare]],
 				texture4                = [[smallflare]],
 				thickness               = 4.5,
-				tolerance               = 2000,
+				tolerance               = 4000,
 				turret                  = true,
 				weaponType              = [[BeamLaser]],
 				waterWeapon				= true,

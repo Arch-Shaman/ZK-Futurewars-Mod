@@ -34,7 +34,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		else
 			local mult = config[weaponDefID]
 			depth = abs(depth)
-			local depthmod = min(1/(sqrt(depth + 10) * mult), 1)
+			local depthmod = min(1/(sqrt(depth) * mult), 1)
 			return damage * depthmod, 1.0
 		end
 	else
