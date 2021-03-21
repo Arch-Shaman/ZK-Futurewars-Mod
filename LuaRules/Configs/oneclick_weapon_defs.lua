@@ -56,6 +56,9 @@ local oneClickWepDefNames = {
 	gunshiptrans = {
 		{ functionToCall = "ForceDropUnit", reloadTime = 7, name = "Drop Cargo", tooltip = "Eject Cargo: Drop the unit in the transport.", useSpecialReloadFrame = true,},
 	},
+	gunshipraid = {
+		{functionToCall = "Overdrive", reloadTime = 40*30, name = "Overdrive", tooltip = "Overdrive:\nIncreases Weapon Damage and speed by 25%. Also reduces reload time by 25%. Lasts 10 seconds.\nWARNING: DISABLES ALL WEAPONS AND REDUCES SPEED BY 33% FOR 10s AFTER ITS AFFECT.", useSpecialReloadFrame = true, texture = "LuaUI/Images/Commands/Bold/sprint.png",}
+	},
 	
 	--staticmissilesilo = {
 	--	dummy = true,
