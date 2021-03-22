@@ -107,7 +107,7 @@ local unitDef = {
 			tolerance               = 5000,
 			turret                  = true,
 			weaponType              = [[Cannon]],
-			weaponVelocity          = 900,
+			weaponVelocity          = 1500,
 		},
 		AA = {
 			burst = 2,
