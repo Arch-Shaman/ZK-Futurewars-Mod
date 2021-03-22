@@ -39,7 +39,7 @@ return {
 		leaveTracks         = true,
 		maxDamage           = 6000,
 		maxSlope            = 36,
-		maxVelocity         = 2.25,
+		maxVelocity         = 2.0,
 		maxWaterDepth       = 22,
 		movementClass       = [[KBOT2]],
 		noAutoFire          = false,
@@ -73,9 +73,7 @@ return {
 			},
 		},
 
-
 		weaponDefs          = {
-
 			Spike = {
 				name                    = [[Spike]],
 				areaOfEffect            = 8,
@@ -91,6 +89,7 @@ return {
 					light_radius = 150,
 					light_beam_start = 0.25,
 					combatrange = 60,
+					timeslow_damagefactor = 1/3,
 				},
 
 				damage                  = {
@@ -119,8 +118,6 @@ return {
 				weaponVelocity          = 2000,
 			},
 		},
-
-
 		featureDefs         = {
 			DEAD  = {
 				blocking         = true,
