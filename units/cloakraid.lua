@@ -43,9 +43,7 @@ return {
 		objectName             = [[spherebot.s3o]],
 		script                 = [[cloakraid.lua]],
 		selfDestructAs         = [[SMALL_UNITEX]],
-
 		sfxtypes               = {
-
 			explosiongenerators = {
 				[[custom:emg_shells_l]],
 				[[custom:flashmuzzle1]],
