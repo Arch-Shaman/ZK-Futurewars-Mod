@@ -75,7 +75,7 @@ return {
 				coreThickness           = 1.3,
 				craterBoost             = 0,
 				craterMult              = 0,
-				cylinderTargeting       = 0.7,
+				cylinderTargeting       = 2.5,
 
 				customparams = {
 
