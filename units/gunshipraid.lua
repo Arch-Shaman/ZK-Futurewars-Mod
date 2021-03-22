@@ -86,7 +86,7 @@ return {
 				},
 
 				damage                  = {
-					default = 280,
+					default = 240,
 				},
 
 				explosionGenerator      = [[custom:heavybeamorangeimpactsmall]],
@@ -99,7 +99,7 @@ return {
 				laserFlareSize          = 2,
 				minIntensity            = 1,
 				noSelfDamage            = true,
-				range                   = 320,
+				range                   = 300,
 				reloadtime              = 2.4,
 				rgbColor                = [[0.8941 0.7647 0.1255]],
 				soundStart              = [[weapon/laser/medium_phaser]],

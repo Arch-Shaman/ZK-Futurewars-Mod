@@ -404,7 +404,7 @@ return {
 			properties = {
 				alwaysvisible      = true,
 				heat               = [[0.1d]],
-				heatfalloff        = 1,
+				heatfalloff        = 4,
 				maxheat            = 10,
 				pos                = [[0, 5, 0]],
 				size               = 0.2,
