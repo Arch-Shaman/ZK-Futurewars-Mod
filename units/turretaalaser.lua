@@ -52,7 +52,6 @@ return {
 			AAGUN  = {
 				name                    = [[High Intensity Micropulse Laser]],
 				areaOfEffect            = 8,
-				accuracy				= 250,
 				coreThickness           = 0.5,
 				beamTime                = 1/30,
 				craterBoost             = 0,
@@ -65,7 +64,7 @@ return {
 				},
       
 				damage                  = {
-					default = 50.1,
+					default = 150.1,
 				},
 
 				duration                = 2/30,
@@ -78,7 +77,7 @@ return {
 				leadLimit               = 0,
 				noSelfDamage            = true,
 				range                   = 1000,
-				reloadtime              = 6/30,
+				reloadtime              = 18/30,
 				rgbColor                = [[1 0.40059 0]],
 				soundStart              = [[weapon/laser/heavy_pulser]],
 				soundstartvolume	    = 135,
