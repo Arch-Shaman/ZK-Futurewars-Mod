@@ -5,7 +5,7 @@ return {
 		description            = [[Ambush Raider Bot]],
 		acceleration           = 1.5,
 		brakeRate              = 2.4,
-		buildCostMetal         = 70,
+		buildCostMetal         = 60,
 		buildPic               = [[cloakraid.png]],
 		canGuard               = true,
 		canMove                = true,

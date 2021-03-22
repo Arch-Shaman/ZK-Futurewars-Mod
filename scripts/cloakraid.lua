@@ -77,6 +77,7 @@ end
 
 local function Uncloak()
 	GG.SetWantedCloaked(unitID, 0)
+	Spring.UnitScript.SetUnitValue(stealth, 1)
 end
 
 local function Walk()
