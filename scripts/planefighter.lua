@@ -17,7 +17,7 @@ local flare = {
 
 
 local fast = 3.75
-local slow = 0.75
+local slow = 0.85
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitMoveTypeData = Spring.GetUnitMoveTypeData
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
