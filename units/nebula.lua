@@ -369,7 +369,6 @@ return {
 				},
 				customParams            = {
 					unlinked                = true,
-					shield_recharge_delay   = 60,
 				},
 
 				exteriorShield          = true,
@@ -378,7 +377,7 @@ return {
 				shieldGoodColor         = [[0.1 0.1 1 1]],
 				shieldInterceptType     = 3,
 				shieldPower             = 30000,
-				shieldPowerRegen        = 3000,
+				shieldPowerRegen        = 400,
 				shieldPowerRegenEnergy  = 90,
 				shieldRadius            = 600,
 				shieldRepulser          = false,
