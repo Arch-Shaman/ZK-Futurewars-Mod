@@ -26,7 +26,7 @@ return {
 
 			grey_goo = 1,
 			grey_goo_spawn = "jumpscout",
-			grey_goo_drain = 5,
+			grey_goo_drain = 7.5,
 			grey_goo_cost = 45,
 			grey_goo_range = 120,
 			selection_scale = 1, -- Maybe change later
