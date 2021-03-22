@@ -192,7 +192,7 @@ end
 
 function script.StartMoving()
 	StartThread(Walk)
-	Decloak()
+	Uncloak()
 end
 
 function script.StopMoving()
