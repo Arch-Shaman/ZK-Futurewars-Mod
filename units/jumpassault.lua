@@ -20,6 +20,14 @@ return {
 			jump_speed         = 8,
 			jump_reload        = 6,
 			jump_from_midair   = 1,
+			
+			grey_goo = 1,
+			grey_goo_spawn = "jumpassault",
+			grey_goo_drain = 10,
+			grey_goo_cost = 600,
+			grey_goo_range = 120,
+			selection_scale = 1, -- Maybe change later
+			select_show_eco = 1,
 		},
 
 		explodeAs           = [[BIG_UNITEX]],
