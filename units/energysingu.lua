@@ -31,7 +31,6 @@ return {
 			decay_time = 2,
 			decay_maxoutput = 1.8,
 			decay_initialrate = 0.9,
-			
 		},
 
 		energyMake                    = 250,
@@ -43,7 +42,7 @@ return {
 		iconType                      = [[energysingu]],
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = 4000,
+		maxDamage                     = 6500,
 		maxSlope                      = 18,
 		maxVelocity                   = 0,
 		minCloakDistance              = 150,
