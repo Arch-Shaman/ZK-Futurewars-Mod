@@ -120,12 +120,12 @@ return {
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 180,
 					--proximity_priority = 5, -- Don't use this unless required as it causes O(N^2) seperation checks per slow update.
-					numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "turretriot_secondary",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 135, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 185, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 					vradius1 = "-1,-1,-1,1,1,1", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					proxy = 1, -- check for nearby units?
@@ -137,7 +137,7 @@ return {
 				},
 
 				damage                  = {
-					default = 66,
+					default = 22*5,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -149,7 +149,7 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 380,
-				reloadtime              = 5/30,
+				reloadtime              = 8/30,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
 				soundHit                = [[weapon/clusters/cluster_light]],
