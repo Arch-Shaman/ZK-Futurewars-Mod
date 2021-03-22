@@ -16,7 +16,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 1500,
+		default = 850,
 	},
 
 	edgeEffectiveness       = 0.5,
