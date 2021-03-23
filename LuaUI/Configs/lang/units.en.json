@@ -975,9 +975,9 @@
 		"helptext" : "Stealthy, fast, and fragile, this Submarine can quickly strike unprotected targets. Slow damage allows it to effectively kill lone units. Watch out for anything with anti-sub weaponry, especially Torpedo Boats and Destroyers."
 	},
 	"subtacmissile" : {
-		"name" : "Scylla",
-		"description" : "Tactical Nuke Missile Sub, Drains 20 m/s, 30 second stockpile",
-		"helptext" : "The Tactical Nuke Missile Sub provides a standoff precision strike weapon in the form of tactical missiles. It has no defense against direct attacks and should avoid contact with the enemy."
+		"name" : "Charybdis",
+		"description" : "Tactical MIRV SLBM platform, Drains 24 m/s, 50 second stockpile",
+		"helptext" : "The Tactical Nuke Missile Sub provides a standoff precision strike weapon in the form of tactical SLBMss. It has no defense against direct attacks and should avoid contact with the enemy."
 	},
 	"shipriot" : {
 		"name" : "Corsair",
