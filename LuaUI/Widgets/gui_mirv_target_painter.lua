@@ -134,7 +134,7 @@ local function DrawWorldFunc()
 				gl.LineWidth(6)
 				glColor(1,0.5,0,0.5)
 								
-				glBeginEnd(GL_LINES, VertexListCircle, targetX, targetY, targetZ, 800, math.rad(10))
+				glBeginEnd(GL_LINES, VertexListCircle, targetX, targetY, targetZ, def.UIaoe, math.rad(10))
 				
 				
 				if drawMIRVCircle and drawnTargets > 0 and (targetX-x)^2+(targetZ-z)^2 < def.range2 then
