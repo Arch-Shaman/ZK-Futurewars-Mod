@@ -92,7 +92,7 @@ return {
 				},
 
 				edgeEffectiveness       = 0.4,
-				explosionGenerator      = [[custom:NUKE_150]],
+				explosionGenerator      = [[custom:NONE]],
 				fireStarter             = 0,
 				flightTime              = 10,
 				impulseBoost            = 0,
