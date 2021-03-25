@@ -279,7 +279,7 @@ return {
 					default = 0,
 				},
 
-				explosionGenerator      = [[custom:napalm_phoenix]],
+				explosionGenerator      = [[custom:NONE]],
 				firestarter             = 180,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
