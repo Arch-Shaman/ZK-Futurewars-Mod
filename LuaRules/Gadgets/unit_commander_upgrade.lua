@@ -45,6 +45,27 @@ include("LuaRules/Configs/customcmds.h.lua")
 --------------------------------------------------------------------------------
 -- Various module configs
 
+local names = {
+	"Moi Maailma",
+	"FFC Doesn't Like Me",
+	"FRIENDLIES OVER HERE",
+	"I Use Hacks",
+	"SHIELD NOOB",
+	"Dgun Me Harder",
+	"Van Doorn",
+	"GODMODE USER",
+	"ONE NEAT TRICK TO KILL ALL COMMS",
+	"I AM ERROR",
+	"Debug THIS",
+	"Self-Ds when lost",
+	"NOT SUSPICIOUS AT ALL",
+	"Internet Boyfriend",
+	"WTB Dgun",
+	"Dgun Not Included",
+	"I have range hacks",
+	"Query Failed: Couldn't Load Name",
+}
+
 local defaultweapon = {
 	[1] = "commweapon_heavyrifle", -- strike
 	[2] = "commweapon_heatray", -- recon
@@ -52,6 +73,34 @@ local defaultweapon = {
 	[4] = "commweapon_canistercannon", -- bombard
 	[5] = "commweapon_beamlaser", -- knight
 	[6] = "commweapon_canistercannon", -- presumably battle comm at some point
+}
+
+local defaultaddons = {
+	-- strike --
+	[1] = {
+		"module_personal_cloak",
+		"module_radarnet",
+	},
+	-- recon --
+	[2] = {
+		"module_radarnet",
+	},
+	-- support --
+	[3] = {
+		"module_radarnet",
+	},
+	-- bombard --
+	[4] = {
+		"module_radarnet",
+	},
+	-- knight --
+	[5] = {
+		"module_radarnet",
+	},
+	-- riot? --
+	[6] = {
+		"module_radarnet",
+	},	
 }
 
 local function GetCommanderChassisDefaultWeapon(type)
@@ -322,10 +371,22 @@ local function GetModuleEffectsData(moduleList, level, chassis)
 	return moduleEffectData
 end
 
+local function AddAddons(moduleList, chassis)
+	moduleList = moduleList or {}
+	local addons = defaultaddons[chassis]
+	for _, v in pairs(addons) do
+		moduleList[#moduleList + 1] = moduleDefNames[v]
+	end
+	return moduleList
+end
+
 local function InitializeDynamicCommander(unitID, level, chassis, totalCost, name, baseUnitDefID, baseWreckID, baseHeapID, moduleList, moduleEffectData, images, profileID, staticLevel)
 	-- This function sets the UnitRulesParams and updates the unit attributes after
 	-- a commander has been created. This can either happen internally due to a request
 	-- to spawn a commander or with rezz/construction/spawning.
+	if level == 0 or staticLevel then
+		moduleList = AddAddons(moduleList, chassis)
+	end
 	if not moduleEffectData then
 		moduleEffectData = GetModuleEffectsData(moduleList, level, chassis)
 	end
@@ -493,9 +554,10 @@ local function Upgrades_CreateStarterDyncomm(dyncommID, x, y, z, facing, teamID,
 	
 	local baseUnitDefID = commProfileInfo.baseUnitDefID or chassisData.baseUnitDef
 	
-	local moduleList = {moduleDefNames.econ, moduleDefNames.module_radarnet}
-	if commProfileInfo.chassis == "strike" then
-		moduleList[#moduleList + 1] = moduleDefNames.module_personal_cloak
+	local moduleList = {moduleDefNames.econ}
+	local addons = defaultaddons[chassisDefID]
+	for _, v in pairs(addons) do
+		moduleList[#moduleList + 1] = moduleDefNames[v]
 	end
 	local moduleCost = 0
 	for i = 1, #moduleList do
@@ -531,6 +593,10 @@ local function Upgrades_CreateStarterDyncomm(dyncommID, x, y, z, facing, teamID,
 	local unitID = Upgrades_CreateUpgradedUnit(baseUnitDefID, x, y, z, facing, teamID, false, upgradeDef)
 	
 	return unitID
+end
+
+local function GetRandomName()
+	return names[math.random(1, #names)] or "Error In L592"
 end
 
 function gadget:UnitCreated(unitID, unitDefID, unitTeam)
@@ -591,13 +657,13 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 	
 	if chassisDefByBaseDef[unitDefID] then
 		local chassisData = chassisDefs[chassisDefByBaseDef[unitDefID]]
-		
+		local name = GetRandomName()
 		InitializeDynamicCommander(
 			unitID,
 			0,
 			chassisDefByBaseDef[unitDefID],
 			UnitDefs[unitDefID].metalCost,
-			"Guinea Pig",
+			name,
 			unitDefID,
 			chassisData.baseWreckID,
 			chassisData.baseHeapID,
