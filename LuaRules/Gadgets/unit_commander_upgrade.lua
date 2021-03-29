@@ -121,7 +121,7 @@ local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, dama
 		local wd = WeaponDefNames[weaponName]
 		if wd and wd.customParams and wd.customParams.manualfire then
 			weapon2 = weapon1
-			weapon1 = "commweapon_beamlaser"
+			weapon1 = GetCommanderChassisDefaultWeapon(chassis)
 		end
 	end
 	--Spring.Echo("Chassis: " .. tostring(chassis))
@@ -145,7 +145,7 @@ end
 
 local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	local ud = UnitDefs[spGetUnitDefID(unitID)]
-	
+	spSetUnitRulesParam(unitID, "resurrectableCommander", 1, INLOS)
 	-- Update ApplyModuleEffectsFromUnitRulesParams if any non-unitRulesParams changes are made.
 	if data.speedMod then
 		local speedMult = (data.speedMod + ud.speed)/ud.speed
