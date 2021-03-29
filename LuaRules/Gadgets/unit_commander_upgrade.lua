@@ -390,6 +390,16 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 	if not moduleEffectData then
 		moduleEffectData = GetModuleEffectsData(moduleList, level, chassis)
 	end
+	if level == 1 and not moduleEffectData.weapon1 then
+		local default = GetCommanderChassisDefaultWeapon(chassis)
+		moduleList[#moduleList + 1] = moduleDefNames[default]
+		moduleEffectData.weapon1 = default
+	end
+	if level == 3 and not moduleEffectData.weapon2 then
+		local default = GetCommanderChassisDefaultWeapon(chassis)
+		moduleList[#moduleList + 1] = moduleDefNames[default]
+		moduleEffectData.weapon2 = default
+	end
 	
 	-- Start setting required unitRulesParams
 	spSetUnitRulesParam(unitID, "comm_level",         level, INLOS)
@@ -435,8 +445,10 @@ end
 
 local function Upgrades_CreateUpgradedUnit(defName, x, y, z, face, unitTeam, isBeingBuilt, upgradeDef)
 	-- Calculate Module effects
-	local moduleEffectData = GetModuleEffectsData(upgradeDef.moduleList, upgradeDef.level, upgradeDef.chassis)
-	
+	local level = upgradeDef.level
+	local chassis = upgradeDef.chassis
+	local modulelist = upgradeDef.moduleList
+	local moduleEffectData = GetModuleEffectsData(modulelist, level, chassis)
 	-- Create Unit, set appropriate global data first
 	-- These variables are set such that other gadgets can notice the effect
 	-- within UnitCreated.
