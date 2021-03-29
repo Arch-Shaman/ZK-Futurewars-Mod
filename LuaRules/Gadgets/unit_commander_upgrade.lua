@@ -1,13 +1,13 @@
 function gadget:GetInfo()
-  return {
-    name      = "Commander Upgrade",
-    desc      = "",
-    author    = "Google Frog",
-    date      = "30 December 2015",
-    license   = "GNU GPL, v2 or later",
-    layer     = 1,
-    enabled   = true  --  loaded by default?
-  }
+	return {
+		name      = "Commander Upgrade",
+		desc      = "",
+		author    = "Google Frog",
+		date      = "30 December 2015",
+		license   = "GNU GPL, v2 or later",
+		layer     = 1,
+		enabled   = true  --  loaded by default?
+	}
 end
 
 --------------------------------------------------------------------------------
