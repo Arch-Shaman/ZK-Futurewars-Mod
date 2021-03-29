@@ -176,7 +176,7 @@ local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, dama
 	--Spring.Echo("Chassis: " .. tostring(chassis))
 	weapon1 = weapon1 or GetCommanderChassisDefaultWeapon(chassis)
 	if string.find(weapon1, "commweapon_capray") or (weapon2 and string.find(weapon2, "commweapon_capray")) then
-		spSetUnitRulesParam(unitID, "postCaptureReload", WeaponDefNames["0_commweapon_capray"].customParams["post_capture_reload"] or 240)
+		spSetUnitRulesParam(unitID, "postCaptureReload", WeaponDefNames["0_commweapon_capray"].customParams["post_capture_reload"] or 240, INLOS)
 		GG.MorphedMastermind(unitID)
 	end
 	if not weapon2 and spGetUnitRulesParam(unitID, "comm_level") > 2 then
