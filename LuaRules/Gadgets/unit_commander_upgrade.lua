@@ -59,11 +59,12 @@ local names = {
 	"Debug THIS",
 	"Self-Ds when lost",
 	"NOT SUSPICIOUS AT ALL",
-	"Internet Boyfriend",
 	"WTB Dgun",
 	"Dgun Not Included",
 	"I have range hacks",
 	"Query Failed: Couldn't Load Name",
+	"Ol' Reliable (Not Reliable)",
+	"Explosive Contents",
 }
 
 local defaultweapon = {
