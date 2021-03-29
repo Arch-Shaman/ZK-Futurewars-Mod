@@ -15,7 +15,7 @@ end
 
 --SYNCED
 if (not gadgetHandler:IsSyncedCode()) then
-   return
+	return
 end
 
 include("LuaRules/Configs/constants.lua")
