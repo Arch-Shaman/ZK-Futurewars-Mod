@@ -6,7 +6,7 @@ function widget:GetInfo()
 		date      = "3/23/2021",
 		license   = "CC-0",
 		layer     = 0,
-		enabled   = true  --  loaded by default?
+		enabled   = false  --  loaded by default?
 	}
 end
 
@@ -30,7 +30,7 @@ local function ProccessCommand(str)
 end
 
 function widget:TextCommand(msg)
-	Spring.Echo(msg)
+	--Spring.Echo(msg)
 	if msg:find("addunitimpulse") then
 		local selection = Spring.GetSelectedUnits()
 		local x, y, z = ProccessCommand(msg)
