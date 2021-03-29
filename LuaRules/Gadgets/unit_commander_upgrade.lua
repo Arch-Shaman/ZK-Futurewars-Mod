@@ -38,6 +38,14 @@ local spSetUnitCloak = Spring.SetUnitCloak
 local spRemoveUnitCmdDesc = Spring.RemoveUnitCmdDesc
 local spSetUnitStealth = Spring.SetUnitStealth
 local spGetUnitHealth = Spring.GetUnitHealth
+local zombies = false
+
+do
+	local modoptions = Spring.GetModOptions()
+	if tonumber(modOptions.zombies) == 1 then
+		zombies = true
+	end
+end
 
 include("LuaRules/Configs/customcmds.h.lua")
 
@@ -65,6 +73,42 @@ local names = {
 	"Query Failed: Couldn't Load Name",
 	"Ol' Reliable (Not Reliable)",
 	"Explosive Contents",
+}
+
+local zombienames = {
+	"R2hvc3RseSBNZW5hbmNl",
+	"UHJlZGF0b3Jib3QyMDIx",
+	"TmlsIEV4Y2VwdGlvbg==",
+	"WW914oCZdmUgYWx3YXlzIGJlZW4gdGhlIG5ldyB5b3UuIA==",
+	"TW9pIE1hYWlsbWE=",
+	"SnVzdCBwbGFzdGljLg==",
+	"U2hhbWFuIGNyZWF0ZWQgbWU=",
+	"Q3JlYXRlZCBpbiBoaXMgbmFtZQ==",
+	"dGVydmU4ODY=",
+	"ZnV0dXJlIHdhcnM=",
+	"dGhlIG9ubHkgY2hpbGQ=",
+	"aXQgaHVydHMgdG8gY3JlYXRl",
+	"YSBjb3B5IG9mIGEgY29weQ==",
+	"YW5vdGhlciBkZXJpdmVkIHdvcms=",
+	"SHVvbmUgb24ga2FsdXN0ZXR0dSBwZWxrw6RsbMOk",
+	"dG9kbyBiaWVu",
+	"dHVvbGlsbGEgamEgcMO2eWTDpGxsw6Q=",
+	"bXVuYSBoYWxrZWlsZWUg",
+	"dGhlIHdvcmQgdGhhdCBkZXNjcmliZXMgbWU=",
+	"dGhlIHRydXRoIHdpbGwgZW1lcmdlIGJyb3RoZXI=",
+	"Y29uY2VwdHVhbCByZWFsaXR5",
+	"TCdpbW1hZ2luZSBlIHR1IGhhaSBsJ2ltbWFnaW5l",
+	"cGVsa8OkbGzDpCBzw6RuZ3lsbMOk",
+	"dGhpcyBpcyB0aGUgZmluYWwgb25l",
+	"dGhlIGxhc3QgZGF5IGRhd25z",
+	"Zm9yZXZlciAgZm9yZ290dGVu",
+	"aGF2ZSBpIGRvbmUgbXkgam9iPw==",
+	"d2UgY2FuIG9ubHkgY3JlYXRlIHNvIG11Y2g=",
+	"YmVmb3JlIGl0IGFsbCBiZWNvbWVzIHBhaW4=",
+	"bXkgbGlmZSBiZWZvcmUgd2FzIG5vcm1hbA==",
+	"bm93IGFsbCBpcyBjb3ZpZCwgYWxsIGlzIHNhZA==",
+	"dGhlIHBhc3Njb2RlIGlzIHRlcnZl",
+	"0JDQvdCw0YDRh9C40LQ=",
 }
 
 local defaultweapon = {
@@ -609,7 +653,15 @@ local function Upgrades_CreateStarterDyncomm(dyncommID, x, y, z, facing, teamID,
 end
 
 local function GetRandomName()
-	return names[math.random(1, #names)] or "Error In L592"
+	return names[math.random(1, #names)] or "Error In L656"
+end
+
+local function GetRandomZombieName()
+	if zombies then
+		return zombienames[math.random(1, #zombienames)] or "Error In L661"
+	else
+		return GetRandomName()
+	end
 end
 
 function gadget:UnitCreated(unitID, unitDefID, unitTeam)
@@ -670,7 +722,12 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 	
 	if chassisDefByBaseDef[unitDefID] then
 		local chassisData = chassisDefs[chassisDefByBaseDef[unitDefID]]
-		local name = GetRandomName()
+		local name
+		if unitTeam ~= Spring.GetGaiaTeamID() then
+			name = GetRandomName()
+		else
+			name = GetRandomZombieName()
+		end
 		InitializeDynamicCommander(
 			unitID,
 			0,
