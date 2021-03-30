@@ -538,23 +538,21 @@ local function UpdateAttackOrder(unitID, pos)
 	if removeTarget then
 		unitTargets[removeTarget] = unitTargets[count]
 		unitTargets[count] = nil
-		for i = 1, count-1 do
-			spSetUnitRulesParam(unitID, "subprojectile_target_" .. i .. "_x", unitTargets[i][1], ALLIES)
-			spSetUnitRulesParam(unitID, "subprojectile_target_" .. i .. "_z", unitTargets[i][3], ALLIES)
-		end
 	else
 		unitTargets[count+1] = {pos[1], pos[2], pos[3]}
-		spSetUnitRulesParam(unitID, "subprojectile_target_" .. count+1 .. "_x", pos[1], ALLIES)
-		spSetUnitRulesParam(unitID, "subprojectile_target_" .. count+1 .. "_z", pos[3], ALLIES)
 	end
-	
+	count = #unitTargets
+	for i = 1, count do
+		spSetUnitRulesParam(unitID, "subprojectile_target_" .. i .. "_x", unitTargets[i][1], ALLIES)
+		spSetUnitRulesParam(unitID, "subprojectile_target_" .. i .. "_z", unitTargets[i][3], ALLIES)
+	end
 	if debug then
 		spEcho("CAS: updating targets for unit " .. unitID .. ", new targets list:")
 		Spring.Utilities.TableEcho(unitTargets)
 	end
 	
 	targettable[unitID] = unitTargets
-	spSetUnitRulesParam(unitID, "subprojectile_target_count", #targettable[unitID], ALLIES)
+	spSetUnitRulesParam(unitID, "subprojectile_target_count", count, ALLIES)
 end
 
 GG.Submunitions = {}
