@@ -536,9 +536,7 @@ local function UpdateAttackOrder(unitID, pos)
 		end
 	end
 	if removeTarget then
-		for i=removeTarget, count-1 do
-			unitTargets[i] = unitTargets[i+1]
-		end
+		unitTargets[removeTarget] = unitTargets[count]
 		unitTargets[count] = nil
 		for i = 1, count-1 do
 			spSetUnitRulesParam(unitID, "subprojectile_target_" .. i .. "_x", unitTargets[i][1], ALLIES)
