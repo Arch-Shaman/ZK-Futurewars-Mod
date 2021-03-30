@@ -1132,16 +1132,7 @@ end
 -- check for FFA
 local isFFA = Spring.Utilities.Gametype.isFFA()
 local isSmallTeams = Spring.Utilities.Gametype.isSmallTeams()
-local teamcount = 0
-do
-	local allyteams = Spring.GetAllyTeamList()
-	for a = 1, #allyteams - 1 do -- Presumes last allyteamID is gaia.
-		local allyid = allyteams[a]
-		if #Spring.GetTeamList(allyid) > 0 then
-			teamcount = teamcount + 1
-		end
-	end
-end
+local teamcount = Spring.Utilities.GetTeamCount()
 local r = math.random(1, 10)
 if not isFFA then -- give extra boxes in big teams/coop
 	local count1 = #Spring.GetTeamList(1)
@@ -1211,8 +1202,8 @@ else -- 8 way FFA.
 	end
 	if teamcount > 4 then
 		for i = 4, 7 do
-			boxes[i] = {startpoints = {}, nameLong = names[i], nameShort = shorts[i], boxes = {}}
-			boxes[i] = {startpoints = {}, nameLong = names[i], nameShort = shorts[i], boxes = {}}
+			boxes[i] = {startpoints = {}, nameLong = names[i + 1], nameShort = shorts[i + 1], boxes = {}}
+			boxes[i] = {startpoints = {}, nameLong = names[i + 1], nameShort = shorts[i + 1], boxes = {}}
 		end
 		boxes[4].boxes[1] = team5box
 		boxes[5].boxes[1] = team6box
