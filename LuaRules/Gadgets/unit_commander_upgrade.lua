@@ -42,7 +42,7 @@ local zombies = false
 
 do
 	local modoptions = Spring.GetModOptions()
-	if tonumber(modOptions.zombies) == 1 then
+	if tonumber(modoptions.zombies) == 1 then
 		zombies = true
 	end
 end
@@ -109,6 +109,7 @@ local zombienames = {
 	"bm93IGFsbCBpcyBjb3ZpZCwgYWxsIGlzIHNhZA==",
 	"dGhlIHBhc3Njb2RlIGlzIHRlcnZl",
 	"0JDQvdCw0YDRh9C40LQ=",
+	"S3VpbmthIHNhbm90ICJodWxsdSI/IA==",
 }
 
 local defaultweapon = {
