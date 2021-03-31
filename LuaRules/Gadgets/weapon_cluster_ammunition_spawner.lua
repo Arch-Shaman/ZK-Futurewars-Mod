@@ -133,6 +133,17 @@ local wanteddefs = VFS.Include("LuaRules/Configs/setprojectiletargetdefs.lua") o
 local mapx = Game.mapSizeX
 local mapz = Game.mapSizeZ
 -- functions --
+local function ToggleDebug()
+	if spIsCheatingEnabled() then -- toggle debugMode
+		debug = not debug
+		if debug then
+			spEcho("[CAS] Debug enabled.")
+		else
+			spEcho("[CAS] Debug disabled.")
+		end
+	end
+end
+
 local function distance3d(x1, y1, z1, x2, y2, z2)
 	return sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)) + ((z2 - z1) * (z2 - z1)))
 end
@@ -519,16 +530,21 @@ end
 
 local function UpdateAttackOrder(unitID, pos)
 	if type(pos) ~= "table" then
+		if debug then
+			spEcho("[CAS] Update for " .. unitID .. " is not a position (Type: " .. type(pos) .. ", value: " .. tostring(pos) .. ")")
+		end
 		local new = {}
 		new[1], new[2], new[3] = spGetUnitPosition(pos)
 		pos = new
 	end
-	
+	if debug then
+		spEcho("[CAS] Updating Attack Order: Got: {" .. tostring(new[1]) .. "," .. tostring(new[2]) .. "," .. tostring(new[3]) .. ")")
+	end
 	local unitTargets = targettable[unitID] or {}
 	local count = #unitTargets
 	local removeTarget = false
 	if count > 0 then
-		for i=1, count do
+		for i = 1, count do
 			if unitTargets[i] and (unitTargets[i][1]-pos[1])^2 + (unitTargets[i][3]-pos[3])^2 < targetCancelRadius then
 				removeTarget = i
 				break
@@ -539,7 +555,7 @@ local function UpdateAttackOrder(unitID, pos)
 		unitTargets[removeTarget] = unitTargets[count]
 		unitTargets[count] = nil
 	else
-		unitTargets[count+1] = {pos[1], pos[2], pos[3]}
+		unitTargets[count + 1] = {pos[1], pos[2], pos[3]}
 	end
 	count = #unitTargets
 	for i = 1, count do
@@ -689,6 +705,10 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
 		UpdateAttackOrder(unitID, cmdParams)
 		return false
 	end
+end
+
+function gadget:Initialize()
+	gadgetHandler:AddChatAction("debugcas", ToggleDebug, "Toggles CAS debug echos.")
 end
 
 function gadget:UnitDestroyed(unitID)
