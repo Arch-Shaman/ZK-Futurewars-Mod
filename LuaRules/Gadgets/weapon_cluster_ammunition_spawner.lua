@@ -529,12 +529,9 @@ local function CheckProjectile(id)
 end
 
 local function UpdateAttackOrder(unitID, pos)
-	if type(pos) ~= "table" then
-		if debug then
-			spEcho("[CAS] Update for " .. unitID .. " is not a position (Type: " .. type(pos) .. ", value: " .. tostring(pos) .. ")")
-		end
+	if not pos[2] then
 		local new = {}
-		new[1], new[2], new[3] = spGetUnitPosition(pos)
+		new[1], new[2], new[3] = spGetUnitPosition(pos[1])
 		pos = new
 	end
 	if debug then
