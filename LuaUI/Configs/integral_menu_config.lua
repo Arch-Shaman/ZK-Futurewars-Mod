@@ -29,6 +29,7 @@ local tooltips = {
 	DISABLE_ATTACK = "Allow Attack Commands (_STATE_)\n  Set whether the unit responds to attack commands.",
 	PUSH_PULL = "Impulse Mode (_STATE_)\n  Set whether gravity guns push or pull.",
 	DONT_FIRE_AT_RADAR = "Fire At Radar State (_STATE_)\n  Set whether precise units with high reload time fire at radar dots.",
+	PREVENT_BAIT = "Avoid Bad Targets (_STATE_)\n  _DESC_",
 	PREVENT_OVERKILL = "Overkill Prevention (_STATE_)\n  Prevents units from shooting at already doomed enemies.",
 	TRAJECTORY = "Trajectory (_STATE_)\n  Set whether units fire at a high or low arc.",
 	AIR_STRAFE = "Gunship Strafe (_STATE_)\n  Set whether gunships strafe when fighting.",
@@ -182,6 +183,22 @@ local commandDisplayConfig = {
 				tooltipsAlternate.FIRE_STATE:gsub("_STATE_", "Return Fire"),
 				tooltipsAlternate.FIRE_STATE:gsub("_STATE_", "Fire At Will")
 			},
+		}
+	},
+	[CMD_PREVENT_BAIT] = {
+		texture = {
+			imageDir .. 'states/bait_off_alternate.png',
+			imageDir .. 'states/bait_1.png',
+			imageDir .. 'states/bait_2.png',
+			imageDir .. 'states/bait_3.png',
+			imageDir .. 'states/bait_4.png',
+		},
+		stateTooltip = {
+			tooltips.PREVENT_BAIT:gsub("_STATE_", "Disabled"):gsub("_DESC_", "Enable this to ignore bad targets when not on Force Fire or Attack Move."),
+			tooltips.PREVENT_BAIT:gsub("_STATE_", "Free"):gsub("_DESC_", "Avoid light drones, Wind, Solar, Claw, Dirtbag and armoured targets."),
+			tooltips.PREVENT_BAIT:gsub("_STATE_", "Light"):gsub("_DESC_", "Avoid cost under 90, Razor, Sparrow, unknown radar and armour."),
+			tooltips.PREVENT_BAIT:gsub("_STATE_", "Medium"):gsub("_DESC_", "Avoid cost under 240, minus Stardust, Raptor, unknown radar and armour."),
+			tooltips.PREVENT_BAIT:gsub("_STATE_", "Heavy"):gsub("_DESC_", "Avoid cost under 420, unknown radar dots and armour."),
 		}
 	},
 	[CMD_RETREAT] = {
