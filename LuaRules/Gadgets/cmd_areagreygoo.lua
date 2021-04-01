@@ -16,14 +16,14 @@ end
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 
 local handled = IterableMap.New()
-local wantedUnitDefs = {}
 local featurecache = {}
 
 local areaGreyGooDesc = {
 	id      = CMD_GREYGOO,
 	type    = CMDTYPE.ICON_UNIT_FEATURE_OR_AREA,
-	name    = 'Reclaim (Grey Goo)', -- TODO: better name. Marketing was out today.
-	action  = 'reclaim', -- this may break things for modders with cons that grey goo!
+	name    = 'Grey Goo', -- TODO: better name. Marketing was out today.
+	action  = 'greygoo',
+	cursor  = 'Reclaim',
 	tooltip	= 'Marks an area or wreckage for grey goo.',
 }
 
@@ -38,15 +38,11 @@ local spValidFeatureID = Spring.ValidFeatureID
 local spValidUnitID = Spring.ValidUnitID
 local spGetUnitCommands = Spring.GetUnitCommands
 local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc
-local CommandOrder = 123456
+local CommandOrder = 22425
 local sqrt = math.sqrt
 
 local validFeatures = {}
 local _, GooDefs = VFS.Include("LuaRules/Configs/grey_goo_defs.lua")
-
-for def, _ in pairs(GooDefs) do
-	wantedUnitDefs[def] = true
-end
 
 for i = 1, #FeatureDefs do
 	local fdef = FeatureDefs[i]
@@ -110,15 +106,16 @@ function gadget:FeatureDestroyed(featureID)
 end
 
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
-	if cmdID == CMD_GREYGOO and not wantedUnitDefs[unitDefID] then -- screen against non-grey gooers using area greygoo.
+	if cmdID == CMD_GREYGOO and not GooDefs[unitDefID] then -- screen against non-grey gooers using area greygoo.
 		return false
 	else
 		return true
 	end
 end
 
-function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
-	if wantedUnitDefs[unitDefID] then
+function gadget:UnitCreated(unitID, unitDefID)
+	if GooDefs[unitDefID] then
+		Spring.Echo("Injecting Command to " .. unitID)
 		spInsertUnitCmdDesc(unitID, CommandOrder, areaGreyGooDesc)
 	end
 end
@@ -150,7 +147,7 @@ function gadget:CommandFallback(unitID, unitDefID, unitTeam, cmdID, cmdParams, c
 			elseif not IsThereEligiableWreckNearby(cmdParams[1], cmdParams[3], cmdParams[4]) then -- there's nothing that we can use in the radius.
 				return true, true
 			end
-			IterableMap.Add(handled, unitID, {def = unitDefID, done = false, params = cmdParams, goal = -9999} -- we found a new unit!
+			IterableMap.Add(handled, unitID, {def = unitDefID, done = false, params = cmdParams, goal = -9999}) -- we found a new unit!
 		end
 		return true, false -- we're still not done here.
 	end
@@ -200,5 +197,12 @@ function gadget:GameFrame(f)
 				end
 			end
 		end
+	end
+end
+
+function gadget:Initalize()
+	gadgetHandler:RegisterCMDID(CMD_GREYGOO)
+	for _, unitID in pairs(Spring.GetAllUnits()) do
+		gadget:UnitCreated(unitID, Spring.GetUnitDefID(unitID))
 	end
 end
