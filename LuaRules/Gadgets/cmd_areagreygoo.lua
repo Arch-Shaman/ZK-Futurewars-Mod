@@ -13,6 +13,8 @@ end
 if (not gadgetHandler:IsSyncedCode()) then
 	return
 end
+
+include("LuaRules/Configs/customcmds.h.lua")
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 
 local handled = IterableMap.New()
@@ -22,8 +24,8 @@ local areaGreyGooDesc = {
 	id      = CMD_GREYGOO,
 	type    = CMDTYPE.ICON_UNIT_FEATURE_OR_AREA,
 	name    = 'Grey Goo', -- TODO: better name. Marketing was out today.
-	action  = 'greygoo',
 	cursor  = 'Reclaim',
+	action  = 'reclaim',
 	tooltip	= 'Marks an area or wreckage for grey goo.',
 }
 
@@ -38,7 +40,7 @@ local spValidFeatureID = Spring.ValidFeatureID
 local spValidUnitID = Spring.ValidUnitID
 local spGetUnitCommands = Spring.GetUnitCommands
 local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc
-local CommandOrder = 22425
+local CommandOrder = 123456
 local sqrt = math.sqrt
 
 local validFeatures = {}
@@ -115,7 +117,7 @@ end
 
 function gadget:UnitCreated(unitID, unitDefID)
 	if GooDefs[unitDefID] then
-		Spring.Echo("Injecting Command to " .. unitID)
+		Spring.Echo("Injecting Command to " .. unitID .. "(Cmd: " .. tostring(CMD_GREYGOO) .. ")")
 		spInsertUnitCmdDesc(unitID, CommandOrder, areaGreyGooDesc)
 	end
 end
