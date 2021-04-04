@@ -19,6 +19,7 @@ local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 
 local handled = IterableMap.New()
 local featurecache = {}
+local needLOS = true
 
 local areaGreyGooDesc = {
 	id      = CMD_GREYGOO,
@@ -40,6 +41,8 @@ local spValidFeatureID = Spring.ValidFeatureID
 local spValidUnitID = Spring.ValidUnitID
 local spGetUnitCommands = Spring.GetUnitCommands
 local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc
+local spIsPosInLos = Spring.IsPosInLos
+local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local CommandOrder = 123456
 local sqrt = math.sqrt
 
@@ -57,20 +60,27 @@ local function Distance(x1, x2, y1, y2)
 	return sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)))
 end
 
-local function GetEligiableWrecksInArea(x, z, radius)
+local function GetEligiableWrecksInArea(x, z, radius, allyID) -- Looks for wrecks in LOS that are nearby.
 	local check = spGetFeaturesInCylinder(x, z, radius)
 	local ret = {}
 	for i = 1, #check do
 		local featureID = check[i]
 		if featurecache[featureID] then
-			ret[#ret + 1] = featureID
+			if needLOS then
+				local x, y, z = spGetFeaturePosition(featureID)
+				if needLOS and spIsPosInLos(x, y, z, allyID) then
+					ret[#ret + 1] = featureID
+				end
+			else
+				ret[#ret + 1] = featureID
+			end
 		end
 	end
 	return ret
 end
 
-local function GetClosestWreck(x, z, cx, cz, radius)
-	local wrecks = GetEligiableWrecksInArea(cx, cz, radius)
+local function GetClosestWreck(x, z, cx, cz, radius, ally) --
+	local wrecks = GetEligiableWrecksInArea(cx, cz, radius, ally)
 	if #wrecks == 0 then -- double safety.
 		return nil
 	end
@@ -78,7 +88,7 @@ local function GetClosestWreck(x, z, cx, cz, radius)
 	local lowestID
 	for i = 1, #wrecks do
 		local id = wrecks[i]
-		local x2, _, z2 = spGetFeaturePosition(id)
+		local x2, y2, z2 = spGetFeaturePosition(id)
 		local d = Distance(x, x2, z, z2)
 		if d < lowestDistance then
 			lowestID = id
@@ -88,11 +98,19 @@ local function GetClosestWreck(x, z, cx, cz, radius)
 	return lowestID
 end
 
-local function IsThereEligiableWreckNearby(x, z, radius)
+local function IsThereEligiableWreckNearby(x, z, radius, allyteam)
 	local check = spGetFeaturesInCylinder(x, z, radius)
 	for i = 1, #check do
-		if featurecache[check[i]] then
-			return check[i] -- return the lowest one in range
+		local featureID = check[i]
+		if featurecache[featureID] then
+			if needLOS then
+				local x, y, z = spGetFeaturePosition(featureID)
+				if spIsPosInLos(x, y, z, allyteam) then
+					return featureID -- return the lowest one in range
+				end
+			else
+				return featureID
+			end
 		end
 	end
 	return nil
@@ -117,36 +135,40 @@ end
 
 function gadget:UnitCreated(unitID, unitDefID)
 	if GooDefs[unitDefID] then
-		Spring.Echo("Injecting Command to " .. unitID .. "(Cmd: " .. tostring(CMD_GREYGOO) .. ")")
+		--Spring.Echo("Injecting Command to " .. unitID .. "(Cmd: " .. tostring(CMD_GREYGOO) .. ")")
 		spInsertUnitCmdDesc(unitID, CommandOrder, areaGreyGooDesc)
 	end
 end
 
 function gadget:CommandFallback(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag) -- used for "free" command management since we have a command that isn't an engine command.
 	if cmdID ~= CMD_GREYGOO then
+		--Spring.Echo("GREYGOO: CMDFALLBACK: bad cmd")
 		return false, false -- don't care (not ours)
 	else
 		local data = IterableMap.Get(handled, unitID)
 		if data and data.done then
+			--Spring.Echo("GREYGOO: DONE")
 			IterableMap.Remove(handled, unitID)
 			return true, true -- we're done with this command.
 		elseif not data then
+			--Spring.Echo("GREYGOO: INITIALIZING with params: " .. tostring(cmdParams[1]) .. ", " .. tostring(cmdParams[2]) .. ", " .. tostring(cmdParams[3]) .. ", " .. tostring(cmdParams[4]))
+			local allyteam = spGetUnitAllyTeam(unitID)
 			if #cmdParams == 1 then -- this is a single feature command.
 				local id = cmdParams[1]
-				if id < Game.maxUnits then
+				if id < Game.maxUnits then -- unitID instead of featureID
+					return true, true
+				end
+				id = id - Game.maxUnits
+				local valid = spValidFeatureID(id)
+				--Spring.Echo("ID: " .. id .. " (Valid: " .. tostring(valid) .. ")")
+				if not valid then
 					return true, true -- this is invalid since it's targeting a unit (wtf)
 				else
-					local id = cmdParams[1] - Game.MaxUnits -- expects: (unitid or Game.maxUnits+featureid) so to get featureID we need to subtract Game.maxUnits.
 					cmdParams = id -- we set this to just a number so our gameframe check can differentiate between a single command and an area command.
-					if not spValidFeatureID(id) then
-						return true, true
-					else -- check if this is a good def to target.
-						if not featurecache[id] then
-							return true, true
-						end
-					end
+					-- Note: We don't need to worry about LOS as I think it won't work out of LOS (returns a map position, probably)
 				end
-			elseif not IsThereEligiableWreckNearby(cmdParams[1], cmdParams[3], cmdParams[4]) then -- there's nothing that we can use in the radius.
+			elseif not IsThereEligiableWreckNearby(cmdParams[1], cmdParams[3], cmdParams[4], allyteam) then -- there's nothing that we can use in the radius.
+				--Spring.Echo("GREYGOO: No eligible wrecks nearby")
 				return true, true
 			end
 			IterableMap.Add(handled, unitID, {def = unitDefID, done = false, params = cmdParams, goal = -9999}) -- we found a new unit!
@@ -159,33 +181,39 @@ function gadget:GameFrame(f)
 	if f%5 == 0 then -- 6hz
 		for unitID, data in IterableMap.Iterator(handled) do
 			if not data.done then -- don't handle things that are done.
-				local unitDef = data.def
+				--Spring.Echo("GreyGoo: Update " .. unitID .. ": Goal: " .. data.goal)
 				local greygooconfig = GooDefs[data.def]
 				local currentcmd = spGetUnitCommands(unitID, 1)
-				if spValidUnitID(unitID) or #currentcmd == 0 or currentcmd[1].id ~= CMD_GREYGOO then -- safety. first we check if we have any commands, then if we're not doing grey goo anymore.
+				if not spValidUnitID(unitID) or #currentcmd == 0 or currentcmd[1].id ~= CMD_GREYGOO then -- safety. first we check if we have any commands, then if we're not doing grey goo anymore.
+					--Spring.Echo("Invalid unit or not working")
 					IterableMap.Remove(handled, unitID)
 				else
 					local params = data.params
+					local commandRadius = data.params[4]
+					local commandX = data.params[1]
+					local commandZ = data.params[3]
 					local range = greygooconfig.range
-					local wantedrange = range * 0.1 -- puts us clearly in range, and gives us bonus targets, potentially.
-					if type(params) ~= "table" then -- this is a single command
-						if spValidFeatureID(params) then
-							if data.goal ~= params then -- we haven't set the move goal yet.
-								local x, y, z = spGetFeaturePosition(params) -- find the location of our target.
+					local wantedrange = range * 0.1 -- puts us clearly in range, and gives us bonus targets (for mostly "free"), potentially.
+					if type(data.params) ~= "table" then -- this is a single command
+						local featureID = data.params
+						if spValidFeatureID(featureID) then
+							if data.goal ~= featureID then -- we haven't set the move goal yet.
+								local x, y, z = spGetFeaturePosition(featureID) -- find the location of our target.
 								spSetUnitMoveGoal(unitID, x, y, z, wantedrange)
-								data.goal = params
+								data.goal = featureID
 							end
 						else
 							data.done = true
 						end
 					else -- this is an area command.
+						local allyTeam = spGetUnitAllyTeam(unitID)
 						if data.goal == -9999 or not spValidFeatureID(data.goal) then -- haven't set a goal yet or our current greygoo task is complete.
 							local x, y, z = spGetUnitPosition(unitID)
-							local newgoal = IsThereEligiableWreckNearby(x, z, range)
+							local newgoal = IsThereEligiableWreckNearby(x, z, range, allyTeam)
 							if newgoal then
 								data.goal = newgoal -- set our new goal to a nearby wreck in range (we're still eating something, no sense moving onto other things yet)
 							else
-								local id = GetClosestWreck(x, z, params[1], params[3], params[4])
+								local id = GetClosestWreck(x, z, commandX, commandZ, commandRadius, allyTeam)
 								if id then
 									local gx, gy, gz = spGetFeaturePosition(id)
 									spSetUnitMoveGoal(unitID, gx, gy, gz, wantedrange)
