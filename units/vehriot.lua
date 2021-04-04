@@ -1,7 +1,7 @@
 return { 
 	vehriot = {
 		unitname            = [[vehriot]],
-		name                = [[Ripper]],
+		name                = [[Striker]],
 		description         = [[Riot Rover]],
 		acceleration        = 0.159,
 		brakeRate           = 1.24,
@@ -33,7 +33,6 @@ return {
 		maxSlope            = 18,
 		maxVelocity         = 2.1,
 		maxWaterDepth       = 22,
-		minCloakDistance    = 75,
 		movementClass       = [[TANK3]],
 		noAutoFire          = false,
 		noChaseCategory     = [[TERRAFORM FIXEDWING SATELLITE SUB]],
@@ -91,8 +90,7 @@ return {
 					light_camera_height = 1600,
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 40,
-					isFlak = 3,
-					flaktime = 1/30,
+					isFlak = 2,
 				},
 				
 				damage                  = {
@@ -133,14 +131,14 @@ return {
 					smoothradius = [[60]],
 					smoothmult   = [[0.08]],
 					force_ignore_ground = [[1]],
-					numprojectiles = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile = "vehriot_secondary",
-					--spreadradius = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+					numprojectiles1 = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					projectile1 = "vehriot_secondary",
+					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
+					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 100, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius = "-4,0,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-6,-2,-6,6,0,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 0, -- check for nearby units?
 					proxydist = 100, -- how far to check for units? Default: spawndist
@@ -151,7 +149,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 40*6,
+					default = 40*12,
 				},
 				
 				edgeEffectiveness       = 0.75,
@@ -162,7 +160,7 @@ return {
 				noSelfDamage            = true,
 				range                   = 280,
 				reloadtime              = 1.7 + 2/30,
-				soundHit                = [[weapon/cluster_light]],
+				soundHit                = [[weapon/clusters/cluster_light]],
 				soundStart              = [[weapon/cannon/outlaw_gun]],
 				soundStartVolume        = 3,
 				turret                  = true,
@@ -175,7 +173,7 @@ return {
 		featureDefs         = {
 			
 			DEAD  = {
-				blocking         = false,
+				blocking         = true,
 				featureDead      = [[HEAP]],
 				footprintX       = 2,
 				footprintZ       = 2,

@@ -3,7 +3,7 @@ return {
 		unitname                      = [[staticheavyarty]],
 		name                          = [[Big Bertha]],
 		description                   = [[Canister Barrage Artillery]],
-		buildCostMetal                = 6000,
+		buildCostMetal                = 7500,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 6,
@@ -20,6 +20,10 @@ return {
 			aimposoffset = [[0 50 -7]],
 			modelradius    = [[35]],
 			selectionscalemult = 1,
+			
+    			keeptooltip    = [[any string I want]],
+    			neededlink     = 170,
+   			pylonrange     = 100,
 		},
 		
 		explodeAs                     = [[ATOMIC_BLAST]],
@@ -70,33 +74,27 @@ return {
 				alphaDecay              = 0.7,
 				areaOfEffect            = 0,
 				burnblow                = true,
-				burst                   = 3,
-				burstrate               = 0.1,
 				craterBoost             = 0.15,
 				craterMult              = 0.3,
 
 				customParams        = {
-					gatherradius     = [[240]],
-					smoothradius     = [[120]],
-					smoothmult       = [[0.5]],
-					quickgather      = [[1]],
 					lups_noshockwave = [[1]],
 					light_camera_height = 1600,
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 110,
-					numprojectiles = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile = "staticheavyarty_tritary",
-					--spreadradius = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+					numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					projectile1 = "staticheavyarty_tritary",
+					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
+					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 600, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius = "-8,-2,-8,8,3,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-8,-2,-8,8,3,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
 				},
 				
 				damage                  = {
-					default = 145*8,
+					default = 145*2*4,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -111,7 +109,7 @@ return {
 				reloadtime              = 0.5,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
-				soundHit                = [[weapon/cluster_light]],
+				soundHit                = [[weapon/clusters/cluster_light]],
 				soundStart              = [[weapon/heavy_emg]],
 				stages                  = 10,
 				turret                  = true,
@@ -122,17 +120,11 @@ return {
 			tritary = {
 				name                    = [[Heavy Fragmentation]],
 				alphaDecay              = 0.7,
-				areaOfEffect            = 140,
+				areaOfEffect            = 192,
 				craterBoost             = 0.15,
 				craterMult              = 0.3,
 
 				customParams        = {
-					gatherradius     = [[240]],
-					detachmentradius = [[320]],
-					smoothradius     = [[120]],
-					smoothmult       = [[0.5]],
-					movestructures = [[1]],
-					quickgather      = [[1]],
 					lups_noshockwave = [[1]],
 					light_camera_height = 1600,
 					light_color = [[0.8 0.76 0.38]],
@@ -140,7 +132,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 145,
+					default = 145*2,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -155,7 +147,7 @@ return {
 				reloadtime              = 0.5,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
-				soundHit                = [[weapon/cannon/cannon_hit2]],
+				soundHit                = [[weapon/cannon/rhino4]],
 				soundStart              = [[weapon/heavy_emg]],
 				stages                  = 10,
 				turret                  = true,
@@ -164,29 +156,29 @@ return {
 			},
 	
 			PLASMA = {
-				name                    = [[3 Round Cluster Barrage]],
-				highTrajectory		  = 1,
+				name                    = [[Cluster Barrage]],
+				highTrajectory		= 1,
 				areaOfEffect            = 0,
 				avoidFeature            = false,
 				avoidGround             = false,
 				cegTag                  = [[vulcanfx]],
 				craterBoost             = 0,
 				craterMult              = 0,
-				burst					= 3,
-				burstrate				= 1.2,
+				burst			= 2,
+				burstrate		= 2,
 				customParams            = {
 					restrict_in_widgets = 1,
 
 					gatherradius = [[128]],
 					smoothradius = [[96]],
 					smoothmult   = [[0.4]],
-					numprojectiles = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile = "staticheavyarty_secondary",
-					--spreadradius = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					projectile1 = "staticheavyarty_secondary",
+					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
+					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 2200, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius = "-5,-5,-5,5,5,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-5,-5,-5,5,5,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
 					light_camera_height = 1500,
 					light_color = [[0.8 0.76 0.38]],
@@ -203,16 +195,16 @@ return {
 				impulseBoost            = 0.5,
 				impulseFactor           = 0.2,
 				interceptedByShieldType = 1,
+				mygravity				= 0.25,
 				sprayAngle				= 120,
 				noSelfDamage            = true,
-				range                   = 8000,
-				reloadtime              = 30,
-				mygravity				= 0.20,
-				soundHit                = [[weapon/cluster_heavy]],
-				soundStart              = [[weapon/cannon/big_begrtha_gun_fire]],
+				range                   = 6000,
+				reloadtime              = 25,
+				soundHit                = [[weapon/clusters/cluster_heavy]],
+				soundStart              = [[weapon/cannon/large_cannon_fire]],
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 1440,
+				weaponVelocity          = 1350,
 			},
 
 		},

@@ -39,7 +39,7 @@ local function SetupStorage(teamID)
 	for id, storage in pairs(storagedefs) do
 		ammount = ammount + spGetTeamUnitDefCount(teamID, id) * storage
 	end
-	ammount = HIDDEN_STORAGE + ammount
+	ammount = HIDDEN_STORAGE + (ammount * GG.GetTeamHandicap(teamID))
 	spSetTeamResource(teamID, "es", ammount)
 	spSetTeamResource(teamID, "ms", ammount)
 	spSetTeamResource(teamID, "energy", 0)
@@ -51,9 +51,15 @@ local function GiveStartResources(teamID) -- Called each time a commander spawns
 	local metal = spGetTeamResources(teamID, "metal")
 	local energy = spGetTeamResources(teamID, "energy")
 	local teamInfo = teamID and select(7, spGetTeamInfo(teamID, true))
+	local mult = GG.GetTeamHandicap(teamID)
 	--Spring.Echo("To give: " .. tostring(teamInfo.start_energy) .. " or " .. START_ENERGY + energy)
-	spSetTeamResource(teamID, "energy", teamInfo.start_energy or (START_ENERGY + energy))
-	spSetTeamResource(teamID, "metal", teamInfo.start_metal or (START_METAL + metal))
+	local wantede = teamInfo.start_energy or (START_ENERGY + energy)
+	local wantedm = teamInfo.start_metal or (START_METAL + metal)
+	wantede = wantede * mult
+	wantedm = wantedm * mult
+	--Spring.Echo("giving " ..wantede .. " to " .. teamID)
+	spSetTeamResource(teamID, "energy", wantede)
+	spSetTeamResource(teamID, "metal", wantedm)
 end
 
 function gadget:Shutdown()

@@ -1,14 +1,14 @@
 local unitDef = {
 	unitname               = [[striderbantha]],
-	name                   = [[Paladin]],
+	name                   = [[Mogul]],
 	description            = [[Ultraheavy Siege]],
 	acceleration           = 0.1047,
 	brakeRate              = 0.2212,
-	buildCostMetal         = 10000,
+	buildCostMetal         = 20000,
 	builder                = false,
 	buildPic               = [[striderbantha.png]],
 	canGuard               = true,
-	canManualFire          = true,
+	canManualFire          = false,
 	canMove                = true,
 	canPatrol              = true,
 	category               = [[LAND]],
@@ -18,7 +18,7 @@ local unitDef = {
 	corpse                 = [[DEAD]],
 
 	customParams           = {
-		extradrawrange = 700,
+		extradrawrange = 1500,
 		aimposoffset   = [[0 -8 0]],
 		midposoffset   = [[0 -8 0]],
 		modelradius    = [[17]],
@@ -28,15 +28,14 @@ local unitDef = {
 	footprintX             = 4,
 	footprintZ             = 4,
 	iconType               = [[t3generic]],
-	idleAutoHeal           = 5,
+	idleAutoHeal           = 320,
 	idleTime               = 1800,
 	leaveTracks            = true,
 	losEmitHeight          = 60,
 	maxDamage              = 32000,
 	maxSlope               = 36,
-	maxVelocity            = 1.55,
+	maxVelocity            = 1.25,
 	maxWaterDepth          = 22,
-	minCloakDistance       = 75,
 	movementClass          = [[KBOT4]],
 	noAutoFire             = false,
 	noChaseCategory        = [[FIXEDWING SATELLITE SUB]],
@@ -95,7 +94,6 @@ local unitDef = {
       
 			damage                  = {
 				default = 1000,
-				subs    = 50,
 			},
 			edgeEffectiveness = 0.2,
 			explosionGenerator      = [[custom:TESS]],
@@ -164,8 +162,6 @@ local unitDef = {
 			},
 			damage                  = {
 				default = 0.00,
-				planes  = 0.00,
-				subs    = 0.00,
 			},
 			--explosionGenerator      = [[custom:flash1red]],
 			fireTolerance           = 8192, -- 45 degrees
@@ -183,7 +179,7 @@ local unitDef = {
 			sweapfire = false,
 			rgbColor                = [[0.3 0 0]],
 			rgbColor2				  = [[0.5 0 0]],
-			soundStart              = [[weapon/laser/tracker]],
+			soundStart              = [[weapon/laser/mogul-uplink]],
 			--soundHit				  = [[trackercompleted.wav]]
 			soundStartVolume        = 15,
 			texture1                = [[largelaser]],
@@ -202,8 +198,8 @@ local unitDef = {
 			accuracy                = 512,
 			avoidFeature            = false,
 			avoidFriendly           = false,
-			burst                   = 12,
-			burstrate               = 0.2,
+			burst                   = 8,
+			burstrate               = 0.7,
 			cegTag                  = [[tactrail]],
 			--commandFire             = true,
 			craterBoost             = 0,
@@ -211,21 +207,21 @@ local unitDef = {
 
 			customParams            = {
 				tracker = 1,
-				combatrange = 1500,
-				numprojectiles = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-				projectile = "striderbantha_secondary",
-				--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-				clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+				combatrange = 2000,
+				numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+				projectile1 = "striderbantha_secondary",
+				--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
+				clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 				use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-				spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
+				spawndist = 400, -- at what distance should we spawn the projectile(s)? REQUIRED.
 				timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-				vradius = "-20,9,-20,20,10,20", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+				vradius1 = "-8,2,-8,8,10,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 				light_color = [[0.65 0.65 0.18]],
 				light_radius = 380,
 				useheight = 1,
 			},
 			damage                  = {
-				default        = 1250,
+				default        = 5*1000,
 			},
 			dance                   = 20,
 			edgeEffectiveness       = 0.5,
@@ -239,7 +235,7 @@ local unitDef = {
 			model                   = [[banthamissile.s3o]],
 			noSelfDamage            = true,
 			range                   = 2900,
-			reloadtime              = 22,
+			reloadtime              = 30,
 			smokeTrail              = false,
 			soundHit                = [[explosion/ex_large9.wav]],
 			soundStart              = [[weapon/missile/bantha_launch.wav]],
@@ -252,62 +248,106 @@ local unitDef = {
 			turret                  = true,
 			weaponAcceleration      = 100,
 			weaponType              = [[StarburstLauncher]],
-			weaponTimer			  = 5,
+			weaponTimer			    = 5,
 			weaponVelocity          = 850,
-			--wobble                  = 18000,
+			--wobble                = 18000,
 		},	
-		LIGHTNING      = {
-			name                    = [[Plasmatic Bomb]],
-			areaOfEffect            = 0,
+		EMPSECONDARY = {
+			name                    = [[Light EMP Shockcannon]],
+			accuracy                = 80,
+			movingAccuracy			= 400,
+			areaOfEffect            = 120,
+			cegtag					= [[artillery_spark_small]],
 			craterBoost             = 0,
 			craterMult              = 0,
-			cegTag = [[tactrail]],
-			customParams            = {
-				gatherradius = [[105]],
-				smoothradius = [[70]],
-				smoothmult   = [[2]],
-				light_camera_height = 2200,
-				light_color = [[0.85 0.85 1.2]],
-				light_radius = 200,
-				numprojectiles = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-				projectile = "striderbantha_plasma",
-				--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-				clustervec = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-				use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-				spawndist = 100, -- at what distance should we spawn the projectile(s)? REQUIRED.
-				timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-				vradius = "-10,4,-10,10,6,10", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-				light_color = [[0.65 0.65 0.18]],
-				light_radius = 380,
-				useheight = 1,
+			--highTrajectory			= 1,
+			burst					= 1,
+
+			customParams        = {
+				light_camera_height = 1400,
+				light_color = [[0.3 0.3 0.7]],
+				light_radius = 100,
+				extra_damage = 210*3,
 			},
+
 			damage                  = {
-				default        = 180,
+				default = 210,
 			},
-			duration                = 10,
-			explosionGenerator      = [[custom:TORPEDOHITHUGE]],
-			fireStarter             = 50,
-			impactOnly              = true,
-			impulseBoost            = 60,
-			impulseFactor           = 2.4,
-			intensity               = 12,
+
+			edgeEffectiveness       = 0.1,
+			paralyzeTime            = 3,
+			explosionGenerator      = [[custom:lightningplosion_nopost]],
+			impactOnly              = false,
+			impulseBoost            = 0,
+			impulseFactor           = 0.4,
 			interceptedByShieldType = 1,
-			range                   = 700,
-			reloadtime              = 0.5,
-			rgbColor                = [[1 0.25 0.25]],
-			soundStart              = [[weapon/quantum_hit.wav]],
-			soundStartVolume        = 3.8,
-			soundTrigger            = true,
-			sprayAngle              = 800,
-			--texture1                = [[lightning]],
-			thickness               = 10,
+			myGravity               = 0.07,
+			noSelfDamage            = true,
+			range                   = 900,
+			reloadtime              = 6,
+			size					= 0.01,
+			soundHit                = [[weapon/cannon/emp_arty_hit]],
+			soundStart              = [[weapon/cannon/emparty_fire]],
 			turret                  = true,
 			weaponType              = [[Cannon]],
-			weaponVelocity          = 400,
+			weaponVelocity          = 235,
+		},
+		LIGHTNING = {
+			name                    = [[Unstable Plasmatic Energy Launcher]],
+			areaOfEffect            = 64,
+			craterBoost             = 0,
+			craterMult              = 0,
+			burst					= 3,
+			burstrate				= 2,
+			cegtag					= [[antagonist_spark_bigger]],
+			customParams            = {
+				extra_damage = 210*3*8,
+				numprojectiles1 = 8,
+				light_camera_height = 2000,
+				light_color = [[0.85 0.85 1.2]],
+				light_radius = 220,
+				projectile1 = "striderbantha_empsecondary",
+				--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
+				clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+				use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
+				spawndist = 300, -- at what distance should we spawn the projectile(s)? REQUIRED.
+				timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
+				vradius1 = "-4,-1,-4,4,2,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+				light_color = [[0.65 0.65 0.18]],
+				light_radius = 380,
+			},
+
+			cylinderTargeting      = 0,
+
+			damage                  = {
+				default        = 210*8,
+			},
+
+			duration                = 10,
+			explosionGenerator      = [[custom:hammer_artillery_hit]],
+			edgeeffectiveness		= 0.05,
+			fireStarter             = 50,
+			impulseBoost            = 0,
+			impulseFactor           = 0,
+			intensity               = 12,
+			interceptedByShieldType = 1,
+			paralyzeTime            = 1,
+			range                   = 1500,
+			reloadtime              = 10,
+			size 					= 0.3,
+			gravity					= 0.06,
+			rgbColor                = [[0.54 0.54 1]],
+			soundHit				= [[weapon/cannon/emp_hit]],
+			soundStart              = [[weapon/cannon/bantha_fire]],
+			sprayAngle              = 400,
+			thickness               = 10,
+			turret                  = true,
+			waterweapon             = false,
+			weaponType              = [[Cannon]],
+			weaponVelocity          = 770,
 		},
 	},
 	featureDefs            = {
-
 		DEAD  = {
 			blocking         = true,
 			featureDead      = [[HEAP]],
@@ -321,9 +361,7 @@ local unitDef = {
 			footprintZ       = 4,
 			object           = [[debris4x4b.s3o]],
 		},
-
 	},
-
 }
 
 return { striderbantha = unitDef }

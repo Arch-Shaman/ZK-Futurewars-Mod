@@ -68,53 +68,50 @@ local SIG_RESTORE = 4
 --------------------------------------------------------------------------------
 -- vars
 --------------------------------------------------------------------------------
+include "JumpRetreat.lua"
 local bAiming, bJumping, bReloading = false, false, false
 local gun_1 = 0
 local lastHeading, lastPitch = 0, 0
 
 
+local function BeginJumpThread()
+	Turn(luparm, x_axis, math.rad(45), math.rad(400))
+	Turn(ruparm, x_axis, math.rad(45), math.rad(400))
+	Turn(lthigh, x_axis, math.rad(-45), math.rad(400))
+	Turn(rthigh, x_axis, math.rad(45), math.rad(400))
+	Turn(head, y_axis, math.rad(15), math.rad(400))
+end
+
+function preJump()
+	WaitForTurn(lthigh, x_axis)
+	WaitForTurn(rthigh, x_axis)
+	bJumping = true
+end
+
 function beginJump()
-	EmitSfx(jump, 2048 + 3)
-	bJumping = 1
-	Turn(luparm, x_axis, math.rad(30), math.rad(400))
-	Turn(ruparm, x_axis, math.rad(30), math.rad(400))
-	Turn(lthigh, x_axis, math.rad(30), math.rad(400))
-	Turn(rthigh, x_axis, math.rad(30), math.rad(400))
-	Sleep(1500)
-	Turn(luparm, x_axis, math.rad(-90), math.rad(200))
-	Turn(ruparm, x_axis, math.rad(-45), math.rad(200))
-	Turn(rloarm, x_axis, math.rad(-90), math.rad(200))
-	Turn(lthigh, x_axis, math.rad(-30), math.rad(200))
-	Turn(lleg, x_axis, math.rad(110), math.rad(200))
-	Turn(rthigh, z_axis, math.rad(-(-20)), math.rad(200))
-	Turn(rthigh, x_axis, math.rad(-80), math.rad(200))
-	Turn(rleg, x_axis, math.rad(-10), math.rad(200))
+	StartThread(BeginJumpThread)
 end
 
-function EndJump()
-
-	bJumping = 0
-	Turn(luparm, x_axis, 0, math.rad(400))
-	Turn(ruparm, x_axis, 0, math.rad(400))
-	Turn(rloarm, x_axis, 0, math.rad(400))
-	Turn(lthigh, x_axis, 0, math.rad(400))
-	Turn(rthigh, x_axis, 0, math.rad(400))
-	Turn(rthigh, z_axis, math.rad(-(0)), math.rad(400))
-	Turn(rleg, x_axis, 0, math.rad(400))
-	Turn(lleg, x_axis, 0, math.rad(400))
-	Turn(ground, x_axis, 0, math.rad(4000))
-	EmitSfx(jump, 2048 + 4)
-end
-
-function JumpSmoke()
-	while true do
-	
-		if bJumping then
-			EmitSfx(jump, 100)
-			Sleep(100)
-		end
-		Sleep(33)
+function jumping(percent)
+	GG.PokeDecloakUnit(unitID, unitDefID)
+	if bJumping then
+		Turn(head, y_axis, math.rad(math.min((60 - percent), 15)), math.rad(400))
 	end
+	if percent < 40 then
+		EmitSfx(jump, 1027)
+	end
+	if percent > 70 and bJumping then
+		bJumping = false
+		StartThread(RestorePose)
+	end
+end
+
+function halfJump()
+end
+
+
+function endJump() 
+	Turn(head, y_axis, math.rad(0), math.rad(400))
 end
 
 
@@ -133,6 +130,11 @@ local function Walk()
 	Turn(ground, x_axis, math.rad(10), math.rad(30))
 	while true do
 		--left leg up, right leg back
+		if bJumping then
+			while bJumping do
+				Sleep(33)
+			end
+		end
 		Turn(lthigh, x_axis, THIGH_FRONT_ANGLE, THIGH_FRONT_SPEED)
 		Turn(lleg, x_axis, SHIN_FRONT_ANGLE, SHIN_FRONT_SPEED)
 		Turn(rthigh, x_axis, THIGH_BACK_ANGLE, THIGH_BACK_SPEED)
@@ -147,7 +149,11 @@ local function Walk()
 		end
 		WaitForTurn(lthigh, x_axis)
 		Sleep(0)
-		
+		if bJumping then
+			while bJumping do
+				Sleep(33)
+			end
+		end
 		--right leg up, left leg back
 		Turn(lthigh, x_axis, THIGH_BACK_ANGLE, THIGH_BACK_SPEED)
 		Turn(lleg, x_axis, SHIN_BACK_ANGLE, SHIN_BACK_SPEED)
@@ -186,9 +192,7 @@ end
 function script.Create()
 	Hide(nanospray)
 	Hide(laserblade)
-	Move(jump, y_axis, -10, 100)
 	StartThread(GG.Script.SmokeUnit, unitID, {head})
-	StartThread(JumpSmoke)
 end
 
 function script.StartMoving()
@@ -246,7 +250,9 @@ end
 function script.AimWeapon(num, heading, pitch)
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
-		while (bReloading or bJumping) do Sleep(33) end
+	while (bReloading or bJumping) do 
+		Sleep(33) 
+	end
 	bAiming = true
 	lastHeading = heading
 	lastPitch = pitch

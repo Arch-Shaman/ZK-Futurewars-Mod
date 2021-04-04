@@ -11,7 +11,7 @@ local Sounds = {
 		--   file = "sounds/button9.wav",
 		--},
 		MapPoint = {
-			file = "sounds/ping.wav",
+			file = "sounds/beep4_decrackled.wav",
 			maxconcurrent = 3,
 		},
 		--[[
@@ -59,6 +59,10 @@ local Sounds = {
 			pitchmod = 0.4,
 			gainmod = 0.2,
 		},
+		NoSound = {
+			file = "sounds/nosound.wav",
+			maxconcurrent = 1,
+		},
 		DefaultsForSounds = { -- this are default settings
 			file = "ThisEntryMustBePresent.wav",
 			gain = 1.0,
@@ -101,6 +105,22 @@ local Sounds = {
 			file = "sounds/jump_land.wav",
 			pitchmod = 0.1,
 			gainmod = 0.05,
+		},
+		Teleport2 = {
+			file = "sounds/misc/teleport2.wav",
+			maxconcurrent = 20,
+			gain = 1.0,
+			pitch = 1.0,
+			preload = true,
+		},
+		SiloLaunch = {
+			file = "sounds/weapon/missile/tacnuke_launch.wav",
+			gain = 1.0,
+			pitch = 1.0,
+			priority = 0,
+			maxconcurrent = 16,
+			preload = true,
+			maxdist = nil,
 		},
 	},
 }

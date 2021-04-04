@@ -5,10 +5,10 @@ local buildOpts = {
 	[[energysingu]],
 	[[energywind]],
 	[[energygeo]],
-	[[staticstorage]],
 	[[energypylon]],
 	[[staticcon]],
 	[[staticrearm]],
+	[[staticenergyrtg]],
 	[[factoryshield]],
 	[[factorycloak]],
 	[[factoryveh]],
@@ -35,6 +35,7 @@ local buildOpts = {
 	[[staticradar]],
 	[[staticshield]],
 	[[staticjammer]],
+	[[turretdecloak]],
 	[[turretmissile]],
 	[[turretlaser]],
 	[[turretimpulse]],
@@ -58,6 +59,8 @@ local buildOpts = {
 	[[mahlazer]],
 	[[raveparty]],
 	[[zenith]],
+	[[gunshiptrans]],
+	[[gunshipheavytrans]],
 }
 
 return buildOpts

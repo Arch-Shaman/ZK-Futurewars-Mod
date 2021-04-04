@@ -2,7 +2,7 @@ function gadget:GetInfo()
 	return {
 		name      = "Cluster Ammunition Spawner",
 		desc      = "Spawns subprojectiles",
-		author    = "_Shaman",
+		author    = "_Shaman, Stuff",
 		date      = "March 12, 2019",
 		license   = "CC-0",
 		layer     = 5,
@@ -13,27 +13,40 @@ end
 --[[
 	Expected customParams:
 	{
-		numprojectiles = int, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-		projectile = string, -- the weapondef name. we will convert this to an ID in init. REQUIRED. If defined in the unitdef, it will be unitdefname_weapondefname.
-		keepmomentum = 1/0, -- should the projectile we spawn keep momentum of the mother projectile? OPTIONAL. Default: True
-		spreadradius = num, -- used in clusters. OPTIONAL. Default: 100.
-		clusterposition = string,
-		clustervelocity = string,
+		# - replace with subprojectile number.
+		numprojectiles# = int, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+		projectile# = string, -- the weapondef name. we will convert this to an ID in init. REQUIRED. If defined in the unitdef, it will be unitdefname_weapondefname.
+		keepmomentum# = 1/0, -- should the projectile we spawn keep momentum of the mother projectile? OPTIONAL. Default: True
+		spreadradius# = num, -- used in clusters. OPTIONAL. Default: 100.
+		clusterposition# = string,
+		clustervelocity# = string,
+		vradius# = num, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Enter as "min,max" to define custom radius.
+
 		use2ddist = 1/0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 		spawndist = num, -- at what distance should we spawn the projectile(s)? REQUIRED.
 		soundspawn = file, -- file to play when we spawn the projectiles. OPTIONAL. Default: None.
 		timeoutspawn = 1/0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 		vradius = num, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Enter as "min,max" to define custom radius.
-		groundimpact = 1/0 -- check the distance between ground and projectile? OPTIONAL.
+		groundimpact = 2/1/0 -- check the distance between ground and projectile? OPTIONAL.
 		proxy = 1/0 -- check for nearby units?
 		proxydist = num, -- how far to check for units? Default: spawndist
 		timedcharge = num, -- how long after reaching the spawndistance should it spawn projectiles? (in frames) -- NOTE: this disables the default behavior!
+		clustercharges = num -- how many times to spawn the cluster projectiles
+		clusterdelay = num -- number of frames between each spawn.
+		clusterdelaytype = 0/-1 -- { 0 - after being triggered, keep clustering until clustercharge runs out.
+									-1 - only cluster if trigger conditions met AND delay has run out.
+		dyndamage = string / nil -- if any non-nil value, this weapon will have commander dynamic damage
+		noairburst = value / nil -- if true, this projectile will skip all airburst checks except ttl
+		onexplode = value / nil -- if true, this projectile will cluster when it explodes
 	}
 ]]
 
 if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
 	return
 end
+
+local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+include("LuaRules/Configs/customcmds.h.lua")
 
 --Speedups--
 local spEcho = Spring.Echo
@@ -61,191 +74,79 @@ local spGetUnitIsCloaked = Spring.GetUnitIsCloaked
 local SetWatchWeapon = Script.SetWatchWeapon
 local spSetProjectileAlwaysVisible = Spring.SetProjectileAlwaysVisible
 local spGetProjectileIsIntercepted = Spring.GetProjectileIsIntercepted
+local spGetProjectileTeamID = Spring.GetProjectileTeamID
+local spSpawnSFX = Spring.SpawnSFX
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc
+local spSetUnitRulesParam = Spring.SetUnitRulesParam
+local spGetUnitDefID = Spring.GetUnitDefID
+
+
 local random = math.random
 local sqrt = math.sqrt
 local byte = string.byte
 local abs = math.abs
+local atan2 = math.atan2
 local pi = math.pi
-local abs = math.abs
+local halfpi = pi/2
+local abs = math.abs -- CAS GOES TO THE GYM AND HAS DOUBLE ABS
 local strfind = string.find
 local gmatch = string.gmatch
+local floor = math.floor
+local rad = math.rad
+local sin = math.sin
+local cos = math.cos
 
+local CommandOrder = 123456
 local ground = byte("g")
 local unit = byte("u")
 local projectile = byte("p")
 local feature = byte("f")
+local ALLIES = {allied = true}
+
+local projectileattributesCache = {pos = {0,0,0}, speed = {0,0,0}, owner = 0, team = 0, ttl= 0,gravity = 0,tracking = false,}
+--projectileattributesCache["end"] = {0,0,0}
+
+local frame
+
+local targetCancelRadius = 50*50
+
+local setprojectiletargetcmddesc = {
+	id      = CMD_SUBMUNITION_TARGET,
+	type    = CMDTYPE.ICON_UNIT_OR_MAP,
+	name    = 'Set Warhead Target',
+	action  = 'subprojectileattack',
+	tooltip	= 'Adds a payload target at the selected position. Payloads without a target will be targeted at a random nearby location (Issue on exsiting target to cancel target)',
+}
 
 --variables--
-local config = {} -- projectile configuration data
-local projectiles = {} -- stuff we need to act on.
+spEcho("CAS: Scanning weapondefs")
+local config = VFS.Include("LuaRules/Configs/submunition_config.lua") -- projectile configuration data
+spEcho("CAS: done processing weapondefs")
+
+local projectiles = IterableMap.New() -- stuff we need to act on.
+local targettable = {} -- holds individual warhead info. form: unitID = {[1] = {x,y,z}, etc}
+local projectiletargets = {} -- proID = {[1] = {}, [2] = {}, etc}
+local forceupdatetargets = {count = 0, data = {}} -- proID = {x, y, z}
 local debug = false
+local wanteddefs = VFS.Include("LuaRules/Configs/setprojectiletargetdefs.lua") or {}
+local mapx = Game.mapSizeX
+local mapz = Game.mapSizeZ
 -- functions --
+local function ToggleDebug()
+	if spIsCheatingEnabled() then -- toggle debugMode
+		debug = not debug
+		if debug then
+			spEcho("[CAS] Debug enabled.")
+		else
+			spEcho("[CAS] Debug disabled.")
+		end
+	end
+end
+
 local function distance3d(x1, y1, z1, x2, y2, z2)
 	return sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)) + ((z2 - z1) * (z2 - z1)))
 end
-
-local function debugEcho(str)
-	if debug then
-		spEcho(str)
-	end
-end
-
-spEcho("CAS: Scanning weapondefs")
-
-for i=1, #WeaponDefs do
-	local wd = WeaponDefs[i]
-	local curRef = wd.customParams -- hold table for referencing
-	if curRef and curRef.projectile then -- found it!
-		spEcho("CAS: Discovered " .. i .. "(" .. wd.name .. ")")
-		if type(curRef.projectile) == "string" then -- reason we use it like this is to provide an error if something doesn't seem right.
-			if WeaponDefNames[curRef.projectile] then
-				if type(curRef.spawndist) == "string" then -- all ok
-					SetWatchWeapon(i, true)
-					debugEcho("CAS: Enabled watch for " .. i)
-					config[i] = {}
-					if wd.type == "AircraftBomb" then
-						config[i]["isBomb"] = true
-					else
-						config[i]["isBomb"] = false
-					end
-					config[i]["projectile"] = WeaponDefNames[curRef.projectile].id -- transform into an id
-					config[i]["spawndist"] = tonumber(curRef.spawndist)
-					if wd.type == "StarburstLauncher" then
-						config[i]["launcher"] = true
-					else
-						config[i]["launcher"] = false
-					end
-					if type(curRef.timeoutspawn) ~= "string" then
-						config[i]["timeoutspawn"] = 1
-					else
-						config[i]["timeoutspawn"] = tonumber(curRef.timeoutspawn)
-					end
-					if type(curRef.numprojectiles) ~= "string" then
-						config[i]["numprojectiles"] = 1
-					else
-						config[i]["numprojectiles"] = tonumber(curRef.numprojectiles)
-					end
-					if type(curRef.use2ddist) ~= "string" then
-						config[i]["use2ddist"] = 0
-						spEcho("CAS: Set 2ddist to false for " .. name)
-					else
-						config[i]["use2ddist"] = tonumber(curRef.use2ddist)
-					end
-					if type(curRef.keepmomentum) ~= "string" then
-						config[i]["keepmomentum"] = 1
-					else
-						config[i]["keepmomentum"] = tonumber(curRef.keepmomentum)
-					end
-					if type(curRef.spreadradius) ~= "string" then
-						config[i]["spreadmin"] = -100
-						config[i]["spreadmax"] = 100
-					else
-						if strfind(curRef.spreadradius,",") then -- projectile offsetting.
-							config[i]["spreadmin"], config[i]["spreadmax"] = curRef.spreadradius:match("([^,]+),([^,]+)")
-							config[i]["spreadmin"] = tonumber(config[i]["spreadmin"])
-							config[i]["spreadmax"] = tonumber(config[i]["spreadmax"])
-							if config[i]["spreadmax"] == "" or config[i]["spreadmax"] == nil then
-								config[i]["spreadmax"] = config[i]["spreadmin"] * -1
-							end
-							if config[i]["spreadmin"] > config[i]["spreadmax"] then
-								local mi = config[i]["spreadmax"]
-								local ma = config[i]["spreadmin"]
-								config[i]["spreadmin"] = mi
-								config[i]["spreadmax"] = ma
-								spEcho("[CAS] WARNING: Illegal min,max value for spread on projectile ID " .. i .. " (" .. wd.name .. ").\n These values have been automatically switched, but you should fix your config!\nValues got:" .. config[i]["spreadmax"],config[i]["spreadmin"])
-							end
-						else
-							config[i]["spreadmin"] = -abs(tonumber(curRef.spreadradius))
-							config[i]["spreadmax"] = abs(tonumber(curRef.spreadradius))
-						end
-					end
-					if type(curRef.vradius) ~= "string" then
-						config[i]["veldata"] = {min = {-4.2,-4.2,-4.2}, max = {4.2,4.2,4.2}}
-					else
-						if strfind(curRef.vradius,",") then -- projectile velocity offsets
-							config[i]["veldata"] = {min = {}, max = {}}
-							config[i]["veldata"].min[1],config[i]["veldata"].min[2], config[i]["veldata"].min[3],config[i]["veldata"].max[1],config[i]["veldata"].max[2],config[i]["veldata"].max[3]  = curRef.vradius:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
-							for j=1, 3 do
-								config[i]["veldata"].min[j] = tonumber(config[i]["veldata"].min[j])
-								config[i]["veldata"].max[j] = tonumber(config[i]["veldata"].max[j])
-								if config[i].veldata.min[j] > config[i].veldata.max[j] then
-									local mi = config[i]["veldata"].min[j]
-									local ma = config[i]["veldata"].max[j]
-									config[i]["veldata"].min[j] = mi
-									config[i]["veldata"].max[j] = ma
-									spEcho("[CAS] WARNING: Illegal min,max value for velocity on projectile ID " .. i .. " (" .. wd.name .. ").\n These values have been automatically switched, but you should fix your config!\nValues got:" .. config[i]["veldata"].min[j],config[i]["veldata"].max[j])
-								end
-							end
-						else
-							config[i].veldata = {min = {}, max = {}}
-							for j=1,3 do
-								config[i]["veldata"].min[j] = -abs(tonumber(curRef.vradius))
-								config[i]["veldata"].max[j] = abs(tonumber(curRef.vradius))
-							end
-						end
-					end
-					if type(curRef.proxy) ~= "string" then
-						config[i]["proxy"] = 0
-					else
-						config[i]["proxy"] = tonumber(curRef.proxy)
-					end
-					if type(curRef.proxydist) ~= "string" then
-						config[i]["proxydist"] = config[i]["spawndist"]
-					else
-						config[i]["proxydist"] = tonumber(curRef.proxydist)
-					end
-					if type(curRef.clusterpos) ~= "string" then
-						config[i]["clusterpos"] = "no"
-					else
-						config[i]["clusterpos"] = curRef.clusterpos
-					end
-					if type(curRef.clustervec) ~= "string" then
-						config[i]["clustervec"] = "no"
-					else
-						config[i]["clustervec"] = curRef.clustervec
-					end
-					if type(curRef.alwaysvisible) ~= "string" then
-						config[i]["alwaysvisible"] = false
-					else
-						config[i]["alwaysvisible"] = curRef.alwaysvisible
-					end
-					if type(curRef.useheight) ~= "string" then
-						config[i]["useheight"] = 0
-					else
-						config[i]["useheight"] = tonumber(curRef.useheight)
-					end
-					if curRef.timedcharge and curRef.timedcharge > 0 then
-						config[i]["type"] = "timedcharge"
-					else
-						config[i]["type"] = "normal"
-					end
-					if curRef.keepmomentum and curRef.keepmomentum == 0 then
-						config[i]["keepmomentum"] = false
-					else
-						config[i]["keepmomentum"] = true
-					end
-					if type(curRef.vlist) == "string" then
-						config[i]["vlist"] = {}
-						local x,y,z
-						for w in gmatch(curRef.vlist,"%S+") do -- string should be "x,y,z/x,y,z/x,y,z,/x,y,z/etc
-							x,y,z = w:match("([^,]+),([^,]+),([^,]+)")
-							config[i]["vlist"][#config[i]["vlist"]+1] = {tonumber(x),tonumber(y),tonumber(z)}
-						end
-					end
-				else
-					spEcho("Error: " .. i .. "(" .. WeaponDefs[i].name .. "): spawndist is not present.")
-				end
-			else
-				spEcho("Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a valid weapondef name.")
-			end
-		else
-			spEcho("Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a string.")
-		end
-	end
-	wd = nil
-	curRef = nil
-end
-spEcho("CAS: done processing weapondefs")
 
 local function unittest(tab, self, teamID)
 	if #tab == 0 or (#tab == 1 and tab[1] == self) then
@@ -272,207 +173,541 @@ local function distance2d(x1,y1,x2,y2)
 	return sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)))
 end
 
+local function RegisterForceUpdate(id, x, y, z)
+	local count = forceupdatetargets.count + 1
+	forceupdatetargets.count = count
+	if forceupdatetargets.data[count] then
+		forceupdatetargets.data[count].id = id
+		forceupdatetargets.data[count].x = x
+		forceupdatetargets.data[count].y = y
+		forceupdatetargets.data[count].z = z
+	else
+		forceupdatetargets.data[count] = {id = id, x = x, y = y, z = z}
+	end
+end
+
 local function RegisterSubProjectiles(p, me)
 	if config[me] then
-		projectiles[p] = {def = me, intercepted = false}
+		local damagemult = spGetUnitRulesParam(spGetProjectileOwnerID(p), "comm_damage_mult")
+		IterableMap.Add(projectiles, p, {def = me, intercepted = false, ttl = ((config[me].timer and (frame + config[me].timer)) or nil), delay = 0, charges = config[me].clustercharges, commdamagemult = damagemult}) --frame is set to current frame in gameframe
 		if config[me]["alwaysvisible"] then
 			spSetProjectileAlwaysVisible(p, true)
 		end
 	end
 end
 
+local function GetRandomAttackPoint(x, z, radius)
+	local distance = sqrt(random(0, radius*radius))
+	local heading = rad(random(0, 360))
+	local target = {}
+	target[1] = x + (distance * sin(heading))
+	target[3] = z + (distance * cos(heading))
+	if target[1] > mapx then -- clamp inside the map
+		target[1] = mapx
+	elseif target[1] < 0 then
+		target[1] = 0
+	end
+	if target[3] > mapz then -- ditto
+		target[3] = mapz
+	elseif target[3] < 0 then
+		target[3] = 0
+	end
+	target[2] = spGetGroundHeight(target[1], target[3])
+	return target
+end
+
 local function SpawnSubProjectiles(id, wd)
 	if id == nil then
 		return
 	end
-	local projectileattributes = {pos = {0,0,0}, speed = {0,0,0}, owner = 0, team = 0, ttl= 0,gravity = 0,tracking = false,}
-	debugEcho("Fire the submunitions!")
+	--spawn all the subprojectiles
+	local projectiledata = IterableMap.Get(projectiles, id)
+	local projectileattributes = projectileattributesCache
+	if debug then
+		spEcho("Fire the submunitions!")
+	end
 	local x,y,z = spGetProjectilePosition(id)
 	local vx,vy,vz = spGetProjectileVelocity(id)
 	local ttype,target = spGetProjectileTarget(id)
-	local r = config[wd]["spreadradius"]
-	local vr = config[wd]["veldata"]
-	local me = config[wd]["projectile"]
-	local projectilecount = config[wd]["numprojectiles"]
-	local step = {0,0,0}
-	for i=1, 3 do
-		step[i] = (vr.max[i] - vr.min[i])/projectilecount
-	end
-	debugEcho("Velocity: " ..tostring(config[wd].clusterpos),tostring(config[wd].clustervec))
-	debugEcho("step: " .. tostring(step))
-	local positioning = config[wd].clusterpos or "none"
-	local vectoring = config[wd].clustervec or "none"
 	-- update projectile attributes --
-	projectileattributes["gravity"] = -WeaponDefs[wd].myGravity or -1
-	projectileattributes["owner"] = spGetProjectileOwnerID(id)
-	projectileattributes["team"] = spGetUnitTeam(projectileattributes["owner"])
-	projectileattributes["ttl"] = WeaponDefs[wd].flightTime
-	projectileattributes["tracking"] = WeaponDefs[wd].tracks or false
+	local owner = spGetProjectileOwnerID(id)
+	projectileattributes["owner"] = owner
+	projectileattributes["team"] = spGetProjectileTeamID(id)
 	projectileattributes["pos"][1] = x
 	projectileattributes["pos"][2] = y
 	projectileattributes["pos"][3] = z
 	projectileattributes["speed"][1] = vx
 	projectileattributes["speed"][2] = vy
 	projectileattributes["speed"][3] = vz
-	projectileattributes["tracking"] = tracks
-	-- create the explosion --
-	spSpawnExplosion(x,y,z,0,0,0,{weaponDef = wd, owner = spGetProjectileOwnerID(id), craterAreaOfEffect = WeaponDefs[wd].craterAreaOfEffect, damageAreaOfEffect = WeaponDefs[wd].damageAreaOfEffect, edgeEffectiveness = WeaponDefs[wd].edgeEffectiveness, explosionSpeed = WeaponDefs[wd].explosionSpeed, impactOnly = WeaponDefs[wd].impactOnly, ignoreOwner = WeaponDefs[wd].noSelfDamage, damageGround = true})
-	spPlaySoundFile(WeaponDefs[wd].hitSound[1].name,WeaponDefs[wd].hitSound[1].volume,x,y,z)
-	spDeleteProjectile(id)
-	-- Create the projectiles --
-	for i=1, config[wd]["numprojectiles"] do
-		local p
-		if strfind(positioning,"random") then
-			if strfind(positioning,"x") then
-				projectileattributes["pos"][1] = x+random(-r,r)
-			end
-			if strfind(positioning,"y") then
-				projectileattributes["pos"][2] = y+random(-r,r)
-			end
-			if strfind(positioning,"z") then
-				projectileattributes["pos"][3] = z+random(-r,r)
-			end
-		end
-		if strfind(vectoring,"random") then
-			if strfind(vectoring,"x") then
-				projectileattributes["speed"][1] = vx+random(vr.min[1],vr.max[1])
-			end
-			if strfind(vectoring,"y") then
-				projectileattributes["speed"][2] = vy+random(vr.min[2],vr.max[2])
-			end
-			if strfind(vectoring,"z") then
-				projectileattributes["speed"][3] = vz+random(vr.min[3],vr.max[3])
-			end
-		elseif strfind(vectoring,"even") then
-			if strfind(vectoring,"x") then
-				projectileattributes["speed"][1] = vx+(vr.min[1]+(step[1]*(i-1)))
-			end
-			if strfind(vectoring,"y") then
-				projectileattributes["speed"][2] = vy+(vr.min[2]+(step[2]*(i-1)))
-			end
-			if strfind(vectoring,"z") then
-				projectileattributes["speed"][3] = vz+(vr.min[3]+(step[3]*(i-1)))
-			end
-		end
-		debugEcho("Projectile Speed: " .. projectileattributes["speed"][1],projectileattributes["speed"][2],projectileattributes["speed"][3])
-		p = spSpawnProjectile(me, projectileattributes)
-		if ttype ~= ground then
-			debugEcho("setting target for " .. p .. " = " .. target)
-			spSetProjectileTarget(p, target,ttype)
-		else
-			spSetProjectileTarget(p, target[1], target[2], target[3])
-		end
-		RegisterSubProjectiles(p,me)
+	local projectileConfig = config[wd].frags
+	local targetoverride
+	local forceupdate = false
+	local ownerDefID = spGetUnitDefID(projectileattributes["owner"])
+	if config[wd].usertarget then
+		targetoverride = projectiletargets[id] or {}
+		forceupdate = true
 	end
-	projectiles[id].dead = true
+	local step = {0,0,0}
+	-- Create the projectiles --
+	for j = 1, config[wd].fragcount do
+		local me = projectileConfig[j]["projectile"]
+		local mr = projectileConfig[j]["spreadmin"]
+		local dr = projectileConfig[j]["spreadmax"] - mr
+		local vr = projectileConfig[j]["veldata"]
+		local projectilecount = projectileConfig[j]["numprojectiles"]
+		for i=1, 3 do
+			step[i] = (vr.diff[i])/projectilecount
+		end
+		if debug then
+			spEcho("Velocity: " ..tostring(projectileConfig[j].clusterpos),tostring(projectileConfig[j].clustervec) .. "\nstep: " .. tostring(step))
+		end
+		projectileattributes["ttl"] = WeaponDefs[me].flightTime or WeaponDefs[me].beamTTL
+		projectileattributes["tracking"] = WeaponDefs[me].tracks or false
+		projectileattributes["gravity"] = -WeaponDefs[me].myGravity or -1
+		local positioning = projectileConfig[j].clusterpos or "none"
+		local vectoring = projectileConfig[j].clustervec or "none"
+		local keepmomentum = projectileConfig[j].keepmomentum
+		if config[wd].dynDamage then
+			local spawnMult = projectiledata.commdamagemult or 1
+			if debug then
+				spEcho("SpawnMult: " .. spawnMult)
+			end
+			if spawnMult > 1 then
+				projectilecount = floor(spawnMult * projectilecount + random())
+			end
+		end
+		for i = 1, projectilecount do
+			if config[wd].usertarget then
+				target = targetoverride[i] or GetRandomAttackPoint(x, z, wanteddefs[ownerDefID]["range"])
+				ttype = ground
+			end
+			local p
+			if strfind(positioning,"random") then
+				if strfind(positioning,"x") then
+					projectileattributes["pos"][1] = x+mr+(2*dr*random())
+				end
+				if strfind(positioning,"y") then
+					projectileattributes["pos"][2] = y+mr+(2*dr*random())
+				end
+				if strfind(positioning,"z") then
+					projectileattributes["pos"][3] = z+mr+(2*dr*random())
+				end
+			end
+			local vxf, vyf, vzf = (vx * keepmomentum[1]), (vy * keepmomentum[2]), (vz * keepmomentum[3])
+			if strfind(vectoring,"random") then
+				if strfind(vectoring,"x") then
+					projectileattributes["speed"][1] = vxf+vr.min[1]+(vr.diff[1]*random())
+				end
+				if strfind(vectoring,"y") then
+					projectileattributes["speed"][2] = vyf+vr.min[2]+(vr.diff[2]*random())
+				end
+				if strfind(vectoring,"z") then
+					projectileattributes["speed"][3] = vzf+vr.min[3]+(vr.diff[3]*random())
+				end
+			elseif strfind(vectoring,"even") then
+				if strfind(vectoring,"x") then
+					projectileattributes["speed"][1] = vxf+(vr.min[1]+(step[1]*(i-1)))
+				end
+				if strfind(vectoring,"y") then
+					projectileattributes["speed"][2] = vyf+(vr.min[2]+(step[2]*(i-1)))
+				end
+				if strfind(vectoring,"z") then
+					projectileattributes["speed"][3] = vzf+(vr.min[3]+(step[3]*(i-1)))
+				end
+			end
+			--projectileattributes["end"][1] = projectileattributes.speed[1] + projectileattributes.pos[1]
+			--projectileattributes["end"][2] = projectileattributes.speed[2] + projectileattributes.pos[2]
+			--projectileattributes["end"][3] = projectileattributes.speed[3] + projectileattributes.pos[3]
+			if debug then
+				spEcho("Projectile Speed: " .. projectileattributes["speed"][1],projectileattributes["speed"][2],projectileattributes["speed"][3])
+			end
+			if projectileConfig[j].spawnsfx then
+				--How does this work? I have no idea!
+				local dx = projectileattributes["speed"][1]
+				local dy = projectileattributes["speed"][2] - 1 --hackity hax
+				local dz = projectileattributes["speed"][3]
+				--do not question the arctangent
+				local dx2 = dx*dx	
+				local dy2 = dy*dy
+				local dz2 = dz*dz
+				local dirX = atan2(dx, sqrt(dy2 + dz2))
+				local dirY = atan2(dy, sqrt(dx2 + dz2))
+				local dirZ = atan2(dz, sqrt(dx2 + dy2))
+				spSpawnSFX(projectileattributes["owner"], projectileConfig[j].spawnsfx, projectileattributes["pos"][1], projectileattributes["pos"][2], projectileattributes["pos"][3], dirX, dirY, dirZ, true)
+			else
+				p = spSpawnProjectile(me, projectileattributes)
+				--if projectileattributes["tracking"] then
+				if ttype ~= ground then
+					if debug then
+						spEcho("setting target for " .. p .. " = " .. tostring(target)) -- safety
+					end
+					spSetProjectileTarget(p, target,ttype)
+				else
+					if debug then
+						spEcho("CAS: setting target for " .. p .. " = (" .. target[1] .. ", " .. target[2] .. ", " .. target[3] .. ")")
+					end
+					RegisterForceUpdate(p, target[1], target[2], target[3])
+				end
+				--end
+			end
+			RegisterSubProjectiles(p,me)
+		end
+	end
+	-- create the explosion --
+	spSpawnExplosion(x,y,z,0,0,0,{weaponDef = wd, owner = spGetProjectileOwnerID(id), craterAreaOfEffect = WeaponDefs[wd].craterAreaOfEffect, damageAreaOfEffect = 0, edgeEffectiveness = 0, explosionSpeed = WeaponDefs[wd].explosionSpeed, impactOnly = WeaponDefs[wd].impactOnly, ignoreOwner = WeaponDefs[wd].noSelfDamage, damageGround = true})
+	spPlaySoundFile(WeaponDefs[wd].hitSound[1].name,WeaponDefs[wd].hitSound[1].volume,x,y,z)
+	local projectiledata = IterableMap.Get(projectiles, id)
+	if projectiledata.charges == 1 or projectiledata.charges == 0 then --charge below 0 never run out
+		if debug then
+			spEcho("Run outta charge")
+		end
+		spDeleteProjectile(id)
+		projectiledata.dead = true
+	else
+		projectiledata.charges = projectiledata.charges - 1
+		if debug then
+			spEcho("Lost 1 charge")
+		end
+		projectiledata.delay = frame + config[wd].clusterdelay
+		local delaytype = projectileConfig.clusterdelaytype
+		if delaytype == 0 then
+			projectileConfig.clusterdelaytype = 1
+		end
+	end
+	if config[wd].usertargetable then
+		targettable[owner].count = targettable[owner].count - 1
+		if targettable[owner].count == 0 and targettable[owner].dead then
+			targettable[owner] = nil
+		end
+	end
+	projectiletargets[id] = nil
 end
 
 local function CheckProjectile(id)
-	debugEcho("CheckProjectile " .. id)
+	if debug then 
+		spEcho("CheckProjectile " .. id)
+	end
+	local projectile = IterableMap.Get(projectiles, id)
 	local targettype, targetID = spGetProjectileTarget(id)
-	if targettype == nil or projectiles[id].dead then
-		projectiles[id] = nil
+	if targettype == nil or projectile.dead then
+		if debug then spEcho("projectile " .. id .. " deleted.") end
+		IterableMap.Remove(projectiles, id)
 		return
 	end
-	local wd = projectiles[id].def
-	projectiles[id].intercepted = spGetProjectileIsIntercepted(id)
-	local isMissile = false -- check for missile status. When the missile times out, the subprojectiles will be spawned if allowed.
-	if WeaponDefs[wd]["flightTime"] ~= nil and WeaponDefs[wd].type == "Missile" then
-		isMissile = true
-	end
-	local vx,vy,vz = spGetProjectileVelocity(id)
-	if config[wd].launcher and vy > -0.000001 then
-		return
-	end
-	--spEcho("CheckProjectile: " .. id .. ", " .. wd)
-	if isMissile and debug then spEcho("ttl: " .. spGetProjectileTimeToLive(id)) end
-	if isMissile and config[wd].timeoutspawn and spGetProjectileTimeToLive(id) == 0 then
-		SpawnSubProjectiles(id,wd)
-	end
-	local use3d = (config[wd].use2ddist == 0)
-	local distance
-	local x2,y2,z2 = spGetProjectilePosition(id)
-	local x1,y1,z1
-	debugEcho("Attack type: " .. targettype .. "\nTarget: " .. tostring(targetID))
-	--debugEcho("Key: 'g' = " .. byte("g") .. "\n'u' = " .. byte("u") .. "\n'f' = " .. byte("f") .. "\n'p' = " .. byte("p"))
-	if config[wd].useheight and config[wd].useheight ~= 0 then -- this spawns at the selected height when vy < 0
-		debugEcho("Useheight check")
-		if y2 - spGetGroundHeight(x2,z2) < config[wd].spawndist and vy < 0 then
+	local wd = projectile.def or spGetProjectileDefID(id)
+	if projectile.delay <= frame then
+		if config[wd].clusterdelaytype == 1 then
+			if debug then
+				spEcho("Locked in spawning")
+			end
 			SpawnSubProjectiles(id,wd)
-		else
 			return
+		else
+			if projectile.ttl then -- timed weapons don't need anything fancy.
+				if projectile.ttl <= frame then
+					if debug then
+						spEcho("Spawn by ttl")
+					end
+					SpawnSubProjectiles(id, wd)
+					return
+				else
+					return
+				end
+			end
+			if config[wd].airburst then
+				--spEcho("wd: " .. tostring(wd))
+				projectile.intercepted = spGetProjectileIsIntercepted(id)
+				local isMissile = false -- check for missile status. When the missile times out, the subprojectiles will be spawned if allowed.
+				if WeaponDefs[wd]["flightTime"] ~= nil and WeaponDefs[wd].type == "Missile" then
+					isMissile = true
+				end
+				local myConfig = config[wd]
+				local vx,vy,vz = spGetProjectileVelocity(id)
+				if myConfig.launcher and vy > -0.000001 then
+					return
+				end
+				--spEcho("CheckProjectile: " .. id .. ", " .. wd)
+				local ttl = spGetProjectileTimeToLive(id)
+				if isMissile and debug then spEcho("ttl: " .. tostring(ttl)) end
+				if isMissile and myConfig.timeoutspawn and ttl == 0 then
+					if debug then
+						spEcho("Spawn by timeoutspawn")
+					end
+					SpawnSubProjectiles(id,wd)
+					return
+				end
+				local use3d = (myConfig.use2ddist == 0)
+				local distance
+				local x2,y2,z2 = spGetProjectilePosition(id)
+				local x1,y1,z1
+				if debug then 
+					spEcho("Attack type: " .. targettype .. "\nTarget: " .. tostring(targetID))
+				end
+				--debugEcho("Key: 'g' = " .. byte("g") .. "\n'u' = " .. byte("u") .. "\n'f' = " .. byte("f") .. "\n'p' = " .. byte("p"))
+				if myConfig.useheight and myConfig.useheight ~= 0 then -- this spawns at the selected height when vy < 0
+					if debug then
+						spEcho("Useheight check")
+					end
+					if y2 - spGetGroundHeight(x2,z2) < myConfig.spawndist and vy < 0 then
+						if debug then
+							spEcho("Spawn by ground height")
+						end
+						SpawnSubProjectiles(id,wd)
+						return
+					else
+						return
+					end
+				end
+				if targettype == ground then -- this is an undocumented case. Aircraft bombs when targeting ground returns 103 or byte(49).
+					x1 = targetID[1]
+					y1 = targetID[2]
+					z1 = targetID[3]
+					if debug then
+						spEcho(x1,y1,z1)
+					end
+				elseif targettype == 103 then
+					if debug then
+						spEcho("103! \n" .. targetID[1],targetID[2],targetID[3])
+					end
+					x1 = x2
+					y1 = spGetGroundHeight(x2,z2)
+					z1 = z2
+				elseif targettype == unit or targettype == 117 then
+					x1,y1,z1 = spGetUnitPosition(targetID)
+				elseif targettype == feature then
+					x1,y1,z1 = spGetFeaturePosition(targetID)
+				elseif targettype == projectile then
+					x1,y1,z1 = spGetProjectilePosition(targetID)
+				end
+				if use3d then
+					distance = distance3d(x2,y2,z2,x1,y1,z1)
+				else
+					distance = distance2d(x2,z2,x1,z1)
+				end
+				local height = y2 - spGetGroundHeight(x2,z2)
+				if debug then
+					spEcho("d: " .. distance .. "\nisBomb: " .. tostring(myConfig["isBomb"]) .. "\nVelocity: (" .. vx,vy,vz .. ")" .. "\nH: " .. height .. "\nexplosion dist: " .. height - myConfig.spawndist)
+				end
+				if distance < myConfig.spawndist and not myConfig["isBomb"] then -- bombs ignore distance and explode based on height. This is due to bomb ground attacks being absolutely fucked in current spring build.
+					SpawnSubProjectiles(id,wd)
+					if debug then
+						spEcho("distance")
+					end
+					return
+				elseif myConfig["isBomb"] and height <= myConfig.spawndist then
+					SpawnSubProjectiles(id,wd)
+					if debug then
+						spEcho("bomb engage")
+					end
+					return
+				elseif myConfig.groundimpact == 1 and vy < -1 or myConfig.groundimpact == 2 and height <= myConfig.spawndist then
+					if debug then
+						spEcho("ground impact")
+					end
+					SpawnSubProjectiles(id,wd)
+					return
+				elseif myConfig["proxy"] == 1 then
+					local units
+					if use3d then
+						units = spGetUnitsInSphere(x2,y2,z2, myConfig["proxydist"])
+					else 
+						units = spGetUnitsInCylinder(x2,z2, myConfig["proxydist"])
+					end
+					if unittest(units, projectile.owner, projectile.teamID) then
+						if debug then
+							spEcho("Unit passed unittest. Passed to SpawnSubProjectiles")
+						end
+						SpawnSubProjectiles(id, wd)
+						return
+					end
+				end
+			end
 		end
-	end
-	if targettype == ground then -- this is an undocumented case. Aircraft bombs when targeting ground returns 103 or byte(49).
-		x1 = targetID[1]
-		y1 = targetID[2]
-		z1 = targetID[3]
-		debugEcho(x1,y1,z1)
-	elseif targettype == 103 then
-		debugEcho("103! \n" .. targetID[1],targetID[2],targetID[3])
-		x1 = x2
-		y1 = spGetGroundHeight(x2,z2)
-		z1 = z2
-	elseif targettype == unit or targettype == 117 then
-		x1,y1,z1 = spGetUnitPosition(targetID)
-	elseif targettype == feature then
-		x1,y1,z1 = spGetFeaturePosition(targetID)
-	elseif targettype == projectile then
-		x1,y1,z1 = spGetProjectilePosition(targetID)
-	end
-	if use3d then
-		distance = distance3d(x2,y2,z2,x1,y1,z1)
-	else
-		distance = distance2d(x2,z2,x1,z1)
-	end
-	local height = y2 - spGetGroundHeight(x2,z2)
-	debugEcho("d: " .. distance .. "\nisBomb: " .. tostring(config[wd]["isBomb"]) .. "\nVelocity: (" .. vx,vy,vz .. ")" .. "\nH: " .. height .. "\nexplosion dist: " .. height - config[wd].spawndist)
-	if distance < config[wd].spawndist and not config[wd]["isBomb"] then -- bombs ignore distance and explode based on height. This is due to bomb ground attacks being absolutely fucked in current spring build.
-		SpawnSubProjectiles(id,wd)
-		debugEcho("distance")
-	elseif config[wd]["isBomb"] and height <= config[wd].spawndist then
-		SpawnSubProjectiles(id,wd)
-		debugEcho("bomb engage")
-	elseif config[wd].groundimpact == 1 and vy < -1 and height <= config[wd].spawndist then
-		debugEcho("ground impact")
-		SpawnSubProjectiles(id,wd)
-	elseif config[wd]["proxy"] == 1 then
-		local units
-		if use3d then
-			units = spGetUnitsInSphere(x2,y2,z2,config[wd]["proxydist"])
-		else 
-			units = spGetUnitsInCylinder(x2,z2,config[wd]["proxydist"])
-		end
-		if unittest(units, projectiles[id].owner, projectiles[id].teamID) then
-			debugEcho("Unit passed unittest. Passed to SpawnSubProjectiles")
-			SpawnSubProjectiles(id, wd)
-		end
+	elseif debug then
+		spEcho("Delay: " .. projectile.delay)
 	end
 end
 
+local function UpdateAttackOrder(unitID, pos)
+	if not pos[2] then
+		local new = {}
+		new[1], new[2], new[3] = spGetUnitPosition(pos[1])
+		pos = new
+	end
+	if debug then
+		spEcho("[CAS] Updating Attack Order: Got: {" .. tostring(new[1]) .. "," .. tostring(new[2]) .. "," .. tostring(new[3]) .. ")")
+	end
+	local unitTargets = targettable[unitID] or {}
+	local count = #unitTargets
+	local removeTarget = false
+	if count > 0 then
+		for i = 1, count do
+			if unitTargets[i] and (unitTargets[i][1]-pos[1])^2 + (unitTargets[i][3]-pos[3])^2 < targetCancelRadius then
+				removeTarget = i
+				break
+			end
+		end
+	end
+	if removeTarget then
+		unitTargets[removeTarget] = unitTargets[count]
+		unitTargets[count] = nil
+	else
+		unitTargets[count + 1] = {pos[1], pos[2], pos[3]}
+	end
+	count = #unitTargets
+	for i = 1, count do
+		spSetUnitRulesParam(unitID, "subprojectile_target_" .. i .. "_x", unitTargets[i][1], ALLIES)
+		spSetUnitRulesParam(unitID, "subprojectile_target_" .. i .. "_z", unitTargets[i][3], ALLIES)
+	end
+	if debug then
+		spEcho("CAS: updating targets for unit " .. unitID .. ", new targets list:")
+		Spring.Utilities.TableEcho(unitTargets)
+	end
+	
+	targettable[unitID] = unitTargets
+	spSetUnitRulesParam(unitID, "subprojectile_target_count", count, ALLIES)
+end
+
+GG.Submunitions = {}
+GG.Submunitions.AddProjectileTarget = UpdateAttackOrder
+
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
-	debugEcho("ProjectileCreated: " .. tostring(proID, proOwnerID, weaponDefID))
+	if debug then
+		spEcho("ProjectileCreated: " .. tostring(proID, proOwnerID, weaponDefID))
+	end
+	local proOwnerDefID = spGetUnitDefID(proOwnerID)
+	if targettable[proOwnerID] and config[weaponDefID] and config[weaponDefID]["usertarget"] then
+		local unitTargets = targettable[proOwnerID]
+		local ttype, target = spGetProjectileTarget(proID)
+		local x,y,z
+		if ttype == unit then
+			x,y,z = spGetUnitPosition(target)
+		else
+			x,y,z = target[1], target[2], target[3]
+		end
+		spSetProjectileTarget(proID, x, y, z)
+		
+		local selectableTargets = wanteddefs[proOwnerDefID]["targets"]
+		local selectedTargets = {}
+		local projTargets = {}
+		local newUnitTargets = {}
+		--select the targets and add them to projTargets
+		for i=1, #unitTargets do
+			if debug then
+				spEcho("CAS: distance between MIRV target and warhead target: " .. ((unitTargets[i][1]-x)^2+(unitTargets[i][3]-z)^2))
+			end
+			if ((unitTargets[i][1]-x)^2+(unitTargets[i][3]-z)^2) <= wanteddefs[proOwnerDefID]["range2"] then
+				selectableTargets = selectableTargets - 1
+				selectedTargets[i] = true
+				projTargets[#projTargets+1] = unitTargets[i]
+				if selectableTargets <= 0 then
+					break
+				end
+			end
+		end
+		--remove the selected targets from unitTargets
+		for i=1, #unitTargets do
+			if not selectedTargets[i] then
+				newUnitTargets[#newUnitTargets+1] = unitTargets[i]
+			end
+		end
+		--update unitrulesparam
+		if #newUnitTargets > 0 then
+			for i = 1, #newUnitTargets do
+				spSetUnitRulesParam(proOwnerID, "subprojectile_target_" .. i .. "_x", newUnitTargets[i][1], ALLIES)
+				spSetUnitRulesParam(proOwnerID, "subprojectile_target_" .. i .. "_z", newUnitTargets[i][3], ALLIES)
+			end
+		end
+		spSetUnitRulesParam(proOwnerID, "subprojectile_target_count", #newUnitTargets, ALLIES)
+		
+		if debug then
+			spEcho("CAS: MIRV launched by unit " .. proOwnerID)
+			spEcho("CAS: Unit Targets:")
+			Spring.Utilities.TableEcho(unitTargets)
+			spEcho("CAS: New Unit Targets:")
+			Spring.Utilities.TableEcho(newUnitTargets)
+			spEcho("CAS: MIRV Targets")
+			Spring.Utilities.TableEcho(projTargets)
+		end
+		
+		--update the main tables
+		targettable[proOwnerID] = newUnitTargets
+		projectiletargets[proID] = projTargets
+	end
 	if weaponDefID == nil then
 		weaponDefID = spGetProjectileDefID(proID)
 	end
-	if config[weaponDefID] and not projectiles[proID] then
-		debugEcho("Registered projectile " .. proID)
-		projectiles[proID] = {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetUnitTeam(proOwnerID)}
+	local projectiledata = IterableMap.Get(projectiles, proID)
+	if config[weaponDefID] and not projectiledata then
+		if debug then
+			spEcho("Registered projectile " .. proID)
+		end
+		IterableMap.Add(projectiles, proID, {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetProjectileTeamID(proID), ttl = ((config[weaponDefID].timer and (frame + config[weaponDefID].timer)) or nil), delay = 1, charges = config[weaponDefID].clustercharges}) --frame is set to the current frame in gameframe
 		if config[weaponDefID]["alwaysvisible"] then
 			spSetProjectileAlwaysVisible(proID,true)
 		end
 	end
 end
 
-function gadget:ProjectileDestroyed(proID)
-	if projectiles[proID] and not projectiles[proID].intercepted then
-		local wd = projectiles[proID].def
+--Does not seem to called
+--[[function gadget:ProjectileDestroyed(proID)
+	local projectiledata = IterableMap.Get(projectiles, proID)
+	if projectiledata and not projectiledata.intercepted then
+		local wd = projectiledata.def
+		spEcho("Destroyed")
 		SpawnSubProjectiles(id, wd)
+	end
+end]]--
+
+function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, ProjectileID)
+	if config[weaponDefID] then
+		local projectiledata = IterableMap.Get(projectiles, ProjectileID)
+		if projectiledata and config[weaponDefID]["onExplode"] then
+			if debug then
+				spEcho("I Smell an Explosion!")
+			end
+			SpawnSubProjectiles(ProjectileID, weaponDefID)
+			IterableMap.Remove(projectiles, id)
+		end
 	end
 end
 
 function gadget:GameFrame(f)
-	for id, _ in pairs(projectiles) do
+	frame = f
+	if forceupdatetargets.count > 0 then
+		for i = 1, forceupdatetargets.count do
+			local data = forceupdatetargets.data[i]
+			spSetProjectileTarget(data.id, data.x, data.y, data.z)
+			GG.ForceCruiseUpdate(data.id, data.x, data.y, data.z)
+		end
+		forceupdatetargets.count = 0
+	end
+	for id, data in IterableMap.Iterator(projectiles) do
+		if debug then spEcho(id .. ": Updating.") end
 		CheckProjectile(id)
 	end
+end
+
+function gadget:UnitCreated(unitID, unitDefID)
+	if wanteddefs[unitDefID] then
+		targettable[unitID] = {} -- note: count is for the active projectiles so we know when to delete the table.
+		spInsertUnitCmdDesc(unitID, CommandOrder, setprojectiletargetcmddesc)
+	end
+end
+
+function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions)
+	if cmdID ~= CMD_SUBMUNITION_TARGET then
+		return true
+	else
+		UpdateAttackOrder(unitID, cmdParams)
+		return false
+	end
+end
+
+function gadget:Initialize()
+	gadgetHandler:AddChatAction("debugcas", ToggleDebug, "Toggles CAS debug echos.")
+end
+
+function gadget:UnitDestroyed(unitID)
+	targettable[unitID] = nil
 end

@@ -70,7 +70,6 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		spSetUnitRulesParam(builderID, "facplop", 0, IN_LOS)
 		spSetUnitRulesParam(unitID, "ploppee", 1, PRIVATE)
 		local _, _, cmdTag = spGetUnitCurrentCommand(builderID)
-		spGiveOrderToUnit(builderID, CMD.REMOVE, cmdTag, CMD.OPT_ALT)
 		local _, maxHealth = spGetUnitHealth(unitID)
 		SETHEALTH.health = maxHealth
 		spSetUnitHealth(unitID, SETHEALTH)
@@ -88,13 +87,14 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		end
 		str = str .. ",END_PLOP"
 		spSendCommands("wbynum 255 " .. str)]]
-		spPlaySoundFile("Teleport2", 10, x, y, z) -- this is fine now because of preloading
+		GG.PlayFogHiddenSound("Teleport2", 10, x, y, z) -- this is fine now because of preloading
 		if facplopsremaining == 0 and not CampaignSafety then
 			if debugMode then
 				spEcho("No facplops remaining. Disabling UnitCreated.")
 			end
-			gadgetHandler:RemoveCallin('UnitCreated')
+			gadgetHandler:RemoveCallIn('UnitCreated')
 		end
+		--spGiveOrderToUnit(builderID, CMD.REMOVE, cmdTag, CMD.OPT_CTRL) -- This seems to cause a recursion error sometimes
 	end
 end
 

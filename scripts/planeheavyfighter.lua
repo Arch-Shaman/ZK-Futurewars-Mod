@@ -13,6 +13,7 @@ local smokePiece = {base, engineL, engineR}
 --variables
 local gun = false
 local hasfired = false
+local landed = false
 local lastfire = 0
 local RESTORE_DELAY = 150
 local FIRE_SLOWDOWN = tonumber(UnitDef.customParams.combat_slowdown)
@@ -28,22 +29,25 @@ local function getState()
 	return state and state.active
 end
 
-function script.Create()
-	Turn(thrust1, x_axis, -math.rad(90), 1)
-	Turn(thrust2, x_axis, -math.rad(90), 1)
-	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-end
-
 function WeaponEnder()
 	if Spring.GetGameFrame() - 3 > lastfire and hasfired then
 		local x,y,z = Spring.GetUnitPosition(unitID)
-		Spring.PlaySoundFile("weapon/brrt_final.wav", 1.0, x, y, z, 1, 1, 1, 1)
+		GG.PlayFogHiddenSound("sounds/weapon/brrt_final.wav", 85.5, x, y, z, 1, 1, 1, 1)
 		hasfired = false
 	end
 	Sleep(33)
 end
 
+function script.Create()
+	Turn(thrust1, x_axis, -math.rad(90), 1)
+	Turn(thrust2, x_axis, -math.rad(90), 1)
+	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+	StartThread(WeaponEnder)
+	landed = false
+end
+
 function script.StartMoving()
+	landed = false
 	Turn(engineL, z_axis, -1.57, 1)
 	Turn(engineR, z_axis, 1.57, 1)
 	Turn(engineL, y_axis, -1.57, 1)
@@ -53,6 +57,7 @@ function script.StartMoving()
 end
 
 function script.StopMoving()
+	landed = true
 	Turn(engineL, z_axis, 0, 1)
 	Turn(engineR, z_axis, 0, 1)
 	Turn(engineL, y_axis, 0, 1)
@@ -77,7 +82,7 @@ function script.AimWeapon(num, heading, pitch)
 	return not (GetUnitValue(COB.CRASHING) == 1)
 end
 
-function script.EndBurst(num)
+function script.FireWeapon(num)
 	gun = not gun
 	if num == 1 then
 		lastfire = Spring.GetGameFrame()
@@ -115,7 +120,7 @@ local function RestoreAfterDelay()
 end
 
 function script.BlockShot(num)
-	if GetUnitValue(GG.Script.CRASHING) == 1 then
+	if GetUnitValue(GG.Script.CRASHING) == 1 or landed then
 		return true
 	else
 		if Spring.GetUnitRulesParam(unitID, "selfMoveSpeedChange") ~= FIRE_SLOWDOWN then

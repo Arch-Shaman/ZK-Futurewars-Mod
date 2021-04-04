@@ -342,6 +342,7 @@ local function SpawnStartUnit(teamID, playerID, isAI, bonusSpawn, notAtTheStartO
 	end
 
 	if startUnit then
+	
 		-- replace with shuffled position
 		local x,y,z = GetStartPos(teamID, teamInfo, isAI)
 		
@@ -373,7 +374,6 @@ local function SpawnStartUnit(teamID, playerID, isAI, bonusSpawn, notAtTheStartO
 		
 		if Spring.GetGameFrame() <= 1 then
 			Spring.SpawnCEG("gate", x, y, z)
-			Spring.PlaySoundFile("Teleport2", 10, x, y, z) -- no longer perf loss
 		end
 
 		if not bonusSpawn then
@@ -390,7 +390,7 @@ local function SpawnStartUnit(teamID, playerID, isAI, bonusSpawn, notAtTheStartO
 		--local teamLuaAI = Spring.GetTeamLuaAI(teamID)
 		local udef = UnitDefs[Spring.GetUnitDefID(unitID)]
 		Script.LuaRules.GiveStartResources(teamID)
-
+		Spring.SetUnitRulesParam(unitID, "commander_storage_override", 0, {inlos = true})
 		if GG.Overdrive then
 			GG.Overdrive.AddInnateIncome(allyTeamID, INNATE_INC_METAL, INNATE_INC_ENERGY)
 		end
@@ -507,6 +507,7 @@ function gadget:GameStart()
 	gamestart = true
 
 	-- spawn units
+	Spring.PlaySoundFile("Teleport2", 10) -- no longer perf loss
 	for teamNum,team in ipairs(Spring.GetTeamList()) do
 		
 		-- clear resources

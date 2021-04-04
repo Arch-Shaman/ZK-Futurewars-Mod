@@ -54,26 +54,26 @@ local feature = byte("f")
 local unit = byte("u")
 local projectile = byte("p")
 
-local lastlocation = {}
-
 for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
 	if curRef and curRef.isflak then -- found it!
-		spEcho("FlakCon: Discovered " .. i .. "(" .. wd.name .. ")")
+		if debug then
+			spEcho("FlakCon: Discovered " .. i .. "(" .. wd.name .. ")")
+		end
 		Script.SetWatchWeapon(i, true)
 		config[i] = {type = tonumber(curRef.isflak)} -- 1 = 2d, 2 = 3d, 3 = timed explosion
 		if config[i].type == 3 then
 			config[i]["timer"] = tonumber(curRef.flaktime)
 		end
 	end
-	wd = nil
-	curRef = nil
 end
 spEcho("FlakCon: done.")
-for name,data in pairs(config) do
-	for k,v in pairs(data) do
-		spEcho(k .. ": " .. tostring(v))
+if debug then
+	for name,data in pairs(config) do
+		for k,v in pairs(data) do
+			spEcho(k .. ": " .. tostring(v))
+		end
 	end
 end
 
@@ -124,17 +124,13 @@ local function CheckProjectile(id, wd)
 		end
 		if not spGetUnitIsCloaked(target) then
 			x2,y2,z2 = spGetUnitPosition(target, false, true)
-			if lastlocation[target] then
-				lastlocation[target][1] = x2
-				lastlocation[target][2] = y2
-				lastlocation[target][3] = z2
-			else
-				lastlocation[target] = {[1] = x2, [2] = y2, [3] = z2}
-			end
+			projectiles[id].targetlastposition[1] = x2
+			projectiles[id].targetlastposition[2] = y2
+			projectiles[id].targetlastposition[3] = z2
 		else
-			x2 = lastlocation[target][1]
-			y2 = lastlocation[target][2]
-			z2 = lastlocation[target][3]
+			x2 = projectiles[id].targetlastposition[1]
+			y2 = projectiles[id].targetlastposition[2]
+			z2 = projectiles[id].targetlastposition[3]
 		end
 	elseif ttype == feature then
 		x2,y2,z2 = spGetFeaturePosition(target)
@@ -145,13 +141,14 @@ local function CheckProjectile(id, wd)
 		spEcho("Weird projectile: " .. id)
 		return
 	end
+	if x2 == nil or y2 == nil or z2 == nil then
+		ExplodeProjectile(id,wd,x,y,z)
+		return
+	end
 	if config[wd].type == 1 then
 		projectiles[id].distance = distance2d(x,z,x2,z2)
-	elseif config[wd].type == 2 then
-		projectiles[id].distance = distance3d(x,y,z,x2,y2,z2)
 	else
-		projectiles[id] = nil
-		return
+		projectiles[id].distance = distance3d(x,y,z,x2,y2,z2)
 	end
 	if olddistance < projectiles[id].distance and projectiles[id].distance >= WeaponDefs[wd].damageAreaOfEffect/2 then
 		ExplodeProjectile(id,wd,x,y,z)
@@ -164,13 +161,9 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 			projectiles[proID] = {timer = config[weaponDefID]["timer"], defid = weaponDefID}
 			--spEcho("Timed demo charge for " .. proID)
 		else
-			projectiles[proID] = {distance = 999999999, defid = weaponDefID} -- distance stored here 
+			projectiles[proID] = {distance = 999999999, defid = weaponDefID, targetlastposition = {}} -- distance stored here 
 		end
 	end
-end
-
-function gadget:UnitDestroyed(unitID)
-	lastlocation[unitID] = nil
 end
 
 function gadget:GameFrame(f)
