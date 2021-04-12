@@ -591,7 +591,7 @@ for name, ud in pairs(UnitDefs) do
 	end
 	
 	-- Set incomes
-		if ud.metalmake and ud.metalmake > 0 then
+	if ud.metalmake and ud.metalmake > 0 then
 		ud.customparams.income_metal = ud.metalmake
 		ud.activatewhenbuilt = true
 		ud.metalmake = 0
