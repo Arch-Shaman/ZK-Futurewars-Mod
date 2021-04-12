@@ -3,7 +3,7 @@ function gadget:GetInfo()
 		name      = "Area Grey Goo Handler",
 		desc      = "Units will consume all wreckage in an area",
 		author    = "Shaman",
-		date      = "March 3, 2021",
+		date      = "April 1st, 2021",
 		license   = "CC-0",
 		layer     = 5,
 		enabled   = true,
@@ -99,11 +99,8 @@ local function GetClosestWreck(x, z, cx, cz, radius, ally)
 end
 
 local function IsThereEligiableWreckNearby(x, z, radius, allyteam) -- stupid check. (for when we don't want the closest wreck)
-	local check = spGetFeaturesInCylinder(x, z, radius)
 	local check = GetEligiableWrecksInArea(x, z, radius, allyteam)
-	for i = 1, #check do
-		return #check > 0 and check[1] or nil
-	end
+	return #check > 0 and check[1] or nil
 end
 
 
