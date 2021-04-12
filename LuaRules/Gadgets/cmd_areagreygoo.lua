@@ -3,7 +3,7 @@ function gadget:GetInfo()
 		name      = "Area Grey Goo Handler",
 		desc      = "Units will consume all wreckage in an area",
 		author    = "Shaman",
-		date      = "April 1, 2021",
+		date      = "March 3, 2021",
 		license   = "CC-0",
 		layer     = 5,
 		enabled   = true,
@@ -99,9 +99,13 @@ local function GetClosestWreck(x, z, cx, cz, radius, ally)
 end
 
 local function IsThereEligiableWreckNearby(x, z, radius, allyteam) -- stupid check. (for when we don't want the closest wreck)
+	local check = spGetFeaturesInCylinder(x, z, radius)
 	local check = GetEligiableWrecksInArea(x, z, radius, allyteam)
-	return #check > 0 and check[1] or nil
+	for i = 1, #check do
+		return #check > 0 and check[1] or nil
+	end
 end
+
 
 function gadget:FeatureCreated(featureID, allyTeamID)
 	local featuredef = spGetFeatureDefID(featureID)
@@ -113,11 +117,8 @@ function gadget:FeatureDestroyed(featureID)
 end
 
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
-	if cmdID == CMD_GREYGOO then -- screen against bad things
-		if not GooDefs[unitDefID] or not (#cmdParams == 1 or #cmdParams == 4) then
-			Spring.Echo("Invalid params? " .. tostring(cmdParams[1]) .. ", " .. tostring(cmdParams[2]) .. ", " .. tostring(cmdParams[3]) .. ", " .. tostring(cmdParams[4]))
-			return false
-		end
+	if cmdID == CMD_GREYGOO and not GooDefs[unitDefID] then -- screen against non-grey gooers using area greygoo.
+		return false
 	else
 		return true
 	end
