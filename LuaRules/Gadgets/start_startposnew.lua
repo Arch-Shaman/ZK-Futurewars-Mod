@@ -62,6 +62,7 @@ local function SetUpPlayers()
 						Spring.SetPlayerRulesParam(playerID, "startpos_1_z", 0, ALLIED)
 						Spring.SetPlayerRulesParam(playerID, "startpos_1_def", DEFAULT_UNIT, ALLIED)
 						Spring.SetPlayerRulesParam(playerID, "startpos_1_placed", false, ALLIED)
+						Spring.SetPlayerRulesParam(playerID, "startpos_1_profile", "?", ALLIED)
 						Spring.SetPlayerRulesParam(playerID, "player_ready", false, PUBLIC)
 						Spring.SetPlayerRulesParam(playerID, "startpos_options_movestart", false, ALLIED)
 						Spring.SetPlayerRulesParam(playerID, "startpos_options_setcommander", false, ALLIED)
@@ -105,6 +106,7 @@ local function EqualizeCommanders()
 							Spring.SetPlayerRulesParam(playerID, "startpos_" .. count + 1 .. "_z", 0, ALLIED)
 							Spring.SetPlayerRulesParam(playerID, "startpos_" .. count + 1 .. "_def", DEFAULT_UNIT, ALLIED)
 							Spring.SetPlayerRulesParam(playerID, "startpos_" .. count + 1 .. "_placed", false, ALLIED)
+							Spring.SetPlayerRulesParam(playerID, "startpos_" .. count + 1 .. "_profile", "?", ALLIED)
 							assigned = assigned + 1
 						end
 					end
@@ -132,7 +134,19 @@ end
 local function ProcessSetPlayerStartpos(str)
 	str = str:gsub(" ", "") -- get rid of spaces to fit nicely into our template below
 	local playerID, index, x, z, profileID = str:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
-	return tonumber(playerID), tonumber(index), tonumber(x), tonumber(z), tonumber(profileID)
+	return tonumber(playerID), tonumber(index), tonumber(x), tonumber(z)
+end
+
+local function ProcessCommanderString(str)
+	str = str:gsub(" ", "")
+	local profile, index = str:match("([^,]+),([^,]+)")
+	return profile, index
+end
+
+local function ProccessForeignString(str)
+	str = str:gsub(" ", "")
+	local player, profile, index = str:match("([^,]+),([^,]+),([^,]+)")
+	return player, profile, index
 end
 
 local function CheckStartPosition(teamID, x, z)
@@ -221,12 +235,10 @@ local function GetFacingDirection(x, z)
 end
 
 function gadget:RecvLuaMsg(msg, playerID)
-	if msg:find("startpos") then -- startpos <index>,<x>,<z>,<def>
+	if msg:find("startpos") then -- startpos <index>,<x>,<z>
 		msg = msg:gsub("startpos", "")
-		local index, x, z, profileID = ProcessString(msg)
+		local index, x, z = ProcessString(msg)
 		local teamID = select(4, Spring.GetPlayerInfo(playerID))
-		local commanderProfile = GG.ModularCommAPI.GetCommProfileInfo(profileID)
-		local def = (commanderProfile and commanderProfile.baseUnitDefID) or DEFAULT_UNIT
 		if CheckStartPosition(teamID, x, z) then
 			SetStartPosition(playerID, index, x, z, def)
 		end
@@ -258,14 +270,19 @@ function gadget:RecvLuaMsg(msg, playerID)
 				end
 			end
 		end
-	end
+	elseif msg:find("customcomm:") then -- profileID, index
+		
+		local commanderProfile = GG.ModularCommAPI.GetCommProfileInfo(profileID)
+		local def = (commanderProfile and commanderProfile.baseUnitDefID) or DEFAULT_UNIT
+	elseif msg:find("setplayercomm") then
+		
 end
 
 function gadget:RecvSkirmishAIMessage(aiTeam, dataStr)
 	-- perhaps this should be a global relay mode somewhere instead
-	local command = "ai_commander:";
+	local command = "ai_commander:"
 	if dataStr:find(command,1,true) then
-		local name = dataStr:sub(command:len()+1);
+		local name = dataStr:sub(command:len()+1)
 		aiInfo[aiTeam][1].def = name
 	end
 end
