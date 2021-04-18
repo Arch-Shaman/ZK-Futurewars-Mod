@@ -98,8 +98,7 @@ return {
 				},
 
 				damage                  = {
-					default = 40.6, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
-					--also, the 609 dps was not intended, but nice nonetheless
+					default = 28.6, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
 				},
 
 				explosionGenerator      = [[custom:gauss_hit_m]],
@@ -126,7 +125,7 @@ return {
 				waterbounce             = 1,
 				waterweapon				= true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 1600,
+				weaponVelocity          = 900,
 			},
 			TORPEDO_BATTERY = {
 				name                    = [[Kinetic Missile Battery]],
@@ -167,7 +166,7 @@ return {
 				noSelfDamage            = true,
 				projectiles             = 2,
 				range                   = 930,
-				reloadtime              = 6,
+				reloadtime              = 7,
 				smokeTrail              = false,
 				soundHit                = [[weapon/missile/vlaunch_hit]],
 				soundStart              = [[weapon/missile/missile_launch]],
