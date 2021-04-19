@@ -201,7 +201,8 @@ local function Initialize()
 end
 
 local function UpdateResignTimer(allyTeamID)
-	Spring.SetGameRulesParam("resigntimer_" .. allyTeamID, states[allyTeamID].timer, PUBLIC)
+	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_timer", states[allyTeamID].timer, PUBLIC)
+	SendToUnsynced("MakeUpdate", allyTeamID)
 end
 
 function gadget:GameFrame(f)
@@ -240,7 +241,7 @@ function gadget:GameFrame(f)
 					Spring.Echo("game_message: Team " .. allyTeamID .. " Destroyed due to morale.")
 					DestroyAlliance(allyTeamID)
 					RemoveResignTeam(allyTeamID)
-					Spring.SetGameRulesParam("resign_alliance_" .. allyTeamID .. "_total", 0, PUBLIC)
+					Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_total", 0, PUBLIC)
 					SendToUnsynced("MakeUpdate", allyTeamID)
 				end
 			end
