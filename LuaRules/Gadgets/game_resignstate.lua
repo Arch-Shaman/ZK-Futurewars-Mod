@@ -209,8 +209,10 @@ function gadget:GameFrame(f)
 	if f%90 == 15 then
 		if resigntimer > mintime then
 			for i = 1, #states do
-				states[i].timer = states[i].timer - 1
-				UpdateResignTimer(i)
+				if states[i].timer >= resigntimer then
+					states[i].timer = states[i].timer - 1
+					UpdateResignTimer(i)
+				end
 			end
 			resigntimer = resigntimer - 1
 			UpdateResignTimer(i)
@@ -250,7 +252,7 @@ function gadget:GameFrame(f)
 end
 
 function gadget:GameOver()
-	GadgetHandler:RemoveCallIn("gameframe") -- stop teams from resigning.
+	gadgetHandler:RemoveCallIn("gameframe") -- stop teams from resigning.
 end
 
 function gadget:RecvLuaMsg(msg, playerID)
