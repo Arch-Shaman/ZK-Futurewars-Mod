@@ -118,6 +118,7 @@ end
 local function UpdatePlayerResignState(playerID, state, update)
 	local allyTeamID = playerMap[playerID]
 	local currentState = states[allyTeamID].playerStates[playerID] or false
+	Spring.SetPlayerRulesParam(playerID, "resign_state", state, ALLIED)
 	if currentState == state then
 		return
 	end
@@ -129,7 +130,6 @@ local function UpdatePlayerResignState(playerID, state, update)
 	end
 	states[allyTeamID].count = states[allyTeamID].count + mod
 	Spring.SetGameRulesParam("resign_alliance_" .. allyTeamID .. "_count", states[allyTeamID].count, PUBLIC)
-	Spring.SetPlayerRulesParam("resign_state", state, ALLIED)
 	states[allyTeamID].playerStates[playerID] = state
 	if update then
 		CheckAllyTeamState(allyTeamID)
@@ -175,6 +175,17 @@ local function Initialize()
 		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
 		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
 		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_count", 0, PUBLIC)
+		local teamlist = Spring.GetTeamList(allyTeamID)
+		for t = 1, #teamlist do
+			local teamID = teamlist[t]
+			local playerList = Spring.GetPlayerList(teamID)
+			for p = 1, #playerList do
+				local playerID = playerList[p]
+				states[allyTeamID].playerStates[playerID] = false
+				Spring.SetPlayerRulesParam(playerID, "resign_state", false, ALLIED)
+				playerMap[playerID] = allyTeamID
+			end
+		end
 	end
 end
 
