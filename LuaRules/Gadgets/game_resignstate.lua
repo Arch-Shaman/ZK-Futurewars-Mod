@@ -23,6 +23,7 @@ local playerMap = {} -- playerID = allyTeamID
 local resigntimer = 180 -- timer starts at 3 minutes and loses a second every 3rd second (down to 60s) over the first 6 minutes.
 local mintime = 60
 local resignteams = {}
+local exemptplayers = {} -- players who are exempt.
 local afkplayers = {}
 Spring.SetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
 
@@ -61,8 +62,11 @@ local function GetAllyTeamPlayerCount(allyTeamID)
 			aiteam = false
 		end
 		local playerList = Spring.GetPlayerList(teamID) -- spectators are ignored as of 104.0
-		if #playerList > 0 then
-			playerCount = playerCount + #playerList
+		for p = 1, #playerList do
+			local playerID = playerList[p]
+			if Spring.GetPlayerRulesParam(playerID, "lagmonitor_lagging") == nil and exemptplayers[playerID] == nil then
+				playerCount = playerCount + 1
+			end
 		end
 	end
 	return playerCount
@@ -124,29 +128,34 @@ local function UpdatePlayerResignState(playerID, state, update)
 		mod = -1
 	end
 	states[allyTeamID].count = states[allyTeamID].count + mod
+	Spring.SetGameRulesParam("resign_alliance_" .. allyTeamID .. "_count", states[allyTeamID].count, PUBLIC)
 	states[allyTeamID].playerStates[playerID] = state
 	if update then
 		CheckAllyTeamState(allyTeamID)
 	end
 end
 
+local function UpdateAllyTeam(allyTeamID)
+	states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
+	Spring.SetGameRulesParam("resign_alliance_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
+	Spring.SetGameRulesParam("resign_alliance_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
+end
+
 local function AFKUpdate(playerID)
 	local state = Spring.GetPlayerRulesParam(playerID, "lagmonitor_lagging") or 0
+	local allyTeamID = playerMap[playerID]
 	if state == 1 and not afkplayers[playerID] then
-		local allyTeamID = playerMap[playerID]
 		local wantsResign = states[allyTeamID].playerStates[playerID]
 		afkplayers[playerID] = states[allyTeamID].playerStates[playerID] or false
+		UpdateAllyTeam(allyTeamID)
 		UpdatePlayerResignState(playerID, false, false)
-		states[allyTeamID].total = states[allyTeamID].total - 1
 	elseif state == 0 and afkplayers[playerID] ~= nil then
 		local wantedresign = afkplayers[playerID]
-		local allyTeamID = playerMap[playerID]
-		states[allyTeamID].total = states[allyTeamID].total + 1
-		states[allyTeamID].threshold = 
+		afkplayers[playerID] = nil
+		UpdateAllyTeam(allyTeamID)
 		if wantedresign then
 			UpdatePlayerResignState(playerID, true, true)
 		end
-		afkplayers[playerID] = nil
 	end
 end
 
@@ -163,8 +172,8 @@ local function Initialize()
 		}
 		states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
 		Spring.SetGameRulesParam("resign_alliance_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
+		Spring.SetGameRulesParam("resign_alliance_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
 		Spring.SetGameRulesParam("resign_alliance_" .. allyTeamID .. "_count", 0, PUBLIC)
-		Spring.SetGameRulesParam("resign_alliance_" .. allyTeamID .. "_voters", "", ALLIED)
 	end
 end
 
@@ -180,6 +189,7 @@ function gadget:GameFrame(f)
 				UpdateResignTimer(i)
 			end
 			resigntimer = resigntimer - 1
+			UpdateResignTimer(i)
 			Spring.SetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
 		end
 		if #resignteams > 0 then
@@ -187,6 +197,7 @@ function gadget:GameFrame(f)
 				local allyTeamID = resignteams[i]
 				if not states[allyTeamID].thresholdState then
 					states[allyTeamID].timer = states[allyTeamID].timer + 1
+					UpdateResignTimer(allyTeamID)
 					if states[allyTeamID].timer == resigntimer then
 						RemoveResignTeam(allyTeamID)
 					end
@@ -203,28 +214,32 @@ function gadget:GameFrame(f)
 				if states[allyTeamID].timer == 0 then
 					Spring.Echo("game_message: Team " .. allyTeamID .. " Destroyed due to morale.")
 					DestroyAlliance(allyTeamID)
+					RemoveResignTeam(allyTeamID)
 				end
 			end
 		end
 	end
 end
 
+function gadget:GameOver()
+	GadgetHandler:RemoveCallIn("gameframe") -- stop teams from resigning.
+end
+
 function gadget:RecvLuaMsg(msg, playerID)
 	if playerMap[playerID] == nil then
 		return
 	end
+	local allyTeamID = playerMap[playerID]
 	if msg:find("forceresign") then
-		local allyTeamID = playerMap[playerID]
 		if allyTeamID == nil then
 			return
 		end
-		states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
-		if states[allyTeamID].playerStates[playerID] then
-			states[allyTeamID].count = states[allyTeamID].count - 1
-			CheckAllyTeamState(allyTeamID)
-		end
+		UpdatePlayerResignState(playerID, false, false)
 		states[allyTeamID].playerStates[playerID] = nil
 		playerMap[playerID] = nil
+		exemptplayers[playerID] = true
+		UpdateAllyTeam(allyTeamID)
+		CheckAllyTeamState(allyTeamID)
 	end
 	if msg:find("resignstate") then -- resignstate 1 or resignstate 0
 		msg = msg:gsub("resignstate", "")
@@ -233,5 +248,16 @@ function gadget:RecvLuaMsg(msg, playerID)
 		if s ~= nil then
 			UpdatePlayerResignState(playerID, s == 1, true)
 		end
+	end
+	if msg == "resignquit" and playerMap[playerID] then
+		UpdatePlayerResignState(playerID, false, true)
+		exemptplayers[playerID] = true
+		UpdateAllyTeam(allyTeamID)
+		CheckAllyTeamState(allyTeamID)
+	end
+	if msg == "resignrejoin" and playerMap[playerID] and exemptplayers[playerID] then
+		exemptplayers[playerID] = nil
+		UpdateAllyTeam(allyTeamID)
+		CheckAllyTeamState(allyTeamID)
 	end
 end
