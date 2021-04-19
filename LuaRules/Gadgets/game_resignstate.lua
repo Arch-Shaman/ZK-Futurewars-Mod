@@ -1,7 +1,3 @@
-if not gadgetHandler:IsSyncedCode() then
-	return
-end
-
 function gadget:GetInfo()
 	return {
 		name      = "Resign Handler",
@@ -12,6 +8,19 @@ function gadget:GetInfo()
 		layer     = 1,
 		enabled   = true  --  loaded by default?
 	}
+end
+
+if not gadgetHandler:IsSyncedCode() then
+	local function MakeUpdate(_, allyTeamID)
+		if Script.LuaUI('UpdateResignState') then
+			Script.LuaUI.UpdateResignState(allyTeamID)
+		end
+	end
+	
+	function gadget:Initialize()
+		gadgetHandler:AddSyncAction("MakeUpdate", MakeUpdate)
+	end
+	return
 end
 
 local DestroyAlliance = GG.DestroyAlliance
@@ -134,12 +143,14 @@ local function UpdatePlayerResignState(playerID, state, update)
 	if update then
 		CheckAllyTeamState(allyTeamID)
 	end
+	SendToUnsynced("MakeUpdate", allyTeamID)
 end
 
 local function UpdateAllyTeam(allyTeamID)
 	states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
 	Spring.SetGameRulesParam("resign_alliance_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
 	Spring.SetGameRulesParam("resign_alliance_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
+	SendToUnsynced("MakeUpdate", allyTeamID)
 end
 
 local function AFKUpdate(playerID)
@@ -203,6 +214,7 @@ function gadget:GameFrame(f)
 			resigntimer = resigntimer - 1
 			UpdateResignTimer(i)
 			Spring.SetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
+			SendToUnsynced("MakeUpdate", allyTeamID)
 		end
 		if #resignteams > 0 then
 			for i = 1, #resignteams do
@@ -214,6 +226,7 @@ function gadget:GameFrame(f)
 						RemoveResignTeam(allyTeamID)
 					end
 				end
+				SendToUnsynced("MakeUpdate", allyTeamID)
 			end
 		end
 	end
@@ -227,6 +240,8 @@ function gadget:GameFrame(f)
 					Spring.Echo("game_message: Team " .. allyTeamID .. " Destroyed due to morale.")
 					DestroyAlliance(allyTeamID)
 					RemoveResignTeam(allyTeamID)
+					Spring.SetGameRulesParam("resign_alliance_" .. allyTeamID .. "_total", 0, PUBLIC)
+					SendToUnsynced("MakeUpdate", allyTeamID)
 				end
 			end
 		end
