@@ -1,11 +1,11 @@
 return { 
 	gunshipheavyskirm = {
 		unitname            = [[gunshipheavyskirm]],
-		name                = [[Nimbus]],
+		name                = [[Aurora Boralis]],
 		description         = [[Fire Support Gunship]],
 		acceleration        = 0.2,
 		brakeRate           = 0.16,
-		buildCostMetal      = 760,
+		buildCostMetal      = 1720,
 		builder             = false,
 		buildPic            = [[gunshipheavyskirm.png]],
 		canFly              = true,
@@ -19,7 +19,7 @@ return {
 		collisionVolumeScales  = [[40 20 60]],
 		collisionVolumeType    = [[box]],
 		corpse              = [[DEAD]],
-		cruiseAlt           = 240,
+		cruiseAlt           = 330,
 
 		customParams        = {
 			airstrafecontrol = [[0]],
@@ -36,7 +36,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		maneuverleashlength = [[1280]],
-		maxDamage           = 2800,
+		maxDamage           = 5280,
 		maxVelocity         = 3.3,
 		minCloakDistance    = 75,
 		noAutoFire          = false,
@@ -48,8 +48,9 @@ return {
 		sfxtypes            = {
 
 		explosiongenerators = {
-		[[custom:brawlermuzzle]],
-		[[custom:emg_shells_m]],
+			[[custom:flashmuzzle1]],
+			[[custom:emg_shells_m]], --not used
+			[[custom:SLASHMUZZLE]],
 		},
 
 		},
@@ -60,9 +61,14 @@ return {
 		weapons             = {
 
 			{
-				def                = [[EMG]],
+				def                = [[GUASS_REPEATER]],
 				mainDir            = [[0 0 1]],
 				maxAngleDif        = 70,
+				onlyTargetCategory = [[SWIM LAND SHIP SINK TURRET FLOAT GUNSHIP FIXEDWING HOVER]],
+			},
+
+			{
+				def                = [[TORPEDO_BATTERY]],
 				onlyTargetCategory = [[SWIM LAND SHIP SINK TURRET FLOAT GUNSHIP FIXEDWING HOVER]],
 			},
 
@@ -71,47 +77,108 @@ return {
 
 		weaponDefs          = {
 
-			EMG = {
-				name                    = [[Heavy Pulse MG]],
-				areaOfEffect            = 40,
-				avoidFeature            = false,
-				burnBlow                = true,
-				burst                   = 4,
-				burstrate               = 0.1,
+			GUASS_REPEATER = {
+				name                    = [[Guass Autocannon]],
+				alphaDecay              = 0.12,
+				areaOfEffect            = 96,
+				avoidfeature            = false,
+				bouncerebound           = 0.15,
+				bounceslip              = 1,
+				cegTag                  = [[gauss_tag_l]],
 				collideFriendly         = false,
-				craterBoost             = 0.15,
-				craterMult              = 0.3,
+				craterBoost             = 0.3,
+				craterMult              = 0.15,
 
 				customparams = {
-					combatrange = 630,
-					light_camera_height = 2000,
-					light_color = [[0.9 0.84 0.45]],
-					light_ground_height = 120,
+					combatrange = 980,
+					single_hit_multi = true,
+					--light_camera_height = 2000,
+					--light_color = [[0.9 0.84 0.45]],
+					--light_ground_height = 120,
 				},
 
 				damage                  = {
-					default = 19.3,
+					default = 32.1, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
 				},
 
-				edgeEffectiveness       = 0.5,
-				explosionGenerator      = [[custom:EMG_HIT_HE]],
-				firestarter             = 70,
+				explosionGenerator      = [[custom:gauss_hit_m]],
+				groundbounce            = 1,
+				heightBoostFactor       = 0,
 				impulseBoost            = 0,
-				impulseFactor           = 0.2,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
-				myGravity               = 0.15,
+				noExplode               = true,
 				noSelfDamage            = true,
-				range                   = 600,
-				reloadtime              = 0.433,
-				rgbColor                = [[1 0.95 0.5]],
-				soundHit                = [[weapon/cannon/emg_hit]],
-				soundStart              = [[weapon/cannon/brawler_emg]],
-				sprayAngle              = 1400,
-				tolerance               = 2000,
+				numbounce               = 10,
+				range                   = 930,
+				reloadtime              = 1/15,
+				rgbColor                = [[0.5 1 1]],
+				separation              = 0.5,
+				size                    = 0.8,
+				sizeDecay               = -0.1,
+				soundHit                = [[weapon/gauss_hit]],
+				soundHitVolume          = 3,
+				soundStart              = [[weapon/gauss_fire]],
+				soundStartVolume        = 2.5,
+				sprayAngle              = 2000,
+				stages                  = 32,
 				turret                  = true,
-				weaponTimer             = 1,
+				waterbounce             = 1,
+				waterweapon				= true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 420,
+				weaponVelocity          = 900,
+			},
+			TORPEDO_BATTERY = {
+				name                    = [[Kinetic Missile Battery]],
+				areaOfEffect            = 24,
+				cegTag                  = [[missiletrailgreen]],
+				burst                   = 8,
+				burstrate               = 0.1,
+				collideFriendly         = false,
+				craterBoost             = 1,
+				craterMult              = 2,
+			
+				customParams        = {
+					burst = Shared.BURST_RELIABLE,
+					reaim_time = 15, -- Some script bug. It does not need fast aim updates anyway.
+					light_camera_height = 2500,
+					light_color = [[1 0.8 0.2]],
+				},
+			
+				damage         = {
+					default = 80.1,
+				},
+			
+				--texture1=[[null]], --flare, reference: http://springrts.com/wiki/Weapon_Variables#Texture_Tags
+				--texture2 = [[lightsmoketrail]],
+				--texture3=[[null]], --flame
+			
+				edgeEffectiveness       = 0.5,
+				explosionGenerator      = [[custom:DOT_Merl_Explo]],
+				fireStarter             = 100,
+				fixedlauncher           = true,
+				flightTime              = 3,
+				impactOnly              = true,
+				impulseBoost            = 0,
+				impulseFactor           = 0.4,
+				interceptedByShieldType = 2,
+				metalpershot            = 0,
+				model                   = [[wep_merl.s3o]],
+				noSelfDamage            = true,
+				projectiles             = 2,
+				range                   = 930,
+				reloadtime              = 7,
+				smokeTrail              = false,
+				soundHit                = [[weapon/missile/vlaunch_hit]],
+				soundStart              = [[weapon/missile/missile_launch]],
+				soundStartVolume        = 4.5,
+				startVelocity           = 450,
+				tolerance               = 4000,
+				turnRate                = 33000,
+				weaponAcceleration      = 189,
+				weaponTimer             = 0.15,
+				weaponType              = [[StarburstLauncher]],
+				weaponVelocity          = 700,
 			},
 		},
 		featureDefs         = {

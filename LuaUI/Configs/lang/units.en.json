@@ -390,9 +390,9 @@
 		"helptext" : "Solar collectors are the least cost-efficient of the energy structures, but they are also the most reliable and sturdy. When attacked, solars will curl up into armored form for 8 seconds, which reduces incoming damage to a quarter and offers excellent protection against raiders."
 	},
 	"gunshipheavyskirm" : {
-		"name" : "Nimbus",
+		"name" : "Aurora",
 		"description" : "Fire Support Gunship",
-		"helptext" : "The Nimbus is a fire support gunship that flies out of the reach of most ground mobiles. It is tough enough to survive limited anti-air fire, and its twin EMGs chew through units stupid enough to stay put."
+		"helptext" : "An aerial gun platform designed to bombard the enemy from beyond the reach of their weapons. It's 2 pairs of Guass Autocannons are powerful, but inaccurate while it's Kinetic Missiles will make short work of slow targets. Although the Aurora is not made out of wet paper and can withstand some punishment, it is still advised to keep this craft behind other units as tanking shots is not it's forte."
 	},
 	"factoryshield" : {
 		"name" : "Shieldbot Factory",
