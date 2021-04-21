@@ -132,9 +132,9 @@ local function TimeToText(val) -- gives us 00:30 or 00:05
 end
 
 local function UpdateResignState(allyTeamID)
-	if allyteamstrings[allyTeamID] == nil then
+	--[[if allyteamstrings[allyTeamID] == nil then
 		allyteamstrings[allyTeamID] = {exempt = "", voted = ""}
-	end
+	end]]
 	local total = Spring.GetGameRulesParam("resign_" .. allyTeamID .. "_total")
 	local threshold = Spring.GetGameRulesParam("resign_" .. allyTeamID .. "_threshold")
 	local count = Spring.GetGameRulesParam("resign_" .. allyTeamID .. "_count") or 0
@@ -150,12 +150,12 @@ local function UpdateResignState(allyTeamID)
 		states[allyTeamID] = nil -- destroyed.
 		return
 	end
-	local tooltip = strings["progressbar_help"] .. strings.exemption .. allyteamstrings[allyTeamID].exempt
+	--[[local tooltip = strings["progressbar_help"] .. strings.exemption .. allyteamstrings[allyTeamID].exempt
 	if allied or Spring.GetSpectatingState() then
 		tooltip = tooltip .. "\n" .. strings.voted .. allyteamstrings[allyTeamID].voted
 	else
 		tooltip = tooltip .. "\n" .. strings.enemyvote
-	end
+	end]]
 	if (count > 0 or timer ~= maxresign) and progressbars[allyTeamID] == nil then
 		Spring.Echo(name .. " ( allyTeamID: " .. allyTeamID .. ")")
 		progressbars[allyTeamID] = Chili.Progressbar:New{parent = grid, width = '100%', caption = name .. ' [' .. count .. " / " .. threshold .. " ] Time Left: " .. TimeToText(timer), tooltip = "Not Initialized", useValueTooltip = true, min = 0, max = threshold, value = count}

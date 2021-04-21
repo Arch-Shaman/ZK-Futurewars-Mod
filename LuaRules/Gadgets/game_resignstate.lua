@@ -12,6 +12,7 @@ end
 
 if not gadgetHandler:IsSyncedCode() then
 	local function MakeUpdate(_, allyTeamID)
+		Spring.Echo("MakeUpdate: " .. tostring(allyTeamID))
 		if Script.LuaUI('UpdateResignState') then
 			Script.LuaUI.UpdateResignState(allyTeamID)
 		end
@@ -228,11 +229,11 @@ function gadget:GameFrame(f)
 				if states[i].timer >= resigntimer - 1 then
 					states[i].timer = states[i].timer - 1
 					UpdateResignTimer(i)
+					SendToUnsynced("MakeUpdate", i)
 				end
 			end
 			resigntimer = resigntimer - 1
 			Spring.SetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
-			SendToUnsynced("MakeUpdate", i)
 		end
 		if #resignteams > 0 then
 			for i = 1, #resignteams do
