@@ -7,6 +7,7 @@ function widget:GetInfo()
 		license   = "PD-0",
 		layer     = 1,
 		enabled   = true,  --  loaded by default?
+		handler   = true,
 	}
 end
 
