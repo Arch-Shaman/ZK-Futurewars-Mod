@@ -181,7 +181,7 @@ end
 
 GG.ResignState = {UpdateAFK = AFKUpdate}
 
-local function Initialize()
+function gadget:Initialize()
 	local allyteamlist = Spring.GetAllyTeamList()
 	for a = 1, #allyteamlist do
 		local allyTeamID = allyteamlist[a]
