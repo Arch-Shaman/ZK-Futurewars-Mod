@@ -112,6 +112,9 @@ local function RemoveResignTeam(allyTeamID)
 			break
 		end
 	end
+	if id == nil then
+		return
+	end
 	resignteams[id] = resignteams[#resignteams]
 	resignteams[#resignteams] = nil
 end
@@ -192,12 +195,13 @@ function gadget:Initialize()
 		states[allyTeamID] = {
 			playerStates = {},
 			count = 0,
-			timer = 180,
+			timer = resigntimer,
 		}
 		states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
 		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
 		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
 		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_count", 0, PUBLIC)
+		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_timer", resigntimer, PUBLIC)
 		local teamlist = Spring.GetTeamList(allyTeamID)
 		for t = 1, #teamlist do
 			local teamID = teamlist[t]

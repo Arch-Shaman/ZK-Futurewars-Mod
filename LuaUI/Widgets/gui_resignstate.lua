@@ -140,6 +140,7 @@ local function UpdateResignState(allyTeamID)
 	local timer = Spring.GetGameRulesParam("resign_" .. allyTeamID .. "_timer")
 	local name = Spring.GetGameRulesParam("allyteam_short_name_" .. allyTeamID)
 	maxresign = Spring.GetGameRulesParam("resigntimer_max") or 60
+	Spring.Echo("Resign State" .. allyTeamID .. ":\nTotal: " .. tostring(total) .. "\nthreshold: " .. tostring(threshold) .. "\ncount: " .. count .. "\nTimer: " .. tostring(timer))
 	local allied = allyTeamID == MyAllyTeamID
 	local exempt = ""
 	local resigned = ""
@@ -159,12 +160,12 @@ local function UpdateResignState(allyTeamID)
 		progressbars[allyTeamID] = Chili.Progressbar:New{parent = grid, width = '100%', caption = name .. ' [' .. count .. " / " .. threshold .. " ] Time Left: " .. TimeToText(timer), tooltip = "Not Initialized", useValueTooltip = true, min = 0, max = threshold, value = count}
 		Spring.Echo(progressbars[allyTeamID].y)
 	end
-	if progressbars[allyTeamID] and (timer == maxresign and count == 0) or total == 0 or timer <= 0 then
+	if progressbars[allyTeamID] and ((timer == maxresign and count == 0) or total == 0 or timer <= 0) then
 		progressbars[allyTeamID]:Dispose() -- drop the bar because we have no need for it anymore.
 		progressbars[allyTeamID] = nil
 		return
 	end
-	if count >= threshold then
+	if progressbars[allyTeamID] and count >= threshold then
 		progressbars[allyTeamID]:SetMinMax(0, maxresign)
 		progressbars[allyTeamID]:SetCaption(name .. " RESIGNING! [ " .. count .. " / " .. total .. "] Time Left: " .. TimeToText(timer))
 		progressbars[allyTeamID]:SetValue(timer)
@@ -180,7 +181,7 @@ local function UpdateResignState(allyTeamID)
 		else
 			progressbars[allyTeamID]:SetColor(colors["low"])
 		end
-	else
+	elseif progressbars[allyTeamID] then
 		progressbars[allyTeamID]:SetMinMax(0, threshold)
 		progressbars[allyTeamID]:SetValue(count)
 		local ratio = count / threshold
@@ -207,7 +208,6 @@ local function UpdateResignState(allyTeamID)
 			progressbars[allyTeamID]:SetCaption(name .. " [" .. count .. " / " .. total .. "] Time Left: " .. TimeToText(timer))
 		end
 	end
-	progressbars[allyTeamID].tooltip = tooltip
 end
 
 function widget:Initialize()
