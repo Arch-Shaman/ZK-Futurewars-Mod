@@ -40,7 +40,6 @@ local mintime = 60
 local resignteams = {}
 local exemptplayers = {} -- players who are exempt.
 local afkplayers = {}
-Spring.SetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
 
 -- config --
 
@@ -133,7 +132,9 @@ end
 local function UpdatePlayerResignState(playerID, state, update)
 	local allyTeamID = playerMap[playerID]
 	local currentState = states[allyTeamID].playerStates[playerID] or false
-	Spring.SetPlayerRulesParam(playerID, "resign_state", state, ALLIED)
+	local val
+	if state then val = 1 else val = 0 end
+	Spring.SetPlayerRulesParam(playerID, "resign_state", val, ALLIED)
 	if currentState == state then
 		return
 	end
@@ -183,6 +184,8 @@ GG.ResignState = {UpdateAFK = AFKUpdate}
 
 function gadget:Initialize()
 	local allyteamlist = Spring.GetAllyTeamList()
+	Spring.Echo("ResignState: Loading")
+	Spring.SetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
 	for a = 1, #allyteamlist do
 		local allyTeamID = allyteamlist[a]
 		states[allyTeamID] = {
@@ -201,7 +204,7 @@ function gadget:Initialize()
 			for p = 1, #playerList do
 				local playerID = playerList[p]
 				states[allyTeamID].playerStates[playerID] = false
-				Spring.SetPlayerRulesParam(playerID, "resign_state", false, ALLIED)
+				Spring.SetPlayerRulesParam(playerID, "resign_state", 0, ALLIED)
 				playerMap[playerID] = allyTeamID
 			end
 		end

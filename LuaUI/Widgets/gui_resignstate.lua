@@ -13,7 +13,7 @@ end
 local myID = Spring.GetMyPlayerID()
 
 local Chili, bigtext, window, Screen0, resignimage, grid, bigtextwindow
-local mystate = Spring.GetPlayerRulesParam(myID, "resign_state") or false
+local mystate = (Spring.GetPlayerRulesParam(myID, "resign_state") or 0) == 1
 local progressbars = {}
 local exempt = {}
 local switches = 2 -- number of times a user can switch states.
