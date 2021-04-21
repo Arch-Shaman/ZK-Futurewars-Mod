@@ -159,7 +159,7 @@ local function UpdateResignState(allyTeamID)
 		progressbars[allyTeamID] = Chili.Progressbar:New{parent = grid, width = '100%', caption = name .. ' [' .. count .. " / " .. threshold .. " ] Time Left: " .. TimeToText(timer), tooltip = "Not Initialized", useValueTooltip = true, min = 0, max = threshold, value = count}
 		Spring.Echo(progressbars[allyTeamID].y)
 	end
-	if (timer == maxresign and count == 0) or total == 0 or timer <= 0 then
+	if progressbars[allyTeamID] and (timer == maxresign and count == 0) or total == 0 or timer <= 0 then
 		progressbars[allyTeamID]:Dispose() -- drop the bar because we have no need for it anymore.
 		progressbars[allyTeamID] = nil
 		return
