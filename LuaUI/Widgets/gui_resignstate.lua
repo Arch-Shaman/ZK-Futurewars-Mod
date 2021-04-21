@@ -139,7 +139,7 @@ local function UpdateResignState(allyTeamID)
 	local threshold = Spring.GetGameRulesParam("resign_" .. allyTeamID .. "_threshold")
 	local count = Spring.GetGameRulesParam("resign_" .. allyTeamID .. "_count") or 0
 	local timer = Spring.GetGameRulesParam("resign_" .. allyTeamID .. "_timer")
-	local name = Spring.GetGameRulesParam("allyteam_short_name_" .. allyTeamID)
+	local name = Spring.GetGameRulesParam("allyteam_long_name_" .. allyTeamID)
 	maxresign = Spring.GetGameRulesParam("resigntimer_max") or 180
 	--Spring.Echo("Resign State" .. allyTeamID .. ":\nTotal: " .. tostring(total) .. "\nthreshold: " .. tostring(threshold) .. "\ncount: " .. count .. "\nTimer: " .. tostring(timer))
 	local allied = allyTeamID == MyAllyTeamID
@@ -168,7 +168,7 @@ local function UpdateResignState(allyTeamID)
 	end
 	if progressbars[allyTeamID] and count >= threshold then
 		progressbars[allyTeamID]:SetMinMax(0, maxresign)
-		progressbars[allyTeamID]:SetCaption(name .. " RESIGNING! [ " .. count .. " / " .. total .. "] Time Left: " .. TimeToText(timer))
+		progressbars[allyTeamID]:SetCaption(name .. " RESIGNING! [ " .. count .. " / " .. total .. " for instant resign] Time Left until resign: " .. TimeToText(timer))
 		progressbars[allyTeamID]:SetValue(timer)
 		local ratio = timer / maxresign
 		if ratio >= 0.9 then
@@ -185,7 +185,11 @@ local function UpdateResignState(allyTeamID)
 	elseif progressbars[allyTeamID] then
 		progressbars[allyTeamID]:SetMinMax(0, threshold)
 		progressbars[allyTeamID]:SetValue(count)
-		progressbars[allyTeamID]:SetCaption(name .. ' [' .. count .. " / " .. threshold .. " ] Time Left: " .. TimeToText(timer))
+		if total > 3 then
+			progressbars[allyTeamID]:SetCaption(name .. ' [' .. count .. " / " .. threshold .. " for timer]")
+		else
+			progressbars[allyTeamID]:SetCaption(name .. ' [' .. count .. " / " .. total .. " for instant resign]")
+		end
 		local ratio = count / threshold
 		if allied then
 			if ratio >= 0.75 then
