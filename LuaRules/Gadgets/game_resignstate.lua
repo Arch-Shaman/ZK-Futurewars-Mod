@@ -12,7 +12,7 @@ end
 
 if not gadgetHandler:IsSyncedCode() then
 	local function MakeUpdate(_, allyTeamID)
-		Spring.Echo("MakeUpdate: " .. tostring(allyTeamID))
+		--Spring.Echo("MakeUpdate: " .. tostring(allyTeamID))
 		if Script.LuaUI('UpdateResignState') then
 			Script.LuaUI.UpdateResignState(allyTeamID)
 		end
@@ -150,7 +150,7 @@ local function UpdatePlayerResignState(playerID, state, update)
 		mod = -1
 	end
 	states[allyTeamID].count = states[allyTeamID].count + mod
-	Spring.SetGameRulesParam("resign_alliance_" .. allyTeamID .. "_count", states[allyTeamID].count, PUBLIC)
+	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_count", states[allyTeamID].count, PUBLIC)
 	states[allyTeamID].playerStates[playerID] = state
 	if update then
 		CheckAllyTeamState(allyTeamID)
@@ -160,8 +160,8 @@ end
 
 local function UpdateAllyTeam(allyTeamID)
 	states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
-	Spring.SetGameRulesParam("resign_alliance_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
-	Spring.SetGameRulesParam("resign_alliance_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
+	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
+	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
 	SendToUnsynced("MakeUpdate", allyTeamID)
 end
 
