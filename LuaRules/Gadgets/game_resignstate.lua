@@ -219,16 +219,15 @@ end
 function gadget:GameFrame(f)
 	if f%90 == 15 then
 		if resigntimer > mintime then
-			for i = 1, #states do
-				if states[i].timer >= resigntimer then
+			for i = 0, #states do
+				if states[i].timer >= resigntimer - 1 then
 					states[i].timer = states[i].timer - 1
 					UpdateResignTimer(i)
 				end
 			end
 			resigntimer = resigntimer - 1
-			UpdateResignTimer(i)
 			Spring.SetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
-			SendToUnsynced("MakeUpdate", allyTeamID)
+			SendToUnsynced("MakeUpdate", i)
 		end
 		if #resignteams > 0 then
 			for i = 1, #resignteams do
