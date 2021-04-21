@@ -45,7 +45,7 @@ local colors = {
 }
 
 local function ToggleState()
-	if switches == 0 then
+	if switches == 0 or Spring.GetGameFrame() < 1 then
 		return
 	end
 	mystate = not mystate
@@ -218,7 +218,7 @@ function widget:Initialize()
 	Spring.SendLuaRulesMsg("resignrejoin") -- tell the gadget I want to rejoin (in case I already quit)
 	Chili = WG.Chili
 	Screen0 = Chili.Screen0
-	if WG.GlobalCommandBar then
+	if WG.GlobalCommandBar and not Spring.GetSpectatingState() then
 		local image = mystate and images.on or images.off
 		resignbutton = WG.GlobalCommandBar.AddCommand(image, "", ToggleState)
 		local text = "Toggle Resign State\nYou're currently "
@@ -231,13 +231,13 @@ function widget:Initialize()
 		for _, v in pairs(resignbutton.childrenByName) do -- there's only one here, so let's fetch it. The name is some random name so.. this is sadly necessary. Fortunately this doesn't have high perf cost I think.
 			resignimage = v
 		end
-		local allylist = Spring.GetAllyTeamList() -- parent = Screen0, width='20%',height='43.5%',x='0%',y='10%',resizable=false,draggable=false,dockable=true, padding = {0,0,0,0}, color = {0,0,0,0}
-		window = Chili.Panel:New{parent=Screen0, width = '20%', height = '42.5%', x = '0%', y = '10%', resizable = false, resizeItems = false, draggable = false, dockable = true, padding = {0,0,0,0}, verticalScrollbar=true, horizontalScrollbar=false, scrollBarSize=150, backgroundColor = {0,0,0,0}, borderColor = {0,0,0,0}} -- in case of weird render sizes, etc.
-		grid = Chili.Grid:New{parent = window, columns = 1, orientation = 'vertical', width = '500%', centerItems = false, height = "100%", itemPadding = {0.2,0.2,0.2,0.2}, resizeItems = false, minWidth = window.width, color = {0,0,0,0}, backgroundColor = {0,0,0,0}}
-		for i = 1, #allylist do
-			local allyTeamID = allylist[i]
-			UpdateResignState(allyTeamID)
-		end
+	end
+	local allylist = Spring.GetAllyTeamList() -- parent = Screen0, width='20%',height='43.5%',x='0%',y='10%',resizable=false,draggable=false,dockable=true, padding = {0,0,0,0}, color = {0,0,0,0}
+	window = Chili.Panel:New{parent=Screen0, width = '20%', height = '42.5%', x = '0%', y = '10%', resizable = false, resizeItems = false, draggable = false, dockable = true, padding = {0,0,0,0}, verticalScrollbar=true, horizontalScrollbar=false, scrollBarSize=150, backgroundColor = {0,0,0,0}, borderColor = {0,0,0,0}} -- in case of weird render sizes, etc.
+	grid = Chili.Grid:New{parent = window, columns = 1, orientation = 'vertical', width = '500%', centerItems = false, height = "100%", itemPadding = {0.2,0.2,0.2,0.2}, resizeItems = false, minWidth = window.width, color = {0,0,0,0}, backgroundColor = {0,0,0,0}}
+	for i = 1, #allylist do
+		local allyTeamID = allylist[i]
+		UpdateResignState(allyTeamID)
 	end
 end
 
@@ -256,5 +256,11 @@ function widget:Update()
 			switches = switches + 1
 		end
 		t = Spring.GetTimer()
+	end
+end
+
+function widget:PlayerResigned(playerID)
+	if playerID == myID and resignbutton ~= nil then
+		resignbutton:Dispose()
 	end
 end
