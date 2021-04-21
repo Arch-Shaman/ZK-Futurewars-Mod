@@ -251,12 +251,10 @@ end
 local t = Spring.GetTimer()
 function widget:Update()
 	local dif = Spring.DiffTimers(Spring.GetTimer(), t)
-	if dif > 5 and switches < 2 then
-		switches = switches + 1
-		t = Spring.GetTimer()
-	elseif dif > 5 then
+	if dif > 5 then
+		if switches < 2 then
+			switches = switches + 1
+		end
 		t = Spring.GetTimer()
 	end
-end
-
 end
