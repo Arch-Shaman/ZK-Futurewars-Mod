@@ -118,6 +118,7 @@ end
 
 local function CheckAllyTeamState(allyTeamID)
 	if states[allyTeamID].count == states[allyTeamID].total then
+		states[allyTeamID].timer = 1
 		DestroyAlliance(allyTeamID)
 		RemoveResignTeam(allyTeamID)
 	end
