@@ -17,6 +17,12 @@ if not gadgetHandler:IsSyncedCode() then
 		end
 	end
 	
+	local function MakePlayerUpdate(_, playerID, state)
+		if Script.LuaUI('UpdatePlayer') then
+			Script.LuaUI.UpdatePlayer(playerID, state)
+		end
+	end
+	
 	function gadget:Initialize()
 		gadgetHandler:AddSyncAction("MakeUpdate", MakeUpdate)
 	end
@@ -161,6 +167,7 @@ local function AFKUpdate(playerID)
 		afkplayers[playerID] = states[allyTeamID].playerStates[playerID] or false
 		UpdateAllyTeam(allyTeamID)
 		UpdatePlayerResignState(playerID, false, false)
+		SendToUnsynced("MakePlayerUpdate", playerID, "afk")
 	elseif state == 0 and afkplayers[playerID] ~= nil then
 		local wantedresign = afkplayers[playerID]
 		afkplayers[playerID] = nil
@@ -168,6 +175,7 @@ local function AFKUpdate(playerID)
 		if wantedresign then
 			UpdatePlayerResignState(playerID, true, true)
 		end
+		SendToUnsynced("MakePlayerUpdate", playerID, "normal")
 	end
 end
 
@@ -270,6 +278,7 @@ function gadget:RecvLuaMsg(msg, playerID)
 		exemptplayers[playerID] = true
 		UpdateAllyTeam(allyTeamID)
 		CheckAllyTeamState(allyTeamID)
+		SendToUnsynced("MakePlayerUpdate", playerID, "exempt")
 	end
 	if msg:find("resignstate") then -- resignstate 1 or resignstate 0
 		msg = msg:gsub("resignstate", "")
@@ -284,10 +293,12 @@ function gadget:RecvLuaMsg(msg, playerID)
 		exemptplayers[playerID] = true
 		UpdateAllyTeam(allyTeamID)
 		CheckAllyTeamState(allyTeamID)
+		SendToUnsynced("MakePlayerUpdate", playerID, "exempt")
 	end
 	if msg == "resignrejoin" and playerMap[playerID] and exemptplayers[playerID] then
 		exemptplayers[playerID] = nil
 		UpdateAllyTeam(allyTeamID)
 		CheckAllyTeamState(allyTeamID)
+		SendToUnsynced("MakePlayerUpdate", playerID, "normal")
 	end
 end
