@@ -141,7 +141,7 @@ local function UpdateResignState(allyTeamID)
 	local timer = Spring.GetGameRulesParam("resign_" .. allyTeamID .. "_timer")
 	local name = Spring.GetGameRulesParam("allyteam_short_name_" .. allyTeamID)
 	maxresign = Spring.GetGameRulesParam("resigntimer_max") or 60
-	Spring.Echo("Resign State" .. allyTeamID .. ":\nTotal: " .. tostring(total) .. "\nthreshold: " .. tostring(threshold) .. "\ncount: " .. count .. "\nTimer: " .. tostring(timer))
+	--Spring.Echo("Resign State" .. allyTeamID .. ":\nTotal: " .. tostring(total) .. "\nthreshold: " .. tostring(threshold) .. "\ncount: " .. count .. "\nTimer: " .. tostring(timer))
 	local allied = allyTeamID == MyAllyTeamID
 	local exempt = ""
 	local resigned = ""
@@ -159,7 +159,7 @@ local function UpdateResignState(allyTeamID)
 	if (count > 0 or timer ~= maxresign) and progressbars[allyTeamID] == nil then
 		Spring.Echo(name .. " ( allyTeamID: " .. allyTeamID .. ")")
 		progressbars[allyTeamID] = Chili.Progressbar:New{parent = grid, width = '100%', caption = name .. ' [' .. count .. " / " .. threshold .. " ] Time Left: " .. TimeToText(timer), tooltip = "Not Initialized", useValueTooltip = true, min = 0, max = threshold, value = count}
-		Spring.Echo(progressbars[allyTeamID].y)
+		--Spring.Echo(progressbars[allyTeamID].y)
 	end
 	if progressbars[allyTeamID] and ((timer == maxresign and count == 0) or total == 0 or timer <= 0) then
 		progressbars[allyTeamID]:Dispose() -- drop the bar because we have no need for it anymore.
