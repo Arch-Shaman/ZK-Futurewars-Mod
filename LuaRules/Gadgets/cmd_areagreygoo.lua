@@ -116,9 +116,8 @@ end
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
 	if cmdID == CMD_GREYGOO and not GooDefs[unitDefID] then -- screen against non-grey gooers using area greygoo.
 		return false
-	else
-		return true
 	end
+	return true
 end
 
 function gadget:UnitCreated(unitID, unitDefID)
