@@ -67,16 +67,17 @@ return {
 
 		weaponDefs             = {
 			LASER = {
-				name                    = [[Pulsed Phaser]],
+				name                    = [[Light Modulated Laser System]],
 				areaOfEffect            = 8,
 				avoidFeature            = false,
-				beamTime                = 10/30,
+				beamTime                = 4/30,
 				collideFriendly         = false,
 				coreThickness           = 1.3,
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting       = 2.5,
-
+				burst					= 7,
+				burstrate				= 2/30,
 				customparams = {
 
 					light_color = [[0.8941 0.7647 0.1255]],
@@ -86,7 +87,7 @@ return {
 				},
 
 				damage                  = {
-					default = 240,
+					default = 35,
 				},
 
 				explosionGenerator      = [[custom:heavybeamorangeimpactsmall]],
@@ -99,20 +100,19 @@ return {
 				laserFlareSize          = 2,
 				minIntensity            = 1,
 				noSelfDamage            = true,
-				range                   = 300,
+				range                   = 320,
 				reloadtime              = 2.4,
 				rgbColor                = [[0.8941 0.7647 0.1255]],
 				soundStart              = [[weapon/laser/medium_phaser]],
-				sweepfire               = false,
-				texture1                = [[laser4]],
-				texture2                = [[flare]],
-				texture3                = [[flare]],
-				texture4                = [[smallflare]],
+				soundHit				= [[weapon/impacts/impact-light01]],
+				soundHitVolume			= 50,
+				soundStartVolume		= 25,
 				thickness               = 3.25,
 				tolerance               = 2000,
 				turret                  = true,
-				weaponType              = [[BeamLaser]],
+				weaponType              = [[LaserCannon]],
 				waterWeapon				= true,
+				weaponVelocity			= 330,
 			},
 			LASER_OVERDRIVE = {
 				name                    = [[Pulsed Phaser]],
