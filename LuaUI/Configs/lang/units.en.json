@@ -392,7 +392,7 @@
 	"gunshipheavyskirm" : {
 		"name" : "Aurora",
 		"description" : "Fire Support Gunship",
-		"helptext" : "An aerial gun platform designed to bombard the enemy from beyond the reach of their weapons. It's 2 pairs of Guass Autocannons are powerful, but inaccurate while it's Kinetic Missiles will make short work of slow targets. Although the Aurora is not made out of wet paper and can withstand some punishment, it is still advised to keep this craft behind other units as tanking shots is not it's forte."
+		"helptext" : "An aerial gun platform designed to bombard the enemy from beyond the reach of their weapons. Its 2 pairs of Guass Autocannons are powerful, but inaccurate while its Kinetic Missiles will make short work of slow targets. Although the Aurora is not made out of wet paper and can withstand some punishment, it is still advised to keep this craft behind other units as tanking shots is not its forte."
 	},
 	"factoryshield" : {
 		"name" : "Shieldbot Factory",
