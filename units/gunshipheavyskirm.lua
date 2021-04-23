@@ -118,7 +118,7 @@ return {
 				sizeDecay               = -0.1,
 				soundHit                = [[weapon/gauss_hit]],
 				soundHitVolume          = 3,
-				soundStart              = [[weapon/gauss_fire]],
+				soundStart              = [[weapon/gauss_rapid]],
 				soundStartVolume        = 2.5,
 				sprayAngle              = 2000,
 				stages                  = 32,
