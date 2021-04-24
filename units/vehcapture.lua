@@ -71,7 +71,7 @@ return {
 				customparams = {
 					capture_scaling = 1,
 					is_capture = 1,
-					disarmDamageMult = 0.85,
+					disarmDamageMult = 1.35,
 					disarmDamageOnly = 0,
 					disarmTimer      = 5, -- seconds
 					post_capture_reload = 360,
