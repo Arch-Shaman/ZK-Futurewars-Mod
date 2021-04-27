@@ -97,7 +97,7 @@ return {
 				},
 
 				damage                  = {
-					default = 32.1, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
+					default = 15.1, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
 				},
 
 				explosionGenerator      = [[custom:gauss_hit_m]],
