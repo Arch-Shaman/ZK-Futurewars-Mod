@@ -73,7 +73,7 @@ return {
 				craterMult              = 0,
 
 				customParams = {
-					single_hit          = true,
+					single_hit_multi    = true,
 					light_camera_height = 1200,
 					light_radius        = 180,
 					shield_damage		= 50.1,
