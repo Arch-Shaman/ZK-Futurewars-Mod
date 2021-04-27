@@ -82,6 +82,7 @@ return {
 					light_camera_height = 2500,
         			light_color = [[0.90 0.65 0.30]],
         			light_radius = 250,
+					reveal_unit = 3,
 				},
 				damage                  = {
 					default = 230.1,

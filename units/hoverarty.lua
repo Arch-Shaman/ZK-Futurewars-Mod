@@ -135,6 +135,7 @@ unitDef = {
 
 				light_color = [[1.25 0.8 1.75]],
 				light_radius = 320,
+				reveal_unit = 10,
 			},
 			damage                  = {
 				default = 3000.1,

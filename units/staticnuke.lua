@@ -137,6 +137,7 @@ return {
 					stats_custom_tooltip_entry_2 = "3",
 					stats_custom_tooltip_3 = "    - Warhead Range:",
 					stats_custom_tooltip_entry_3 = "1750 elmos",
+					reveal_unit = 25,
 				},
 				damage                  = {
 					default = 36000.1,

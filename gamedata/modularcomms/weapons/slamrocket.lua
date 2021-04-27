@@ -25,6 +25,7 @@ local weaponDef = {
 		reaim_time = 1,
 		cruisealt = 600,
 		cruisedist = 340,
+		reveal_unit = 4,
 	},
 	cylinderTargeting       = 1.0,
 

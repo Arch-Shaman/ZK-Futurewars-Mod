@@ -164,8 +164,8 @@ return {
 				cegTag                  = [[vulcanfx]],
 				craterBoost             = 0,
 				craterMult              = 0,
-				burst			= 2,
-				burstrate		= 2,
+				burst			        = 2,
+				burstrate		        = 2,
 				customParams            = {
 					restrict_in_widgets = 1,
 
@@ -184,6 +184,7 @@ return {
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 120,
 					light_color = [[2.4 1.5 0.6]],
+					reveal_unit = 26,
 				},
       
 				damage                  = {

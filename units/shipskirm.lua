@@ -77,6 +77,7 @@ return {
 					cruisealt = 200,
 					airlaunched = 1, -- don't ask me why.
 					cruisedist = 420,
+					reveal_unit = 7,
 				},
 
 				damage                  = {

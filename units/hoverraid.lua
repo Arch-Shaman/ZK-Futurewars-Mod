@@ -76,11 +76,10 @@ return {
 					single_hit_multi    = true,
 					light_camera_height = 1200,
 					light_radius        = 180,
-					shield_damage		= 50.1,
 				},
 
 				damage                  = {
-					default = 40.1,
+					default = 35.1,
 				},
 
 				explosionGenerator      = [[custom:gauss_hit_l]],

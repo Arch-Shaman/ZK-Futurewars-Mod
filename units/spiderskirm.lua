@@ -82,6 +82,7 @@ return {
 					airlaunched = 1,
 					cruisedist = -1,
 					timeslow_damagefactor = 1.7,
+					reveal_unit = 3,
 				},
 
 				damage                  = {

@@ -80,6 +80,7 @@ return {
 					light_camera_height = 3000,
 					light_color = [[1 0.58 0.17]],
 					light_radius = 200,
+					reveal_unit = 3,
 				},
 
 				damage                  = {

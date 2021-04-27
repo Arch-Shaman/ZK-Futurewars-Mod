@@ -81,6 +81,7 @@ return {
 					sweepfire_step = 10,
 					light_radius = 0,
 					nofriendlyfire = "needs hax",
+					reveal_unit = 3,
 				},
 
 				damage                  = {

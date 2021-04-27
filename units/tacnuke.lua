@@ -69,6 +69,7 @@ return {
 					light_radius = 400,
 					cruisealt = 1300,
 					cruisedist = 400,
+					reveal_unit = 3,
 				},
 
 				damage                  = {

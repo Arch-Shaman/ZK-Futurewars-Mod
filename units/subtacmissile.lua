@@ -85,6 +85,7 @@ return {
 					stats_custom_tooltip_entry_2 = "6",
 					stats_custom_tooltip_3 = "    - Warhead Range:",
 					stats_custom_tooltip_entry_3 = "500 elmos",
+					reveal_unit = 5,
 				},
 
 				damage                  = {

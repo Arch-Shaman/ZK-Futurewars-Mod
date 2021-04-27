@@ -11,6 +11,7 @@ local weaponDef = {
 		slot = [[5]],
 		light_radius = 0,
 		reaim_time = 1,
+		reveal_unit = 3,
 	},
 
 	damage                  = {

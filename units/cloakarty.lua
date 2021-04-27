@@ -89,6 +89,7 @@ return {
 					light_color = [[0.3 0.3 0.7]],
 					light_radius = 100,
 					extra_damage = 400,
+					reveal_unit = 6,
 				},
 
 				damage                  = {

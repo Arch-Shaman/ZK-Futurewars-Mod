@@ -17,7 +17,7 @@ local weaponDef = {
 		area_damage_dps = 20,
 		area_damage_duration = 20,
 		reaim_time = 1,
-
+		reveal_unit = 8,
 		light_color = [[1.5 0.7 0.3]],
 	},
 

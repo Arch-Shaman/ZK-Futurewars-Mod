@@ -72,6 +72,7 @@ unitDef = {
 			light_color = [[0.25 0.13 0.05]],
 			light_radios = 460,
 			lups_napalm_fx = 1,
+			reveals_unit = 3,
 		},
 		explosionGenerator      = [[custom:napalm_koda]],
 		fireStarter             = 250,
@@ -178,7 +179,7 @@ unitDef = {
 				burntime = 90,
 
 				restrict_in_widgets = 1,
-
+				reveal_unit = 3,
 				stats_hide_dps = 1, -- one use
 				stats_hide_reload = 1,		
 				light_color = [[1.35 0.5 0.36]],

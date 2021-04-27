@@ -62,7 +62,7 @@ return {
 		weapons             = {
 
 			{
-				def                = [[GUASS_REPEATER]],
+				def                = [[emg]],
 				mainDir            = [[0 0 1]],
 				maxAngleDif        = 70,
 				onlyTargetCategory = [[SWIM LAND SHIP SINK TURRET FLOAT GUNSHIP FIXEDWING HOVER]],
@@ -78,7 +78,7 @@ return {
 
 		weaponDefs          = {
 
-			GUASS_REPEATER = {
+			emg = {
 				name                    = [[Guass Autocannon]],
 				alphaDecay              = 0.12,
 				areaOfEffect            = 96,
@@ -139,6 +139,7 @@ return {
 					reaim_time = 15, -- Some script bug. It does not need fast aim updates anyway.
 					light_camera_height = 2500,
 					light_color = [[1 0.8 0.2]],
+					reveal_unit = 7,
 				},
 			
 				damage         = {

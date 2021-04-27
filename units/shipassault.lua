@@ -136,6 +136,7 @@ return {
 				craterMult              = 2,
 				customParams            = {
 					combatrange = 270,
+					reveal_unit = 3,
 				},
 				damage                  = {
 					default = 400.01,

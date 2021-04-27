@@ -146,7 +146,7 @@ return {
 					sweepfire_maxangle = 12,
 					sweepfire_step = 6,
 					sweepfire_maxrangemult = 0.98,
-					
+					reveal_unit = 3,
 				},
 				damage                  = {
 					default = 300,

@@ -77,6 +77,7 @@ return {
 
 				customParams            = {
 					light_color = [[1.4 0.8 0.3]],
+					reveal_unit = 10,
 				},
 
 				damage                  = {

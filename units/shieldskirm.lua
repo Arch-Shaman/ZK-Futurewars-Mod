@@ -119,6 +119,7 @@ return {
 					spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 					vradius1 = "-4,-1,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					reveal_unit = 3,
 				},
 				damage                  = {
 					default = 450,

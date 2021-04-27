@@ -88,7 +88,7 @@ return { turretaaflak = {
 					vradius1 = "-3,0,-3,3,0,3", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?
-					damage_vs_shield = [[200]]
+					damage_vs_shield = [[200]],
 				},
 
 				damage  = {
@@ -132,7 +132,7 @@ return { turretaaflak = {
 					isaa = [[1]],
 					light_radius = 0,
 					isFlak = 3,
-					flaktime = -25,
+					flaktime = -5,
 				},
 
 				damage = {
@@ -155,7 +155,7 @@ return { turretaaflak = {
 				soundHitVolume	      = 0.4,
 				--soundTrigger            = true,
 				sprayangle              = 1500,
-				size = 6,
+				size 					= 6,
 				thickness               = 2,
 				tolerance               = 10000,
 				turret                  = true,

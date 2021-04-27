@@ -88,7 +88,9 @@ return {
 				cegtag				    = [[serpent_trail]],
 				craterBoost             = 0,
 				craterMult              = 0,
-
+				customParams			= {
+					reveal_unit = 6,
+				},
 				damage                  = {
 					default = 900.5,
 				},

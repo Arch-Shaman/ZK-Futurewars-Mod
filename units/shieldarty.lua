@@ -75,6 +75,7 @@ return {
 					cruisealt = 400,
 					cruisedist = 200,
 					cruisetracking = true,
+					reveal_unit = 10,
 				},
 				damage                  = {
 					default        = 2500,

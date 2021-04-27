@@ -875,6 +875,10 @@ local function weapons2Table(cells, ws, unitID)
 			--cells[#cells+1] = cp.smoothradius .. " radius" -- overlaps
 			cells[#cells+1] = ''
 		end
+		if cp["reveal_unit"] then
+			cells[#cells+1] = ' - Reveals for'
+			cells[#cells+1] = cp["reveal_unit"] .. "s while in enemy Radar"
+		end
 		if cp.movestructures then
 			cells[#cells+1] = ' - Smoothes under structures'
 			--cells[#cells+1] = cp.smoothradius .. " radius" -- overlaps

@@ -92,6 +92,7 @@ return {
 					light_radius = 250,
 					reload_move_mod_time = 3,
 					tracker = 1,
+					reveal_unit = 3,
 				},
 				damage                  = {
 					default = 230,

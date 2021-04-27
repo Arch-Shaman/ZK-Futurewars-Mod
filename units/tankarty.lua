@@ -80,7 +80,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 175.1,
+					default = 265.1,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -128,9 +128,10 @@ return {
 					light_camera_height = 1500,
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 40,
+					reveal_unit = 7,
 				},
 				damage                  = {
-					default = 1050.6,
+					default = 265.1 * 6,
 				},
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
@@ -141,6 +142,7 @@ return {
 				noSelfDamage            = true,
 				range                   = 1120,
 				reloadtime              = 7,
+				size					= 4,
 				soundHit                = [[weapon/cannon/mini_cannon]],
 				soundStart              = [[weapon/cannon/pillager_fire]],
 				turret                  = true,

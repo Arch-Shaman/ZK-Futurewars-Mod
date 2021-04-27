@@ -76,6 +76,7 @@ return {
 					light_color = [[1 0.8 0.2]],
 					cruisealt = 600,
 					cruisedist = 340,
+					reveal_unit = 10,
 				},
 
 				damage         = {
