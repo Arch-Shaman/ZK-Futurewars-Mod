@@ -75,9 +75,9 @@
 		"helptext" : "The Basilisk climbs walls like a spider to surprise the enemy with its highly acidic spit. Only a vigilant watch keeps these critters from sauntering over hills to wreck your base from unexpected directions. Gunships are the best solution to Basilisk incursions."
 	},
 	"hoverraid" : {
-		"name" : "Dagger",
+		"name" : "Spear",
 		"description" : "Fast Attack Hovercraft",
-		"helptext" : "The Dagger is the hover plant's scout. It provides a cheap, disposable method of getting intel, and can also hit economic targets of opportunity. Its light Gauss gun can also hit underwater targets."
+		"helptext" : "The Spear is the hover plant's raider/scout. It provides decent damage with its gauss scattergun and a semi-disposable method of getting intel while being moderately fast. Its Gauss Scattergun can also hit underwater targets, though with less efficiency."
 	},
 	"hoverheavyraid" : {
 		"name" : "Bolas",
