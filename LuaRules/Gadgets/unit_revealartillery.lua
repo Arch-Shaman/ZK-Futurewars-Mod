@@ -128,7 +128,7 @@ function gadget:GameFrame(f)
 		for unitID, timer in IterableMap.Iterator(units) do
 			timer = timer - 1
 			IterableMap.Set(units, unitID, timer)
-			Spring.Echo("[RevealArty] " .. unitID .. ": " .. timer)
+			--Spring.Echo("[RevealArty] " .. unitID .. ": " .. timer)
 			if timer == 0 then
 				Unreveal(unitID)
 				IterableMap.Remove(units, unitID)
