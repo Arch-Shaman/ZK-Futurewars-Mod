@@ -62,7 +62,7 @@ end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-	Spring.UnitScript.SetUnitValue(stealth, 1)
+	Spring.SetUnitStealth(unitID, true) 
 	Turn(flare, x_axis, 1.6, 5)
 	Turn(lshoulder, x_axis, math.rad(-10))
 	Turn(lforearm, x_axis, math.rad(-30))
@@ -77,7 +77,7 @@ end
 
 local function Uncloak()
 	GG.SetWantedCloaked(unitID, 0)
-	Spring.UnitScript.SetUnitValue(stealth, 1)
+	Spring.SetUnitStealth(unitID, true) 
 end
 
 local function Walk()
