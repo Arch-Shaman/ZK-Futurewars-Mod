@@ -875,7 +875,6 @@ local function weapons2Table(cells, ws, unitID)
 			--cells[#cells+1] = cp.smoothradius .. " radius" -- overlaps
 			cells[#cells+1] = ''
 		end
-
 		if cp.movestructures then
 			cells[#cells+1] = ' - Smoothes under structures'
 			--cells[#cells+1] = cp.smoothradius .. " radius" -- overlaps
@@ -1403,6 +1402,61 @@ local function printWeapons(unitDef, unitID)
 	return cells
 end
 
+local function slopeDegrees(slope)
+	return math.floor(math.deg(math.acos(1 - slope)) + 0.5)
+end
+
+local slopeTolerances = {
+	VEHICLE = 27,
+	BOT = 54,
+	SPIDER = 90,
+}
+
+-- returns the string, plus optionally the slope if it makes sense to show
+local function GetMoveType(ud)
+	if ud.isImmobile then
+		return "Immobile"
+	elseif ud.isStrafingAirUnit then
+		return "Plane"
+	elseif ud.isHoveringAirUnit then
+		return "Gunship"
+	end
+
+	local md = ud.moveDef
+	local smClass = Game.speedModClasses
+
+	if md.smClass == smClass.Ship then
+		-- caveman style workaround for the lack of `md.subMarine`
+		if ud.name == "subraider" or ud.name == "subtacmissile" or ud.name == "subscout" then
+			return "Submarine"
+		else
+			return "Ship"
+		end
+	end
+
+	local slope = slopeDegrees(md.maxSlope)
+	if md.smClass == smClass.Hover then
+		if slope == slopeTolerances.BOT then
+			-- chickens can walk on water!
+			return "Waterwalker", slope
+		else
+			return "Hovercraft", slope
+		end
+	elseif md.depth > 1337 then
+		return "Amphibious", slope
+	elseif slope == slopeTolerances.SPIDER then
+		return "All-terrain", slope
+	elseif md.smClass == smClass.KBot then
+		-- "bot" would sound weird for a chicken, but
+		-- all seem to be either amphs or waterwalkers
+		return "Bot", slope
+	else
+		return "Vehicle", slope
+	end
+end
+
+
+
 local function GetWeapon(weaponName)
 	return WeaponDefNames[weaponName]
 end
@@ -1527,6 +1581,14 @@ local function printunitinfo(ud, buttonWidth, unitID)
 	if not ud.isImmobile then
 		statschildren[#statschildren+1] = Label:New{ caption = 'Speed: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = speed .. " elmo/s", textColor = color.stats_fg, }
+
+		local mt, slope = GetMoveType(ud)
+		statschildren[#statschildren+1] = Label:New{ caption = 'Movement: ', textColor = color.stats_fg, }
+		statschildren[#statschildren+1] = Label:New{ caption = mt, textColor = color.stats_fg, }
+		if slope then
+			statschildren[#statschildren+1] = Label:New{ caption = 'Climbs: ', textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = slope .. " deg", textColor = color.stats_fg, }
+		end
 	end
 
 	--[[ Enable through some option perhaps
