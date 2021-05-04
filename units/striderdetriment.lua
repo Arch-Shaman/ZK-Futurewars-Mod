@@ -159,7 +159,6 @@ return {
 
 			FLAK = {
 				name                    = [[Flak Canister]],
-				accuracy                = 900,
 				areaOfEffect            = 0,
 				burnblow                = true,
 				canattackground         = false,
@@ -182,12 +181,12 @@ return {
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?
 					proxydist = 300, -- how far to check for units? Default: spawndist
-					damage_vs_shield = [[90]]
+					damage_vs_shield = [[180]]
 				},
 
 				damage  = {
-					default = 8*3,
-					planes  = 60*3,
+					default = 16*3,
+					planes  = 120*3,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.25,
@@ -197,7 +196,7 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 800,
-				reloadtime              = 1/3,
+				reloadtime              = 1/6,
 				myGravity				= 0.03,
 				size                    = 8,
 				soundHit                = [[weapon/cannon/cannon_fire4]],
@@ -230,8 +229,8 @@ return {
 				},
 
 				damage = {
-					default = 8,
-					planes  = 60,
+					default = 16,
+					planes  = 120,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.3,
