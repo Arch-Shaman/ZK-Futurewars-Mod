@@ -520,9 +520,9 @@
 		"helptext" : "The Sentinel replaced the Vandal during the first Coalition Wars. In this iteration, it received heavier missiles, a mobile radar, and a personal shield. These missiles contain light electromagnetic payloads that can disarm a target."
 	},
 	"hoverriot" : {
-		"name" : "Mace",
-		"description" : "Riot Hover",
-		"helptext" : "The Mace is a mobile laser tower. Its high firepower is useful for killing light enemy units. It is perfectly accurate and is good against gunships and fast units. However, its thin armor makes it vulnerable when targetted directly, especially by skirmishers."
+		"name" : "Longsword",
+		"description" : "Suppressive Fire Support Hovercraft",
+		"helptext" : "After devestating lessons learned from the capabilities of underwater combat against hover units, the Mace was shortly replaced by the Longsword. Now armed with a gauss machine gun, it can target both hordes of lighter units and underwater units alike. It received some minor additional armoring as well at the cost of a little speed. Beware: its shots penetrate both friendly and hostile units alike."
 	},
 	"veharty" : {
 		"name" : "Badger",
