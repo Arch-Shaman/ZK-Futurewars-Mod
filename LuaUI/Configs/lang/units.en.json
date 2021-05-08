@@ -494,6 +494,11 @@
 		"description" : "Strategic MIRV Launcher, Drains 25 m/s, 4 minute stockpile",
 		"helptext" : "Oblivion, the pinnacle of human engineering. The abesolute wizardry that it takes to cram 3 Hawking Bombs into a missile that can still fly across interplanetary space at fractions of the speed of light in unimagenable, yet somehow, some way, it was done."
 	},
+	"hovertransport" : {
+		"name" : "Hoverboard",
+		"description" : "Transport Hovercraft",
+		"helptext" : "An all purpose hoverboard that allows units to bypass their normal domains and go into sea or land. It's tanky enough for front line combat, but is completely unarmed.",
+	},
 	"hovershotgun" : {
 		"name" : "Punisher",
 		"description" : "Shotgun Hover",
