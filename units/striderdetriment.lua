@@ -63,6 +63,10 @@ return {
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING GUNSHIP]],
 			},
+			{
+				def                = [[TRILASER]],
+				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
+			},
 
 		},
 		weaponDefs             = {
@@ -255,6 +259,57 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 880,
 				--coverage = 1000,
+			},
+			
+			TRILASER = {
+				name                    = [[Gigawatt Laser]],
+				areaOfEffect            = 36,
+				beamTime                = 1,
+				beamttl                 = 3,
+				coreThickness           = 0.5,
+				craterBoost             = 0,
+				craterMult              = 0,
+				edgeEffectiveness       = 0.3,
+
+				customParams            = {
+					light_color = [[0.2 0.8 0.2]],
+					reaim_time = 1,
+				},
+
+				damage                  = {
+					default = 8000.1,
+				},
+
+				explosionGenerator      = [[custom:beamlaser_hit_saphire]],
+				fireStarter             = 90,
+				fireTolerance           = 4200, -- about 50 degrees
+				impactOnly              = false,
+				impulseBoost            = 0,
+				impulseFactor           = 0.4,
+				interceptedByShieldType = 1,
+				largeBeamLaser          = true,
+				laserFlareSize          = 16.4,
+				leadLimit               = 18,
+				minIntensity            = 1,
+				noSelfDamage            = true,
+				range                   = 1000,
+				reloadtime              = 10,
+				rgbColor                = [[0.0588 0.3215 0.7294]],
+				rgbColor2               = [[0.3215 0.54509 0.898]],
+				scrollSpeed             = 5,
+				soundStart              = [[weapon/laser/gigalaser_fire]],
+				soundStartVolume        = 10,
+				sweepfire               = false,
+				texture1                = [[ecmnoise]],
+				texture2                = [[flare]],
+				texture3                = [[flare]],
+				texture4                = [[smallflare]],
+				thickness               = 14,
+				tileLength              = 300,
+				tolerance               = 4200, -- about 50 degrees
+				turret                  = true,
+				weaponType              = [[BeamLaser]],
+				weaponVelocity          = 2250,
 			},
 		},
 		featureDefs            = {

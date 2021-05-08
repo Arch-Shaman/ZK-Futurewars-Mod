@@ -362,7 +362,7 @@ function script.Create()
 	Turn(rarm, z_axis, 0.1)
 	Turn(shoulderflare, x_axis, math.rad(-90))
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-	Spring.SetUnitMaxRange(unitID, 510)
+	--Spring.SetUnitMaxRange(unitID, 510)
 end
 
 local function RestoreAfterDelay()
@@ -449,7 +449,7 @@ function script.AimWeapon(num, heading, pitch)
 		WaitForTurn(torso, y_axis)
 		WaitForTurn(rarm, x_axis)]]
 	elseif num == 3 then -- Shoulder Cannon
-		manualfireAimOverride = 60
+		--manualfireAimOverride = 60
 		Turn(torso, y_axis, heading, math.rad(90))
 		WaitForTurn(torso, y_axis)
 		Turn(shouldercannon, x_axis, -pitch+math.rad(90),  math.rad(90))
