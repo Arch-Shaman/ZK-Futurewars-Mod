@@ -1160,9 +1160,9 @@
 		"helptext" : "The Crane flies quickly over any terrain, but is fragile to any AA. Though it has relatively poor nano power compared to other constructors, it is able to build in many hard to reach places and expand an air players territory in a nonlinear fashion. Due to its mobility, it is ideal for reclaiming wrecks and other repetetitive tasks."
 	},
 	"gunshipraid" : {
-		"name" : "Locust",
+		"name" : "Whirlwind",
 		"description" : "Raider Gunship",
-		"helptext" : "The Locust is a light gunship. Its high speed and decent damage makes it excellent for quickly taking out enemy economy or inaccurate units like assaults. However, it flies close to the ground and has a short range, meaning even other raiders can engage it on an equal footing. Like any raider, the Locust should avoid riots and static defense."
+		"helptext" : "The Whirlwind is a light gunship. Its high speed and decent damage makes it excellent for quickly taking out enemy economy or inaccurate units like assaults. However, it flies close to the ground and has a short range, meaning even other raiders can engage it on an equal footing. Like any raider, the Whirlwind should avoid riots and static defense."
 	},
 	"shieldraid" : {
 		"name" : "Warden",
