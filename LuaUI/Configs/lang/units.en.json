@@ -544,6 +544,11 @@
 		"description" : "Strategic Nuclear Cruise Missile",
 		"helptext" : "A derivative of the original Silencer strategic warhead, the Silencer MkIII simplified its nanoprint to be buildable by factory nanolathes. Although this practically limits it to the Missile Silo, the Silencer MkIII has had to take some compromises to get to this point. With the removal of the base platform (used in favor of the new Oblivion MIRV), its range has been considerably decreased. However, it is still a very potent and dangerous weapon."
 	},
+	"hovertransport" : {
+		"name" : "Hoverboard",
+		"description" : "Transport Hovercraft",
+		"helptext" : "An all purpose hoverboard that allows units to bypass their normal domains and go into sea or land. It's tanky enough for front line combat, but is completely unarmed.",
+	},
 	"hovershotgun" : {
 		"name" : "Punisher",
 		"description" : "Shotgun Hover",
