@@ -17,6 +17,7 @@ end
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 
 local units = IterableMap.New()
+local projectiles = {count = 0, data = {}}
 local siloDefID = UnitDefNames.staticmissilesilo.id
 local missiles = {}
 
@@ -37,8 +38,11 @@ local wantedDefs = {}
 for w = 1, #WeaponDefs do
 	local WeaponDef = WeaponDefs[w]
 	local cp = WeaponDef.customParams
-	if cp["reveal_unit"] then
-		wantedDefs[w] = tonumber(cp["reveal_unit"])
+	local timer = tonumber(cp["reveal_unit"])
+	if timer then
+		wantedDefs[w] = timer
+		Script.SetWatchWeapon(w, true)
+		--Spring.Echo("[RevealArty] Added " .. WeaponDefs[w].name .. "[" .. timer .. "]")
 	end
 end
 
@@ -48,11 +52,14 @@ local function Reveal(unitID)
 	local myAllyTeam = spGetUnitAllyTeam(unitID)
 	local allyTeams = spGetAllyTeamList()
 	local x, y, z = Spring.GetUnitPosition(unitID)
+	--Spring.Echo("Checking " .. unitID .. " [Reveal]")
 	for i = 1, #allyTeams do
 		local allyTeamID = allyTeams[i]
 		if myAllyTeam ~= allyTeamID then
 			local _, inLOS, inRadar = spGetPositionLosState(x, y, z, allyTeamID)
-			if inRadar and not inLOS then
+			--Spring.Echo(allyTeamID .. ": In radar: " .. tostring(inRadar))
+			if inRadar then
+				--Spring.Echo("Setting LOS Mask")
 				spSetUnitLosMask(unitID, allyTeamID, 15) -- see: https://github.com/ZeroK-RTS/Zero-K/blob/master/LuaRules/Gadgets/unit_show_shooter.lua
 				spSetUnitLosState(unitID, allyTeamID, 15)
 			else
@@ -78,11 +85,13 @@ end
 
 local function CheckReveal(unitID)
 	local x, y, z = spGetUnitPosition(unitID)
+	local myAllyTeam = spGetUnitAllyTeam(unitID)
 	local _, _, _, inJammer = spGetPositionLosState(x, y, z, myAllyTeam)
 	local isCloaked = spGetUnitIsCloaked(unitID)
+	--Spring.Echo("CheckReveal\nCloaked:" .. tostring(isCloaked) .. "\ninJammer: " .. tostring(inJammer))
 	if inJammer or isCloaked then
 		Unreveal(unitID)
-	elseif not inJammer and not isCloaked then
+	else
 		Reveal(unitID)
 	end
 end
@@ -103,11 +112,19 @@ function gadget:UnitDestroyed(unitID)
 end
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponID)
+	weaponID = weaponID or Spring.GetProjectileDefID(proID)
+	--Spring.Echo("ProjectileCreated: " .. tostring(weaponID) .. " WatchTimer: " .. tostring(wantedDefs[weaponID]))
 	if wantedDefs[weaponID] == nil then
+		--Spring.Echo("NotAWatchWeapon")
 		return
 	end
 	proOwnerID = missiles[proOwnerID] or proOwnerID
-	IterableMap.Set(units, proOwnerID, wantedDefs[weaponID])
+	local timer = IterableMap.Get(units, proOwnerID)
+	if timer and timer < wantedDefs[weaponID] then
+		IterableMap.Set(units, proOwnerID, wantedDefs[weaponID])
+	else
+		IterableMap.Add(units, proOwnerID, wantedDefs[weaponID])
+	end
 	CheckReveal(proOwnerID)
 end
 
@@ -128,7 +145,7 @@ function gadget:GameFrame(f)
 		for unitID, timer in IterableMap.Iterator(units) do
 			timer = timer - 1
 			IterableMap.Set(units, unitID, timer)
-			--Spring.Echo("[RevealArty] " .. unitID .. ": " .. timer)
+			----Spring.Echo("[RevealArty] " .. unitID .. ": " .. timer)
 			if timer == 0 then
 				Unreveal(unitID)
 				IterableMap.Remove(units, unitID)
