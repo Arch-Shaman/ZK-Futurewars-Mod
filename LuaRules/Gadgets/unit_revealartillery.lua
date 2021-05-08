@@ -17,7 +17,6 @@ end
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 
 local units = IterableMap.New()
-local projectiles = {count = 0, data = {}}
 local siloDefID = UnitDefNames.staticmissilesilo.id
 local missiles = {}
 
@@ -145,7 +144,7 @@ function gadget:GameFrame(f)
 		for unitID, timer in IterableMap.Iterator(units) do
 			timer = timer - 1
 			IterableMap.Set(units, unitID, timer)
-			----Spring.Echo("[RevealArty] " .. unitID .. ": " .. timer)
+			--Spring.Echo("[RevealArty] " .. unitID .. ": " .. timer)
 			if timer == 0 then
 				Unreveal(unitID)
 				IterableMap.Remove(units, unitID)
