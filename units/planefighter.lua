@@ -3,7 +3,7 @@ local unitDef = {
 	name                   = [[Deserter]],
 	description            = [[Early Response Fighter-Bomber]],
 	brakerate              = 0.4,
-	buildCostMetal         = 150,
+	buildCostMetal         = 175,
 	buildPic               = [[planefighter.png]],
 	canFly                 = true,
 	canGuard               = true,
@@ -151,7 +151,7 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 50,
+				default = 42,
 			},
 			groundbounce = false,
 			--bounceslip = 0.25,
@@ -207,7 +207,7 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 50*3,
+				default = 42*3,
 			},
 
 			edgeEffectiveness		= 0.2,
