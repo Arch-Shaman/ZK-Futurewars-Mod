@@ -164,6 +164,10 @@ function script.QueryWeapon(num)
 	return firepoint
 end
 
+function script.BlockShot(num, targetID)
+	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 133, 210, 1, 0, 0, true) -- unitID, targetID, gameFrame, damage, timeout, fastmult, radarmult, staticonly
+end
+
 function script.AimWeapon(num, heading, pitch)
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
