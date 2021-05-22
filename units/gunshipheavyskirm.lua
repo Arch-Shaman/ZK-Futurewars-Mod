@@ -105,7 +105,6 @@ return {
 				impulseBoost            = 0,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
-				noExplode               = true,
 				noSelfDamage            = true,
 				range                   = 930,
 				reloadtime              = 1/15,
