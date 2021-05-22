@@ -82,7 +82,7 @@ return {
 				shieldBadColor          = [[1 0.1 0.1 1]],
 				shieldGoodColor         = [[0.1 0.1 1 1]],
 				shieldInterceptType     = 3,
-				shieldPower             = 1600,
+				shieldPower             = 2500,
 				shieldPowerRegen        = 10,
 				shieldPowerRegenEnergy  = 5,
 				shieldRadius            = 120,
@@ -102,7 +102,7 @@ return {
 				cylinderTargeting       = 0.3,
 
 				customParams            = {
-					shield_drain = 90,
+					shield_drain = 100,
 
 					light_camera_height = 2500,
 					light_color = [[0.66 0.32 0.90]],
@@ -110,7 +110,7 @@ return {
 				},
 
 				damage                  = {
-					default        = 100.1,
+					default        = 120.1,
 				},
 
 				explosionGenerator      = [[custom:flash2purple]],
@@ -120,7 +120,7 @@ return {
 				impulseFactor           = 0.4,
 				intensity               = 6,
 				interceptedByShieldType = 1,
-				range                   = 440,
+				range                   = 460,
 				reloadtime              = 0.133,
 				rgbColor                = [[0.5 0 0.7]],
 				soundStart              = [[weapon/constant_electric]],
