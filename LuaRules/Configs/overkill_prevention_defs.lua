@@ -28,6 +28,7 @@ local handledUnitDefIDs = {
 	[UnitDefNames["shieldarty"].id] = 1, --Shields's racketeer
 	[UnitDefNames["bomberprec"].id] = 1,
 	[UnitDefNames["bomberstrike"].id] = 1,
+	[UnitDefNames["planefighter"].id] = 1,
 	[UnitDefNames["shipscout"].id] = 0, --Defaults to off because of strange disarm + normal damage behaviour.
 	[UnitDefNames["shiptorpraider"].id] = 1,
 	[UnitDefNames["shipskirm"].id] = 1,
