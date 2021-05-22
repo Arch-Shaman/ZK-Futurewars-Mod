@@ -154,7 +154,7 @@ function script.BlockShot(num, targetID)
 	if num == 1 then -- ATA overkill prevention
 		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 133, 135)
 	elseif num == 2 then -- ATG okp
-		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 133, 126, 1, 0.85) -- unitID, targetID, gameFrame, damage, timeout, fastmult, radarmult, staticonly
+		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 126, 60, 0.25, 0.4) -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
 	end
 	return false
 end

@@ -165,7 +165,7 @@ function script.QueryWeapon(num)
 end
 
 function script.BlockShot(num, targetID)
-	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 133, 210, 1, 0, 0, true) -- unitID, targetID, gameFrame, damage, timeout, fastmult, radarmult, staticonly
+	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 210, 40, 0.3, 0, true) -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
 end
 
 function script.AimWeapon(num, heading, pitch)
