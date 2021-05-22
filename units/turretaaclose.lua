@@ -167,7 +167,7 @@ return {
 				featureDead      = [[HEAP]],
 				footprintX       = 3,
 				footprintZ       = 3,
-				object           = [[missiletower_dead.s3o]],
+				object           = [[turretaaclose_dead.s3o]],
 			},
 
 
