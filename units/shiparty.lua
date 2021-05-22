@@ -31,7 +31,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		losEmitHeight          = 25,
-		maxDamage              = 6600,
+		maxDamage              = 6800,
 		maxVelocity            = 1.4,
 		minWaterDepth          = 10,
 		movementClass          = [[BOAT4]],
@@ -70,7 +70,7 @@ return {
 				},
 
 				damage                  = {
-					default = 250.1,
+					default = 300.1,
 				},
 				edgeeffectiveness		= 0.3,
 				explosionGenerator      = [[custom:plasma_hit_32]],
@@ -82,7 +82,7 @@ return {
 				reloadtime              = 3,
 				soundHit                = [[weapon/cannon/cannon_hit2]],
 				soundStart              = [[weapon/cannon/battleship_fire]],
-				soundStartVolume		= 10,
+				soundStartVolume		= 40,
 				turret                  = true,
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 600,
