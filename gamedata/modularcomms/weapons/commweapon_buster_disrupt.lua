@@ -15,6 +15,11 @@ local weaponDef = {
 		miscEffectFire = [[custom:RIOT_SHELL_H]],
 		timeslow_damageFactor = 2,
 		reaim_time = 1,
+		use_okp = 1,
+		okp_speedmult = 0.6,
+		okp_radarmult = 1,
+		okp_timeout = 40,
+		okp_damage = 1020,
 	},
 
 	damage                  = {

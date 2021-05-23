@@ -12,6 +12,8 @@ local weaponsInitialized = false
 local paceMult
 local scaleMult
 local weaponCegs = {}
+local weaponDef1
+local weaponDef2
 
 local commWreckUnitRulesParam = {"comm_baseWreckID", "comm_baseHeapID"}
 local moduleWreckNamePrefix = {"module_wreck_", "module_heap_"}
@@ -304,6 +306,37 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 	weaponsInitialized = true
 end
 
+local function GetOKP()
+	local okp = {}
+	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
+	local weaponname2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2")
+	local damageMult = Spring.GetUnitRulesParam(unitID, "comm_damage_mult") or 1
+	Spring.Echo("GetOKP: " .. tostring(weaponname1) .. ", " .. tostring(weaponname2))
+	local wep1 = WeaponDefs[unitWeaponNames[weaponname1].weaponDefID]
+	local wep2 = weaponname2 and WeaponDefs[unitWeaponNames[weaponname2].weaponDefID] or nil
+	okp[1] = {useokp = wep1.customParams["use_okp"] ~= nil}
+	if wep2 ~= nil then
+		okp[2] = {useokp = wep2.customParams["use_okp"] ~= nil}
+	else
+		okp[2] = {useokp = false}
+	end
+	if okp[1].useokp then
+		okp[1].damage = (tonumber(wep1.customParams["okp_damage"]) or 0) * damageMult
+		okp[1].speedmult = tonumber(wep1.customParams["okp_speedmult"]) or 1
+		okp[1].structureonly = wep1.customParams["okp_structureonly"] ~= nil
+		okp[1].radarmult = tonumber(wep1.customParams["okp_radarmult"]) or 1
+		okp[1].timeout = tonumber(wep1.customParams["okp_timeout"]) or 30
+	end
+	if okp[2].useokp then
+		okp[2].damage = tonumber(wep2.customParams["okp_damage"]) or 0 * damageMult
+		okp[2].speedmult = tonumber(wep2.customParams["okp_speedmult"]) or 1
+		okp[2].structureonly = wep2.customParams["okp_structureonly"] ~= nil
+		okp[2].radarmult = tonumber(wep2.customParams["okp_radarmult"]) or 1
+		okp[2].timeout = tonumber(wep2.customParams["okp_timeout"]) or 30
+	end
+	return okp
+end
+
 local function Create()
 	-- copy the dgun command table because we sometimes need to reinsert it
 	local cmdID = Spring.FindUnitCmdDesc(unitID, CMD.MANUALFIRE)
@@ -381,4 +414,5 @@ return {
 	Create            = Create,
 	SpawnModuleWrecks = SpawnModuleWrecks,
 	SpawnWreck        = SpawnWreck,
+	GetOKPConfig      = GetOKP,
 }

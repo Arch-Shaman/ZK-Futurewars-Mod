@@ -29,6 +29,8 @@ local lleg = piece 'lleg'
 local lfoot = piece 'lfoot'
 local rleg = piece 'rleg'
 local rfoot = piece 'rfoot'
+local wep1dmg = 0
+local wep2dmg = 0
 
 local smokePiece = {torso}
 local nanoPieces = {lnanoflare}
@@ -101,6 +103,9 @@ local PACE = 2*PACE_MULT
 local BASE_VELOCITY = UnitDefNames.benzcom1.speed or 1.25*30
 local VELOCITY = UnitDefs[unitDefID].speed or BASE_VELOCITY
 local PACE = PACE * VELOCITY/BASE_VELOCITY
+local weapon1dmg = 0
+local weapon2dmg = 0
+local okpconfig
 
 local SLEEP_TIME = 360/PACE_MULT
 
@@ -204,7 +209,11 @@ function script.Create()
 	dyncomm.Create()
 	Hide(rcannon_flare)
 	Hide(lnanoflare)
-	
+	okpconfig = dyncomm.GetOKPConfig()
+	Spring.Echo("Use OKP: " .. tostring(okpconfig[1].useokp or okpconfig[2].useokp))
+	if okpconfig[1].useokp or okpconfig[2].useokp then
+		GG.OverkillPrevention_ForceAdd(unitID)
+	end
 --	Turn(larm, x_axis, math.rad(30))
 --	Turn(rarm, x_axis, math.rad(-10))
 --	Turn(rhand, x_axis, math.rad(41))
@@ -303,7 +312,14 @@ function script.FireWeapon(num)
 end
 
 function script.BlockShot(num, targetID)
-	return (targetID and GG.DontFireRadar_CheckBlock(unitID, targetID)) and true or false
+	local weaponNum = dyncomm.GetWeapon(num)
+	Spring.Echo(unitID .. ": BlockShot: " .. weaponNum)
+	local radarcheck = (targetID and GG.DontFireRadar_CheckBlock(unitID, targetID)) and true or false
+	local okp = false
+	if okpconfig[weaponNum] and okpconfig[weaponNum].useokp and targetID then
+		okp = GG.OverkillPrevention_CheckBlock(unitID, targetID, okpconfig[weaponNum].damage, okpconfig[weaponNum].timeout, okpconfig[weaponNum].speedmult, okpconfig[weaponNum].structureonly) or false -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
+	end
+	return okp or radarcheck
 end
 
 function script.Shot(num)
