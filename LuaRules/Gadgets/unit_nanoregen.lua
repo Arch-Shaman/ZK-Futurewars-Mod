@@ -45,10 +45,6 @@ for i = 1, #UnitDefs do
 	end
 end
 
-function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
-	units[unitID] = nil
-end
-
 function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 	if config[unitDefID] then
 		units[unitID] = unitDefID
@@ -59,19 +55,23 @@ function gadget:GameFrame(f)
 	if f%updaterate == 3 then -- before idle regen.
 		for id, unitdef in pairs(units) do
 			local hp, maxhp = spGetUnitHealth(id)
-			local data = config[unitdef]
-			local actualregen = (data.regen * (1 - (spGetUnitRulesParam(id, "slowState") or 0))) * (30 / updaterate) * min(1/(max(hp, 1)/maxhp), data.maxregenmult)
-			spSetUnitRulesParam(id, "nanoregen", actualregen, INLOS)
-			if hp < maxhp then
-				hp = min(hp + actualregen, maxhp)
-				spSetUnitHealth(id, hp)
-				if hp == maxhp then
+			if hp then
+				local data = config[unitdef]
+				local actualregen = (data.regen * (1 - (spGetUnitRulesParam(id, "slowState") or 0))) * (30 / updaterate) * min(1/(max(hp, 1)/maxhp), data.maxregenmult)
+				spSetUnitRulesParam(id, "nanoregen", actualregen, INLOS)
+				if hp < maxhp then
+					hp = min(hp + actualregen, maxhp)
+					spSetUnitHealth(id, hp)
+					if hp == maxhp then
+						units[id] = nil
+						spSetUnitRulesParam(id, "nanoregen", nil)
+					end
+				else
 					units[id] = nil
 					spSetUnitRulesParam(id, "nanoregen", nil)
 				end
 			else
 				units[id] = nil
-				spSetUnitRulesParam(id, "nanoregen", nil)
 			end
 		end
 	end
