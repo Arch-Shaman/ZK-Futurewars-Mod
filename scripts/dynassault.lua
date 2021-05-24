@@ -29,8 +29,6 @@ local lleg = piece 'lleg'
 local lfoot = piece 'lfoot'
 local rleg = piece 'rleg'
 local rfoot = piece 'rfoot'
-local wep1dmg = 0
-local wep2dmg = 0
 
 local smokePiece = {torso}
 local nanoPieces = {lnanoflare}
@@ -116,9 +114,6 @@ local PACE = 2*PACE_MULT
 local BASE_VELOCITY = UnitDefNames.benzcom1.speed or 1.25*30
 local VELOCITY = UnitDefs[unitDefID].speed or BASE_VELOCITY
 local PACE = PACE * VELOCITY/BASE_VELOCITY
-local weapon1dmg = 0
-local weapon2dmg = 0
-local okpconfig
 
 local SLEEP_TIME = 360/PACE_MULT
 
