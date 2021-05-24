@@ -20,6 +20,12 @@ local weaponDef = {
 		light_color = [[0.8 0.22 0.7]],
 		light_radius = 200,
 		reaim_time = 1,
+		
+		use_okp = 1,
+		okp_speedmult = 1,
+		okp_radarmult = 1,
+		okp_timeout = 11,
+		okp_damage = 700.1,
 	},
 
 	damage                  = {

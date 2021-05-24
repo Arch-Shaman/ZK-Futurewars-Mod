@@ -65,10 +65,23 @@ local bMoving = false
 local bAiming = false
 local shieldOn = true
 local inJumpMode = false
+local okpconfig
 
 --------------------------------------------------------------------------------
 -- funcs
 --------------------------------------------------------------------------------
+
+local function GetOKP()
+	while Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") == nil do
+		Sleep(33)
+	end
+	okpconfig = dyncomm.GetOKPConfig()
+	--Spring.Echo("Use OKP: " .. tostring(okpconfig[1].useokp or okpconfig[2].useokp))
+	if okpconfig[1].useokp or okpconfig[2].useokp then
+		GG.OverkillPrevention_ForceAdd(unitID)
+	end
+end
+
 local function BuildPose(heading, pitch)
 	Turn(luparm, x_axis, math.rad(-60), math.rad(250))
 	Turn(luparm, y_axis, math.rad(-15), math.rad(250))
@@ -333,6 +346,7 @@ end
 
 function script.Create()
 	dyncomm.Create()
+	StartThread(GetOKP)
 	sizeSpeedMult = (1 - (1 - dyncomm.GetPace())/2.5) *SPEED_MULT
 	--alert to dirt
 	Turn(armhold, x_axis, math.rad(-45), math.rad(250)) --upspring at -45
@@ -525,9 +539,16 @@ function script.StartBuilding(heading, pitch)
 end
 
 function script.BlockShot(num, targetID)
-	return (targetID and GG.DontFireRadar_CheckBlock(unitID, targetID)) and true or false
+	local weaponNum = dyncomm.GetWeapon(num)
+	--Spring.Echo(unitID .. ": BlockShot: " .. weaponNum)
+	local radarcheck = (targetID and GG.DontFireRadar_CheckBlock(unitID, targetID)) and true or false
+	local okp = false
+	if okpconfig[weaponNum] and okpconfig[weaponNum].useokp and targetID then
+		okp = GG.OverkillPrevention_CheckBlock(unitID, targetID, okpconfig[weaponNum].damage, okpconfig[weaponNum].timeout, okpconfig[weaponNum].speedmult, okpconfig[weaponNum].structureonly) or false -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
+		--Spring.Echo("OKP: " .. tostring(okp))
+	end
+	return okp or radarcheck
 end
-
 function script.QueryNanoPiece()
 	GG.LUPS.QueryNanoPiece(unitID,unitDefID,Spring.GetUnitTeam(unitID),nanospray)
 	return nanospray

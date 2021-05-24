@@ -15,19 +15,24 @@ local weaponDef = {
 		light_color = [[0.95 0.65 0.30]],
 		light_radius = 280,
 		reaim_time = 1,
+		use_okp = 1,
+		okp_speedmult = 0.3,
+		okp_radarmult = 1,
+		okp_timeout = 30,
+		okp_damage = 750,
 	},
 
 	damage                  = {
-		default = 600,
+		default = 750,
 	},
 
 	fireStarter             = 180,
-	flightTime              = 4,
+	flightTime              = 6,
 	impulseBoost            = 0,
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 2,
 	model                   = [[wep_m_hailstorm.s3o]],
-	range                   = 510,
+	range                   = 530,
 	reloadtime              = 3,
 	smokeTrail              = false,
 	soundHit                = [[explosion/ex_med4]],
@@ -36,11 +41,11 @@ local weaponDef = {
 	soundStartVolume        = 7,
 	startVelocity           = 200,
 	tracks                  = false,
-	trajectoryHeight        = 0.05,
+	trajectoryHeight        = 0.1,
 	turret                  = true,
 	weaponAcceleration      = 100,
 	weaponType              = [[MissileLauncher]],
-	weaponVelocity          = 250,
+	weaponVelocity          = 270,
 }
 
 return name, weaponDef

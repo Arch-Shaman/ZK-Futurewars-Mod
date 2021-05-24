@@ -15,6 +15,13 @@ local weaponDef = {
 
 		light_color = [[1.4 0.8 0.3]],
 		reaim_time = 1,
+		
+		-- okp --
+		use_okp = 1,
+		okp_speedmult = 0.6,
+		okp_radarmult = 1,
+		okp_timeout = 40,
+		okp_damage = 1250,
 	},
 
 	damage                  = {
