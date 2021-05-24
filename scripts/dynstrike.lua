@@ -64,7 +64,7 @@ local function GetOKP()
 		Sleep(33)
 	end
 	okpconfig = dyncomm.GetOKPConfig()
-	Spring.Echo("Use OKP: " .. tostring(okpconfig[1].useokp or okpconfig[2].useokp))
+	--Spring.Echo("Use OKP: " .. tostring(okpconfig[1].useokp or okpconfig[2].useokp))
 	if okpconfig[1].useokp or okpconfig[2].useokp then
 		GG.OverkillPrevention_ForceAdd(unitID)
 	end
@@ -586,12 +586,12 @@ end
 
 function script.BlockShot(num, targetID)
 	local weaponNum = dyncomm.GetWeapon(num)
-	Spring.Echo(unitID .. ": BlockShot: " .. weaponNum)
+	--Spring.Echo(unitID .. ": BlockShot: " .. weaponNum)
 	local radarcheck = (targetID and GG.DontFireRadar_CheckBlock(unitID, targetID)) and true or false
 	local okp = false
 	if okpconfig[weaponNum] and okpconfig[weaponNum].useokp and targetID then
 		okp = GG.OverkillPrevention_CheckBlock(unitID, targetID, okpconfig[weaponNum].damage, okpconfig[weaponNum].timeout, okpconfig[weaponNum].speedmult, okpconfig[weaponNum].structureonly) or false -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
-		Spring.Echo("OKP: " .. tostring(okp))
+		--Spring.Echo("OKP: " .. tostring(okp))
 	end
 	return okp or radarcheck
 end
