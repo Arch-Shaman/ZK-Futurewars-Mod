@@ -12,6 +12,11 @@ local weaponDef = {
 		light_radius = 0,
 		reaim_time = 1,
 		reveal_unit = 3,
+		use_okp = 1,
+		okp_speedmult = 0.8,
+		okp_radarmult = 1,
+		okp_timeout = 60,
+		okp_damage = 1500,
 	},
 
 	damage                  = {
