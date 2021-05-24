@@ -92,7 +92,7 @@ return { turretaaflak = {
 				},
 
 				damage  = {
-					default = 10*3,
+					default = 5*3,
 					planes  = 100*3,
 				},
 				--interceptor = 2,
@@ -136,7 +136,7 @@ return { turretaaflak = {
 				},
 
 				damage = {
-					default = 10,
+					default = 5,
 					planes  = 100,
 				},
 				--interceptor = 2,
