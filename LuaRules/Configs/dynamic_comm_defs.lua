@@ -541,7 +541,7 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
-			local weaponName = "commweapon_shockrifle"
+			local weaponName = "commweapon_shockriflefw"
 			if sharedData.noMoreWeapons then
 				return
 			end

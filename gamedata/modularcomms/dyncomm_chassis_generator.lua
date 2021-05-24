@@ -79,8 +79,8 @@ local chassisDefs = {
 			"commweapon_lightninggun_improved",
 			"commweapon_disruptorprojector",
 			"commweapon_disruptorprojector",
-			"commweapon_shockrifle",
-			"commweapon_shockrifle",
+			"commweapon_shockriflefw",
+			"commweapon_shockriflefw",
 			"commweapon_multistunner", -- TODO: replace with EMP bomb.
 			"commweapon_multistunner_improved",
 			"commweapon_disruptorbomb",
