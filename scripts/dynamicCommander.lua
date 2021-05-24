@@ -311,7 +311,7 @@ local function GetOKP()
 	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
 	local weaponname2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2")
 	local damageMult = Spring.GetUnitRulesParam(unitID, "comm_damage_mult") or 1
-	Spring.Echo("GetOKP: " .. tostring(weaponname1) .. ", " .. tostring(weaponname2))
+	--Spring.Echo("GetOKP: " .. tostring(weaponname1) .. ", " .. tostring(weaponname2))
 	local wep1 = WeaponDefs[unitWeaponNames[weaponname1].weaponDefID]
 	local wep2 = weaponname2 and WeaponDefs[unitWeaponNames[weaponname2].weaponDefID] or nil
 	okp[1] = {useokp = wep1.customParams["use_okp"] ~= nil}
