@@ -215,7 +215,6 @@ end
 
 function script.Create()
 	dyncomm.Create()
-	StartThread(GetOKP)
 	Hide(rcannon_flare)
 	Hide(lnanoflare)
 --	Turn(larm, x_axis, math.rad(30))
@@ -225,6 +224,7 @@ function script.Create()
 	
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	Spring.SetUnitNanoPieces(unitID, nanoPieces)
+	StartThread(GetOKP)
 end
 
 function script.StartMoving()
@@ -320,7 +320,7 @@ function script.BlockShot(num, targetID)
 	--Spring.Echo(unitID .. ": BlockShot: " .. weaponNum)
 	local radarcheck = (targetID and GG.DontFireRadar_CheckBlock(unitID, targetID)) and true or false
 	local okp = false
-	if okpconfig[weaponNum] and okpconfig[weaponNum].useokp and targetID then
+	if okpconfig and okpconfig[weaponNum] and okpconfig[weaponNum].useokp and targetID then
 		okp = GG.OverkillPrevention_CheckBlock(unitID, targetID, okpconfig[weaponNum].damage, okpconfig[weaponNum].timeout, okpconfig[weaponNum].speedmult, okpconfig[weaponNum].structureonly) or false -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
 		--Spring.Echo("OKP: " .. tostring(okp))
 	end
