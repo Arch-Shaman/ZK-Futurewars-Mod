@@ -25,9 +25,9 @@ return {
 		customParams           = {
 			canjump          = 1,
 			jump_range       = 450,
-			jump_height      = 240,
+			jump_height      = 320,
 			jump_speed       = 8,
-			jump_reload      = 10,
+			jump_reload      = 7,
 			jump_from_midair = 0,
 			aimposoffset   = [[0 2 0]],
 			midposoffset   = [[0 2 0]],
@@ -53,7 +53,7 @@ return {
 		maneuverleashlength    = [[140]],
 		maxDamage              = 300,
 		maxSlope               = 36,
-		maxVelocity            = 2.0,
+		maxVelocity            = 2.3,
 		maxWaterDepth          = 15,
 		minCloakDistance       = 125,
 		movementClass          = [[SKBOT2]],
@@ -106,7 +106,7 @@ return {
 					lups_explodelife = 1.5,
 				},
 				damage = {
-					default          = 8002.4,
+					default          = 8500.1,
 				},
 			},
 		}
