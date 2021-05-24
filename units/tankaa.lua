@@ -46,6 +46,7 @@ return {
 			},
 
 		},
+		script = [[tankaa.lua]],
 		sightDistance          = 660,
 		trackOffset            = 6,
 		trackStrength          = 5,
