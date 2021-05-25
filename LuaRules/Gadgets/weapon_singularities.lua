@@ -26,7 +26,7 @@ local singularitydefs = {}
 for i = 1, #WeaponDefs do
 	local cp = WeaponDefs[i].customParams
 	if cp and cp.singularity then
-		singularitydefs[i] = {radius = tonumber(cp.singuradius) or 400, lifespan = math.max(tonumber(cp.singulifespan) or 300, 10), strength = tonumber(cp.singustrength) or 20, height = tonumber(cp.singuheight) or 0}
+		singularitydefs[i] = {radius = tonumber(cp.singuradius) or 400, lifespan = math.max(tonumber(cp.singulifespan) or 300, 10), strength = tonumber(cp.singustrength) or 20, height = tonumber(cp.singuheight) or 0, ceg = cp.singuceg or 'black_hole_singu'}
 	end
 end
 
@@ -226,10 +226,11 @@ local function ProcessSingularity(singu, data)
 	local lifespan = data.lifespan
 	local radius = data.radius
 	local strength = data.strength
+	local ceg = data.ceg
 	if lifespan == 1 then
-		spSpawnCEG("opticblast_charge", sx, sy, sz, 0, 0, 0 , radius, 3000)
+		spSpawnCEG("opticblast_charge", sx, sy, sz, 0, 0, 0 , radius, 3000) -- note: radius doesn't seem to do anything here.
 	elseif lifespan%15 == 0 and lifespan > 20 then
-		spSpawnCEG("black_hole_singu", sx, sy, sz, 0, 0, 0 , radius, 0)
+		spSpawnCEG(ceg, sx, sy, sz, 0, 0, 0 , radius, 0) -- hence why we need to make separate cegs :(
 	end
 	if lifespan < 20 and lifespan%4 == 0 then
 		spSpawnCEG("riotballgrav", sx, sy, sz, 0, 0, 0, radius, 0)
@@ -262,7 +263,7 @@ function gadget:GameFrame(f)
 			elseif data.lifespan == 15 then
 				spPlaySoundFile("sounds\\blackhole_final.ogg", 30, data.position[1], data.position[2], data.position[3])
 			elseif data.lifespan == 1 then
-				spPlaySoundFile("sounds\\explosions\\ex_burn1.wav", 12, data.position[1], data.position[2], data.position[3]) -- needs replacement file?
+				--spPlaySoundFile("sounds\\explosions\\ex_burn1.wav", 12, data.position[1], data.position[2], data.position[3]) -- needs replacement file?
 			end
 		else
 			IterableMap.Remove(singularities, id)
@@ -277,12 +278,13 @@ function gadget:GameFrame(f)
 	--end
 end
 
-local function AddSingularity(x, y, z, strength, radius, lifespan)
+local function AddSingularity(x, y, z, strength, radius, lifespan, ceg)
 	local n = 0
+	ceg = ceg or 'black_hole_singu'
 	repeat
 		n = -math.random(1, 336559)
 	until IterableMap.InMap(singularities, n) == false
-	IterableMap.Add(singularities, n, {position = {[1] = x, [2] = y, [3] = z}, lifespan = lifespan, strength = strength, radius = radius})
+	IterableMap.Add(singularities, n, {position = {[1] = x, [2] = y, [3] = z}, lifespan = lifespan, strength = strength, radius = radius, ceg = ceg})
 end
 
 GG.AddSingularity = AddSingularity
@@ -290,6 +292,6 @@ GG.AddSingularity = AddSingularity
 function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, ProjectileID)
 	if singularitydefs[weaponDefID] and ProjectileID then
 		local def = singularitydefs[weaponDefID]
-		IterableMap.Add(singularities, ProjectileID, {position = {[1] = px, [2] = py + def.height, [3] = pz}, lifespan = def.lifespan, strength = def.strength, radius = def.radius})
+		IterableMap.Add(singularities, ProjectileID, {position = {[1] = px, [2] = py + def.height, [3] = pz}, lifespan = def.lifespan, strength = def.strength, radius = def.radius, ceg = def.ceg})
 	end
 end
