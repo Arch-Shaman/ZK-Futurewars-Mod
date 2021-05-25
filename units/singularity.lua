@@ -30,7 +30,7 @@ return {
 		minCloakDistance              = 150,
 		objectName                    = [[missilesingu.dae]],
 		script                        = [[singularity.lua]],
-		selfDestructAs                = [[SEISMIC_WEAPON]],
+		selfDestructAs                = [[SINGULARITY_WEAPON]],
 
 		sfxtypes                      = {
 			explosiongenerators = {
@@ -44,7 +44,7 @@ return {
 		selectionVolumeType    = [[box]],
 		weapons                       = {
 			{
-				def                = [[SEISMIC_WEAPON]],
+				def                = [[SINGULARITY_WEAPON]],
 				badTargetCategory  = [[SWIM LAND SHIP HOVER]],
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 			},
@@ -52,7 +52,7 @@ return {
 
 		weaponDefs                    = {
 
-			SEISMIC_WEAPON = {
+			SINGULARITY_WEAPON = {
 				name                    = [[Singularity]],
 				areaOfEffect            = 400,
 				avoidFriendly           = false,
@@ -67,6 +67,7 @@ return {
 					singustrength = [[75]],
 					detachmentradius = [[500]],
 					singuheight = [[250]],
+					singuceg = [[black_hole_400]],
 					restrict_in_widgets = 1,
 					stats_hide_dps = 1, -- one use
 					stats_hide_reload = 1,

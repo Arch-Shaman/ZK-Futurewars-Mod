@@ -87,7 +87,7 @@ return {
 					singulifespan = [[300]],
 					singustrength = [[44]],
 					singuheight = [[200]],
-
+					singuceg = [[black_hole_1280]],
 				},
 				--explosionGenerator = "custom:grav_danger_spikes",
 				explosionSpeed     = 100000,

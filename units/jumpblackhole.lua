@@ -93,6 +93,7 @@ return {
 					singulifespan = [[200]],
 					singustrength = [[12]],
 					singuheight = [[100]],
+					singuceg	= [[black_hole_200]],
 
 					light_color = [[1 1 1]],
 					light_radius = 500,
