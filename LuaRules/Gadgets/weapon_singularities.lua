@@ -21,7 +21,7 @@ local ignoreexplosion = {}
 
 local singularitydefs = {}
 
-local singuexplosion = {weapondef = WeaponDefNames["energysingu_singularity"].id}
+--local singuexplosion = {weapondef = WeaponDefNames["energysingu_singularity"].id}
 
 for i = 1, #WeaponDefs do
 	local cp = WeaponDefs[i].customParams
