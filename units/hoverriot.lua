@@ -63,7 +63,7 @@ return {
 				alphaDecay              = 0.12,
 				areaOfEffect            = 16,
 				avoidfeature            = false,
-				cegTag                  = [[sonictrail]],
+				--cegTag                  = [[sonictrail]],
 				craterBoost             = 0,
 				craterMult              = 0,
 				accuracy				= 1100,
