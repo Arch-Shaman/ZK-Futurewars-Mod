@@ -79,7 +79,7 @@ return {
 				},
 
 				damage                  = {
-					default = 35.1,
+					default = 26.1,
 				},
 
 				explosionGenerator      = [[custom:gauss_hit_l]],
@@ -93,7 +93,7 @@ return {
 				noSelfDamage            = true,
 				numbounce               = 10,
 				range                   = 235,
-				reloadtime              = 39/30,
+				reloadtime              = 43/30,
 				rgbColor                = [[0.5 1 1]],
 				separation              = 0.5,
 				size                    = 0.8,
