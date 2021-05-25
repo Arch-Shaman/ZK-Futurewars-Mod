@@ -19,9 +19,10 @@ return {
 
 		customParams          = {
 			midposoffset   = [[0 10 0]],
+			canjump			 = 1,
 			jump_range       = 450,
 			jump_height      = 170,
-			jump_speed       = 4,
+			jump_speed       = 6,
 			jump_reload      = 12,
 			jump_from_midair = 1,
 		},
