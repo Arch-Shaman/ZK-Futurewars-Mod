@@ -95,7 +95,7 @@ return {
 				model                   = [[antinukemissile.s3o]],
 				noSelfDamage            = true,
 				range                   = 3800,
-				reloadtime              = 6,
+				reloadtime              = 4,
 				smokeTrail              = true,
 				soundHit                = [[weapon/missile/vlaunch_hit]],
 				soundStart              = [[weapon/missile/missile_launch]],
