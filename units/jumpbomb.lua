@@ -25,7 +25,7 @@ return {
 		customParams           = {
 			canjump          = 1,
 			jump_range       = 450,
-			jump_height      = 320,
+			jump_height      = 220,
 			jump_speed       = 8,
 			jump_reload      = 7,
 			jump_from_midair = 0,
