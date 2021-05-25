@@ -55,6 +55,7 @@ for i=1, #WeaponDefs do
 					config[i]["airburst"] = curRef.noairburst == nil
 					config[i]["onExplode"] = curRef.onexplode ~= nil
 					config[i]["usertarget"] = curRef.usertargetable ~= nil
+					config[i]["noceg"] = curRef.clusternoceg ~= nil
 					
 					--sonny projectile defs
 					

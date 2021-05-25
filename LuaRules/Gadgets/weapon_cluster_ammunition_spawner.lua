@@ -226,9 +226,9 @@ local function SpawnSubProjectiles(id, wd)
 	if debug then
 		spEcho("Fire the submunitions!")
 	end
-	local x,y,z = spGetProjectilePosition(id)
-	local vx,vy,vz = spGetProjectileVelocity(id)
-	local ttype,target = spGetProjectileTarget(id)
+	local x, y, z = spGetProjectilePosition(id)
+	local vx, vy, vz = spGetProjectileVelocity(id)
+	local ttype, target = spGetProjectileTarget(id)
 	-- update projectile attributes --
 	local owner = spGetProjectileOwnerID(id)
 	projectileattributes["owner"] = owner
@@ -255,8 +255,8 @@ local function SpawnSubProjectiles(id, wd)
 		local dr = projectileConfig[j]["spreadmax"] - mr
 		local vr = projectileConfig[j]["veldata"]
 		local projectilecount = projectileConfig[j]["numprojectiles"]
-		for i=1, 3 do
-			step[i] = (vr.diff[i])/projectilecount
+		for i = 1, 3 do
+			step[i] = (vr.diff[i]) / projectilecount
 		end
 		if debug then
 			spEcho("Velocity: " ..tostring(projectileConfig[j].clusterpos),tostring(projectileConfig[j].clustervec) .. "\nstep: " .. tostring(step))
@@ -327,9 +327,9 @@ local function SpawnSubProjectiles(id, wd)
 				local dy = projectileattributes["speed"][2] - 1 --hackity hax
 				local dz = projectileattributes["speed"][3]
 				--do not question the arctangent
-				local dx2 = dx*dx	
-				local dy2 = dy*dy
-				local dz2 = dz*dz
+				local dx2 = dx * dx	
+				local dy2 = dy * dy
+				local dz2 = dz * dz
 				local dirX = atan2(dx, sqrt(dy2 + dz2))
 				local dirY = atan2(dy, sqrt(dx2 + dz2))
 				local dirZ = atan2(dz, sqrt(dx2 + dy2))
@@ -354,7 +354,9 @@ local function SpawnSubProjectiles(id, wd)
 		end
 	end
 	-- create the explosion --
-	spSpawnExplosion(x,y,z,0,0,0,{weaponDef = wd, owner = spGetProjectileOwnerID(id), craterAreaOfEffect = WeaponDefs[wd].craterAreaOfEffect, damageAreaOfEffect = 0, edgeEffectiveness = 0, explosionSpeed = WeaponDefs[wd].explosionSpeed, impactOnly = WeaponDefs[wd].impactOnly, ignoreOwner = WeaponDefs[wd].noSelfDamage, damageGround = true})
+	if config[wd].noceg then
+		spSpawnExplosion(x, y, z, 0, 0, 0, {weaponDef = wd, owner = spGetProjectileOwnerID(id), craterAreaOfEffect = WeaponDefs[wd].craterAreaOfEffect, damageAreaOfEffect = 0, edgeEffectiveness = 0, explosionSpeed = WeaponDefs[wd].explosionSpeed, impactOnly = WeaponDefs[wd].impactOnly, ignoreOwner = WeaponDefs[wd].noSelfDamage, damageGround = true})
+	end
 	spPlaySoundFile(WeaponDefs[wd].hitSound[1].name,WeaponDefs[wd].hitSound[1].volume,x,y,z)
 	local projectiledata = IterableMap.Get(projectiles, id)
 	if projectiledata.charges == 1 or projectiledata.charges == 0 then --charge below 0 never run out
