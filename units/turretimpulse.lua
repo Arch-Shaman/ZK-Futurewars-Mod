@@ -34,6 +34,7 @@ return {
 		objectName                    = [[CORGRAV]],
 		onoffable                     = true,
 		selfDestructAs                = [[MEDIUM_BUILDINGEX]],
+		script                        = [[turretimpulse.lua]],
 		sightDistance                 = 554, -- Range*1.1 + 48 for radar overshoot
 		useBuildingGroundDecal        = true,
 		workerTime                    = 0,
