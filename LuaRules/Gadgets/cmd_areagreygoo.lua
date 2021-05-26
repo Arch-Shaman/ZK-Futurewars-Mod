@@ -159,6 +159,7 @@ function gadget:CommandFallback(unitID, unitDefID, unitTeam, cmdID, cmdParams, c
 				return true, true
 			end
 			local persistent = cmdOptions.alt and #cmdParams > 1
+			--Spring.Echo("Persistent: " .. tostring(persistent))
 			IterableMap.Add(handled, unitID, {def = unitDefID, done = false, params = cmdParams, goal = -9999, updates = 0, persistent = persistent}) -- we found a new unit!
 		end
 		return true, false -- we're still not done here.
@@ -176,14 +177,14 @@ function gadget:GameFrame(f)
 					--Spring.Echo("Invalid unit or not working")
 					IterableMap.Remove(handled, unitID)
 				else
-					local range = GooDefs[data.def].range
-					local wantedrange = range * 0.1 -- puts us clearly in range
+					local wantedrange = 16
+					local wantedspeed = UnitDefs[data.def].speed
 					if type(data.params) ~= "table" then -- this is a single command
 						local featureID = data.params
 						if spValidFeatureID(featureID) then
 							if data.goal ~= featureID then -- we haven't set the move goal yet.
 								local x, y, z = spGetFeaturePosition(featureID) -- find the location of our target.
-								spSetUnitMoveGoal(unitID, x, y, z, wantedrange)
+								spSetUnitMoveGoal(unitID, x, y, z, wantedrange, wantedspeed, true)
 								data.goal = featureID
 							end
 						else
@@ -199,16 +200,19 @@ function gadget:GameFrame(f)
 							local id = GetClosestWreck(x, z, commandX, commandZ, commandRadius, allyTeam)
 							if id then
 								local gx, gy, gz = spGetFeaturePosition(id)
-								spSetUnitMoveGoal(unitID, gx, gy, gz, wantedrange)
+								spSetUnitMoveGoal(unitID, gx, gy, gz, wantedrange, wantedspeed, true)
 								data.goal = id
 							elseif not data.persistent then
+								spSetUnitMoveGoal(unitID, commandX, Spring.GetGroundHeight(commandX, commandZ), commandZ, wantedrange) -- don't allow them to run off to fuckall.
 								data.done = true
 							end
 						elseif data.updates == 3 then -- check if we're within range (fires off every 3rd update, this staggers the check)
 							data.updates = 0
+							--Spring.Echo("Check Distance. Wanted Distance: " .. wantedrange)
 							local px, py, pz = spGetFeaturePosition(data.goal)
-							if Distance(px, x, pz, z) > range * 0.98 then
-								spSetUnitMoveGoal(unitID, px, py, pz, wantedrange) -- we may have been pushed by allies or other grey gooers. prevents softlock.
+							if Distance(px, x, pz, z) >= wantedrange * 2 then
+								--Spring.Echo("Move to")
+								spSetUnitMoveGoal(unitID, px, py, pz, wantedrange, wantedspeed, true) -- we may have been pushed by allies or other grey gooers. prevents softlock.
 							end
 						end
 					end
@@ -220,7 +224,9 @@ end
 
 function gadget:Initalize()
 	gadgetHandler:RegisterCMDID(CMD_GREYGOO)
-	Spring.SetCustomCommandDrawData(CMD_GREYGOO, "Reclaim", {0.8, 0.3, 0.3, 0.7}, true)
+	--Spring.SetCustomCommandDrawData(CMD_GREYGOO, "Reclaim", {0.8, 0.3, 0.3, 0.7}, true)
+	-- It should be noted that Gadgets cannot set the custom command draw data for whatever reason.
+	-- Use gui_command_alpha widget instead.
 	for _, unitID in pairs(Spring.GetAllUnits()) do
 		gadget:UnitCreated(unitID, Spring.GetUnitDefID(unitID))
 	end
