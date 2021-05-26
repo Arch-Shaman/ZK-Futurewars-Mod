@@ -82,7 +82,7 @@ local commandDisplayConfig = {
 	[CMD_SWEEPFIRE] = {texture = imageDir .. 'sweepfire.png', tooltip = "Sweepfire: Sets a direction for sweeping an area with attack commands."},
 	[CMD_SWEEPFIRE_MINES] = {texture = imageDir .. 'sweepfire.png', tooltip = "Lay Mines: Sets a direction for randomly laying mines in."},
 	[CMD_SWEEPFIRE_CANCEL] = {texture = imageDir .. 'sweepfire_cancel.png', tooltip = "Clear Sweepfire: Clears the sweepfire command for this unit."},
-	
+	[CMD_GREYGOO] = {texture = imageDir .. 'Bold/GreyGoo.png', tooltip = "Reclaim (Grey Goo): Consumes wreck(s) in an area (or a single wreck)."},
 	[CMD_EXCLUDE_PAD] = {texture = imageDir .. 'Bold/excludeairpad.png', tooltip = "Exclude Airpad: Toggle whether any of your aircraft use the targeted airpad."},
 
 	[CMD_EMBARK] = {texture = imageDir .. 'Bold/embark.png'},
