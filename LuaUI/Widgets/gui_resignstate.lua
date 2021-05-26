@@ -157,7 +157,7 @@ local function UpdateResignState(allyTeamID)
 		tooltip = tooltip .. "\n" .. strings.enemyvote
 	end]]
 	if (count > 0 or timer < maxresign - 5) and progressbars[allyTeamID] == nil then
-		Spring.Echo(name .. " ( allyTeamID: " .. allyTeamID .. ")")
+		--Spring.Echo(name .. " ( allyTeamID: " .. allyTeamID .. ")")
 		progressbars[allyTeamID] = Chili.Progressbar:New{parent = grid, width = '100%', caption = name .. ' [' .. count .. " / " .. threshold .. " ] Time Left: " .. TimeToText(timer), tooltip = "Not Initialized", useValueTooltip = true, min = 0, max = threshold, value = count}
 		--Spring.Echo(progressbars[allyTeamID].y)
 	end
@@ -237,7 +237,7 @@ function widget:Initialize()
 		end
 	end
 	local allylist = Spring.GetAllyTeamList() -- parent = Screen0, width='20%',height='43.5%',x='0%',y='10%',resizable=false,draggable=false,dockable=true, padding = {0,0,0,0}, color = {0,0,0,0}
-	window = Chili.Panel:New{parent=Screen0, width = '20%', height = '40.5%', x = '0%', y = '15%', resizable = false, resizeItems = false, draggable = false, dockable = true, padding = {0,0,0,0}, verticalScrollbar=true, horizontalScrollbar=false, scrollBarSize=150, backgroundColor = {0,0,0,0}, borderColor = {0,0,0,0}} -- in case of weird render sizes, etc.
+	window = Chili.Panel:New{parent=Screen0, width = '20%', height = '40.5%', x = '0%', y = '15%', resizable = false, resizeItems = false, draggable = false, dockable = false, padding = {0,0,0,0}, verticalScrollbar=true, horizontalScrollbar=false, scrollBarSize=150, backgroundColor = {0,0,0,0}, borderColor = {0,0,0,0}} -- in case of weird render sizes, etc.
 	grid = Chili.Grid:New{parent = window, columns = 1, orientation = 'vertical', width = '500%', centerItems = false, height = "100%", itemPadding = {0.2,0.2,0.2,0.2}, resizeItems = false, minWidth = window.width, color = {0,0,0,0}, backgroundColor = {0,0,0,0}}
 	for i = 1, #allylist do
 		local allyTeamID = allylist[i]
