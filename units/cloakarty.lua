@@ -47,9 +47,9 @@ return {
 		sfxtypes               = {
 
 			explosiongenerators = {
-				[[custom:THUDMUZZLE]],
-				[[custom:THUDSHELLS]],
-				[[custom:THUDDUST]],
+				[[custom:zeusmuzzle]],
+				[[custom:sonicfire_80]],
+				[[custom:sonicfire_80]],
 			},
 
 		},
