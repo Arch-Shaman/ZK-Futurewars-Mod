@@ -339,7 +339,7 @@ local function GiveRetreatOrders(unitID, hx,hz)
 	
 	if unitIsIdle then
 		local ux, uy, uz = spGetUnitPosition(unitID)
-		GiveClampedOrderToUnit(unitID, CMD_RAW_MOVE, {ux, uy, uz}, CMD_OPT_SHIFT)
+		GiveClampedOrderToUnit(unitID, CMD.FIGHT, {ux, uy, uz}, CMD_OPT_SHIFT)
 	end
 	
 	local env = Spring.UnitScript.GetScriptEnv(unitID)

@@ -38,8 +38,10 @@ function RetreatFunction(hx, hy, hz)
 	if Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus") then -- dynacomm support (FW ONLY)
 		jumpRange = Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus")
 	end
-	retreating = true
-	StartThread(RetreatThread, hx, hy, hz)
+	if not retreating then
+		StartThread(RetreatThread, hx, hy, hz)
+		retreating = true
+	end
 end
 
 function StopRetreatFunction()
