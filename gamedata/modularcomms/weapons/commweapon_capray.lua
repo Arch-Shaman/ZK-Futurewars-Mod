@@ -16,7 +16,9 @@ local weaponDef = {
 
 		stats_hide_damage = 1, -- continuous laser
 		stats_hide_reload = 1,
-
+		disarmDamageMult = 5/3,
+		disarmDamageOnly = 0,
+		disarmTimer      = 5, -- seconds
 		light_radius = 120,
 		light_color = [[0 0.6 0.15]],
 		
@@ -36,7 +38,7 @@ local weaponDef = {
 	largeBeamLaser          = true,
 	laserFlareSize          = 0,
 	minIntensity            = 1,
-	range                   = 400,
+	range                   = 440,
 	reloadtime              = 1/30,
 	rgbColor                = [[0 0.8 0.2]],
 	scrollSpeed             = 2,
