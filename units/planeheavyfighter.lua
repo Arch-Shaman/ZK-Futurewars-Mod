@@ -128,8 +128,8 @@ local unitDef = {
 				reaim_time = 60, -- Fast update not required (maybe dangerous)
 			},
 			damage                  = {
-				default = 8.1*3,
-				planes  = 80.1*3,
+				default = 26.1,
+				planes  = 260.1,
 			},
 			explosionGenerator      = [[custom:sonic]],
 			fireStarter             = 70,
@@ -141,7 +141,7 @@ local unitDef = {
 			model                   = [[wep_m_avalanche.s3o]],
 			noSelfDamage            = true,
 			range                   = 1000,
-			reloadtime              = 5.2,
+			reloadtime              = 5.0,
 			smokeTrail              = true,
 			soundHit                = [[weapon/missile/rocket_hit]],
 			soundStart              = [[weapon/missile/sidewinder]],
