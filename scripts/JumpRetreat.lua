@@ -15,7 +15,7 @@ local function RetreatThread(hx, hy, hz)
 			local ux, uy, uz = Spring.GetUnitPosition(unitID)
 			local moveDistance = math.sqrt(((ux - hx) * (ux - hx)) + ((uz - hz) * (uz - hz)))
 			if moveDistance < jumpRange / 2 and moveDistance < 300 then -- don't jump around in haven or waste it near it.
-				retreating = false
+				retreating = false -- stop watching reload states.
 			else
 				local disScale = jumpRange/moveDistance*0.95
 				local cx, cy, cz = ux + disScale*(hx - ux), hy, uz + disScale*(hz - uz)
