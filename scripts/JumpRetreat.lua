@@ -1,7 +1,7 @@
 -- TODO: CACHE INCLUDE FILE
 local CMD_JUMP = Spring.Utilities.CMD.JUMP
 local GiveClampedOrderToUnit = Spring.Utilities.GiveClampedOrderToUnit
-local jumpRange = tonumber(UnitDefs[unitDefID].customParams.jump_range)
+local jumpRange = tonumber(UnitDefs[unitDefID].customParams.jump_range) * (Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus") or 1)
 local retreattype = UnitDefs[unitDefID].customParams.jumpretreattype or "always"
 
 local retreating = false
@@ -34,9 +34,6 @@ end
 function RetreatFunction(hx, hy, hz)
 	if retreattype == "none" then
 		return
-	end
-	if Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus") then -- dynacomm support (FW ONLY)
-		jumpRange = Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus")
 	end
 	if not retreating then
 		StartThread(RetreatThread, hx, hy, hz)
