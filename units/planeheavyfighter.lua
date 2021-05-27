@@ -55,14 +55,14 @@ local unitDef = {
 		{
 			def                = [[CANNON]],
 			mainDir            = [[0 0 1]],
-			maxAngleDif        = 90,
+			maxAngleDif        = 45,
 			onlyTargetCategory = [[LAND SINK TURRET SHIP SWIM FLOAT HOVER SINK SUB FIXEDWING GUNSHIP]],
 		},
 		{
 			def                = [[AA]],
 			badTargetCategory  = [[GUNSHIP]],
 			mainDir            = [[0 0 1]],
-			maxAngleDif        = 90,
+			maxAngleDif        = 45,
 			onlyTargetCategory = [[FIXEDWING GUNSHIP]],
 		},
 
@@ -148,6 +148,7 @@ local unitDef = {
 			startVelocity           = 200,
 			texture2                = [[AAsmoketrail]],
 			tolerance               = 22000,
+			firetolerance			= 32768/4,
 			tracks                  = true,
 			turnRate                = 45000,
 			weaponAcceleration      = 300,

@@ -54,7 +54,7 @@ function WeaponEnder()
 	while true do
 		if Spring.GetGameFrame() - 3 > lastfire and hasfired then
 			x, y, z = Spring.GetUnitPosition(unitID)
-			GG.PlayFogHiddenSound("sounds/weapon/brrt_final.wav", 25.5, x, y, z, 1, 1, 1, 1)
+			GG.PlayFogHiddenSound("sounds/weapon/brrt_final.wav", 10.5, x, y, z, 1, 1, 1, 1)
 			hasfired = false
 		end
 		Sleep(100)
