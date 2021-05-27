@@ -85,7 +85,7 @@ return {
 					reload_override = 0.01, --causes the capture reload bar to show but not the reload bar
 				},
 				damage                  = {
-					default = 11.1,
+					default = 13.1,
 				},
 				explosionGenerator      = [[custom:NONE]],
 				fireStarter             = 30,
