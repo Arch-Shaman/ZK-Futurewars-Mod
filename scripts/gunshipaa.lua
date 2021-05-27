@@ -222,7 +222,7 @@ end
 
 function script.BlockShot(num, targetID)
 	if gun[shot].loaded then
-		return GG.Script.OverkillPreventionCheck(unitID, targetID, 190.1, 750, 30, 0.05, true, 120)
+		return GG.Script.OverkillPreventionCheck(unitID, targetID, 250.1, 750, 30, 0.05, true, 120)
 	end
 	return true
 end
@@ -231,7 +231,7 @@ function script.Shot(num)
 	Hide(gun[shot].missile)
 	Move(gun[shot].rack, y_axis, 5, 2)
 	StartThread(reload,shot)
-	shot = (shot + 1)%3
+	shot = (shot + 1)%6
 end
 
 function script.Killed(recentDamage, maxHealth)
