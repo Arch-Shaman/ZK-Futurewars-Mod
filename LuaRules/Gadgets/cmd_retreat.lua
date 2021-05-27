@@ -401,7 +401,7 @@ local function SetWantRetreat(unitID, want)
 		if not want then
 			local env = Spring.UnitScript.GetScriptEnv(unitID)
 			if env and env.StopRetreatFunction then
-				Spring.UnitScript.CallAsUnit(unitID,env.StopRetreatFunction)
+				Spring.UnitScript.CallAsUnit(unitID, env.StopRetreatFunction)
 			end
 		end
 	end
@@ -426,7 +426,10 @@ local function CheckSetWantRetreat(unitID)
 	local healthRatio = health / maxHealth
 	local threshold = thresholdMap[retreatState[unitID].hp] or 0
 	local shieldthreshold
+	local disarmFrame = spGetUnitRulesParam(unitID, "disarmframe") or -1
+	local gameFrame = Spring.GetGameFrame()
 	local disarm = (spGetUnitRulesParam(unitID, "disarmed") or 0) == 1
+	local disarmProp = (disarmFrame - gameFrame)/1200
 	local shieldratio = 1
 	if currentcharge then
 		shieldthreshold = shieldmap[retreatState[unitID].shield] or 0
@@ -437,7 +440,7 @@ local function CheckSetWantRetreat(unitID)
 	local wantshieldretreat = shieldmax ~= nil and (shieldratio < shieldthreshold)
 	if (healthRatio < threshold or capture >= 1 - threshold or wantshieldretreat or disarm) and (not inBuild) then
 		SetWantRetreat(unitID, true)
-	elseif healthRatio >= 1 and capture == 0 and shieldratio >= 1 then
+	elseif healthRatio >= 1 and capture == 0 and shieldratio >= 1 and disarmProp <= 0.5 and not disarm then
 		SetWantRetreat(unitID, nil)
 	end
 end
