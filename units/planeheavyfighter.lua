@@ -110,8 +110,6 @@ local unitDef = {
 			weaponVelocity          = 1500,
 		},
 		AA = {
-			burst = 2,
-			burstRate = 10/30,
 			name                    = [[ATA Sidewinder]],
 			areaOfEffect            = 96,
 			avoidFriendly           = true,
@@ -126,6 +124,8 @@ local unitDef = {
 				isaa = [[1]],
 				light_color = [[0.5 0.6 0.6]],
 				reaim_time = 60, -- Fast update not required (maybe dangerous)
+				script_reload = [[5]],
+				script_burst = [[4]],
 			},
 			damage                  = {
 				default = 26.1,
@@ -133,7 +133,7 @@ local unitDef = {
 			},
 			explosionGenerator      = [[custom:sonic]],
 			fireStarter             = 70,
-			flightTime              = 5,
+			flightTime              = 7,
 			impulseBoost            = 0,
 			impulseFactor           = 0.4,
 			interceptedByShieldType = 2,
@@ -141,7 +141,7 @@ local unitDef = {
 			model                   = [[wep_m_avalanche.s3o]],
 			noSelfDamage            = true,
 			range                   = 1000,
-			reloadtime              = 5.0,
+			reloadtime              = 0.2,
 			smokeTrail              = true,
 			soundHit                = [[weapon/missile/rocket_hit]],
 			soundStart              = [[weapon/missile/sidewinder]],

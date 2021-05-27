@@ -35,6 +35,7 @@ local handledUnitDefIDs = {
 	[UnitDefNames["subraider"].id] = 1,
 	[UnitDefNames["turretheavylaser"].id] = 1,
 	[UnitDefNames["amphassault"].id] = 1,
+	[UnitDefNames["planeheavyfighter"].id] = 1,
 
 	-- Static only OKP below
 	[UnitDefNames["amphfloater"].id] = 1,

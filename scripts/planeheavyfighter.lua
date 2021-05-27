@@ -1,4 +1,5 @@
 include "constants.lua"
+local scriptReload = include("scriptReload.lua")
 
 --pieces
 local base = piece "base"
@@ -7,14 +8,22 @@ local engineR, engineL, thrust1, thrust2, thrust3 = piece("jetr", "jetl", "thrus
 local missR, missL = piece("m1", "m2")
 
 local smokePiece = {base, engineL, engineR}
+local gameSpeed = Game.gameSpeed
 
 --constants
+local gundefs = {
+	[0] = {firepoint = missR, loaded = true},
+	[1] = {firepoint = missL, loaded = true},
+	[2] = {firepoint = missR, loaded = true},
+	[3] = {firepoint = missL, loaded = true},
+}
 
 --variables
 local gun = false
 local hasfired = false
 local landed = false
 local lastfire = 0
+local shot = 0
 local RESTORE_DELAY = 150
 local FIRE_SLOWDOWN = tonumber(UnitDef.customParams.combat_slowdown)
 
@@ -29,13 +38,27 @@ local function getState()
 	return state and state.active
 end
 
-function WeaponEnder()
-	if Spring.GetGameFrame() - 3 > lastfire and hasfired then
-		local x,y,z = Spring.GetUnitPosition(unitID)
-		GG.PlayFogHiddenSound("sounds/weapon/brrt_final.wav", 85.5, x, y, z, 1, 1, 1, 1)
-		hasfired = false
+local function reload(num)
+	scriptReload.GunStartReload(num)
+	gundefs[num].loaded = false
+	scriptReload.SleepAndUpdateReload(num, 5 * gameSpeed)
+	if scriptReload.GunLoaded(num) then
+		shot = 0
 	end
-	Sleep(33)
+	gundefs[num].loaded = true
+end
+
+
+function WeaponEnder()
+	local x, y, z
+	while true do
+		if Spring.GetGameFrame() - 3 > lastfire and hasfired then
+			x, y, z = Spring.GetUnitPosition(unitID)
+			GG.PlayFogHiddenSound("sounds/weapon/brrt_final.wav", 25.5, x, y, z, 1, 1, 1, 1)
+			hasfired = false
+		end
+		Sleep(100)
+	end
 end
 
 function script.Create()
@@ -43,6 +66,7 @@ function script.Create()
 	Turn(thrust2, x_axis, -math.rad(90), 1)
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	StartThread(WeaponEnder)
+	scriptReload.SetupScriptReload(4, 5 * gameSpeed)
 	landed = false
 end
 
@@ -67,10 +91,14 @@ function script.StopMoving()
 end
 
 function script.QueryWeapon(num)
-	if gun then
-		return missR
+	if num == 1 then
+		if gun then
+			return missR
+		else
+			return missL
+		end
 	else
-		return missL
+		return gundefs[shot].firepoint
 	end
 end
 
@@ -83,10 +111,17 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.FireWeapon(num)
-	gun = not gun
 	if num == 1 then
+		gun = not gun
 		lastfire = Spring.GetGameFrame()
 		hasfired = true
+	end
+end
+
+function script.Shot(num)
+	if num == 2 then
+		StartThread(reload, shot)
+		shot = (shot + 1)%4
 	end
 end
 
@@ -119,7 +154,7 @@ local function RestoreAfterDelay()
 	end
 end
 
-function script.BlockShot(num)
+function script.BlockShot(num, targetID)
 	if GetUnitValue(GG.Script.CRASHING) == 1 or landed then
 		return true
 	else
@@ -129,8 +164,11 @@ function script.BlockShot(num)
 			GG.UpdateUnitAttributes(unitID)
 		end
 		StartThread(RestoreAfterDelay)
-		return false
 	end
+	if num == 2 and targetID then
+		return not gundefs[shot].loaded or GG.Script.OverkillPreventionCheck(unitID, targetID, 260.1, 220, 32, 0.2)
+	end
+	return false -- anything unhandled gets passed through.
 end
 
 function OnLoadGame()
