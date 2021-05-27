@@ -12,10 +12,14 @@ local function RetreatThread(hx, hy, hz)
 		disarmed = (Spring.GetUnitRulesParam(unitID, "disarmed") or 0) == 1
 		if reload >= 1 and not disarmed then
 			local ux, uy, uz = Spring.GetUnitPosition(unitID)
-			local moveDistance = math.sqrt((ux - hx)^2 + (uz - hz)^2)
-			local disScale = jumpRange/moveDistance*0.95
-			local cx, cy, cz = ux + disScale*(hx - ux), hy, uz + disScale*(hz - uz)
-			GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
+			local moveDistance = math.sqrt(((ux - hx) * (ux - hx)) + ((uz - hz) * (uz - hz)))
+			if moveDistance < jumpRange then
+				Sleep(1000)
+			else
+				local disScale = jumpRange/moveDistance*0.95
+				local cx, cy, cz = ux + disScale*(hx - ux), hy, uz + disScale*(hz - uz)
+				GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
+			end
 		else
 			Sleep(33)
 		end
