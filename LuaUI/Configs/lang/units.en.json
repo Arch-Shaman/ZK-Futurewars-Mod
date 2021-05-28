@@ -470,9 +470,9 @@
 		"helptext" : "This slow-moving, expensive cloaked unit can jump on to enemy units and blast even a heavy tank straight to hell. Counter with swarms of cheap screening units. Be careful of its very small explosion radius when using it."
 	},
 	"jumpskirm" : {
-		"name" : "Moderator",
+		"name" : "Mediator",
 		"description" : "Disruptor Skirmisher Walker",
-		"helptext" : "The Moderator's disruptor beam reduces enemy speed and rate of fire by up to 50%% in addition to dealing damage, making it effective against almost all targets."
+		"helptext" : "The Mediator's disruptor cannon reduces enemy speed and rate of fire by up to 50%% in addition to dealing damage."
 	},
 	"chicken" : {
 		"name" : "Chicken",
