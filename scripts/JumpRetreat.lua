@@ -1,7 +1,7 @@
 -- TODO: CACHE INCLUDE FILE
 local jumpRange = tonumber(UnitDefs[unitDefID].customParams.jump_range)
 local jumpRangeBonus = 1
-local retreattype = UnitDefs[unitDefID].customParams.jumpretreattype or "always"
+--local retreattype = UnitDefs[unitDefID].customParams.jumpretreattype or "always"
 
 local retreating = false
 
@@ -24,10 +24,10 @@ local function RetreatThread(hx, hy, hz)
 				disScale = realrange/moveDistance*0.95
 				cx, cy, cz = ux + disScale*(hx - ux), hy, uz + disScale*(hz - uz)
 				Spring.Utilities.GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, Spring.Utilities.CMD.JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
-				if retreattype == "once" then
+				--[[if retreattype == "once" then
 					--Spring.Echo("Stopping JumpRetreat: One Jump only.")
 					retreating = false
-				end
+				end]]
 			end
 		else
 			Sleep(333)
@@ -36,9 +36,9 @@ local function RetreatThread(hx, hy, hz)
 end
 
 function RetreatFunction(hx, hy, hz)
-	if retreattype == "none" then
+	--[[if retreattype == "none" then
 		return
-	end
+	end]]
 	if Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus") then -- if it's a custom comm with an upgrade..
 		jumpRangeBonus = 1 + (Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus"))
 	end
