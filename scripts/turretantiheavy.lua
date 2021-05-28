@@ -200,11 +200,11 @@ function script.BlockShot(num, targetID)
 	--spEcho("Is unit is Los: " .. ((spIsUnitInLos(targetID, spGetUnitTeam(unitID)) and "true") or "false"))
 	--spEcho("Is ground fire: " .. ((targetID and "true") or "false"))
 	--spEcho("Final Verdict: " .. (((targetID and not spIsUnitInLos(targetID, spGetUnitTeam(unitID))) and "true") or "false"))
-	return targetID and not spIsUnitInLos(targetID, spGetUnitTeam(unitID))
+	return targetID and not spIsUnitInLos(targetID, Spring.GetUnitAllyTeam(unitID))
 end
 
 function script.TargetWeight(num, targetUnitID)
-	if spIsUnitInLos(targetUnitID, spGetUnitTeam(unitID)) then
+	if spIsUnitInLos(targetUnitID, Spring.GetUnitAllyTeam(unitID)) then
 		return 1
 	else
 		return huge
