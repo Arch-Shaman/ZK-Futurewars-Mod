@@ -111,7 +111,7 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting       = 1,
-				burst					= 3,
+				burst					= 2,
 				burstRate				= 10/30,
 				projectiles				= 1,
 
@@ -123,7 +123,7 @@ return {
 					light_color = [[1.1 0.9 0.45]],
 					light_radius = 220,
 					--torp_underwater = [[bomberprec_a_torpedo]],
-					numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "bombercluster_bomblet",
 					--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
