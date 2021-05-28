@@ -28,7 +28,7 @@ return {
 		leaveTracks         = true,
 		maxDamage           = 1100,
 		maxSlope            = 18,
-		maxVelocity         = 2.0,
+		maxVelocity         = 1.8,
 		movementClass       = [[TANK3]],
 		noChaseCategory     = [[TERRAFORM FIXEDWING GUNSHIP]],
 		objectName          = [[core_diplomat.s3o]],
