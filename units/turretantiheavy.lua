@@ -24,7 +24,7 @@ return {
 			aimposoffset   = [[0 32 0]],
 			midposoffset   = [[0 0 0]],
 			modelradius    = [[40]],
-			dontfireatradarcommand = '0',
+			--dontfireatradarcommand = '0',
 		},
 
 		damageModifier                = 0.15,
