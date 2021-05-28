@@ -95,7 +95,7 @@ return {
 					reveal_unit = 3,
 				},
 				damage                  = {
-					default = 230,
+					default = 280,
 				},
 
 				fireStarter             = 70,

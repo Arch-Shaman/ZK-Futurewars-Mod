@@ -187,7 +187,7 @@ function script.BlockShot(num, targetID)
 			return true
 		end 
 		local distMult = (Spring.GetUnitSeparation(unitID, targetID) or 0)/450
-		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 240, 75 * distMult, false, false, true)
+		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 280, 75 * distMult, 0.3, 0.1)
 	end
 	return false
 end
