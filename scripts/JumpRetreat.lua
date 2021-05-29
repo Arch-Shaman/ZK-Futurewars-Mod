@@ -19,7 +19,10 @@ local function RetreatThread(hx, hy, hz)
 			ux, uy, uz = Spring.GetUnitPosition(unitID)
 			moveDistance = math.sqrt(((ux - hx) * (ux - hx)) + ((uz - hz) * (uz - hz)))
 			--Spring.Echo("MoveDistance: " .. moveDistance)
-			if moveDistance < 100 then -- don't jump around in haven or waste it near it.
+			if moveDistance >= 200 and moveDistance < realrange then -- jump to finish reteating.
+				GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, hx, hy, hz}, CMD.OPT_ALT)
+				retreating = false
+			elseif moveDistance < 200 then -- don't jump around in haven or waste it near it.
 				--Spring.Echo("Stopping JumpRetreat: Low Distance.")
 				retreating = false -- stop watching reload states.
 			else
@@ -38,6 +41,7 @@ local function RetreatThread(hx, hy, hz)
 end
 
 function RetreatFunction(hx, hy, hz)
+	--Spring.Echo("Wanted retreat!")
 	if retreattype == "none" then
 		return
 	end
