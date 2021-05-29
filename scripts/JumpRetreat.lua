@@ -45,8 +45,8 @@ function RetreatFunction(hx, hy, hz)
 		jumpRangeBonus = 1 + (Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus"))
 	end
 	if not retreating then
-		retreating = true
 		StartThread(RetreatThread, hx, hy, hz)
+		retreating = true
 	end
 end
 
