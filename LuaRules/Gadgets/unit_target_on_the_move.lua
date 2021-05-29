@@ -444,6 +444,10 @@ function GG.GetUnitTargetGround(unitID)
 	return false
 end
 
+function GG.GetUnitHasSetTarget(unitID)
+	return (unitById[unitID] and unit.data[unitById[unitID]] and (not unit.data[unitById[unitID]].lingerOnly) and true) or false
+end
+
 function GG.SetUnitTarget(unitID, targetID)
 	local unitDefID = Spring.GetUnitDefID(unitID)
 	if not (unitDefID and validUnits[unitDefID]) then
@@ -497,7 +501,7 @@ function gadget:GameFrame(n)
 
 		local toRemove = {count = 0, data = {}}
 		for i = 1, unit.count do
-			if unit.data[i].lingerFrame and unit.data[i].tempFrame < n then
+			if unit.data[i].tempFrame and unit.data[i].tempFrame < n then
 				unit.data[i].tempFrame = nil
 			end
 			if not (unit.data[i].tempFrame or setTarget(unit.data[i], false)) then
