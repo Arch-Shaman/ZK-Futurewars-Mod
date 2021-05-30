@@ -156,7 +156,7 @@ function script.BlockShot(num, targetID)
 		return false
 	end
 	if gun[shot].loaded then
-		return GG.Script.OverkillPreventionCheck(unitID, targetID, 300.1, 1000, 52, 0, true)
+		return GG.Script.OverkillPreventionCheck(unitID, targetID, 420.1, 72, 10, 0, true)
 	end
 	return true
 end

@@ -1,7 +1,7 @@
 return { 
 	turretaaclose = {
 		unitname                      = [[turretaaclose]],
-		name                          = [[Archer]],
+		name                          = [[Duster]],
 		description                   = [[Laser Guided Anti-Air Turret]],
 		buildCostMetal                = 300,
 		builder                       = false,
@@ -84,8 +84,8 @@ return {
 				},
 
 				damage                  = {
-					default = 40.1,
-					planes  = 400.1,
+					default = 42.1,
+					planes  = 420.1,
 				},
 
 				explosionGenerator      = [[custom:FLASH2]],
@@ -98,7 +98,7 @@ return {
 				leadLimit               = 0,
 				model                   = [[wep_m_phoenix.s3o]],
 				noSelfDamage            = true,
-				range                   = 1000,
+				range                   = 1200,
 				reloadtime              = 0.1,
 				smokeTrail              = true,
 				soundHit                = [[explosion/ex_med11]],
@@ -142,7 +142,7 @@ return {
 				leadLimit               = 18,
 				minIntensity            = 0.01,
 				noSelfDamage            = true,
-				range                   = 1020,
+				range                   = 1220,
 				reloadtime              = 1/15,
 				sweapfire = false,
 				rgbColor                = [[0.8 0 0]],
