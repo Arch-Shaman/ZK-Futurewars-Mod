@@ -20,7 +20,7 @@ return {
 		corpse                        = [[DEAD]],
 
 		customParams                  = {
-			pylonrange = 150,
+			pylonrange = 250,
 			aimposoffset   = [[0 12 0]],
 			midposoffset   = [[0 12 0]],
 			modelradius    = [[60]],
@@ -78,12 +78,12 @@ return {
 
 		weaponDefs = {
 			SINGULARITY = {
-				areaOfEffect       = 1280,
+				areaOfEffect       = 1000,
 				craterMult         = 1,
 				edgeEffectiveness  = 0,
 				customParams            = {
 					singularity = [[1]],
-					singuradius = [[1280]],
+					singuradius = [[1000]],
 					singulifespan = [[300]],
 					singustrength = [[44]],
 					singuheight = [[200]],
