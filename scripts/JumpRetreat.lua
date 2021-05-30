@@ -9,21 +9,17 @@ local retreating = false
 
 local function RetreatThread(hx, hy, hz)
 	--Spring.Echo("RetreatThread")
-	local reload, disarmed, ux, uy, uz, moveDistance, disScale, cx, cy, cz, isstunned
+	local reload, disarmed, ux, uy, uz, moveDistance, disScale, cx, cy, cz
 	local realrange = jumpRange * jumpRangeBonus -- this can't be cached for some reason.
 	while retreating do
 		reload = Spring.GetUnitRulesParam(unitID, "jumpReload") or 1
 		disarmed = (Spring.GetUnitRulesParam(unitID, "disarmed") or 0) == 1
-		isstunned = Spring.GetUnitIsStunned(unitID)
 		--Spring.Echo("Reload: " .. tostring(reload) .. " / 1\nDisarmed: " .. tostring(disarmed))
-		if reload >= 1 and not disarmed and not isstunned then
+		if reload >= 1 and not disarmed then
 			ux, uy, uz = Spring.GetUnitPosition(unitID)
 			moveDistance = math.sqrt(((ux - hx) * (ux - hx)) + ((uz - hz) * (uz - hz)))
 			--Spring.Echo("MoveDistance: " .. moveDistance)
-			if moveDistance >= 200 and moveDistance < realrange then -- jump to finish reteating.
-				GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, hx, hy, hz}, CMD.OPT_ALT)
-				retreating = false
-			elseif moveDistance < 200 then -- don't jump around in haven or waste it near it.
+			if moveDistance < 100 then -- don't jump around in haven or waste it near it.
 				--Spring.Echo("Stopping JumpRetreat: Low Distance.")
 				retreating = false -- stop watching reload states.
 			else
@@ -42,16 +38,15 @@ local function RetreatThread(hx, hy, hz)
 end
 
 function RetreatFunction(hx, hy, hz)
-	--Spring.Echo("Wanted retreat!")
 	if retreattype == "none" then
 		return
 	end
 	if Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus") then -- if it's a custom comm with an upgrade..
-		jumpRangeBonus = 1 + Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus")
+		jumpRangeBonus = 1 + (Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus"))
 	end
 	if not retreating then
-		retreating = true
 		StartThread(RetreatThread, hx, hy, hz)
+		retreating = true
 	end
 end
 
