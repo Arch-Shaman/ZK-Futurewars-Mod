@@ -35,9 +35,8 @@ local function RetreatThread(hx, hy, hz)
 					retreating = false
 				end
 			end
-		else
-			Sleep(33)
 		end
+		Sleep(66)
 	end
 end
 
