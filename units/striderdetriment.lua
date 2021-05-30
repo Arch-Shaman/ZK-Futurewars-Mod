@@ -23,6 +23,8 @@ return {
 		customParams           = {
 			modelradius    = [[95]],
 			extradrawrange = 925,
+			nanoregen = 10,
+			nano_maxregen = 40,
 		},
 		explodeAs              = [[NUCLEAR_MISSILE]],
 		footprintX             = 6,
