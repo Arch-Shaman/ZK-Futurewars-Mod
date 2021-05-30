@@ -906,8 +906,8 @@
 	},
 	"turretantiheavy" : {
 		"name" : "Azimuth",
-		"description" : "Anti-Heavy Tachyonic Artillary - Requires Line-Of-Sight and 225 grid to fire",
-		"helptext" : "Refered to by many as a 'Long-range Ultimatum', the Azimuth certainly lives up to it's nickname. It's weapon creates a feedback loop between it and it's target, allowing it to gain more firepower the longer it is locked on. Do not try to fight it with brute force, as it's damage output can and will surpass even that of the now antique Starlight planetary energy chisel. Instead you should fight it with swarms of weaker units, as it has a long recalibration time between shots, or by killing the unit which is spotting for it."
+		"description" : "Anti-Heavy Tachyonic Artillery - Requires Line-Of-Sight and 225 grid to fire",
+		"helptext" : "Refered to by many as a 'Long-range Ultimatum', the Azimuth certainly lives up to its nickname. Its weapon creates a feedback loop between it and its target, allowing it to gain more firepower the longer it is locked on. Do not try to fight it with brute force, as it's damage output can and will surpass even that of the now antique Starlight planetary energy chisel. Instead you should fight it with swarms of weaker units, as it has a long recalibration time between shots, or by killing the unit which is spotting for it."
 	},
 	"jumparty" : {
 		"name" : "Firewall",
