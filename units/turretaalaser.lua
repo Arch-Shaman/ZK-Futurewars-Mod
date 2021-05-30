@@ -3,7 +3,7 @@ return {
 		unitname                      = [[turretaalaser]],
 		name                          = [[Razor]],
 		description                   = [[Hardened Anti-Air Laser]],
-		buildCostMetal                = 260,
+		buildCostMetal                = 270,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 6,
@@ -64,7 +64,7 @@ return {
 				},
       
 				damage                  = {
-					default = 150.1,
+					default = 100.1,
 				},
 
 				duration                = 2/30,
@@ -76,8 +76,8 @@ return {
 				interceptedByShieldType = 1,
 				leadLimit               = 0,
 				noSelfDamage            = true,
-				range                   = 1000,
-				reloadtime              = 18/30,
+				range                   = 800,
+				reloadtime              = 10/30,
 				rgbColor                = [[1 0.40059 0]],
 				soundStart              = [[weapon/laser/heavy_pulser]],
 				soundstartvolume	    = 135,
