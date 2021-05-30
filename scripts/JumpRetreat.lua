@@ -9,13 +9,14 @@ local retreating = false
 
 local function RetreatThread(hx, hy, hz)
 	--Spring.Echo("RetreatThread")
-	local reload, disarmed, ux, uy, uz, moveDistance, disScale, cx, cy, cz
+	local reload, disarmed, ux, uy, uz, moveDistance, disScale, cx, cy, cz, isstunned
 	local realrange = jumpRange * jumpRangeBonus -- this can't be cached for some reason.
 	while retreating do
 		reload = Spring.GetUnitRulesParam(unitID, "jumpReload") or 1
 		disarmed = (Spring.GetUnitRulesParam(unitID, "disarmed") or 0) == 1
+		isstunned = Spring.GetUnitIsStunned(unitID)
 		--Spring.Echo("Reload: " .. tostring(reload) .. " / 1\nDisarmed: " .. tostring(disarmed))
-		if reload >= 1 and not disarmed then
+		if reload >= 1 and not disarmed and not isstunned then
 			ux, uy, uz = Spring.GetUnitPosition(unitID)
 			moveDistance = math.sqrt(((ux - hx) * (ux - hx)) + ((uz - hz) * (uz - hz)))
 			--Spring.Echo("MoveDistance: " .. moveDistance)
@@ -46,7 +47,7 @@ function RetreatFunction(hx, hy, hz)
 		return
 	end
 	if Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus") then -- if it's a custom comm with an upgrade..
-		jumpRangeBonus = 1 + (Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus"))
+		jumpRangeBonus = 1 + Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus")
 	end
 	if not retreating then
 		retreating = true
