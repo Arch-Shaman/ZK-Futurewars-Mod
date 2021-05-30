@@ -76,7 +76,7 @@ return {
 				interceptedByShieldType = 1,
 				leadLimit               = 0,
 				noSelfDamage            = true,
-				range                   = 800,
+				range                   = 850,
 				reloadtime              = 10/30,
 				rgbColor                = [[1 0.40059 0]],
 				soundStart              = [[weapon/laser/heavy_pulser]],
