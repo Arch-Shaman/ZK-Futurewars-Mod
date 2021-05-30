@@ -221,7 +221,7 @@
 	},
 	"turretdecloak" : {
 		"name" : "Clarity",
-		"description" : "Anti-Cloak field",
+		"description" : "Cloak Detection System",
 		"helptext" : "The Clarity emits a disruptive electromagnetic pulse that interferes with enemy cloakfields. It does not affect your units."
 	},
 	"tankaa" : {
