@@ -85,6 +85,9 @@ end
 local function CheckReveal(unitID)
 	local x, y, z = spGetUnitPosition(unitID)
 	local myAllyTeam = spGetUnitAllyTeam(unitID)
+	if myAllyTeam == nil then
+		return
+	end
 	local _, _, _, inJammer = spGetPositionLosState(x, y, z, myAllyTeam)
 	local isCloaked = spGetUnitIsCloaked(unitID)
 	--Spring.Echo("CheckReveal\nCloaked:" .. tostring(isCloaked) .. "\ninJammer: " .. tostring(inJammer))
