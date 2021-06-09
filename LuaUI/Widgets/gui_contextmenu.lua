@@ -1147,9 +1147,9 @@ local function printAbilities(ud, unitID)
 			cells[#cells+1] = "Base Regeneration:"
 			cells[#cells+1] = cp.nanoregen .. "HP/s"
 			cells[#cells+1] = "Max Regeneration:"
-			cells[#cells+1] = cp.nanoregen * cp.nano_maxregen .. "HP/s"
+			cells[#cells+1] = numformat(cp.nanoregen * cp.nano_maxregen, 1) .. "HP/s"
 			cells[#cells+1] = "Max Regen below:"
-			cells[#cells+1] = cp.nano_maxregen / ud.health
+			cells[#cells+1] = numformat(ud.health / cp.nano_maxregen) .. "hp"
 		end
 		if cp.amph_regen then
 			cells[#cells+1] = ' - Water regen: '
