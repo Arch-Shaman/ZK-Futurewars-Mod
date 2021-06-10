@@ -18,6 +18,7 @@ local stuns = {}
 local SIG_ANIM = 1
 local SIG_AIM = 2
 local disarmed = false
+local StopPieceTurn = GG.PieceControl.StopTurn
 
 local turnrate = 60.1 -- degrees per second
 turnrate = turnrate/30
