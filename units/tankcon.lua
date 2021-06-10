@@ -5,8 +5,8 @@ return {
 		description            = [[Armed Construction Tank]],
 		acceleration           = 0.4,
 		brakeRate              = 18.0,
-		buildCostMetal         = 185,
-		buildDistance          = 180,
+		buildCostMetal         = 280,
+		buildDistance          = 200,
 		builder                = true,
 		buildoptions           = {},
 		buildPic               = [[tankcon.png]],
@@ -24,6 +24,9 @@ return {
 			midposoffset   = [[0 -4 0]],
 			modelradius    = [[30]],
 			selection_scale = 1.2,
+			nanoregen = 7.5,
+			nano_maxregen = 8,
+			aim_lookahead = 120,
 		},
 
 		energyUse              = 0,
@@ -34,9 +37,9 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 1700,
+		maxDamage              = 2240,
 		maxSlope               = 18,
-		maxVelocity            = 2.1,
+		maxVelocity            = 1.7,
 		maxWaterDepth          = 22,
 		movementClass          = [[TANK3]],
 		moveState              = 0,
@@ -48,12 +51,13 @@ return {
 
 		sfxtypes               = {
 			explosiongenerators = {
-				[[custom:BEAMWEAPON_MUZZLE_RED]],
+				[[custom:emg_shells_l]],
+				[[custom:flashmuzzle1]],
 			},
 		},
 
 		showNanoSpray          = false,
-		sightDistance          = 300,
+		sightDistance          = 385,
 		trackOffset            = 3,
 		trackStrength          = 6,
 		trackStretch           = 1,
@@ -61,53 +65,61 @@ return {
 		trackWidth             = 38,
 		turninplace            = 0,
 		turnRate               = 1000,
-		workerTime             = 7.5,
+		workerTime             = 10,
 
 		weapons                = {
 			{
-				def                = [[LASER]],
+				def                = [[CANNON]],
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
 		},
 		weaponDefs             = {
-			LASER = {
-				name                    = [[Mini Laser]],
-				areaOfEffect            = 8,
-				coreThickness           = 0.5,
+			CANNON = {
+				name                    = [[Twin Autocannon]],
+				alphaDecay              = 0.1,
+				areaOfEffect            = 24,
+				colormap                = [[1 0.95 0.4 1   1 0.95 0.4 1    0 0 0 0.01    1 0.7 0.2 1]],
 				craterBoost             = 0,
 				craterMult              = 0,
+				cylinderTargeting 		= 1,
 				customParams        = {
 					light_camera_height = 1200,
-					light_radius = 120,
+					light_color = [[0.8 0.76 0.38]],
+					light_radius = 60,
 				},
+
 				damage                  = {
-					default = 8.64,
+					default = 10.1,
 				},
-				duration                = 0.02,
-				explosionGenerator      = [[custom:BEAMWEAPON_HIT_RED]],
-				fireStarter             = 50,
-				heightMod               = 1,
+
+				explosionGenerator      = [[custom:EMG_HIT_HE]],
 				impactOnly              = true,
-				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseBoost            = 2,
+				impulseFactor           = 1.2,
+				intensity               = 0.7,
 				interceptedByShieldType = 1,
+				leadLimit               = 0,
+				noGap                   = false,
 				noSelfDamage            = true,
-				range                   = 240,
-				reloadtime              = 0.2,
-				rgbColor                = [[1 0 0]],
-				soundHit                = [[weapon/laser/lasercannon_hit]],
-				soundStart              = [[weapon/laser/lasercannon_fire]],
-				soundTrigger            = true,
-				thickness               = 2.5,
-				tolerance               = 10000,
+				range                   = 350,
+				reloadtime              = 3/30, -- 10 rnd per sec
+				rgbColor                = [[1 0.95 0.4]],
+				separation              = 1.5,
+				size                    = 3,
+				sizeDecay               = 0.1,
+				soundhit			    = [[weapon/cannon/cannon_hit1]],
+				soundStart              = [[weapon/brawler_emg5]],
+				soundStartVolume        = 2,
+				sprayAngle              = 380,
+				stages                  = 10,
+				tolerance               = 5000,
 				turret                  = true,
-				weaponType              = [[LaserCannon]],
-				weaponVelocity          = 880,
+				weaponType              = [[Cannon]],
+				weaponVelocity          = 600,
 			},
 		},
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -118,14 +130,12 @@ return {
 				collisionVolumeScales         = [[34 18 46]],
 				collisionVolumeType           = [[box]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,
 				footprintZ       = 3,
 				object           = [[debris3x3b.s3o]],
 			},
-			
 		},
 	} 
 }
