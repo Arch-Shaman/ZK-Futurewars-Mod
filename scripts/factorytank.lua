@@ -18,7 +18,7 @@ local stuns = {}
 local SIG_ANIM = 1
 local SIG_AIM = 2
 local disarmed = false
-local StopPieceTurn = GG.PieceControl.StopTurn
+--local StopPieceTurn = GG.PieceControl.StopTurn
 
 local turnrate = 60.1 -- degrees per second
 turnrate = turnrate/30
@@ -45,8 +45,8 @@ function Stunned(stun_type)
 
 	disarmed = true
 	Signal (SIG_AIM)
-	StopPieceTurn(turret, y_axis)
-	StopPieceTurn(barrel, x_axis)
+	--StopPieceTurn(turret, y_axis)
+	--StopPieceTurn(barrel, x_axis)
 end
 
 function Unstunned(stun_type)
