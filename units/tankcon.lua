@@ -99,7 +99,6 @@ return {
 				impulseFactor           = 1.2,
 				intensity               = 0.7,
 				interceptedByShieldType = 1,
-				leadLimit               = 0,
 				noGap                   = false,
 				noSelfDamage            = true,
 				range                   = 350,
