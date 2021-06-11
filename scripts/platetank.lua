@@ -36,8 +36,8 @@ function Stunned(stun_type)
 
 	disarmed = true
 	Signal (SIG_AIM)
-	StopPieceTurn(turret, y_axis)
-	StopPieceTurn(barrel, x_axis)
+	--StopPieceTurn(turret, y_axis)
+	--StopPieceTurn(barrel, x_axis)
 end
 
 function Unstunned(stun_type)
@@ -91,7 +91,7 @@ end
 
 local function IsDisabled()
 	local nofac = Spring.GetUnitRulesParam(unitID, "nofactory")
-	return nofact and nofact == 1
+	return (nofact and nofact == 1) or false
 end
 
 function script.AimWeapon(num, heading, pitch)
