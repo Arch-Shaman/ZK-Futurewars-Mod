@@ -480,7 +480,7 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 	end
 	SetUnitRulesModuleCounts(unitID, counts)
 	ApplyModuleEffects(unitID, moduleEffectData, totalCost, images or {}, chassis)
-	GG.SetupCommanderStorage(unitID)
+	--GG.SetupCommanderStorage(unitID)
 	
 	if staticLevel then
 		-- Newly created commander, set to full health
@@ -526,7 +526,7 @@ local function Upgrades_CreateUpgradedUnit(defName, x, y, z, face, unitTeam, isB
 	end
 	
 	interallyCreatedUnit = true
-	moduleEffectData.extrastorage = 0
+	--moduleEffectData.extrastorage = 0
 	internalCreationUpgradeDef = upgradeDef
 	internalCreationModuleEffectData = moduleEffectData
 	
@@ -534,7 +534,7 @@ local function Upgrades_CreateUpgradedUnit(defName, x, y, z, face, unitTeam, isB
 	if moduleEffectData.wantsfireatradar then
 		GG.AddUnitRadarTargeting(unitID)
 	end
-	GG.SetupCommanderStorage(unitID)
+	--GG.SetupCommanderStorage(unitID)
 	-- Unset the variables which need to be present at unit creation
 	interallyCreatedUnit = false
 	internalCreationUpgradeDef = nil

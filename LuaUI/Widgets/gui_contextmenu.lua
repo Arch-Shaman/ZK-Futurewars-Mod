@@ -1314,15 +1314,10 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = 'Immunity to afterburn'
 		cells[#cells+1] = ''
 	end
-
+	local storageoverride = unitID and Spring.GetUnitRulesParam(unitID, "commander_storage_override") or ud.metalStorage
 	if ud.metalStorage > 0 then
-		cells[#cells+1] = 'Stores metal: '
-		cells[#cells+1] = ud.metalStorage .. " M"
-	end
-	
-	if ud.energyStorage > 0 then
-		cells[#cells+1] = 'Stores energy: '
-		cells[#cells+1] = ud.energyStorage .. " E"
+		cells[#cells+1] = 'Stores resources: '
+		cells[#cells+1] = math.max(storageoverride, ud.metalStorage) .. " M/E"
 	end
 	
 	if (#cells > 2 and cells[#cells-1] == '') then
