@@ -479,8 +479,8 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 		SetUnitRulesModule(unitID, counts, moduleDefID)
 	end
 	SetUnitRulesModuleCounts(unitID, counts)
-	GG.SetupCommanderStorage(unitID)
 	ApplyModuleEffects(unitID, moduleEffectData, totalCost, images or {}, chassis)
+	GG.SetupCommanderStorage(unitID)
 	
 	if staticLevel then
 		-- Newly created commander, set to full health
