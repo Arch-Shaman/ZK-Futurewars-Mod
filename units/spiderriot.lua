@@ -6,7 +6,7 @@ return {
 		acceleration           = 0.66,
 		--autoheal               = 30,
 		brakeRate              = 3.96,
-		buildCostMetal         = 460,
+		buildCostMetal         = 400,
 		buildPic               = [[spiderriot.png]],
 		canGuard               = true,
 		canMove                = true,
@@ -20,7 +20,7 @@ return {
 		customParams           = {
 			aimposoffset   = [[0 10 0]],
 			nanoregen = 10,
-			nano_maxregen = 3,
+			nano_maxregen = 5,
 			aim_lookahead = 80,
 		},
 		
@@ -33,7 +33,7 @@ return {
 		idleTime               = 900,
 		leaveTracks            = true,
 		losEmitHeight          = 40,
-		maxDamage              = 1100,
+		maxDamage              = 1600,
 		maxSlope               = 72,
 		maxVelocity            = 1.8,
 		maxWaterDepth          = 22,
