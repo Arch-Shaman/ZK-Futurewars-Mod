@@ -36,7 +36,7 @@ return {
 		maxWaterDepth                 = 0,
 		minCloakDistance              = 150,
 		noAutoFire                    = false,
-		objectName                    = [[Silencer.s3o]],
+		objectName                    = [[staticnuke.s3o]],
 		script                        = [[staticnuke.lua]],
 		selfDestructAs                = [[ATOMIC_BLAST]],
 		sightDistance                 = 660,
@@ -149,7 +149,7 @@ return {
 				impulseBoost            = 0.5,
 				impulseFactor           = 0.2,
 				interceptedByShieldType = 65,
-				model                   = [[crblmsslr.s3o]],
+				model                   = [[staticnuke_projectile.s3o]],
 				noSelfDamage            = false,
 				range                   = 140000,
 				reloadtime              = 30,
@@ -175,7 +175,7 @@ return {
 				featureDead      = [[HEAP]],
 				footprintX       = 6,
 				footprintZ       = 8,
-				object           = [[silencer_dead.s3o]],
+				object           = [[staticnuke_dead.s3o]],
 			},
 
 			HEAP  = {

@@ -43,7 +43,7 @@ return {
 		maxDamage                     = 3300,
 		maxSlope                      = 18,
 		maxVelocity                   = 0,
-		objectName                    = [[antinuke.s3o]],
+		objectName                    = [[staticantinuke.s3o]],
 		radarDistance                 = 2500,
 		radarEmitHeight               = 24,
 		script                        = [[staticantinuke.lua]],
@@ -115,7 +115,7 @@ return {
 				featureDead      = [[HEAP]],
 				footprintX       = 5,
 				footprintZ       = 8,
-				object           = [[antinuke_dead.s3o]],
+				object           = [[staticantinuke_dead.s3o]],
 			},
 			HEAP  = {
 				blocking         = false,
