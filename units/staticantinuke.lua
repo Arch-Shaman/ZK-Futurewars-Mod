@@ -92,7 +92,7 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				interceptor             = 1,
-				model                   = [[antinukemissile.s3o]],
+				model                   = [[staticantinuke_projectile.s3o]],
 				noSelfDamage            = true,
 				range                   = 3800,
 				reloadtime              = 4,
