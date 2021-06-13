@@ -153,7 +153,7 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				projectiles             = 3,
-				range                   = 270,
+				range                   = 264,
 				reloadtime              = 0.8,
 				rgbColor                = [[1 1 0]],
 				soundHit                = [[impacts/shotgun_impactv5]],

@@ -194,7 +194,7 @@ return {
 				interceptedByShieldType = 0,
 				noSelfDamage            = true,
 				proximityPriority       = -15,
-				range                   = 460,
+				range                   = 440,
 				reloadtime              = 0.2,
 				rgbColor                = [[0 0 1]],
 				rgbColor2               = [[1 0.5 1]],
