@@ -14,6 +14,7 @@ local shoulder = piece 'shoulder'
 local shoulder_left = piece 'shoulder_left'
 
 include "constants.lua"
+include "JumpRetreat.lua"
 
 local aiming = false
 
@@ -23,6 +24,39 @@ local RESTORE_DELAY = 2000
 local SIG_MOVE = 1
 local SIG_AIM = 2
 local SIG_RESTORE = 4
+
+function beginJump()
+	Signal(SIG_MOVE)
+	--Turn(base, y_axis, 0, turnSpeed)
+	bJumping = true
+	
+	Turn(thigh1, x_axis, math.rad(-20),math.rad(300))
+	Turn(leg1, x_axis, math.rad(45), math.rad(400))
+	Turn(foot1, x_axis, math.rad(-30), math.rad(80))
+
+	Turn(thigh2, x_axis, math.rad(-20),math.rad(300))
+	Turn(leg2, x_axis, math.rad(45), math.rad(400))
+	Turn(foot2, x_axis, math.rad(-30), math.rad(80))
+	
+	--StartThread(JumpExhaust)
+end
+
+function jumping()
+end
+
+function halfJump()
+	--Turn(torso, x_axis, math.rad(0), math.rad(80))
+	
+	Turn(leg1, x_axis, math.rad(0), math.rad(200))
+	Turn(foot1, x_axis, math.rad(0), math.rad(80))
+	
+	Turn(leg2, x_axis, math.rad(0), math.rad(200))
+	Turn(foot2, x_axis, math.rad(0), math.rad(80))
+end
+
+function endJump()
+	bJumping = false
+end
 
 local function walk()
 	Signal(SIG_MOVE)
