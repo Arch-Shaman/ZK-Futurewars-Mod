@@ -9,7 +9,7 @@ function widget:GetInfo()
     date      = "15 August 2015",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
-    enabled   = true
+    enabled   = true,
   }
 end
 
@@ -141,7 +141,7 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local function languageChanged ()
+local function languageChanged()
 	if not mainWindow then return end
 	mainWindow.label:SetCaption(WG.Translate ("interface", "nuclear_launch_detected"))
 end
@@ -171,16 +171,18 @@ function widget:Update(dt)
 	end
 end
 
-local function SetWantedShown(t)
+local function NukeAlert(t)
 	if t then
+		wantedShown = true
 		ShowWindow()
-		Spring.PlaySound("sounds/reply/advisor/nuclearthreat.wav", 20)
 	else
+		wantedShown = false
 		HideWindow()
 	end
 end
 
 function widget:Initialize()
+	widgetHandler:RegisterGlobal("NukeAlert", NukeAlert)
 	Chili = WG.Chili
 	screen0 = Chili.Screen0
 	if (not Chili) then
@@ -188,7 +190,6 @@ function widget:Initialize()
 		return
 	end
 	WG.InitializeTranslation (languageChanged, GetInfo().name)
-	widgetHandler:RegisterGlobal(widget, "NukeAlert", SetWantedShown)
 end
 
 
