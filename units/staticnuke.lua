@@ -154,7 +154,7 @@ return {
 				range                   = 140000,
 				reloadtime              = 30,
 				smokeTrail              = false,
-				soundHit                = [[weapon\missile\nuclear_reentry]],
+				soundHit                = [[weapon/missile/nuclear_reentry]],
 				startVelocity           = 100,
 				stockpile               = true,
 				stockpileTime           = 10^5,
