@@ -105,9 +105,9 @@
 		"helptext" : "This Torpedo Launcher provides defense against both surface and submerged vessels."
 	},
 	"tankheavyassault" : {
-		"name" : "Cyclops",
-		"description" : "Very Heavy Tank Buster",
-		"helptext" : "The Cyclops is the single heaviest tank on the field. Its main gun is a hefty disruptor cannon designed to smash lesser tanks and other heavies alike into oblivion, slowing any survivors down to prevent escaping its grasp. However, it turns like a tub of water, its short range makes it easy prey for advanced skirmishers or air attacks, and its slow rate of fire makes it vulnerable to massed raider attacks. The heavy main cannon can shake walls down so it is somewhat able to spearhead assaults against areas with terraformed fortifications."
+		"name" : "Collossus",
+		"description" : "Near-Impervious Assault Tank",
+		"helptext" : "The Collossus is an ultraheavy tank capable of smashing lesser units with its massive cannon. The impact of an Oblivion Cannon is enough to send most medium units sliding back, assuming they survive the impact."
 	},
 	"damagesink" : {
 		"name" : "Damage Sink thing",
