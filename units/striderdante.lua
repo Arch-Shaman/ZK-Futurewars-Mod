@@ -121,7 +121,7 @@ return {
 				noExplode               = true,
 				noSelfDamage            = true,
 				projectiles             = 1,
-				range                   = 340,
+				range                   = 320,
 				reloadtime              = 0.133,
 				rgbColor                = [[1 1 1]],
 				soundStart              = [[weapon/flamethrower]],

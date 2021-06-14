@@ -98,7 +98,7 @@ return {
 				minIntensity            = 1,
 				noSelfDamage            = true,
 				mygravity				= 0.03,
-				range                   = 510,
+				range                   = 512,
 				reloadtime              = 7.2,
 				rgbColor                = [[0.3 0 0.4]],
 				soundstart              = [[weapon/laser/heavydisruptor]],

@@ -111,7 +111,7 @@ return {
 				interceptedByShieldType = 1,
 				laserFlareSize          = 3.25,
 				minIntensity            = 1,
-				range                   = 600,
+				range                   = 660,
 				reloadtime              = 3,
 				rgbColor                = [[0.6 0.2 0.2]],
 				rgbColor2				= [[0.0 0.8 0.8]],

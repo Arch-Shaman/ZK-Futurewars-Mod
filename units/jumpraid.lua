@@ -151,7 +151,7 @@ return {
 				tolerance               = 5000,
 				turret                  = true,
 				weaponType              = [[LaserCannon]],
-				weaponVelocity          = 800,
+				weaponVelocity          = 840,
 			},
 
 
@@ -216,7 +216,7 @@ return {
 				tolerance               = 5000,
 				turret                  = true,
 				weaponType              = [[LaserCannon]],
-				weaponVelocity          = 800,
+				weaponVelocity          = 840,
 			},
 			
 			
