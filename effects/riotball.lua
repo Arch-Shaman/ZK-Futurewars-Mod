@@ -278,7 +278,7 @@ return {
 			circlegrowth       = 7,
 			flashalpha         = 0.5,
 			flashsize          = 15,
-			ttl                = 5,
+			ttl                = 8,
 			color = {
 				[1]  = 1,
 				[2]  = 0,
@@ -291,12 +291,12 @@ return {
 			count              = 1,
 			ground             = true,
 			water              = true,
-			underwater 		 = true,
+			underwater 		   = true,
 			properties = {
 				alpha              = 0.25,
 				color              = [[1,0,1]],
-				expansionspeed     = 3,
-				ttl                = 5,
+				expansionspeed     = 2,
+				ttl                = 8,
 			},
 		},
 		ring1 = {
