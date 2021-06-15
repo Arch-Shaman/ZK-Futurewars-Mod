@@ -57,7 +57,11 @@ function gadget:GameFrame(f)
 			local hp, maxhp = spGetUnitHealth(id)
 			if hp then
 				local data = config[unitdef]
+				local emped = Spring.GetUnitIsStunned(id)
 				local actualregen = (data.regen * (1 - (spGetUnitRulesParam(id, "slowState") or 0))) * (30 / updaterate) * min(1/(max(hp, 1)/maxhp), data.maxregenmult)
+				if emped then
+					actualregen = 0
+				end
 				spSetUnitRulesParam(id, "nanoregen", actualregen, INLOS)
 				if hp < maxhp then
 					hp = min(hp + actualregen, maxhp)
