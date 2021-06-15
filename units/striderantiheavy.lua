@@ -23,7 +23,7 @@ return {
 			modelradius    = [[21]],
 			canjump            = 1,
 			jump_range         = 650,
-			jump_speed         = 3.8,
+			jump_speed         = 6,
 			jump_reload        = 20,
 			jump_from_midair   = 1,
 			cloakregen = 25,
@@ -37,9 +37,9 @@ return {
 		iconType               = [[corcommander]],
 		initCloaked            = true,
 		leaveTracks            = true,
-		maxDamage              = 2500,
+		maxDamage              = 4500,
 		maxSlope               = 36,
-		maxVelocity            = 1.55,
+		maxVelocity            = 2.4,
 		maxWaterDepth          = 5000,
 		minCloakDistance       = 150,
 		movementClass          = [[AKBOT2]],
@@ -65,13 +65,11 @@ return {
 		upright                = true,
 
 		weapons                = {
-
 			{
 				def = [[DISINTEGRATOR]],
 				badTargetCategory  = [[FIXEDWING GUNSHIP]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SUB SWIM FLOAT GUNSHIP HOVER]],
 			},
-
 		},
 		weaponDefs             = {
 			DISINTEGRATOR = {
@@ -96,7 +94,7 @@ return {
 				noExplode               = true,
 				noSelfDamage            = true,
 				range                   = 250,
-				reloadtime              = 2,
+				reloadtime              = 1.3,
 				size                    = 6,
 				soundHit                = [[explosion/ex_med6]],
 				soundStart              = [[weapon/laser/heavy_laser4]],
