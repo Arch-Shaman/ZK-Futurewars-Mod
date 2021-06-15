@@ -149,6 +149,7 @@ unitDef = {
 			edgeEffectiveness       = 0.7,
 			explosionGenerator      = [[custom:STARFIRE]], --custom:napalm_phoenix
 			fireStarter             = 250,
+			fireTolerance		= 65536/2,
 			impulseBoost            = 0,
 			impulseFactor           = 0.1,
 			interceptedByShieldType = 1,
