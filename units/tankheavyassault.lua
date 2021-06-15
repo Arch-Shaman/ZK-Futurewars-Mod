@@ -237,11 +237,12 @@ return {
 				damage                  = {
 					default = 30,
 				},
-				explosionGenerator      = [[custom:riotballplus2_purple_small60]],
+				explosionGenerator      = [[custom:flashslowwithsparks]],
 				explosionSpeed          = 5,
 				fireStarter             = 100,
 				impulseBoost            = 0,
 				impulseFactor           = 0,
+				impactonly				= true,
 				interceptedByShieldType = 1,
 				minIntensity            = 1,
 				noSelfDamage            = true,
