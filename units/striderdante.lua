@@ -27,7 +27,7 @@ return {
 		losEmitHeight       = 50,
 		maxDamage           = 24400,
 		maxSlope            = 36,
-		maxVelocity         = 1.75,
+		maxVelocity         = 1.45,
 		maxWaterDepth       = 22,
 		minCloakDistance    = 75,
 		movementClass       = [[KBOT4]],
