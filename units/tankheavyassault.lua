@@ -20,6 +20,7 @@ return {
 			nanoregen = 25,
 			nano_maxregen = 8,
 			extradrawrange = 300,
+			dontfireatradarcommand = '1',
 		},
 
 		explodeAs           = [[BIG_UNIT]],
