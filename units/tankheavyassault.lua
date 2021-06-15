@@ -1,7 +1,7 @@
 return { 
 	tankheavyassault = {
 		unitname            = [[tankheavyassault]],
-		name                = [[Collossus]],
+		name                = [[Colossus]],
 		description         = [[Near-Impervious Assault Tank]],
 		acceleration        = 0.17,
 		brakeRate           = 0.624,
