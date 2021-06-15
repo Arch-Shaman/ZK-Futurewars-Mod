@@ -222,11 +222,28 @@ local options = {
 	},
 	{
 		key = "enablelagmonitor",
-		name = "Enable Inactivity Sharing",
-		desc = "In a team game, automatically share units of inactive players.",
-		type = 'bool',
+		name = "Inactive Player Unit Sharing",
+		desc = "Whether to automatically share units of inactive players to another player within the team.",
+		type   = "list",
 		section= 'a_important',
-		def = true,
+		def    = "on",
+		items  = {
+			{
+				key  = "on",
+				name = "Enable",
+				desc = "Share units of inactive players.",
+			},
+			{
+				key  = "auto",
+				name = "PvP Only",
+				desc = "Enable if there are at least two teams of non-AIs. Lagging or dropped players will still share units.",
+			},
+			{
+				key  = "off",
+				name = "Disable",
+				desc = "Do not share units of inactive players. Lagging or dropped players will still share units.",
+			},
+		},
 	},
 	{
 		key         = "allyreclaim",
