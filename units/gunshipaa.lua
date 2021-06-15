@@ -107,7 +107,7 @@ return {
 				interceptedByShieldType = 2,
 				model                   = [[wep_m_fury.s3o]],
 				noSelfDamage            = true,
-				range                   = 800,
+				range                   = 1100,
 				reloadtime              = 0.2,
 				smokeTrail              = true,
 				soundHit                = [[weapon/missile/rocket_hit]],
