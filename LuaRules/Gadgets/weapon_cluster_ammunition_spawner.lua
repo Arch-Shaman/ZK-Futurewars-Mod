@@ -264,6 +264,7 @@ local function SpawnSubProjectiles(id, wd)
 		projectileattributes["ttl"] = WeaponDefs[me].flightTime or WeaponDefs[me].beamTTL
 		projectileattributes["tracking"] = WeaponDefs[me].tracks or false
 		projectileattributes["gravity"] = -WeaponDefs[me].myGravity or -1
+		projectileattributes["cegTag"] = WeaponDefs[me].cegTag
 		local positioning = projectileConfig[j].clusterpos or "none"
 		local vectoring = projectileConfig[j].clustervec or "none"
 		local keepmomentum = projectileConfig[j].keepmomentum
