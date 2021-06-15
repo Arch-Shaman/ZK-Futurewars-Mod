@@ -55,7 +55,7 @@ local unitDef = {
 		{
 			def                = [[CANNON]],
 			mainDir            = [[0 0 1]],
-			maxAngleDif        = 45,
+			maxAngleDif        = 70,
 			onlyTargetCategory = [[LAND SINK TURRET SHIP SWIM FLOAT HOVER SINK SUB FIXEDWING GUNSHIP]],
 		},
 		{
