@@ -386,15 +386,14 @@ function script.AimWeapon(num, heading, pitch)
 	isFiring = true
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
-	if manualfireAimOverride and (num == 1 or num == 2 or num == 5) then
+	--[[if manualfireAimOverride and (num == 1 or num == 2 or num == 5) then
 		manualfireAimOverride = manualfireAimOverride - 1
 		if manualfireAimOverride <= 0 then
 			manualfireAimOverride = false
-			Turn(shouldercannon, x_axis, 0, math.rad(90))
 		end
 		Sleep(500)
 		return false
-	end
+	end]]
 
 	if weaponBlocked and (num == 1 or num == 2 or num == 3 or num == 5) then
 		return false
@@ -528,10 +527,10 @@ function script.BlockShot(num, targetID)
 	end
 	
 	local frame = Spring.GetGameFrame()
-	if (blockGauss[num] or 0) > frame then
+	--[[if (blockGauss[num] or 0) > frame then
 		return true
 	end
-	blockGauss[3 - num] = frame + 20
+	blockGauss[3 - num] = frame + 20]]
 	return false
 end
 
