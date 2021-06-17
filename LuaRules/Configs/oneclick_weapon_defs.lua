@@ -10,7 +10,7 @@ local oneClickWepDefNames = {
 		{ functionToCall = "Detonate", name = "Cancel", tooltip = "Cancel selected terraform units.", texture = "LuaUI/Images/Commands/Bold/cancel.png", partBuilt = true},
 	},
 	gunshipkrow = {
-		{ functionToCall = "ClusterBomb", reloadTime = 854, name = "Carpet Bomb", tooltip = "Drop Bombs: Drop a huge number of bombs in a circle under the Krow", weaponToReload = 3, texture = "LuaUI/Images/Commands/Bold/bomb.png",},
+		{ functionToCall = "ClusterBomb", reloadTime = 854, name = "Annhilator Beam", tooltip = "Annhilator Beam: Activates a massive death laser to erase ground-loving plebs from exsitance.", weaponToReload = 3, texture = "LuaUI/Images/Commands/Bold/bomb.png",},
 	},
 	--hoverdepthcharge = {
 	--	{ functionToCall = "ShootDepthcharge", reloadTime = 256, name = "Drop Depthcharge", tooltip = "Drop Depthcharge: Drops a on the sea surface or ground.", weaponToReload = 1, texture = "LuaUI/Images/Commands/Bold/dgun.png",},
