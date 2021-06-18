@@ -17,12 +17,10 @@ return {
 		collisionVolumeScales         = [[30 90 30]],
 		collisionVolumeType           = [[CylY]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			aimposoffset   = [[0 22 0]],
 			cus_noflashlight = 1,
 		},
-
 		explodeAs                     = [[SMALL_BUILDINGEX]],
 		footprintX                    = 2,
 		footprintZ                    = 2,
@@ -34,12 +32,12 @@ return {
 		maxDamage                     = 785,
 		maxSlope                      = 36,
 		maxVelocity                   = 0,
-		minCloakDistance              = 150,
 		noAutoFire                    = false,
 		noChaseCategory               = [[FIXEDWING LAND SHIP SATELLITE SWIM GUNSHIP SUB HOVER]],
 		objectName                    = [[lotustest2.s3o]],
 		script                        = [[turretlaser.lua]],
 		selfDestructAs                = [[SMALL_BUILDINGEX]],
+
 		sfxtypes                      = {
 			explosiongenerators = {
 				[[custom:BEAMWEAPON_MUZZLE_BLUE]],
@@ -53,11 +51,13 @@ return {
 		yardMap                       = [[oooo]],
 
 		weapons                       = {
+
 			{
 				def                = [[LASER]],
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
+
 		},
 		weaponDefs                    = {
 			LASER = {
@@ -111,6 +111,7 @@ return {
 			},
 		},
 		featureDefs                   = {
+
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -125,5 +126,5 @@ return {
 				object           = [[debris2x2b.s3o]],
 			},
 		},
-	}
+	} 
 }
