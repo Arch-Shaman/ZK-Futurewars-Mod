@@ -76,7 +76,7 @@ return {
 		weaponDefs             = {
 
 			AA_LASER      = {
-				name                    = [[Anti-Air Repulser]],
+				name                    = [[Anti-Air Pulsar]],
 				areaOfEffect            = 12,
 				beamTime                = 2/30,
 				canattackground         = false,
@@ -95,8 +95,8 @@ return {
 				},
 
 				damage                  = {
-					default = 9.2,
-					planes  = 92.1,
+					default = 9.5,
+					planes  = 95.1,
 				},
 				duration                = 0.075,
 				beamDecay 				= 0.38,
@@ -106,7 +106,7 @@ return {
 				explosionGenerator      = [[custom:flash_teal7]],
 				fireStarter             = 100,
 				impactOnly              = true,
-				impulseFactor           = 1.4,
+				impulseFactor           = 0,
 				fallOffRate				= 0.67,
 				interceptedByShieldType = 1,
 				laserFlareSize          = 3.25,
