@@ -49,12 +49,10 @@ return {
 		selfDestructAs      = [[BIG_UNITEX]],
 
 		sfxtypes            = {
-
 			explosiongenerators = {
 				[[custom:RAIDMUZZLE]],
 				[[custom:VINDIBACK]],
 			},
-
 		},
 		sightDistance       = 350,
 		trackOffset         = 0,
@@ -108,7 +106,8 @@ return {
 				range                   = 125,
 				reloadtime              = 1,
 				rgbColor                = [[1 0.25 0]],
-				soundStart              = [[explosion/ex_large7]],
+				soundStart              = [[weapon/impacts/melee]],
+				soundStartVolume		= 45,
 				targetborder            = 0.9,
 				thickness               = 0,
 				tolerance               = 10000,
