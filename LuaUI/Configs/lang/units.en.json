@@ -620,9 +620,9 @@
 		"helptext" : "The Disco Rave Party throws six different party shots at your enemy for a different surprise each time. Fun for the whole family!"
 	},
 	"turretlaser" : {
-		"name" : "Lotus",
-		"description" : "Light Laser Tower",
-		"helptext" : "The Lotus is a basic turret. A versatile, solid anti-ground weapon, it does well versus scouts as well as being able to take on one or two raiders. Falls relatively easily to skirmishers, artillery or assault units unless supported."
+		"name" : "Parapet",
+		"description" : "Medium Pulse Laser Tower",
+		"helptext" : "A direct upgrade over the earlier Lotus model, the general-purpose Parapet Laser Tower uses medium energy lasers to damage incoming enemy units. Its range disallows it to engage skirmishers, but requires considerable investment in raiders to penetrate its perimeter."
 	},
 	"cloakskirm" : {
 		"name" : "Waylayer",

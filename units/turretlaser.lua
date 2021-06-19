@@ -1,11 +1,11 @@
 return { 
 	turretlaser = {
 		unitname                      = [[turretlaser]],
-		name                          = [[Lotus]],
-		description                   = [[Light Laser Tower]],
+		name                          = [[Parapet]],
+		description                   = [[Medium Pulse Laser Tower]],
 		acceleration                  = 0,
 		brakeRate                     = 0,
-		buildCostMetal                = 90,
+		buildCostMetal                = 120,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 4,
@@ -29,7 +29,7 @@ return {
 		idleTime                      = 1800,
 		levelGround                   = false,
 		losEmitHeight                 = 60,
-		maxDamage                     = 785,
+		maxDamage                     = 960,
 		maxSlope                      = 36,
 		maxVelocity                   = 0,
 		noAutoFire                    = false,
@@ -40,7 +40,7 @@ return {
 
 		sfxtypes                      = {
 			explosiongenerators = {
-				[[custom:BEAMWEAPON_MUZZLE_BLUE]],
+				[[custom:BEAMWEAPON_MUZZLE_YELLOW]],
 			},
 		},
 		sightDistance                 = 554,  -- Range*1.1 + 48 for radar overshoot
@@ -61,53 +61,47 @@ return {
 		},
 		weaponDefs                    = {
 			LASER = {
-				name                    = [[Laserbeam]],
+				name                    = [[Yellow Pulse Laser]],
 				areaOfEffect            = 8,
-				beamTime                = 0.1,
-				coreThickness           = 0.4,
+				accuracy				= 250,
+				coreThickness           = 0.5,
+				beamTime                = 1/30,
 				craterBoost             = 0,
 				craterMult              = 0,
-
-				customparams = {
-					stats_hide_damage = 1, -- continuous laser
-					stats_hide_reload = 1,
+				
+				customParams        = {
+					light_camera_height = 1200,
+					light_radius = 20,
 					sweepfire = 1,
-					sweepfire_maxangle = 30,
-					sweepfire_step = 1.5,
+					sweepfire_maxangle = 45,
+					sweepfire_step = 0.5,
 					sweepfire_fastupdate = 1,
-					light_color = [[0.4 1.1 1.1]],
-					light_radius = 120,
 				},
-
+      
 				damage                  = {
-					default = 7.5,
+					default = 22.1,
 				},
 
-				explosionGenerator      = [[custom:FLASH1blue]],
-				fireStarter             = 30,
+				duration                = 8/30,
+				explosionGenerator      = [[custom:heavybeamyellowimpactsmall]],
+				fireStarter             = 100,
 				impactOnly              = true,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 1.1,
 				interceptedByShieldType = 1,
-				largeBeamLaser          = true,
-				laserFlareSize          = 2,
-				minIntensity            = 1,
+				leadLimit               = 0,
 				noSelfDamage            = true,
-				range                   = 460,
-				reloadtime              = 0.1,
-				rgbColor                = [[0 1 1]],
-				soundStart              = [[weapon/laser/laser_burn8]],
-				soundTrigger            = true,
-				sweepfire               = false,
-				texture1                = [[largelaser]],
-				texture2                = [[flare]],
-				texture3                = [[flare]],
-				texture4                = [[smallflare]],
-				thickness               = 2,
-				tolerance               = 5000,
+				range                   = 480,
+				reloadtime              = 3/30,
+				rgbColor                = [[1 0.7843 0.1647]],
+				rgbColor2				= [[0.902 0.682 0.145]],
+				soundStart              = [[weapon/laser/yellow_laser]],
+				soundstartvolume	    = 65,
+				thickness               = 3.75,
+				tolerance               = 10000,
 				turret                  = true,
 				weaponType              = [[BeamLaser]],
-				weaponVelocity          = 500,
+				weaponVelocity          = 880,
 			},
 		},
 		featureDefs                   = {
