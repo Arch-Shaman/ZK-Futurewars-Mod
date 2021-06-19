@@ -82,7 +82,7 @@ return {
 					light_camera_height = 1200,
 					light_radius = 20,
 					sweepfire = 1,
-					sweepfire_maxangle = 90,
+					sweepfire_maxangle = 45,
 					sweepfire_step = 0.5,
 					sweepfire_fastupdate = 1,
 				},
