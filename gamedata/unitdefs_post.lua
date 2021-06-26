@@ -395,9 +395,6 @@ for name, ud in pairs(UnitDefs) do
 	end
 	if ud.workertime and name:find("con") and not name:find("dyn") then
 		storage = storage + (ud.workertime * conbonus)
-		if name:find("static") then
-			storage = 250
-		end
 	end
 	
 	if storage > 0 then
