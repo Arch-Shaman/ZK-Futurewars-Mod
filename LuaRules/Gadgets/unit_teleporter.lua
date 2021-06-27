@@ -304,10 +304,10 @@ local function GetTeleTargetPos(ud, unitDefID, tx, tz)
 	return nil
 end
 
-local function GetTeleTargetPosRandomNoBuildTest(ud, unitID, unitDefID, tx, ty, tz)
+local function GetTeleTargetPosRandomNoBuildTest(ud, unitID, unitDefID, tx, ty, tz, offset)
 	local size = ud.xsize
 	local direction = GetExitDirection(unitID, tx, tz)
-	local distance = size*4 + 40
+	local distance = size*4 + 40 + offset
 	local dirOffset = ((math.random() > 0.5) and math.pi/4) or -math.pi/4
 	for i = 1, 8 do -- Just try 10 times
 		local ux, uz = math.cos(direction), math.sin(direction)
@@ -544,6 +544,7 @@ function gadget:GameFrame(f)
 					local teleportiee = false
 					local bestPriority = false
 					local teleTargetX, teleTargetZ = false
+					local offset = tele[tid].offset
 					
 					for j = 1, #units do
 						local nid = units[j]
@@ -555,7 +556,7 @@ function gadget:GameFrame(f)
 									local unitDefID = Spring.GetUnitDefID(nid)
 									local ud = unitDefID and UnitDefs[unitDefID]
 									if ud then
-										local spotX, spotZ = GetTeleTargetPosRandomNoBuildTest(ud, nid, unitDefID, tx, ty, tz)
+										local spotX, spotZ = GetTeleTargetPosRandomNoBuildTest(ud, nid, unitDefID, tx, ty, tz, offset)
 										if spotX and spotZ then
 											teleportiee = nid
 											bestPriority = priority
@@ -629,6 +630,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 			offsetZ = false,
 			deployed = false,
 			cost = false,
+			offset = tonumber(UnitDefs[unitDefID].customParams.teleporter_offset) or 0,
 			stunned = isUnitDisabled(unitID),
 			throughput = tonumber(UnitDefs[unitDefID].customParams.teleporter_throughput) / Game.gameSpeed,
 		}

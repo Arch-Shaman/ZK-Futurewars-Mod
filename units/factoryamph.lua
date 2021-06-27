@@ -3,6 +3,7 @@ return {
 		unitname                      = [[factoryamph]],
 		name                          = [[Amphbot Factory]],
 		description                   = [[Produces Amphibious Bots]],
+		activatewhenbuilt             = true,
 		buildCostMetal                = Shared.FACTORY_COST,
 		buildDistance                 = Shared.FACTORY_PLATE_RANGE,
 		builder                       = true,
@@ -54,6 +55,7 @@ return {
 			teleporter = 1,
 			teleporter_throughput = 550, -- mass per second
 			teleporter_beacon_spawn_time = 10,
+			teleporter_offset = 180,
 		},
 
 		energyUse        = 0,

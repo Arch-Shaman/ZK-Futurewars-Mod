@@ -11,10 +11,9 @@ local BEACON_SPAWN_SPEED = 8 / tonumber(UnitDef.customParams.teleporter_beacon_s
 local PRIVATE = {private = true}
 local INLOS = {inlos = true}
 
-local deployed = false
+--local deployed = false
 local beaconCreateX, beaconCreateZ
 
-local SIG_DEPLOY = 2
 local SIG_BEACON = 2
 
 --------------------------------------------------------------------------------------
@@ -23,17 +22,15 @@ local SIG_BEACON = 2
 
 
 local function Create_Beacon_Thread(x,z)
-	Spring.Echo("Create_Beacon")
+	--Spring.Echo("Create_Beacon")
 	local y = Spring.GetGroundHeight(x,z) or 0
 	
-	Signal(SIG_DEPLOY)
 	Signal(SIG_BEACON)
 	SetSignalMask(SIG_BEACON)
 	
 	beaconCreateX, beaconCreateZ = x, z
 	Spring.SetUnitRulesParam(unitID, "tele_creating_beacon_x", x, PRIVATE)
 	Spring.SetUnitRulesParam(unitID, "tele_creating_beacon_z", z, PRIVATE)
-	activity_mode(3)
 	GG.PlayFogHiddenSound("sounds/misc/teleport_loop.wav", 3, x, y, z)
 	for i = 1, 90 do
 		local speedMult = (spGetUnitRulesParam(unitID,"baseSpeedMult") or 1) * BEACON_SPAWN_SPEED
@@ -61,7 +58,7 @@ local function Create_Beacon_Thread(x,z)
 	beaconCreateX, beaconCreateZ = nil, nil
 	
 	Spring.SpawnCEG("teleport_in", x, y, z, 0, 0, 0, 1)
-	
+	Spring.SetUnitRulesParam(unitID, "teleActive", 1, INLOS)
 	GG.tele_deployTeleport(unitID)
 end
 
@@ -71,7 +68,6 @@ function StopCreateBeacon(resetAnimation)
 		Spring.SetUnitRulesParam(unitID, "tele_creating_beacon_x", nil, PRIVATE)
 		Spring.SetUnitRulesParam(unitID, "tele_creating_beacon_z", nil, PRIVATE)
 		beaconCreateX, beaconCreateZ = nil, nil
-		activity_mode(deployed and 3 or 1)
 	end
 end
 
@@ -87,20 +83,12 @@ function UndeployTeleport()
 	--deployed = false
 end
 
---------------------------------------------------------------------------------------
---------------------------------------------------------------------------------------
-
-
-function activity_mode(n)
-	if (not mode) or mode ~= n then
-		if n < 2 then
-			Spring.SetUnitRulesParam(unitID, "teleActive", 0, INLOS)
-		elseif mode < 2 then
-			Spring.SetUnitRulesParam(unitID, "teleActive", 1, INLOS)
-		end
-		mode = n
-	end
+function activity_mode(n) -- needed otherwise bad things happen.
+	
 end
+
+--------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
 
 local function Open ()
 	Signal (1)
@@ -134,7 +122,6 @@ end
 function script.Create()
 	StartThread (GG.Script.SmokeUnit, unitID, smokePiece)
 	Spring.SetUnitNanoPieces (unitID, nanoPieces)
-	activity_mode(1)
 end
 
 function script.QueryNanoPiece ()
