@@ -65,7 +65,7 @@ return {
 
 		weaponDefs                    = {
 			secondary = {
-				name                    = [[Fragment]],
+				name                    = [[Plasma Flechette]],
 				accuracy                = 350,
 				alphaDecay              = 0.7,
 				areaOfEffect            = 96,
