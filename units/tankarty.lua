@@ -65,8 +65,6 @@ return {
 				alphaDecay              = 0.7,
 				areaOfEffect            = 96,
 				burnblow                = true,
-				burst                   = 3,
-				burstrate               = 0.1,
 				craterBoost             = 2,
 				craterMult              = 1,
 
