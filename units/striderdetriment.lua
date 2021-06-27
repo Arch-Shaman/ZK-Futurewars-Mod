@@ -74,7 +74,7 @@ return {
 		weaponDefs             = {
 
 			SECONDARY = {
-				name                    = [[Fragmentation]],
+				name                    = [[Antimatter Pellet]],
 				areaOfEffect            = 108,
 				craterBoost             = 20,
 				craterMult              = 4,
@@ -279,7 +279,7 @@ return {
 				},
 
 				damage                  = {
-					default = 8000.1,
+					default = 16000.1,
 				},
 
 				explosionGenerator      = [[custom:beamlaser_hit_saphire]],
