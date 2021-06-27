@@ -48,7 +48,7 @@ unitDef = {
 
 	weaponDefs                    = {
 		SECONDARY = {
-		name 			= "Napalm",
+		name 			= "Fireball",
 		cegTag                  = [[flamer]],
 		areaOfEffect            = 216,
 		avoidFeature            = false,
@@ -152,7 +152,7 @@ unitDef = {
 		},
 	
 		WEAPON2 = {
-			name                    = [[Napalm Missile]],
+			name                    = [[Incendiary Warhead]],
 			cegTag                  = [[napalmtrail]],
 			areaOfEffect            = 512,
 			craterAreaOfEffect      = 64,
