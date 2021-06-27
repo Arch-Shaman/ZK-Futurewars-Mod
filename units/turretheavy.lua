@@ -112,7 +112,7 @@ return {
 				lodDistance             = 10000,
 				proximityPriority       = 6,
 				projectiles             = 2,
-				range                   = 430,
+				range                   = 433,
 				reloadtime              = 0.1,
 				rgbColor                = [[1 0.1 0]],
 				rgbColor2               = [[1 1 0.25]],

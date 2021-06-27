@@ -206,7 +206,7 @@ return {
 				leadLimit               = 10,
 				noExplode               = true,
 				noSelfDamage            = true,
-				range                   = 260,
+				range                   = 280,
 				reloadtime              = 0.133,
 				rgbColor                = [[1 1 1]],
 				soundStart              = [[weapon/flamethrower]],
