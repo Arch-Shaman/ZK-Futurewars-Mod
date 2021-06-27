@@ -164,7 +164,7 @@ return {
 				weaponVelocity          = 440,
 			},
 			BOMBLET = {
-				name                    = [[Cluster Bomb]],
+				name                    = [[High Explosive Bomblet]],
 				accuracy                = 200,
 				areaOfEffect            = 128,
 				craterBoost             = 10,
