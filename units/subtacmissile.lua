@@ -117,7 +117,7 @@ return {
 				weaponVelocity          = 1200,
 			},
 			WARHEAD        = {
-				name                    = [[Ima probably take a break, key word being probably.]],
+				name                    = [[Ultraheavy High Explosive Warhead]],
 				areaOfEffect            = 196,
 				collideFriendly         = false,
 				commandfire             = true,
