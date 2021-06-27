@@ -69,7 +69,7 @@ return {
 		weaponDefs                    = {
 	
 			secondary = {
-				name                    = [[Heavy Fragmentation]],
+				name                    = [[Fragmention Bomb]],
 				accuracy                = 350,
 				alphaDecay              = 0.7,
 				areaOfEffect            = 0,
@@ -118,7 +118,7 @@ return {
 			},
 			
 			tritary = {
-				name                    = [[Heavy Fragmentation]],
+				name                    = [[Heavy Fragment]],
 				alphaDecay              = 0.7,
 				areaOfEffect            = 192,
 				craterBoost             = 0.15,
