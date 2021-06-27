@@ -21,6 +21,11 @@ local BEACON_WAIT_RANGE_MOVE = 150
 local BEACON_TELEPORT_RADIUS = 200
 local BEACON_TELEPORT_RADIUS_SQR = BEACON_TELEPORT_RADIUS^2
 
+local testoffsets = {
+	["amphtele"] = 16,
+	["factoryamph"] = 60,
+}
+
 -- Used in synced and unsynced
 local canTeleport = {}
 for i = 1, #UnitDefs do
@@ -304,11 +309,15 @@ local function GetTeleTargetPos(ud, unitDefID, tx, tz)
 	return nil
 end
 
-local function GetTeleTargetPosRandomNoBuildTest(ud, unitID, unitDefID, tx, ty, tz, offset)
+local function GetTeleTargetPosRandomNoBuildTest(ud, unitID, unitDefID, tx, ty, tz, offset, teleporterdef)
+	--Spring.Echo("GetTeleTargetPosRandomNoBuildTest")
 	local size = ud.xsize
+	--Spring.Echo("Size: " .. size)
 	local direction = GetExitDirection(unitID, tx, tz)
-	local distance = size*4 + 40 + offset
+	local distance = size*4 + offset
+	--Spring.Echo("Distance: " .. distance)
 	local dirOffset = ((math.random() > 0.5) and math.pi/4) or -math.pi/4
+	local testoffset = testoffsets[teleporterdef.name] or 16
 	for i = 1, 8 do -- Just try 10 times
 		local ux, uz = math.cos(direction), math.sin(direction)
 		if ud.canFly then
@@ -316,18 +325,20 @@ local function GetTeleTargetPosRandomNoBuildTest(ud, unitID, unitDefID, tx, ty, 
 		end
 		
 		local passed = true
-		for testDist = 16, distance - 16, 16 do -- Just try 10 times
+		for testDist = testoffset, distance, 16 do -- Just try 10 times
+			--Spring.Echo("Test distance: " .. testDist)
 			if not spTestMoveOrder(unitDefID, tx + testDist*ux, 0, tz + testDist*uz, 0, 0, 0, true, true, false) then
 				passed = false
 				break
 			end
 		end
-		
+		--Spring.Echo(passed and "passed" or "failed inner loop")
 		if passed and spTestMoveOrder(unitDefID, tx + distance*ux, 0, tz + distance*uz, 0, 0, 0, true, true, false) then
 			return tx + distance*ux, tz + distance*uz
 		end
 		direction = direction + dirOffset
 	end
+	--Spring.Echo("Failed.")
 	return nil
 end
 
@@ -545,7 +556,7 @@ function gadget:GameFrame(f)
 					local bestPriority = false
 					local teleTargetX, teleTargetZ = false
 					local offset = tele[tid].offset
-					
+					local teleporterdef = UnitDefs[Spring.GetUnitDefID(tid)]
 					for j = 1, #units do
 						local nid = units[j]
 						if allyTeam == Spring.GetUnitAllyTeam(nid) and beaconWaiter[nid] then
@@ -556,7 +567,7 @@ function gadget:GameFrame(f)
 									local unitDefID = Spring.GetUnitDefID(nid)
 									local ud = unitDefID and UnitDefs[unitDefID]
 									if ud then
-										local spotX, spotZ = GetTeleTargetPosRandomNoBuildTest(ud, nid, unitDefID, tx, ty, tz, offset)
+										local spotX, spotZ = GetTeleTargetPosRandomNoBuildTest(ud, nid, unitDefID, tx, ty, tz, offset, teleporterdef)
 										if spotX and spotZ then
 											teleportiee = nid
 											bestPriority = priority
@@ -630,7 +641,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 			offsetZ = false,
 			deployed = false,
 			cost = false,
-			offset = tonumber(UnitDefs[unitDefID].customParams.teleporter_offset) or 0,
+			offset = tonumber(UnitDefs[unitDefID].customParams.teleporter_offset) or 40,
 			stunned = isUnitDisabled(unitID),
 			throughput = tonumber(UnitDefs[unitDefID].customParams.teleporter_throughput) / Game.gameSpeed,
 		}
