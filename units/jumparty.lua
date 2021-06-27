@@ -63,7 +63,7 @@ return {
 		},
 		weaponDefs             = {
 			NAPALM_FRAGMENT = {
-				name                    = [[Napalm Fragment]],
+				name                    = [[Napalm Trail]],
 				accuracy                = 400,
 				areaOfEffect            = 162,
 				avoidFeature            = false,
@@ -94,7 +94,6 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				myGravity               = 0.1,
-				projectiles             = 10,
 				range                   = 900,
 				reloadtime              = 12,
 				rgbColor                = [[1 0.5 0.2]],
