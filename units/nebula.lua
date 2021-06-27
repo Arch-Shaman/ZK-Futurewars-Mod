@@ -94,7 +94,7 @@ return {
 		weaponDefs             = {
 	
 			AG = {
-				name                    = [[Plasma Submunition]],
+				name                    = [[Destructo-Pods]],
 				accuracy                = 60,
 				areaOfEffect            = 96,
 				avoidFeature            = false,
