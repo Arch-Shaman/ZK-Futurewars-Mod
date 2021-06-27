@@ -53,7 +53,7 @@ return {
 			amph_submerged_at = 40,
 			teleporter = 1,
 			teleporter_throughput = 550, -- mass per second
-			teleporter_beacon_spawn_time = 3,
+			teleporter_beacon_spawn_time = 10,
 		},
 
 		energyUse        = 0,
