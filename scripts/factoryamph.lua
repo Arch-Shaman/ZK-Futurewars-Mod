@@ -20,8 +20,6 @@ local SIG_BEACON = 2
 --------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
 -- Create beacon animation and delay
-local spGetUnitRulesParam = Spring.GetUnitRulesParam
-local BEACON_SPAWN_SPEED = 8 / tonumber(UnitDef.customParams.teleporter_beacon_spawn_time)
 
 
 local function Create_Beacon_Thread(x,z)
@@ -78,7 +76,7 @@ function StopCreateBeacon(resetAnimation)
 end
 
 function Create_Beacon(x,z)
-	Spring.Echo("Create_Beacon")
+	--Spring.Echo("Create_Beacon")
 	if x == beaconCreateX and z == beaconCreateZ then
 		return
 	end
@@ -86,7 +84,7 @@ function Create_Beacon(x,z)
 end
 
 function UndeployTeleport()
-	deployed = false
+	--deployed = false
 end
 
 --------------------------------------------------------------------------------------
