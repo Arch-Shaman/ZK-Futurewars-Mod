@@ -105,12 +105,12 @@ return {
 				soundTrigger            = true,
 				startVelocity           = 125,
 				trajectoryHeight        = 1.8,
-				turnRate                = 4000,
+				turnRate                = 5000,
 				turret                  = true,
 				weaponAcceleration      = 150,
 				weaponType              = [[MissileLauncher]],
 				weaponVelocity          = 350,
-				wobble                  = 9000,
+				wobble                  = 7000,
 			},
 
 			DISRUPTORBOMB = {
