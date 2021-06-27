@@ -363,6 +363,10 @@ local bayonetFleeArray = NameToDefID({
 	"tankheavyassault",
 	"striderdante",
 	"shieldriot",
+	"dronecarry",
+	"dronefighter",
+	"droneheavyslow",
+	"dronelight",
 })
 
 -- Nested union so long ranged things also skirm the things skirmed by short ranged things
