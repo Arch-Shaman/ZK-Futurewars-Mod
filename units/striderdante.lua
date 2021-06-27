@@ -193,7 +193,7 @@ return {
 			},
 		
 			NAPALM_ROCKETS       = {
-				name                    = [[Napalm Rockets]],
+				name                    = [[Hellfire Rockets]],
 				areaOfEffect            = 228,
 				burst                   = 2,
 				burstrate               = 0.1,
@@ -207,13 +207,13 @@ return {
 					burntime = [[1000]],
 					reaim_time = 1,
 					
-					numprojectiles1 = 10, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "striderdante_napalm_fragment_dummy",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					keepmomentum1 = 0,
 					timeoutspawn = 0,
-					vradius1 = "-1.5,6,-1.5,1.5,10,1.5",
+					vradius1 = "-1.5,4,-1.5,1.5,8,1.5",
 					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
 					onexplode = "by the power of god, disco and hentai...", -- if true, this projectile will cluster when it explodes
 					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
@@ -274,6 +274,7 @@ return {
 					light_color = [[0.25 0.13 0.05]],
 					light_radius = 500,
 					shield_damage = 100,
+					bogus = 1,
 				},
 				damage                  = {
 					default = 0,
@@ -301,7 +302,7 @@ return {
 			},
 
 			NAPALM_FRAGMENT = {
-				name                    = [[Napalm Fragment]],
+				name                    = [[Hellfire Fireball]],
 				accuracy                = 400,
 				areaOfEffect            = 162,
 				avoidFeature            = false,
@@ -320,7 +321,7 @@ return {
 					light_radius = 500,
 				},
 				damage                  = {
-					default = 100,
+					default = 165,
 				},
 
 				explosionGenerator      = [[custom:napalm_phoenix]],
