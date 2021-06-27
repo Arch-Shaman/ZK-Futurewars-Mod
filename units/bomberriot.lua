@@ -75,7 +75,7 @@ unitDef = {
 	weaponDefs          = {
 
 		NAPALM_SECONDARY = {
-			name 			= "Napalm",
+			name 			= "Napalm Pellet",
 			cegTag                  = [[flamer]],
 			areaOfEffect            = 216,
 			avoidFeature            = false,
