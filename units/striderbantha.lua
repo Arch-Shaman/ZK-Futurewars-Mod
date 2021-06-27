@@ -1,7 +1,7 @@
 local unitDef = {
 	unitname               = [[striderbantha]],
 	name                   = [[Mogul]],
-	description            = [[Ultraheavy Siege]],
+	description            = [[Ultraheavy Siege Engine]],
 	acceleration           = 0.1047,
 	brakeRate              = 0.2212,
 	buildCostMetal         = 20000,
@@ -80,7 +80,7 @@ local unitDef = {
 	},
 	weaponDefs             = {
 		SECONDARY = {
-			name                    = [[Fragmentation]],
+			name                    = [[LGM-220 Warhead]],
 			areaOfEffect            = 108,
 			craterBoost             = 20,
 			craterMult              = 2,
@@ -253,7 +253,7 @@ local unitDef = {
 			--wobble                = 18000,
 		},	
 		EMPSECONDARY = {
-			name                    = [[Light EMP Shockcannon]],
+			name                    = [[EMP Shockwave]],
 			accuracy                = 80,
 			movingAccuracy			= 400,
 			areaOfEffect            = 120,
