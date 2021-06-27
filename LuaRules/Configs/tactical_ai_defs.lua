@@ -1466,8 +1466,8 @@ local behaviourConfig = {
 	},
 	{
 		name = "gunshipskirm",
-		skirms = medRangeSkirmieeArray,
-		swarms = medRangeSwarmieeArray,
+		skirms = longRangeSkirmieeArray,
+		--swarms = medRangeSwarmieeArray,
 		--flees = {},
 		avoidHeightDiff = explodableFull,
 		fightOnlyUnits = medRangeExplodables,
@@ -1479,7 +1479,7 @@ local behaviourConfig = {
 		wardFireLeeway = 10,
 		wardFirePredict = 50,
 		wardFireShield = 450,
-		wardFireDefault = true,
+		wardFireDefault = false,
 	},
 	
 	-- long range skirms
