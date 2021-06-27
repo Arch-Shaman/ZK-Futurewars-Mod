@@ -138,7 +138,7 @@ return {
 				weaponVelocity          = 880,
 			},
 			FRAGMENT_DUMMY = {
-				name                    = [[Fragment]],
+				name                    = [[Plasma Bomblet]],
 				accuracy                = 400,
 				areaOfEffect            = 162,
 				avoidFeature            = false,
@@ -188,7 +188,7 @@ return {
 				weaponVelocity          = 320,
 			},
 			FINAL = {
-				name                    = [[Flechette]],
+				name                    = [[Plasma Flechette]],
 				--cegTag                  = [[flak_trail]],
 				areaOfEffect            = 96,
 				alphaDecay              = 0.7,
