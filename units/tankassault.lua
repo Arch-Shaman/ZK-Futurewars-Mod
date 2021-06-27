@@ -37,7 +37,7 @@ return {
 		noAutoFire          = false,
 		noChaseCategory     = [[TERRAFORM FIXEDWING SATELLITE SUB DRONE]],
 		objectName          = [[correap.s3o]],
-		script              = [[tankassault.cob]],
+		script              = [[tankassault.lua]],
 		selfDestructAs      = [[BIG_UNITEX]],
 		sfxtypes            = {
 			explosiongenerators = {
