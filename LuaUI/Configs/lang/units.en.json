@@ -277,7 +277,7 @@
 	"hoverassault" : {
 		"name" : "Bayonet",
 		"description" : "Armored Assault Hovercraft",
-		"helptext" : "The Bayonet is a recent retrofit to the Halberd design. The new Bayonet model fires a high intensity X-Ray laser which only briefly exposes its delicate interior unlike the previous Halberd's constant exposure. The Bayonet also features an automated armoring system that protects the interior while reloading, providing a 75% reduction in damage."
+		"helptext" : "The Bayonet is a recent retrofit to the Halberd design. The new Bayonet model fires a high intensity X-Ray laser which only briefly exposes its delicate interior unlike the previous Halberd's constant exposure. The Bayonet also features an automated armoring system that protects the interior while reloading, providing a 75%% reduction in damage."
 	},
 	"shieldcon" : {
 		"name" : "Conservator",

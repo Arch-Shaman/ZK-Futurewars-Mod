@@ -32,6 +32,7 @@ local hpi = math.pi*0.5
 local BUNKERED_AUTOHEAL = tonumber(UnitDef.customParams.armored_regen or 20) / 2 -- applied every 0.5s
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spGetUnitHealth = Spring.GetUnitHealth
 
 -- Tasks for open/close state
 local TASK_NEUTRAL = 0
@@ -126,6 +127,19 @@ function script.setSFXoccupy(num)
 	sfxNum = num
 end
 
+local function Regen()
+	while true do
+		local stunned_or_inbuild = spGetUnitIsStunned(unitID) or (spGetUnitRulesParam(unitID, "disarmed") == 1)
+		if not stunned_or_inbuild and closed then
+			local hp = spGetUnitHealth(unitID)
+			local slowMult = (spGetUnitRulesParam(unitID,"baseSpeedMult") or 1)
+			local newHp = hp + slowMult*BUNKERED_AUTOHEAL
+			spSetUnitHealth(unitID, newHp)
+		end
+		Sleep(500)
+	end
+end
+
 local function MoveScript()
 	while Spring.GetUnitIsStunned(unitID) do
 		Sleep(2000)
@@ -154,6 +168,7 @@ function script.Create()
 		Sleep (100)
 	end
 	Spring.SetUnitArmored(unitID,true)
+	StartThread(Regen)
 end
 
 local function Close()
@@ -177,16 +192,6 @@ local function Close()
 
 	currentTask = TASK_NEUTRAL
 	Spring.SetUnitArmored(unitID, true)
-	while true do
-		local stunned_or_inbuild = spGetUnitIsStunned(unitID) or (spGetUnitRulesParam(unitID, "disarmed") == 1)
-		if not stunned_or_inbuild then
-			local hp = spGetUnitHealth(unitID)
-			local slowMult = (spGetUnitRulesParam(unitID,"baseSpeedMult") or 1)
-			local newHp = hp + slowMult*BUNKERED_AUTOHEAL
-			spSetUnitHealth(unitID, newHp)
-		end
-		Sleep(500)
-	end
 end
 
 local function RestoreAfterDelay()
