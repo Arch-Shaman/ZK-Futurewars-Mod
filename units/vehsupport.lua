@@ -128,7 +128,7 @@ return {
 				weaponVelocity          = 545,
 			},
 			PARTICLEBEAM = {
-				name                    = [[Bogus Fragment]],
+				name                    = [[Superplastic Stream]],
 				beamDecay               = 0.85,
 				beamTime                = 0.1,
 				beamttl                 = 45,
