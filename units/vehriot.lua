@@ -73,7 +73,7 @@ return {
 		weaponDefs          = {
 		
 			secondary = {
-				name                    = [[Heavy Pulse MG]],
+				name                    = [[Impulse Shard]],
 				accuracy                = 350,
 				alphaDecay              = 0.7,
 				areaOfEffect            = 96,
