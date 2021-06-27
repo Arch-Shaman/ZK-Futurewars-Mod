@@ -30,6 +30,8 @@ local disarmed = false
 local reloaded = true
 local hpi = math.pi*0.5
 local BUNKERED_AUTOHEAL = tonumber(UnitDef.customParams.armored_regen or 20) / 2 -- applied every 0.5s
+local spGetUnitIsStunned = Spring.GetUnitIsStunned
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 
 -- Tasks for open/close state
 local TASK_NEUTRAL = 0
