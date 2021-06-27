@@ -72,10 +72,10 @@ local medRangeSwarmieeArray = NameToDefID({
 	"amphfloater",
 	"chickens",
 	"shipskirm",
+	"shieldassault",
 })
 
 local lowRangeSwarmieeArray = NameToDefID({
-	"shieldassault",
 	"spiderassault",
 	"vehassault",
 	"hoverassault",
@@ -159,6 +159,8 @@ local longRangeRaiderIdleFleeArray = NameToDefID({
 	
 	"shipriot",
 	"striderdante",
+	"shieldbomb",
+	"cloakbomb",
 })
 
 local medRangeRaiderIdleFleeArray = NameToDefID({
@@ -166,6 +168,7 @@ local medRangeRaiderIdleFleeArray = NameToDefID({
 	"vehraid",
 	"hoverraid",
 	"spideremp",
+	"vehscout",
 })
 
 local shortRangeRaiderIdleFleeArray = NameToDefID({
@@ -200,7 +203,6 @@ local veryShortRangeSkirmieeArray = NameToDefID({
 	"cloakheavyraid",
 	"cloakbomb",
 	"jumpscout",
-	"shieldbomb",
 	"chicken",
 	"chickena",
 	"chicken_leaper",
@@ -210,7 +212,7 @@ local veryShortRangeSkirmieeArray = NameToDefID({
 	"vehraid",
 	"spiderscout",
 	"cloakraid",
-	"vehscout",
+	"shieldbomb",
 })
 
 local shortRangeSkirmieeArray = NameToDefID({
@@ -226,6 +228,7 @@ local shortToRiotRangeSkirmieeArray = NameToDefID({
 	"hoverraid",
 	"amphriot",
 	"amphimpulse",
+	"vehscout",
 })
 
 local riotRangeSkirmieeArray = NameToDefID({
@@ -364,8 +367,25 @@ artyRangeSkirmieeArray        = Union(artyRangeSkirmieeArray, longRangeSkirmieeA
 ---------------------------------------------------------------------------
 
 local personalShieldUnits = {
-	[UnitDefNames["shieldassault"].id] = 70,
-	[UnitDefNames["shieldfelon"].id] = 120,
+	[UnitDefNames["shieldassault"].id] = 68,
+	[UnitDefNames["shieldcon"].id] = 68,
+	[UnitDefNames["shieldraid"].id] = 51,
+	[UnitDefNames["shieldskirm"].id] = 68,
+	[UnitDefNames["shieldriot"].id] = 68,
+	[UnitDefNames["shieldaa"].id] = 68,
+	[UnitDefNames["shieldarty"].id] = 102,
+	[UnitDefNames["shieldfelon"].id] = 118,
+}
+
+local personalShieldUnitsWithSafetyMargin = {
+	[UnitDefNames["shieldassault"].id] = 50,
+	[UnitDefNames["shieldcon"].id] = 50,
+	[UnitDefNames["shieldraid"].id] = 37,
+	[UnitDefNames["shieldarty"].id] = 75,
+	[UnitDefNames["shieldaa"].id] = 50,
+	[UnitDefNames["shieldriot"].id] = 50,
+	[UnitDefNames["shieldskirm"].id] = 50,
+	[UnitDefNames["shieldfelon"].id] = 100,
 }
 
 ---------------------------------------------------------------------------
@@ -518,8 +538,14 @@ local shortRangeDiveArray = SetMinus(SetMinus(allGround, diverSkirmieeArray), lo
 -- skirmBlockApproachHeadingBlock (defaults to false): Blocks the effect of skirmBlockedApproachFrames if the dot product of enemyVector and unitFacing exceeds skirmBlockApproachHeadingBlock.
 -- avoidHeightDiff (default in config): A table of targets that are not skirmed if they are too far above or below the unit.
 -- bonusRangeUnits: a map indexed by unitDefID of extra skirm range against particular units.
--- wardFireRange (defaults to false): Range at which to fire towards enemies that are hyperskirmed due to bonusRangeUnits.
--- wardFireHeight (defaults to false): Ground height at which to fire towards enemies that are hyperskirmed due to bonusRangeUnits.
+
+-- wardFireTargets (default false): List of targets, with leeway ranges, to wardfire against.
+-- wardFireLeeway (defaults to 10): Distance below max range to aim at when ward firing.
+-- wardFireEnableLeeway (defaults to 3): Do not ward fire if enemy is within range + wardFireEnableLeeway, to free up targeting for fast moving units.
+-- wardFireHeight (defaults to 0): Ground height at which to fire towards enemies that are hyperskirmed due to bonusRangeUnits.
+-- wardFirePredict (default to 0): Multiply target velocity to predict location for ward fire.
+-- wardFireShield (default to false): Set a shield threshold required to ward fire against shielded targets.
+-- wardFireDefault (default to false): Default value for ward fire.
 
 --*** swarms(defaults to empty): the table of units that this unit will jink towards and strafe
 -- maxSwarmLeeway (defaults to Weapon range): (Weapon range - maxSwarmLeeway) = Max range that the unit will begin strafing targets while swarming
@@ -547,7 +573,6 @@ local shortRangeDiveArray = SetMinus(SetMinus(allGround, diverSkirmieeArray), lo
 -- fleeVelPrediction (defaults to 10): velocity prediction that overrides general velocity prediction for fleeing.
 
 --*** idleFlee (defaults to empty): Units that this unit will flea when idle and not on hold position.
--- 
 
 --*** hugs(defaults to empty): the table of units to close range with.
 -- hugRange (default in config): Range to close to
@@ -644,6 +669,12 @@ local behaviourConfig = {
 		stoppingDistance = 10,
 		fleeLeeway = 140,
 		idleCommitDistMult = 0.05,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireEnableLeeway = 8,
+		wardFirePredict = 2,
+		wardFireShield = 50,
+		wardFireDefault = true,
 	},
 	{
 		name = "spiderscout",
@@ -662,6 +693,11 @@ local behaviourConfig = {
 		minCircleStrafeDistance = 20,
 		fleeLeeway = 160,
 		fleeDistance = 150,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireEnableLeeway = 8,
+		wardFireShield = 50,
+		wardFireDefault = true,
 	},
 	{
 		name = "vehscout",
@@ -685,6 +721,11 @@ local behaviourConfig = {
 		minCircleStrafeDistance = 50,
 		fleeLeeway = 140,
 		fleeDistance = 150,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireEnableLeeway = 8,
+		wardFireShield = 50,
+		wardFireDefault = true,
 	},
 	-- longer ranged swarmers
 	{
@@ -693,7 +734,6 @@ local behaviourConfig = {
 		swarms = lowRangeSwarmieeArray,
 		--flees = {},
 		idleFlee = shortRangeRaiderIdleFleeArray,
-		idleFlee = medRangeRaiderIdleFleeArray,
 		avoidHeightDiff = explodableFull,
 		fightOnlyUnits = shortRangeExplodables,
 		circleStrafe = ENABLE_OLD_JINK_STRAFE,
@@ -704,6 +744,12 @@ local behaviourConfig = {
 		minCircleStrafeDistance = 10,
 		fleeLeeway = 140,
 		velocityPrediction = 30,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireEnableLeeway = 8,
+		wardFirePredict = 2,
+		wardFireShield = 50,
+		wardFireDefault = true,
 	},
 	{
 		name = "amphraid",
@@ -724,6 +770,12 @@ local behaviourConfig = {
 			minCircleStrafeDistance = 10,
 			fleeLeeway = 140,
 			velocityPrediction = 30,
+			
+			wardFireTargets = personalShieldUnitsWithSafetyMargin,
+			wardFireEnableLeeway = 10,
+			wardFirePredict = 28,
+			wardFireShield = 50,
+			wardFireDefault = true,
 		},
 		sea = {
 			weaponNum = 2,
@@ -766,21 +818,12 @@ local behaviourConfig = {
 		velocityPrediction = 20,
 		fleeLeeway = 120,
 		idlePushAggressDist = 320,
-	},
-	{
-		name = "hoverscout",
-		skirms = shortRangeSkirmieeArray,
-		swarms = lowRangeSwarmieeArray,
-		--flees = {},
-		avoidHeightDiff = explodableFull,
-		fightOnlyUnits = shortRangeExplodables,
-		jinkAwayParallelLength = 100,
-		circleStrafe = ENABLE_OLD_JINK_STRAFE,
-		strafeOrderLength = 180,
-		maxSwarmLeeway = 40,
-		swarmLeeway = 40,
-		stoppingDistance = 8,
-		skirmOrderDis = 150,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireEnableLeeway = 10,
+		wardFirePredict = 10,
+		wardFireShield = 50,
+		wardFireDefault = true,
 	},
 	{
 		name = "hoverraid",
@@ -797,6 +840,12 @@ local behaviourConfig = {
 		stoppingDistance = 8,
 		skirmOrderDis = 150,
 		fleeLeeway = 120,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireEnableLeeway = 8,
+		wardFirePredict = 10,
+		wardFireShield = 130,
+		wardFireDefault = true,
 	},
 	{
 		name = "hoverheavyraid",
@@ -811,6 +860,11 @@ local behaviourConfig = {
 		swarmLeeway = 50,
 		stoppingDistance = 15,
 		skirmOrderDis = 150,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireEnableLeeway = 5,
+		wardFireShield = 50,
+		wardFireDefault = true,
 	},
 	{
 		name = "jumpraid",
@@ -827,6 +881,12 @@ local behaviourConfig = {
 		stoppingDistance = 8,
 		velocityPrediction = 20,
 		fleeLeeway = 120,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireEnableLeeway = 5,
+		wardFirePredict = 5,
+		wardFireShield = 50,
+		wardFireDefault = true,
 	},
 	{
 		name = "tankraid",
@@ -844,6 +904,12 @@ local behaviourConfig = {
 		skirmOrderDis = 150,
 		idlePushAggressDist = 350,
 		fleeLeeway = 120,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireEnableLeeway = 10,
+		wardFirePredict = 5,
+		wardFireShield = 50,
+		wardFireDefault = true,
 	},
 	{
 		name = "tankheavyraid",
@@ -858,6 +924,11 @@ local behaviourConfig = {
 		swarmLeeway = 50,
 		stoppingDistance = 15,
 		skirmOrderDis = 150,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireEnableLeeway = 10,
+		wardFireShield = 380,
+		wardFireDefault = true,
 	},
 	{
 		name = "amphimpulse",
@@ -871,7 +942,13 @@ local behaviourConfig = {
 		maxSwarmLeeway = 40,
 		skirmLeeway = 30,
 		minCircleStrafeDistance = 10,
-		velocityPrediction = 20
+		velocityPrediction = 20,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireEnableLeeway = 8,
+		wardFireShield = 180,
+		wardFirePredict = 10,
+		wardFireDefault = true,
 	},
 	{
 		name = "shiptorpraider",
@@ -926,6 +1003,11 @@ local behaviourConfig = {
 		idleChaseEnemyLeeway = 200,
 		idleCommitDistMult = 0.5,
 		idleEnemyDistMult = 0.5,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireShield = 20,
+		wardFirePredict = 5,
+		wardFireDefault = true,
 	},
 	{
 		name = "jumpcon",
@@ -937,6 +1019,11 @@ local behaviourConfig = {
 		maxSwarmLeeway = 0,
 		skirmLeeway = 0,
 		velocityPrediction = 20,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireEnableLeeway = 5,
+		wardFireShield = 90,
+		wardFireDefault = true,
 	},
 	{
 		name = "spiderriot",
@@ -953,6 +1040,10 @@ local behaviourConfig = {
 		idleChaseEnemyLeeway = 200,
 		idleCommitDistMult = 0.5,
 		idleEnemyDistMult = 0.5,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireShield = 50,
+		wardFireDefault = true,
 	},
 	{
 		name = "spideremp",
@@ -968,6 +1059,10 @@ local behaviourConfig = {
 		minCircleStrafeDistance = 10,
 		velocityPrediction = 20,
 		idlePushAggressDist = 200,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireShield = 210,
+		wardFireDefault = true,
 	},
 	{
 		name = "shieldriot",
@@ -999,6 +1094,11 @@ local behaviourConfig = {
 		idleChaseEnemyLeeway = 200,
 		idleCommitDistMult = 0.5,
 		idleEnemyDistMult = 0.5,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireShield = 300,
+		wardFirePredict = 5,
+		wardFireDefault = true,
 	},
 	{
 		name = "shieldfelon",
@@ -1011,10 +1111,14 @@ local behaviourConfig = {
 		skirmLeeway = 50,
 		stoppingDistance = 5,
 		skirmBlockedApproachFrames = 40,
+		
+		wardFireTargets = personalShieldUnitsWithSafetyMargin,
+		wardFireShield = 880,
+		wardFireDefault = true,
 	},
 	{
 		name = "hoverriot",
-		skirms = lowMedRangeSkirmieeArray,
+		skirms = medRangeSkirmieeArray,
 		swarms = lowRangeSwarmieeArray,
 		--flees = {},
 		idleFlee = skirmRangeRiotIdleFleeArray,
@@ -1032,6 +1136,10 @@ local behaviourConfig = {
 		idleChaseEnemyLeeway = 200,
 		idleCommitDistMult = 0.5,
 		idleEnemyDistMult = 0.5,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireShield = 0,
+		wardFireDefault = true,
 	},
 	{
 		name = "tankriot",
@@ -1053,6 +1161,11 @@ local behaviourConfig = {
 		idleChaseEnemyLeeway = 200,
 		idleCommitDistMult = 0.5,
 		idleEnemyDistMult = 0.5,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireShield = 250,
+		wardFirePredict = 20,
+		wardFireDefault = true,
 	},
 	{
 		name = "amphriot",
@@ -1073,6 +1186,11 @@ local behaviourConfig = {
 			idleChaseEnemyLeeway = 200,
 			idleCommitDistMult = 0.5,
 			idleEnemyDistMult = 0.5,
+			
+			wardFireTargets = personalShieldUnits,
+			wardFireShield = 300,
+			wardFirePredict = 10,
+			wardFireDefault = true,
 		},
 		sea = {
 			weaponNum = 2,
@@ -1084,33 +1202,6 @@ local behaviourConfig = {
 			maxSwarmLeeway = 40,
 			skirmLeeway = 30,
 			minCircleStrafeDistance = 10,
-		},
-	},
-	{
-		name = "ampharty",
-		waterline = -5,
-		land = {
-			weaponNum = 1,
-			skirms = artyRangeSkirmieeArray,
-			--swarms = {},
-			--flees = {},
-			fightOnlyUnits = medRangeExplodables,
-			skirmRadar = true,
-			maxSwarmLeeway = 10,
-			minSwarmLeeway = 130,
-			skirmLeeway = 40,
-		},
-		sea = {
-			weaponNum = 2,
-			skirms = medRangeSkirmieeArray,
-			--swarms = {},
-			--flees = {},
-			avoidHeightDiff = explodableFull,
-			fightOnlyUnits = medRangeExplodables,
-			skirmRadar = true,
-			maxSwarmLeeway = 10,
-			minSwarmLeeway = 130,
-			skirmLeeway = 40,
 		},
 	},
 	{
@@ -1156,6 +1247,11 @@ local behaviourConfig = {
 			skirmLeeway = 0,
 			stoppingDistance = 8,
 			skirmOrderDis = 150,
+			
+			wardFireTargets = personalShieldUnitsWithSafetyMargin,
+			wardFireShield = 500,
+			wardFirePredict = 35,
+			wardFireDefault = true,
 		},
 		sea = {
 			weaponNum = 1,
@@ -1185,6 +1281,10 @@ local behaviourConfig = {
 		jinkPeriod = 2,
 		skirmLeeway = 40,
 		skirmBlockedApproachFrames = 10,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireShield = 450,
+		wardFireDefault = true,
 	},
 	{
 		name = "shieldassault",
@@ -1197,6 +1297,11 @@ local behaviourConfig = {
 		minSwarmLeeway = 120,
 		jinkPeriod = 2,
 		skirmLeeway = 40,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireShield = 180,
+		wardFirePredict = 20,
+		wardFireDefault = true,
 	},
 	{
 		name = "spiderassault",
@@ -1209,17 +1314,11 @@ local behaviourConfig = {
 		minSwarmLeeway = 120,
 		jinkPeriod = 2,
 		skirmLeeway = 40,
-	},
-	{
-		name = "shipraider",
-		skirms = riotRangeSkirmieeArray,
-		swarms = lowRangeSwarmieeArray,
-		--flees = {},
-		avoidHeightDiff = explodableFull,
-		fightOnlyUnits = shortRangeExplodables,
-		maxSwarmLeeway = 30,
-		minSwarmLeeway = 90,
-		skirmLeeway = 60,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireShield = 160,
+		wardFirePredict = 30,
+		wardFireDefault = true,
 	},
 	{
 		name = "vehassault",
@@ -1231,6 +1330,11 @@ local behaviourConfig = {
 		maxSwarmLeeway = 50,
 		minSwarmLeeway = 120,
 		skirmLeeway = 40,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireShield = 250,
+		wardFirePredict = 20,
+		wardFireDefault = true,
 	},
 	{
 		name = "tankassault",
@@ -1241,6 +1345,11 @@ local behaviourConfig = {
 		fightOnlyUnits = shortRangeExplodables,
 		skirmOrderDis = 220,
 		skirmLeeway = 50,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireShield = 350,
+		wardFirePredict = 25,
+		wardFireDefault = true,
 	},
 	
 	-- med range skirms
@@ -1253,12 +1362,18 @@ local behaviourConfig = {
 		fightOnlyUnits = medRangeExplodables,
 		maxSwarmLeeway = 30,
 		minSwarmLeeway = 130,
+		jinkPeriod = 2,
 		skirmLeeway = 10,
 		skirmBlockedApproachFrames = 90,
 		velPredChaseFactor = 0.5,
+
 		bonusRangeUnits = personalShieldUnits,
-		wardFireRange = 425,
+		wardFireTargets = personalShieldUnits,
+		wardFireLeeway = 10,
 		wardFireHeight = 20,
+		wardFirePredict = 50,
+		wardFireShield = 200,
+		wardFireDefault = true,
 	},
 	{
 		name = "jumpskirm",
@@ -1273,6 +1388,14 @@ local behaviourConfig = {
 		skirmLeeway = 5,
 		skirmBlockedApproachFrames = 60,
 		velPredChaseFactor = 0.5,
+
+		bonusRangeUnits = personalShieldUnits,
+		wardFireTargets = personalShieldUnits,
+		wardFireLeeway = 10,
+		wardFireHeight = 20,
+		wardFirePredict = 0,
+		wardFireShield = 1100,
+		wardFireDefault = true,
 	},
 	{
 		name = "striderdante",
@@ -1294,9 +1417,14 @@ local behaviourConfig = {
 		skirmLeeway = 10,
 		skirmBlockedApproachFrames = 75,
 		velPredChaseFactor = 0.5,
+
 		bonusRangeUnits = personalShieldUnits,
-		wardFireRange = 445,
-		wardFireHeight = 20,
+		wardFireTargets = personalShieldUnits,
+		wardFireLeeway = 20,
+		wardFireHeight = 5,
+		wardFirePredict = 50,
+		wardFireShield = 250,
+		wardFireDefault = true,
 	},
 	{
 		name = "hoverskirm",
@@ -1312,6 +1440,12 @@ local behaviourConfig = {
 		velocityPrediction = 90,
 		skirmBlockedApproachFrames = 60,
 		skirmBlockApproachHeadingBlock = 0,
+
+		wardFireTargets = personalShieldUnitsWithSafetyMargin,
+		wardFireLeeway = 10,
+		wardFirePredict = 20,
+		wardFireShield = 400,
+		wardFireDefault = true,
 	},
 	{
 		name = "tankheavyassault",
@@ -1323,6 +1457,12 @@ local behaviourConfig = {
 		skirmOrderDis = 220,
 		skirmLeeway = 50,
 		skirmBlockedApproachFrames = 60,
+
+		wardFireTargets = personalShieldUnitsWithSafetyMargin,
+		wardFireLeeway = 10,
+		wardFirePredict = 50,
+		wardFireShield = 1100,
+		wardFireDefault = true,
 	},
 	{
 		name = "gunshipskirm",
@@ -1334,6 +1474,12 @@ local behaviourConfig = {
 		skirmOrderDis = 120,
 		selfVelocityPrediction = true,
 		velocityPrediction = 30,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireLeeway = 10,
+		wardFirePredict = 50,
+		wardFireShield = 450,
+		wardFireDefault = true,
 	},
 	
 	-- long range skirms
@@ -1356,8 +1502,15 @@ local behaviourConfig = {
 		fightOnlyUnits = medRangeExplodables,
 		maxSwarmLeeway = 30,
 		minSwarmLeeway = 130,
+		jinkPeriod = 2,
 		skirmLeeway = 10,
 		skirmBlockedApproachFrames = 90,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireLeeway = 10,
+		wardFirePredict = 80,
+		wardFireShield = 400,
+		wardFireDefault = true,
 	},
 	{
 		name = "spiderskirm",
@@ -1369,6 +1522,12 @@ local behaviourConfig = {
 		minSwarmLeeway = 130,
 		skirmLeeway = 10,
 		skirmBlockedApproachFrames = 90,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireLeeway = 10,
+		wardFirePredict = 80,
+		wardFireShield = 400,
+		wardFireDefault = true,
 	},
 	{
 		name = "amphassault",
@@ -1434,6 +1593,12 @@ local behaviourConfig = {
 		velocityPrediction = 10,
 		skirmOnlyNearEnemyRange = 80,
 		velPredChaseFactor = 0.5,
+		
+		wardFireTargets = personalShieldUnits,
+		wardFireLeeway = 10,
+		wardFirePredict = 35,
+		wardFireShield = 60,
+		wardFireDefault = true,
 	},
 	
 	-- arty range skirms
@@ -1542,6 +1707,26 @@ local behaviourConfig = {
 	},
 	{
 		name = "shiparty",
+		skirms = allMobileGround,
+		--swarms = {},
+		--flees = {},
+		skirmRadar = true,
+		maxSwarmLeeway = 10,
+		minSwarmLeeway = 130,
+		skirmLeeway = 40,
+	},
+	{
+		name = "shipcarrier",
+		skirms = allMobileGround,
+		--swarms = {},
+		--flees = {},
+		skirmRadar = true,
+		maxSwarmLeeway = 10,
+		minSwarmLeeway = 130,
+		skirmLeeway = 40,
+	},
+	{
+		name = "shipheavyarty",
 		skirms = allMobileGround,
 		--swarms = {},
 		--flees = {},
@@ -1786,10 +1971,6 @@ local behaviourConfig = {
 		name = "striderdetriment",
 		onlyIdleHandling = true,
 	},
-	{
-		name = "shipheavyarty",
-		onlyIdleHandling = true,
-	},
 	
 	-- chickens
 	{
@@ -1815,6 +1996,27 @@ local behaviourConfig = {
 		--flees = {},
 		hugs = allGround,
 		hugRange = 150,
+	},
+	
+	-- Ward fire only units.
+	{
+		name = "turretlaser",
+		wardFireTargets = personalShieldUnits,
+		wardFireShield = 0,
+		wardFireDefault = true,
+	},
+	{
+		name = "turretemp",
+		wardFireTargets = personalShieldUnits,
+		wardFireShield = 450,
+		wardFireDefault = true,
+	},
+	{
+		name = "amphsupport",
+		wardFireTargets = personalShieldUnits,
+		wardFireShield = 300,
+		wardFirePredict = 35,
+		wardFireDefault = true,
 	},
 	
 	-- Externally handled units
@@ -1891,6 +2093,12 @@ local function GetBehaviourTable(behaviourData, ud)
 		behaviourData.swarmLeeway             = (behaviourData.swarmLeeway or 50)
 	end
 	
+	if behaviourData.wardFireTargets then
+		behaviourData.wardFireLeeway          = behaviourData.wardFireLeeway or 10
+		behaviourData.wardFireEnableLeeway    = behaviourData.wardFireEnableLeeway or 3
+		behaviourData.wardFireHeight          = behaviourData.wardFireHeight or 0
+	end
+	
 	if behaviourData.fightOnlyOverride then
 		for k, v in pairs(behaviourData) do
 			if not (k == "fightOnlyOverride" or behaviourData.fightOnlyOverride[k]) then
@@ -1907,21 +2115,19 @@ local function LoadBehaviour()
 	local unitAIBehaviour = {}
 	for i = 1, #behaviourConfig do
 		local behaviourData = behaviourConfig[i]
-		local ud = UnitDefNames[behaviourConfig[i].name]
-		
-		if ud then
-			if behaviourData.land and behaviourData.sea then
-				unitAIBehaviour[ud.id] = {
-					defaultAIState = (behaviourData.defaultAIState or behaviourDefaults.defaultState),
-					waterline = (behaviourData.waterline or 0),
-					floatWaterline = behaviourData.floatWaterline,
-					land = GetBehaviourTable(behaviourData.land, ud),
-					sea = GetBehaviourTable(behaviourData.sea, ud),
-				}
-			else
-				unitAIBehaviour[ud.id] = GetBehaviourTable(behaviourData, ud)
-				unitAIBehaviour[ud.id].defaultAIState = (behaviourData.defaultAIState or behaviourDefaults.defaultState)
-			end
+		local ud = UnitDefNames[behaviourData.name]
+
+		if behaviourData.land and behaviourData.sea then
+			unitAIBehaviour[ud.id] = {
+				defaultAIState = (behaviourData.defaultAIState or behaviourDefaults.defaultState),
+				waterline = (behaviourData.waterline or 0),
+				floatWaterline = behaviourData.floatWaterline,
+				land = GetBehaviourTable(behaviourData.land, ud),
+				sea = GetBehaviourTable(behaviourData.sea, ud),
+			}
+		else
+			unitAIBehaviour[ud.id] = GetBehaviourTable(behaviourData, ud)
+			unitAIBehaviour[ud.id].defaultAIState = (behaviourData.defaultAIState or behaviourDefaults.defaultState)
 		end
 	end
 	
