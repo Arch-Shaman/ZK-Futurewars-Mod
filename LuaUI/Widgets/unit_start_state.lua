@@ -20,6 +20,7 @@ end
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
 
 local overkillPrevention, overkillPreventionBlackHole = include("LuaRules/Configs/overkill_prevention_defs.lua")
+local baitPreventionDefault = include("LuaRules/Configs/bait_prevention_defs.lua")
 local alwaysHoldPos, holdPosException, dontFireAtRadarUnits, factoryDefs = VFS.Include("LuaUI/Configs/unit_state_defaults.lua")
 local defaultSelectionRank = VFS.Include(LUAUI_DIRNAME .. "Configs/selection_rank.lua")
 local spectatingState = select(1, Spring.GetSpectatingState())
@@ -28,6 +29,10 @@ local unitsToFactory = {}	-- [unitDefName] = factoryDefName
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
+
+local preventBaitTip = "\nAvoidance is disabled for units with Force Fire (only for the target), Attack Move or Patrol commands."
+local badTargetDescStr = "\n\nAvoid Bad Targets prevents auto-aim at low value targets. It is disabled for units with Force Fire (only for the target), Attack Move or Patrol commands. The lowest level avoids armoured targets (excluding Crab) while levels Light to Heavy ignore unidentified radar dots."
+
 
 local tooltipFunc = {}
 local tooltips = {
@@ -90,6 +95,17 @@ local tooltips = {
 		[2] = "2",
 		[3] = "3",
 	},
+	prevent_bait = {
+		[0] = "Disable target avoidance.",
+		[1] = "Avoid shooting at light drones, Wind, Solar, Claw, Dirtbag, low value nanoframes and armoured targets (excluding Crab)." .. preventBaitTip,
+		[2] = "Avoid shooting at units costing less than 90, Razor, Sparrow, unknown radar dots, low value nanoframes and armoured targets (except Crab)." .. preventBaitTip,
+		[3] = "Avoid shooting at units costing less than 240 (excluding Stardust) as well as, Raptor, unknown radar dots, low value nanoframes and armoured targets (excluding Crab). Disables Ward Fire." .. preventBaitTip,
+		[4] = "Avoid shooting at  units costing less than 420, unknown radar dots, low value nanoframes and armoured targets (excluding Crab). Disables Ward Fire." .. preventBaitTip,
+	},
+	ward_fire = {
+		[0] = "Disabled.",
+		[1] = "Shoot at the shields of Thugs, Felons and Convicts when nothing else is in range.",
+	},
 }
 
 for name, values in pairs(tooltips) do
@@ -127,6 +143,7 @@ options_order = {
 	'resetMoveStates', 'holdPosition',
 	'skirmHoldPosition', 'artyHoldPosition', 'aaHoldPosition',
 	'enableTacticalAI', 'disableTacticalAI',
+	'preventBaitOff', 'preventBaitDefault', 'preventBaitMinOne', 'preventBaitPlusOne',
 	'enableAutoAssist', 'disableAutoAssist',
 	'enableAutoCallTransport', 'disableAutoCallTransport',
 	'setRanksToDefault', 'setRanksToThree',
@@ -275,6 +292,74 @@ options = {
 				local ud = name and UnitDefNames[name]
 				if ud then
 					options[opt].value = true
+				end
+			end
+		end,
+	},
+	preventBaitOff = {
+		type = 'button',
+		name = "Disable Avoid Bad Targets",
+		desc = "Disable low value target avoidance for all units." .. badTargetDescStr,
+		path = "Settings/Unit Behaviour/Default States/Presets",
+		OnChange = function ()
+			for i = 1, #options_order do
+				local opt = options_order[i]
+				local find = string.find(opt, "_prevent_bait")
+				local name = find and string.sub(opt,0,find-1)
+				local ud = name and UnitDefNames[name]
+				if ud then
+					options[opt].value = 0
+				end
+			end
+		end,
+	},
+	preventBaitDefault = {
+		type = 'button',
+		name = "Default Avoid Bad Targets",
+		desc = "Set low value target avoidance back to the default. This causes some units with costly or high reload shots to ignore targets at the 40 or 100 threshold." .. badTargetDescStr,
+		path = "Settings/Unit Behaviour/Default States/Presets",
+		OnChange = function ()
+			for i = 1, #options_order do
+				local opt = options_order[i]
+				local find = string.find(opt, "_prevent_bait")
+				local name = find and string.sub(opt,0,find-1)
+				local ud = name and UnitDefNames[name]
+				if ud then
+					options[opt].value = baitPreventionDefault[ud.id]
+				end
+			end
+		end,
+	},
+	preventBaitMinOne = {
+		type = 'button',
+		name = "Set min Avoid Bad Targets",
+		desc = "Set low value target avoidance to a cost threshold of 40 if the default is not higher." .. badTargetDescStr,
+		path = "Settings/Unit Behaviour/Default States/Presets",
+		OnChange = function ()
+			for i = 1, #options_order do
+				local opt = options_order[i]
+				local find = string.find(opt, "_prevent_bait")
+				local name = find and string.sub(opt,0,find-1)
+				local ud = name and UnitDefNames[name]
+				if ud then
+					options[opt].value = math.max(1, baitPreventionDefault[ud.id])
+				end
+			end
+		end,
+	},
+	preventBaitPlusOne = {
+		type = 'button',
+		name = "Set high Avoid Bad Targets",
+		desc = "Set low value target avoidance to one higher than the default for all units." .. badTargetDescStr,
+		path = "Settings/Unit Behaviour/Default States/Presets",
+		OnChange = function ()
+			for i = 1, #options_order do
+				local opt = options_order[i]
+				local find = string.find(opt, "_prevent_bait")
+				local name = find and string.sub(opt,0,find-1)
+				local ud = name and UnitDefNames[name]
+				if ud then
+					options[opt].value = baitPreventionDefault[ud.id] + 1
 				end
 			end
 		end,
@@ -521,6 +606,7 @@ options = {
 }
 
 local tacticalAIUnits = {}
+local wardFireUnits = {}
 do
 	local tacticalAIDefs, behaviourDefaults = VFS.Include("LuaRules/Configs/tactical_ai_defs.lua", nil, VFS.ZIP)
 	for unitDefID, behaviourData in pairs(tacticalAIDefs) do
@@ -529,6 +615,9 @@ do
 			unitDefName = unitDefName and unitDefName.name
 			if unitDefName then
 				tacticalAIUnits[unitDefName] = {value = (behaviourData.defaultAIState or behaviourDefaults.defaultState) == 1}
+			end
+			if behaviourData.wardFireTargets then
+				wardFireUnits[unitDefName] = (behaviourData.wardFireDefault and 1) or 0
 			end
 		end
 	end
@@ -859,6 +948,33 @@ local function addUnit(defName, path)
 		options_order[#options_order+1] = defName .. "_overkill_prevention"
 	end
 
+	if wardFireUnits[defName] then
+		options[defName .. "_ward_fire"] = {
+			name = "  Shoot Shields (Ward Fire)",
+			desc = "Shoot at the shields of Thugs, Felons and Convicts when nothing else is in range.",
+			type = 'bool',
+			value = (wardFireUnits[defName] == 1),
+			path = path,
+			tooltipFunction = tooltipFunc.prevent_bait,
+		}
+		options_order[#options_order+1] = defName .. "_ward_fire"
+	end
+
+	if baitPreventionDefault[unitDefID] then
+		options[defName .. "_prevent_bait"] = {
+			name = "  Avoid bad targets",
+			desc = "Avoid shooting at low value targets, set by a threshold.",
+			type = 'number',
+			value = baitPreventionDefault[unitDefID],
+			min = 0,
+			max = 4,
+			step = 1,
+			path = path,
+			tooltipFunction = tooltipFunc.prevent_bait,
+		}
+		options_order[#options_order+1] = defName .. "_prevent_bait"
+	end
+
 	if ud.canCloak then
 		options[defName .. "_personal_cloak_0"] = {
 			name = "  Personal Cloak",
@@ -1179,6 +1295,7 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		QueueState(name, "auto_assist", CMD_FACTORY_GUARD, orderArray)
 		QueueState(name, "airstrafe1", CMD_AIR_STRAFE, orderArray)
 		QueueState(name, "floattoggle", CMD_UNIT_FLOAT_STATE, orderArray)
+		QueueState(name, "goostate", CMD_GOO_GATHER, orderArray)
 		
 		local retreat = GetStateValue(name, "retreatpercent")
 		local retreatshield = GetStateValue(name, "retreatpercent_shield")
@@ -1257,6 +1374,16 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		value = GetStateValue(name, "selection_rank")
 		if value and WG.SetSelectionRank then
 			WG.SetSelectionRank(unitID, value)
+		end
+		
+		value = GetStateValue(name, "prevent_bait")
+		if value then
+			orderArray[#orderArray + 1] = {CMD_PREVENT_BAIT, {value}, CMD.OPT_SHIFT}
+		end
+		
+		value = GetStateValue(name, "ward_fire")
+		if value then
+			orderArray[#orderArray + 1] = {CMD_WARD_FIRE, {(value and 1) or 0}, CMD.OPT_SHIFT}
 		end
 		
 		value = GetStateValue(name, "disableattack")

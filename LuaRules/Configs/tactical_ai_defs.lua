@@ -353,6 +353,18 @@ local slasherSkirmieeArray = NameToDefID({
 	"turretemp",
 })
 
+local bayonetFleeArray = NameToDefID({
+	"cloakraid",
+	"vehraid",
+	"chicken",
+	"tankassault",
+	"vehscout",
+	"turretriot",
+	"tankheavyassault",
+	"striderdante",
+	"shieldriot",
+})
+
 -- Nested union so long ranged things also skirm the things skirmed by short ranged things
 shortRangeSkirmieeArray       = Union(shortRangeSkirmieeArray,veryShortRangeSkirmieeArray)
 shortToRiotRangeSkirmieeArray = Union(shortToRiotRangeSkirmieeArray,shortRangeSkirmieeArray)
@@ -369,7 +381,7 @@ artyRangeSkirmieeArray        = Union(artyRangeSkirmieeArray, longRangeSkirmieeA
 local personalShieldUnits = {
 	[UnitDefNames["shieldassault"].id] = 68,
 	[UnitDefNames["shieldcon"].id] = 68,
-	[UnitDefNames["shieldraid"].id] = 51,
+	--[UnitDefNames["shieldraid"].id] = 51,
 	[UnitDefNames["shieldskirm"].id] = 68,
 	[UnitDefNames["shieldriot"].id] = 68,
 	[UnitDefNames["shieldaa"].id] = 68,
@@ -380,7 +392,7 @@ local personalShieldUnits = {
 local personalShieldUnitsWithSafetyMargin = {
 	[UnitDefNames["shieldassault"].id] = 50,
 	[UnitDefNames["shieldcon"].id] = 50,
-	[UnitDefNames["shieldraid"].id] = 37,
+	--[UnitDefNames["shieldraid"].id] = 37,
 	[UnitDefNames["shieldarty"].id] = 75,
 	[UnitDefNames["shieldaa"].id] = 50,
 	[UnitDefNames["shieldriot"].id] = 50,
@@ -1936,7 +1948,17 @@ local behaviourConfig = {
 	},
 	{
 		name = "hoverassault",
-		onlyIdleHandling = true,
+		flees = bayonetFleeArray,
+		skirms = medRangeSkirmieeArray,
+		idleFlee = longRangeRaiderIdleFleeArray,
+		idleChaseEnemyLeeway = 500,
+		fleeLeeway = 1000,
+		fleeDistance = 500,
+		wardFireTargets = personalShieldUnits,
+		wardFireLeeway = 10,
+		wardFirePredict = 35,
+		wardFireShield = 60,
+		wardFireDefault = true,
 	},
 	{
 		name = "spidercrabe",

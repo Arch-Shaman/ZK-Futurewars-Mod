@@ -27,6 +27,8 @@ local stateData = {
 	--[CMD_GLOBAL_BUILD] = 2, -- Handled entirely in luaUI so not included here.
 	[CMD_UNIT_KILL_SUBORDINATES] = 2,
 	[CMD_PREVENT_OVERKILL] = 2,
+	[CMD_PREVENT_BAIT] = 5,
+	[CMD_WARD_FIRE] = 2,
 	--[CMD_SELECTION_RANK] = 2, -- Handled entirely in luaUI so not included here.
 	[CMD_UNIT_AI] = 2,
 }
@@ -55,6 +57,8 @@ local gadgetReverse = {
 	[CMD_UNIT_FLOAT_STATE] = true,
 	[CMD_MISC_PRIORITY] = true,
 	[CMD_UNIT_BOMBER_DIVE_STATE] = true,
+	[CMD_PREVENT_BAIT] = true,
+	[CMD_GOO_GATHER] = true,
 }
 
 return stateData, gadgetReverse, specialHandling
