@@ -63,7 +63,7 @@ return {
 		weaponDefs             = {
 	
 			fragment = {
-				name                    = [[Rocket]],
+				name                    = [[High Explosive Warhead]],
 				areaOfEffect            = 90,
 				burnblow                = true,
 				cegTag                  = [[rocket_trail_bar]],
