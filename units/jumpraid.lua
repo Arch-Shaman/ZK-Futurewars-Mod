@@ -308,6 +308,7 @@ return {
 					light_color = [[0.25 0.13 0.05]],
 					light_radius = 500,
 					shield_damage = 40,
+					bogus = 1
 				},
 				damage                  = {
 					default = 0,
