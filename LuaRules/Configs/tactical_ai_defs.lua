@@ -369,6 +369,38 @@ local bayonetFleeArray = NameToDefID({
 	"dronelight",
 })
 
+local tankconskirmarray = NameToDefID({
+	"cloakraid",
+	"shieldraid",
+	"cloakheavyraid",
+	"amphraid",
+	"cloakriot",
+	"shieldriot",
+	"vehscout",
+	"dronelight",
+	"dronecarry",
+	"jumpbomb",
+	"gunshipraid",
+	"cloakcon",
+	"shieldcon",
+	"amphcon",
+	"vehcon",
+	"gunshipcon",
+	"gunshipaa",
+	"gunshipbomb",
+	"turretmissile",
+	"turretaaclose",
+	"turretaaflak",
+	"turretaalaser",
+	"turretlaser",
+	"planecon",
+	"shipcon",
+	"spiderscout",
+	"spideremp",
+})
+
+local tankconfleearray = SetMinus(allGround, tankconfleearray)
+
 -- Nested union so long ranged things also skirm the things skirmed by short ranged things
 shortRangeSkirmieeArray       = Union(shortRangeSkirmieeArray,veryShortRangeSkirmieeArray)
 shortToRiotRangeSkirmieeArray = Union(shortToRiotRangeSkirmieeArray,shortRangeSkirmieeArray)
@@ -496,6 +528,22 @@ local fleeables = NameToDefID({
 	"jumpsumo",
 })
 
+local raiderFleeables = NameToDefID({
+	"cloakbomb",
+	"shieldbomb",
+	"amphbomb",
+	"jumpscout",
+})
+
+local somebombs = NameToDefID({
+	"shieldbomb",
+	"cloakbomb",
+})
+
+local justroach = NameToDefID({
+	"shieldbomb",
+})
+
 -- Not currently used as air scouts flee everything.
 --local antiAirFlee = NameToDefID({
 --	"cloakaa",
@@ -519,6 +567,8 @@ local fleeables = NameToDefID({
 local subfleeables = NameToDefID({
 	"subraider",
 })
+
+local jumpconflee = SetMinus(armedLand, lowMedRangeSkirmieeArray)
 
 -- Some short ranged units dive everything that they don't skirm or swarm.
 local shortRangeDiveArray = SetMinus(SetMinus(allGround, diverSkirmieeArray), lowRangeSwarmieeArray)
@@ -673,7 +723,7 @@ local behaviourConfig = {
 		name = "cloakraid",
 		skirms = veryShortRangeSkirmieeArray,
 		swarms = lowRangeSwarmieeArray,
-		--flees = {},
+		flees = justroach,
 		idleFlee = veryShortRangeRaiderIdleFleeArray,
 		avoidHeightDiff = explodableFull,
 		fightOnlyUnits = veryShortRangeExplodables,
@@ -748,7 +798,7 @@ local behaviourConfig = {
 		name = "shieldraid",
 		skirms = riotRangeSkirmieeArray,
 		swarms = lowRangeSwarmieeArray,
-		--flees = {},
+		flees = raiderFleeables,
 		idleFlee = shortRangeRaiderIdleFleeArray,
 		avoidHeightDiff = explodableFull,
 		fightOnlyUnits = shortRangeExplodables,
@@ -774,7 +824,7 @@ local behaviourConfig = {
 			weaponNum = 1,
 			skirms = shortRangeSkirmieeArray,
 			swarms = lowRangeSwarmieeArray,
-			--flees = {},
+			flees = raiderFleeables,
 			idleFlee = shortRangeRaiderIdleFleeArray,
 			avoidHeightDiff = explodableFull,
 			fightOnlyUnits = shortRangeExplodables,
@@ -815,15 +865,15 @@ local behaviourConfig = {
 		name = "vehraid",
 		skirms = diverSkirmieeArray,
 		swarms = lowRangeSwarmieeArray,
-		--flees = {},
+		flees = raiderFleeables,
 		idleFlee = medRangeRaiderIdleFleeArray,
 		avoidHeightDiff = explodableFull,
 		hugs = shortRangeDiveArray,
 		fightOnlyUnits = shortRangeExplodables,
-		localJinkOrder = false,
+		localJinkOrder = true,
 		jinkTangentLength = 50,
 		jinkAwayParallelLength = 120,
-		circleStrafe = ENABLE_OLD_JINK_STRAFE,
+		circleStrafe = true,
 		strafeOrderLength = 100,
 		minCircleStrafeDistance = 260,
 		maxSwarmLeeway = 50,
@@ -845,7 +895,7 @@ local behaviourConfig = {
 		name = "hoverraid",
 		skirms = shortRangeSkirmieeArray,
 		swarms = lowRangeSwarmieeArray,
-		--flees = {},
+		flees = raiderFleeables,
 		idleFlee = shortRangeRaiderIdleFleeArray,
 		avoidHeightDiff = explodableFull,
 		fightOnlyUnits = shortRangeExplodables,
@@ -886,7 +936,7 @@ local behaviourConfig = {
 		name = "jumpraid",
 		skirms = shortToRiotRangeSkirmieeArray,
 		swarms = lowRangeSwarmieeArray,
-		--flees = {},
+		flees = raiderFleeables,
 		idleFlee = longRangeRaiderIdleFleeArray,
 		fightOnlyUnits = shortRangeExplodables,
 		circleStrafe = ENABLE_OLD_JINK_STRAFE,
@@ -931,7 +981,7 @@ local behaviourConfig = {
 		name = "tankheavyraid",
 		skirms = shortToRiotRangeSkirmieeArray,
 		swarms = lowRangeSwarmieeArray,
-		--flees = {},
+		flees = raiderFleeables,
 		idleFlee = longRangeRaiderIdleFleeArray,
 		fightOnlyUnits = shortRangeExplodables,
 		circleStrafe = ENABLE_OLD_JINK_STRAFE,
@@ -1029,11 +1079,11 @@ local behaviourConfig = {
 		name = "jumpcon",
 		skirms = lowMedRangeSkirmieeArray,
 		--swarms = {},
-		--flees = {},
+		flees = jumpconflee,
 		avoidHeightDiff = explodableFull,
 		fightOnlyUnits = medRangeExplodables,
 		maxSwarmLeeway = 0,
-		skirmLeeway = 0,
+		skirmLeeway = 80,
 		velocityPrediction = 20,
 		
 		wardFireTargets = personalShieldUnits,
@@ -1920,7 +1970,64 @@ local behaviourConfig = {
 		fleeLeeway = 850,
 		fleeDistance = 850,
 	},
-	
+	-- Constructors --
+	{
+		name = "tankcon",
+		onlyIdleHandling = false,
+		skirms = tankconskirmarray,
+		flees = tankconskirmarray,
+		minFleeRange = 300,
+		fleeLeeway = 300,
+	},
+	{
+		name = "cloakcon",
+		--skirms = {},
+		--swarms = {},
+		--flees = {},
+		searchRange = 1200,
+		fleeEverything = true,
+		minFleeRange = 400, -- Avoid enemies standing in front of Pickets
+		fleeLeeway = 250,
+		fleeDistance = 100,
+	},
+	{
+		name = "vehcon",
+		skirms = allMobileGround,
+		skirmRadar = true,
+		maxSwarmLeeway = 400,
+		minSwarmLeeway = 200,
+		skirmLeeway = 300,
+	},
+	{
+		name = "planecon",
+		--skirms = {},
+		--swarms = {},
+		flees = armedLand,
+		searchRange = 800,
+		minFleeRange = 200, -- Avoid enemies standing in front of Pickets
+		fleeLeeway = 450,
+		fleeDistance = 450,
+	},
+	{
+		name = "hovercon",
+		--skirms = {},
+		--swarms = {},
+		flees = armedLand,
+		searchRange = 800,
+		minFleeRange = 200, -- Avoid enemies standing in front of Pickets
+		fleeLeeway = 450,
+		fleeDistance = 450,
+	},
+	{
+		name = "shieldcon",
+		--skirms = {},
+		--swarms = {},
+		flees = armedLand,
+		searchRange = 300,
+		minFleeRange = 100, -- Avoid enemies standing in front of Pickets
+		fleeLeeway = 100,
+		fleeDistance = 100,
+	},
 	-- only handle idleness
 	{
 		name = "shieldscout",
@@ -1928,6 +2035,7 @@ local behaviourConfig = {
 	},
 	{
 		name = "cloakheavyraid",
+		flees = allMobileGround,
 		onlyIdleHandling = true,
 	},
 	{
@@ -1964,10 +2072,6 @@ local behaviourConfig = {
 	},
 	{
 		name = "jumpassault",
-		onlyIdleHandling = true,
-	},
-	{
-		name = "tankcon",
 		onlyIdleHandling = true,
 	},
 	{
