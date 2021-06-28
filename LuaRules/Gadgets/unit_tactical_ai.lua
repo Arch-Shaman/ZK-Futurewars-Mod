@@ -888,7 +888,7 @@ local function DoTacticalAI(unitID, cmdID, cmdOpts, cmdTag, cp_1, cp_2, cp_3,
 	
 	if (typeKnown and ((behaviour.flees and behaviour.flees[enemyUnitDef]) or (behaviour.fleeCombat and armedUnitDefIDs[enemyUnitDef])))
 			or (not typeKnown and behaviour.fleeRadar) 
-			or (behaviour.cloakFlee and Spring.GetUnitIsCloaked(unitID)) then
+			or (behaviour.cloakFlee and Spring.GetUnitIsCloaked(unitID) and (behaviour.flees == nil or behaviour.swarms[enemyUnitDef] == nil)) then
 		-- if I have los and the unit is a fleeable or a unit is unarmed and I flee combat - flee
 		-- if I do not have los and flee radar dot, flee
 		local orderSent = DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typeKnown, move, isIdleAttack, cmdID, cmdTag, frame)
