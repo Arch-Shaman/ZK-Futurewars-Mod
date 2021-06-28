@@ -568,6 +568,16 @@ local subfleeables = NameToDefID({
 	"subraider",
 })
 
+local eco = NameToDefID({
+	"energysolar",
+	"energyfusion",
+	"energysingu",
+	"energygeo",
+	"energyheavygeo",
+	"staticmex",
+	"energywind",
+})
+
 local jumpconflee = SetMinus(armedLand, lowMedRangeSkirmieeArray)
 
 -- Some short ranged units dive everything that they don't skirm or swarm.
@@ -2036,10 +2046,22 @@ local behaviourConfig = {
 	},
 	{
 		name = "cloakheavyraid",
+		swarms = eco,
+		skirms = {}
+		flees = armedLand,
 		onlyIdleHandling = false,
 		cloakFlee = true,
 		fleeVelPrediction = 10,
-		velocityPrediction = behaviourDefaults.defaultVelocityPrediction or 10,
+		minFleeRange = 100,
+		JinkTangentLength = 80,
+		JinkParallelLength = 200,
+		JinkAwayParallelLength = 170,
+		StrafeOrderLength = 100,
+		MinCircleStrafeDistance = 40,
+		LocalJinkOrder = false,
+		SkirmOrderDis = 120,
+		VelocityPrediction = 30,
+		HugRange = 50,
 	},
 	{
 		name = "gunshipraid",
