@@ -123,7 +123,6 @@ return {
 
 				customparams = {
 					timeslow_damagefactor = 1.7,
-					bogus = 1,
 					nofriendlyfire = 1,
 				},
 
