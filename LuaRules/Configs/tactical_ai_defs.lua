@@ -2038,6 +2038,8 @@ local behaviourConfig = {
 		name = "cloakheavyraid",
 		onlyIdleHandling = false,
 		cloakFlee = true,
+		fleeVelPrediction = 10,
+		velocityPrediction = behaviourDefaults.defaultVelocityPrediction or 10,
 	},
 	{
 		name = "gunshipraid",
