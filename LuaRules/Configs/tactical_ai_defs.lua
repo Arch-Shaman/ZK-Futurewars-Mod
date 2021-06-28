@@ -1533,17 +1533,11 @@ local behaviourConfig = {
 		skirms = longRangeSkirmieeArray,
 		swarms = longRangeSwarmieeArray,
 		--flees = {},
-		fightOnlyUnits = medRangeExplodables,
+		--fightOnlyUnits = medRangeExplodables,
 		maxSwarmLeeway = 10,
 		minSwarmLeeway = 130,
 		skirmLeeway = 10,
 		skirmBlockedApproachFrames = 90,
-		
-		wardFireTargets = personalShieldUnits,
-		wardFireLeeway = 10,
-		wardFirePredict = 80,
-		wardFireShield = 400,
-		wardFireDefault = true,
 	},
 	{
 		name = "amphassault",
