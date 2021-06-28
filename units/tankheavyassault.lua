@@ -148,6 +148,7 @@ return {
 					light_color = [[0.25 0.13 0.05]],
 					light_radius = 500,
 					shield_damage = 100,
+					bogus = 1,
 				},
 				damage                  = {
 					default = 0,
@@ -174,7 +175,7 @@ return {
 				weaponVelocity          = 320,
 			},
 			FINAL = {
-				name                    = [[Flechette]],
+				name                    = [[Oblivion Flechette]],
 				--cegTag                  = [[flak_trail]],
 				areaOfEffect            = 96,
 				alphaDecay              = 0.7,
