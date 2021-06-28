@@ -18,6 +18,7 @@ Todo:
 - Drone production (would need some work to do properly because of entanglement)
 - Clogging (Dirtbag)
 - Water tank (Archer)
+- Spread of cluster projectiles
 
 Customparams to add to units:
 stats_show_death_explosion
@@ -29,7 +30,6 @@ stats_hide_damage
 stats_hide_reload
 stats_hide_dps
 stats_hide_projectile_speed
-
 ]]
 
 --------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ local color2incolor
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local WINDOW_WIDTH  = 450
+local WINDOW_WIDTH  = 650
 local B_HEIGHT 		= 30
 local icon_size 	= 18
 
@@ -435,14 +435,25 @@ local function GetShieldRegenDrain(wd)
 	return shieldRegen, shieldDrain
 end
 
-local function weapons2Table(cells, ws, unitID)
+local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds)
 	local cells = cells
+	local startPoint = #cells+1
 	
-	local wd = WeaponDefs[ws.weaponID]
+	local wd
+	if bombletCount then
+		wd = WeaponDefNames[ws]
+	else
+		wd = WeaponDefs[ws.weaponID]
+	end
+	local recursedWepIds = recursedWepIds
+	recursedWepIds[#recursedWepIds+1] = wd.name
 	local cp = wd.customParams or emptyTable
-
+	
+	local comm_mult = (unitID and Spring.GetUnitRulesParam(unitID, "comm_damage_mult")) or 1
 	local name = wd.description or "Weapon"
-	if ws.count > 1 then
+	if bombletCount then
+		name = name .. " x " .. math.floor(bombletCount * comm_mult)
+	elseif ws.count > 1 then
 		name = name .. " x " .. ws.count
 	end
 
@@ -454,15 +465,17 @@ local function weapons2Table(cells, ws, unitID)
 		name = name .. " (manual fire)"
 	end
 	
-	if ws.aa_only then
+	if not bombletCount and ws.aa_only then
 		name = name .. " (anti-air only)"
 	end
 	if cp.targeter then
 		name = name .. " (Guidance only)"
 	end
-	cells[#cells+1] = name
-	cells[#cells+1] = ''
-
+	if not cp.bogus then
+		cells[#cells+1] = name
+		cells[#cells+1] = ''
+	end
+	
 	if wd.isShield then
 		local regen, drain = GetShieldRegenDrain(wd)
 		cells[#cells+1] = ' - Strength:'
@@ -483,486 +496,519 @@ local function weapons2Table(cells, ws, unitID)
 			cells[#cells+1] = ''
 		end
 	else
-		-- calculate damages
-
-		local dam  = 0
-		local damw = 0
-		local dams = 0
-		local damd = 0
-		local damc = 0
-
-		local stun_time = 0
-
-		local comm_mult = (unitID and Spring.GetUnitRulesParam(unitID, "comm_damage_mult")) or 1
-		local baseDamage = tonumber(cp.stats_damage) or wd.customParams.shield_damage or 0
-		local val = baseDamage * comm_mult
-
-		if cp.disarmdamagemult then
-			damd = val * cp.disarmdamagemult
-			if (cp.disarmdamageonly == "1") then
-				val = 0
+			-- calculate damages
+		if not cp.bogus then
+			local dam  = 0
+			local damw = 0
+			local dams = 0
+			local damd = 0
+			local damc = 0
+	
+			local stun_time = 0
+			
+			local baseDamage = tonumber(cp.stats_damage) or wd.customParams.shield_damage or 0
+			local val = baseDamage * comm_mult
+	
+			if cp.disarmdamagemult then
+				damd = val * cp.disarmdamagemult
+				if (cp.disarmdamageonly == "1") then
+					val = 0
+				end
+				stun_time = tonumber(cp.disarmtimer)
 			end
-			stun_time = tonumber(cp.disarmtimer)
-		end
-
-		if cp.timeslow_damagefactor then
-			dams = val * cp.timeslow_damagefactor
-			if (cp.timeslow_onlyslow == "1") then
-				val = 0
-			end
-		end
-
-		if cp.is_capture then
-			damc = val
-			val = 0
-		end
-
-		if cp.extra_damage then
-			damw = tonumber(cp.extra_damage) * comm_mult
-			stun_time = tonumber(wd.customParams.extra_paratime)
-		end
-
-		if wd.paralyzer then
-			damw = val
-			if stun_time == 0 then
-				stun_time = wd.damages.paralyzeDamageTime
-			end
-		else
-			dam = val
-		end
-
-		-- get reloadtime and calculate dps
-		local reloadtime = tonumber(cp.script_reload) or wd.reload
-		
-		local dps  = math.floor(dam /reloadtime + 0.5)
-		local dpsw = math.floor(damw/reloadtime + 0.5)
-		local dpss = math.floor(dams/reloadtime + 0.5)
-		local dpsd = math.floor(damd/reloadtime + 0.5)
-		local dpsc = math.floor(damc/reloadtime + 0.5)
-
-		local mult = tonumber(cp.statsprojectiles) or ((tonumber(cp.script_burst) or wd.salvoSize) * wd.projectiles)
-
-		local dps_str, dam_str, shield_dam_str = '', '', ''
-		local damageTypes = 0
-		if dps > 0 then
-			dam_str = dam_str .. numformat(dam,2)
-			shield_dam_str = shield_dam_str .. numformat(dam,2)
-			if cp.stats_damage_per_second then
-				dps_str = dps_str .. numformat(tonumber(cp.stats_damage_per_second),2)
-			else
-				dps_str = dps_str .. numformat(dps*mult,2)
-			end
-			damageTypes = damageTypes + 1
-		end
-		if dpsw > 0 then
-			if dps_str ~= '' then
-				dps_str = dps_str .. ' + '
-				dam_str = dam_str .. ' + '
-				shield_dam_str = shield_dam_str .. ' + '
-			end
-			dam_str = dam_str .. color2incolor(colorCyan) .. numformat(damw,2) .. " (P)\008"
-			shield_dam_str = shield_dam_str .. color2incolor(colorCyan) .. numformat(math.floor(damw / 3),2) .. " (P)\008"
-			dps_str = dps_str .. color2incolor(colorCyan) .. numformat(dpsw*mult,2) .. " (P)\008"
-			damageTypes = damageTypes + 1
-		end
-		if dpss > 0 then
-			if dps_str ~= '' then
-				dps_str = dps_str .. ' + '
-				dam_str = dam_str .. ' + '
-				shield_dam_str = shield_dam_str .. ' + '
-			end
-			dam_str = dam_str .. color2incolor(colorPurple) .. numformat(dams,2) .. " (S)\008"
-			shield_dam_str = shield_dam_str .. color2incolor(colorPurple) .. numformat(math.floor(dams / 3),2) .. " (S)\008"
-			dps_str = dps_str .. color2incolor(colorPurple) .. numformat(dpss*mult,2) .. " (S)\008"
-			damageTypes = damageTypes + 1
-		end
-
-		if dpsd > 0 then
-			if dps_str ~= '' then
-				dps_str = dps_str .. ' + '
-				dam_str = dam_str .. ' + '
-				shield_dam_str = shield_dam_str .. ' + '
-			end
-			dam_str = dam_str .. color2incolor(colorDisarm) .. numformat(damd,2) .. " (D)\008"
-			shield_dam_str = shield_dam_str .. color2incolor(colorDisarm) .. numformat(math.floor(damd / 3),2) .. " (D)\008"
-			dps_str = dps_str .. color2incolor(colorDisarm) .. numformat(dpsd*mult,2) .. " (D)\008"
-			damageTypes = damageTypes + 1
-		end
-
-		if dpsc > 0 then
-			if dps_str ~= '' then
-				dps_str = dps_str .. ' + '
-				dam_str = dam_str .. ' + '
-				shield_dam_str = shield_dam_str .. ' + '
-			end
-			dam_str = dam_str .. color2incolor(colorCapture) .. numformat(damc,2) .. " (C)\008"
-			shield_dam_str = shield_dam_str .. color2incolor(colorCapture) .. numformat(damc,2) .. " (C)\008"
-			dps_str = dps_str .. color2incolor(colorCapture) .. numformat(dpsc*mult,2) .. " (C)\008"
-			damageTypes = damageTypes + 1
-		end
-
-		if mult > 1 then
-			dam_str = dam_str .. " x " .. mult
-			shield_dam_str = shield_dam_str .. " x " .. mult
-		end
-		if cp.shield_mult then
-			shield_dam_str = shield_dam_str .. " x " .. math.floor(100*cp.shield_mult) .. '%'
-		end
-		
-		local show_damage = not cp.stats_hide_damage
-		local show_dps = not cp.stats_hide_dps
-		local show_reload = not cp.stats_hide_reload
-		local show_range = not cp.stats_hide_range
-		local show_aoe = not cp.stats_hide_aoe
-
-		local hitscan = {
-			BeamLaser = true,
-			LightningCannon = true,
-		}
-		local show_projectile_speed = not cp.stats_hide_projectile_speed and not hitscan[wd.type]
-
-		if ((dps + dpsw + dpss + dpsd + dpsc) < 2) then -- no damage: newtons and such
-			show_damage = false
-			show_dps = false
-		end
-		
-		if cp.damage_vs_shield and cp.spawns_name then -- Badger
-			dam_str = tostring(cp.damage_vs_shield) .. " (" .. dam .. " + " .. (tonumber(cp.damage_vs_shield)-dam) .. " mine)"
-			dps_str = numformat(math.floor(tonumber(cp.damage_vs_shield)/reloadtime))
-		end
-
-		if show_damage then
-			cells[#cells+1] = ' - Damage:'
-			cells[#cells+1] = dam_str
-		end
-
-		-- shield damage
-		if (wd.interceptedByShieldType ~= 0) and show_damage and not cp.stats_hide_shield_damage then
-			if cp.damage_vs_shield then
-				cells[#cells+1] = ' - Shield damage:'
-				cells[#cells+1] = numformat(cp.stats_shield_damage)
-			elseif tonumber(cp.stats_shield_damage) ~= baseDamage then
-				cells[#cells+1] = ' - Shield damage:'
-				if damageTypes > 1 or mult > 1 then
-					cells[#cells+1] = numformat(math.floor(cp.stats_shield_damage * mult * comm_mult), 2) .. " (" .. shield_dam_str .. ")"
-				else
-					cells[#cells+1] = numformat(math.floor(cp.stats_shield_damage * mult * comm_mult), 2)
+	
+			if cp.timeslow_damagefactor then
+				dams = val * cp.timeslow_damagefactor
+				if (cp.timeslow_onlyslow == "1") then
+					val = 0
 				end
 			end
-		end
-		
-		if cp.post_capture_reload then
-			cells[#cells+1] = ' - Reloadtime:'
-			cells[#cells+1] = numformat (tonumber(cp.post_capture_reload)/30,2) .. 's'
-		elseif show_reload then
-			cells[#cells+1] = ' - Reloadtime:'
-			cells[#cells+1] = numformat (reloadtime,2) .. 's'
-		end
-		
-		if show_dps then
-			cells[#cells+1] = ' - DPS:'
-			cells[#cells+1] = dps_str
-			if cp.dmg_scaling then
-				cells[#cells+1] = '    - Increases by:'
-				cells[#cells+1] = numformat(tonumber(cp.dmg_scaling) * 100 * 30) .. "%/s"
-
-				if tonumber(cp.dmg_scaling_max) < 10000 then
-					cells[#cells+1] = '    - Caps out at:'
-					cells[#cells+1] = numformat(tonumber(cp.dmg_scaling_max) * 100) .. "%"
-				else
-					cells[#cells+1] = '    - Never caps out'
-					cells[#cells+1] = ""
+	
+			if cp.is_capture then
+				damc = val
+				val = 0
+			end
+	
+			if cp.extra_damage then
+				damw = tonumber(cp.extra_damage) * comm_mult
+				stun_time = tonumber(wd.customParams.extra_paratime)
+			end
+	
+			if wd.paralyzer then
+				damw = val
+				if stun_time == 0 then
+					stun_time = wd.damages.paralyzeDamageTime
 				end
-			end
-		end
-
-		if (wd.interceptedByShieldType == 0) then
-			cells[#cells+1] = ' - Ignores shields'
-			cells[#cells+1] = ''
-		end
-
-		if stun_time > 0 then
-			cells[#cells+1] = ' - Stun time:'
-			cells[#cells+1] = color2incolor((damw > 0) and colorCyan or colorDisarm) .. numformat(stun_time,2) .. 's\008'
-		end
-
-		if cp.setunitsonfire then
-			cells[#cells+1] = ' - Afterburn:'
-			local afterburn_frames = (cp.burntime or (450 * (wd.fireStarter or 0)))
-			cells[#cells+1] = color2incolor(colorFire) .. numformat(afterburn_frames/30) .. 's (15 DPS)\008'
-		end
-
-		if show_range then
-			local range = cp.truerange or wd.range
-			cells[#cells+1] = ' - Range:'
-			cells[#cells+1] = numformat(range * ((unitID and Spring.GetUnitRulesParam(unitID, "comm_range_mult")) or 1),2) .. " elmo"
-		end
-		if wd.customParams.puredecloaktime then
-			cells[#cells+1] = ' - Forces decloak for'
-			cells[#cells+1] = numformat(wd.customParams.puredecloaktime / 30, 1) .. "s"
-		end
-		local aoe = wd.impactOnly and 0 or wd.damageAreaOfEffect
-		if aoe > 15 and show_aoe then
-			cells[#cells+1] = ' - AoE radius:'
-			cells[#cells+1] = numformat(aoe) .. " elmo"
-		end
-
-		if show_projectile_speed then
-			cells[#cells+1] = ' - Projectile speed:'
-			cells[#cells+1] = numformat(wd.projectilespeed*30) .. " elmo/s"
-		elseif hitscan[wd.type] then
-			cells[#cells+1] = ' - Instantly hits'
-			cells[#cells+1] = ''
-		end
-
-		--[[ Unimportant stuff, maybe make togglable with some option later
-		if (wd.type == "MissileLauncher") then
-			if ((wd.startvelocity < wd.projectilespeed) and (wd.weaponAcceleration > 0)) then
-				cells[#cells+1] = ' - Missile speed:'
-				cells[#cells+1] = numformat(wd.startvelocity*30) .. " - " .. numformat(wd.projectilespeed*30) .. " elmo/s"
-				cells[#cells+1] = ' - Acceleration:'
-				cells[#cells+1] = numformat(wd.weaponAcceleration*900) .. " elmo/s^2"
 			else
-				cells[#cells+1] = ' - Missile speed:'
-				cells[#cells+1] = numformat(wd.projectilespeed*30) .. " elmo/s"
+				dam = val
 			end
-			cells[#cells+1] = ' - Flight time:'
-			if cp.flighttime then
-				cells[#cells+1] = numformat(tonumber(cp.flighttime)) .. "s"
-			else
-				cells[#cells+1] = numformat(((wd.range / wd.projectilespeed) + (wd.selfExplode and 25 or 0))/32) .. "s"
+			-- get reloadtime and calculate dps
+			local reloadtime = tonumber(cp.script_reload) or wd.reload
+			
+			local dps  = math.floor(dam /reloadtime + 0.5)
+			local dpsw = math.floor(damw/reloadtime + 0.5)
+			local dpss = math.floor(dams/reloadtime + 0.5)
+			local dpsd = math.floor(damd/reloadtime + 0.5)
+			local dpsc = math.floor(damc/reloadtime + 0.5)
+	
+			local mult = tonumber(cp.statsprojectiles) or ((tonumber(cp.script_burst) or wd.salvoSize) * wd.projectiles)
+	
+			local dps_str, dam_str, shield_dam_str = '', '', ''
+			local damageTypes = 0
+			if dps > 0 then
+				dam_str = dam_str .. numformat(dam,2)
+				shield_dam_str = shield_dam_str .. numformat(dam,2)
+				if cp.stats_damage_per_second then
+					dps_str = dps_str .. numformat(tonumber(cp.stats_damage_per_second),2)
+				else
+					dps_str = dps_str .. numformat(dps*mult,2)
+				end
+				damageTypes = damageTypes + 1
+			end
+			if dpsw > 0 then
+				if dps_str ~= '' then
+					dps_str = dps_str .. ' + '
+					dam_str = dam_str .. ' + '
+					shield_dam_str = shield_dam_str .. ' + '
+				end
+				dam_str = dam_str .. color2incolor(colorCyan) .. numformat(damw,2) .. " (P)\008"
+				shield_dam_str = shield_dam_str .. color2incolor(colorCyan) .. numformat(math.floor(damw / 3),2) .. " (P)\008"
+				dps_str = dps_str .. color2incolor(colorCyan) .. numformat(dpsw*mult,2) .. " (P)\008"
+				damageTypes = damageTypes + 1
+			end
+			if dpss > 0 then
+				if dps_str ~= '' then
+					dps_str = dps_str .. ' + '
+					dam_str = dam_str .. ' + '
+					shield_dam_str = shield_dam_str .. ' + '
+				end
+				dam_str = dam_str .. color2incolor(colorPurple) .. numformat(dams,2) .. " (S)\008"
+				shield_dam_str = shield_dam_str .. color2incolor(colorPurple) .. numformat(math.floor(dams / 3),2) .. " (S)\008"
+				dps_str = dps_str .. color2incolor(colorPurple) .. numformat(dpss*mult,2) .. " (S)\008"
+				damageTypes = damageTypes + 1
+			end
+	
+			if dpsd > 0 then
+				if dps_str ~= '' then
+					dps_str = dps_str .. ' + '
+					dam_str = dam_str .. ' + '
+					shield_dam_str = shield_dam_str .. ' + '
+				end
+				dam_str = dam_str .. color2incolor(colorDisarm) .. numformat(damd,2) .. " (D)\008"
+				shield_dam_str = shield_dam_str .. color2incolor(colorDisarm) .. numformat(math.floor(damd / 3),2) .. " (D)\008"
+				dps_str = dps_str .. color2incolor(colorDisarm) .. numformat(dpsd*mult,2) .. " (D)\008"
+				damageTypes = damageTypes + 1
+			end
+	
+			if dpsc > 0 then
+				if dps_str ~= '' then
+					dps_str = dps_str .. ' + '
+					dam_str = dam_str .. ' + '
+					shield_dam_str = shield_dam_str .. ' + '
+				end
+				dam_str = dam_str .. color2incolor(colorCapture) .. numformat(damc,2) .. " (C)\008"
+				shield_dam_str = shield_dam_str .. color2incolor(colorCapture) .. numformat(damc,2) .. " (C)\008"
+				dps_str = dps_str .. color2incolor(colorCapture) .. numformat(dpsc*mult,2) .. " (C)\008"
+				damageTypes = damageTypes + 1
+			end
+	
+			if mult > 1 then
+				dam_str = dam_str .. " x " .. mult
+				shield_dam_str = shield_dam_str .. " x " .. mult
+			end
+			if cp.shield_mult then
+				shield_dam_str = shield_dam_str .. " x " .. math.floor(100*cp.shield_mult) .. '%'
 			end
 			
-			if wd.selfExplode then
-				cells[#cells+1] = " - Explodes on timeout"
-			else
-				cells[#cells+1] = " - Falls down on timeout"
+			local show_damage = not cp.stats_hide_damage
+			local show_dps = not cp.stats_hide_dps
+			local show_reload = not cp.stats_hide_reload
+			local show_range = not cp.stats_hide_range
+			local show_aoe = not cp.stats_hide_aoe
+	
+			local hitscan = {
+				BeamLaser = true,
+				LightningCannon = true,
+			}
+			local show_projectile_speed = not cp.stats_hide_projectile_speed and not hitscan[wd.type]
+	
+			if ((dps + dpsw + dpss + dpsd + dpsc) < 2) then -- no damage: newtons and such
+				show_damage = false
+				show_dps = false
 			end
-			cells[#cells+1] = ''
-		end
+			
+			if cp.damage_vs_shield and cp.spawns_name then -- Badger
+				dam_str = tostring(cp.damage_vs_shield) .. " (" .. dam .. " + " .. (tonumber(cp.damage_vs_shield)-dam) .. " mine)"
+				dps_str = numformat(math.floor(tonumber(cp.damage_vs_shield)/reloadtime))
+			end
+	
+			if show_damage then
+				cells[#cells+1] = ' - Damage:'
+				cells[#cells+1] = dam_str
+			end
+	
+			-- shield damage
+			if (wd.interceptedByShieldType ~= 0) and show_damage and not cp.stats_hide_shield_damage then
+				if cp.damage_vs_shield then
+					cells[#cells+1] = ' - Shield damage:'
+					cells[#cells+1] = numformat(cp.stats_shield_damage)
+				elseif tonumber(cp.stats_shield_damage) ~= baseDamage then
+					cells[#cells+1] = ' - Shield damage:'
+					if damageTypes > 1 or mult > 1 then
+						cells[#cells+1] = numformat(math.floor(cp.stats_shield_damage * mult * comm_mult), 2) .. " (" .. shield_dam_str .. ")"
+					else
+						cells[#cells+1] = numformat(math.floor(cp.stats_shield_damage * mult * comm_mult), 2)
+					end
+				end
+			end
+			
+			if cp.post_capture_reload then
+				cells[#cells+1] = ' - Reloadtime:'
+				cells[#cells+1] = numformat (tonumber(cp.post_capture_reload)/30,2) .. 's'
+			elseif show_reload and not bombletCount then
+				cells[#cells+1] = ' - Reloadtime:'
+				cells[#cells+1] = numformat (reloadtime,2) .. 's'
+			end
+			
+			if show_dps and not bombletCount then
+				cells[#cells+1] = ' - DPS:'
+				cells[#cells+1] = dps_str
+				if cp.dmg_scaling then
+					cells[#cells+1] = '    - Increases by:'
+					cells[#cells+1] = numformat(tonumber(cp.dmg_scaling) * 100 * 30) .. "%/s"
+	
+					if tonumber(cp.dmg_scaling_max) < 10000 then
+						cells[#cells+1] = '    - Caps out at:'
+						cells[#cells+1] = numformat(tonumber(cp.dmg_scaling_max) * 100) .. "%"
+					else
+						cells[#cells+1] = '    - Never caps out'
+						cells[#cells+1] = ""
+					end
+				end
+			end
+	
+			if (wd.interceptedByShieldType == 0) then
+				cells[#cells+1] = ' - Ignores shields'
+				cells[#cells+1] = ''
+			end
+	
+			if stun_time > 0 then
+				cells[#cells+1] = ' - Stun time:'
+				cells[#cells+1] = color2incolor((damw > 0) and colorCyan or colorDisarm) .. numformat(stun_time,2) .. 's\008'
+			end
+	
+			if cp.setunitsonfire then
+				cells[#cells+1] = ' - Afterburn:'
+				local afterburn_frames = (cp.burntime or (450 * (wd.fireStarter or 0)))
+				cells[#cells+1] = color2incolor(colorFire) .. numformat(afterburn_frames/30) .. 's (15 DPS)\008'
+			end
 
-		if (wd.type == "StarburstLauncher") then
-			cells[#cells+1] = ' - Vertical rise:'
-			cells[#cells+1] = numformat(wd.uptime) .. "s"
-		end
-		]]
-
-		if wd.tracks and wd.turnRate > 0 and (cp.cruisealt == nil or cp.cruisedist == nil) then
-			cells[#cells+1] = ' - Homing:'
-			local turnrate = wd.turnRate * 30 * 180 / math.pi
-			cells[#cells+1] = numformat(turnrate, 1) .. " deg/s"
-		end
-		if cp.cruisealt and cp.cruisedist then
-			cells[#cells+1] = ' - Cruise Missile:'
-			cells[#cells+1] = ''
-			cells[#cells+1] = 'Cruise Height: '
-			cells[#cells+1] = cp.cruisealt .. ' elmo AGL'
-			cells[#cells+1] = 'Begins descent: ' 
-			cells[#cells+1] = wd.customParams.cruisedist .. ' elmo from target'
-			if cp.cruisetracking and cp.cruise_nolock == nil then
+			if show_range and not bombletCount then
+				local range = cp.truerange or wd.range
+				cells[#cells+1] = ' - Range:'
+				cells[#cells+1] = numformat(range * ((unitID and Spring.GetUnitRulesParam(unitID, "comm_range_mult")) or 1),2) .. " elmo"
+			end
+			if wd.customParams.puredecloaktime then
+				cells[#cells+1] = ' - Forces decloak for'
+				cells[#cells+1] = numformat(wd.customParams.puredecloaktime / 30, 1) .. "s"
+			end
+			local aoe = wd.impactOnly and 0 or wd.damageAreaOfEffect
+			if aoe > 15 and show_aoe then
+				cells[#cells+1] = ' - AoE radius:'
+				cells[#cells+1] = numformat(aoe) .. " elmo"
+			end
+	
+			if show_projectile_speed and not bombletCount then
+				cells[#cells+1] = ' - Projectile speed:'
+				cells[#cells+1] = numformat(wd.projectilespeed*30) .. " elmo/s"
+			elseif hitscan[wd.type] then
+				cells[#cells+1] = ' - Instantly hits'
+				cells[#cells+1] = ''
+			end
+	
+			--[[ Unimportant stuff, maybe make togglable with some option later
+			if (wd.type == "MissileLauncher") then
+				if ((wd.startvelocity < wd.projectilespeed) and (wd.weaponAcceleration > 0)) then
+					cells[#cells+1] = ' - Missile speed:'
+					cells[#cells+1] = numformat(wd.startvelocity*30) .. " - " .. numformat(wd.projectilespeed*30) .. " elmo/s"
+					cells[#cells+1] = ' - Acceleration:'
+					cells[#cells+1] = numformat(wd.weaponAcceleration*900) .. " elmo/s^2"
+				else
+					cells[#cells+1] = ' - Missile speed:'
+					cells[#cells+1] = numformat(wd.projectilespeed*30) .. " elmo/s"
+				end
+				cells[#cells+1] = ' - Flight time:'
+				if cp.flighttime then
+					cells[#cells+1] = numformat(tonumber(cp.flighttime)) .. "s"
+				else
+					cells[#cells+1] = numformat(((wd.range / wd.projectilespeed) + (wd.selfExplode and 25 or 0))/32) .. "s"
+				end
+				
+				if wd.selfExplode then
+					cells[#cells+1] = " - Explodes on timeout"
+				else
+					cells[#cells+1] = " - Falls down on timeout"
+				end
+				cells[#cells+1] = ''
+			end
+	
+			if (wd.type == "StarburstLauncher") then
+				cells[#cells+1] = ' - Vertical rise:'
+				cells[#cells+1] = numformat(wd.uptime) .. "s"
+			end
+			]]
+	
+			if wd.tracks and wd.turnRate > 0 and (cp.cruisealt == nil or cp.cruisedist == nil) then
+				cells[#cells+1] = ' - Homing:'
 				local turnrate = wd.turnRate * 30 * 180 / math.pi
-				cells[#cells+1] = 'Tracks target: ' 
-				cells[#cells+1] =  numformat(turnrate, 1) .. ' deg/s'
+				cells[#cells+1] = numformat(turnrate, 1) .. " deg/s"
 			end
-			if cp.cruisetracking and cp.cruise_nolock then
-				cells[#cells+1] = 'Guided Cruise, unguided descent'
+			if cp.cruisealt and cp.cruisedist then
+				cells[#cells+1] = ' - Cruise Missile:'
+				cells[#cells+1] = ''
+				cells[#cells+1] = 'Cruise Height: '
+				cells[#cells+1] = cp.cruisealt .. ' elmo AGL'
+				cells[#cells+1] = 'Begins descent: ' 
+				cells[#cells+1] = wd.customParams.cruisedist .. ' elmo from target'
+				if cp.cruisetracking and cp.cruise_nolock == nil then
+					local turnrate = wd.turnRate * 30 * 180 / math.pi
+					cells[#cells+1] = 'Tracks target: ' 
+					cells[#cells+1] =  numformat(turnrate, 1) .. ' deg/s'
+				end
+				if cp.cruisetracking and cp.cruise_nolock then
+					cells[#cells+1] = 'Guided Cruise, unguided descent'
+					cells[#cells+1] = ''
+				end
+				if wd.customParams.cruise_randomizationtype == "circle" then
+					cells[#cells+1] = 'Has circular spread (' .. cp.cruiserandomradius .. ' elmo around the target)'
+					cells[#cells+1] = ''
+				elseif wd.customParams.cruiserandomradius then
+					cells[#cells+1] = 'Strikes within ' .. cp.cruiserandomradius .. ' elmo of the target'
+					cells[#cells+1] = ''
+				end
+			end
+			if cp.tracker and cp.externaltracker == nil then
+				cells[#cells+1] = ' - Laser guided'
+				cells[#cells+1] = ''
+			elseif cp.tracker then
+				cells[#cells+1] = ' - Laser guided (Needs external guidance)'
 				cells[#cells+1] = ''
 			end
-			if wd.customParams.cruise_randomizationtype == "circle" then
-				cells[#cells+1] = 'Has circular spread (' .. cp.cruiserandomradius .. ' elmo around the target)'
-				cells[#cells+1] = ''
-			elseif wd.customParams.cruiserandomradius then
-				cells[#cells+1] = 'Strikes within ' .. cp.cruiserandomradius .. ' elmo of the target'
+			if cp.externaltargeter then
+				cells[#cells+1] = ' - Provides External Guidance'
 				cells[#cells+1] = ''
 			end
-		end
-		if cp.tracker and cp.externaltracker == nil then
-			cells[#cells+1] = ' - Laser guided'
-			cells[#cells+1] = ''
-		elseif cp.tracker then
-			cells[#cells+1] = ' - Laser guided (Needs external guidance)'
-			cells[#cells+1] = ''
-		end
-		if cp.externaltargeter then
-			cells[#cells+1] = ' - Provides External Guidance'
-			cells[#cells+1] = ''
-		end
-		if cp.needsuplink then
-			cells[#cells+1] = ' - Requires guidance for ' .. numformat(cp.needsuplink / 30, 2) .. 's'
-			cells[#cells+1] = ''
-		end
-		if wd.wobble > 0 then
-			cells[#cells+1] = ' - Wobbly:'
-			local wobble = wd.wobble * 30 * 180 / math.pi
-			cells[#cells+1] = "up to " .. numformat(wobble, 1) .. " deg/s"
-		end
-
-		if wd.sprayAngle > 0 then
-			cells[#cells+1] = ' - Inaccuracy:'
-			local accuracy = math.asin(wd.sprayAngle) * 90 / math.pi
-			cells[#cells+1] = numformat(accuracy, 1) .. " deg"
-		end
-
-		if wd.type == "BeamLaser" and wd.beamtime > 0.2 then
-			cells[#cells+1] = ' - Burst time:'
-			cells[#cells+1] = numformat(wd.beamtime) .. "s"
-		end
-
-		if cp.spawns_name then
-			cells[#cells+1] = ' - Spawns: '
-			cells[#cells+1] = Spring.Utilities.GetHumanName(UnitDefNames[cp.spawns_name])
-			if cp.spawns_expire then
-				cells[#cells+1] = ' - Spawn life: '
-				cells[#cells+1] = cp.spawns_expire .. "s"
-			end
-		end
-		
-		if cp.reload_move_mod_time then
-			cells[#cells+1] = ' - Move mult time: '
-			cells[#cells+1] = cp.reload_move_mod_time .. "s"
-		end
-		if cp.area_damage then
-			if (cp.area_damage_is_impulse == "1") then
-				cells[#cells+1] = ' - Creates a gravity well:'
-				cells[#cells+1] = ''
-			else
-				cells[#cells+1] = ' - Sets the ground on fire:'
-				cells[#cells+1] = ''
-				cells[#cells+1] = '   * DPS:'
-				cells[#cells+1] = cp.area_damage_dps
-			end
-			cells[#cells+1] = '   * Radius:'
-			cells[#cells+1] = numformat(tonumber(cp.area_damage_radius)) .. " elmo"
-			cells[#cells+1] = '   * Duration:'
-			cells[#cells+1] = numformat(tonumber(cp.area_damage_duration)) .. " s"
-		end
-		if cp.singularity then
-			cells[#cells+1] = ' - Creates a Singularity:'
-			cells[#cells+1] = ''
-			cells[#cells+1] = 'Duration:'
-			cells[#cells+1] = numformat(cp.singulifespan/30, 1) .. "s"
-			cells[#cells+1] = 'Strength:'
-			cells[#cells+1] = numformat(cp.singustrength, 1) .. "elmo/s pull"
-			cells[#cells+1] = 'Radius:'
-			cells[#cells+1] = cp.singuradius .. " elmo"
-		end
-		if wd.trajectoryHeight > 0 then
-			cells[#cells+1] = ' - Arcing shot:'
-			cells[#cells+1] = numformat(math.atan(wd.trajectoryHeight) * 180 / math.pi) .. " deg"
-		end
-
-		if wd.stockpile then
-			cells[#cells+1] = ' - Stockpile time:'
-			cells[#cells+1] = (((tonumber(ws.stockpile_time) or 0) > 0) and tonumber(ws.stockpile_time) or wd.stockpileTime) .. 's'
-			if ((not ws.free_stockpile) and (ws.stockpile_cost or (wd.metalCost > 0))) then
-				cells[#cells+1] = ' - Stockpile cost:'
-				cells[#cells+1] = ws.stockpile_cost or wd.metalCost .. " M"
-			end
-		end
-
-		if ws.firing_arc and (ws.firing_arc > -1) then
-			cells[#cells+1] = ' - Firing arc:'
-			cells[#cells+1] = numformat(360*math.acos(ws.firing_arc)/math.pi) .. ' deg'
-		end
-
-		if cp.needs_link then
-			cells[#cells+1] = ' - Grid needed:'
-			cells[#cells+1] = tonumber(cp.needs_link) .. " E"
-		end
-
-		if cp.smoothradius then
-			cells[#cells+1] = ' - Smoothes ground'
-			--cells[#cells+1] = cp.smoothradius .. " radius" -- overlaps
-			cells[#cells+1] = ''
-		end
-		if cp["reveal_unit"] then
-			cells[#cells+1] = ' - Reveals for'
-			cells[#cells+1] = cp["reveal_unit"] .. "s while in enemy Radar"
-		end
-		if cp.movestructures then
-			cells[#cells+1] = ' - Smoothes under structures'
-			--cells[#cells+1] = cp.smoothradius .. " radius" -- overlaps
-			cells[#cells+1] = ''
-		end
-
-		local highTraj = wd.highTrajectory
-		if highTraj == 2 then
-			highTraj = ws.highTrajectory
-		end
-		if highTraj == 1 then
-			cells[#cells+1] = ' - High trajectory'
-			cells[#cells+1] = ''
-		elseif highTraj == 2 then
-			cells[#cells+1] = ' - Trajectory toggle'
-			cells[#cells+1] = ''
-		end
-
-		if wd.waterWeapon and (wd.type ~= "TorpedoLauncher") then
-			cells[#cells+1] = ' - Water capable'
-			cells[#cells+1] = ''
-		end
-
-		if not wd.avoidFriendly and not wd.noFriendlyCollide then
-			cells[#cells+1] = ' - Potential friendly fire'
-			cells[#cells+1] = ''
-		end
-
-		if wd.noGroundCollide then
-			cells[#cells+1] = ' - Passes through ground'
-			cells[#cells+1] = ''
-		end
-
-		if wd.noExplode then
-			cells[#cells+1] = ' - Piercing '
-			cells[#cells+1] = ''
-			if not (cp.single_hit or cp.single_hit_multi) then
-				cells[#cells+1] = ' - Damage increase vs large units'
+			if cp.needsuplink then
+				cells[#cells+1] = ' - Requires guidance for ' .. numformat(cp.needsuplink / 30, 2) .. 's'
 				cells[#cells+1] = ''
 			end
-		end
-
-		if cp.dyndamageexp then
-			cells[#cells+1] = ' - Damage falls off with range'
-			cells[#cells+1] = ''
-		end
-
-		if cp.nofriendlyfire then
-			cells[#cells+1] = ' - No friendly fire'
-			cells[#cells+1] = ''
-		end
-
-		if cp.shield_drain then
-			cells[#cells+1] = ' - Shield drain:'
-			cells[#cells+1] = cp.shield_drain .. " HP/shot"
-		end
-
-		if cp.aim_delay then
-			cells[#cells+1] = ' - Aiming time:'
-			cells[#cells+1] = numformat(tonumber(cp.aim_delay)/1000) .. "s"
-		end
-
-		if wd.targetMoveError > 0 then
-			cells[#cells+1] = ' - Inaccuracy vs moving targets'
-			cells[#cells+1] = '' -- actual value doesn't say much as it's a multiplier for the target speed
-		end
-		
-		if cp.stats_custom_tooltip_1 then
-		local q = 1
-			while cp["stats_custom_tooltip_" .. q] do
-			cells[#cells+1] = cp["stats_custom_tooltip_" .. q] or ""
-			cells[#cells+1] = cp["stats_custom_tooltip_entry_" .. q] or ""
-			q = q + 1
+			if wd.wobble > 0 then
+				cells[#cells+1] = ' - Wobbly:'
+				local wobble = wd.wobble * 30 * 180 / math.pi
+				cells[#cells+1] = "up to " .. numformat(wobble, 1) .. " deg/s"
+			end
+	
+			if wd.sprayAngle > 0 and not bombletCount then
+				cells[#cells+1] = ' - Inaccuracy:'
+				local accuracy = math.asin(wd.sprayAngle) * 90 / math.pi
+				cells[#cells+1] = numformat(accuracy, 1) .. " deg"
+			end
+	
+			if wd.type == "BeamLaser" and wd.beamtime > 0.2 then
+				cells[#cells+1] = ' - Burst time:'
+				cells[#cells+1] = numformat(wd.beamtime) .. "s"
+			end
+	
+			if cp.spawns_name then
+				cells[#cells+1] = ' - Spawns: '
+				cells[#cells+1] = Spring.Utilities.GetHumanName(UnitDefNames[cp.spawns_name])
+				if cp.spawns_expire then
+					cells[#cells+1] = ' - Spawn life: '
+					cells[#cells+1] = cp.spawns_expire .. "s"
+				end
+			end
+			
+			if cp.reload_move_mod_time  and not bombletCount then
+				cells[#cells+1] = ' - Move mult time: '
+				cells[#cells+1] = cp.reload_move_mod_time .. "s"
+			end
+			if cp.area_damage then
+				if (cp.area_damage_is_impulse == "1") then
+					cells[#cells+1] = ' - Creates a gravity well:'
+					cells[#cells+1] = ''
+				else
+					cells[#cells+1] = ' - Sets the ground on fire:'
+					cells[#cells+1] = ''
+					cells[#cells+1] = '   * DPS:'
+					cells[#cells+1] = cp.area_damage_dps
+				end
+				cells[#cells+1] = '   * Radius:'
+				cells[#cells+1] = numformat(tonumber(cp.area_damage_radius)) .. " elmo"
+				cells[#cells+1] = '   * Duration:'
+				cells[#cells+1] = numformat(tonumber(cp.area_damage_duration)) .. " s"
+			end
+			if cp.singularity then
+				cells[#cells+1] = ' - Creates a Singularity:'
+				cells[#cells+1] = ''
+				cells[#cells+1] = 'Duration:'
+				cells[#cells+1] = numformat(cp.singulifespan/30, 1) .. "s"
+				cells[#cells+1] = 'Strength:'
+				cells[#cells+1] = numformat(cp.singustrength, 1) .. "elmo/s pull"
+				cells[#cells+1] = 'Radius:'
+				cells[#cells+1] = cp.singuradius .. " elmo"
+			end
+			if wd.trajectoryHeight > 0  and not bombletCount then
+				cells[#cells+1] = ' - Arcing shot:'
+				cells[#cells+1] = numformat(math.atan(wd.trajectoryHeight) * 180 / math.pi) .. " deg"
+			end
+	
+			if not bombletCount and wd.stockpile then
+				cells[#cells+1] = ' - Stockpile time:'
+				cells[#cells+1] = (((tonumber(ws.stockpile_time) or 0) > 0) and tonumber(ws.stockpile_time) or wd.stockpileTime) .. 's'
+				if ((not ws.free_stockpile) and (ws.stockpile_cost or (wd.metalCost > 0))) then
+					cells[#cells+1] = ' - Stockpile cost:'
+					cells[#cells+1] = ws.stockpile_cost or wd.metalCost .. " M"
+				end
+			end
+	
+			if not bombletCount and ws.firing_arc and (ws.firing_arc > -1) then
+				cells[#cells+1] = ' - Firing arc:'
+				cells[#cells+1] = numformat(360*math.acos(ws.firing_arc)/math.pi) .. ' deg'
+			end
+	
+			if cp.needs_link then
+				cells[#cells+1] = ' - Grid needed:'
+				cells[#cells+1] = tonumber(cp.needs_link) .. " E"
+			end
+	
+			if cp.smoothradius then
+				cells[#cells+1] = ' - Smoothes ground'
+				--cells[#cells+1] = cp.smoothradius .. " radius" -- overlaps
+				cells[#cells+1] = ''
+			end
+			if cp["reveal_unit"] then
+				cells[#cells+1] = ' - Reveals for'
+				cells[#cells+1] = cp["reveal_unit"] .. "s while in enemy Radar"
+			end
+			if cp.movestructures then
+				cells[#cells+1] = ' - Smoothes under structures'
+				--cells[#cells+1] = cp.smoothradius .. " radius" -- overlaps
+				cells[#cells+1] = ''
+			end
+			
+			if not bombletCount then
+				local highTraj = wd.highTrajectory
+				if highTraj == 2 then
+					highTraj = ws.highTrajectory
+				end
+				if highTraj == 1 then
+					cells[#cells+1] = ' - High trajectory'
+					cells[#cells+1] = ''
+				elseif highTraj == 2 then
+					cells[#cells+1] = ' - Trajectory toggle'
+					cells[#cells+1] = ''
+				end
+			end
+			
+			if wd.waterWeapon and (wd.type ~= "TorpedoLauncher") then
+				cells[#cells+1] = ' - Water capable'
+				cells[#cells+1] = ''
+			end
+	
+			if not wd.avoidFriendly and not wd.noFriendlyCollide then
+				cells[#cells+1] = ' - Potential friendly fire'
+				cells[#cells+1] = ''
+			end
+	
+			if wd.noGroundCollide then
+				cells[#cells+1] = ' - Passes through ground'
+				cells[#cells+1] = ''
+			end
+	
+			if wd.noExplode then
+				cells[#cells+1] = ' - Piercing '
+				cells[#cells+1] = ''
+				if not (cp.single_hit or cp.single_hit_multi) then
+					cells[#cells+1] = ' - Damage increase vs large units'
+					cells[#cells+1] = ''
+				end
+			end
+	
+			if cp.dyndamageexp then
+				cells[#cells+1] = ' - Damage falls off with range'
+				cells[#cells+1] = ''
+			end
+	
+			if cp.nofriendlyfire then
+				cells[#cells+1] = ' - No friendly fire'
+				cells[#cells+1] = ''
+			end
+	
+			if not bombletCount and cp.shield_drain then
+				cells[#cells+1] = ' - Shield drain:'
+				cells[#cells+1] = cp.shield_drain .. " HP/shot"
+			end
+	
+			if not bombletCount and cp.aim_delay then
+				cells[#cells+1] = ' - Aiming time:'
+				cells[#cells+1] = numformat(tonumber(cp.aim_delay)/1000) .. "s"
+			end
+	
+			if not bombletCount and wd.targetMoveError > 0 then
+				cells[#cells+1] = ' - Inaccuracy vs moving targets'
+				cells[#cells+1] = '' -- actual value doesn't say much as it's a multiplier for the target speed
+			end
+			
+			if cp.stats_custom_tooltip_1 then
+			local q = 1
+				while cp["stats_custom_tooltip_" .. q] do
+				cells[#cells+1] = cp["stats_custom_tooltip_" .. q] or ""
+				cells[#cells+1] = cp["stats_custom_tooltip_entry_" .. q] or ""
+				q = q + 1
+				end
+			end
+			
+			if wd.targetable and ((wd.targetable == 1) or (wd.targetable == true)) then
+				cells[#cells+1] = ' - Can be shot down by antinukes'
+				cells[#cells+1] = ''
 			end
 		end
-		
-		if wd.targetable and ((wd.targetable == 1) or (wd.targetable == true)) then
-			cells[#cells+1] = ' - Can be shot down by antinukes'
-			cells[#cells+1] = ''
+		--cluster info
+		--RECURSION INCOMING!
+		if cp.numprojectiles1 then
+			if not cp.bogus then
+				cells[#cells+1] = ' - Cluster Submuntions:'
+				cells[#cells+1] = ''
+			end
+			local submunitionCount = 1
+			while cp["numprojectiles" .. submunitionCount] do
+				local isRecusive = false
+				for i = 1, #recursedWepIds do
+					if cp["projectile" .. submunitionCount] == recursedWepIds[i] then
+						isRecusive = true
+					end
+				end
+				if isRecusive then
+					cells[#cells+1] = (not cp.bogus and '   ' or '') .. WeaponDefNames[cp["projectile" .. submunitionCount]].description .. ' x ' .. cp["numprojectiles" .. submunitionCount] .. ' (Previously Listed)'
+					cells[#cells+1] = ''
+				else
+					cells = weapons2Table(cells, cp["projectile" .. submunitionCount], unitID, cp["numprojectiles" .. submunitionCount] * (cp.bogus and bombletCount or 1) * (cp["clustercharges"] or 1),  recursedWepIds)
+				end
+				submunitionCount = submunitionCount + 1
+			end
+			if cp["clustercharges"] then
+				cells[#cells+1] = ' - Time-To-Release:'
+				cells[#cells+1] = numformat(cp["clustercharges"]/30) .. 's'
+			end
+		end
+	end
+	if not cp.bogus then
+		for i = startPoint, #cells, 2 do
+			cells[i] = '    ' .. cells[i]
 		end
 	end
 	return cells
 end
-
 local function printAbilities(ud, unitID)
 	local cells = {}
 
@@ -1394,7 +1440,7 @@ local function printWeapons(unitDef, unitID)
 			cells[#cells+1] = ''
 			cells[#cells+1] = ''
 		end
-		cells = weapons2Table(cells, ws, unitID)
+		cells = weapons2Table(cells, ws, unitID, false, {})
 		--end
 	end
 	
@@ -2068,7 +2114,7 @@ local function MakeUnitContextMenu(unitID,x,y)
 	local playerName 	= spGetPlayerInfo(player, false) or 'noname'
 	local teamColor 	= {spGetTeamColor(team)}
 		
-	local window_width = 200
+	local window_width = 350
 	--local buttonWidth = window_width - 0
 
 	local children = {
