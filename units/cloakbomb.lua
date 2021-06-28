@@ -39,6 +39,7 @@ return {
 		noChaseCategory        = [[FIXEDWING LAND SINK TURRET SHIP SWIM GUNSHIP FLOAT SUB HOVER]],
 		objectName             = [[ARMTICK]],
 		pushResistant          = 0,
+		stealth				   = true,
 		script                 = [[cloakbomb.lua]],
 		selfDestructAs         = [[cloakbomb_DEATH]],
 		selfDestructCountdown  = 0,
