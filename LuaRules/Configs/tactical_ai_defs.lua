@@ -2047,7 +2047,7 @@ local behaviourConfig = {
 	{
 		name = "cloakheavyraid",
 		swarms = eco,
-		skirms = {}
+		skirms = {},
 		flees = armedLand,
 		onlyIdleHandling = false,
 		cloakFlee = true,
