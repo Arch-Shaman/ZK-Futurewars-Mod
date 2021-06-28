@@ -399,7 +399,7 @@ local tankconskirmarray = NameToDefID({
 	"spideremp",
 })
 
-local tankconfleearray = SetMinus(allGround, tankconfleearray)
+local tankconfleearray = SetMinus(armedLand, tankconskirmarray)
 
 -- Nested union so long ranged things also skirm the things skirmed by short ranged things
 shortRangeSkirmieeArray       = Union(shortRangeSkirmieeArray,veryShortRangeSkirmieeArray)
@@ -1975,15 +1975,16 @@ local behaviourConfig = {
 		name = "tankcon",
 		onlyIdleHandling = false,
 		skirms = tankconskirmarray,
-		flees = tankconskirmarray,
-		minFleeRange = 300,
-		fleeLeeway = 300,
+		flees = tankconfleearray,
+		minFleeRange = 500,
+		fleeLeeway = 500,
 	},
 	{
 		name = "cloakcon",
 		--skirms = {},
 		--swarms = {},
-		--flees = {},
+		flees = allMobileGround,
+		idleFlee = allMobileGround,
 		searchRange = 1200,
 		fleeEverything = true,
 		minFleeRange = 400, -- Avoid enemies standing in front of Pickets
@@ -2014,9 +2015,9 @@ local behaviourConfig = {
 		--swarms = {},
 		flees = armedLand,
 		searchRange = 800,
-		minFleeRange = 200, -- Avoid enemies standing in front of Pickets
-		fleeLeeway = 450,
-		fleeDistance = 450,
+		minFleeRange = 100, -- Avoid enemies standing in front of Pickets
+		fleeLeeway = 100,
+		fleeDistance = 100,
 	},
 	{
 		name = "shieldcon",
@@ -2035,8 +2036,8 @@ local behaviourConfig = {
 	},
 	{
 		name = "cloakheavyraid",
-		flees = allMobileGround,
-		onlyIdleHandling = true,
+		onlyIdleHandling = false,
+		cloakFlee = true,
 	},
 	{
 		name = "gunshipraid",
