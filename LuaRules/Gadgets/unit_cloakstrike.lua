@@ -26,7 +26,6 @@ local frame = 0
 function gadget:UnitCloaked(unitID, unitDefID, unitTeam)
 	if cloakstrike_defs[unitDefID] then
 		local strikedefs = cloakstrike_defs[unitDefID]
-		persisting_strikes[unitID] = nil
 		for num, data in pairs(strikedefs["WeaponStats"]) do
 			spSetUnitWeaponState(unitID, num, data["cloakedWeaponStates"])
 			spSetUnitWeaponDamages(unitID, num, data["cloakedWeaponDamages"])
