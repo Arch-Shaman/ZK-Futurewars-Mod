@@ -718,14 +718,28 @@ end
 local function DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typeKnown, move, isIdleAttack, cmdID, cmdTag, frame)
 	local unitData = unit[unitID]
 	local enemyRange = behaviour.minFleeRange
+	local fleeDistance = behaviour.fleeDistance
+	local orderdistance = behaviour.fleeOrderDis
+	local cloakstrike = spGetUnitRulesParam(unitID, "cloakstrike_active")
+	local cloakedflee = behaviour.cloakFlee and not Spring.GetUnitIsCloaked(unitID) and (cloakstrike == nil or cloakstrike < 10)
+	if cloakedflee then
+		enemyRange = behaviour.minDecloakFleeRange or 500
+		fleeDistance = behaviour.decloakFleeDistance or 100
+		orderdistance = behaviour.decloakFleeOrderDis or 100
+	end
 	
-	if enemyUnitDef and typeKnown then
+	if enemyUnitDef and typeKnown and not cloakedflee then
 		local range = GetEnemyRange(enemyUnitDef)
 		if range > enemyRange then
 			enemyRange = range
 		end
 	end
-
+	if cloakedflee and typeKnown then
+		local range = UnitDefs[enemyUnitDef].losRadius * 1.1 -- out of sight, out of mind.
+		if range > enemyRange then
+			enemyRange = range
+		end
+	end
 	local doDebug = (debugUnit and debugUnit[unitID]) or debugAll
 	if debugAction or doDebug then
 		if doDebug then
@@ -759,9 +773,9 @@ local function DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typ
 	end
 	
 	if enemyRange + behaviour.fleeLeeway > pointDis then
-		local dis = behaviour.fleeOrderDis
+		local dis = orderdistance
 		if (pointDis+dis > behaviour.skirmRange-behaviour.stoppingDistance) then
-			dis = (enemyRange+behaviour.fleeDistance-pointDis)
+			dis = (enemyRange+fleeDistance-pointDis)
 		end
 		local f = dis/pointDis
 		local cx = ux+(ux-ex)*f
@@ -822,19 +836,36 @@ end
 local function DoTacticalAI(unitID, cmdID, cmdOpts, cmdTag, cp_1, cp_2, cp_3,
 		fx, fy, fz, unitData, behaviour, enemy, enemyUnitDef, typeKnown,
 		move, haveFight, holdPos, isIdleAttack, particularEnemy, frame, alwaysJink)
-	
-	local ex, _, ez = spGetUnitPosition(enemy)
-	local myx, _, myz = spGetUnitPosition(unitID)
-	local distance = math.sqrt(((myx - ex)*(myx - ex)) + ((myz - ez)*(myz - ez)))
+	local myunitdef = spGetUnitDefID(unitID)
+	local distance = 90000
+	if enemy then
+		local ex, _, ez = spGetUnitPosition(enemy)
+		local myx, _, myz = spGetUnitPosition(unitID)
+		distance = math.sqrt(((myx - ex)*(myx - ex)) + ((myz - ez)*(myz - ez)))
+	end
 	if (typeKnown and (not haveFight) and behaviour.fightOnlyUnits and behaviour.fightOnlyUnits[enemyUnitDef]) then
 		return false -- Do not tactical AI enemy if it is fight-only.
 	end
-	
+	local wantsreloadflee = false
+	if behaviour.reloadFlee and enemy then
+		local numweapons = #UnitDefs[myunitdef].weapons
+		local somethingNotReloading = false
+		for i = 1, numweapons do
+			if WeaponDefs[UnitDefs[myunitdef].weapons[i].weaponDef].customParams.targeter == nil then -- check everything not a targeting laser.
+				local _, loaded, _, salvoleft = Spring.GetUnitWeaponState(unitID, i)
+				if loaded or salvoleft > 0 then
+					somethingNotReloading = true
+					break
+				end
+			end
+		end
+		wantsreloadflee = not somethingNotReloading
+	end
 	if behaviour.fightOnlyUnits and behaviour.fightOnlyUnits[enemyUnitDef] and behaviour.fightOnlyOverride then
 		behaviour = behaviour.fightOnlyOverride
 	end
 	
-	if isIdleAttack and enemy and (not unitData.idleAgression) and typeKnown
+	if isIdleAttack and enemy and (not unitData.idleAgression) and typeKnown and not wantsreloadflee
 			and ((behaviour.idleFleeCombat and armedUnitDefIDs[enemyUnitDef]) or (behaviour.idleFlee and behaviour.idleFlee[enemyUnitDef])) then
 		local orderSent = DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typeKnown, move, isIdleAttack, cmdID, cmdTag, frame)
 		if not orderSent then
@@ -844,7 +875,7 @@ local function DoTacticalAI(unitID, cmdID, cmdOpts, cmdTag, cp_1, cp_2, cp_3,
 	end
 	
 	local didSwarm = false
-	if alwaysJink or (enemy and typeKnown and behaviour.swarms and behaviour.swarms[enemyUnitDef]) then
+	if alwaysJink or (enemy and typeKnown and behaviour.swarms and behaviour.swarms[enemyUnitDef]) and not wantsreloadflee then
 		--Spring.Echo("unit checking swarm")
 		if DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typeKnown, move, isIdleAttack, cmdID, cmdTag, fx, fy, fz, frame) then
 			didSwarm = true
@@ -888,12 +919,14 @@ local function DoTacticalAI(unitID, cmdID, cmdOpts, cmdTag, cp_1, cp_2, cp_3,
 	if (cmdID == CMD_ATTACK and not Spring.Utilities.CheckBit(DEBUG_NAME, cmdOpts, CMD.OPT_INTERNAL)) then
 		return false -- if I have been given attack order manually do not flee
 	end
-	
-	local decloakdistance = (spGetUnitRulesParam(unitID, "areacloaked") == 1 and UnitDefs[spGetUnitDefID(unitID)].customParams.cloaker_bestowed_radius) or UnitDefs[spGetUnitDefID(unitID)].decloakDistance
-	local cloakedwanteddistance = decloakdistance * 2
+	local cloaked = Spring.GetUnitIsCloaked(unitID)
+	local decloakdistance = (spGetUnitRulesParam(unitID, "areacloaked") == 1 and UnitDefs[myunitdef].customParams.cloaker_bestowed_radius) or UnitDefs[myunitdef].decloakDistance
+	local cloakedwanteddistance = decloakdistance * 1.33
 	if (typeKnown and ((behaviour.flees and behaviour.flees[enemyUnitDef]) or (behaviour.fleeCombat and armedUnitDefIDs[enemyUnitDef])))
 			or (not typeKnown and behaviour.fleeRadar) 
-			or (behaviour.cloakFlee and Spring.GetUnitIsCloaked(unitID) and distance <= cloakedwanteddistance and (behaviour.flees == nil or behaviour.swarms[enemyUnitDef] == nil)) then
+			or (behaviour.cloakFlee and cloaked and distance <= cloakedwanteddistance and (behaviour.flees == nil or behaviour.swarms[enemyUnitDef] == nil)) 
+			or wantsreloadflee 
+			or behaviour.cloakFlee and not cloaked and (behaviour.decloakfleeexceptions == nil or behaviour.decloakfleeexceptions[enemyUnitDef] == nil) then
 		-- if I have los and the unit is a fleeable or a unit is unarmed and I flee combat - flee
 		-- if I do not have los and flee radar dot, flee
 		local orderSent = DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typeKnown, move, isIdleAttack, cmdID, cmdTag, frame)

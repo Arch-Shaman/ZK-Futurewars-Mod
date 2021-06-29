@@ -576,6 +576,20 @@ local eco = NameToDefID({
 	"energyheavygeo",
 	"staticmex",
 	"energywind",
+	"shieldcon",
+	"hovercon",
+	"cloakcon",
+	"spidercon",
+	"gunshipcon",
+	"planecon",
+	-- Jumpcon and Tankcon purposefully ommited because they're armed and scary.
+})
+
+local scythestayandfight = NameToDefID({
+	"energyfusion",
+	"energysingu",
+	"energygeo",
+	"energyheavygeo",
 })
 
 local jumpconflee = SetMinus(armedLand, lowMedRangeSkirmieeArray)
@@ -2049,10 +2063,14 @@ local behaviourConfig = {
 		swarms = eco,
 		skirms = {},
 		flees = armedLand,
+		decloakfleeexceptions = scythestayandfight,
 		onlyIdleHandling = false,
 		cloakFlee = true,
-		fleeVelPrediction = 10,
-		minFleeRange = 100,
+		fleeVelPrediction = 20,
+		minFleeRange = 30,
+		minDecloakFleeRange = 200,
+		decloakFleeDistance = 200,
+		decloakFleeOrderDis = 100,
 		JinkTangentLength = 80,
 		JinkParallelLength = 200,
 		JinkAwayParallelLength = 170,
@@ -2060,7 +2078,7 @@ local behaviourConfig = {
 		MinCircleStrafeDistance = 40,
 		LocalJinkOrder = false,
 		SkirmOrderDis = 120,
-		VelocityPrediction = 30,
+		VelocityPrediction = 21,
 		HugRange = 50,
 	},
 	{
@@ -2075,7 +2093,16 @@ local behaviourConfig = {
 	},
 	{
 		name = "gunshipassault",
-		onlyIdleHandling = true,
+		swarms = allGround,
+		skirms = {},
+		flees = {},
+		onlyIdleHandling = false,
+		reloadFlee = true,
+		fleeLeeway = 400,
+		fleeDistance = 400,
+		minFleeRange = 500,
+        skirmLeeway = 200,
+		hugRange = 420,
 	},
 	{
 		name = "hoverassault",
@@ -2085,6 +2112,7 @@ local behaviourConfig = {
 		idleChaseEnemyLeeway = 500,
 		fleeLeeway = 1000,
 		fleeDistance = 500,
+		reloadFlee = true,
 		wardFireTargets = personalShieldUnits,
 		wardFireLeeway = 10,
 		wardFirePredict = 35,
