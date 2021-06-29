@@ -4,10 +4,10 @@ local StrikeWepDefs = {}
 
 local StrikeWepDefNames = {
 	cloakheavyraid = {
-		persistance = 30, 
-		cloakRecharge = 2, 
-		maxRecharge = 60, 
-		attackDecharge = -1, 
+		persistance = 30,
+		cloakRecharge = 2,    -- NYI
+		maxRecharge = 60,     -- NYI
+		attackDecharge = -1,  -- NYI apparently (None of this matters anyways because Persistence is a thing.)
 		WeaponStats = {
 			[1] = {
 				cloakedWeaponStates = {}, 
