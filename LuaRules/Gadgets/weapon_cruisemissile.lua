@@ -118,7 +118,16 @@ local function GetMissileDestination(num, allyteam)
 			missiles[num].lastknownposition[3] = z
 			return x, y, z
 		else
-			return missile.lastknownposition[1], missile.lastknownposition[2], missile.lastknownposition[3]
+			local x, y, z
+			if spValidUnitID(target) then
+				x, y, z = Spring.GetUnitPosErrorParams(target)
+				if x and y and z then
+					missiles[num].lastknownposition[1] = x
+					missiles[num].lastknownposition[2] = y
+					missiles[num].lastknownposition[3] = z
+				end
+			end
+			return x or missile.lastknownposition[1], y or missile.lastknownposition[2], z or missile.lastknownposition[3]
 		end
 	end
 end
