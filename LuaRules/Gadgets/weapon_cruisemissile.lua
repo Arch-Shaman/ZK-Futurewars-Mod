@@ -112,7 +112,7 @@ local function GetMissileDestination(num, allyteam)
 		return missile.target[1], missile.target[2], missile.target[3]
 	else
 		local target = missile.target
-		if spValidUnitID(target) and spIsUnitInLos(target, allyteam) then
+		if config[missile.configid].track or (spValidUnitID(target) and spIsUnitInLos(target, allyteam)) then
 			local x, y, z = spGetUnitPosition(target)
 			missiles[num].lastknownposition[1] = x
 			missiles[num].lastknownposition[2] = y
