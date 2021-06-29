@@ -76,7 +76,7 @@ return {
 				craterBoost             = 1,
 				craterMult              = 2,
 				cylinderTargeting       = 1,
-				burst					= 3,
+				burst					= 2,
 				burstRate				= 0.4,
 
 				customParams            = {
@@ -87,8 +87,8 @@ return {
 				},
 
 				damage                  = {
-					default = 20.1,
-					planes  = 200.1,
+					default = 24.1,
+					planes  = 240.1,
 				},
 
 				edgeEffectiveness       = 0.3,
