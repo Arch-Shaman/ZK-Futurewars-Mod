@@ -1,6 +1,5 @@
 --smr
 --smr_big
---smr_trail
 
 return {
   ["smr_big"] = { --modifed from av_tess
