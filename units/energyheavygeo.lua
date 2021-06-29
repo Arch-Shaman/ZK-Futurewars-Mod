@@ -2,7 +2,7 @@ return {
   energyheavygeo = {
     unitname                      = [[energyheavygeo]],
     name                          = [[Advanced Geothermal]],
-    description                   = [[Large Powerplant (+150) - Increases slowly over time, EXTREAMLY HAZARDOUS]],
+    description                   = [[Large Powerplant (+150) - Increases slowly over time, EXTREMELY HAZARDOUS]],
     activateWhenBuilt             = true,
     buildCostMetal                = 1500,
     builder                       = false,
