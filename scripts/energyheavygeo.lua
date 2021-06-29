@@ -10,22 +10,6 @@ function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, {smoke1, smoke2, smoke2, smoke3, smoke3, smoke3}, 6)
 end
 
-function script.AimFromWeapon()
-	return base
-end
-
-function script.QueryWeapon()
-	return base
-end
-
-function script.AimWeapon(num, heading, pitch)
-	return false
-end
-
-function script.BlockShot(num)
-	return true
-end
-
 function script.Killed(recentDamage, maxHealth)
 	local px, py, pz = Spring.GetUnitPosition(unitID)
 	Spring.SpawnProjectile(WeaponDefNames["energyheavygeo_yellowstone"].id, {
