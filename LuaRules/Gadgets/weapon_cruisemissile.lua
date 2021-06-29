@@ -43,6 +43,7 @@ local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spGetProjectilePosition = Spring.GetProjectilePosition
 local SetWatchWeapon = Script.SetWatchWeapon
 local spEcho = Spring.Echo
+local spGetUnitPosErrorParams = Spring.GetUnitPosErrorParams
 
 -- proccess config --
 for i=1, #WeaponDefs do
@@ -120,7 +121,7 @@ local function GetMissileDestination(num, allyteam)
 		else
 			local x, y, z
 			if spValidUnitID(target) then
-				x, y, z = Spring.GetUnitPosErrorParams(target)
+				x, y, z = spGetUnitPosErrorParams(target)
 				if x and y and z then
 					missiles[num].lastknownposition[1] = x
 					missiles[num].lastknownposition[2] = y
