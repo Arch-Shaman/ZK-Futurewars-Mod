@@ -52,7 +52,7 @@ return {
 		},
 		weaponDefs          = {
 			secondary = {
-				name                    = [[Heavy Pulse MG]],
+				name                    = [[Pulse Fragment]],
 				accuracy                = 350,
 				alphaDecay              = 0.7,
 				areaOfEffect            = 96,
