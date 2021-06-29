@@ -18,9 +18,9 @@ local spSetUnitWeaponState = Spring.SetUnitWeaponState
 local spSetUnitWeaponDamages = Spring.SetUnitWeaponDamages
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 
+local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local handledUnits = IterableMap.New()
 local cloakstrike_defs = include("LuaRules/Configs/cloakstrike_def.lua")
-local persisting_strikes = {}
-local persisting_strikes_cache = {unitDefID = 0, timer = 0,}
 local frame = 0
 
 function gadget:UnitCloaked(unitID, unitDefID, unitTeam)
@@ -60,23 +60,28 @@ end
 function gadget:UnitDecloaked(unitID, unitDefID, unitTeam)
 	if cloakstrike_defs[unitDefID] then
 		if cloakstrike_defs[unitDefID].persistance and cloakstrike_defs[unitDefID].persistance > 0 then
-			persisting_strikes_cache["unitDefID"] = unitDefID
-			persisting_strikes_cache["timer"] = frame + cloakstrike_defs[unitDefID]["persistance"]
-			persisting_strikes[unitID] = persisting_strikes_cache
+			IterableMap.Add(handledUnits, unitID, {timer = cloakstrike_defs[unitDefID].persistance, unitDefID = unitDefID})
 		else
 			UndoCloakStrike(unitID, unitDefID)
 		end
 	end
 end
 
+function gadget:UnitDestroyed(unitID)
+	if IterableMap.InMap(handledUnits, unitID) then
+		IterableMap.Remove(handledUnits, unitID)
+	end
+end
+
+
 function gadget:GameFrame(f)
 	frame = f
-	if f%5 == 0 then
-		for unitID, data in pairs(persisting_strikes) do
-			spSetUnitRulesParam(unitID, "cloakstrike_active", data.timer - f)
-			if data["timer"] <= f then
-				UndoCloakStrike(unitID, data.unitDefID)
-			end
+	for unitID, data in IterableMap.Iterator(handledUnits) do
+		data.timer = data.timer - 1
+		spSetUnitRulesParam(unitID, "cloakstrike_active", data.timer)
+		if data.timer == 0 then
+			UndoCloakStrike(unitID, data.unitDefID)
+			IterableMap.Remove(handledUnits, unitID)
 		end
 	end
 end
