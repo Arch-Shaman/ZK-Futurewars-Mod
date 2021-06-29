@@ -850,21 +850,33 @@ local function DoTacticalAI(unitID, cmdID, cmdOpts, cmdTag, cp_1, cp_2, cp_3,
 	if behaviour.reloadFlee and enemy then
 		local numweapons = #UnitDefs[myunitdef].weapons
 		local somethingNotReloading = false
-		for i = 1, numweapons do
-			if WeaponDefs[UnitDefs[myunitdef].weapons[i].weaponDef].customParams.targeter == nil then -- check everything not a targeting laser.
-				local _, loaded, _, salvoleft = Spring.GetUnitWeaponState(unitID, i)
-				if loaded or salvoleft > 0 then
-					somethingNotReloading = true
-					break
+		local loadedGuns = spGetUnitRulesParam(unitID, "scriptLoaded") or 1
+		--Spring.Echo("LoadedGuns: " .. loadedGuns)
+		if loadedGuns == 0 then
+			wantsreloadflee = true
+		else
+			for i = 1, numweapons do
+				if WeaponDefs[UnitDefs[myunitdef].weapons[i].weaponDef].customParams.targeter == nil then -- check everything not a targeting laser.
+					local _, loaded, _, salvoleft = Spring.GetUnitWeaponState(unitID, i)
+					if loaded or salvoleft > 0 then
+						somethingNotReloading = true
+						break
+					end
 				end
 			end
+			wantsreloadflee = not somethingNotReloading
 		end
-		wantsreloadflee = not somethingNotReloading
 	end
 	if behaviour.fightOnlyUnits and behaviour.fightOnlyUnits[enemyUnitDef] and behaviour.fightOnlyOverride then
 		behaviour = behaviour.fightOnlyOverride
 	end
-	
+	if wantsreloadflee then
+		local orderSent = DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typeKnown, move, isIdleAttack, cmdID, cmdTag, frame)
+		if not orderSent then
+			ClearOrder(unitID, unitData, cmdID, cmdTag, cp_1, cp_2, cp_3)
+		end
+		return true, orderSent
+	end
 	if isIdleAttack and enemy and (not unitData.idleAgression) and typeKnown and not wantsreloadflee
 			and ((behaviour.idleFleeCombat and armedUnitDefIDs[enemyUnitDef]) or (behaviour.idleFlee and behaviour.idleFlee[enemyUnitDef])) then
 		local orderSent = DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typeKnown, move, isIdleAttack, cmdID, cmdTag, frame)
@@ -895,7 +907,7 @@ local function DoTacticalAI(unitID, cmdID, cmdOpts, cmdTag, cp_1, cp_2, cp_3,
 	end
 	
 	local typeSkirm = typeKnown and behaviour.skirms and (behaviour.skirms[enemyUnitDef] or (behaviour.hugs and behaviour.hugs[enemyUnitDef]))
-	if (typeSkirm or ((not typeKnown) and behaviour.skirmRadar) or behaviour.skirmEverything) then
+	if (typeSkirm or ((not typeKnown) and behaviour.skirmRadar) or behaviour.skirmEverything) and not wantsreloadflee then
 		--Spring.Echo("unit checking skirm")
 		local orderSent = DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typeKnown,
 			move, isIdleAttack, cmdID, cmdTag, frame,
@@ -925,7 +937,6 @@ local function DoTacticalAI(unitID, cmdID, cmdOpts, cmdTag, cp_1, cp_2, cp_3,
 	if (typeKnown and ((behaviour.flees and behaviour.flees[enemyUnitDef]) or (behaviour.fleeCombat and armedUnitDefIDs[enemyUnitDef])))
 			or (not typeKnown and behaviour.fleeRadar) 
 			or (behaviour.cloakFlee and cloaked and distance <= cloakedwanteddistance and (behaviour.flees == nil or behaviour.swarms[enemyUnitDef] == nil)) 
-			or wantsreloadflee 
 			or behaviour.cloakFlee and not cloaked and (behaviour.decloakfleeexceptions == nil or behaviour.decloakfleeexceptions[enemyUnitDef] == nil) then
 		-- if I have los and the unit is a fleeable or a unit is unarmed and I flee combat - flee
 		-- if I do not have los and flee radar dot, flee

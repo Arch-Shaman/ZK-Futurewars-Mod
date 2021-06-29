@@ -498,6 +498,7 @@ local skirmableAir = NameToDefID({
 -- Brawler, for AA to swarm.
 local brawler = NameToDefID({
 	"gunshipheavyskirm",
+	"gunshipaa",
 })
 
 -- Things that are fled by some things
@@ -1862,7 +1863,7 @@ local behaviourConfig = {
 		flees = armedLand,
 		fleeLeeway = 100,
 		fleeDistance = 100,
-		minFleeRange = 500,
+		minFleeRange = 100,
 		skirmLeeway = 150,
 		swarmLeeway = 250,
 		minSwarmLeeway = 300,
