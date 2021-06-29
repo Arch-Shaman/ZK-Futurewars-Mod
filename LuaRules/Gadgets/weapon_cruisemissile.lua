@@ -121,11 +121,12 @@ local function GetMissileDestination(num, allyteam)
 		else
 			local x, y, z
 			if spValidUnitID(target) then
+				local ux, uy, uz = spGetUnitPosition(target)
 				x, y, z = spGetUnitPosErrorParams(target)
 				if x and y and z then
-					missiles[num].lastknownposition[1] = x
-					missiles[num].lastknownposition[2] = y
-					missiles[num].lastknownposition[3] = z
+					missiles[num].lastknownposition[1] = ux + x
+					missiles[num].lastknownposition[2] = uy + y
+					missiles[num].lastknownposition[3] = uz + z
 				end
 			end
 			return x or missile.lastknownposition[1], y or missile.lastknownposition[2], z or missile.lastknownposition[3]
