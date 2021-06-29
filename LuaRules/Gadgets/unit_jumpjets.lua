@@ -224,7 +224,6 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 	start[2] = math.max(start[2], startHeight)
 	
 	local reloadmult	   = math.max(1 - (spGetUnitRulesParam(unitID, "comm_jumpreload_bonus") or 0), 0)
-	local fakeUnitID
 	local unitDefID        = spGetUnitDefID(unitID)
 	local jumpDef          = jumpDefs[unitDefID]
 	local defSpeed         = jumpDef.speed + speedbonus
