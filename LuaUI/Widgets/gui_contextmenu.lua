@@ -435,13 +435,13 @@ local function GetShieldRegenDrain(wd)
 	return shieldRegen, shieldDrain
 end
 
-local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds)
+local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, deathExplosion)
 	local cells = cells
 	local startPoint = #cells+1
 	
 	local wd
 	if bombletCount then
-		wd = WeaponDefNames[ws]
+		wd = WeaponDefNames[ws] --GetWeapon for some reason doesn't work
 	else
 		wd = WeaponDefs[ws.weaponID]
 	end
@@ -452,7 +452,9 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds)
 	local comm_mult = (unitID and Spring.GetUnitRulesParam(unitID, "comm_damage_mult")) or 1
 	local name = wd.description or "Weapon"
 	if bombletCount then
-		name = name .. " x " .. math.floor(bombletCount * comm_mult)
+		if not deathExplosion then
+			name = name .. " x " .. math.floor(bombletCount * comm_mult)
+		end
 	elseif ws.count > 1 then
 		name = name .. " x " .. ws.count
 	end
@@ -648,14 +650,14 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds)
 			end
 	
 			-- shield damage
-			if (wd.interceptedByShieldType ~= 0) and show_damage and not cp.stats_hide_shield_damage then
+			if (wd.interceptedByShieldType ~= 0) and show_damage and not cp.stats_hide_shield_damage and not deathExplosion then
 				if cp.damage_vs_shield then
 					cells[#cells+1] = ' - Shield damage:'
 					cells[#cells+1] = numformat(cp.stats_shield_damage)
 				elseif tonumber(cp.stats_shield_damage) ~= baseDamage then
 					cells[#cells+1] = ' - Shield damage:'
 					if damageTypes > 1 or mult > 1 then
-						cells[#cells+1] = numformat(math.floor(cp.stats_shield_damage * mult * comm_mult), 2) .. " (" .. shield_dam_str .. ")"
+						cells[#cells+1] = numformat(math.floor(cp.stats_shield_damage * mult * comm_mult), 2) .. "(" .. shield_dam_str .. ")"
 					else
 						cells[#cells+1] = numformat(math.floor(cp.stats_shield_damage * mult * comm_mult), 2)
 					end
@@ -992,7 +994,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds)
 					cells[#cells+1] = (not cp.bogus and '   ' or '') .. WeaponDefNames[cp["projectile" .. submunitionCount]].description .. ' x ' .. cp["numprojectiles" .. submunitionCount] .. ' (Previously Listed)'
 					cells[#cells+1] = ''
 				else
-					cells = weapons2Table(cells, cp["projectile" .. submunitionCount], unitID, cp["numprojectiles" .. submunitionCount] * (cp.bogus and bombletCount or 1) * (cp["clustercharges"] or 1),  recursedWepIds)
+					cells = weapons2Table(cells, cp["projectile" .. submunitionCount], unitID, cp["numprojectiles" .. submunitionCount] * (cp.bogus and bombletCount or 1) * (cp["clustercharges"] or 1), recursedWepIds, false)
 				end
 				submunitionCount = submunitionCount + 1
 			end
@@ -1002,7 +1004,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds)
 			end
 		end
 	end
-	if not cp.bogus then
+	if bombletCount and not cp.bogus and not deathExplosion then
 		for i = startPoint, #cells, 2 do
 			cells[i] = '    ' .. cells[i]
 		end
@@ -1440,7 +1442,7 @@ local function printWeapons(unitDef, unitID)
 			cells[#cells+1] = ''
 			cells[#cells+1] = ''
 		end
-		cells = weapons2Table(cells, ws, unitID, false, {})
+		cells = weapons2Table(cells, ws, unitID, false, {}, false)
 		--end
 	end
 	
@@ -1783,6 +1785,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 
 	cells = printWeapons(ud, isCommander and unitID)
 	
+	
 	if cells and #cells > 0 then
 		
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
@@ -1819,7 +1822,8 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
 		statschildren[#statschildren+1] = Label:New{ caption = 'Death Explosion', textColor = color.stats_header,}
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
-
+		
+		--[[
 		local weaponStats = GetWeapon( ud.deathExplosion:lower() )
 		local wepCp = weaponStats.customParams
 		local damageValue = tonumber(weaponStats.customParams.stats_damage)
@@ -1855,7 +1859,15 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		-- statschildren[#statschildren+1] = Label:New{ caption = 'Edge Damage: ', textColor = color.stats_fg, }
 		-- statschildren[#statschildren+1] = Label:New{ caption = numformat(damageValue * weaponStats.edgeEffectiveness,2), textColor = color.stats_fg, }
 		-- edge damage is always 0, see http://springrts.com/mediawiki/images/1/1c/EdgeEffectiveness.png
-
+		]]--
+		
+		local cells = weapons2Table({}, ud.deathExplosion:lower(), unitID, 1, {}, true)
+		
+		if cells and #cells > 0 then
+			for i=1, #cells do
+				statschildren[#statschildren+1] = Label:New{ caption = cells[i], textColor = color.stats_fg, }
+			end
+		end
 	end
 
 	--adding this because of annoying  cutoff
