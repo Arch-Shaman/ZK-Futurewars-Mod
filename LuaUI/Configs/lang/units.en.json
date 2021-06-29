@@ -316,8 +316,8 @@
 	},
 	"energyheavygeo" : {
 		"name" : "Advanced Geothermal",
-		"description" : "Powerplant: +100e (HAZARDOUS)",
-		"helptext" : "The Advanced Geothermal Powerplant produces a massive amount of energy. It requires protection, though, as destroying it results in a devastating explosion."
+		"description" : "Large Powerplant +150e - Increases slowly over time, EXTREMELY HAZARDOUS",
+		"helptext" : "The Advanced Geothermal Powerplant taps into the mantle of the planet to produce an extremely large amount of energy for a very low cost. Unfortunately, the very nature of this powerplant means that once it is destroyed, even the best safety mechanisms are not able to prevent ensuing supervolcanic eruption. Construct at your own risk."
 	},
 	"staticcon" : {
 		"name" : "Caretaker",
