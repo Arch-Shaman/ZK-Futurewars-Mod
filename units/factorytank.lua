@@ -68,7 +68,7 @@ return {
 		maxWaterDepth                 = 0,
 		moveState                     = 1,
 		noAutoFire                    = false,
-		objectName                    = [[factorytank.s3o]],
+		objectName                    = [[factorytank.dae]],
 		script                        = [[factorytank.lua]],
 		selfDestructAs                = [[LARGE_BUILDINGEX]],
 		showNanoSpray                 = false,
