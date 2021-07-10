@@ -89,6 +89,7 @@ local abs = math.abs
 local atan2 = math.atan2
 local pi = math.pi
 local halfpi = pi/2
+local doublepi = pi*2
 local abs = math.abs -- CAS GOES TO THE GYM AND HAS DOUBLE ABS
 local strfind = string.find
 local gmatch = string.gmatch
@@ -216,6 +217,49 @@ local function GetRandomAttackPoint(x, z, radius)
 	return target
 end
 
+local function GetRingAttackPoint(x, z, radius, heading)
+	local target = {}
+	target[1] = x + (radius * sin(heading))
+	target[3] = z + (radius * cos(heading))
+	if target[1] > mapx then -- clamp inside the map
+		target[1] = mapx
+	elseif target[1] < 0 then
+		target[1] = 0
+	end
+	if target[3] > mapz then -- ditto
+		target[3] = mapz
+	elseif target[3] < 0 then
+		target[3] = 0
+	end
+	target[2] = spGetGroundHeight(target[1], target[3])
+	return target
+end
+
+local function ConvertProjectileTargetToPos(targettype, targetID, projX, projY, projZ)
+	if targettype == ground then -- this is an undocumented case. Aircraft bombs when targeting ground returns 103 or byte(49).
+		x1 = targetID[1]
+		y1 = targetID[2]
+		z1 = targetID[3]
+		if debug then
+			spEcho(x1,y1,z1)
+		end
+	elseif targettype == 103 then
+		if debug then
+			spEcho("103! \n" .. targetID[1],targetID[2],targetID[3])
+		end
+		x1 = projX
+		y1 = spGetGroundHeight(projX,projZ)
+		z1 = projZ
+	elseif targettype == unit or targettype == 117 then
+		x1,y1,z1 = spGetUnitPosition(targetID)
+	elseif targettype == feature then
+		x1,y1,z1 = spGetFeaturePosition(targetID)
+	elseif targettype == projectile then
+		x1,y1,z1 = spGetProjectilePosition(targetID)
+	end
+	return x1, y1, z1
+end
+
 local function SpawnSubProjectiles(id, wd)
 	if id == nil then
 		return
@@ -229,6 +273,7 @@ local function SpawnSubProjectiles(id, wd)
 	local x, y, z = spGetProjectilePosition(id)
 	local vx, vy, vz = spGetProjectileVelocity(id)
 	local ttype, target = spGetProjectileTarget(id)
+	local targetX, targetY, targetZ = ConvertProjectileTargetToPos(ttype, target, x, y, z)
 	-- update projectile attributes --
 	local owner = spGetProjectileOwnerID(id)
 	projectileattributes["owner"] = owner
@@ -277,9 +322,21 @@ local function SpawnSubProjectiles(id, wd)
 				projectilecount = floor(spawnMult * projectilecount + random())
 			end
 		end
+		local untargetedCount
 		for i = 1, projectilecount do
 			if config[wd].usertarget then
-				target = targetoverride[i] or GetRandomAttackPoint(x, z, wanteddefs[ownerDefID]["range"])
+				if targetoverride[i] then
+					target = targetoverride[i]
+				else
+					untargetedCount = untargetedCount or (projectilecount - i + 1) --the +1 is there since THIS projectile is also not targeted
+					if untargetedCount >= 3 then
+						local angle = (i + untargetedCount - projectilecount) * (doublepi / untargetedCount)
+						target = GetRingAttackPoint(targetX, targetZ, wanteddefs[ownerDefID]["noTargetRange"], angle)
+						
+					else
+						target = GetRandomAttackPoint(targetX, targetZ, wanteddefs[ownerDefID]["noTargetRange"])
+					end
+				end
 				ttype = ground
 			end
 			local p
@@ -442,7 +499,7 @@ local function CheckProjectile(id)
 				local use3d = (myConfig.use2ddist == 0)
 				local distance
 				local x2,y2,z2 = spGetProjectilePosition(id)
-				local x1,y1,z1
+				local x1,y1,z1 = ConvertProjectileTargetToPos(targettype, targetID, x2, y2, z2)
 				if debug then 
 					spEcho("Attack type: " .. targettype .. "\nTarget: " .. tostring(targetID))
 				end
@@ -460,27 +517,6 @@ local function CheckProjectile(id)
 					else
 						return
 					end
-				end
-				if targettype == ground then -- this is an undocumented case. Aircraft bombs when targeting ground returns 103 or byte(49).
-					x1 = targetID[1]
-					y1 = targetID[2]
-					z1 = targetID[3]
-					if debug then
-						spEcho(x1,y1,z1)
-					end
-				elseif targettype == 103 then
-					if debug then
-						spEcho("103! \n" .. targetID[1],targetID[2],targetID[3])
-					end
-					x1 = x2
-					y1 = spGetGroundHeight(x2,z2)
-					z1 = z2
-				elseif targettype == unit or targettype == 117 then
-					x1,y1,z1 = spGetUnitPosition(targetID)
-				elseif targettype == feature then
-					x1,y1,z1 = spGetFeaturePosition(targetID)
-				elseif targettype == projectile then
-					x1,y1,z1 = spGetProjectilePosition(targetID)
 				end
 				if use3d then
 					distance = distance3d(x2,y2,z2,x1,y1,z1)
