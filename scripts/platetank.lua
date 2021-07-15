@@ -91,7 +91,7 @@ end
 
 local function IsDisabled()
 	local nofac = Spring.GetUnitRulesParam(unitID, "nofactory")
-	return (nofact and nofact == 1) or false
+	return (nofac and nofac == 1) or false
 end
 
 function script.AimWeapon(num, heading, pitch)
