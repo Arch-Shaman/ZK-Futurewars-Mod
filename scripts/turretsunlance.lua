@@ -8,7 +8,7 @@ local smokePiece = {base, turret}
 
 local delay = {}
 for i=1, #UnitDef.weapons do
-  delay[i] = WeaponDefs[UnitDef.weapons[i].weaponDef].customParams.aimdelay
+	delay[i] = WeaponDefs[UnitDef.weapons[i].weaponDef].customParams.aimdelay
 end
 
 -- Signal definitions
@@ -22,10 +22,9 @@ function script.AimWeapon(num, heading, pitch)
 	WaitForTurn(breech, x_axis)
 	WaitForTurn(turret, y_axis)
 	if (spGetUnitRulesParam(unitID, "lowpower") ~= 0) then --checks for sufficient energy in grid
-    return false
-  end
-
-  return GG.AimDelay_AttemptToFire(unitID, num, heading, pitch, delay[num])
+		return false
+	end
+	return GG.AimDelay_AttemptToFire(unitID, num, heading, pitch, delay[num])
 end
 
 function script.AimFromWeapon(num) return breech end
