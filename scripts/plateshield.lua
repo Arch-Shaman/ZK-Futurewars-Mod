@@ -5,6 +5,8 @@ local base, turret, arm_1, arm_2, arm_3, nanobase, rightpiece, leftpiece, nanoem
 
 local nanoPieces = { nanoemit }
 local smokePiece = { base }
+local enabled = true -- is the shield enabled?
+local power = 0
 
 local function Open ()
 	Signal (1)
@@ -35,9 +37,30 @@ local function Close()
 	Turn (nanobase, x_axis, 0, math.rad(4))
 end
 
+local function IsDisabled()
+	local nofac = Spring.GetUnitRulesParam(unitID, "nofactory")
+	return (nofac and nofac == 1) or false
+end
+
+local function ShieldEnableThread()
+	while true do
+		if IsDisabled() and enabled then -- we're on, but we want to be turned off.
+			local _, p = Spring.GetUnitShieldState(unitID, 1)
+			power = p -- store shield strength.
+			enabled = false
+			Spring.SetUnitShieldState(unitID, 1, false, 0)
+		elseif not IsDisabled() and not enabled then -- we're off, but we want to be turned on.
+			enabled = true
+			Spring.SetUnitShieldState(unitID, 1, true, power)
+		end
+		Sleep(200)
+	end
+end
+
 function script.Create()
 	StartThread (GG.Script.SmokeUnit, unitID, smokePiece)
 	Spring.SetUnitNanoPieces (unitID, nanoPieces)
+	StartThread(ShieldEnableThread)
 end
 
 function script.QueryNanoPiece ()
