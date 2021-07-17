@@ -23,6 +23,13 @@ end
 local abs = math.abs
 local allowedHeadingError = 0.000001 -- to allow for micro-variations in heading even when firing at fixed positions
 local allowedPitchError = 0.01 -- to allow for cratering
+local WeaponDefOverrides = {}
+
+for i = 1, #WeaponDefs do
+	if WeaponDefs[i].customParams.allowedpitcherror or WeaponDefs[i].customParams.allowedheadingerror then
+		WeaponDefOverrides[i] = {heading = tonumber(WeaponDefs[i].customParams.allowedheadingerror) or allowedHeadingError, pitch = tonumber(WeaponDefs[i].customParams.allowedpitcherror) or allowedPitchError}
+	end
+end
 
 local LOS_ACCESS = {inlos = true}
 
@@ -32,19 +39,29 @@ local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local frame = -1
 
 
-local function isCloseEnough(heading1, heading2, pitch1, pitch2)
+local function isCloseEnough(heading1, heading2, pitch1, pitch2, weaponDefID)
+	local headingerror = allowedHeadingError
+	local pitcherror = allowedPitchError
+	if WeaponDefOverrides[weaponDefID] then
+		headingerror = WeaponDefOverrides[weaponDefID].heading
+		pitcherror = WeaponDefOverrides[weaponDefID].pitch
+	end
 	if (heading1 == false or heading2 == false or pitch1 == false or pitch2 == false) then
 		return false
 	end
-	if (abs(heading1 - heading2) > allowedHeadingError) then
+	if (abs(heading1 - heading2) > headingerror) then
 		return false
 	end
-	if (abs(pitch1 - pitch2) > allowedPitchError) then
+	if (abs(pitch1 - pitch2) > pitcherror) then
 		return false
 	end
 	return true
 end
 
+
+function GG.AimDelay_ForceWeaponRestart(unitID, weaponNum, delay)
+	unitDelayedArray[unitID][weaponNum].forcereset = true
+end
 
 function GG.AimDelay_AttemptToFire(unitID, weaponNum, heading, pitch, delay)
 	
@@ -53,13 +70,15 @@ function GG.AimDelay_AttemptToFire(unitID, weaponNum, heading, pitch, delay)
 		heading = false,
 		pitch = false,
 		delayedUntil = 0,
+		forcereset = false,
 	}
 	local weaponDelay = unitDelayedArray[unitID][weaponNum]
-	
-	if (not isCloseEnough(weaponDelay.heading, heading, weaponDelay.pitch, pitch)) then
-		weaponDelay.delayedUntil = Spring.GetGameFrame() + delay
-		weaponDelay.heading = heading
-		weaponDelay.pitch = pitch
+	local weaponDefID = UnitDefs[Spring.GetUnitDefID(unitID)].weapons[weaponNum].weaponDef or 0
+	if (not isCloseEnough(weaponDelay.heading, heading, weaponDelay.pitch, pitch, weaponDefID)) or weaponDelay.forcereset then
+		unitDelayedArray[unitID][weaponNum].delayedUntil = frame + delay
+		unitDelayedArray[unitID][weaponNum].heading = heading
+		unitDelayedArray[unitID][weaponNum].pitch = pitch
+		unitDelayedArray[unitID][weaponNum].forcereset = false
 		spSetUnitRulesParam(unitID, "specialReloadFrame", weaponDelay.delayedUntil, LOS_ACCESS)
 		return false
 	end
