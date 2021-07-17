@@ -211,9 +211,9 @@ function script.FireWeapon(num)
 	Move(barrel, x_axis, 0, 1)
 end 
 
---[[function script.BlockShot(num, targetID)
-	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 600, 50, 1, 0, false)
-end]] -- OKP, if needed.
+function script.BlockShot(num, targetID)
+	return num == 1 and GG.OverkillPrevention_CheckBlock(unitID, targetID, 600, 50, 1, 0, false) -- 2 should be MGs which dont need OKP.
+end
 
 local firstDeactivate = true
 function script.Deactivate()
