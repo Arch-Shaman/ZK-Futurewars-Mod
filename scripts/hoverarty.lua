@@ -14,22 +14,20 @@ local smokePiece = {base, turret}
 
 local RESTORE_DELAY = 4000
 
+local delay = WeaponDefs[UnitDef.weapons[1].weaponDef].customParams.aimdelay
+local beam_duration = WeaponDefs[UnitDef.weapons[1].weaponDef].beamtime * 1000
+
 -- Signal definitions
 local SIG_AIM = 2
 local SIG_MOVE = 4
 
 local curTerrainType = 4
 local wobble = false
-local firing = false
-local tracking = 0
-local trackneeded = 15
 local reloading = false
-local turning = false
-local trackingcomplete = false
-local reloadtime = WeaponDefs[UnitDef.weapons[1].weaponDef].reload * 1000
-local lastfire = 0
-local currentframe = 0
-local lasttracking = 0
+local lastcheck = -1
+--local turning = false
+
+local turnrate = math.rad(20)
 
 local function Tilt()
 	while true do
@@ -47,16 +45,13 @@ local function WobbleUnit()
 	while true do
 		if wobble == true then
 			Move(base, y_axis, 2, 3)
-		end
-		if wobble == false then
+		else
 			Move(base, y_axis, -2, 3)
 		end
 		wobble = not wobble
 		Sleep(1500)
 	end
 end
-
-local oldtime = 0
 
 local function HoverFX()
 	local emitType = 1024
@@ -83,7 +78,7 @@ function script.StopMoving()
 	bMoving = 0
 end
 
-function TurnThread()
+--[[function TurnThread()
 	if turning and not Spring.GetUnitIsCloaked(unitID) then
 		local x,y,z = Spring.GetUnitPosition(unitID)
 		GG.PlayFogHiddenSound("Sounds/ambient/turretslow.wav", 38.5,x,y,z,0.1,0.1,0.1,1)
@@ -91,51 +86,32 @@ function TurnThread()
 	else
 		Sleep(100)
 	end
-end
-
-function reloadThread()
-	while true do
-		if reloading then
-			Sleep(reloadtime)
-			reloading = false
-		end
-		Sleep(100)
-	end
-end
+end]]
 
 function TrackThread()
+	local currentframe, trackingcompletedframe, diff, reloadFrame = 0, 999999999, 0, 0
 	while true do
-		if Spring.GetGameFrame() > lastfire + 6 and tracking > 0 then
-			trackingcomplete = false
-			tracking = tracking - 2
-			if tracking < 0 then
-				tracking = 0
-			end
+		trackingcompletedframe = Spring.GetUnitRulesParam(unitID, "specialReloadFrame") or -9999
+		currentframe = Spring.GetGameFrame()
+		diff = trackingcompletedframe - currentframe
+		if diff <= 30 and diff > 0 and currentframe - lastcheck < 3 and not reloading then
+			Spring.PlaySoundFile("Sounds/weapon/laser/trackercompleted.wav", 20.0, x, y, z, 1, 1, 1, 1)
+			Sleep(33 * math.ceil((trackingcompletedframe - currentframe)/4))
+		else
+			Sleep(33)
 		end
-		if tracking >= trackneeded and not trackingcomplete then
-			local x,y,z = Spring.GetUnitPosition(unitID)
-			Spring.PlaySoundFile("Sounds/weapon/laser/trackercompleted.wav", 20.0, x, y, z, 1, 1, 1, 1)
-			Sleep(150)
-			Spring.PlaySoundFile("Sounds/weapon/laser/trackercompleted.wav", 20.0, x, y, z, 1, 1, 1, 1)
-			Sleep(150)
-			Spring.PlaySoundFile("Sounds/weapon/laser/trackercompleted.wav", 20.0, x, y, z, 1, 1, 1, 1)
-			Sleep(75)
-			Spring.PlaySoundFile("Sounds/weapon/laser/trackercompleted.wav", 20.0, x, y, z, 1, 1, 1, 1)
-			Sleep(75)
-			Spring.PlaySoundFile("Sounds/weapon/laser/trackercompleted.wav", 20.0, x, y, z, 1, 1, 1, 1)
-			Sleep(25)
-			trackingcomplete = true
+		_, _, reloadFrame = Spring.GetUnitWeaponState(unitID, 1)
+		if reloadFrame then
+			reloading = reloadFrame >= currentframe
+			--Spring.Echo("TrackThread: Updated Reloading state: " .. tostring(reloading) .. "\nReloadFrame: " .. tostring(reloadFrame))
 		end
-		Sleep(33)
-		lasttracking = tracking
 	end
 end
 
 function script.Create()
 	Hide(flare)
-	StartThread(reloadThread)
 	StartThread(WobbleUnit)
-	StartThread(TurnThread)
+	--StartThread(TurnThread)
 	StartThread(TrackThread)
 	--for i = 1, 4 do
 		--Hide(wheels[i])
@@ -146,38 +122,37 @@ end
 
 local function RestoreAfterDelay()
 	Sleep(RESTORE_DELAY)
-	Turn(turret, y_axis, 0, math.rad(30))
-	Turn(gun, x_axis, 0, math.rad(10))
+	Turn(turret, y_axis, 0, turnrate)
+	Turn(gun, x_axis, 0, turnrate / 2)
 end
 
 function script.AimWeapon(num, heading, pitch)
-	if num == 2 and (reloading or tracking > trackneeded + 3) then
-		return false
-	end
-	if num == 1 and not trackingcomplete then
-		return false
-	end
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
-
-	while firing do
-		Sleep(100)
-	end
-
 	GG.DontFireRadar_CheckAim(unitID)
-	
-	Turn(turret, y_axis, heading, math.rad(30))
-	Turn(gun, x_axis, -pitch, math.rad(30))
-	turning = true
+	Turn(turret, y_axis, heading, turnrate)
+	Turn(gun, x_axis, -pitch, turnrate)
 	WaitForTurn(turret, y_axis)
 	WaitForTurn(gun, x_axis)
-	turning = false
 	StartThread(RestoreAfterDelay)
+	if num == 1 and not reloading then
+		lastcheck = Spring.GetGameFrame()
+		--Spring.Echo("Heading: " .. tostring(heading) .. "\nPitch: " .. tostring(pitch) .. "\nAimDelay: " .. tostring(GG.AimDelay_AttemptToFire(unitID, 1, heading, pitch, delay)))
+		return GG.AimDelay_AttemptToFire(unitID, 1, heading, pitch, delay)
+	elseif num == 1 and reloading then
+		return false
+	end
 	return true
 end
 
 function script.BlockShot(num, targetID)
-	return (targetID and GG.DontFireRadar_CheckBlock(unitID, targetID)) and true or false
+	if num == 1 then
+		return (targetID and GG.DontFireRadar_CheckBlock(unitID, targetID)) and true or false
+	elseif num == 2 then
+		return reloading
+	else
+		return false
+	end
 end
 
 function script.AimFromWeapon(num)
@@ -188,19 +163,9 @@ function script.QueryWeapon(num)
 	return flare
 end
 
-local beam_duration = WeaponDefs[UnitDef.weapons[1].weaponDef].beamtime * 1000
-
 function script.FireWeapon(id)
-	if id == 2 then -- tracking beam 
-		tracking = tracking + 1
-		lastfire = Spring.GetGameFrame()
-	elseif id == 1 then
-		firing = true
-		Sleep (beam_duration)
-		firing = false
-		reloading = true
-		trackingcomplete = false
-		tracking = 0
+	if id == 1 then
+		GG.AimDelay_ForceWeaponRestart(unitID, 1) -- restart progress.
 	end
 end
 

@@ -20,6 +20,7 @@ unitDef = {
 	customParams        = {
 		dontfireatradarcommand = '0',
 		aimposoffset   = [[0 15 0]],
+		specialreloadtime = 120, -- must be the same as ATA's aimdelay.
 	},
 
 	explodeAs           = [[MEDIUM_BUILDINGEX]],
@@ -106,12 +107,11 @@ unitDef = {
 			noSelfDamage            = true,
 			range                   = 1020,
 			reloadtime              = 2/30,
-			sweapfire = false,
 			rgbColor                = [[0.7 0 0]],
 			soundStart              = [[weapon/laser/tracker]],
 			soundStartVolume        = 15,
 			texture1                = [[largelaser]],
-			texture2                = [[flare]],
+			--texture2                = [[flare]],
 			texture3                = [[flare]],
 			texture4                = [[smallflare]],
 			thickness               = 2,
@@ -132,10 +132,12 @@ unitDef = {
 			craterMult              = 0,
 			customParams            = {
 				burst = Shared.BURST_RELIABLE,
-
+				aimdelay = 120, -- 6 seconds
 				light_color = [[1.25 0.8 1.75]],
 				light_radius = 320,
 				reveal_unit = 10,
+				allowedpitcherror = 0.2,
+				allowedheadingerror = 0.1,
 			},
 			damage                  = {
 				default = 3000.1,
