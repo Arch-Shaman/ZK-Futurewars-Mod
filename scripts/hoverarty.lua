@@ -24,10 +24,13 @@ local SIG_MOVE = 4
 local curTerrainType = 4
 local wobble = false
 local reloading = false
+local trackerlastframe = 0
+local aimedrecently = false
+local forcefire = false
 local lastcheck = -1
 --local turning = false
 
-local turnrate = math.rad(20)
+local turnrate = math.rad(45)
 
 local function Tilt()
 	while true do
@@ -90,21 +93,29 @@ end]]
 
 function TrackThread()
 	local currentframe, trackingcompletedframe, diff, reloadFrame = 0, 999999999, 0, 0
+	local sounded = false
 	while true do
 		trackingcompletedframe = Spring.GetUnitRulesParam(unitID, "specialReloadFrame") or -9999
 		currentframe = Spring.GetGameFrame()
 		diff = trackingcompletedframe - currentframe
-		if diff <= 30 and diff > 0 and currentframe - lastcheck < 3 and not reloading then
-			Spring.PlaySoundFile("Sounds/weapon/laser/trackercompleted.wav", 20.0, x, y, z, 1, 1, 1, 1)
-			Sleep(33 * math.ceil((trackingcompletedframe - currentframe)/4))
-		else
-			Sleep(33)
+		if aimedrecently and currentframe - trackerlastframe > 7 then
+			aimedrecently = false
+			GG.AimDelay_ForceWeaponRestart(unitID, 1)
+		end
+		if diff <= 30 and diff > 0 and currentframe - lastcheck < 3 and not reloading and aimedrecently and not sounded then
+			Spring.PlaySoundFile("Sounds/weapon/laser/trackercompleted_full.wav", 20.0, x, y, z, 1, 1, 1, 1)
+			sounded = true
+		end
+		if diff <= 0 and aimedrecently then
+			forcefire = true
+			sounded = false
 		end
 		_, _, reloadFrame = Spring.GetUnitWeaponState(unitID, 1)
 		if reloadFrame then
 			reloading = reloadFrame >= currentframe
 			--Spring.Echo("TrackThread: Updated Reloading state: " .. tostring(reloading) .. "\nReloadFrame: " .. tostring(reloadFrame))
 		end
+		Sleep(33)
 	end
 end
 
@@ -124,9 +135,20 @@ local function RestoreAfterDelay()
 	Sleep(RESTORE_DELAY)
 	Turn(turret, y_axis, 0, turnrate)
 	Turn(gun, x_axis, 0, turnrate / 2)
+	GG.AimDelay_ForceWeaponRestart(unitID, 1)
 end
 
 function script.AimWeapon(num, heading, pitch)
+	if num == 1 and not reloading then
+		if forcefire then
+			return true
+		else
+			GG.AimDelay_AttemptToFire(unitID, 1, heading, pitch, delay)
+			aimedrecently = true
+			sounded = false
+			lastcheck = Spring.GetGameFrame()
+		end
+	end
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
 	GG.DontFireRadar_CheckAim(unitID)
@@ -137,7 +159,7 @@ function script.AimWeapon(num, heading, pitch)
 	StartThread(RestoreAfterDelay)
 	if num == 1 and not reloading then
 		lastcheck = Spring.GetGameFrame()
-		--Spring.Echo("Heading: " .. tostring(heading) .. "\nPitch: " .. tostring(pitch) .. "\nAimDelay: " .. tostring(GG.AimDelay_AttemptToFire(unitID, 1, heading, pitch, delay)))
+		aimedrecently = true
 		return GG.AimDelay_AttemptToFire(unitID, 1, heading, pitch, delay)
 	elseif num == 1 and reloading then
 		return false
@@ -165,7 +187,11 @@ end
 
 function script.FireWeapon(id)
 	if id == 1 then
+		forcefire = false
 		GG.AimDelay_ForceWeaponRestart(unitID, 1) -- restart progress.
+		aimedrecently = false
+	elseif id == 2 then
+		trackerlastframe = Spring.GetGameFrame()
 	end
 end
 
