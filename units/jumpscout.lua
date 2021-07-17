@@ -6,7 +6,7 @@ return {
 		acceleration           = 0.72,
 		activateWhenBuilt      = true,
 		brakeRate              = 4.32,
-		buildCostMetal         = 45,
+		buildCostMetal         = 35,
 		builder                = false,
 		buildPic               = [[jumpscout.png]],
 		canGuard               = true,
@@ -40,7 +40,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 80,
+		maxDamage              = 70,
 		maxSlope               = 36,
 		maxVelocity            = 3.5,
 		maxWaterDepth          = 15,
@@ -93,7 +93,7 @@ return {
 				},
 
 				damage                  = {
-					default = 410.1,
+					default = 610.1,
 				},
 
 				fireStarter             = 70,
