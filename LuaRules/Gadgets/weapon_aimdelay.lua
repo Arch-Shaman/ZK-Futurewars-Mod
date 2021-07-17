@@ -50,9 +50,11 @@ local function isCloseEnough(heading1, heading2, pitch1, pitch2, weaponDefID)
 		return false
 	end
 	if (abs(heading1 - heading2) > headingerror) then
+		--Spring.Echo("Heading error: " .. abs(heading1 - heading2))
 		return false
 	end
 	if (abs(pitch1 - pitch2) > pitcherror) then
+		--Spring.Echo("Pitch error: " .. abs(heading1 - heading2))
 		return false
 	end
 	return true
