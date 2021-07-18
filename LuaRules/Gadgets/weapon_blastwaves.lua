@@ -31,6 +31,7 @@ for i = 1, #WeaponDefs do
 		local paradamage = tonumber(cp["blastwave_empdmg"]) or 0
 		local paratime = tonumber(cp["blastwave_emptime"]) or 1
 		local slowdmg = tonumber(cp["blastwave_slowdmg"]) or 0
+		local damagesfriendly = cp["blastwave_nofriendly"] == nil
 		blastwaveDefs[id] = {
 			size = size,
 			impulse = impulse,
@@ -41,6 +42,7 @@ for i = 1, #WeaponDefs do
 			paradmg = paradamage,
 			paratime = paratime,
 			slowdmg = slowdmg,
+			damagesfriendly = damagesfriendly,
 		}
 		wanted[#wanted + 1] = id
 		Script.SetWatchExplosion(id, true)
@@ -60,29 +62,31 @@ local function distance2d(x1,y1,x2,y2)
 	return sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)))
 end
 
-local function Updateblastwave(x, y, z, size, impulse, damage, attackerID, weaponDefID, slow, para)
+local function Updateblastwave(x, y, z, size, impulse, damage, attackerID, attackerTeam, weaponDefID, slow, para)
 	local affected = spGetUnitsInSphere(x, y, z, size)
 	if #affected == 0 then
 		return
 	end
 	for i = 1, #affected do
 		local unitID = affected[i]
-		local ux, uy, uz = Spring.GetUnitPosition(unitID)
-		local dx, dy, dz = (ux - x)/size, (uy - y)/size, (uz - z)/size
-		local distance = distance2d(ux, uz, x, z)
-		local ddist = 1 - ((size - distance) / size)
-		local vx, vy, vz = impulse * dx, dy * impulse, dz * impulse
-		local incoming = damage * ddist
-		spAddUnitImpulse(unitID, vx, vy, vz)
-		spAddUnitDamage(unitID, incoming, 0, attackerID, weaponDefID, vx, vy, vz) -- real damage first
-		if para and para > 0 then
-			local paratime = blastwaveDefs[weaponDefID].paratime or 1
-			spAddUnitDamage(unitID, para * ddist, paratime, attackerID, weaponDefID, 0, 0, 0)
+		if blastwaveDefs[weaponDefID].damagesfriendly or (not blastwaveDefs[weaponDefID].damagesfriendly and Spring.GetUnitAllyTeam(unitID) ~=  attackerTeam then
+			local ux, uy, uz = Spring.GetUnitPosition(unitID)
+			local dx, dy, dz = (ux - x)/size, (uy - y)/size, (uz - z)/size
+			local distance = distance2d(ux, uz, x, z)
+			local ddist = 1 - ((size - distance) / size)
+			local vx, vy, vz = impulse * dx, dy * impulse, dz * impulse
+			local incoming = damage * ddist
+			spAddUnitImpulse(unitID, vx, vy, vz)
+			spAddUnitDamage(unitID, incoming, 0, attackerID, weaponDefID, vx, vy, vz) -- real damage first
+			if para and para > 0 then
+				local paratime = blastwaveDefs[weaponDefID].paratime or 1
+				spAddUnitDamage(unitID, para * ddist, paratime, attackerID, weaponDefID, 0, 0, 0)
+			end
+			if slow and slow > 0 then
+				GG.addSlowDamage(unitID, slow * ddist)
+			end
+			--Spring.Echo("Did " .. incoming .. " and " .. vx .. ", " .. vy .. ", " .. vz .. " to " .. unitID)
 		end
-		if slow and slow > 0 then
-			GG.addSlowDamage(unitID, slow * ddist)
-		end
-		--Spring.Echo("Did " .. incoming .. " and " .. vx .. ", " .. vy .. ", " .. vz .. " to " .. unitID)
 	end
 end
 
@@ -103,6 +107,9 @@ function gadget:Explosion(weaponDefID, px, py, pz, attackerID, projectileID)
 			slowdmg = conf.slowdmg,
 			paradmg = conf.paradmg,
 		}
+		if attackerID then
+			tab.attackerteam = Spring.GetUnitAllyTeam(attackerID)
+		end
 		if projectileID == -1 then
 			local newid = 0
 			repeat
@@ -122,7 +129,7 @@ end
 function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(handled) do
 		local config = blastwaveDefs[data.wepID]
-		Updateblastwave(data.x, data.y, data.z, data.size, data.impulse, data.damage, data.attacker, data.wepID, data.slowdmg, data.paradmg)
+		Updateblastwave(data.x, data.y, data.z, data.size, data.impulse, data.damage, data.attacker, data.attackerTeam, data.wepID, data.slowdmg, data.paradmg)
 		if data.lifespan == 0 then
 			--Spring.Echo("Removing blastwave " .. id)
 			IterableMap.Remove(handled, id)
