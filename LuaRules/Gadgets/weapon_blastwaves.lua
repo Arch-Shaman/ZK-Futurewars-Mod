@@ -59,6 +59,7 @@ local spGetUnitsInSphere = Spring.GetUnitsInSphere
 local spAddUnitImpulse = Spring.AddUnitImpulse
 local spAddUnitDamage = Spring.AddUnitDamage -- does not seem to register.
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
+local spGetUnitTeam = Spring.GetUnitTeam
 local sqrt = math.sqrt
 
 local function distance2d(x1,y1,x2,y2)
@@ -110,7 +111,7 @@ function gadget:Explosion(weaponDefID, px, py, pz, attackerID, projectileID)
 			slowdmg = conf.slowdmg,
 			paradmg = conf.paradmg,
 		}
-		if attackerID and not config.damagesfriendly then
+		if attackerID and not conf.damagesfriendly then
 			tab.attackerteam = spGetUnitAllyTeam(attackerID)
 		end
 		if attackerID then
