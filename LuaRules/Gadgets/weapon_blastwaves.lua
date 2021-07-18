@@ -28,6 +28,9 @@ for i = 1, #WeaponDefs do
 		local lifespan = cp["blastwave_life"] or 30 -- how long it lasts before disappaiting.
 		local losscoef = cp["blastwave_lossfactor"] or 0.95 -- how much energy does it lose each check?
 		local damage = cp["blastwave_damage"] or 0
+		local paradamage = cp["blastwave_paralysis"] or 0
+		local paratime = cp["blastwave_paratime"] or 1
+		local slowdmg = cp["blastwave_slowdmg"] or 0
 		blastwaveDefs[id] = {
 			size = size,
 			impulse = impulse,
@@ -35,6 +38,9 @@ for i = 1, #WeaponDefs do
 			lifespan = lifespan,
 			losscoef = losscoef,
 			damage = damage,
+			paradmg = paradamage,
+			paratime = paratime,
+			slowdmg = slowdmg,
 		}
 		wanted[#wanted + 1] = id
 		Script.SetWatchExplosion(id, true)
@@ -54,7 +60,7 @@ local function distance2d(x1,y1,x2,y2)
 	return sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)))
 end
 
-local function Updateblastwave(x, y, z, size, impulse, damage, attackerID, weaponDefID)
+local function Updateblastwave(x, y, z, size, impulse, damage, attackerID, weaponDefID, slow, para)
 	local affected = spGetUnitsInSphere(x, y, z, size)
 	if #affected == 0 then
 		return
@@ -68,8 +74,14 @@ local function Updateblastwave(x, y, z, size, impulse, damage, attackerID, weapo
 		local vx, vy, vz = impulse * dx, dy * impulse, dz * impulse
 		local incoming = damage * ddist
 		spAddUnitImpulse(unitID, vx, vy, vz)
-		--spAddUnitDamage(unitID, incoming, 0, attackerID, -1, vx, vy, vz)
-		spAddUnitDamage(unitID, incoming, 0, attackerID, weaponDefID, vx, vy, vz)
+		spAddUnitDamage(unitID, incoming, 0, attackerID, weaponDefID, vx, vy, vz) -- real damage first
+		if para and para > 0 then
+			local paratime = blastwaveDefs[weaponDefID].paratime or 1
+			spAddUnitDamage(unitID, para * ddist, paratime, attackerID, weaponDefID, 0, 0, 0)
+		end
+		if slow and slow > 0 then
+			GG.addSlowDamage(unitID, slow * ddist)
+		end
 		--Spring.Echo("Did " .. incoming .. " and " .. vx .. ", " .. vy .. ", " .. vz .. " to " .. unitID)
 	end
 end
@@ -88,6 +100,8 @@ function gadget:Explosion(weaponDefID, px, py, pz, attackerID, projectileID)
 			lifespan = conf.lifespan,
 			wepID = weaponDefID,
 			attacker = attackerID,
+			slowdmg = conf.slowdmg,
+			paradmg = conf.paradamage,
 		}
 		if projectileID == -1 then
 			local newid = 0
@@ -108,15 +122,18 @@ end
 function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(handled) do
 		local config = blastwaveDefs[data.wepID]
-		Updateblastwave(data.x, data.y, data.z, data.size, data.impulse, data.damage, data.attacker, data.wepID)
+		Updateblastwave(data.x, data.y, data.z, data.size, data.impulse, data.damage, data.attacker, data.wepID, data.slowdmg, data.paradamage)
 		if data.lifespan == 0 then
 			--Spring.Echo("Removing blastwave " .. id)
 			IterableMap.Remove(handled, id)
 		else
+			local losscoef = config.losscoef
 			data.size = data.size + config.speed
-			data.impulse = data.impulse * config.losscoef
-			data.damage = data.damage * config.losscoef
+			data.impulse = data.impulse * losscoef
+			data.damage = data.damage * losscoef
 			data.lifespan = data.lifespan - 1
+			data.slowdmg = data.slowdmg * losscoef
+			data.paradamage = data.paradamage * losscoef
 			--Spring.Echo("Update:\nSize: " .. data.size .. "\nimpulse: " .. data.impulse .. "\ndamage: " .. data.damage .. "\nlifespan: " .. data.lifespan)
 		end
 	end
