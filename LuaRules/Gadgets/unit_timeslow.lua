@@ -190,11 +190,12 @@ local function dealSlowToUnit(unitID, damage, overslow, attackerTeam)
 	end
 	slowedUnits[unitID].slowDamage = slowedUnits[unitID].slowDamage + damage
 	slowedUnits[unitID].degradeTimer = DEGRADE_TIMER
-	if GG.Awards and GG.Awards.AddAwardPoints then
+	if GG.Awards and GG.Awards.AddAwardPoints and attackerTeam then
 		local _, maxHp = spGetUnitHealth(unitID)
 		local cost_slowdown = (damage / maxHp) * GetUnitCost(unitID)
 		GG.Awards.AddAwardPoints ('slow', attackerTeam, cost_slowdown)
 	end
+	updateSlow( unitID, slowedUnits[unitID]) -- without this unit does not fire slower, only moves slower
 end
 
 local function addSlowDamage(unitID, damage, overslow)
