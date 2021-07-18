@@ -22,15 +22,15 @@ for i = 1, #WeaponDefs do
 	local cp = WeaponDefs[i].customParams
 	local id = WeaponDefs[i].id
 	if cp["blastwave_size"] then
-		local size = cp["blastwave_size"] -- how big does the blastwave start off?
-		local impulse = cp["blastwave_impulse"] or 180 -- how much impulse it has.
-		local speed = cp["blastwave_speed"] or 30 -- how fast outwards the blastwave travels. In elmos/frame
-		local lifespan = cp["blastwave_life"] or 30 -- how long it lasts before disappaiting.
-		local losscoef = cp["blastwave_lossfactor"] or 0.95 -- how much energy does it lose each check?
-		local damage = cp["blastwave_damage"] or 0
-		local paradamage = cp["blastwave_empdmg"] or 0
-		local paratime = cp["blastwave_emptime"] or 1
-		local slowdmg = cp["blastwave_slowdmg"] or 0
+		local size = tonumber(cp["blastwave_size"]) or 0 -- how big does the blastwave start off?
+		local impulse = tonumber(cp["blastwave_impulse"]) or 180 -- how much impulse it has.
+		local speed = tonumber(cp["blastwave_speed"]) or 30 -- how fast outwards the blastwave travels. In elmos/frame
+		local lifespan = tonumber(cp["blastwave_life"]) or 30 -- how long it lasts before disappaiting.
+		local losscoef = tonumber(cp["blastwave_lossfactor"]) or 0.95 -- how much energy does it lose each check?
+		local damage = tonumber(cp["blastwave_damage"]) or 0
+		local paradamage = tonumber(cp["blastwave_empdmg"]) or 0
+		local paratime = tonumber(cp["blastwave_emptime"]) or 1
+		local slowdmg = tonumber(cp["blastwave_slowdmg"]) or 0
 		blastwaveDefs[id] = {
 			size = size,
 			impulse = impulse,
@@ -101,7 +101,7 @@ function gadget:Explosion(weaponDefID, px, py, pz, attackerID, projectileID)
 			wepID = weaponDefID,
 			attacker = attackerID,
 			slowdmg = conf.slowdmg,
-			paradmg = conf.paradamage,
+			paradmg = conf.paradmg,
 		}
 		if projectileID == -1 then
 			local newid = 0
@@ -122,7 +122,7 @@ end
 function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(handled) do
 		local config = blastwaveDefs[data.wepID]
-		Updateblastwave(data.x, data.y, data.z, data.size, data.impulse, data.damage, data.attacker, data.wepID, data.slowdmg, data.paradamage)
+		Updateblastwave(data.x, data.y, data.z, data.size, data.impulse, data.damage, data.attacker, data.wepID, data.slowdmg, data.paradmg)
 		if data.lifespan == 0 then
 			--Spring.Echo("Removing blastwave " .. id)
 			IterableMap.Remove(handled, id)
@@ -133,7 +133,7 @@ function gadget:GameFrame(f)
 			data.damage = data.damage * losscoef
 			data.lifespan = data.lifespan - 1
 			data.slowdmg = data.slowdmg * losscoef
-			data.paradamage = data.paradamage * losscoef
+			data.paradmg = data.paradmg * losscoef
 			--Spring.Echo("Update:\nSize: " .. data.size .. "\nimpulse: " .. data.impulse .. "\ndamage: " .. data.damage .. "\nlifespan: " .. data.lifespan)
 		end
 	end
