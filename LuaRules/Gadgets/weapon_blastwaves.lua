@@ -56,6 +56,7 @@ local handled = IterableMap.New()
 local spGetUnitsInSphere = Spring.GetUnitsInSphere
 local spAddUnitImpulse = Spring.AddUnitImpulse
 local spAddUnitDamage = Spring.AddUnitDamage -- does not seem to register.
+local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local sqrt = math.sqrt
 
 local function distance2d(x1,y1,x2,y2)
@@ -69,7 +70,7 @@ local function Updateblastwave(x, y, z, size, impulse, damage, attackerID, attac
 	end
 	for i = 1, #affected do
 		local unitID = affected[i]
-		if blastwaveDefs[weaponDefID].damagesfriendly or (not blastwaveDefs[weaponDefID].damagesfriendly and Spring.GetUnitAllyTeam(unitID) ~=  attackerTeam then
+		if blastwaveDefs[weaponDefID].damagesfriendly or (not blastwaveDefs[weaponDefID].damagesfriendly and spGetUnitAllyTeam(unitID) ~=  attackerTeam) then
 			local ux, uy, uz = Spring.GetUnitPosition(unitID)
 			local dx, dy, dz = (ux - x)/size, (uy - y)/size, (uz - z)/size
 			local distance = distance2d(ux, uz, x, z)
@@ -107,8 +108,8 @@ function gadget:Explosion(weaponDefID, px, py, pz, attackerID, projectileID)
 			slowdmg = conf.slowdmg,
 			paradmg = conf.paradmg,
 		}
-		if attackerID then
-			tab.attackerteam = Spring.GetUnitAllyTeam(attackerID)
+		if attackerID and not config.damagesfriendly then
+			tab.attackerteam = spGetUnitAllyTeam(attackerID)
 		end
 		if projectileID == -1 then
 			local newid = 0
