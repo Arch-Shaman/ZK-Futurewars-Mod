@@ -73,6 +73,7 @@ local function Updateblastwave(x, y, z, size, impulse, damage, attackerID, attac
 	end
 	for i = 1, #affected do
 		local unitID = affected[i]
+		--Spring.Echo("attacker Ally Team: " .. tostring(attackerTeam) .. "\nMyTeam: " .. tostring(spGetUnitAllyTeam(unitID)))
 		if blastwaveDefs[weaponDefID].damagesfriendly or (not blastwaveDefs[weaponDefID].damagesfriendly and (attackerTeam == nil or spGetUnitAllyTeam(unitID) ~=  attackerTeam)) then
 			local ux, uy, uz = Spring.GetUnitPosition(unitID)
 			local dx, dy, dz = (ux - x)/size, (uy - y)/size, (uz - z)/size
@@ -111,6 +112,7 @@ function gadget:Explosion(weaponDefID, px, py, pz, attackerID, projectileID)
 			slowdmg = conf.slowdmg,
 			paradmg = conf.paradmg,
 		}
+		--Spring.Echo("attackerID: " .. tostring(attackerID) .."\nDamages Friendly: " .. tostring(conf.damagesfriendly))
 		if attackerID and not conf.damagesfriendly then
 			tab.attackerteam = spGetUnitAllyTeam(attackerID)
 		end
@@ -136,7 +138,7 @@ end
 function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(handled) do
 		local config = blastwaveDefs[data.wepID]
-		Updateblastwave(data.x, data.y, data.z, data.size, data.impulse, data.damage, data.attacker, data.attackerTeam, data.wepID, data.slowdmg, data.paradmg, data.attackerteamID)
+		Updateblastwave(data.x, data.y, data.z, data.size, data.impulse, data.damage, data.attacker, data.attackerteam, data.wepID, data.slowdmg, data.paradmg, data.attackerteamID)
 		if data.lifespan == 0 then
 			--Spring.Echo("Removing blastwave " .. id)
 			IterableMap.Remove(handled, id)
