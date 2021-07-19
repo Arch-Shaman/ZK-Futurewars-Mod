@@ -393,6 +393,7 @@ function script.Shot(num)
 	Move(firepoints[gun_1], z_axis, 4)
 	EmitSfx(firepoints[gun_1], 1024)
 	Move(firepoints[gun_1], z_axis, 0)
+	gun_1 = 1 - gun_1
 end
 
 -- EndBurst so that the projectile fires from the correct gun
