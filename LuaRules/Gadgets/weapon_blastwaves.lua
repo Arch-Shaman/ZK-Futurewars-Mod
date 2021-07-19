@@ -44,7 +44,7 @@ for i = 1, #WeaponDefs do
 			paratime = paratime,
 			slowdmg = slowdmg,
 			damagesfriendly = damagesfriendly,
-			overslow = overslow,
+			overslow = overslow / 30,
 		}
 		wanted[#wanted + 1] = id
 		Script.SetWatchExplosion(id, true)
