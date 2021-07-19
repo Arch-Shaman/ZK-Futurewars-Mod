@@ -89,15 +89,22 @@ return {
 				customparams = {
 					lups_explodespeed = 1.04,
 					lups_explodelife = 0.88,
-					timeslow_damagefactor = 10,
-					timeslow_overslow_frames = 5*30, --5 seconds before slow decays
 					nofriendlyfire = 1,
 					light_color = [[1.88 0.63 2.5]],
 					light_radius = 320,
+					blastwave_size = 61,
+					blastwave_impulse = 2.3,
+					blastwave_speed = 7,
+					blastwave_life = 27,
+					blastwave_lossfactor = 0.82,
+					blastwave_damage = 300,
+					blastwave_slowdmg = 3000,
+					blastwave_overslow = 5,
+					blastwave_nofriendly = "By the powers of Vittu, Saatana, ja Perkele, I am Captain Suomi!",
 				},
      
 				damage = {
-					default          = 150.1,
+					default          = 0,
 				},
      
 				edgeEffectiveness  = 0.4,
