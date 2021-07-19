@@ -381,7 +381,7 @@ function script.BlockShot(num, targetID)
 	GG.Floating_AimWeapon(unitID)
 	aimWeaponLinger = 5
 	-- Lower than real damage (155) to help against Duck regen case.
-	return (targetID and GG.OverkillPrevention_CheckBlock(unitID, targetID, 142, 10)) and true or false
+	return (targetID and GG.OverkillPrevention_CheckBlock(unitID, targetID, 100, 10)) and true or false
 end
 
 function script.QueryWeapon(num)
