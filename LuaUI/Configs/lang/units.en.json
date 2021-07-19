@@ -1105,9 +1105,9 @@
 		"helptext" : "The Advanced Radar tower utilizes OTH (Over-the-Horizon) technology to vastly increase radar coverage and sight. It is less sensitive to terrain than the basic model, with the ability to see over small hills."
 	},
 	"amphimpulse" : {
-		"name" : "Archer",
-		"description" : "Amphibious Raider/Riot Bot",
-		"helptext" : "The Archer uses a powerful sonic cannon to hit units above or below the water. It does not work while wet, so Archers must float to fire."
+		"name" : "Ripple",
+		"description" : "Amphibious Riot Bot",
+		"helptext" : "The Ripple uses two powerful sonic cannons to hit units above or below the water. The impact of a Sonic Cannon leaves an area of high pressure, dealing additional damage and pushing units back slightly. This makes it useful when fighting lots of lighter units in chokepoints, but performs poorly against heavier units."
 	},
 	"fakeunit" : {
 		"name" : "Fake radar signal",

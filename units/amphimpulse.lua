@@ -1,8 +1,8 @@
 return { 
 	amphimpulse = {
 		unitname               = [[amphimpulse]],
-		name                   = [[Archer]],
-		description            = [[Amphibious Raider/Riot Bot]],
+		name                   = [[Ripple]],
+		description            = [[Amphibious Riot Bot]],
 		acceleration           = 0.6,
 		activateWhenBuilt      = true,
 		brakeRate              = 2.4,
