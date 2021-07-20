@@ -60,6 +60,7 @@ local spAddUnitImpulse = Spring.AddUnitImpulse
 local spAddUnitDamage = Spring.AddUnitDamage -- does not seem to register.
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spGetUnitTeam = Spring.GetUnitTeam
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local sqrt = math.sqrt
 
 local function distance2d(x1,y1,x2,y2)
@@ -111,13 +112,18 @@ function gadget:Explosion(weaponDefID, px, py, pz, attackerID, projectileID)
 			attacker = attackerID,
 			slowdmg = conf.slowdmg,
 			paradmg = conf.paradmg,
+			coef = conf.losscoef,
 		}
 		--Spring.Echo("attackerID: " .. tostring(attackerID) .."\nDamages Friendly: " .. tostring(conf.damagesfriendly))
-		if attackerID and not conf.damagesfriendly then
-			tab.attackerteam = spGetUnitAllyTeam(attackerID)
-		end
 		if attackerID then
+			if conf.damagesfriendly then
+				tab.attackerteam = spGetUnitAllyTeam(attackerID)
+			end
 			tab.attackerteamID = spGetUnitTeam(attackerID)
+			local damagebonus = spGetUnitRulesParam(attackerID, "comm_damage_mult") or 1
+			tab.damage = tab.damage * damagebonus
+			local bonuscoef = spGetUnitRulesParam(attackerID, "comm_blastwave_coefbonus") or 0
+			tab.coef = tab.coef + bonuscoef
 		end
 		if projectileID == -1 then
 			local newid = 0
@@ -143,7 +149,7 @@ function gadget:GameFrame(f)
 			--Spring.Echo("Removing blastwave " .. id)
 			IterableMap.Remove(handled, id)
 		else
-			local losscoef = config.losscoef
+			local losscoef = data.coef
 			data.size = data.size + config.speed
 			data.impulse = data.impulse * losscoef
 			data.damage = data.damage * losscoef
