@@ -42,6 +42,7 @@ local torpRange = WeaponDefNames["amphraid_torpedo"].range
 local shotRange = WeaponDefNames["amphraid_torpmissile"].range
 local longRange = true
 local ROCKET_DEPTH = -32
+local recoil = -1.1
 
 --------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
@@ -106,6 +107,24 @@ local function Walk()
 	end
 end
 
+local function GunRecoilThread(num)
+	if num == 0 then
+		Move(lturret, y_axis, recoil)
+		Move(lturret, x_axis, recoil/2)
+	else
+		Move(rturret, y_axis, recoil)
+		Move(rturret, x_axis, recoil/2)
+	end
+	Sleep(200)
+	if num == 0 then
+		Move(lturret, y_axis, 0, 1.1)
+		Move(lturret, x_axis, 0, 0.55)
+	else
+		Move(rturret, y_axis, 0, 1.1)
+		Move(rturret, x_axis, 0, 0.55)
+	end
+end
+
 local function Stopping()
 	Signal(SIG_WALK)
 	SetSignalMask(SIG_WALK)
@@ -147,7 +166,7 @@ end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-	StartThread(WeaponRangeUpdate)
+	--StartThread(WeaponRangeUpdate)
 end
 
 local function RestoreAfterDelay()
@@ -209,6 +228,9 @@ function script.BlockShot(num, targetID)
 end
 
 function script.Shot(num)
+	if num == 1 then
+		StartThread(GunRecoilThread, gun_1)
+	end
 	gun_1 = 1 - gun_1
 end
 
