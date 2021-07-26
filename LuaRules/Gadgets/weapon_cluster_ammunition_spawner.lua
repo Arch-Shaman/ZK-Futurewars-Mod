@@ -455,6 +455,11 @@ local function CheckProjectile(id)
 		return
 	end
 	local wd = projectile.def or spGetProjectileDefID(id)
+	if debug then spEcho("isCheckedDuringCruise: " .. tostring(config[wd]["block_check_during_cruise"])) end
+	if config[wd]["block_check_during_cruise"] and GG.GetMissileCruising(id) then -- some weapons don't want CAS to check during cruise.
+		if debug then spEcho(id .. " got blocked due to Cruising") end
+		return
+	end
 	if projectile.delay <= frame then
 		if config[wd].clusterdelaytype == 1 then
 			if debug then

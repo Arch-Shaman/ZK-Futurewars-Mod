@@ -183,7 +183,7 @@ function gadget:GameFrame(f)
 			if f - data.lastframe > 10 and data.numMissiles > 0 then
 				data.state = "lost"
 				for pid,_ in pairs(data.missiles) do
-					if not GG.GetMissileCruising(pid) then
+					if GG.GetMissileCruising(pid) then
 						local x,y,z = spGetProjectilePosition(pid)
 						y = spGetGroundHeight(x,z)
 						if debug then
@@ -200,7 +200,7 @@ function gadget:GameFrame(f)
 			end
 			if data.state == "normal" and data.numMissiles > 0 then
 				for pid,_ in pairs(data.missiles) do
-					if not GG.GetMissileCruising(pid) then
+					if GG.GetMissileCruising(pid) then
 						spSetProjectileTarget(pid, data.target[1], data.target[2], data.target[3])
 					end
 				end
