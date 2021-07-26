@@ -96,43 +96,50 @@ local function Updateblastwave(x, y, z, size, impulse, damage, attackerID, attac
 	end
 end
 
+local function AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID)
+	--Spring.Echo("Spawning a blastwave!")
+	if projectileID and IterableMap.InMap(handled, projectileID) then
+		return
+	end
+	local conf = blastwaveDefs[weaponDefID]
+	local tab = {
+		x = px,
+		y = py,
+		z = pz,
+		damage = conf.damage,
+		impulse = conf.impulse,
+		size = conf.size,
+		lifespan = conf.lifespan,
+		wepID = weaponDefID,
+		attacker = attackerID,
+		slowdmg = conf.slowdmg,
+		paradmg = conf.paradmg,
+		coef = conf.losscoef,
+	}
+	--Spring.Echo("attackerID: " .. tostring(attackerID) .."\nDamages Friendly: " .. tostring(conf.damagesfriendly))
+	if attackerID then
+		if conf.damagesfriendly then
+			tab.attackerteam = spGetUnitAllyTeam(attackerID)
+		end
+		tab.attackerteamID = spGetUnitTeam(attackerID)
+		local damagebonus = spGetUnitRulesParam(attackerID, "comm_damage_mult") or 1
+		tab.damage = tab.damage * damagebonus
+		local bonuscoef = spGetUnitRulesParam(attackerID, "comm_blastwave_coefbonus") or 0
+		tab.coef = tab.coef + bonuscoef
+	end
+	if projectileID == -1 then
+		local newid = 0
+		repeat
+			newid = math.random(0, 999999)
+		until IterableMap.Get(handled, newid) == nil
+		projectileID = newid
+	end
+	IterableMap.Add(handled, projectileID, tab)
+end
+
 function gadget:Explosion(weaponDefID, px, py, pz, attackerID, projectileID)
 	if blastwaveDefs[weaponDefID] then
-		--Spring.Echo("Spawning a blastwave!")
-		local conf = blastwaveDefs[weaponDefID]
-		local tab = {
-			x = px,
-			y = py,
-			z = pz,
-			damage = conf.damage,
-			impulse = conf.impulse,
-			size = conf.size,
-			lifespan = conf.lifespan,
-			wepID = weaponDefID,
-			attacker = attackerID,
-			slowdmg = conf.slowdmg,
-			paradmg = conf.paradmg,
-			coef = conf.losscoef,
-		}
-		--Spring.Echo("attackerID: " .. tostring(attackerID) .."\nDamages Friendly: " .. tostring(conf.damagesfriendly))
-		if attackerID then
-			if conf.damagesfriendly then
-				tab.attackerteam = spGetUnitAllyTeam(attackerID)
-			end
-			tab.attackerteamID = spGetUnitTeam(attackerID)
-			local damagebonus = spGetUnitRulesParam(attackerID, "comm_damage_mult") or 1
-			tab.damage = tab.damage * damagebonus
-			local bonuscoef = spGetUnitRulesParam(attackerID, "comm_blastwave_coefbonus") or 0
-			tab.coef = tab.coef + bonuscoef
-		end
-		if projectileID == -1 then
-			local newid = 0
-			repeat
-				newid = math.random(0, 999999)
-			until IterableMap.Get(handled, newid) == nil
-			projectileID = newid
-		end
-		IterableMap.Add(handled, projectileID, tab)
+		AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID)
 	end
 	return false
 end
@@ -140,6 +147,13 @@ end
 function gadget:Explosion_GetWantedWeaponDef()
 	return wanted
 end
+
+--[[function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+	if blastwaveDefs[weaponDefID] and projectileID then
+		local px, py, pz = Spring.GetProjectilePosition(projectileID)
+		AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID)
+	end
+end]]
 
 function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(handled) do
