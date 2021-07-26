@@ -246,7 +246,7 @@ function gadget:GameFrame(f)
 			if missileconfig.torpedo then
 				if cy <= 0 then -- we're not in the water, so don't bother.
 					local success
-					if missileconfig.splittarget == nil then
+					if not missileconfig.splittarget then
 						wantedalt = missileconfig.altitude
 					end
 					--spEcho("Current Depth: " .. cy .. "(" .. wantedalt .. ")")
