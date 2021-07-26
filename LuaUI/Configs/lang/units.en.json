@@ -1170,9 +1170,9 @@
 		"helptext" : "The Warden was made on the chasis of a bandit, but given a shield and an orange micropulser. In groups, they can be especially dangerous due to their ability to link shields."
 	},
 	"amphraid" : {
-		"name" : "Duck",
-		"description" : "Amphibious Raider Bot (Anti-Sub)",
-		"helptext" : "The Duck is the basic underwater raider. Armed with short ranged torpedoes, it uses its (relatively) high speed to harass sea targets that cannot shoot back, though it dies to serious opposition. On land it can launch the torpedoes a short distance as a decent short ranged anti-heavy weapon."
+		"name" : "Milta",
+		"description" : "Amphibious Light Skirmisher/Artillery",
+		"helptext" : "The Milta's sawhead torpedos can be fired as a long range mortar or against sea based threats. The sawhead delivers a payload of 3 sonic emitters that deal damage and push units away. It is rather inaccurate in land, so is best used as a light artillery piece."
 	},
 	"planefighter" : {
 		"name" : "Deserter",
