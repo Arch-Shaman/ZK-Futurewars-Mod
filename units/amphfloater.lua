@@ -20,8 +20,8 @@ return {
 		customParams           = {
 			bait_level_default = 0,
 			aim_lookahead      = 60,
-			amph_regen         = 80,
-			amph_submerged_at  = 30,
+			amph_regen         = 40,
+			amph_submerged_at  = 80,
 			sink_on_emp        = 0,
 			floattoggle        = [[1]],
 			selection_scale    = 0.85,
