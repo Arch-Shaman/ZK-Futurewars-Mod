@@ -80,7 +80,7 @@ local lowRangeSwarmieeArray = NameToDefID({
 	"spiderassault",
 	"vehassault",
 	"hoverassault",
-	
+	"amphfloater",
 	"tankassault",
 	"tankheavyassault",
 	
@@ -136,7 +136,6 @@ shortRangeRiotIdleFleeArray = Union(shortRangeRiotIdleFleeArray, medRangeRiotIdl
 local longRangeRaiderIdleFleeArray = NameToDefID({
 	"cloakriot",
 	"cloakassault",
-	
 	"shieldfelon",
 	"shieldriot",
 	
@@ -302,7 +301,6 @@ local longRangeSkirmieeArray = NameToDefID({
 	"cloakskirm",
 	"jumpskirm",
 	"jumpblackhole",
-	"amphfloater",
 	"hoverskirm", -- hover janus
 	"vehcapture",
 	"chickenc",
@@ -1475,15 +1473,13 @@ local behaviourConfig = {
 	},
 	{
 		name = "amphfloater",
-		skirms = medRangeSkirmieeArray,
-		swarms = medRangeSwarmieeArray,
+		skirms = lowMedRangeSkirmieeArray,
+		--swarms = {},
 		--flees = {},
 		avoidHeightDiff = explodableFull,
-		maxSwarmLeeway = 30,
-		minSwarmLeeway = 130,
-		skirmLeeway = 10,
-		skirmBlockedApproachFrames = 75,
-		velPredChaseFactor = 0.5,
+		fightOnlyUnits = shortRangeExplodables,
+		skirmOrderDis = 220,
+		skirmLeeway = 50,
 
 		bonusRangeUnits = personalShieldUnits,
 		wardFireTargets = personalShieldUnits,

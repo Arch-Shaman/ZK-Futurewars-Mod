@@ -1245,9 +1245,9 @@
 		"helptext" : "The Informer is a light scout that can be built from a Radar Tower, making it the only plane that is availible without a Plane Factory. Such an accessible scouting option is invaluable to those without access to planes, but is generally outclassed by the extremely fast Deserter and larger Agitator."
 	},
 	"amphfloater" : {
-		"name" : "Buoy",
-		"description" : "Heavy Amphibious Skirmisher Bot",
-		"helptext" : "The Buoy works around its inability to shoot while submerged by floating to the surface of the sea. Here it can fire a decently ranged cannon with slow damage. It is unable to move while floating."
+		"name" : "Bully",
+		"description" : "Amphibious Assault Bot",
+		"helptext" : "The Bully is the Amphibious Factory's assault unit of choice. It armed with a ponderous Assault Disruptor that slows its foes with a mass of slow bolts. It can attack underwater as well as float to the surface, though while firing underwater, it is slightly inaccurate against surface targets."
 	},
 	"amphsupport" : {
 		"name" : "Bulkhead",

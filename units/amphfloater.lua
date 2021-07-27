@@ -1,8 +1,8 @@
 return { 
 	amphfloater = {
 		unitname               = [[amphfloater]],
-		name                   = [[Buoy]],
-		description            = [[Heavy Amphibious Skirmisher Bot]],
+		name                   = [[Bully]],
+		description            = [[Amphibious Assault Bot]],
 		acceleration           = 0.6,
 		activateWhenBuilt      = true,
 		brakeRate              = 2.4,
@@ -95,7 +95,7 @@ return {
 				},
 
 				damage                  = {
-					default = 80.1,
+					default = 56.1,
 				},
 				
 				sprayAngle				= 1100,
