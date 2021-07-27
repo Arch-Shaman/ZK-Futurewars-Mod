@@ -851,6 +851,7 @@ local behaviourConfig = {
 		minFleeRange = 100,
 		fleeLeeway = 125,
 		fleeOrderDis = 80,
+		fleeDistance = 100,
 		jinkPeriod = 2,
 		skirmLeeway = 10,
 		skirmBlockedApproachFrames = 90,
