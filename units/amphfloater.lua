@@ -6,7 +6,7 @@ return {
 		acceleration           = 0.6,
 		activateWhenBuilt      = true,
 		brakeRate              = 2.4,
-		buildCostMetal         = 280,
+		buildCostMetal         = 330,
 		buildPic               = [[amphfloater.png]],
 		canGuard               = true,
 		canMove                = true,
@@ -20,7 +20,7 @@ return {
 		customParams           = {
 			bait_level_default = 0,
 			aim_lookahead      = 60,
-			amph_regen         = 60,
+			amph_regen         = 80,
 			amph_submerged_at  = 30,
 			sink_on_emp        = 0,
 			floattoggle        = [[1]],
@@ -34,7 +34,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 1250,
+		maxDamage              = 2200,
 		maxSlope               = 36,
 		maxVelocity            = 1.7,
 		minCloakDistance       = 75,
@@ -74,9 +74,12 @@ return {
 		weaponDefs             = {
 			
 			CANNON = {
-				name                    = [[Disruption Cannon]],
-				accuracy                = 200,
+				name                    = [[Assault Disruptor]],
+				accuracy                = 400,
 				areaOfEffect            = 32,
+				burst					= 5,
+				burstRate				= 0.1,
+				projectiles				= 2,
 				cegTag                  = [[beamweapon_muzzle_purple]],
 				craterBoost             = 1,
 				craterMult              = 2,
@@ -84,7 +87,7 @@ return {
 				customparams = {
 					burst = Shared.BURST_RELIABLE,
 
-					timeslow_damagefactor = 1.667,
+					timeslow_damagefactor = 0.75,
 
 					light_camera_height = 2500,
 					light_color = [[1.36 0.68 1.5]],
@@ -92,9 +95,10 @@ return {
 				},
 
 				damage                  = {
-					default = 150.1,
+					default = 80.1,
 				},
-
+				
+				sprayAngle				= 1100,
 				explosionGenerator      = [[custom:flashslowwithsparks]],
 				fireStarter             = 180,
 				impactOnly              = true,
@@ -102,17 +106,17 @@ return {
 				impulseFactor           = 0.2,
 				interceptedByShieldType = 2,
 				myGravity               = 0.2,
-				range                   = 450,
-				reloadtime              = 1.8,
+				range                   = 310,
+				reloadtime              = 3 + 1/3,
 				rgbcolor                = [[0.9 0.1 0.9]],
 				soundHit                = [[weapon/laser/small_laser_fire]],
 				soundHitVolume          = 2.2,
-				soundStart              = [[weapon/laser/small_laser_fire3]],
+				soundStart              = [[weapon/cannon/disruptor_cannon]],
 				soundStartVolume        = 3.5,
-				soundTrigger            = true,
 				turret                  = true,
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 340,
+				waterWeapon				= true,
 			},
 
 			FAKE_CANNON = {
@@ -139,7 +143,7 @@ return {
 				impulseFactor           = 0.2,
 				interceptedByShieldType = 2,
 				myGravity               = 0.2,
-				range                   = 450,
+				range                   = 310,
 				reloadtime              = 1.8,
 				rgbcolor                = [[0.9 0.1 0.9]],
 				soundHit                = [[weapon/laser/small_laser_fire]],
