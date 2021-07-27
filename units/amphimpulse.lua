@@ -84,6 +84,7 @@ return {
 					blastwave_life = 30,
 					blastwave_lossfactor = 0.8,
 					blastwave_damage = 120,
+					damage_vs_shield = 200,
 				},
 
 				damage                  = {
