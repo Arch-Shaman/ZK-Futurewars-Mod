@@ -9,8 +9,8 @@ local gs1l, gs2l, gs3l, gs4l = piece('gs1l', 'gs2l', 'gs3l', 'gs4l')
 local SIG_AIM = 1
 local SIG_MOVE = 2
 local RESTORE_DELAY = 3000
-local TURRET_TURN_SPEED = math.rad(90)
-local SLEEVE_TURN_SPEED = math.rad(45)
+local TURRET_TURN_SPEED = math.rad(180)
+local SLEEVE_TURN_SPEED = math.rad(90)
 
 local angle = math.rad(90)
 
