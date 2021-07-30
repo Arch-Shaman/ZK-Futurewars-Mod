@@ -6,7 +6,7 @@ return {
 		acceleration        = 0.75,
 		activateWhenBuilt   = true,
 		brakeRate           = 1.32,
-		buildCostMetal      = 300,
+		buildCostMetal      = 280,
 		buildPic            = [[shieldassault.png]],
 		canGuard            = true,
 		canMove             = true,
