@@ -36,9 +36,8 @@ local oneClickWepDefNames = {
 	bomberdisarm = {
 		{ functionToCall = "StartRun", name = "Start Run", tooltip = "Unleash Lightning: Manually activate Thunderbird run.", texture = "LuaUI/Images/Commands/Bold/bomb.png",},
 	},
-	--[[
 	tankraid = {
-		{ functionToCall = "FlameTrail", reloadTime = 850, name = "Flame Trail", tooltip = "Leave a path of flame in your wake", useSpecialReloadFrame = true, texture = "LuaUI/Images/Commands/Bold/sprint.png",},
+		{ functionToCall = "FlameTrail", reloadTime = 900, name = "Afterburner Overload", tooltip = "Blast ahead and leave a path of devastating flame in your wake", useSpecialReloadFrame = true, texture = "LuaUI/Images/Commands/Bold/sprint.png",},
 	},
 	--]]
 	--planefighter = {
