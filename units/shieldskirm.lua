@@ -133,7 +133,7 @@ return {
 				noSelfDamage            = true,
 				predictBoost            = 0.75,
 				range                   = 540,
-				reloadtime              = 10,
+				reloadtime              = 6.5,
 				smokeTrail              = false,
 				soundHit                = [[weapon/missile/sabot_hit]],
 				soundHitVolume          = 8,
