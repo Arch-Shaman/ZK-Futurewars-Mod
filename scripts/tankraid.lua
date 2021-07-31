@@ -41,7 +41,7 @@ local spAddUnitDamage = Spring.AddUnitDamage
 local flaming = false
 
 local boostSpeed = 2
-local boostTime = 3*10
+local boostTime = 4*10
 local normalSpeed = 1
 local firingSpeed = 0.4
 
