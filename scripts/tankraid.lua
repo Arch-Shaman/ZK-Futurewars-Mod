@@ -111,15 +111,13 @@ function FlameTrailThread()
 		Sleep(100)
 		n = n + 1
 	end
-	spSetUnitRulesParam(unitID, "selfMoveSpeedChange", firingSpeed)
-	spSetUnitRulesParam(unitID, "maxAcc", firingSpeed)
-	GG.UpdateUnitAttributes(unitID)
-	flaming = false
-	Sleep(19500)
 	spSetUnitRulesParam(unitID, "selfMoveSpeedChange", normalSpeed)
 	spSetUnitRulesParam(unitID, "maxAcc", normalSpeed)
 	GG.UpdateUnitAttributes(unitID)
+	flaming = false
 	disableAfterburner = false
+	
+	StartThread(RestoreAfterDelay)
 end
 
 
@@ -319,6 +317,8 @@ function script.Killed(recentDamage, maxHealth)
 end
 
 function script.Create()
+	Spring.SetUnitRulesParam(unitID,'cannot_damage_unit',unitID) --SAVE ME, SENPAI LAZOR!
+
 	moving = false
 	
 	Turn(firepoint, x_axis, math.rad(7))
