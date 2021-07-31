@@ -73,7 +73,7 @@ local function RestoreAfterDelay()
 	GG.UpdateUnitAttributes(unitID)
 	
 	while true do
-		EmitSfx(firepoint, 1024)
+		EmitSfx(firepoint, GG.Script.UNIT_SFX1)
 		Sleep(100)
 	end
 end
@@ -97,13 +97,13 @@ function FlameTrailThread()
 	spSetUnitRulesParam(unitID, "maxAcc", boostSpeed)
 	GG.UpdateUnitAttributes(unitID)
 	
-	spAddUnitDamage(unitID, 30) --this is to reset regen times. there seems to be a minium enforced by either a gadget or the engine of 20 damage.
+	--spAddUnitDamage(unitID, 30) --this is to reset regen times. there seems to be a minium enforced by either a gadget or the engine of 20 damage.
 	local n = 0
 	while (n < boostTime) do
 		local health = spGetUnitHealth(unitID) 
 		if moving then
 			EmitSfx(firepoint, GG.Script.FIRE_W2)
-			spSetUnitHealth(unitID, health-4)
+			spSetUnitHealth(unitID, health-15)
 		end
 		if health < 100 then
 			n = 10000
