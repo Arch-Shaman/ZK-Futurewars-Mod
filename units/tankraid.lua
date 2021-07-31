@@ -4,7 +4,7 @@ return {  tankraid = {
   description         = [[Raider Tank]],
   acceleration        = 0.725,
   brakeRate           = 1.45,
-  buildCostMetal      = 180,
+  buildCostMetal      = 230,
   builder             = false,
   buildPic            = [[tankraid.png]],
   canGuard            = true,
@@ -26,7 +26,7 @@ return {  tankraid = {
     aimposoffset      = [[0 5 0]],
     selection_scale   = 0.85,
     aim_lookahead     = 180,
-    percieved_range   = 270, -- How much range enemy units think Kodachi has
+    percieved_range   = 300, -- How much range enemy units think Kodachi has
   },
 
   explodeAs           = [[BIG_UNITEX]],
@@ -37,7 +37,7 @@ return {  tankraid = {
   idleAutoHeal        = 5,
   idleTime            = 300,
   leaveTracks         = true,
-  maxDamage           = 670,
+  maxDamage           = 1120,
   maxSlope            = 18,
   maxVelocity         = 4.7,
   maxWaterDepth       = 22,
@@ -58,10 +58,13 @@ return {  tankraid = {
   turnRate            = 720,
   workerTime          = 0,
   
-  explosiongenerators = {
-    [[custom:flamer]],
-  },
+  sfxtypes               = {
 
+    explosiongenerators = {
+      [[custom:flamer]],
+    },
+
+  },
   weapons             = {
 
     {
@@ -106,7 +109,7 @@ return {  tankraid = {
       },
       
       damage                  = {
-        default = 12,
+        default = 19,
       },
     
       explosionGenerator      = [[custom:napalm_phoenix]],
@@ -116,7 +119,7 @@ return {  tankraid = {
       interceptedByShieldType = 1,
       myGravity               = 0.55,
       --projectiles             = 10,
-      range                   = 240,
+      range                   = 270,
       reloadtime              = 0.133,
       rgbColor                = [[1 0.5 0.2]],
       size                    = 5,
@@ -145,7 +148,7 @@ return {  tankraid = {
         
         area_damage = 1,
         area_damage_radius = 80,
-        area_damage_dps = 120,
+        area_damage_dps = 160,
         area_damage_duration = 16,
 
         --lups_heat_fx = [[firewalker]],
@@ -154,7 +157,7 @@ return {  tankraid = {
         light_radius = 460,
         
         stats_custom_tooltip_1 = " - Health Cost per Usage:",
-        stats_custom_tooltip_entry_1 = "150 hp",
+        stats_custom_tooltip_entry_1 = "450 hp",
         stats_custom_tooltip_2 = " - Mininium Health to remain Active:",
         stats_custom_tooltip_entry_2 = "100 hp",
       },
@@ -172,7 +175,7 @@ return {  tankraid = {
       noSelfDamage            = true,
       --projectiles             = 10,
       range                   = 0,
-      reloadtime              = 10,
+      reloadtime              = 15,
       rgbColor                = [[1 0.5 0.2]],
       size                    = 5,
       --soundHit                = [[weapon/cannon/wolverine_hit]],
