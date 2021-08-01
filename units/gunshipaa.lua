@@ -94,8 +94,8 @@ return {
 				},
 
 				damage                  = {
-					default = 25.01,
-					planes  = 250.1,
+					default = 16.01,
+					planes  = 160.1,
 				},
 
 				explosionGenerator      = [[custom:FLASH2]],
