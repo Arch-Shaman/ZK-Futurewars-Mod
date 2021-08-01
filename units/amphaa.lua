@@ -6,7 +6,7 @@ return {
 		acceleration           = 0.54,
 		activateWhenBuilt      = true,
 		brakeRate              = 2.25,
-		buildCostMetal         = 200,
+		buildCostMetal         = 230,
 		buildPic               = [[amphaa.png]],
 		canGuard               = true,
 		canMove                = true,
@@ -33,7 +33,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 1100,
+		maxDamage              = 1750,
 		maxSlope               = 36,
 		maxVelocity            = 1.6,
 		movementClass          = [[AKBOT3]],
@@ -91,8 +91,8 @@ return {
 				},
 
 				damage                  = {
-					default = 20.01,
-					planes  = 200.1,
+					default = 15.01,
+					planes  = 150.1,
 				},
 
 				explosionGenerator      = [[custom:FLASH2]],
