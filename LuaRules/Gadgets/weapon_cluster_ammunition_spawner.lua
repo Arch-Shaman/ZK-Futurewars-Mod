@@ -331,10 +331,10 @@ local function SpawnSubProjectiles(id, wd)
 					untargetedCount = untargetedCount or (projectilecount - i + 1) --the +1 is there since THIS projectile is also not targeted
 					if untargetedCount >= 3 then
 						local angle = (i + untargetedCount - projectilecount) * (doublepi / untargetedCount)
-						target = GetRingAttackPoint(targetX, targetZ, wanteddefs[ownerDefID]["noTargetRange"], angle)
+						target = GetRingAttackPoint(targetX, targetZ, wanteddefs[proOwnerDefID]["noTargetRange"], angle)
 						
 					else
-						target = GetRandomAttackPoint(targetX, targetZ, wanteddefs[ownerDefID]["noTargetRange"])
+						target = GetRandomAttackPoint(targetX, targetZ, wanteddefs[proOwnerDefID]["noTargetRange"])
 					end
 				end
 				ttype = ground
