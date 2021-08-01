@@ -287,7 +287,7 @@ local function SpawnSubProjectiles(id, wd)
 	local projectileConfig = config[wd].frags
 	local targetoverride
 	local forceupdate = false
-	local ownerDefID = spGetUnitDefID(projectileattributes["owner"])
+	local ownerDefID = spGetUnitDefID(owner) or projectiledata.proOwnerDefID
 	if config[wd].usertarget then
 		targetoverride = projectiletargets[id] or {}
 		forceupdate = true
@@ -331,10 +331,10 @@ local function SpawnSubProjectiles(id, wd)
 					untargetedCount = untargetedCount or (projectilecount - i + 1) --the +1 is there since THIS projectile is also not targeted
 					if untargetedCount >= 3 then
 						local angle = (i + untargetedCount - projectilecount) * (doublepi / untargetedCount)
-						target = GetRingAttackPoint(targetX, targetZ, wanteddefs[proOwnerDefID]["noTargetRange"], angle)
+						target = GetRingAttackPoint(targetX, targetZ, wanteddefs[ownerDefID]["noTargetRange"], angle)
 						
 					else
-						target = GetRandomAttackPoint(targetX, targetZ, wanteddefs[proOwnerDefID]["noTargetRange"])
+						target = GetRandomAttackPoint(targetX, targetZ, wanteddefs[ownerDefID]["noTargetRange"])
 					end
 				end
 				ttype = ground
@@ -686,7 +686,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		if debug then
 			spEcho("Registered projectile " .. proID)
 		end
-		IterableMap.Add(projectiles, proID, {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetProjectileTeamID(proID), ttl = ((config[weaponDefID].timer and (frame + config[weaponDefID].timer)) or nil), delay = 1, charges = config[weaponDefID].clustercharges}) --frame is set to the current frame in gameframe
+		IterableMap.Add(projectiles, proID, {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetProjectileTeamID(proID), ttl = ((config[weaponDefID].timer and (frame + config[weaponDefID].timer)) or nil), delay = 1, charges = config[weaponDefID].clustercharges}, proOwnerDefID = proOwnerDefID) --frame is set to the current frame in gameframe
 		if config[weaponDefID]["alwaysvisible"] then
 			spSetProjectileAlwaysVisible(proID,true)
 		end
