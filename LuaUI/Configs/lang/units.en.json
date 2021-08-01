@@ -1131,8 +1131,8 @@
 	},
 	"tankraid" : {
 		"name" : "Trailblazer",
-		"description" : "Raider Tank",
-		"helptext" : "The diminutive Kodachi is a unique raider. Its small yet agile chassis has enough armor and speed to get it close enough to fire its weapon, a napalm bomb. The Kodachi should run in, get a shot off, and withdraw before it takes significant damage. Damaged Kodachis regenerate out of combat."
+		"description" : "Raider Tank (Must slow down to fire)",
+		"helptext" : "A unique hybrid of heavy tank battle doctrine and the roles of a raider. As a heavy tank, the Trailblazer sports a heavy amount of firepower and armor, both of which heavily hinder its maneuverability. To counteract this, the Trailblazer is able to use it napalm machinegun as a booster, allowing it to reach high speeds at the cost of slowing down in combat."
 	},
 	"cloakcon" : {
 		"name" : "Mirage",
