@@ -87,7 +87,7 @@ return {
 				edgeEffectiveness       = 0.4,
 				explosionGenerator      = [[custom:NUKE_150]],
 				model                   = [[wep_tacnuke.s3o]],
-				range                   = 700,
+				range                   = 850,
 				reloadtime              = 10,
 				smokeTrail              = false,
 				soundHit                = [[explosion/mini_nuke]],
