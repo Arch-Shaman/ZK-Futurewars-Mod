@@ -26,6 +26,7 @@ local spGetUnitWeaponTarget = Spring.GetUnitWeaponTarget
 local spGetUnitWeaponState = Spring.GetUnitWeaponState
 local spGetUnitHeading = Spring.GetUnitHeading
 local spGetGameFrame = Spring.GetGameFrame
+local spValidUnitID = Spring.ValidUnitID
 local spUtilitiesGetEffectiveWeaponRange = Spring.Utilities.GetEffectiveWeaponRange
 local cos = math.cos
 local sin = math.sin
@@ -134,9 +135,9 @@ local function GetLowestHeightOnCircle(x, z, radius, points)
 	return lowest
 end
 
-local function GetUnitRange(unitID, weaponNum, runs)
+local function GetUnitRange(unitID, weaponNum, runs, unitDefID)
 	local x, y, z = spGetUnitPosition(unitID)
-	local unitDefID = spGetUnitDefID(unitID)
+	--local unitDefID = spGetUnitDefID(unitID)
 	local weapondefid = UnitDefs[unitDefID].weapons[weaponNum].weaponDef
 	local weapondef = WeaponDefs[weapondefid]
 	local originalrange = weapondef.range
@@ -197,7 +198,7 @@ end
 
 local function UpdateFiringPoint(unitID, weapon, angle, unitdef)
 	local x, y, z = spGetUnitPosition(unitID, true)
-	local range = GetUnitRange(unitID, weapon, 1)
+	local range = GetUnitRange(unitID, weapon, 1, unitdef)
 	local myconfig = config[unitdef][weapon]
 	if myconfig.minelayer then
 		range = random(ceil(range * 0.4), range)
@@ -255,7 +256,7 @@ local function CheckUnitNeedsSweeping(unitID, def)
 	local range = 0
 	for i = 1, #UnitDefs[def].weapons do
 		if config[def][ReverseLookup(def, i)] ~= nil then
-			local myrange = GetUnitRange(unitID, i, 1)
+			local myrange = GetUnitRange(unitID, i, 1, def)
 			local isfiring = GetWeaponIsFiringAtSomething(unitID, i)
 			if isfiring then
 				return false
@@ -345,38 +346,42 @@ end
 function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(UnitData) do
 		if data.nextupdate <= f then
-			local wantssweep = CheckUnitNeedsSweeping(id, data.unitdef)
-			if wantssweep then -- we have no target, so we can sweep away.
-				data.sweeping = true
-				local configuration = overrides[id] or config[data.unitdef]
-				local nextupdate = math.huge
-				for w = 1, #configuration do
-					local weaponnum = configuration[w].weaponNum
-					local reload = spGetUnitWeaponState(id, weaponnum, "reloadState")
-					local potential = min(f + floor(WeaponDefs[UnitDefs[data.unitdef].weapons[weaponnum].weaponDef].reload * 30), reload)
-					if potential < nextupdate then
-						nextupdate = potential
-					end
-					if reload == nil or reload <= f then -- we're ready to go
-						if configuration[w].centerreadjust then
-							data.initialangle = GetUnitHeading(id)
-						end
-						UpdateOffset(id, weaponnum)
-						nextupdate = f + ((configuration[w].fastupdate and 0) or 3)
-						if debug then
-							DebugEcho("Next update: " .. nextupdate)
-						end
-						local wantedangle = data.weaponstates[weaponnum].currentoffset + data.initialangle
-						UpdateFiringPoint(id, weaponnum, wantedangle, data.unitdef)
-					end
-				end
-				data.nextupdate = nextupdate
+			if not spValidUnitID(id) then
+				IterableMap.Remove(UnitData, id)
 			else
-				if data.sweeping then
-					GG.RemoveTemporaryPosTarget(id)
-					data.sweeping = false
+				local wantssweep = CheckUnitNeedsSweeping(id, data.unitdef)
+				if wantssweep then -- we have no target, so we can sweep away.
+					data.sweeping = true
+					local configuration = overrides[id] or config[data.unitdef]
+					local nextupdate = math.huge
+					for w = 1, #configuration do
+						local weaponnum = configuration[w].weaponNum
+						local reload = spGetUnitWeaponState(id, weaponnum, "reloadState")
+						local potential = min(f + floor(WeaponDefs[UnitDefs[data.unitdef].weapons[weaponnum].weaponDef].reload * 30), reload)
+						if potential < nextupdate then
+							nextupdate = potential
+						end
+						if reload == nil or reload <= f then -- we're ready to go
+							if configuration[w].centerreadjust then
+								data.initialangle = GetUnitHeading(id)
+							end
+							UpdateOffset(id, weaponnum)
+							nextupdate = f + ((configuration[w].fastupdate and 0) or 3)
+							if debug then
+								DebugEcho("Next update: " .. nextupdate)
+							end
+							local wantedangle = data.weaponstates[weaponnum].currentoffset + data.initialangle
+							UpdateFiringPoint(id, weaponnum, wantedangle, data.unitdef)
+						end
+					end
+					data.nextupdate = nextupdate
+				else
+					if data.sweeping then
+						GG.RemoveTemporaryPosTarget(id)
+						data.sweeping = false
+					end
+					data.nextupdate = f + 10 -- check again later.
 				end
-				data.nextupdate = f + 10 -- check again later.
 			end
 		end
 	end
