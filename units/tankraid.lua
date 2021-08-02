@@ -189,7 +189,7 @@ return {  tankraid = {
     
 	DEATHEXPLO = {
 				name                    = [[Fuel Tank Rupture]], --CREDITS: Cliver5
-				areaOfEffect            = 48,
+				areaOfEffect            = 70,
 				avoidFeature            = true,
 				--cegTag                  = [[missiletrailred]],
 				commandFire             = true,
@@ -209,7 +209,7 @@ return {  tankraid = {
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					keepmomentum1 = 0,
 					timeoutspawn = 0,
-					vradius1 = "-1.5,4,-1.5,1.5,6,1.5",
+					vradius1 = "-3,3,-3,3,6,3",
 					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
 					onexplode = "by the power of god, disco and hentai...", -- if true, this projectile will cluster when it explodes
 					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
