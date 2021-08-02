@@ -19,6 +19,7 @@ return {
 
 		customParams           = {
 			modelradius    = [[9]],
+			bait_level_default = 0,
 		},
 
 		explodeAs              = [[BIG_UNITEX]],

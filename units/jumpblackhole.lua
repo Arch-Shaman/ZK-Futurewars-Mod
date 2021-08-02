@@ -25,6 +25,7 @@ return {
 			jump_speed       = 6,
 			jump_reload      = 12,
 			jump_from_midair = 1,
+			bait_level_default = 1,
 		},
 
 		explodeAs             = [[BIG_UNITEX]],

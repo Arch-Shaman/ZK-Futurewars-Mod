@@ -23,6 +23,7 @@ return {
 			floattoggle       = [[1]],
 			selection_scale   = 0.8,
 			aim_lookahead     = 120,
+			bait_level_default = 1,
 		},
 
 		explodeAs              = [[BIG_UNITEX]],

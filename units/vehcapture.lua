@@ -23,6 +23,7 @@ return {
 			modelradius    = [[13]],
 			turnatfullspeed = [[1]],
 			cus_noflashlight = 1,
+			bait_level_default = 1,
 		},
 		explodeAs           = [[BIG_UNITEX]],
 		footprintX          = 3,

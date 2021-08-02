@@ -17,6 +17,7 @@ return {
 
 		customParams        = {
 			dontfireatradarcommand = '0',
+			bait_level_default = 2,
 		},
 
 		explodeAs           = [[BIG_UNITEX_MERL]],
