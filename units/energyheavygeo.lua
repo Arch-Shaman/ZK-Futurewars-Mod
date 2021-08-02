@@ -244,8 +244,8 @@ return {
 			energyheavygeo_DEATH = {
 				name                    = [[Supervolcanic Eruption]],
 				areaOfEffect            = 1280,
-				craterBoost             = 6,
-				craterMult              = 6,
+				craterBoost             = 0,
+				craterMult              = 0,
 				customParams            = {
 					setunitsonfire = "1",
 					burntime = 2700,
