@@ -686,7 +686,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		if debug then
 			spEcho("Registered projectile " .. proID)
 		end
-		IterableMap.Add(projectiles, proID, {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetProjectileTeamID(proID), ttl = ((config[weaponDefID].timer and (frame + config[weaponDefID].timer)) or nil), delay = 1, charges = config[weaponDefID].clustercharges}, proOwnerDefID = proOwnerDefID) --frame is set to the current frame in gameframe
+		IterableMap.Add(projectiles, proID, {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetProjectileTeamID(proID), ttl = ((config[weaponDefID].timer and (frame + config[weaponDefID].timer)) or nil), delay = 1, charges = config[weaponDefID].clustercharges, proOwnerDefID = proOwnerDefID}) --frame is set to the current frame in gameframe
 		if config[weaponDefID]["alwaysvisible"] then
 			spSetProjectileAlwaysVisible(proID,true)
 		end
