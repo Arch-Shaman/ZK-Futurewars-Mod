@@ -56,8 +56,7 @@ return {
 		weapons                = {
 			{
 				def                = [[TORPMISSILE]],
-				badTargetCategory  = [[FIXEDWING GUNSHIP]],
-				onlyTargetCategory = [[SWIM FIXEDWING HOVER LAND SINK TURRET FLOAT SHIP GUNSHIP]],
+				onlyTargetCategory = [[SWIM HOVER LAND SINK TURRET FLOAT SHIP]],
 			},
 			{
 				def                = [[TORPEDO]],
