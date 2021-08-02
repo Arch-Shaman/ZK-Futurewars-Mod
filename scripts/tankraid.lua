@@ -10,6 +10,16 @@ piece('base', 'body', 'turret', 'sleeve', 'barrel', 'firepoint', 'tracks1', 'tra
 
 local moving, once, animCount = false,true,0
 
+local deathanimtab = {
+	[1] = piece('base'),
+	[2] = piece('turret'),
+	[3] = piece('tracks1'),
+	[4] = piece('tracks3'),
+	[5] = piece('tracks2'),
+	[6] = piece('tracks4'),
+	[7] = piece('wheels8'),
+}
+
 -- Signal definitions
 local SIG_Walk = 2
 local SIG_Restore = 1 --NOTE: must be an odd number
@@ -292,8 +302,64 @@ function script.BlockShot(num, targetID)
 	end
 end
 
+local function DeathAnim(px, py, pz)
+	Spring.PlaySoundFile("Sounds/explosion/tankraid_deathexplo.wav", 80.0, px, py, pz, 1, 1, 1, 1)
+	EmitSfx(turret, 1024)
+	Sleep(33)
+	EmitSfx(base, 1024)
+	EmitSfx(deathanimtab[math.random(5,7)], GG.Script.UNIT_SFX1)
+	EmitSfx(deathanimtab[math.random(1,4)], GG.Script.UNIT_SFX1)
+	Spring.SpawnProjectile(WeaponDefNames["tankraid_deathexplo"].id, {
+		pos = {px, py + 5, pz},
+		["end"] = {px, py, pz},
+		speed = {0, 0, 0},
+		ttl = 10,
+		gravity = 1,
+		team = Spring.GetGaiaTeamID(),
+		owner = unitID,
+	})
+	Sleep(math.random() * 300)
+	EmitSfx(deathanimtab[math.random(5,7)], GG.Script.UNIT_SFX1)
+	EmitSfx(deathanimtab[math.random(1,4)], GG.Script.UNIT_SFX1)
+	Spring.SpawnProjectile(WeaponDefNames["tankraid_deathexplo"].id, {
+		pos = {px, py + 5, pz},
+		["end"] = {px, py, pz},
+		speed = {0, 0, 0},
+		ttl = 10,
+		gravity = 1,
+		team = Spring.GetGaiaTeamID(),
+		owner = unitID,
+	})
+	Sleep(math.random() * 300)
+	EmitSfx(deathanimtab[math.random(5,7)], GG.Script.UNIT_SFX2)
+	EmitSfx(deathanimtab[math.random(1,4)], GG.Script.UNIT_SFX2)
+	Spring.SpawnProjectile(WeaponDefNames["tankraid_deathexplo"].id, {
+		pos = {px, py + 5, pz},
+		["end"] = {px, py, pz},
+		speed = {0, 0, 0},
+		ttl = 10,
+		gravity = 1,
+		team = Spring.GetGaiaTeamID(),
+		owner = unitID,
+	})
+	Sleep(math.random() * 300)
+	EmitSfx(deathanimtab[math.random(5,7)], GG.Script.UNIT_SFX2)
+	EmitSfx(deathanimtab[math.random(1,4)], GG.Script.UNIT_SFX2)
+	Spring.SpawnProjectile(WeaponDefNames["tankraid_deathexplo"].id, {
+		pos = {px, py + 5, pz},
+		["end"] = {px, py, pz},
+		speed = {0, 0, 0},
+		ttl = 10,
+		gravity = 1,
+		team = Spring.GetGaiaTeamID(),
+		owner = unitID,
+	})
+end
+
 function script.Killed(recentDamage, maxHealth)
 	local severity = 100 * recentDamage / maxHealth
+	local px, py, pz = Spring.GetUnitPosition(unitID)
+	DeathAnim(px, py, pz)
 	if severity <= 25 then
 		Explode(body, SFX.NONE)
 		Explode(turret, SFX.NONE)
@@ -318,15 +384,15 @@ end
 
 function script.Create()
 	Spring.SetUnitRulesParam(unitID,'cannot_damage_unit',unitID) --SAVE ME, SENPAI LAZOR!
-
+	
 	moving = false
 	
 	Turn(firepoint, x_axis, math.rad(7))
 	
-	Hide(tracks1)
-	Hide(tracks2)
-	Hide(tracks3)
-
+	--Hide(tracks1)
+	--Hide(tracks2)
+	--Hide(tracks3)
+	
 	while select(5, Spring.GetUnitHealth(unitID)) < 1 do
 		Sleep(250)
 	end

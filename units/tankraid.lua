@@ -62,6 +62,7 @@ return {  tankraid = {
 
     explosiongenerators = {
       [[custom:flamer]],
+	  [[custom:napalm_phoenix]],
     },
 
   },
@@ -202,22 +203,26 @@ return {  tankraid = {
 					light_radius = 220,
 					
 					manualfire = 1,
-					
-					numprojectiles1 = 24, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					area_damage = 1,
+					area_damage_radius = 128,
+					area_damage_dps = 20,
+					area_damage_duration = 45,
+
+					numprojectiles1 = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "tankraid_napalm_fragment_dummy",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					keepmomentum1 = 0,
 					timeoutspawn = 0,
-					vradius1 = "-3,3,-3,3,6,3",
-					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
-					onexplode = "by the power of god, disco and hentai...", -- if true, this projectile will cluster when it explodes
+					vradius1 = "-2.5,3,-2.5,2.5,6,2.5",
+					noairburst = "Sattuu ihan perkeleesti", -- if true, this projectile will skip all airburst checks
+					onexplode = "Sattuu ihan vitusti", -- if true, this projectile will cluster when it explodes
 					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					
 					area_damage = 1,
-					area_damage_radius = 70,
-					area_damage_dps = 40,
-					area_damage_duration = 12,
+					area_damage_radius = 108,
+					area_damage_dps = 20,
+					area_damage_duration = 16,
 					
 					stats_damage = (35*24) + 200,
 					shield_damage = (35*24) + 200,
@@ -228,7 +233,7 @@ return {  tankraid = {
 					default = 200,
 				},
 
-				explosionGenerator      = [[custom:napalm_hellfire]],
+				explosionGenerator      = [[custom:napalm_koda]],
 				fireStarter             = 70,
 				flightTime              = 3,
 				impulseBoost            = 0,
@@ -239,7 +244,7 @@ return {  tankraid = {
 				reloadtime              = 45,
 				smokeTrail              = true,
 				soundHit                = [[weapon/cannon/wolverine_hit]],
-				soundHitVolume          = 8,
+				soundHitVolume          = 0,
 				soundStart              = [[weapon/cannon/cannon_fire3]],
 				trajectoryHeight        = 1,
 				texture2                = [[lightsmoketrail]],
