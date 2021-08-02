@@ -302,73 +302,48 @@ function script.BlockShot(num, targetID)
 	end
 end
 
-local function DeathAnim(px, py, pz)
+local function DeathAnim(num)
 	Spring.PlaySoundFile("Sounds/explosion/tankraid_deathexplo.wav", 80.0, px, py, pz, 1, 1, 1, 1)
 	EmitSfx(turret, 1024)
 	Sleep(33)
+	local px, py, pz = Spring.GetUnitPosition(unitID)
 	EmitSfx(base, 1024)
 	EmitSfx(deathanimtab[math.random(5,7)], GG.Script.UNIT_SFX1)
 	EmitSfx(deathanimtab[math.random(1,4)], GG.Script.UNIT_SFX1)
-	Spring.SpawnProjectile(WeaponDefNames["tankraid_deathexplo"].id, {
-		pos = {px, py + 5, pz},
-		["end"] = {px, py, pz},
-		speed = {0, 0, 0},
-		ttl = 10,
-		gravity = 1,
-		team = Spring.GetGaiaTeamID(),
-		owner = unitID,
-	})
-	Sleep(math.random() * 300)
-	EmitSfx(deathanimtab[math.random(5,7)], GG.Script.UNIT_SFX1)
-	EmitSfx(deathanimtab[math.random(1,4)], GG.Script.UNIT_SFX1)
-	Spring.SpawnProjectile(WeaponDefNames["tankraid_deathexplo"].id, {
-		pos = {px, py + 5, pz},
-		["end"] = {px, py, pz},
-		speed = {0, 0, 0},
-		ttl = 10,
-		gravity = 1,
-		team = Spring.GetGaiaTeamID(),
-		owner = unitID,
-	})
-	Sleep(math.random() * 300)
-	EmitSfx(deathanimtab[math.random(5,7)], GG.Script.UNIT_SFX2)
-	EmitSfx(deathanimtab[math.random(1,4)], GG.Script.UNIT_SFX2)
-	Spring.SpawnProjectile(WeaponDefNames["tankraid_deathexplo"].id, {
-		pos = {px, py + 5, pz},
-		["end"] = {px, py, pz},
-		speed = {0, 0, 0},
-		ttl = 10,
-		gravity = 1,
-		team = Spring.GetGaiaTeamID(),
-		owner = unitID,
-	})
-	Sleep(math.random() * 300)
-	EmitSfx(deathanimtab[math.random(5,7)], GG.Script.UNIT_SFX2)
-	EmitSfx(deathanimtab[math.random(1,4)], GG.Script.UNIT_SFX2)
-	Spring.SpawnProjectile(WeaponDefNames["tankraid_deathexplo"].id, {
-		pos = {px, py + 5, pz},
-		["end"] = {px, py, pz},
-		speed = {0, 0, 0},
-		ttl = 10,
-		gravity = 1,
-		team = Spring.GetGaiaTeamID(),
-		owner = unitID,
-	})
+	for i = 1, num do
+		EmitSfx(deathanimtab[math.random(5,7)], GG.Script.UNIT_SFX2)
+		EmitSfx(deathanimtab[math.random(1,4)], GG.Script.UNIT_SFX2)
+		px, py, pz = Spring.GetUnitPosition(unitID)
+		Spring.SpawnProjectile(WeaponDefNames["tankraid_deathexplo"].id, {
+			pos = {px, py + 5, pz},
+			["end"] = {px, py, pz},
+			speed = {0, 0, 0},
+			ttl = 10,
+			gravity = 1,
+			team = Spring.GetGaiaTeamID(),
+			owner = unitID,
+		})
+		if num < 3 then
+			Sleep(math.random() * 300)
+		else
+			Sleep(50)
+		end
+	end
 end
 
 function script.Killed(recentDamage, maxHealth)
 	local severity = 100 * recentDamage / maxHealth
-	local px, py, pz = Spring.GetUnitPosition(unitID)
-	DeathAnim(px, py, pz)
 	if severity <= 25 then
 		Explode(body, SFX.NONE)
 		Explode(turret, SFX.NONE)
+		DeathAnim(2)
 		return 1
 	end
 	if severity <= 50 then
 		Explode(body, SFX.NONE)
 		Explode(turret,SFX.NONE)
 		Explode(barrel, SFX.FALL + SFX.SMOKE + SFX.FIRE)
+		DeathAnim(4)
 		return 1
 	else
 		Explode(body, SFX.NONE)
@@ -378,6 +353,7 @@ function script.Killed(recentDamage, maxHealth)
 		Hide(tracks2)
 		Hide(tracks3)
 		Hide(tracks4)
+		DeathAnim(6)
 		return 2
 	end
 end
