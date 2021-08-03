@@ -28,7 +28,6 @@ return {
 				fronttexture       = [[shockwave]],
 				length             = 1,
 				pos                = [[0, 0, 0]],
-				sidetexture        = [[shockwave]],
 				size               = 1,
 				sizegrowth         = 500,
 				ttl                = 60,
