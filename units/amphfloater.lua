@@ -18,7 +18,7 @@ return {
 		corpse                 = [[DEAD]],
 
 		customParams           = {
-			bait_level_default = 0,
+			bait_level_default = 1,
 			aim_lookahead      = 60,
 			amph_regen         = 40,
 			amph_submerged_at  = 80,
