@@ -16,7 +16,7 @@ include("LuaRules/Configs/customcmds.h.lua")
 -- needed for checks
 
 local SAVE_FILE  = "Gadgets/unit_jumpjets.lua"
-local PLAY_SOUND = false
+local PLAY_SOUND = true
 
 local Spring    = Spring
 local MoveCtrl  = Spring.MoveCtrl
