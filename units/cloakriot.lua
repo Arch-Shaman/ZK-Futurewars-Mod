@@ -83,9 +83,6 @@ return {
 				alphaDecay              = 0.7,
 				areaOfEffect            = 96,
 				burnblow                = true,
-				projectiles				= 2,
-				burst                   = 3,
-				burstrate               = 5/30,
 				craterBoost             = 0.15,
 				craterMult              = 0.3,
 				customParams        = {
@@ -99,7 +96,7 @@ return {
 				},
 
 				damage                  = {
-					default = 40,
+					default = 16.1,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -111,7 +108,7 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 275,
-				reloadtime              = 1,
+				reloadtime              = 2/30,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
 				soundHit                = [[weapon/cannon/emg_hit]],
