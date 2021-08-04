@@ -629,6 +629,7 @@ end
 
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
+	local x, y, z = Spring.GetUnitPosition(unitID)
 	if severity < 0.5 then
 		-- Pointless because deathclone contains head.
 		--Explode(Head, SFX.FALL)
@@ -636,7 +637,7 @@ function script.Killed(recentDamage, maxHealth)
 		
 		GG.Script.InitializeDeathAnimation(unitID)
 		PlayAnimation('die')
-		
+		dyncomm.Explode(x, y, z)
 		Explode(ArmLeft, SFX.NONE)
 		Explode(ArmRight, SFX.NONE)
 		Explode(CalfLeft, SFX.NONE)
@@ -645,6 +646,7 @@ function script.Killed(recentDamage, maxHealth)
 		dyncomm.SpawnModuleWrecks(1)
 		dyncomm.SpawnWreck(1)
 	else
+		dyncomm.Explode(x, y, z)
 		Explode(Head, SFX.FALL + SFX.FIRE)
 		Explode(Stomach, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
 		Explode(ArmLeft, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)

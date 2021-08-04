@@ -2,6 +2,7 @@ local CopyTable = Spring.Utilities.CopyTable
 
 local weaponsList = VFS.DirList("gamedata/modularcomms/weapons", "*.lua") or {}
 local subprojectileList = VFS.DirList("gamedata/modularcomms/subprojectiles", "*.lua") or {}
+local explosionList = VFS.DirList("gamedata/modularcomms/deathexplosions", "*.lua") or {}
 
 for i = 1, #weaponsList do
 	local name, array = VFS.Include(weaponsList[i])
@@ -92,3 +93,11 @@ for i = 1, #subprojectileList do
 		WeaponDefs[boost .. "_" .. name] = weaponData
 	end
 end
+
+for i = 1, #explosionList do
+	local name, array = VFS.Include(explosionList[i])
+	local weapon = lowerkeys(array)
+	local weaponData = CopyTable(weapon, true)
+	WeaponDefs[name] = weaponData
+end
+

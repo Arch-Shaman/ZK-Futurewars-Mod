@@ -380,7 +380,10 @@ for name, ud in pairs(UnitDefs) do
 	if not ud.buildcostmetal then ud.buildcostmetal = cost end
 	if not ud.buildtime then ud.buildtime = cost end
 	
-	
+	if ud.customparams.dynamic_comm then -- Dynamic commanders have their explosion handled by unitscript.
+		ud.explodeas = "noweapon"
+		ud.selfdestructas = "noweapon"
+	end
 	
 	--setting uniform M/E storage
 	local storage = math.max (ud.metalstorage or 0, ud.energystorage or 0)

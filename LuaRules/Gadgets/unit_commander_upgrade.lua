@@ -121,6 +121,13 @@ local defaultweapon = {
 	[6] = "commweapon_canistercannon", -- presumably battle comm at some point
 }
 
+local detpacktable = {
+	[0] = "commexplosion_default",
+	[1] = "commexplosion_boom",
+	[2] = "commexplosion_biggaboom",
+	[3] = "commexplosion_nuclear",
+}
+
 local defaultaddons = {
 	-- strike --
 	[1] = {
@@ -353,6 +360,9 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	local _, maxHealth = spGetUnitHealth(unitID)
 	local effectiveMass = (((totalCost/2) + (maxHealth/8))^0.6)*6.5
 	spSetUnitRulesParam(unitID, "massOverride", effectiveMass, INLOS)
+	-- Peaceful Wind --
+	local detpack = data.detpacklv or 0
+	spSetUnitRulesParam(unitID, "comm_deathexplosion", detpacktable[detpack], INLOS)
 	
 	ApplyWeaponData(unitID, data.weapon1, data.weapon2, data.shield, data.rangeMult, data.damageMult, chassis)
 	
