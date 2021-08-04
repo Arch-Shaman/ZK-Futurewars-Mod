@@ -212,7 +212,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local allyteam = spGetUnitAllyTeam(proOwnerID)
 		local _, py = spGetProjectilePosition(proID)
 		py = max(py, ty)
-		missiles[proID] = {target = target, type = type, cruising = false, takeoff = true, lastknownposition = last, configid = wep, started = false, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0}
+		missiles[proID] = {target = target, type = type, cruising = false, takeoff = true, lastknownposition = last, configid = wep, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0}
 		if config[wep].radius then
 			ProccessOffset(wep, proID)
 		end
@@ -284,11 +284,19 @@ function gadget:GameFrame(f)
 				end
 			else
 				local distance = Distance(cx, x, cz, z)
-				--spEcho("Projectile ID: " .. projectile .. "\nAlt: " .. cy .. " / " .. wantedalt .. "\nCruising: " .. tostring(data.cruising) .. "\nAscending: " .. tostring(data.takeoff) .. "\nStarted: " .. tostring(data.started) .. "\nTargetCoords: " .. x .. ", " .. y .. ", " .. z .. "\nDistance: " .. distance .. "/" .. mindist)
+				--spEcho("Projectile ID: " .. projectile .. "\nAlt: " .. cy .. " / " .. wantedalt .. "\nCruising: " .. tostring(data.cruising) .. "\nAscending: " .. tostring(data.takeoff) .. "\nTargetCoords: " .. x .. ", " .. y .. ", " .. z .. "\nDistance: " .. distance .. "/" .. mindist)
 				if data.takeoff then -- begin ascent phase
-					spSetProjectileTarget(projectile, cx, wantedalt, cz)
+					local success = false
+					if missileconfig.ascendradius and missileconfig.ascendradius > 0 then
+						local targetx, targetz = GetFiringPoint(missileconfig.ascendradius, cx, cz, CalculateAngle(cx, cz, x, z))
+						--Spring.Echo("Aiming for " .. targetx .. "," .. targetz)
+						success = spSetProjectileTarget(projectile, targetx, wantedalt, targetz)
+					else
+						success = spSetProjectileTarget(projectile, cx, wantedalt, cz)
+					end
+					--spEcho("Success: " .. tostring(success))
 				end
-				if data.takeoff and ((cy >= wantedalt - 20 and not missileconfig.airlaunched) or (cy <= wantedalt + 20 and missileconfig.airlaunched)) then -- end ascent
+				if data.takeoff and ((cy >= wantedalt - 40 and not missileconfig.airlaunched) or (cy <= wantedalt + 20 and missileconfig.airlaunched)) then -- end ascent
 					missiles[projectile].takeoff = false
 					missiles[projectile].cruising = true
 				end
