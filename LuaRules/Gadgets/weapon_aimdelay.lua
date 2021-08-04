@@ -62,7 +62,9 @@ end
 
 
 function GG.AimDelay_ForceWeaponRestart(unitID, weaponNum, delay)
-	unitDelayedArray[unitID][weaponNum].forcereset = true
+	if unitDelayedArray[unitID] then
+		unitDelayedArray[unitID][weaponNum].forcereset = true
+	end
 end
 
 function GG.AimDelay_AttemptToFire(unitID, weaponNum, heading, pitch, delay)
