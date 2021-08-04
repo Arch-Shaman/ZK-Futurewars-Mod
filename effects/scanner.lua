@@ -26,6 +26,7 @@ return {
 				dir                = [[-0.01 r0.01, 1, -0.01 r0.01]],
 				frontoffset        = 0,
 				fronttexture       = [[shockwave]],
+				sidetexture        = [[null]],
 				length             = 1,
 				pos                = [[0, 0, 0]],
 				size               = 1,
