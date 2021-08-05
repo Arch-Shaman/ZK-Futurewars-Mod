@@ -76,7 +76,7 @@ return {
 					reveal_unit = 10,
 					cruisetracking = 0,
 					cruise_nolock = 1,
-					cruiserandomradius = 600,
+					cruiserandomradius = 500,
 				},
 				damage                  = {
 					default = 220.5,
@@ -91,7 +91,7 @@ return {
 				model                   = [[hobbes.s3o]],
 				noSelfDamage            = true,
 				range                   = 2600,
-				reloadtime              = 5 + 10/30,
+				reloadtime              = 9 + 15/30,
 				smokeTrail              = false,
 				soundHit                = [[weapon/missile/rapid_rocket_hit]],
 				soundHitVolume          = 40,
