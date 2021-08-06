@@ -18,6 +18,7 @@ return {
 
 		customParams                  = {
 			aim_lookahead      = 120,
+			bait_level_default = 1,
 		},
 
 		explodeAs                     = [[SMALL_BUILDINGEX]],
