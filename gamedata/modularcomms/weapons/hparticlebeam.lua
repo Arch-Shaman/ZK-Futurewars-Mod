@@ -19,11 +19,11 @@ local weaponDef = {
 		okp_speedmult = 1,
 		okp_radarmult = 1,
 		okp_timeout = 20,
-		okp_damage = 800,
+		okp_damage = 850,
 	},
 
 	damage                  = {
-		default = 800,
+		default = 850,
 	},
 
 	explosionGenerator      = [[custom:flash2green_large]],
@@ -33,8 +33,8 @@ local weaponDef = {
 	interceptedByShieldType = 1,
 	laserFlareSize          = 10,
 	minIntensity            = 1,
-	range                   = 390,
-	reloadtime              = 3.1,
+	range                   = 420,
+	reloadtime              = 3,
 	rgbColor                = [[0 1 0]],
 	soundStart              = [[weapon/laser/small_laser_fire4]],
 	soundStartVolume        = 5,
