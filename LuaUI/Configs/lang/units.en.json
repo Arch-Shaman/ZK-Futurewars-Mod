@@ -555,9 +555,9 @@
 		"helptext" : "The Lance's weapon, nicknamed 'the Blue Laser of Death', has the power and accuracy to skewer most units with a single shot. Use it against high armor units, but keep it behind the front lines - it has light armor and can't run from danger."
 	},
 	"shieldbomb" : {
-		"name" : "Snitch",
-		"description" : "Crawling Bomb (Burrows)",
-		"helptext" : "This fast-moving suicide unit is very good against massed units, particularly assault tanks. It features a cloaking device which is automatically activated once the unit stands still, effectively turning it into a mine. Chain explodes terribly, so best not to mass it. Counter with Pickets and missile trucks, or single cheap units to set off a premature detonation."
+		"name" : "Parcel",
+		"description" : "Crawling Cluster Bomb (Burrows)",
+		"helptext" : "The simplistic Parcel is just a cluster bomb with legs. When receiving fatal damage or the command to explode, it will release its payload: a detonation shockwave along side 20 small high explosive bombs. These extra bomblets allow it to drain shields along with inflicting direct damage to shield units, detect suspected cloakbots, or inflict mild area damage to nearby enemy units. Especially effective if used with a Charon for air deployment or cloakfield."
 	},
 	"cloakjammer" : {
 		"name" : "Iris",
