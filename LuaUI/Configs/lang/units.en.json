@@ -557,7 +557,7 @@
 	"shieldbomb" : {
 		"name" : "Parcel",
 		"description" : "Crawling Cluster Bomb (Burrows)",
-		"helptext" : "The simplistic Parcel is just a cluster bomb with legs. When receiving fatal damage or the command to explode, it will release its payload: a detonation shockwave along side 20 small high explosive bombs. These extra bomblets allow it to drain shields along with inflicting direct damage to shield units, detect suspected cloakbots, or inflict mild area damage to nearby enemy units. Especially effective if used with a Charon for air deployment or cloakfield."
+		"helptext" : "The simplistic Parcel is just a cluster bomb with legs. When receiving fatal damage or the command to explode, it will release its payload: a detonation shockwave along side 20 small high explosive bombs. These extra bomblets allow it to drain shields along with inflicting direct damage to shield units, detect suspected cloakbots, or inflict mild area damage to nearby enemy units. Especially effective if used with a Charon for air deployment or cloakfield.\nWhile some have hinted at it being used as munitions for cluster bombers, these are just rumors and not part of any planned upgrade to air unit designs."
 	},
 	"cloakjammer" : {
 		"name" : "Iris",
