@@ -18,6 +18,7 @@ local weaponDef = {
 		muzzleEffectFire = [[custom:flashmuzzle1]],
 		single_hit_multi = true,
 		reaim_time = 1,
+		antibaitbypass = "ärsytät minua",
 	},
 
 	damage                  = {

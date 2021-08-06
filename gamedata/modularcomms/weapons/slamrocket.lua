@@ -26,6 +26,7 @@ local weaponDef = {
 		cruisealt = 600,
 		cruisedist = 340,
 		reveal_unit = 4,
+		antibaitbypass = "ärsytät minua",
 	},
 	cylinderTargeting       = 1.0,
 

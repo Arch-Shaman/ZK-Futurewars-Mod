@@ -17,6 +17,7 @@ local weaponDef = {
 		light_radius = 180,
 		reaim_time = 1,
 		reveal_unit = 8,
+		antibaitbypass = "ärsytät minua",
 	},
 
 	damage                  = {

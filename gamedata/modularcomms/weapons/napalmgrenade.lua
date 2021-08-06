@@ -29,6 +29,7 @@ local weaponDef = {
 		area_damage_radius = 128,
 		area_damage_dps = 40,
 		area_damage_duration = 12,
+		antibaitbypass = "ärsytät minua",
 	},
 
 	damage                  = {
