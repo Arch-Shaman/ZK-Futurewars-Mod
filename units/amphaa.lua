@@ -18,13 +18,12 @@ return {
 		corpse                 = [[DEAD]],
 
 		customParams           = {
-			bait_level_default = 0,
+			bait_level_default = 1,
 			amph_regen        = 20,
 			amph_submerged_at = 40,
 			sink_on_emp       = 1,
 			floattoggle       = [[1]],
 			selection_scale   = 0.85,
-			bait_level_default = 0,
 		},
 
 		explodeAs              = [[BIG_UNITEX]],
