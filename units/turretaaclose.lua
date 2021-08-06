@@ -37,12 +37,10 @@ return {
 		selfDestructAs                = [[SMALL_BUILDINGEX]],
 
 		sfxtypes                      = {
-
-		explosiongenerators = {
-			[[custom:STORMMUZZLE]],
-			[[custom:STORMBACK]],
-		},
-
+			explosiongenerators = {
+				[[custom:STORMMUZZLE]],
+				[[custom:STORMBACK]],
+			},
 		},
 		sightDistance                 = 1025,
 		useBuildingGroundDecal        = true,
