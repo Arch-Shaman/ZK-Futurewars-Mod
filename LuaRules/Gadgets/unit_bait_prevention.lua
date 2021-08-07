@@ -167,11 +167,15 @@ function gadget:AllowWeaponTarget(unitID, targetID, attackerWeaponNum, attackerW
 	return true, defPriority
 end
 
-function GG.AddUnitAntibait(unitID, level, config)
+function GG.AddUnitAntibait(unitID, level)
 	unitBaitLevel[unitID] = level
 	preventChaffShootingCmdDesc.params[1] = level
 	spInsertUnitCmdDesc(unitID, preventChaffShootingCmdDesc)
 	preventChaffShootingCmdDesc.params[1] = 0
+end
+
+function GG.UpdateAntibait(old, new)
+	unitBaitLevel[new] = (unitBaitLevel[old] or 0)
 end
 
 --------------------------------------------------------------------------------
