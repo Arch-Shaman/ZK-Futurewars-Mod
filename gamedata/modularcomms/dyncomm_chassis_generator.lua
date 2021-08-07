@@ -1,23 +1,19 @@
 local chassisDefs = {
 	{
-		name = "dynstrike1", -- 25/31 (UPDATE ME AS YOU ADD MORE WEAPONS)
+		name = "dynstrike1", -- 21/31 (UPDATE ME AS YOU ADD MORE WEAPONS)
 		weapons = {
 			"commweapon_tankbuster",
 			"commweapon_tankbuster",
 			"commweapon_buster_disrupt",
 			"commweapon_buster_disrupt",
-			"commweapon_lparticlebeam",
 			"commweapon_shotgun", -- TODO: REPLACE
 			"commweapon_shotgun_disrupt",
-			"commweapon_disruptor", -- TODO: REMOVE
 			"commweapon_heavyrifle",
 			"commweapon_heavyrifle_disrupt",
 			"commweapon_lightninggun",
 			"commweapon_lightninggun_improved",
-			"commweapon_lparticlebeam",
 			"commweapon_shotgun",
 			"commweapon_shotgun_disrupt",
-			"commweapon_disruptor",
 			"commweapon_heavyrifle",
 			"commweapon_heavyrifle_disrupt",
 			"commweapon_lightninggun",
