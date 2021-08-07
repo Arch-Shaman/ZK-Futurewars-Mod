@@ -49,7 +49,7 @@ local preventChaffShootingCmdDesc = {
 
 local antibaitbypass = {}
 for i = 1, #WeaponDefs do
-	if WeaponDefs[i].customParams.ignoreantibait then
+	if WeaponDefs[i].customParams.antibaitbypass then
 		antibaitbypass[i] = true
 	end
 end
