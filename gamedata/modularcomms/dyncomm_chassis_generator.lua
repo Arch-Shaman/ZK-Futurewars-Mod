@@ -91,31 +91,31 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynassault1", --23/31
+		name = "dynassault1", --23/31 (will be: 11/31)
 		weapons = {
 			"commweapon_rocketlauncher", -- 430
 			"commweapon_rocketlauncher_napalm", -- 430
 			"commweapon_rocketlauncher", -- 430
 			"commweapon_rocketlauncher_napalm", -- 430
-			"commweapon_canistercannon",
-			"commweapon_canistercannon",
-			"commweapon_heatray",
-			"commweapon_heavymachinegun",
-			"commweapon_flamethrower",
-			"commweapon_riotcannon",
-			"commweapon_riotcannon_napalm",
-			"commweapon_heatray",
-			"commweapon_heavymachinegun",
-			"commweapon_flamethrower",
-			"commweapon_riotcannon",
-			"commweapon_riotcannon_napalm",
+			"commweapon_canistercannon", -- TODO: remove and replace.
+			"commweapon_canistercannon", -- TODO: remove and replace
+			"commweapon_heatray", -- TODO: remove
+			"commweapon_heavymachinegun", -- TODO: remove, use by dynriot
+			"commweapon_flamethrower", -- TODO: remove, use by dynriot
+			"commweapon_riotcannon", -- TODO: remove, use by dynriot
+			"commweapon_riotcannon_napalm", -- TODO: remove, use by dynriot
+			"commweapon_heatray", -- TODO: remove
+			"commweapon_heavymachinegun", -- TODO: remove, use by dynriot
+			"commweapon_flamethrower", -- TODO: remove, use by dynriot
+			"commweapon_riotcannon", -- TODO: remove, use by dynriot
+			"commweapon_riotcannon_napalm", -- TODO: remove, use by dynriot
 			"commweapon_artillery_heavy",
 			"commweapon_artillery_heavy",
 			"commweapon_artillery_heavy_napalm",
 			"commweapon_artillery_heavy_napalm",
-			"commweapon_napalmgrenade",
+			"commweapon_napalmgrenade", -- TODO: replace with napalm mortar
 			"commweapon_slamrocket",
-			"commweapon_clusterbomb",
+			"commweapon_clusterbomb", -- TODO: replace with mortar
 			-- Space for shield
 		}
 	},
