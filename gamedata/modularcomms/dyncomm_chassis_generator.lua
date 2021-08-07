@@ -7,16 +7,16 @@ local chassisDefs = {
 			"commweapon_buster_disrupt",
 			"commweapon_buster_disrupt",
 			"commweapon_shotgun", -- TODO: REPLACE
-			"commweapon_shotgun_disrupt",
-			"commweapon_heavyrifle",
-			"commweapon_heavyrifle_disrupt",
-			"commweapon_lightninggun",
-			"commweapon_lightninggun_improved",
 			"commweapon_shotgun",
 			"commweapon_shotgun_disrupt",
+			"commweapon_shotgun_disrupt",
+			"commweapon_heavyrifle",
 			"commweapon_heavyrifle",
 			"commweapon_heavyrifle_disrupt",
+			"commweapon_heavyrifle_disrupt",
 			"commweapon_lightninggun",
+			"commweapon_lightninggun",
+			"commweapon_lightninggun_improved",
 			"commweapon_lightninggun_improved",
 			"commweapon_multistunner",
 			"commweapon_multistunner_improved",
@@ -75,8 +75,8 @@ local chassisDefs = {
 			"commweapon_lightninggun_improved",
 			"commweapon_disruptorprojector",
 			"commweapon_disruptorprojector",
-			"commweapon_shockriflefw",
-			"commweapon_shockriflefw",
+			"commweapon_shockrifle",
+			"commweapon_shockrifle",
 			"commweapon_multistunner", -- TODO: replace with EMP bomb.
 			"commweapon_multistunner_improved",
 			"commweapon_disruptorbomb",
@@ -119,7 +119,6 @@ local chassisDefs = {
 		name = "dynknight1", -- don't care.
 		weapons = {
 			-- Aiming from earlier weapons is overridden by 
-			"commweapon_peashooter",
 			"commweapon_rocketlauncher", -- 430
 			"commweapon_rocketlauncher_napalm", -- 430
 			"commweapon_missilelauncher", -- 415
@@ -139,7 +138,6 @@ local chassisDefs = {
 			"commweapon_flamethrower", -- 270
 			"commweapon_multistunner",
 			"commweapon_multistunner_improved",
-			"commweapon_peashooter",
 			"commweapon_artillery_heavy",
 			"commweapon_artillery_heavy_napalm",
 			"commweapon_disintegrator",
