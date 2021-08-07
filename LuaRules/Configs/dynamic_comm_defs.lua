@@ -486,7 +486,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_disruptorprojector",
 		humanName = "Disruptor Projector (Area Slow)",
-		description = "Deals some damage and slows targets in a small area. Low DPS. Can be converted into a heavy AOE slow beam.",
+		description = "Disruptor Projector (Area Slow)\nDeals some damage and slows targets in a small area. Low DPS. Can be converted into a heavy AOE slow beam.",
 		image = moduleImagePath .. "commweapon_disruptorprojector.png",
 		limit = 2,
 		cost = 75 * COST_MULT,
