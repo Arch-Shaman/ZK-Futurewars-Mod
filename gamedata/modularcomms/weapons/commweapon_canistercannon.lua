@@ -31,10 +31,11 @@ local weaponDef = {
 		light_camera_height = 1500,
 		light_color = [[0.8 0.76 0.38]],
 		light_radius = 40,
+		areaofeffectoverride = 144,
 	},
 	
 	damage                  = {
-		default = 70*6,
+		default = 420,
 	},
 	
 	edgeEffectiveness       = 0.75,

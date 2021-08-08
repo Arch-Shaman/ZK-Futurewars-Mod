@@ -1,4 +1,4 @@
-local _, def = VFS.Include("gamedata/modularcomms/weapons/multistunner.lua")
+local _, def = VFS.Include("gamedata/modularcomms/weapons/commweapon_multistunner.lua")
 
 def.name = "Heavy " .. def.name
 def.paralyzeTime = def.paralyzeTime + 2
