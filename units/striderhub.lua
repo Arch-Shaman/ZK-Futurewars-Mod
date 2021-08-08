@@ -14,7 +14,6 @@ return {
 		buildingGroundDecalType       = [[striderhub_aoplane.dds]],
 
 		buildoptions                  = {
-			[[athena]],
 			[[striderantiheavy]],
 			[[striderscorpion]],
 			[[striderdante]],

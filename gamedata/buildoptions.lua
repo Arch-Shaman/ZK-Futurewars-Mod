@@ -61,6 +61,7 @@ local buildOpts = {
 	[[zenith]],
 	[[gunshiptrans]],
 	[[gunshipheavytrans]],
+	[[athena]],
 }
 
 return buildOpts
