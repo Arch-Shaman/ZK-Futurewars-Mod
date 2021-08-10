@@ -62,6 +62,7 @@ local configList = {
 	{cmdID = CMD_SELECTION_RANK        , state = true, default = false, name = "Selection Rank"},
 	{cmdID = CMD_UNIT_AI               , state = true, default = false, name = "Unit AI"},
 	{cmdID = CMD_WARD_FIRE             , state = true, default = false, name = "Ward Fire"},
+	{cmdID = CMD_OVERRECLAIM           , state = true, default = false, name = "Overreclaim Prevention"},
 }
 
 local defaultValues = {

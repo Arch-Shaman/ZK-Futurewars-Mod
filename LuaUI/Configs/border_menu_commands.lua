@@ -8,11 +8,11 @@ local tooltips = {
 	landat = "Repair level: set the HP % at which this aircraft will go to a repair pad (0, 30, 50, 80)",
 	factoryGuard = "Auto Assist: Newly built constructors automatically assist their factory",
 	diveBomb = "Dive bomb (never; target under shield; any target; always (including moving))",
-
+	overreclaim = "Overreclaim Protection: Constructors will not reclaim metal when your storage is almost full",
 	fireState = "Fire State: Sets under what conditions a unit will fire without an explicit attack order (never, when attacked, always)",
 	moveState = "Move State: Sets how far out of its way a unit will move to attack enemies",
 	["repeat"] = "Repeat: if on the unit will continously push finished orders to the end of its order queue",
-	autoCallTransport = "Automatically call transports between constructor tasks."
+	autoCallTransport = "Automatically call transports between constructor tasks.",
 }
 
 
@@ -257,6 +257,7 @@ local overrides = {
 		caption='', tooltip = tooltips.retreat,},
 	[CMD_RETREATSHIELD] = { texture = {imageDir .. 'states/shield_off.png', imageDir .. 'states/shield_30.png', imageDir .. 'states/shield_50.png', imageDir .. 'states/shield_80.png'},
 		caption='', tooltip = tooltips.retreatshield,},
+	[CMD_OVERRECLAIM] = { texture = {imageDir .. 'states/goo_off.png', imageDir .. 'states/goo_on.png'},},
 	[CMD.IDLEMODE] = { texture = {imageDir .. 'states/fly_on.png', imageDir .. 'states/fly_off.png'}, caption=''},
 	[CMD_AP_FLY_STATE] = { texture = {imageDir .. 'states/fly_on.png', imageDir .. 'states/fly_off.png'}, caption=''},
 	[CMD.AUTOREPAIRLEVEL] = { texture = {imageDir .. 'states/landat_off.png', imageDir .. 'states/landat_30.png', imageDir .. 'states/landat_50.png', imageDir .. 'states/landat_80.png'},
@@ -274,7 +275,7 @@ local overrides = {
 	[CMD_AIR_STRAFE] = { texture = {imageDir .. 'states/strafe_off.png', imageDir .. 'states/strafe_on.png'}, caption=''},
 	[CMD_UNIT_FLOAT_STATE] = { texture = {imageDir .. 'states/amph_sink.png', imageDir .. 'states/amph_attack.png', imageDir .. 'states/amph_float.png'}, caption=''},
 	[CMD_SELECTION_RANK] = { texture = {imageDir .. 'states/selection_rank_0.png', imageDir .. 'states/selection_rank_1.png', imageDir .. 'states/selection_rank_2.png', imageDir .. 'states/selection_rank_3.png'}, text=''},
-	}
+}
 
 -- noone really knows what this table does but it's needed for epic menu to get the hotkey
 local custom_cmd_actions = {	-- states are 2, not states are 1
@@ -343,6 +344,7 @@ local custom_cmd_actions = {	-- states are 2, not states are 1
 --	stealth=2, --no longer applicable
 	cloak_shield=2,
 	retreat=2,
+	overreclaim = 0,
 	['luaui noretreat']=2,
 	priority=2,
 	ap_fly_state=2,

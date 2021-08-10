@@ -31,6 +31,7 @@ local stateData = {
 	[CMD_WARD_FIRE] = 2,
 	--[CMD_SELECTION_RANK] = 2, -- Handled entirely in luaUI so not included here.
 	[CMD_UNIT_AI] = 2,
+	[CMD_OVERRECLAIM] = 2,
 }
 
 local specialHandling = {
@@ -59,6 +60,7 @@ local gadgetReverse = {
 	[CMD_UNIT_BOMBER_DIVE_STATE] = true,
 	[CMD_PREVENT_BAIT] = true,
 	[CMD_GOO_GATHER] = true,
+	[CMD_OVERRECLAIM] = true,
 }
 
 return stateData, gadgetReverse, specialHandling

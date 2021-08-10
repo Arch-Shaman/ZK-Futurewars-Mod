@@ -65,7 +65,7 @@ local cmdPosDef = {
 	[CMD.REPEAT]           = {pos = 1, priority = 1},
 	[CMD_RETREAT]          = {pos = 1, priority = 2},
 	[CMD_RETREATSHIELD]    = {pos = 1, priority = 3},
-	
+	[CMD_OVERRECLAIM]      = {pos = 1, priority = 4},
 	[CMD.MOVE_STATE]       = {pos = 6, posSimple = 5, priority = 1},
 	[CMD.FIRE_STATE]       = {pos = 6, posSimple = 5, priority = 2},
 	[CMD_FACTORY_GUARD]    = {pos = 6, posSimple = 5, priority = 3},
