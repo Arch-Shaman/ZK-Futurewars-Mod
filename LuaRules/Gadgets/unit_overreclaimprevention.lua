@@ -62,29 +62,26 @@ local CommandDesc = {
 	params      = {0, 'On', 'Off'},
 }
 
-local toggleParams = {params = {1, 'Off', 'On'}}
+local toggleParams = {params = {1, 'On', 'Off'}}
 
 function gadget:AllowFeatureBuildStep(builderID, builderTeam, featureID, featureDefID, part) -- part seems to be some sort of reclaim speed.
+	local metalvalue = FeatureDefs[featureDefID].metal or 0
 	--spEcho(builderID .. ", " .. builderTeam .. ", " .. featureID .. ", " .. featureDefID .. ", " .. tostring(part))
-	local reclaimspeed = part * (FeatureDefs[featureDefID].metal or 0) * -1
+	local reclaimspeed = part * metalvalue * -1
 	--Spring.Echo("Reclaim seems to be " .. reclaimspeed)
 	local currentMetal, metalStorage = spGetTeamResources(builderTeam, "metal")
 	metalStorage = (metalStorage - 10000) * 0.97 -- remove hidden storage, stop reclaiming at 97% storage.
 	--spEcho("Current Storage: " .. currentMetal .. " / " .. metalStorage .. " -> " .. currentMetal + reclaimspeed .. " / " .. metalStorage)
-	return (reclaimspeed + currentMetal < metalStorage) or exceptionUnits[builderID]
+	return metalvalue <= 0.1 or (reclaimspeed + currentMetal < metalStorage) or exceptionUnits[builderID]
 end
 
 local function Command(unitID, cmdID, cmdParams, cmdOptions)
 	local cmdDescID = spFindUnitCmdDesc(unitID, CMD_OVERRECLAIM)
 	if cmdDescID then
-		local state = (cmdParams[1] + 1)%2
-		spEcho("State: " .. state)
-		if state == 0 then
-			exceptionUnits[unitID] = nil
-		elseif state == 1 then
-			exceptionUnits[unitID] = true
-		end
-		toggleParams[1] = (state + 1)%2
+		local state = cmdParams[1] == 1
+		--spEcho("State: " .. tostring(state))
+		exceptionUnits[unitID] = state
+		toggleParams[1] = (state and 0) or 1
 		Spring.EditUnitCmdDesc(unitID, cmdDescID, toggleParams)
 	end
 end
