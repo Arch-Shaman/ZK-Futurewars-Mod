@@ -139,8 +139,8 @@ local commandDisplayConfig = {
 	[CMD_OVERRECLAIM] = {
 		texture = {imageDir .. 'states/goo_off.png', imageDir .. 'states/goo_cloak.png'},
 		stateTooltip = {
-			tooltips.OVERRECLAIM:gsub("_STATE_", "Off"),
-			tooltips.OVERRECLAIM:gsub("_STATE_", "On"),
+			tooltips.OVERRECLAIM:gsub("_STATE_", "Enabled"),
+			tooltips.OVERRECLAIM:gsub("_STATE_", "Disabled"),
 		}
 	},
 	[CMD_MISC_PRIORITY] = {
