@@ -78,10 +78,10 @@ end
 local function Command(unitID, cmdID, cmdParams, cmdOptions)
 	local cmdDescID = spFindUnitCmdDesc(unitID, CMD_OVERRECLAIM)
 	if cmdDescID then
-		local state = cmdParams[1] == 1
+		local state = cmdParams[1] == 0
 		--spEcho("State: " .. tostring(state))
 		exceptionUnits[unitID] = state
-		toggleParams[1] = (state and 0) or 1
+		toggleParams[1] = (state and 1) or 0
 		Spring.EditUnitCmdDesc(unitID, cmdDescID, toggleParams)
 	end
 end
