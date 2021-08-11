@@ -397,7 +397,7 @@ for name, ud in pairs(UnitDefs) do
 	if name == "striderfunnelweb" then
 		storage = 1200
 	end
-	if ud.workertime and name:find("con") and not name:find("dyn") then
+	if (ud.workertime and name:find("con") and not name:find("dyn")) or name == "athena" then
 		storage = storage + (ud.workertime * conbonus)
 	end
 	
