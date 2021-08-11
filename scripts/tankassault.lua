@@ -112,10 +112,6 @@ function script.AimWeapon(num, heading, pitch)
 	while disarmed do
 		Sleep (34)
 	end
-	--Spring.Echo("Loaded " .. shot .. ": " .. tostring(gun[shot].loaded))
-	if not gun[shot].loaded then
-		return false
-	end
 	local slowMult = (Spring.GetUnitRulesParam (unitID, "baseSpeedMult") or 1)
 	Turn(turret, y_axis, heading, TURRET_TURN_SPEED * slowMult)
 	Turn(sleeve1, x_axis, -pitch, TURRET_PITCH_SPEED * slowMult)
