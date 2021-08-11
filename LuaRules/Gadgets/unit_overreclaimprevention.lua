@@ -19,7 +19,6 @@ if (not gadgetHandler:IsSyncedCode()) then
 			return
 		end
 		
-		local name = "Retreat"
 		-- basically everything here is regenerated either on unit recreation or when retreat check is done
 		local data = {
 			exceptionUnits = Spring.Utilities.MakeRealTable(SYNCED.exceptionUnits, "ORP")
@@ -72,7 +71,7 @@ function gadget:AllowFeatureBuildStep(builderID, builderTeam, featureID, feature
 	local currentMetal, metalStorage = spGetTeamResources(builderTeam, "metal")
 	metalStorage = (metalStorage - 10000) * 0.97 -- remove hidden storage, stop reclaiming at 97% storage.
 	--spEcho("Current Storage: " .. currentMetal .. " / " .. metalStorage .. " -> " .. currentMetal + reclaimspeed .. " / " .. metalStorage)
-	return metalvalue <= 0.1 or (reclaimspeed + currentMetal < metalStorage) or exceptionUnits[builderID]
+	return metalvalue <= 0.1 or (reclaimspeed + currentMetal < metalStorage) or exceptionUnits[builderID] or part > 0
 end
 
 local function Command(unitID, cmdID, cmdParams, cmdOptions)
