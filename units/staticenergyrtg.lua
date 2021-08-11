@@ -28,6 +28,7 @@ return {
 			modelradius    = [[60]],
 			pylonrange = 100,
 			dangerous_reclaim = [[gimme that radioactive goodness]],
+			selection_scale   = 0.92,
 		},
 		energyMake                    = 1.8,
   		energyUse                     = 0,
