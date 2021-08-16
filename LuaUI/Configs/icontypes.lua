@@ -1070,7 +1070,8 @@ local icontypes = {
   },
   cruisemissileemp = {
 	bitmap='icons/cruisemissileemp.dds',
-	size=1,
+	size=2.5,
+  },
   },
 
   --icon for nuclear missile silos
