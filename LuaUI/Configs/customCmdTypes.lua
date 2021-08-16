@@ -49,6 +49,7 @@ local custom_cmd_actions = {
 	excludeairpad = {cmdType = 1, name = "Exclude an Airpad"},
 	--build = {cmdType = 1, name = "--build"},
 	areamex = {cmdType = 1, name = "Area Mex"},
+	areaterramex = {cmdType = 1, name = "Area Terra Mex"},
 	mine = {cmdType = 1, name = "Mine"},
 	build = {cmdType = 1, name = "Build"},
 	jump = {cmdType = 1, name = "Jump"},
