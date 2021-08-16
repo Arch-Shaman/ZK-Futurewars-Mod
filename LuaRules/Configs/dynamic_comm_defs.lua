@@ -2103,10 +2103,10 @@ for i = 1, #moduleDefs do -- Add name, cost, dps, etc
 		local wd
 		if name:find("commweapon") or name:find("shield") then
 			if VFS.FileExists("gamedata\\modularcomms\\weapons\\" .. name .. ".lua") then
-				Spring.Echo("Loading future wars file")
+				--Spring.Echo("Loading future wars file")
 				_, wd = VFS.Include("gamedata\\modularcomms\\weapons\\" .. name .. ".lua")
 			elseif VFS.FileExists("gamedata\\modularcomms\\weapons\\" .. name:gsub("commweapon_", "") .. ".lua") then
-				Spring.Echo("Falling back to base game")
+				--Spring.Echo("Falling back to base game")
 				_, wd = VFS.Include("gamedata\\modularcomms\\weapons\\" .. name:gsub("commweapon_", "") .. ".lua")
 			end
 			if VFS.FileExists("gamedata\\modularcomms\\weapons\\" .. string.gsub(name:gsub("commweapon_", ""), "_", "") .. ".lua") then
