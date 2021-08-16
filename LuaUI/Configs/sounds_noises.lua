@@ -1824,6 +1824,16 @@ local sounds = {
 			[1] = "silo_select",
 		},
 	},
+	missilenuke = {
+		ok = {
+			volume = 0.36,
+			[1] = "turret_select",
+		},
+		select = {
+			volume = 0.78,
+			[1] = "silo_select",
+		},
+	},
 	singularity = {
 		ok = {
 			volume = 0.36,

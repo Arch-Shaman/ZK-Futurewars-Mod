@@ -16,6 +16,7 @@ return {
 			[[empmissile]],
 			[[napalmmissile]],
 			[[singularity]],
+			[[missilenuke]],
 		},
 		buildPic                      = [[staticmissilesilo.png]],
 		canFight                      = false,

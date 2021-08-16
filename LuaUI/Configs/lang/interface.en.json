@@ -12,6 +12,7 @@
 	"emp_aoe" : "EMP AOE",
 	"emp_vertical" : "EMP vertical",
 	"tacnuke_vertical" : "Seismic and Tacnuke vertical",
+	"nuke_range" : "Silencer MkIII", 
 	"clear_factory_queue" : "Clear factory queue",
 	"space_click_show_stats" : "Space+click: Show unit stats",
 	"hold_space_for_help" : "Hold Spacebar for help",
