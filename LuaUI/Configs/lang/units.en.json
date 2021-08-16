@@ -1048,7 +1048,7 @@
 		"name" : "Tank Foundry",
 		"description" : "Produces Heavy Tracked Vehicles",
 		"helptext" : "The Tank Foundry is the ultimate in brute force methods - nothing gets the job done quite like a sustained artillery barrage followed by a decisive push with the largest tanks in the field. Key units: Emissary, Barbarian, Ogre, Cyclops"
-	?
+	},
 	"striderbantha" : {
 		"name" : "Mogul",
 		"description" : "Heavy Laser Guided Missile Platform",
