@@ -82,7 +82,7 @@ return {
 				interceptedByShieldType = 65,
 				model                   = [[crblmsslr.s3o]],
 				noSelfDamage            = false,
-				range                   = 10000,
+				range                   = 9000,
 				reloadtime              = 10,
 				smokeTrail              = false,
 				soundHit                = [[explosion/ex_ultra8]],
