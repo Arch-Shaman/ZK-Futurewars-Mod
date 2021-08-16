@@ -32,7 +32,7 @@ return {
 		leaveTracks         = true,
 		maxDamage           = 8000,
 		maxSlope            = 18,
-		maxVelocity         = 2.3,
+		maxVelocity         = 2.0,
 		maxWaterDepth       = 22,
 		movementClass       = [[TANK4]],
 		noAutoFire          = false,
