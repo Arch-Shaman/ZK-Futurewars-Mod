@@ -16,7 +16,7 @@ return {
 		explodeAs              = [[EMP_WEAPON]],
 		footprintX             = 1,
 		footprintZ             = 1,
-		iconType               = [[cruisemissilesmall]],
+		iconType               = [[cruisemissileemp]],
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		maxDamage              = 1000,
