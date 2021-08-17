@@ -20,7 +20,8 @@ unitDef = {
 	customParams        = {
 		dontfireatradarcommand = '0',
 		aimposoffset   = [[0 15 0]],
-		specialreloadtime = 120, -- must be the same as ATA's aimdelay.
+		specialreloadtime = 120,
+		bait_level_default = 2,
 	},
 
 	explodeAs           = [[MEDIUM_BUILDINGEX]],

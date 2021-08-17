@@ -55,8 +55,9 @@ local cmdPosDef = {
 	[CMD.UNLOAD_UNITS]  = {pos = 7, priority = 8},
 	[CMD_RECALL_DRONES] = {pos = 7, priority = 10},
 	
+	[CMD_AREA_TERRA_MEX]= {pos = 13, priority = 1},
 	[CMD_UNIT_SET_TARGET_CIRCLE] = {pos = 13, priority = 2},
-	[CMD_UNIT_CANCEL_TARGET]     = {pos = 13, priority = 2},
+	[CMD_UNIT_CANCEL_TARGET]     = {pos = 13, priority = 3},
 	[CMD_EMBARK]        = {pos = 13, priority = 5},
 	[CMD_DISEMBARK]     = {pos = 13, priority = 6},
 	[CMD_EXCLUDE_PAD]   = {pos = 13, priority = 7},
@@ -65,7 +66,7 @@ local cmdPosDef = {
 	[CMD.REPEAT]           = {pos = 1, priority = 1},
 	[CMD_RETREAT]          = {pos = 1, priority = 2},
 	[CMD_RETREATSHIELD]    = {pos = 1, priority = 3},
-	
+	[CMD_OVERRECLAIM]      = {pos = 1, priority = 4},
 	[CMD.MOVE_STATE]       = {pos = 6, posSimple = 5, priority = 1},
 	[CMD.FIRE_STATE]       = {pos = 6, posSimple = 5, priority = 2},
 	[CMD_FACTORY_GUARD]    = {pos = 6, posSimple = 5, priority = 3},

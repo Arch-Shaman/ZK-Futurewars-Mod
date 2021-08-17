@@ -23,6 +23,7 @@ return {
 		customParams        = {
 			modelradius    = [[25]],
 			midposoffset   = [[0 8 0]],
+			bait_level_default = 0,
 		},
 
 		explodeAs           = [[BIG_UNITEX]],

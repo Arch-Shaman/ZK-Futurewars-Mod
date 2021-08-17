@@ -43,6 +43,7 @@ local cmds = {
 	SELECT_MISSILES = 14001,
 
 	AREA_MEX = 30100,
+	AREA_TERRA_MEX = 30101,
 	STEALTH = 31100,
 	CLOAK_SHIELD = 31101,
 	RAW_MOVE = 31109, --cmd_raw_move.lua
@@ -100,6 +101,7 @@ local cmds = {
 	SWEEPFIRE = 38886, -- cmd_sweepfire gadget
 	SWEEPFIRE_MINES = 38888,
 	SWEEPFIRE_CANCEL = 38887,
+	OVERRECLAIM = 38950,
 	AIR_STRAFE = 39381,
 	-- terraform
 	RAMP = 39734,

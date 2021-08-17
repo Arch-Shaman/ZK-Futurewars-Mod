@@ -22,6 +22,7 @@ local configList = {
 	{cmdID = CMD.UNLOAD_UNITS          , default = true, name = "Unload"},
 	{label = "Advanced Commands (hidden by default)"},
 	{cmdID = CMD.AREA_ATTACK           , default = false, name = "Area Attack"},
+	{cmdID = CMD_AREA_TERRA_MEX        , default = false, name = "Area Terra Mex"},
 	{cmdID = CMD_UNIT_CANCEL_TARGET    , default = false, name = "Cancel Target"},
 	{cmdID = CMD_DISEMBARK             , default = false, name = "Disembark"},
 	{cmdID = CMD_EXCLUDE_PAD           , default = false, name = "Exclude Airpad"},
@@ -62,6 +63,7 @@ local configList = {
 	{cmdID = CMD_SELECTION_RANK        , state = true, default = false, name = "Selection Rank"},
 	{cmdID = CMD_UNIT_AI               , state = true, default = false, name = "Unit AI"},
 	{cmdID = CMD_WARD_FIRE             , state = true, default = false, name = "Ward Fire"},
+	{cmdID = CMD_OVERRECLAIM           , state = true, default = false, name = "Overreclaim Prevention"},
 }
 
 local defaultValues = {
@@ -69,6 +71,7 @@ local defaultValues = {
 	[CMD.WAIT] = true,
 	[CMD_DISEMBARK] = true,
 	[CMD.AREA_ATTACK] = true,
+	[CMD_AREA_TERRA_MEX] = true,
 	[CMD_AREA_GUARD] = true,
 	[CMD_UNIT_SET_TARGET_CIRCLE] = true,
 	[CMD_UNIT_CANCEL_TARGET] = true,

@@ -22,6 +22,7 @@ local targettypes = {}
 targettypes[string.byte('g')] = 'ground'
 targettypes[string.byte('u')] = 'unit'
 targettypes["unit"] = string.byte('u')
+targettypes["ground"] = string.byte('g')
 targettypes[string.byte('p')] = 'projectile'
 targettypes[string.byte('f')] = 'feature'
 local random = math.random
@@ -30,6 +31,7 @@ local sin = math.sin
 local cos = math.cos
 local sqrt = math.sqrt
 local max = math.max
+local atan2 = math.atan2
 
 local spGetGroundHeight = Spring.GetGroundHeight
 local spValidUnitID = Spring.ValidUnitID
@@ -50,6 +52,7 @@ for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
 	if tonumber(curRef.cruisealt) ~= nil and tonumber(curRef.cruisedist) ~= nil then -- found it!
+		Spring.Echo("[CruiseMissiles] Adding " .. i .. "(" .. tostring(wd.name) .. ")")
 		config[i] = {}
 		config[i].altitude = tonumber(curRef.cruisealt)
 		config[i].randomizationtype = curRef.cruise_randomizationtype or "?"
@@ -59,6 +62,10 @@ for i=1, #WeaponDefs do
 		config[i].radius = tonumber(curRef.cruiserandomradius)
 		config[i].permoffset = curRef.cruise_permoffset ~= nil
 		config[i].finaltracking = curRef.cruise_nolock == nil
+		config[i].torpedo = wd.type == "TorpedoLauncher"
+		config[i].ascendradius = tonumber(curRef.cruise_ascendradius)
+		config[i].splittarget = curRef.cruise_torpedosplittarget ~= nil
+		Spring.Echo(tostring(wd.type))
 		SetWatchWeapon(i, true)
 	elseif curRef.cruisealt ~= nil or curRef.cruisedist ~= nil then
 		spEcho("[Cruise Missiles] Bad def " .. WeaponDefs[i].name .. " (Missing Altitude or Distance field)")
@@ -69,6 +76,15 @@ local function Distance(x1, x2, y1, y2)
 	return sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)))
 end
 
+local function CalculateAngle(x, z, targetx, targetz) -- first set of coords: center, second: point
+	--local heading = GetUnitHeading(unitID)
+	local angle = atan2(targetz - z, targetx - x )
+	return angle -- Used for determining the center of the arc.
+end
+
+local function GetFiringPoint(radius, x, z, angle)
+	return x + (radius * cos(angle)), z + (radius * sin(angle))
+end
 
 local function GetTargetType(num)
 	return targettypes[num] or '?'
@@ -152,7 +168,8 @@ end
 
 
 local function IsMissileCruiseDone(id) -- other gadgets can look up if the missile is done with its cruise phase.
-	return not missiles[id] == nil
+	--Spring.Echo("IsMissileCruiseDone: Returning: " .. tostring(missiles[id] ~= nil) .. " for " .. id)
+	return missiles[id] ~= nil
 end
 
 local function ForceUpdate(id, x, y, z)
@@ -195,7 +212,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local allyteam = spGetUnitAllyTeam(proOwnerID)
 		local _, py = spGetProjectilePosition(proID)
 		py = max(py, ty)
-		missiles[proID] = {target = target, type = type, cruising = false, takeoff = true, lastknownposition = last, configid = wep, started = false, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0}
+		missiles[proID] = {target = target, type = type, cruising = false, takeoff = true, lastknownposition = last, configid = wep, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0}
 		if config[wep].radius then
 			ProccessOffset(wep, proID)
 		end
@@ -211,38 +228,89 @@ function gadget:GameFrame(f)
 		for projectile, data in pairs(missiles) do
 			local cx, cy, cz = spGetProjectilePosition(projectile)
 			local x, y, z = GetMissileDestination(projectile, data.allyteam)
+			--spEcho("Target: " .. x .. ", " .. y .. ", " .. z)
+			--spEcho("Position: " .. cx .. ", " .. cz)
 			local projectiledef = data.configid
 			local missileconfig = config[projectiledef]
-			missiles[projectile].updates = data.updates + 1
+			local wantedalt = data.wantedalt
+			local mindist = missileconfig.distance
 			if data.offset then
 				x = x + data.offset.x
 				z = z + data.offset.z
 				y = spGetGroundHeight(x, z)
+				if not missileconfig.permoffset and missileconfig.radius and data.updates%15 == 0 then
+					ProccessOffset(data.configid, projectile)
+				end
 			end
-			if not missileconfig.permoffset and missileconfig.radius and data.updates%15 == 0 then
-				ProccessOffset(data.configid, projectile)
-			end
-			local wantedalt = data.wantedalt
-			local mindist = missileconfig.distance
-			local distance = Distance(cx, x, cz, z)
-			--spEcho("Projectile ID: " .. projectile .. "\nAlt: " .. cy .. " / " .. wantedalt .. "\nCruising: " .. tostring(data.cruising) .. "\nAscending: " .. tostring(data.takeoff) .. "\nStarted: " .. tostring(data.started) .. "\nTargetCoords: " .. x .. ", " .. y .. ", " .. z .. "\nDistance: " .. distance .. "/" .. mindist)
-			if data.takeoff then -- begin ascent phase
-				spSetProjectileTarget(projectile, cx, wantedalt, cz)
-			end
-			if data.takeoff and ((cy >= wantedalt - 20 and not missileconfig.airlaunched) or (cy <= wantedalt + 20 and missileconfig.airlaunched)) then -- end ascent
-				missiles[projectile].takeoff = false
-				missiles[projectile].cruising = true
-			end
-			if data.cruising then -- cruise phase
-				spSetProjectileTarget(projectile, x, cy, z)
-				if distance <= mindist then -- end of cruise phase
-					data.cruising = false
-					if missileconfig.track and missileconfig.finaltracking and data.type == "unit" then
-						spSetProjectileTarget(projectile, data.target, targettypes.unit)
-					else
-						spSetProjectileTarget(projectile, x, y, z)
+			missiles[projectile].updates = data.updates + 1
+			if missileconfig.torpedo then
+				if cy <= 0 then -- we're not in the water, so don't bother.
+					local success
+					if not missileconfig.splittarget then
+						wantedalt = missileconfig.altitude
 					end
-					missiles[projectile] = nil -- good night.
+					--spEcho("Current Depth: " .. cy .. "(" .. wantedalt .. ")")
+					if data.takeoff and (cy > math.min(wantedalt + 40, -5) or cy < wantedalt - 40) then -- we aren't at the correct height yet, but avoid aiming out of water or at ground.
+						if missileconfig.ascendradius then
+							local targetx, targetz = GetFiringPoint(missileconfig.ascendradius, cx, cz, CalculateAngle(cx, cz, x, z))
+							success = spSetProjectileTarget(projectile, targetx, wantedalt, targetz) -- we don't particularly care if it's UW or surface based, we just want to get within 10 elmos of the target depth
+							--spEcho("target: " .. targetx .. ", " .. targetz)
+						else
+							success = spSetProjectileTarget(projectile, cx, wantedalt, cz) -- we don't particularly care if it's UW or surface based, we just want to get within 10 elmos of the target depth
+						end
+					elseif data.takeoff then
+						--spEcho("Torpedo is now cruising")
+						missiles[projectile].takeoff = false
+						missiles[projectile].cruising = true
+					end
+					if data.cruising then
+						local mindist = missileconfig.distance
+						local distance = Distance(cx, x, cz, z)
+						--spEcho("Distance to target: " .. distance .. " / " .. mindist)
+						if distance < mindist then -- final approach
+							if missileconfig.finaltracking and data.type == "unit" then
+								--Spring.Echo("Set target to unit and releasing!")
+								success = spSetProjectileTarget(projectile, data.target, targettypes.unit)
+								missiles[projectile] = nil
+							else
+								success = spSetProjectileTarget(projectile, x, y, z)
+								missiles[projectile] = nil
+							end
+						else
+							success = spSetProjectileTarget(projectile, x, wantedalt, z)
+						end
+					end
+					--spEcho("Successful torpedo target: " .. tostring(success))
+				end
+			else
+				local distance = Distance(cx, x, cz, z)
+				--spEcho("Projectile ID: " .. projectile .. "\nAlt: " .. cy .. " / " .. wantedalt .. "\nCruising: " .. tostring(data.cruising) .. "\nAscending: " .. tostring(data.takeoff) .. "\nTargetCoords: " .. x .. ", " .. y .. ", " .. z .. "\nDistance: " .. distance .. "/" .. mindist)
+				if data.takeoff then -- begin ascent phase
+					local success = false
+					if missileconfig.ascendradius and missileconfig.ascendradius > 0 then
+						local targetx, targetz = GetFiringPoint(missileconfig.ascendradius, cx, cz, CalculateAngle(cx, cz, x, z))
+						--Spring.Echo("Aiming for " .. targetx .. "," .. targetz)
+						success = spSetProjectileTarget(projectile, targetx, wantedalt, targetz)
+					else
+						success = spSetProjectileTarget(projectile, cx, wantedalt, cz)
+					end
+					--spEcho("Success: " .. tostring(success))
+				end
+				if data.takeoff and ((cy >= wantedalt - 40 and not missileconfig.airlaunched) or (cy <= wantedalt + 20 and missileconfig.airlaunched)) then -- end ascent
+					missiles[projectile].takeoff = false
+					missiles[projectile].cruising = true
+				end
+				if data.cruising then -- cruise phase
+					spSetProjectileTarget(projectile, x, cy, z)
+					if distance <= mindist then -- end of cruise phase
+						data.cruising = false
+						if missileconfig.track and missileconfig.finaltracking and data.type == "unit" then
+							spSetProjectileTarget(projectile, data.target, targettypes.unit)
+						else
+							spSetProjectileTarget(projectile, x, y, z)
+						end
+						missiles[projectile] = nil -- good night.
+					end
 				end
 			end
 		end

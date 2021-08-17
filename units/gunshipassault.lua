@@ -23,6 +23,7 @@ return {
 		customParams        = {
 			airstrafecontrol = [[1]],
 			modelradius    = [[10]],
+			bait_level_default = 1,
 		},
 		explodeAs           = [[GUNSHIPEX]],
 		floater             = true,

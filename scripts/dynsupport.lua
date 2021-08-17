@@ -563,10 +563,11 @@ end
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
 	dead = 1
+	local x, y, z = Spring.GetUnitPosition(unitID)
 	--Turn(turret, y_axis, 0, math.rad(500))
 	if severity <= 0.5 then
+		dyncomm.Explode(x, y, z)
 		dyncomm.SpawnModuleWrecks(1)
-		
 		Turn(base, x_axis, math.rad(79), math.rad(80))
 		Turn(rloleg, x_axis, math.rad(25), math.rad(250))
 		Turn(lupleg, x_axis, math.rad(7), math.rad(250))
@@ -597,6 +598,7 @@ function script.Killed(recentDamage, maxHealth)
 ]]--
 		dyncomm.SpawnWreck(1)
 	else
+		dyncomm.Explode(x, y, z)
 		Explode(gun, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
 		Explode(head, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
 		Explode(pelvis, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)

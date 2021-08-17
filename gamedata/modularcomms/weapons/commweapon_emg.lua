@@ -9,7 +9,7 @@ local weaponDef = {
 		is_unit_weapon = 1,
 		muzzleEffectFire = [[custom:HEAVY_CANNON_MUZZLE]],
 		miscEffectFire = [[custom:emg_shells_l]],
-
+		antibaitbypass = "ärsytät minua",
 		light_color = [[0.8 0.76 0.38]],
 		light_radius = 120,
 		reaim_time = 1,

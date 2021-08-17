@@ -377,6 +377,7 @@ end
 
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
+	local x, y, z = Spring.GetUnitPosition(unitID)
 	if severity < 0.5 then
 		Explode(torso, SFX.NONE)
 		Explode(larm, SFX.NONE)
@@ -388,6 +389,7 @@ function script.Killed(recentDamage, maxHealth)
 		Explode(rhand, SFX.NONE)
 		Explode(lleg, SFX.NONE)
 		Explode(rleg, SFX.NONE)
+		dyncomm.Explode(x, y, z)
 		dyncomm.SpawnModuleWrecks(1)
 		dyncomm.SpawnWreck(1)
 	else
@@ -401,6 +403,7 @@ function script.Killed(recentDamage, maxHealth)
 		Explode(rhand, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
 		Explode(lleg, SFX.SHATTER)
 		Explode(rleg, SFX.SHATTER)
+		dyncomm.Explode(x, y, z)
 		dyncomm.SpawnModuleWrecks(2)
 		dyncomm.SpawnWreck(2)
 	end

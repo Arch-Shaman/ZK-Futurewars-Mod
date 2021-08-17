@@ -155,7 +155,7 @@ local function setTarget(data, sendToWidget)
 	if spValidUnitID(data.id) then
 		if not data.targetID then
 			if locationInRange(data.id, data.unitDefID, data.x, data.y, data.z) then
-				spSetUnitTarget(data.id, data.x, data.y, data.z, false, true)
+				spSetUnitTarget(data.id, data.x, data.y, data.z, false, true, -1)
 				GG.UnitSetGroundTarget(data.id)
 			end
 			if sendToWidget then
@@ -169,8 +169,8 @@ local function setTarget(data, sendToWidget)
 				spSetUnitTarget(data.id, data.targetID, false, true)
 			end
 			if sendToWidget then
-				spSetUnitRulesParam(data.id,"target_type",TARGET_UNIT)
-				spSetUnitRulesParam(data.id,"target_id",data.targetID)
+				spSetUnitRulesParam(data.id, "target_type", TARGET_UNIT)
+				spSetUnitRulesParam(data.id, "target_id", data.targetID)
 			end
 		else
 			return false
@@ -468,8 +468,11 @@ function GG.SetUnitTarget(unitID, targetID)
 	end
 end
 
-function GG.SetTemporaryPosTarget(unitID, tx, ty, tz, userCommand, lingerTime, weaponid)
+function GG.SetTemporaryPosTarget(unitID, tx, ty, tz, userCommand, lingerTime, setIgnoreStates, weaponid)
 	--Spring.MarkerAddPoint(tx, ty, tz, "")
+	if setIgnoreStates then
+		GG.UnitSetGroundTarget(unitID)
+	end
 	if weaponid == nil then
 		Spring.SetUnitTarget(unitID, tx, ty, tz, false, userCommand)
 	else

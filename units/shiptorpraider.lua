@@ -73,11 +73,9 @@ return {
 				customParams = {
 					burst = Shared.BURST_RELIABLE,
 					cruisealt = -15,
-					airlaunched = 1,
 					cruisetracking = 1,
 					cruise_nolock = 1,
 					cruisedist = 140,
-					keepinwater = 1,
 				},
 
 				damage                  = {

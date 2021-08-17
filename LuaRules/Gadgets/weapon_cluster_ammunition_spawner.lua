@@ -287,7 +287,7 @@ local function SpawnSubProjectiles(id, wd)
 	local projectileConfig = config[wd].frags
 	local targetoverride
 	local forceupdate = false
-	local ownerDefID = spGetUnitDefID(projectileattributes["owner"])
+	local ownerDefID = spGetUnitDefID(owner) or projectiledata.proOwnerDefID
 	if config[wd].usertarget then
 		targetoverride = projectiletargets[id] or {}
 		forceupdate = true
@@ -455,6 +455,11 @@ local function CheckProjectile(id)
 		return
 	end
 	local wd = projectile.def or spGetProjectileDefID(id)
+	if debug then spEcho("isCheckedDuringCruise: " .. tostring(config[wd]["block_check_during_cruise"])) end
+	if config[wd]["block_check_during_cruise"] and GG.GetMissileCruising(id) then -- some weapons don't want CAS to check during cruise.
+		if debug then spEcho(id .. " got blocked due to Cruising") end
+		return
+	end
 	if projectile.delay <= frame then
 		if config[wd].clusterdelaytype == 1 then
 			if debug then
@@ -681,7 +686,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		if debug then
 			spEcho("Registered projectile " .. proID)
 		end
-		IterableMap.Add(projectiles, proID, {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetProjectileTeamID(proID), ttl = ((config[weaponDefID].timer and (frame + config[weaponDefID].timer)) or nil), delay = 1, charges = config[weaponDefID].clustercharges}) --frame is set to the current frame in gameframe
+		IterableMap.Add(projectiles, proID, {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetProjectileTeamID(proID), ttl = ((config[weaponDefID].timer and (frame + config[weaponDefID].timer)) or nil), delay = 1, charges = config[weaponDefID].clustercharges, proOwnerDefID = proOwnerDefID}) --frame is set to the current frame in gameframe
 		if config[weaponDefID]["alwaysvisible"] then
 			spSetProjectileAlwaysVisible(proID,true)
 		end

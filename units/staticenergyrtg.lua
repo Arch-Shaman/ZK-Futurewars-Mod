@@ -28,10 +28,11 @@ return {
 			modelradius    = [[60]],
 			pylonrange = 100,
 			dangerous_reclaim = [[gimme that radioactive goodness]],
+			selection_scale   = 0.92,
 		},
 		energyMake                    = 1.8,
   		energyUse                     = 0,
-		explodeAs                     = [[ATOMIC_BLAST]],
+		explodeAs                     = [[staticenergyrtg_DEATH]],
 		floater                       = true,
 		footprintX                    = 6,
 		footprintZ                    = 6,
@@ -45,7 +46,7 @@ return {
 		objectName                    = [[staticenergyrtg.dae]],
 		script                        = [[staticenergyrtg.lua]],
 		onoffable                     = false,
-		selfDestructAs                = [[ATOMIC_BLAST]],
+		selfDestructAs                = [[staticenergyrtg_DEATH]],
 		useBuildingGroundDecal        = true,
 		modelCenterOffset			  = [[0,70,0]],
 		sightDistance                 = 200,
@@ -69,5 +70,31 @@ return {
 			},
 
 		},
+		
+		weaponDefs = {
+			staticenergyrtg_DEATH = {
+				name = "Atomic Blast",
+				areaOfEffect       = 192,
+				craterBoost        = 1,
+				craterMult         = 3.6,
+				customParams       = {
+					blastwave_size = 50,
+					blastwave_impulse = 3.8,
+					blastwave_speed = 22,
+					blastwave_life = 15,
+					blastwave_lossfactor = 0.75,
+					blastwave_damage = 2200,
+				},
+				edgeEffectiveness  = 0.4,
+				explosionGenerator = "custom:NUKE_150",
+				explosionSpeed     = 10000,
+				impulseBoost       = 0,
+				impulseFactor      = 0.3,
+				soundHit           = "explosion/mini_nuke",
+				damage = {
+					default          = 0,
+				},
+			},
+		}
 	}
 }

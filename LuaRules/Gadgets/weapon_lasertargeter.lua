@@ -56,7 +56,6 @@ local gaiaID = Spring.GetGaiaTeamID()
 local missiles = {} -- id = {missiles = {projIDs},target = {x,y,z}, numMissiles = 0, fake = uid}
 local config = {} -- targeter or tracker
 local prolist = {} -- reverse lookup: proID = ownerID
-local fakeweapons = {}
 
 for wid = 1, #WeaponDefs do
 	--debugecho(wid .. ": " .. tostring(WeaponDefs[wid].type) .. "\ntracker: " .. tostring(WeaponDefs[wid].customParams.tracker))
@@ -66,9 +65,6 @@ for wid = 1, #WeaponDefs do
 	elseif WeaponDefs[wid].customParams.targeter then
 		config[wid] = 'targeter'
 		SetWatchWeapon(wid, true)
-	end
-	if WeaponDefs[wid].customParams.norealdamage or WeaponDefs[wid].customParams.targeter then
-		fakeweapons[wid] = true
 	end
 end
 
@@ -90,12 +86,6 @@ end
 GG.GetLaserTrackingEnabled = GetMissileTracking
 
 if debug then PrintConfig() end
-
-function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID)
-	if fakeweapons[weaponDefID] then
-		return 0, 0
-	end
-end
 
 function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, projectileID)
 	--debugecho("Explosion: " .. tostring(weaponDefID, px, py, pz, AttackerID, projectileID))
@@ -183,9 +173,9 @@ function gadget:GameFrame(f)
 			if f - data.lastframe > 10 and data.numMissiles > 0 then
 				data.state = "lost"
 				for pid,_ in pairs(data.missiles) do
+					local x,y,z = spGetProjectilePosition(pid)
+					y = spGetGroundHeight(x,z)
 					if not GG.GetMissileCruising(pid) then
-						local x,y,z = spGetProjectilePosition(pid)
-						y = spGetGroundHeight(x,z)
 						if debug then
 							spEcho("Setting " .. pid .. " lost target:" .. x .. "," .. y .. "," .. z)
 						end
@@ -193,6 +183,8 @@ function gadget:GameFrame(f)
 						if debug then
 							spEcho("Success: " .. tostring(success))
 						end
+					else
+						GG.ForceCruiseUpdate(pid, x, y, z)
 					end
 				end
 			elseif f - data.lastframe < 10 and data.state ~= "normal" and data.numMissiles > 0 then
@@ -202,6 +194,8 @@ function gadget:GameFrame(f)
 				for pid,_ in pairs(data.missiles) do
 					if not GG.GetMissileCruising(pid) then
 						spSetProjectileTarget(pid, data.target[1], data.target[2], data.target[3])
+					else
+						GG.ForceCruiseUpdate(pid, data.target[1], data.target[2], data.target[3])
 					end
 				end
 			end

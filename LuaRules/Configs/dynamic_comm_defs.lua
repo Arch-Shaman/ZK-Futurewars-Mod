@@ -61,7 +61,7 @@ local moduleDefs = {
 	{
 		name = "nullmodule",
 		humanName = "No Module",
-		description = "No Module",
+		description = "",
 		image = "LuaUI/Images/dynamic_comm_menu/cross.png",
 		limit = false,
 		emptyModule = true,
@@ -72,7 +72,7 @@ local moduleDefs = {
 	{
 		name = "nullbasicweapon",
 		humanName = "No Weapon",
-		description = "No Weapon",
+		description = "",
 		image = "LuaUI/Images/dynamic_comm_menu/cross.png",
 		limit = false,
 		emptyModule = true,
@@ -83,7 +83,7 @@ local moduleDefs = {
 	{
 		name = "nulladvweapon",
 		humanName = "No Weapon",
-		description = "No Weapon",
+		description = "",
 		image = "LuaUI/Images/dynamic_comm_menu/cross.png",
 		limit = false,
 		emptyModule = true,
@@ -96,7 +96,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_beamlaser",
 		humanName = "Beam Laser",
-		description = "Beam Laser: An effective short-range cutting tool",
+		description = "An effective short-range cutting tool",
 		image = moduleImagePath .. "commweapon_beamlaser.png",
 		limit = 2,
 		cost = 0 * COST_MULT,
@@ -117,7 +117,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_flamethrower",
 		humanName = "Flamethrower",
-		description = "Flamethrower: Good for deep-frying swarmers and large targets alike",
+		description = "Good for deep-frying swarmers and large targets alike",
 		image = moduleImagePath .. "commweapon_flamethrower.png",
 		limit = 2,
 		cost = 50 * COST_MULT,
@@ -138,7 +138,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_heatray",
 		humanName = "Heatray",
-		description = "Heatray: Rapidly melts anything at short range; steadily loses all of its damage over distance",
+		description = "Rapidly melts anything at short range; steadily loses all of its damage over distance",
 		image = moduleImagePath .. "commweapon_heatray.png",
 		limit = 2,
 		cost = 100 * COST_MULT,
@@ -159,7 +159,8 @@ local moduleDefs = {
 	{
 		name = "commweapon_heatray_recon",
 		humanName = "Heatray",
-		description = "Heatray: Rapidly melts anything at short range; steadily loses all of its damage over distance",
+		description = "Rapidly melts anything at short range; steadily loses all of its damage over distance",
+		override = "commweapon_heatray",
 		image = moduleImagePath .. "commweapon_heatray.png",
 		limit = 2,
 		cost = 0 * COST_MULT,
@@ -180,7 +181,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_heavymachinegun",
 		humanName = "Machine Gun",
-		description = "Machine Gun: Close-in automatic weapon with AoE",
+		description = "Close-in automatic weapon with AoE",
 		image = moduleImagePath .. "commweapon_heavymachinegun.png",
 		limit = 2,
 		cost = 50 * COST_MULT,
@@ -202,7 +203,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_heavyrifle",
 		humanName = "Heavy Rifle",
-		description = "Heavy Rifle:\n Medium range and medium damage assault rifle for hunting down light units.",
+		description = "Medium range and medium damage assault rifle for hunting down light units.",
 		image = moduleImagePath .. "commweapon_emg.png",
 		limit = 2,
 		cost = 0 * COST_MULT,
@@ -224,7 +225,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_emg",
 		humanName = "Medium EMG Rifle",
-		description = "Medium EMG Rifle\n Fast firing medium damage assault rifle. Single target only.",
+		description = "Fast firing medium damage assault rifle. Single target only.",
 		image = moduleImagePath .. "commweapon_emg.png",
 		limit = 2,
 		cost = 75 * COST_MULT,
@@ -246,7 +247,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_tankbuster",
 		humanName = "Tank Buster Cannon",
-		description = "Tank Buster Cannon\n Extremely hard hitting, low fire rate antiheavy cannon.",
+		description = "Extremely hard hitting, low fire rate antiheavy cannon.",
 		image = moduleImagePath .. "commweapon_assaultcannon.png",
 		limit = 2,
 		cost = 100 * COST_MULT,
@@ -286,9 +287,9 @@ local moduleDefs = {
 		end
 	},]]
 	{
-		name = "commweapon_hpartillery",
+		name = "commweapon_artillery_heavy",
 		humanName = "Plasma Artillery",
-		description = "Plasma Artillery",
+		description = "Long range, slow moving projectile that deals area damage.",
 		image = moduleImagePath .. "commweapon_assaultcannon.png",
 		limit = 2,
 		cost = 200 * COST_MULT,
@@ -311,7 +312,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_lightninggun",
 		humanName = "Lightning Rifle",
-		description = "Lightning Rifle: Paralyzes and damages annoying bugs",
+		description = "Paralyzes and damages annoying bugs",
 		image = moduleImagePath .. "commweapon_lightninggun.png",
 		limit = 2,
 		cost = 50 * COST_MULT,
@@ -333,11 +334,11 @@ local moduleDefs = {
 	{
 		name = "commweapon_lparticlebeam",
 		humanName = "Light Particle Beam",
-		description = "Light Particle Beam: Fast, light pulsed energy weapon",
+		description = "Fast, light pulsed energy weapon",
 		image = moduleImagePath .. "commweapon_lparticlebeam.png",
 		limit = 2,
 		cost = 100 * COST_MULT,
-		requireChassis = {"support", "recon", "strike", "knight"},
+		requireChassis = {"support", "recon", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -355,7 +356,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_missilelauncher",
 		humanName = "Missile Launcher",
-		description = "Missile Launcher: Lightweight seeker missile with good range",
+		description = "Lightweight seeker missile with good range", -- Unused, besides knight
 		image = moduleImagePath .. "commweapon_missilelauncher.png",
 		limit = 2,
 		cost = 100 * COST_MULT,
@@ -376,7 +377,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_riotcannon",
 		humanName = "Riot Cannon",
-		description = "Riot Cannon: The weapon of choice for crowd control",
+		description = "The weapon of choice for crowd control",
 		image = moduleImagePath .. "commweapon_riotcannon.png",
 		limit = 2,
 		cost = 75 * COST_MULT,
@@ -398,7 +399,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_rocketlauncher",
 		humanName = "Rocket Launcher",
-		description = "Rocket Launcher: Medium-range, low-velocity hitter",
+		description = "Medium-range, low-velocity rocket launcher.",
 		image = moduleImagePath .. "commweapon_rocketlauncher.png",
 		limit = 2,
 		cost = 75 * COST_MULT,
@@ -419,8 +420,8 @@ local moduleDefs = {
 	},
 	{
 		name = "commweapon_capray",
-		humanName = "Virus Uplink (Capture)",
-		description = "Virus Uplink\nUploads a capture virus onto enemy units, giving control over to you. The uplink must recharge after capturing a unit.\nWater Capable.",
+		humanName = "Virus Uplink",
+		description = "Uploads a capture/disarming virus onto enemy units, giving control over to you. The uplink must recharge after capturing a unit.",
 		image = moduleImagePath .. "commweapon_capray.png",
 		limit = 2,
 		cost = 100 * COST_MULT,
@@ -442,7 +443,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_shotgun",
 		humanName = "Shotgun",
-		description = "Shotgun: Can hammer a single large target or shred several small ones",
+		description = "Can hammer a single large target or shred several small ones",
 		image = moduleImagePath .. "commweapon_shotgun.png",
 		limit = 2,
 		cost = 50 * COST_MULT,
@@ -462,9 +463,9 @@ local moduleDefs = {
 		end
 	},
 	{
-		name = "commweapon_canister_cannon",
+		name = "commweapon_canistercannon",
 		humanName = "Canister Cannon",
-		description = "Canister Cannon:\nReleases tiny fragments at a certain range. May impact multiple units.",
+		description = "Releases tiny fragments at a certain range. May impact multiple units.",
 		image = moduleImagePath .. "commweapon_canister.png",
 		limit = 2,
 		cost = 0 * COST_MULT,
@@ -485,8 +486,8 @@ local moduleDefs = {
 	},
 	{
 		name = "commweapon_disruptorprojector",
-		humanName = "Disruptor Projector (Area Slow)",
-		description = "Deals some damage and slows targets in a small area. Low DPS. Can be converted into a heavy AOE slow beam.",
+		humanName = "Disruptor Projector",
+		description = "Deals some damage and slows targets in a small area. Can be converted into a heavy AOE slow beam.",
 		image = moduleImagePath .. "commweapon_disruptorprojector.png",
 		limit = 2,
 		cost = 75 * COST_MULT,
@@ -508,7 +509,7 @@ local moduleDefs = {
 	{
 		name = "module_heavyprojector",
 		humanName = "High Frequency Beam Kit",
-		description = "High Frequency Beam Kit\nConverts a disruptor or beam into a heavier version.",
+		description = "Converts a disruptor or beam into a heavier version.",
 		image = moduleImagePath .. "module_beamamplifier.png",
 		limit = 1,
 		cost = 300 * COST_MULT,
@@ -521,7 +522,7 @@ local moduleDefs = {
 	{
 		name = "module_heavyprojector_second",
 		humanName = "High Frequency Beam Kit",
-		description = "High Frequency Beam Kit\nConverts a disruptor or beam into a heavier version.",
+		description = "Converts a disruptor or beam into a heavier version.",
 		image = moduleImagePath .. "module_beamamplifier.png",
 		limit = 1,
 		cost = 300 * COST_MULT,
@@ -534,7 +535,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_shockrifle",
 		humanName = "Sniper Rifle",
-		description = "Sniper Rifle\n Long range sniper rifle. Long reload time, high damage, long range.",
+		description = "Long range sniper rifle. Good for sniping single units.",
 		image = moduleImagePath .. "commweapon_shockrifle.png",
 		limit = 2,
 		cost = 50 * COST_MULT,
@@ -542,7 +543,7 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
-			local weaponName = "commweapon_shockriflefw"
+			local weaponName = "commweapon_shockrifle"
 			if sharedData.noMoreWeapons then
 				return
 			end
@@ -557,7 +558,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_clusterbomb",
 		humanName = "Cluster Bomb",
-		description = "Cluster Bomb - Manually fired burst of bombs.",
+		description = "Manually fired burst of bombs.",
 		image = moduleImagePath .. "commweapon_clusterbomb.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
@@ -578,7 +579,7 @@ local moduleDefs = {
 		{
 		name = "commweapon_minefieldinacan",
 		humanName = "Minefield In A Can",
-		description = "Minefield In A Can:\nA canister full of surprises, waiting for your enemies.\nStrike and Recon only.",
+		description = "A canister full of surprises, waiting for your enemies.",
 		image = moduleImagePath .. "conversion_partillery.png",
 		limit = 1,
 		cost = 300 * COST_MULT,
@@ -599,7 +600,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_concussion",
 		humanName = "Concussion Shell",
-		description = "Concussion Shell - Manually fired high impulse projectile.",
+		description = "Manually fired high impulse projectile.",
 		image = moduleImagePath .. "commweapon_concussion.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
@@ -620,7 +621,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_disintegrator",
 		humanName = "Disintegrator",
-		description = "Disintegrator\nManually fired weapon that destroys almost everything it touches.\nWater Capable.",
+		description = "Manually fired weapon that destroys almost everything it touches.",
 		image = moduleImagePath .. "commweapon_disintegrator.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
@@ -641,7 +642,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_sunburst",
 		humanName = "Sunburst Cannon",
-		description = "Sunburst Cannon\nManually fired weapon that ruin's a single target's day with a high damage shot. Quick reload.\nAmbusher only. Water Capable.",
+		description = "Manually fired weapon that ruin's a single target's day with a high damage shot. Quick reload.",
 		image = moduleImagePath .. "commweapon_sunburst.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
@@ -660,7 +661,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_disruptorbomb",
 		humanName = "Disruptor Bomb",
-		description = "Disruptor Bomb - Manually fired bomb that slows enemies in a large area.",
+		description = "Manually fired bomb that slows enemies in a large area.",
 		image = moduleImagePath .. "commweapon_disruptorbomb.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
@@ -681,7 +682,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_multistunner",
 		humanName = "Multistunner",
-		description = "Multistunner - Manually fired sustained burst of lightning.",
+		description = "Manually fired sustained burst of lightning.",
 		image = moduleImagePath .. "commweapon_multistunner.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
@@ -703,7 +704,7 @@ local moduleDefs = {
 		{
 		name = "commweapon_gaussrepeater",
 		humanName = "Gauss Repeater",
-		description = "Gauss Repeater\nA penetrating, rapid fire short range rifle for raiding while underwater.\nRecon only.",
+		description = "A penetrating, rapid fire short range rifle for raiding while underwater.",
 		image = moduleImagePath .. "commweapon_gaussrifle.png",
 		limit = 2,
 		cost = 100 * COST_MULT,
@@ -725,7 +726,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_napalmgrenade",
 		humanName = "Hellfire Grenade",
-		description = "Hellfire Grenade - Manually fired bomb that inflames a large area.",
+		description = "Manually fired bomb that inflames a large area.",
 		image = moduleImagePath .. "commweapon_napalmgrenade.png",
 		limit = 1,
 		cost = 200 * COST_MULT,
@@ -746,7 +747,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_slamrocket",
 		humanName = "S.L.A.M. Rocket",
-		description = "S.L.A.M. Rocket - Manually fired miniature tactical nuke.",
+		description = "Manually fired miniature tactical nuke.",
 		image = moduleImagePath .. "commweapon_slamrocket.png",
 		limit = 1,
 		cost = 200 * COST_MULT,
@@ -769,7 +770,7 @@ local moduleDefs = {
 	{
 		name = "econ",
 		humanName = "Vanguard Economy Pack",
-		description = "Vanguard Economy Pack - A vital part of establishing a beachhead, this module is equipped by all new commanders to kickstart their economy. Provides 4 metal income and 6 energy income.",
+		description = "A vital part of establishing a beachhead, this module is equipped by all new commanders to kickstart their economy. Provides 4 metal income and 6 energy income.",
 		image = moduleImagePath .. "module_energy_cell.png",
 		limit = 1,
 		unequipable = true,
@@ -784,7 +785,7 @@ local moduleDefs = {
 	{
 		name = "efficiency",
 		humanName = "Efficient Resourcing",
-		description = "By upgrading the Support comm's resource allocation algorithms, some extra metal and energy can be squeezed out of the chassis's resource generator.",
+		description = "By upgrading the Support comm's resource allocation algorithms, some extra metal and energy can be squeezed out of the chassis's resource generator.\nProvides 1.5m/sec and 3e/sec income",
 		image = moduleImagePath .. "module_efficency.png",
 		limit = 4,
 		requireChassis = {"support"},
@@ -792,14 +793,14 @@ local moduleDefs = {
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			sharedData.metalIncome = (sharedData.metalIncome or 0) + 0.5
-			sharedData.energyIncome = (sharedData.energyIncome or 0) + 2
+			sharedData.metalIncome = (sharedData.metalIncome or 0) + 1.5
+			sharedData.energyIncome = (sharedData.energyIncome or 0) + 3
 		end
 	},
 	{
 		name = "commweapon_personal_shield",
 		humanName = "Personal Shield",
-		description = "Personal Shield\nA small, protective bubble shield.\nMutually Exclusive with Area Jammer and Personal Cloak.",
+		description = "A small, protective bubble shield.\nMutually Exclusive with Area Jammer and Personal Cloak.",
 		image = moduleImagePath .. "module_personal_shield.png",
 		limit = 1,
 		cost = 300 * COST_MULT,
@@ -815,7 +816,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_areashield",
 		humanName = "Area Shield",
-		description = "Area Shield\nProjects a large shield. Replaces Personal Shield.",
+		description = "Projects a large shield. Replaces Personal Shield.",
 		image = moduleImagePath .. "module_areashield.png",
 		limit = 1,
 		cost = 250 * COST_MULT,
@@ -831,7 +832,7 @@ local moduleDefs = {
 	{
 		name = "weaponmod_napalm_warhead",
 		humanName = "Napalm Warhead",
-		description = "Napalm Warhead - Riot Cannon and Rocket Launcher set targets on fire. Reduced direct damage.",
+		description = "Riot Cannon and Rocket Launcher set targets on fire. Reduced direct damage.",
 		image = moduleImagePath .. "weaponmod_napalm_warhead.png",
 		limit = 1,
 		cost = 350 * COST_MULT,
@@ -843,7 +844,7 @@ local moduleDefs = {
 	{
 		name = "conversion_disruptor",
 		humanName = "Disruptor Ammo",
-		description = "Disruptor Ammo - Heavy Machine Gun, Tank Buster, EMG, Shotgun and Particle Beams deal slow damage. Reduced direct damage.",
+		description = "Heavy Machine Gun, Tank Buster, EMG, Shotgun and Particle Beams deal slow damage. Reduced direct damage.",
 		image = moduleImagePath .. "weaponmod_disruptor_ammo.png",
 		limit = 1,
 		cost = 300 * COST_MULT,
@@ -855,7 +856,7 @@ local moduleDefs = {
 	{
 		name = "weaponmod_stun_booster",
 		humanName = "Flux Amplifier",
-		description = "Flux Amplifier - Improves EMP duration and strength of Lightning Rifle and Multistunner.",
+		description = "Improves EMP duration and strength of Lightning Rifle and Multistunner.",
 		image = moduleImagePath .. "weaponmod_stun_booster.png",
 		limit = 1,
 		cost = 300 * COST_MULT,
@@ -867,7 +868,7 @@ local moduleDefs = {
 	{
 		name = "module_jammer",
 		humanName = "Radar Jammer",
-		description = "Radar Jammer - Hide the radar signals of nearby units.",
+		description = "Hide the radar signals of nearby units.",
 		image = moduleImagePath .. "module_jammer.png",
 		limit = 1,
 		cost = 500 * COST_MULT,
@@ -883,7 +884,7 @@ local moduleDefs = {
 	{
 		name = "module_personaljammer",
 		humanName = "Personal Radar Jammer",
-		description = "Personal Radar Jammer:\nHides you from radar.",
+		description = "Hides you from radar.",
 		image = moduleImagePath .. "module_jammer.png",
 		limit = 1,
 		cost = 500 * COST_MULT,
@@ -899,7 +900,7 @@ local moduleDefs = {
 	{
 		name = "module_radarnet",
 		humanName = "Field Radar",
-		description = "Field Radar - Attaches a basic radar system.",
+		description = "Attaches a basic radar system.",
 		image = moduleImagePath .. "module_fieldradar.png",
 		limit = 1,
 		cost = 75 * COST_MULT,
@@ -912,7 +913,7 @@ local moduleDefs = {
 	{
 		name = "module_radaramplifier",
 		humanName = "Radar Amplifier",
-		description = "Radar Amplifier:\nIncreases radar by 10%.\nRecon Only (Limit: 8)",
+		description = "Increases radar by 10%.",
 		image = moduleImagePath .. "module_fieldradar.png",
 		limit = 8,
 		requireChassis = {"recon"},
@@ -926,7 +927,7 @@ local moduleDefs = {
 	{
 		name = "module_visionenhancer",
 		humanName = "Enhanced Sensors",
-		description = "Enhanced Sensors:\nIncreases sight radius by 15%.\nRecon Only (Limit: 8)",
+		description = "Increases sight radius by 20%.",
 		image = moduleImagePath .. "module_radarnet2.png",
 		limit = 8,
 		requireChassis = {"recon"},
@@ -934,13 +935,13 @@ local moduleDefs = {
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			sharedData.sightrangebonus = (sharedData.sightrangebonus or 1) + .15
+			sharedData.sightrangebonus = (sharedData.sightrangebonus or 1) + .2
 		end
 	},
 	{
 		name = "module_personal_cloak",
 		humanName = "Personal Cloak",
-		description = "Personal Cloak:\n A personal cloaking device.\nReduces speed by 2.\nRecon and Bombard only.",
+		description = "A personal cloaking device.\nRecon and Bombard only.",
 		image = moduleImagePath .. "module_personal_cloak.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
@@ -952,13 +953,12 @@ local moduleDefs = {
 			sharedData.decloakDistance = math.max(sharedData.decloakDistance or 0, 150)
 			sharedData.personalCloak = true
 			sharedData.recloaktime = 300
-			sharedData.speedMod = (sharedData.speedMod or 0) - 2
 		end
 	},
 	{
 		name = "module_cloak_field",
 		humanName = "Cloaking Field",
-		description = "Cloaking Field\nCloaks all nearby units.\nReduces speed by 3.\nSupport only.",
+		description = "Cloaks all nearby units in a 350m radius.",
 		image = moduleImagePath .. "module_cloak_field.png",
 		limit = 1,
 		cost = 600 * COST_MULT,
@@ -973,16 +973,15 @@ local moduleDefs = {
 			sharedData.cloakFieldUpkeep = 15
 			sharedData.radarJammingRange = 350
 			sharedData.recloaktime = 300
-			sharedData.speedMod = (sharedData.speedMod or 0) - 3
 		end
 	},
 	{
 		name = "module_resurrect",
 		humanName = "Lazarus Device",
-		description = "Lazarus Device:\nUpgrade nanolathe to allow resurrection.\nSupport only.",
+		description = "Upgrade nanolathe to allow resurrection.",
 		image = moduleImagePath .. "module_resurrect.png",
 		limit = 1,
-		cost = 400 * COST_MULT,
+		cost = 200 * COST_MULT,
 		requireChassis = {"support", "knight"},
 		requireLevel = 2,
 		slotType = "module",
@@ -993,7 +992,7 @@ local moduleDefs = {
 	{
 		name = "module_jumpreload",
 		humanName = "Efficient Jumpjets",
-		description = "Efficient Jumpjets:\nReduces jumpjet cooldown by 20%.\nIncreases jump speed slightly.\nRecon only.\nMutually Exclusive with: Improved Jumpjets & High Performance Jumpjets.",
+		description = "Reduces jumpjet cooldown by 20%.\nIncreases jump speed slightly.\nMutually Exclusive with: Improved Jumpjets & High Performance Jumpjets.",
 		image = moduleImagePath .. "module_jumpjetrecharge.png",
 		limit = 4,
 		cost = 200 * COST_MULT,
@@ -1009,9 +1008,23 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "module_detpack",
+		humanName = "\"Peaceful Wind\" Asset Denial System",
+		description = "Mutually Assured Destruction guaranteed or your metal back!\n\nIncreases the severity of the commander death explosion. At maximum level, it is equivalent to a nuclear detonation.",
+		image = moduleImagePath .. "module_detpack.png",
+		limit = 3,
+		cost = 600 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			local detpacklv = (sharedData.detpacklv or 0) + 1
+			sharedData.detpacklv = detpacklv
+		end
+	},
+	{
 		name = "module_jumpretrofit",
 		humanName = "Improved Jumpjets",
-		description = "Improved Jumpjets:\nIncreases jumpjet range by 20%.\nIncreases jump speed moderately.\nDecreases jumpjet reload by 7.5%\nRecon only.\nMutually Exclusive with: High Performance Jumpjets & Efficient Jumpjets.",
+		description = "Increases jumpjet range by 20%.\nIncreases jump speed moderately.\nDecreases jumpjet reload by 7.5%\nMutually Exclusive with: High Performance Jumpjets & Efficient Jumpjets.",
 		image = moduleImagePath .. "module_jumpjetretrofit.png",
 		limit = 4,
 		cost = 220 * COST_MULT,
@@ -1031,7 +1044,7 @@ local moduleDefs = {
 	{
 		name = "module_jumprange",
 		humanName = "High Performance Jumpjets",
-		description = "High Performance Jumpjets:\nIncreases jumpjet range by 50%.\nIncreases jump speed signifcantly.\nRecon only.\nMutually Exclusive with: Improved Jumpjets & Efficient Jumpjets.",
+		description = "Increases jumpjet range by 50%.\nIncreases jump speed signifcantly.\nMutually Exclusive with: Improved Jumpjets & Efficient Jumpjets.",
 		image = moduleImagePath .. "module_jumpjetpower.png",
 		limit = 4,
 		cost = 200 * COST_MULT,
@@ -1049,7 +1062,7 @@ local moduleDefs = {
 	{
 		name = "module_jumpjet",
 		humanName = "Jumpjets",
-		description = "Jumpjets - Leap over obstacles and out of danger.",
+		description = "Leap over obstacles and out of danger.",
 		image = moduleImagePath .. "module_jumpjet.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
@@ -1065,7 +1078,7 @@ local moduleDefs = {
 	{
 		name = "module_companion_drone",
 		humanName = "Companion Drone",
-		description = "Companion Drone:\nAdds a protective drone.\nSupport only (Limit: 8)",
+		description = "Adds a protective drone.",
 		image = moduleImagePath .. "module_companion_drone.png",
 		limit = 8,
 		cost = 50 * COST_MULT,
@@ -1079,7 +1092,7 @@ local moduleDefs = {
 	{
 		name = "module_battle_drone",
 		humanName = "Battle Drone",
-		description = "Battle Drone:\nCommander spawns heavy drones.\nSupport only (Limit: 8, Requires 1 Companion Drone)",
+		description = "Commander spawns a heavy drone.",
 		image = moduleImagePath .. "module_battle_drone.png",
 		limit = 8,
 		cost = 125 * COST_MULT,
@@ -1093,8 +1106,8 @@ local moduleDefs = {
 	},
 	{
 		name = "module_autorepair",
-		humanName = "Autorepair",
-		description = "Autorepair:\nCommander self-repairs at +10 hp/s. Reduces Health by " .. 100*HP_MULT .. ".(Limit: 8)",
+		humanName = "Damage Control Systems",
+		description = "Commander self-repairs at +10 hp/s. Reduces Health by " .. 75*HP_MULT,
 		image = moduleImagePath .. "module_autorepair.png",
 		limit = 8,
 		cost = 150 * COST_MULT,
@@ -1102,13 +1115,13 @@ local moduleDefs = {
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10
-			sharedData.healthBonus = (sharedData.healthBonus or 0) - 100*HP_MULT
+			sharedData.healthBonus = (sharedData.healthBonus or 0) - 75*HP_MULT
 		end
 	},
 	{
 		name = "module_ablative_armor",
 		humanName = "Ablative Armour Plates",
-		description = "Ablative Armour Plates - Provides " .. 1250*HP_MULT .. " health. (Limit: 8)",
+		description = "Provides " .. 1250*HP_MULT .. " health.",
 		image = moduleImagePath .. "module_ablative_armor.png",
 		limit = 8,
 		cost = 150 * COST_MULT,
@@ -1121,7 +1134,7 @@ local moduleDefs = {
 	{
 		name = "module_heavy_armor",
 		humanName = "High Density Plating",
-		description = "High Density Plating:\nProvides " .. 3000*HP_MULT .. " health but reduces speed by 1. " ..
+		description = "Provides " .. 3000*HP_MULT .. " health but reduces speed by 1.",
 		"\nGuardian Only. (Limit: 8, Requires Ablative Armour Plates)",
 		image = moduleImagePath .. "module_heavy_armor.png",
 		limit = 8,
@@ -1137,8 +1150,8 @@ local moduleDefs = {
 	},
 	{
 		name = "module_dmg_booster",
-		humanName = "Damage Booster",
-		description = "Damage Booster:\nIncreases damage by 10% but reduces speed by 1. (Limit: 8)",
+		humanName = "Enhanced Weapon Systems",
+		description = "Increases damage by 10% but reduces speed by 0.75.",
 		image = moduleImagePath .. "module_dmg_booster.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1147,26 +1160,26 @@ local moduleDefs = {
 		applicationFunction = function (modules, sharedData)
 			-- Damage boost is applied via clone swapping
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.1
-			sharedData.speedMod = (sharedData.speedMod or 0) - 1
+			sharedData.speedMod = (sharedData.speedMod or 0) - 0.75
 		end
 	},
 	{
 		name = "module_high_power_servos",
 		humanName = "High Power Servos",
-		description = "High Power Servos\nIncreases speed by 2. (Limit: 8)",
+		description = "Increases speed by 2.2.",
 		image = moduleImagePath .. "module_high_power_servos.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			sharedData.speedMod = (sharedData.speedMod or 0) + 2
+			sharedData.speedMod = (sharedData.speedMod or 0) + 2.2
 		end
 	},
 	{
 		name = "module_high_power_servos_improved",
 		humanName = "Strike Servos",
-		description = "Strike Servos\nIncreases speed by 4, decreases health by " .. 300*HP_MULT .. "\nRecon and Ambusher only. (Limit: 8)",
+		description = "Increases speed by 4, decreases health by " .. 275*HP_MULT,
 		image = moduleImagePath .. "module_strike_servos.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1175,13 +1188,13 @@ local moduleDefs = {
 		requireChassis = {"strike", "recon"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.speedMod = (sharedData.speedMod or 0) + 4
-			sharedData.healthBonus = (sharedData.healthBonus or 0) - 300*HP_MULT
+			sharedData.healthBonus = (sharedData.healthBonus or 0) - 275*HP_MULT
 		end
 	},
 	{
 		name = "module_cloakregen",
 		humanName = "Nanobot Sleeve",
-		description = "Nanobot Sleeve:\nIncreases regen while cloaked by 20.\nAmbusher only (Limit: 8)",
+		description = "Increases regen while cloaked by 20.",
 		image = moduleImagePath .. "module_cloakregen.png",
 		limit = 8,
 		cost = 75 * COST_MULT,
@@ -1195,7 +1208,7 @@ local moduleDefs = {
 	{
 		name = "module_adv_targeting",
 		humanName = "Adv. Targeting System",
-		description = "Advanced Targeting System:\nIncreases range by 7.5% but reduces speed by 1. (Limit: 8)",
+		description = "Increases range by 7.5% but reduces speed by 0.75.",
 		image = moduleImagePath .. "module_adv_targeting.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1204,13 +1217,13 @@ local moduleDefs = {
 		requireChassis = {"strike", "recon", "support", "riot"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.075
-			sharedData.speedMod = (sharedData.speedMod or 0) - 1
+			sharedData.speedMod = (sharedData.speedMod or 0) - 0.75
 		end
 	},
 	{
 		name = "module_adv_targeting",
-		humanName = "Adv. Targeting System",
-		description = "Improved Targeting System:\nIncreases range by 10% but reduces speed by 2.\nBombard only.(Limit: 8)",
+		humanName = "Improved Targeting System",
+		description = "Increases range by 10% but reduces speed by 2.",
 		image = moduleImagePath .. "module_adv_targeting.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1225,7 +1238,7 @@ local moduleDefs = {
 	{
 		name = "module_adv_nano",
 		humanName = "Advanced Nanolathe",
-		description = "Advanced Nanolathe:\nIncreases build power by 2.5 (+5 for support). Increases storage by 25 (50 for support).\nLimit: 8",
+		description = "Increases build power by 2.5 (+5 for support). Increases storage by 25 (50 for support).",
 		image = moduleImagePath .. "module_adv_nano.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1240,7 +1253,7 @@ local moduleDefs = {
 	{
 		name = "module_adv_nano_support",
 		humanName = "Advanced Nanolathe",
-		description = "Advanced Nanolathe:\nIncreases build power by 5 (+2.5 for others). Increases storage by 50 (25 for others).\nLimit: 8",
+		description = "Increases build power by 5 (+2.5 for others). Increases storage by 50 (25 for others).",
 		image = moduleImagePath .. "module_adv_nano.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1257,7 +1270,7 @@ local moduleDefs = {
 	{
 		name = "banner_overhead",
 		humanName = "Banner",
-		description = "Banner",
+		description = "",
 		image = moduleImagePath .. "module_ablative_armor.png",
 		limit = 1,
 		cost = 0,
@@ -1281,6 +1294,7 @@ for name, data in pairs(skinDefs) do
 		requireChassis = {data.chassis},
 		requireLevel = 0,
 		slotType = "decoration",
+		isDeco = true,
 		applicationFunction = function (modules, sharedData)
 			sharedData.skinOverride = name
 		end
@@ -2078,11 +2092,87 @@ end
 -- Processing
 ------------------------------------------------------------------------
 
--- Set cost in module tooltip
-for i = 1, #moduleDefs do
-	local data = moduleDefs[i]
-	if data.cost > 0 then
-		data.description = data.description .. "\nCost: " .. data.cost
+for i = 1, #moduleDefs do -- Add name, cost, dps, etc
+	if not moduleDefs[i].isDeco then -- IMPORTANT NOTE: This is proccessed **BEFORE** weapondefs_post!!!!!!! (Mitä vitua?)
+		local name = moduleDefs[i].name
+		if moduleDefs[i].override then
+			name = moduleDefs[i].override
+		end
+		--Spring.Echo("[Modular Comms] ModuleDefs: Proccessing description for " .. tostring(name))
+		moduleDefs[i].description = moduleDefs[i].humanName ..":\nCost: " .. moduleDefs[i].cost .. "m" .. "\n" .. moduleDefs[i].description
+		local wd
+		if name:find("commweapon") or name:find("shield") then
+			if VFS.FileExists("gamedata\\modularcomms\\weapons\\" .. name .. ".lua") then
+				--Spring.Echo("Loading future wars file")
+				_, wd = VFS.Include("gamedata\\modularcomms\\weapons\\" .. name .. ".lua")
+			elseif VFS.FileExists("gamedata\\modularcomms\\weapons\\" .. name:gsub("commweapon_", "") .. ".lua") then
+				--Spring.Echo("Falling back to base game")
+				_, wd = VFS.Include("gamedata\\modularcomms\\weapons\\" .. name:gsub("commweapon_", "") .. ".lua")
+			end
+			if VFS.FileExists("gamedata\\modularcomms\\weapons\\" .. string.gsub(name:gsub("commweapon_", ""), "_", "") .. ".lua") then
+				_, wd = VFS.Include("gamedata\\modularcomms\\weapons\\" .. string.gsub(name:gsub("commweapon_", ""), "_", "") .. ".lua")
+			end
+		end
+		if wd and not name:find("shield") then
+			local projectiles = wd.projectiles or 1
+			local burst = wd.burst or 1
+			local damage = wd.damage.default * burst * projectiles
+			--Spring.Echo("Calculate DPS: " .. projectiles .. "projectiles, " .. burst .. " bursts, " .. tostring(wd.damage.default) .. " damage = " .. damage .. ", Reload: " .. wd.reloadtime)
+			local customparams = wd.customParams or wd.customparams or {}
+			moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\061\061Weapon Notes:\n\255\255\255\031- Range:\255\255\255\255 " .. wd.range .. "\n\255\255\255\031- DPS:\255\255\255\255 "
+			if customparams.extra_damage_mult then -- lightning gun
+				local extradmg = tonumber(customparams.extra_damage_mult) or 0
+				local extradps = (extradmg * damage) / wd.reloadtime
+				extradps = "\255\51\179\255" .. string.format("%.1f", extradps) .. "P\255\255\255\255"
+				moduleDefs[i].description = moduleDefs[i].description .. "\255\255\255\255 " .. string.format("%.1f", damage / wd.reloadtime) .. " + " .. extradps
+			elseif customparams.is_capture then -- capture
+				moduleDefs[i].description = moduleDefs[i].description .. "\255\153\255\153 " .. string.format("%.1f", damage / wd.reloadtime) .. "C"
+			elseif customparams.setunitsonfire then -- napalm
+				local burntime = tonumber(customparams.burntime) or 0
+				burntime = burntime / 30 -- convert to seconds
+				moduleDefs[i].description = moduleDefs[i].description .. "\255\255\77\0 " .. string.format("%.1f", damage / wd.reloadtime) .. " (" .. string.format("%.1f", burntime) .. "s)"
+			elseif customparams.disarmDamageOnly or customparams.disarmdamageonly then -- pure disarm damage.
+				moduleDefs[i].description = moduleDefs[i].description .. "\255\128\128\128" .. string.format("%.1f", damage / wd.reloadtime) .. "D"
+			elseif wd.paralyzeTime == nil and wd.paralyzetime == nil then -- normal weapon
+				moduleDefs[i].description = moduleDefs[i].description .. "\255\255\255\255 " .. string.format("%.1f", damage / wd.reloadtime)
+			else -- pure paralyzer
+				moduleDefs[i].description = moduleDefs[i].description .. "\255\51\179\255 " .. string.format("%.1f", damage / wd.reloadtime) .. "P"
+			end
+			local isDisarmOnly = customparams.disarmDamageOnly or customparams.disarmdamageonly or 0
+			if (customparams.disarmDamageMult or customparams.disarmdamagemult) and isDisarmOnly == 0 then
+				local disarm = (customparams.disarmDamageMult or customparams.disarmdamagemult) or 0
+				local disarmdps = (damage * tonumber(disarm)) / wd.reloadtime
+				if disarmdps > 0 then
+					disarmdps = "\255\128\128\128" .. string.format("%.1f", disarmdps) .. "D"
+					moduleDefs[i].description = moduleDefs[i].description .. " + " .. disarmdps
+				end
+			end
+			if customparams.timeslow_damagefactor then
+				local slow = damage * (tonumber(customparams.timeslow_damagefactor) or 0)
+				if slow > 0 then
+					local slowdps = string.format("%.1f", slow / wd.reloadtime)
+					moduleDefs[i].description = moduleDefs[i].description .. " + \255\255\031\255" .. slowdps .. "S" .. "\255\255\255\255"
+				end
+			end
+			if wd.paralyzeTime or wd.paralyzetime then
+				local stuntime = wd.paralyzeTime or wd.paralyzetime or 0
+				if stuntime ~= 0 then
+					moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\255\031- Stun time:\255\255\255\255" .. stuntime .. "s"
+				end
+			end
+			if not (wd.impactonly or wd.impactOnly) then
+				local aoe = customparams.areaofeffectoverride or wd.areaOfEffect or wd.areaofeffect
+				moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\255\031- AoE:\255\255\255\255 " .. aoe .. "m"
+			end
+			if wd.waterweapon or wd.waterWeapon then
+				moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\255\031- \255\031\255\255WATER CAPABLE\255\255\255\255"
+			end
+		elseif wd and name:find("shield") then
+			moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\255\031Shield Radius:\255\255\255\255 " .. wd.shieldRadius .. "\n\255\255\255\031Shield HP:\255\255\255\255 " .. wd.shieldPower .. "\n\255\255\255\031Shield Regen:\255\255\255\255 " .. wd.shieldPowerRegen .. "\n\255\255\255\031Shield Regen Cost:\255\255\255\255 " .. wd.shieldPowerRegenEnergy
+		elseif not name:find("null") then
+			moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\061\061Limit: " .. tostring(moduleDefs[i].limit) .. "\255\255\255\255" -- why does this have a boolean?
+		end
+		--Spring.Echo("Final description: " .. moduleDefs[i].description)
 	end
 end
 

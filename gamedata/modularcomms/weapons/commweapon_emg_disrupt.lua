@@ -13,6 +13,7 @@ local weaponDef = {
 		light_color = [[1.3 0.5 1.6]],
 		light_radius = 120,
 		reaim_time = 1,
+		antibaitbypass = "ärsytät minua",
 	},
 
 	damage                  = {

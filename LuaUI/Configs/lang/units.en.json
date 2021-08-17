@@ -50,9 +50,9 @@
 		"helptext" : "Two words: RUN AWAY! The Chicken Queen is the matriach of the Thunderbird colony, and when aggravated is virtually impossible to stop. It can spit fiery napalm, spray spores to kill aircraft, and kick land units away from it. Most of all, its jaws can rip apart the largest assault mech in seconds. Only the most determined, focused assault can hope to stop this beast in her tracks."
 	},
 	"tankassault" : {
-		"name" : "Minotaur",
+		"name" : "Barbarian",
 		"description" : "Assault Tank",
-		"helptext" : "A heavy duty battle tank. The Minotaur excels at absorbing damage in pitched battles, but its low rate of fire means it is not so good at dealing with swarms, and its heavy armor comes at the price of manuverability."
+		"helptext" : "A heavy duty battle tank. The Barbarian excels at absorbing damage in pitched battles, but its low rate of fire means it is not so good at dealing with swarms, and its heavy armor comes at the price of manuverability."
 	},
 	"chicken_listener" : {
 		"name" : "Listener",
@@ -342,7 +342,7 @@
 	"bomberprec" : {
 		"name" : "Raven",
 		"description" : "Precision Bomber",
-		"helptext" : "The Raven drops a single high damage, low AoE bomb. Cost for cost, nothing quite matches it for taking out that antinuke or Minotaur, but you should look elsewhere for something to use against smaller mobiles."
+		"helptext" : "The Raven drops a single high damage, low AoE bomb. Cost for cost, nothing quite matches it for taking out that antinuke or Barbarian, but you should look elsewhere for something to use against smaller mobiles."
 	},
 	"chicken_shield" : {
 		"name" : "Blooper",
@@ -492,7 +492,12 @@
 	"staticnuke" : {
 		"name" : "Oblivion",
 		"description" : "Strategic MIRV Launcher, Drains 25 m/s, 4 minute stockpile",
-		"helptext" : "Oblivion, the pinnacle of human engineering. The abesolute wizardry that it takes to cram 3 Hawking Bombs into a missile that can still fly across interplanetary space at fractions of the speed of light in unimagenable, yet somehow, some way, it was done."
+		"helptext" : "Oblivion, the pinnacle of human engineering. The absolute wizardry that it takes to cram 3 Hawking Bombs into a missile that can still fly across interplanetary space at fractions of the speed of light in unimagenable, yet somehow, some way, it was done."
+	},
+	"missilenuke" : {
+		"name" : "Silencer MkIII",
+		"description" : "Strategic Nuclear Cruise Missile",
+		"helptext" : "A derivative of the original Silencer strategic warhead, the Silencer MkIII simplified its nanoprint to be buildable by factory nanolathes. Although this practically limits it to the Missile Silo, the Silencer MkIII has had to take some compromises to get to this point. With the removal of the base platform (used in favor of the new Oblivion MIRV), its range has been considerably decreased. However, it is still a very potent and dangerous weapon."
 	},
 	"hovershotgun" : {
 		"name" : "Punisher",
@@ -555,9 +560,9 @@
 		"helptext" : "The Lance's weapon, nicknamed 'the Blue Laser of Death', has the power and accuracy to skewer most units with a single shot. Use it against high armor units, but keep it behind the front lines - it has light armor and can't run from danger."
 	},
 	"shieldbomb" : {
-		"name" : "Snitch",
-		"description" : "Crawling Bomb (Burrows)",
-		"helptext" : "This fast-moving suicide unit is very good against massed units, particularly assault tanks. It features a cloaking device which is automatically activated once the unit stands still, effectively turning it into a mine. Chain explodes terribly, so best not to mass it. Counter with Pickets and missile trucks, or single cheap units to set off a premature detonation."
+		"name" : "Parcel",
+		"description" : "Crawling Cluster Bomb (Burrows)",
+		"helptext" : "The simplistic Parcel is just a cluster bomb with legs. When receiving fatal damage or the command to explode, it will release its payload: a detonation shockwave along side 20 small high explosive bombs. These extra bomblets allow it to drain shields along with inflicting direct damage to shield units, detect suspected cloakbots, or inflict mild area damage to nearby enemy units. Especially effective if used with a Charon for air deployment or cloakfield.\nWhile some have hinted at it being used as munitions for cluster bombers, these are just rumors and not part of any planned upgrade to air unit designs."
 	},
 	"cloakjammer" : {
 		"name" : "Iris",
@@ -1047,7 +1052,7 @@
 	"factorytank" : {
 		"name" : "Tank Foundry",
 		"description" : "Produces Heavy Tracked Vehicles",
-		"helptext" : "The Tank Foundry is the ultimate in brute force methods - nothing gets the job done quite like a sustained artillery barrage followed by a decisive push with the largest tanks in the field. Key units: Emissary, Minotaur, Ogre, Cyclops"
+		"helptext" : "The Tank Foundry is the ultimate in brute force methods - nothing gets the job done quite like a sustained artillery barrage followed by a decisive push with the largest tanks in the field. Key units: Emissary, Barbarian, Ogre, Cyclops"
 	},
 	"striderbantha" : {
 		"name" : "Mogul",
@@ -1105,9 +1110,9 @@
 		"helptext" : "The Advanced Radar tower utilizes OTH (Over-the-Horizon) technology to vastly increase radar coverage and sight. It is less sensitive to terrain than the basic model, with the ability to see over small hills."
 	},
 	"amphimpulse" : {
-		"name" : "Archer",
-		"description" : "Amphibious Raider/Riot Bot",
-		"helptext" : "The Archer uses a powerful sonic cannon to hit units above or below the water. It does not work while wet, so Archers must float to fire."
+		"name" : "Ripple",
+		"description" : "Amphibious Riot Bot",
+		"helptext" : "The Ripple uses two powerful sonic cannons to hit units above or below the water. The impact of a Sonic Cannon leaves an area of high pressure, dealing additional damage and pushing units back slightly. This makes it useful when fighting lots of lighter units in chokepoints, but performs poorly against heavier units."
 	},
 	"fakeunit" : {
 		"name" : "Fake radar signal",
@@ -1130,9 +1135,9 @@
 		"helptext" : "The principle behind the Tremor is simple: flood an area with enough shots, and you'll hit something at least once. Slow, clumsy, vulnerable and extremely frightening, the Tremor works best against high-density target areas, where its saturation shots are most likely to do damage. It pulverizes shields in seconds and its shells smooth terrain."
 	},
 	"tankraid" : {
-		"name" : "Kodachi",
-		"description" : "Raider Tank",
-		"helptext" : "The diminutive Kodachi is a unique raider. Its small yet agile chassis has enough armor and speed to get it close enough to fire its weapon, a napalm bomb. The Kodachi should run in, get a shot off, and withdraw before it takes significant damage. Damaged Kodachis regenerate out of combat."
+		"name" : "Trailblazer",
+		"description" : "Raider Tank (Must slow down to fire)",
+		"helptext" : "A unique hybrid of heavy tank battle doctrine and the roles of a raider. As a heavy tank, the Trailblazer sports a heavy amount of firepower and armor, both of which heavily hinder its maneuverability. To counteract this, the Trailblazer is able to use it napalm machinegun as a booster, allowing it to reach high speeds at the cost of slowing down in combat."
 	},
 	"cloakcon" : {
 		"name" : "Mirage",
@@ -1170,9 +1175,9 @@
 		"helptext" : "The Warden was made on the chasis of a bandit, but given a shield and an orange micropulser. In groups, they can be especially dangerous due to their ability to link shields."
 	},
 	"amphraid" : {
-		"name" : "Duck",
-		"description" : "Amphibious Raider Bot (Anti-Sub)",
-		"helptext" : "The Duck is the basic underwater raider. Armed with short ranged torpedoes, it uses its (relatively) high speed to harass sea targets that cannot shoot back, though it dies to serious opposition. On land it can launch the torpedoes a short distance as a decent short ranged anti-heavy weapon."
+		"name" : "Milta",
+		"description" : "Amphibious Light Skirmisher/Artillery",
+		"helptext" : "The Milta's sawhead torpedos can be fired as a long range mortar or against sea based threats. The sawhead delivers a payload of 3 sonic emitters that deal damage and push units away. It is rather inaccurate in land, so is best used as a light artillery piece."
 	},
 	"planefighter" : {
 		"name" : "Deserter",
@@ -1245,9 +1250,9 @@
 		"helptext" : "The Informer is a light scout that can be built from a Radar Tower, making it the only plane that is availible without a Plane Factory. Such an accessible scouting option is invaluable to those without access to planes, but is generally outclassed by the extremely fast Deserter and larger Agitator."
 	},
 	"amphfloater" : {
-		"name" : "Buoy",
-		"description" : "Heavy Amphibious Skirmisher Bot",
-		"helptext" : "The Buoy works around its inability to shoot while submerged by floating to the surface of the sea. Here it can fire a decently ranged cannon with slow damage. It is unable to move while floating."
+		"name" : "Bully",
+		"description" : "Amphibious Assault Bot",
+		"helptext" : "The Bully is the Amphibious Factory's assault unit of choice. It armed with a ponderous Assault Disruptor that slows its foes with a mass of slow bolts. It can attack underwater as well as float to the surface, though while firing underwater, it is slightly inaccurate against surface targets."
 	},
 	"amphsupport" : {
 		"name" : "Bulkhead",

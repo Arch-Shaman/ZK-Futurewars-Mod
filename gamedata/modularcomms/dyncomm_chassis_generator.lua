@@ -1,26 +1,22 @@
 local chassisDefs = {
 	{
-		name = "dynstrike1", -- 25/31 (UPDATE ME AS YOU ADD MORE WEAPONS)
+		name = "dynstrike1", -- 21/31 (UPDATE ME AS YOU ADD MORE WEAPONS)
 		weapons = {
 			"commweapon_tankbuster",
 			"commweapon_tankbuster",
 			"commweapon_buster_disrupt",
 			"commweapon_buster_disrupt",
-			"commweapon_lparticlebeam",
 			"commweapon_shotgun", -- TODO: REPLACE
-			"commweapon_shotgun_disrupt",
-			"commweapon_disruptor", -- TODO: REMOVE
-			"commweapon_heavyrifle",
-			"commweapon_heavyrifle_disrupt",
-			"commweapon_lightninggun",
-			"commweapon_lightninggun_improved",
-			"commweapon_lparticlebeam",
 			"commweapon_shotgun",
 			"commweapon_shotgun_disrupt",
-			"commweapon_disruptor",
+			"commweapon_shotgun_disrupt",
+			"commweapon_heavyrifle",
 			"commweapon_heavyrifle",
 			"commweapon_heavyrifle_disrupt",
+			"commweapon_heavyrifle_disrupt",
 			"commweapon_lightninggun",
+			"commweapon_lightninggun",
+			"commweapon_lightninggun_improved",
 			"commweapon_lightninggun_improved",
 			"commweapon_multistunner",
 			"commweapon_multistunner_improved",
@@ -79,8 +75,8 @@ local chassisDefs = {
 			"commweapon_lightninggun_improved",
 			"commweapon_disruptorprojector",
 			"commweapon_disruptorprojector",
-			"commweapon_shockriflefw",
-			"commweapon_shockriflefw",
+			"commweapon_shockrifle",
+			"commweapon_shockrifle",
 			"commweapon_multistunner", -- TODO: replace with EMP bomb.
 			"commweapon_multistunner_improved",
 			"commweapon_disruptorbomb",
@@ -91,31 +87,31 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynassault1", --23/31
+		name = "dynassault1", --23/31 (will be: 11/31)
 		weapons = {
 			"commweapon_rocketlauncher", -- 430
 			"commweapon_rocketlauncher_napalm", -- 430
 			"commweapon_rocketlauncher", -- 430
 			"commweapon_rocketlauncher_napalm", -- 430
-			"commweapon_canistercannon",
-			"commweapon_canistercannon",
-			"commweapon_heatray",
-			"commweapon_heavymachinegun",
-			"commweapon_flamethrower",
-			"commweapon_riotcannon",
-			"commweapon_riotcannon_napalm",
-			"commweapon_heatray",
-			"commweapon_heavymachinegun",
-			"commweapon_flamethrower",
-			"commweapon_riotcannon",
-			"commweapon_riotcannon_napalm",
+			"commweapon_canistercannon", -- TODO: remove and replace.
+			"commweapon_canistercannon", -- TODO: remove and replace
+			"commweapon_heatray", -- TODO: remove
+			"commweapon_heavymachinegun", -- TODO: remove, use by dynriot
+			"commweapon_flamethrower", -- TODO: remove, use by dynriot
+			"commweapon_riotcannon", -- TODO: remove, use by dynriot
+			"commweapon_riotcannon_napalm", -- TODO: remove, use by dynriot
+			"commweapon_heatray", -- TODO: remove
+			"commweapon_heavymachinegun", -- TODO: remove, use by dynriot
+			"commweapon_flamethrower", -- TODO: remove, use by dynriot
+			"commweapon_riotcannon", -- TODO: remove, use by dynriot
+			"commweapon_riotcannon_napalm", -- TODO: remove, use by dynriot
 			"commweapon_artillery_heavy",
 			"commweapon_artillery_heavy",
 			"commweapon_artillery_heavy_napalm",
 			"commweapon_artillery_heavy_napalm",
-			"commweapon_napalmgrenade",
+			"commweapon_napalmgrenade", -- TODO: replace with napalm mortar
 			"commweapon_slamrocket",
-			"commweapon_clusterbomb",
+			"commweapon_clusterbomb", -- TODO: replace with mortar
 			-- Space for shield
 		}
 	},
@@ -123,7 +119,6 @@ local chassisDefs = {
 		name = "dynknight1", -- don't care.
 		weapons = {
 			-- Aiming from earlier weapons is overridden by 
-			"commweapon_peashooter",
 			"commweapon_rocketlauncher", -- 430
 			"commweapon_rocketlauncher_napalm", -- 430
 			"commweapon_missilelauncher", -- 415
@@ -143,7 +138,6 @@ local chassisDefs = {
 			"commweapon_flamethrower", -- 270
 			"commweapon_multistunner",
 			"commweapon_multistunner_improved",
-			"commweapon_peashooter",
 			"commweapon_artillery_heavy",
 			"commweapon_artillery_heavy_napalm",
 			"commweapon_disintegrator",

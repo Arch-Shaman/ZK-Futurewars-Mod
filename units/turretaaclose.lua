@@ -15,11 +15,10 @@ return {
 		collisionVolumeScales         = [[42 53 42]],
 		collisionVolumeType            = [[CylY]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			aim_lookahead      = 120,
+			bait_level_default = 1,
 		},
-
 		explodeAs                     = [[SMALL_BUILDINGEX]],
 		floater                       = true,
 		footprintX                    = 3,
@@ -34,23 +33,18 @@ return {
 		objectName                    = [[missiletower.dae]],
 		script                        = [[turretaaclose.lua]],
 		selfDestructAs                = [[SMALL_BUILDINGEX]],
-
 		sfxtypes                      = {
-
-		explosiongenerators = {
-			[[custom:STORMMUZZLE]],
-			[[custom:STORMBACK]],
-		},
-
+			explosiongenerators = {
+				[[custom:STORMMUZZLE]],
+				[[custom:STORMBACK]],
+			},
 		},
 		sightDistance                 = 1025,
 		useBuildingGroundDecal        = true,
 		waterline                     = 10,
 		workerTime                    = 0,
 		yardMap                       = [[ooooooooo]],
-
 		weapons                       = {
-
 			{
 				def                = [[MISSILE]],
 				badTargetCategory  = [[GUNSHIP]],
@@ -61,10 +55,8 @@ return {
 				badTargetCategory  = [[GUNSHIP]],
 				onlyTargetCategory = [[FIXEDWING GUNSHIP]],
 			},
-
 		},
 		weaponDefs                    = {
-
 			MISSILE = {
 				name                    = [[LGAAM-4 Salvo]],
 				areaOfEffect            = 24,
@@ -169,8 +161,6 @@ return {
 				footprintZ       = 3,
 				object           = [[turretaaclose_dead.s3o]],
 			},
-
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,

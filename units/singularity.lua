@@ -19,7 +19,7 @@ return {
 			mobilebuilding = [[1]],
 		},
 
-		explodeAs                     = [[SEISMIC_WEAPON]],
+		explodeAs                     = [[SINGULARITY_WEAPON]],
 		footprintX                    = 1,
 		footprintZ                    = 1,
 		iconType                      = [[cruisemissilesmall]],

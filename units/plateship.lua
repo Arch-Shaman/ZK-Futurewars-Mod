@@ -53,7 +53,7 @@ return {
 		iconType                      = [[padship]],
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = Shared.FACTORY_PLATE_HEALTH * 3 / 2,
+		maxDamage                     = Shared.FACTORY_PLATE_HEALTH * 2,
 		maxSlope                      = 15,
 		maxVelocity                   = 0,
 		minCloakDistance              = 150,
@@ -63,14 +63,13 @@ return {
 		script                        = [[plateship.lua]],
 		selfDestructAs                = [[FAC_PLATEEX]],
 		showNanoSpray                 = false,
-		sightDistance                 = 273,
+		sightDistance                 = 850,
+		sonarDistance                 = 850,
 		turnRate                      = 0,
 		waterline                     = 0,
 		workerTime                    = Shared.FACTORY_BUILDPOWER,
 		yardMap                       = [[ooyyyy ooyyyy ooyyyy ooyyyy ooyyyy ooyyyy ooyyyy ooyyyy]],
-
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = false,
 				featureDead      = [[HEAP]],
@@ -85,6 +84,5 @@ return {
 				object           = [[debris4x4c.s3o]],
 			},
 		},
-
 	} 
 }

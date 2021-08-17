@@ -27,6 +27,7 @@ local weaponDef = {
 		spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
 		nofriendlyfire = "needs hax",
 		shield_damage = 6080,
+		antibaitbypass = "ärsytät minua",
 	},
 
 	damage                  = {

@@ -65,6 +65,7 @@ local longRangeSwarmieeArray = NameToDefID({
 	"cloakarty",
 	"amphsupport",
 	"shiparty",
+	"amphraid",
 })
 
 local medRangeSwarmieeArray = NameToDefID({
@@ -79,7 +80,7 @@ local lowRangeSwarmieeArray = NameToDefID({
 	"spiderassault",
 	"vehassault",
 	"hoverassault",
-	
+	"amphfloater",
 	"tankassault",
 	"tankheavyassault",
 	
@@ -135,7 +136,6 @@ shortRangeRiotIdleFleeArray = Union(shortRangeRiotIdleFleeArray, medRangeRiotIdl
 local longRangeRaiderIdleFleeArray = NameToDefID({
 	"cloakriot",
 	"cloakassault",
-	
 	"shieldfelon",
 	"shieldriot",
 	
@@ -172,7 +172,6 @@ local medRangeRaiderIdleFleeArray = NameToDefID({
 })
 
 local shortRangeRaiderIdleFleeArray = NameToDefID({
-	"amphraid",
 	"shieldraid",
 })
 
@@ -217,7 +216,6 @@ local veryShortRangeSkirmieeArray = NameToDefID({
 
 local shortRangeSkirmieeArray = NameToDefID({
 	"jumpraid",
-	"amphraid",
 	"jumpsumo",
 	"amphbomb",
 	"jumpbomb",
@@ -303,7 +301,6 @@ local longRangeSkirmieeArray = NameToDefID({
 	"cloakskirm",
 	"jumpskirm",
 	"jumpblackhole",
-	"amphfloater",
 	"hoverskirm", -- hover janus
 	"vehcapture",
 	"chickenc",
@@ -373,7 +370,6 @@ local tankconskirmarray = NameToDefID({
 	"cloakraid",
 	"shieldraid",
 	"cloakheavyraid",
-	"amphraid",
 	"cloakriot",
 	"shieldriot",
 	"vehscout",
@@ -844,47 +840,25 @@ local behaviourConfig = {
 	},
 	{
 		name = "amphraid",
-		waterline = -5,
-		land = {
-			weaponNum = 1,
-			skirms = shortRangeSkirmieeArray,
-			swarms = lowRangeSwarmieeArray,
-			flees = raiderFleeables,
-			idleFlee = shortRangeRaiderIdleFleeArray,
-			avoidHeightDiff = explodableFull,
-			fightOnlyUnits = shortRangeExplodables,
-			circleStrafe = ENABLE_OLD_JINK_STRAFE,
-			maxSwarmLeeway = 35,
-			swarmLeeway = 30,
-			jinkTangentLength = 90,
-			stoppingDistance = 25,
-			minCircleStrafeDistance = 10,
-			fleeLeeway = 140,
-			velocityPrediction = 30,
-			
-			wardFireTargets = personalShieldUnitsWithSafetyMargin,
-			wardFireEnableLeeway = 10,
-			wardFirePredict = 28,
-			wardFireShield = 50,
-			wardFireDefault = true,
-		},
-		sea = {
-			weaponNum = 2,
-			skirms = shortRangeSkirmieeArray,
-			swarms = lowRangeSwarmieeArray,
-			--flees = {},
-			idleFlee = torpedoIdleFleeArray,
-			avoidHeightDiff = explodableFull,
-			fightOnlyUnits = shortRangeExplodables,
-			circleStrafe = ENABLE_OLD_JINK_STRAFE,
-			maxSwarmLeeway = 35,
-			swarmLeeway = 30,
-			jinkTangentLength = 90,
-			stoppingDistance = 25,
-			minCircleStrafeDistance = 10,
-			velocityPrediction = 30,
-			fleeLeeway = 180,
-		},
+		skirms = longRangeSkirmieeArray,
+		swarms = longRangeSwarmieeArray,
+		--flees = {},
+		fightOnlyUnits = medRangeExplodables,
+		maxSwarmLeeway = 30,
+		minSwarmLeeway = 130,
+		minFleeRange = 100,
+		fleeLeeway = 125,
+		fleeOrderDis = 80,
+		fleeDistance = 100,
+		jinkPeriod = 2,
+		skirmLeeway = 10,
+		skirmBlockedApproachFrames = 90,
+		reloadFlee = true,
+		wardFireTargets = personalShieldUnits,
+		wardFireLeeway = 10,
+		wardFirePredict = 80,
+		wardFireShield = 400,
+		wardFireDefault = true,
 	},
 	{
 		name = "vehraid",
@@ -1414,10 +1388,19 @@ local behaviourConfig = {
 	{
 		name = "vehassault",
 		skirms = riotRangeSkirmieeArray,
-		--swarms = {},
-		--flees = {},
+		swarms = lowRangeSwarmieeArray,
 		avoidHeightDiff = explodableFull,
 		fightOnlyUnits = shortRangeExplodables,
+		jinkTangentLength = 80,
+		jinkAwayParallelLength = 120,
+		strafeOrderLength = 140,
+		maxSwarmLeeway = 50,
+		minSwarmLeeway = 120,
+		swarmLeeway = 300,
+		skirmLeeway = 10,
+		velocityPrediction = 20,
+		fleeLeeway = 120,
+		idlePushAggressDist = 320,
 		maxSwarmLeeway = 50,
 		minSwarmLeeway = 120,
 		skirmLeeway = 40,
@@ -1499,15 +1482,13 @@ local behaviourConfig = {
 	},
 	{
 		name = "amphfloater",
-		skirms = medRangeSkirmieeArray,
-		swarms = medRangeSwarmieeArray,
+		skirms = lowMedRangeSkirmieeArray,
+		--swarms = {},
 		--flees = {},
 		avoidHeightDiff = explodableFull,
-		maxSwarmLeeway = 30,
-		minSwarmLeeway = 130,
-		skirmLeeway = 10,
-		skirmBlockedApproachFrames = 75,
-		velPredChaseFactor = 0.5,
+		fightOnlyUnits = shortRangeExplodables,
+		skirmOrderDis = 220,
+		skirmLeeway = 50,
 
 		bonusRangeUnits = personalShieldUnits,
 		wardFireTargets = personalShieldUnits,

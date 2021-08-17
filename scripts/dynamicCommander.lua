@@ -353,6 +353,19 @@ local function Create()
 	end
 end
 
+local function DoDeathExplosion(x, y, z)
+	local explosion = Spring.GetUnitRulesParam(unitID, "comm_deathexplosion")
+	--Spring.Echo("Spawning " .. tostring(explosion))
+	Spring.SpawnProjectile(WeaponDefNames[explosion].id, {
+			pos = {x, y, z},
+			["end"] = {x, y, z},
+			speed = {0, 0, 0},
+			ttl = 1,
+			gravity = 0,
+			team = Spring.GetGaiaTeamID(),
+			owner = unitID,
+		})
+end
 
 local function SpawnModuleWreck(moduleDefID, wreckLevel, totalCount, teamID, x, y, z, vx, vy, vz)
 	local featureDefID = FeatureDefNames[moduleWreckNamePrefix[wreckLevel] .. moduleDefID]
@@ -415,4 +428,5 @@ return {
 	SpawnModuleWrecks = SpawnModuleWrecks,
 	SpawnWreck        = SpawnWreck,
 	GetOKPConfig      = GetOKP,
+	Explode			  = DoDeathExplosion,
 }

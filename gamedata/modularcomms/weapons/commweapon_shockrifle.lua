@@ -1,4 +1,4 @@
-local name = "commweapon_shockriflefw"
+local name = "commweapon_shockrifle"
 local weaponDef = {
 	name                    = [[Sniper Rifle]],
 	areaOfEffect            = 16,

@@ -1068,6 +1068,14 @@ local icontypes = {
     bitmap='icons/cruisemissile.dds',
     size=1,
   },
+  cruisemissileemp = {
+	bitmap='icons/cruisemissileemp.dds',
+	size=2.5,
+  },
+  cruisemissilenuclear = {
+	bitmap='icons/cruisemissilenuclear.dds',
+	size=2.5,
+  },
 
   --icon for nuclear missile silos
   nuke = {

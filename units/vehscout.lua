@@ -78,16 +78,22 @@ return {
 				cegTag                  = [[beamweapon_muzzle_purple]],
 				customParams            = {
 					timeslow_damagefactor = 10,
-
 					light_camera_height = 2500,
 					light_color = [[1.5 0.75 1.8]],
 					light_radius = 280,
 					nofriendlyfire = "needs hax",
-					
+					blastwave_size = 20,
+					blastwave_impulse = 0,
+					blastwave_speed = 6.25,
+					blastwave_life = 8,
+					blastwave_lossfactor = 0.9,
+					blastwave_damage = 10.1,
+					blastwave_nofriendly = "Vittu momentums",
+					blastwave_slowdmg = 100,
 				},
       
 				damage                  = {
-					default = 16.1,
+					default = 4.1,
 				},
   
 				explosionGenerator      = [[custom:riotballplus2_purple_small]],

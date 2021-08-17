@@ -36,7 +36,8 @@ local tooltips = {
 	AIR_STRAFE = "Gunship Strafe (_STATE_)\n  Set whether gunships strafe when fighting.",
 	UNIT_FLOAT_STATE = "Float State (_STATE_)\n  Set when certain amphibious units float to the surface.",
 	SELECTION_RANK = "Selection Rank (_STATE_)\n  Priority for selection filtering.",
-	TOGGLE_DRONES = "Drone Construction (_STATE_)\n  Toggle drone creation."
+	TOGGLE_DRONES = "Drone Construction (_STATE_)\n  Toggle drone creation.",
+	OVERRECLAIM = "Overreclaim Prevention (_STATE_)\nBlocks constructors from reclaiming when storage is nearly full.",
 }
 
 local tooltipsAlternate = {
@@ -75,6 +76,7 @@ local commandDisplayConfig = {
 	[CMD_AREA_GUARD] = { texture = imageDir .. 'Bold/guard.png', tooltip = "Guard: Protect the target and assist its production."},
 
 	[CMD_AREA_MEX] = {texture = imageDir .. 'Bold/mex.png'},
+	[CMD_AREA_TERRA_MEX] = {texture = imageDir .. 'Bold/mex.png'},
 
 	[CMD_JUMP] = {texture = imageDir .. 'Bold/jump.png'},
 
@@ -133,6 +135,13 @@ local commandDisplayConfig = {
 			tooltips.PRIORITY:gsub("_STATE_", "Low"),
 			tooltips.PRIORITY:gsub("_STATE_", "Normal"),
 			tooltips.PRIORITY:gsub("_STATE_", "High")
+		}
+	},
+	[CMD_OVERRECLAIM] = {
+		texture = {imageDir .. 'states/goo_off.png', imageDir .. 'states/goo_cloak.png'},
+		stateTooltip = {
+			tooltips.OVERRECLAIM:gsub("_STATE_", "Enabled"),
+			tooltips.OVERRECLAIM:gsub("_STATE_", "Disabled"),
 		}
 	},
 	[CMD_MISC_PRIORITY] = {

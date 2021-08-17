@@ -380,7 +380,11 @@ for name, ud in pairs(UnitDefs) do
 	if not ud.buildcostmetal then ud.buildcostmetal = cost end
 	if not ud.buildtime then ud.buildtime = cost end
 	
-	
+	if ud.customparams.dynamic_comm then -- Dynamic commanders have their explosion handled by unitscript. Also gives them antibait
+		ud.explodeas = "noweapon"
+		ud.selfdestructas = "noweapon"
+		ud.customparams.bait_level_default = 0
+	end
 	
 	--setting uniform M/E storage
 	local storage = math.max (ud.metalstorage or 0, ud.energystorage or 0)
@@ -393,7 +397,7 @@ for name, ud in pairs(UnitDefs) do
 	if name == "striderfunnelweb" then
 		storage = 1200
 	end
-	if ud.workertime and name:find("con") and not name:find("dyn") then
+	if (ud.workertime and name:find("con") and not name:find("dyn")) or name == "athena" then
 		storage = storage + (ud.workertime * conbonus)
 	end
 	

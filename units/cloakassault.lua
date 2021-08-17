@@ -28,6 +28,7 @@ return {
 			cloakregen		   = 20,
 			recloaktime 	   = 330,
 			cloaker_bestowed_radius = 75,
+			bait_level_default = 1,
 		},
 
 		explodeAs              = [[BIG_UNITEX]],
