@@ -89,7 +89,7 @@ return {
 				craterMult              = 0.15,
 
 				customparams = {
-					combatrange = 980,
+					combatrange = 850,
 					single_hit_multi = true,
 					--light_camera_height = 2000,
 					--light_color = [[0.9 0.84 0.45]],
@@ -106,7 +106,7 @@ return {
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 930,
+				range                   = 850,
 				reloadtime              = 1/15,
 				rgbColor                = [[0.5 1 1]],
 				separation              = 0.5,
@@ -162,7 +162,7 @@ return {
 				model                   = [[wep_merl.s3o]],
 				noSelfDamage            = true,
 				projectiles             = 2,
-				range                   = 930,
+				range                   = 850,
 				reloadtime              = 7,
 				smokeTrail              = false,
 				soundHit                = [[weapon/missile/vlaunch_hit]],
