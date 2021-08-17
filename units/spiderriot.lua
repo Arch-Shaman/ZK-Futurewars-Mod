@@ -97,7 +97,7 @@ return {
 				rgbColor                = [[1 0.5 0.2]],
 				size                    = 5,
 				soundHit                = [[weapon/cannon/wolverine_hit]],
-				soundStart              = [[weapon/cannon/wolverine_fire]],
+				soundStart              = [[weapon/cannon/flamethrower_fire]],
 				soundStartVolume        = 3.2,
 				sprayangle              = 2500,
 				turret                  = true,
