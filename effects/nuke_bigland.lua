@@ -60,11 +60,11 @@ return {
 				alwaysvisible = true,
 				heat = 30,
 				emitvector = [[0, 1, 0]],
-				heatfalloff = 0.1,
+				heatfalloff = 0.2,
 				maxheat = 45,
 				pos = [[r-2 r2, 5, r-2 r2]],
 				size = 1,
-				sizegrowth = 9,
+				sizegrowth = 7,
 				speed = [[0, 1 0, 0]],
 				texture = [[uglynovaexplo]],
 			},
@@ -78,12 +78,12 @@ return {
 			properties = {
 				alwaysvisible = true,
 				heat = 30,
-				heatfalloff = 0.3,
+				heatfalloff = 0.2,
 				maxheat = 45,
 				emitvector = [[0, 1, 0]],
 				pos = [[r-2 r2, 5, r-2 r2]],
 				size = 3,
-				sizegrowth = 25,
+				sizegrowth = 20,
 				speed = [[0, 1 0, 0]],
 				texture = [[flare]],
 			},
@@ -153,7 +153,7 @@ return {
 			air = true,
 			properties = {
 				colormap = [[
-				0.9 0.2 0 	0.025
+				0.9 0.2 0 	0.2
 				0.8 0.2 0 0.5
 				0.2 0.1 0	0.6
 				0.4 0.3 0.3 0.7
@@ -208,14 +208,17 @@ return {
 			class = [[CSimpleParticleSystem]],
 			count = 4,
 			ground = true,
+			water  = true,
+			air = true,
+			underwater = 1,
 			properties = {
 				emitrot = 0,
 				emitrotspread = 3,
 				airdrag = 0.8,
 				alwaysvisible = true,
-				colormap = [[	1.0 1.0 1.0 0.01
-								0.9 0.5 0.2 0.01
-								0.8 0.1 0.1 0.01
+				colormap = [[	1.0 1.0 1.0 0.2
+								0.9 0.5 0.2 0.2
+								0.8 0.1 0.1 0.1
 								0.8 0.1 0.1 0.0]],
 				directional = true,
 				emitvector = [[0r0.01r-0.01, 2r0.5, 0r0.01r-0.01]],
@@ -239,14 +242,17 @@ return {
 			class = [[CSimpleParticleSystem]],
 			count = 4,
 			ground = true,
+			water  = true,
+			air = true,
+			underwater = 1,
 			properties = {
 				emitrot = 0,
 				emitrotspread = 3,
 				airdrag = 0.8,
 				alwaysvisible = true,
-				colormap = [[	1.0 1.0 1.0 0.01
-								0.9 0.5 0.2 0.01
-								0.8 0.1 0.1 0.01
+				colormap = [[	1.0 1.0 1.0 0.2
+								0.9 0.5 0.2 0.2
+								0.8 0.1 0.1 0.1
 								0.8 0.1 0.1 0.0]],
 				directional = true,
 				emitvector = [[0r0.01r-0.01, 2r0.5, 0r0.01r-0.01]],
@@ -280,7 +286,7 @@ return {
 				colormap = [[
 				0.9 0.2 0 	0.05
 				0.8 0.2 0 0.05
-				0.8 0.2 0 0.05
+				0.8 0.2 0 0.25
 				0.2 0.1 0	0.35
 				0.2 0.1 0	0.35
 				0.4 0.3 0.3 0.6

@@ -28,8 +28,8 @@ return {
 		customParams        = {
 			modelradius      = [[10]],
 			requireammo      = [[1]],
-			reammoseconds    = [[80]],
-			refuelturnradius = [[1050]],
+			reammoseconds    = [[60]],
+			refuelturnradius = [[550]],
 			reallyabomber    = [[1]],
 			fighter_pullup_dist = 1500, -- pullup at the end of attack dive to avoid hitting terrain
 		},
@@ -80,8 +80,6 @@ return {
 				burnblow                = true,
 				cegTag                  = [[NUCKLEARMINI]],
 				collideFriendly         = false,
-				burst					= 3,
-				burstrate				= 0.7,
 				craterBoost             = 1,
 				craterMult              = 4,
 
@@ -93,14 +91,14 @@ return {
 				},
 
 				damage                  = {
-					default = 7500.1,
+					default = 10000.1,
 				},
 
-				edgeEffectiveness       = 0.5,
+				edgeEffectiveness       = 0.25,
 				explosionGenerator      = [[custom:nukebigland]],
 				fireStarter             = 100,
 				impulseBoost            = 0,
-				impulseFactor           = -0.8,
+				impulseFactor           = 2.3,
 				interceptedByShieldType = 2,
 				model                   = [[zeppelin_bomb.dae]],
 				mygravity				= 0.3,
@@ -111,8 +109,6 @@ return {
 				soundStart              = [[weapon/missile/liche_fire]],
 				startVelocity           = 100,
 				tolerance               = 16000,
-				tracks                  = true,
-				turnRate                = 30000,
 				weaponAcceleration      = 200,
 				weaponType              = [[AircraftBomb]],
 				weaponVelocity          = 800,
