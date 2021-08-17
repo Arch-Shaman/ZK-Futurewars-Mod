@@ -99,7 +99,7 @@ return {
 				},
 
 				edgeEffectiveness       = 0.5,
-				explosionGenerator      = [[custom:LONDON_SMALL]],
+				explosionGenerator      = [[custom:nukebigland]],
 				fireStarter             = 100,
 				flightTime              = 3,
 				impulseBoost            = 0,
