@@ -3,7 +3,7 @@ return {
 		unitname                      = [[missilenuke]],
 		name                          = [[Silencer Mk III]],
 		description                   = [[Nuclear Cruise Missile]],
-		buildCostMetal                = 3200,
+		buildCostMetal                = 4500,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 3,
