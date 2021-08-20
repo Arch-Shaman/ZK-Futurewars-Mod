@@ -1,7 +1,7 @@
 return {
 	name='Future Wars',
 	description='Zero-K',
-	version='v0.22.6',
+	version='v0.22.7',
 	shortname='ZKFW',
 	mutator='1',
 	game='Zero-K',
@@ -9,6 +9,5 @@ return {
 	modtype=1,
 	depend = {
 		[[rapid://zk:stable]],
-		[[Future Wars Music v1]],
 	},
 }
