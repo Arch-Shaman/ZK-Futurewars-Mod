@@ -97,6 +97,7 @@ return {
 				edgeEffectiveness       = 0.25,
 				explosionGenerator      = [[custom:nukebigland]],
 				fireStarter             = 100,
+				fireTolerance		    = 65536/2,
 				impulseBoost            = 0,
 				impulseFactor           = 2.3,
 				interceptedByShieldType = 2,
@@ -108,7 +109,7 @@ return {
 				soundHit                = [[weapon/missile/mininuke_hit]],
 				soundStart              = [[weapon/missile/liche_fire]],
 				startVelocity           = 100,
-				tolerance               = 16000,
+				tolerance               = 65536/2, -- 180 degrees
 				weaponAcceleration      = 200,
 				weaponType              = [[AircraftBomb]],
 				weaponVelocity          = 800,
