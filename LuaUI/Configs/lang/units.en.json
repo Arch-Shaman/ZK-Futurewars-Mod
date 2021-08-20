@@ -1145,9 +1145,9 @@
 		"helptext" : "The Mirage packs a medium-ranged jammer and a cloaking device for stealthy expansion and base maintenance. It can also enable a medium-range cloaking field, which unlike the aforementioned abilities costs energy to maintain."
 	},
 	"turretsunlance" : {
-		"name" : "Sunlance",
-		"description" : "Anti-Tank Turret - Requires 25 Power",
-		"helptext" : "The Sunlance's heavy disruptor beam cripples even the heaviest assault unit and will stop any armored assault dead in its tracks."
+		"name" : "Tracer",
+		"description" : "Sniper Turret - Requires 75 Power",
+		"helptext" : "The Tracer came into service shortly after the start of the Coalition Wars. Designed to counter the threat of ever growing artillery ranges with its X-32 (eXperimental weapon 32) Sniper Cannon, it is best deployed in the front lines where it can pick off slow moving targets at range. Beware: at close range, it is effectively useless."
 	},
 	"shieldassault" : {
 		"name" : "Vindicator",

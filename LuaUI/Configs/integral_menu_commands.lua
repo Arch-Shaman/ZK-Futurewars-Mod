@@ -330,6 +330,7 @@ local defense_commands = {
 	turretheavy       = {order = 16, row = 3, col = 3},
 	turretantiheavy   = {order = 17, row = 3, col = 4},
 	staticshield      = {order = 18, row = 3, col = 5},
+	turretsunlance    = {order = 19, row = 3, col = 6},
 }
 
 local special_commands = {

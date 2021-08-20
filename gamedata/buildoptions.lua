@@ -42,6 +42,7 @@ local buildOpts = {
 	[[turretemp]],
 	[[turretriot]],
 	[[turretheavylaser]],
+	[[turretsunlance]],
 	[[turretgauss]],
 	[[turretantiheavy]],
 	[[turretheavy]],
