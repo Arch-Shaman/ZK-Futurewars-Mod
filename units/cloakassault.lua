@@ -100,7 +100,7 @@ return {
 				cylinderTargeting      = 0,
 
 				damage                  = {
-					default        = 275,
+					default        = 350,
 				},
 
 				duration                = 10,

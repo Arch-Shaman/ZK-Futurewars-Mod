@@ -107,7 +107,7 @@ return {
 				tolerance               = 65536/4,
 				turnRate                = 9000,
 				range                   = 470,
-				reloadtime              = 5,
+				reloadtime              = 4.0,
 				smokeTrail              = false,
 				soundHit                = [[weapon/missile/sabot_hit]],
 				soundHitVolume          = 8,

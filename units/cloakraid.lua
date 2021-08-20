@@ -5,7 +5,7 @@ return {
 		description            = [[Ambush Raider Bot]],
 		acceleration           = 1.5,
 		brakeRate              = 2.4,
-		buildCostMetal         = 60,
+		buildCostMetal         = 65,
 		buildPic               = [[cloakraid.png]],
 		canGuard               = true,
 		canMove                = true,
@@ -33,7 +33,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 200,
 		maxSlope               = 36,
-		maxVelocity            = 4.5,
+		maxVelocity            = 4.7,
 		maxWaterDepth          = 22,
 		minCloakDistance       = 75,
 		movementClass          = [[KBOT2]],
@@ -86,7 +86,7 @@ return {
 				},
 
 				damage                  = {
-					default = 30.1,
+					default = 35.1,
 				},
 
 				explosionGenerator      = [[custom:EMG_HIT_HE]],
@@ -99,7 +99,7 @@ return {
 				noGap                   = false,
 				noSelfDamage            = true,
 				range                   = 220,
-				reloadtime              = 1.8,
+				reloadtime              = 1.7,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
 				size                    = 3,

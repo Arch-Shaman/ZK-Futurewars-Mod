@@ -40,7 +40,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 950,
 		maxSlope               = 36,
-		maxVelocity            = 2.2,
+		maxVelocity            = 2.3,
 		maxWaterDepth          = 22,
 		minCloakDistance       = 230,
 		movementClass          = [[KBOT3]],
@@ -96,7 +96,7 @@ return {
 				},
 
 				damage                  = {
-					default = 50.1,
+					default = 60.1,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -107,7 +107,7 @@ return {
 				intensity               = 0.7,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 275,
+				range                   = 300,
 				reloadtime              = 6/30,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
