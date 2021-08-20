@@ -91,7 +91,7 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				mygravity               = 0.1,
-				range                   = 1850,
+				range                   = 2200,
 				reloadtime              = 10,
 				soundHit                = [[explosion/ex_large4]],
 				soundStart              = [[explosion/ex_large5]],
