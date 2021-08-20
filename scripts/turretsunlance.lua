@@ -25,7 +25,6 @@ function ReloadWatcher()
 		if reloadFrame and reloadFrame > frame then
 			reloading = true
 			GG.AimDelay_ForceWeaponRestart(unitID, 1)
-		end
 		else
 			reloading = false
 		end
