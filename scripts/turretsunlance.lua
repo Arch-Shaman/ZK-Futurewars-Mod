@@ -20,7 +20,7 @@ function ReloadWatcher()
 	local reloadFrame, frame
 	while true do
 		Sleep(33)
-		Spring.GetGameFrame()
+		frame = Spring.GetGameFrame()
 		_, _, reloadFrame = Spring.GetUnitWeaponState(unitID, 1)
 		if reloadFrame and reloadFrame > frame then
 			reloading = true
