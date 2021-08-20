@@ -11,20 +11,42 @@ for i=1, #UnitDef.weapons do
 	delay[i] = WeaponDefs[UnitDef.weapons[i].weaponDef].customParams.aimdelay
 end
 
+local reloading = false
+
 -- Signal definitions
 local SIG_AIM = 1
+
+function ReloadWatcher()
+	local reloadFrame, frame
+	while true do
+		Sleep(33)
+		Spring.GetGameFrame()
+		_, _, reloadFrame = Spring.GetUnitWeaponState(unitID, 1)
+		if reloadFrame and reloadFrame > frame then
+			reloading = true
+			GG.AimDelay_ForceWeaponRestart(unitID, 1)
+		end
+		else
+			reloading = false
+		end
+	end
+end
 
 function script.AimWeapon(num, heading, pitch)
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
+	if (spGetUnitRulesParam(unitID, "lowpower") ~= 0) then --checks for sufficient energy in grid
+		return false
+	end
 	Turn(turret, y_axis, heading, math.rad(80))
 	Turn(breech, x_axis, 0 - pitch, math.rad(60))
 	WaitForTurn(breech, x_axis)
 	WaitForTurn(turret, y_axis)
-	if (spGetUnitRulesParam(unitID, "lowpower") ~= 0) then --checks for sufficient energy in grid
+	if reloading then
 		return false
+	else
+		return GG.AimDelay_AttemptToFire(unitID, num, heading, pitch, delay[num])
 	end
-	return GG.AimDelay_AttemptToFire(unitID, num, heading, pitch, delay[num])
 end
 
 function script.AimFromWeapon(num) return breech end
@@ -46,6 +68,7 @@ end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+	StartThread(ReloadWatcher)
 end
 
 function script.Killed(recentDamage, maxHealth)
