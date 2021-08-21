@@ -121,10 +121,10 @@ return {
 					light_color = [[0.75 0.4 0.15]],
 					light_radius = 220,
 					blastwave_size = 25,
-					blastwave_impulse = 1,
+					blastwave_impulse = 4,
 					blastwave_speed = 30,
 					blastwave_life = 4,
-					blastwave_lossfactor = 0.55,
+					blastwave_lossfactor = 0.66,
 					blastwave_damage = 1000,
 
 					numprojectiles1 = 10, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
@@ -184,7 +184,7 @@ return {
 					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
 					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeddeploy = 20,
-					shield_damage = 100,
+					shield_damage = 300,
 					bogus = 1
 				},
 				damage                  = {
@@ -210,6 +210,7 @@ return {
 				turret                  = true,
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 320,
+				waterWeapon             = true,
 			},
 			
 			cluster_fragment = {
@@ -220,9 +221,9 @@ return {
 				craterMult              = 5,
 
 				damage                  = {
-					default = 100,
+					default = 350,
 				},
-
+				edgeEffectiveness		= 0.4,
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
 				fireStarter             = 180,
 				impulseBoost            = 0,
@@ -242,6 +243,7 @@ return {
 				firetolerance			= 32000,
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 400,
+				waterWeapon             = true,
 			},
 		}
 	} 
