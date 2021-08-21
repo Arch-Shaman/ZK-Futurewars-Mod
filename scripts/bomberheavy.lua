@@ -128,6 +128,21 @@ function script.BlockShot(num)
 	return (GetUnitValue(COB.CRASHING) == 1) or RearmBlockShot()
 end
 
+local function Explode()
+	if Spring.GetUnitRulesParam(unitID, "noammo") ~= 1 then
+		local px, py, pz = Spring.GetUnitPosition(unitID)
+		Spring.SpawnProjectile(WeaponDefNames["bomberheavy_deathexplo"].id, {
+			pos = {px, py + 5, pz},
+			["end"] = {px, py, pz},
+			speed = {0, 0, 0},
+			ttl = 10,
+			gravity = 1,
+			team = Spring.GetGaiaTeamID(),
+			owner = unitID,
+		})
+	end
+end
+
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
 	if severity <= .25 then

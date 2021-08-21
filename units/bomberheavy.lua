@@ -113,6 +113,48 @@ return {
 				weaponType              = [[AircraftBomb]],
 				weaponVelocity          = 800,
 			},
+			
+			deathexplo = {
+				name                    = [[BN-22 Atomic Bomb]],
+				areaOfEffect            = 800,
+				avoidFeature            = false,
+				avoidFriendly           = false,
+				--cegTag                  = [[NUCKLEARMINI]],
+				collideFriendly         = false,
+				craterBoost             = 1,
+				craterMult              = 4,
+
+				customParams            = {
+					burst = Shared.BURST_UNRELIABLE,
+					reaim_time = 15, -- Fast update not required (maybe dangerous)
+					light_color = [[1.6 0.85 0.38]],
+					light_radius = 750,
+				},
+
+				damage                  = {
+					default = 10000.1,
+				},
+
+				edgeEffectiveness       = 0.25,
+				explosionGenerator      = [[custom:nukebigland]],
+				fireStarter             = 100,
+				fireTolerance		    = 65536,
+				impulseBoost            = 0,
+				impulseFactor           = 2.3,
+				interceptedByShieldType = 2,
+				model                   = [[zeppelin_bomb.dae]],
+				mygravity				= 0.5,
+				range                   = 300,
+				reloadtime              = 1,
+				smokeTrail              = false,
+				soundHit                = [[weapon/missile/mininuke_hit]],
+				soundStart              = [[weapon/missile/liche_fire]],
+				startVelocity           = 100,
+				tolerance               = 65536/2, -- 180 degrees
+				weaponAcceleration      = 200,
+				weaponType              = [[AircraftBomb]],
+				weaponVelocity          = 800,
+			},
 
 		},
 
