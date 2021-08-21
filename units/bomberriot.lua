@@ -116,7 +116,7 @@ unitDef = {
 
 		NAPALM = {
 			name                    = [[Napalm Bomb]],
-			areaOfEffect            = 0,
+			areaOfEffect            = 216,
 			avoidFeature            = false,
 			avoidFriendly           = false,
 			burst                   = 3,
