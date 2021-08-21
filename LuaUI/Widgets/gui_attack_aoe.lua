@@ -30,6 +30,10 @@ local minSpread            = 8 --weapons with this spread or less are ignored
 local numAoECircles        = 9
 local pointSizeMult        = 2048
 
+local overrides = {
+	[UnitDefNames["bomberheavy"].id] = 0.6
+}
+
 --------------------------------------------------------------------------------
 --vars
 --------------------------------------------------------------------------------
@@ -56,6 +60,7 @@ local detrimentUnitID = nil
 --------------------------------------------------------------------------------
 --speedups
 --------------------------------------------------------------------------------
+local spGetUnitDefID         = Spring.GetUnitDefID
 local GetActiveCommand       = Spring.GetActiveCommand
 local GetCameraPosition      = Spring.GetCameraPosition
 local GetFeaturePosition     = Spring.GetFeaturePosition
@@ -662,7 +667,7 @@ end
 --------------------------------------------------------------------------------
 --dropped
 --------------------------------------------------------------------------------
-local function DrawDroppedScatter(aoe, ee, scatter, v, fx, fy, fz, tx, ty, tz, salvoSize, salvoDelay)
+local function DrawDroppedScatter(aoe, ee, scatter, v, fx, fy, fz, tx, ty, tz, salvoSize, salvoDelay, alphaOverride)
 	local dx = tx - fx
 	local dz = tz - fz
 
@@ -675,6 +680,11 @@ local function DrawDroppedScatter(aoe, ee, scatter, v, fx, fy, fz, tx, ty, tz, s
 	local vertices = {}
 	local currScatter = scatter * v * sqrt(2*fy/g)
 	local alphaMult = min(v * salvoDelay / aoe, 1)
+	if alphaOverride then
+		alphaMult = alphaOverride
+	else
+		alphaMult = min(v * salvoDelay / aoe, 1)
+	end
 
 	for i=1,salvoSize do
 		local delay = salvoDelay * (i - (salvoSize + 1) / 2)
@@ -733,7 +743,7 @@ end
 
 function widget:DrawWorld()
 	mouseDistance = GetMouseDistance() or 1000
-
+	local alphaOverride
 	local tx, ty, tz, targetIsGround = GetMouseTargetPosition()
 	if (not tx) then
 		return
@@ -754,6 +764,7 @@ function widget:DrawWorld()
 	if (cmd == CMD_ATTACK and aoeUnitInfo) then
 		info = aoeUnitInfo
 		unitID = aoeUnitID
+		alphaOverride = overrides[spGetUnitDefID(unitID)]
 	elseif (cmd == CMD_MANUALFIRE and dgunUnitInfo) then
 		info = dgunUnitInfo
 		local extraDrawParam = Spring.GetUnitRulesParam(dgunUnitID, "secondary_range")
@@ -789,7 +800,6 @@ function widget:DrawWorld()
 	end
 
 	local weaponType = info.type
-
 	if (weaponType == "noexplode") then
 		DrawNoExplode(info.aoe, fx, fy, fz, tx, ty, tz, info.range)
 	elseif (weaponType == "ballistic") then
@@ -807,7 +817,7 @@ function widget:DrawWorld()
 		DrawAoE(tx, ty, tz, info.aoe, info.ee)
 		DrawDirectScatter(info.scatter, fx, fy, fz, tx, ty, tz, info.range, GetUnitRadius(unitID))
 	elseif (weaponType == "dropped") then
-		DrawDroppedScatter(info.aoe, info.ee, info.scatter, info.v, fx, info.h, fz, tx, ty, tz, info.salvoSize, info.salvoDelay)
+		DrawDroppedScatter(info.aoe, info.ee, info.scatter, info.v, fx, info.h, fz, tx, ty, tz, info.salvoSize, info.salvoDelay, alphaOverride)
 	elseif (weaponType == "wobble") then
 		DrawAoE(tx, ty, tz, info.aoe, info.ee)
 		DrawWobbleScatter(info.scatter, fx, fy, fz, tx, ty, tz, info.rangeScatter, info.range)
