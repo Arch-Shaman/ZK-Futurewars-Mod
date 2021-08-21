@@ -38,13 +38,13 @@ function SpeedThread()
 		reloading = Spring.GetUnitRulesParam(unitID, "noammo") == 1
 		if reloading and not oldstate then
 			oldstate = true
-			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", unarmedspeed)
+			Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", unarmedspeed)
 			SetAirMoveTypeData(unitID, "maxAcc", unarmedspeed)
 			GG.UpdateUnitAttributes(unitID)
 			GG.UpdateUnitAttributes(unitID)
 		elseif not reloading and oldstate then
 			oldstate = false
-			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", armedspeed)
+			Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", armedspeed)
 			SetAirMoveTypeData(unitID, "maxAcc", armedspeed)
 			GG.UpdateUnitAttributes(unitID)
 			GG.UpdateUnitAttributes(unitID)
