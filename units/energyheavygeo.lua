@@ -78,8 +78,8 @@ return {
 
 				fireStarter             = 70,
 				interceptedByShieldType = 0,
-				model                   = [[wep_b_fabby.s3o]], --TODO: replace with SharkGameDev's better model. delete this once it's done.
-				range                   = 100,
+				model                   = [[wep_b_fabby.s3o]],
+				range                   = 5,
 				reloadtime              = 45,
 				soundHit                = [[nosound]],
 				soundStart              = [[nosound]],
@@ -88,7 +88,7 @@ return {
 				turret                  = true,
 				waterweapon             = true,
 				weaponType              = [[LaserCannon]],
-				weaponVelocity          = 0,
+				weaponVelocity          = 1,
 			},
 			NAPALM_FRAGMENT_DUMMY = {
 				name                    = [[Volcanic Superbomb]], --https://en.wikipedia.org/wiki/Volcanic_bomb but on steroids

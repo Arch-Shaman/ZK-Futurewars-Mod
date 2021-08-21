@@ -1,7 +1,7 @@
 return { 
 	gunshipheavyskirm = {
 		unitname            = [[gunshipheavyskirm]],
-		name                = [[Aurora Boralis]],
+		name                = [[Aurora]],
 		description         = [[Fire Support Gunship]],
 		acceleration        = 0.2,
 		brakeRate           = 0.16,
@@ -79,7 +79,7 @@ return {
 		weaponDefs          = {
 
 			emg = {
-				name                    = [[Guass Autocannon]],
+				name                    = [[Gauss Autocannon]],
 				alphaDecay              = 0.12,
 				areaOfEffect            = 96,
 				avoidfeature            = false,
@@ -113,7 +113,7 @@ return {
 				size                    = 0.8,
 				sizeDecay               = -0.1,
 				soundHit                = [[weapon/cannon/heavy_gauss_hit]],
-				soundHitVolume          = 20,
+				soundHitVolume          = 13,
 				soundStart              = [[weapon/cannon/gauss_rapid]],
 				soundStartVolume        = 2.5,
 				sprayAngle              = 1000,
@@ -135,7 +135,7 @@ return {
 			
 				customParams        = {
 					burst = Shared.BURST_RELIABLE,
-					reaim_time = 15, -- Some script bug. It does not need fast aim updates anyway.
+					reaim_time = 15,
 					light_camera_height = 2500,
 					light_color = [[1 0.8 0.2]],
 					reveal_unit = 7,
