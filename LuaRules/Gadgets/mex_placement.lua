@@ -49,7 +49,7 @@ local adjustvalue = 1.0
 
 do
 	local modoptions = Spring.GetModOptions() or {}
-	local adjust = modoptions.metaladjustment or true
+	local adjust = (modoptions.metaladjustment and modoptions.metaladjustment == 1)
 	if adjust then
 		local numplayers = 0
 		for i = 1, 16 do
@@ -186,7 +186,7 @@ function gadget:Initialize()
 		for _, data in pairs(metalSpots) do
 			local old = data.metal
 			local final = data.metal * adjustvalue
-			final = tonumber(string.format("%.1f", final) or old
+			final = tonumber(string.format("%.1f", final)) or old
 			data.metal = final
 		end
 	end

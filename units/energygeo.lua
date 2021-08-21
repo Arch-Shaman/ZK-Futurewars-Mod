@@ -29,14 +29,14 @@ return {
 			morphto = [[energyheavygeo]],
 			morphtime = [[100]],
 			decay_maxoutput= 2,
-			decay_initialrate = 0.0,
-			decay_time     = 2,
+			decay_initialrate = 0.005,
+			decay_time     = 2.5,
 			decay_rate     = -0.005,
 			priority_misc = 1, -- Medium
 			default_spacing = 0,
 		},
 
-		energyMake                    = 25,
+		energyMake                    = 30,
 		energyUse                     = 0,
 		explodeAs                     = [[ESTOR_BUILDING]],
 		footprintX                    = 5,
