@@ -43,7 +43,7 @@ return {
 		idleTime            = 1800,
 		maneuverleashlength = [[1280]],
 		maxAcc              = 0.75,
-		maxDamage           = 15000,
+		maxDamage           = 11000,
 		maxFuel             = 1000000,
 		maxRudder           = 0.02,
 		maxVelocity         = 5.5,
