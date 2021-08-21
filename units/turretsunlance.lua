@@ -69,8 +69,8 @@ return {
 					burst = Shared.BURST_RELIABLE,
 					light_color = [[3 2.33 1.5]],
 					light_radius = 150,
-					allowedpitcherror = 0.35,
-					allowedheadingerror = 0.3,
+					allowedpitcherror = 0.25,
+					allowedheadingerror = 0.2,
 				},
 
 				damage                  = {
@@ -83,8 +83,8 @@ return {
 				impulseFactor           = 0.2,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 2200,
-				reloadtime              = 10.0,
+				range                   = 1970,
+				reloadtime              = 6.5,
 				soundHit                = [[weapon/cannon/cannonfire_004]],
 				soundStart              = [[weapon/cannon/sniperturret_fire]],
 				turret                  = true,

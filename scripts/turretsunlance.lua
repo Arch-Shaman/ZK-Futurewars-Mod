@@ -6,6 +6,8 @@ local base, turret, breech, barrel2, flare = piece("base", "turret", "breech", "
 -- unused piece: barrel1
 local smokePiece = {base, turret}
 
+local turnrate = math.rad(33.2)
+
 local delay = {}
 for i=1, #UnitDef.weapons do
 	delay[i] = WeaponDefs[UnitDef.weapons[i].weaponDef].customParams.aimdelay
@@ -37,8 +39,8 @@ function script.AimWeapon(num, heading, pitch)
 	if (spGetUnitRulesParam(unitID, "lowpower") ~= 0) then --checks for sufficient energy in grid
 		return false
 	end
-	Turn(turret, y_axis, heading, math.rad(80))
-	Turn(breech, x_axis, 0 - pitch, math.rad(60))
+	Turn(turret, y_axis, heading, turnrate)
+	Turn(breech, x_axis, 0 - pitch, turnrate)
 	WaitForTurn(breech, x_axis)
 	WaitForTurn(turret, y_axis)
 	if reloading then
@@ -58,7 +60,7 @@ local function Recoil()
 	EmitSfx(flare, 1024)
 	Move(barrel2, z_axis, -6)
 	Sleep(300)
-	Move(barrel2, z_axis, 0, 4)
+	Move(barrel2, z_axis, 0, 1.5)
 end
 
 function script.Shot(num)
