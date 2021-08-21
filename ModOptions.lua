@@ -205,6 +205,14 @@ local options = {
 		def		= "",
 	},
 	{
+		key		= "metaladjustment",
+		name	= "Adjust Metal Values",
+		desc	= "Adjusts metal values if playercount is above 5.",
+		section	= 'startconds',
+		type	= "bool",
+		def		= true,
+	},
+	{
 		key = 'globallos',
 		name = 'Full visibility',
 		desc = 'No fog of war, everyone can see the entire map.',
