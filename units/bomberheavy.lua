@@ -144,7 +144,7 @@ return {
 				interceptedByShieldType = 2,
 				model                   = [[zeppelin_bomb.dae]],
 				mygravity				= 0.5,
-				range                   = 300,
+				range                   = 100,
 				reloadtime              = 1,
 				smokeTrail              = false,
 				soundHit                = [[weapon/missile/mininuke_hit]],
@@ -152,7 +152,7 @@ return {
 				startVelocity           = 100,
 				tolerance               = 65536/2, -- 180 degrees
 				weaponAcceleration      = 200,
-				weaponType              = [[AircraftBomb]],
+				weaponType              = [[MissileLauncher]],
 				weaponVelocity          = 800,
 			},
 
