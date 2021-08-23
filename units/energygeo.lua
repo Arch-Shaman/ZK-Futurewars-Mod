@@ -2,7 +2,7 @@ return {
 	energygeo = {
 		unitname                      = [[energygeo]],
 		name                          = [[Geothermal Generator]],
-		description                   = [[Medium Powerplant (+25)]],
+		description                   = [[Medium Powerplant (+6, increases over time)]],
 		acceleration                  = 0,
 		activateWhenBuilt             = true,
 		brakeRate                     = 0,
@@ -28,15 +28,15 @@ return {
 
 			morphto = [[energyheavygeo]],
 			morphtime = [[100]],
-			decay_maxoutput= 2,
-			decay_initialrate = 0.01,
+			decay_maxoutput= 1,
+			decay_initialrate = 0.04,
 			decay_time     = 1,
-			decay_rate     = -0.01,
+			decay_rate     = -0.003,
 			priority_misc = 1, -- Medium
 			default_spacing = 0,
 		},
 
-		energyMake                    = 30,
+		energyMake                    = 150,
 		energyUse                     = 0,
 		explodeAs                     = [[ESTOR_BUILDING]],
 		footprintX                    = 5,

@@ -681,8 +681,8 @@
 	},
 	"energygeo" : {
 		"name" : "Geothermal Generator",
-		"description" : "Powerplant: +25e",
-		"helptext" : "Geothermal plants are highly efficient energy sources that can only be built on geovents on the map. They explode quite violently when destroyed, so avoid placing anything directly adjacent."
+		"description" : "Powerplant: +6e, rapidly increases",
+		"helptext" : "Geothermal plants start boring into the ground to trap energy and become increasingly efficient over time. They can only be built on geovents on the map, which limits their effectiveness. They explode quite violently when destroyed, so avoid placing anything directly adjacent."
 	},
 	"jumpcon" : {
 		"name" : "Constable",
