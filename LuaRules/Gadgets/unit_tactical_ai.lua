@@ -790,7 +790,7 @@ local function DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typ
 		end
 	end
 	local canJump = UnitDefs[myDef].customParams.jump_range and behaviour.emergencyJumpRange and (spGetUnitRulesParam(unitID, "jumpReload") or 1) and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
-	Spring.Echo("CanJump: " .. tostring(canJump))
+	--Spring.Echo("CanJump: " .. tostring(canJump))
 	if behaviour.emergencyJumpRange + behaviour.fleeLeeway > pointDis and canJump then
 		local jumpRange = UnitDefs[myDef].customParams.jump_range
 		local disScale = jumpRange/pointDis * 0.95
