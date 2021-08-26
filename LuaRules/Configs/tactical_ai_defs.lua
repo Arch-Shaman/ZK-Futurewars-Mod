@@ -1475,7 +1475,7 @@ local behaviourConfig = {
 		wardFireShield = 1100,
 		wardFireDefault = true,
 		
-		emergencyJumpRange = 100, -- I don't want enemies to come within this range.
+		emergencyJumpRange = 250, -- I don't want enemies to come within this range.
 	},
 	{
 		name = "striderdante",
