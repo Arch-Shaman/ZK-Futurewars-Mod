@@ -551,11 +551,12 @@ end
 
 local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typeKnown, move, isIdleAttack, cmdID, cmdTag, frame, haveFightAndHoldPos, doHug)
 	local unitData = unit[unitID]
-	--local pointDis = spGetUnitSeparation (enemy, unitID, true)
+	local pointDis = spGetUnitSeparation (enemy, unitID, true)
 	
 	local vx, vy, vz, enemySpeed = spGetUnitVelocity(enemy)
 	local ex, ey, ez, _, aimY = spGetUnitPosition(enemy, false, true) -- enemy position
 	local ux, uy, uz = spGetUnitPosition(unitID) -- my position
+	local myDef = spGetUnitDefID(unitID)
 
 	local doDebug = (debugUnit and debugUnit[unitID]) or debugAll
 	if debugAction or doDebug then
@@ -638,6 +639,22 @@ local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 	local skirmRange = (doHug and behaviour.hugRange) or ((GetEffectiveWeaponRange(unitData.udID, -dy, behaviour.weaponNum) or 0) - behaviour.skirmLeeway)
 	--Spring.Echo("skirmRange", skirmRange, GetEffectiveWeaponRange(unitData.udID, -dy, behaviour.weaponNum))
 	local reloadFrames
+	
+	local canJump = UnitDefs[myDef].customParams.jump_range and behaviour.emergencyJumpRange and (spGetUnitRulesParam(unitID, "jumpReload") or 1) and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
+	--Spring.Echo("CanJump: " .. tostring(canJump))
+	if canJump and behaviour.emergencyJumpRange + behaviour.skirmLeeway > pointDis then
+		local jumpRange = UnitDefs[myDef].customParams.jump_range
+		local wantedDis = jumpRange * 0.95
+		local cx = ux - wantedDis * ex/eDist
+		local cy = uy
+		local cz = uz - wantedDis * ez/eDist
+		GG.recursion_GiveOrderToUnit = true
+		GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
+		GG.recursion_GiveOrderToUnit = false
+		unitData.cx, unitData.cy, unitData.cz = cx, cy, cz
+		unitData.receivedOrder = true
+		return true
+	end
 	if behaviour.reloadSkirmLeeway then
 		local reloadState = spGetUnitWeaponState(unitID, behaviour.weaponNum, 'reloadState')
 		if reloadState then
@@ -721,6 +738,7 @@ local function DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typ
 	local fleeDistance = behaviour.fleeDistance
 	local orderdistance = behaviour.fleeOrderDis
 	local cloakstrike = spGetUnitRulesParam(unitID, "cloakstrike_active")
+	local myDef = spGetUnitDefID(unitID)
 	local cloakedflee = behaviour.cloakFlee and not Spring.GetUnitIsCloaked(unitID) and (cloakstrike == nil or cloakstrike < 10)
 	if cloakedflee then
 		enemyRange = behaviour.minDecloakFleeRange or 500
@@ -771,7 +789,21 @@ local function DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typ
 			return false
 		end
 	end
-	
+	local canJump = UnitDefs[myDef].customParams.jump_range and behaviour.emergencyJumpRange and (spGetUnitRulesParam(unitID, "jumpReload") or 1) and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
+	Spring.Echo("CanJump: " .. tostring(canJump))
+	if behaviour.emergencyJumpRange + behaviour.fleeLeeway > pointDis and canJump then
+		local jumpRange = UnitDefs[myDef].customParams.jump_range
+		local disScale = jumpRange/pointDis * 0.95
+		local cx = ux + disScale *(ux-ex)
+		local cy = uy
+		local cz = uz + disScale *(uz-ez)
+		GG.recursion_GiveOrderToUnit = true
+		GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
+		GG.recursion_GiveOrderToUnit = false
+		unitData.cx, unitData.cy, unitData.cz = cx, cy, cz
+		unitData.receivedOrder = true
+		return true
+	end
 	if enemyRange + behaviour.fleeLeeway > pointDis then
 		local dis = orderdistance
 		if (pointDis+dis > behaviour.skirmRange-behaviour.stoppingDistance) then
@@ -781,9 +813,7 @@ local function DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typ
 		local cx = ux+(ux-ex)*f
 		local cy = uy
 		local cz = uz+(uz-ez)*f
-
 		GG.recursion_GiveOrderToUnit = true
-
 		if cmdID then
 			if move then
 				cx, cy, cz = GiveClampedOrderToUnit(unitID, CMD_INSERT, {0, CMD_RAW_MOVE, CMD_OPT_INTERNAL, cx, cy, cz }, CMD.OPT_ALT )

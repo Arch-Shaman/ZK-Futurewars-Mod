@@ -1463,7 +1463,7 @@ local behaviourConfig = {
 		maxSwarmLeeway = 10,
 		minSwarmLeeway = 130,
 		skirmOrderDis = 150,
-		skirmLeeway = 5,
+		skirmLeeway = 50,
 		skirmBlockedApproachFrames = 60,
 		velPredChaseFactor = 0.5,
 
@@ -1474,6 +1474,8 @@ local behaviourConfig = {
 		wardFirePredict = 0,
 		wardFireShield = 1100,
 		wardFireDefault = true,
+		
+		emergencyJumpRange = 100, -- I don't want enemies to come within this range.
 	},
 	{
 		name = "striderdante",
