@@ -244,7 +244,7 @@ function script.AimWeapon(num, heading, pitch)
 	return true
 end
 
-function script.FireWeapon(num)
+function script.Shot(num)
 	Spin(magazine, y_axis, 2)
 	EmitSfx(ejector, 1024)
 	EmitSfx(flare, 1025)

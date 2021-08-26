@@ -52,7 +52,7 @@ return {
 		sfxtypes               = {
 
 			explosiongenerators = {
-				[[custom:WARMUZZLE]],
+				[[custom:RAIDMUZZLE]],
 				[[custom:emg_shells_l]],
 			},
 

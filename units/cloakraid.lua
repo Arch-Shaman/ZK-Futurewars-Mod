@@ -45,7 +45,7 @@ return {
 		sfxtypes               = {
 			explosiongenerators = {
 				[[custom:emg_shells_l]],
-				[[custom:flashmuzzle1]],
+				[[custom:RAIDMUZZLE]],
 			},
 		},
 		sightDistance          = 560,

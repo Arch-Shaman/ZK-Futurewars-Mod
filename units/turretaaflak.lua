@@ -43,9 +43,8 @@ return { turretaaflak = {
 		sfxtypes               = {
 
 		explosiongenerators = {
-				[[custom:HEAVY_CANNON_MUZZLE]],
+				[[custom:heavy_cannon_muzzle]],
 			},
-
 		},
 		sightDistance                 = 660,
 		turnRate                      = 0,

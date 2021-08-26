@@ -44,7 +44,7 @@ return {
 		
 			explosiongenerators = {
 				[[custom:RAIDMUZZLE]],
-				[[custom:LEVLRMUZZLE]],
+				[[custom:LEVLRMUZZLE_CLOUDLESS]],
 				[[custom:RIOT_SHELL_L]],
 			},
 		},
