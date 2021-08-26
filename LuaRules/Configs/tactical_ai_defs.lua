@@ -186,6 +186,13 @@ local torpedoIdleFleeArray = NameToDefID({
 	"amphriot",
 })
 
+local jumpassaultflee = NameToDefID({
+	"cloakraid",
+	"jumpbomb",
+})
+
+local jumpassaultswarm = SetMinus(allGround, jumpassaultflee)
+
 medRangeRaiderIdleFleeArray = Union(medRangeRaiderIdleFleeArray, longRangeRaiderIdleFleeArray)
 shortRangeRaiderIdleFleeArray = Union(shortRangeRaiderIdleFleeArray, medRangeRaiderIdleFleeArray)
 veryShortRangeRaiderIdleFleeArray = Union(veryShortRangeRaiderIdleFleeArray, shortRangeRaiderIdleFleeArray)
@@ -952,6 +959,8 @@ local behaviourConfig = {
 		wardFirePredict = 5,
 		wardFireShield = 50,
 		wardFireDefault = true,
+		jumpAttack = true,
+		emergencyJumpRange = 200,
 	},
 	{
 		name = "tankraid",
@@ -1889,6 +1898,8 @@ local behaviourConfig = {
 		fleeDistance = 100,
 		minFleeRange = 500,
         skirmLeeway = 50,
+		skirmOrderDis = 100,
+		emergencyJumpRange = 300,
 	},
 	{
 		name = "hoveraa",
@@ -2124,7 +2135,21 @@ local behaviourConfig = {
 	},
 	{
 		name = "jumpassault",
-		onlyIdleHandling = true,
+		swarms = jumpassaultswarm,
+		skirms = {},
+		flees = jumpassaultflee,
+		circleStrafe = true,
+		minCircleStrafeDistance = 40,
+		strafeOrderLength = 50,
+		minSwarmRange = 50,
+		fleeLeeway = 200,
+		fleeDistance = 400,
+		minFleeRange = 500,
+        skirmLeeway = 200,
+		hugRange = 50,
+		emergencyJumpRange = 100,
+		fleeOrderDis = 200,
+		jumpAttack = true,
 	},
 	{
 		name = "tankheavyarty",

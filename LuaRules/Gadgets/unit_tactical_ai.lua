@@ -410,8 +410,9 @@ end
 
 local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typeKnown, move, isIdleAttack, cmdID, cmdTag, fightX, fightY, fightZ, frame)
 	local unitData = unit[unitID]
-	
+	local myunitdef = spGetUnitDefID(unitID)
 	local doDebug = (debugUnit and debugUnit[unitID]) or debugAll
+	local canJump = UnitDefs[myunitdef].customParams.jump_range and behaviour.jumpAttack and (spGetUnitRulesParam(unitID, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
 	if debugAction or doDebug then
 		if doDebug then
 			Spring.Echo(" === DoSwarmEnemy", unitID, "===")
@@ -419,7 +420,7 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 		Spring.Utilities.UnitEcho(unitID, "Swarm")
 	end
 	
-	if not (enemy and typeKnown) then
+	if not (enemy and typeKnown) and not behaviour.dontjink then
 		if not (((cmdID == CMD_FIGHT) or move) and fightZ) then
 			return false
 		end
@@ -478,6 +479,23 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 		end
 		
 		UpdateIdleAgressionState(unitID, behaviour, unitData, frame, enemy, typeKnown and enemyUnitDef, behaviour.swarmEnemyDefaultRange, pointDis, ux, uz, ex, ez)
+	end
+	
+	local jumpRange = UnitDefs[myunitdef].customParams.jump_range
+	if canJump and pointDis < jumpRange * 0.95 and pointDis > 0.4 * jumpRange then
+		local vx, vy, vz = spGetUnitVelocity(enemy)
+		local timescale = math.ceil(pointDis / UnitDefs[myunitdef].customParams.jump_speed) -- estimate the time to get to the point and multiply velocity by it to get predicted location.
+		cx = ex + (vx * timescale)
+		cy = ey
+		cz = ez + (vz * timescale)
+		GG.recursion_GiveOrderToUnit = true
+		GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
+		GG.recursion_GiveOrderToUnit = false
+		return true
+	end
+	
+	if behaviour.dontjink then
+		return false
 	end
 	
 	if behaviour.maxSwarmRange < pointDis then -- if I cannot shoot at the enemy
@@ -640,7 +658,7 @@ local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 	--Spring.Echo("skirmRange", skirmRange, GetEffectiveWeaponRange(unitData.udID, -dy, behaviour.weaponNum))
 	local reloadFrames
 	
-	local canJump = UnitDefs[myDef].customParams.jump_range and behaviour.emergencyJumpRange and (spGetUnitRulesParam(unitID, "jumpReload") or 1) and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
+	local canJump = UnitDefs[myDef].customParams.jump_range and behaviour.emergencyJumpRange and (spGetUnitRulesParam(unitID, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
 	--Spring.Echo("CanJump: " .. tostring(canJump))
 	if canJump and behaviour.emergencyJumpRange + behaviour.skirmLeeway > pointDis then
 		local jumpRange = UnitDefs[myDef].customParams.jump_range
@@ -789,9 +807,9 @@ local function DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typ
 			return false
 		end
 	end
-	local canJump = UnitDefs[myDef].customParams.jump_range and behaviour.emergencyJumpRange and (spGetUnitRulesParam(unitID, "jumpReload") or 1) and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
+	local canJump = UnitDefs[myDef].customParams.jump_range and behaviour.emergencyJumpRange and (spGetUnitRulesParam(unitID, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
 	--Spring.Echo("CanJump: " .. tostring(canJump))
-	if behaviour.emergencyJumpRange + behaviour.fleeLeeway > pointDis and canJump then
+	if canJump and behaviour.emergencyJumpRange + behaviour.fleeLeeway > pointDis then
 		local jumpRange = UnitDefs[myDef].customParams.jump_range
 		local disScale = jumpRange/pointDis * 0.95
 		local cx = ux + disScale *(ux-ex)
