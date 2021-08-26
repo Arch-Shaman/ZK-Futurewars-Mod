@@ -1440,7 +1440,10 @@ local behaviourConfig = {
 		skirmLeeway = 10,
 		skirmBlockedApproachFrames = 90,
 		velPredChaseFactor = 0.5,
-
+		minFleeRange = 300,
+		fleeDistance = 50,
+		fleeOrderDis = 50,
+		fleeLeeway   = 50,
 		bonusRangeUnits = personalShieldUnits,
 		wardFireTargets = personalShieldUnits,
 		wardFireLeeway = 10,
@@ -1448,6 +1451,7 @@ local behaviourConfig = {
 		wardFirePredict = 50,
 		wardFireShield = 200,
 		wardFireDefault = true,
+		reloadFlee = true,
 	},
 	{
 		name = "jumpskirm",
