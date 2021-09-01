@@ -960,7 +960,7 @@ local behaviourConfig = {
 		wardFireShield = 50,
 		wardFireDefault = true,
 		jumpAttack = true,
-		emergencyJumpRange = 200,
+		emergencyJumpRange = 400,
 	},
 	{
 		name = "tankraid",
