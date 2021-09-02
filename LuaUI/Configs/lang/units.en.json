@@ -205,9 +205,9 @@
 		"helptext" : "Storages act as a buffer when one expects a big influx of metal, such as reclaiming a vast wreckage field. However, longer periods of increased metal income are better dealt with by acquiring more buildpower."
 	},
 	"shieldscout" : {
-		"name" : "Dirtbag",
-		"description" : "Box of Dirt",
-		"helptext" : "The Dirtbag exists to block enemy movement and generally get in the way. They are so dedicated to this task that they release their dirt payload upon death to form little annoying mounds. While waiting for their fate Dirtbags enjoy headbutting and scouting."
+		"name" : "Sapper",
+		"description" : "Shielded Nuisence",
+		"helptext" : "The Sapper exists to block enemy movement and generally get in the way. They are so dedicated to this task that they release their dirt payload upon death to form little annoying mounds. Beware: their shields aren't great."
 	},
 	"amphaa" : {
 		"name" : "Angler",
