@@ -582,7 +582,7 @@
 	"gunshipkrow" : {
 		"name" : "Purifier",
 		"description" : "Flying Battlestation",
-		"helptext" : "The expensive and extremely durable Purifier was built off a krow chassis. Now sporting an even heavier armament, the Purifier's sole purpose is to destroy anything that stands in front or under it. Armed with 3 scatterguns and a clusterbomb autofab system, it is sure to ruin the day of ground loving plebs that dwell below it."
+		"helptext" : "The expensive and extremely durable Purifier was built off a krow chassis. Now sporting an even heavier armament, the Purifier's sole purpose is to destroy anything that stands in front or under it. Armed with 3 scatterguns and a death laser system, it is sure to ruin the day of ground loving plebs that dwell below it."
 	},
 	"neebcomm" : {
 		"name" : "Neeb Comm",
