@@ -1026,6 +1026,7 @@ local behaviourConfig = {
 		wardFireShield = 50,
 		wardFireDefault = true,
 		jumpAttack = true,
+		minJumpRange = 0.3,
 		emergencyJumpRange = 400,
 	},
 	{
@@ -2144,6 +2145,7 @@ local behaviourConfig = {
 		fleeOrderDis = 200,
 		jumpAttack = true,
 		jumpMove = true,
+		minJumpRange = 0.1,
 		emergencyJumpRange = 200,
 		selfDestructSwarm = sapperselfdarray,
 		selfdrange = 16,
@@ -2241,6 +2243,7 @@ local behaviourConfig = {
 		emergencyJumpRange = 100,
 		fleeOrderDis = 200,
 		jumpAttack = true,
+		minJumpRange = 0.4,
 	},
 	{
 		name = "tankheavyarty",
