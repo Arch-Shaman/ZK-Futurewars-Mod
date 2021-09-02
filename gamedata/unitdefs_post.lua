@@ -394,9 +394,9 @@ for name, ud in pairs(UnitDefs) do
 	if name:find("plate") then
 		storage = platebonus
 	end
-	if name == "striderfunnelweb" then
+	--[[if name == "striderfunnelweb" then
 		storage = 1200
-	end
+	end]] -- no longer a builder
 	if (ud.workertime and name:find("con") and not name:find("dyn")) or name == "athena" then
 		storage = storage + (ud.workertime * conbonus)
 	end

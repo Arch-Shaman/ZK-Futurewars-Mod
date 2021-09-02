@@ -786,8 +786,8 @@
 	},
 	"striderfunnelweb" : {
 		"name" : "Funnelweb",
-		"description" : "Shield Support Strider",
-		"helptext" : "The slow all-terrain Funnelweb features an extremely powerful wide-area shield and high nano power for post-battle utility. It is otherwise unarmed."
+		"description" : "Shielded Support Fire Strider",
+		"helptext" : "The Funnelweb is armed with a shieldbusting prototype weapon that has high DPS against shields. This is an obvious placeholder description and needs work."
 	},
 	"cloakriot" : {
 		"name" : "Assailant",
