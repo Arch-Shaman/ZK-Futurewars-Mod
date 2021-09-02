@@ -26,6 +26,8 @@ return {
 			decay_initialrate = 10,
 			decay_rate     = 0.025,
 			modelradius    = [[60]],
+			modelheight    = [[80]],
+			aimposoffset   = [[0 -40 0]],
 			pylonrange = 100,
 			dangerous_reclaim = [[gimme that radioactive goodness]],
 			selection_scale   = 0.92,
@@ -48,7 +50,7 @@ return {
 		onoffable                     = false,
 		selfDestructAs                = [[staticenergyrtg_DEATH]],
 		useBuildingGroundDecal        = true,
-		modelCenterOffset			  = [[0,70,0]],
+		modelCenterOffset			  = [[0,10,0]],
 		sightDistance                 = 200,
 		yardMap                       = [[oooooooooooooooooooooooooooooooooooo]],
 		
