@@ -413,6 +413,7 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 	local myunitdef = spGetUnitDefID(unitID)
 	local doDebug = (debugUnit and debugUnit[unitID]) or debugAll
 	local canJump = UnitDefs[myunitdef].customParams.jump_range and behaviour.jumpAttack and (spGetUnitRulesParam(unitID, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
+	local jumpRange = UnitDefs[myunitdef].customParams.jump_range
 	if debugAction or doDebug then
 		if doDebug then
 			Spring.Echo(" === DoSwarmEnemy", unitID, "===")
@@ -421,13 +422,22 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 	end
 	
 	if not (enemy and typeKnown) and not behaviour.dontjink then
+		
 		if not (((cmdID == CMD_FIGHT) or move) and fightZ) then
 			return false
 		end
 		local ex, ey, ez = fightX, fightY, fightZ
 		local ux, uy, uz = spGetUnitPosition(unitID) -- my position
 		local cx, cy, cz -- command position
-		
+		if canJump and behaviour.jumpMovement then
+			local moveDistance = math.sqrt(((ux - ex) * (ux - ex)) + ((uz - ez) * (uz - ez)))
+			disScale = jumpRange/moveDistance*0.95
+			cx, cy, cz = ux + disScale*(ex - ux), ey, uz + disScale*(ez - uz)
+			GG.recursion_GiveOrderToUnit = true
+			GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
+			GG.recursion_GiveOrderToUnit = false
+			return true
+		end
 		local pointDis = Dist(ex, ez, ux, uz)
 		UpdateJink(behaviour, unitData)
 		
@@ -496,6 +506,13 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 	
 	if behaviour.dontjink then
 		return false
+	end
+	
+	if behaviour.selfDestructSwarm and behaviour.selfDestructSwarm[enemyUnitDef] and math.sqrt(((ux - ex) * (ux - ex)) + ((uz - ez) * (uz - ez))) < behaviour.selfdrange then
+		GG.recursion_GiveOrderToUnit = true
+		GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD.SELFD, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
+		GG.recursion_GiveOrderToUnit = false
+		return true
 	end
 	
 	if behaviour.maxSwarmRange < pointDis then -- if I cannot shoot at the enemy

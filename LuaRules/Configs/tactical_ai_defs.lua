@@ -488,6 +488,7 @@ medRangeSkirmieeArray    = Union(medRangeSkirmieeArray, medRangeExplodables)
 
 -- Stuff that mobile AA skirms
 
+
 local skirmableAir = NameToDefID({
 	"gunshipbomb",
 	"gunshipemp",
@@ -503,6 +504,39 @@ local skirmableAir = NameToDefID({
 local brawler = NameToDefID({
 	"gunshipheavyskirm",
 	"gunshipaa",
+})
+
+-- Armed sea units --
+local armedSea = NameToDefID({
+	"shiparty",
+	"shipassault",
+	"shipcarrier",
+	"shipheavyarty",
+	"shipriot",
+	"shipscout",
+	"shipskirm",
+	"shiptorpraider",
+	"ampharty",
+	"amphriot",
+	"amphraid",
+	"amphbomb",
+	"subraider",
+	"amphassault",
+	"amphfloater",
+	"amphimpulse",
+	"amphsupport",
+})
+
+-- Armed UW capable targets --
+local seaASW = NameToDefID({
+	"amphraid",
+	"amphriot",
+	"amphbomb",
+	"shiptorpraider",
+	"shipassault",
+	"amphimpulse",
+	"amphfloater",
+	"subraider",
 })
 
 -- Things that are fled by some things
@@ -547,6 +581,20 @@ local somebombs = NameToDefID({
 
 local justroach = NameToDefID({
 	"shieldbomb",
+})
+
+local sapperselfdarray = NameToDefID({
+	"vehassault",
+	"tankassault",
+	"tankriot",
+	"vehriot",
+	"striderdante",
+	"tankheavyassault",
+	"tankheavyarty",
+	"tankraid",
+	"tankheavyraid",
+	"vehheavyarty",
+	"vehcapture",
 })
 
 -- Not currently used as air scouts flee everything.
@@ -1949,7 +1997,7 @@ local behaviourConfig = {
 		swarms = brawler,
 		flees = armedLand,
 		minSwarmLeeway = 100,
-		fleeLeeway = 100,
+		fleeLeeway = 300,
 		fleeDistance = 100,
 		minFleeRange = 500,
 		skirmLeeway = 50,
@@ -1959,12 +2007,13 @@ local behaviourConfig = {
 		name = "amphaa",
 		skirms = skirmableAir,
 		swarms = brawler,
-		flees = armedLand,
+		flees = Union(armedLand, armedSea),
 		fleeLeeway = 100,
 		fleeDistance = 100,
 		minFleeRange = 500,
 		skirmLeeway = 50,
 		skirmOrderDis = 200,
+		fleeOrderDis = 100,
 	},
 	{
 		name = "gunshipaa",
@@ -1983,11 +2032,16 @@ local behaviourConfig = {
 		name = "shipaa",
 		skirms = skirmableAir,
 		--swarms = {},
-		--flees = {},
+		flees = armedSea,
 		skirmRadar = true,
 		maxSwarmLeeway = 10,
 		minSwarmLeeway = 130,
 		skirmLeeway = 40,
+		fleeLeeway = 200,
+		fleeDistance = 100,
+		minFleeRange = 500,
+		skirmOrderDis = 200,
+		fleeOrderDis = 100,
 	},
 	
 	-- Flying scouts
@@ -2075,7 +2129,24 @@ local behaviourConfig = {
 	-- only handle idleness
 	{
 		name = "shieldscout",
-		onlyIdleHandling = true,
+		onlyIdleHandling = false,
+		swarms = SetMinus(allGround, SetMinus(riotsgoaway, sapperselfdarray)),
+		flees = Union(raiderFleeables, SetMinus(riotsgoaway, sapperselfdarray)),
+		minCircleStrafeDistance = 40,
+		strafeOrderLength = 50,
+		minSwarmRange = 50,
+		fleeLeeway = 200,
+		fleeDistance = 400,
+		minFleeRange = 500,
+        skirmLeeway = 200,
+		hugRange = 50,
+		emergencyJumpRange = 100,
+		fleeOrderDis = 200,
+		jumpAttack = true,
+		jumpMove = true,
+		emergencyJumpRange = 200,
+		selfDestructSwarm = sapperselfdarray,
+		selfdrange = 16,
 	},
 	{
 		name = "cloakheavyraid",
