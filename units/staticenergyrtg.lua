@@ -12,8 +12,8 @@ return {
 		buildingGroundDecalType       = [[staticenergyrtg_aoplane.dds]],
 		buildPic                      = [[staticenergyrtg.png]],
 		category                      = [[UNARMED FLOAT]],
-		collisionVolumeOffsets        = [[0 0 0]],
-		collisionVolumeScales         = [[96 140 96]],
+		collisionVolumeOffsets        = [[0 -40 0]],
+		collisionVolumeScales         = [[96 80 96]],
 		collisionVolumeType           = [[CylY]],
 		corpse                        = [[DEAD]],
 
