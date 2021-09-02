@@ -597,6 +597,23 @@ local scythestayandfight = NameToDefID({
 	"energyheavygeo",
 })
 
+local riotsgoaway = NameToDefID({
+	"cloakriot",
+	"shieldriot",
+	"cloakassault",
+	"spiderriot",
+	"spideremp",
+	"hoverriot",
+	"shieldfelon",
+	"turretriot",
+	"turretimpulse",
+	"cloakbomb",
+	"shieldbomb",
+	"amphbomb",
+	"jumpscout",
+	"vehriot",
+})
+
 local jumpconflee = SetMinus(armedLand, lowMedRangeSkirmieeArray)
 
 -- Some short ranged units dive everything that they don't skirm or swarm.
@@ -943,7 +960,7 @@ local behaviourConfig = {
 		name = "jumpraid",
 		skirms = shortToRiotRangeSkirmieeArray,
 		swarms = lowRangeSwarmieeArray,
-		flees = raiderFleeables,
+		flees = riotsgoaway,
 		idleFlee = longRangeRaiderIdleFleeArray,
 		fightOnlyUnits = shortRangeExplodables,
 		circleStrafe = ENABLE_OLD_JINK_STRAFE,
@@ -953,7 +970,7 @@ local behaviourConfig = {
 		swarmLeeway = 30,
 		stoppingDistance = 8,
 		velocityPrediction = 20,
-		fleeLeeway = 120,
+		fleeLeeway = 200,
 		
 		wardFireTargets = personalShieldUnits,
 		wardFireEnableLeeway = 5,
