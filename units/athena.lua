@@ -6,7 +6,7 @@ return {
 		acceleration        = 0.1,
 		airStrafe           = 0,
 		brakeRate           = 0.2,
-		buildCostMetal      = 500,
+		buildCostMetal      = 750,
 		buildDistance       = 400,
 		builder             = true,
 
@@ -69,7 +69,7 @@ return {
 		hoverAttack         = true,
 		iconType            = [[t3builder]],
 		initCloaked         = false,
-		maxDamage           = 1500,
+		maxDamage           = 2300,
 		maxSlope            = 36,
 		maxVelocity         = 7,
 		minCloakDistance    = 100,
@@ -85,7 +85,7 @@ return {
 		sonarDistance       = 600,
 		resurrectSpeed      = 7.5,
 		turnRate            = 148,
-		workerTime          = 20,
+		workerTime          = 30,
 		featureDefs         = {
 			DEAD  = {
 				blocking         = true,
