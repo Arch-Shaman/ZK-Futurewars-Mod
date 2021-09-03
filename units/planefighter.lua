@@ -308,7 +308,7 @@ local unitDef = {
 				light_color = [[0.5 0.6 0.6]],
 				reaim_time = 60, -- Fast update not required (maybe dangerous)
 				--CAS--
-				numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+				--numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 				--projectile1 = "proliferator_aa",
 				--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
 				--clustervec1 = "evenx", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
