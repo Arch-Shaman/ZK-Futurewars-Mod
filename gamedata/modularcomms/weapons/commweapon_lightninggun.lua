@@ -1,11 +1,13 @@
 local name = "commweapon_lightninggun"
 local weaponDef = {
-	name                    = [[Lightning Gun]],
-	areaOfEffect            = 8,
-	beamTTL                 = 12,
+	name                    = [[Light EMP Rifle]],
+	areaOfEffect            = 40,
+	cegtag					= [[artillery_spark_small_commander]],
 	craterBoost             = 0,
 	craterMult              = 0,
-
+	--highTrajectory			= 1,
+	burst					= 4,
+	burstrate				= 0.2,
 	customParams            = {
 		is_unit_weapon = 1,
 		extra_damage_mult = 2.5,
@@ -17,32 +19,24 @@ local weaponDef = {
 		light_radius = 200,
 		reaim_time = 1,
 	},
-
 	cylinderTargeting       = 0,
-
 	damage                  = {
-		default = 220,
+		default = 85,
 	},
-
-	explosionGenerator      = [[custom:LIGHTNINGPLOSION]],
-	fireStarter             = 110,
-	impactOnly              = true,
-	impulseBoost            = 0,
-	impulseFactor           = 0.4,
-	intensity               = 12,
-	interceptedByShieldType = 1,
+	explosionGenerator      = [[custom:comm_shockhit]],
+	edgeEffectiveness       = 0.05,
 	paralyzeTime            = 1,
-	range                   = 300,
-	reloadtime              = 1 + 25/30,
-	rgbColor                = [[0.5 0.5 1]],
-	soundStart              = [[weapon/more_lightning_fast]],
-	soundTrigger            = true,
-	sprayAngle              = 500,
-	texture1                = [[lightning]],
-	thickness               = 10,
+	impactOnly              = false,
+	interceptedByShieldType = 1,
+	range					= 340,
+	myGravity               = 0.02,
+	reloadtime              = 2,
+	soundHit                = [[weapon/cannon/emp_arty_hit]],
+	soundStart              = [[weapon/emp/commweapon_emplight_fire]],
+	size					= 0.01,
 	turret                  = true,
-	weaponType              = [[LightningCannon]],
-	weaponVelocity          = 400,
+	weaponType              = [[Cannon]],
+	weaponVelocity          = 600,
 }
 
 return name, weaponDef
