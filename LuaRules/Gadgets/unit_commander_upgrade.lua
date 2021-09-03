@@ -624,9 +624,9 @@ local function Upgrades_CreateStarterDyncomm(dyncommID, x, y, z, facing, teamID,
 	
 	local moduleList = {moduleDefNames.econ}
 	local addons = defaultaddons[chassisDefID]
-	for _, v in pairs(addons) do
-		moduleList[#moduleList + 1] = moduleDefNames[v]
-	end
+	--for _, v in pairs(addons) do
+		--moduleList[#moduleList + 1] = moduleDefNames[v]
+	--end
 	local moduleCost = 0
 	for i = 1, #moduleList do
 		moduleCost = moduleCost + moduleDefs[moduleList[i]].cost
