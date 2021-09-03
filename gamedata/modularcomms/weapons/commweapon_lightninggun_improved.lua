@@ -25,7 +25,7 @@ local weaponDef = {
 	},
 	explosionGenerator      = [[custom:lightningplosion_nopost]],
 	edgeEffectiveness       = 0.05,
-	paralyzeTime            = 4,
+	paralyzeTime            = 5,
 	impactOnly              = false,
 	interceptedByShieldType = 1,
 	myGravity               = 0.04,
