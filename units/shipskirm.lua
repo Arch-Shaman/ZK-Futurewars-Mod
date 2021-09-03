@@ -73,7 +73,6 @@ return {
 				burstrate				= 1/6,
 				customParams        = {
 					light_camera_height = 1800,
-					cruiserandomradius = 50,
 					cruisealt = 200,
 					airlaunched = 1, -- don't ask me why.
 					cruisedist = 420,
