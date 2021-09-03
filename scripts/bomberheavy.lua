@@ -31,27 +31,33 @@ local gun_1 = false
 local armedspeed = 1.0
 local unarmedspeed = 1 + 1/3
 
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spGetUnitMoveTypeData = Spring.GetUnitMoveTypeData
+local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local SetAirMoveTypeData = Spring.MoveCtrl.SetAirMoveTypeData
+local movectrlGetTag = Spring.MoveCtrl.GetTag
 
 function SpeedThread()
 	local reloading = false
 	local oldstate = false
-	while true do
-		reloading = Spring.GetUnitRulesParam(unitID, "noammo") == 1
-		if reloading and not oldstate then
-			oldstate = true
-			Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", unarmedspeed)
+	while spGetUnitMoveTypeData(unitID).aircraftState ~= "crashing" do
+		ammo = spGetUnitRulesParam(unitID,"noammo") or 0
+		if ammo == 0 and reloading then -- being reloaded.
+			while movectrlGetTag(unitID) ~= nil do
+				Sleep(33)
+			end
+			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", unarmedspeed)
 			SetAirMoveTypeData(unitID, "maxAcc", unarmedspeed)
 			GG.UpdateUnitAttributes(unitID)
+			Sleep(330)
+			reloading = false
+		elseif ammo == 1 and not reloading then
+			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
+			SetAirMoveTypeData(unitID, "maxAcc", 1)
 			GG.UpdateUnitAttributes(unitID)
-		elseif not reloading and oldstate then
-			oldstate = false
-			Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", armedspeed)
-			SetAirMoveTypeData(unitID, "maxAcc", armedspeed)
-			GG.UpdateUnitAttributes(unitID)
-			GG.UpdateUnitAttributes(unitID)
+			reloading = true
 		end
-		Sleep(100)
+		Sleep(50)
 	end
 end
 
