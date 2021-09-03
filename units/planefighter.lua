@@ -68,7 +68,7 @@ local unitDef = {
 		},
 
 	},
-	sightDistance          = 520,
+	sightDistance          = 660,
 	speedToFront           = 0,
 	turnRadius             = 150,
 	turnRate               = 839,
