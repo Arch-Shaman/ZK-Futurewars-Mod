@@ -31,6 +31,8 @@ local gun_1 = false
 local armedspeed = 1.0
 local unarmedspeed = 1 + 1/3
 
+local SetAirMoveTypeData = Spring.MoveCtrl.SetAirMoveTypeData
+
 function SpeedThread()
 	local reloading = false
 	local oldstate = false
