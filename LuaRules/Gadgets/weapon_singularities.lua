@@ -229,7 +229,7 @@ local function ProcessSingularity(singu, data)
 	local ceg = data.ceg
 	local finalceg = data.finalceg
 	if lifespan == 1 then
-		spSpawnCEG("opticblast_charge", sx, sy, sz, 0, 0, 0 , radius, 3000) -- note: radius doesn't seem to do anything here.
+		--spSpawnCEG("opticblast_charge", sx, sy, sz, 0, 0, 0 , radius, 3000) -- note: radius doesn't seem to do anything here.
 	elseif lifespan%15 == 0 and lifespan > 20 then
 		spSpawnCEG(ceg, sx, sy, sz, 0, 0, 0 , radius, 0) -- hence why we need to make separate cegs :(
 	end
