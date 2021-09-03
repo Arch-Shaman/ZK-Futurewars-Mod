@@ -24,6 +24,7 @@ return {
 			aimposoffset   = [[0 32 0]],
 			midposoffset   = [[0 0 0]],
 			modelradius    = [[40]],
+			bait_level_default = 2,
 			--dontfireatradarcommand = '0',
 		},
 
