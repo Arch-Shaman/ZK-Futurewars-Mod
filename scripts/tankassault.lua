@@ -1,6 +1,7 @@
 include "constants.lua"
 include "trackControl.lua"
 include "rockPiece.lua"
+include "pieceControl.lua"
 local scriptReload = include("scriptReload.lua")
 local base, body, turret, sleeve1, sleeve2 = piece('base', 'body', 'turret', 'sleeve1', 'sleeve2')
 local smokes = {piece('smoke1', 'smoke2')}
