@@ -357,7 +357,7 @@
 	"bomberheavy" : {
 		"name" : "Hella",
 		"description" : "Strategic Bomber",
-		"helptext" : "Replacing the Licho in recent history as air doctrines changed in favor of heavier strategic bombers, the Hella's payload consists of multiple atomic bombs. Being quite heavily armored and carrying such a heavy payload, the Hella is much slower than most aircraft. While lacking the punch of the Oblivion or Silencer MkIII missile, its BN-22 Atomic Bomb still provides an explosion larger than an Eos Tactical Nuke."
+		"helptext" : "Replacing the Licho in recent history as air doctrines changed in favor of heavier strategic bombers, the Hella's payload consists of an atomic bomb. Being quite heavily armored and carrying such a heavy payload, the Hella is much slower than most aircraft. While lacking the punch of the Oblivion or Silencer MkIII missile, its BN-22 Atomic Bomb still provides an explosion larger than an Eos Tactical Nuke."
 	},
 	"tacnuke" : {
 		"name" : "Eos",
