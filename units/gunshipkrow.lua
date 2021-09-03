@@ -38,7 +38,7 @@ return {
 		idleTime               = 1800,
 		maneuverleashlength    = [[500]],
 		maxDamage              = 36000,
-		maxVelocity            = 3.5,
+		maxVelocity            = 4.1,
 		noAutoFire             = false,
 		noChaseCategory        = [[TERRAFORM FIXEDWING SATELLITE SUB]],
 		objectName             = [[krow.s3o]],
@@ -111,8 +111,8 @@ return {
 				cylinderTargeting		= 1,
 				burstRate				= 10/30,
 				sprayangle				= 1390,
-				edgeeffectiveness		= 0.05,
-
+				edgeeffectiveness		= 0.4,
+				minIntensity            = 0.5,
 				customParams        = {
 					light_camera_height = 1800,
 					light_radius = 160,
@@ -120,7 +120,7 @@ return {
 				},
 
 				damage                  = {
-					default = 37.8,
+					default = 60.1,
 				},
 
 				duration                = 0.1,
@@ -130,7 +130,7 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				range                   = 620,
-				reloadtime              = 1.8,
+				reloadtime              = 1.4,
 				rgbColor                = [[0.043 0.7 0.274]],
 				soundHit                = [[weapon/laser/emerald_hit]],
 				soundStart              = [[weapon/laser/emerald_fire]],
@@ -227,7 +227,7 @@ return {
 			ATA = {
 				name                    = [[Annihilator Beam]],
 				areaOfEffect            = 255,
-				beamTime                = 10,
+				beamTime                = 8,
 				commandFire             = true,
 				coreThickness           = 3,
 				craterBoost             = 8,
@@ -238,7 +238,7 @@ return {
 					light_radius = 480,
 				},
 				damage                  = {
-					default = 37500,
+					default = 40100,
 				},
 				cameraShake				= 1500,
 				explosionGenerator      = [[custom:craterpuncher]],
