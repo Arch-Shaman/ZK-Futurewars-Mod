@@ -2148,7 +2148,7 @@ local behaviourConfig = {
 		minJumpRange = 0.1,
 		emergencyJumpRange = 200,
 		selfDestructSwarm = sapperselfdarray,
-		selfdrange = 16,
+		selfdrange = 8,
 	},
 	{
 		name = "cloakheavyraid",
