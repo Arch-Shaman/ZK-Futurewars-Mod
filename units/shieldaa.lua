@@ -1,7 +1,7 @@
 return { 
 	shieldaa = {
 		unitname               = [[shieldaa]],
-		name                   = [[Vandal]],
+		name                   = [[Sentinel]],
 		description            = [[Anti-Air Bot]],
 		acceleration           = 1.35,
 		brakeRate              = 8.1,
@@ -72,7 +72,7 @@ return {
 
 				customParams              = {
 					burst = Shared.BURST_RELIABLE,
-					disarmDamageMult = 1.5,
+					disarmDamageMult = 1.33,
 					disarmDamageOnly = 0,
 					disarmTimer      = 3, -- seconds
 					isaa = [[1]],
