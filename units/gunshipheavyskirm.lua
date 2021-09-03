@@ -87,6 +87,8 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0.3,
 				craterMult              = 0.15,
+				burst					= 2,
+				burstrate				= 2/30,
 
 				customparams = {
 					combatrange = 850,
@@ -97,7 +99,7 @@ return {
 				},
 
 				damage                  = {
-					default = 15.1, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
+					default = 22.1, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
 				},
 
 				explosionGenerator      = [[custom:gauss_hit_m]],
@@ -107,13 +109,13 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 850,
-				reloadtime              = 1/15,
+				reloadtime              = 6/30,
 				rgbColor                = [[0.5 1 1]],
 				separation              = 0.5,
 				size                    = 0.8,
 				sizeDecay               = -0.1,
 				soundHit                = [[weapon/cannon/heavy_gauss_hit]],
-				soundHitVolume          = 13,
+				soundHitVolume          = 6,
 				soundStart              = [[weapon/cannon/gauss_rapid]],
 				soundStartVolume        = 2.5,
 				sprayAngle              = 1000,
