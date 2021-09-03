@@ -46,14 +46,14 @@ function SpeedThread()
 			while movectrlGetTag(unitID) ~= nil do
 				Sleep(33)
 			end
-			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", unarmedspeed)
-			SetAirMoveTypeData(unitID, "maxAcc", unarmedspeed)
+			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
+			SetAirMoveTypeData(unitID, "maxAcc", 1)
 			GG.UpdateUnitAttributes(unitID)
 			Sleep(330)
 			reloading = false
 		elseif ammo == 1 and not reloading then
-			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
-			SetAirMoveTypeData(unitID, "maxAcc", 1)
+			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", unarmedspeed)
+			SetAirMoveTypeData(unitID, "maxAcc", unarmedspeed)
 			GG.UpdateUnitAttributes(unitID)
 			reloading = true
 		end
