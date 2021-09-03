@@ -25,6 +25,7 @@ return {
 			priority_misc  = 1, -- Medium
 			shield_emit_height = 45,
 			shield_power_gfx_override = 10000,
+			bait_level_default = 1,
 		},
 
 		explodeAs              = [[ESTOR_BUILDING]],
@@ -43,7 +44,7 @@ return {
 		noAutoFire             = false,
 		noChaseCategory        = [[TERRAFORM FIXEDWING GUNSHIP SATELLITE SUB]],
 		objectName             = [[funnelweb.dae]],
-		radarDistance          = 1400,
+		radarDistance          = 2200,
 		radarEmitHeight        = 32,
 		onoffable              = true,
 		selfDestructAs         = [[ESTOR_BUILDING]],
@@ -63,7 +64,7 @@ return {
 		trackStretch           = 1,
 		trackType              = [[ChickenTrackPointy]],
 		trackWidth             = 85,
-		turnRate               = 520,
+		turnRate               = 230,
 
 		weapons                = {
 			{
@@ -92,10 +93,10 @@ return {
 				shieldBadColor          = [[1 0.1 0.1 1]],
 				shieldGoodColor         = [[0.1 0.1 1 1]],
 				shieldInterceptType     = 3,
-				shieldPower             = 38000,
-				shieldPowerRegen        = 500,
-				shieldPowerRegenEnergy  = 48,
-				shieldRadius            = 550,
+				shieldPower             = 32000,
+				shieldPowerRegen        = 350,
+				shieldPowerRegenEnergy  = 40,
+				shieldRadius            = 450,
 				shieldRepulser          = false,
 				smartShield             = true,
 				visibleShield           = false,
@@ -129,15 +130,17 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
 				explosionGenerator      = [[custom:riotballplus2_purple_small]],
-				range                   = 700,
-				reloadtime              = 3,
+				range                   = 1100,
+				reloadtime              = 4.4,
+				myGravity				= 0.09,
+				heightBoostFactor       = 1.1,
 				rgbColor				= [[0.5 0 0.5]],
 				soundHit				= [[weapon/aoe_aura2]],
 				soundHitVolume          = 4,
 				soundStart              = [[weapon/cannon/funnel_fire]],
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 350,
+				weaponVelocity          = 450,
 			},
 			
 			FRAGMENT_FAKE = {
