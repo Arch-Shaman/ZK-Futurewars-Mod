@@ -262,6 +262,14 @@ local options = {
 		def         = false,
 	},
 	{
+		key         = "groundunitygravity",
+		name        = "Ground Unit Gravity",
+		desc        = "I have no idea what this does, but it sounds funny.",
+		type        = "bool",
+		section     = "silly",
+		def         = false,
+	},
+	{
 		key    = "shuffle",
 		name   = "Start Boxes",
 		desc   = "Start box settings.",
