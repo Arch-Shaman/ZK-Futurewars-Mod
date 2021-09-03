@@ -116,7 +116,7 @@ return {
 				projectiles				= 1,
 
 				damage                  = {
-					default = 800,
+					default = 1000,
 				},
       
 				customParams            = {
@@ -131,7 +131,7 @@ return {
 					proxy = 0, -- check for nearby units?
 					useheight = 1,
 					spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-6,0,-6,6,2,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-5,0,-5,5,2,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1,
 					reaim_time = 60, -- see what the hell this does.
 				},
@@ -146,17 +146,17 @@ return {
 				leadlimit               = 0,
 				model                   = [[hobbes.s3o]],
 				leadLimit               = 20,
-				mygravity		= 0.25,
+				mygravity		        = 0.25,
 				reloadtime              = 5,
-				range			= 50,
+				range			        = 50,
 				texture2                = [[darksmoketrail]],
 				soundHit                = [[weapon/cannon/cannonfire_001]],
 				soundStart              = [[weapon/bomb_drop]],
 				startVelocity           = 150,
 				tolerance               = 65536/2, -- 180 degrees
-				fireTolerance		= 65536/2,
-				accuracy		= 2800,
-				sprayangle		= 300,
+				fireTolerance		    = 65536/2,
+				accuracy		        = 2800,
+				sprayangle		        = 300,
 				turnRate                = 2500,
 				turret                  = true,
 				weaponAcceleration      = 150,
@@ -171,7 +171,7 @@ return {
 				craterMult              = 5,
 
 				damage                  = {
-					default = 100,
+					default = 125,
 				},
 
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
