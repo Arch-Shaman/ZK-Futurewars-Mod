@@ -36,6 +36,7 @@ local spGetUnitMoveTypeData = Spring.GetUnitMoveTypeData
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local SetAirMoveTypeData = Spring.MoveCtrl.SetAirMoveTypeData
 local movectrlGetTag = Spring.MoveCtrl.GetTag
+local deathexplosiontriggered = false
 
 function SpeedThread()
 	local reloading = false
@@ -59,6 +60,7 @@ function SpeedThread()
 		end
 		Sleep(50)
 	end
+	DeathExplosion()
 end
 
 local function Stopping()
@@ -136,7 +138,7 @@ function script.BlockShot(num)
 	return (GetUnitValue(COB.CRASHING) == 1) or RearmBlockShot()
 end
 
-local function Explode()
+local function DeathExplosion()
 	if Spring.GetUnitRulesParam(unitID, "noammo") ~= 1 then
 		local px, py, pz = Spring.GetUnitPosition(unitID)
 		Spring.SpawnProjectile(WeaponDefNames["bomberheavy_deathexplo"].id, {
@@ -148,11 +150,15 @@ local function Explode()
 			team = Spring.GetGaiaTeamID(),
 			owner = unitID,
 		})
+		deathexplosiontriggered = true
 	end
 end
 
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
+	if not deathexplosiontriggered then
+		DeathExplosion()
+	end
 	if severity <= .25 then
 		Explode(base, SFX.NONE)
 		Explode(wing1, SFX.NONE)
