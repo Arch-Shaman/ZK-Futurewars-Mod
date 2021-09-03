@@ -83,7 +83,7 @@ return {
 				alphaDecay              = 0.12,
 				areaOfEffect            = 96,
 				avoidfeature            = false,
-				cegTag                  = [[gauss_tag_l]],
+				--cegTag                  = [[gauss_tag_l]],
 				collideFriendly         = false,
 				craterBoost             = 0.3,
 				craterMult              = 0.15,
