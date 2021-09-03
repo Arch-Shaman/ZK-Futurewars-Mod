@@ -58,10 +58,8 @@ local CommandDesc = {
 	name        = 'Overreclaim Prevention',
 	action      = 'ORP',
 	tooltip     = Tooltips[DefaultState + 1],
-	params      = {0, 'On', 'Off'},
+	params      = {0, 'Off', 'On'},
 }
-
-local toggleParams = {params = {1, 'On', 'Off'}}
 
 function gadget:AllowFeatureBuildStep(builderID, builderTeam, featureID, featureDefID, part) -- part seems to be some sort of reclaim speed.
 	local metalvalue = FeatureDefs[featureDefID].metal or 0
@@ -77,11 +75,10 @@ end
 local function Command(unitID, cmdID, cmdParams, cmdOptions)
 	local cmdDescID = spFindUnitCmdDesc(unitID, CMD_OVERRECLAIM)
 	if cmdDescID then
-		local state = cmdParams[1] == 0
-		--spEcho("State: " .. tostring(state))
-		exceptionUnits[unitID] = state
-		toggleParams[1] = (state and 1) or 0
-		Spring.EditUnitCmdDesc(unitID, cmdDescID, toggleParams)
+		local state = cmdParams[1]
+		CommandDesc.params[1] = state
+		exceptionUnits[unitID] = state == 1
+		Spring.EditUnitCmdDesc(unitID, cmdDescID, {params = CommandDesc.params})
 	end
 end
 
