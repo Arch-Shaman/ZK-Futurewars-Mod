@@ -6,7 +6,7 @@ return {
 		acceleration           = 0.54,
 		activateWhenBuilt      = true,
 		brakeRate              = 2.25,
-		buildCostMetal         = 110,
+		buildCostMetal         = 150,
 		buildPic               = [[amphraid.png]],
 		canGuard               = true,
 		canMove                = true,
