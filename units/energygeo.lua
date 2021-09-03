@@ -27,7 +27,7 @@ return {
 			selectionscalemult = 1.15,
 
 			morphto = [[energyheavygeo]],
-			morphtime = [[100]],
+			morphtime = [[130]],
 			decay_maxoutput= 1,
 			decay_initialrate = 0.04,
 			decay_time     = 1,
