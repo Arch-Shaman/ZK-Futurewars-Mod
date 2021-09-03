@@ -12,7 +12,7 @@ local weaponDef = {
 		is_unit_weapon = 1,
 		extra_damage_mult = 5,
 		slot = [[5]],
-		muzzleEffectFire = [[custom:zeus_fire_fx]],
+		muzzleeffectshot = [[custom:zeus_fire_fx]],
 
 		light_camera_height = 1600,
 		light_color = [[0.85 0.85 1.2]],
