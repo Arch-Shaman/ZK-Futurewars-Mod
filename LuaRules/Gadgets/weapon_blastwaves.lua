@@ -118,7 +118,7 @@ local function AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID)
 	}
 	--Spring.Echo("attackerID: " .. tostring(attackerID) .."\nDamages Friendly: " .. tostring(conf.damagesfriendly))
 	if attackerID then
-		if conf.damagesfriendly then
+		if not conf.damagesfriendly then
 			tab.attackerteam = spGetUnitAllyTeam(attackerID)
 		end
 		tab.attackerteamID = spGetUnitTeam(attackerID)
