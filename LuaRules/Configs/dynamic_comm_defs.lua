@@ -837,7 +837,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 350 * COST_MULT,
 		requireChassis = {"assault", "knight"},
-		requireOneOf = {"commweapon_rocketlauncher", "commweapon_hpartillery", "commweapon_riotcannon"},
+		requireOneOf = {"commweapon_rocketlauncher", "commweapon_artillery_heavy", "commweapon_riotcannon"},
 		requireLevel = 2,
 		slotType = "module",
 	},
