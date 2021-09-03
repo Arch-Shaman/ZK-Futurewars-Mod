@@ -912,7 +912,7 @@ local function DoTacticalAI(unitID, cmdID, cmdOpts, cmdTag, cp_1, cp_2, cp_3,
 		return false -- Do not tactical AI enemy if it is fight-only.
 	end
 	local wantsreloadflee = false
-	if behaviour.reloadFlee and enemy then
+	if behaviour.reloadFlee and enemy and not holdPos then
 		local numweapons = #UnitDefs[myunitdef].weapons
 		local somethingNotReloading = false
 		local loadedGuns = spGetUnitRulesParam(unitID, "scriptLoaded") or 1
