@@ -79,7 +79,7 @@ local turretSpeed = 8
 local isLanded = true
 local SPECIAL_FIRE_COUNT = 75
 
-local SLOWDOWN_FACTOR = 0.75
+local SLOWDOWN_FACTOR = 0.85
 local UNIT_SPEED = UnitDefNames["gunshipkrow"].speed*SLOWDOWN_FACTOR/30
 local lasermax
 
