@@ -443,9 +443,7 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 	if level == 0 or staticLevel then
 		moduleList = AddAddons(moduleList, chassis)
 	end
-	if not moduleEffectData then
-		moduleEffectData = GetModuleEffectsData(moduleList, level, chassis)
-	end
+	moduleEffectData = GetModuleEffectsData(moduleList, level, chassis)
 	if level == 1 and not moduleEffectData.weapon1 then
 		local default = GetCommanderChassisDefaultWeapon(chassis)
 		moduleList[#moduleList + 1] = moduleDefNames[default]
