@@ -856,7 +856,7 @@ local moduleDefs = {
 	{
 		name = "weaponmod_stun_booster",
 		humanName = "Flux Amplifier",
-		description = "Improves EMP duration and strength of Lightning Rifle and Multistunner.",
+		description = "Lightning rifle is upgraded to be heavier (longer reload, better EMP, more damage). Improves EMP time on Multistunner.",
 		image = moduleImagePath .. "weaponmod_stun_booster.png",
 		limit = 1,
 		cost = 300 * COST_MULT,
