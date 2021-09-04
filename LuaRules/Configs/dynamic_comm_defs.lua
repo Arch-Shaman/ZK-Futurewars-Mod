@@ -862,7 +862,7 @@ local moduleDefs = {
 		cost = 300 * COST_MULT,
 		requireChassis = {"support", "strike", "recon", "knight"},
 		requireOneOf = {"commweapon_lightninggun", "commweapon_multistunner"},
-		requireLevel = 2,
+		requireLevel = 4,
 		slotType = "module",
 	},
 	{
