@@ -485,9 +485,9 @@
 		"helptext" : "The Sporeshooter shoots spores to drop aircraft and hit land targets from a distance. Can climb walls for surprise attacks."
 	},
 	"turretaafar" : {
-		"name" : "Chainsaw",
-		"description" : "Long-Range Anti-Air Missile Battery",
-		"helptext" : "The Chainsaw is a long range anti-air turret, dealing out massive damage, able to knock bombers out of the sky very quickly. It can't take very much damage in return, though, and does poorly when attacked directly."
+		"name" : "Hailstorm",
+		"description" : "Heavy SAM Battery (Requires 80 energy grid)",
+		"helptext" : "A recent redesign, the Hailstorm houses 26 missiles that it can fire at its enemies. A pair of Hailstorms can knock out heavy air units like Hellas very easily."
 	},
 	"staticnuke" : {
 		"name" : "Oblivion",
