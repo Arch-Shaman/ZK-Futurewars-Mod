@@ -42,6 +42,7 @@ return {
 			[[turretriot]],
 			[[turrettorp]],
 			[[turretimpulse]],
+			[[staticantinuke]],
 		},
 
 		buildPic            = [[athena.png]],
