@@ -179,7 +179,7 @@ local function StunThread()
 	Signal (SIG_AIM)
 	Signal(SIG_IDLE)
 	SetSignalMask(SIG_AIM)
-	SetSignalMask(SIG_IDLE)
+	--SetSignalMask(SIG_IDLE)
 	disarmed = true
 
 	GG.PieceControl.StopTurn (gear, y_axis)
