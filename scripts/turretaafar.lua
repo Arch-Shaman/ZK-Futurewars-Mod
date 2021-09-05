@@ -138,6 +138,8 @@ end
 --------------------------------------------------------------------------------
 -- Methods and functions
 --------------------------------------------------------------------------------
+local spinspeed = math.rad(60)
+
 local function IdleAnim()
 	Signal(SIG_IDLE)
 	SetSignalMask(SIG_IDLE)
@@ -160,8 +162,8 @@ local function IdleAnim()
 			Spin(gear001, y_axis, math.rad(TURN_SPEED) * 5 * rotateWise)
 			Spin(gear002, y_axis, math.rad(TURN_SPEED) * 5 * rotateWise)
 		
-			Turn(rotating_bas, y_axis, heading, math.rad(60))
-			Turn(mc_rocket_ho, x_axis, math.rad(math.random(-25, 0)), math.rad(60))
+			Turn(rotating_bas, y_axis, heading, spinspeed)
+			Turn(mc_rocket_ho, x_axis, math.rad(math.random(-25, 0)), spinspeed)
 			
 			WaitForTurn(rotating_bas, y_axis)
 			EmitSfx(modra, 1027)
