@@ -5,7 +5,7 @@ return {
 		description         = [[Heavy Canister Support Gunship]],
 		acceleration        = 0.15,
 		brakeRate           = 0.13,
-		buildCostMetal      = 1000,
+		buildCostMetal      = 850,
 		builder             = false,
 		buildPic            = [[gunshipassault.png]],
 		canFly              = true,
