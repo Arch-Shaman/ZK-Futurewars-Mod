@@ -96,7 +96,7 @@ return {
 				edgeEffectiveness       = 0.25,
 				explosionGenerator      = [[custom:nukebigland]],
 				fireStarter             = 100,
-				fireTolerance		    = 65536,
+				fireTolerance		    = 65536/2,
 				impulseBoost            = 0,
 				impulseFactor           = 2.3,
 				interceptedByShieldType = 2,
