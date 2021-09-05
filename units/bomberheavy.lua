@@ -110,7 +110,7 @@ return {
 				startVelocity           = 100,
 				tolerance               = 65536/2, -- 180 degrees
 				weaponAcceleration      = 200,
-				weaponType              = [[AircraftBomb]],
+				weaponType              = [[MissileLauncher]],
 				weaponVelocity          = 800,
 			},
 			
