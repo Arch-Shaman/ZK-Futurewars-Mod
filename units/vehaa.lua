@@ -5,7 +5,7 @@ return {
 		description            = [[Anti-Air Rover]],
 		acceleration           = 0.36,
 		brakeRate              = 1.8,
-		buildCostMetal         = 200,
+		buildCostMetal         = 220,
 		builder                = false,
 		buildPic               = [[vehaa.png]],
 		canGuard               = true,

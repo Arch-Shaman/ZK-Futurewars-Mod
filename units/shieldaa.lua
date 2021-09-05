@@ -5,7 +5,7 @@ return {
 		description            = [[Anti-Air Bot]],
 		acceleration           = 1.35,
 		brakeRate              = 8.1,
-		buildCostMetal         = 90,
+		buildCostMetal         = 110,
 		buildPic               = [[shieldaa.png]],
 		canGuard               = true,
 		canMove                = true,

@@ -6,7 +6,7 @@ return {
 		acceleration           = 0.3,
 		activateWhenBuilt      = true,
 		brakeRate              = 1.0,
-		buildCostMetal         = 320,
+		buildCostMetal         = 350,
 		builder                = false,
 		buildPic               = [[shipaa.png]],
 		canGuard               = true,

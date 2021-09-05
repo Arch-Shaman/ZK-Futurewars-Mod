@@ -6,7 +6,7 @@ return {
 		acceleration           = 0.54,
 		activateWhenBuilt      = true,
 		brakeRate              = 2.25,
-		buildCostMetal         = 230,
+		buildCostMetal         = 250,
 		buildPic               = [[amphaa.png]],
 		canGuard               = true,
 		canMove                = true,

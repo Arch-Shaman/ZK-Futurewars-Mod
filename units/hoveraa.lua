@@ -6,7 +6,7 @@ return {
 		acceleration        = 0.24,
 		activateWhenBuilt   = true,
 		brakeRate           = 0.43,
-		buildCostMetal      = 270,
+		buildCostMetal      = 300,
 		builder             = false,
 		buildPic            = [[hoveraa.png]],
 		canGuard            = true,
