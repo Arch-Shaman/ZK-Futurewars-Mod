@@ -139,8 +139,8 @@ end
 -- Methods and functions
 --------------------------------------------------------------------------------
 local function IdleAnim()
-	--Signal(SIG_IDLE)
-	--SetSignalMask(SIG_IDLE)
+	Signal(SIG_IDLE)
+	SetSignalMask(SIG_IDLE)
 	while idle do
 		while (spGetUnitRulesParam(unitID, "lowpower") == 1) or disarmed do
 			Sleep(100)
@@ -168,14 +168,16 @@ local function IdleAnim()
 			StopSpin(gear, y_axis)
 			StopSpin(gear001, y_axis)
 			StopSpin(gear002, y_axis)
-			Sleep(math.random(100, 6500))
+			Sleep(math.random(400, 6500))
 		end
 	end
 end
 
 local function StunThread()
 	Signal (SIG_AIM)
+	Signal(SIG_IDLE)
 	SetSignalMask(SIG_AIM)
+	SetSignalMask(SIG_IDLE)
 	disarmed = true
 
 	GG.PieceControl.StopTurn (gear, y_axis)
@@ -413,6 +415,9 @@ function script.AimWeapon(num, heading, pitch)
 	Signal(SIG_IDLE) -- Tell the IdleAnim we're busy.
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
+	if (spGetUnitRulesParam(unitID, "lowpower") == 0) then
+		return false
+	end
 	EmitSfx(cervena, 1025)
 	if(lastHeading > heading) then
 		rotateWise = 1
