@@ -3,7 +3,7 @@ local unitDef = {
 	name                   = [[Deserter]],
 	description            = [[Early Response Fighter-Bomber]],
 	brakerate              = 0.4,
-	buildCostMetal         = 175,
+	buildCostMetal         = 200,
 	buildPic               = [[planefighter.png]],
 	canFly                 = true,
 	canGuard               = true,
@@ -48,7 +48,7 @@ local unitDef = {
 	idleTime               = 1800,
 	maneuverleashlength    = [[1280]],
 	maxAcc                 = 0.5,
-	maxDamage              = 300,
+	maxDamage              = 500,
 	maxRudder              = 0.007,
 	maxVelocity            = 7,
 	mygravity              = 1,
@@ -152,7 +152,7 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 42,
+				default = 60.1,
 			},
 			groundbounce = false,
 			--bounceslip = 0.25,
@@ -208,7 +208,7 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 42*3,
+				default = 60.1*3,
 			},
 
 			edgeEffectiveness		= 0.2,
@@ -261,8 +261,8 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 7.5,
-				planes  = 75,
+				default = 11.1,
+				planes  = 110,
 			},
 
 			explosionGenerator      = [[custom:WEAPEXP_PUFF]],
@@ -323,8 +323,8 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 13.5,
-				planes  = 135,
+				default = 18.0,
+				planes  = 180.1,
 			},
 
 			explosionGenerator      = [[custom:WEAPEXP_PUFF]],
