@@ -29,10 +29,15 @@ local function RetreatThread(hx, hy, hz)
 			else
 				disScale = realrange/moveDistance*0.95
 				cx, cy, cz = ux + disScale*(hx - ux), hy, uz + disScale*(hz - uz)
-				GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
-				if retreattype == "once" then
-					--Spring.Echo("Stopping JumpRetreat: One Jump only.")
-					retreating = false
+				cy = Spring.GetGroundHeight(cx, cz)
+				if cy >= 0 then
+					GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
+					if retreattype == "once" then
+						--Spring.Echo("Stopping JumpRetreat: One Jump only.")
+						retreating = false
+					end
+				else
+					Sleep(100)
 				end
 			end
 		end
