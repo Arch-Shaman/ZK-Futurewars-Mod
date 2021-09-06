@@ -18,6 +18,7 @@ return {
 		corpse                 = [[DEAD]],
 		customParams           = {
 			selection_scale   = 0.92,
+			fireproof      = [[1]],
 		},
 
 		explodeAs              = [[BIG_UNITEX]],
