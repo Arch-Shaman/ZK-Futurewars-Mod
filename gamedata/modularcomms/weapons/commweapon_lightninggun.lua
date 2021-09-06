@@ -21,7 +21,7 @@ local weaponDef = {
 		use_okp = 1,
 		okp_speedmult = 1,
 		okp_radarmult = 1,
-		okp_timeout = 300,
+		okp_timeout = 60,
 		okp_damage = 340.4,
 	},
 	cylinderTargeting       = 0,
