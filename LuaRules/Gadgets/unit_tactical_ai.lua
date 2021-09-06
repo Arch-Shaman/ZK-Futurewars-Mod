@@ -22,6 +22,7 @@ end
 --------------------------------------------------------------------------------
 -- Speedups
 
+local spGetGroundHeight     = Spring.GetGroundHeight
 local spGetGameFrame        = Spring.GetGameFrame
 local spInsertUnitCmdDesc   = Spring.InsertUnitCmdDesc
 local spGetCommandQueue     = Spring.GetCommandQueue
@@ -433,10 +434,13 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 			local moveDistance = math.sqrt(((ux - ex) * (ux - ex)) + ((uz - ez) * (uz - ez)))
 			disScale = jumpRange/moveDistance*0.95
 			cx, cy, cz = ux + disScale*(ex - ux), ey, uz + disScale*(ez - uz)
-			GG.recursion_GiveOrderToUnit = true
-			GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
-			GG.recursion_GiveOrderToUnit = false
-			return true
+			cy = spGetGroundHeight(cx, cz)
+			if cy >= 0 then
+				GG.recursion_GiveOrderToUnit = true
+				GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
+				GG.recursion_GiveOrderToUnit = false
+				return true
+			end
 		end
 		local pointDis = Dist(ex, ez, ux, uz)
 		UpdateJink(behaviour, unitData)
@@ -496,12 +500,15 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 		local vx, vy, vz = spGetUnitVelocity(enemy)
 		local timescale = math.ceil(pointDis / UnitDefs[myunitdef].customParams.jump_speed) -- estimate the time to get to the point and multiply velocity by it to get predicted location.
 		cx = ex + (vx * timescale)
-		cy = ey
 		cz = ez + (vz * timescale)
-		GG.recursion_GiveOrderToUnit = true
-		GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
-		GG.recursion_GiveOrderToUnit = false
-		return true
+		cy = spGetGroundHeight(cx, cz)
+		
+		if cy >= 0 and ey - cy < 50 then
+			GG.recursion_GiveOrderToUnit = true
+			GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, ey, cz}, CMD.OPT_ALT)
+			GG.recursion_GiveOrderToUnit = false
+			return true
+		end
 	end
 	
 	if behaviour.dontjink then
@@ -683,12 +690,15 @@ local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 		local cx = ux - wantedDis * ex/eDist
 		local cy = uy
 		local cz = uz - wantedDis * ez/eDist
-		GG.recursion_GiveOrderToUnit = true
-		GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
-		GG.recursion_GiveOrderToUnit = false
-		unitData.cx, unitData.cy, unitData.cz = cx, cy, cz
-		unitData.receivedOrder = true
-		return true
+		cy = spGetGroundHeight(cx, cz)
+		if cy >= 0 then
+			GG.recursion_GiveOrderToUnit = true
+			GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
+			GG.recursion_GiveOrderToUnit = false
+			unitData.cx, unitData.cy, unitData.cz = cx, cy, cz
+			unitData.receivedOrder = true
+			return true
+		end
 	end
 	if behaviour.reloadSkirmLeeway then
 		local reloadState = spGetUnitWeaponState(unitID, behaviour.weaponNum, 'reloadState')
