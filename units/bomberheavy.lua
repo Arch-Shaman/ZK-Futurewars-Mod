@@ -30,7 +30,7 @@ return {
 			requireammo      = [[1]],
 			reammoseconds    = [[60]],
 			refuelturnradius = [[550]],
-			--reallyabomber    = [[1]],
+			reallyabomber    = [[1]],
 			--fighter_pullup_dist = 1500, -- pullup at the end of attack dive to avoid hitting terrain
 		},
 
@@ -45,7 +45,7 @@ return {
 		maxAcc              = 0.75,
 		maxDamage           = 11000,
 		maxFuel             = 1000000,
-		maxRudder           = 0.01,
+		maxRudder           = 0.02,
 		maxVelocity         = 5.5,
 		minCloakDistance    = 75,
 		mygravity           = 1,
