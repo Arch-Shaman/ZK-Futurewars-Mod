@@ -28,6 +28,7 @@ return {
 			jump_from_midair   = 1,
 			cloakregen = 25,
 			cloaker_bestowed_radius = 75,
+			bait_level_default = 1,
 		},
 
 		energyUse              = 0,
