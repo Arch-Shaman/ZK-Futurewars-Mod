@@ -92,7 +92,7 @@ return {
 				explosionGenerator      = [[custom:slam]],
 				fireStarter             = 100,
 				flightTime              = 20,
-				impactOnly              = true,
+				impactOnly              = false,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
