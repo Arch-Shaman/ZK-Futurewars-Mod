@@ -31,7 +31,7 @@ return {
 			reammoseconds    = [[60]],
 			refuelturnradius = [[550]],
 			reallyabomber    = [[1]],
-			--fighter_pullup_dist = 1500, -- pullup at the end of attack dive to avoid hitting terrain
+			fighter_pullup_dist = 1500, -- pullup at the end of attack dive to avoid hitting terrain
 		},
 
 		explodeAs           = [[GUNSHIPEX]],
@@ -104,13 +104,13 @@ return {
 				interceptedByShieldType = 2,
 				model                   = [[zeppelin_bomb.dae]],
 				mygravity				= 0.5,
-				range                   = 400,
+				range                   = 300,
 				reloadtime              = 1,
 				smokeTrail              = false,
 				soundHit                = [[weapon/missile/mininuke_hit]],
 				soundStart              = [[weapon/missile/liche_fire]],
 				startVelocity           = 100,
-				tolerance               = 65536, -- 180 degrees
+				tolerance               = 65536/2, -- 180 degrees
 				weaponAcceleration      = 200,
 				weaponType              = [[MissileLauncher]],
 				weaponVelocity          = 800,
