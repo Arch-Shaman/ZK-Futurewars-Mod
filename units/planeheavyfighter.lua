@@ -29,6 +29,7 @@ local unitDef = {
 		fighter_pullup_dist = 380,
 		combat_slowdown = 1.3,
 		selection_scale = 1.4,
+		bait_level_default = 1,
 	},
 	explodeAs              = [[GUNSHIPEX]],
 	fireState              = 2,
@@ -80,6 +81,7 @@ local unitDef = {
 				light_camera_height = 1200,
 				light_color = [[0.8 0.76 0.38]],
 				light_radius = 120,
+				antibaitbypass = "ärsytät minua",
 			},
 
 			damage                  = {
