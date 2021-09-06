@@ -2,10 +2,10 @@ return {
 	vehheavyarty = {
 		unitname            = [[vehheavyarty]],
 		name                = [[Impaler]],
-		description         = [[Precision Artillery Rover]],
+		description         = [[Tactical Bombardment Artillery]],
 		acceleration        = 0.252,
 		brakeRate           = 0.96,
-		buildCostMetal      = 700,
+		buildCostMetal      = 1400,
 		builder             = false,
 		buildPic            = [[vehheavyarty.png]],
 		canMove             = true,
@@ -29,7 +29,7 @@ return {
 		leaveTracks         = true,
 		maxDamage           = 1100,
 		maxSlope            = 18,
-		maxVelocity         = 1.8,
+		maxVelocity         = 1.6,
 		movementClass       = [[TANK3]],
 		noChaseCategory     = [[TERRAFORM FIXEDWING GUNSHIP]],
 		objectName          = [[core_diplomat.s3o]],
@@ -38,7 +38,7 @@ return {
 		sfxtypes            = {
 
 			explosiongenerators = {
-				[[custom:NONE]],
+				[[custom:SLAM_MUZZLE]],
 			},
 
 		},
@@ -50,7 +50,7 @@ return {
 		trackType           = [[StdTank]],
 		trackWidth          = 44,
 		turninplace         = 0,
-		turnRate            = 736,
+		turnRate            = 336,
 		weapons             = {
 
 			{
@@ -63,9 +63,9 @@ return {
 		weaponDefs          = {
 
 			CORTRUCK_ROCKET = {
-				name                    = [[Kinetic Cruise Missile]],
-				areaOfEffect            = 24,
-				cegTag                  = [[raventrail]],
+				name                    = [[Tactical Cruise Missile]],
+				areaOfEffect            = 160,
+				cegTag                  = [[slam_trail]],
 				collideFriendly         = false,
 				craterBoost             = 1,
 				craterMult              = 2,
@@ -77,19 +77,19 @@ return {
 					light_color = [[1 0.8 0.2]],
 					cruisealt = 600,
 					cruisedist = 340,
-					reveal_unit = 10,
+					reveal_unit = 40,
 				},
 
 				damage         = {
-					default = 800.1,
+					default = 1800.1,
 				},
 
 				texture1=[[null]], --flare, reference: http://springrts.com/wiki/Weapon_Variables#Texture_Tags
 				--texture2=[[null]], --smoketrail
 				--texture3=[[null]], --flame
 
-				edgeEffectiveness       = 0.5,
-				explosionGenerator      = [[custom:DOT_Merl_Explo]],
+				edgeEffectiveness       = 0.25,
+				explosionGenerator      = [[custom:slam]],
 				fireStarter             = 100,
 				flightTime              = 20,
 				impactOnly              = true,
@@ -98,16 +98,16 @@ return {
 				interceptedByShieldType = 2,
 				model                   = [[wep_merl.s3o]],
 				noSelfDamage            = true,
-				range                   = 1600,
-				reloadtime              = 10,
+				range                   = 1800,
+				reloadtime              = 25,
 				smokeTrail              = false,
-				soundHit                = [[weapon/missile/vlaunch_hit]],
-				soundStart              = [[weapon/missile/missile_launch]],
+				soundHit                = [[explosion/mini_nuke_2]],
+				soundStart              = [[weapon/missile/missile_fire2]],
 				tolerance               = 4000,
 				turnrate                = 22500,
 				startVelocity           = 80,
 				weaponAcceleration      = 315,
-				tracks = true, -- doesn't actually track. Needed for cruise missile.
+				tracks                  = true, -- doesn't actually track. Needed for cruise missile.
 				weaponType              = [[StarburstLauncher]],
 				weaponVelocity          = 800,
 			},

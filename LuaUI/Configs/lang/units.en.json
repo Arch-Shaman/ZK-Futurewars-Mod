@@ -846,8 +846,8 @@
 	},
 	"vehheavyarty" : {
 		"name" : "Impaler",
-		"description" : "Precision Artillery Rover",
-		"helptext" : "The Impaler fires vertically a high damage, high accuracy kinetic missile at long range. Its high arc makes it able to fire over any obstacle, however that makes the flight time so high that it's useless against moving targets. Use the Impaler to kill specific buildings."
+		"description" : "Tactical Bombardment Artillery",
+		"helptext" : "The Impaler fires vertically a high damage, high accuracy tactical missile at long range. Its high arc makes it able to fire over any obstacle, however that makes the flight time so high that it's useless against moving targets. Use the Impaler to kill specific buildings."
 	},
 	"zenith" : {
 		"name" : "Zenith",
