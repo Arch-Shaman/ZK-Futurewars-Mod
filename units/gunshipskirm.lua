@@ -73,7 +73,7 @@ return {
 				customparams = {
 					burst = Shared.BURST_UNRELIABLE,
 					--cruise_permoffset = 1,
-					cruiserandomradius = 130,
+					cruiserandomradius = 180,
 					cruisealt = 300,
 					airlaunched = 1,
 					cruisedist = 270,
