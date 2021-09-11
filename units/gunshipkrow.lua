@@ -108,11 +108,10 @@ return {
 				craterMult              = 0,
 				projectiles				= 7,
 				burst					= 2,
-				cylinderTargeting		= 1,
 				burstRate				= 10/30,
 				sprayangle				= 1390,
 				edgeeffectiveness		= 0.4,
-				minIntensity            = 0.95,
+				minIntensity            = 0.5,
 				customParams        = {
 					light_camera_height = 1800,
 					light_radius = 160,
