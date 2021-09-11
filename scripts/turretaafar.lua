@@ -143,20 +143,22 @@ local spinspeed = math.rad(60)
 local function IdleAnim()
 	Signal(SIG_IDLE)
 	SetSignalMask(SIG_IDLE)
+	local heading = 0
+	local r = 0
 	while idle do
 		while (spGetUnitRulesParam(unitID, "lowpower") == 1) or disarmed do
 			Sleep(100)
 		end
 		EmitSfx(zelena, 1026)
 		
-		local heading = math.rad(math.random(-90, 90))
-		if(lastHeading > heading) then
+		heading = heading + math.rad(math.random(-90, 90))
+		r = math.random(0, 100)
+		if r > 50 then
 			rotateWise = 1
 		else
 			rotateWise = -1
 		end
 		lastHeading = heading
-		Sleep(100)
 		if idle then
 			Spin(gear, y_axis, math.rad(TURN_SPEED) * 5 * rotateWise)
 			Spin(gear001, y_axis, math.rad(TURN_SPEED) * 5 * rotateWise)
@@ -170,8 +172,8 @@ local function IdleAnim()
 			StopSpin(gear, y_axis)
 			StopSpin(gear001, y_axis)
 			StopSpin(gear002, y_axis)
-			Sleep(math.random(400, 6500))
 		end
+		Sleep(math.random(400, 6500))
 	end
 end
 
@@ -190,7 +192,7 @@ local function StunThread()
 end
 
 local function RestoreAfterDelay()
-	Sleep(2000)
+	Sleep(6000)
 	idle = true
 	StartThread(IdleAnim)
 end
@@ -417,7 +419,7 @@ function script.AimWeapon(num, heading, pitch)
 	Signal(SIG_IDLE) -- Tell the IdleAnim we're busy.
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
-	if (spGetUnitRulesParam(unitID, "lowpower") == 0) then
+	if (spGetUnitRulesParam(unitID, "lowpower") == 1) then
 		return false
 	end
 	EmitSfx(cervena, 1025)
