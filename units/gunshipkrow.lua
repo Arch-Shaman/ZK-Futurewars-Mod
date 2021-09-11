@@ -3,11 +3,11 @@ return {
 		unitname               = [[gunshipkrow]],
 		name                   = [[Purifier]],
 		description            = [[Flying Battlestation]],
-		acceleration           = 0.09,
+		acceleration           = 0.15,
 		activateWhenBuilt      = true,
 		airStrafe              = 0,
 		bankingAllowed         = false,
-		brakeRate              = 0.04,
+		brakeRate              = 0.15,
 		buildCostMetal         = 6000,
 		builder                = false,
 		buildPic               = [[gunshipkrow.png]],
@@ -112,7 +112,7 @@ return {
 				burstRate				= 10/30,
 				sprayangle				= 1390,
 				edgeeffectiveness		= 0.4,
-				minIntensity            = 0.5,
+				minIntensity            = 0.95,
 				customParams        = {
 					light_camera_height = 1800,
 					light_radius = 160,
@@ -231,7 +231,7 @@ return {
 				commandFire             = true,
 				coreThickness           = 3,
 				craterBoost             = 8,
-				craterMult              = 15,
+				craterMult              = 20,
       
 				customParams            = {
 					light_color = [[1.25 0.8 1.75]],
@@ -240,8 +240,9 @@ return {
 				damage                  = {
 					default = 40100,
 				},
-				cameraShake				= 1500,
-				explosionGenerator      = [[custom:craterpuncher]],
+				cameraShake				= 500,
+				explosionGenerator      = [[custom:craterpuncher_short]],
+				explosionScar           = false,
 				fireTolerance           = 8192, -- 45 degrees
 				impactOnly              = false,
 				impulseBoost            = 0,
