@@ -137,8 +137,11 @@ for i = 1, #UnitDefs do
 	end
 end
 
+local disableORP = false
+
 options_path = 'Settings/Unit Behaviour/Default States'
 options_order = {
+	'okpdisabledbydefault',
 	'inheritcontrol', 'presetlabel',
 	'resetMoveStates', 'holdPosition',
 	'skirmHoldPosition', 'artyHoldPosition', 'aaHoldPosition',
@@ -186,7 +189,15 @@ options = {
 			end
 		end,
 	},
-
+	okpdisabledbydefault = {
+		name = "Disable Overreclaim Prevention",
+		desc = "Sets ORP to off by default if enabled.",
+		type = 'bool',
+		value = false,
+		OnChange = function(self)
+			disableORP = self.value
+		end,
+	},
 	holdPosition = {
 		type = 'button',
 		name = "Hold Position",
@@ -1409,7 +1420,9 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		QueueState(name, "impulseMode", CMD_PUSH_PULL, orderArray)
 		QueueState(name, "activateWhenBuilt", CMD_WANT_ONOFF, orderArray)
 	end
-
+	if UnitDefs[unitDefID].isBuilder and disableORP then
+		orderArray[#orderArray + 1] = {CMD_OVERRECLAIM, {1}, CMD.OPT_SHIFT}
+	end
 	if #orderArray > 0 then
 		Spring.GiveOrderArrayToUnitArray ({unitID,},orderArray) --give out all orders at once
 	end
@@ -1490,6 +1503,10 @@ local function ApplyUnitStates()
 			widget:UnitFinished(units[i], Spring.GetUnitDefID(units[i]), teamID or Spring.GetUnitTeam(units[i]))
 		end
 	end
+end
+
+function widget:Initialize()
+	disableORP = options.okpdisabledbydefault.value
 end
 
 function widget:PlayerChanged()

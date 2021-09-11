@@ -86,8 +86,14 @@ function gadget:UnitDestroyed(unitID)
 	exceptionUnits[unitID] = nil
 end
 
-function gadget:UnitCreated(unitID, unitDefID)
+function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 	if wantedUnits[unitDefID] then
+		if Spring.GetAIInfo(unitTeam) then
+			CommandDesc.params[1] = 1
+			exceptionUnits[unitID] = true
+		else
+			CommandDesc.params[1] = 0
+		end
 		spInsertUnitCmdDesc(unitID, CommandOrder, CommandDesc)
 	end
 end
