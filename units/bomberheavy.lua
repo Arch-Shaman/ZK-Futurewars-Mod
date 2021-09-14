@@ -45,7 +45,7 @@ return {
 		maxAcc              = 0.75,
 		maxDamage           = 11000,
 		maxFuel             = 1000000,
-		maxRudder           = 0.02,
+		maxRudder           = 0.008,
 		maxVelocity         = 5.5,
 		minCloakDistance    = 75,
 		mygravity           = 1,
@@ -87,6 +87,9 @@ return {
 					reaim_time = 15, -- Fast update not required (maybe dangerous)
 					light_color = [[1.6 0.85 0.38]],
 					light_radius = 750,
+					cruisealt = 600,
+					airlaunched = 1,
+					cruisedist = 280,
 				},
 
 				damage                  = {
@@ -100,7 +103,6 @@ return {
 				flighttime				= 6,
 				impulseBoost            = 0,
 				impulseFactor           = 2.3,
-				trajectoryHeight		= 0.1,
 				interceptedByShieldType = 2,
 				model                   = [[zeppelin_bomb.dae]],
 				mygravity				= 0.5,
@@ -109,7 +111,9 @@ return {
 				smokeTrail              = false,
 				soundHit                = [[weapon/missile/mininuke_hit]],
 				soundStart              = [[weapon/missile/liche_fire]],
+				tracks = true,
 				startVelocity           = 100,
+				turnrate			    = 65536/4, -- 90 degrees
 				tolerance               = 65536/2, -- 180 degrees
 				weaponAcceleration      = 200,
 				weaponType              = [[MissileLauncher]],
