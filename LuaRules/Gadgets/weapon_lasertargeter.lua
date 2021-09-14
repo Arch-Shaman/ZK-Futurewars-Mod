@@ -170,7 +170,7 @@ end
 function gadget:GameFrame(f)
 	if f%3 == 0 then
 		for id, data in pairs(missiles) do
-			if f - data.lastframe > 10 and data.numMissiles > 0 then
+			if f - data.lastframe > 20 and data.numMissiles > 0 then
 				data.state = "lost"
 				for pid,_ in pairs(data.missiles) do
 					local x,y,z = spGetProjectilePosition(pid)
@@ -187,7 +187,7 @@ function gadget:GameFrame(f)
 						GG.ForceCruiseUpdate(pid, x, y, z)
 					end
 				end
-			elseif f - data.lastframe < 10 and data.state ~= "normal" and data.numMissiles > 0 then
+			elseif f - data.lastframe < 20 and data.state ~= "normal" and data.numMissiles > 0 then
 				data.state = "normal"
 			end
 			if data.state == "normal" and data.numMissiles > 0 then
