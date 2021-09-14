@@ -140,7 +140,7 @@ return {
 				},
 
 				damage                  = {
-					default = 100,
+					default = 200,
 				},
 
 				explosionGenerator      = "custom:ROACHPLOSION",
@@ -221,7 +221,7 @@ return {
 				craterMult              = 5,
 
 				damage                  = {
-					default = 350,
+					default = 400,
 				},
 				edgeEffectiveness		= 0.4,
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
