@@ -88,7 +88,7 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				mygravity				= 0.03,
-				range                   = 380,
+				range                   = 420,
 				reloadtime              = 0.7,
 				soundHit                = [[weapon/cannon/cannonfire_004]],
 				soundStartVolume        = 10,
