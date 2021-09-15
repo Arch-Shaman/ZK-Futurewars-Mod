@@ -5,7 +5,7 @@ return {
 		description         = [[Tactical Bombardment Artillery]],
 		acceleration        = 0.252,
 		brakeRate           = 0.96,
-		buildCostMetal      = 1400,
+		buildCostMetal      = 1600,
 		builder             = false,
 		buildPic            = [[vehheavyarty.png]],
 		canMove             = true,
@@ -109,7 +109,7 @@ return {
 				weaponAcceleration      = 315,
 				tracks                  = true, -- doesn't actually track. Needed for cruise missile.
 				weaponType              = [[StarburstLauncher]],
-				weaponVelocity          = 800,
+				weaponVelocity          = 500,
 			},
 		},
 
