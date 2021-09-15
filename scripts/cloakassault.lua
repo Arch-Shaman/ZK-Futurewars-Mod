@@ -138,7 +138,7 @@ function script.Create()
 end
 
 function script.BlockShot(num, targetID)
-	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 550, 70, 0.1, 0.2) -- unitID, targetID, gameFrame, damage, timeout, fastmult, radarmult, staticonly
+	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 450.1, 70, 0.1, 0.2) -- unitID, targetID, gameFrame, damage, timeout, fastmult, radarmult, staticonly
 end
 
 function script.StartMoving()
