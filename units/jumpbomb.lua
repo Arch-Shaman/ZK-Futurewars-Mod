@@ -102,11 +102,16 @@ return {
 				name               = "Explosion",
 				soundHit           = "explosion/mini_nuke",
 				customParams       = {
-					burst = Shared.BURST_UNRELIABLE,
 					lups_explodelife = 1.5,
+					blastwave_size = 75,
+					blastwave_impulse = 4.5,
+					blastwave_speed = 10,
+					blastwave_life = 15,
+					blastwave_lossfactor = 0.75,
+					blastwave_damage = 5000,
 				},
 				damage = {
-					default          = 8500.1,
+					default          = 250.1,
 				},
 			},
 		}
