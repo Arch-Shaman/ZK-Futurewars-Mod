@@ -112,7 +112,7 @@ return {
 				soundHit                = [[weapon/gauss_hit]],
 				soundHitVolume          = 3,
 				soundStart              = [[weapon/cannon/grizzly_fire]],
-				soundStartVolume        = 2.5,
+				soundStartVolume        = 9,
 				stages                  = 32,
 				turret                  = true,
 				waterweapon             = true,
