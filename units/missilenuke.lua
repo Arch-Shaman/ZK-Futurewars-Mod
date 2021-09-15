@@ -9,7 +9,7 @@ return {
 		buildingGroundDecalSizeX      = 3,
 		buildingGroundDecalSizeY      = 3,
 		buildingGroundDecalType       = [[seismic_aoplane.dds]],
-		buildPic                      = [[tacnuke.png]],
+		buildPic                      = [[missilenuke.png]],
 		category                      = [[SINK UNARMED]],
 		collisionVolumeOffsets        = [[0 75 -50]],
 		collisionVolumeScales         = [[20 50 20]],
