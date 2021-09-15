@@ -87,7 +87,7 @@ return {
 				craterBoost             = 1,
 				craterMult              = 2,
 				damage                  = {
-					default = 50,
+					default = 30.1,
 				},
 				explosionGenerator      = [[custom:EMG_HIT]],
 				impulseBoost            = 0,
@@ -95,7 +95,7 @@ return {
 				intensity               = 0.7,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 605,
+				range                   = 505,
 				reloadtime              = 10/30,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
