@@ -2,7 +2,7 @@ return {
 	staticantinuke = {
 		unitname                      = [[staticantinuke]],
 		name                          = [[Antinuke]],
-		description                   = [[Nuclear Interceptor (Needs Grid: 175E)]],
+		description                   = [[Nuclear Interceptor (Needs Grid: 90E)]],
 		acceleration                  = 0,
 		activateWhenBuilt             = true,
 		brakeRate                     = 0,
@@ -28,7 +28,7 @@ return {
 			nuke_coverage  = 2500,
 			modelradius      = [[50]],
 			selectionscalemult = 1,
-			neededlink  = 175,
+			neededlink  = 90,
 			pylonrange  = 450,
 			keeptooltip = "by janitor's request, please don't remove the tooltips Machine God.",
 		},
