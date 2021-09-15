@@ -23,7 +23,11 @@ return {
 		customParams           = {
 			bait_level_default = 1,
 			modelradius    = [[10]],
-
+			jump_range       = 350,
+			jump_height      = 220,
+			jump_speed       = 8,
+			jump_reload      = 4,
+			jump_from_midair = 0,
 			grey_goo = 1,
 			grey_goo_spawn = "jumpscout",
 			grey_goo_drain = 7.5,
