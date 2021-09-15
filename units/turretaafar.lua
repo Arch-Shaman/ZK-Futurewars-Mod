@@ -5,7 +5,7 @@ return {
 		description                   = [[Heavy SAM Battery (Requires 80 energy grid)]],
 		acceleration                  = 0,
 		brakeRate                     = 0,
-		buildCostMetal                = 2250,
+		buildCostMetal                = 2100,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 3.6,
@@ -83,8 +83,8 @@ return {
 				},
 
 				damage                  = {
-					default = 15.01,
-					planes  = 150.1,
+					default = 20.01,
+					planes  = 200.1,
 				},
 
 				explosionGenerator      = [[custom:MISSILE_HIT_PIKES_160]],
