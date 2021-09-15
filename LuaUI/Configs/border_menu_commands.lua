@@ -221,7 +221,7 @@ local overrides = {
 	[CMD_AREA_TERRA_MEX] = {caption = '', texture = imageDir .. 'Bold/mex.png'},
 
 	[CMD_JUMP] = {texture = imageDir .. 'Bold/jump.png'},
-	[CMD_SWEEPFIRE] = {texture = imageDir .. 'sweepfire.png'}
+	[CMD_SWEEPFIRE] = {texture = imageDir .. 'sweepfire.png'},
 	[CMD_SWEEPFIRE_CANCEL] = {texture = imageDir .. 'sweepfire_cancel.png'},
 	[CMD_FIND_PAD] = {caption = '', texture = imageDir .. 'Bold/rearm.png'},
 
