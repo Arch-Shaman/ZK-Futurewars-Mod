@@ -515,9 +515,9 @@
 		"helptext" : "Wind generators produce a variable amount of energy, depending on altitude and wind speed. They are extremely fragile and chain explode when bunched, so consider their placement carefully. When placed in water, they become somewhat more sturdy tidal generators with a good, constant output."
 	},
 	"amphassault" : {
-		"name" : "Grizzly",
+		"name" : "Breaker",
 		"description" : "Heavy Amphibious Assault Walker",
-		"helptext" : "The Grizzly is a classic assault unit - relatively slow, clumsy and next to unstoppable. Its weapon is a high power laser beam with high range and damage, ineffective against swarmers and fast aircraft but not much else. While its weapon cannot fire underwater, the Grizzly can float to surface in order to shoot."
+		"helptext" : "The Breaker is a classic assault unit: slow, clumsy and can take a beating. Armed with twin Heavy Gauss Cannons with high range and damage, it is ineffective against swarmers and fast aircraft but deadly against heavies."
 	},
 	"shieldaa" : {
 		"name" : "Sentinel",
