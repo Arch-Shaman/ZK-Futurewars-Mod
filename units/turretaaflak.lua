@@ -126,7 +126,6 @@ return { turretaaflak = {
 				customParams            = {
 					light_camera_height = 2000,
 					light_color = [[1 0.2 0.2]],
-					light_radius = 128,
 					reaim_time = 8, -- COB
 					isaa = [[1]],
 					light_radius = 0,

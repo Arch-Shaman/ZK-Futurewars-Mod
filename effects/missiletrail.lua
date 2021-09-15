@@ -258,7 +258,6 @@ local cegs = {
 			},
 		},
 	},
-
 	["missiletrailpurple"] = {
 		alwaysvisible      = false,
 		usedefaultexplosions = false,

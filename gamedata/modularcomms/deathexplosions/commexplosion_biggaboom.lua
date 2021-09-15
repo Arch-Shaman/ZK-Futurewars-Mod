@@ -1,6 +1,6 @@
 local name = "commexplosion_biggaboom"
 local weaponDef = {
-	name               = [[Hyvää huomenta räjähdys]],
+	--name               = [[Hyvää huomenta räjähdys]],
 	areaOfEffect       = 384,
 	craterBoost        = 1,
 	craterMult         = 3.5,
@@ -28,7 +28,7 @@ local weaponDef = {
 	impulseBoost       = 0,
 	impulseFactor      = 0.3,
 	name               = "Explosion",
-	soundHit           = "explosion/mini_nuke",
+	--soundHit           = "explosion/mini_nuke",
 	damage = {
 		default          = 0,
 	},

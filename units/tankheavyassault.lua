@@ -83,8 +83,6 @@ return {
 
 				customParams            = {
 					restrict_in_widgets = 1,
-					light_color = [[3 2.33 1.5]],
-					light_radius = 150,
 					light_camera_height = 3500,
 					light_color = [[0.75 0.4 0.15]],
 					light_radius = 220,
@@ -186,7 +184,6 @@ return {
 				customParams            = {
 					light_camera_height = 2000,
 					light_color = [[1 0.2 0.2]],
-					light_radius = 128,
 					reaim_time = 8, -- COB
 					isaa = [[1]],
 					light_radius = 0,

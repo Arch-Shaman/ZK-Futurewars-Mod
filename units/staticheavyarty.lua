@@ -181,7 +181,6 @@ return {
 					vradius1 = "-5,-5,-5,5,5,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
 					light_camera_height = 1500,
-					light_color = [[0.8 0.76 0.38]],
 					light_radius = 120,
 					light_color = [[2.4 1.5 0.6]],
 					reveal_unit = 26,

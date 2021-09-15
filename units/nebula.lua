@@ -103,7 +103,6 @@ return {
 				craterMult              = 2,
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
-					isFlak = 3,
 					reaim_time = 8, -- COB
 					light_color = [[1.4 0.8 0.3]],
 					isFlak = 3,
@@ -132,8 +131,6 @@ return {
 			},
 		
 			MISSILETOP = {
-				burst = 2,
-				burstRate = 0.5,
 				name                    = [[Typhoon Missile Barrage]],
 				areaOfEffect            = 60,
 				sprayAngle				= 800,
@@ -205,8 +202,6 @@ return {
 				weaponVelocity          = 650,
 			},
 			MISSILEBOTTOM = {
-				burst = 2,
-				burstRate = 0.5,
 				name                    = [[Typhoon Missile Barrage]],
 				areaOfEffect            = 60,
 				sprayAngle				= 800,

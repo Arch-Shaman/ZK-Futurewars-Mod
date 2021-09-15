@@ -554,7 +554,7 @@ function gadget:GameFrame(f)
 					
 					local teleportiee = false
 					local bestPriority = false
-					local teleTargetX, teleTargetZ = false
+					local teleTargetX, teleTargetZ = nil, nil
 					local offset = tele[tid].offset
 					local teleporterdef = UnitDefs[Spring.GetUnitDefID(tid)]
 					for j = 1, #units do
