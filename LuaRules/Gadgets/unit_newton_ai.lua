@@ -215,11 +215,11 @@ local function CheckUnit(unitID, data, currenttarget)
 end
 
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced) -- we get unitAI cmd from tactical ai. this just plugs it into this script.
-	if (cmdID ~= CMD_UNIT_AI) then
-		return true  -- command was not used
+	if (cmdID == CMD_UNIT_AI) and wanteddefs[unitDefID] then
+		AIToggleCommand(unitID, cmdParams, cmdOptions)
+		return false  -- command was used
 	end
-	AIToggleCommand(unitID, cmdParams, cmdOptions)
-	return false  -- command was used
+	return true  -- command wasnt used
 end
 
 function gadget:UnitDestroyed(unitID)
