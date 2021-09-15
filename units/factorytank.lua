@@ -97,8 +97,8 @@ return {
 
 				customParams            = {
 					restrict_in_widgets = 1,
-					light_color = [[3 2.33 1.5]],
-					light_radius = 150,
+					-- light_color = [[3 2.33 1.5]], Not quite sure which ones are intentionally supposed to be here.
+					-- light_radius = 150,			 Usually the last index is whats set at runtime, so i'll just leave it as commented out for future reference?
 					light_camera_height = 3500,
 					light_color = [[0.75 0.4 0.15]],
 					light_radius = 220,
@@ -199,7 +199,7 @@ return {
 				customParams            = {
 					light_camera_height = 2000,
 					light_color = [[1 0.2 0.2]],
-					light_radius = 128,
+					-- light_radius = 128,  Refer to line 100's comment.
 					reaim_time = 8, -- COB
 					isaa = [[1]],
 					light_radius = 0,

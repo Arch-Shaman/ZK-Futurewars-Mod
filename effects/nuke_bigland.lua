@@ -204,7 +204,6 @@ return {
 			},
 		},
 		fireballup = {
-			air = true,
 			class = [[CSimpleParticleSystem]],
 			count = 4,
 			ground = true,
@@ -238,7 +237,6 @@ return {
 			},
 		},
 		fireballupred = {
-			air = true,
 			class = [[CSimpleParticleSystem]],
 			count = 4,
 			ground = true,

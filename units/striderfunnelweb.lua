@@ -154,7 +154,6 @@ return {
 					light_camera_height = 3500,
 					light_color = [[0.5 0.0 0.5]],
 					light_radius = 220,
-					shield_damage = 150,
 					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "striderfunnelweb_fragment",
 					clustervec1 = "derpderpderpderpderpderpderpderpderpderp", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.

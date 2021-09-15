@@ -227,10 +227,6 @@ local icontypes = {
     bitmap='icons/vehiclesupport.dds',
     size=1.8,
   },
-  vehicleaa = {
-    bitmap='icons/vehicleaa.dds',
-    size=1.8,
-  },
   vehicleriot = {
     bitmap='icons/vehicleriot.dds',
     size=1.8,
@@ -628,14 +624,6 @@ local icontypes = {
   builderair = {
     bitmap='icons/builderair.dds',
     size=1.8,
-  },
-  t3builder = {
-    bitmap='icons/t3builder.dds',
-    size=2,
-  },
-  staticbuilder = {
-    bitmap='icons/staticbuilder.dds',
-    size=1,
   },
   t3hub = {
     bitmap='icons/t3hub.dds',

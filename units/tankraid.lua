@@ -196,10 +196,6 @@ return {
 					light_radius = 220,
 					
 					manualfire = 1,
-					area_damage = 1,
-					area_damage_radius = 128,
-					area_damage_dps = 20,
-					area_damage_duration = 45,
 
 					numprojectiles1 = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "tankraid_napalm_fragment_dummy",

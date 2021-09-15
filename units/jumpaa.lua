@@ -104,7 +104,6 @@ return {
 				smokeTrail              = true,
 				sprayAngle              = 10000,
 				soundHit                = [[weapon/gravity_fire]],
-				soundStartVolume        = 20,
 				soundStart              = [[weapon/missile/rapid_rocket_fire]],
 				soundStartVolume        = 20,
 				startVelocity           = 300,

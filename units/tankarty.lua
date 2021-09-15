@@ -111,8 +111,6 @@ return {
 				craterMult              = 0,
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
-					reaim_time = 8, -- COB
-					light_color = [[1.4 0.8 0.3]],
 					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "tankarty_secondary",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
