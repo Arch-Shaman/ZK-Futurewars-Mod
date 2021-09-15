@@ -16,11 +16,11 @@ local weaponDef = {
 		okp_speedmult = 0.8,
 		okp_radarmult = 1,
 		okp_timeout = 60,
-		okp_damage = 1500,
+		okp_damage = 1250.1,
 	},
 
 	damage                  = {
-		default = 1500,
+		default = 1250.1,
 	},
 
 	explosionGenerator      = [[custom:spectre_hit]],
@@ -29,7 +29,7 @@ local weaponDef = {
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 1,
 	noSelfDamage            = true,
-	range                   = 800,
+	range                   = 750,
 	reloadtime              = 10,
 	rgbColor                = [[1 0.2 0.2]],
 	separation              = 0.5,
