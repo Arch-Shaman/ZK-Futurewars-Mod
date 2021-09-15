@@ -5,7 +5,7 @@ return {
 		description         = [[Heavy Canister Support Gunship]],
 		acceleration        = 0.15,
 		brakeRate           = 0.13,
-		buildCostMetal      = 850,
+		buildCostMetal      = 800,
 		builder             = false,
 		buildPic            = [[gunshipassault.png]],
 		canFly              = true,
@@ -72,7 +72,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 40,
+					default = 50,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -127,7 +127,7 @@ return {
 				},
 
 				damage                  = {
-					default = 40*6,
+					default = 50*6,
 				},
 
 				dance                   = 30,
