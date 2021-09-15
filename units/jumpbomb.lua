@@ -107,8 +107,8 @@ return {
 					blastwave_impulse = 4.5,
 					blastwave_speed = 10,
 					blastwave_life = 15,
-					blastwave_lossfactor = 0.75,
-					blastwave_damage = 5000,
+					blastwave_lossfactor = 0.66,
+					blastwave_damage = 4500,
 				},
 				damage = {
 					default          = 250.1,
