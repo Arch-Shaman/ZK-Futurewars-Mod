@@ -101,6 +101,7 @@ return {
 				turret                  = true,
 				weaponType              = [[BeamLaser]],
 				weaponVelocity          = 2200,
+				waterweapon				= true,
 				texture1                = [[largelaser]],
 				texture2                = [[flare]],
 				texture3                = [[flare]],
@@ -154,6 +155,7 @@ return {
 				turret                  = true,
 				weaponType              = [[BeamLaser]],
 				weaponVelocity          = 2200,
+				waterweapon				= true,
 			},
 
 		},
