@@ -12,7 +12,7 @@ return {
 		buildingGroundDecalType       = [[gauss_aoplate.dds]],
 		buildPic                      = [[turretgauss.png]],
 		canMove                       = false,
-		category                      = [[SINK TURRET]],
+		category                      = [[FLOAT TURRET]],
 		collisionVolumeOffsets        = [[0 5 0]],
 		collisionVolumeScales         = [[28 40 28]],
 		collisionVolumeType           = [[CylY]],
