@@ -42,6 +42,7 @@ return {
 		noChaseCategory        = [[TERRAFORM FIXEDWING SATELLITE GUNSHIP]],
 		objectName             = [[cortrem.s3o]],
 		selfDestructAs         = [[BIG_UNIT]],
+		script                 = [[tankheavyarty.lua]],
 
 		sfxtypes               = {
 			explosiongenerators = {
