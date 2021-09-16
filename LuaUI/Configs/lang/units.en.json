@@ -37,7 +37,7 @@
 	"spiderscout" : {
 		"name" : "Wolf",
 		"description" : "Light Scout/Raider Spider",
-		"helptext" : "The Wolf is a combination scout and raider that has moderately high dps for its cost. It can be used in small groups to effectively raid mexes early on, and in maps with tall cliffs can attack from unexpected angles."
+		"helptext" : "The Wolf has a combined role of scout and raider. It has moderately high dps for its cost and it can be used in small groups to effectively raid mexes early on. In maps with tall cliffs, it can attack from unexpected angles."
 	},
 	"energyfusion" : {
 		"name" : "Fusion Reactor",
@@ -82,7 +82,7 @@
 	"hoverheavyraid" : {
 		"name" : "Bolas",
 		"description" : "Disruptor Hovercraft",
-		"helptext" : "The Bolas is a heavy raider hovercraft armed with a rapid-fire disruptor beam. While its damage output is quite noticeable, it works even better alongside Maces or Scalpels to hit the slowed-down enemies harder."
+		"helptext" : "The Bolas is a heavy raider hovercraft armed with a rapid-fire disruptor beam. While its damage output is quite noticeable, it works even better alongside Longswords or Scalpels to hit the slowed-down enemies harder."
 	},
 	"chicken_digger" : {
 		"name" : "Digger",
@@ -152,7 +152,7 @@
 	"turretgauss" : {
 		"name" : "Gauss",
 		"description" : "Gauss Turret, 10 health/s when closed",
-		"helptext" : "The Gauss is a compact, resilent turret with a medium-range gauss cannon. When popped down, it recieves a quarter of incoming damage as well as small amount of health regeneration. It can also attack underwater targets."
+		"helptext" : "The Gauss is a compact, resilient turret with a medium-range gauss cannon. When popped down, it recieves a quarter of incoming damage as well as small amount of health regeneration. It can also attack underwater targets."
 	},
 	"nebula" : {
 		"name" : "Nebula",
@@ -392,7 +392,7 @@
 	"gunshipheavyskirm" : {
 		"name" : "Aurora",
 		"description" : "Fire Support Gunship",
-		"helptext" : "An aerial gun platform designed to bombard the enemy from beyond the reach of their weapons. Its 2 pairs of Guass Autocannons are powerful, but inaccurate while its Kinetic Missiles will make short work of slow targets. Although the Aurora is not made out of wet paper and can withstand some punishment, it is still advised to keep this craft behind other units as tanking shots is not its forte."
+		"helptext" : "An aerial gun platform designed to bombard the enemy from beyond the reach of their weapons. Its 2 pairs of Gauss Autocannons are powerful, but inaccurate while its Kinetic Missiles will make short work of slow targets. Although the Aurora is not made out of wet paper and can withstand some punishment, it is still advised to keep this craft behind other units as tanking shots is not its forte."
 	},
 	"factoryshield" : {
 		"name" : "Shieldbot Factory",
@@ -492,7 +492,7 @@
 	"staticnuke" : {
 		"name" : "Oblivion",
 		"description" : "Strategic MIRV Launcher, Drains 25 m/s, 4 minute stockpile",
-		"helptext" : "Oblivion, the pinnacle of human engineering. The absolute wizardry that it takes to cram 3 Hawking Bombs into a missile that can still fly across interplanetary space at fractions of the speed of light in unimagenable, yet somehow, some way, it was done."
+		"helptext" : "Oblivion, the pinnacle of human engineering. The absolute wizardry that it takes to cram 3 Hawking Bombs into a missile that can still fly across interplanetary space at fractions of the speed of light in unimaginable, yet somehow, some way, it was done."
 	},
 	"missilenuke" : {
 		"name" : "Silencer MkIII",
@@ -982,7 +982,7 @@
 	"subtacmissile" : {
 		"name" : "Charybdis",
 		"description" : "Tactical MIRV SLBM platform, Drains 24 m/s, 50 second stockpile",
-		"helptext" : "The Tactical Nuke Missile Sub provides a standoff precision strike weapon in the form of tactical SLBMss. It has no defense against direct attacks and should avoid contact with the enemy."
+		"helptext" : "The Tactical Nuke Missile Sub provides a standoff precision strike weapon in the form of tactical SLBMs. It has no defense against direct attacks and should avoid contact with the enemy."
 	},
 	"shipriot" : {
 		"name" : "Corsair",
@@ -995,8 +995,8 @@
 		"helptext" : "This Destroyer is a general-purpose combat vessel, combining a strong area-of-effect sonic cannon, a medium-range vertical launch missile, and strong armor. Use its sonic gun against smaller opponents above and below the water, and its missile against static targets."
 	},
 	"shiparty" : {
-		"name" : "Tsumani",
-		"description" : "Naval Supremecy Vessel",
+		"name" : "Tsunami",
+		"description" : "Naval Supremacy Vessel",
 		"helptext" : "This Cruiser packs two powerful, medium-range plasma anti-surface cannons, useful for taking on lesser ships. It's slow and ponderous, so keep an eye out for would-be predators like raider vessels and submarines."
 	},
 	"shipaa" : {
@@ -1057,7 +1057,7 @@
 	"striderbantha" : {
 		"name" : "Mogul",
 		"description" : "Heavy Laser Guided Missile Platform",
-		"helptext" : "Developed as a platform to deploy heavy canister barrages at ludicrious distances, the Mogul is the single heaviest mobile artillery piece currently availible in the galaxy. Its cluster missile barrage can devestate an area. However, don't expect it do much against nearby enemies. It only is armed modestly for direct fire engagements."
+		"helptext" : "Developed as a platform to deploy heavy canister barrages at ludicrious distances, the Mogul is the single heaviest mobile artillery piece currently availible in the galaxy. Its cluster missile barrage can devastate an area. However, don't expect it do much against nearby enemies. It only is armed modestly for direct fire engagements."
 	},
 	"shipcarrier" : {
 		"name" : "Reef",
