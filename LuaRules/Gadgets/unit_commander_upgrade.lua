@@ -73,6 +73,8 @@ local names = {
 	"Query Failed: Couldn't Load Name",
 	"Ol' Reliable (Not Reliable)",
 	"Explosive Contents",
+	"Lappi Gaming",
+	"Moikka Mikael",
 }
 
 local zombienames = {
