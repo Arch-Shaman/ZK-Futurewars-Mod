@@ -469,6 +469,11 @@
 		"description" : "Cloaked Jumping Anti-Heavy Bomb",
 		"helptext" : "This slow-moving, expensive cloaked unit can jump on to enemy units and blast even a heavy tank straight to hell. Counter with swarms of cheap screening units. Be careful of its very small explosion radius when using it."
 	},
+	"factorycomm" : {
+		"name" : "Commander Production Line",
+		"description" : "Produces Commanders",
+		"helptext" : "The Commander Production Line (CPL) is responsible for constructing the unique commanders found across the galaxy. It is here replacement units or new units are constructed to join the endless war that ravages the universe."
+	},
 	"jumpskirm" : {
 		"name" : "Mediator",
 		"description" : "Disruptor Skirmisher Walker",

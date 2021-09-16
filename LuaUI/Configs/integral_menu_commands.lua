@@ -115,6 +115,12 @@ local unitTypes = {
 }
 
 local factoryUnitPosDef = {
+	factorycomm = {
+		dynsupport0 = unitTypes.CONSTRUCTOR,
+		dynrecon0 = unitTypes.RAIDER,
+		dynassault0 = unitTypes.SKIRMISHER,
+		dynstrike0 = unitTypes.RIOT, -- move to ASSAULT when riot comm is added.
+	},
 	factorycloak = {
 		cloakcon          = unitTypes.CONSTRUCTOR,
 		cloakraid         = unitTypes.RAIDER,
@@ -295,6 +301,7 @@ local factory_commands = {
 	factoryamph       = {order = 10, row = 2, col = 4},
 	factoryship       = {order = 11, row = 2, col = 5},
 	striderhub        = {order = 12, row = 2, col = 6},
+	factorycomm       = {order = 13, row = 3, col = 1},
 }
 
 local econ_commands = {
