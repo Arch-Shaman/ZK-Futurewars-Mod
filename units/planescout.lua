@@ -46,8 +46,8 @@ return {
 		radarDistanceJam    = 600,
 		script              = [[planescout.lua]],
 		selfDestructAs      = [[GUNSHIPEX]],
-		sightDistance       = 1400,
-		sonarDistance       = 1400,
+		sightDistance       = 1700,
+		sonarDistance       = 1700,
 		turnRadius          = 60,
 		workerTime          = 0,
 
