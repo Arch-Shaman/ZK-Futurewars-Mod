@@ -5,7 +5,7 @@ return {
 		description            = [[Armed Construction Tank]],
 		acceleration           = 0.4,
 		brakeRate              = 18.0,
-		buildCostMetal         = 280,
+		buildCostMetal         = 300,
 		buildDistance          = 200,
 		builder                = true,
 		buildoptions           = {},
@@ -24,8 +24,8 @@ return {
 			midposoffset   = [[0 -4 0]],
 			modelradius    = [[30]],
 			selection_scale = 1.2,
-			nanoregen = 7.5,
-			nano_maxregen = 8,
+			nanoregen = 10,
+			nano_maxregen = 10,
 			aim_lookahead = 120,
 		},
 
@@ -37,7 +37,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 2240,
+		maxDamage              = 2500,
 		maxSlope               = 18,
 		maxVelocity            = 1.7,
 		maxWaterDepth          = 22,
@@ -73,10 +73,15 @@ return {
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
+			{
+				def                = [[CANNON]],
+				badTargetCategory  = [[FIXEDWING]],
+				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
+			},
 		},
 		weaponDefs             = {
 			CANNON = {
-				name                    = [[Twin Autocannon]],
+				name                    = [[Rotary Cannon]],
 				alphaDecay              = 0.1,
 				areaOfEffect            = 24,
 				colormap                = [[1 0.95 0.4 1   1 0.95 0.4 1    0 0 0 0.01    1 0.7 0.2 1]],
@@ -87,6 +92,11 @@ return {
 					light_camera_height = 1200,
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 60,
+					stats_custom_tooltip_1 = " - Spooling Weapon:",
+					stats_custom_tooltip_entry_1 = "-15% reload time per shot",
+					stats_custom_tooltip_2 = " - Maximum DPS:",
+					stats_custom_tooltip_entry_2 = "303",
+					reaim_time = 1, -- fast update?
 				},
 
 				damage                  = {
@@ -102,7 +112,7 @@ return {
 				noGap                   = false,
 				noSelfDamage            = true,
 				range                   = 350,
-				reloadtime              = 3/30, -- 10 rnd per sec
+				reloadtime              = 30/30, -- 10 rnd per sec
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
 				size                    = 3,
