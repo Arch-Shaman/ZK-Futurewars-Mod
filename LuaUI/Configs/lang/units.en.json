@@ -622,7 +622,7 @@
 	"vehassault" : {
 		"name" : "Ravager",
 		"description" : "Assault Rover",
-		"helptext" : "Expensive and powerful, the Ravager is capable of holding its own against most opposition. Though its maneuverability is terrible, its strength is when moving at a considerable top speed in a straight line. Due to this, it is almost impossible to skirmish using raiders. In combat, you should attempt to keep travelling forward and not turn too suddenly, so as to maintain top speed. Circling your target at the edge of your range is a good tactic. An arcing projectile allows it to shoot over wreckage, other tanks, etc. Vulnerable to crawling bombs when in swarms."
+		"helptext" : "The modern Ravager has undergone several iterations before reaching what it currently is. Sporting a new Thermoregenerative plasma generator that recycles the heat generated from creating plasma to produce more plasma, a Ravager unit can eventually start pumbling targets with damage equivalent to a raider unit. In addition, it can emergency boost out of situations or to intercept hostile units at the cost of slowing for a few seconds."
 	},
 	"raveparty" : {
 		"name" : "Disco Rave Party",

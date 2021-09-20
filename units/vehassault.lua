@@ -73,31 +73,35 @@ return {
 		},
 		weaponDefs             = {
 			PLASMA = {
-				name                    = [[Plasma Cannon]],
+				name                    = [[Thermoregenerative Plasma Cannon]],
 				areaOfEffect            = 32,
 				craterBoost             = 0,
 				craterMult              = 0,
 				customParams        = {
 					light_camera_height = 1500,
+					stats_custom_tooltip_1 = " - Spooling Weapon:",
+					stats_custom_tooltip_entry_1 = "-10% reload time per shot",
+					stats_custom_tooltip_2 = " - Maximum DPS:",
+					stats_custom_tooltip_entry_2 = "276",
 				},
 
 				damage                  = {
-					default = 210,
+					default = 230,
 				},
 
 				explosionGenerator      = [[custom:INGEBORG]],
-				mygravity				= 0.05,
+				mygravity				= 0.04,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 320,
-				reloadtime              = 1.7,
+				reloadtime              = 2.5,
 				soundHit                = [[weapon/cannon/cannon_hit2]],
-				soundStart              = [[weapon/cannon/medplasma_fire]],
+				soundStart              = [[weapon/cannon/cannonfire_001]],
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 360,
+				weaponVelocity          = 480,
 			},
 		},
 		featureDefs            = {
