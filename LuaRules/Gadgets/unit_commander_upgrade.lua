@@ -55,13 +55,11 @@ include("LuaRules/Configs/customcmds.h.lua")
 
 local names = {
 	"Moi Maailma",
-	"FFC Doesn't Like Me",
 	"FRIENDLIES OVER HERE",
 	"I Use Hacks",
 	"SHIELD NOOB",
 	"Dgun Me Harder",
 	"Van Doorn",
-	"GODMODE USER",
 	"ONE NEAT TRICK TO KILL ALL COMMS",
 	"I AM ERROR",
 	"Debug THIS",
@@ -69,12 +67,18 @@ local names = {
 	"NOT SUSPICIOUS AT ALL",
 	"WTB Dgun",
 	"Dgun Not Included",
-	"I have range hacks",
 	"Query Failed: Couldn't Load Name",
 	"Ol' Reliable (Not Reliable)",
 	"Explosive Contents",
 	"Lappi Gaming",
 	"Moikka Mikael",
+	"No More Mr Nice Guy",
+	"God Told Me To Do It", 
+	"What Are the Civilian Applications?", 
+	"Attitude Adjuster", 
+	"Appeal To Reason", 
+	"Lapsed Pacifist", 
+	"Reformed Nice Guy",
 }
 
 local zombienames = {
