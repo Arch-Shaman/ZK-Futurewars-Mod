@@ -21,6 +21,7 @@ return {
 		selectionVolumeType    = [[ellipsoid]],
 
 		customParams           = {
+			canjump            = 1,
 			bait_level_default = 1,
 			modelradius    = [[10]],
 			jump_range       = 350,
