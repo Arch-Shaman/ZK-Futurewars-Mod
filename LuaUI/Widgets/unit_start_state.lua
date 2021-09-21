@@ -25,7 +25,7 @@ local alwaysHoldPos, holdPosException, dontFireAtRadarUnits, factoryDefs = VFS.I
 local defaultSelectionRank = VFS.Include(LUAUI_DIRNAME .. "Configs/selection_rank.lua")
 local spectatingState = select(1, Spring.GetSpectatingState())
 
-local unitsToFactory = {}	-- [unitDefName] = factoryDefName
+local unitsToFactory = {} -- [unitDefName] = factoryDefName
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -102,9 +102,13 @@ local tooltips = {
 		[3] = "Avoid shooting at units costing less than 240 (excluding Stardust) as well as, Raptor, unknown radar dots, low value nanoframes and armoured targets (excluding Crab). Disables Ward Fire." .. preventBaitTip,
 		[4] = "Avoid shooting at  units costing less than 420, unknown radar dots, low value nanoframes and armoured targets (excluding Crab). Disables Ward Fire." .. preventBaitTip,
 	},
-	ward_fire = {
+	fire_at_shield = {
 		[0] = "Disabled.",
 		[1] = "Shoot at the shields of Thugs, Felons and Convicts when nothing else is in range.",
+	},
+	fire_towards_enemy = {
+		[0] = "Disabled.",
+		[1] = "Shoot towards the closest enemy when nothing else is in range.",
 	},
 }
 
@@ -198,6 +202,7 @@ options = {
 			disableORP = self.value
 		end,
 	},
+
 	holdPosition = {
 		type = 'button',
 		name = "Hold Position",
@@ -618,6 +623,7 @@ options = {
 
 local tacticalAIUnits = {}
 local wardFireUnits = {}
+local wardFireCmdID = {}
 do
 	local tacticalAIDefs, behaviourDefaults = VFS.Include("LuaRules/Configs/tactical_ai_defs.lua", nil, VFS.ZIP)
 	for unitDefID, behaviourData in pairs(tacticalAIDefs) do
@@ -627,8 +633,9 @@ do
 			if unitDefName then
 				tacticalAIUnits[unitDefName] = {value = (behaviourData.defaultAIState or behaviourDefaults.defaultState) == 1}
 			end
-			if behaviourData.wardFireTargets then
+			if behaviourData.hasWardFire then
 				wardFireUnits[unitDefName] = (behaviourData.wardFireDefault and 1) or 0
+				wardFireCmdID[unitDefName] = behaviourData.wardFireCmdID
 			end
 		end
 	end
@@ -960,15 +967,30 @@ local function addUnit(defName, path)
 	end
 
 	if wardFireUnits[defName] then
-		options[defName .. "_ward_fire"] = {
-			name = "  Shoot Shields (Ward Fire)",
-			desc = "Shoot at the shields of Thugs, Felons and Convicts when nothing else is in range.",
-			type = 'bool',
-			value = (wardFireUnits[defName] == 1),
-			path = path,
-			tooltipFunction = tooltipFunc.prevent_bait,
-		}
-		options_order[#options_order+1] = defName .. "_ward_fire"
+		local def = wardFireUnits[defName]
+		local wardCmd = wardFireCmdID[defName]
+		
+		if wardCmd == CMD_FIRE_AT_SHIELD then
+			options[defName .. "_fire_at_shield"] = {
+				name = "  Fire at Shields",
+				desc = "Shoot at the shields of Thugs, Felons and Convicts when nothing else is in range.",
+				type = 'bool',
+				value = (wardFireUnits[defName] == 1),
+				path = path,
+				tooltipFunction = tooltipFunc.prevent_bait,
+			}
+			options_order[#options_order+1] = defName .. "_fire_at_shield"
+		elseif wardCmd == CMD_FIRE_TOWARDS_ENEMY then
+			options[defName .. "_fire_towards_enemy"] = {
+				name = "  Fire Towards Enemies",
+				desc = "Shoot towards the closest enemy when nothing else is in range.",
+				type = 'bool',
+				value = (wardFireUnits[defName] == 1),
+				path = path,
+				tooltipFunction = tooltipFunc.prevent_bait,
+			}
+			options_order[#options_order+1] = defName .. "_fire_towards_enemy"
+		end
 	end
 
 	if baitPreventionDefault[unitDefID] then
@@ -1392,9 +1414,14 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 			orderArray[#orderArray + 1] = {CMD_PREVENT_BAIT, {value}, CMD.OPT_SHIFT}
 		end
 		
-		value = GetStateValue(name, "ward_fire")
+		value = GetStateValue(name, "fire_at_shield")
 		if value then
-			orderArray[#orderArray + 1] = {CMD_WARD_FIRE, {(value and 1) or 0}, CMD.OPT_SHIFT}
+			orderArray[#orderArray + 1] = {CMD_FIRE_AT_SHIELD, {(value and 1) or 0}, CMD.OPT_SHIFT}
+		end
+		
+		value = GetStateValue(name, "fire_towards_enemy")
+		if value then
+			orderArray[#orderArray + 1] = {CMD_FIRE_TOWARDS_ENEMY, {(value and 1) or 0}, CMD.OPT_SHIFT}
 		end
 		
 		value = GetStateValue(name, "disableattack")
@@ -1423,6 +1450,7 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 	if UnitDefs[unitDefID].isBuilder and disableORP then
 		orderArray[#orderArray + 1] = {CMD_OVERRECLAIM, {1}, CMD.OPT_SHIFT}
 	end
+
 	if #orderArray > 0 then
 		Spring.GiveOrderArrayToUnitArray ({unitID,},orderArray) --give out all orders at once
 	end

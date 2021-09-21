@@ -38,7 +38,8 @@ local stateCommands = {
 	[CMD_TOGGLE_DRONES] = true,
 	[CMD_AUTO_CALL_TRANSPORT] = true,
 	[CMD_SELECTION_RANK] = true,
-	[CMD_WARD_FIRE] = true,
+	[CMD_FIRE_AT_SHIELD] = true,
+	[CMD_FIRE_TOWARDS_ENEMY] = true,
 }
 
 return stateCommands

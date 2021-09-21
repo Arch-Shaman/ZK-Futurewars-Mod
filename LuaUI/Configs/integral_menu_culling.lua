@@ -37,6 +37,7 @@ local configList = {
 	{cmdID = CMD_CLOAK_SHIELD          , state = true, default = true, name = "Area Cloaker"},
 	{cmdID = CMD_PREVENT_BAIT          , state = true, default = true, name = "Avoid Bad Targets"},
 	{cmdID = CMD_DONT_FIRE_AT_RADAR    , state = true, default = true, name = "Fire At Radar State"},
+	{cmdID = CMD_FIRE_TOWARDS_ENEMY    , state = true, default = true, name = "Fire Towards Enemies"},
 	{cmdID = CMD_FACTORY_GUARD         , state = true, default = true, name = "Auto Assist"},
 	{cmdID = CMD_WANT_CLOAK            , state = true, default = true, name = "Cloak"},
 	{cmdID = CMD_PRIORITY              , state = true, default = true, name = "Construction Priority"},
@@ -62,7 +63,7 @@ local configList = {
 	{cmdID = CMD_PREVENT_OVERKILL      , state = true, default = false, name = "Overkill Prevention"},
 	{cmdID = CMD_SELECTION_RANK        , state = true, default = false, name = "Selection Rank"},
 	{cmdID = CMD_UNIT_AI               , state = true, default = false, name = "Unit AI"},
-	{cmdID = CMD_WARD_FIRE             , state = true, default = false, name = "Ward Fire"},
+	{cmdID = CMD_FIRE_AT_SHIELD        , state = true, default = false, name = "Ward Fire"},
 	{cmdID = CMD_OVERRECLAIM           , state = true, default = false, name = "Overreclaim Prevention"},
 }
 
