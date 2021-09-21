@@ -24,7 +24,7 @@ return {
 			canjump            = 1,
 			bait_level_default = 1,
 			modelradius    = [[10]],
-			jump_range       = 250,
+			jump_range       = 280,
 			jump_height      = 120,
 			jump_speed       = 6,
 			jump_reload      = 4,

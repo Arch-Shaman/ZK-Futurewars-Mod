@@ -236,6 +236,8 @@ local shortToRiotRangeSkirmieeArray = NameToDefID({
 	"vehscout",
 })
 
+
+
 local riotRangeSkirmieeArray = NameToDefID({
 	"cloakriot",
 	"tankheavyraid",
@@ -403,7 +405,12 @@ local tankconskirmarray = NameToDefID({
 })
 
 local tankconfleearray = SetMinus(armedLand, tankconskirmarray)
-
+local puppyavoid = NameToDefID({
+	"turretlaser",
+	"turretriot",
+	"spiderriot",
+}
+local puppyattack = SetMinus(allGround, puppyavoid)
 -- Nested union so long ranged things also skirm the things skirmed by short ranged things
 shortRangeSkirmieeArray       = Union(shortRangeSkirmieeArray,veryShortRangeSkirmieeArray)
 shortToRiotRangeSkirmieeArray = Union(shortToRiotRangeSkirmieeArray,shortRangeSkirmieeArray)
@@ -803,13 +810,13 @@ local behaviourConfig = {
 	{
 		name = "jumpscout",
 		--skirms = {},
-		swarms = allGround,
-		--flees = {},
+		swarms = puppyattack,
+		flees = puppyavoid,
 		localJinkOrder = false,
 		circleStrafe = ENABLE_OLD_JINK_STRAFE,
 		minCircleStrafeDistance = 50,
 		maxSwarmLeeway = 170,
-		jinkTangentLength = 10,
+		jinkTangentLength = 30,
 		minSwarmLeeway = 100,
 		swarmLeeway = 200,
 		fleeOrderDis = 200,
