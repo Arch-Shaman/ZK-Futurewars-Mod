@@ -409,7 +409,7 @@ local puppyavoid = NameToDefID({
 	"turretlaser",
 	"turretriot",
 	"spiderriot",
-}
+})
 local puppyattack = SetMinus(allGround, puppyavoid)
 -- Nested union so long ranged things also skirm the things skirmed by short ranged things
 shortRangeSkirmieeArray       = Union(shortRangeSkirmieeArray,veryShortRangeSkirmieeArray)

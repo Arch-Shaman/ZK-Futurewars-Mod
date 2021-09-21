@@ -173,6 +173,10 @@ local function SetGameOver(winningAllyTeamID)
 		end
 	else
 		spGameOver({winningAllyTeamID})
+		local allys = Spring.GetAllyTeamList()
+		for _, id in pairs(allys) do
+			Spring.SetGlobalLos(id, true)
+		end
 	end
 end
 
@@ -792,10 +796,6 @@ function gadget:GameOver()
 		Spring.Echo("gadget:GameOver")
 	end
 	gameIsOver = true
-	local allys = Spring.GetAllyTeamList()
-	for a = 1, #allys do
-		Spring.SetGlobalLos(a, true)
-	end
 	if noElo then
 		Spring.SendCommands("wbynum 255 SPRINGIE:noElo")
 	end
