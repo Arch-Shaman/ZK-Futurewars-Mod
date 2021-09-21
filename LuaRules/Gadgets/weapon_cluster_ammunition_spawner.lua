@@ -145,6 +145,11 @@ local function ToggleDebug()
 	end
 end
 
+local function AddCommand(unitID)
+	targettable[unitID] = {} -- note: count is for the active projectiles so we know when to delete the table.
+	spInsertUnitCmdDesc(unitID, CommandOrder, setprojectiletargetcmddesc)
+end
+
 local function distance3d(x1, y1, z1, x2, y2, z2)
 	return sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)) + ((z2 - z1) * (z2 - z1)))
 end
@@ -612,8 +617,14 @@ local function UpdateAttackOrder(unitID, pos)
 	spSetUnitRulesParam(unitID, "subprojectile_target_count", count, ALLIES)
 end
 
+local function AddCommanderCmd(unitID)
+	AddCommand(unitID)
+end
+	
+
 GG.Submunitions = {}
 GG.Submunitions.AddProjectileTarget = UpdateAttackOrder
+GG.Submunitions.AddCommanderCmd = AddCommanderCmd
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	if debug then
@@ -734,8 +745,7 @@ end
 
 function gadget:UnitCreated(unitID, unitDefID)
 	if wanteddefs[unitDefID] then
-		targettable[unitID] = {} -- note: count is for the active projectiles so we know when to delete the table.
-		spInsertUnitCmdDesc(unitID, CommandOrder, setprojectiletargetcmddesc)
+		AddCommand(unitID)
 	end
 end
 
