@@ -158,6 +158,14 @@ local Sounds = {
 			maxconcurrent = 14,
 			rollOff = 0.5,
 		},
+		nukewarning = {
+			file = "sounds/reply/advisor/nuclearthreat.wav",
+			gain = 1.33,
+			pitch = 1.0,
+			priority = 20,
+			preload = true,
+			maxconcurrent = 1,
+		},
 	},
 }
 
