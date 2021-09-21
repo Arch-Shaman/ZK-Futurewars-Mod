@@ -224,9 +224,6 @@ function script.QueryWeapon(num)
 end
 
 function script.BlockShot(num, targetID)
-	if targetID then
-		lastfire = Spring.GetGameFrame()
-	end
 	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 210, 40, 0.3, 0, true) -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
 end
 
@@ -251,6 +248,7 @@ function script.Shot(num) -- Moved off FireWeapon for modders/tweakunits mostly.
 	if reloads < maxreloads then
 		reloads = reloads + 1
 	end
+	lastfire = Spring.GetGameFrame()
 end
 
 function script.Create()
