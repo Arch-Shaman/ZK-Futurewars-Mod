@@ -98,7 +98,7 @@ return {
 				avoidFeature            = false,
 				craterBoost             = 1,
 				craterMult              = 2,
-				cegTag                  = [[custom:meteor_trail]],
+				cegTag                  = [[meteor_trail]],
 				customParams              = {
 					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "energyheavygeo_napalm_fragment",
@@ -149,7 +149,7 @@ return {
 				avoidFeature            = false,
 				craterBoost             = 1,
 				craterMult              = 2,
-				cegTag                  = [[custom:meteor_trail]],
+				cegTag                  = [[meteor_trail]],
 				customParams              = {
 					setunitsonfire = "1",
 					burntime = 900,
