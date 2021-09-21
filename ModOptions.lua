@@ -451,6 +451,14 @@ local options = {
 		def    = false,
 	},
 	{
+		key    = 'explodeondefeat',
+		name   = 'Enemies explode on victory',
+		desc   = 'Causes units and structures of defeated teams to explode when the game ends.',
+		type   = 'bool',
+		def    = false,
+		section= 'experimental',
+	},
+	{
 		key    = 'enemyterra',
 		name   = 'Allow Terraform Near Enemies',
 		desc   = 'Without this option terraform progress is 20x slower if an enemy unit is visible nearby.',
