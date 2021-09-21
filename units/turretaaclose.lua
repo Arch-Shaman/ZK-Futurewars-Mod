@@ -137,7 +137,7 @@ return {
 				noSelfDamage            = true,
 				range                   = 1200,
 				reloadtime              = 1/15,
-				sweapfire = false,
+				--sweapfire = false,
 				rgbColor                = [[0.8 0 0]],
 				rgbColor2				  = [[0.5 0 0]],
 				soundStart              = [[weapon/laser/archertracker]],

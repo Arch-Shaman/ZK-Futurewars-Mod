@@ -227,7 +227,7 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
 				range                   = 1100,
-				mgravity				= 0.10,
+				mygravity				= 0.10,
 				reloadtime              = 6.5,
 				rgbColor				= [[0.5 0 0.5]],
 				smokeTrail              = true,

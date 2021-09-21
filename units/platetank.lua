@@ -104,7 +104,6 @@ return {
 				soundStart              = [[weapon/cannon/cannonfire_001]],
 				soundStartVolume        = 4,
 				stages                  = 10,
-				startsmoke              = [[0]],
 				tolerance               = 5000,
 				turret                  = true,
 				weaponTimer             = 0.1,
