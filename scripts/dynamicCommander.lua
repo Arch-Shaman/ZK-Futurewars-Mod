@@ -155,7 +155,7 @@ local function GetCegTable(wd)
 	return cegs
 end
 
-local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, damageMult)
+local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, damageMult, reloadmult)
 	local weaponDef1 = weaponName1 and unitWeaponNames[weaponName1]
 	local weaponDef2 = weaponName2 and unitWeaponNames[weaponName2]
 	local shieldDef = shieldName and unitWeaponNames[shieldName]
@@ -276,6 +276,23 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 		end
 	end
 	
+	Spring.SetUnitRulesParam(unitID, "selfReloadSpeedChange", reloadmult or 1, INLOS)
+	
+	if weapon1 and reloadmult ~= 1 then
+		local basereload = WeaponDefs[weaponDef1.weaponDefID].reload
+		Spring.Echo("Base Reload: " .. basereload .. "(" .. tostring(weapon1) .. ")")
+		local newreload = Spring.Utilities.RoundToNearestFrame(basereload / reloadmult)
+		Spring.Echo("New Reload: " .. newreload)
+		Spring.SetUnitWeaponState(unitID, weapon1, 'reloadTime', newreload)
+	end
+	if weapon2 and reloadmult ~= 1 then
+		local basereload = Spring.GetUnitWeaponState(unitID, weapon2, 'reloadTime')
+		Spring.Echo("Base Reload2: " .. basereload)
+		local newreload = Spring.Utilities.RoundToNearestFrame(basereload / reloadmult)
+		Spring.Echo("New Reload2: " .. newreload)
+		Spring.SetUnitWeaponState(unitID, weapon2, 'reloadTime', newreload)
+	end
+	
 	-- Set other ranges to 0 for leashing
 	if weapon1 ~= 1 and weapon2 ~= 1 then
 		Spring.SetUnitWeaponState(unitID, 1, "range", maxRange)
@@ -304,6 +321,8 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 	end
 	
 	weaponsInitialized = true
+	GG.UpdateUnitAttributes(unitID)
+	GG.UpdateUnitAttributes(unitID)
 end
 
 local function GetOKP()
@@ -348,7 +367,8 @@ local function Create()
 			Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2"),
 			Spring.GetUnitRulesParam(unitID, "comm_shield_name"),
 			Spring.GetUnitRulesParam(unitID, "comm_range_mult") or 1,
-			Spring.GetUnitRulesParam(unitID, "comm_damage_mult") or 1
+			Spring.GetUnitRulesParam(unitID, "comm_damage_mult") or 1,
+			Spring.GetUnitRulesParam(unitID, "comm_reload_mult") or 1
 		)
 	end
 end

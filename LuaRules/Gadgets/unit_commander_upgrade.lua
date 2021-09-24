@@ -222,7 +222,7 @@ local function SetUnitRulesModuleCounts(unitID, counts)
 	end
 end
 
-local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, damageMult, chassis)
+local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, damageMult, chassis, reloadmult)
 	if (not weapon2) and weapon1 then
 		local unitDefID = spGetUnitDefID(unitID)
 		local weaponName = "0_" .. weapon1
@@ -246,9 +246,10 @@ local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, dama
 	spSetUnitRulesParam(unitID, "comm_range_mult", rangeMult,  INLOS)
 	damageMult = damageMult or spGetUnitRulesParam(unitID, "comm_damage_mult") or 1
 	spSetUnitRulesParam(unitID, "comm_damage_mult", damageMult,  INLOS)
+	reloadmult = reloadmult or spGetUnitRulesParam(unitID, "comm_reload_mult") or 1
 	
 	local env = Spring.UnitScript.GetScriptEnv(unitID)
-	Spring.UnitScript.CallAsUnit(unitID, env.dyncomm.UpdateWeapons, weapon1, weapon2, shield, rangeMult, damageMult)
+	Spring.UnitScript.CallAsUnit(unitID, env.dyncomm.UpdateWeapons, weapon1, weapon2, shield, rangeMult, damageMult, reloadmult)
 end
 
 local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
@@ -285,6 +286,10 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 			spRemoveUnitCmdDesc(unitID, onOffCmd)
 		end
 	end
+	if data.reloadMult then
+		spSetUnitRulesParam(unitID, "comm_reload_mult", data.reloadMult, INLOS)
+	end
+		
 	if data.sightrangebonus then
 		spSetUnitRulesParam(unitID, "sightBonus", data.sightrangebonus, INLOS)
 	end
@@ -370,7 +375,7 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	local detpack = data.detpacklv or 0
 	spSetUnitRulesParam(unitID, "comm_deathexplosion", detpacktable[detpack], INLOS)
 	
-	ApplyWeaponData(unitID, data.weapon1, data.weapon2, data.shield, data.rangeMult, data.damageMult, chassis)
+	ApplyWeaponData(unitID, data.weapon1, data.weapon2, data.shield, data.rangeMult, data.damageMult, chassis, data.reloadMult)
 	
 	-- Do this all the time as it will be needed almost always.
 	GG.UpdateUnitAttributes(unitID)

@@ -1158,9 +1158,24 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			-- Damage boost is applied via clone swapping
+			-- Damage boost is applied via clone swapping (it doesn't seem to be.)
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.1
 			sharedData.speedMod = (sharedData.speedMod or 0) - 0.75
+		end
+	},
+	{
+		name = "module_autoreloader",
+		humanName = "Enhanced Autofabricators",
+		description = "Increases reload by 7.5% but reduces speed by 1.5.",
+		image = moduleImagePath .. "module_reloader.png",
+		limit = 8,
+		cost = 300 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			-- Damage boost is applied via clone swapping
+			sharedData.reloadMult = (sharedData.reloadMult or 1) + 0.075
+			sharedData.speedMod = (sharedData.speedMod or 0) - 1.5
 		end
 	},
 	{
