@@ -78,11 +78,12 @@ return {
 					default = 40.01,
 				},
 
+				edgeEffectiveness		= 0.1,
 				explosionGenerator      = [[custom:DEFAULT]],
 				fireStarter             = 70,
 				fixedlauncher           = 1,
 				flightTime              = 1,
-				impactOnly              = true,
+				impactOnly              = false,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
