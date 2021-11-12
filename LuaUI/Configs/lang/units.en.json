@@ -115,9 +115,9 @@
 		"helptext" : "\"I sink, therefore I am.\""
 	},
 	"turretmissile" : {
-		"name" : "Picket",
-		"description" : "Light Missile Tower",
-		"helptext" : "The Picket is a light multi-purpose missile tower. It is good for sniping units from a distance, providing some degree of anti-air protection, and skirmishing enemy LLTs from outside their range. However, it breaks when you sneeze on it."
+		"name" : "Mirador",
+		"description" : "Missile Barrage Tower",
+		"helptext" : "The Mirador is a cheap medium distance solution for bombardment. Its missiles have a high firing arc, making it perfect for bombarding incoming enemy ground units from behind cover. While being slightly more sturdy compared to its predecessor, the Defender, it still is very vulnerable to indirect artillery attacks."
 	},
 	"chicken_roc" : {
 		"name" : "Roc",

@@ -1,11 +1,11 @@
 return { 
 	turretmissile = {
 		unitname                      = [[turretmissile]],
-		name                          = [[Picket]],
-		description                   = [[Light Missile Tower]],
+		name                          = [[Mirador]],
+		description                   = [[Missile Barrage Tower]],
 		acceleration                  = 0,
 		brakeRate                     = 0,
-		buildCostMetal                = 100,
+		buildCostMetal                = 140,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 4,
@@ -32,7 +32,7 @@ return {
 		idleTime                      = 1800,
 		levelGround                   = false,
 		losEmitHeight                 = 40,
-		maxDamage                     = 300,
+		maxDamage                     = 560,
 		maxSlope                      = 36,
 		maxVelocity                   = 0,
 		noAutoFire                    = false,
@@ -47,7 +47,7 @@ return {
 				[[custom:PULVBACK]],
 			},
 		},
-		sightDistance                 = 719, -- Range*1.1 + 48 for radar overshoot
+		sightDistance                 = 800, -- Range*1.1 + 48 for radar overshoot
 		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
 		workerTime                    = 0,
@@ -55,61 +55,111 @@ return {
 
 		weapons                       = {
 			{
-				def                = [[ARMRL_MISSILE]],
+				def                = [[MISSILE]],
 				--badTargetCategory  = [[HOVER SWIM LAND SINK FLOAT SHIP]],
-				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
+				onlyTargetCategory = [[LAND SINK TURRET SHIP SWIM FLOAT HOVER]],
 			},
 		},
 
 		weaponDefs                    = {
-			ARMRL_MISSILE = {
-				name                    = [[Homing Missiles]],
-				areaOfEffect            = 8,
-				avoidFeature            = true,
-				cegTag                  = [[missiletrailyellow]],
+		
+			BOMBLET = {
+				name                    = [[Palvo Bomblet]],
+				areaOfEffect            = 96,
+				avoidFriendly			= false,
+				collideFriendly			= false,
 				craterBoost             = 0,
 				craterMult              = 0,
-				cylinderTargeting       = 5,
-
-				customParams            = {
-				burst = Shared.BURST_RELIABLE,
-
-				isaa = [[1]],
-				script_reload = [[12.5]],
-				script_burst = [[3]],
-
-				light_camera_height = 2000,
-				light_radius = 200,
+				customParams = {
+					light_camera_height = 200,
+					light_color = [[0.90 0.65 0.30]],
+					light_radius = 600,
 				},
-
 				damage                  = {
-				default = 104,
+					default = 40.01,
 				},
 
-				explosionGenerator      = [[custom:FLASH2]],
+				edgeEffectiveness		= 1/3,
+				explosionGenerator      = [[custom:STARFIRE]],
 				fireStarter             = 70,
-				flightTime              = 4,
-				impactOnly              = true,
+				fixedlauncher           = 1,
+				flightTime              = 1,
+				impactOnly              = false,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
-				metalpershot            = 0,
-				model                   = [[hobbes.s3o]],
-				noSelfDamage            = true,
-				range                   = 610,
-				reloadtime              = 1.2,
+				model                   = [[wep_b_fabby.s3o]],
+				range                   = 115,
+				reloadtime              = 20,
 				smokeTrail              = true,
-				soundHit                = [[explosion/ex_small13]],
-				soundStart              = [[weapon/missile/missile_fire11]],
-				startVelocity           = 500,
-				texture2                = [[lightsmoketrail]],
-				tolerance               = 10000,
-				tracks                  = true,
-				turnRate                = 60000,
+				soundHit                = [[weapon/missile/sabot_hit]],
+				soundHitVolume          = 5,
+				soundStart              = [[weapon/missile/sabot_fire_short]],
+				soundStartVolume        = 9,
+				soundTrigger            = 1,
+				startVelocity           = 50,
+				texture2                = [[darksmoketrail]],
+				tracks                  = false,
+				turnRate                = 180,
 				turret                  = true,
-				weaponAcceleration      = 300,
+				weaponAcceleration      = 200,
 				weaponType              = [[MissileLauncher]],
-				weaponVelocity          = 750,
+				weaponVelocity          = 300,
+			},
+			MISSILE = {
+				name                    = [[Palvo Rocket Barrage]],
+				areaOfEffect            = 96,
+				burnblow                = true,
+				cegTag                  = [[missiletrailyellow]],
+				craterBoost             = 0,
+				craterMult              = 0,
+				--avoidGround				= false,
+				avoidFeature			= false,
+
+				customParams        = {
+					burst = Shared.BURST_RELIABLE,
+					light_camera_height = 1600,
+					light_color = [[0.90 0.65 0.30]],
+					light_radius = 250,
+					script_reload = [[13.5]],
+					script_burst = [[3]],
+					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					projectile1 = "turretmissile_bomblet",
+					--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
+					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
+					spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
+					vradius1 = "-4,-1,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+				},
+
+				damage                  = {
+					default = 40.01*6,
+				},
+
+				fireStarter             = 70,
+				flightTime              = 8.45,
+				impulseBoost            = 0,
+				impulseFactor           = 0.4,
+				interceptedByShieldType = 2,
+				model                   = [[wep_m_ajax.s3o]],
+				noSelfDamage            = true,
+				predictBoost            = 0.75,
+				range                   = 630,
+				reloadtime              = 0.2,
+				smokeTrail              = false,
+				soundHit                = [[weapon/missile/sabot_fire_short]],
+				soundHitVolume          = 8,
+				soundStart              = [[weapon/missile/sabot_fire]],
+				soundStartVolume        = 7,
+				startVelocity           = 100,
+				tracks                  = true,
+				trajectoryHeight        = 1.85,
+				turnrate                = 12000,
+				turret                  = true,
+				weaponAcceleration      = 200,
+				weaponType              = [[MissileLauncher]],
+				weaponVelocity          = 450,
 			},
 		},
 		featureDefs                   = {
