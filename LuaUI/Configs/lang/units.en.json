@@ -460,9 +460,9 @@
 		"helptext" : "The Cockatrice is truly a beast. Seemingly impervious to enemy fire, it casually walks up to its target and dismembers it with its incredibly powerful jaws. Fortunately, it is not fast or particularly intelligent, and can be destroyed with skirmishers or swarmers easily."
 	},
 	"hoverskirm" : {
-		"name" : "Scalpel",
-		"description" : "Skirmisher/Anti-Heavy Hovercraft",
-		"helptext" : "Use the Scalpel for hit-and-run attacks. Has a long reload time and not too many hit points, and should always be kept at range with the enemy. An arcing projectile allows it to shoot over obstacles and friendly units."
+		"name" : "Pike",
+		"description" : "Assault/Riot Hovercraft",
+		"helptext" : "The Pike is an amphibious riot with nanoreactive armor. Its armed with a heavy sonic cannon that can target enemies in most domains. Be warned: it's fairly slow when turning and has terrible acceleration."
 	},
 	"jumpbomb" : {
 		"name" : "Skuttle",

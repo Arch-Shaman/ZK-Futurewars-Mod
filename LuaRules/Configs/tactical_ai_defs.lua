@@ -252,7 +252,7 @@ local riotRangeSkirmieeArray = NameToDefID({
 	"spideraa",
 	"amphaa",
 	"shipaa",
-	
+	"hoverskirm",
 	"cloakcon",
 	"shieldcon",
 	"vehcon",
@@ -310,7 +310,6 @@ local longRangeSkirmieeArray = NameToDefID({
 	"cloakskirm",
 	"jumpskirm",
 	"jumpblackhole",
-	"hoverskirm", -- hover janus
 	"vehcapture",
 	"chickenc",
 	"striderbantha",
@@ -348,7 +347,6 @@ local slasherSkirmieeArray = NameToDefID({
 	"vehassault",
 	"vehriot",
 	"hoverriot",
-	"hoverskirm",
 	"tankriot",
 	"shieldfelon",
 	"tankassault",
@@ -393,6 +391,7 @@ local tankconskirmarray = NameToDefID({
 	"gunshipcon",
 	"gunshipaa",
 	"gunshipbomb",
+	"hoverskirm",
 	"turretmissile",
 	"turretaaclose",
 	"turretaaflak",
@@ -532,6 +531,7 @@ local armedSea = NameToDefID({
 	"amphfloater",
 	"amphimpulse",
 	"amphsupport",
+	"hoverskirm",
 })
 
 -- Armed UW capable targets --
@@ -544,6 +544,7 @@ local seaASW = NameToDefID({
 	"amphimpulse",
 	"amphfloater",
 	"subraider",
+	"hoverskirm",
 })
 
 -- Things that are fled by some things
@@ -602,6 +603,7 @@ local sapperselfdarray = NameToDefID({
 	"tankheavyraid",
 	"vehheavyarty",
 	"vehcapture",
+	"hoverskirm",
 })
 
 -- Not currently used as air scouts flee everything.
@@ -667,6 +669,7 @@ local riotsgoaway = NameToDefID({
 	"amphbomb",
 	"jumpscout",
 	"vehriot",
+	"hoverskirm",
 })
 
 local jumpconflee = SetMinus(armedLand, lowMedRangeSkirmieeArray)
@@ -1602,11 +1605,15 @@ local behaviourConfig = {
 		velocityPrediction = 90,
 		skirmBlockedApproachFrames = 60,
 		skirmBlockApproachHeadingBlock = 0,
+		reloadFlee = true,
 
 		wardFireTargets = personalShieldUnitsWithSafetyMargin,
 		wardFireLeeway = 10,
 		wardFirePredict = 20,
 		wardFireShield = 400,
+		fleeLeeway = 100,
+		fleeDistance = 100,
+		minFleeRange = 500,
 		wardFireDefault = true,
 	},
 	{
