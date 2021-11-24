@@ -1606,14 +1606,14 @@ local behaviourConfig = {
 		skirmBlockedApproachFrames = 60,
 		skirmBlockApproachHeadingBlock = 0,
 		reloadFlee = true,
-
+		fleeOrderDis = 100,
 		wardFireTargets = personalShieldUnitsWithSafetyMargin,
 		wardFireLeeway = 10,
 		wardFirePredict = 20,
 		wardFireShield = 400,
 		fleeLeeway = 100,
 		fleeDistance = 100,
-		minFleeRange = 500,
+		minFleeRange = 300,
 		wardFireDefault = true,
 	},
 	{

@@ -3,9 +3,9 @@ return {
 		unitname            = [[hoverskirm]],
 		name                = [[Pike]],
 		description         = [[Sonic Assault/Riot Hovercraft]],
-		acceleration        = 0.05,
+		acceleration        = 0.035,
 		activateWhenBuilt   = true,
-		brakeRate           = 0.2,
+		brakeRate           = 0.15,
 		buildCostMetal      = 400,
 		builder             = false,
 		buildPic            = [[hoversonic.png]],
@@ -17,8 +17,8 @@ return {
 
 		customParams        = {
 			modelradius    = [[25]],
-			nanoregen = 15,
-			nano_maxregen = 7,
+			nanoregen = 10,
+			nano_maxregen = 6.6,
 			bait_level_default = 1,
 		},
 
@@ -46,7 +46,7 @@ return {
 		},
 		sightDistance       = 450,
 		turninplace         = 0,
-		turnRate            = 400,
+		turnRate            = 200,
 		workerTime          = 0,
 		weapons             = {
 			{
@@ -58,7 +58,7 @@ return {
 		weaponDefs          = {
 			SONIC         = {
 				name                    = [[Heavy Sonic Cannon]],
-				areaOfEffect            = 256,
+				areaOfEffect            = 80,
 				avoidFeature            = true,
 				avoidFriendly           = true,
 				burnblow                = true,
@@ -70,12 +70,12 @@ return {
 					lups_explodespeed = 0.5,
 					light_radius = 80,
 					blastwave_size = 20,
-					blastwave_impulse = 4.2,
+					blastwave_impulse = 3.2,
 					blastwave_speed = 2,
 					blastwave_life = 30,
-					blastwave_lossfactor = 0.8,
-					blastwave_damage = 250,
-					damage_vs_shield = 330,
+					blastwave_lossfactor = 0.92,
+					blastwave_damage = 185,
+					damage_vs_shield = 150,
 				},
 
 				damage                  = {
@@ -93,7 +93,7 @@ return {
 				myGravity               = 0.01,
 				noSelfDamage            = true,
 				range                   = 380,
-				reloadtime              = 1.5,
+				reloadtime              = 3.0,
 				size                    = 50,
 				sizeDecay               = 0.2,
 				soundStart              = [[weapon/cannon/heavy_sonic2_fire]],
@@ -107,7 +107,7 @@ return {
 				rgbColor                = {0.2, 0.6, 0.8},
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 780,
+				weaponVelocity          = 580,
 				waterweapon             = true,
 				duration                = 0.15,
 			}
