@@ -29,6 +29,7 @@ return {
 			jump_speed       = 6,
 			jump_reload      = 4,
 			jump_from_midair = 0,
+			jump_using_weapon = 1,
 			grey_goo = 1,
 			grey_goo_spawn = "jumpscout",
 			grey_goo_drain = 7.5,
