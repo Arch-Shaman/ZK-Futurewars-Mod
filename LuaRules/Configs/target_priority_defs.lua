@@ -168,7 +168,6 @@ local velocityPenaltyDefs = {
 	[WeaponDefNames["vehaa_missile"].id]                  = {14.0},
 	[WeaponDefNames["gunshipheavyskirm_emg"].id]          = {3.0},
 	[WeaponDefNames["gunshipaa_aa_missile"].id]           = {14.0},
-	[WeaponDefNames["hoverskirm_missile"].id]             = {4.5},
 	[WeaponDefNames["hoverassault_dew"].id]               = {2.5},
 	[WeaponDefNames["amphraid_torpmissile"].id]           = {4.5},
 	[WeaponDefNames["amphfloater_cannon"].id]             = {2.5},
