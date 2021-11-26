@@ -20,11 +20,11 @@ local weaponDef = {
 		okp_speedmult = 1,
 		okp_radarmult = 1,
 		okp_timeout = 20,
-		okp_damage = 680,
+		okp_damage = 720,
 	},
 
 	damage                  = {
-		default = 680,
+		default = 720,
 	},
 
 	explosionGenerator      = [[custom:flash2purple_large]],
@@ -35,7 +35,7 @@ local weaponDef = {
 	laserFlareSize          = 10,
 	minIntensity            = 1,
 	noSelfDamage            = true,
-	range                   = 420,
+	range                   = 550,
 	reloadtime              = 3.0,
 	rgbColor                = [[0.3 0 0.4]],
 	soundStart              = [[weapon/laser/heavy_laser5]],
