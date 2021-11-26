@@ -62,6 +62,7 @@ return {
 				avoidGround  = false,
 				canAttackGround         = false,
 				beamTime                = 1/3,
+				beamttl                 = 70,
 				coreThickness           = 0.5,
 				craterBoost             = 0,
 				craterMult              = 0,
