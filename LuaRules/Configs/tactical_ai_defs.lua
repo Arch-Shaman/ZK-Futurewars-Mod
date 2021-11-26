@@ -2001,11 +2001,12 @@ local behaviourConfig = {
 		skirms = skirmableAir,
 		swarms = brawler,
 		flees = armedLand,
-		minSwarmLeeway = 300,
+		minSwarmLeeway = 100,
 		fleeLeeway = 100,
 		fleeDistance = 100,
 		minFleeRange = 500,
 		skirmLeeway = 50,
+		skirmOrderDis = 20,
 	},
 	{
 		name = "tankaa",

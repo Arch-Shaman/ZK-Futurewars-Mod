@@ -925,9 +925,9 @@
 		"helptext" : "The Firewall shoots a canister of unstable napalm mixture that breaks off in a line formation as it approaches its target. This allows it to create lines of napalm, effectively denying an area to an approaching enemy."
 	},
 	"spideraa" : {
-		"name" : "Tarantula",
-		"description" : "Anti-Air Spider",
-		"helptext" : "An all-terrain AA unit that supports other spiders against air with its medium-range missiles."
+		"name" : "Lynx",
+		"description" : "Heavy AA Laser Spider",
+		"helptext" : "An all-terrain AA unit that supports other spiders against air with its long range, high damage laser. It must aim at a target briefly before releasing its high energy laser. Be warned: it requires an unimpeded view of the target, making it useless near hills."
 	},
 	"chicken_pigeon" : {
 		"name" : "Pigeon",
