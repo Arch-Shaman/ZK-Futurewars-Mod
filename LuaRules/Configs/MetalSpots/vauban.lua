@@ -1,3 +1,3 @@
 return {
-	metalValueOverride = 2.5,
+	metalValueOverride = 4,
 }
