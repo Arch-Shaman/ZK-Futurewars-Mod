@@ -63,17 +63,17 @@ return {
 				canAttackGround         = false,
 				beamTime                = 1/3,
 				beamttl                 = 70,
-				coreThickness           = 0.5,
+				coreThickness           = 0.9,
 				craterBoost             = 0,
 				craterMult              = 0,
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
-					aimdelay = 50, -- 1.66 seconds
+					aimdelay = 60, -- 2 seconds
 					light_color = [[0.203 0.631 0.196]],
 					light_radius = 320,
-					reveal_unit = 9,
+					reveal_unit = 10,
 					allowedpitcherror = 0.7,
-					allowedheadingerror = 1.0,
+					allowedheadingerror = 0.8,
 				},
 				damage                  = {
 					default = 2000.1,
@@ -90,7 +90,7 @@ return {
 				minIntensity            = 1,
 				noSelfDamage            = true,
 				range                   = 1500,
-				reloadtime              = 5.1,
+				reloadtime              = 7.1,
 				rgbColor                = [[0.203 0.631 0.196]],
 				soundStart              = [[weapon/laser/aa_laser]],
 				soundStartVolume        = 15,
