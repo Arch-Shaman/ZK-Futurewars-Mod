@@ -54,7 +54,7 @@ return {
 		weaponDefs             = {
 
 			ADV_ROCKET = {
-				name                    = [[Rocket Volley]],
+				name                    = [[Disruptor Rocket]],
 				areaOfEffect            = 48,
 				cegTag                  = [[missiletrailpurple]],
 				craterBoost             = 0,
@@ -114,12 +114,12 @@ return {
 			},
 
 			DISRUPTORBOMB = {
-				name                    = [[Fake Disruption Cannon]],
+				name                    = [[Disruptor Bomblet]],
 				accuracy                = 200,
 				areaOfEffect            = 120,
 				cegTag                  = [[beamweapon_muzzle_purple]],
-				craterBoost             = 1,
-				craterMult              = 2,
+				craterBoost             = 0,
+				craterMult              = 0,
 
 				customparams = {
 					timeslow_damagefactor = 1.7,
