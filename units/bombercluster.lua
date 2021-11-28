@@ -4,7 +4,7 @@ return {
 		name                = [[Divinity]],
 		description         = [[Cluster Bomber]],
 		brakerate           = 0.4,
-		buildCostMetal      = 600,
+		buildCostMetal      = 550,
 		builder             = false,
 		buildPic            = [[bomberprec.png]],
 		canFly              = true,
@@ -41,7 +41,7 @@ return {
 		maneuverleashlength = [[1380]],
 		maxAcc              = 0.5,
 		maxBank             = 0.6,
-		maxDamage           = 2400,
+		maxDamage           = 2500,
 		maxElevator         = 0.02,
 		maxRudder           = 0.013,
 		maxFuel             = 1000000,
@@ -52,7 +52,6 @@ return {
 		objectName          = [[corshad.s3o]],
 		script              = [[bombercluster.lua]],
 		selfDestructAs      = [[GUNSHIPEX]],
-
 		sfxtypes            = {
 
 			explosiongenerators = {
@@ -64,7 +63,6 @@ return {
 		sightDistance       = 780,
 		turnRadius          = 300,
 		workerTime          = 0,
-
 		weapons             = {
 			{
 				def                = [[BOMBSABOT]],
