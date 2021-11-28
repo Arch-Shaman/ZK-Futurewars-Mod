@@ -590,6 +590,9 @@ for name, ud in pairs(UnitDefs) do
 	if ud.customparams.massmult then
 		ud.mass = ud.mass*ud.customparams.massmult
 	end
+	if ud.customparams.massoverride then
+		ud.mass = tonumber(ud.customparams.massoverride) or ud.mass
+	end
 	
 	-- Set incomes
 	if ud.metalmake and ud.metalmake > 0 then
