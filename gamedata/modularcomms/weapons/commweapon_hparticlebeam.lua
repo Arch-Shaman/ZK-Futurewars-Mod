@@ -24,7 +24,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 900,
+		default = 1140,
 	},
 
 	explosionGenerator      = [[custom:atagreen_smoll]],
@@ -35,7 +35,7 @@ local weaponDef = {
 	laserFlareSize          = 13,
 	minIntensity            = 0.8,
 	range                   = 550,
-	reloadtime              = 3,
+	reloadtime              = 3.8,
 	rgbColor                = [[0.203 0.631 0.196]],
 	soundStart              = [[weapon/laser/hpbeam]],
 	soundStartVolume        = 5,

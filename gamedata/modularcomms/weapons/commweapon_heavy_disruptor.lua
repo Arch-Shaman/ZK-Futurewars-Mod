@@ -13,7 +13,7 @@ local weaponDef = {
 		is_unit_weapon = 1,
 		--timeslow_preset       = [[module_disruptorbeam]],
 		timeslow_damagefactor = [[3]],
-		timeslow_overslow_frames = 5*30,
+		timeslow_overslow_frames = 4*30,
 		light_color = [[1.047 0.741 2.525]],
 		light_radius = 100,
 		reaim_time = 1,
@@ -25,7 +25,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 720, 
+		default = 912, 
 	},
 
 	explosionGenerator      = [[custom:atapurple]],
@@ -37,7 +37,7 @@ local weaponDef = {
 	minIntensity            = 0.8,
 	noSelfDamage            = true,
 	range                   = 550,
-	reloadtime              = 3.0,
+	reloadtime              = 3.8,
 	rgbColor                = [[0.334 0.851 0.80784]],
 	soundStart              = [[weapon/laser/hpbeamslow]],
 	soundStartVolume        = 7,
