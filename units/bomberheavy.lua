@@ -5,7 +5,7 @@ return {
 		description         = [[Strategic Bomber]],
 		--autoheal          = 25,
 		brakerate           = 0.4,
-		buildCostMetal      = 5000,
+		buildCostMetal      = 6000,
 		builder             = false,
 		buildPic            = [[bomberheavy.png]],
 		canFly              = true,
@@ -24,7 +24,6 @@ return {
 		corpse              = [[DEAD]],
 		crashDrag           = 0.02,
 		cruiseAlt           = 450,
-
 		customParams        = {
 			modelradius      = [[10]],
 			requireammo      = [[1]],
@@ -33,7 +32,6 @@ return {
 			reallyabomber    = [[1]],
 			fighter_pullup_dist = 1500, -- pullup at the end of attack dive to avoid hitting terrain
 		},
-
 		explodeAs           = [[GUNSHIPEX]],
 		floater             = true,
 		footprintX          = 3,
@@ -43,7 +41,7 @@ return {
 		idleTime            = 1800,
 		maneuverleashlength = [[1280]],
 		maxAcc              = 0.75,
-		maxDamage           = 11000,
+		maxDamage           = 12000,
 		maxFuel             = 1000000,
 		maxRudder           = 0.008,
 		maxVelocity         = 5.5,
@@ -58,20 +56,14 @@ return {
 		sightDistance       = 780,
 		turnRadius          = 20,
 		workerTime          = 0,
-
 		weapons             = {
-
 			{
 				def                = [[ARM_PIDR]],
 				badTargetCategory  = [[GUNSHIP FIXEDWING]],
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP FIXEDWING]],
 			},
-
 		},
-
-
 		weaponDefs          = {
-
 			ARM_PIDR = {
 				name                    = [[BN-22 Atomic Bomb]],
 				areaOfEffect            = 800,
@@ -119,7 +111,6 @@ return {
 				weaponType              = [[MissileLauncher]],
 				weaponVelocity          = 800,
 			},
-			
 			deathexplo = {
 				name                    = [[BN-22 Atomic Bomb]],
 				areaOfEffect            = 800,
@@ -161,12 +152,8 @@ return {
 				weaponType              = [[MissileLauncher]],
 				weaponVelocity          = 800,
 			},
-
 		},
-
-
 		featureDefs         = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -174,14 +161,12 @@ return {
 				footprintZ       = 2,
 				object           = [[licho_d.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
 				object           = [[debris3x3b.s3o]],
 			},
-
 		},
 	} 
 }
