@@ -4,7 +4,7 @@ return {
 		name                = [[Heretic]],
 		description         = [[ALCM Bomber (Anti-Structure)]],
 		brakerate           = 0.4,
-		buildCostMetal      = 1100,
+		buildCostMetal      = 900,
 		builder             = false,
 		buildPic            = [[bomberstrike.png]],
 		canFly              = true,
@@ -37,7 +37,7 @@ return {
 		idleTime            = 1800,
 		maxAcc              = 0.5,
 		maxAileron          = 0.02,
-		maxDamage           = 1600,
+		maxDamage           = 1800,
 		maxElevator         = 0.01,
 		maxRudder           = 0.007,
 		maxFuel             = 1000000,
@@ -60,7 +60,6 @@ return {
 			},
 		},
 		weaponDefs          = {
-  
 			MISSILE = {
 				name                    = [[Air Launched Cruise Missile]],
 				areaOfEffect            = 192,
@@ -88,7 +87,7 @@ return {
 				edgeEffectiveness       = 0.4,
 				explosionGenerator      = [[custom:NUKE_150]],
 				model                   = [[wep_tacnuke.s3o]],
-				range                   = 950,
+				range                   = 1000,
 				reloadtime              = 10,
 				smokeTrail              = false,
 				soundHit                = [[explosion/mini_nuke]],
