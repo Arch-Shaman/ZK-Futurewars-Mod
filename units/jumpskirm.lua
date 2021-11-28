@@ -81,7 +81,7 @@ return {
 				coreThickness           = 0.25,
 				craterBoost             = 0,
 				craterMult              = 0,
-				cegtag					= [[cyclopstrail]],
+				cegtag					= [[disruptortrail]],
 				customparams = {
 					burst = Shared.BURST_RELIABLE,
 					timeslow_damagefactor = 4,
