@@ -409,6 +409,18 @@ end
 --------------------------------------------------------------------------------
 ---- Unit AI Execution
 
+local function DoJump(unitID, cx, cy, cz)
+	local cmdID, _, cmdTag, cp_1, cp_2, cp_3 = Spring.GetUnitCurrentCommand(unitID)
+	if cmdID == CMD.MOVE or cmdID == CMD_RAW_MOVE then
+		GG.recursion_GiveOrderToUnit = true
+		spGiveOrderToUnit(unitID, CMD_REMOVE, {cmdTag}, 0)
+		GG.recursion_GiveOrderToUnit = false
+	end
+	GG.recursion_GiveOrderToUnit = true
+	GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
+	GG.recursion_GiveOrderToUnit = false
+end
+
 local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typeKnown, move, isIdleAttack, cmdID, cmdTag, fightX, fightY, fightZ, frame)
 	local unitData = unit[unitID]
 	local myunitdef = spGetUnitDefID(unitID)
@@ -436,9 +448,7 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 			cx, cy, cz = ux + disScale*(ex - ux), ey, uz + disScale*(ez - uz)
 			cy = spGetGroundHeight(cx, cz)
 			if cy >= 0 then
-				GG.recursion_GiveOrderToUnit = true
-				GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
-				GG.recursion_GiveOrderToUnit = false
+				DoJump(unitID, cx, cy, cz)
 				return true
 			end
 		end
@@ -504,9 +514,7 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 		cy = spGetGroundHeight(cx, cz)
 		
 		if cy >= 0 and ey - cy < 50 then
-			GG.recursion_GiveOrderToUnit = true
-			GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, ey, cz}, CMD.OPT_ALT)
-			GG.recursion_GiveOrderToUnit = false
+			DoJump(unitID, cx, cy, cz)
 			return true
 		end
 	end
@@ -692,9 +700,7 @@ local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 		local cz = uz - wantedDis * ez/eDist
 		cy = spGetGroundHeight(cx, cz)
 		if cy >= 0 then
-			GG.recursion_GiveOrderToUnit = true
-			GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
-			GG.recursion_GiveOrderToUnit = false
+			DoJump(unitID, cx, cy, cz)
 			unitData.cx, unitData.cy, unitData.cz = cx, cy, cz
 			unitData.receivedOrder = true
 			return true
@@ -842,9 +848,7 @@ local function DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typ
 		local cx = ux + disScale *(ux-ex)
 		local cy = uy
 		local cz = uz + disScale *(uz-ez)
-		GG.recursion_GiveOrderToUnit = true
-		GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
-		GG.recursion_GiveOrderToUnit = false
+		DoJump(unitID, cx, cy, cz)
 		unitData.cx, unitData.cy, unitData.cz = cx, cy, cz
 		unitData.receivedOrder = true
 		return true
