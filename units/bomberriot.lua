@@ -3,7 +3,7 @@ unitDef = {
 	name                = [[Firebrand]],
 	description         = [[Napalm Bomber]],
 	brakerate           = 0.4,
-	buildCostMetal      = 280,
+	buildCostMetal      = 250,
 	builder             = false,
 	buildPic            = [[bomberriot.png]],
 	canFly              = true,
@@ -21,13 +21,11 @@ unitDef = {
 	selectionVolumeType    = [[cylY]],
 	corpse              = [[DEAD]],
 	cruiseAlt           = 250,
-
 	customParams        = {
 		modelradius    = [[10]],
 		refuelturnradius = [[80]],
 		requireammo    = [[1]],
 	},
-
 	explodeAs           = [[GUNSHIPEX]],
 	floater             = true,
 	footprintX          = 4,
@@ -47,31 +45,23 @@ unitDef = {
 	objectName          = [[firestorm.s3o]],
 	script			  = [[bomberriot.lua]],
 	selfDestructAs      = [[GUNSHIPEX]],
-
 	sfxtypes            = {
-
 		explosiongenerators = {
 			[[custom:BEAMWEAPON_MUZZLE_RED]],
 			[[custom:light_red]],
 			[[custom:light_green]],
 		},
-
 	},
 	sightDistance       = 660,
 	turnRadius          = 200,
 	workerTime          = 0,
-
 	weapons             = {
-
 		{
 			def                = [[NAPALM]],
 			badTargetCategory  = [[SWIM LAND SHIP HOVER GUNSHIP]],
 			onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP]],
 		},
-
 	},
-
-
 	weaponDefs          = {
 
 		NAPALM_SECONDARY = {
