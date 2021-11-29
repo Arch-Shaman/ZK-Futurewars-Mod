@@ -21,7 +21,7 @@ return {
 		customParams           = {
 			dontcount = [[1]],
 			notselectable = [[1]],
-			overridemass = 1200,
+			massoverride = 330,
 		},
 		explodeAs              = [[wolverine_mine_bomb]],
 		footprintX             = 1,
