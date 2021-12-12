@@ -51,7 +51,7 @@ holdatrange[UnitDefNames["gunshipskirm"].id] = true
 holdatrange[UnitDefNames["gunshipraid"].id] = true
 holdatrange[UnitDefNames["gunshipheavyskirm"].id] = true
 holdatrange[UnitDefNames["bomberdisarm"].id] = true
-holdatrange[UnitDefNames["bombercluster"].id] = true
+holdatrange[UnitDefNames["bomberprec"].id] = true
 holdatrange[UnitDefNames["bomberriot"].id] = true
 
 -- important config --

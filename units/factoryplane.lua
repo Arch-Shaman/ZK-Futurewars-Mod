@@ -17,7 +17,7 @@ return {
 			[[planecon]],
 			[[planefighter]],
 			[[planeheavyfighter]],
-			[[bombercluster]],
+			[[bomberprec]],
 			[[bomberstrike]],
 			[[bomberriot]],
 			[[bomberdisarm]],

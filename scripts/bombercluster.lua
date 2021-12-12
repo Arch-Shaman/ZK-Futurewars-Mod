@@ -23,7 +23,7 @@ include "bombers.lua"
 include "fixedwingTakeOff.lua"
 
 local SIG_TAKEOFF = 1
-local takeoffHeight = UnitDefNames["bombercluster"].wantedHeight
+local takeoffHeight = UnitDefNames["bomberprec"].wantedHeight
 
 local function Lights()
 	while select(5, Spring.GetUnitHealth(unitID)) < 1 do

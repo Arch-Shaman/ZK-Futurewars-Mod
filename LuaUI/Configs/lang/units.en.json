@@ -340,9 +340,9 @@
 		"helptext" : "Energy Transmission Pylons help extend energy grids and connect more Extractors or energy sources. This in turn helps Extractors overdrive, producing more metal. Pylons can also provide a fast way to power defenses that rely on the energy grid. Note that over short distances or in low-energy situations using energy producers like solar collectors to connect grids can be a more cost efficient alternative."
 	},
 	"bomberprec" : {
-		"name" : "Raven",
-		"description" : "Precision Bomber",
-		"helptext" : "The Raven drops a single high damage, low AoE bomb. Cost for cost, nothing quite matches it for taking out that antinuke or Barbarian, but you should look elsewhere for something to use against smaller mobiles."
+		"name" : "Divinity",
+		"description" : "Cluster Bomber",
+		"helptext" : "The Divinity's sole purpose is to deliver its payload of cluster bombs to a position where it will rain destruction upon the enemy. Very useful against enemy defenses and clusters of slow to medium speed units."
 	},
 	"chicken_shield" : {
 		"name" : "Blooper",
@@ -943,11 +943,6 @@
 		"name" : "Placeholder",
 		"description" : "Black Hole Launcher",
 		"helptext" : "The Placeholder is a support unit. Its projectiles create a vacuum that sucks in nearby units, clustering and holding them in place to help finish them off."
-	},
-	"bombercluster" : {
-		"name" : "Divinity",
-		"description" : "Cluster Bomber",
-		"helptext" : "The Divinity's sole purpose is to deliver its payload of 3 cluster bombs to a position where it will rain destruction upon the enemy. Very useful against enemy defenses and clusters of slow to medium speed units."
 	},
 	"vehcon" : {
 		"name" : "Bloom",

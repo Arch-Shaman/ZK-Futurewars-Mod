@@ -1,6 +1,6 @@
 return { 
-	bombercluster = {
-		unitname            = [[bombercluster]],
+	bomberprec = {
+		unitname            = [[bomberprec]],
 		name                = [[Divinity]],
 		description         = [[Cluster Bomber]],
 		brakerate           = 0.4,
@@ -53,12 +53,10 @@ return {
 		script              = [[bombercluster.lua]],
 		selfDestructAs      = [[GUNSHIPEX]],
 		sfxtypes            = {
-
 			explosiongenerators = {
 				[[custom:light_red]],
 				[[custom:light_green]],
 			},
-
 		},
 		sightDistance       = 780,
 		turnRadius          = 300,
@@ -71,33 +69,6 @@ return {
 			},
 		},
 		weaponDefs          = {
-
-			BOGUS_BOMB = {
-				name                    = [[Fake Bomb]],
-				areaOfEffect            = 80,
-				craterBoost             = 0,
-				craterMult              = 0,
-
-				customParams            = {
-					reaim_time = 15, -- Fast update not required (maybe dangerous)
-					bogus = 1,
-				},
-
-				damage                  = {
-					default = 0,
-				},
-
-				edgeEffectiveness       = 0,
-				explosionGenerator      = [[custom:NONE]],
-				impulseBoost            = 0,
-				impulseFactor           = 0,
-				interceptedByShieldType = 1,
-				model                   = [[]],
-				myGravity               = 1000,
-				range                   = 10,
-				reloadtime              = 10,
-				weaponType              = [[AircraftBomb]],
-			},
 			BOMBSABOT  = {
 				name                    = [[Cluster Bomb]],
 				areaOfEffect            = 0,
