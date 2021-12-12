@@ -85,7 +85,7 @@ return {
 				projectiles				= 1,
 
 				damage                  = {
-					default = 1000,
+					default = 12*125,
 				},
       
 				customParams            = {
@@ -114,8 +114,7 @@ return {
 				interceptedByShieldType = 2,
 				leadlimit               = 0,
 				model                   = [[hobbes.s3o]],
-				leadLimit               = 20,
-				mygravity		        = 0.25,
+				mygravity		        = 0.4,
 				reloadtime              = 5,
 				range			        = 50,
 				texture2                = [[darksmoketrail]],
