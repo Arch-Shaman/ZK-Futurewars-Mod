@@ -1043,9 +1043,9 @@ function gadget:GameFrame(n)
 				te.inc = te.inc + share*allyTeamSharedEnergyIncome/resourceShares
 
 				te.cur, te.max, te.pull, _, te.exp, _, te.sent, te.rec = spGetTeamResources(teamID, "energy")
-				te.exp = math.max(0, te.exp - (lastTeamOverdriveNetLoss[teamID] or 0))
+				te.exp = max(0, te.exp - (lastTeamOverdriveNetLoss[teamID] or 0))
 
-				te.max = math.max(MIN_STORAGE, te.max - HIDDEN_STORAGE) -- Caretakers spend in chunks of 0.33
+				te.max = max(MIN_STORAGE, te.max - HIDDEN_STORAGE) -- Caretakers spend in chunks of 0.33
 
 				allyTeamEnergyIncome = allyTeamEnergyIncome + te.inc
 				allyTeamEnergyCurrent = allyTeamEnergyCurrent + te.cur
@@ -1097,13 +1097,13 @@ function gadget:GameFrame(n)
 				local teamID = allyTeamData.team[i]
 				local te = teamEnergy[teamID]
 				if te.energyProducerOrUser then
-					te.extraFreeStorage = math.max(0, averageSpare - te.inc)
+					te.extraFreeStorage = max(0, averageSpare - te.inc)
 					
 					-- This prevents full overdrive until everyone has full energy storage.
-					allyTeamEnergyMaxCurMax = allyTeamEnergyMaxCurMax + math.max(te.max + te.extraFreeStorage, te.cur)
+					allyTeamEnergyMaxCurMax = allyTeamEnergyMaxCurMax + max(te.max + te.extraFreeStorage, te.cur)
 					
 					-- Save from energy from being sent to overdrive if we are stalling and have below average energy income.
-					local holdBack = math.max(0, te.extraFreeStorage - te.cur)
+					local holdBack = max(0, te.extraFreeStorage - te.cur)
 					holdBackEnergyFromOverdrive = holdBackEnergyFromOverdrive + holdBack
 					if debugMode then
 						Spring.Echo(teamID, "extraFreeStorage", te.extraFreeStorage, "spare", te.spare, "held back", holdBack)
@@ -1119,7 +1119,7 @@ function gadget:GameFrame(n)
 			-- This is how much energy will be spent on overdrive. It remains to determine how much
 			-- is spent by each player.
 			local energyForOverdrive = max(0, allyTeamEnergySpare)*((allyTeamEnergyMaxCurMax > 0 and max(0, min(1, allyTeamEnergyCurrent/allyTeamEnergyMaxCurMax))) or 1)
-			energyForOverdrive = math.max(0, energyForOverdrive - holdBackEnergyFromOverdrive)
+			energyForOverdrive = max(0, energyForOverdrive - holdBackEnergyFromOverdrive)
 			
 			if debugMode then
 				Spring.Echo("=========== AllyTeam Economy ===========", allyTeamID)
@@ -1462,7 +1462,7 @@ function gadget:GameFrame(n)
 				sendTeamInformationToAwards(teamID, baseShare, odShare, te.overdriveEnergyNet)
 
 				local mCurr, mStor = spGetTeamResources(teamID, "metal")
-				mStor = math.max(MIN_STORAGE, mStor - HIDDEN_STORAGE) -- Caretakers spend in chunks of 0.33
+				mStor = max(MIN_STORAGE, mStor - HIDDEN_STORAGE) -- Caretakers spend in chunks of 0.33
 				
 				if mCurr > mStor then
 					shareToSend[i] = mCurr - mStor
@@ -1768,8 +1768,8 @@ function externalFunctions.AddUnitResourceGeneration(unitID, metal, energy, shar
 
 	local genData = generator[allyTeamID][teamID][unitID]
 
-	local metalIncome = math.max(0, ((override and 0) or genData.metalIncome) + (metal * (Spring.GetModOptions().metalmult or 1)))
-	local energyIncome = math.max(0, ((override and 0) or genData.energyIncome) + (energy * (Spring.GetModOptions().energymult or 1)))
+	local metalIncome = max(0, ((override and 0) or genData.metalIncome) + (metal * (Spring.GetModOptions().metalmult or 1)))
+	local energyIncome = max(0, ((override and 0) or genData.energyIncome) + (energy * (Spring.GetModOptions().energymult or 1)))
 
 	genData.metalIncome = metalIncome
 	genData.energyIncome = energyIncome
