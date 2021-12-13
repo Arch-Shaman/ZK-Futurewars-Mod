@@ -20,6 +20,7 @@ return {
 		customParams                  = {
 			modelradius    = [[35]],
 			bait_level_default = 0,
+			draw_blueprint_facing = 1,
 		},
 		explodeAs                     = [[ATOMIC_BLAST]],
 		footprintX                    = 7,
@@ -51,7 +52,6 @@ return {
 		useBuildingGroundDecal        = true,
 		workerTime                    = 0,
 		yardMap                       = [[ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo]],
-
 		weapons                       = {
 			{
 				def                = [[RED_KILLER]],
@@ -79,7 +79,6 @@ return {
 			},
 		},
 		weaponDefs                    = {
-
 			RED_KILLER = {
 				name                    = [[Red Killer]],
 				accuracy                = 750,
@@ -88,10 +87,7 @@ return {
 				areaOfEffect            = 192,
 				craterBoost             = 4,
 				craterMult              = 3,
-
 				customParams = {
-					reveal_unit = 4,
-					restrict_in_widgets = 1,
 					script_reload = [[6]],
 				},
 				damage                  = {
@@ -116,7 +112,6 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 1100,
 			},
-
 			ORANGE_ROASTER = {
 				name                    = [[Orange Roaster]],
 				accuracy                = 750,
@@ -126,25 +121,22 @@ return {
 				avoidGround             = false,
 				craterBoost             = 0.25,
 				craterMult              = 0.5,
-
 				customParams              = {
 					setunitsonfire = "1",
 					burntime = 240,
 					burnchance = 1,
-					restrict_in_widgets = 1,
+
 					script_reload = [[6]],
 
 					area_damage = 1,
 					area_damage_radius = 320,
 					area_damage_dps = 40,
 					area_damage_duration = 15,
-					reveal_unit = 4,
 				},
-
 				damage                  = {
 					default = 300.9,
+					planes  = 300,
 				},
-
 				edgeeffectiveness       = 0.25,
 				explosionGenerator      = [[custom:napalm_drp]],
 				impulseBoost            = 0.2,
@@ -163,7 +155,6 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 1100,
 			},
-
 			YELLOW_SLAMMER = {
 				name                    = [[Yellow Slammer]],
 				accuracy                = 750,
@@ -175,15 +166,13 @@ return {
 				craterMult              = 1,
 
 				customParams = {
-					restrict_in_widgets = 1,
 					script_reload = [[6]],
-					reveal_unit = 4,
 				},
 
 				damage                  = {
 					default = 801.1,
+					planes  = 800,
 				},
-
 				edgeeffectiveness       = 0.5,
 				explosionGenerator      = [[custom:330rlexplode]],
 				explosionSpeed          = 500,
@@ -203,7 +192,6 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 1100,
 			},
-
 			GREEN_STAMPER = {
 				name                    = [[Green Stamper]],
 				accuracy                = 750,
@@ -212,22 +200,18 @@ return {
 				avoidGround             = false,
 				craterBoost             = 32,
 				craterMult              = 1,
-
 				customParams            = {
 					gatherradius = [[384]],
 					smoothradius = [[192]],
 					smoothmult   = [[0.7]],
 					smoothexponent = [[0.45]],
 					movestructures = [[1]],
-					restrict_in_widgets = 1,
 					script_reload = [[6]],
-					reveal_unit = 4,
 				},
-
 				damage                  = {
 					default = 401.1,
+					planes  = 400,
 				},
-
 				explosionGenerator      = [[custom:blobber_goo]],
 				impulseBoost            = 0.7,
 				impulseFactor           = 0.5,
@@ -245,7 +229,6 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 1100,
 			},
-
 			BLUE_SHOCKER = {
 				name                    = [[Blue Shocker]],
 				accuracy                = 750,
@@ -256,16 +239,14 @@ return {
 				craterMult              = 0.5,
 
 				customParams = {
-					restrict_in_widgets = 1,
 					script_reload = [[6]],
-					reveal_unit = 4,
 				},
 
 				damage                  = {
 				--[[ huge value to burst Funnelweb shields, since most of DRP's
-				power is in effects normally crappy vs them but we don't want
-				DRP to arbitrarily suck vs Funnel if the other supers don't ]]
-				default        = 30000,
+					power is in effects normally crappy vs them but we don't want
+					DRP to arbitrarily suck vs Funnel if the other supers don't ]]
+					default        = 30000,
 				},
 
 				edgeEffectiveness       = 0.75,
@@ -288,7 +269,6 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 1100,
 			},
-
 			VIOLET_SLUGGER = {
 				name                    = [[Violet Slugger]],
 				accuracy                = 750,
@@ -302,14 +282,12 @@ return {
 				customparams = {
 					timeslow_damagefactor = 10,
 					nofriendlyfire = "needs hax",
-					restrict_in_widgets = 1,
 					script_reload = [[6]],
-					reveal_unit = 4,
+					timeslow_overslow_frames = 2*30, --2 seconds before slow decays
 				},
-
+      
 				damage                  = {
-				default = 450.1,
-				subs    = 22.5,
+					default = 450.1,
 				},
 
 				edgeeffectiveness       = 0.8,
@@ -334,7 +312,6 @@ return {
 			},
 		},
 		featureDefs                   = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
