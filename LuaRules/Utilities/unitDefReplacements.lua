@@ -141,6 +141,20 @@ local function GetZenithTooltip (unitID)
 	return (WG.Translate("units", "zenith.description") or "Meteor Controller") .. " - " .. (WG.Translate("interface", "meteors_controlled") or "Meteors controlled") .. " " .. (meteorsControlled or "0") .. "/300"
 end
 
+local function GetRavePartyTooltip (unitID, ud)
+	if ud.name ~= "raveparty" then
+		return
+	end
+	local superRate = Spring.GetUnitRulesParam(unitID, "superweapon_mult") or 0
+	local fireRate = ""
+	if (Spring.GetUnitRulesParam(unitID, "lowpower") or 0) == 1 or (Spring.GetUnitRulesParam(unitID,"disarmed") or 0) == 1 then
+		fireRate = "DISABLED"
+	else
+		fireRate = string.format("%.2f %%", math.round(superRate*100, 2))
+	end
+	return (WG.Translate("units", "raveparty.description") or "Lolcannon") .. " - " .. (WG.Translate("interface", "fire_rate") or "Fire Rate: ") .. " " .. fireRate
+end
+
 local function GetAvatarTooltip(unitID)
 	local commOwner = Spring.GetUnitRulesParam(unitID, "commander_owner")
 	if not commOwner then return end
@@ -187,6 +201,7 @@ local function GetCustomTooltip (unitID, ud)
 	or GetAvatarTooltip(unitID)
 	or GetPlanetwarsTooltip(unitID, ud)
 	or GetPlateTooltip(unitID, ud)
+	or GetRavePartyTooltip(unitID, ud)
 end
 
 function Spring.Utilities.GetHumanName(ud, unitID)

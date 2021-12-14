@@ -76,6 +76,7 @@ for i = 1, #UnitDefs do
 			range = pylonRange,
 			neededLink = tonumber(udef.customParams.neededlink) or false,
 			keeptooltip = udef.customParams.keeptooltip or false,
+			isSuperWeapon = udef.customParams.superweapon ~= nil,
 		}
 	end
 	local metalIncome = tonumber(udef.customParams.income_metal) or 0
@@ -233,7 +234,7 @@ end
 -- local functions
 
 local function energyToExtraM(energy)
-	return (sqrt(energy))/3
+	return (sqrt(energy))/4
 end
 
 -------------------------------------------------------------------------------------
@@ -797,9 +798,13 @@ local function OptimizeOverDrive(allyTeamID,allyTeamData,allyE,maxGridCapacity)
 				gridEnergySpent[i] = 0
 				gridMetalGain[i] = 0
 				for unitID, orgMetal in pairs(allyTeamMexes[i]) do -- loop mexes
+					local isSuperWeapon = UnitDefs[spGetUnitDefID(unitID)].customParams.superweapon ~= nil
 					local stunned_or_inbuld = spGetUnitIsStunned(unitID) or (spGetUnitRulesParam(unitID,"disarmed") == 1)
 					if stunned_or_inbuld then
 						orgMetal = 0
+					end
+					if (not stunned_or_inbuild) and isSuperWeapon then
+						orgMetal = 10
 					end
 					local incomeFactor = spGetUnitRulesParam(unitID, "resourceGenerationFactor") or 1
 					if incomeFactor then
@@ -833,9 +838,13 @@ local function OptimizeOverDrive(allyTeamID,allyTeamData,allyE,maxGridCapacity)
 							allyE = allyE - gridE
 							energyWasted = allyE
 							for unitID, orgMetal in pairs(allyTeamMexes[i]) do --re-distribute the grid energy to Mex (again! except taking account the limited energy of the grid)
+								local isSuperWeapon = UnitDefs[spGetUnitDefID(unitID)].customParams.superweapon ~= nil
 								local this_stunned_or_inbuld = spGetUnitIsStunned(unitID) or (spGetUnitRulesParam(unitID,"disarmed") == 1)
 								if this_stunned_or_inbuld then
 									orgMetal = 0
+								end
+								if (not this_stunned_or_inbuld) and isSuperWeapon then
+									orgMetal = 10
 								end
 								local thisIncomeFactor = spGetUnitRulesParam(unitID,"resourceGenerationFactor")
 								if thisIncomeFactor then
@@ -844,21 +853,22 @@ local function OptimizeOverDrive(allyTeamID,allyTeamData,allyE,maxGridCapacity)
 								local thisMexE = gridE*(orgMetal * orgMetal)/ gridMetalSquared
 								local metalMult = energyToExtraM(thisMexE)
 								local thisMexM = orgMetal + orgMetal * metalMult
+								if not isSuperWeapon then
+									spSetUnitRulesParam(unitID, "overdrive", 1+thisMexE/5, inlosTrueTable)
+									spSetUnitRulesParam(unitID, "overdrive_energyDrain", thisMexE, inlosTrueTable)
+									spSetUnitRulesParam(unitID, "current_metalIncome", thisMexM, inlosTrueTable)
+									spSetUnitRulesParam(unitID, "overdrive_proportion", metalMult, inlosTrueTable)
 
-								spSetUnitRulesParam(unitID, "overdrive", 1+thisMexE/5, inlosTrueTable)
-								spSetUnitRulesParam(unitID, "overdrive_energyDrain", thisMexE, inlosTrueTable)
-								spSetUnitRulesParam(unitID, "current_metalIncome", thisMexM, inlosTrueTable)
-								spSetUnitRulesParam(unitID, "overdrive_proportion", metalMult, inlosTrueTable)
+									maxedMetalProduction = maxedMetalProduction + thisMexM
+									maxedBaseMetal = maxedBaseMetal + orgMetal
+									maxedOverdrive = maxedOverdrive + orgMetal * metalMult
 
-								maxedMetalProduction = maxedMetalProduction + thisMexM
-								maxedBaseMetal = maxedBaseMetal + orgMetal
-								maxedOverdrive = maxedOverdrive + orgMetal * metalMult
+									allyMetalSquared = allyMetalSquared - orgMetal * orgMetal
+									gridMetalGain[i] = gridMetalGain[i] + orgMetal * metalMult
 
-								allyMetalSquared = allyMetalSquared - orgMetal * orgMetal
-								gridMetalGain[i] = gridMetalGain[i] + orgMetal * metalMult
-
-								if mexByID[unitID].refundTeamID then
-									mexBaseMetal[unitID] = orgMetal
+									if mexByID[unitID].refundTeamID then
+										mexBaseMetal[unitID] = orgMetal
+									end
 								end
 							end
 							break --finish distributing energy to 1 grid, go to next grid
@@ -867,20 +877,21 @@ local function OptimizeOverDrive(allyTeamID,allyTeamData,allyE,maxGridCapacity)
 
 					local metalMult = energyToExtraM(mexE)
 					local thisMexM = orgMetal + orgMetal * metalMult
+					if not isSuperWeapon then
+						spSetUnitRulesParam(unitID, "overdrive", 1+mexE/5, inlosTrueTable)
+						spSetUnitRulesParam(unitID, "overdrive_energyDrain", mexE, inlosTrueTable)
+						spSetUnitRulesParam(unitID, "current_metalIncome", thisMexM, inlosTrueTable)
+						spSetUnitRulesParam(unitID, "overdrive_proportion", metalMult, inlosTrueTable)
 
-					spSetUnitRulesParam(unitID, "overdrive", 1+mexE/5, inlosTrueTable)
-					spSetUnitRulesParam(unitID, "overdrive_energyDrain", mexE, inlosTrueTable)
-					spSetUnitRulesParam(unitID, "current_metalIncome", thisMexM, inlosTrueTable)
-					spSetUnitRulesParam(unitID, "overdrive_proportion", metalMult, inlosTrueTable)
+						summedMetalProduction = summedMetalProduction + thisMexM
+						summedBaseMetal = summedBaseMetal + orgMetal
+						summedOverdrive = summedOverdrive + orgMetal * metalMult
 
-					summedMetalProduction = summedMetalProduction + thisMexM
-					summedBaseMetal = summedBaseMetal + orgMetal
-					summedOverdrive = summedOverdrive + orgMetal * metalMult
+						gridMetalGain[i] = gridMetalGain[i] + orgMetal * metalMult
 
-					gridMetalGain[i] = gridMetalGain[i] + orgMetal * metalMult
-
-					if mexByID[unitID].refundTeamID then
-						mexBaseMetal[unitID] = orgMetal
+						if mexByID[unitID].refundTeamID then
+							mexBaseMetal[unitID] = orgMetal
+						end
 					end
 				end
 
@@ -1306,6 +1317,7 @@ function gadget:GameFrame(n)
 			for i = 1, list.count do
 				local unitID = list.data[i]
 				local pylonData = pylon[allyTeamID][unitID]
+				local unitDefID = Spring.GetUnitDefID(unitID)
 				if pylonData then
 					local grid = pylonData.gridID
 					local gridEfficiency = -1
@@ -1316,11 +1328,16 @@ function gadget:GameFrame(n)
 							gridEfficiency = 0
 						end
 					end
-
 					spSetUnitRulesParam(unitID, "gridefficiency", gridEfficiency, alliedTrueTable)
-
-					if not pylonData.mex then
-						local unitDefID = spGetUnitDefID(unitID)
+					if pylonDefs[unitDefID].isSuperWeapon then
+						local need = pylonDefs[unitDefID].neededLink or 0
+						if gridEnergySpent[grid] > need then
+							Spring.Echo("Avaliable Energy: " .. gridEnergySpent[grid] .. "\nFire rate: " ..  sqrt(gridEnergySpent[grid] - need)/20)
+							spSetUnitRulesParam(unitID, "superweapon_mult", sqrt(gridEnergySpent[grid] - need)/20, alliedTrueTable)
+						else
+							spSetUnitRulesParam(unitID, "superweapon_mult", 0, alliedTrueTable)
+						end
+					elseif not pylonData.mex then
 						if not unitDefID then
 							if not spammedError then
 								Spring.Log(gadget:GetInfo().name, LOG.ERROR, "unitDefID missing for pylon")
@@ -1551,6 +1568,19 @@ local function TransferMexRefund(unitID, newTeamID)
 		teamPayback[oldTeamID].metalDueBase = teamPayback[oldTeamID].metalDueBase - remainingPayback
 		teamPayback[newTeamID].metalDueBase = teamPayback[newTeamID].metalDueBase + remainingPayback
 	end
+end
+
+local function AddSuperweapon(unitID)
+	local allyTeamID = spGetUnitAllyTeam(unitID)
+	mexByID[unitID] = {gridID = 0, allyTeamID = allyTeamID, isSuperWeapon = true}
+	local pylonData = pylon[allyTeamID][unitID]
+	local mexGridID = 0
+	if pylonData then
+		pylonData.mex = true --in case some magical case where pylon was initialized as not mex, then became mex?
+		mexGridID = pylonData.gridID 
+	end
+	mexes[allyTeamID][mexGridID][unitID] = 0.1
+	mexByID[unitID].gridID = mexGridID
 end
 
 local function AddMex(unitID, teamID, metalMake)
@@ -1812,6 +1842,9 @@ function gadget:Initialize()
 			local inc = spGetUnitRulesParam(unitID, "mexIncome")
 			AddMex(unitID, false, inc)
 		end
+		if UnitDefs[unitDefID].customParams.superweapon then
+			AddSuperweapon(unitID)
+		end
 		if (pylonDefs[unitDefID]) then
 			AddPylon(unitID, unitDefID, pylonDefs[unitDefID].range)
 		end
@@ -1843,6 +1876,9 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 		local inc = spGetUnitRulesParam(unitID, "mexIncome")
 		AddMex(unitID, unitTeam, inc)
 	end
+	if UnitDefs[unitDefID].customParams.superweapon then
+		AddSuperweapon(unitID)
+	end
 	if pylonDefs[unitDefID] then
 		AddPylon(unitID, unitDefID, pylonDefs[unitDefID].range)
 	end
@@ -1866,7 +1902,9 @@ function gadget:UnitGiven(unitID, unitDefID, teamID, oldTeamID)
 			local inc = spGetUnitRulesParam(unitID, "mexIncome")
 			AddMex(unitID, false, inc)
 		end
-
+		if UnitDefs[unitDefID].customParams.superweapon then
+			AddSuperweapon(unitID)
+		end
 		if pylonDefs[unitDefID] then
 			AddPylon(unitID, unitDefID, pylonDefs[unitDefID].range)
 			--Spring.Echo(spGetUnitAllyTeam(unitID) .. "  " .. newAllyTeam)
@@ -1890,7 +1928,9 @@ function gadget:UnitTaken(unitID, unitDefID, oldTeamID, teamID)
 		if (mexDefs[unitDefID] and mexByID[unitID]) then
 			RemoveMex(unitID)
 		end
-
+		if UnitDefs[unitDefID].customParams.superweapon then
+			RemoveMex(unitID)
+		end
 		if pylonDefs[unitDefID] then
 			RemovePylon(unitID)
 		end
@@ -1907,6 +1947,9 @@ end
 
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	if (mexDefs[unitDefID] and mexByID[unitID]) then
+		RemoveMex(unitID)
+	end
+	if UnitDefs[unitDefID].isSuperWeapon then
 		RemoveMex(unitID)
 	end
 	if (pylonDefs[unitDefID]) then
