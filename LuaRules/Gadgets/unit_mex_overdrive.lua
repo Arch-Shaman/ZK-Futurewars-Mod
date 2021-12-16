@@ -1949,7 +1949,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	if (mexDefs[unitDefID] and mexByID[unitID]) then
 		RemoveMex(unitID)
 	end
-	if UnitDefs[unitDefID].isSuperWeapon then
+	if UnitDefs[unitDefID].customParams.superweapon then
 		RemoveMex(unitID)
 	end
 	if (pylonDefs[unitDefID]) then
