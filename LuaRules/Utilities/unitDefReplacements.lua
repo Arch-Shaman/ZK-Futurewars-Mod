@@ -84,7 +84,10 @@ local spGetUnitBuildSpeed = Spring.Utilities.GetUnitBuildSpeed
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 
-local function GetGridTooltip(unitID)
+local function GetGridTooltip(unitID, ud)
+	if ud.customParams.keeptooltip or ud.customParams.superweapon then
+		return
+	end
 	local gridCurrent = Spring.GetUnitRulesParam(unitID, "OD_gridCurrent")
 	if not gridCurrent then return end
 
@@ -154,7 +157,7 @@ local function GetSuperweaponTooltip(unitID, ud)
 		return
 	end
 	if (Spring.GetUnitRulesParam(unitID, "lowpower") or 0) == 1 then
-		return WG.Translate("units", ud.name .. ".description") .. " - " .. (WG.Translate("interface", "needs_grid") or "Grid Power: ") ..  .. ud.customParams.neededlink
+		return WG.Translate("units", ud.name .. ".description") .. " - " .. (WG.Translate("interface", "needs_grid") or "Grid Power: ") .. (Spring.GetUnitRulesParam(unitID, "OD_gridCurrent") or 0) .. " / " .. ud.customParams.neededlink
 	end
 	local superRate = (Spring.GetUnitRulesParam(unitID, "superweapon_mult") or 0) * 100
 	local fireRate = ""
@@ -170,6 +173,17 @@ local function GetAvatarTooltip(unitID)
 	local commOwner = Spring.GetUnitRulesParam(unitID, "commander_owner")
 	if not commOwner then return end
 	return commOwner or ""
+end
+
+local function GetLinkNeedTooltip(unitID, ud)
+	if ud.customParams.neededlink == nil or ud.customParams.superweapon then
+		return
+	end
+	if (Spring.GetUnitRulesParam(unitID, "lowpower") or 0) == 1 then
+		return WG.Translate("units", ud.name .. ".description") .. " - " .. (WG.Translate("interface", "needs_grid") or "Insufficient grid power: ") .. (Spring.GetUnitRulesParam(unitID, "OD_gridMaximum") or 0) .. " / " .. ud.customParams.neededlink
+	else
+		return WG.Translate("units", ud.name .. ".description")
+	end
 end
 
 local function GetPlanetwarsTooltip(unitID, ud)
@@ -205,9 +219,10 @@ local function GetPlateTooltip(unitID, ud)
 end
 
 local function GetCustomTooltip (unitID, ud)
-	return GetGridTooltip(unitID)
+	return GetGridTooltip(unitID, ud)
 	or GetSuperweaponTooltip(unitID, ud)
 	or GetMexTooltip(unitID)
+	or GetLinkNeedTooltip(unitID, ud)
 	or GetTerraformTooltip(unitID)
 	or GetZenithTooltip(unitID)
 	or GetAvatarTooltip(unitID)

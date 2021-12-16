@@ -10,7 +10,7 @@
 	"singularity" : "Singularity",
 	"seismic" : "Seismic",
 	"emp_aoe" : "EMP AOE",
-	"needs_grid" : "Grid Power:",
+	"needs_grid" : "Insufficient grid power: ",
 	"fire_rate" : "Current Firerate:",
 	"emp_vertical" : "EMP vertical",
 	"tacnuke_vertical" : "Seismic and Tacnuke vertical",

@@ -491,7 +491,7 @@
 	},
 	"turretaafar" : {
 		"name" : "Hailstorm",
-		"description" : "Heavy SAM Battery (Requires 80 energy grid)",
+		"description" : "Heavy SAM Battery",
 		"helptext" : "A recent redesign, the Hailstorm houses 26 missiles that it can fire at its enemies. A pair of Hailstorms can knock out heavy air units like Hellas very easily."
 	},
 	"staticnuke" : {
@@ -746,7 +746,7 @@
 	},
 	"staticantinuke" : {
 		"name" : "Antinuke",
-		"description" : "Nuclear Interceptor (Needs Grid: 90E)",
+		"description" : "Nuclear Interceptor",
 		"helptext" : "The Antinuke automatically intercepts enemy nuclear ICBMs aimed within its coverage radius. WARNING: Does not work on MIRVs traveling in space. Only works on MIRV warheads!"
 	},
 	"staticheavyarty" : {
@@ -761,7 +761,7 @@
 	},
 	"staticarty" : {
 		"name" : "Cerberus",
-		"description" : "Plasma Artillery Battery - Power by connecting to a 50 energy grid",
+		"description" : "Plasma Artillery Battery",
 		"helptext" : "The Cerberus offers long-range artillery/counter-artillery capability, making it excellent for area denial. It is not designed as a defense turret, and will go down if attacked directly."
 	},
 	"wolverine_mine" : {
@@ -776,7 +776,7 @@
 	},
 	"turretriot" : {
 		"name" : "Bombard",
-		"description" : "Anti-Swarm Turret (needs 4E grid)",
+		"description" : "Anti-Swarm Turret",
 		"helptext" : "The Bombard packs a powerful and accurate canister autocannon that rapidly shreds incoming units. It requires a small electrical grid though to power its rapid fabricators."
 	},
 	"spideranarchid" : {
@@ -916,7 +916,7 @@
 	},
 	"turretantiheavy" : {
 		"name" : "Azimuth",
-		"description" : "Anti-Heavy Tachyonic Artillery - Requires Line-Of-Sight and 225 grid to fire",
+		"description" : "Anti-Heavy Tachyonic Beam Artillery",
 		"helptext" : "Refered to by many as a 'Long-range Ultimatum', the Azimuth certainly lives up to its nickname. Its weapon creates a feedback loop between it and its target, allowing it to gain more firepower the longer it is locked on. Do not try to fight it with brute force, as it's damage output can and will surpass even that of the now antique Starlight planetary energy chisel. Instead you should fight it with swarms of weaker units, as it has a long recalibration time between shots, or by killing the unit which is spotting for it."
 	},
 	"jumparty" : {
@@ -1016,7 +1016,7 @@
 	},
 	"turretheavy" : {
 		"name" : "Bastion",
-		"description" : "Medium Range Defense Fortress - Power by connecting to a 50 energy grid",
+		"description" : "Medium Range Defense Fortress",
 		"helptext" : "Armed with a heavy plasma cannon and a Heat Ray, the Bastion forms a focal defense point against enemy assault pushes. It can bunker down to survive attack by long-range artillery or air attacks to reduce incoming damage to a quarter, although it cannot fire its weapons while doing so."
 	},
 	"turretimpulse" : {
@@ -1191,7 +1191,7 @@
 	},
 	"turretheavylaser" : {
 		"name" : "Rampart",
-		"description" : "Medium Range Plasma Bombarder (Needs 8E Grid)",
+		"description" : "Medium Range Plasma Bombarder",
 		"helptext" : "The Rampant is a medium plasma turret. Its three rotating guns can kill almost any small unit, but its low rate of fire makes it vulnerable to swarms when unassisted."
 	},
 	"hoversonic" : {

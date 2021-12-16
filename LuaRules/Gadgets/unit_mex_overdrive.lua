@@ -1332,10 +1332,14 @@ function gadget:GameFrame(n)
 					if pylonDefs[unitDefID].isSuperWeapon then
 						local need = pylonDefs[unitDefID].neededLink or 0
 						if gridEnergySpent[grid] > need then
-							Spring.Echo("Avaliable Energy: " .. gridEnergySpent[grid] .. "\nFire rate: " ..  sqrt(gridEnergySpent[grid] - need)/20)
+							--Spring.Echo("Avaliable Energy: " .. gridEnergySpent[grid] .. "\nFire rate: " ..  sqrt(gridEnergySpent[grid] - need)/20)
 							spSetUnitRulesParam(unitID, "superweapon_mult", sqrt(gridEnergySpent[grid] - need)/20, alliedTrueTable)
+							spSetUnitRulesParam(unitID, "OD_gridCurrent", gridEnergySpent[grid], alliedTrueTable)
+							spSetUnitRulesParam(unitID, "OD_gridMaximum", maxGridCapacity[grid], alliedTrueTable)
 						else
 							spSetUnitRulesParam(unitID, "superweapon_mult", 0, alliedTrueTable)
+							spSetUnitRulesParam(unitID, "OD_gridCurrent", gridEnergySpent[grid], alliedTrueTable)
+							spSetUnitRulesParam(unitID, "OD_gridMaximum", maxGridCapacity[grid], alliedTrueTable)
 						end
 					elseif not pylonData.mex then
 						if not unitDefID then
@@ -1344,7 +1348,7 @@ function gadget:GameFrame(n)
 								spammedError = true
 							end
 						else
-							if not pylonDefs[unitDefID].keeptooltip then
+							--if not pylonDefs[unitDefID].keeptooltip then
 								if grid ~= 0 then
 									spSetUnitRulesParam(unitID, "OD_gridCurrent", gridEnergySpent[grid], alliedTrueTable)
 									spSetUnitRulesParam(unitID, "OD_gridMaximum", maxGridCapacity[grid], alliedTrueTable)
@@ -1352,7 +1356,7 @@ function gadget:GameFrame(n)
 								else
 									spSetUnitRulesParam(unitID, "OD_gridCurrent", -1, alliedTrueTable)
 								end
-							end
+							--end
 						end
 					end
 				elseif not spammedError then
