@@ -64,7 +64,7 @@ local SIG_AIM = 2
 
 local gunNum = 1
 local weaponNum = 1
-local randomize = true
+local randomize = false
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
@@ -87,6 +87,9 @@ for i = 1, 6 do
 end
 
 function script.AimWeapon(num, heading, pitch)
+	if num == 7 then -- metrenome cannot fire.
+		return false
+	end
 	if (sleeper[num]) then
 		return false
 	end
@@ -142,6 +145,28 @@ local function gunFire(num)
 	Move(guns[num].barrel, y_axis, 0, 0.2*guns[num].ys * speedMult)
 end
 
+local function PickNewWeapon()
+	local r = math.random(0, 1000)
+	if r < 150 then -- 15%
+		return 1 -- red
+	elseif r < 300 then -- 15%
+		return 2 -- orange
+	elseif r < 450 then
+		return 3 -- yellow
+	elseif r < 600 then
+		return 4 -- green
+	elseif r < 750 then
+		return 5 -- blue
+	elseif r < 900 then
+		return 6 -- violet
+	elseif r < 935 then
+		return 7 -- ruby
+	elseif r < 970 then
+		return 8 -- sapphire
+	else
+		return 9 -- rainbow
+	end
+end
 
 function script.Shot(num)
 	--EmitSfx(base, 1024) BASE IS NOT CENTRAL
@@ -151,16 +176,11 @@ function script.Shot(num)
 end
 
 function script.FireWeapon(num)
+	GG.FireControl.WeaponFired(unitID, 7) -- Update Metrenome.
 	local reloadspeed = Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0
 	if reloadspeed <= 1 then
 		reloadspeed = 1
 	end
-	if not randomize and reloadspeed < 25 then
-		Spring.SetUnitWeaponState(unitID, num, "reloadFrame", Spring.GetGameFrame() + (6*30)/reloadspeed) -- stop double shot.
-	elseif randomize and reloadspeed < 25 then
-		Spring.SetUnitWeaponState(unitID, num, "reloadFrame", Spring.GetGameFrame() + 2)
-	end
-	Sleep(33)
 	if randomize then
 		weaponNum = math.random(1,6)
 	else
@@ -174,6 +194,11 @@ function script.FireWeapon(num)
 		gunNum = 1
 	end
 	spindleOffset = math.rad(60)*(gunNum - 1)
+end
+
+function script.BlockShot(num, targetID)
+	Spring.Echo("Metrenome ready: " .. tostring(GG.FireControl.CanFireWeapon(unitID, 7)))
+	return not GG.FireControl.CanFireWeapon(unitID, 7)
 end
 
 function script.Killed(recentDamage, maxHealth)

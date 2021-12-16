@@ -182,6 +182,20 @@ local altforms = {
 			},
 		},
 	},
+	sonic_360 = {
+		source = "sonic",
+		modifications = {
+			groundflash = {
+				ttl = 18,
+			},
+			expand = {
+				properties = {size = 16, sizegrowth = 16, heat = 45, maxheat = 45},
+			},
+			contract = {
+				properties = {size = 340, sizegrowth = -16, heat = 90, maxheat = 90},
+			},
+		},
+	},
 	sonicfire_80 = {
 		source = "sonicfire",
 		modifications = {
