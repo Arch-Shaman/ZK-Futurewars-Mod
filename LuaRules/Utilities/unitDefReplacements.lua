@@ -9,6 +9,7 @@ local buildPlate = {}
 local variableCostUnit = {
 	[UnitDefNames["terraunit"].id] = true
 }
+local superweapons = {}
 
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 
@@ -17,6 +18,9 @@ for i = 1, #UnitDefs do
 	buildTimes[i] = ud.buildTime
 	if ud.customParams.level or ud.customParams.dynamic_comm then
 		variableCostUnit[i] = true
+	end
+	if ud.customParams.superweapon then
+		superweapons[UnitDefs[i].name] = true
 	end
 	if ud.customParams.planetwars_structure then
 		planetwarsStructure[i] = true
@@ -141,18 +145,25 @@ local function GetZenithTooltip (unitID)
 	return (WG.Translate("units", "zenith.description") or "Meteor Controller") .. " - " .. (WG.Translate("interface", "meteors_controlled") or "Meteors controlled") .. " " .. (meteorsControlled or "0") .. "/300"
 end
 
-local function GetRavePartyTooltip (unitID, ud)
-	if ud.name ~= "raveparty" then
+local function GetSuperweaponTooltip(unitID, ud)
+	if ud.name == "zenith" or not superweapons[ud.name] then
 		return
 	end
-	local superRate = Spring.GetUnitRulesParam(unitID, "superweapon_mult") or 0
+	local superRate = Spring.GetUnitRulesParam(unitID, "superweapon_mult")
+	if not superRate then
+		return
+	end
+	if (Spring.GetUnitRulesParam(unitID, "lowpower") or 0) == 1 then
+		return WG.Translate("units", ud.name .. ".description") .. " - " .. (WG.Translate("interface", "needs_grid") or "Grid Power: ") ..  .. ud.customParams.neededlink
+	end
+	local superRate = (Spring.GetUnitRulesParam(unitID, "superweapon_mult") or 0) * 100
 	local fireRate = ""
-	if (Spring.GetUnitRulesParam(unitID, "lowpower") or 0) == 1 or (Spring.GetUnitRulesParam(unitID,"disarmed") or 0) == 1 then
+	if (Spring.GetUnitRulesParam(unitID,"disarmed") or 0) == 1 then
 		fireRate = "DISABLED"
 	else
-		fireRate = string.format("%.2f %%", math.round(superRate*100, 2))
+		fireRate = string.format("%.2f %%", math.round(superRate, 2))
 	end
-	return (WG.Translate("units", "raveparty.description") or "Lolcannon") .. " - " .. (WG.Translate("interface", "fire_rate") or "Fire Rate: ") .. " " .. fireRate
+	return (WG.Translate("units", ud.name .. ".description") or "Lolcannon") .. " - " .. (WG.Translate("interface", "fire_rate") or "Fire Rate: ") .. " " .. fireRate
 end
 
 local function GetAvatarTooltip(unitID)
@@ -195,13 +206,13 @@ end
 
 local function GetCustomTooltip (unitID, ud)
 	return GetGridTooltip(unitID)
+	or GetSuperweaponTooltip(unitID, ud)
 	or GetMexTooltip(unitID)
 	or GetTerraformTooltip(unitID)
 	or GetZenithTooltip(unitID)
 	or GetAvatarTooltip(unitID)
 	or GetPlanetwarsTooltip(unitID, ud)
 	or GetPlateTooltip(unitID, ud)
-	or GetRavePartyTooltip(unitID, ud)
 end
 
 function Spring.Utilities.GetHumanName(ud, unitID)
