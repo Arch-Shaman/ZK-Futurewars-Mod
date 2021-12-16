@@ -750,9 +750,9 @@
 		"helptext" : "The Antinuke automatically intercepts enemy nuclear ICBMs aimed within its coverage radius. WARNING: Does not work on MIRVs traveling in space. Only works on MIRV warheads!"
 	},
 	"staticheavyarty" : {
-		"name" : "Big Bertha",
-		"description" : "Strategic Plasma Cannon - Power by connecting to a 170 energy grid",
-		"helptext" : "The Bertha is a massive cannon that fires high-energy plasmoids across the map. Used appropriately, it can effectively suppress enemy operations from the safety of your base. Do not expect it to win battles alone for you, however."
+		"name" : "Liberator",
+		"description" : "Overdrivable Strategic Artillery",
+		"helptext" : "The hulking Liberator cannon prior to the Coalition Wars saw peaceful applications as a railgun, delivering light payloads into space and to unknown frontiers. Those peaceful applications are now sunsetted into a long forgotten memory as the modern Liberator now converts grid energy into a devestating plasma barrage that it delivers at long ranges. Giving it more power increases the rate in which it can produce this plasma, increasing its overall firing rate."
 	},
 	"cloaksnipe" : {
 		"name" : "Phantom",

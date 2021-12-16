@@ -20,10 +20,9 @@ return {
 			aimposoffset = [[0 50 -7]],
 			modelradius    = [[35]],
 			selectionscalemult = 1,
-			
-    			keeptooltip    = [[any string I want]],
-    			neededlink     = 170,
-   			pylonrange     = 100,
+    		superweapon    = 1,
+    		neededlink     = 100,
+   			pylonrange     = 150,
 		},
 		
 		explodeAs                     = [[ATOMIC_BLAST]],
@@ -44,7 +43,6 @@ return {
 		selfDestructAs                = [[ATOMIC_BLAST]],
 		
 		sfxtypes                      = {
-			
 			explosiongenerators = {
 				[[custom:staticheavyarty_SHOCKWAVE]],
 				[[custom:staticheavyarty_SMOKE]],
@@ -55,15 +53,12 @@ return {
 		sightDistance                 = 660,
 		useBuildingGroundDecal        = true,
 		yardMap                       = [[oooo oooo oooo oooo]],
-
 		weapons                       = {
-			
 			{
 				def                = [[PLASMA]],
 				badTargetCategory  = [[LAND SHIP HOVER SWIM]],
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 			},
-		
 		},
 		
 		weaponDefs                    = {
@@ -156,22 +151,16 @@ return {
 			},
 	
 			PLASMA = {
-				name                    = [[Cluster Barrage]],
-				highTrajectory		= 1,
+				name                    = [[Cluster Artillery Shell]],
+				highTrajectory		    = 1,
 				areaOfEffect            = 0,
 				avoidFeature            = false,
 				avoidGround             = false,
 				cegTag                  = [[vulcanfx]],
 				craterBoost             = 0,
 				craterMult              = 0,
-				burst			        = 2,
-				burstrate		        = 2,
 				customParams            = {
 					restrict_in_widgets = 1,
-
-					gatherradius = [[128]],
-					smoothradius = [[96]],
-					smoothmult   = [[0.4]],
 					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "staticheavyarty_secondary",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
@@ -182,6 +171,7 @@ return {
 					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
 					light_camera_height = 1500,
 					light_radius = 120,
+					script_reload = [[14]], -- NB: Superweapon field in CP makes this handled by FireControl.
 					light_color = [[2.4 1.5 0.6]],
 					reveal_unit = 26,
 				},
@@ -199,7 +189,7 @@ return {
 				sprayAngle				= 120,
 				noSelfDamage            = true,
 				range                   = 6000,
-				reloadtime              = 25,
+				reloadtime              = 1/30, -- force render our reload progress?
 				soundHit                = [[weapon/clusters/cluster_heavy]],
 				soundStart              = [[weapon/cannon/large_cannon_fire]],
 				turret                  = true,
