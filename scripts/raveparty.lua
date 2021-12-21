@@ -119,7 +119,7 @@ function script.AimWeapon(num, heading, pitch)
 	end
 	spindlePitch = -pitch
 	local slowMult = (Spring.GetUnitRulesParam(unitID,"baseSpeedMult") or 1)
-	local speedMult = Spring.GetUnitRulesParam(unitID,"superweapon_mult") * slowMult
+	local speedMult = (Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0) * slowMult
 	local effectivePitchSpeed = math.min(pitchSpeed * speedMult, maxPitchSpeed)
 	Turn(turret, y_axis, heading, headingSpeed*slowMult)
 	Turn(spindle, x_axis, spindlePitch+spindleOffset, effectivePitchSpeed)
@@ -160,11 +160,11 @@ local function PickNewWeapon()
 	elseif r < 900 then
 		return 6 -- violet
 	elseif r < 935 then
-		return 7 -- ruby
+		return 8 -- ruby
 	elseif r < 970 then
-		return 8 -- sapphire
+		return 9 -- sapphire
 	else
-		return 9 -- rainbow
+		return 10 -- rainbow
 	end
 end
 
