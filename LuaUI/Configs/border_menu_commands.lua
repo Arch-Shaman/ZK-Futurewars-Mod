@@ -258,6 +258,7 @@ local overrides = {
 		caption='', tooltip = tooltips.retreat,},
 	[CMD_RETREATSHIELD] = { texture = {imageDir .. 'states/shield_off.png', imageDir .. 'states/shield_30.png', imageDir .. 'states/shield_50.png', imageDir .. 'states/shield_80.png'},
 		caption='', tooltip = tooltips.retreatshield,},
+	[CMD_FIRECYCLE] = {texture = {imageDir .. 'states/firecycle_off.png', imageDir .. 'states/firecycle_on.png'}, caption=''},
 	[CMD_OVERRECLAIM] = { texture = {imageDir .. 'states/goo_off.png', imageDir .. 'states/goo_on.png'},},
 	[CMD.IDLEMODE] = { texture = {imageDir .. 'states/fly_on.png', imageDir .. 'states/fly_off.png'}, caption=''},
 	[CMD_AP_FLY_STATE] = { texture = {imageDir .. 'states/fly_on.png', imageDir .. 'states/fly_off.png'}, caption=''},

@@ -100,8 +100,9 @@ local cmds = {
 	TURN = 38530,
 	WANTED_SPEED = 38825,
 	SWEEPFIRE = 38886, -- cmd_sweepfire gadget
-	SWEEPFIRE_MINES = 38888,
 	SWEEPFIRE_CANCEL = 38887,
+	SWEEPFIRE_MINES = 38888,
+	FIRECYCLE = 38889, -- cmd_firecycle gadget
 	OVERRECLAIM = 38950,
 	AIR_STRAFE = 39381,
 	-- terraform

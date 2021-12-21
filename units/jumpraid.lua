@@ -26,6 +26,7 @@ return {
 			jump_from_midair   = 1,
 			fireproof      = [[1]],
 			stats_show_death_explosion = 1,
+			firecycle = 1,
 		},
 		
 		explodeAs             = [[PYRO_DEATH]],
@@ -121,7 +122,7 @@ return {
 					light_fade_time = 10,
 					light_beam_mult_frames = 5,
 					light_beam_mult = 5,
-				
+					usefirecycle = 1,
 					combatrange = 280,
 				},
 				

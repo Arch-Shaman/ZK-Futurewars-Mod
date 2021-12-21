@@ -110,6 +110,10 @@ local tooltips = {
 		[0] = "Disabled.",
 		[1] = "Shoot towards the closest enemy when nothing else is in range.",
 	},
+	firecycle = {
+		[0] = "Disabled.",
+		[1] = "Prioritize spreading burning status.",
+	},
 }
 
 for name, values in pairs(tooltips) do
@@ -142,10 +146,12 @@ for i = 1, #UnitDefs do
 end
 
 local disableORP = false
+local spreadNapalm = false
 
 options_path = 'Settings/Unit Behaviour/Default States'
 options_order = {
 	'okpdisabledbydefault',
+	'spreadnapalmbydefault',
 	'inheritcontrol', 'presetlabel',
 	'resetMoveStates', 'holdPosition',
 	'skirmHoldPosition', 'artyHoldPosition', 'aaHoldPosition',
@@ -200,6 +206,15 @@ options = {
 		value = false,
 		OnChange = function(self)
 			disableORP = self.value
+		end,
+	},
+	spreadnapalmbydefault = {
+		name = "Napalm units try to spread napalm",
+		desc = "Napalm units will switch targets once it's caught on fire.",
+		type = 'bool',
+		value = false,
+		OnChange = function(self)
+			spreadNapalm = self.value
 		end,
 	},
 
@@ -1450,6 +1465,9 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 	if UnitDefs[unitDefID].isBuilder and disableORP then
 		orderArray[#orderArray + 1] = {CMD_OVERRECLAIM, {1}, CMD.OPT_SHIFT}
 	end
+	if UnitDefs[unitDefID].customParams.firecycle and spreadNapalm then
+		orderArray[#orderArray + 1] = {CMD_FIRECYCLE, {1}, CMD.OPT_SHIFT}
+	end
 
 	if #orderArray > 0 then
 		Spring.GiveOrderArrayToUnitArray ({unitID,},orderArray) --give out all orders at once
@@ -1535,6 +1553,7 @@ end
 
 function widget:Initialize()
 	disableORP = options.okpdisabledbydefault.value
+	spreadNapalm = options.spreadnapalmbydefault.value
 end
 
 function widget:PlayerChanged()

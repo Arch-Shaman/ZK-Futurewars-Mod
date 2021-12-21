@@ -70,6 +70,7 @@ local cmdPosDef = {
 	[CMD.MOVE_STATE]       = {pos = 6, posSimple = 5, priority = 1},
 	[CMD.FIRE_STATE]       = {pos = 6, posSimple = 5, priority = 2},
 	[CMD_FACTORY_GUARD]    = {pos = 6, posSimple = 5, priority = 3},
+	[CMD_FIRECYCLE]        = {pos = 6, priority = 5},
 	
 	[CMD_SELECTION_RANK]   = {pos = 6, posSimple = 1, priority = 1.5},
 	

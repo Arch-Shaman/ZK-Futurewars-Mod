@@ -66,6 +66,7 @@ local configList = {
 	{cmdID = CMD_UNIT_AI               , state = true, default = false, name = "Unit AI"},
 	{cmdID = CMD_FIRE_AT_SHIELD        , state = true, default = false, name = "Ward Fire"},
 	{cmdID = CMD_OVERRECLAIM           , state = true, default = false, name = "Overreclaim Prevention"},
+	{cmdID = CMD_FIRECYCLE             , state = true, default = false, name = "Spread Napalm"},
 }
 
 local defaultValues = {

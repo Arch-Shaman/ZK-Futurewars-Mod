@@ -22,6 +22,7 @@ return {
 			nanoregen = 10,
 			nano_maxregen = 5,
 			aim_lookahead = 80,
+			firecycle = 1,
 		},
 		
 		explodeAs              = [[BIG_UNITEX]],
@@ -79,6 +80,7 @@ return {
 					sweepfire_maxangle = 25,
 					sweepfire_step = 3,
 					sweepfire_fastupdate = 1,
+					usefirecycle = 1,
 				},
 				
 				damage                  = {

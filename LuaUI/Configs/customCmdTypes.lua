@@ -92,6 +92,7 @@ local custom_cmd_actions = {
 
 	--states
 --	stealth = {cmdType = 2, name = "stealth"}, --no longer applicable
+	firecycle =         {cmdType = 2, cmdID = CMD_FIRECYCLE, name = "Firecycle", states = {'Off', 'On'}},
 	cloak_shield =      {cmdType = 2, cmdID = CMD_CLOAK_SHIELD, name = "Area Cloaker", states = {'Off', 'On'}},
 	retreat =           {cmdType = 2, cmdID = CMD_RETREAT, name = "Retreat Threshold", states = {'Off', '30%', '65%', '99%'}, actionOverride = {'cancelretreat'}},
 	retreatshield =     {cmdType = 2, cmdID = CMD_RETREATSHIELD, name = "Retreat Shield Threshold", states = {'Off', '30%', '50%', '80%'}, actionOverride = {'cancelretreat'}},
@@ -198,6 +199,7 @@ local usedActions = {
 	["pushpull"] = true,
 	["unit_kill_subordinates"] = true,
 	["goostate"] = true,
+	["firecycle"] = true,
 
 	-- These actions are used, just not by selecting everything with default UI
 	["globalbuild"] = true,

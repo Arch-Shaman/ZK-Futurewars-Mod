@@ -39,6 +39,7 @@ local tooltips = {
 	SELECTION_RANK = "Selection Rank (_STATE_)\n  Priority for selection filtering.",
 	TOGGLE_DRONES = "Drone Construction (_STATE_)\n  Toggle drone creation.",
 	OVERRECLAIM = "Overreclaim Prevention (_STATE_)\nBlocks constructors from reclaiming when storage is nearly full.",
+	FIRECYCLE = "Spread napalm (_STATE_)\nSets whether this unit should prioritize spreading burning status.",
 }
 
 local tooltipsAlternate = {
@@ -148,6 +149,13 @@ local commandDisplayConfig = {
 		stateTooltip = {
 			tooltips.OVERRECLAIM:gsub("_STATE_", "Enabled"),
 			tooltips.OVERRECLAIM:gsub("_STATE_", "Disabled"),
+		}
+	},
+	[CMD_FIRECYCLE] = {
+		texture = {imageDir .. 'states/firecycle_off.png', imageDir .. 'states/firecycle_on.png'},
+		stateTooltip = {
+			tooltips.FIRECYCLE:gsub("_STATE_", "Disabled"),
+			tooltips.FIRECYCLE:gsub("_STATE_", "Enabled"),
 		}
 	},
 	[CMD_MISC_PRIORITY] = {
