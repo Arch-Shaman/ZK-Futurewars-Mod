@@ -54,9 +54,9 @@ return {
 		weapons                = {
 		
 			{
-			def                = [[NAPALM_SPRAYER]],
-			badTargetCategory  = [[FIXEDWING]],
-			onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
+				def                = [[NAPALM_SPRAYER]],
+				badTargetCategory  = [[FIXEDWING]],
+				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
 		
 		},
