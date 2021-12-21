@@ -68,8 +68,8 @@ return {
 				accuracy                = 500,
 				areaOfEffect            = 128,
 				avoidFeature            = false,
-				craterBoost             = 1,
-				craterMult              = 2,
+				craterBoost             = 0,
+				craterMult              = 0,
 				cegTag                  = [[flamer]],
 			
 				customParams              = {
