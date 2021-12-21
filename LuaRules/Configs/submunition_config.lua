@@ -173,7 +173,7 @@ for i=1, #WeaponDefs do
 					Spring.Echo("[CAS] Error: " .. i .. "(" .. WeaponDefs[i].name .. "): spawndist is not present.")
 				end
 			else
-				Spring.Echo("[CAS] Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a valid weapondef name.")
+				Spring.Echo("[CAS] Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile " .. curRef.projectile1 ..  " is not a valid weapondef name.")
 			end
 		else
 			Spring.Echo("[CAS] Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a string.")
