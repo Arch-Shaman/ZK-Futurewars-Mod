@@ -64,7 +64,7 @@ local SIG_AIM = 2
 
 local gunNum = 1
 local weaponNum = 1
-local randomize = false
+local randomize = true
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
@@ -120,8 +120,8 @@ function script.AimWeapon(num, heading, pitch)
 	spindlePitch = -pitch
 	local slowMult = (Spring.GetUnitRulesParam(unitID,"baseSpeedMult") or 1)
 	local speedMult = (Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0) * slowMult
-	local effectivePitchSpeed = math.min(pitchSpeed * speedMult, maxPitchSpeed)
-	Turn(turret, y_axis, heading, headingSpeed*slowMult)
+	local effectivePitchSpeed = pitchSpeed * speedMult, maxPitchSpeed
+	Turn(turret, y_axis, heading, headingSpeed*slowMult*speedMult)
 	Turn(spindle, x_axis, spindlePitch+spindleOffset, effectivePitchSpeed)
 	WaitForTurn(turret, y_axis)
 	WaitForTurn(spindle, x_axis)
@@ -138,11 +138,11 @@ end
 
 local function gunFire(num)
 	local speedMult = (Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0) + 1
-	Move(guns[num].barrel, z_axis, guns[num].z*1.2, 8*guns[num].zs * speedMult)
-	Move(guns[num].barrel, y_axis, guns[num].y*1.2, 8*guns[num].ys * speedMult)
+	Move(guns[num].barrel, z_axis, guns[num].z*1.2, 8*guns[num].zs)
+	Move(guns[num].barrel, y_axis, guns[num].y*1.2, 8*guns[num].ys)
 	WaitForMove(guns[num].barrel, y_axis)
-	Move(guns[num].barrel, z_axis, 0, 0.2*guns[num].zs * speedMult)
-	Move(guns[num].barrel, y_axis, 0, 0.2*guns[num].ys * speedMult)
+	Move(guns[num].barrel, z_axis, 0, 0.2*guns[num].zs)
+	Move(guns[num].barrel, y_axis, 0, 0.2*guns[num].ys)
 end
 
 local function PickNewWeapon()
@@ -182,7 +182,7 @@ function script.FireWeapon(num)
 		reloadspeed = 1
 	end
 	if randomize then
-		weaponNum = math.random(1,6)
+		weaponNum = PickNewWeapon()
 	else
 		weaponNum = weaponNum + 1
 		if weaponNum > 6 then
@@ -193,11 +193,11 @@ function script.FireWeapon(num)
 	if gunNum > 6 then
 		gunNum = 1
 	end
-	spindleOffset = math.rad(60)*(gunNum - 1)
+	spindleOffset = math.rad(60)*(gunNum)
 end
 
 function script.BlockShot(num, targetID)
-	Spring.Echo("Metrenome ready: " .. tostring(GG.FireControl.CanFireWeapon(unitID, 7)))
+	--Spring.Echo("Metrenome ready: " .. tostring(GG.FireControl.CanFireWeapon(unitID, 7)))
 	return not GG.FireControl.CanFireWeapon(unitID, 7)
 end
 
