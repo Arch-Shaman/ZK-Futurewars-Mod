@@ -51,10 +51,10 @@ return {
 		sfxtypes              = {
 		
 			explosiongenerators = {
-			[[custom:PILOT]],
-			[[custom:PILOT2]],
-			[[custom:RAIDMUZZLE]],
-			[[custom:VINDIBACK]],
+				[[custom:PILOT]],
+				[[custom:PILOT2]],
+				[[custom:RAIDMUZZLE]],
+				[[custom:VINDIBACK]],
 			},
 		
 		},
