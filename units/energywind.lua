@@ -4,7 +4,7 @@ return {
 		name                          = [[Wind/Tidal Generator]],
 		description                   = [[Small Powerplant]],
 		activateWhenBuilt             = true,
-		buildCostMetal                = 35,
+		buildCostMetal                = 25,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 5,
@@ -19,7 +19,7 @@ return {
 
 		customParams                  = {
 			bait_level_target = 1,
-			pylonrange     = 60,
+			pylonrange     = 80,
 			windgen        = true,
 			modelradius    = [[12]],
 			removewait     = 1,
