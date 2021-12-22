@@ -1,4 +1,5 @@
 local buildOpts = {
+	[[energyprosperity]],
 	[[staticmex]],
 	[[energysolar]],
 	[[energyfusion]],

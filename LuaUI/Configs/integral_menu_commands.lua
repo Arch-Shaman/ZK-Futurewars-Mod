@@ -315,6 +315,7 @@ local econ_commands = {
 	energygeo         = {order = 5, row = 2, col = 3},
 	energyfusion      = {order = 6, row = 2, col = 4},
 	energysingu       = {order = 7, row = 2, col = 5},
+	energyprosperity  = {order = 8, row = 2, col = 6},
 	--staticstorage     = {order = 8, row = 3, col = 1},
 	energypylon       = {order = 9, row = 3, col = 2},
 	staticcon         = {order = 10, row = 3, col = 3},
