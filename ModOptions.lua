@@ -560,6 +560,14 @@ local options = {
 		step    = 0.1,
 	},
 	{
+		key    = 'allowfpsmode',
+		name   = 'Enable first person control',
+		desc   = "Allow players to take direct control of units without cheats enabled. Select a unit and press Alt+P to toggle.",
+		type   = 'bool',
+		section= 'silly',
+		def    = false,
+	},
+	{
 		key     = 'maxspeed',
 		name    = 'Maximum game speed',
 		desc    = 'Sets the maximum speed that the players will be allowed to change to',
