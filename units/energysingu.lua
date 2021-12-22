@@ -29,7 +29,7 @@ return {
 			selectionscalemult = 1.15,
 			decay_rate = -0.005,
 			decay_time = 2,
-			decay_maxoutput = 1.8,
+			decay_maxoutput = 2.0,
 			decay_initialrate = 0.9,
 		},
 
