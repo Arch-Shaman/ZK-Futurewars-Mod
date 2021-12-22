@@ -151,20 +151,20 @@ local function PickNewWeapon()
 		return 1 -- red
 	elseif r < 300 then -- 15%
 		return 2 -- orange
-	elseif r < 450 then
+	elseif r < 450 then -- 15%
 		return 3 -- yellow
-	elseif r < 600 then
+	elseif r < 600 then -- 15%
 		return 4 -- green
-	elseif r < 750 then
+	elseif r < 750 then -- 15%
 		return 5 -- blue
-	elseif r < 900 then
+	elseif r < 900 then -- 15%
 		return 6 -- violet
-	elseif r < 935 then
-		return 8 -- ruby
-	elseif r < 970 then
-		return 9 -- sapphire
-	else
+	elseif r < 950 then -- 5%
+		return 9 -- ruby
+	elseif r < 990 then -- 4%
 		return 10 -- rainbow
+	else -- 1%
+		return 8 -- sapphire (singularity should be fairly rare)
 	end
 end
 

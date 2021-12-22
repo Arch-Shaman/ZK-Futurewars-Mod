@@ -10,6 +10,7 @@ return  {
 			underwater         = 1,
 			water              = true,
 			useAirLos          = true,
+			alwaysVisible	   = true,
 			properties = {
 				colormap           =[[1.0 0.0 0.0 0.01
 									  1.0 1.0 0.0 0.01

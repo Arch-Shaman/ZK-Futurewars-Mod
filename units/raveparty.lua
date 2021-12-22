@@ -189,7 +189,7 @@ return {
 				areaOfEffect            = 800,
 				craterBoost             = 4,
 				craterMult              = 10,
-				cegTag                  = [[napalmtrail]],
+				cegTag                  = [[flamer_koda]],
 				customParams = {
 					script_reload = [[6]],
 					light_color = [[0.8784 0.0667 0.3725]],
@@ -230,7 +230,7 @@ return {
 			},
 			RUBY_SECONDARY = {
 				name                    = [[Napalm Blob]],
-				cegTag                  = [[napalmtrail]],
+				cegTag                  = [[flamer_koda]],
 				areaOfEffect            = 512,
 				craterAreaOfEffect      = 0,
 				avoidFriendly           = false,
