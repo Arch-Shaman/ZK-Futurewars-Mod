@@ -386,7 +386,7 @@
 	},
 	"energysolar" : {
 		"name" : "Solar Collector",
-		"description" : "Powerplant: +2e",
+		"description" : "Powerplant: +3e",
 		"helptext" : "Solar collectors are the least cost-efficient of the energy structures, but they are also the most reliable and sturdy. When attacked, solars will curl up into armored form for 8 seconds, which reduces incoming damage to a quarter and offers excellent protection against raiders."
 	},
 	"gunshipheavyskirm" : {
