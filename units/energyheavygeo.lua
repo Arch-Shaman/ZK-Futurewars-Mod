@@ -19,13 +19,13 @@ return {
 			removewait     = 1,
 			removestop     = 1,
 			decay_time     = 2,
-			decay_maxoutput= 1.4,
-			decay_initialrate = 0.6,
+			decay_maxoutput= 1,
+			decay_initialrate = 0.1,
 			decay_rate     = -0.002,
 			stats_show_death_explosion = true,
 		},
     
-		energyMake                    = 250, --ik the AI doesn't build geos, but when they do, hopefully they builds lots!
+		energyMake                    = 400, --ik the AI doesn't build geos, but when they do, hopefully they builds lots!
 		energyUse                     = 0,
 		explodeAs                     = [[energyheavygeo_DEATH]],
 		footprintX                    = 5,
