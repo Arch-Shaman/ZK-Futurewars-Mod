@@ -41,7 +41,7 @@
 	},
 	"energyfusion" : {
 		"name" : "Fusion Reactor",
-		"description" : "Powerplant: +28e, increases over time",
+		"description" : "Powerplant: +25e, increases over time",
 		"helptext" : "Fusion reactors provide a good amount of steady energy output at a fair price. They are attractive targets and not very well-armored, so keep them well-protected. Fusion reactors increase their output over time as they heat up, so keep them well protector (or hunt them down quickly)."
 	},
 	"chickenlandqueen" : {
@@ -316,7 +316,7 @@
 	},
 	"energyheavygeo" : {
 		"name" : "Advanced Geothermal",
-		"description" : "Large Powerplant +150e - Increases slowly over time, EXTREMELY HAZARDOUS",
+		"description" : "Large Powerplant +40e - Increases slowly over time, EXTREMELY HAZARDOUS",
 		"helptext" : "The Advanced Geothermal Powerplant taps into the mantle of the planet to produce an extremely large amount of energy for a very low cost. Unfortunately, the very nature of this powerplant means that once it is destroyed, even the best safety mechanisms are not able to prevent ensuing supervolcanic eruption. Construct at your own risk."
 	},
 	"staticcon" : {
@@ -686,8 +686,13 @@
 	},
 	"energygeo" : {
 		"name" : "Geothermal Generator",
-		"description" : "Powerplant: +6e, rapidly increases",
+		"description" : "Powerplant: +8e, increases over time",
 		"helptext" : "Geothermal plants start boring into the ground to trap energy and become increasingly efficient over time. They can only be built on geovents on the map, which limits their effectiveness. They explode quite violently when destroyed, so avoid placing anything directly adjacent."
+	},
+	"energyprosperity" : {
+		"name" : "Prosperity",
+		"description" : "Economic superweapon",
+		"helptext" : "The Prosperity reactor creates metal and generates huges amounts of energy to overdrive your grid. If you spot one, you should snipe it as soon as possible."
 	},
 	"jumpcon" : {
 		"name" : "Constable",
