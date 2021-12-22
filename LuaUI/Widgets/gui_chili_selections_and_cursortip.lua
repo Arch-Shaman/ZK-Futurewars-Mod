@@ -175,7 +175,7 @@ local fullHealthBarColor = {0, 255, 0, 1}
 local econStructureDefs = {
 	[UnitDefNames.staticmex.id] = {cost = UnitDefNames.staticmex.metalCost, mex = true},
 }
-for _, defName in pairs({"energywind", "energysolar", "energygeo", "energyheavygeo", "energyfusion", "energysingu"}) do
+for _, defName in pairs({"energywind", "energysolar", "energygeo", "energyheavygeo", "energyfusion", "energysingu", "energyprosperity"}) do
 	local def = UnitDefNames[defName]
 	econStructureDefs[def.id] = { cost = def.metalCost, income = def.customParams.income_energy }
 end
