@@ -26,4 +26,5 @@ return {
 	heart   = 'Queen Heart Breaker',
 	sweeper = 'Land Sweeper',
 	repair  = 'Esprit de Corps',
+	assistant  = 'Ally Subsidizer',
 }

@@ -313,7 +313,7 @@ end
 local function AddAwardPoints( awardType, teamID, amount )
 	if (teamID and (teamID ~= gaiaTeamID)) then
 		awardData[awardType][teamID] = awardData[awardType][teamID] + (amount or 0)
-		if awardType == 'repair' then
+		if awardType == 'assistant' then
 			Spring.Echo("New value: " .. awardData[awardType][teamID])
 		end
 	end
@@ -391,6 +391,8 @@ local function ProcessAwardData()
 					message = vetName ..', '.. expUnitExpRounded .. "% cost made"
 				elseif awardType == 'repair' then
 					message = maxValWrite .. ' allied hp repaired'
+				elseif awardType == 'assistant' then
+					message = maxValWrite .. 'm used for assisting allies'
 				else
 					message = 'Damaged value: '.. maxValWrite
 				end
@@ -411,10 +413,14 @@ function gadget:AllowUnitBuildStep(builderID, builderTeam, unitID, unitDefID, pa
 		return true
 	end
 	local hp, maxhp, _, _, bp = spGetUnitHealth(unitID)
+	local otherTeam = spGetUnitTeam(unitID)
 	if bp < 1.0 then
+		if otherTeam ~= builderTeam then
+			AddAwardPoints('assistant', builderTeam, part * UnitDefs[unitDefID].metalCost)
+		end
 		return true
 	end
-	local otherTeam = spGetUnitTeam(unitID)
+	
 	if otherTeam == builderTeam then
 		return true
 	end
