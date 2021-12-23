@@ -58,9 +58,7 @@ return {
 			},
 		},
 		cloakTimeout = 1,
-		
 		weaponDefs             = {
-			
 			BOMB = {
 				name                    = [[Mine Explosion]],
 				accuracy                = 0,
@@ -98,6 +96,7 @@ return {
 					blastwave_life = 6,
 					blastwave_lossfactor = 1.0,
 					blastwave_damage = 20,
+					nofriendlyfire = "needs hax",
 				},
 
 				damage                  = {
@@ -128,7 +127,6 @@ return {
 				craterBoost             = 1,
 				craterMult              = 2,
 				customParams              = {
-
 					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "wolverine_mine_bomblet",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
@@ -175,6 +173,7 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				customparams = {
+					nofriendlyfire = "needs hax",
 					stats_hide_dps = 1, -- one use
 					stats_hide_reload = 1,
 				},
