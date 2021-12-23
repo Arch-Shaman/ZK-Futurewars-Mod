@@ -36,7 +36,7 @@ return {
 		losEmitHeight          = 40,
 		maxDamage              = 1600,
 		maxSlope               = 72,
-		maxVelocity            = 1.8,
+		maxVelocity            = 1.6,
 		maxWaterDepth          = 22,
 		minCloakDistance       = 75,
 		movementClass          = [[TKBOT3]],
@@ -63,7 +63,6 @@ return {
 		},
 		
 		weaponDefs             = {
-		
 			NAPALM_SPRAYER = {
 				name                    = [[Napalm Machine Gun]],
 				accuracy                = 500,
@@ -72,7 +71,6 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				cegTag                  = [[flamer]],
-			
 				customParams              = {
 					setunitsonfire = "1",
 					
@@ -84,7 +82,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 20,
+					default = 14.8,
 				},
 			
 				explosionGenerator      = [[custom:napalm_phoenix]],
