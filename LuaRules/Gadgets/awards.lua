@@ -313,9 +313,9 @@ end
 local function AddAwardPoints( awardType, teamID, amount )
 	if (teamID and (teamID ~= gaiaTeamID)) then
 		awardData[awardType][teamID] = awardData[awardType][teamID] + (amount or 0)
-		if awardType == 'assistant' then
-			Spring.Echo("New value: " .. awardData[awardType][teamID])
-		end
+		--if awardType == 'assistant' then
+			--Spring.Echo("New value: " .. awardData[awardType][teamID])
+		--end
 	end
 end
 
