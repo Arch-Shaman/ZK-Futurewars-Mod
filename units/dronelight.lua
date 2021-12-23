@@ -17,7 +17,7 @@ return {
 		canSubmerge         = false,
 		category            = [[GUNSHIP DRONE]],
 		collide             = false,
-		cruiseAlt           = 85,
+		cruiseAlt           = 120,
 		explodeAs           = [[TINY_BUILDINGEX]],
 		floater             = true,
 		footprintX          = 2,
@@ -26,8 +26,8 @@ return {
 		iconType            = [[fighter]],
 		idleAutoHeal        = 10,
 		idleTime            = 300,
-		maxDamage           = 180,
-		maxVelocity         = 7,
+		maxDamage           = 300,
+		maxVelocity         = 6,
 		noAutoFire          = false,
 		noChaseCategory     = [[TERRAFORM SATELLITE SUB]],
 		objectName          = [[attackdrone.s3o]],
@@ -75,7 +75,7 @@ return {
 				},
 
 				damage                  = {
-					default = 32,
+					default = 25,
 				},
 
 				explosionGenerator      = [[custom:flash_teal7]],
@@ -86,7 +86,7 @@ return {
 				laserFlareSize          = 3.25,
 				minIntensity            = 1,
 				range                   = 150,
-				reloadtime              = 0.8,
+				reloadtime              = 1/3,
 				rgbColor                = [[0 1 0]],
 				soundStart              = [[weapon/laser/mini_laser]],
 				soundStartVolume        = 4,
