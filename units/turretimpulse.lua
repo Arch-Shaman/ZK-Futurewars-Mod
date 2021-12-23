@@ -77,6 +77,7 @@ return {
 					stats_hide_reload = 1,
 					light_color = [[0.33 0.33 1.28]],
 					light_radius = 140,
+					can_target_allies  = 1,
 				},
 
 				damage                  = {
@@ -126,6 +127,7 @@ return {
 					stats_hide_reload = 1,
 					light_color = [[0.85 0.2 0.2]],
 					light_radius = 140,
+					can_target_allies  = 1,
 				},
 
 				damage                  = {
