@@ -70,7 +70,7 @@ local function GetIsBeamWeapon(projectileID)
 	if weapondef == nil or weapondef.type == nil then -- fix for death particle things
 		return false
 	end
-	return weapondef.type == "BeamLaser"
+	return weapondef.type == "BeamLaser" or weapondef.customParams.singuimmune ~= nil
 end
 
 local function GetEffectStrength(radius, strength, distance, mass)

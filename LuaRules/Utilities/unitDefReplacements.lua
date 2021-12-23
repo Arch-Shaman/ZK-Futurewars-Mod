@@ -149,8 +149,23 @@ local function GetZenithTooltip (unitID)
 end
 
 local function GetSuperweaponTooltip(unitID, ud)
-	if ud.name == "zenith" or not superweapons[ud.name] then
+	if not superweapons[ud.name] then
 		return
+	end
+	if ud.name == "zenith" then
+		local base = GetZenithTooltip(unitID)
+		base = base .. "\n"
+		if (Spring.GetUnitRulesParam(unitID, "lowpower") or 0) == 1 then
+			return base .. "\255\255\061\061" .. (WG.Translate("interface", "needs_grid") or "Grid Power: ") .. (Spring.GetUnitRulesParam(unitID, "OD_gridCurrent") or 0) .. " / " .. ud.customParams.neededlink .. "\255\255\255\255"
+		end
+		local superRate = (Spring.GetUnitRulesParam(unitID, "superweapon_mult") or 0) * 100
+		local fireRate = ""
+		if (Spring.GetUnitRulesParam(unitID,"disarmed") or 0) == 1 then
+			fireRate = "\255\255\061\061DISABLED\255\255\255\255"
+		else
+			fireRate = string.format("%.2f %%", math.round(superRate, 2))
+		end
+		return base .. (WG.Translate("interface", "gather_rate") or "Meteor Gather Rate: ") .. " " .. fireRate
 	end
 	local superRate = Spring.GetUnitRulesParam(unitID, "superweapon_mult")
 	if not superRate then
@@ -166,7 +181,7 @@ local function GetSuperweaponTooltip(unitID, ud)
 	else
 		fireRate = string.format("%.2f %%", math.round(superRate, 2))
 	end
-	return (WG.Translate("units", ud.name .. ".description") or "Lolcannon") .. " - " .. (WG.Translate("interface", "fire_rate") or "Fire Rate: ") .. " " .. fireRate
+	return (WG.Translate("units", ud.name .. ".description") or "Lolcannon") .. "\n" .. (WG.Translate("interface", "fire_rate") or "Fire Rate: ") .. " " .. fireRate
 end
 
 local function GetAvatarTooltip(unitID)
@@ -180,7 +195,7 @@ local function GetLinkNeedTooltip(unitID, ud)
 		return
 	end
 	if (Spring.GetUnitRulesParam(unitID, "lowpower") or 0) == 1 then
-		return WG.Translate("units", ud.name .. ".description") .. " - \255\255\061\061" .. (WG.Translate("interface", "needs_grid") or "Insufficient grid power\255\255\255\255: ") .. (Spring.GetUnitRulesParam(unitID, "OD_gridMaximum") or 0) .. " / " .. ud.customParams.neededlink
+		return WG.Translate("units", ud.name .. ".description") .. "\n\255\255\061\061" .. (WG.Translate("interface", "needs_grid") or "Insufficient grid power\255\255\255\255: ") .. (Spring.GetUnitRulesParam(unitID, "OD_gridMaximum") or 0) .. " / " .. ud.customParams.neededlink
 	else
 		return WG.Translate("units", ud.name .. ".description")
 	end
@@ -221,10 +236,10 @@ end
 local function GetCustomTooltip (unitID, ud)
 	return GetGridTooltip(unitID, ud)
 	or GetSuperweaponTooltip(unitID, ud)
-	or GetMexTooltip(unitID)
 	or GetLinkNeedTooltip(unitID, ud)
 	or GetTerraformTooltip(unitID)
 	or GetZenithTooltip(unitID)
+	or GetMexTooltip(unitID)
 	or GetAvatarTooltip(unitID)
 	or GetPlanetwarsTooltip(unitID, ud)
 	or GetPlateTooltip(unitID, ud)
