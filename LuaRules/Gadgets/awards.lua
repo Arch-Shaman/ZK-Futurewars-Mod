@@ -230,7 +230,6 @@ local function UpdateResourceStats(t)
 		local team = allyTeamData.team
 
 		local allyOverdriveResources = GG.Overdrive_allyTeamResources[allyTeamID] or {}
-
 		resourceInfo.data[resourceInfo.count].allyRes[allyTeamID] = {
 			metal_income_total = 0,
 			metal_income_base = allyOverdriveResources.baseMetal or 0,
@@ -271,7 +270,7 @@ local function UpdateResourceStats(t)
 			aRes.energy_storage_current = aRes.energy_storage_current + eCurr
 
 			local teamOverdriveResources = GG.Overdrive_teamResources[teamID] or {}
-
+			
 			resourceInfo.data[resourceInfo.count].teamRes[teamID] = {
 				metal_income_total = mInco + mReci,
 				metal_income_base = teamOverdriveResources.baseMetal or 0,
@@ -295,7 +294,14 @@ local function UpdateResourceStats(t)
 
 				energy_storage_current = eCurr,
 			}
-
+			if resourceInfo.Count > 1 then
+				local overdrivedAmount = resourceInfo.data[resourceInfo.count].teamRes[teamID].metal_income_overdrive - resourceInfo.data[resourceInfo.count - 1].teamRes[teamID].metal_income_overdrive
+				if overdrivedAmount > 0 then
+					AddAwardPoints('ecowhore', teamID, overdrivedAmount)
+				end
+			elseif resourceInfo.Count == 1 then
+				AddAwardPoints('ecowhore', teamID, resourceInfo.data[resourceInfo.count].teamRes[teamID].metal_income_overdrive)
+			end
 			local tRes = resourceInfo.data[resourceInfo.count].teamRes[teamID]
 
 			tRes.metal_income_other = tRes.metal_income_total - tRes.metal_income_base - tRes.metal_income_overdrive - mReci
@@ -313,7 +319,7 @@ end
 local function AddAwardPoints( awardType, teamID, amount )
 	if (teamID and (teamID ~= gaiaTeamID)) then
 		awardData[awardType][teamID] = awardData[awardType][teamID] + (amount or 0)
-		--if awardType == 'assistant' then
+		--if awardType == 'ecowhore' then
 			--Spring.Echo("New value: " .. awardData[awardType][teamID])
 		--end
 	end
@@ -393,6 +399,8 @@ local function ProcessAwardData()
 					message = maxValWrite .. ' allied hp repaired'
 				elseif awardType == 'assistant' then
 					message = maxValWrite .. 'm used for assisting allies'
+				elseif awardType == 'ecowhore' then
+					message = maxValWrite .. 'm overdriven'
 				else
 					message = 'Damaged value: '.. maxValWrite
 				end

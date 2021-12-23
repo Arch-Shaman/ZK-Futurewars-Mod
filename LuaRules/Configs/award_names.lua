@@ -27,4 +27,5 @@ return {
 	sweeper = 'Land Sweeper',
 	repair  = 'Esprit de Corps',
 	assistant  = 'Ally Subsidizer',
+	ecowhore = 'Economic Powerhouse',
 }

@@ -290,6 +290,10 @@ function gadget:GameFrame(n)
 		mIncome[teamID] = mIncome[teamID] + GetMetalIncome  (teamID)
 		eIncome[teamID] = eIncome[teamID] + GetEnergyIncome (teamID)
 		mIncomeBase     [teamID] = mIncomeBase     [teamID] + (spGetTeamRulesParam(teamID, "OD_metalBase"     ) or 0)
+		local overdrive = (spGetTeamRulesParam(teamID, "OD_metalOverdrive") or 0)
+		if overdrive > 0 then
+			GG.Awards.AddAwardPoints('ecowhore', teamID, overdrive)
+		end
 		mIncomeOverdrive[teamID] = mIncomeOverdrive[teamID] + (spGetTeamRulesParam(teamID, "OD_metalOverdrive") or 0)
 		mTotalOverdrive[teamID] = mTotalOverdrive[teamID] + (spGetTeamRulesParam(teamID, "OD_metalOverdrive") or 0)
 

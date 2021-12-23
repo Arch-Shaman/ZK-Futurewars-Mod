@@ -267,7 +267,7 @@ local function SitOnPad(unitID)
 					local healing = newHealth - health
 					local padTeam = spGetUnitTeam(landData.padID)
 					if spGetUnitTeam(unitID) ~= padTeam then
-						GG.AddAwardPoints('repair', padTeam, healing)
+						GG.Awards.AddAwardPoints('repair', padTeam, healing)
 					end
 					spSetUnitHealth(unitID, min(maxHP, health + updateRate*healPerFrame))
 				else
