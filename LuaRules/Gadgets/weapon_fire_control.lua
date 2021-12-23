@@ -40,7 +40,7 @@ local function WeaponFired(unitID, weaponNum)
 	local data = IterableMap.Get(units, unitID)
 	if debug then Spring.Echo("[FireControl] WeaponFired: " .. unitID .. "," .. weaponNum) end
 	if data ~= nil then
-		local firerate = Spring.GetUnitRulesParam(unitID,"superweapon_mult")
+		local firerate = Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0
 		if firerate < config[data.unitDef][weaponNum].origReload then
 			data.weapons[weaponNum].progress = 0
 			IterableMap.Set(units, unitID, data)

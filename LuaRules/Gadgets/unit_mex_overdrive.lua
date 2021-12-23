@@ -1331,7 +1331,7 @@ function gadget:GameFrame(n)
 					spSetUnitRulesParam(unitID, "gridefficiency", gridEfficiency, alliedTrueTable)
 					if pylonDefs[unitDefID].isSuperWeapon then
 						local need = pylonDefs[unitDefID].neededLink or 0
-						if gridEnergySpent[grid] > need then
+						if grid ~= 0 and gridEnergySpent[grid] > need then
 							--Spring.Echo("Avaliable Energy: " .. gridEnergySpent[grid] .. "\nFire rate: " ..  sqrt(gridEnergySpent[grid] - need)/20)
 							spSetUnitRulesParam(unitID, "superweapon_mult", sqrt(gridEnergySpent[grid] - need)/20, alliedTrueTable)
 							spSetUnitRulesParam(unitID, "OD_gridCurrent", gridEnergySpent[grid], alliedTrueTable)
