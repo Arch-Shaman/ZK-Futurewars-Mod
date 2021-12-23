@@ -93,7 +93,7 @@ return {
 					light_radius = 220,
 					--torp_underwater = [[bomberprec_a_torpedo]],
 					numprojectiles1 = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile1 = "bombercluster_bomblet",
+					projectile1 = "bomberprec_bomblet",
 					--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
