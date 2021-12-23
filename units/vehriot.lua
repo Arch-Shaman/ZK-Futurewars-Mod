@@ -39,16 +39,13 @@ return {
 		objectName          = [[corleveler_512.s3o]],
 		script              = [[vehriot.lua]],
 		selfDestructAs      = [[BIG_UNITEX]],
-
 		sfxtypes            = {
-		
 			explosiongenerators = {
 				[[custom:RAIDMUZZLE]],
 				[[custom:LEVLRMUZZLE_CLOUDLESS]],
 				[[custom:RIOT_SHELL_L]],
 			},
 		},
-		
 		sightDistance       = 350,
 		trackOffset         = 7,
 		trackStrength       = 6,
@@ -129,12 +126,12 @@ return {
 					smoothradius = [[60]],
 					smoothmult   = [[0.08]],
 					force_ignore_ground = [[1]],
-					numprojectiles1 = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 14, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "vehriot_secondary",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 100, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 120, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 					vradius1 = "-6,-2,-6,6,0,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
@@ -147,7 +144,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 40*12,
+					default = 40*14,
 				},
 				
 				edgeEffectiveness       = 0.75,
