@@ -69,7 +69,6 @@ local awardAbsolutes = {
 	sweeper     = 20,
 	heart       = 1*10^9, --we should not exceed 2*10^9 because math.floor-ing the value will return integer -2147483648. Reference: https://code.google.com/p/zero-k/source/detail?r=9681
 	vet         = 3,
-	repair      = 4000,
 }
 
 local awardEasyFactors = {
@@ -314,6 +313,9 @@ end
 local function AddAwardPoints( awardType, teamID, amount )
 	if (teamID and (teamID ~= gaiaTeamID)) then
 		awardData[awardType][teamID] = awardData[awardType][teamID] + (amount or 0)
+		if awardType == 'repair' then
+			Spring.Echo("New value: " .. awardData[awardType][teamID])
+		end
 	end
 end
 
@@ -403,6 +405,23 @@ end
 
 -------------------
 -- Callins
+
+function gadget:AllowUnitBuildStep(builderID, builderTeam, unitID, unitDefID, part)
+	if part < 0 or unitID == nil then
+		return true
+	end
+	local hp, maxhp, _, _, bp = spGetUnitHealth(unitID)
+	if bp < 1.0 then
+		return true
+	end
+	local otherTeam = spGetUnitTeam(unitID)
+	if otherTeam == builderTeam then
+		return true
+	end
+	local healing = part * maxhp
+	AddAwardPoints('repair', builderTeam, healing)
+	return true
+end
 
 function gadget:Initialize()
 
