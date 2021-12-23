@@ -220,7 +220,7 @@ local function CopyTable(original) -- Warning: circular table references lead to
 	return copy
 end
 
-local function UpdateResourceStats(t)
+local function UpdateResourceStats(t) -- this never gets called apparently.
 
 	resourceInfo.count = resourceInfo.count + 1
 	resourceInfo.data[resourceInfo.count] = {allyRes = {}, teamRes = {}, t = t}
@@ -294,14 +294,6 @@ local function UpdateResourceStats(t)
 
 				energy_storage_current = eCurr,
 			}
-			if resourceInfo.Count > 1 then
-				local overdrivedAmount = resourceInfo.data[resourceInfo.count].teamRes[teamID].metal_income_overdrive - resourceInfo.data[resourceInfo.count - 1].teamRes[teamID].metal_income_overdrive
-				if overdrivedAmount > 0 then
-					AddAwardPoints('ecowhore', teamID, overdrivedAmount)
-				end
-			elseif resourceInfo.Count == 1 then
-				AddAwardPoints('ecowhore', teamID, resourceInfo.data[resourceInfo.count].teamRes[teamID].metal_income_overdrive)
-			end
 			local tRes = resourceInfo.data[resourceInfo.count].teamRes[teamID]
 
 			tRes.metal_income_other = tRes.metal_income_total - tRes.metal_income_base - tRes.metal_income_overdrive - mReci
