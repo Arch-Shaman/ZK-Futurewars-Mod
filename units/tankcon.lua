@@ -27,6 +27,7 @@ return {
 			nanoregen = 10,
 			nano_maxregen = 10,
 			aim_lookahead = 120,
+			needsfirecontrol = 1,
 		},
 
 		energyUse              = 0,
@@ -97,6 +98,12 @@ return {
 					stats_custom_tooltip_2 = " - Maximum DPS:",
 					stats_custom_tooltip_entry_2 = "303",
 					reaim_time = 1, -- fast update?
+					script_reload [[0.8]],
+					recycler = 1,
+					recycle_reductiontime = 2,
+					recycle_reduction = 0.05,
+					recycle_bonus = 0.15,
+					recycle_reductionframes = 0.5,
 				},
 
 				damage                  = {
@@ -112,7 +119,7 @@ return {
 				noGap                   = false,
 				noSelfDamage            = true,
 				range                   = 350,
-				reloadtime              = 30/30, -- 10 rnd per sec
+				reloadtime              = 0.8, -- 10 rnd per sec
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
 				size                    = 3,

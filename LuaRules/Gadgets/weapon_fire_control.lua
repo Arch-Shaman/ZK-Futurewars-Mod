@@ -16,35 +16,60 @@ end
 
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 local units = IterableMap.New()
+local recyclers = {}
 local config = {}
 local debug = false
+
+local spGetGameFrame = Spring.GetGameFrame
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 
 Spring.Echo("[FireControl] Version 1.0 by Shaman initializing. Scanning for Superweapons.")
 
 for i = 1, #UnitDefs do
 	local UnitDef = UnitDefs[i]
-	if UnitDef.customParams.superweapon then
+	if UnitDef.customParams.superweapon or UnitDef.customParams.needsfirecontrol then
 		local weapons = UnitDef.weapons
 		local data = {}
-		for i = 1, #weapons do
+		local recylcer = false
+		for j = 1, #weapons do
 			local weaponDef = WeaponDefs[weapons[i].weaponDef]
 			local reload = (tonumber(weaponDef.customParams.script_reload) or 10) * 30
-			data[i] = {origReload = reload, progress = reload}
+			data[j] = {origReload = reload, progress = reload, recycler = weaponDef.customParams.recycler ~= nil}
+			if data[j].recycler then
+				recycler = true
+				data[j].currentbonus = 0
+				data[j].framesuntilreduction = (tonumber(weaponDef.customParams.recycle_reductiontime) or 3.0) * 30
+				data[j].reductionpenalty = -(tonumber(weaponDef.customParams.recycle_reduction) or 0.1)
+				data[j].reduction (tonumber(weaponDef.customParams.recycle_bonus) or 0.1)
+				data[j].reductionframes = (tonumber(weaponDef.customParams.recycle_reductionframes) or 1) * 30
+				data[j].maxbonus = (tonumber(weaponDef.customParams.recycle_maxbonus) or 900)
+				data[j].lastfire = 0
+			end
 		end
 		Spring.Echo("Found " .. i .. "(" .. UnitDef.name .. ")\n Weapons: " .. #weapons)
 		config[i] = data
+		if recycler then
+			recyclers[i] = true
+		end
 	end
 end
+
 
 local function WeaponFired(unitID, weaponNum)
 	local data = IterableMap.Get(units, unitID)
 	if debug then Spring.Echo("[FireControl] WeaponFired: " .. unitID .. "," .. weaponNum) end
 	if data ~= nil then
-		local firerate = Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0
+		local firerate = spGetUnitRulesParam(unitID,"superweapon_mult") or 0
 		if firerate < config[data.unitDef][weaponNum].origReload then
 			data.weapons[weaponNum].progress = 0
-			IterableMap.Set(units, unitID, data)
 		end
+		if data[weaponNum].lastfire then -- recycler.
+			data[weaponNum].lastfire = spGetGameFrame()
+			if firerate < config[data.unitDef][weaponNum].origReload and firerate < config[data.unitDef][weaponNum].maxbonus then
+				data[weaponNum].currentbonus = data[weaponNum].currentbonus + data[weaponNum].reduction
+			end
+		end
+		IterableMap.Set(units, unitID, data)
 	end
 end
 
@@ -76,12 +101,22 @@ GG.FireControl = {WeaponFired = WeaponFired, CanFireWeapon = CanFireWeapon}
 
 function gadget:GameFrame(f)
 	for unitID, data in IterableMap.Iterator(units) do
-		local firespeed = Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0
-		local slowMult = (Spring.GetUnitRulesParam(unitID,"baseSpeedMult") or 1)
-		local unpowered = Spring.GetUnitRulesParam(unitID, "lowpower") or 0
-		local effectiveSpeed = firespeed * slowMult * (1 - unpowered)
+		local slowMult = (spGetUnitRulesParam(unitID,"baseSpeedMult") or 1)
+		local unpowered = (spGetUnitRulesParam(unitID, "lowpower") or 0)
+		local effectiveSpeed
+		local firespeed
+		if recyclers[data.unitDefID] then
+			firespeed = 1
+		else
+			firespeed = Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0
+		end
+		effectiveSpeed = firespeed * slowMult * (1 - unpowered)
 		for i = 1, #data.weapons do
 			if data.weapons[i].progress < data.weapons[i].origReload then
+				local progressToAdd = effectiveSpeed
+				if data.weapons[i].currentbonus then
+					progressToAdd = progressToAdd * (1 + data.weapons[i].currentbonus)
+				end
 				data.weapons[i].progress = data.weapons[i].progress + effectiveSpeed
 				local estimatedTimeToReload
 				if data.weapons[i].progress < data.weapons[i].origReload then
@@ -91,6 +126,9 @@ function gadget:GameFrame(f)
 				end
 				if debug then Spring.Echo("[FireControl] WeaponUpdated: " .. unitID .. "," .. i .. ": " .. data.weapons[i].progress .. "/" .. data.weapons[i].origReload) end
 				Spring.SetUnitWeaponState(unitID, i, "reloadFrame", estimatedTimeToReload)
+			elseif data.weapons[i].currentbonus and data.weapons[i].currentbonus > 0 and f > data.weapons[i].lastfire + data.weapons[i].framesuntilreduction then
+				data.weapons[i].lastfire = data.weapons[i].reductionframes + f
+				data.weapons[i].currentbonus = math.max(data.weapons[i].currentbonus + data.weapons[i].reductionpenalty, 0)
 			end
 		end
 	end

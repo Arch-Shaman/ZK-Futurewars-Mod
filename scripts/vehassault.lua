@@ -14,39 +14,6 @@ local SLEEVE_TURN_SPEED = math.rad(90)
 
 local angle = math.rad(90)
 
-local recoil = -1.75
-local recoilamount = 10
-local returnspeed = 1.5
-local fired = false
-local lastfire = -1
-local graceperiod = 4 -- 4 seconds before decay.
-local reloads = 0
-local maxreloads = 20
-local reloadtime = WeaponDefs[UnitDefNames["vehassault"].weapons[1].weaponDef].reload
-local reloadframes = {
-	[0] = 75,
-	[1] = 75,
-	[2] = 68,
-	[3] = 62,
-	[4] = 58,
-	[5] = 54,
-	[6] = 50,
-	[7] = 47,
-	[8] = 44,
-	[9] = 42,
-	[10] = 39,
-	[11] = 38,
-	[12] = 36,
-	[13] = 34,
-	[14] = 33,
-	[15] = 31,
-	[16] = 30,
-	[17] = 29,
-	[18] = 28,
-	[19] = 27,
-	[20] = 26,
-}
-
 local mainhead = 0
 
 local SUSPENSION_BOUND = 3
@@ -105,37 +72,6 @@ local function RetreatThread()
 	local specialReloadState = Spring.GetUnitRulesParam(unitID,"specialReloadFrame")
 	if (not specialReloadState or (specialReloadState <= Spring.GetGameFrame())) then
 		Spring.GiveOrderToUnit(unitID, CMD.INSERT, {0, CMD_ONECLICK_WEAPON, CMD.OPT_INTERNAL,}, CMD.OPT_ALT)
-	end
-end
-
-local function ReloadSpeedSetterThread()
-	local lastreloads = 0
-	while true do
-		if reloads ~= lastreloads then
-			--Spring.Echo("New reloads: " .. reloads)
-			lastreloads = reloads
-			Spring.SetUnitWeaponState(unitID, 1, "reloadTime", reloadframes[reloads]/30)
-		end
-		Sleep(66)
-	end
-end
-
-local function ReloadSpeedControlThread()
-	while true do
-		Sleep(33)
-		if reloads ~= 0 then
-			if lastfire == Spring.GetGameFrame() then
-				Sleep(graceperiod * (1000 / Game.gameSpeed))
-			else
-				if lastfire + (graceperiod * 30) <= Spring.GetGameFrame() then
-					reloads = reloads - 1
-					if reloads < 0 then -- safety.
-						reloads = 0
-					end
-					Sleep(33 * 4)
-				end
-			end
-		end
 	end
 end
 
@@ -224,7 +160,7 @@ function script.QueryWeapon(num)
 end
 
 function script.BlockShot(num, targetID)
-	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 210, 40, 0.3, 0, true) -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
+	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 210, 40, 0.3, 0, true) and not GG.FireControl.CanFireWeapon(unitID, num) -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
 end
 
 function script.AimWeapon(num, heading, pitch)
@@ -245,17 +181,12 @@ function script.Shot(num) -- Moved off FireWeapon for modders/tweakunits mostly.
 	EmitSfx(firepoint, 1024)
 	EmitSfx(firepoint, 1025)
 	StartThread(BarrelRecoil)
-	if reloads < maxreloads then
-		reloads = reloads + 1
-	end
-	lastfire = Spring.GetGameFrame()
+	GG.FireControl.WeaponFired(unitID, num)
 end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, {body, turret})
 	StartThread(Suspension)
-	StartThread(ReloadSpeedControlThread)
-	StartThread(ReloadSpeedSetterThread)
 	Hide(firepoint)
 end
 

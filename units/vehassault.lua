@@ -80,9 +80,16 @@ return {
 				customParams        = {
 					light_camera_height = 1500,
 					stats_custom_tooltip_1 = " - Spooling Weapon:",
-					stats_custom_tooltip_entry_1 = "-10% reload time per shot",
+					stats_custom_tooltip_entry_1 = "-15% reload time per shot",
 					stats_custom_tooltip_2 = " - Maximum DPS:",
-					stats_custom_tooltip_entry_2 = "276",
+					stats_custom_tooltip_entry_2 = "460",
+					script_reload = [[2]]
+					recycler = 1,
+					recycle_reductiontime = 2,
+					recycle_reduction = 0.05,
+					recycle_bonus = 0.15,
+					recycle_reductionframes = 0.5,
+					recycle_maxbonus = 4,
 				},
 
 				damage                  = {
@@ -96,7 +103,7 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 320,
-				reloadtime              = 2.5,
+				reloadtime              = 2,
 				soundHit                = [[weapon/cannon/cannon_hit2]],
 				soundStart              = [[weapon/cannon/cannonfire_001]],
 				turret                  = true,
