@@ -26,14 +26,6 @@ local spGetUnitRulesParam = Spring.GetUnitRulesParam
 
 Spring.Echo("[FireControl] Version 1.0 by Shaman initializing. Scanning for Superweapons.")
 
-do
-	local modoptions = Spring.GetModOptions() or {}
-	lolmode = modoptions and not modoptions.firecontrol
-	if lolmode then
-		Spring.Echo("[FireControl] SOMETHING BAD COMING YOUR WAY.")
-	end
-end
-
 for i = 1, #UnitDefs do
 	local UnitDef = UnitDefs[i]
 	if UnitDef.customParams.superweapon or UnitDef.customParams.needsfirecontrol then
@@ -68,7 +60,7 @@ end
 local function WeaponFired(unitID, weaponNum)
 	local data = IterableMap.Get(units, unitID)
 	if debug then Spring.Echo("[FireControl] WeaponFired: " .. unitID .. "," .. weaponNum) end
-	if data ~= nil then
+	if data ~= nil and data[weaponNum] then
 		local firerate = spGetUnitRulesParam(unitID,"superweapon_mult") or 0
 		if firerate < config[data.unitDef][weaponNum].origReload then
 			data.weapons[weaponNum].progress = 0
