@@ -178,6 +178,14 @@ local options = {
 		step=0.01,
 	},
 	{
+		key    = 'firecontrol',
+		name   = 'Fire control? Whats that',
+		desc   = "",
+		type   = 'bool',
+		section= 'silly',
+		def = false,
+	},
+	{
 		key    = 'zombies_partial_reclaim',
 		name   = 'Zombies partially reclaimable',
 		desc   = "Partially reclaimed zombies are partially damaged.",

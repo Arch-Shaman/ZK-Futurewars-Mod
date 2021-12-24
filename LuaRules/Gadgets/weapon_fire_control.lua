@@ -19,11 +19,20 @@ local units = IterableMap.New()
 local recyclers = {}
 local config = {}
 local debug = false
+local lolmode = false
 
 local spGetGameFrame = Spring.GetGameFrame
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 
 Spring.Echo("[FireControl] Version 1.0 by Shaman initializing. Scanning for Superweapons.")
+
+do
+	local modoptions = Spring.GetModOptions() or {}
+	lolmode = modoptions and not modoptions.firecontrol
+	if lolmode then
+		Spring.Echo("[FireControl] SOMETHING BAD COMING YOUR WAY.")
+	end
+end
 
 for i = 1, #UnitDefs do
 	local UnitDef = UnitDefs[i]
@@ -32,7 +41,7 @@ for i = 1, #UnitDefs do
 		local data = {}
 		local recylcer = false
 		for j = 1, #weapons do
-			local weaponDef = WeaponDefs[weapons[i].weaponDef]
+			local weaponDef = WeaponDefs[weapons[j].weaponDef]
 			local reload = (tonumber(weaponDef.customParams.script_reload) or 10) * 30
 			data[j] = {origReload = reload, progress = reload, recycler = weaponDef.customParams.recycler ~= nil}
 			if data[j].recycler then
@@ -53,6 +62,7 @@ for i = 1, #UnitDefs do
 		end
 	end
 end
+
 
 
 local function WeaponFired(unitID, weaponNum)
@@ -78,7 +88,7 @@ local function CanFireWeapon(unitID, weaponNum)
 	if data == nil then
 		return true
 	end
-	return data.weapons[weaponNum].progress >= data.weapons[weaponNum].origReload
+	return lolmode or data.weapons[weaponNum].progress >= data.weapons[weaponNum].origReload
 end
 
 function gadget:UnitFinished(unitID, unitDefID, unitTeam)
