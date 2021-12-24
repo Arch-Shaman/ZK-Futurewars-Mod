@@ -183,7 +183,7 @@ local options = {
 		desc   = "",
 		type   = 'bool',
 		section= 'silly',
-		def = false,
+		def = true,
 	},
 	{
 		key    = 'zombies_partial_reclaim',

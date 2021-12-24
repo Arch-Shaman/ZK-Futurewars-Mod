@@ -49,7 +49,7 @@ for i = 1, #UnitDefs do
 				data[j].currentbonus = 0
 				data[j].framesuntilreduction = (tonumber(weaponDef.customParams.recycle_reductiontime) or 3.0) * 30
 				data[j].reductionpenalty = -(tonumber(weaponDef.customParams.recycle_reduction) or 0.1)
-				data[j].reduction (tonumber(weaponDef.customParams.recycle_bonus) or 0.1)
+				data[j].reduction = (tonumber(weaponDef.customParams.recycle_bonus) or 0.1)
 				data[j].reductionframes = (tonumber(weaponDef.customParams.recycle_reductionframes) or 1) * 30
 				data[j].maxbonus = (tonumber(weaponDef.customParams.recycle_maxbonus) or 900)
 				data[j].lastfire = 0
