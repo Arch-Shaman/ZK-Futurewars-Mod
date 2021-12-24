@@ -44,6 +44,7 @@ local function ApplyHighFrequencyBeamKit(modules, sharedData)
 	local wantsfireatradar = {
 		["commweapon_disruptorprojector_heavy"] = true,
 		["commweapon_beamlaser_heavy"] = true,
+		["commweapon_hparticlebeam"] = true,
 	}
 	if sharedData.weapon1 and upgrade[sharedData.weapon1] then
 		sharedData.weapon1 = upgrade[sharedData.weapon1]
