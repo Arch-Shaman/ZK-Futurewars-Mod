@@ -83,7 +83,7 @@ return {
 					stats_custom_tooltip_entry_1 = "-15% reload time per shot",
 					stats_custom_tooltip_2 = " - Maximum DPS:",
 					stats_custom_tooltip_entry_2 = "460",
-					script_reload = [[2]]
+					script_reload = [[2]],
 					recycler = 1,
 					recycle_reductiontime = 2,
 					recycle_reduction = 0.05,

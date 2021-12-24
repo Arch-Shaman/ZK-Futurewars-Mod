@@ -98,7 +98,7 @@ return {
 					stats_custom_tooltip_2 = " - Maximum DPS:",
 					stats_custom_tooltip_entry_2 = "303",
 					reaim_time = 1, -- fast update?
-					script_reload [[0.8]],
+					script_reload = [[0.8]],
 					recycler = 1,
 					recycle_reductiontime = 2,
 					recycle_reduction = 0.05,
