@@ -16,6 +16,7 @@ local angle = math.rad(90)
 
 local mainhead = 0
 
+local recoil = -1.75
 local SUSPENSION_BOUND = 3
 local SPEEDUP_FACTOR = tonumber (UnitDef.customParams.boost_speed_mult)
 local SPEEDUP_DURATION = tonumber (UnitDef.customParams.boost_duration)
