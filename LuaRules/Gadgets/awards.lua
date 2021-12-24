@@ -414,18 +414,14 @@ function gadget:AllowUnitBuildStep(builderID, builderTeam, unitID, unitDefID, pa
 	end
 	local hp, maxhp, _, _, bp = spGetUnitHealth(unitID)
 	local otherTeam = spGetUnitTeam(unitID)
-	if bp < 1.0 then
-		if otherTeam ~= builderTeam then
-			AddAwardPoints('assistant', builderTeam, part * UnitDefs[unitDefID].metalCost)
-		end
-		return true
-	end
-	
 	if otherTeam == builderTeam then
 		return true
 	end
-	local healing = part * maxhp
-	AddAwardPoints('repair', builderTeam, healing)
+	if bp < 1.0 then
+		AddAwardPoints('assistant', builderTeam, part * UnitDefs[unitDefID].metalCost)
+	else
+		AddAwardPoints('repair', builderTeam, part * maxhp)
+	end
 	return true
 end
 
