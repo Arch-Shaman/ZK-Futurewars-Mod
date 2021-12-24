@@ -23,6 +23,7 @@ local lolmode = false
 
 local spGetGameFrame = Spring.GetGameFrame
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spSetUnitWeaponState = Spring.SetUnitWeaponState
 
 Spring.Echo("[FireControl] Version 1.0 by Shaman initializing. Scanning for Superweapons.")
 
@@ -66,6 +67,7 @@ local function WeaponFired(unitID, weaponNum)
 			data.weapons[weaponNum].progress = 0
 		end
 		if data[weaponNum].lastfire then -- recycler.
+			data.weapons[weaponNum].progress = 0
 			data[weaponNum].lastfire = spGetGameFrame()
 			if firerate < config[data.unitDef][weaponNum].origReload and firerate < config[data.unitDef][weaponNum].maxbonus then
 				data[weaponNum].currentbonus = data[weaponNum].currentbonus + data[weaponNum].reduction
@@ -127,7 +129,7 @@ function gadget:GameFrame(f)
 					estimatedTimeToReload = f
 				end
 				if debug then Spring.Echo("[FireControl] WeaponUpdated: " .. unitID .. "," .. i .. ": " .. data.weapons[i].progress .. "/" .. data.weapons[i].origReload) end
-				Spring.SetUnitWeaponState(unitID, i, "reloadFrame", estimatedTimeToReload)
+				spSetUnitWeaponState(unitID, i, "reloadFrame", estimatedTimeToReload)
 			elseif data.weapons[i].currentbonus and data.weapons[i].currentbonus > 0 and f > data.weapons[i].lastfire + data.weapons[i].framesuntilreduction then
 				data.weapons[i].lastfire = data.weapons[i].reductionframes + f
 				data.weapons[i].currentbonus = math.max(data.weapons[i].currentbonus + data.weapons[i].reductionpenalty, 0)
