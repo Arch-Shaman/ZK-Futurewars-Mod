@@ -25,7 +25,7 @@ return {
 	dragon  = 'Dragon Slayer',
 	heart   = 'Queen Heart Breaker',
 	sweeper = 'Land Sweeper',
-	repair  = 'Esprit de Corps',
-	assistant  = 'Ally Subsidizer',
+	repair  = 'Friendly Mechanic',
+	assistant  = 'Subsidization Strategy',
 	ecowhore = 'Economic Powerhouse',
 }
