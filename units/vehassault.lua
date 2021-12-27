@@ -103,7 +103,7 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 320,
-				reloadtime              = 2,
+				reloadtime              = 1/30,
 				soundHit                = [[weapon/cannon/cannon_hit2]],
 				soundStart              = [[weapon/cannon/cannonfire_001]],
 				turret                  = true,

@@ -119,7 +119,7 @@ return {
 				noGap                   = false,
 				noSelfDamage            = true,
 				range                   = 350,
-				reloadtime              = 0.8, -- 10 rnd per sec
+				reloadtime              = 1/30, -- 10 rnd per sec
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
 				size                    = 3,
@@ -172,7 +172,7 @@ return {
 				noGap                   = false,
 				noSelfDamage            = true,
 				range                   = 350,
-				reloadtime              = 0.8, -- 10 rnd per sec
+				reloadtime              = 1/30, -- 10 rnd per sec
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
 				size                    = 3,
