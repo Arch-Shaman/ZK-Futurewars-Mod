@@ -311,7 +311,7 @@ end
 local function AddAwardPoints( awardType, teamID, amount )
 	if (teamID and (teamID ~= gaiaTeamID)) then
 		awardData[awardType][teamID] = awardData[awardType][teamID] + (amount or 0)
-		--if awardType == 'ecowhore' then
+		--if awardType == 'economist' then
 			--Spring.Echo("New value: " .. awardData[awardType][teamID])
 		--end
 	end
@@ -391,7 +391,7 @@ local function ProcessAwardData()
 					message = maxValWrite .. ' allied hp repaired'
 				elseif awardType == 'assistant' then
 					message = maxValWrite .. 'm used for assisting allies'
-				elseif awardType == 'ecowhore' then
+				elseif awardType == 'economist' then
 					message = maxValWrite .. 'm overdriven'
 				else
 					message = 'Damaged value: '.. maxValWrite

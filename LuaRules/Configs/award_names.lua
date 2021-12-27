@@ -27,5 +27,5 @@ return {
 	sweeper = 'Land Sweeper',
 	repair  = 'Friendly Mechanic',
 	assistant  = 'Subsidization Strategy',
-	ecowhore = 'Economic Powerhouse',
+	economist = 'Economic Powerhouse',
 }
