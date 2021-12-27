@@ -27,6 +27,7 @@ return {
 			boost_speed_mult = 3,
 			boost_duration = 60,
 			specialreloadtime = 600,
+			needsfirecontrol = 1,
 		},
 
 		explodeAs              = [[BIG_UNITEX]],
@@ -82,14 +83,14 @@ return {
 					stats_custom_tooltip_1 = " - Spooling Weapon:",
 					stats_custom_tooltip_entry_1 = "-15% reload time per shot",
 					stats_custom_tooltip_2 = " - Maximum DPS:",
-					stats_custom_tooltip_entry_2 = "460",
-					script_reload = [[2]],
+					stats_custom_tooltip_entry_2 = "985.7",
+					script_reload = [[1.4]],
 					recycler = 1,
-					recycle_reductiontime = 2,
-					recycle_reduction = 0.05,
+					recycle_reductiontime = 8/30,
+					recycle_reduction = 0.2,
 					recycle_bonus = 0.15,
-					recycle_reductionframes = 0.5,
-					recycle_maxbonus = 4,
+					recycle_reductionframes = 10/30,
+					recycle_maxbonus = 5,
 				},
 
 				damage                  = {

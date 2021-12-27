@@ -153,10 +153,10 @@ return {
 					reaim_time = 1, -- fast update?
 					script_reload = [[0.8]],
 					recycler = 1,
-					recycle_reductiontime = 2,
-					recycle_reduction = 0.05,
-					recycle_bonus = 0.15,
-					recycle_reductionframes = 0.5,
+					recycle_reductiontime = 2/30,
+					recycle_reduction = 0.2,
+					recycle_bonus = 0.075,
+					recycle_reductionframes = 2/30,
 				},
 
 				damage                  = {

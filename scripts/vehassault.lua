@@ -161,7 +161,9 @@ function script.QueryWeapon(num)
 end
 
 function script.BlockShot(num, targetID)
-	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 210, 40, 0.3, 0, true) and not GG.FireControl.CanFireWeapon(unitID, num) -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
+	local canfire = GG.FireControl.CanFireWeapon(unitID, num)
+	--Spring.Echo("Can fire: " .. tostring(canfire))
+	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 210, 40, 0.3, 0, true) or not canfire -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
 end
 
 function script.AimWeapon(num, heading, pitch)
@@ -177,11 +179,15 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.Shot(num) -- Moved off FireWeapon for modders/tweakunits mostly.
-	xtiltv = xtiltv - cos(mainhead) / 69
-	ztiltv = ztiltv - sin(mainhead) / 69
+	local firerate = GG.FireControl.GetBonusFirerate(unitID, num)
+	xtiltv = xtiltv - ((cos(mainhead) / 69)/firerate)
+	ztiltv = ztiltv - ((sin(mainhead) / 69)/firerate)
 	EmitSfx(firepoint, 1024)
 	EmitSfx(firepoint, 1025)
 	StartThread(BarrelRecoil)
+end
+
+function script.FireWeapon(num)
 	GG.FireControl.WeaponFired(unitID, num)
 end
 
