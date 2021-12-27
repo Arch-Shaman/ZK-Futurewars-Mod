@@ -43,7 +43,6 @@ local spAddTeamResource   = Spring.AddTeamResource
 local spUseTeamResource   = Spring.UseTeamResource
 local spSetTeamResource   = Spring.SetTeamResource
 local spGetTeamInfo       = Spring.GetTeamInfo
-	
 
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
@@ -234,7 +233,7 @@ end
 -- local functions
 
 local function energyToExtraM(energy)
-	return (sqrt(energy))/4
+	return sqrt(energy)*0.25
 end
 
 -------------------------------------------------------------------------------------
@@ -429,11 +428,6 @@ local function AddPylonToGrid(unitID)
 		mexByID[mid].gridID = newGridID
 		mexes[allyTeamID][0][mid] = nil
 	end
-
-	-- energy
-	--[[for eid,_ in pairs(pylon[allyTeamID][unitID].nearEnergy) do
-		ai.grid[newGridID].plant[eid] = true
-	end--]]
 end
 
 local function QueueAddPylonToGrid(unitID)
@@ -504,39 +498,6 @@ local function AddPylon(unitID, unitDefID, range)
 		Spring.Utilities.UnitEcho(unitID, list.count .. ", " .. unitID)
 	end
 
-	-- check for mexes
-	--[[
-	if unitOverdrive then
-		for mid, orgMetal in pairs(mexes[allyTeamID][0]) do
-			local mX,_,mZ = spGetUnitPosition(mid)
-			if (mid == unitID) then -- mex as pylon
-			--if (pX-mX)^2 + (pZ-mZ)^2 <= range^2 and not takenMexId[mid] then
-
-				--pylon[allyTeamID][unitID].mexes = pylon[allyTeamID][unitID].mexes + 1
-				pylon[allyTeamID][unitID].mex = true
-				--takenMexId[mid] = true
-
-				--if pylon[allyTeamID][unitID].mexes >= PYLON_MEX_LIMIT then
-				--	break
-				--end
-			end
-		end
-	end
-	--]]
-
-	-- check for energy
-	--[[
-	for eid, state in pairs(ai.plant) do
-		if (state == 0) then
-			local eX,_,eZ = spGetUnitPosition(eid)
-			if (pX-eX)^2 + (pZ-eZ)^2 < PYLON_ENERGY_RANGESQ then
-				ai.plant[eid] = 1
-				pylon[allyTeamID][unitID].nearEnergy[eid] = true
-			end
-		end
-	end
-	--]]
-
 	QueueAddPylonToGrid(unitID)
 end
 
@@ -573,24 +534,7 @@ local function ReactivatePylon(unitID)
 	if debugGridMode then
 		Spring.Echo("ReactivatePylon " .. unitID)
 	end
-
-	--local pX,_,pZ = spGetUnitPosition(unitID)
-
 	pylon[allyTeamID][unitID].active = true
-
-	-- check for energy
-	--[[
-	for eid, state in pairs(ai.plant) do
-		if state == 0 then
-			local eX,_,eZ = spGetUnitPosition(eid)
-			if (pX-eX)^2 + (pZ-eZ)^2 < PYLON_ENERGY_RANGESQ then
-				state = 1
-				pylon[allyTeamID][unitID].nearEnergy[eid] = true
-			end
-		end
-
-	end
-	--]]
 
 	QueueAddPylonToGrid(unitID)
 end
