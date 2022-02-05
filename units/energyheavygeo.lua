@@ -49,6 +49,7 @@ return {
 				canAttackGround         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
+				collideFeature          = false,
 				customParams        = {
 					setunitsonfire = "1",
 					burntime = 1980,
@@ -98,6 +99,7 @@ return {
 				avoidFeature            = false,
 				craterBoost             = 1,
 				craterMult              = 2,
+				collideFeature          = false,
 				cegTag                  = [[meteor_trail]],
 				customParams              = {
 					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
