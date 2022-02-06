@@ -695,9 +695,9 @@
 		"helptext" : "The Prosperity reactor creates metal and generates huges amounts of energy to overdrive your grid. If you spot one, you should snipe it as soon as possible."
 	},
 	"jumpcon" : {
-		"name" : "Constable",
+		"name" : "Pathfinder",
 		"description" : "Jumpjet Constructor",
-		"helptext" : "Fast and capable of jumping over short distances or heights, the Constable is the ideal constructor for rapid expansion. Armed with a light slowbeam, it can also provide combat support."
+		"helptext" : "In the later half of the Coalition Wars, a more combat oriented Constable was produced in order to quickly secure hillside encampments. In doing so, the Pathfinder lost significant chunks of armoring in favor of faster jumpjets, faster nanolathes, a powerful pulse disruptor, and more speed. However, this retrofit made the model more costly."
 	},
 	"chicken_blimpy" : {
 		"name" : "Blimpy",

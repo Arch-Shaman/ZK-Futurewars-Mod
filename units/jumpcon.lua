@@ -1,12 +1,12 @@
 return { 
 	jumpcon = {
 		unitname            = [[jumpcon]],
-		name                = [[Constable]],
+		name                = [[Pathfinder]],
 		description         = [[Jumpjet Constructor]],
-		acceleration        = 0.78,
+		acceleration        = 1.0,
 		brakeRate           = 4.68,
-		buildCostMetal      = 140,
-		buildDistance       = 128,
+		buildCostMetal      = 175,
+		buildDistance       = 200,
 		builder             = true,
 		buildoptions        = {},
 		buildPic            = [[jumpcon.png]],
@@ -20,9 +20,9 @@ return {
 		corpse              = [[DEAD]],
 		customParams        = {
 			canjump            = 1,
-			jump_range         = 400,
-			jump_speed         = 6,
-			jump_reload        = 10,
+			jump_range         = 450,
+			jump_speed         = 8,
+			jump_reload        = 8,
 			jump_from_midair   = 1,
 		},
 
@@ -32,9 +32,9 @@ return {
 		footprintZ          = 2,
 		iconType            = [[builder]],
 		leaveTracks         = true,
-		maxDamage           = 550,
+		maxDamage           = 600,
 		maxSlope            = 36,
-		maxVelocity         = 2.1,
+		maxVelocity         = 2.4,
 		maxWaterDepth       = 22,
 		movementClass       = [[KBOT2]],
 		noAutoFire          = false,
@@ -50,7 +50,7 @@ return {
 		},
 
 		showNanoSpray       = false,
-		sightDistance       = 375,
+		sightDistance       = 500,
 		trackOffset         = 0,
 		trackStrength       = 8,
 		trackStretch        = 1,
@@ -58,7 +58,7 @@ return {
 		trackWidth          = 22,
 		turnRate            = 1680,
 		upright             = true,
-		workerTime          = 5,
+		workerTime          = 7.5,
  
 		weapons             = {
 			{
@@ -70,29 +70,32 @@ return {
 		weaponDefs          = {
 
 			SLOWBEAM = {
-				name                    = [[Slowing Beam]],
+				name                    = [[Pulse Disruptor]],
 				areaOfEffect            = 8,
 				beamDecay               = 0.9,
 				beamTime                = 0.1,
-				beamttl                 = 30,
-				coreThickness           = 0,
+				beamttl                 = 3,
+				coreThickness           = 1.1,
 				craterBoost             = 0,
 				craterMult              = 0,
 
-				customparams = {
-					timeslow_damagefactor = 12,
-					timeslow_smartretarget = 0.33,
-					timeslow_smartretargethealth = 50,
-
+				customParams            = {
+					--timeslow_preset = [[commrecon_slowbeam]],
+					timeslow_damagefactor = [[3.3]],
+					timeslow_smartretarget = [[0.5]],
+					stats_hide_damage = 1, -- continuous laser
+					stats_hide_reload = 1,
 					light_camera_height = 1800,
 					light_color = [[0.4 0.15 0.55]],
 					light_radius = 150,
+					reaim_time = 1,
+					antibaitbypass = "ärsytät minua",
 				},
 
 				damage                  = {
-					default = 15,
+					default = 13.34,
 				},
-
+				edgeEffectiveness		= 0.05,
 				explosionGenerator      = [[custom:flashslow]],
 				fireStarter             = 30,
 				impactOnly              = true,
@@ -100,17 +103,17 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				largeBeamLaser          = true,
-				laserFlareSize          = 4,
+				laserFlareSize          = 3,
 				minIntensity            = 1,
 				noSelfDamage            = true,
-				range                   = 240,
-				reloadtime              = 2,
-				rgbColor                = [[0.3 0 0.4]],
-				soundStart              = [[weapon/laser/pulse_laser2]],
-				soundStartVolume        = 30,
+				range                   = 330,
+				reloadtime              = 1/3,
+				rgbColor                = [[0.4 0 0.5]],
+				soundStart              = [[weapon/laser/pulse_d.wav]],
+				soundStartVolume        = 8,
 				soundTrigger            = true,
 				sweepfire               = false,
-				texture1                = [[largelaser]],
+				texture1                = [[disruptor]],
 				texture2                = [[flare]],
 				texture3                = [[flare]],
 				texture4                = [[smallflare]],
