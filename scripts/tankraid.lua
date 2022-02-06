@@ -53,7 +53,7 @@ local flaming = false
 local boostSpeed = 2
 local boostTime = 4*10
 local normalSpeed = 1
-local firingSpeed = 0.4
+local firingSpeed = 2/3
 
 local sweepAngle = 0
 local sweepMax = math.rad(30)
