@@ -19,6 +19,7 @@ return {
 
 		customParams                  = {
 			modelradius    = [[25]],
+			can_target_allies = 1,
 		},
 
 		explodeAs                     = [[MEDIUM_BUILDINGEX]],
