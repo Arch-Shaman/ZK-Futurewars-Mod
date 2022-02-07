@@ -29,6 +29,7 @@ return {
 			[[cloakbomb]],
 			[[cloakaa]],
 			[[cloakjammer]],
+			[[vehcapture]],
 			[[amphtele]],
 			[[striderantiheavy]],
 			[[staticmissilesilo]],
