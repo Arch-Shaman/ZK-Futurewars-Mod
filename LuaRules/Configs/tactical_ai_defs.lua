@@ -80,7 +80,7 @@ local lowRangeSwarmieeArray = NameToDefID({
 	"spiderassault",
 	"vehassault",
 	"hoverassault",
-	"amphfloater",
+	--"amphfloater", -- now an assault. bad news bears.
 	"tankassault",
 	"tankheavyassault",
 	
@@ -278,7 +278,7 @@ local lowMedRangeSkirmieeArray = NameToDefID({
 	"shieldriot",
 	"shieldassault",
 	"vehassault",
-	
+	"amphfloater",
 	"shipscout",
 	"shipriot",
 	"shipassault",
@@ -330,6 +330,7 @@ local artyRangeSkirmieeArray = NameToDefID({
 	"turretheavy",
 	"striderdetriment",
 	"ampharty",
+	"amphraid",
 	
 	"shipskirm",
 })
@@ -1674,7 +1675,8 @@ local behaviourConfig = {
 		jinkPeriod = 2,
 		skirmLeeway = 10,
 		skirmBlockedApproachFrames = 90,
-		
+		reloadFlee = true,
+		fleeOrderDis = 100,
 		wardFireTargets = personalShieldUnits,
 		wardFireLeeway = 10,
 		wardFirePredict = 80,
