@@ -3,9 +3,9 @@ return {
 		unitname               = [[gunshipbomb]],
 		name                   = [[Seeker]],
 		description            = [[Guidable Canister Missile]],
-		acceleration           = 0.2,
+		acceleration           = 0.4,
 		airStrafe              = 0,
-		brakeRate              = 0.1,
+		brakeRate              = 0.2,
 		buildCostMetal         = 75,
 		builder                = false,
 		buildPic               = [[gunshipbomb.png]],
@@ -42,7 +42,7 @@ return {
 		maneuverleashlength    = [[1240]],
 		maxDamage              = 400,
 		maxSlope               = 36,
-		maxVelocity            = 15,
+		maxVelocity            = 13.2,
 		noAutoFire             = false,
 		noChaseCategory        = [[TERRAFORM SATELLITE SUB]],
 		objectName             = [[f-1.s3o]],
@@ -191,7 +191,7 @@ return {
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-6,0,-6,6,0,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-3,-1,-3,3,1,3", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 0, -- check for nearby units?
 					proxydist = 80, -- how far to check for units? Default: spawndist
