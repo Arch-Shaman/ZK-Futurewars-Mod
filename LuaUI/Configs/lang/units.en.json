@@ -600,9 +600,9 @@
 		"helptext" : "The Airplane Plant offers a variety of fixed-wing aircraft to suit your needs. Choose between multirole fighters that can double as light attackers or specialized interceptors, and between precision bombers for taking down specific targets or their saturation counterparts for destroying swarms. The plant also comes bundled with one rearm pad."
 	},
 	"gunshipbomb" : {
-		"name" : "Blastwing",
-		"description" : "Flying Bomb/Scout (Burrows)",
-		"helptext" : "The Blastwing does only a small amount of damage, suitable for taking out mexes, solars, LLTs, wind farms and nanotowers, though it can offer a more fomidible punch en-masse. Be mindful of the speed and direction it is travelling, as much of the damage done by it is directional shrapnel that will continue on the trajectory of the bomb after it dies. In this way, you can spray an enemy with shards of metal even if your Blastwing dies before it is in range. Do not pack them too tightly, as they can chain explode. Cloaks when landed."
+		"name" : "Seeker",
+		"description" : "Guidable Clusterbomb",
+		"helptext" : "The Seeker is a direct upgrade to the Blastwing. Essentially a cluster bomb with a pair of wings, it can take out groups of small targets. It's best used when you have line of sight of targets and to deploy it on top of hills as a form of primitive airborn artillery. Counter it with long range AA defence."
 	},
 	"napalmmissile" : {
 		"name" : "Inferno",
