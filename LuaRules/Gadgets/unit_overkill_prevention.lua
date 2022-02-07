@@ -61,12 +61,14 @@ local handledUnitDefIDs = include("LuaRules/Configs/overkill_prevention_defs.lua
 
 local shieldPowerDef = {}
 local shieldRegenDef = {}
+local maxEffectiveHealth = {}
 for i = 1, #UnitDefs do
 	local ud = UnitDefs[i]
 	if ud.customParams.shield_power then
 		shieldPowerDef[i] = ud.customParams.shield_power
 		shieldRegenDef[i] = ud.customParams.shield_rate/30
 	end
+	maxEffectiveHealth[i] = (ud.health / ud.armoredMultiple + (shieldPowerDef[i] or 0))
 end
 
 include("LuaRules/Configs/customcmds.h.lua")
@@ -123,7 +125,7 @@ local function IsUnitIdentifiedStructure(identified, unitID)
 	if not identified then
 		return false
 	end
-	local unitDefID = Spring.GetUnitDefID(unitID)
+	local unitDefID = spGetUnitDefID(unitID)
 	if not (unitDefID and UnitDefs[unitDefID]) then
 		return false
 	end
@@ -174,7 +176,7 @@ local function CheckBlockCommon(unitID, targetID, gameFrame, fullDamage, disarmD
 	--Spring.Utilities.UnitEcho(unitID, timeout + gameFrame)
 
 	-- Modify timeout based on unit speed and fastMult
-	local unitDefID = Spring.GetUnitDefID(targetID)
+	local unitDefID = spGetUnitDefID(targetID)
 	if fastMult and fastMult ~= 1 then
 		if fastUnitDefs[unitDefID] then
 			timeout = timeout * (fastMult or 1)
@@ -186,12 +188,11 @@ local function CheckBlockCommon(unitID, targetID, gameFrame, fullDamage, disarmD
 
 	local targetVisiblityState = Spring.GetUnitLosState(targetID, allyTeamID, true)
 	local targetInLoS = (targetVisiblityState == 15)
-	local targetIdentified = (targetVisiblityState%2 == 1)
+	local targetIdentified = targetInLoS or (math.floor(targetVisiblityState / 4) % 4 == 3)
 
 	-- When true, the projectile damage will be added to the damage to be taken by the unit.
 	-- When false, it will only check whether the shot should be blocked.
 	local addToIncomingDamage = not noFire
-
 	if staticOnly and not noFire then
 		addToIncomingDamage = IsUnitIdentifiedStructure(targetIdentified, targetID)
 	end
@@ -215,8 +216,7 @@ local function CheckBlockCommon(unitID, targetID, gameFrame, fullDamage, disarmD
 		end
 	else
 		timeout = timeout * (radarMult or 1)
-		local ud = UnitDefs[unitDefID]
-		adjHealth = (targetIdentified and (ud.health/ud.armoredMultiple + (shieldPowerDef[unitDefID] or 0))) or false
+		adjHealth = (targetIdentified and maxEffectiveHealth[unitDefID]) or false
 		disarmFrame = (targetIdentified and gameFrame) or false
 	end
 
@@ -234,11 +234,8 @@ local function CheckBlockCommon(unitID, targetID, gameFrame, fullDamage, disarmD
 				if frame < gameFrame then
 					incData.frames:TrimFront() --frames should come in ascending order, so it's safe to trim front of array one by one
 				else
-					local dataDisarmDamage = data.disarmDamage
-					local dataFullDamage = data.fullDamage
-
-					local disarmExtra = math.floor(dataDisarmDamage/adjHealth*DECAY_FRAMES)
-					adjHealth = adjHealth - dataFullDamage
+					local disarmExtra = math.floor(data.disarmDamage/adjHealth*DECAY_FRAMES)
+					adjHealth = adjHealth - data.fullDamage
 
 					disarmFrame = disarmFrame + disarmExtra
 					if disarmFrame > frame + DECAY_FRAMES + disarmTimeout then
@@ -287,10 +284,10 @@ local function CheckBlockCommon(unitID, targetID, gameFrame, fullDamage, disarmD
 			local queueSize = spGetCommandQueue(unitID, 0)
 			if queueSize == 1 then
 				local cmdID, cmdOpts, cmdTag, cp_1, cp_2 = Spring.GetUnitCurrentCommand(unitID)
-				if not GG.recursion_GiveOrderToUnit and cmdID == CMD.ATTACK and Spring.Utilities.CheckBit(gadget:GetInfo().name, cmdOpts, CMD.OPT_INTERNAL) and cp_1 and (not cp_2) and cp_1 == targetID then
+				if cmdID == CMD.ATTACK and Spring.Utilities.CheckBit(gadget:GetInfo().name, cmdOpts, CMD.OPT_INTERNAL) and cp_1 and (not cp_2) and cp_1 == targetID then
 					--Spring.Echo("Removing auto-attack command")
 					GG.recursion_GiveOrderToUnit = true
-					spGiveOrderToUnit(unitID, CMD.STOP, {}, 0 ) -- VITTU.
+					spGiveOrderToUnit(unitID, CMD.REMOVE, {cmdTag}, 0 )
 					GG.recursion_GiveOrderToUnit = false
 				end
 			else
@@ -301,7 +298,9 @@ local function CheckBlockCommon(unitID, targetID, gameFrame, fullDamage, disarmD
 		end
 	end
 
-	lastShot[unitID] = targetID
+	if not noFire then
+		lastShot[unitID] = targetID
+	end
 	return false
 end
 
@@ -426,7 +425,7 @@ function gadget:Initialize()
 	
 	-- load active units
 	for _, unitID in ipairs(Spring.GetAllUnits()) do
-		local unitDefID = Spring.GetUnitDefID(unitID)
+		local unitDefID = spGetUnitDefID(unitID)
 		local teamID = Spring.GetUnitTeam(unitID)
 		gadget:UnitCreated(unitID, unitDefID, teamID)
 	end
