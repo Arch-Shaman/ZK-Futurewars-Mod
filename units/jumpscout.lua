@@ -75,18 +75,14 @@ return {
 		trackWidth             = 12,
 		turnRate               = 2160,
 		workerTime             = 0,
-
 		weapons                = {
-
 			{
 				def                = [[MISSILE]],
 				badTargetCategory  = [[UNARMED]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-
 		},
 		weaponDefs             = {
-
 			MISSILE = {
 				name                    = [[Legless Puppy]],
 				areaOfEffect            = 40,
