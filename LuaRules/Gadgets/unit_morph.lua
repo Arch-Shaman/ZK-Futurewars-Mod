@@ -98,7 +98,7 @@ for i = 1, #UnitDefs do
 	for w = 1, #weapons do
 		local wep = weapons[w].weaponDef
 		if WeaponDefs[wep].shieldPower and WeaponDefs[wep].shieldPower > 0 and shields[i] == nil then
-			shields[i] = WeaponDefs[wep].shieldPower
+			shields[i] = WeaponDefs[wep].id
 			--Spring.Echo("Added shield retreat to " .. i .. " ( has " .. tostring(WeaponDefs[wep].shieldPower) .. ")")
 		end
 	end
