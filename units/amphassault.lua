@@ -6,7 +6,7 @@ return {
 		acceleration        = 0.3,
 		activateWhenBuilt   = true,
 		brakeRate           = 1.8,
-		buildCostMetal      = 4500,
+		buildCostMetal      = 4000,
 		buildPic            = [[amphassault.png]],
 		canGuard            = true,
 		canMove             = true,
