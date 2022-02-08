@@ -4,7 +4,7 @@ return {
 		name                          = [[Azimuth]],
 		description                   = [[Tachyonic Anti-Heavy Turret - Requires connection to a 225 energy grid]],
 		activateWhenBuilt             = true,
-		buildCostMetal                = 3500,
+		buildCostMetal                = 4000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 6,
@@ -19,12 +19,12 @@ return {
 
 		customParams                  = {
 			keeptooltip    = [[any string I want]],
-			neededlink     = 225,
+			neededlink     = 300,
 			pylonrange     = 50,
 			aimposoffset   = [[0 32 0]],
 			midposoffset   = [[0 0 0]],
 			modelradius    = [[40]],
-			bait_level_default = 2,
+			bait_level_default = 3,
 			--dontfireatradarcommand = '0',
 		},
 
@@ -36,7 +36,7 @@ return {
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		losEmitHeight                 = 65,
-		maxDamage                     = 8500,
+		maxDamage                     = 8000,
 		maxSlope                      = 18,
 		maxWaterDepth                 = 0,
 		minCloakDistance              = 150,
@@ -99,7 +99,7 @@ return {
 					dmg_scaling_keeptime = 4,
 					dmg_scaling_falloff = 10000,
 					
-					reload_override = 14,
+					reload_override = 20,
 						
 					ceg_d_override = 2,
 					explosion_generator = [[ataalasergrow]],
