@@ -5,7 +5,7 @@ return {
 		description         = [[Near-Impervious Assault Tank]],
 		acceleration        = 0.17,
 		brakeRate           = 0.624,
-		buildCostMetal      = 5400,
+		buildCostMetal      = 5500,
 		builder             = false,
 		buildPic            = [[tankheavyassault.png]],
 		canGuard            = true,
@@ -18,7 +18,7 @@ return {
 			bait_level_default = 0,
 			decloak_footprint  = 5,
 			nanoregen = 25,
-			nano_maxregen = 8,
+			nano_maxregen = 10,
 			extradrawrange = 300,
 			dontfireatradarcommand = '1',
 		},
@@ -30,9 +30,9 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
-		maxDamage           = 24000,
+		maxDamage           = 30250,
 		maxSlope            = 18,
-		maxVelocity         = 1.3,
+		maxVelocity         = 1.2,
 		maxWaterDepth       = 22,
 		movementClass       = [[TANK4]],
 		noAutoFire          = false,
@@ -48,14 +48,14 @@ return {
 			},
 		},
 		
-		sightDistance       = 540,
+		sightDistance       = 650,
 		trackOffset         = 8,
 		trackStrength       = 10,
 		trackStretch        = 1,
 		trackType           = [[StdTank]],
 		trackWidth          = 50,
 		turninplace         = 0,
-		turnRate            = 500,
+		turnRate            = 400,
 		workerTime          = 0,
 
 		weapons             = {
@@ -86,7 +86,7 @@ return {
 					light_camera_height = 3500,
 					light_color = [[0.75 0.4 0.15]],
 					light_radius = 220,
-					numprojectiles1 = 10, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "tankheavyassault_fragment_dummy",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -96,12 +96,12 @@ return {
 					noairburst = "March of progress", -- if true, this projectile will skip all airburst checks
 					onexplode = "The unity prevails", -- if true, this projectile will cluster when it explodes
 					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					stats_damage = 3000,
-					shield_damage = (100*10) + 3000,
+					stats_damage = 3800 + (150*12),
+					shield_damage = (150*12) + 3800,
 				},
 
 				damage                  = {
-					default = 3000.2,
+					default = 3800.2,
 				},
 				
 				explosionGenerator      = [[custom:100rlexplode]],
@@ -192,7 +192,7 @@ return {
 				},
 
 				damage = {
-					default = 100,
+					default = 150,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.8,
@@ -234,7 +234,7 @@ return {
 					antibaitbypass = "ärsytät minua",
 				},
 				damage                  = {
-					default = 30,
+					default = 24,
 				},
 				explosionGenerator      = [[custom:flashslowwithsparks]],
 				explosionSpeed          = 5,
@@ -247,7 +247,7 @@ return {
 				noSelfDamage            = true,
 				myGravity               = 0.11,
 				range                   = 300,
-				reloadtime              = 1/6,
+				reloadtime              = 4/30,
 				rgbColor                = [[0.3 0 0.4]],
 				soundHit				= [[weapon/aoe_aura2]],
 				soundHitVolume          = 2.2,
