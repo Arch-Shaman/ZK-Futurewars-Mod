@@ -14,7 +14,7 @@ return {
 
 		customParams           = {
 			morphto = [[staticjammer]],
-			morphtime = 10,
+			morphtime = 5,
 			area_cloak = 1,
 			area_cloak_upkeep = 16,
 			area_cloak_radius = 300,

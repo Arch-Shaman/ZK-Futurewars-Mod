@@ -19,7 +19,7 @@ return {
 		customParams           = {
 			modelradius    = [[17]],
 			morphto = [[staticshield]],
-			morphtime = 10,
+			morphtime = 5,
 			priority_misc = 1, -- Medium
 			unarmed       = true,
 		},

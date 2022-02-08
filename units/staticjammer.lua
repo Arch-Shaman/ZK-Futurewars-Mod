@@ -22,7 +22,7 @@ return {
 		customParams                  = {
 			removewait     = 1,
 			morphto = [[cloakjammer]],
-			morphtime = 10,
+			morphtime = 5,
 			area_cloak = 1,
 			area_cloak_upkeep = 8,
 			area_cloak_radius = 600,

@@ -43,7 +43,7 @@ return {
 		customParams        = {
 			removewait     = 1,
 			morphto = [[shieldshield]],
-			morphtime = [[10]],
+			morphtime = [[5]],
 			priority_misc = 1, -- Medium
 			unarmed       = true,
 			addfight       = 1,
