@@ -90,6 +90,20 @@ local emptyTable = {} -- for speedups
 
 local MAX_MORPH = 0 -- Set in morph defs
 
+local shields = {}
+
+for i = 1, #UnitDefs do
+	local def = UnitDefs[i]
+	local weapons = def.weapons
+	for w = 1, #weapons do
+		local wep = weapons[w].weaponDef
+		if WeaponDefs[wep].shieldPower and WeaponDefs[wep].shieldPower > 0 and shields[i] == nil then
+			shields[i] = WeaponDefs[wep].shieldPower
+			--Spring.Echo("Added shield retreat to " .. i .. " ( has " .. tostring(WeaponDefs[wep].shieldPower) .. ")")
+		end
+	end
+end
+
 --------------------------------------------------------------------------------
 --	COMMON
 --------------------------------------------------------------------------------
@@ -437,7 +451,7 @@ local function FinishMorph(unitID, morphData)
 	--// copy cloak state
 	local wantCloakState = Spring.GetUnitRulesParam(unitID, "wantcloak")
 	--// copy shield power
-	local shieldNum = Spring.GetUnitRulesParam(unitID, "comm_shield_num") or -1
+	local shieldNum = Spring.GetUnitRulesParam(unitID, "comm_shield_num") or shields[unitDefID] or -1
 	local oldShieldState, oldShieldCharge = Spring.GetUnitShieldState(unitID, shieldNum)
 	--//copy experience
 	local newXp = Spring.GetUnitExperience(unitID)
