@@ -1672,6 +1672,7 @@ local behaviourConfig = {
 		fightOnlyUnits = medRangeExplodables,
 		maxSwarmLeeway = 30,
 		minSwarmLeeway = 130,
+		minFleeRange = 100,
 		jinkPeriod = 2,
 		skirmLeeway = 10,
 		skirmBlockedApproachFrames = 90,
