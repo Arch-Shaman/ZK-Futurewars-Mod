@@ -21,7 +21,7 @@ return {
 		customParams                  = {
 			keeptooltip = [[any string I want]],
 			neededlink  = 750,
-			pylonrange  = 280,
+			pylonrange  = 330,
 			modelradius    = [[45]],
 			bait_level_default = 0,
 			superweapon = 1,
@@ -120,7 +120,7 @@ return {
 				customParams              = {
 					light_color = [[2.4 1.5 0.6]],
 					light_radius = 600,
-					script_reload = [[20]],
+					script_reload = [[15]],
 					restrict_in_widgets = 1,
 					light_camera_height = 3500,
 					light_color = [[0.75 0.4 0.15]],
