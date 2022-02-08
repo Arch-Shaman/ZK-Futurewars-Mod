@@ -5,7 +5,7 @@ return {
 		description            = [[Shock and Awe Ambusher]],
 		acceleration           = 0.6,
 		brakeRate              = 3.6,
-		buildCostMetal         = 300,
+		buildCostMetal         = 270,
 		buildPic               = [[cloakassault.png]],
 		canGuard               = true,
 		canMove                = true,
