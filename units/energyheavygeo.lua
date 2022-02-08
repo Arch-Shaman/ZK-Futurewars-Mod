@@ -21,7 +21,7 @@ return {
 			decay_time     = 2,
 			decay_maxoutput= 1,
 			decay_initialrate = 0.1,
-			decay_rate     = -0.002,
+			decay_rate     = -0.01,
 			stats_show_death_explosion = true,
 		},
     
