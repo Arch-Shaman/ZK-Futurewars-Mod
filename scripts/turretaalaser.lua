@@ -15,7 +15,7 @@ local closed = true
 local stuns = {false, false, false}
 local disarmed = false
 local currentTask = 0
-local openrate = math.rad(275*2)
+local openrate = math.rad(275*6)
 
 local SigAim = 1
 
