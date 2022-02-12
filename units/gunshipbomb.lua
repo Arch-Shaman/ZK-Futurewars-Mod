@@ -97,9 +97,10 @@ return {
 				},
 
 				damage                  = {
-					default = 50.1,
+					default = 75.1,
 				},
-
+				
+				edgeEffectiveness       = 0.33,
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
 				fireStarter             = 180,
 				impulseBoost            = 0,
@@ -147,7 +148,7 @@ return {
 					light_camera_height = 1500,
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 40,
-					shield_damage = 800,
+					shield_damage = 75*20,
 					bogus = 1,
 				},
 				damage                  = {
@@ -184,7 +185,7 @@ return {
 				craterMult              = 0.5,
 				collideFriendly         = false,
 				customParams            = {
-					numprojectiles1 = 16, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 20, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "gunshipbomb_secondary",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -201,11 +202,11 @@ return {
 					light_radius = 40,
 					stats_hide_dps = 1, -- one use
 					stats_hide_reload = 1,
-					shield_damage = 800,
+					shield_damage = 20*75.1,
 				},
 				
 				damage                  = {
-					default = 8*100,
+					default = 20*75.1,
 				},
 				mygravity               = 0.07,
 				cegTag                  = [[VINDIBACK]],
