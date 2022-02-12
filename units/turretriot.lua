@@ -32,7 +32,7 @@ return {
 		footprintZ                    = 3,
 		iconType                      = [[defenseriot]],
 		levelGround                   = false,
-		maxDamage                     = 1600,
+		maxDamage                     = 2000,
 		maxSlope                      = 18,
 		minCloakDistance              = 150,
 		noChaseCategory               = [[FIXEDWING LAND SHIP SWIM GUNSHIP SUB HOVER]],
@@ -84,7 +84,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 22,
+					default = 11.1,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -120,14 +120,14 @@ return {
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 180,
 					--proximity_priority = 5, -- Don't use this unless required as it causes O(N^2) seperation checks per slow update.
-					numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 10, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "turretriot_secondary",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 185, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-1,-1,-1,1,1,1", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-2,-2,-2,2,2,2", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					proxy = 1, -- check for nearby units?
 					sweepfire = 1,
 					sweepfire_maxangle = 30,
@@ -137,7 +137,7 @@ return {
 				},
 
 				damage                  = {
-					default = 22*5,
+					default = 11.1*10,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -149,7 +149,7 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 380,
-				reloadtime              = 8/30,
+				reloadtime              = 6/30,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
 				soundHit                = [[weapon/clusters/cluster_light]],
@@ -159,7 +159,7 @@ return {
 				stages                  = 10,
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 550,
+				weaponVelocity          = 900,
 			},
 		},
 
