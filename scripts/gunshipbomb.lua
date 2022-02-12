@@ -81,7 +81,7 @@ local function RangeUpdateThread() -- shamelessly stolen from xponen's ballistic
 			range = 10
 		end
 		Spring.SetUnitMaxRange(unitID, range/15)
-		Spring.SetUnitWeaponState(unitID, 1, {range = range, autoTargetRangeBoost = 1000,})
+		Spring.SetUnitWeaponState(unitID, 1, {range = range, autoTargetRangeBoost = 100,})
 		--Spring.Echo("RANGEUPDATE\nVel: " .. velocity .. "\nRange: " .. range)
 		Sleep(33)
 	end
@@ -159,7 +159,7 @@ function script.BlockShot() -- after verifying aim and before firing so we're su
 		local ax = ex - x
 		angle = math.atan(az/ax)
 	end
-	local diff = math.abs(range - rangeto)
+	local diff = range - rangeto
 	--Spring.Echo("Angle: " .. angle .. ", Heading: " .. heading)
 	local headingDiff = 0
 	if angle > heading and (heading > 0 or angle < 0) then -- + - or - -
@@ -173,7 +173,7 @@ function script.BlockShot() -- after verifying aim and before firing so we're su
 	end
 	headingDiff = math.abs(headingDiff)
 	--Spring.Echo("Target Range: " .. rangeto .. "\nDif: " .. diff .. "\nAngle Dif: " .. headingDiff .. " / " .. tolerance)
-	if diff < 80 and headingDiff <= tolerance then
+	if diff < 20 and diff > -40 and headingDiff <= tolerance then
 		Terminate(ex, Spring.GetGroundHeight(ex, ez), ez)
 	end
 	return true
