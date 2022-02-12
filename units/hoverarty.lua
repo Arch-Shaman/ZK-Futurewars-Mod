@@ -134,12 +134,12 @@ unitDef = {
 			craterMult              = 0,
 			customParams            = {
 				burst = Shared.BURST_RELIABLE,
-				aimdelay = 120, -- 6 seconds
+				aimdelay = 75, -- 2.5 seconds
 				light_color = [[1.25 0.8 1.75]],
 				light_radius = 320,
 				reveal_unit = 10,
-				allowedpitcherror = 0.6,
-				allowedheadingerror = 0.6,
+				allowedpitcherror = 0.8,
+				allowedheadingerror = 0.8,
 			},
 			damage                  = {
 				default = 6000.1,
