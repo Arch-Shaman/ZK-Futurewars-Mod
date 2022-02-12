@@ -102,10 +102,10 @@ local function CanFireWeapon(unitID, weaponNum)
 	local data = IterableMap.Get(units, unitID)
 	if data == nil then
 		if debug then Spring.Echo("CanFireWeapon nil") end
-		return true
+		return false
 	end
-	if debug then Spring.Echo("CanFireWeapon: " .. tostring(data.weapons[weaponNum].progress >= data.weapons[weaponNum].origReload)) end
-	return data.weapons[weaponNum].progress >= data.weapons[weaponNum].origReload
+	if debug then Spring.Echo("CanFireWeapon: " .. tostring(data.weapons[weaponNum].progress >= data.weapons[weaponNum].origReload and (spGetUnitRulesParam(unitID, "lowpower") or 0) == 0)) end
+	return data.weapons[weaponNum].progress >= data.weapons[weaponNum].origReload and (spGetUnitRulesParam(unitID, "lowpower") or 0) == 0
 end
 
 function gadget:UnitFinished(unitID, unitDefID, unitTeam)

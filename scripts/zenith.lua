@@ -322,6 +322,7 @@ end
 
 function script.Create()
 	spSetUnitRulesParam(unitID, "meteorSpawnBlocked", 0)
+	spSetUnitRulesParam(unitID, "lowpower", 1, INLOS_ACCESS)
 	if Spring.GetGameRulesParam("loadPurge") ~= 1 then
 		Spring.SetUnitRulesParam(unitID, "meteorsControlled", 0, INLOS_ACCESS)
 	end
