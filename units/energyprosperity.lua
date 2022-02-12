@@ -37,7 +37,7 @@ return {
 		maxSlope = 18,
 		footprintx = 7,
 		footprintz = 7,
-		buildcostmetal = 60000,
+		buildcostmetal = 40000,
 		yardMap = [[ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo]],
 		sightDistance = 750,
 		turnRate = 0,
