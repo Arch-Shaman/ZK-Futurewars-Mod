@@ -136,7 +136,7 @@ return {
 				interceptedByShieldType = 1,
 				myGravity               = 0.095,
 				noSelfDamage            = true,
-				range                   = 1120,
+				range                   = 1500,
 				reloadtime              = 7,
 				size					= 4,
 				soundHit                = [[weapon/cannon/mini_cannon]],
