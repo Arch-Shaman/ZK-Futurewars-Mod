@@ -5,7 +5,7 @@ return {
 		description         = [[Light Cluster Artillery]],
 		acceleration        = 0.141,
 		brakeRate           = 1.36,
-		buildCostMetal      = 700,
+		buildCostMetal      = 750,
 		builder             = false,
 		buildPic            = [[tankarty.png]],
 		canGuard            = true,
