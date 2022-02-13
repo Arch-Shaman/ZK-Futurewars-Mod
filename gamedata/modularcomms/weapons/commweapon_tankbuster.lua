@@ -21,17 +21,17 @@ local weaponDef = {
 		okp_speedmult = 0.6,
 		okp_radarmult = 1,
 		okp_timeout = 40,
-		okp_damage = 1250,
+		okp_damage = 1400,
 	},
 
 	damage                  = {
-		default = 1250,
+		default = 1400,
 	},
 
 	edgeEffectiveness       = 0.5,
 	explosionGenerator      = [[custom:TESS]],
 	impulseBoost            = 0,
-	impulseFactor           = 0.4,
+	impulseFactor           = 1.4,
 	interceptedByShieldType = 1,
 	range                   = 400,
 	reloadtime              = 5,
@@ -40,7 +40,7 @@ local weaponDef = {
 	soundstartvolume		= 8,
 	turret                  = true,
 	weaponType              = [[Cannon]],
-	weaponVelocity          = 480,
+	weaponVelocity          = 700,
 	waterweapon				= true,
 }
 

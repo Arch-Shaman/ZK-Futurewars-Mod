@@ -19,11 +19,11 @@ local weaponDef = {
 		okp_speedmult = 0.6,
 		okp_radarmult = 1,
 		okp_timeout = 40,
-		okp_damage = 1020,
+		okp_damage = 1120.1,
 	},
 
 	damage                  = {
-		default = 1020,
+		default = 1120.1,
 	},
 
 	edgeEffectiveness       = 0.5,
@@ -31,14 +31,14 @@ local weaponDef = {
 	impulseBoost            = 0,
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 1,
-	range                   = 350,
+	range                   = 400,
 	reloadtime              = 5,
 	rgbColor				= "0.9 0.1 0.9",
 	soundHit                = [[weapon/cannon/heavy_disrupter_hit]],
 	soundStart              = [[weapon/cannon/heavy_disrupter]],
 	turret                  = true,
 	weaponType              = [[Cannon]],
-	weaponVelocity          = 420,
+	weaponVelocity          = 700,
 	waterweapon				= true,
 }
 
