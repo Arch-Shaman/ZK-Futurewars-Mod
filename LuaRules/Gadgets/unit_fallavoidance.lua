@@ -102,7 +102,7 @@ function gadget:GameFrame(f)
 					if debug then
 						spEcho("GroundHeight: " .. currentheight)
 					end
-					if not GG.GetUnitFallDamageImmunity(id) and currentheight > 0 and currentheight <= 50 then
+					if not GG.GetUnitFallDamageImmunity(id) and currentheight > 10 and currentheight <= 50 then
 						local vx, vy, vz = spGetUnitVelocity(id)
 						if debug then
 							spEcho("Velocity: " .. vx .. ", " .. vy .. ", " .. vz)
