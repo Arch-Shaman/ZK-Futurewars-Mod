@@ -105,6 +105,7 @@ local cmds = {
 	FIRECYCLE = 38889, -- cmd_firecycle gadget
 	OVERRECLAIM = 38950,
 	AIR_STRAFE = 39381,
+	AUTOJUMP = 39382, -- Tactical AI / Jump Fall Avoidance
 	-- terraform
 	RAMP = 39734,
 	LEVEL = 39736,

@@ -96,6 +96,7 @@ local custom_cmd_actions = {
 	cloak_shield =      {cmdType = 2, cmdID = CMD_CLOAK_SHIELD, name = "Area Cloaker", states = {'Off', 'On'}},
 	retreat =           {cmdType = 2, cmdID = CMD_RETREAT, name = "Retreat Threshold", states = {'Off', '30%', '65%', '99%'}, actionOverride = {'cancelretreat'}},
 	retreatshield =     {cmdType = 2, cmdID = CMD_RETREATSHIELD, name = "Retreat Shield Threshold", states = {'Off', '30%', '50%', '80%'}, actionOverride = {'cancelretreat'}},
+	autojump =          {cmdType = 2, cmdID = CMD_AUTOJUMP, name = "Autojump", states = {'off', 'on'}},
 	overreclaim =       {cmdType = 2, cmdID = CMD_OVERRECLAIM, name = "Overreclaim Prevention", states = {'On', 'Off'}},
 	['luaui noretreat'] = {cmdType = 2, name = "luaui noretreat"},
 	priority =          {cmdType = 2, cmdID = CMD_PRIORITY, name = "Construction Priority", states = {'Low', 'Normal', 'High'}},

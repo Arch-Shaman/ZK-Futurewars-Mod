@@ -23,6 +23,7 @@ local tooltips = {
 	FIRE_STATE = "Hold Fire (_STATE_)\n  Prevent units from firing unless a direct command or target is set.",
 	RETREAT = "Retreat (_STATE_)\n  Retreat to the closest Airpad or Retreat Zone (placed via the top left of the screen). Right click to disable.",
 	RETREATSHIELD = "Retreat (_STATE_)\n  Retreat to the closest Airpad or Retreat Zone (placed via the top left of the screen) when shield is below a threshold. Right click to disable.",
+	AUTOJUMP = "Current Stance: _STATE_\n Allows the unit to use its jump to prevent fall damage, close into enemies, or avoid enemy units.",
 	IDLEMODE = "Air Idle State (_STATE_)\n  Set whether aircraft land when idle.",
 	AP_FLY_STATE = "Air Factory Idle State (_STATE_)\n  Set whether produced aircraft land when idle.",
 	UNIT_BOMBER_DIVE_STATE = "Bomber Dive State (_STATE_)\n  Set when Ravens dive.",
@@ -245,6 +246,13 @@ local commandDisplayConfig = {
 			tooltips.RETREATSHIELD:gsub("_STATE_", "30%% Shield"),
 			tooltips.RETREATSHIELD:gsub("_STATE_", "50%% Shield"),
 			tooltips.RETREATSHIELD:gsub("_STATE_", "80%% Shield")
+		}
+	},
+	[CMD_AUTOJUMP] = {
+		texture = {imageDir .. 'states/autojumpoff.png', imageDir .. 'states/autojumpon.png',},
+		stateTooltip = {
+			tooltips.AUTOJUMP:gsub("_STATE_", "Manual Jump Only"),
+			tooltips.AUTOJUMP:gsub("_STATE_", "Up to Unit"),
 		}
 	},
 	[CMD.IDLEMODE] = {

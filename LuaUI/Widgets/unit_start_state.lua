@@ -61,6 +61,10 @@ local tooltips = {
 		[2] = "Retreat at 65% health",
 		[3] = "Retreat at 99% health",
 	},
+	autojump = {
+		[0] = "Require manual approval to use Jumpjets",
+		[1] = "Allow Tactical use of Jumpjets",
+	},
 	retreatshield = {
 		[-1] = "Inherit from factory",
 		[0] = "Never Retreat",
@@ -798,7 +802,20 @@ local function addUnit(defName, path)
 		}
 		options_order[#options_order+1] = defName .. "_floattoggle"
 	end
-
+	if ud.customParams and ud.customParams.can_jump then
+		options[defName .. "_autojump"] = {
+						name = "  Puppy Goo",
+			desc = "Values: Disable, Allow Tactical use",
+			type = 'number',
+			value = (ud.customParams and ud.customParams.grey_goo) or 1,
+			min = 0,
+			max = 1,
+			step = 1,
+			path = path,
+			tooltipFunction = tooltipFunc.autojump,
+		}
+		options_order[#options_order+1] = defName .. "_autojump"
+	end
 	if ud.customParams and ud.customParams.grey_goo then
 		options[defName .. "_goostate"] = {
 			name = "  Puppy Goo",
@@ -1347,6 +1364,12 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		
 		local retreat = GetStateValue(name, "retreatpercent")
 		local retreatshield = GetStateValue(name, "retreatpercent_shield")
+		local autojump = GetStateValue(name, "autojump")
+		if autojump then
+			if autojump == 0 then
+				orderArray[#orderArray + 1] = {CMD_AUTOJUMP, {0}, CMD.OPT_SHIFT + CMD.OPT_RIGHT}
+			end
+		end
 		if retreat == -1 then --if inherit
 			if builderID then
 				retreat = Spring.GetUnitRulesParam(builderID,"retreatState")
@@ -1356,7 +1379,7 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		end
 		if retreatshield == -1 then --if inherit
 			if builderID then
-				retreatshield = Spring.GetUnitRulesParam(builderID,"retreatshieldState")
+				retreatshield = Spring.GetUnitRulesParam(builderID, "retreatshieldState")
 			else
 				retreatshield = GetFactoryDefState(name, "retreatpercent_shield")
 			end
