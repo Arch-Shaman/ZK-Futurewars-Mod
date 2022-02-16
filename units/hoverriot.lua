@@ -3,7 +3,7 @@ return {
 		unitname            = [[hoverriot]],
 		name                = [[Longsword]],
 		description         = [[Riot/Skirmisher Hover]],
-		acceleration        = 0.168,
+		acceleration        = 0.14,
 		activateWhenBuilt   = true,
 		brakeRate           = 0.432,
 		buildCostMetal      = 300,
@@ -29,9 +29,9 @@ return {
 		iconType            = [[hoverriot]],
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
-		maxDamage           = 1200,
+		maxDamage           = 1400,
 		maxSlope            = 36,
-		maxVelocity         = 2.1,
+		maxVelocity         = 2.4,
 		movementClass       = [[HOVER4]],
 		noAutoFire          = false,
 		noChaseCategory     = [[TERRAFORM FIXEDWING SATELLITE SUB]],
@@ -49,7 +49,7 @@ return {
 		sightDistance       = 520,
 		sonarDistance       = 520,
 		turninplace         = 0,
-		turnRate            = 600,
+		turnRate            = 400,
 		workerTime          = 0,
 		weapons             = {
 			{
@@ -82,7 +82,7 @@ return {
 				},
 
 				damage                  = {
-					default = 29.1,
+					default = 30.1,
 				},
 				explosionGenerator      = [[custom:gauss_hit_m]],
 				impactOnly              = true,
