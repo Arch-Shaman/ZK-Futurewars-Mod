@@ -112,7 +112,7 @@ return {
 				turret                  = true,
 				weaponType              = [[LaserCannon]],
 				waterWeapon				= true,
-				weaponVelocity			= 330,
+				weaponVelocity			= 730,
 			},
 			LASER_OVERDRIVE = {
 				name                    = [[Pulsed Phaser]],
