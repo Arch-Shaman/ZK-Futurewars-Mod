@@ -532,7 +532,7 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 	end
 	
 	if behaviour.maxSwarmRange < pointDis then -- if I cannot shoot at the enemy
-		UpdateJink(behaviour, unitData)
+		UpdateJink(behaviour, unitData) -- TODO: Add jump to range.
 		
 		-- jink towards the enemy
 		if behaviour.localJinkOrder and behaviour.jinkParallelLength < pointDis then
@@ -846,11 +846,12 @@ local function DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typ
 	local canJump = UnitDefs[myDef].customParams.jump_range and behaviour.emergencyJumpRange and (spGetUnitRulesParam(unitID, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
 	--Spring.Echo("CanJump: " .. tostring(canJump))
 	if canJump and jumpEnabled and behaviour.emergencyJumpRange + behaviour.fleeLeeway > pointDis then
-		local jumpRange = UnitDefs[myDef].customParams.jump_range
-		local disScale = jumpRange/pointDis * 0.95
-		local cx = ux + disScale *(ux-ex)
+		--Spring.Echo("Jump flee")
+		local jumpRange = UnitDefs[myDef].customParams.jump_range * 0.995
+		local angle = math.rad(360) - math.atan((uy-ey)/(ux-ex))
+		local cx = ux + (jumpRange * math.sin(angle))
 		local cy = uy
-		local cz = uz + disScale *(uz-ez)
+		local cz = uz + (jumpRange * math.cos(angle))
 		DoJump(unitID, cx, cy, cz)
 		unitData.cx, unitData.cy, unitData.cz = cx, cy, cz
 		unitData.receivedOrder = true
