@@ -114,7 +114,7 @@ return {
 				avoidGround             = false,
 				cegTag                  = [[METEOR_TAG]],
 				collideFriendly         = true,
-				craterBoost             = 0,
+				craterBoost             = 100,
 				craterMult              = 20,
 
 				customParams              = {
