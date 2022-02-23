@@ -5,7 +5,7 @@ return {
 		description            = [[Heavy Riot/Skirmish Spider - Curls into Armored Form When Stationary]],
 		acceleration           = 0.66,
 		brakeRate              = 1.08,
-		buildCostMetal         = 1600,
+		buildCostMetal         = 3750,
 		buildPic               = [[spidercrabe.png]],
 		canGuard               = true,
 		canMove                = true,
@@ -16,7 +16,7 @@ return {
 		collisionVolumeType    = [[ellipsoid]],
 		corpse                 = [[DEAD]],
 		customParams           = {
-			bait_level_default = 0,
+			bait_level_default = 2,
 			aimposoffset   = [[0 0 0]],
 			midposoffset   = [[0 -10 0]],
 			modelradius    = [[30]],
@@ -29,9 +29,9 @@ return {
 		footprintZ             = 4,
 		iconType               = [[spidersupport]],
 		leaveTracks            = true,
-		maxDamage              = 4200,
+		maxDamage              = 16000,
 		maxSlope               = 36,
-		maxVelocity            = 1.35,
+		maxVelocity            = 1.0,
 		maxWaterDepth          = 22,
 		movementClass          = [[TKBOT4]],
 		moveState              = 0,
@@ -82,7 +82,7 @@ return {
 				},
 
 				edgeEffectiveness       = 0.3,
-				explosionGenerator      = [[custom:spidercrabe_EXPLOSION]],
+				explosionGenerator      = [[custom:new_crabe_explosion]],
 				impulseBoost            = 0,
 				impulseFactor           = 0.32,
 				interceptedByShieldType = 1,
@@ -94,7 +94,7 @@ return {
 				-- size = 5, -- maybe find a good size that is bigger than default
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 290,
+				weaponVelocity          = 800,
 			},
 		},
 
