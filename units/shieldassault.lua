@@ -6,7 +6,7 @@ return {
 		acceleration        = 0.75,
 		activateWhenBuilt   = true,
 		brakeRate           = 1.32,
-		buildCostMetal      = 280,
+		buildCostMetal      = 260,
 		buildPic            = [[shieldassault.png]],
 		canGuard            = true,
 		canMove             = true,
@@ -62,17 +62,14 @@ return {
 		upright             = true,
 
 		weapons             = {
-
 			{
 				def                = [[THUD_WEAPON]],
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-
 			{
 				def = [[SHIELD]],
 			},
-
 		},
 
 		weaponDefs          = {
@@ -111,7 +108,7 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				burst = 2,
-				burstrate = 0.5,
+				burstrate = 1/3,
 
 				customParams        = {
 					light_camera_height = 1400,
@@ -125,15 +122,15 @@ return {
 
 				explosionGenerator      = [[custom:MARY_SUE]],
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 1.1,
 				interceptedByShieldType = 1,
 				range                   = 420,
-				reloadtime              = 3 + 1/3,
+				reloadtime              = 2.8,
 				soundHit                = [[impacts/shotgun_impactv5]],
 				soundStart              = [[weapon/cannon/cannon_fire4]],
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 300,
+				weaponVelocity          = 390,
 			},
 		},
 

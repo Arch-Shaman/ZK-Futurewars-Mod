@@ -28,6 +28,7 @@ local SIG_RESTORE = 4
 
 -- variables
 local gun_1
+local turretspeed = math.rad(125)
 
 local function Step(front, back)
 	Move(base, y_axis, 0, 2)
@@ -97,9 +98,23 @@ local function RestoreAfterDelay()
 	SetSignalMask(SIG_RESTORE)
 	Sleep(3000)
 	--move all the pieces to their original spots
-	Turn(head, y_axis, 0, math.rad(100))
-	Turn(l_gun, x_axis, 0, math.rad(100))
-	Turn(r_gun, x_axis, 0, math.rad(100))
+	Turn(head, y_axis, 0, turretspeed)
+	Turn(l_gun, x_axis, 0, turretspeed)
+	Turn(r_gun, x_axis, 0, turretspeed)
+end
+
+function script.QueryWeapon(num)
+	if num == 1 then
+		-- Gun
+		if gun_1 then
+			return firept1
+		else
+			return firept2
+		end
+	else
+		-- Shield
+		return shield
+	end
 end
 
 function script.AimFromWeapon()
@@ -110,16 +125,16 @@ function script.AimWeapon(num, heading, pitch)
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
 	
-	Turn(head, y_axis, heading, math.rad(100))
-	Turn(l_gun, x_axis, -pitch, math.rad(100))
-	Turn(r_gun, x_axis, -pitch, math.rad(100))
+	Turn(head, y_axis, heading, turretspeed)
+	Turn(l_gun, x_axis, -pitch, turretspeed)
+	Turn(r_gun, x_axis, -pitch, turretspeed)
 	WaitForTurn(head, y_axis)
 	
 	StartThread(RestoreAfterDelay)
 	return 1 -- allows fire weapon after WaitForTurn
 end
 
-function script.FireWeapon()
+function script.Shot()
 	if gun_1 then
 		EmitSfx(firept1, GG.Script.UNIT_SFX1)
 		EmitSfx(firept1, GG.Script.UNIT_SFX2)
@@ -137,23 +152,6 @@ function script.FireWeapon()
 		Move(l_barrel, z_axis, 0, 2.5)
 		Move(l_gun, z_axis, 0, 1.25)
 	end
-end
-
-function script.QueryWeapon(num)
-	if num == 1 then
-		-- Gun
-		if gun_1 then
-			return firept1
-		else
-			return firept2
-		end
-	else
-		-- Shield
-		return shield
-	end
-end
-
-function script.Shot()
 	gun_1 = not gun_1
 end
 
@@ -167,29 +165,12 @@ end
 
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
-	if severity <= 0.25 then
-		Explode(head, SFX.NONE)
-		Explode(l_gun, SFX.NONE)
-		Explode(r_gun, SFX.NONE)
-		Explode(leftLeg.leg, SFX.NONE)
-		Explode(leftLeg.flever, SFX.NONE)
-		Explode(leftLeg.blever, SFX.NONE)
-		Explode(leftLeg.foot, SFX.NONE)
-		Explode(leftLeg.heel, SFX.NONE)
-		Explode(leftLeg.heeltoe, SFX.NONE)
-		Explode(rightLeg.leg, SFX.NONE)
-		Explode(rightLeg.flever, SFX.NONE)
-		Explode(rightLeg.blever, SFX.NONE)
-		Explode(rightLeg.foot, SFX.NONE)
-		Explode(rightLeg.heel, SFX.NONE)
-		Explode(rightLeg.heeltoe, SFX.NONE)
-		return 1
-	elseif severity <= 0.5 then
-		Explode(head, SFX.NONE)
-		Explode(l_gun, SFX.NONE)
-		Explode(r_gun, SFX.FALL + SFX.EXPLODE_ON_HIT)
+	if severity <= 0.5 then
+		Explode(head, SFX.FIRE + SFX.SMOKE + SFX.EXPLODE_ON_HIT)
+		Explode(l_gun, SFX.FIRE + SFX.SMOKE + SFX.EXPLODE_ON_HIT)
+		Explode(r_gun, SFX.FIRE + SFX.SMOKE + SFX.EXPLODE_ON_HIT)
 		Explode(leftLeg.leg, SFX.FALL + SFX.EXPLODE_ON_HIT)
-		Explode(rightLeg.leg, SFX.NONE)
+		Explode(rightLeg.leg, SFX.FALL + SFX.EXPLODE_ON_HIT)
 		Explode(leftLeg.foot, SFX.NONE)
 		Explode(rightLeg.foot, SFX.NONE)
 		Explode(leftLeg.blever, SFX.NONE)
@@ -203,7 +184,7 @@ function script.Killed(recentDamage, maxHealth)
 		return 1
 	else
 		Explode(head, SFX.SHATTER + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE_ON_HIT)
-		Explode(l_gun, SFX.NONE)
+		Explode(l_gun, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE_ON_HIT)
 		Explode(r_gun, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE_ON_HIT)
 		Explode(leftLeg.leg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE_ON_HIT)
 		Explode(rightLeg.leg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE_ON_HIT)
