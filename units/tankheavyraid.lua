@@ -129,7 +129,7 @@ return {
 				turret                  = true,
 				waterweapon             = false,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 420,
+				weaponVelocity          = 480,
 			},
 		},
 		featureDefs            = {
