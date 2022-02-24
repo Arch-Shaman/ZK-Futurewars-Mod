@@ -100,7 +100,7 @@ return {
 				laserFlareSize          = 2,
 				minIntensity            = 1,
 				noSelfDamage            = true,
-				range                   = 340,
+				range                   = 341,
 				reloadtime              = 2.0,
 				rgbColor                = [[0.8941 0.7647 0.1255]],
 				soundStart              = [[weapon/laser/medium_phaser]],
