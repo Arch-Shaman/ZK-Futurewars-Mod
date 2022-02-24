@@ -16,11 +16,12 @@ return {
 		collisionVolumeType    = [[ellipsoid]],
 		corpse                 = [[DEAD]],
 		customParams           = {
-			bait_level_default = 2,
+			bait_level_default = 0,
 			aimposoffset   = [[0 0 0]],
 			midposoffset   = [[0 -10 0]],
 			modelradius    = [[30]],
 			unstick_leeway    = 60, -- Don't lose move orders for longer while preparing to move.
+			armored_regen  = 50,
 		},
 
 		damageModifier         = 0.2,
@@ -66,35 +67,38 @@ return {
 
 		weaponDefs             = {
 			ARM_CRABE_GAUSS = {
-				name                    = [[Heavy Plasma Cannon]],
-				areaOfEffect            = 200,
+				name                    = [[GPR22 Scattergun]],
+				areaOfEffect            = 128,
 				craterBoost             = 0,
-				craterMult              = 0.5,
-
+				craterMult              = 1.3,
+				projectiles             = 8,
+				sprayAngle				= 1080,
 				customParams            = {
 					force_ignore_ground = [[1]],
 					light_color = [[1.5 1.13 0.6]],
-					light_radius = 450,
+					light_radius = 100,
 				},
 
 				damage                  = {
-					default = 600.5,
+					default = 200.5,
 				},
 
 				edgeEffectiveness       = 0.3,
-				explosionGenerator      = [[custom:new_crabe_explosion]],
+				explosionGenerator      = [[custom:nce_128]],
 				impulseBoost            = 0,
-				impulseFactor           = 0.32,
+				impulseFactor           = 2,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 600,
-				reloadtime              = 4,
+				range                   = 800,
+				reloadtime              = 5.5,
 				soundHit                = [[weapon/cannon/cannon_hit3]],
-				soundStart              = [[weapon/cannon/heavy_cannon2]],
-				-- size = 5, -- maybe find a good size that is bigger than default
+				soundHitVolume			= 3,
+				soundStart              = [[weapon/cannon/behe_fire2]],
+				size = 5, -- maybe find a good size that is bigger than default
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 800,
+				weaponVelocity          = 900,
+				mygravity               = 0.1,
 			},
 		},
 
