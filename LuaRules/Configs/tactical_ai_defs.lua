@@ -1,3 +1,6 @@
+
+include("LuaRules/Configs/customcmds.h.lua")
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -2409,10 +2412,12 @@ local function GetBehaviourTable(behaviourData, ud)
 		behaviourData.swarmLeeway             = (behaviourData.swarmLeeway or 50)
 	end
 	
-	if behaviourData.wardFireTargets then
+	if behaviourData.wardFireTargets or behaviourData.wardFireEverything then
+		behaviourData.hasWardFire             = true
 		behaviourData.wardFireLeeway          = behaviourData.wardFireLeeway or 10
 		behaviourData.wardFireEnableLeeway    = behaviourData.wardFireEnableLeeway or 3
 		behaviourData.wardFireHeight          = behaviourData.wardFireHeight or 0
+		behaviourData.wardFireCmdID           = behaviourData.wardFireCmdID or CMD_FIRE_AT_SHIELD
 	end
 	
 	if behaviourData.fightOnlyOverride then
