@@ -73,7 +73,7 @@ return {
 				craterMult              = 0,
 				cylinderTargeting 		= 100,
 				customParams            = {
-					impulse = [[-150]],
+					impulse = [[-180]],
 					stats_hide_damage = 1, -- continuous laser
 					stats_hide_reload = 1,
 					light_color = [[0.33 0.33 1.28]],
@@ -104,7 +104,6 @@ return {
 				turret                  = true,
 				weaponType              = [[BeamLaser]],
 				weaponVelocity          = 2200,
-				waterweapon				= true,
 				texture1                = [[largelaser]],
 				texture2                = [[flare]],
 				texture3                = [[flare]],
@@ -123,7 +122,7 @@ return {
 				craterMult              = 0,
 				cylinderTargeting 		= 100,
 				customParams            = {
-					impulse = [[150]],
+					impulse = [[180]],
 					stats_hide_damage = 1, -- continuous laser
 					stats_hide_reload = 1,
 					light_color = [[0.85 0.2 0.2]],
@@ -159,7 +158,6 @@ return {
 				turret                  = true,
 				weaponType              = [[BeamLaser]],
 				weaponVelocity          = 2200,
-				waterweapon				= true,
 			},
 
 		},
