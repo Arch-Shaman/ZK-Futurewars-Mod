@@ -94,12 +94,10 @@ return {
 
 				customParams              = {
 					setunitsonfire = "1",
-
 					sweepfire = 1,
 					sweepfire_maxangle = 15,
 					sweepfire_step = 3,
 					sweepfire_maxrangemult = 0.98,
-
 					stats_custom_tooltip_1 = " - Slowdown while Firing:",
 					stats_custom_tooltip_entry_1 = "60%",
 				},
@@ -111,7 +109,7 @@ return {
 				explosionGenerator      = [[custom:napalm_phoenix]],
 				firestarter             = 180,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				myGravity               = 0.55,
 				--projectiles             = 10,

@@ -72,7 +72,6 @@ local unitDef = {
 	speedToFront           = 0,
 	turnRadius             = 150,
 	turnRate               = 839,
-
 	weapons                = {
 		{
 			def                = [[MISSILE_AA]],
@@ -80,7 +79,6 @@ local unitDef = {
 			onlyTargetCategory = [[FIXEDWING GUNSHIP]],
 			maxAngleDif        = 120,
 		},
-
 		{
 			def                = [[MISSILE_AG]],
 			badTargetCategory  = [[GUNSHIP]],
@@ -88,7 +86,6 @@ local unitDef = {
 			maxAngleDif        = 120,
 		},
 	},
-
 	weaponDefs             = {
 		CANNON = {
 			name                    = [[Main Cannon]],
@@ -161,7 +158,7 @@ local unitDef = {
 			edgeEffectiveness       = 0.5,
 			explosionGenerator      = [[custom:DOT_Pillager_Explo]],
 			impulseBoost            = 0,
-			impulseFactor           = 0.4,
+			impulseFactor           = 0,
 			interceptedByShieldType = 1,
 			myGravity               = 0.1,
 			noSelfDamage            = true,

@@ -43,21 +43,17 @@ return {
 		objectName                    = [[hlt.s3o]],
 		script                        = [[turretheavylaser.lua]],
 		selfDestructAs                = [[MEDIUM_BUILDINGEX]],
-
 		sfxtypes                      = {
-
 			explosiongenerators = {
 				[[custom:HLTRADIATE0]],
 				[[custom:RAIDMUZZLE]],
 			},
-
 		},
 		sightDistance                 = 796, -- Range*1.1 + 48 for radar overshoot
 		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
 		workerTime                    = 0,
 		yardMap                       = [[ooo ooo ooo]],
-
 		weapons                       = {
 
 			{
@@ -67,10 +63,7 @@ return {
 			},
 
 		},
-
-
 		weaponDefs                    = {
-
 			LASER = {
 				name                    = [[Medium Range Plasma Cannon]],
 				areaOfEffect            = 64,
@@ -82,14 +75,12 @@ return {
 				customParams        = {
 					burst = Shared.BURST_UNRELIABLE,
 				},
-
 				damage                  = {
 					default = 160,
 				},
-
 				explosionGenerator      = [[custom:TESS]],
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 600,

@@ -106,7 +106,7 @@ return {
 				explosionGenerator      = [[custom:DOT_Pillager_Explo]],
 				fireTolerance           = 1820, -- 10 degrees
 				impulseBoost            = 0.5,
-				impulseFactor           = 0.2,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 80,
@@ -145,7 +145,7 @@ return {
 
 				firestarter             = 180,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				myGravity               = 0.1,
 				noExplode               = true,

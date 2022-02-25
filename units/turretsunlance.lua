@@ -62,7 +62,6 @@ return {
 				avoidGround             = true,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams            = {
 					restrict_in_widgets = 1,
 					aimdelay = aimTime,
@@ -72,14 +71,12 @@ return {
 					allowedpitcherror = 0.25,
 					allowedheadingerror = 0.2,
 				},
-
 				damage                  = {
 					default = 1500.1,
 				},
-
 				explosionGenerator      = [[custom:DOT_Pillager_Explo]],
 				fireTolerance           = 1820, -- 10 degrees
-				impulseBoost            = 0.5,
+				impulseBoost            = 0,
 				impulseFactor           = 0.2,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,

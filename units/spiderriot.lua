@@ -88,7 +88,7 @@ return {
 				explosionGenerator      = [[custom:napalm_phoenix]],
 				firestarter             = 180,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				myGravity               = 0.49,
 				--projectiles             = 10,

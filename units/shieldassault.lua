@@ -60,7 +60,6 @@ return {
 		trackWidth          = 22,
 		turnRate            = 2400,
 		upright             = true,
-
 		weapons             = {
 			{
 				def                = [[THUD_WEAPON]],
@@ -71,20 +70,15 @@ return {
 				def = [[SHIELD]],
 			},
 		},
-
 		weaponDefs          = {
-
 			SHIELD      = {
 				name                    = [[Energy Shield]],
-
 				damage                  = {
 					default = 10,
 				},
-				
 				customParams			= {
 					--shield_recharge_delay   = 10,
 				},
-
 				exteriorShield          = true,
 				shieldAlpha             = 0.2,
 				shieldBadColor          = [[1 0.1 0.1 1]],
@@ -101,7 +95,6 @@ return {
 				visibleShieldRepulse    = false,
 				weaponType              = [[Shield]],
 			},
-
 			THUD_WEAPON = {
 				name                    = [[Medium Plasma Cannon]],
 				areaOfEffect            = 36,
@@ -109,7 +102,6 @@ return {
 				craterMult              = 0,
 				burst = 2,
 				burstrate = 1/3,
-
 				customParams        = {
 					light_camera_height = 1400,
 					light_color = [[0.80 0.54 0.23]],
@@ -119,10 +111,9 @@ return {
 				damage                  = {
 					default = 125.1,
 				},
-
 				explosionGenerator      = [[custom:MARY_SUE]],
 				impulseBoost            = 0,
-				impulseFactor           = 1.1,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				range                   = 420,
 				reloadtime              = 2.8,
@@ -133,9 +124,7 @@ return {
 				weaponVelocity          = 390,
 			},
 		},
-
 		featureDefs         = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -143,15 +132,12 @@ return {
 				footprintZ       = 2,
 				object           = [[thug_d.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
 				object           = [[debris2x2c.s3o]],
 			},
-
 		},
-
 	} 
 }

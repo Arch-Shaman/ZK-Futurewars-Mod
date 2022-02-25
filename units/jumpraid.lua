@@ -69,9 +69,7 @@ return {
 		turnRate              = 1800,
 		upright               = true,
 		workerTime            = 0,
-
 		weapons               = {
-
 			{
 				def                = [[FLAMETHROWER]],
 				badTargetCategory  = [[FIREPROOF]],
@@ -92,10 +90,7 @@ return {
 				badTargetCategory  = [[]],
 				onlyTargetCategory = [[]],
 			},
-
 		},
-
-
 		weaponDefs            = {
 			FLAMETHROWER = {
 				name                    = [[Primary Flamethrower]],
@@ -109,13 +104,11 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				cegTag                  = [[flamer]],
-			
 				customParams            = {
 					flamethrower = [[1]],
 					setunitsonfire = "1",
 					burnchance = "0.4", -- Per-impact
 					burntime = [[150]],
-					
 					light_camera_height = 2800,
 					light_color = [[0.6 0.39 0.18]],
 					light_radius = 260,
@@ -125,11 +118,9 @@ return {
 					usefirecycle = 1,
 					combatrange = 280,
 				},
-				
 				damage                  = {
 					default = 6.8,
 				},
-			
 				duration                = 0.01,
 				explosionGenerator      = [[custom:SMOKE]],
 				fallOffRate             = 1,

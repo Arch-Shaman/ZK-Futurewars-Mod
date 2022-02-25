@@ -49,7 +49,6 @@ return {
 		waterline                     = 5,
 		workerTime                    = 0,
 		yardMap                       = [[oooo]],
-
 		weapons                       = {
 
 			{
@@ -68,7 +67,6 @@ return {
 				beamTime                = 1/30,
 				craterBoost             = 0,
 				craterMult              = 0,
-				
 				customParams        = {
 					light_camera_height = 1200,
 					light_radius = 20,
@@ -77,17 +75,15 @@ return {
 					sweepfire_step = 0.5,
 					sweepfire_fastupdate = 1,
 				},
-      
 				damage                  = {
 					default = 22.1,
 				},
-
 				duration                = 8/30,
 				explosionGenerator      = [[custom:heavybeamyellowimpactsmall]],
 				fireStarter             = 100,
 				impactOnly              = true,
 				impulseBoost            = 0,
-				impulseFactor           = 1.1,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				leadLimit               = 0,
 				noSelfDamage            = true,

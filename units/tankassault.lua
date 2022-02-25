@@ -54,7 +54,6 @@ return {
 		turninplace         = 0,
 		turnRate            = 583,
 		workerTime          = 0,
-
 		weapons             = {
 			{
 				def                = [[COR_REAP]],
@@ -62,8 +61,6 @@ return {
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
 		},
-
-
 		weaponDefs          = {
 			COR_REAP = {
 				name                    = [[R-12 HEAT Cannon]],
@@ -71,17 +68,14 @@ return {
 				craterBoost             = 10,
 				craterMult              = 1.5,
 				edgeEffectiveness       = 0.1,
-
 				customParams        = {
 					reaim_time = 8, -- COB
 					script_reload = [[3.5]],
 					script_burst = [[2]],
 				},
-
 				damage                  = {
 					default = 400,
 				},
-
 				explosionGenerator      = [[custom:70rlexplode]],
 				impulseBoost            = 3,
 				impulseFactor           = 1.5,

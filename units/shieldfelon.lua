@@ -69,7 +69,6 @@ return {
 		},
 
 		weaponDefs          = {
-
 			SHIELD      = {
 				name                    = [[Energy Shield]],
 
@@ -93,7 +92,6 @@ return {
 				visibleShieldRepulse    = false,
 				weaponType              = [[Shield]],
 			},
-
 			SHIELDGUN = {
 				name                    = [[Shield Gun]],
 				areaOfEffect            = 8,
@@ -117,7 +115,7 @@ return {
 				fireStarter             = 50,
 				impactOnly              = true,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				intensity               = 6,
 				interceptedByShieldType = 1,
 				range                   = 460,

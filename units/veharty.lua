@@ -91,7 +91,7 @@ return {
 				explosionGenerator      = [[custom:dirt]],
 				explosionScar		= false,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				model                   = [[clawshell.s3o]],
 				myGravity               = 0.34,

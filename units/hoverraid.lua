@@ -21,7 +21,6 @@ return {
 			modelradius        = [[25]],
 			aim_lookahead      = 120,
 		},
-
 		explodeAs           = [[SMALL_UNITEX]],
 		footprintX          = 2,
 		footprintZ          = 2,
@@ -38,14 +37,11 @@ return {
 		script              = [[hoverraid.lua]],
 		selfDestructAs      = [[SMALL_UNITEX]],
 		sfxtypes            = {
-
 			explosiongenerators = {
 				[[custom:HOVERS_ON_GROUND]],
 				[[custom:flashmuzzle1]],
 			},
-
 		},
-
 		sightDistance       = 740,
 		sonarDistance       = 740,
 		turninplace         = 0,
@@ -59,7 +55,6 @@ return {
 			},
 		},
 		weaponDefs          = {
-
 			GAUSS = {
 				name                    = [[Gauss Scattercannon]],
 				alphaDecay              = 0.12,
@@ -71,17 +66,14 @@ return {
 				cegTag                  = [[sonictrail]],
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams = {
 					single_hit_multi    = true,
 					light_camera_height = 1200,
 					light_radius        = 180,
 				},
-
 				damage                  = {
 					default = 26.1,
 				},
-
 				explosionGenerator      = [[custom:gauss_hit_l]],
 				groundbounce            = 1,
 				impactOnly              = true,
@@ -112,7 +104,6 @@ return {
 			},
 		},
 		featureDefs         = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -120,14 +111,12 @@ return {
 				footprintZ       = 3,
 				object           = [[corsh_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,
 				footprintZ       = 3,
 				object           = [[debris3x3c.s3o]],
 			},
-
 		},
 	} 
 }

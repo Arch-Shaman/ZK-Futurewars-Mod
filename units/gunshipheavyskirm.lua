@@ -44,40 +44,30 @@ return {
 		objectName          = [[stingray.s3o]],
 		script              = [[gunshipheavyskirm.lua]],
 		selfDestructAs      = [[GUNSHIPEX]],
-
 		sfxtypes            = {
-
-		explosiongenerators = {
-			[[custom:flashmuzzle1]],
-			[[custom:emg_shells_m]], --not used
-			[[custom:SLASHMUZZLE]],
-		},
-
+			explosiongenerators = {
+				[[custom:flashmuzzle1]],
+				[[custom:emg_shells_m]], --not used
+				[[custom:SLASHMUZZLE]],
+			},
 		},
 		sightDistance       = 800,
 		sonarDistance		= 800,
 		turnRate            = 600,
 		workerTime          = 0,
-
 		weapons             = {
-
 			{
 				def                = [[emg]],
 				mainDir            = [[0 0 1]],
 				maxAngleDif        = 70,
 				onlyTargetCategory = [[SWIM LAND SHIP SINK TURRET FLOAT GUNSHIP FIXEDWING HOVER]],
 			},
-
 			{
 				def                = [[TORPEDO_BATTERY]],
 				onlyTargetCategory = [[SWIM LAND SHIP SINK TURRET FLOAT GUNSHIP FIXEDWING HOVER]],
 			},
-
 		},
-
-
 		weaponDefs          = {
-
 			emg = {
 				name                    = [[Gauss Autocannon]],
 				alphaDecay              = 0.12,
@@ -98,11 +88,9 @@ return {
 					--light_color = [[0.9 0.84 0.45]],
 					--light_ground_height = 120,
 				},
-
 				damage                  = {
 					default = 22.1, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
 				},
-
 				explosionGenerator      = [[custom:gauss_hit_m]],
 				heightBoostFactor       = 0,
 				impulseBoost            = 0,
@@ -181,7 +169,6 @@ return {
 			},
 		},
 		featureDefs         = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -189,7 +176,6 @@ return {
 				footprintZ       = 2,
 				object           = [[brawler_d.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
