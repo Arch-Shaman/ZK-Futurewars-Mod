@@ -73,7 +73,6 @@ return {
 		},
 
 		weaponDefs             = {
-
 			Blade = {
 				name                    = [[Blade]],
 				areaOfEffect            = 8,
@@ -94,7 +93,7 @@ return {
 				},
       
 				damage                  = {
-					default = 285.1,
+					default = 300.1,
 				},
 
 				explosionGenerator      = [[custom:BEAMWEAPON_HIT_ORANGE]],
@@ -102,7 +101,7 @@ return {
 				hardStop                = false,
 				impactOnly              = true,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 0,
 				lodDistance             = 10000,
 				minIntensity            = 1,
@@ -119,7 +118,6 @@ return {
 				weaponType              = [[BeamLaser]],
 				weaponVelocity          = 2000,
 			},
-
 		},
 		
 		featureDefs            = {
