@@ -21,7 +21,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 2250,
+		default = 2500,
 	},
 
 	explosionGenerator      = [[custom:blue_explosion]],
