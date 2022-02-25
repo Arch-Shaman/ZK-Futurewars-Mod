@@ -1,4 +1,4 @@
-unitDef = {
+local unitDef = {
 	unitname            = [[bomberriot]],
 	name                = [[Firebrand]],
 	description         = [[Napalm Bomber]],
@@ -141,7 +141,7 @@ unitDef = {
 			fireStarter             = 250,
 			fireTolerance		= 65536/2,
 			impulseBoost            = 0,
-			impulseFactor           = 0.1,
+			impulseFactor           = 0,
 			interceptedByShieldType = 1,
 			model                   = [[wep_b_fabby.s3o]],
 			myGravity               = 0.4,

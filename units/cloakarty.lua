@@ -101,7 +101,7 @@ return {
 				explosionGenerator      = [[custom:hammer_artillery_hit]],
 				impactOnly              = false,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				myGravity               = 0.07,
 				noSelfDamage            = true,

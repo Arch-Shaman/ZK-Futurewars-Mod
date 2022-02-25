@@ -126,7 +126,7 @@ return {
 				explosionGenerator      = [[custom:beamlaser_hit_emerald]],
 				fireStarter             = 50,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				range                   = 620,
 				reloadtime              = 1.4,

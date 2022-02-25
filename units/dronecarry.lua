@@ -99,7 +99,7 @@ return {
 				fireStarter             = 70,
 				flightTime              = 2.45,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 2,
 				model                   = [[wep_m_ajax.s3o]],
 				noSelfDamage            = true,
@@ -127,7 +127,7 @@ return {
 					burst = Shared.BURST_RELIABLE,
 					light_camera_height = 1800,
 					numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile1 = "shieldskirm_fragment",
+					projectile1 = "dronecarry_fragment",
 					--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
@@ -142,7 +142,7 @@ return {
 				fireStarter             = 70,
 				flightTime              = 3.5,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 2,
 				model                   = [[wep_m_hailstorm.s3o]],
 				noSelfDamage            = true,
@@ -189,7 +189,7 @@ return {
 				fireStarter             = 100,
 				impactOnly              = true,
 				impulseBoost            = 0,
-				impulseFactor           = 1.1,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				leadLimit               = 0,
 				noSelfDamage            = true,
@@ -230,7 +230,7 @@ return {
 				flightTime              = 4,
 				impactOnly              = true,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 2,
 				metalpershot            = 0,
 				model                   = [[hobbes.s3o]],

@@ -61,9 +61,7 @@ return {
 		trackWidth             = 16,
 		turnRate               = 2040,
 		upright                = true,
-
 		weapons                = {
-
 			{
 				def                = [[BOT_ROCKET]],
 				onlyTargetCategory = [[LOWFLYING LAND SINK TURRET SHIP SWIM FLOAT HOVER]],
@@ -72,11 +70,8 @@ return {
 				def                = [[TRACKER]],
 				onlyTargetCategory = [[LOWFLYING LAND SINK TURRET SHIP SWIM FLOAT HOVER]],
 			},
-
 		},
-
 		weaponDefs             = {
-
 			BOT_ROCKET = {
 				name                    = [[Laser guided Rocket]],
 				areaOfEffect            = 48,
@@ -98,9 +93,9 @@ return {
 				},
 
 				fireStarter             = 70,
-				flightTime              = 6,
+				flightTime              = 8,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0.2,
 				interceptedByShieldType = 2,
 				model                   = [[wep_m_ajax.s3o]],
 				noSelfDamage            = true,
@@ -144,14 +139,14 @@ return {
 				fireTolerance           = 8192, -- 45 degrees
 				impactOnly              = true,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 0,
 				largeBeamLaser          = true,
 				laserFlareSize          = 2,
 				leadLimit               = 18,
 				minIntensity            = 0.01,
 				noSelfDamage            = true,
-				range                   = 465,
+				range                   = 475,
 				reloadtime              = 1/30,
 				sweepfire               = false,
 				rgbColor                = [[0.3 0 0]],

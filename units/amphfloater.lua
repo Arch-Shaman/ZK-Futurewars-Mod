@@ -102,7 +102,7 @@ return {
 				fireStarter             = 180,
 				impactOnly              = true,
 				impulseBoost            = 0,
-				impulseFactor           = 0.2,
+				impulseFactor           = 0,
 				interceptedByShieldType = 2,
 				myGravity               = 0.2,
 				range                   = 320,

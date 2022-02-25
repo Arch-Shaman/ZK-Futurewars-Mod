@@ -100,7 +100,7 @@ return {
 				explosionGenerator      = [[custom:INGEBORG]],
 				mygravity				= 0.04,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 320,

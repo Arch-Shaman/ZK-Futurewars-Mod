@@ -144,7 +144,7 @@ return {
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
 				fireStarter             = 180,
 				impulseBoost            = 0,
-				impulseFactor           = 0.2,
+				impulseFactor           = 0,
 				interceptedByShieldType = 2,
 				model                   = [[wep_b_fabby.s3o]],
 				range                   = 200,

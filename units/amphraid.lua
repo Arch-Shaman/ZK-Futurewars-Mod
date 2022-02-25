@@ -95,7 +95,7 @@ return {
 				groundbounce            = 1,
 				impactOnly              = false,
 				impulseBoost            = 0,
-				impulseFactor           = 0.6,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				leadlimit               = 1,
 				myGravity               = 0.4,
