@@ -51,20 +51,17 @@ return {
 		turninplace         = 0,
 		turnRate            = 568,
 		workerTime          = 0,
-
 		weapons             = {
-
 			{
 				def                = [[TAWF_BANISHER]],
 				mainDir            = [[0 0 1]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-
 		},
 		weaponDefs          = {
 	
 			fragment = {
-				name                    = [[R-62 Canister Cannon Fragment]],
+				name                    = [[R-62 Fragment]],
 				areaOfEffect            = 144,
 				avoidFeature            = true,
 				avoidFriendly           = true,
@@ -76,14 +73,13 @@ return {
 					gatherradius = [[120]],
 					smoothradius = [[80]],
 					smoothmult   = [[0.25]],
-					force_ignore_ground = [[1]],
 					isFlak = 3,
 					flaktime = 1/30,
 					light_camera_height = 1500,
 				},
 
 				damage                  = {
-					default = 30.2,
+					default = 20.2,
 				},
 
 				edgeEffectiveness       = 0.75,
@@ -117,7 +113,7 @@ return {
 
 					script_reload = [[3.4]],
 					script_burst = [[4]],
-					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "tankriot_fragment",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -134,7 +130,7 @@ return {
 				},
       
 				damage                  = {
-					default = 30.2 * 6,
+					default = 20.2 * 8,
 				},
 
 				edgeEffectiveness       = 0.4,
@@ -144,15 +140,14 @@ return {
 				impulseBoost            = 0,
 				impulseFactor           = 0.6,
 				interceptedByShieldType = 2,
-				leadlimit               = 0,
 				model                   = [[corbanishrk.s3o]],
 				noSelfDamage            = true,
-				range                   = 380,
-				reloadtime              = 0.233,
+				range                   = 395,
+				reloadtime              = 0.2,
 				smokeTrail              = false,
 				soundHit                = [[weapon/cannon/outlaw_gun]],
 				soundStart              = [[weapon/missile/banisher_fire]],
-				startVelocity           = 400,
+				startVelocity           = 200,
 				tolerance               = 9000,
 				tracks                  = true,
 				trajectoryHeight        = 0.15,
@@ -160,11 +155,10 @@ return {
 				turret                  = true,
 				weaponAcceleration      = 70,
 				weaponType              = [[MissileLauncher]],
-				weaponVelocity          = 400,
+				weaponVelocity          = 450,
 			},
 		},
 		featureDefs         = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -178,8 +172,6 @@ return {
 				footprintZ       = 3,
 				object           = [[debris3x3a.s3o]],
 			},
-
 		},
-
 	} 
 }
