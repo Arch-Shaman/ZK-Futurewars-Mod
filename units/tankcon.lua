@@ -113,8 +113,8 @@ return {
 
 				explosionGenerator      = [[custom:EMG_HIT_HE]],
 				impactOnly              = true,
-				impulseBoost            = 2,
-				impulseFactor           = 1.2,
+				impulseBoost            = 0,
+				impulseFactor           = 0,
 				intensity               = 0.7,
 				interceptedByShieldType = 1,
 				noGap                   = false,
@@ -167,8 +167,8 @@ return {
 
 				explosionGenerator      = [[custom:EMG_HIT_HE]],
 				impactOnly              = true,
-				impulseBoost            = 2,
-				impulseFactor           = 1.2,
+				impulseBoost            = 0,
+				impulseFactor           = 0,
 				intensity               = 0.7,
 				interceptedByShieldType = 1,
 				noGap                   = false,
