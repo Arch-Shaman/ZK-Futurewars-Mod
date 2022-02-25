@@ -162,7 +162,7 @@ return {
 				explosionGenerator      = [[custom:napalm_firewalker_small]],
 				firestarter             = 180,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				myGravity               = 0,
 				noSelfDamage            = true,

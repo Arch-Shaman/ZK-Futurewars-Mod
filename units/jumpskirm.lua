@@ -96,7 +96,7 @@ return {
 				fireStarter             = 30,
 				edgeeffectiveness		= 0.2,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				laserFlareSize          = 4.33,
 				minIntensity            = 1,

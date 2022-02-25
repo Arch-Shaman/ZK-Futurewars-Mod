@@ -84,7 +84,7 @@ return {
 				fireStarter             = 70,
 				flightTime              = 2.45,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 2,
 				model                   = [[wep_m_ajax.s3o]],
 				noSelfDamage            = true,

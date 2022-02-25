@@ -95,7 +95,7 @@ return {
 				fireStarter             = 50,
 				impactOnly              = true,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				laserFlareSize          = 3.22,
 				minIntensity            = 1,
