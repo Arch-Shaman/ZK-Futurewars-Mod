@@ -72,6 +72,7 @@ return {
 					light_camera_height = 1800,
 					light_color = [[0.25 1 0.25]],
 					light_radius = 130,
+					combatrange = 150,
 				},
 
 				damage                  = {
@@ -85,7 +86,7 @@ return {
 				interceptedByShieldType = 1,
 				laserFlareSize          = 3.25,
 				minIntensity            = 1,
-				range                   = 150,
+				range                   = 170,
 				reloadtime              = 1/3,
 				rgbColor                = [[0 1 0]],
 				soundStart              = [[weapon/laser/mini_laser]],
