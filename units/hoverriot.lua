@@ -72,7 +72,6 @@ return {
 					is_unit_weapon = 1,
 					slot = [[5]],
 					muzzleEffectFire = [[custom:flashmuzzle1]],
-					single_hit_multi = true,
 					reaim_time = 1,
 					sweepfire = 1,
 					sweepfire_maxangle = 15,
