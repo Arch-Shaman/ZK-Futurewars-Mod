@@ -939,7 +939,8 @@ local function DoTacticalAI(unitID, cmdID, cmdOpts, cmdTag, cp_1, cp_2, cp_3,
 			wantsreloadflee = true
 		else
 			for i = 1, numweapons do
-				if WeaponDefs[UnitDefs[myunitdef].weapons[i].weaponDef].customParams.targeter == nil then -- check everything not a targeting laser.
+				local wd = WeaponDefs[UnitDefs[myunitdef].weapons[i].weaponDef]
+				if wd.customParams.targeter == nil and wd.type ~= "Shield" then -- check everything not a targeting laser or shield.
 					local _, loaded, _, salvoleft = Spring.GetUnitWeaponState(unitID, i)
 					if loaded or salvoleft > 0 then
 						somethingNotReloading = true
