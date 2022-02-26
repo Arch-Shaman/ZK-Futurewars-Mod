@@ -611,23 +611,22 @@ local sapperselfdarray = NameToDefID({
 })
 
 -- Not currently used as air scouts flee everything.
---local antiAirFlee = NameToDefID({
---	"cloakaa",
---	"shieldaa",
---	"jumpaa",
---	"spideraa",
---	"vehaa",
---	"tankaa",
---	"hoveraa",
---	"amphaa",
---	"gunshipaa",
---	"shipaa",
---
---	"turretmissile",
---	"turretaalaser",
---	"turretaaclose",
---	"turretaaflak",
---})
+local antiAirFlee = NameToDefID({
+	"cloakaa",
+	"shieldaa",
+	"jumpaa",
+	"spideraa",
+	"vehaa",
+	"tankaa",
+	"hoveraa",
+	"amphaa",
+	"gunshipaa",
+	"shipaa",
+
+	"turretaalaser",
+	"turretaaclose",
+	"turretaaflak",
+})
 
 -- Submarines to be fled by some things
 local subfleeables = NameToDefID({
@@ -675,6 +674,8 @@ local riotsgoaway = NameToDefID({
 	"vehriot",
 	"hoverskirm",
 })
+
+local allGroundNonAA = SetMinus(allGround, antiAirFlee)
 
 local jumpconflee = SetMinus(armedLand, lowMedRangeSkirmieeArray)
 
@@ -1456,7 +1457,7 @@ local behaviourConfig = {
 		minSwarmLeeway = 120,
 		jinkPeriod = 2,
 		skirmLeeway = 40,
-		
+		skirmBlockedApproachFrames = 10,
 		wardFireTargets = personalShieldUnits,
 		wardFireShield = 180,
 		wardFirePredict = 20,
@@ -1630,7 +1631,7 @@ local behaviourConfig = {
 		skirmOrderDis = 220,
 		skirmLeeway = 50,
 		skirmBlockedApproachFrames = 60,
-
+		
 		wardFireTargets = personalShieldUnitsWithSafetyMargin,
 		wardFireLeeway = 10,
 		wardFirePredict = 50,
@@ -1639,20 +1640,24 @@ local behaviourConfig = {
 	},
 	{
 		name = "gunshipskirm",
-		skirms = longRangeSkirmieeArray,
-		--swarms = medRangeSwarmieeArray,
-		--flees = {},
+		skirms = allGroundNonAA,
+		swarms = {},
+		flees = antiAirFlee,
+		skirmRadar = true,
 		avoidHeightDiff = explodableFull,
 		fightOnlyUnits = medRangeExplodables,
+		reloadFlee = true,
 		skirmOrderDis = 120,
-		selfVelocityPrediction = true,
 		velocityPrediction = 30,
-		
+		fleeLeeway = 100,
+		fleeDistance = 100,
+		minFleeRange = 100,
+		fleeOrderDis = 100,
 		wardFireTargets = personalShieldUnits,
 		wardFireLeeway = 10,
-		wardFirePredict = 50,
-		wardFireShield = 450,
-		wardFireDefault = false,
+		wardFirePredict = 20,
+		wardFireShield = 400,
+		wardFireDefault = true,
 	},
 	
 	-- long range skirms
@@ -1675,15 +1680,15 @@ local behaviourConfig = {
 		fightOnlyUnits = medRangeExplodables,
 		maxSwarmLeeway = 30,
 		minSwarmLeeway = 130,
-		minFleeRange = 100,
+		minFleeRange = 150,
 		jinkPeriod = 2,
 		skirmLeeway = 10,
 		skirmBlockedApproachFrames = 90,
 		reloadFlee = true,
 		fleeOrderDis = 100,
-		fleeLeeway = 20,
+		fleeLeeway = 100,
 		fleeDistance = 100,
-		skirmOrderDis = 20,
+		skirmOrderDis = 80,
 		wardFireTargets = personalShieldUnits,
 		wardFireLeeway = 10,
 		wardFirePredict = 80,
@@ -2200,9 +2205,9 @@ local behaviourConfig = {
 	{
 		name = "gunshipraid",
 		onlyIdleHandling = false,
-		swarms = allGround,
-		skirms = {},
-		flees = {},
+		swarms = {},
+		skirms = allGroundNonAA,
+		flees = antiAirFlee,
 		reloadFlee = true,
 		idleFlee = longRangeRaiderIdleFleeArray,
 		idleChaseEnemyLeeway = 350,
@@ -2218,8 +2223,8 @@ local behaviourConfig = {
 	},
 	{
 		name = "gunshipassault",
-		swarms = allGround,
-		skirms = {},
+		swarms = {},
+		skirms = allGround,
 		flees = {},
 		onlyIdleHandling = false,
 		reloadFlee = true,
