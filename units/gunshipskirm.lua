@@ -38,28 +38,20 @@ return {
 		objectName             = [[rapier.s3o]],
 		script                 = [[gunshipskirm.lua]],
 		selfDestructAs         = [[GUNSHIPEX]],
-
 		sfxtypes               = {
-
 			explosiongenerators = {
 				[[custom:PULVMUZZLE]],
 			},
-
 		},
-
 		sightDistance          = 550,
 		turnRate               = 594,
 		weapons                = {
-
 			{
 				def                = [[VTOL_ROCKET]],
 				onlyTargetCategory = [[LAND SINK TURRET SHIP SWIM FLOAT HOVER]],
 			},
-
 		},
-
 		weaponDefs             = {
-
 			VTOL_ROCKET = {
 				name                    = [[ATG Rocket Pods]],
 				areaOfEffect            = 96,
@@ -110,11 +102,8 @@ return {
 				weaponType              = [[MissileLauncher]],
 				weaponVelocity          = 550,
 			},
-
 		},
-
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -128,8 +117,6 @@ return {
 				footprintZ       = 3,
 				object           = [[debris2x2c.s3o]],
 			},
-		
 		},
-	
 	} 
 }
