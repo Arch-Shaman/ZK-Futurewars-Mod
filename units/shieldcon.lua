@@ -63,7 +63,7 @@ return {
 				shieldInterceptType     = 3,
 				shieldPower             = 2000,
 				shieldPowerRegen        = 20,
-				shieldPowerRegenEnergy  = 0.4,
+				shieldPowerRegenEnergy  = 4,
 				shieldRadius            = 240,
 				shieldRepulser          = false,
 				shieldStartingPower     = 400,
