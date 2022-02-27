@@ -23,7 +23,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 70,
+		default = 85,
 	},
 
 	duration                = 0.3,
