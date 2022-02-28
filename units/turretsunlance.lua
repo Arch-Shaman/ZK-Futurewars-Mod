@@ -6,7 +6,7 @@ return {
 		name                          = [[Tracer]],
 		description                   = [[Sniper Turret - Requires 75 Power]],
 		activateWhenBuilt             = true,
-		buildCostMetal                = 1200,
+		buildCostMetal                = 1500,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 5,
