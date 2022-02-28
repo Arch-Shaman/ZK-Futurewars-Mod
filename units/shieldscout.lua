@@ -86,7 +86,7 @@ return {
 				},
 
 				damage                  = {
-					default = 50,
+					default = 70,
 				},
 
 				explosionGenerator      = [[custom:none]],
@@ -98,7 +98,7 @@ return {
 				lodDistance             = 10000,
 				noSelfDamage            = true,
 				range                   = 50,
-				reloadtime              = 2,
+				reloadtime              = 1,
 				rgbColor                = [[1 0.25 0]],
 				soundStart              = [[explosion/ex_small4_2]],
 				soundStartVolume        = 25,
@@ -121,10 +121,10 @@ return {
 				shieldBadColor          = [[1 0.1 0.1 1]],	
 				shieldGoodColor         = [[0.1 0.1 1 1]],	
 				shieldInterceptType     = 3,	
-				shieldPower             = 200,	
-				shieldPowerRegen        = 14,	
-				shieldPowerRegenEnergy  = 0.1,
-				shieldRadius            = 60,
+				shieldPower             = 380,	
+				shieldPowerRegen        = 10,	
+				shieldPowerRegenEnergy  = 0,
+				shieldRadius            = 80,
 				shieldRepulser          = false,
 				smartShield             = true,	
 				visibleShield           = false,	
