@@ -24,6 +24,7 @@ return {
 			pylonrange  = 150,
 			keeptooltip = "by janitor's request, please don't remove the tooltips Machine God.",
 			bait_level_default = 1,
+			dontfireatradarcommand = '0',
 		},
 		explodeAs                     = [[LARGE_BUILDINGEX]],
 		floater                       = true,
