@@ -21,8 +21,8 @@ return {
 		customParams                  = {
 			aimposoffset   = [[0 15 0]],
 			keeptooltip = [[any string i want]],
-			neededlink  = 8,
-			pylonrange  = 50,
+			neededlink  = 9,
+			pylonrange  = 150,
 		},
 
 		explodeAs                     = [[MEDIUM_BUILDINGEX]],
