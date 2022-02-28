@@ -108,17 +108,16 @@ return {
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					keepmomentum1 = 0,
 					timeoutspawn = 0,
-					vradius1 = "-2.5,3,-2.5,2.5,6,2.5",
+					vradius1 = "-1.25,3,-1.25,1.25,5,1.25",
 					noairburst = "March of progress", -- if true, this projectile will skip all airburst checks
 					onexplode = "The unity prevails", -- if true, this projectile will cluster when it explodes
 					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					stats_damage = (35*20) + 400,
-					shield_damage = (35*20) + 400,
-					stats_shield_damage = (35*20) + 400,
+					shield_damage = (100*20) + 1200,
+					stats_shield_damage = (100*20) + 1200,
 				},
 
 				damage                  = {
-					default = 400.2,
+					default = 1200.2,
 				},
 				
 				explosionGenerator      = [[custom:DOT_Pillager_Explo]],
@@ -208,7 +207,7 @@ return {
 				},
 
 				damage = {
-					default = 35,
+					default = 100,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.8,
