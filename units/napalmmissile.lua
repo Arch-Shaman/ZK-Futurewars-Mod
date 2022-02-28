@@ -70,7 +70,7 @@ unitDef = {
 				area_damage_duration = 16,
 				light_camera_height = 2500,
 				light_color = [[0.25 0.13 0.05]],
-				light_radios = 460,
+				light_radius = 460,
 				lups_napalm_fx = 1,
 				reveals_unit = 3,
 			},
