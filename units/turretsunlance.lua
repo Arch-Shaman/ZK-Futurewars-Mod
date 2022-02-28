@@ -19,7 +19,7 @@ return {
 		customParams                  = {
 			keeptooltip    = [[any string I want]],
 			neededlink     = 75,
-			pylonrange     = 50,
+			pylonrange     = 150,
 			specialreloadtime = tostring(aimTime),
 		},
 

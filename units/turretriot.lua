@@ -22,7 +22,7 @@ return {
 			midposoffset   = [[0 4 0]],
 			aim_lookahead  = 100,
 			neededlink  = 4,
-			pylonrange  = 70,
+			pylonrange  = 150,
 			keeptooltip = [[any string i want]],
 		},
 
