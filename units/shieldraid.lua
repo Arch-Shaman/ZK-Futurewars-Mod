@@ -6,7 +6,7 @@ return {
 		acceleration           = 1.5,
 		activateWhenBuilt      = true,
 		brakeRate              = 2.4,
-		buildCostMetal         = 90,
+		buildCostMetal         = 100,
 		buildPic               = [[shieldraid.png]],
 		canGuard               = true,
 		canMove                = true,
@@ -30,7 +30,7 @@ return {
 		idleAutoHeal           = 10,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 290,
+		maxDamage              = 330,
 		maxSlope               = 36,
 		maxVelocity            = 3.0,
 		maxWaterDepth          = 22,
@@ -88,7 +88,7 @@ return {
 				},
       
 				damage                  = {
-					default = 6.8,
+					default = 8,
 				},
 
 				duration                = 2/30,
@@ -122,8 +122,8 @@ return {
 				shieldBadColor          = [[1 0.1 0.1 1]],	
 				shieldGoodColor         = [[0.1 0.1 1 1]],	
 				shieldInterceptType     = 3,	
-				shieldPower             = 400,	
-				shieldPowerRegen        = 10,	
+				shieldPower             = 600,	
+				shieldPowerRegen        = 15,	
 				shieldPowerRegenEnergy  = 0.1,
 				shieldRadius            = 60,	
 				shieldRepulser          = false,	
