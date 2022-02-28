@@ -17,9 +17,9 @@ return {
 		collisionVolumeScales   = [[55 55 55]],
 		collisionVolumeType     = [[ellipsoid]],
 		corpse              = [[DEAD]],
-
 		customParams        = {
 			modelradius    = [[25]],
+			okp_damage = 400,
 		},
 
 		explodeAs           = [[BIG_UNITEX]],
@@ -37,7 +37,6 @@ return {
 		objectName          = [[hoverassault.s3o]],
 		script              = [[hoverdepthcharge.lua]],
 		selfDestructAs      = [[BIG_UNITEX]],
-
 		sfxtypes            = {
 
 			explosiongenerators = {
@@ -51,9 +50,7 @@ return {
 		turninplace         = 0,
 		turnRate            = 624,
 		workerTime          = 0,
-
 		weapons             = {
-
 			{
 				def                = [[DEPTHCHARGE]],
 				badTargetCategory  = [[FIXEDWING]],
@@ -70,11 +67,8 @@ return {
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[SWIM FIXEDWING LAND SUB SINK TURRET FLOAT SHIP GUNSHIP HOVER]],
 			},
-
 		},
-
 		weaponDefs             = {
-
 			DEPTHCHARGE = {
 				name                    = [[Depth Charge]],
 				areaOfEffect            = 160,
@@ -85,7 +79,6 @@ return {
 				craterBoost             = 1,
 				craterMult              = 2,
 				cegTag                  = [[torpedo_trail]],
-
 				customParams = {
 					burst = Shared.BURST_UNRELIABLE,
 				},
@@ -93,7 +86,6 @@ return {
 				damage                  = {
 					default = 400.1,
 				},
-
 				edgeEffectiveness       = 0.4,
 				explosionGenerator      = [[custom:TORPEDOHITHUGE]],
 				fixedLauncher           = true,
@@ -136,11 +128,9 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 1,
 				craterMult              = 2,
-
 				damage                  = {
 					default = 400.1,
 				},
-
 				edgeEffectiveness       = 0.4,
 				explosionGenerator      = [[custom:TORPEDOHITHUGE]],
 				fixedLauncher           = true,
@@ -175,15 +165,12 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams            = {
 					bogus = 1,
 				},
-
 				damage                  = {
 					default = 1E-06,
 				},
-
 				explosionGenerator      = [[custom:NONE]],
 				fireStarter             = 0,
 				flightTime              = 1,
@@ -194,13 +181,11 @@ return {
 				size                    = 1E-06,
 				smokeTrail              = false,
 				targetborder            = 0.9,
-
 				textures                = {
 					[[null]],
 					[[null]],
 					[[null]],
 				},
-
 				turnrate                = 10000,
 				turret                  = true,
 				waterWeapon             = true,
@@ -211,7 +196,6 @@ return {
 			},
 		},
 		featureDefs         = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -219,8 +203,6 @@ return {
 				footprintZ       = 3,
 				object           = [[hoverdepthcharge_dead.s3o]],
 			},
-
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,
