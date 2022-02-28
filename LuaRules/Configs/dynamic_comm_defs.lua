@@ -399,8 +399,8 @@ local moduleDefs = {
 	},
 	{
 		name = "commweapon_rocketlauncher",
-		humanName = "Rocket Launcher",
-		description = "Medium-range, low-velocity rocket launcher.",
+		humanName = "Multiple Light Rocket Launcher",
+		description = "Long range, indirect area bombardment. Spreads its DPS across a small area.",
 		image = moduleImagePath .. "commweapon_rocketlauncher.png",
 		limit = 2,
 		cost = 75 * COST_MULT,
