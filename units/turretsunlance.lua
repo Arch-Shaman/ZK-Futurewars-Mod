@@ -21,6 +21,7 @@ return {
 			neededlink     = 75,
 			pylonrange     = 150,
 			specialreloadtime = tostring(aimTime),
+			dontfireatradarcommand = '1',
 		},
 
 		explodeAs                     = [[LARGE_BUILDINGEX]],
