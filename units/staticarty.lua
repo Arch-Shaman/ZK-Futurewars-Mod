@@ -2,7 +2,7 @@ return {
 	staticarty = {
 		unitname                      = [[staticarty]],
 		name                          = [[Cerberus]],
-		description                   = [[Plasma Artillery Battery - Requires connection to a 50 energy grid]],
+		description                   = [[Plasma Artillery Battery]],
 		acceleration                  = 0,
 		activateWhenBuilt             = true,
 		brakeRate                     = 0,
@@ -53,13 +53,11 @@ return {
 		yardMap                       = [[ooooo ooooo ooooo ooooo ooooo]],
 
 		weapons                       = {
-
 			{
 				def                = [[PLASMA]],
 				badTargetCategory  = [[GUNSHIP]],
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP]],
 			},
-
 		},
 
 
@@ -74,16 +72,13 @@ return {
 				burstRate               = 0.133,
 				craterBoost             = 1,
 				craterMult              = 2,
-
 				customParams            = {
 					light_color = [[1.4 0.8 0.3]],
 					reveal_unit = 10,
 				},
-
 				damage                  = {
 					default = 601,
 				},
-
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = [[custom:330rlexplode]],
 				fireStarter             = 120,
