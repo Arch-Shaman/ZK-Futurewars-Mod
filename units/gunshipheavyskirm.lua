@@ -5,7 +5,7 @@ return {
 		description         = [[Fire Support Gunship]],
 		acceleration        = 0.2,
 		brakeRate           = 0.16,
-		buildCostMetal      = 1000,
+		buildCostMetal      = 1250,
 		builder             = false,
 		buildPic            = [[gunshipheavyskirm.png]],
 		canFly              = true,
