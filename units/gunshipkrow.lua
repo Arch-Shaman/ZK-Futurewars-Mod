@@ -53,13 +53,11 @@ return {
 			},
 
 		},
-		sightDistance          = 633,
+		sightDistance          = 700,
 		turnRate               = 250,
 		upright                = true,
 		workerTime             = 0,
-  
 		weapons                = {
-
 			{
 				def                = [[KROWLASER]],
 				mainDir            = [[0.38 0.1 0.2]],
@@ -67,8 +65,6 @@ return {
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-
-
 			{
 				def                = [[KROWLASER]],
 				mainDir            = [[-0.38 0.1 0.2]],
@@ -96,7 +92,6 @@ return {
 
 		},
 		weaponDefs             = {
-			
 			KROWLASER  = {
 				name                    = [[High Intensity Scattergun]],
 				areaOfEffect            = 30,
@@ -119,7 +114,7 @@ return {
 				},
 
 				damage                  = {
-					default = 60.1,
+					default = 100.1,
 				},
 
 				duration                = 0.1,
