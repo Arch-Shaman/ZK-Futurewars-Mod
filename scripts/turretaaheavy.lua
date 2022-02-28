@@ -60,7 +60,7 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.BlockShot(num, targetID)
-	return ((targetID and (GG.DontFireRadar_CheckBlock(unitID, targetID) or GG.OverkillPrevention_CheckBlock(unitID, targetID, 1500.1, 28))) or false) or GG.Script.OverkillPreventionCheck(unitID, targetID, OKP_DAMAGE, 2400, 55, -0.05, true, 100)
+	return (targetID and (GG.DontFireRadar_CheckBlock(unitID, targetID) or GG.Script.OverkillPreventionCheck(unitID, targetID, OKP_DAMAGE, 2400, 55, -0.05, true, 100))) or false
 end
 
 function script.Killed(recentDamage, maxHealth)
