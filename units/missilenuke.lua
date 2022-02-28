@@ -14,11 +14,9 @@ return {
 		collisionVolumeOffsets        = [[0 75 -50]],
 		collisionVolumeScales         = [[20 50 20]],
 		collisionVolumeType           = [[CylY]],
-
 		customParams                  = {
 			mobilebuilding = [[1]],
 		},
-
 		explodeAs                     = [[CRBLMSSL]],
 		footprintX                    = 1,
 		footprintZ                    = 1,
@@ -31,7 +29,6 @@ return {
 		objectName                    = [[crblmsslr.s3o]],
 		script                        = [[missilenuke.lua]],
 		selfDestructAs                = [[CRBLMSSL]],
-
 		sfxtypes                      = {
 			explosiongenerators = {
 				[[custom:RAIDMUZZLE]],
@@ -49,7 +46,6 @@ return {
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 			},
 		},
-
 		weaponDefs                    = {
 			CRBLMSSL = {
 				name                    = [[Nuclear Missile]],
@@ -68,11 +64,9 @@ return {
 					cruisedist = 800,
 					reveal_unit = 20,
 				},
-
 				damage                  = {
 					default = 11000.1,
 				},
-
 				edgeEffectiveness       = 0.3,
 				explosionGenerator      = [[custom:LONDON_FLAT]],      -- note, spawning of the explosion is handled by exp_nuke_effect_chooser.lua
 				fireStarter             = 0,
