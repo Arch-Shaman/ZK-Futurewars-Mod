@@ -15,10 +15,10 @@ return {
 		corpse                        = [[DEAD]],
 
 		customParams                  = {
-			pylonrange = 150,
+			pylonrange = 200,
 			removewait = 1,
 			removestop = 1,
-			decay_rate = -0.02,
+			decay_rate = -0.04,
 			decay_time = 3,
 			decay_maxoutput = 4,
 			decay_initialrate = 1,
