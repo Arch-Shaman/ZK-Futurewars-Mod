@@ -17,12 +17,13 @@ local weaponDef = {
 		light_color = [[0.95 0.65 0.30]],
 		light_radius = 280,
 		reaim_time = 1,
-		cruiserandomradius = 130,
+		cruiserandomradius = 220,
 		cruisealt = 200,
 		airlaunched = 1,
 		cruisedist = 280,
 		cruisetracking = 1,
 		cruise_nolock = 1,
+		reveal_unit = 10,
 	},
 
 	damage                  = {
@@ -36,7 +37,7 @@ local weaponDef = {
 	interceptedByShieldType = 2,
 	model                   = [[wep_m_hailstorm.s3o]],
 	range                   = 720,
-	reloadtime              = 7.4,
+	reloadtime              = 8.5,
 	smokeTrail              = false,
 	soundHit                = [[weapon/missile/rapid_rocket_hit]],
 	soundHitVolume          = 7,
