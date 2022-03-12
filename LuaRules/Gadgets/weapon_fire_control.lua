@@ -162,7 +162,7 @@ function gadget:GameFrame(f)
 				data.weapons[i].progress = data.weapons[i].progress + progressToAdd
 				local estimatedTimeToReload
 				if data.weapons[i].progress < data.weapons[i].origReload then
-					estimatedTimeToReload = f + ceil((data.weapons[i].origReload - data.weapons[i].progress)/effectiveSpeed)
+					estimatedTimeToReload = f + ceil((data.weapons[i].origReload - data.weapons[i].progress))
 				else
 					estimatedTimeToReload = f
 				end
