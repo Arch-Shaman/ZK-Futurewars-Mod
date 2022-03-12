@@ -98,7 +98,7 @@ return {
 					timeslow_onlyslow = 1,
 				},
 
-				edgeeffectiveness       = 0.4,
+				edgeeffectiveness       = 0.01,
 				explosionGenerator      = [[custom:scanner_slow]],
 				explosionSpeed          = 12,
 				impulseBoost            = 0,
