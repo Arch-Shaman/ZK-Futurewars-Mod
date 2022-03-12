@@ -190,7 +190,7 @@ local function GetSuperweaponTooltip(unitID, ud)
 		base = base .. "\n"
 		if (Spring.GetUnitRulesParam(unitID, "lowpower") or 0) == 1 then
 			local grid = (Spring.GetUnitRulesParam(unitID, "OD_gridMaximum") or 0)
-			grid = string.format("%.1f %%", math.round(grid, 1))
+			grid = string.format("%.1f", math.round(grid, 1))
 			return base .. "\255\255\061\061" .. (WG.Translate("interface", "needs_grid") or "Grid Power: ") .. grid .. " / " .. ud.customParams.neededlink .. "\255\255\255\255"
 		end
 		local superRate = (Spring.GetUnitRulesParam(unitID, "superweapon_mult") or 0) * 100
@@ -208,7 +208,7 @@ local function GetSuperweaponTooltip(unitID, ud)
 	end
 	if (Spring.GetUnitRulesParam(unitID, "lowpower") or 0) == 1 then
 		local grid = (Spring.GetUnitRulesParam(unitID, "OD_gridMaximum") or 0)
-		grid = string.format("%.1f %%", math.round(grid, 1))
+		grid = string.format("%.1f", math.round(grid, 1))
 		return WG.Translate("units", ud.name .. ".description") .. " - \255\255\061\061" .. (WG.Translate("interface", "needs_grid") or "Grid Power: ") .. grid .. " / " .. ud.customParams.neededlink .. "\255\255\255\255"
 	end
 	local superRate = (Spring.GetUnitRulesParam(unitID, "superweapon_mult") or 0) * 100
@@ -233,7 +233,7 @@ local function GetLinkNeedTooltip(unitID, ud)
 	end
 	if (Spring.GetUnitRulesParam(unitID, "lowpower") or 0) == 1 then
 		local grid = (Spring.GetUnitRulesParam(unitID, "OD_gridMaximum") or 0)
-		grid = string.format("%.1f %%", math.round(grid, 1))
+		grid = string.format("%.1f", math.round(grid, 1))
 		return WG.Translate("units", ud.name .. ".description") .. "\n\255\255\061\061" .. (WG.Translate("interface", "needs_grid") or "Insufficient grid power\255\255\255\255: ") .. grid .. " / " .. ud.customParams.neededlink
 	else
 		return WG.Translate("units", ud.name .. ".description")
