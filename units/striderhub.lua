@@ -21,8 +21,6 @@ return {
 			[[striderfunnelweb]],
 			[[striderbantha]],
 			[[striderdetriment]],
-			[[shipheavyarty]],
-			[[shipcarrier]],
 			[[subtacmissile]],
 			[[nebula]],
 		},

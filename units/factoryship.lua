@@ -19,7 +19,8 @@ return {
 			[[shipassault]],
 			[[shiparty]],
 			[[shipaa]],
-			[[subscout]],
+			[[shipcarrier]],
+			[[shipheavyarty]],
 		},
 
 		buildPic               = [[FACTORYSHIP.png]],
