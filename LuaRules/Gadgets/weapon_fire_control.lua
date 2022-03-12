@@ -38,7 +38,8 @@ for i = 1, #UnitDefs do
 	if UnitDef.customParams.superweapon or UnitDef.customParams.needsfirecontrol then
 		local weapons = UnitDef.weapons
 		local data = {}
-		local recylcer = false
+		local recycler = false
+		spEcho("Found " .. i .. "(" .. UnitDef.name .. ")\n Weapons: " .. #weapons)
 		for j = 1, #weapons do
 			local weaponDef = WeaponDefs[weapons[j].weaponDef]
 			local reload = (tonumber(weaponDef.customParams.script_reload) or 10) * 30
@@ -55,7 +56,6 @@ for i = 1, #UnitDefs do
 				data[j].lastfire = 0
 			end
 		end
-		spEcho("Found " .. i .. "(" .. UnitDef.name .. ")\n Weapons: " .. #weapons)
 		config[i] = data
 		if recycler then
 			recyclers[i] = true
@@ -145,12 +145,13 @@ function gadget:GameFrame(f)
 		local firespeed
 		if recyclers[data.unitDef] or forcerecycle[unitID] then
 			firespeed = 1
+			if debug then spEcho("Firespeed set to 1 due to recycler") end
 		else
 			firespeed = Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0
 		end
 		--if debug then spEcho("firespeed: " .. firespeed .. "\nslowMult : " .. slowMult) end
 		effectiveSpeed = firespeed * slowMult * (1 - unpowered)
-		--if debug then spEcho("effectiveSpeed: " .. effectiveSpeed) end
+		if debug then spEcho("effectiveSpeed: " .. effectiveSpeed) end
 		for i = 1, #data.weapons do
 			if data.weapons[i].progress < data.weapons[i].origReload then
 				local progressToAdd = effectiveSpeed
