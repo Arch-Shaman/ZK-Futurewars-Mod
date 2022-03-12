@@ -53,6 +53,11 @@ do
 			lineWidth = 2,
 			class = CLOAK,
 		},
+		factoryspider = {
+			color = {0.8, 0.8, 0.2},
+			lineWidth = 2,
+			class = CLOAK,
+		},
 		mahlazer = {
 			color = {1, 0, 0},
 			class = GROUND,
