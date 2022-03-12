@@ -22,6 +22,7 @@ return {
 		customParams           = {
 			modelradius        = [[10]],
 			aim_lookahead      = 160,
+			specialreloadtime = [[300]],
 		},
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 2,
@@ -30,7 +31,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 500,
+		maxDamage              = 550,
 		maxSlope               = 18,
 		maxVelocity            = 3.7,
 		maxWaterDepth          = 22,
@@ -43,6 +44,7 @@ return {
 		sfxtypes               = {
 			explosiongenerators = {
 				[[custom:BEAMWEAPON_MUZZLE_ORANGE_SMALL]],
+				[[custom:flamer]],
 			},
 		},
 		sightDistance          = 560,
@@ -55,7 +57,6 @@ return {
 		turnRate               = 1125,
 		workerTime             = 0,
 		weapons                = {
-
 			{
 				def                = [[HEATRAY]],
 				badTargetCategory  = [[FIXEDWING]],
@@ -86,7 +87,7 @@ return {
 					sweepfire_fastupdate = 1,
 				},
 				damage                  = {
-					default = 45,
+					default = 50,
 				},
 				duration                = 0.3,
 				dynDamageExp            = 1,

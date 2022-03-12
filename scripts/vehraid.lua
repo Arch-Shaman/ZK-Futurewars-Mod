@@ -23,6 +23,10 @@ local smokePiece = {turret, body}
 local SIG_AIM = 1
 local ANIM_SPEED = 50
 local RESTORE_DELAY = 2000
+local SPEEDUP_DURATION = 45
+local SPEEDUP_FACTOR = 3.8
+local POSTSPRINT_DURATION = 18
+local POSTSPRINT_SPEED = 2/3
 
 local TURRET_TURN_SPEED = 335
 local SLEEVE_TURN_SPEED = 90
@@ -36,6 +40,28 @@ local spGetPiecePosition = Spring.GetUnitPiecePosition
 local spGetUnitVelocity = Spring.GetUnitVelocity
 local spGetUnitPosition = Spring.GetUnitPosition
 
+function SprintThread()
+	for i=1, SPEEDUP_DURATION do
+		EmitSfx(rwheel2, 1025)
+		EmitSfx(lwheel2, 1025)
+		Sleep(33)
+	end
+	
+	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", POSTSPRINT_SPEED)
+	GG.UpdateUnitAttributes(unitID)
+	Sleep(POSTSPRINT_DURATION * 33)
+	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
+	GG.UpdateUnitAttributes(unitID)
+	-- Spring.MoveCtrl.SetAirMoveTypeData(unitID, "maxAcc", 0.5)
+	GG.UpdateUnitAttributes(unitID)
+end
+
+function Sprint()
+	StartThread(SprintThread)
+	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", SPEEDUP_FACTOR)
+	-- Spring.MoveCtrl.SetAirMoveTypeData(unitID, "maxAcc", 3)
+	GG.UpdateUnitAttributes(unitID)
+end
 
 local function GetWheelHeight(piece)
 	local x,y,z = Spring.GetUnitPiecePosDir(unitID, piece)

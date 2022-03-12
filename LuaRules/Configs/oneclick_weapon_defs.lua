@@ -9,6 +9,9 @@ local oneClickWepDefNames = {
 	subscout = {
 		{ functionToCall = "Detonate", name = "Cancel", tooltip = "Cancel selected terraform units.", texture = "LuaUI/Images/Commands/Bold/cancel.png", partBuilt = true},
 	},
+	vehraid = {
+		{ functionToCall = "Sprint", reloadTime = 300, name = "Sprint", useSpecialReloadFrame = true, tooltip = "Sprint: Increase speed by 380% for 1.5seconds, slow down by 33% afterward for 0.6s. 10sec cooldown.", texture = "LuaUI/Images/Commands/Bold/sprint.png",},
+	},
 	gunshipkrow = {
 		{ functionToCall = "ClusterBomb", reloadTime = 854, name = "Annhilator Beam", tooltip = "Annhilator Beam: Activates a massive death laser to erase ground-loving plebs from exsitance.", weaponToReload = 3, texture = "LuaUI/Images/Commands/Bold/bomb.png",},
 	},
