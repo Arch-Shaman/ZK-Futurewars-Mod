@@ -89,7 +89,7 @@ function script.Activate ()
 end
 
 function script.Deactivate ()
-	StartThread (Close)
+	--StartThread (Close)
 end
 
 function script.QueryBuildInfo ()
