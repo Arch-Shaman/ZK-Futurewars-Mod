@@ -6,7 +6,7 @@ return {
 		acceleration        = 0.3,
 		activateWhenBuilt   = true,
 		brakeRate           = 1.8,
-		buildCostMetal      = 4000,
+		buildCostMetal      = 4200,
 		buildPic            = [[amphassault.png]],
 		canGuard            = true,
 		canMove             = true,
@@ -18,7 +18,7 @@ return {
 		corpse              = [[DEAD]],
 
 		customParams        = {
-			amph_regen = 100,
+			amph_regen = 200,
 			amph_submerged_at = 40,
 			sink_on_emp    = 0,
 			floattoggle    = [[1]],
@@ -34,7 +34,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
-		maxDamage           = 16000,
+		maxDamage           = 26400,
 		maxSlope            = 36,
 		maxVelocity         = 1.1,
 		maxReverseVelocity  = 0,
@@ -51,8 +51,8 @@ return {
 			},
 		},
 
-		sightDistance       = 660,
-		sonarDistance       = 660,
+		sightDistance       = 860,
+		sonarDistance       = 860,
 		trackOffset         = 0,
 		trackStrength       = 8,
 		trackStretch        = 1,
@@ -91,7 +91,7 @@ return {
 				},
 
 				damage                  = {
-					default = 400.1,
+					default = 600.1,
 				},
 
 				explosionGenerator      = [[custom:gauss_hit_m]],
@@ -103,7 +103,7 @@ return {
 				noExplode               = true,
 				noSelfDamage            = true,
 				numbounce               = 4,
-				range                   = 600,
+				range                   = 800,
 				reloadtime              = 3.5,
 				rgbColor                = [[0.5 1 1]],
 				separation              = 0.5,
@@ -117,7 +117,7 @@ return {
 				turret                  = true,
 				waterweapon             = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 650,
+				weaponVelocity          = 550,
 			},
 		},
 		featureDefs         = {
