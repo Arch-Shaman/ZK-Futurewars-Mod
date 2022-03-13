@@ -1160,9 +1160,9 @@
 		"helptext" : "The steward replaced the aging Thug design after its miserable failure against the Coalition. Its deficient plasma cannons were replaced with a heavier accelerator resulting in improved range and damage. The Ward has high shield regeneration, but that comes at a premium."
 	},
 	"amphriot" : {
-		"name" : "Scallop",
-		"description" : "Amphibious Riot Bot (Anti-Sub)",
-		"helptext" : "A typical riot unit, the Scallop is armed with impact explosives for underwater use and a quadruple shotgun when on land."
+		"name" : "Froth",
+		"description" : "Amphibious Riot Bot",
+		"helptext" : "The Froth's quad barrel grenade launcher allows it to fire 4 inaccurate grenades rapidly at approaching raiders. It also works fairly well underwater and may be able to strike surface vessels from below, albiet very inaccurately. Counter with Air Units or skirmishers that outrange it."
 	},
 	"planecon" : {
 		"name" : "Crane",
