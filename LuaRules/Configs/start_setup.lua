@@ -1,7 +1,8 @@
 aiCommanders = {}
 ploppableDefs = {}
 for unitDefID, unitDef in pairs(UnitDefs) do
-	if unitDef.customParams.ai_start_unit then
+	local cp = unitDef.customParams
+	if cp.ai_start_unit then
 		aiCommanders[unitDefID] = true
 	end
 	if cp.ploppable then
