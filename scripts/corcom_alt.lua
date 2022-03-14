@@ -201,7 +201,7 @@ end
 
 function script.FireWeapon(num)
 	local weaponNum = dyncomm.GetWeapon(num)
-	Spring.Echo("FireWeapon: " .. num .. ", " .. weaponNum)
+	--Spring.Echo("FireWeapon: " .. num .. ", " .. weaponNum)
 	if weaponNum == 1 then
 		dyncomm.EmitWeaponFireSfx(lfirept, num)
 		if spooling1 then
@@ -226,7 +226,7 @@ end
 
 function script.BlockShot(num, targetID)
 	local weaponNum = dyncomm.GetWeapon(num)
-	Spring.Echo("BlockShot: " .. weaponNum .. ", " .. num)
+	--Spring.Echo("BlockShot: " .. weaponNum .. ", " .. num)
 	local radarcheck = (targetID and GG.DontFireRadar_CheckBlock(unitID, targetID)) and true or false
 	local okp = false
 	local spool = false
@@ -236,10 +236,10 @@ function script.BlockShot(num, targetID)
 	end
 	if weaponNum == 1 and spooling1 then
 		spool = not GG.FireControl.CanFireWeapon(unitID, weaponNum)
-		Spring.Echo("SpoolCheck1: " .. tostring(spool))
+		--Spring.Echo("SpoolCheck1: " .. tostring(spool))
 	elseif weaponNum == 2 and spooling2 then
 		spool = not GG.FireControl.CanFireWeapon(unitID, weaponNum)
-		Spring.Echo("SpoolCheck2: " .. tostring(spool))
+		--Spring.Echo("SpoolCheck2: " .. tostring(spool))
 	end
 	return spool or okp or radarcheck
 end

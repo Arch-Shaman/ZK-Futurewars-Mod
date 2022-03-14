@@ -314,7 +314,7 @@ local function SetupSpooling()
 	if weaponname1 then 
 		local cp1 = WeaponDefs[unitWeaponNames[weaponname1].weaponDefID].customParams
 		if cp1.recycler then
-			Spring.Echo("Weapon 1 is recycler!")
+			--Spring.Echo("Weapon 1 is recycler!")
 			GG.FireControl.ForceAddUnit(unitID, 1, tonumber(cp1["script_reload"]) * 30, tonumber(cp1["recycle_bonus"]), tonumber(cp1["recycle_reductionframes"]), tonumber(cp1["recycle_reduction"]), tonumber(cp1["recycle_reductiontime"]), tonumber(cp1["recycle_maxbonus"]), 0)
 			spool1 = true
 		end
@@ -322,7 +322,7 @@ local function SetupSpooling()
 	if weaponname2 then
 		local cp2 = WeaponDefs[unitWeaponNames[weaponname2].weaponDefID].customParams
 		if cp2.recycler then
-			Spring.Echo("Weapon 2 is recycler!")
+			--Spring.Echo("Weapon 2 is recycler!")
 			GG.FireControl.ForceAddUnit(unitID, 2, tonumber(cp2["script_reload"]) * 30, tonumber(cp2["recycle_bonus"]), tonumber(cp2["recycle_reductionframes"]), tonumber(cp2["recycle_reduction"]), tonumber(cp2["recycle_reductiontime"]), tonumber(cp2["recycle_maxbonus"]), 0)
 			spool2 = true
 		end
