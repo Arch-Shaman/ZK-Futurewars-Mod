@@ -38,9 +38,9 @@ return {
 		iconType            = [[commander1]],
 		leaveTracks         = true,
 		losEmitHeight       = 40,
-		maxDamage           = 4500,
+		maxDamage           = 5500,
 		maxSlope            = 36,
-		maxVelocity         = 1.25,
+		maxVelocity         = 1.0,
 		maxWaterDepth       = 5000,
 		movementClass       = [[AKBOT2]],
 		noChaseCategory     = [[TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET]],
@@ -66,7 +66,7 @@ return {
 		trackWidth          = 22,
 		turnRate            = 1377,
 		upright             = true,
-		workerTime          = 10,
+		workerTime          = 5,
 		featureDefs         = {
 			DEAD      = {
 				blocking         = true,
