@@ -22,7 +22,7 @@ return {
 		buildingGroundDecalSizeY      = 16,
 		category			          = [[UNARMED SINK LAND]],
 		customParams = {
-			soundselect = "building_select1",
+			soundselect = "cpl_select",
 		},
 		energyUse                     = 0,
 		explodeAs                     = [[LARGE_BUILDINGEX]],
