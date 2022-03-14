@@ -345,6 +345,10 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 		spSetUnitRulesParam(unitID, "comm_area_cloak_radius", data.cloakFieldRange, INLOS)
 	end
 	
+	if data.nanoregen and data.nanomax then
+		GG.NanoRegen.Add(unitID, data.nanoregen, data.nanomax)
+	end
+	
 	local buildPowerMult = ((data.bonusBuildPower or 0) + ud.buildSpeed)/ud.buildSpeed
 	local extrastorage = data.extrastorage or 0
 	local storageamount = ud.energyStorage + extrastorage
