@@ -4,9 +4,9 @@ local weaponDef = {
 	accuracy                = 1024,
 	alphaDecay              = 0.7,
 	areaOfEffect            = 96,
-	burnblow                = true,
-	craterBoost             = 0.15,
-	craterMult              = 0.3,
+	burnblow                = false,
+	craterBoost             = 0,
+	craterMult              = 0,
 
 	customParams            = {
 		is_unit_weapon = 1,
@@ -19,8 +19,8 @@ local weaponDef = {
 		script_reload = [[1.1]],
 		recycler = 1,
 		recycle_reductiontime = 0.2,
-		recycle_reduction = 0.15,
-		recycle_bonus = 0.15,
+		recycle_reduction = 0.3,
+		recycle_bonus = 0.3,
 		recycle_reductionframes = 0.5,
 		recycle_maxbonus = 20,
 	},
@@ -36,6 +36,7 @@ local weaponDef = {
 	impulseFactor           = 0.2,
 	intensity               = 0.7,
 	interceptedByShieldType = 1,
+	impactOnly              = false,
 	noSelfDamage            = true,
 	range                   = 285,
 	reloadtime              = 1/30,
@@ -47,7 +48,7 @@ local weaponDef = {
 	stages                  = 10,
 	turret                  = true,
 	weaponType              = [[Cannon]],
-	weaponVelocity          = 550,
+	weaponVelocity          = 650,
 }
 
 return name, weaponDef
