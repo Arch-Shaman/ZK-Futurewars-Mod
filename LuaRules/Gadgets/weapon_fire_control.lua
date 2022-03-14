@@ -22,7 +22,7 @@ local config = {}
 local min = math.min
 local max = math.max
 local ceil = math.ceil
-local debug = true
+local debug = false
 
 local INLOS = {inlos = true}
 local spGetGameFrame = Spring.GetGameFrame
