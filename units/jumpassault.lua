@@ -16,8 +16,8 @@ return {
 
 		customParams        = {
 			canjump            = 1,
-			jump_range         = 400,
-			jump_speed         = 8,
+			jump_range         = 450,
+			jump_speed         = 9,
 			jump_reload        = 6,
 			jump_from_midair   = 1,
 			
@@ -37,7 +37,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
-		maxDamage           = 6000,
+		maxDamage           = 6900,
 		maxSlope            = 36,
 		maxVelocity         = 2.3,
 		maxWaterDepth       = 22,
