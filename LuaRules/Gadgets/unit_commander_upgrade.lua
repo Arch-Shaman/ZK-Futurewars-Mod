@@ -54,24 +54,26 @@ include("LuaRules/Configs/customcmds.h.lua")
 -- Various module configs
 
 local names = {
-	"Moi Maailma",
-	"FRIENDLIES OVER HERE",
+	-- Original Series --
+	"Moi Maailma", -- "Hello world" in Finnish?
+	"FRIENDLIES OVER HERE", -- XCOM meme
 	"I Use Hacks",
-	"SHIELD NOOB",
+	"SHIELD NOOB", -- ZK reference
 	"Dgun Me Harder",
-	"Van Doorn",
-	"ONE NEAT TRICK TO KILL ALL COMMS",
-	"I AM ERROR",
+	"Van Doorn", -- XCOM meme
+	"ONE WEIRD TRICK TO KILL ALL COMMS", -- Clickbait reference
+	"I AM ERROR", -- Legend of Zelda
 	"Debug THIS",
 	"Self-Ds when lost",
 	"NOT SUSPICIOUS AT ALL",
-	"WTB Dgun",
-	"Dgun Not Included",
-	"Query Failed: Couldn't Load Name",
+	"WTB Dgun", -- ZK
+	"Dgun Not Included", -- ZK
+	"Query Failed: Couldn't Load Name", -- Programming humor
 	"Ol' Reliable (Not Reliable)",
 	"Explosive Contents",
-	"Lappi Gaming",
+	"Lappi Gaming", -- Ehal45 reference
 	"Moikka Mikael",
+	-- Civilization memes (suggested by someone I forgot, sorri) --
 	"No More Mr Nice Guy",
 	"God Told Me To Do It", 
 	"What Are the Civilian Applications?", 
@@ -79,6 +81,38 @@ local names = {
 	"Appeal To Reason", 
 	"Lapsed Pacifist", 
 	"Reformed Nice Guy",
+	-- Other --
+	"Loot Loot Inside", -- terve meme. :P
+	"Strength of Sea Sweden", -- Shaman meme
+	"Probably a Riot Commander",
+	"Volatile Storage",
+	"Ghost of Kyiv", -- Ukraine conflict
+	"Unreliable Enemy Explosion Generator",
+	"That's Future Wars!",
+	"Zero Point",
+	"Scourge of Pootis",
+	"Conviction Tester",
+	"Born Again in Fire",
+	"Cursed with the Curse of being Cursed",
+	"Missing key 'CommName' in 'CommTable'", -- Unity Localization reference
+	"Earth's Resolution",
+	"Buy me for only 4928 credits!", -- Poking fun at space capitalism.
+	"Hazy_uhyR's Plight", -- Just because I want to.
+	"Emperor's Guard",
+	-- Shamelessly stolen from Users --
+	"Ukraine BM", -- User: Ukraine
+	"ICE COLD BUT HOT", -- User: Ukraine
+	"StrikeFreedom", -- User: vesves
+	"Yeye", -- User: Yeye77
+	"TEDIOUS SCROLLING", -- User: Kapy
+	"THE INEVITABLE END", -- User: Kapy
+	"Borek the Builder", -- User: Silent_AI
+	"I dont like me", -- User: Kingstad
+	"Kingstad hates him", -- User: Pootis
+	"Important Commander", -- User: Hazy_uhyR
+	"Condola", -- User: terve886
+	"DLR", -- User: terve886
+	
 }
 
 local zombienames = {
@@ -122,9 +156,10 @@ local defaultweapon = {
 	[1] = "commweapon_heavyrifle", -- strike
 	[2] = "commweapon_heatray", -- recon
 	[3] = "commweapon_beamlaser", -- support
-	[4] = "commweapon_canistercannon", -- bombard
-	[5] = "commweapon_beamlaser", -- knight
-	[6] = "commweapon_canistercannon", -- presumably battle comm at some point
+	[4] = "commweapon_rocketlauncher", -- bombard
+	[5] = "commweapon_heavymachinegun", -- riot
+	[6] = "commweapon_beamlaser", -- knight (presumably?)
+	[7] = "commweapon_heavymachinegun", -- riot?
 }
 
 local detpacktable = {
@@ -159,10 +194,14 @@ local defaultaddons = {
 	-- riot? --
 	[6] = {
 		"module_radarnet",
-	},	
+	},
+	[7] = {
+		"module_radarnet",
+	},
 }
 
 local function GetCommanderChassisDefaultWeapon(type)
+	--Spring.Echo(type)
 	return defaultweapon[type]
 end
 

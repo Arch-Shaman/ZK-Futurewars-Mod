@@ -122,7 +122,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_flamethrower.png",
 		limit = 2,
 		cost = 50 * COST_MULT,
-		requireChassis = {"recon", "assault", "knight"},
+		requireChassis = {"recon", "assault", "riot", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -181,12 +181,12 @@ local moduleDefs = {
 	},
 	{
 		name = "commweapon_heavymachinegun",
-		humanName = "Machine Gun",
-		description = "Close-in automatic weapon with AoE",
+		humanName = "Chaingun",
+		description = "Automatic weapon with AoE that spools up over time.\nShaman's note: The actual DPS is much higher!",
 		image = moduleImagePath .. "commweapon_heavymachinegun.png",
 		limit = 2,
 		cost = 50 * COST_MULT,
-		requireChassis = {"assault", "knight"},
+		requireChassis = {"riot", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -382,7 +382,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_riotcannon.png",
 		limit = 2,
 		cost = 75 * COST_MULT,
-		requireChassis = {"assault", "knight"},
+		requireChassis = {"riot", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -470,7 +470,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_canister.png",
 		limit = 2,
 		cost = 0 * COST_MULT,
-		requireChassis = {"assault"},
+		requireChassis = {"riot"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -478,6 +478,50 @@ local moduleDefs = {
 				return
 			end
 			local weaponName = "commweapon_canistercannon"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+	{
+		name = "commweapon_grenadelauncher",
+		humanName = "Grenade Launcher",
+		description = "Like explosions? This weapon features a 10 round burst of light HE grenades, ruining any raider's day or dealing massive damage up close.",
+		image = moduleImagePath .. "commweapon_canister.png",
+		limit = 2,
+		cost = 0 * COST_MULT,
+		requireChassis = {"riot"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = "commweapon_grenadelauncher"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+	{
+		name = "commweapon_impulse_laser",
+		humanName = "Repulsor",
+		description = "A lightly damaging laser that phases through enemies, dealing higher damage to fatter units. High impulse.",
+		image = moduleImagePath .. "commweapon_impulse_laser.png",
+		limit = 2,
+		cost = 0 * COST_MULT,
+		requireChassis = {"riot"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = "commweapon_impulse_laser"
 			if not sharedData.weapon1 then
 				sharedData.weapon1 = weaponName
 			else
@@ -605,7 +649,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_concussion.png",
 		limit = 1,
 		cost = 300 * COST_MULT,
-		requireChassis = {"recon", "knight"},
+		requireChassis = {"recon", "riot", "knight"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -1135,18 +1179,33 @@ local moduleDefs = {
 	{
 		name = "module_heavy_armor",
 		humanName = "High Density Plating",
-		description = "Provides " .. 3000*HP_MULT .. " health but reduces speed by 1.",
-		"\nGuardian Only. (Limit: 8, Requires Ablative Armour Plates)",
+		description = "Provides " .. 3000*HP_MULT .. " health but reduces speed by 1.\nRiot Commander exclusive.",
 		image = moduleImagePath .. "module_heavy_armor.png",
 		limit = 8,
 		cost = 200 * COST_MULT,
 		requireOneOf = {"module_ablative_armor"},
-		requireChassis = {"assault"},
+		requireChassis = {"riot"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			sharedData.healthBonus = (sharedData.healthBonus or 0) + 3000*HP_MULT
 			sharedData.speedMod = (sharedData.speedMod or 0) - 1
+		end
+	},
+	{
+		name = "module_dmg_booster_adv",
+		humanName = "Weapon Retrofits",
+		description = "Provides a 12.5% boost in firepower. Increases HP by " .. 200*HP_MULT ..	". Decreases speed by 0.75.\nRiot Exclusive.",
+		image = moduleImagePath .. "module_dmg_booster.png",
+		limit = 8,
+		cost = 100 * COST_MULT,
+		requireLevel = 4,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			-- Damage boost is applied via clone swapping
+			sharedData.damageMult = (sharedData.damageMult or 1) + 0.125
+			sharedData.healthBonus = (sharedData.healthBonus or 0) + 200*HP_MULT
+			sharedData.speedMod = (sharedData.speedMod or 0) - 0.75
 		end
 	},
 	{
@@ -1333,6 +1392,11 @@ local function GetSupportCloneModulesString(modulesByDefID)
 end
 
 local function GetAssaultCloneModulesString(modulesByDefID)
+	return (modulesByDefID[moduleDefNames.commweapon_personal_shield] or 0) ..
+		(modulesByDefID[moduleDefNames.commweapon_areashield] or 0)
+end
+
+local function GetRiotCloneModulesString(modulesByDefID)
 	return (modulesByDefID[moduleDefNames.commweapon_personal_shield] or 0) ..
 		(modulesByDefID[moduleDefNames.commweapon_areashield] or 0)
 end
@@ -1921,6 +1985,145 @@ local chassisDefs = {
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynassault5_" .. GetAssaultCloneModulesString(modulesByDefID)].id
+				end,
+				upgradeSlots = {
+					{
+						defaultModule = moduleDefNames.nullmodule,
+						slotAllows = "module",
+					},
+					{
+						defaultModule = moduleDefNames.nullmodule,
+						slotAllows = "module",
+					},
+					{
+						defaultModule = moduleDefNames.nullmodule,
+						slotAllows = "module",
+					},
+				},
+			},
+		}
+	},
+	{
+		name = "riot",
+		humanName = "Riot",
+		baseUnitDef = UnitDefNames and UnitDefNames["dynriot0"].id,
+		extraLevelCostFunction = extraLevelCostFunction,
+		maxNormalLevel = 5,
+		secondPeashooter = true,
+		levelDefs = {
+			[0] = {
+				morphBuildPower = 10,
+				morphBaseCost = 0,
+				chassisApplicationFunction = function (modules, sharedData)
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.damageMult = (sharedData.damageMult or 1) + 0.05
+				end,
+				morphUnitDefFunction = function(modulesByDefID)
+					return UnitDefNames["dynriot0"].id
+				end,
+				upgradeSlots = {},
+			},
+			[1] = {
+				morphBuildPower = 10,
+				morphBaseCost = morphCosts[1],
+				chassisApplicationFunction = function (modules, sharedData)
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.damageMult = (sharedData.damageMult or 1) + 0.1
+				end,
+				morphUnitDefFunction = function(modulesByDefID)
+					return UnitDefNames["dynriot1_" .. GetRiotCloneModulesString(modulesByDefID)].id
+				end,
+				upgradeSlots = {
+					{
+						defaultModule = moduleDefNames.commweapon_heavymachinegun,
+						slotAllows = "basic_weapon",
+					},
+					{
+						defaultModule = moduleDefNames.nullmodule,
+						slotAllows = "module",
+					},
+				},
+			},
+			[2] = {
+				morphBuildPower = 15,
+				morphBaseCost = morphCosts[2] * COST_MULT,
+				chassisApplicationFunction = function (modules, sharedData)
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.damageMult = (sharedData.damageMult or 1) + 0.15
+				end,
+				morphUnitDefFunction = function(modulesByDefID)
+					return UnitDefNames["dynriot2_" .. GetRiotCloneModulesString(modulesByDefID)].id
+				end,
+				upgradeSlots = {
+					{
+						defaultModule = moduleDefNames.nullmodule,
+						slotAllows = "module",
+					},
+					{
+						defaultModule = moduleDefNames.nullmodule,
+						slotAllows = "module",
+					},
+				},
+			},
+			[3] = {
+				morphBuildPower = 20,
+				morphBaseCost = morphCosts[3] * COST_MULT,
+				chassisApplicationFunction = function (modules, sharedData)
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.damageMult = (sharedData.damageMult or 1) + 0.2
+				end,
+				morphUnitDefFunction = function(modulesByDefID)
+					return UnitDefNames["dynriot3_" .. GetRiotCloneModulesString(modulesByDefID)].id
+				end,
+				upgradeSlots = {
+					{
+						defaultModule = moduleDefNames.commweapon_heavymachinegun,
+						slotAllows = {"adv_weapon", "basic_weapon"},
+					},
+					{
+						defaultModule = moduleDefNames.nullmodule,
+						slotAllows = "module",
+					},
+					{
+						defaultModule = moduleDefNames.nullmodule,
+						slotAllows = "module",
+					},
+				},
+			},
+			[4] = {
+				morphBuildPower = 25,
+				morphBaseCost = morphCosts[4] * COST_MULT,
+				chassisApplicationFunction = function (modules, sharedData)
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.damageMult = (sharedData.damageMult or 1) + 0.25
+				end,
+				morphUnitDefFunction = function(modulesByDefID)
+					return UnitDefNames["dynriot4_" .. GetRiotCloneModulesString(modulesByDefID)].id
+				end,
+				upgradeSlots = {
+					{
+						defaultModule = moduleDefNames.nullmodule,
+						slotAllows = "module",
+					},
+					{
+						defaultModule = moduleDefNames.nullmodule,
+						slotAllows = "module",
+					},
+					{
+						defaultModule = moduleDefNames.nullmodule,
+						slotAllows = "module",
+					},
+				},
+			},
+			[5] = {
+				morphBuildPower = 30,
+				morphBaseCost = morphCosts[5] * COST_MULT,
+				chassisApplicationFunction = function (modules, sharedData)
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.damageMult = (sharedData.damageMult or 1) + 0.3
+				end,
+				morphUnitDefFunction = function(modulesByDefID)
+					return UnitDefNames["dynriot5_" .. GetRiotCloneModulesString(modulesByDefID)].id
 				end,
 				upgradeSlots = {
 					{

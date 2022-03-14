@@ -22,7 +22,7 @@ local config = {}
 local min = math.min
 local max = math.max
 local ceil = math.ceil
-local debug = false
+local debug = true
 
 local INLOS = {inlos = true}
 local spGetGameFrame = Spring.GetGameFrame
@@ -31,7 +31,7 @@ local spSetUnitWeaponState = Spring.SetUnitWeaponState
 local spEcho = Spring.Echo
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 
-Spring.Echo("[FireControl] Version 1.0 by Shaman initializing. Scanning for Superweapons.")
+Spring.Echo("[FireControl] Version 1.2 by Shaman initializing. Scanning for Superweapons.")
 
 for i = 1, #UnitDefs do
 	local UnitDef = UnitDefs[i]
@@ -81,6 +81,9 @@ end
 local function WeaponFired(unitID, weaponNum)
 	local data = IterableMap.Get(units, unitID)
 	if debug then spEcho("[FireControl] WeaponFired: " .. unitID .. "," .. weaponNum) end
+	if data ~= nil and data.commWeaponMap then
+		weaponNum = data.commWeaponMap[weaponNum]
+	end
 	if data ~= nil and data.weapons[weaponNum] then
 		local firerate = spGetUnitRulesParam(unitID,"superweapon_mult") or 0
 		if firerate < data.weapons[weaponNum].origReload and data.weapons[weaponNum].lastfire == nil then
@@ -107,6 +110,9 @@ local function CanFireWeapon(unitID, weaponNum)
 		if debug then spEcho("CanFireWeapon nil") end
 		return false
 	end
+	if data.commWeaponMap then
+		weaponNum = data.commWeaponMap[weaponNum]
+	end
 	if debug then spEcho("CanFireWeapon: " .. tostring(data.weapons[weaponNum].progress >= data.weapons[weaponNum].origReload and (spGetUnitRulesParam(unitID, "lowpower") or 0) == 0)) end
 	return data.weapons[weaponNum].progress >= data.weapons[weaponNum].origReload and (spGetUnitRulesParam(unitID, "lowpower") or 0) == 0
 end
@@ -123,6 +129,7 @@ end
 function gadget:UnitDestroyed(unitID, unitDefID)
 	if IterableMap.InMap(units, unitID) then
 		IterableMap.Remove(units, unitID)
+		forcerecycle[unitID] = nil
 	end
 end
 
@@ -135,7 +142,39 @@ local function GetBonusFirerate(unitID, weaponNum)
 	end
 end
 
-GG.FireControl = {WeaponFired = WeaponFired, CanFireWeapon = CanFireWeapon, GetBonusFirerate = GetBonusFirerate}
+local function ForceAddUnit(unitID, weaponNum, origReload, bonus, reductionframes, reduction, framesuntilreduction, maxbonus, currentbonus)
+	if debug then
+		spEcho("ForceAddUnit: " .. unitID .. ", " .. weaponNum)
+	end
+	local data = IterableMap.Get(units, unitID) or {}
+	if data.weapons then
+		data.commWeaponMap[weaponNum] = 2
+		data.weapons[2] = {progress = origReload, recycler = true}
+		data.weapons[2].currentbonus = currentbonus or 0
+		data.weapons[2].framesuntilreduction = framesuntilreduction * 30
+		data.weapons[2].reductionpenalty = -reduction
+		data.weapons[2].bonus = bonus
+		data.weapons[2].reductionframes = reductionframes * 30
+		data.weapons[2].maxbonus = maxbonus
+		data.weapons[2].lastfire = spGetGameFrame()
+		data.weapons[2].origReload = origReload
+		IterableMap.Set(units, unitID, data)
+	else
+		data = {weapons = {[1] = {progress = origReload, recycler = true}}, commWeaponMap = {[weaponNum] = 1}}
+		data.weapons[1].currentbonus = currentbonus or 0
+		data.weapons[1].framesuntilreduction = framesuntilreduction * 30
+		data.weapons[1].reductionpenalty = -reduction
+		data.weapons[1].bonus = bonus
+		data.weapons[1].reductionframes = reductionframes * 30
+		data.weapons[1].maxbonus = maxbonus
+		data.weapons[1].lastfire = spGetGameFrame()
+		data.weapons[1].origReload = origReload
+		IterableMap.Add(units, unitID, data)
+	end
+	forcerecycle[unitID] = true
+end
+
+GG.FireControl = {WeaponFired = WeaponFired, CanFireWeapon = CanFireWeapon, GetBonusFirerate = GetBonusFirerate, ForceAddUnit = ForceAddUnit}
 
 function gadget:GameFrame(f)
 	for unitID, data in IterableMap.Iterator(units) do

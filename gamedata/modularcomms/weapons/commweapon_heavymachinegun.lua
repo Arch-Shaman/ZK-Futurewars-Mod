@@ -1,6 +1,6 @@
 local name = "commweapon_heavymachinegun"
 local weaponDef = {
-	name                    = [[Heavy Machine Gun]],
+	name                    = [[Heavy Chain Gun]],
 	accuracy                = 1024,
 	alphaDecay              = 0.7,
 	areaOfEffect            = 96,
@@ -13,20 +13,20 @@ local weaponDef = {
 		slot = [[5]],
 		muzzleEffectShot = [[custom:WARMUZZLE]],
 		miscEffectShot = [[custom:DEVA_SHELLS]],
-		altforms = {
-			lime = {
-				explosionGenerator = [[custom:BEAMWEAPON_HIT_GREEN]],
-				rgbColor = [[0.2 1 0]],
-			},
-		},
-
 		light_color = [[0.8 0.76 0.38]],
 		light_radius = 180,
 		reaim_time = 1,
+		script_reload = [[1.1]],
+		recycler = 1,
+		recycle_reductiontime = 0.2,
+		recycle_reduction = 0.15,
+		recycle_bonus = 0.15,
+		recycle_reductionframes = 0.5,
+		recycle_maxbonus = 20,
 	},
 
 	damage                  = {
-		default = 30,
+		default = 20.1,
 	},
 
 	edgeEffectiveness       = 0.5,
@@ -38,7 +38,7 @@ local weaponDef = {
 	interceptedByShieldType = 1,
 	noSelfDamage            = true,
 	range                   = 285,
-	reloadtime              = 5/30,
+	reloadtime              = 1/30,
 	rgbColor                = [[1 0.95 0.4]],
 	separation              = 1.5,
 	soundHit                = [[weapon/cannon/emg_hit]],

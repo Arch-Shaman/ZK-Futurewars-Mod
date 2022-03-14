@@ -39,6 +39,9 @@ end
 local function RawCanAttack(ud)
 	if (ud.weapons) then
 		for i, weapon in pairs(ud.weapons) do
+			if weapon.name == nil then
+				Spring.Echo("Nil weapon name: " .. ud.name .. ": " .. i)
+			end
 			local wd = WeaponDefs[weapon.name:lower()]
 			if wd.weapontype ~= "Shield" and not wd.interceptor then
 				return true
