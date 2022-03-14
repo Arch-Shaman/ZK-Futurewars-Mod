@@ -122,7 +122,8 @@ local factoryUnitPosDef = {
 		dynsupport0 = unitTypes.CONSTRUCTOR,
 		dynrecon0 = unitTypes.RAIDER,
 		dynassault0 = unitTypes.SKIRMISHER,
-		dynstrike0 = unitTypes.RIOT, -- move to ASSAULT when riot comm is added.
+		dynstrike0 = unitTypes.ASSAULT, -- move to ASSAULT when riot comm is added.
+		dynriot0 = unitTypes.RIOT,
 	},
 	factorycloak = {
 		cloakcon          = unitTypes.CONSTRUCTOR,

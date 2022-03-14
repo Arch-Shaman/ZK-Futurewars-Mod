@@ -40,6 +40,7 @@ return {
 			[[dynrecon0]],
 			[[dynassault0]],
 			[[dynstrike0]],
+			[[dynriot0]],
 		},
 		yardmap                       = [[ooooooooyyyyyyoooooo ooooooooyyyyyyoooooo ooooooooyyyyyyoooooo ooooooooyyyyyyoooooo ooooooooyyyyyyoooooo ooooooooyyyyyyoooooo ooooooooyyyyyyoooooo ooooooooyyyyyyoooooo ooooooooyyyyyyoooooo ooooooooyyyyyyoooooo ooooooooyyyyyyoooooo ooooooooyyyyyyoooooo ooooooooyyyyyyoooooo ooooooooyyyyyyoooooo ooooooooyyyyyyoooooo ooooooooyyyyyyoooooo]],
 		featureDefs                   = {
