@@ -696,7 +696,7 @@ local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 	local jumpEnabled = GG.GetAutoJumpState(unitID)
 	--Spring.Echo("CanJump: " .. tostring(canJump))
 	if canJump and jumpEnabled and behaviour.emergencyJumpRange + behaviour.skirmLeeway > pointDis and (behaviour.flees[enemyUnitDef] or behaviour.skirms[enemyUnitDef]) and not behaviour.hugs[enemyUnitDef] then
-		Spring.Echo("EmergencyJump")
+		--Spring.Echo("EmergencyJump")
 		local jumpRange = UnitDefs[myDef].customParams.jump_range
 		local wantedDis = jumpRange * 0.95
 		local cx = ux - wantedDis * ex/eDist
@@ -711,7 +711,7 @@ local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 		end
 	end
 	if canJump and jumpEnabled and behaviour.hugs[enemyUnitDef] then -- DoHug jump
-		Spring.Echo("DoHugJump")
+		--Spring.Echo("DoHugJump")
 		local jumpRange = UnitDefs[myDef].customParams.jump_range * 0.99
 		local vx, vy, vz = spGetUnitVelocity(enemy)
 		local timescale = math.ceil(pointDis / UnitDefs[myDef].customParams.jump_speed) -- estimate the time to get to the point and multiply velocity by it to get predicted location.
@@ -723,7 +723,7 @@ local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 		local cx, cy, cz = ux + (r * math.cos(angle)), 0, uz + (r * math.sin(angle)) -- x + (radius * cos(angle)), z + (radius * sin(angle))
 		cy = spGetGroundHeight(cx, cz)
 		
-		if cy >= 0 and ey - cy < 50 then
+		if cy >= 0 and ey - cy < 50 and estimatedDistance > 75 then
 			DoJump(unitID, cx, cy, cz)
 			return true
 		end
