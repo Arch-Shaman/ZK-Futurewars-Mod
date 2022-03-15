@@ -17,14 +17,14 @@ end
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 local protectedFeatures = {}
 local features = IterableMap.New()
-local newtable = {timer = 10, cancer = true}
+--local newtable = {timer = 10, cancer = true}
 
 local spGetTeamInfo = Spring.GetTeamInfo
 
 function gadget:AllowFeatureBuildStep(builderID, builderTeam, featureID, featureDefID, part) -- part seems to be some sort of reclaim speed.
 	if part >= 0 then
 		if protectedFeatures[featureID] == nil then
-			IterableMap.Add(features, featureID, newtable)
+			IterableMap.Add(features, featureID, {timer = 10, cancer = true})
 			protectedFeatures[featureID] = true
 		end
 		return true
