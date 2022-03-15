@@ -58,10 +58,11 @@ local gameFrame = 0
 local random = math.random
 local Spring = Spring
 local gadget = gadget
-local AreTeamsAllied    = Spring.AreTeamsAllied
 local AddUnitDamage     = Spring.AddUnitDamage
 local SetUnitRulesParam = Spring.SetUnitRulesParam
 local SetUnitCloak      = Spring.SetUnitCloak
+local spValidUnitID = Spring.ValidUnitID
+local spAreTeamsAllied = Spring.AreTeamsAllied
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -100,6 +101,9 @@ local inWater = {}
 local inGameFrame = false
 
 _G.unitsOnFire = unitsOnFire
+
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 local function CheckImmersion(unitID)
@@ -119,6 +123,17 @@ end
 
 function gadget:UnitLeftWater(unitID, unitDefID, unitTeam)
 	inWater[unitID] = nil
+end
+
+function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+	--Spring.Echo("PreDamaged: " .. unitID .. ", " .. unitDefID .. ", " .. unitTeam .. ", " .. tostring(damage) .. ", " .. tostring(paralyzer) .. ", " .. weaponDefID .. ", " .. tostring(projectileID) .. ", " .. tostring(attackerID) .."," .. tostring(attackerTeam))
+	local realattackerTeam = Spring.GetUnitTeam(attackerID)
+	--Spring.Echo("Fireproof: " .. tostring(fireproof[unitDefID] == nil) .. "\nAllied: " .. tostring(allied) .. "\nflamerDef: " .. tostring(flamerWeaponDefs[weaponDefID] == nil))
+	if flamerWeaponDefs[weaponDefID] and fireproof[unitDefID] and (realattackerTeam == nil or not spAreTeamsAllied(realattackerTeam, unitTeam)) then
+		return 0, 0
+	else
+		return damage, 1
+	end
 end
 
 function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponID,
