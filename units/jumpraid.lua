@@ -107,7 +107,7 @@ return {
 				customParams            = {
 					flamethrower = [[1]],
 					setunitsonfire = "1",
-					burnchance = "0.4", -- Per-impact
+					burnchance = "1", -- Per-impact
 					burntime = [[150]],
 					light_camera_height = 2800,
 					light_color = [[0.6 0.39 0.18]],
