@@ -673,7 +673,42 @@ local riotsgoaway = NameToDefID({
 	"jumpscout",
 	"vehriot",
 	"hoverskirm",
+	--"dynriot1",
 })
+
+local jumpraidhug = NameToDefID({
+	"shieldraid",
+	"shieldassault",
+	"shieldshield",
+	"shieldskirm",
+	"shieldscout",
+	"spiderskirm",
+	"turretmissile",
+	"vehraid",
+	"vehsupport",
+	"vehscout",
+	"hovercon",
+	"vehassault", -- might not be good?
+	--"jumpskirm", -- probably not a good matchup, purposefully omitted.
+	"cloakskirm",
+	"cloaksnipe",
+	"tankarty",
+	"tankheavyarty",
+	"tankheavyraid", -- might not be 100% good outcome.
+	"amphraid",
+	"ampharty",
+	"amphcon",
+	"amphaa",
+	"vehaa",
+	"cloakaa",
+	"hoveraa",
+	"hoverassault", -- probably safe-ish.
+	"planecon", -- probably not great.
+	"gunshipcon",
+})
+
+local jumpraidskirm = SetMinus(shortToRiotRangeSkirmieeArray, jumpraidhug)
+jumpraidskirm = SetMinus(jumpraidskirm, riotsgoaway)
 
 local allGroundNonAA = SetMinus(allGround, antiAirFlee)
 
@@ -1025,22 +1060,24 @@ local behaviourConfig = {
 	},
 	{
 		name = "jumpraid",
-		skirms = shortToRiotRangeSkirmieeArray,
-		swarms = lowRangeSwarmieeArray,
+		skirms =   jumpraidskirm,
+		--swarms = lowRangeSwarmieeArray,
 		flees = riotsgoaway,
+		hugs = jumpraidhug,
+		hugRange = 80,
 		idleFlee = longRangeRaiderIdleFleeArray,
 		fightOnlyUnits = shortRangeExplodables,
 		circleStrafe = ENABLE_OLD_JINK_STRAFE,
 		jinkAwayParallelLength = 150,
-		maxSwarmLeeway = 100,
-		minSwarmLeeway = 200,
+		maxSwarmLeeway = 80,
+		minSwarmLeeway = 20,
 		swarmLeeway = 30,
 		stoppingDistance = 8,
 		velocityPrediction = 20,
 		fleeLeeway = 200,
 		
 		wardFireTargets = personalShieldUnits,
-		wardFireEnableLeeway = 5,
+		wardFireEnableLeeway = 25,
 		wardFirePredict = 5,
 		wardFireShield = 50,
 		wardFireDefault = true,

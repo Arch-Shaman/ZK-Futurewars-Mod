@@ -606,6 +606,7 @@ local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 	
 	local vx, vy, vz, enemySpeed = spGetUnitVelocity(enemy)
 	local ex, ey, ez, _, aimY = spGetUnitPosition(enemy, false, true) -- enemy position
+	local enemyX, enemyZ = ex, ez
 	local ux, uy, uz = spGetUnitPosition(unitID) -- my position
 	local myDef = spGetUnitDefID(unitID)
 
@@ -691,10 +692,11 @@ local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 	--Spring.Echo("skirmRange", skirmRange, GetEffectiveWeaponRange(unitData.udID, -dy, behaviour.weaponNum))
 	local reloadFrames
 	
-	local canJump = UnitDefs[myDef].customParams.jump_range and behaviour.emergencyJumpRange and (spGetUnitRulesParam(unitID, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
+	local canJump = UnitDefs[myDef].customParams.jump_range and (spGetUnitRulesParam(unitID, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
 	local jumpEnabled = GG.GetAutoJumpState(unitID)
 	--Spring.Echo("CanJump: " .. tostring(canJump))
-	if canJump and jumpEnabled and behaviour.emergencyJumpRange + behaviour.skirmLeeway > pointDis then
+	if canJump and jumpEnabled and behaviour.emergencyJumpRange + behaviour.skirmLeeway > pointDis and (behaviour.flees[enemyUnitDef] or behaviour.skirms[enemyUnitDef]) and not behaviour.hugs[enemyUnitDef] then
+		Spring.Echo("EmergencyJump")
 		local jumpRange = UnitDefs[myDef].customParams.jump_range
 		local wantedDis = jumpRange * 0.95
 		local cx = ux - wantedDis * ex/eDist
@@ -705,6 +707,24 @@ local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 			DoJump(unitID, cx, cy, cz)
 			unitData.cx, unitData.cy, unitData.cz = cx, cy, cz
 			unitData.receivedOrder = true
+			return true
+		end
+	end
+	if canJump and jumpEnabled and behaviour.hugs[enemyUnitDef] then -- DoHug jump
+		Spring.Echo("DoHugJump")
+		local jumpRange = UnitDefs[myDef].customParams.jump_range * 0.99
+		local vx, vy, vz = spGetUnitVelocity(enemy)
+		local timescale = math.ceil(pointDis / UnitDefs[myDef].customParams.jump_speed) -- estimate the time to get to the point and multiply velocity by it to get predicted location.
+		local eex, eez = enemyX + (vx * timescale), enemyZ + (vz * timescale) -- estimated enemy position after we jump
+		local angle =  math.atan2(eez - uz, eex - ux) -- atan2(targetz - z, targetx - x )
+		local estimatedDistance = math.sqrt((ux - eex)*(ux - eex) + ((uz - eez)*(uz - eez)))
+		local r = math.min(jumpRange, estimatedDistance)
+		
+		local cx, cy, cz = ux + (r * math.cos(angle)), 0, uz + (r * math.sin(angle)) -- x + (radius * cos(angle)), z + (radius * sin(angle))
+		cy = spGetGroundHeight(cx, cz)
+		
+		if cy >= 0 and ey - cy < 50 then
+			DoJump(unitID, cx, cy, cz)
 			return true
 		end
 	end
