@@ -16,7 +16,7 @@ local weaponDef = {
 		light_color = [[0.8 0.76 0.38]],
 		light_radius = 180,
 		reaim_time = 1,
-		script_reload = [[1.1]],
+		script_reload = [[0.9]],
 		recycler = 1,
 		recycle_reductiontime = 0.2,
 		recycle_reduction = 0.3,
@@ -26,7 +26,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 20.1,
+		default = 25.1,
 	},
 
 	edgeEffectiveness       = 0.5,
