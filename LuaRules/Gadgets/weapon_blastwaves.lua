@@ -102,18 +102,19 @@ local function AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID)
 		return
 	end
 	local conf = blastwaveDefs[weaponDefID]
+	local mult = Spring.ValidUnitID(attackerID) and spGetUnitRulesParam(attackerID, "comm_damage_mult") or 1
 	local tab = {
 		x = px,
 		y = py,
 		z = pz,
-		damage = conf.damage,
-		impulse = conf.impulse,
+		damage = conf.damage * mult,
+		impulse = conf.impulse * mult,
 		size = conf.size,
 		lifespan = conf.lifespan,
 		wepID = weaponDefID,
 		attacker = attackerID,
-		slowdmg = conf.slowdmg,
-		paradmg = conf.paradmg,
+		slowdmg = conf.slowdmg * mult,
+		paradmg = conf.paradmg * mult,
 		coef = conf.losscoef,
 	}
 	--Spring.Echo("attackerID: " .. tostring(attackerID) .."\nDamages Friendly: " .. tostring(conf.damagesfriendly))
