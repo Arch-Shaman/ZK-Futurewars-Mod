@@ -2027,7 +2027,7 @@ local chassisDefs = {
 				morphBuildPower = 10,
 				morphBaseCost = morphCosts[1],
 				chassisApplicationFunction = function (modules, sharedData)
-					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10
 					sharedData.damageMult = (sharedData.damageMult or 1) + 0.1
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -2035,7 +2035,7 @@ local chassisDefs = {
 				end,
 				upgradeSlots = {
 					{
-						defaultModule = moduleDefNames.commweapon_heavymachinegun,
+						defaultModule = moduleDefNames.commweapon_beamlaser,
 						slotAllows = "basic_weapon",
 					},
 					{
@@ -2048,7 +2048,7 @@ local chassisDefs = {
 				morphBuildPower = 15,
 				morphBaseCost = morphCosts[2] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
-					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 15
 					sharedData.damageMult = (sharedData.damageMult or 1) + 0.15
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -2056,8 +2056,8 @@ local chassisDefs = {
 				end,
 				upgradeSlots = {
 					{
-						defaultModule = moduleDefNames.nullmodule,
-						slotAllows = "module",
+						defaultModule = moduleDefNames.commweapon_beamlaser,
+						slotAllows = {"adv_weapon", "basic_weapon"},
 					},
 					{
 						defaultModule = moduleDefNames.nullmodule,
@@ -2069,7 +2069,7 @@ local chassisDefs = {
 				morphBuildPower = 20,
 				morphBaseCost = morphCosts[3] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
-					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 20
 					sharedData.damageMult = (sharedData.damageMult or 1) + 0.2
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -2077,8 +2077,8 @@ local chassisDefs = {
 				end,
 				upgradeSlots = {
 					{
-						defaultModule = moduleDefNames.commweapon_heavymachinegun,
-						slotAllows = {"adv_weapon", "basic_weapon"},
+						defaultModule = moduleDefNames.nullmodule,
+						slotAllows = "module",
 					},
 					{
 						defaultModule = moduleDefNames.nullmodule,
@@ -2094,7 +2094,7 @@ local chassisDefs = {
 				morphBuildPower = 25,
 				morphBaseCost = morphCosts[4] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
-					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 25
 					sharedData.damageMult = (sharedData.damageMult or 1) + 0.25
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -2119,7 +2119,7 @@ local chassisDefs = {
 				morphBuildPower = 30,
 				morphBaseCost = morphCosts[5] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
-					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 30
 					sharedData.damageMult = (sharedData.damageMult or 1) + 0.3
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
