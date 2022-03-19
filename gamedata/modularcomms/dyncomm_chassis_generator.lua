@@ -55,7 +55,7 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynsupport1", -- 25/31
+		name = "dynsupport1", -- 27/31
 		weapons = {
 			"commweapon_capray",
 			"commweapon_capray",
@@ -69,6 +69,8 @@ local chassisDefs = {
 			"commweapon_disruptor",
 			"commweapon_hparticlebeam",
 			"commweapon_hparticlebeam",
+			"commweapon_impulse_laser",
+			"commweapon_impulse_laser",
 			"commweapon_heavy_disruptor", -- TODO: replace with EMP
 			"commweapon_heavy_disruptor",
 			"commweapon_lightninggun",
@@ -112,8 +114,6 @@ local chassisDefs = {
 			"commweapon_heavymachinegun",
 			"commweapon_grenadelauncher",
 			"commweapon_grenadelauncher",
-			"commweapon_impulse_laser",
-			"commweapon_impulse_laser",
 			"commweapon_riotcannon",
 			"commweapon_riotcannon",
 			"commweapon_riotcannon_napalm",
