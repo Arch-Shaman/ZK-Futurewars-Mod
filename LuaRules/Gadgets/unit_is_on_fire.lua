@@ -127,7 +127,7 @@ end
 
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 	--Spring.Echo("PreDamaged: " .. unitID .. ", " .. unitDefID .. ", " .. unitTeam .. ", " .. tostring(damage) .. ", " .. tostring(paralyzer) .. ", " .. weaponDefID .. ", " .. tostring(projectileID) .. ", " .. tostring(attackerID) .."," .. tostring(attackerTeam))
-	local realattackerTeam = Spring.GetUnitTeam(attackerID)
+	local realattackerTeam = (attackerID and Spring.GetUnitTeam(attackerID)) or attackerTeam
 	--Spring.Echo("Fireproof: " .. tostring(fireproof[unitDefID] == nil) .. "\nAllied: " .. tostring(allied) .. "\nflamerDef: " .. tostring(flamerWeaponDefs[weaponDefID] == nil))
 	if flamerWeaponDefs[weaponDefID] and fireproof[unitDefID] and (realattackerTeam == nil or not spAreTeamsAllied(realattackerTeam, unitTeam)) then
 		return 0, 0
