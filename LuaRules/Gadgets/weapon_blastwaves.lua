@@ -125,7 +125,7 @@ local function AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID)
 		local damagebonus = spGetUnitRulesParam(attackerID, "comm_damage_mult") or 1
 		tab.damage = tab.damage * damagebonus
 		tab.slowdmg = tab.slowdmg * damagebonus
-		tab.paradmg = tab.paradamage * damagebonus
+		tab.paradmg = tab.paradmg * damagebonus
 		local bonuscoef = spGetUnitRulesParam(attackerID, "comm_blastwave_coefbonus") or 0
 		tab.coef = tab.coef + bonuscoef
 	end
