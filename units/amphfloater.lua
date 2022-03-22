@@ -90,7 +90,7 @@ return {
 
 					light_camera_height = 2500,
 					light_color = [[1.36 0.68 1.5]],
-					light_radius = 180,
+					light_radius = 40,
 				},
 
 				damage                  = {
