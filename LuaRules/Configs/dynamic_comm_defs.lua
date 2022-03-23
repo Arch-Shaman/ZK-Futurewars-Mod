@@ -2546,7 +2546,7 @@ local function ModuleIsValid(level, chassis, slotAllows, moduleDefID, alreadyOwn
 	-- Check that the module limit is not reached
 	if limit and (alreadyOwned[moduleDefID] or (alreadyOwned2 and alreadyOwned2[moduleDefID])) then
 		local count = (alreadyOwned[moduleDefID] or 0) + ((alreadyOwned2 and alreadyOwned2[moduleDefID]) or 0)
-		Spring.Echo("Count: " .. count)
+		--Spring.Echo("Count: " .. count)
 		if count > limit then
 			return false
 		end
