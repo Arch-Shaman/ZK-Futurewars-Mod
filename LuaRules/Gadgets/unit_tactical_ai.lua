@@ -695,7 +695,7 @@ local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 	local canJump = UnitDefs[myDef].customParams.jump_range and (spGetUnitRulesParam(unitID, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
 	local jumpEnabled = GG.GetAutoJumpState(unitID)
 	--Spring.Echo("CanJump: " .. tostring(canJump))
-	if canJump and jumpEnabled and (behaviour.emergencyJumpRange and behaviour.emergencyJumpRange + behaviour.skirmLeeway > pointDis) and (behaviour.flees[enemyUnitDef] or behaviour.skirms[enemyUnitDef]) and not (behaviour.hugs and behaviour.hugs[enemyUnitDef]) then
+	if canJump and jumpEnabled and (behaviour.emergencyJumpRange and behaviour.emergencyJumpRange + behaviour.skirmLeeway > pointDis) and ((behaviour.flees and behaviour.flees[enemyUnitDef]) or behaviour.skirms[enemyUnitDef]) and not (behaviour.hugs and behaviour.hugs[enemyUnitDef]) then
 		--Spring.Echo("EmergencyJump")
 		local jumpRange = UnitDefs[myDef].customParams.jump_range
 		local wantedDis = jumpRange * 0.95
