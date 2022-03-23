@@ -339,7 +339,6 @@ function script.Killed(recentDamage, maxHealth)
 		dyncomm.Explode(x, y, z)
 		dyncomm.SpawnModuleWrecks(1)
 		dyncomm.SpawnWreck(1)
-		return 1
 	else
 		Explode(torso, SFX.SHATTER)
 		Explode(luparm, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
@@ -355,6 +354,5 @@ function script.Killed(recentDamage, maxHealth)
 		dyncomm.Explode(x, y, z)
 		dyncomm.SpawnModuleWrecks(2)
 		dyncomm.SpawnWreck(2)
-		return 2
 	end
 end
