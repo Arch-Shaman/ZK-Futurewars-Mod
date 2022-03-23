@@ -1208,6 +1208,52 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "module_nanorepair",
+		humanName = "Nanoreactive Armor Installment",
+		description = "Installs a nanite repair system into the armor. As damage is inflicted, more nanites are released into the armor to repair it, granting up to 210 hp/sec repair. May be upgraded further past level 5. Riot only.",
+		image = moduleImagePath .. "module_autorepair.png",
+		limit = 1,
+		cost = 350 * COST_MULT,
+		requireLevel = 2,
+		requireChassis = {"riot"},
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.nanoregen = (sharedData.nanoregen or 0) + 21
+			sharedData.nanomax = (sharedData.nanomax or 0) + 10
+		end
+	},
+	{
+		name = "module_nanorepair_upgrade_regen",
+		humanName = "Nanite Dense Armor",
+		description = "Improves base nanoreactive regeneration speed by 3, increasing max regeneration by 30. Increases health by " .. 500*HP_MULT .. "Riot only.",
+		image = moduleImagePath .. "module_nano_armor.png",
+		limit = 4,
+		cost = 400 * COST_MULT,
+		requireLevel = 5,
+		requireChassis = {"riot"},
+		requireOneOf = {"module_nanorepair"},
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.nanoregen = (sharedData.nanoregen or 0) + 3
+			sharedData.healthBonus = (sharedData.healthBonus or 0) + 500*HP_MULT
+		end
+	},
+	{
+		name = "module_nanorepair_upgrade_max",
+		humanName = "Improved Nanite Response Time",
+		description = "Improves nanoreactive regeneration effectiveness by 20%, allowing higher regen speed. Riot only.",
+		image = moduleImagePath .. "module_repair_field.png",
+		limit = 4,
+		cost = 600 * COST_MULT,
+		requireLevel = 2,
+		requireChassis = {"riot"},
+		requireOneOf = {"module_nanorepair"},
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.nanoregen = (sharedData.nanomax or 0) + 2
+		end
+	},
+	{
 		name = "module_ablative_armor",
 		humanName = "Ablative Armour Plates",
 		description = "Provides " .. 1250*HP_MULT .. " health.",
