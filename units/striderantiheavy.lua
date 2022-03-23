@@ -26,7 +26,7 @@ return {
 			jump_speed         = 6,
 			jump_reload        = 20,
 			jump_from_midair   = 1,
-			cloakregen = 10,
+			cloakregen = 15,
 			cloaker_bestowed_radius = 75,
 			bait_level_default = 1,
 		},
