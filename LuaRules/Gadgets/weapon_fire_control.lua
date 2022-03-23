@@ -151,10 +151,10 @@ local function ForceAddUnit(unitID, weaponNum, origReload, bonus, reductionframe
 		data.commWeaponMap[weaponNum] = 2
 		data.weapons[2] = {progress = origReload, recycler = true}
 		data.weapons[2].currentbonus = currentbonus or 0
-		data.weapons[2].framesuntilreduction = framesuntilreduction * 30
+		data.weapons[2].framesuntilreduction = framesuntilreduction
 		data.weapons[2].reductionpenalty = -reduction
 		data.weapons[2].bonus = bonus
-		data.weapons[2].reductionframes = reductionframes * 30
+		data.weapons[2].reductionframes = reductionframes
 		data.weapons[2].maxbonus = maxbonus
 		data.weapons[2].lastfire = spGetGameFrame()
 		data.weapons[2].origReload = origReload
@@ -162,10 +162,10 @@ local function ForceAddUnit(unitID, weaponNum, origReload, bonus, reductionframe
 	else
 		data = {weapons = {[1] = {progress = origReload, recycler = true}}, commWeaponMap = {[weaponNum] = 1}}
 		data.weapons[1].currentbonus = currentbonus or 0
-		data.weapons[1].framesuntilreduction = framesuntilreduction * 30
+		data.weapons[1].framesuntilreduction = framesuntilreduction
 		data.weapons[1].reductionpenalty = -reduction
 		data.weapons[1].bonus = bonus
-		data.weapons[1].reductionframes = reductionframes * 30
+		data.weapons[1].reductionframes = reductionframes
 		data.weapons[1].maxbonus = maxbonus
 		data.weapons[1].lastfire = spGetGameFrame()
 		data.weapons[1].origReload = origReload
