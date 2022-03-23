@@ -1202,6 +1202,7 @@ local moduleDefs = {
 		cost = 150 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
+		requireChassis = {"recon", "assault", "support", "strike", "knight"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10
 			sharedData.healthBonus = (sharedData.healthBonus or 0) - 75*HP_MULT
