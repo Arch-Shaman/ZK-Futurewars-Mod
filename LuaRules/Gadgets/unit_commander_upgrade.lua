@@ -346,7 +346,7 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	end
 	
 	if data.nanoregen and data.nanomax then
-		GG.NanoRegen.Add(unitID, data.nanoregen, data.nanomax)
+		GG.NanoRegen.AddUnit(unitID, data.nanoregen, data.nanomax)
 	end
 	
 	local buildPowerMult = ((data.bonusBuildPower or 0) + ud.buildSpeed)/ud.buildSpeed
@@ -377,6 +377,7 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 		local newMaxHealth = math.max(maxHealth + data.healthBonus, 1)
 		spSetUnitHealth(unitID, newHealth)
 		Spring.SetUnitMaxHealth(unitID, newMaxHealth)
+		Spring.SetUnitRulesParam(unitID, "commander_healthbonus", healthBonus, INLOS)
 	end
 	
 	if data.skinOverride then

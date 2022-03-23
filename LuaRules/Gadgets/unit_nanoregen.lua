@@ -89,6 +89,9 @@ end
 
 local function AddUnit(unitID, regen, maxregenmult)
 	configoverrides[unitID] = {regen = regen, maxregenmult = maxregenmult}
+	spSetUnitRulesParam(unitID, "commander_regen", regen, INLOS)
+	spSetUnitRulesParam(unitID, "commander_max", maxregenmult, INLOS)
+	units[unitID] = Spring.GetUnitDefID(unitID) 
 end
 
 local function RemoveUnit(unitID)

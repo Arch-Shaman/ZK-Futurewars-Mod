@@ -1193,15 +1193,18 @@ local function printAbilities(ud, unitID)
 				cells[#cells+1] = numformat(dynamic_regen) .. ' HP/s'
 			end
 		end
-		if cp.nanoregen then
+		local nanoregen = (unitID and Spring.GetUnitRulesParam(unitID, "commander_regen")) or cp.nanoregen
+		local nanomax = (unitID and Spring.GetUnitRulesParam(unitID, "commander_max")) or cp.nano_maxregen
+		if nanoregen then
+			local hp = ud.health + ((unitID and Spring.GetUnitRulesParam(unitID, "commander_healthbonus")) or 0)
 			cells[#cells+1] = " - Nanite Regeneration:"
 			cells[#cells+1] = ''
 			cells[#cells+1] = "Base Regeneration:"
-			cells[#cells+1] = cp.nanoregen .. "HP/s"
+			cells[#cells+1] = nanoregen .. "HP/s"
 			cells[#cells+1] = "Max Regeneration:"
-			cells[#cells+1] = numformat(cp.nanoregen * cp.nano_maxregen, 1) .. "HP/s"
+			cells[#cells+1] = numformat(nanoregen * nanomax, 1) .. "HP/s"
 			cells[#cells+1] = "Max Regen below:"
-			cells[#cells+1] = numformat(ud.health / cp.nano_maxregen) .. "hp"
+			cells[#cells+1] = numformat(hp / nanomax) .. "hp"
 		end
 		if cp.amph_regen then
 			cells[#cells+1] = ' - Water regen: '
