@@ -17,8 +17,8 @@ local ret = {
 		chassis = "riot",
 		modules = { -- all null because nabs want to personalize
 			{"nullbasicweapon", "nullmodule"},
-			{"nullmodule", "nullmodule"},
-			{"nulladvweapon", "nullmodule", "nullmodule"},
+			{"nullbasicweapon", "nullmodule"},
+			{"nullmodule", "nullmodule", "nullmodule"},
 			{"nullmodule", "nullmodule", "nullmodule"},
 			{"nullmodule", "nullmodule", "nullmodule"},
 		},

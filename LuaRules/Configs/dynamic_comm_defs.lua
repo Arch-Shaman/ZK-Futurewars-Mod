@@ -2094,7 +2094,7 @@ local chassisDefs = {
 				morphBuildPower = 15,
 				morphBaseCost = morphCosts[2] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
-					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 15
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 20
 					sharedData.damageMult = (sharedData.damageMult or 1) + 0.15
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -2115,7 +2115,7 @@ local chassisDefs = {
 				morphBuildPower = 20,
 				morphBaseCost = morphCosts[3] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
-					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 20
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 30
 					sharedData.damageMult = (sharedData.damageMult or 1) + 0.2
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -2140,7 +2140,7 @@ local chassisDefs = {
 				morphBuildPower = 25,
 				morphBaseCost = morphCosts[4] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
-					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 25
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 40
 					sharedData.damageMult = (sharedData.damageMult or 1) + 0.25
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -2165,7 +2165,7 @@ local chassisDefs = {
 				morphBuildPower = 30,
 				morphBaseCost = morphCosts[5] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
-					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 30
+					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 50
 					sharedData.damageMult = (sharedData.damageMult or 1) + 0.3
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
@@ -2536,13 +2536,17 @@ local function ModuleIsValid(level, chassis, slotAllows, moduleDefID, alreadyOwn
 	-- cheapass hack to prevent cremcom dual wielding same weapon (not supported atm)
 	-- proper solution: make the second instance of a weapon apply projectiles x2 or reloadtime x0.5 and get cremcoms unit script to work with that
 	local limit = data.limit
-	if chassis == 5 and data.slotType == "basic_weapon" and limit == 2 then
+	--Spring.Echo("Chassis: " .. chassis .. ", Module: " .. data.humanName)
+	--Spring.Echo("Limit: " .. tostring(limit))
+	if chassis == 6 and data.slotType == "basic_weapon" and limit == 2 then
 		limit = 1
+		--Spring.Echo("Limited to 1")
 	end
 
 	-- Check that the module limit is not reached
 	if limit and (alreadyOwned[moduleDefID] or (alreadyOwned2 and alreadyOwned2[moduleDefID])) then
 		local count = (alreadyOwned[moduleDefID] or 0) + ((alreadyOwned2 and alreadyOwned2[moduleDefID]) or 0)
+		Spring.Echo("Count: " .. count)
 		if count > limit then
 			return false
 		end
