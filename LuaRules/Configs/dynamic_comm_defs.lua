@@ -1203,6 +1203,7 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"recon", "assault", "support", "strike", "knight"},
+		prohibitingModules = {"module_striderpower"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10
 			sharedData.healthBonus = (sharedData.healthBonus or 0) - 75*HP_MULT
@@ -1214,9 +1215,10 @@ local moduleDefs = {
 		description = "Installs a nanite repair system into the armor. As damage is inflicted, more nanites are released into the armor to repair it, granting up to 210 hp/sec repair. May be upgraded further past level 5. Riot only.",
 		image = moduleImagePath .. "module_autorepair.png",
 		limit = 1,
-		cost = 350 * COST_MULT,
+		cost = 900 * COST_MULT,
 		requireLevel = 2,
 		requireChassis = {"riot"},
+		requireOneOf = {"module_striderpower"},
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			sharedData.nanoregen = (sharedData.nanoregen or 0) + 21
@@ -1293,6 +1295,7 @@ local moduleDefs = {
 		requireLevel = 4,
 		slotType = "module",
 		requireChassis = {"riot"},
+		requireOneOf = {"module_striderpower"},
 		applicationFunction = function (modules, sharedData)
 			-- Damage boost is applied via clone swapping
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.15
@@ -1317,6 +1320,21 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "module_striderpower",
+		humanName = "Massive Weapons Relays",
+		description = "Increases damage by 15%. Blocks access to High Power Servos and Autorepair and grants access to strong powered modules. Commanders undertaking this should be considered strider level units.",
+		image = moduleImagePath .. "module_energy_cell.png",
+		limit = 1,
+		cost = 100 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+		requireChassis = {"riot"},
+		prohibitingModules = {"module_high_power_servos", "module_autorepair"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.speedMod = (sharedData.speedMod or 0) - 2.2
+		end
+	},
+	{
 		name = "module_high_power_servos",
 		humanName = "High Power Servos",
 		description = "Increases speed by 2.2.",
@@ -1325,6 +1343,7 @@ local moduleDefs = {
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
+		prohibitingModules = {"module_striderpower"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.speedMod = (sharedData.speedMod or 0) + 2.2
 		end
