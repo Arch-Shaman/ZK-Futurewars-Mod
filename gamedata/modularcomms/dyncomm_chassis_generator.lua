@@ -112,6 +112,8 @@ local chassisDefs = {
 			"commweapon_canistercannon",
 			"commweapon_heavymachinegun",
 			"commweapon_heavymachinegun",
+			"commweapon_sonicgun",
+			"commweapon_sonicgun",
 			"commweapon_grenadelauncher",
 			"commweapon_grenadelauncher",
 			"commweapon_riotcannon",
@@ -121,6 +123,7 @@ local chassisDefs = {
 			"commweapon_flamethrower",
 			"commweapon_flamethrower",
 			"commweapon_concussion",
+			"commweapon_vacuumgun",
 			-- Space for shield
 		}
 	},

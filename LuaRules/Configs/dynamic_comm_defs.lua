@@ -601,6 +601,29 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "commweapon_sonicgun",
+		humanName = "Heavy Sonic Cannon",
+		description = "Weapon that does some direct damage followed by a blastwave.",
+		image = moduleImagePath .. "commweapon_sonicgun.png",
+		limit = 2,
+		cost = 70 * COST_MULT,
+		requireChassis = {"riot"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			local weaponName = "commweapon_sonicgun"
+			if sharedData.noMoreWeapons then
+				return
+			end
+			sharedData.wantsfireatradar = true
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+	{
 		name = "commweapon_clusterbomb",
 		humanName = "Cluster Bomb",
 		description = "Manually fired burst of bombs.",
@@ -621,7 +644,28 @@ local moduleDefs = {
 			end
 		end
 	},
-		{
+	{
+		name = "commweapon_vacuumgun",
+		humanName = "Vacuum Gun",
+		description = "Manually fired blackhole. Deals heavy damage and pulls units inward.",
+		image = moduleImagePath .. "commweapon_clusterbomb.png",
+		limit = 1,
+		cost = 250 * COST_MULT,
+		requireChassis = {"riot"},
+		requireLevel = 2,
+		slotType = "adv_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = "commweapon_vacuumgun"
+			else
+				sharedData.weapon2 = "commweapon_vacuumgun"
+			end
+		end
+	},
+	{
 		name = "commweapon_minefieldinacan",
 		humanName = "Minefield In A Can",
 		description = "A canister full of surprises, waiting for your enemies.",
@@ -1195,17 +1239,18 @@ local moduleDefs = {
 	{
 		name = "module_dmg_booster_adv",
 		humanName = "Weapon Retrofits",
-		description = "Provides a 12.5% boost in firepower. Increases HP by " .. 200*HP_MULT ..	". Decreases speed by 0.75.\nRiot Exclusive.",
+		description = "Provides a 15% boost in firepower. Increases HP by " .. 200*HP_MULT ..	". Decreases speed by 0.5.\nRiot Exclusive.",
 		image = moduleImagePath .. "module_dmg_booster.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
 		requireLevel = 4,
 		slotType = "module",
+		requireChassis = {"riot"},
 		applicationFunction = function (modules, sharedData)
 			-- Damage boost is applied via clone swapping
-			sharedData.damageMult = (sharedData.damageMult or 1) + 0.125
+			sharedData.damageMult = (sharedData.damageMult or 1) + 0.15
 			sharedData.healthBonus = (sharedData.healthBonus or 0) + 200*HP_MULT
-			sharedData.speedMod = (sharedData.speedMod or 0) - 0.75
+			sharedData.speedMod = (sharedData.speedMod or 0) - 0.5
 		end
 	},
 	{
@@ -1217,6 +1262,7 @@ local moduleDefs = {
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
+		requireChassis = {"support", "assault", "recon", "knight", "strike"},
 		applicationFunction = function (modules, sharedData)
 			-- Damage boost is applied via clone swapping
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.1
