@@ -33,7 +33,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 1410,
 		maxSlope               = 36,
-		maxVelocity            = 1.6,
+		maxVelocity            = 1.4,
 		minCloakDistance       = 75,
 		movementClass          = [[AKBOT2]],
 		noChaseCategory        = [[TERRAFORM FIXEDWING GUNSHIP HOVER]],
