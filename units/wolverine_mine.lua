@@ -74,7 +74,7 @@ return {
 					-- light_radius = 150,			 Usually the last index is whats set at runtime, so i'll just leave it as commented out for future reference?
 					light_camera_height = 3500,
 					light_color = [[0.75 0.4 0.15]],
-					light_radius = 220,
+					light_radius = 100,
 					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "wolverine_mine_fragment_dummy",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
@@ -137,7 +137,9 @@ return {
 					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeddeploy = 20,
 					shield_damage = 100,
-					bogus = 1
+					bogus = 1,
+					light_color = [[0.75 0.4 0.15]],
+					light_radius = 100,
 				},
 				damage                  = {
 					default = 0,
@@ -176,6 +178,8 @@ return {
 					nofriendlyfire = "needs hax",
 					stats_hide_dps = 1, -- one use
 					stats_hide_reload = 1,
+					light_color = [[0.75 0.4 0.15]],
+					light_radius = 100,
 				},
 
 				damage                  = {
