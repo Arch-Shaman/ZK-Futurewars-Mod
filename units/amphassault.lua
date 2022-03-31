@@ -6,7 +6,7 @@ return {
 		acceleration        = 0.3,
 		activateWhenBuilt   = true,
 		brakeRate           = 1.8,
-		buildCostMetal      = 4200,
+		buildCostMetal      = 4500,
 		buildPic            = [[amphassault.png]],
 		canGuard            = true,
 		canMove             = true,
@@ -34,7 +34,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
-		maxDamage           = 26400,
+		maxDamage           = 27000,
 		maxSlope            = 36,
 		maxVelocity         = 1.1,
 		maxReverseVelocity  = 0,
@@ -60,7 +60,6 @@ return {
 		trackWidth          = 66,
 		turnRate            = 500,
 		upright             = false,
-
 		weapons                       = {
 			{
 				def                = [[GAUSS]],
@@ -73,7 +72,6 @@ return {
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
 		},
-
 		weaponDefs                    = {
 			GAUSS = {
 				name                    = [[Heavy Gauss Cannon]],
@@ -85,15 +83,12 @@ return {
 				cegTag                  = [[gauss_tag_l]],
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams = {
 					burst = Shared.BURST_RELIABLE,
 				},
-
 				damage                  = {
 					default = 600.1,
 				},
-
 				explosionGenerator      = [[custom:gauss_hit_m]],
 				groundbounce            = 1,
 				impactOnly              = true,
@@ -103,8 +98,8 @@ return {
 				noExplode               = true,
 				noSelfDamage            = true,
 				numbounce               = 4,
-				range                   = 800,
-				reloadtime              = 3.5,
+				range                   = 720,
+				reloadtime              = 4.2,
 				rgbColor                = [[0.5 1 1]],
 				separation              = 0.5,
 				size                    = 0.8,
@@ -117,7 +112,7 @@ return {
 				turret                  = true,
 				waterweapon             = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 700,
+				weaponVelocity          = 730,
 			},
 		},
 		featureDefs         = {
