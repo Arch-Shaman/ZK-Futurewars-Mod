@@ -89,16 +89,14 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynassault1", --11/31
+		name = "dynassault1", --9/31
 		weapons = {
 			"commweapon_rocketlauncher", -- 430
-			"commweapon_rocketlauncher_napalm", -- 430
 			"commweapon_rocketlauncher", -- 430
-			"commweapon_rocketlauncher_napalm", -- 430
 			"commweapon_artillery_heavy",
 			"commweapon_artillery_heavy",
-			"commweapon_artillery_heavy_napalm",
-			"commweapon_artillery_heavy_napalm",
+			"commweapon_rocketbarrage",
+			"commweapon_rocketbarrage",
 			"commweapon_napalmgrenade", -- TODO: replace with napalm mortar
 			"commweapon_clusterbomb", -- TODO: replace with mortar
 			"commweapon_megalaser", -- DEATH LASER LETS GO GAMERS.

@@ -159,8 +159,8 @@ local moduleDefs = {
 	},
 	{
 		name = "commweapon_megalaser",
-		humanName = "Starbright Laser",
-		description = "Rapidly melts units, can be used to draw a deep line in the sand as well. Manual fire only.",
+		humanName = "Brillant Star Tactical Laser",
+		description = "A long recharge tactical laser that can be used to carve a line in the dirt or to rapidly melt enemy units. Manual fire only.",
 		image = moduleImagePath .. "commweapon_heatray.png",
 		limit = 1,
 		cost = 500 * COST_MULT,
@@ -322,7 +322,7 @@ local moduleDefs = {
 			if sharedData.noMoreWeapons then
 				return
 			end
-			local weaponName = (modules[moduleDefNames.weaponmod_napalm_warhead] and "commweapon_artillery_heavy_napalm") or "commweapon_artillery_heavy"
+			local weaponName = "commweapon_artillery_heavy"
 			sharedData.wantsfireatradar = true
 			if not sharedData.weapon1 then
 				sharedData.weapon1 = weaponName
@@ -397,6 +397,27 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "commweapon_rocketbarrage",
+		humanName = "Light Long Range Missile Battery",
+		description = "Also known as LLRMs. These light missiles spread over a large area, dealing lots of low level splash damage.",
+		image = moduleImagePath .. "commweapon_missilelauncher.png",
+		limit = 2,
+		cost = 100 * COST_MULT,
+		requireChassis = {"assault"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = "commweapon_rocketbarrage"
+			else
+				sharedData.weapon2 = "commweapon_rocketbarrage"
+			end
+		end
+	},
+	{
 		name = "commweapon_riotcannon",
 		humanName = "Riot Cannon",
 		description = "The weapon of choice for crowd control",
@@ -420,12 +441,12 @@ local moduleDefs = {
 	},
 	{
 		name = "commweapon_rocketlauncher",
-		humanName = "Multiple Light Rocket Launcher",
-		description = "Long range, indirect area bombardment. Spreads its DPS across a small area.",
+		humanName = "Portable EOS Launcher",
+		description = "Long range nuclear cruise missile that seeks its target before dropping out of the air and exploding. High damage and long range makes it good for sniping buildings and slow units. May be upgraded to a heavier, longer reload version (NYI).",
 		image = moduleImagePath .. "commweapon_rocketlauncher.png",
 		limit = 2,
 		cost = 75 * COST_MULT,
-		requireChassis = {"assault", "knight"},
+		requireChassis = {"assault"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -946,7 +967,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "weaponmod_napalm_warhead.png",
 		limit = 1,
 		cost = 350 * COST_MULT,
-		requireChassis = {"assault", "knight"},
+		requireChassis = {"knight"},
 		requireOneOf = {"commweapon_rocketlauncher", "commweapon_artillery_heavy", "commweapon_riotcannon"},
 		requireLevel = 2,
 		slotType = "module",
