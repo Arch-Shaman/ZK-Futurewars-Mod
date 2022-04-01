@@ -158,6 +158,27 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "commweapon_megalaser",
+		humanName = "Starbright Laser",
+		description = "Rapidly melts units, can be used to draw a deep line in the sand as well. Manual fire only.",
+		image = moduleImagePath .. "commweapon_heatray.png",
+		limit = 1,
+		cost = 500 * COST_MULT,
+		requireChassis = {"assault"},
+		requireLevel = 3,
+		slotType = "adv_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = "commweapon_megalaser"
+			else
+				sharedData.weapon2 = "commweapon_megalaser"
+			end
+		end
+	},
+	{
 		name = "commweapon_heatray_recon",
 		humanName = "Heatray",
 		description = "Rapidly melts anything at short range; steadily loses all of its damage over distance",

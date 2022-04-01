@@ -100,8 +100,8 @@ local chassisDefs = {
 			"commweapon_artillery_heavy_napalm",
 			"commweapon_artillery_heavy_napalm",
 			"commweapon_napalmgrenade", -- TODO: replace with napalm mortar
-			"commweapon_slamrocket",
 			"commweapon_clusterbomb", -- TODO: replace with mortar
+			"commweapon_megalaser", -- DEATH LASER LETS GO GAMERS.
 			-- Space for shield
 		}
 	},
