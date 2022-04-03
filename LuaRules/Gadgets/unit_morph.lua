@@ -470,6 +470,12 @@ local function FinishMorph(unitID, morphData)
 	GG.UpdateAntibait(unitID, newUnit)
 	Spring.SetUnitBlocking(newUnit, true)
 	
+	-- Copy radar targeting state --
+	local radarstate = GG.GetUnitRadarTargeting(unitID)
+	if radarstate then
+		GG.SetUnitRadarTargeting(newUnit, radarstate)
+	end
+	
 	-- copy disarmed
 	local paradisdmg, pdtime = GG.getUnitParalysisExternal(unitID)
 	if (paradisdmg ~= nil) then
