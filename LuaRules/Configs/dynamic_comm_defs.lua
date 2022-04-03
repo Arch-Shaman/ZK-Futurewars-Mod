@@ -986,16 +986,16 @@ local moduleDefs = {
 	{
 		name = "efficiency",
 		humanName = "Efficient Resourcing",
-		description = "By upgrading the Support comm's resource allocation algorithms, some extra metal and energy can be squeezed out of the chassis's resource generator.\nProvides 1.5m/sec and 3e/sec income",
+		description = "By upgrading the Support comm's resource allocation algorithms, some extra metal and energy can be squeezed out of the chassis's resource generator.\nProvides 2.5m/sec and 5e/sec income",
 		image = moduleImagePath .. "module_efficency.png",
 		limit = 4,
 		requireChassis = {"support"},
-		cost = 125 * COST_MULT,
+		cost = 75 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			sharedData.metalIncome = (sharedData.metalIncome or 0) + 1.5
-			sharedData.energyIncome = (sharedData.energyIncome or 0) + 3
+			sharedData.metalIncome = (sharedData.metalIncome or 0) + 2.5
+			sharedData.energyIncome = (sharedData.energyIncome or 0) + 5
 		end
 	},
 	{
