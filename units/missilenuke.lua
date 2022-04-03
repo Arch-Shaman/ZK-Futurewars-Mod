@@ -50,7 +50,7 @@ return {
 			CRBLMSSL = {
 				name                    = [[Nuclear Missile]],
 				areaOfEffect            = 1920,
-				cegTag                  = [[NUCKLEARMINI]],
+				cegTag                  = [[nucleartrail]],
 				collideFriendly         = false,
 				collideFeature          = false,
 				commandfire             = true,

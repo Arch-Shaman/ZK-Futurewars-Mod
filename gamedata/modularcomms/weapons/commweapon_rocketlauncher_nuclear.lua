@@ -2,7 +2,7 @@ local name = "commweapon_rocketlauncher_nuclear"
 local weaponDef = {
 	name                    = [[Nuclear Cruise Missile Launcher]],
 	areaOfEffect            = 800,
-	cegTag                  = [[NUCKLEARMINI]],
+	cegTag                  = [[nucleartrail_small]],
 	craterBoost             = 1,
 	craterMult              = 4,
 

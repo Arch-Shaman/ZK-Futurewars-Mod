@@ -60,7 +60,7 @@ return {
 			warhead = {
 				name                    = [[Nuclear Warhead]],
 				areaOfEffect            = 1920,
-				cegTag                  = [[NUCKLEARMINI]],
+				cegTag                  = [[nucleartrail]],
 				collideFriendly         = false,
 				collideFeature          = false,
 				commandfire             = true,
@@ -107,7 +107,7 @@ return {
 			crblmssl = {
 				name                    = [[Nuclear MIRV]],
 				areaOfEffect            = 0, --1920,
-				cegTag                  = [[NUCKLEARMINI]],
+				cegTag                  = [[nucleartrail]],
 				collideFriendly         = false,
 				collideFeature          = false,
 				commandfire             = true,
