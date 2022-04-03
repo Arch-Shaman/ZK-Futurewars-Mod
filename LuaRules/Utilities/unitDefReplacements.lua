@@ -284,6 +284,10 @@ local function GetCustomTooltip (unitID, ud)
 	or GetPlateTooltip(unitID, ud)
 end
 
+local function GetUnitName(unitID)
+	return Spring.GetUnitRulesParam(unitID, "unitname")
+end
+
 function Spring.Utilities.GetHumanName(ud, unitID)
 	if not ud then
 		return ""
@@ -302,7 +306,7 @@ function Spring.Utilities.GetHumanName(ud, unitID)
 	end
 
 	local name_override = ud.customParams.statsname or ud.name
-	return WG.Translate ("units", name_override .. ".name") or ud.humanName
+	return GetUnitName(unitID) or WG.Translate ("units", name_override .. ".name") or ud.humanName
 end
 
 function Spring.Utilities.GetDescription(ud, unitID)
