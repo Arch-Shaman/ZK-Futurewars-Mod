@@ -1970,6 +1970,8 @@ local chassisDefs = {
 				morphBaseCost = 0,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.metalIncome = (sharedData.metalIncome or 0) + 1
+					sharedData.energyIncome = (sharedData.energyIncome or 0) + 2
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynsupport0"].id
@@ -1983,6 +1985,8 @@ local chassisDefs = {
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 2
 					sharedData.extrastorage = (sharedData.extrastorage or 0) + 50
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.metalIncome = (sharedData.metalIncome or 0) + 2
+					sharedData.energyIncome = (sharedData.energyIncome or 0) + 4
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynsupport1_" .. GetSupportCloneModulesString(modulesByDefID)].id
@@ -2005,6 +2009,8 @@ local chassisDefs = {
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 4
 					sharedData.extrastorage = (sharedData.extrastorage or 0) + 100
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.metalIncome = (sharedData.metalIncome or 0) + 3
+					sharedData.energyIncome = (sharedData.energyIncome or 0) + 6
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynsupport2_" .. GetSupportCloneModulesString(modulesByDefID)].id
@@ -2027,6 +2033,8 @@ local chassisDefs = {
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 6
 					sharedData.extrastorage = (sharedData.extrastorage or 0) + 150
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.metalIncome = (sharedData.metalIncome or 0) + 4
+					sharedData.energyIncome = (sharedData.energyIncome or 0) + 8
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynsupport3_" .. GetSupportCloneModulesString(modulesByDefID)].id
@@ -2053,6 +2061,8 @@ local chassisDefs = {
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 9
 					sharedData.extrastorage = (sharedData.extrastorage or 0) + 200
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.metalIncome = (sharedData.metalIncome or 0) + 5
+					sharedData.energyIncome = (sharedData.energyIncome or 0) + 10
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynsupport4_" .. GetSupportCloneModulesString(modulesByDefID)].id
@@ -2079,6 +2089,8 @@ local chassisDefs = {
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 12
 					sharedData.extrastorage = (sharedData.extrastorage or 0) + 250
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+					sharedData.metalIncome = (sharedData.metalIncome or 0) + 6
+					sharedData.energyIncome = (sharedData.energyIncome or 0) + 12
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynsupport5_" .. GetSupportCloneModulesString(modulesByDefID)].id
