@@ -27,7 +27,7 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynrecon1", -- 22/31
+		name = "dynrecon1", -- 26/31
 		weapons = {
 			"commweapon_lparticlebeam", -- TODO: Remove
 			"commweapon_lparticlebeam",
@@ -51,6 +51,10 @@ local chassisDefs = {
 			"commweapon_gaussrepeater",
 			"commweapon_gaussrepeater",
 			"commweapon_minefieldinacan",
+			"commweapon_leolaser",
+			"commweapon_leolaser",
+			"commweapon_leolaser_disrupt",
+			"commweapon_leolaser_disrupt",
 			-- Space for shield
 		}
 	},
@@ -89,7 +93,7 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynassault1", --9/31
+		name = "dynassault1", --15/31
 		weapons = {
 			"commweapon_rocketlauncher", -- 430
 			"commweapon_rocketlauncher", -- 430
@@ -97,6 +101,12 @@ local chassisDefs = {
 			"commweapon_artillery_heavy",
 			"commweapon_rocketbarrage",
 			"commweapon_rocketbarrage",
+			"commweapon_rocketbarrage_nuclear",
+			"commweapon_rocketbarrage_nuclear",
+			"commweapon_rocketlauncher_nuclear",
+			"commweapon_rocketlauncher_nuclear",
+			"commweapon_artillery_heavy_nuclear",
+			"commweapon_artillery_heavy_nuclear",
 			"commweapon_napalmgrenade", -- TODO: replace with napalm mortar
 			"commweapon_clusterbomb", -- TODO: replace with mortar
 			"commweapon_megalaser", -- DEATH LASER LETS GO GAMERS.

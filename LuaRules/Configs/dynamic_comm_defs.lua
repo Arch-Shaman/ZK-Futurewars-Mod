@@ -55,6 +55,27 @@ local function ApplyHighFrequencyBeamKit(modules, sharedData)
 	end
 end
 
+local function ApplyHeavyOrdinance(modules, sharedData)
+	local upgrade = {
+		["commweapon_artillery_heavy"] = "commweapon_artillery_heavy_nuclear",
+		["commweapon_rocketbarrage"] = "commweapon_rocketbarrage_nuclear",
+		["commweapon_rocketlauncher"] = "commweapon_rocketlauncher_nuclear",
+	}
+	local wantsfireatradar = {
+		["commweapon_artillery_heavy_nuclear"] = true,
+		["commweapon_rocketbarrage_nuclear"] = false,
+		["commweapon_rocketlauncher_nuclear"] = false,
+	}
+	if sharedData.weapon1 and upgrade[sharedData.weapon1] then
+		sharedData.weapon1 = upgrade[sharedData.weapon1]
+		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon1]
+	elseif sharedData.weapon2 and upgrade[sharedData.weapon2] then
+		sharedData.weapon2 = upgrade[sharedData.weapon2]
+		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon2]
+	end
+end
+
+
 local moduleDefNames = {}
 
 local moduleDefs = {
@@ -506,6 +527,28 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "commweapon_leolaser",
+		humanName = "LEO Laser",
+		description = "Hammers a single target with bursts of lasers.",
+		image = moduleImagePath .. "commweapon_shotgun.png",
+		limit = 2,
+		cost = 50 * COST_MULT,
+		requireChassis = {"recon"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_leolaser_disrupt") or "commweapon_leolaser"
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = weaponName
+			else
+				sharedData.weapon2 = weaponName
+			end
+		end
+	},
+	{
 		name = "commweapon_canistercannon",
 		humanName = "Canister Cannon",
 		description = "Releases tiny fragments at a certain range. May impact multiple units.",
@@ -607,6 +650,32 @@ local moduleDefs = {
 		applicationFunction = ApplyHighFrequencyBeamKit
 	},
 	{
+		name = "module_heavyordinance",
+		humanName = "Heavy Ordinance Kit",
+		description = "Converts weapons into a heavier, longer reload version. Increases AOE, Damage, and reload time.",
+		image = moduleImagePath .. "weaponmod_plasma_containment.png",
+		limit = 1,
+		cost = 300 * COST_MULT,
+		requireChassis = {"assault"},
+		requireOneOf = {"commweapon_artillery_heavy", "commweapon_rocketbarrage", "commweapon_rocketlauncher"},
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = ApplyHeavyOrdinance
+	},
+	{
+		name = "module_heavyordinance_second",
+		humanName = "Heavy Ordinance Kit",
+		description = "Converts weapons into a heavier, longer reload version. Increases AOE, Damage, and reload time.",
+		image = moduleImagePath .. "weaponmod_plasma_containment.png",
+		limit = 1,
+		cost = 300 * COST_MULT,
+		requireChassis = {"assault"},
+		requireTwoOf = {"commweapon_artillery_heavy", "commweapon_rocketbarrage", "commweapon_rocketlauncher"},
+		requireLevel = 4,
+		slotType = "module",
+		applicationFunction = ApplyHeavyOrdinance
+	},
+	{
 		name = "module_heavyprojector_second",
 		humanName = "High Frequency Beam Kit",
 		description = "Converts a disruptor or beam into a heavier version.",
@@ -665,6 +734,7 @@ local moduleDefs = {
 			end
 		end
 	},
+	
 	{
 		name = "commweapon_clusterbomb",
 		humanName = "Cluster Bomb",
@@ -882,7 +952,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_slamrocket.png",
 		limit = 1,
 		cost = 200 * COST_MULT,
-		requireChassis = {"assault", "knight"},
+		requireChassis = {"knight"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -959,6 +1029,18 @@ local moduleDefs = {
 		applicationFunction = function (modules, sharedData)
 			sharedData.shield = "commweapon_areashield"
 		end
+	},
+	{
+		name = "weaponmod_napalm_warhead",
+		humanName = "Napalm Warhead",
+		description = "Riot Cannon and Rocket Launcher set targets on fire. Reduced direct damage.",
+		image = moduleImagePath .. "weaponmod_napalm_warhead.png",
+		limit = 1,
+		cost = 350 * COST_MULT,
+		requireChassis = {"knight"},
+		requireOneOf = {"commweapon_rocketlauncher", "commweapon_artillery_heavy", "commweapon_riotcannon"},
+		requireLevel = 2,
+		slotType = "module",
 	},
 	{
 		name = "weaponmod_napalm_warhead",
