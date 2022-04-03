@@ -4,7 +4,11 @@ if (Spring.GetModOptions) then
 	modOptions = Spring.GetModOptions()
 end
 
+local nuclearwar = tonumber((modOptions["goingnuclear"]) or 0) == 1
+
+
 Spring.Echo("Loading UnitDefs_posts")
+--Spring.Echo("UDP: Nuclear war mode: " .. tostring(nuclearwar) .. "\ngoing nuclear value: " .. tostring(modOptions["goingnuclear"]))
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -266,6 +270,28 @@ local valkDef = UnitDefs.gunshiptrans
 local valkMaxMass = valkDef.transportmass
 local valkMaxSize = valkDef.transportsize
 
+local nuclearwardefs = {
+	["BIG_UNITEX"] = "BOMBERHEAVY_DEATHEXPLO",
+	["PYRO_DEATH"] = "TACNUKE_WEAPON",
+	["SMALL_BUILDINGEX"] = "TACNUKE_WEAPON",
+	["ESTOR_BUILDINGEX"] = "BOMBERHEAVY_DEATHEXPLO",
+	["BIG_UNITEX"] = "VEHHEAVYARTY_CORTRUCK_ROCKET",
+	["ATOMIC_BLAST"] = "BOMBERHEAVY_DEATHEXPLO",
+	["BIG_UNIT"] = "NUCLEAR_MISSILE",
+	["ATOMIC_BLASTSML"] = "VEHHEAVYARTY_CORTRUCK_ROCKET",
+	["FAC_PLATEEX"] = "VEHHEAVYARTY_CORTRUCK_ROCKET",
+	["NOWEAPON"] = "TACNUKE_WEAPON",
+	["ESTOR_BUILDING"] = "BOMBERHEAVY_DEATHEXPLO",
+	["SMALL_UNITEX"] = "TACNUKE_WEAPON",
+	["LARGE_BUILDINGEX"] = "BOMBERHEAVY_DEATHEXPLO",
+	["JUMPBOMB_DEATH"] = "BOMBERHEAVY_DEATHEXPLO",
+	["CRAWL_BLASTSML"] = "NUCLEAR_MISSILE",
+	["MEDIUM_BUILDINGEX"] = "TACNUKE_WEAPON",
+	["GUNSHIPEX"] = "TACNUKE_WEAPON",
+	["BIG_UNITEX_MERL"] = "NUCLEAR_MISSILE",
+}
+	
+
 for name, ud in pairs(UnitDefs) do
 	local cp = ud.customparams
 	-- custom params become strings --
@@ -296,6 +322,46 @@ for name, ud in pairs(UnitDefs) do
 		if value then
 			ud.buildoptions = ud.buildoptions or {}
 			ud.buildoptions[#ud.buildoptions + 1] = value
+		end
+	end
+	
+	-- nuclear war mode --
+	if nuclearwar and ud.explodeas and name ~= "terraunit" then
+		--Spring.Echo("Nuclear war: " .. name)
+		ud.explodeas = string.upper(ud.explodeas)
+		
+		--Spring.Echo(tostring(ud.explodeas))
+		if ((ud.explodeas == "SMALL_BUILDINGEX" or ud.explodeas == "ESTOR_BUILDINGEX") and ud.buildcostmetal > 200) or (ud.explodeas == "GUNSHIPEX" and ud.buildcostmetal > 500) then -- buildings with cost > 270 explode violently
+			ud.explodeas = "BOMBERHEAVY_DEATHEXPLO"
+		end
+		
+		if (ud.explodeas == "SMALL_BUILDINGEX" or ud.explodeas == "MEDIUM_BUILDINGEX") and ud.buildcostmetal < 200 then
+			ud.explodeas = "TACNUKE_WEAPON"
+		end
+		if nuclearwardefs[ud.explodeas] then
+			ud.explodeas = nuclearwardefs[ud.explodeas]
+		end
+		
+		ud.selfdestructas = ud.explodeas or "NOWEAPON"
+		Spring.Echo("Nuclear war: " .. name .. " final: " .. tostring(ud.explodeas))
+		
+		if name == "staticmissilesilo" or name == "staticnuke" or name == "missilenuke" or name == "tacnuke" then
+			ud.buildcostmetal = math.floor(ud.buildcostmetal / 8)
+		end
+		if name == "staticnuke" or name == "subtacmissile" then
+			ud.customparams.stockpiletime = tostring(math.ceil(tonumber(ud.customparams.stockpiletime) / 4))
+			ud.customparams.stockpilecost = tostring(math.floor(tonumber(ud.customparams.stockpilecost) / 4))
+		end
+		if name == "staticantinuke" then
+			ud.buildcostmetal = 600
+			ud.customparams.neededlink = 30
+		end
+		if name == "bomberheavy" then
+			ud.buildcostmetal =  1500
+			ud.maxdamage = 4000
+		end
+		if name == "bomberstrike" then
+			ud.buildcostmetal = 400
 		end
 	end
 	

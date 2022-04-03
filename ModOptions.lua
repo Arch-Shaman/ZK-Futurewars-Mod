@@ -186,6 +186,14 @@ local options = {
 		def = false,
 	},
 	{
+		key    = 'goingnuclear',
+		name   = 'Nuclear Death Mode',
+		desc   = "All units explode like nukes.",
+		type   = 'bool',
+		section= 'silly',
+		def = false,
+	},
+	{
 		key = "max_com_level",
 		name = "Commander level limit",
 		desc = "Choose the commander level limit. 0 for unlimited.",
