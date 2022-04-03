@@ -97,6 +97,10 @@ local chassisDefs = {
 			"commweapon_artillery_heavy",
 			"commweapon_rocketbarrage",
 			"commweapon_rocketbarrage",
+			"commweapon_rocketlauncher_nuclear",
+			"commweapon_rocketlauncher_nuclear",
+			"commweapon_artillery_heavy_nuclear",
+			"commweapon_artillery_heavy_nuclear",
 			"commweapon_napalmgrenade", -- TODO: replace with napalm mortar
 			"commweapon_clusterbomb", -- TODO: replace with mortar
 			"commweapon_megalaser", -- DEATH LASER LETS GO GAMERS.
