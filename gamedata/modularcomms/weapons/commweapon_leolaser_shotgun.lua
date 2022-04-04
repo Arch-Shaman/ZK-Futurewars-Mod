@@ -1,6 +1,6 @@
-local name = "commweapon_leolaser"
+local name = "commweapon_leolaser_shotgun"
 local weaponDef = {
-	name                    = [[LEO Laser Cannon]],
+	name                    = [[LEO Laser Shotgun]],
 	areaOfEffect            = 15,
 	avoidFeature            = false,
 	coreThickness           = 0.4,
@@ -8,11 +8,13 @@ local weaponDef = {
 	craterMult              = 0,
 	beamTTL                 = 12,
 	beamDecay               = 0.85,
-	burst					= 14,
+	burst					= 7,
 	burstRate				= 1/30,
-	sprayangle				= 200,
+	sprayangle				= 1100,
+	accuracy				= 800,
 	edgeeffectiveness		= 0.4,
-	minIntensity            = 0.5,
+	minIntensity            = 0.1,
+	projectiles				= 6,
 	customParams        = {
 		light_camera_height = 1800,
 		light_radius = 80,
@@ -20,7 +22,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 14.1,
+		default = 9.1,
 	},
 
 	duration                = 0.1,
@@ -32,9 +34,9 @@ local weaponDef = {
 	range                   = 280,
 	reloadtime              = 0.6,
 	rgbColor                = [[0.043 0.7 0.274]],
-	soundHit                = [[weapon/laser/emerald_hit]],
-	soundStart              = [[weapon/laser/laser_chaingun_fw]],
-	soundStartVolume        = 0.7,
+	--soundHit                = [[weapon/laser/emerald_hit]],
+	soundStart              = [[weapon/laser/leo_shotgun]],
+	soundStartVolume        = 0.4,
 	soundTrigger            = true,
 	thickness               = 2.25,
 	tolerance               = 10000,

@@ -9,6 +9,8 @@ else
 	skinDefs = {}
 end
 
+local moduleDefNames = {}
+
 local LEVEL_BOUND = math.floor(tonumber(Spring.GetModOptions().max_com_level or 0))
 if LEVEL_BOUND <= 0 then
 	LEVEL_BOUND = nil -- unlimited
@@ -75,8 +77,17 @@ local function ApplyHeavyOrdinance(modules, sharedData)
 	end
 end
 
-
-local moduleDefNames = {}
+local function ApplyShotgunModule(modules, sharedData)
+	local upgrade = {
+		["commweapon_leolaser"] = "commweapon_leolaser_shotgun",
+		["commweapon_leolaser_disrupt"] = "commweapon_leolaser_shotgun_disrupt"
+	}
+	if sharedData.weapon1 and upgrade[sharedData.weapon1] then
+		sharedData.weapon1 = upgrade[sharedData.weapon1]
+	elseif sharedData.weapon2 and upgrade[sharedData.weapon2] then
+		sharedData.weapon2 = upgrade[sharedData.weapon2]
+	end
+end
 
 local moduleDefs = {
 	-- Empty Module Slots
@@ -530,7 +541,7 @@ local moduleDefs = {
 		name = "commweapon_leolaser",
 		humanName = "LEO Laser",
 		description = "Hammers a single target with bursts of lasers.",
-		image = moduleImagePath .. "commweapon_shotgun.png",
+		image = moduleImagePath .. "commweapon_leolaser.png",
 		limit = 2,
 		cost = 50 * COST_MULT,
 		requireChassis = {"recon"},
@@ -661,6 +672,32 @@ local moduleDefs = {
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = ApplyHeavyOrdinance
+	},
+	{
+		name = "module_shotgunlaser",
+		humanName = "Beam Splitter",
+		description = "Splits LEO Lasers, creating a shotgun-like effect. Increases DPS up close in exchange for high spread.",
+		image = moduleImagePath .. "commweapon_leolaser_shotgun.png",
+		limit = 1,
+		cost = 300 * COST_MULT,
+		requireChassis = {"recon"},
+		requireOneOf = {"commweapon_leolaser"},
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = ApplyShotgunModule
+	},
+	{
+		name = "module_shotgunlaser_second",
+		humanName = "Beam Splitter",
+		description = "Splits LEO Lasers, creating a shotgun-like effect. Increases DPS up close in exchange for high spread.",
+		image = moduleImagePath .. "commweapon_leolaser_shotgun.png",
+		limit = 1,
+		cost = 300 * COST_MULT,
+		requireChassis = {"recon"},
+		requireTwoOf = {"commweapon_leolaser"},
+		requireLevel = 4,
+		slotType = "module",
+		applicationFunction = ApplyShotgunModule
 	},
 	{
 		name = "module_heavyordinance_second",
@@ -1062,7 +1099,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 300 * COST_MULT,
 		requireChassis = {"strike", "recon", "support", "knight"},
-		requireOneOf = {"commweapon_heavymachinegun", "commweapon_heavyrifle", "commweapon_tankbuster", "commweapon_emg", "commweapon_shotgun", "commweapon_hparticlebeam", "commweapon_lparticlebeam"},
+		requireOneOf = {"commweapon_heavymachinegun", "commweapon_leolaser", "commweapon_heavyrifle", "commweapon_tankbuster", "commweapon_emg", "commweapon_shotgun", "commweapon_hparticlebeam", "commweapon_lparticlebeam"},
 		requireLevel = 2,
 		slotType = "module",
 	},

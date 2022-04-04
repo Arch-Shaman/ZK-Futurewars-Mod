@@ -15,8 +15,8 @@ local weaponDef = {
 	minIntensity            = 0.5,
 	customParams        = {
 		light_camera_height = 1800,
-		light_radius = 160,
-		light_color = [[1.88 0.63 2.5]],
+		light_radius = 90,
+		light_color = [[0.3 0 0.4]],
 		timeslow_damagefactor = [[3]],
 	},
 

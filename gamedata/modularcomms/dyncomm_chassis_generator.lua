@@ -33,10 +33,6 @@ local chassisDefs = {
 			"commweapon_lparticlebeam",
 			"commweapon_disruptor", -- TODO: Remove
 			"commweapon_disruptor",
-			"commweapon_shotgun",
-			"commweapon_shotgun",
-			"commweapon_shotgun_disrupt",
-			"commweapon_shotgun_disrupt",
 			"commweapon_flamethrower",
 			"commweapon_flamethrower",
 			"commweapon_emg",
@@ -55,6 +51,10 @@ local chassisDefs = {
 			"commweapon_leolaser",
 			"commweapon_leolaser_disrupt",
 			"commweapon_leolaser_disrupt",
+			"commweapon_leolaser_shotgun",
+			"commweapon_leolaser_shotgun",
+			"commweapon_leolaser_shotgun_disrupt",
+			"commweapon_leolaser_shotgun_disrupt",
 			-- Space for shield
 		}
 	},

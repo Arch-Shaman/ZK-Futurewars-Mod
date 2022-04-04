@@ -1,10 +1,13 @@
 local name = "commweapon_artillery_heavy_nuclear"
 local weaponDef = {
 	name                    = [[Heavy Nuclear Artillery]],
-	accuracy                = 600,
+	accuracy                = 1100,
+	sprayangle				= 1100,
 	areaOfEffect            = 192,
 	craterBoost             = 20,
 	craterMult              = 2.5,
+	burst = 6,
+	burstrate = 1/3,
 
 	customParams            = {
 		is_unit_weapon = 1,
@@ -13,16 +16,11 @@ local weaponDef = {
 
 		light_color = [[1.4 0.8 0.3]],
 		reaim_time = 1,
-		reveal_unit = 20,
-		use_okp = 1,
-		okp_speedmult = 0.3,
-		okp_radarmult = 1,
-		okp_timeout = 80,
-		okp_damage = 2500,
+		reveal_unit = 30,
 	},
 
 	damage                  = {
-		default = 2500,
+		default = 1500,
 	},
 
 	edgeEffectiveness       = 0.5,
@@ -31,15 +29,16 @@ local weaponDef = {
 	impulseBoost            = 0,
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 1,
-	myGravity               = 0.05,
+	myGravity               = 0.22,
+	hightrajectory          = 1,
 	range                   = 800,
-	reloadtime              = 16,
+	reloadtime              = 25,
 	noselfdamage			= false,
 	soundHit                = [[explosion/mini_nuke_2]],
-	soundStart              = [[weapon/cannon/battleship_fire]],
+	soundStart              = [[weapon/cannon/crabe_cannon]],
 	turret                  = true,
 	weaponType              = [[Cannon]],
-	weaponVelocity          = 220,
+	weaponVelocity          = 620,
 }
 
 return name, weaponDef
