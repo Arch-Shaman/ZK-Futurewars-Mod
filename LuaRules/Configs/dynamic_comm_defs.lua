@@ -1832,7 +1832,7 @@ local chassisDefs = {
 				morphBaseCost = 0,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.speedMod = (sharedData.speedMod or 0) + 2
+					sharedData.speedMod = (sharedData.speedMod or 0) + 5
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynrecon0"].id
@@ -1844,7 +1844,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[1],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.speedMod = (sharedData.speedMod or 0) + 4
+					sharedData.speedMod = (sharedData.speedMod or 0) + 7
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynrecon1_" .. GetReconCloneModulesString(modulesByDefID)].id
@@ -1865,7 +1865,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[2] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.speedMod = (sharedData.speedMod or 0) + 6
+					sharedData.speedMod = (sharedData.speedMod or 0) + 9
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynrecon2_" .. GetReconCloneModulesString(modulesByDefID)].id
@@ -1886,7 +1886,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[3] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.speedMod = (sharedData.speedMod or 0) + 8
+					sharedData.speedMod = (sharedData.speedMod or 0) + 11
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynrecon3_" .. GetReconCloneModulesString(modulesByDefID)].id
@@ -1911,7 +1911,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[4] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.speedMod = (sharedData.speedMod or 0) + 10
+					sharedData.speedMod = (sharedData.speedMod or 0) + 13
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynrecon4_" .. GetReconCloneModulesString(modulesByDefID)].id
@@ -1936,7 +1936,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[5] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-					sharedData.speedMod = (sharedData.speedMod or 0) + 12
+					sharedData.speedMod = (sharedData.speedMod or 0) + 15
 				end,
 				morphUnitDefFunction = function(modulesByDefID)
 					return UnitDefNames["dynrecon5_" .. GetReconCloneModulesString(modulesByDefID)].id
@@ -1969,6 +1969,7 @@ local chassisDefs = {
 				morphBuildPower = 10,
 				morphBaseCost = 0,
 				chassisApplicationFunction = function (modules, sharedData)
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 100
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.metalIncome = (sharedData.metalIncome or 0) + 1
 					sharedData.energyIncome = (sharedData.energyIncome or 0) + 2
@@ -1983,7 +1984,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[1],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 2
-					sharedData.extrastorage = (sharedData.extrastorage or 0) + 50
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 200
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.metalIncome = (sharedData.metalIncome or 0) + 2
 					sharedData.energyIncome = (sharedData.energyIncome or 0) + 4
@@ -2007,7 +2008,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[2] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 4
-					sharedData.extrastorage = (sharedData.extrastorage or 0) + 100
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 300
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.metalIncome = (sharedData.metalIncome or 0) + 3
 					sharedData.energyIncome = (sharedData.energyIncome or 0) + 6
@@ -2031,7 +2032,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[3] * COST_MULT,
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 6
-					sharedData.extrastorage = (sharedData.extrastorage or 0) + 150
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 400
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.metalIncome = (sharedData.metalIncome or 0) + 4
 					sharedData.energyIncome = (sharedData.energyIncome or 0) + 8
@@ -2059,7 +2060,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[4],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 9
-					sharedData.extrastorage = (sharedData.extrastorage or 0) + 200
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 500
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.metalIncome = (sharedData.metalIncome or 0) + 5
 					sharedData.energyIncome = (sharedData.energyIncome or 0) + 10
@@ -2087,7 +2088,7 @@ local chassisDefs = {
 				morphBaseCost = morphCosts[5],
 				chassisApplicationFunction = function (modules, sharedData)
 					sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 12
-					sharedData.extrastorage = (sharedData.extrastorage or 0) + 250
+					sharedData.extrastorage = (sharedData.extrastorage or 0) + 600
 					sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 					sharedData.metalIncome = (sharedData.metalIncome or 0) + 6
 					sharedData.energyIncome = (sharedData.energyIncome or 0) + 12
