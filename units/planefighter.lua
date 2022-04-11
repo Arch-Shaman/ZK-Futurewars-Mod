@@ -258,20 +258,19 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 11.1,
-				planes  = 110,
+				default = 15.1,
+				planes  = 150,
 			},
 
 			explosionGenerator      = [[custom:WEAPEXP_PUFF]],
 			fireStarter             = 70,
-			flightTime              = 7,
+			flightTime              = 15,
 			impulseBoost            = 0,
 			impulseFactor           = 0.4,
 			interceptedByShieldType = 2,
-			metalpershot            = 0,
 			model                   = [[wep_m_avalanche.s3o]],
 			noSelfDamage            = true,
-			range                   = 700,
+			range                   = 1100,
 			reloadtime              = 5.2,
 			smokeTrail              = true,
 			soundHit                = [[weapon/missile/rocket_hit]],
@@ -283,7 +282,7 @@ local unitDef = {
 			turnRate                = 10000,
 			weaponAcceleration      = 200,
 			weaponType              = [[MissileLauncher]],
-			weaponVelocity          = 550,
+			weaponVelocity          = 850,
 		},
 	
 		MISSILE_AA = {
