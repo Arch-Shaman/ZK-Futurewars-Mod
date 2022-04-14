@@ -330,6 +330,38 @@ local function SetupSpooling()
 	return spool1, spool2
 end
 
+local function SetupAiming()
+	local aimconfig = {[1] = {}, [2] = {}}
+	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
+	local weaponname2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2")
+	if weaponname1 then
+		local cp1 = WeaponDefs[unitWeaponNames[weaponname1].weaponDefID].customParams
+		if cp1.aimdelay then
+			aimconfig[1].allowedpitch = cp1.allowedpitcherror
+			aimconfig[1].allowedheadingerror = cp1.allowedheadingerror
+			aimconfig[1].aimtime = cp1.aimdelay
+		end
+	end
+	if weaponname2 then
+		local cp2 = WeaponDefs[unitWeaponNames[weaponname2].weaponDefID].customParams
+		if cp2.aimdelay then
+			aimconfig[1].allowedpitch = cp2.allowedpitcherror
+			aimconfig[1].allowedheadingerror = cp2.allowedheadingerror
+			aimconfig[1].aimtime = cp2.aimdelay
+		end
+	end
+	local aimbonus
+	if aimconfig[1].aimtime or aimconfig[2].aimtime then
+		
+	end
+	if aimconfig[1].aimtime and aimconfig[2].aimtime then
+		Spring.SetUnitRulesParam(unitID, "comm_aimtime", math.max(aimconfig[1].aimtime, aimconfig[2].aimtime) * (Spring.GetUnitRulesParam(unitID, "comm_aimbonus") or 1), INLOS)
+	elseif aimconfig[1].aimtime or aimconfig[2].aimtime then
+		Spring.SetUnitRulesParam(unitID, "comm_aimtime", (aimconfig[1].aimtime or aimconfig[2].aimtime) * (Spring.GetUnitRulesParam(unitID, "comm_aimbonus") or 1), INLOS)
+	end
+	return aimconfig
+end
+
 local function GetOKP()
 	local okp = {}
 	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
