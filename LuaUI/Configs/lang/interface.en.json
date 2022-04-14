@@ -5,6 +5,7 @@
 		"many" : "You have %{count} idle constructors",
 		"other" : "You have %{count} idle constructors."
 	},
+	"aim" : "Aiming",
 	"quick_rallypoint_mode" : "Quick rallypoint mode",
 	"tacnuke_and_emp" : "Tacnuke and EMP",
 	"singularity" : "Singularity",
