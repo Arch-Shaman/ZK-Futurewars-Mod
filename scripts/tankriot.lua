@@ -177,7 +177,7 @@ end
 local function reload(num)
 	scriptReload.GunStartReload(num)
 	gun[num].loaded = false
-	SleepAndUpdateReload(num, 3.4 * 30)
+	SleepAndUpdateReload(num, 6 * 30)
 	gun[num].loaded = true
 	if scriptReload.GunLoaded(num) then
 		shot = 0

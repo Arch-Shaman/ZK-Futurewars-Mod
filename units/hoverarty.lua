@@ -20,7 +20,7 @@ unitDef = {
 	customParams        = {
 		dontfireatradarcommand = '0',
 		aimposoffset   = [[0 15 0]],
-		specialreloadtime = 120,
+		aimdelay = 75,
 		bait_level_default = 2,
 	},
 
@@ -162,7 +162,7 @@ unitDef = {
 			soundStartVolume        = 15,
 			sweepfire               = true,
 			texture1                = [[largelaser]],
-			texture2                = [[flare]],
+			--texture2                = [[flare]],
 			texture3                = [[flare]],
 			texture4                = [[smallflare]],
 			thickness               = 16.9373846859543,

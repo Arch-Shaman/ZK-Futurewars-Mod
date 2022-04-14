@@ -19,7 +19,6 @@ if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
 	return
 end
 
-
 local abs = math.abs
 local allowedHeadingError = 0.000001 -- to allow for micro-variations in heading even when firing at fixed positions
 local allowedPitchError = 0.01 -- to allow for cratering
@@ -60,7 +59,6 @@ local function isCloseEnough(heading1, heading2, pitch1, pitch2, weaponDefID)
 	return true
 end
 
-
 function GG.AimDelay_ForceWeaponRestart(unitID, weaponNum, delay)
 	if unitDelayedArray[unitID] then
 		unitDelayedArray[unitID][weaponNum].forcereset = true
@@ -68,7 +66,6 @@ function GG.AimDelay_ForceWeaponRestart(unitID, weaponNum, delay)
 end
 
 function GG.AimDelay_AttemptToFire(unitID, weaponNum, heading, pitch, delay)
-	
 	unitDelayedArray[unitID] = unitDelayedArray[unitID] or {}
 	unitDelayedArray[unitID][weaponNum] = unitDelayedArray[unitID][weaponNum] or {
 		heading = false,
@@ -83,12 +80,15 @@ function GG.AimDelay_AttemptToFire(unitID, weaponNum, heading, pitch, delay)
 		unitDelayedArray[unitID][weaponNum].heading = heading
 		unitDelayedArray[unitID][weaponNum].pitch = pitch
 		unitDelayedArray[unitID][weaponNum].forcereset = false
-		spSetUnitRulesParam(unitID, "specialReloadFrame", weaponDelay.delayedUntil, LOS_ACCESS)
+		spSetUnitRulesParam(unitID, "aimdelay", weaponDelay.delayedUntil, LOS_ACCESS) -- Tell LUAUI this unit is currently aiming!
 		return false
 	end
-	
+	Spring.Echo("AttemptToFire: " .. unitID .. ": " .. weaponNum .. " (" ..  tostring(frame >= weaponDelay.delayedUntil) .. ")")
 	return (frame >= weaponDelay.delayedUntil)
-	
+end
+
+function gadget:UnitDestroyed(unitID)
+	unitDelayedArray[unitID] = nil
 end
 
 function gadget:GameFrame(f)

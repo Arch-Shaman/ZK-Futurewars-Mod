@@ -77,7 +77,7 @@ function TrackThread()
 	local currentframe, trackingcompletedframe, diff, reloadFrame = 0, 999999999, 0, 0
 	local sounded = false
 	while true do
-		trackingcompletedframe = Spring.GetUnitRulesParam(unitID, "specialReloadFrame") or -9999
+		trackingcompletedframe = Spring.GetUnitRulesParam(unitID, "aimdelay") or -9999
 		currentframe = Spring.GetGameFrame()
 		diff = trackingcompletedframe - currentframe
 		if aimedrecently and currentframe - trackerlastframe > 7 then

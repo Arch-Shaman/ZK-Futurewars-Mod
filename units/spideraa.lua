@@ -16,7 +16,7 @@ return {
 			bait_level_default = 2,
 			cus_noflashlight = 1,
 			dontfireatradarcommand = '0',
-			specialreloadtime = 70,
+			aimdelay = 60,
 		},
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 3,

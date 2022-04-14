@@ -20,7 +20,8 @@ return {
 			keeptooltip    = [[any string I want]],
 			neededlink     = 75,
 			pylonrange     = 150,
-			specialreloadtime = tostring(aimTime),
+			--specialreloadtime = tostring(aimTime),
+			aimdelay = tostring(aimTime),
 			dontfireatradarcommand = '1',
 		},
 

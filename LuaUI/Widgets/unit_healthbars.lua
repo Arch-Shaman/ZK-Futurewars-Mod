@@ -93,6 +93,7 @@ local messages = {
 	jump = "jump",
 	reclaim = "reclaim",
 	resurrect = "resurrect",
+	aim = "aim",
 }
 
 local function languageChanged ()
@@ -321,6 +322,7 @@ local barColors = {
 	tank           = { 0.10, 0.20, 0.90, barAlpha },
 	tele           = { 0.00, 0.60, 0.60, barAlpha },
 	tele_pw        = { 0.00, 0.60, 0.60, barAlpha },
+	aim            = { 0.30, 0.50, 0.40, barAlpha },
 
 	-- Features
 	resurrect = { 1.00, 0.50, 0.00, featureBarAlpha },
@@ -613,6 +615,7 @@ do
 				maxWaterTank  = ud.customParams.maxwatertank,
 				freeStockpile = (ud.customParams.freestockpile and true) or nil,
 				specialReload = ud.customParams.specialreloadtime,
+				delaytime     = GetUnitRulesParam(unitID, "comm_aimtime") or ud.customParams.aimdelay
 			}
 		end
 		ci = customInfo[unitDefID]
@@ -819,6 +822,18 @@ do
 			if (specialReloadState and specialReloadState > gameFrame) then
 				local special = 1-(specialReloadState-gameFrame)/ci.specialReload	-- don't divide by gamespeed, since specialReload is also in gameframes
 				barDrawer.AddBar(addTitle and messages.ability, special, "reload2", (addPercent and floor(special*100) .. '%'))
+			end
+		end
+		
+		--// AIMING
+		
+		if ci.delaytime then
+			local aiming = GetUnitRulesParam(unitID, "aimdelay")
+			if (aiming and aiming > gameFrame) then
+				local aimProgress = (aiming-gameFrame)/ci.delaytime	-- don't divide by gamespeed, since specialReload is also in gameframes
+				local prog = 1 - aimProgress
+				Spring.Echo("AimProgress: " .. aimProgress)
+				barDrawer.AddBar(addTitle and messages.aim, aimProgress, "aim", (addPercent and floor(prog*100) .. '%'))
 			end
 		end
 		
