@@ -31,6 +31,9 @@ return {
 			decay_time = 2,
 			decay_maxoutput = 2.0,
 			decay_initialrate = 0.9,
+			outline_x = 200,
+			outline_y = 200,
+			outline_yoff = 55,
 		},
 
 		energyMake                    = 250,

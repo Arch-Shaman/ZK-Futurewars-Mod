@@ -32,6 +32,9 @@ return {
 			modelradius      = [[24]],
 			default_spacing  = 1,
 			like_structure   = 1,
+			outline_x = 80, -- TODO: Actually change these values? No idea if this works.
+			outline_y = 85,
+			outline_yoff = 13.5,
 		},
 
 		explodeAs                     = [[NANOBOOM2]],

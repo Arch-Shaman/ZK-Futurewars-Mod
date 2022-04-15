@@ -24,6 +24,9 @@ return {
 			specialreloadtime = [[600]],
 			refuelturnradius  = [[120]],
 			priority_misc     = 2, -- High
+			outline_x = 120,
+			outline_y = 120,
+			outline_yoff = 20,
 		},
 		energyUse           = 1.5,
 		explodeAs           = [[GUNSHIPEX]],

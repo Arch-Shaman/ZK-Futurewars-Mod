@@ -20,7 +20,9 @@ return {
 			jump_speed         = 9,
 			jump_reload        = 6,
 			jump_from_midair   = 1,
-			
+			outline_x = 125,
+			outline_y = 125,
+			outline_yoff = 21,
 			grey_goo = 1,
 			grey_goo_spawn = "jumpassault",
 			grey_goo_drain = 10,

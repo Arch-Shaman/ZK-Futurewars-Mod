@@ -52,6 +52,9 @@ return {
 			nanoregen = 13,
 			nano_maxregen = 5.2,
 			aim_lookahead = 80,
+			outline_x = 250,
+			outline_y = 250,
+			outline_yoff = 5,
 		},
 
 		energyUse                     = 0,

@@ -22,6 +22,9 @@ return {
 			stockpiletime  = [[240]],
 			stockpilecost  = [[6000]],
 			priority_misc  = 1, -- Medium
+			outline_x = 195,
+			outline_y = 195,
+			outline_yoff = 15,
 		},
 
 		explodeAs                     = [[ATOMIC_BLAST]],

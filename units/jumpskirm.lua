@@ -31,6 +31,9 @@ return {
 			bait_level_default = 1,
 			dontfireatradarcommand = '1',
 			selection_scale   = 0.85,
+			outline_x = 80,
+			outline_y = 80,
+			outline_yoff = 15.5,
 		},
 
 		explodeAs           = [[BIG_UNITEX]],

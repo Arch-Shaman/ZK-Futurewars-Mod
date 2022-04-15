@@ -26,6 +26,9 @@ return {
 			jump_reload      = 12,
 			jump_from_midair = 1,
 			bait_level_default = 1,
+			outline_x = 80,
+			outline_y = 90,
+			outline_yoff = 30,
 		},
 
 		explodeAs             = [[BIG_UNITEX]],

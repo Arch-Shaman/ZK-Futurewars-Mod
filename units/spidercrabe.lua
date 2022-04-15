@@ -22,6 +22,9 @@ return {
 			modelradius    = [[30]],
 			unstick_leeway    = 60, -- Don't lose move orders for longer while preparing to move.
 			armored_regen  = 50,
+			outline_x = 110,
+			outline_y = 110,
+			outline_yoff = 5,
 		},
 
 		damageModifier         = 0.2,

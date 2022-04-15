@@ -30,7 +30,10 @@ return {
 			selectionscalemult = 1,
 			neededlink  = 90,
 			pylonrange  = 450,
-			keeptooltip = "by janitor's request, please don't remove the tooltips Machine God.",
+			keeptooltip = "by janitor's request, please don't remove the tooltips Machine God.", -- Do we actually need this with the new tooltips?
+			outline_x = 185,
+			outline_y = 185,
+			outline_yoff = 25,
 		},
 		
 		explodeAs                     = [[LARGE_BUILDINGEX]],

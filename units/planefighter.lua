@@ -35,6 +35,9 @@ local unitDef = {
 		modelradius    = [[5]],
 		refuelturnradius = [[80]],
 		bait_level_default = 1,
+		outline_x = 85,
+		outline_y = 85,
+		outline_yoff = 16,
 	},
 
 	explodeAs              = [[GUNSHIPEX]],

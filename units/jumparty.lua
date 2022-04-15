@@ -19,6 +19,9 @@ return {
 		customParams           = {
 			selection_scale   = 0.92,
 			fireproof      = [[1]],
+			outline_x = 125,
+			outline_y = 125,
+			outline_yoff = 21,
 		},
 
 		explodeAs              = [[BIG_UNITEX]],

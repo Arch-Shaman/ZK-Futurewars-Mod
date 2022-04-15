@@ -23,6 +23,9 @@ return {
     		superweapon    = 1,
     		neededlink     = 100,
    			pylonrange     = 150,
+			outline_x = 270,
+			outline_y = 270,
+			outline_yoff = 90,
 		},
 		
 		explodeAs                     = [[ATOMIC_BLAST]],

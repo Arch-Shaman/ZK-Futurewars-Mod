@@ -28,6 +28,9 @@ return {
 			aim_lookahead     = 180,
 			percieved_range   = 300, -- How much range enemy units think Kodachi has
 			stats_show_death_explosion = true,
+			outline_x = 80,
+			outline_y = 80,
+			outline_yoff = 12.5,
 		},
 
 		explodeAs           = [[DEATHEXPLO]],

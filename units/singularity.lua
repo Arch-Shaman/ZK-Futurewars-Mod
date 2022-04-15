@@ -17,6 +17,9 @@ return {
 
 		customParams                  = {
 			mobilebuilding = [[1]],
+			outline_x = 55,
+			outline_y = 80,
+			outline_yoff = 55,
 		},
 
 		explodeAs                     = [[SINGULARITY_WEAPON]],

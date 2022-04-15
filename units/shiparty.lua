@@ -21,6 +21,9 @@ return {
 			--extradrawrange = 200,
 			modelradius    = [[55]],
 			turnatfullspeed = [[1]],
+			outline_x = 160,
+			outline_y = 160,
+			outline_yoff = 25,
 		},
 
 		explodeAs              = [[BIG_UNITEX]],

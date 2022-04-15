@@ -21,6 +21,9 @@ return {
 			nano_maxregen = 10,
 			extradrawrange = 300,
 			dontfireatradarcommand = '1',
+			outline_x = 110,
+			outline_y = 110,
+			outline_yoff = 13.5,
 		},
 
 		explodeAs           = [[BIG_UNIT]],

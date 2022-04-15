@@ -18,6 +18,9 @@ return {
 		corpse              = [[DEAD]],
 		customParams        = {
 			selection_scale   = 0.85,
+			outline_x = 80,
+			outline_y = 80,
+			outline_yoff = 12.5,
 		},
 		explodeAs           = [[BIG_UNITEX]],
 		footprintX          = 3,

@@ -56,6 +56,9 @@ return {
 			teleporter_throughput = 550, -- mass per second
 			teleporter_beacon_spawn_time = 10,
 			teleporter_offset = 180,
+			outline_x = 250,
+			outline_y = 250,
+			outline_yoff = 5,
 		},
 
 		energyUse        = 0,

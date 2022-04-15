@@ -22,6 +22,9 @@ return {
 			removestop     = 1,
 			priority_misc  = 2, -- High
 			isradar        = 1,
+			outline_x = 110,
+			outline_y = 120,
+			outline_yoff = 32.5,
 		},
 		energyUse                     = 1.5,
 		explodeAs                     = [[SMALL_BUILDINGEX]],

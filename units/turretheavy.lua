@@ -27,6 +27,9 @@ return {
 			aimposoffset   = [[0 30 0]],
 			midposoffset   = [[0 0 0]],
 			modelradius    = [[20]],
+			outline_x = 130,
+			outline_y = 150,
+			outline_yoff = 47.5,
 		},
 
 		damageModifier                = 0.25,

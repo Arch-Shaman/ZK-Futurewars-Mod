@@ -15,7 +15,11 @@ return {
 		collisionVolumeScales  = [[30 41 30]],
 		collisionVolumeType    = [[cylY]],
 		corpse                 = [[DEAD]],
-		customParams           = {},
+		customParams           = {
+			outline_x = 80,
+			outline_y = 80,
+			outline_yoff = 15.5,
+		},
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 2,
 		footprintZ             = 2,
@@ -49,10 +53,8 @@ return {
 		turnRate               = 2640,
 		upright                = true,
 		weapons                = {
-
 			{
 				def                = [[ARMKBOT_MISSILE]],
-				--badTargetCategory  = [[GUNSHIP]],
 				onlyTargetCategory = [[GUNSHIP FIXEDWING]],
 			},
 			{

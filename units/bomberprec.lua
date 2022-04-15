@@ -29,6 +29,9 @@ return {
 			reammoseconds    = [[8]],
 			requireammo    = [[1]],
 			reallyabomber    = [[1]],
+			outline_x = 130,
+			outline_y = 130,
+			outline_yoff = 10,
 		},
 
 		explodeAs           = [[GUNSHIPEX]],

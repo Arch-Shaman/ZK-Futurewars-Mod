@@ -28,6 +28,12 @@ return {
 			isradar        = 1,
 			removewait     = 1,
 			removestop     = 1,
+			outline_x = 90,
+			outline_y = 125,
+			outline_yoff = 35,
+			outline_sea_x = 90,
+			outline_sea_y = 160,
+			outline_sea_yoff = 20,
 		},
   
 		energyUse                     = 0.5,

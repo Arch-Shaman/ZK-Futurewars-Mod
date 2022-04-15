@@ -71,6 +71,9 @@ return {
 			notreallyafactory = 1,
 			cloakregen	= 20,
 			recloaktime 	   = 240,
+			outline_x = 90,
+			outline_y = 90,
+			outline_yoff = 12,
 		},
 
 		energyUse           = 0,

@@ -26,6 +26,9 @@ return {
 			shield_emit_height = 45,
 			shield_power_gfx_override = 10000,
 			bait_level_default = 1,
+			outline_x = 160,
+			outline_y = 160,
+			outline_yoff = 25,
 		},
 
 		explodeAs              = [[ESTOR_BUILDING]],

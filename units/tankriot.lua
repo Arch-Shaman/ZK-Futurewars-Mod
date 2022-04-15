@@ -23,6 +23,9 @@ return {
 			aim_lookahead     = 160,
 			nanoregen = 10,
 			nano_maxregen = 10,
+			outline_x = 110,
+			outline_y = 110,
+			outline_yoff = 13.5,
 		},
 
 		explodeAs           = [[BIG_UNITEX]],
