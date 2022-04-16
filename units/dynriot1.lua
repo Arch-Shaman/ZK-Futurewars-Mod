@@ -28,7 +28,7 @@ return {
 			soundok_vol = [[0.58]],
 			soundselect_vol = [[0.5]],
 			soundbuild = [[builder_start]],
-			commtype = [[7]],
+			commtype = [[2]],
 			dynamic_comm   = 1,
 			aimposoffset   = [[0 5 0]],
 		},
