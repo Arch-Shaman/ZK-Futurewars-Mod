@@ -52,7 +52,7 @@ local function ReportEnemyAircraft()
 	if not spottedair then
 		widgetHandler:RemoveCallIn("UnitEnteredRadar")
 		spottedair = true
-		PlaySound("airborn_threat", 1.0)
+		PlaySound("airborn_threat.wav", 1.0)
 		AddToConsole("Airborn enemy on radar!")
 	end
 end
@@ -69,21 +69,21 @@ function widget:UnitEnteredLos(unitID, unitTeam, allyTeam, unitDefID)
 	if globalcooldown > spGetGameFrame() then
 		return
 	end
-	if not spottedair and UnitDefs[unitDefID].isAirUnit then
+	if not spottedair and unitDefID and UnitDefs[unitDefID].isAirUnit then
 		ReportEnemyAircraft()
 		return
 	end
-	if spottedsuperweapons[unitID] == nil and (UnitDefs[unitDefID].customParams.superweapon or UnitDefs[unitDefID].name == "mahlazer") then
+	if spottedsuperweapons[unitID] == nil and unitDefID and (UnitDefs[unitDefID].customParams.superweapon or UnitDefs[unitDefID].name == "mahlazer") then
 		local _, _, _, _, buildprogress = Spring.GetUnitHealth(unitID)
 		spottedsuperweapons[unitID] = true
 		if buildprogress < 1.0 then
-			PlaySound("superweapon_construction", 1.0)
+			PlaySound("superweapon_construction.wav", 1.0)
 		end
 		return
 	end
 	if spottedsuperweapons[unitID] == nil and UnitDefs[unitDefID].name == "staticmissilesilo" then
 		spottedsuperweapons[unitID] = true
-		PlaySound("missile_silo_detected", 1.0)
+		PlaySound("missile_silo_detected.wav", 1.0)
 	end
 end
 
