@@ -832,7 +832,7 @@ do
 			if (aiming and aiming > gameFrame) then
 				local aimProgress = (aiming-gameFrame)/ci.delaytime	-- don't divide by gamespeed, since specialReload is also in gameframes
 				local prog = 1 - aimProgress
-				Spring.Echo("AimProgress: " .. aimProgress)
+				--Spring.Echo("AimProgress: " .. aimProgress)
 				barDrawer.AddBar(addTitle and messages.aim, aimProgress, "aim", (addPercent and floor(prog*100) .. '%'))
 			end
 		end
