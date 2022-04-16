@@ -53,8 +53,7 @@ return {
 		weapons                = {
 			{
 				def                = [[BOMB]],
-				badTargetCategory  = [[GUNSHIP]],
-				onlyTargetCategory = [[LAND SINK TURRET SHIP SWIM FLOAT HOVER GUNSHIP]],
+				onlyTargetCategory = [[LAND SINK TURRET SHIP SWIM FLOAT HOVER]],
 			},
 		},
 		cloakTimeout = 1,
