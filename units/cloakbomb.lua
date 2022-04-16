@@ -37,7 +37,7 @@ return {
 		minCloakDistance       = 75,
 		movementClass          = [[TKBOT2]],
 		noChaseCategory        = [[FIXEDWING LAND SINK TURRET SHIP SWIM GUNSHIP FLOAT SUB HOVER]],
-		objectName             = [[ARMTICK]],
+		objectName             = [[armtick.s3o]],
 		pushResistant          = 0,
 		stealth				   = true,
 		script                 = [[cloakbomb.lua]],
@@ -62,11 +62,11 @@ return {
   
 		featureDefs            = {
 			DEAD  = {
-				blocking         = false,
+				blocking         = true,
 				featureDead      = [[HEAP]],
 				footprintX       = 2,
 				footprintZ       = 2,
-				object           = [[wreck2x2b.s3o]],
+				object           = [[armtick_dead.s3o]],
 			},
 			HEAP  = {
 				blocking         = false,

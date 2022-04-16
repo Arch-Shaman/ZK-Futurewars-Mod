@@ -34,7 +34,7 @@ return {
 		maxSlope                      = 36,
 		maxWaterDepth                 = 0,
 		noChaseCategory               = [[FIXEDWING LAND SHIP SWIM GUNSHIP SUB HOVER]],
-		objectName                    = [[armartic]],
+		objectName                    = [[armartic.s3o]],
 		script                        = [[turretemp.lua]],
 		selfDestructAs                = [[MEDIUM_BUILDINGEX]],
 		sfxtypes                      = {

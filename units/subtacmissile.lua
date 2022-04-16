@@ -38,7 +38,7 @@ return {
 		movementClass          = [[UBOAT3]],
 		moveState              = 0,
 		noAutoFire             = false,
-		objectName             = [[SUBTACMISSILE]],
+		objectName             = [[subtacmissile.s3o]],
 		selfDestructAs         = [[BIG_UNITEX]],
 		script                 = [[subtacmissile.lua]],
 		sightDistance          = 660,
