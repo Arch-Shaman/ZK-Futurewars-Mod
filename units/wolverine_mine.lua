@@ -94,7 +94,7 @@ return {
 					blastwave_impulse = 1,
 					blastwave_speed = 10,
 					blastwave_life = 6,
-					blastwave_lossfactor = 1.0,
+					blastwave_lossfactor = 0.9,
 					blastwave_damage = 20,
 					nofriendlyfire = "needs hax",
 				},
