@@ -348,11 +348,12 @@ local defense_commands = {
 
 local special_commands = {
 	staticradar       = {order = 10, row = 1, col = 1},
-	turretdecloak	  = {order = 1, row = 1, col = 3},
 	staticjammer      = {order = 12, row = 1, col = 2},
+	turretdecloak	  = {order = 1, row = 1, col = 3},
 	--staticheavyradar  = {order = 14, row = 1, col = 3},
 	staticmissilesilo = {order = 15, row = 1, col = 4},
 	staticantinuke    = {order = 16, row = 1, col = 5},
+	staticheavyshield = {order = 17, row = 1, col = 6}, -- TODO: reorganize this.
 	staticarty        = {order = 2, row = 2, col = 1},
 	staticheavyarty   = {order = 3, row = 2, col = 2},
 	staticnuke        = {order = 4, row = 2, col = 3},

@@ -259,6 +259,11 @@
 		"description" : "Area Shield",
 		"helptext" : "The Aegis protects a modest area with its bubble shield that stops incoming projectiles (but not AoE effects). The shield has a significant energy upkeep and does not block very powerful weapons."
 	},
+	"staticheavyshield" : {
+		"name" : "Safeguard",
+		"description" : "Massive Area Shield",
+		"helptext" : "When the Aegis proved to be useless against strategic arms, the Safeguard was fabricated using an overdriven Funnelweb shield. While the Safeguard can stop even nuclear strikes without need of an anti-nuke, it is completely unable to handle substained bombardment. Use lesser artillery or tac missiles to keep it down."
+	},
 	"turretaaclose" : {
 		"name" : "Duster",
 		"description" : "Laser guided SAM",

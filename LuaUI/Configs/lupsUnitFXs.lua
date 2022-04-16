@@ -111,6 +111,11 @@ effectUnitDefs = {
 		{class='ShieldSphere', options={piece="emitl", life=math.huge, size=14.5, pos={2,14.3,0}, colormap1 = {{0.1, 0.85, 0.95, 0.9}}, colormap2 = {{0.5, 0.3, 0.95, 0.2}}, rechargingColor1 = {0.95, 0.4, 0.4, 1.0}, rechargingColor2 = {0.95, 0.1, 0.4, 0.2}, shieldRechargeSize = 7, repeatEffect=true}},
 		{class='ShieldSphere', options={piece="emitr", life=math.huge, size=14.5, pos={-2,14.3,0}, colormap1 = {{0.1, 0.85, 0.95, 0.9}}, colormap2 = {{0.5, 0.3, 0.95, 0.2}}, rechargingColor1 = {0.95, 0.4, 0.4, 1.0}, rechargingColor2 = {0.95, 0.1, 0.4, 0.2}, shieldRechargeSize = 7, repeatEffect=false}},
 	},
+	
+	staticheavyshield	= {
+		{class='Bursts', options=MergeTable(staticshieldBurstsBig, {piece="wheel", pos={0,95.3,0}}), colormap = { {0.3, 0.3, 1, 0.8} }},
+		{class='ShieldSphere', options={piece="wheel", life=math.huge, size=30.5, pos={0,95.3,0}, colormap1 = {{0.1, 0.85, 0.95, 0.9}}, colormap2 = {{0.5, 0.3, 0.95, 0.2}}, rechargingColor1 = {0.95, 0.4, 0.4, 1.0}, rechargingColor2 = {0.95, 0.1, 0.4, 0.2}, shieldRechargeSize = 15, repeatEffect=false}},
+	},
 
 	--// ENERGY STORAGE //--------------------
 	--[[corestor = {
