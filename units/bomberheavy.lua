@@ -49,7 +49,7 @@ return {
 		mygravity           = 1,
 		noAutoFire          = false,
 		noChaseCategory     = [[TERRAFORM FIXEDWING SATELLITE GUNSHIP SUB]],
-		objectName          = [[ARMCYBR]],
+		objectName          = [[armcybr.s3o]],
 		refuelTime          = 20,
 		script              = [[bomberheavy.lua]],
 		selfDestructAs      = [[GUNSHIPEX]],

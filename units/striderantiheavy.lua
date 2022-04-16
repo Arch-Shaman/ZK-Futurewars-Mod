@@ -45,7 +45,7 @@ return {
 		minCloakDistance       = 150,
 		movementClass          = [[AKBOT2]],
 		noChaseCategory        = [[TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET]],
-		objectName             = [[noruas]],
+		objectName             = [[noruas.s3o]],
 		script                 = [[striderantiheavy.lua]],
 		selfDestructAs         = [[ESTOR_BUILDING]],
 
