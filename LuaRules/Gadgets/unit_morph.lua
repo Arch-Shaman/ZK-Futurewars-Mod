@@ -531,7 +531,10 @@ local function FinishMorph(unitID, morphData)
 	Spring.SetUnitExperience(newUnit, newXp)
 	--// transfer shield power
 	if oldShieldState then
-		Spring.SetUnitShieldState(newUnit, shieldNum, oldShieldCharge)
+		local newDef = Spring.GetUnitDefID(newUnit)
+		local maxcharge = WeaponDefs[shields[newDef]].shieldPower
+		
+		Spring.SetUnitShieldState(newUnit, shieldNum, math.min(oldShieldCharge, maxcharge))
 	end
 	
 	--//transfer some state
