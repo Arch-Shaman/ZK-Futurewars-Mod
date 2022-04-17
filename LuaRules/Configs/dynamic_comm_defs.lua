@@ -983,6 +983,27 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "commweapon_singulauncher",
+		humanName = "Singularity Launcher",
+		description = "Manually launched Singularity generator. Pulls units, wrecks and projectiles inward.",
+		image = moduleImagePath .. "commweapon_concussion.png",
+		limit = 1,
+		cost = 200 * COST_MULT,
+		requireChassis = {"support"},
+		requireLevel = 3,
+		slotType = "adv_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = "commweapon_singulauncher"
+			else
+				sharedData.weapon2 = "commweapon_singulauncher"
+			end
+		end
+	},
+	{
 		name = "commweapon_slamrocket",
 		humanName = "S.L.A.M. Rocket",
 		description = "Manually fired miniature tactical nuke.",

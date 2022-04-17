@@ -1,0 +1,58 @@
+local name = "commweapon_singulauncher"
+local weaponDef = {
+	name                    = [[Singularity Launcher]],
+	areaOfEffect            = 400,
+	avoidFriendly           = true,
+	commandfire             = true,
+	craterBoost             = 1,
+	craterMult              = 6,
+	cegtag = [[energeticblackhole_trail]],
+
+	customParams            = {
+		is_unit_weapon = 1,
+		slot = [[3]],
+		--muzzleEffectFire = [[custom:staticheavyarty_FLARE]],
+		manualfire = 1,
+		singularity = [[1]],
+		singuradius = [[400]],
+		singulifespan = [[300]],
+		singustrength = [[20]],
+		singuheight = [[300]],
+		singuceg = [[black_hole_400]],
+		light_color = [[1.2 1.6 0.55]],
+		light_radius = 150,
+		reaim_time = 1,
+		antibaitbypass = "ärsytät minua",
+	},
+
+	damage                  = {
+		default = 300,
+	},
+
+	explosionGenerator      = [[custom:FLASHSMALLUNITEX]],
+	impactOnly              = true,
+	impulseBoost            = 0,
+	impulseFactor           = 0.2,
+	interceptedByShieldType = 1,
+	myGravity               = 0.1,
+	noExplode               = false,
+	noSelfDamage            = true,
+	range                   = 700,
+	reloadtime              = 20,
+	rgbColor                = [[0.05 0.05 0.05]],
+	separation              = 0.5,
+	size                    = 10,
+	sizeDecay               = 0.05,
+	soundHit                = [[explosion/ex_med14]],
+	soundStart              = [[weapon/blackhole_fire]],
+	soundStartVolume        = 6000,
+	soundHitVolume          = 6000,
+	soundTrigger            = true,
+	tolerance               = 10000,
+	stages                  = 20,
+	turret                  = true,
+	weaponType              = [[Cannon]],
+	weaponVelocity          = 600,
+}
+
+return name, weaponDef

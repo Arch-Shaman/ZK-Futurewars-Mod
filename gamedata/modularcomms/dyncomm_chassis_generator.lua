@@ -6,7 +6,7 @@ local chassisDefs = {
 			"commweapon_tankbuster",
 			"commweapon_buster_disrupt",
 			"commweapon_buster_disrupt",
-			"commweapon_shotgun", -- TODO: REPLACE
+			"commweapon_shotgun",
 			"commweapon_shotgun",
 			"commweapon_shotgun_disrupt",
 			"commweapon_shotgun_disrupt",
@@ -59,7 +59,7 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynsupport1", -- 27/31
+		name = "dynsupport1", -- 28/31
 		weapons = {
 			"commweapon_capray",
 			"commweapon_capray",
@@ -69,13 +69,13 @@ local chassisDefs = {
 			"commweapon_beamlaser_heavy",
 			"commweapon_lparticlebeam",
 			"commweapon_lparticlebeam",
-			"commweapon_disruptor", -- TODO: replace with EMP weapon
+			"commweapon_disruptor",
 			"commweapon_disruptor",
 			"commweapon_hparticlebeam",
 			"commweapon_hparticlebeam",
 			"commweapon_impulse_laser",
 			"commweapon_impulse_laser",
-			"commweapon_heavy_disruptor", -- TODO: replace with EMP
+			"commweapon_heavy_disruptor",
 			"commweapon_heavy_disruptor",
 			"commweapon_lightninggun",
 			"commweapon_lightninggun_improved",
@@ -88,6 +88,7 @@ local chassisDefs = {
 			"commweapon_disruptorbomb",
 			"commweapon_disruptorprojector_heavy",
 			"commweapon_disruptorprojector_heavy",
+			"commweapon_singulauncher",
 			--
 			-- Space for shield
 		}
