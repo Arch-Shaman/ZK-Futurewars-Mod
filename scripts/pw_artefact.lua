@@ -20,16 +20,24 @@ local spGetUnitRulesParam 	= Spring.GetUnitRulesParam
 local function CheckPowerStateThread()
 	local regenstate = true
 	local stunned = false
+	local shieldammount = 9999
+	local maxshield = WeaponDefNames["staticheavyshield_big_shield"].shieldPower
+	local last = 0
 	while true do
 		Sleep(300) -- every 10th frame (3hz)
 		powered = spGetUnitRulesParam(unitID, "lowpower") == 1
 		stunned = Spring.GetUnitIsStunned(unitID)
 		wantedState = (not powered) and active and not stunned
+		if last ~= shieldammount then
+			local spinrate = shieldammount / maxshield
+			Spin(wheel, y_axis, 9 * spinrate , 0.1)
+			Spin(turret, y_axis, -3 * spinrate, 0.01)
+		end
+		last = shieldammount
+		_, shieldammount = Spring.GetUnitShieldState(unitID, 1)
 		--Spring.Echo("Wanted state: " .. tostring(wantedState) .. "{ " .. tostring(active) .. ", " .. tostring(stunned) .. ", " .. tostring(powered) .. "}")
 		if wantedState and not regenstate then
 			Spring.SetUnitRulesParam(unitID, "shieldChargeDisabled", 0, ALLY_ACCESS)
-			Spin(wheel, y_axis, 3, 0.1)
-			Spin(turret, y_axis, -1, 0.01)
 			regenstate = true
 		elseif not wantedState and regenstate then
 			Spring.SetUnitRulesParam(unitID, "shieldChargeDisabled", 1, ALLY_ACCESS)
@@ -37,16 +45,16 @@ local function CheckPowerStateThread()
 			GG.PieceControl.StopTurn(turret, y_axis)
 			regenstate = false
 		end
+		if not regenstate and shieldammount > 0 then
+			shieldammount = shieldammount - 500
+			Spring.SetUnitShieldState(unitID, 1, math.max(shieldammount, 0))
+		end
 	end
 end
 
 local function Initialize()
 	Signal(1)
 	SetSignalMask(2)
-
-	Spin(wheel, y_axis, 3, 0.1)
-	Spin(turret, y_axis, -1, 0.01)
-
 	while (true) do
 		while powered do
 			Sleep(100)
