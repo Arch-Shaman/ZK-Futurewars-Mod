@@ -146,6 +146,7 @@ local function ProcessUnits(sx, sy, sz, radius, strength, list, rev)
 		local vx, vy, vz = spGetUnitVelocity(unitID)
 		local px, py, pz = spGetUnitPosition(unitID)
 		local ex, ey, ez = 0, 0, 0 -- effect's velocity change
+		local gy = Spring.GetGroundHeight(px, pz)
 		local mass = spGetUnitMass(unitID)
 		local unitdefID = spGetUnitDefID(unitID)
 		if not (UnitDefs[unitdefID].isBuilding or UnitDefs[unitdefID].isImmobile) then
@@ -168,8 +169,10 @@ local function ProcessUnits(sx, sy, sz, radius, strength, list, rev)
 				ez = -ez
 			end
 			--spEcho("Wanted velocity: " .. ex .. "," .. ey .. "," .. ez)
-			if vy < 0.18 then
-				Spring.AddUnitImpulse(unitID, 0, 1, 0) -- 'unglue' the unit
+			if py - gy == 0 then -- reliable unstick
+				Spring.MoveCtrl.Enable(unitID)
+				Spring.MoveCtrl.SetPosition(unitID, x,  gy + 1, z)
+				Spring.MoveCtrl.Disable(unitID)
 			end
 			spSetUnitVelocity(unitID, ex + vx, ey + vy, ez + vz)
 			GG.SetUnitFallDamageImmunity(unitID, spGetGameFrame() + 2)
