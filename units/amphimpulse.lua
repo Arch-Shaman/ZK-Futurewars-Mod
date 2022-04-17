@@ -83,7 +83,7 @@ return {
 					blastwave_impulse = 4.2,
 					blastwave_speed = 4,
 					blastwave_life = 30,
-					blastwave_lossfactor = 0.8,
+					blastwave_lossfactor = 0.7,
 					blastwave_damage = 120,
 					damage_vs_shield = 200,
 				},

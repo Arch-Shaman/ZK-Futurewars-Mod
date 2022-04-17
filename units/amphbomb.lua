@@ -93,7 +93,7 @@ return {
 					light_color = [[1.88 0.63 2.5]],
 					light_radius = 320,
 					blastwave_size = 61,
-					blastwave_impulse = 2.3,
+					blastwave_impulse = 1.1,
 					blastwave_speed = 7,
 					blastwave_life = 27,
 					blastwave_lossfactor = 0.82,
