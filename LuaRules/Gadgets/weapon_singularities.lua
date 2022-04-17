@@ -171,7 +171,7 @@ local function ProcessUnits(sx, sy, sz, radius, strength, list, rev)
 			--spEcho("Wanted velocity: " .. ex .. "," .. ey .. "," .. ez)
 			if py - gy == 0 then -- reliable unstick
 				Spring.MoveCtrl.Enable(unitID)
-				Spring.MoveCtrl.SetPosition(unitID, x,  gy + 1, z)
+				Spring.MoveCtrl.SetPosition(unitID, px,  gy + 1, pz)
 				Spring.MoveCtrl.Disable(unitID)
 			end
 			spSetUnitVelocity(unitID, ex + vx, ey + vy, ez + vz)
