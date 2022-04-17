@@ -30,7 +30,7 @@ local weaponDef = {
 	},
 
 	explosionGenerator      = [[custom:FLASHSMALLUNITEX]],
-	impactOnly              = true,
+	impactOnly              = false,
 	impulseBoost            = 0,
 	impulseFactor           = 0.2,
 	interceptedByShieldType = 1,
