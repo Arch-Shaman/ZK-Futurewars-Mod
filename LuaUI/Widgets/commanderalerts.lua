@@ -65,10 +65,8 @@ function widget:UnitEnteredRadar(unitID, unitTeam, allyTeam, unitDefID)
 	end
 end
 
-function widget:UnitEnteredLos(unitID, unitTeam, allyTeam, unitDefID)
-	if globalcooldown > spGetGameFrame() then
-		return
-	end
+function widget:UnitEnteredLos(unitID, unitTeam)
+	local unitDefID = Spring.GetUnitDefID(unitID)
 	if not spottedair and unitDefID and UnitDefs[unitDefID].isAirUnit then
 		ReportEnemyAircraft()
 		return
@@ -81,7 +79,7 @@ function widget:UnitEnteredLos(unitID, unitTeam, allyTeam, unitDefID)
 		end
 		return
 	end
-	if spottedsuperweapons[unitID] == nil and UnitDefs[unitDefID].name == "staticmissilesilo" then
+	if spottedsuperweapons[unitID] == nil and unitDefID and UnitDefs[unitDefID].name == "staticmissilesilo" then
 		spottedsuperweapons[unitID] = true
 		PlaySound("missile_silo_detected.wav", 1.0)
 	end
