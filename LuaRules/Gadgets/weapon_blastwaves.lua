@@ -61,6 +61,7 @@ local spAddUnitDamage = Spring.AddUnitDamage -- does not seem to register.
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spGetUnitTeam = Spring.GetUnitTeam
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spGetUnitPosition = Spring.GetUnitPosition
 local sqrt = math.sqrt
 
 local function distance2d(x1,y1,x2,y2)
@@ -76,10 +77,10 @@ local function Updateblastwave(x, y, z, size, impulse, damage, attackerID, attac
 		local unitID = affected[i]
 		--Spring.Echo("attacker Ally Team: " .. tostring(attackerTeam) .. "\nMyTeam: " .. tostring(spGetUnitAllyTeam(unitID)))
 		if blastwaveDefs[weaponDefID].damagesfriendly or (not blastwaveDefs[weaponDefID].damagesfriendly and (attackerTeam == nil or spGetUnitAllyTeam(unitID) ~=  attackerTeam)) then
-			local ux, uy, uz = Spring.GetUnitPosition(unitID)
+			local ux, uy, uz = spGetUnitPosition(unitID)
 			local dx, dy, dz = (ux - x)/size, (uy - y)/size, (uz - z)/size
 			local distance = distance2d(ux, uz, x, z)
-			local ddist = 1 - ((size - distance) / size)
+			local ddist = (size - distance) / size
 			local vx, vy, vz = impulse * dx, dy * impulse, dz * impulse
 			local incoming = damage * ddist
 			spAddUnitImpulse(unitID, vx, vy, vz)
@@ -129,10 +130,10 @@ local function AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID)
 		local bonuscoef = spGetUnitRulesParam(attackerID, "comm_blastwave_coefbonus") or 0
 		tab.coef = tab.coef + bonuscoef
 	end
-	if projectileID == -1 then
+	if projectileID and projectileID == -1 then
 		local newid = 0
 		repeat
-			newid = math.random(0, 999999)
+			newid = math.random(0, 999999) * -1
 		until IterableMap.Get(handled, newid) == nil
 		projectileID = newid
 	end
@@ -156,6 +157,8 @@ end
 		AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID)
 	end
 end]]
+
+GG.AddBlastwave = AddBlastwave
 
 function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(handled) do
