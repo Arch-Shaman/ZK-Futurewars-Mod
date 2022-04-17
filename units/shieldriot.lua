@@ -91,7 +91,7 @@ return {
 				craterMult              = 0,
 
 				damage                  = {
-					default = 45.1,
+					default = 0,
 				},
 
 				customParams           = {
@@ -99,15 +99,24 @@ return {
 					lups_explodespeed = 1,
 					lups_explodelife = 0.6,
 					nofriendlyfire = 1,
-					timeslow_damagefactor = 1.9,
 					featuredamagemult = 0,
+					blastwave_nofriendly = "By the powers of Vittu, Saatana, ja Perkele, I am Captain Suomi!",
+					blastwave_size = 12,
+					blastwave_impulse = 1.1,
+					blastwave_speed = 12,
+					blastwave_life = 23,
+					blastwave_lossfactor = 0.90,
+					blastwave_damage = 20,
+					blastwave_slowdmg = 40,
+					stats_damage = 30,
+					--norealdamage = "yes", -- stop us from having to deal with that.
 				},
 
 				edgeeffectiveness       = 0.8,
 				explosionGenerator      = [[custom:NONE]],
 				explosionSpeed          = 12,
-				impulseBoost            = 10,
-				impulseFactor           = 7,
+				impulseBoost            = 0,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				myGravity               = 10,
 				noSelfDamage            = true,
