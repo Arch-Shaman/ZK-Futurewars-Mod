@@ -99,7 +99,7 @@ return {
 				},
 
 				damage                  = {
-					default = 60.1,
+					default = 30.1,
 				},
 
 				edgeEffectiveness       = 0.5,
@@ -111,7 +111,7 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 300,
-				reloadtime              = 6/30,
+				reloadtime              = 3/30,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,
 				soundHit                = [[weapon/cannon/emg_hit]],
