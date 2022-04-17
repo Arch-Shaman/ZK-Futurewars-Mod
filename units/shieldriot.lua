@@ -106,8 +106,8 @@ return {
 					blastwave_speed = 12,
 					blastwave_life = 23,
 					blastwave_lossfactor = 0.90,
-					blastwave_damage = 20,
-					blastwave_slowdmg = 40,
+					blastwave_damage = 30,
+					blastwave_slowdmg = 60,
 					stats_damage = 30,
 					--norealdamage = "yes", -- stop us from having to deal with that.
 				},
