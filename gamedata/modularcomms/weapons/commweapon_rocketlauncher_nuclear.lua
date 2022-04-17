@@ -26,6 +26,7 @@ local weaponDef = {
 		okp_radarmult = 1,
 		okp_timeout = 120,
 		okp_damage = 5000.1,
+		onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 	},
 
 	damage                  = {

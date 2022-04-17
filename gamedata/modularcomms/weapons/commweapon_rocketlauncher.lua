@@ -10,7 +10,7 @@ local weaponDef = {
 		is_unit_weapon = 1,
 		slot = [[5]],
 		muzzleEffectShot = [[custom:RAIDMUZZLE]],
-
+		onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 		light_camera_height = 2200,
 		light_color = [[0.95 0.65 0.30]],
 		light_radius = 280,

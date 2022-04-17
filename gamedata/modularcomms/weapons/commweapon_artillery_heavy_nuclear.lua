@@ -17,6 +17,7 @@ local weaponDef = {
 		light_color = [[1.4 0.8 0.3]],
 		reaim_time = 1,
 		reveal_unit = 30,
+		onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 	},
 
 	damage                  = {

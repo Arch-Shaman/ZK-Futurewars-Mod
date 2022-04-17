@@ -23,6 +23,7 @@ local weaponDef = {
 		cruisetracking = 1,
 		cruise_nolock = 1,
 		reveal_unit = 10,
+		onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 	},
 
 	damage                  = {
