@@ -87,6 +87,19 @@ local function GetChargeRate(unitID)
 	return (spGetUnitRulesParam(unitID,"totalReloadSpeedChange") or 1)
 end
 
+function gadget:UnitDestroyed(unitID, unitDefID, teamID)
+	if unitMap[unitID] then
+		local index = unitMap[unitID].index
+		
+		unitList[unitCount].index = index
+		unitList[index] = unitList[unitCount]
+		
+		unitList[unitCount] = nil
+		unitMap[unitID] = nil
+		unitCount = unitCount - 1
+	end
+end
+
 function gadget:GameFrame(n)
 	if n%PERIOD ~= 0 then
 		return
@@ -98,9 +111,9 @@ function gadget:GameFrame(n)
 	for i = 1, unitCount do
 		local data = unitList[i]
 		local unitID = data.unitID
-		
 		local enabled, charge = IsShieldEnabled(unitID)
 		local transported = Spring.GetUnitTransporter(unitID) ~= nil
+		local def = data.def
 		if data.restoreCharge and not transported then
 			charge = data.restoreCharge
 			spSetUnitShieldState(unitID, data.shieldNum, charge)
@@ -108,7 +121,6 @@ function gadget:GameFrame(n)
 		end
 		if data.resTable then
 			-- The engine handles charging for free shields.
-			local def = data.def
 			local hitTime = Spring.GetUnitRulesParam(unitID, "shieldHitFrame") or -999999
 			local currTime = Spring.GetGameFrame()
 			local inCooldown = false
@@ -153,7 +165,7 @@ function gadget:GameFrame(n)
 			if not enabled then
 				local morphing = (spGetUnitRulesParam(unitID, "morphDisable") == 1)
 				if not morphing and not transported then
-					charge = max(charge - (max(data.def.chargePerUpdate, 10) * 3), 0) -- drain shields over time.
+					charge = max(charge - (max(def.chargePerUpdate or 0, 10) * 3), 0) -- drain shields over time.
 					if charge == 0 then
 						spSetUnitShieldState(unitID, -1, 0)
 						data.enabled = enabled
@@ -219,19 +231,6 @@ function gadget:UnitLoaded(unitID, unitDefID, unitTeam, transportID, transportTe
 	if unitMap[unitID] then
 		local _, charge = spGetUnitShieldState(unitID, unitMap[unitID].shieldNum)
 		unitMap[unitID].restoreCharge = (charge or 0)
-	end
-end
-
-function gadget:UnitDestroyed(unitID, unitDefID, teamID)
-	if unitMap[unitID] then
-		local index = unitMap[unitID].index
-		
-		unitList[unitCount].index = index
-		unitList[index] = unitList[unitCount]
-		
-		unitList[unitCount] = nil
-		unitMap[unitID] = nil
-		unitCount = unitCount - 1
 	end
 end
 
