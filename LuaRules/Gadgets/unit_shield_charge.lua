@@ -100,6 +100,8 @@ function gadget:UnitDestroyed(unitID, unitDefID, teamID)
 	end
 end
 
+local spValidUnitID = Spring.ValidUnitID
+
 function gadget:GameFrame(n)
 	if n%PERIOD ~= 0 then
 		return
@@ -111,73 +113,75 @@ function gadget:GameFrame(n)
 	for i = 1, unitCount do
 		local data = unitList[i]
 		local unitID = data.unitID
-		local enabled, charge = IsShieldEnabled(unitID)
-		local transported = Spring.GetUnitTransporter(unitID) ~= nil
-		local def = data.def
-		if data.restoreCharge and not transported then
-			charge = data.restoreCharge
-			spSetUnitShieldState(unitID, data.shieldNum, charge)
-			data.restoreCharge = nil
-		end
-		if data.resTable then
-			-- The engine handles charging for free shields.
-			local hitTime = Spring.GetUnitRulesParam(unitID, "shieldHitFrame") or -999999
-			local currTime = Spring.GetGameFrame()
-			local inCooldown = false
-			if def.rechargeDelay then
-				local remainingTime = hitTime + def.rechargeDelay * 30 - currTime
-				inCooldown = (remainingTime >= 0)
-				if (setParam or currTime - hitTime < 3) and remainingTime > -70 then
-					spSetUnitRulesParam(unitID, "shieldRegenTimer", remainingTime, losTable)
-				end
+		if spValidUnitID(unitID) then
+			local enabled, charge = IsShieldEnabled(unitID)
+			local transported = Spring.GetUnitTransporter(unitID) ~= nil
+			local def = data.def
+			if data.restoreCharge and not transported then
+				charge = data.restoreCharge
+				spSetUnitShieldState(unitID, data.shieldNum, charge)
+				data.restoreCharge = nil
 			end
-			if enabled and charge < def.maxCharge and not inCooldown and spGetUnitRulesParam(unitID, "shieldChargeDisabled") ~= 1 then
-				-- Get changed charge rate based on slow
-				local newChargeRate = GetChargeRate(unitID)
-				if data.oldChargeRate ~= newChargeRate then
-					GG.StartMiscPriorityResourcing(unitID, def.perSecondCost*newChargeRate, true)
+			if data.resTable then
+				-- The engine handles charging for free shields.
+				local hitTime = Spring.GetUnitRulesParam(unitID, "shieldHitFrame") or -999999
+				local currTime = Spring.GetGameFrame()
+				local inCooldown = false
+				if def.rechargeDelay then
+					local remainingTime = hitTime + def.rechargeDelay * 30 - currTime
+					inCooldown = (remainingTime >= 0)
+					if (setParam or currTime - hitTime < 3) and remainingTime > -70 then
+						spSetUnitRulesParam(unitID, "shieldRegenTimer", remainingTime, losTable)
+					end
+				end
+				if enabled and charge < def.maxCharge and not inCooldown and spGetUnitRulesParam(unitID, "shieldChargeDisabled") ~= 1 then
+					-- Get changed charge rate based on slow
+					local newChargeRate = GetChargeRate(unitID)
+					if data.oldChargeRate ~= newChargeRate then
+						GG.StartMiscPriorityResourcing(unitID, def.perSecondCost*newChargeRate, true)
+						
+						data.oldChargeRate = newChargeRate
+						data.resTable.e = def.perUpdateCost*newChargeRate
+					end
 					
-					data.oldChargeRate = newChargeRate
-					data.resTable.e = def.perUpdateCost*newChargeRate
-				end
-				
-				-- Deal with overflow
-				local chargeAdd = newChargeRate*def.chargePerUpdate
-				if charge + chargeAdd > def.maxCharge then
-					local overProportion = 1 - (charge + chargeAdd - def.maxCharge)/chargeAdd
-					data.resTable.e = data.resTable.e*overProportion
-					chargeAdd = chargeAdd*overProportion
-				end
+					-- Deal with overflow
+					local chargeAdd = newChargeRate*def.chargePerUpdate
+					if charge + chargeAdd > def.maxCharge then
+						local overProportion = 1 - (charge + chargeAdd - def.maxCharge)/chargeAdd
+						data.resTable.e = data.resTable.e*overProportion
+						chargeAdd = chargeAdd*overProportion
+					end
 
-				-- Check if the change can be carried out
-				if (GG.AllowMiscPriorityBuildStep(unitID, data.teamID, true, data.resTable) and spUseUnitResource(unitID, data.resTable)) then
-					spSetUnitShieldState(unitID, data.shieldNum, charge + chargeAdd)
-				end
-			else
-				if data.oldChargeRate ~= 0 then
-					GG.StopMiscPriorityResourcing(unitID)
-					data.oldChargeRate = 0
+					-- Check if the change can be carried out
+					if (GG.AllowMiscPriorityBuildStep(unitID, data.teamID, true, data.resTable) and spUseUnitResource(unitID, data.resTable)) then
+						spSetUnitShieldState(unitID, data.shieldNum, charge + chargeAdd)
+					end
+				else
+					if data.oldChargeRate ~= 0 then
+						GG.StopMiscPriorityResourcing(unitID)
+						data.oldChargeRate = 0
+					end
 				end
 			end
-		end
-		-- Drain shields on paralysis etc..
-		if enabled ~= data.enabled then
-			if not enabled then
-				local morphing = (spGetUnitRulesParam(unitID, "morphDisable") == 1)
-				if not morphing and not transported then
-					charge = max(charge - (max(def.chargePerUpdate or 0, 10) * 3), 0) -- drain shields over time.
-					if charge == 0 then
-						spSetUnitShieldState(unitID, -1, 0)
-						data.enabled = enabled
+			-- Drain shields on paralysis etc..
+			if enabled ~= data.enabled then
+				if not enabled then
+					local morphing = (spGetUnitRulesParam(unitID, "morphDisable") == 1)
+					if not morphing and not transported then
+						charge = max(charge - (max(def.chargePerUpdate or 0, 10) * 3), 0) -- drain shields over time.
+						if charge == 0 then
+							spSetUnitShieldState(unitID, -1, 0)
+							data.enabled = enabled
+						else
+							spSetUnitShieldState(unitID, data.shieldNum, charge)
+						end
 					else
-						spSetUnitShieldState(unitID, data.shieldNum, charge)
+						data.enabled = enabled
+						spSetUnitShieldState(unitID, data.shieldNum, false)
 					end
 				else
 					data.enabled = enabled
-					spSetUnitShieldState(unitID, data.shieldNum, false)
 				end
-			else
-				data.enabled = enabled
 			end
 		end
 	end
