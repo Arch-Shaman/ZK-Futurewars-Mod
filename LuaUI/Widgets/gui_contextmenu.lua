@@ -850,13 +850,14 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				cells[#cells+1] = numformat(tonumber(cp.area_damage_duration)) .. " s"
 			end
 			if cp.singularity then
-				cells[#cells+1] = ' - Creates a Singularity:'
+				local bonus = (unitID and (spGetUnitRulesParam(unitID, "comm_damage_mult") or 1)) or 1
+				cells[#cells+1] = '- Creates a Singularity:'
 				cells[#cells+1] = ''
-				cells[#cells+1] = 'Duration:'
+				cells[#cells+1] = '\tDuration:'
 				cells[#cells+1] = numformat(cp.singulifespan/30, 1) .. "s"
-				cells[#cells+1] = 'Strength:'
-				cells[#cells+1] = numformat(cp.singustrength, 1) .. "elmo/s pull"
-				cells[#cells+1] = 'Radius:'
+				cells[#cells+1] = '\tStrength:'
+				cells[#cells+1] = numformat(cp.singustrength * bonus, 1) .. "elmo/s pull"
+				cells[#cells+1] = '\tRadius:'
 				cells[#cells+1] = cp.singuradius .. " elmo"
 			end
 			if wd.trajectoryHeight > 0  and not bombletCount then

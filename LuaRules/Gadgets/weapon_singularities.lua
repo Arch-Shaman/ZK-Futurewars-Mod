@@ -58,6 +58,7 @@ local spGetUnitDefID = Spring.GetUnitDefID
 local gravity = Game.gravity
 local spSpawnCEG = Spring.SpawnCEG
 local spPlaySoundFile = Spring.PlaySoundFile
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 
 local projectiles = {}
 
@@ -297,6 +298,7 @@ GG.AddSingularity = AddSingularity
 function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, ProjectileID)
 	if singularitydefs[weaponDefID] and ProjectileID then
 		local def = singularitydefs[weaponDefID]
-		IterableMap.Add(singularities, ProjectileID, {position = {[1] = px, [2] = py + def.height, [3] = pz}, lifespan = def.lifespan, strength = def.strength, radius = def.radius, ceg = def.ceg, finalceg = def.finalceg})
+		local bonus = spGetUnitRulesParam(AttackerID, "comm_damage_mult") or 1
+		IterableMap.Add(singularities, ProjectileID, {position = {[1] = px, [2] = py + def.height, [3] = pz}, lifespan = def.lifespan, strength = def.strength * bonus, radius = def.radius, ceg = def.ceg, finalceg = def.finalceg})
 	end
 end
