@@ -850,7 +850,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				cells[#cells+1] = numformat(tonumber(cp.area_damage_duration)) .. " s"
 			end
 			if cp.singularity then
-				local bonus = (unitID and (spGetUnitRulesParam(unitID, "comm_damage_mult") or 1)) or 1
+				local bonus = (unitID and (Spring.GetUnitRulesParam(unitID, "comm_damage_mult") or 1)) or 1
 				cells[#cells+1] = '- Creates a Singularity:'
 				cells[#cells+1] = ''
 				cells[#cells+1] = '\tDuration:'
