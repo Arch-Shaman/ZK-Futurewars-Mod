@@ -22,13 +22,11 @@ local weaponDef = {
 		blastwave_speed = -6.6,
 		blastwave_life = 30,
 		blastwave_lossfactor = 0.85,
-		blastwave_damage = 300,
-		featuredamagemult = 0,
-		featureimpulsemult = 1,
+		blastwave_damage = 400,
 	},
 
 	damage                  = {
-		default = 180.1,
+		default = 20.1,
 	},
 
 	explosionGenerator      = [[custom:energeticblackhole_112]], -- technically it's 400, but i can't be assed to rename.
