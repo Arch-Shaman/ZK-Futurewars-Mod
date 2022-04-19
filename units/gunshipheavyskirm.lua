@@ -50,7 +50,7 @@ return {
 		sfxtypes            = {
 			explosiongenerators = {
 				[[custom:flashmuzzle1]],
-				[[custom:emg_shells_m]], --not used
+				[[custom:flashmuzzle1]], --not used
 				[[custom:SLASHMUZZLE]],
 			},
 		},
@@ -100,7 +100,7 @@ return {
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 850,
+				range                   = 770,
 				reloadtime              = 6/30,
 				rgbColor                = [[0.5 1 1]],
 				separation              = 0.5,
