@@ -40,6 +40,7 @@ return {
 			factorytab        = 1,
 			shared_energy_gen = 1,
 			parent_of_plate   = [[plateshield]],
+			priority_misc = 0, -- low
 			outline_x = 250,
 			outline_y = 250,
 			outline_yoff = 5,

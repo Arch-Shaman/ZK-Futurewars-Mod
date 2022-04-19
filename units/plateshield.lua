@@ -45,6 +45,7 @@ return {
 			aimposoffset       = [[0 10 -25]],
 			midposoffset       = [[0 0 -25]],
 			solid_factory      = [[3]],
+			priority_misc = 0,
 			default_spacing    = 4,
 			unstick_help       = 1,
 			selectionscalemult = 1,
