@@ -1,8 +1,8 @@
-local name = "commweapon_artillery_light"
+local name = "commweapon_artillery_light_nuclear"
 local weaponDef = {
-	name                    = [[Rapid Fire Plasma Battery]],
+	name                    = [[Heavy Rapid Fire Plasma Battery]],
 	accuracy                = 550,
-	areaOfEffect            = 64,
+	areaOfEffect            = 128,
 
 	customParams            = {
 		is_unit_weapon = 1,
@@ -10,23 +10,23 @@ local weaponDef = {
 		reaim_time = 1,
 	},
 
-	craterBoost             = 0,
-	craterMult              = 0,
+	craterBoost             = 40,
+	craterMult              = 2,
 
 	damage                  = {
-		default = 40,
+		default = 80,
 	},
 
 	edgeEffectiveness       = 0.5,
-	explosionGenerator      = [[custom:INGEBORG]],
+	explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
 	impulseBoost            = 0,
 	impulseFactor           = 0,
 	interceptedByShieldType = 1,
 	noSelfDamage            = true,
 	range                   = 800,
-	reloadtime              = 8/30,
-	soundHit                = [[explosion/ex_med5]],
-	soundStart              = [[weapon/cannon/cannon_fire1]],
+	reloadtime              = 10/30,
+	soundHit                = [[explosion/explosion_roach]],
+	soundStart              = [[weapon/cannon/tremor_fire]],
 	turret                  = true,
 	weaponType              = [[Cannon]],
 	weaponVelocity          = 420,

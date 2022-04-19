@@ -62,11 +62,13 @@ local function ApplyHeavyOrdinance(modules, sharedData)
 		["commweapon_artillery_heavy"] = "commweapon_artillery_heavy_nuclear",
 		["commweapon_rocketbarrage"] = "commweapon_rocketbarrage_nuclear",
 		["commweapon_rocketlauncher"] = "commweapon_rocketlauncher_nuclear",
+		["commweapon_artillery_light"] = "commweapon_artillery_light_nuclear",
 	}
 	local wantsfireatradar = {
 		["commweapon_artillery_heavy_nuclear"] = true,
 		["commweapon_rocketbarrage_nuclear"] = false,
 		["commweapon_rocketlauncher_nuclear"] = false,
+		["commweapon_artillery_light_nuclear"] = false,
 	}
 	if sharedData.weapon1 and upgrade[sharedData.weapon1] then
 		sharedData.weapon1 = upgrade[sharedData.weapon1]
@@ -668,7 +670,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 300 * COST_MULT,
 		requireChassis = {"assault"},
-		requireOneOf = {"commweapon_artillery_heavy", "commweapon_rocketbarrage", "commweapon_rocketlauncher"},
+		requireOneOf = {"commweapon_artillery_heavy", "commweapon_rocketbarrage", "commweapon_rocketlauncher", "commweapon_artillery_light"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = ApplyHeavyOrdinance
@@ -992,6 +994,27 @@ local moduleDefs = {
 		requireChassis = {"support"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = "commweapon_singulauncher"
+			else
+				sharedData.weapon2 = "commweapon_singulauncher"
+			end
+		end
+	},
+	{
+		name = "commweapon_artillery_light",
+		humanName = "Rapid Fire Artillery Gun",
+		description = "Rapid fire edition of the artillery gun.",
+		image = moduleImagePath .. "commweapon_heavymachinegun.png",
+		limit = 2,
+		cost = 100 * COST_MULT,
+		requireChassis = {"assault"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
