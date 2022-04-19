@@ -1005,27 +1005,27 @@ local moduleDefs = {
 			end
 		end
 	},
-	{
-		name = "commweapon_artillery_light",
-		humanName = "Rapid Fire Artillery Gun",
-		description = "Rapid fire edition of the artillery gun.",
-		image = moduleImagePath .. "commweapon_heavymachinegun.png",
-		limit = 2,
-		cost = 100 * COST_MULT,
-		requireChassis = {"assault"},
-		requireLevel = 1,
-		slotType = "basic_weapon",
-		applicationFunction = function (modules, sharedData)
-			if sharedData.noMoreWeapons then
-				return
-			end
-			if not sharedData.weapon1 then
-				sharedData.weapon1 = "commweapon_artillery_light"
-			else
-				sharedData.weapon2 = "commweapon_artillery_light"
-			end
-		end
-	},
+	--{
+		--name = "commweapon_artillery_light",
+		--humanName = "Rapid Fire Artillery Gun",
+		--description = "Rapid fire edition of the artillery gun.",
+		--image = moduleImagePath .. "commweapon_heavymachinegun.png",
+		--limit = 2,
+		--cost = 100 * COST_MULT,
+		--requireChassis = {"assault"},
+		--requireLevel = 1,
+		--slotType = "basic_weapon",
+		--applicationFunction = function (modules, sharedData)
+			--if sharedData.noMoreWeapons then
+				--return
+			--end
+			--if not sharedData.weapon1 then
+				--sharedData.weapon1 = "commweapon_artillery_light"
+			--else
+				--sharedData.weapon2 = "commweapon_artillery_light"
+			--end
+		--end
+	--},
 	{
 		name = "commweapon_slamrocket",
 		humanName = "S.L.A.M. Rocket",
