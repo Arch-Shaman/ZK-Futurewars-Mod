@@ -28,8 +28,8 @@ local SIG_AIM1 = 1
 local ANIM_SPEED = 50
 local RESTORE_DELAY = 200
 
-local TURRET_TURN_SPEED = math.rad(340)
-local GUN_TURN_SPEED = math.rad(100)
+local TURRET_TURN_SPEED = math.rad(360)
+local GUN_TURN_SPEED = math.rad(260)
 
 local WHEEL_TURN_SPEED1 = 480
 local WHEEL_TURN_SPEED1_ACCELERATION = 75
