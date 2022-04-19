@@ -167,7 +167,7 @@ function gadget:GameFrame(n)
 			if enabled ~= data.enabled then
 				if not enabled then
 					local morphing = (spGetUnitRulesParam(unitID, "morphDisable") == 1)
-					if not morphing and not transported then
+					if not morphing and not transported and charge then
 						charge = max(charge - (max(def.chargePerUpdate or 0, 10) * 3), 0) -- drain shields over time.
 						if charge == 0 then
 							spSetUnitShieldState(unitID, -1, 0)
@@ -175,7 +175,7 @@ function gadget:GameFrame(n)
 						else
 							spSetUnitShieldState(unitID, data.shieldNum, charge)
 						end
-					else
+					elseif charge then
 						data.enabled = enabled
 						spSetUnitShieldState(unitID, data.shieldNum, false)
 					end
