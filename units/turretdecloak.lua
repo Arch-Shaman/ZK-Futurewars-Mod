@@ -39,7 +39,7 @@ return {
 		maxSlope                      = 36,
 		maxVelocity                   = 0,
 		noAutoFire                    = false,
-		objectName                    = [[turretdecloak.3do]],
+		objectName                    = [[turretdecloak.s3o]],
 		script                        = [[turretdecloak.lua]],
 		onoffable                     = false,
 		selfDestructAs                = [[SMALL_BUILDINGEX]],
@@ -104,7 +104,7 @@ return {
 				featureDead      = [[HEAP]],
 				footprintX       = 2,
 				footprintZ       = 2,
-				object           = [[turretdecloak_dead.3do]],
+				object           = [[turretdecloak_dead.s3o]],
 			},
 			HEAP  = {
 				blocking         = false,
