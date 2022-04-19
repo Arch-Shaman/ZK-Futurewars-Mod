@@ -13,10 +13,10 @@ local weaponDef = {
 		light_color = [[2.92 2.64 1.76]],
 		light_radius = 3000,
 		blastwave_size = 460,
-		blastwave_impulse = 30,
+		blastwave_impulse = 13,
 		blastwave_speed = 12,
 		blastwave_life = 80,
-		blastwave_lossfactor = 0.93,
+		blastwave_lossfactor = 0.8,
 		blastwave_damage = 700,
 	},
 
