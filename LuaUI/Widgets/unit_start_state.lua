@@ -99,6 +99,17 @@ local tooltips = {
 		[2] = "2",
 		[3] = "3",
 	},
+	commander_formation_rank = {
+		name = "  Formation Rank",
+		desc = "Selection Rank: when selecting multiple units only those of highest rank are selected. Hold shift to ignore rank.",
+		type = 'number',
+		value = 2,
+		min = 0,
+		max = 3,
+		step = 1,
+		path = "Settings/Unit Behaviour/Default States/Misc",
+		tooltipFunction = tooltipFunc.formationrank,
+	},
 	prevent_bait = {
 		[0] = "Disable target avoidance.",
 		[1] = "Avoid shooting at light drones, Wind, Solar, Claw, Dirtbag, low value nanoframes and armoured targets (excluding Crab)." .. preventBaitTip,
@@ -174,6 +185,7 @@ options_order = {
 	'commander_retreat',
 	'commander_auto_call_transport_2',
 	'commander_selection_rank',
+	'commander_formation_rank',
 }
 
 options = {
@@ -638,6 +650,17 @@ options = {
 		path = "Settings/Unit Behaviour/Default States/Misc",
 		tooltipFunction = tooltipFunc.selectionrank,
 	},
+	commander_formation_rank = {
+		name = "  Formation Rank",
+		desc = "Selection Rank: when selecting multiple units only those of highest rank are selected. Hold shift to ignore rank.",
+		type = 'number',
+		value = 2,
+		min = 0,
+		max = 3,
+		step = 1,
+		path = "Settings/Unit Behaviour/Default States/Misc",
+		tooltipFunction = tooltipFunc.formationrank,
+	},
 }
 
 local tacticalAIUnits = {}
@@ -953,6 +976,21 @@ local function addUnit(defName, path)
 		tooltipFunction = tooltipFunc.selectionrank,
 	}
 	options_order[#options_order+1] = defName .. "_selection_rank"
+	
+	if ud.canMove and not ud.isFactory and not (ud.springCategories.fixedwing) then
+		options[defName .. "_formation_rank"] = {
+			name = "  Formation Rank",
+			desc = "Formation Rank: set rank in formation",
+			type = 'number',
+			value = 2,
+			min = 0,
+			max = 3,
+			step = 1,
+			path = path,
+			tooltipFunction = tooltipFunc.formationrank,
+		}
+		options_order[#options_order+1] = defName .. "_formation_rank"
+	end
 	
 	if tacticalAIUnits[defName] then
 		options[defName .. "_tactical_ai_2"] = {
@@ -1465,6 +1503,10 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		value = GetStateValue(name, "disableattack")
 		if value then -- false is the default
 			orderArray[#orderArray + 1] = {CMD_DISABLE_ATTACK, {1}, CMD.OPT_SHIFT}
+		end
+		value = GetStateValue(name, "formation_rank")
+		if value and WG.SetFormationRank then
+			WG.SetFormationRank(unitID, value)
 		end
 		
 		QueueState(name, "tactical_ai_2", CMD_UNIT_AI, orderArray)

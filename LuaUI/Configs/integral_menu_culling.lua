@@ -64,6 +64,7 @@ local configList = {
 	{cmdID = CMD_UNIT_KILL_SUBORDINATES, state = true, default = false, name = "Kill Captured"},
 	{cmdID = CMD_PREVENT_OVERKILL      , state = true, default = false, name = "Overkill Prevention"},
 	{cmdID = CMD_SELECTION_RANK        , state = true, default = false, name = "Selection Rank"},
+	{cmdID = CMD_FORMATION_RANK        , state = true, default = false, name = "Formation Rank"},
 	{cmdID = CMD_UNIT_AI               , state = true, default = false, name = "Unit AI"},
 	{cmdID = CMD_FIRE_AT_SHIELD        , state = true, default = false, name = "Ward Fire"},
 	{cmdID = CMD_OVERRECLAIM           , state = true, default = false, name = "Overreclaim Prevention"},
@@ -111,6 +112,7 @@ local defaultValues = {
 	[CMD_PREVENT_OVERKILL] = true,
 	--[CMD_AIR_STRAFE] = true,
 	[CMD_SELECTION_RANK] = true,
+	[CMD_FORMATION_RANK] = true,
 }
 
 return configList, defaultValues
