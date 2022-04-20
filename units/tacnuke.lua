@@ -3,7 +3,7 @@ return {
 		unitname                      = [[tacnuke]],
 		name                          = [[Eos]],
 		description                   = [[Tactical Nuke]],
-		buildCostMetal                = 600,
+		buildCostMetal                = 1200,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 3,
@@ -37,7 +37,6 @@ return {
 				[[custom:RAIDMUZZLE]],
 			},
 		},
-
 		sightDistance                 = 0,
 		useBuildingGroundDecal        = false,
 		yardMap                       = [[o]],
@@ -48,39 +47,32 @@ return {
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP]],
 			},
 		},
-
 		weaponDefs                    = {
 			WEAPON = {
-				name                    = [[Tactical Nuke]],
-				areaOfEffect            = 192,
+				name                    = [[BN-14 Tactical Nuclear Bomb]],
+				areaOfEffect            = 800,
+				avoidFeature            = false,
 				avoidFriendly           = false,
-				cegTag                  = [[tactrail]],
+				cegTag                  = [[nucleartrail]],
 				collideFriendly         = false,
-				craterBoost             = 4,
-				craterMult              = 3.5,
-
+				craterBoost             = 1,
+				craterMult              = 8,
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
-
 					restrict_in_widgets = 1,
-
-					lups_explodelife = 1.5,
 					stats_hide_dps = 1, -- meaningless
 					stats_hide_reload = 1,
-
 					light_color = [[1.35 0.8 0.36]],
 					light_radius = 400,
 					cruisealt = 1300,
 					cruisedist = 400,
 					reveal_unit = 3,
 				},
-
 				damage                  = {
-					default = 4000.1,
+					default = 5000.1,
 				},
-
-				edgeEffectiveness       = 0.4,
-				explosionGenerator      = [[custom:NUKE_150]],
+				edgeEffectiveness       = 0.25,
+				explosionGenerator      = [[custom:nukebigland]],
 				fireStarter             = 0,
 				flightTime              = 20,
 				impulseBoost            = 0,
@@ -90,7 +82,7 @@ return {
 				range                   = 3500,
 				reloadtime              = 10,
 				smokeTrail              = false,
-				soundHit                = [[explosion/mini_nuke]],
+				soundHit                = [[weapon/missile/mininuke_hit]],
 				soundStart              = [[SiloLaunch]],
 				tolerance               = 4000,
 				turnrate                = 18000,
