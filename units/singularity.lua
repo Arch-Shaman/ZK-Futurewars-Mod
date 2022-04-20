@@ -67,7 +67,7 @@ return {
 					singularity = [[1]],
 					singuradius = [[400]],
 					singulifespan = [[540]],
-					singustrength = [[75]],
+					singustrength = [[120]],
 					detachmentradius = [[500]],
 					singuheight = [[250]],
 					singuceg = [[black_hole_400]],
