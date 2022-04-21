@@ -49,6 +49,7 @@ local spValidFeatureID = Spring.ValidFeatureID
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetFeaturePosition = Spring.GetFeaturePosition
+local spGetUnitTeam = Spring.GetUnitTeam
 --local EMPTY = {}
 
 local function DebugEcho(str)
@@ -101,14 +102,15 @@ local function HandleUnit(unitID, f)
 				cmdParam1 = cmdParam1 - Game.maxUnits
 			end
 			if debug then DebugEcho(unitID .. ": " .. tostring(cmdID) .. ", " .. tostring(cmdParam1) .. ", " .. tostring(cmdParam2)) end
+			local range = buildRanges[spGetUnitDefID(unitID)]
 			if cmdID and cmdParam1 and (spValidFeatureID(cmdParam1) or spValidUnitID(cmdParam1)) then
 				if debug then DebugEcho(unitID .. ": Valid command, checking distance.") end
-				if not IsObjectCloseEnough(unitID, cmdParam1, cmdID) then
-					if debug then DebugEcho(unitID .. ": Command dropped (Out of Range)") end
+				if not IsObjectCloseEnough(unitID, cmdParam1, cmdID) or (cmdID == CMD_RECLAIM and cmdParam5 and cmdParam5 == range and not GG.CheckORPForTeam(spGetUnitTeam(unitID)) and not GG.GetORPState(unitID)) then
+					if debug then DebugEcho(unitID .. ": Command dropped (Out of Range / ORP)") end
 					spGiveOrderToUnit(unitID, CMD_REMOVE, cmdTag, 0)
-					if cmdParam5 and cmdParam5 ~= buildRanges[spGetUnitDefID(unitID)] then -- this was an area command added by the user.
+					if cmdParam5 and cmdParam5 ~= range then -- this was an area command added by the user.
 						if debug then DebugEcho("Readding area command: " .. tostring(cmdParam2) .. ", " .. tostring(cmdParam3) .. ", " .. tostring(cmdParam4) .. ", " .. tostring(cmdParam5)) end
-						spGiveOrderToUnit(unitID, CMD_INSERT, {0, cmdID, CMD.OPT_SHIFT, cmdParam2, cmdParam3, cmdParam4, cmdParam5}, CMD.OPT_ALT) -- reissue the command (just in case)
+						spGiveOrderToUnit(unitID, CMD_INSERT, {0, cmdID, CMD.OPT_SHIFT, cmdParam2, cmdParam3, cmdParam4, cmdParam5}, CMD.OPT_ALT) -- For whatever reason, when removing reclaim/repair orders from area orders, it removes the command itself. Don't ask me.
 					end
 				end
 			elseif debug then
@@ -121,6 +123,16 @@ local function HandleUnit(unitID, f)
 		end
 	end
 end
+
+--[[function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams)
+	if buildRanges[unitDefID] == nil or cmdID ~= CMD_RECLAIM then
+		return true
+	elseif cmdID == CMD_RECLAIM and not GG.GetORPState(unitID) and not GG.CheckORPForTeam(unitTeam) then 
+		return false
+	else
+		return true
+	end
+end]]
 
 function gadget:GameFrame(f)
 	if handled[f] then

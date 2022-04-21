@@ -61,15 +61,19 @@ local CommandDesc = {
 	params      = {0, 'Off', 'On'},
 }
 
+local function CheckStorage(teamID)
+	local currentMetal, metalStorage = spGetTeamResources(teamID, "metal")
+	metalStorage = (metalStorage - 10000)
+	return currentMetal / metalStorage <= 0.98
+end
+
 function gadget:AllowFeatureBuildStep(builderID, builderTeam, featureID, featureDefID, part) -- part seems to be some sort of reclaim speed.
 	local metalvalue = FeatureDefs[featureDefID].metal or 0
 	--spEcho(builderID .. ", " .. builderTeam .. ", " .. featureID .. ", " .. featureDefID .. ", " .. tostring(part))
-	local reclaimspeed = part * metalvalue * -1
+	--local reclaimspeed = part * metalvalue * -1
 	--Spring.Echo("Reclaim seems to be " .. reclaimspeed)
-	local currentMetal, metalStorage = spGetTeamResources(builderTeam, "metal")
-	metalStorage = (metalStorage - 10000) * 0.97 -- remove hidden storage, stop reclaiming at 97% storage.
 	--spEcho("Current Storage: " .. currentMetal .. " / " .. metalStorage .. " -> " .. currentMetal + reclaimspeed .. " / " .. metalStorage)
-	return metalvalue <= 0.1 or (reclaimspeed + currentMetal < metalStorage) or exceptionUnits[builderID] or part > 0
+	return part > 0 or metalvalue <= 0.1 or CheckStorage(builderTeam) or exceptionUnits[builderID]
 end
 
 local function Command(unitID, cmdID, cmdParams, cmdOptions)
@@ -111,6 +115,14 @@ local function UpdateSaveReferences()
 end
 
 UpdateSaveReferences()
+
+function GG.GetORPState(unitID)
+	return exceptionUnits[unitID]
+end
+
+function GG.CheckORPForTeam(teamID)
+	return CheckStorage(teamID)
+end
 
 function gadget:Load(zip)
 	if not (GG.SaveLoad and GG.SaveLoad.ReadFile) then
