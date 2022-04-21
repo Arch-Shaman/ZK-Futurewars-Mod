@@ -82,8 +82,13 @@ local function IsObjectCloseEnough(unitID, targetID, cmd) -- Note: build ranges 
 			DebugEcho(unitID .. ": Distance: " .. dist .. " (Build Range: " .. buildRanges[spGetUnitDefID(unitID)] .. ")")
 		end
 		return dist <= buildRanges[spGetUnitDefID(unitID)]
-	elseif (cmd == CMD_RECLAIM or cmd == CMD_RESURRECT) and spValidFeatureID(targetID) then
-		local dist = GetDistance(unitID, targetID, true)
+	elseif (cmd == CMD_RECLAIM or cmd == CMD_RESURRECT) then
+		local dist
+		if spValidFeatureID(targetID) then
+			dist = GetDistance(unitID, targetID, true)
+		else
+			dist = GetDistance(unitID, targetID, false)
+		end
 		if debug then
 			DebugEcho(unitID .. ": Distance: " .. dist .. " (Build Range: " .. buildRanges[spGetUnitDefID(unitID)] .. ")")
 		end
