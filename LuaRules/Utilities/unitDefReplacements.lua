@@ -172,7 +172,7 @@ local function GetTerraformTooltip(unitID)
 	return WG.Translate("interface", "terraform") .. " - " .. WG.Translate("interface", "estimated_cost") .. ": " .. math.floor(spent) .. " / " .. math.floor(Spring.GetUnitRulesParam(unitID, "terraform_estimate") or 0)
 end
 
-local function GetZenithTooltip (unitID)
+local function GetZenithTooltip(unitID)
 	local meteorsControlled = Spring.GetUnitRulesParam(unitID, "meteorsControlled") or "0"
 	return (WG.Translate("units", "zenith.description") or "Meteor Controller") .. " - " .. (WG.Translate("interface", "meteors_controlled") or "Meteors controlled") .. " " .. meteorsControlled .. "/300"
 end
@@ -273,7 +273,6 @@ local function GetCustomTooltip (unitID, ud)
 	or GetSuperweaponTooltip(unitID, ud)
 	or GetLinkNeedTooltip(unitID, ud)
 	or GetTerraformTooltip(unitID)
-	or GetZenithTooltip(unitID)
 	or GetMexTooltip(unitID)
 	or GetAvatarTooltip(unitID)
 	or GetPlanetwarsTooltip(unitID, ud)
