@@ -125,11 +125,10 @@ function gadget:UnitLeftWater(unitID, unitDefID, unitTeam)
 	inWater[unitID] = nil
 end
 
-function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam, projectileID)
 	--Spring.Echo("PreDamaged: " .. unitID .. ", " .. unitDefID .. ", " .. unitTeam .. ", " .. tostring(damage) .. ", " .. tostring(paralyzer) .. ", " .. weaponDefID .. ", " .. tostring(projectileID) .. ", " .. tostring(attackerID) .."," .. tostring(attackerTeam))
-	local realattackerTeam = (attackerID and Spring.GetUnitTeam(attackerID)) or attackerTeam
 	--Spring.Echo("Fireproof: " .. tostring(fireproof[unitDefID] == nil) .. "\nAllied: " .. tostring(allied) .. "\nflamerDef: " .. tostring(flamerWeaponDefs[weaponDefID] == nil))
-	if flamerWeaponDefs[weaponDefID] and fireproof[unitDefID] and (realattackerTeam == nil or not spAreTeamsAllied(realattackerTeam, unitTeam)) then
+	if flamerWeaponDefs[weaponDefID] and fireproof[unitDefID] and (attackerTeam == nil or spAreTeamsAllied(attackerTeam, unitTeam)) then
 		return 0, 0
 	else
 		return damage, 1
