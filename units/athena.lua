@@ -44,6 +44,9 @@ return {
 			[[turrettorp]],
 			[[turretimpulse]],
 			[[staticantinuke]],
+			[[energygeo]],
+			[[staticshield]],
+			[[turretgauss]],
 		},
 
 		buildPic            = [[athena.png]],
