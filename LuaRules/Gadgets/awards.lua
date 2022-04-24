@@ -515,7 +515,7 @@ local             roostDefID = UnitDefNames.roost            .id
 
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, killerTeam)
 	local experience = spGetUnitExperience(unitID)
-	if experience > expUnitExp and (experience*UnitDefs[unitDefID].metalCost > 1000) then
+	if experience > expUnitExp and (experience*UnitDefs[unitDefID].metalCost > 1000) and not (UnitDefs[unitDefID].customParams.dontcount or UnitDefs[unitDefID].metalCost == 0) then
 		expUnitExp = experience
 		expUnitTeam = unitTeam
 		expUnitDefID = unitDefID
