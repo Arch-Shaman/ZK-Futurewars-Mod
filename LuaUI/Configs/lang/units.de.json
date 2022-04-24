@@ -60,9 +60,14 @@
 		"helptext" : "Venom ist eine geländeunabhängige Einheit, welche Gegner paralysieren kann, damit andere Einheiten diese einfach zerstören können. Venom besitzt eine AoE und ist nützlich, um gengerische Schwärme in Schach zu halten."
 	},
 	"wolverine_mine" : {
-		"name" : "Claw",
+		"name" : "Disperser",
 		"description" : "Mine",
-		"helptext" : "Statt explodieren, diese Mine schiesst Projektile an Eindringlingen."
+		"helptext" : "Der Disperser ist eine von der Artillerie abgefeuerte Landmine, die in die Luft schießt, bevor sie mehrere Sprengstoffe freisetzt. Es deaktiviert sich nach einer Minute."
+	},
+	"wolverine_mine" : {
+		"name" : "Disbander",
+		"description" : "Baubare Mine",
+		"helptext" : "Der Disbander ist eine baubare Landmine ähnlich dem Disperser, erfordert aber keinen Dachs, um ihn niederzulegen. Wie sein von der Artillerie abgefeuertes Gegenstück schießt es in die Luft, bevor es mehrere Sprengladungen abfeuert. Im Gegensatz zum Dispergierer schaltet er sich nicht nach einer Minute ab."
 	},
 	"neebcomm" : {
 		"name" : "Neeb Comm",

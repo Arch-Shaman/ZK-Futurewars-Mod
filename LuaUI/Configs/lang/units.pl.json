@@ -680,9 +680,14 @@
 		"helptext" : "Cerberus to skuteczna (przeciw-)artyleria; świetnie chroni okolicę. Nie jest to jednak klasyczna wieża obronna i łatwo ją zniszczyć w bezpośrednim natarciu."
 	},
 	"wolverine_mine" : {
-		"name" : "Claw",
+		"name" : "Disperser",
 		"description" : "Mina",
-		"helptext" : "Ta mina nie wybucha, lecz wystrzeliwuje serię pocisków w cel. Po minucie życia dezaktywuje się."
+		"helptext" : "Disperser to mina wystrzeliwana przez artylerię, która wystrzeliwuje w powietrze kilka materiałów wybuchowych. Po minucie życia dezaktywuje się."
+	},
+	"wolverine_mine_buildable" : {
+		"name" : "Disbander",
+		"description" : "Mina",
+		"helptext" : "Disbander to mina lądowa do zbudowania podobna do Disbandera, ale nie wymaga użycia borsuka, aby ją położyć. Podobnie jak jego artyleryjski odpowiednik, wystrzeliwuje w powietrze kilka ładunków wybuchowych. Nie dezaktywuje się po minucie, w przeciwieństwie do dyspergatora."
 	},
 	"staticradar" : {
 		"name" : "Wieża radarowa",

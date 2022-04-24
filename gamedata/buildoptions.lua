@@ -66,6 +66,7 @@ local buildOpts = {
 	[[gunshipheavytrans]],
 	[[athena]],
 	[[staticheavyshield]],
+	[[wolverine_mine_buildable]],
 }
 
 return buildOpts

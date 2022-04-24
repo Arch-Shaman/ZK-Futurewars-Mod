@@ -47,6 +47,7 @@ return {
 			[[energygeo]],
 			[[staticshield]],
 			[[turretgauss]],
+			[[wolverine_mine_buildable]],
 		},
 
 		buildPic            = [[athena.png]],

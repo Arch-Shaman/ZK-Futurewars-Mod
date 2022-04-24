@@ -775,9 +775,14 @@
 		"helptext" : "The Cerberus offers long-range artillery/counter-artillery capability, making it excellent for area denial. It is not designed as a defense turret, and will go down if attacked directly."
 	},
 	"wolverine_mine" : {
-		"name" : "Claw",
+		"name" : "Disperser",
 		"description" : "Badger Mine",
-		"helptext" : "This mine doesn't explode - instead, it releases a flurry of bomblets at trespassing enemies. It deactivates after one minute."
+		"helptext" : "The Disperser is an artillery fired landmine that shoots into the air before releasing several high explosives. It deactivates after one minute."
+	},
+	"wolverine_mine_buildable" : {
+		"name" : "Disbander",
+		"description" : "Landmine",
+		"helptext" : "The Disbander is a buildable landmine similar to the Disperser, but does not require the use of a badger to lay it down. Like its artillery fired counterpart, it shoots into the air before releasing several explosive charges. It does not deactivate after a minute, unlike the disperser."
 	},
 	"staticradar" : {
 		"name" : "Radar Tower",

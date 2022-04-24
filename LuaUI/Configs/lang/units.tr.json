@@ -680,9 +680,14 @@
         "helptext": "Ücbaşlı, uzun menzilli topçu/karşı-topçu yeteneği sunar ve alanın inkar edilmesi için mükemmeldir. Bir savunma kulesi olarak tasarlanmadı ve doğrudan saldırıya uğrarsa yere iner."
     },
     "wolverine_mine": {
-        "name": "Tırnak",
+        "name": "Disperser",
         "description": "Porsuk Mayın",
-        "helptext": "Bu mayın patlamıyor - bunun yerine, geçen düşmanlara bomba atma telaşı salıyor. Bir dakika sonra devre dışı kalır."
+        "helptext": "Disperser birnäçe ýokary partlaýjy serişdäni goýbermezden ozal howada atylýan artilleriýa minasydyr. Bir minutdan soň ýapylýar."
+    },
+	"wolverine_mine_buildable": {
+        "name": "Disbander",
+        "description": "Porsuk Mayın",
+        "helptext": "Dağıtıcıya benzer parçalarla yapılan bir kara mayınıdır, ancak onu yatırmak için bir porsuk kullanılmasını gerektirmez. Topçu ateşiyle ateşlenen muadili gibi, birkaç patlayıcı yük bırakmadan önce havaya ateş eder. Dağıtıcının aksine bir dakika sonra devre dışı kalmaz."
     },
     "staticradar": {
         "name": "Radar Kulesi",

@@ -684,6 +684,11 @@
 		"description" : "獾矿",
 		"helptext" : "这个矿不会爆炸 - 相反，它会释放一系列对非法敌人的小炸弹。 它在一分钟后停用。"
 	},
+	"wolverine_mine_buildable" : {
+		"name" : "解散者",
+		"description" : "地雷",
+		"helptext" : "Disbander 是一種類似於 Disperser 的可建造地雷，但不需要使用獾將其放下。 就像它的火砲一樣，它會在釋放幾個炸藥之前向空中射擊。 與分散器不同，它不會在一分鐘後停用。"
+	},
 	"staticradar" : {
 		"name" : "雷达塔",
 		"description" : "预警系统",
