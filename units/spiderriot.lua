@@ -64,27 +64,31 @@ return {
 		
 		weaponDefs             = {
 			NAPALM_SPRAYER = {
-				name                    = [[Napalm Machine Gun]],
-				accuracy                = 500,
+				name                    = [[Napalm Sprayer]],
+				--accuracy                = 500,
 				areaOfEffect            = 128,
 				avoidFeature            = false,
 				craterBoost             = 0,
 				craterMult              = 0,
+				projectiles             = 4,
 				cegTag                  = [[flamer]],
 				customParams              = {
 					setunitsonfire = "1",
-					
+					burnchance = "1", -- Per-impact
+					burntime = [[120]],
 					sweepfire = 1,
 					sweepfire_maxangle = 25,
 					sweepfire_step = 3,
 					sweepfire_fastupdate = 1,
 					usefirecycle = 1,
+					light_color = [[0.6 0.39 0.18]],
+					light_radius = 100,
 				},
 				
 				damage                  = {
-					default = 14.8,
+					default = 20.1,
 				},
-			
+				edgeEffectiveness       = 0.8,
 				explosionGenerator      = [[custom:napalm_phoenix]],
 				firestarter             = 180,
 				impulseBoost            = 0,
@@ -93,16 +97,16 @@ return {
 				myGravity               = 0.49,
 				--projectiles             = 10,
 				range                   = 370,
-				reloadtime              = 0.067,
+				reloadtime              = 7/30,
 				rgbColor                = [[1 0.5 0.2]],
 				size                    = 5,
 				soundHit                = [[flamethrowerhit]],
 				soundStart              = [[flamethrowerfire]],
 				soundStartVolume        = 3.2,
-				sprayangle              = 2500,
+				sprayangle              = 1600,
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 400,
+				weaponVelocity          = 500,
 			},
 			
 		},
