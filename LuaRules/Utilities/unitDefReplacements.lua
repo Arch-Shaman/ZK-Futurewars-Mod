@@ -269,6 +269,9 @@ local function GetPlateTooltip(unitID, ud)
 end
 
 local function GetCustomTooltip (unitID, ud)
+	if ud == nil then
+		return "Unknown Unit"
+	end
 	return GetGridTooltip(unitID, ud)
 	or GetSuperweaponTooltip(unitID, ud)
 	or GetLinkNeedTooltip(unitID, ud)
