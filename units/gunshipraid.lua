@@ -5,7 +5,7 @@ return {
 		description            = [[Medium Laser Raider Gunship]],
 		acceleration           = 0.2,
 		brakeRate              = 0.4,
-		buildCostMetal         = 225,
+		buildCostMetal         = 200,
 		builder                = false,
 		buildPic               = [[gunshipraid.png]],
 		canFly                 = true,
@@ -49,7 +49,6 @@ return {
 		sonarDistance		   = 700,
 		radarDistance		   = 1300,
 		turnRate               = 693,
-
 		weapons                = {
 			{
 				def                = [[LASER]],
@@ -87,7 +86,7 @@ return {
 				},
 
 				damage                  = {
-					default = 35,
+					default = 37.1,
 				},
 
 				explosionGenerator      = [[custom:heavybeamorangeimpactsmall]],
