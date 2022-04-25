@@ -1,5 +1,5 @@
 return { 
-	wolverine_mine = {
+	wolverine_mine_buildable = {
 		unitname               = [[wolverine_mine_buildable]],
 		name                   = [[Disbander]],
 		description            = [[Buildable Landmine]],
