@@ -102,7 +102,7 @@ return {
 				sizeDecay               = 0,
 				soundhit			    = [[weapon/cannon/cannon_hit1]],
 				soundStart              = [[weapon/cannon/lurker_fire]],
-				soundStartVolume        = 4,
+				soundStartVolume        = 1,
 				sprayAngle              = 1800,
 				stages                  = 10,
 				tolerance               = 5000,
