@@ -39,7 +39,7 @@ return {
 		movementClass          = [[KBOT2]],
 		noAutoFire             = false,
 		noChaseCategory        = [[TERRAFORM FIXEDWING SUB]],
-		objectName             = [[spherebot.s3o]],
+		objectName             = [[spherebot.dae]],
 		script                 = [[cloakraid.lua]],
 		selfDestructAs         = [[SMALL_UNITEX]],
 		sfxtypes               = {
