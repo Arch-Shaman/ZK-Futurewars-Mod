@@ -42,7 +42,7 @@ return {
 		movementClass          = [[KBOT2]],
 		moveState              = 0,
 		noChaseCategory        = [[TERRAFORM LAND SINK TURRET SHIP SWIM FLOAT SUB HOVER]],
-		objectName             = [[spherejeth.s3o]],
+		objectName             = [[spherejeth.dae]],
 		script               = [[cloakaa.lua]],
 		selfDestructAs         = [[BIG_UNITEX]],
 
