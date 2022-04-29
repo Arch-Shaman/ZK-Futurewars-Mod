@@ -48,7 +48,7 @@ return {
 		minCloakDistance       = 230,
 		movementClass          = [[KBOT3]],
 		noChaseCategory        = [[TERRAFORM FIXEDWING SUB]],
-		objectName             = [[Spherewarrior.s3o]],
+		objectName             = [[Spherewarrior.dae]],
 		script                 = [[cloakriot.lua]],
 		selfDestructAs         = [[SMALL_UNITEX]],
 
