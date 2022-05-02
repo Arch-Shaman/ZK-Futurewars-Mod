@@ -56,6 +56,24 @@ local function GetSpeedMod()
 	return (GG.att_MoveChange[unitID] or 1)
 end
 
+local function BarrelAnim()
+	local speedMod = 0
+	local last = 0
+	local acceleration = math.rad(20)
+	while true do
+		speedMod = GG.FireControl.GetBonusFirerate(unitID, 1) - 1 -- Barrel linked to MG weapon
+		if speedMod ~= last then
+			if speedMod < last then
+				Spin(barrel, y_axis, speedMod, -acceleration)
+			else
+				Spin(barrel, y_axis, speedMod, acceleration)
+			end
+		end
+		last = speedMod
+		Sleep(66) -- happens every 3rd frame.
+	end
+end
+
 local function Walk()
 	Signal(SIG_WALK)
 	SetSignalMask(SIG_WALK)
@@ -172,7 +190,7 @@ function script.Create()
 
 	-- workaround for ejectors pointing forwards in model
 	Turn(ejector, y_axis, math.rad(90), 100.0)
-
+	StartThread(BarrelAnim)
 	StartThread(GG.Script.SmokeUnit, unitID, {chest})
 end
 
@@ -192,10 +210,15 @@ function script.QueryWeapon(num)
 	return gunFlares[gun]
 end
 
+function script.BlockShot(num)
+	return not GG.FireControl.CanFireWeapon(unitID, num)
+end
+
 function script.FireWeapon(num)
 	EmitSfx(gunFlares[gun], 1024)
 	EmitSfx(ejectors[gun], 1025)
-	Spin(barrel, y_axis, 20)
+	--Spin(barrel, y_axis, 20)
+	GG.FireControl.WeaponFired(unitID, num)
 end
 
 local function RestoreAim()
@@ -211,7 +234,7 @@ local function RestoreAim()
 	WaitForTurn(rforearm, x_axis)
 	WaitForTurn(rshoulder, y_axis)
 	WaitForTurn(lforearm, x_axis)
-	Spin(barrel, y_axis, 0)
+	--Spin(barrel, y_axis, 0)
 	
 	aiming = false
 end
@@ -225,7 +248,7 @@ function script.AimWeapon(num, heading, pitch)
 	Turn(chest, y_axis, heading, math.rad(800))
 	Turn(rforearm, x_axis, -pitch, math.rad(600))
 	Turn(lforearm, x_axis, -pitch, math.rad(600))
-	Spin(barrel, y_axis, 10)
+	--Spin(barrel, y_axis, 10)
 	WaitForTurn(chest, y_axis)
 	WaitForTurn(lforearm, x_axis)
 	WaitForTurn(rforearm, x_axis)
