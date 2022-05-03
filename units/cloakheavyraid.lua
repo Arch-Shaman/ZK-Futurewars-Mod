@@ -20,15 +20,16 @@ return {
 		cloakCost              = 0.3,
 		cloakCostMoving        = 3.0,
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			modelradius    = [[14]],
 			cus_noflashlight = 1,
 			cloakregen = 10,
 			recloaktime = 300,
 			cloaker_bestowed_radius = 75,
+			cloakstrikeduration = 30,
+			cloakstrikespeed = 1.25,
+			cloakstrikeslow = 0.75,
 		},
-
 		explodeAs              = [[SMALL_UNITEX]],
 		footprintX             = 2,
 		footprintZ             = 2,
@@ -46,15 +47,12 @@ return {
 		objectName             = [[spherepole.s3o]],
 		script                 = [[cloakheavyraid.lua]],
 		selfDestructAs         = [[SMALL_UNITEX]],
-
 		sfxtypes               = {
-
 			explosiongenerators = {
 				[[custom:emg_shells_l]], -- apparently they had emgs at one point. Interesting.
 				[[custom:flashmuzzle1]],
 			},
 		},
-
 		sightDistance          = 425,
 		trackOffset            = 0,
 		trackStrength          = 8,
@@ -63,15 +61,12 @@ return {
 		trackWidth             = 18,
 		turnRate               = 2640,
 		upright                = true,
-
 		weapons                = {
-
 			{
 				def                = [[Blade]],
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP FIXEDWING]],
 			},
 		},
-
 		weaponDefs             = {
 			Blade = {
 				name                    = [[Blade]],
@@ -82,20 +77,17 @@ return {
 				coreThickness           = 0.5,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams        = {
 					light_camera_height = 500,
 					light_color = [[1 1 0.7]],
 					light_radius = 120,
 					light_beam_start = 0.25,
-        
+					cloakstrike = 3,
 					combatrange = 50,
 				},
-      
 				damage                  = {
 					default = 300.1,
 				},
-
 				explosionGenerator      = [[custom:BEAMWEAPON_HIT_ORANGE]],
 				fireStarter             = 90,
 				hardStop                = false,
@@ -119,9 +111,7 @@ return {
 				weaponVelocity          = 2000,
 			},
 		},
-		
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -129,14 +119,12 @@ return {
 				footprintZ       = 2,
 				object           = [[scythe_d.dae]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
 				object           = [[debris2x2b.s3o]],
 			},
-
 		},
 	} 
 }
