@@ -116,7 +116,7 @@ local unitDef = {
 			craterBoost             = 0,
 			craterMult              = 0,
 			customParams        	  = {
-				numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+				numprojectiles1 = 9, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 				projectile1 = "bomberriot_napalm_secondary",
 				--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 				clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -133,7 +133,7 @@ local unitDef = {
 			},
 		  
 			damage                  = {
-				default = 25*6,
+				default = 25*9,
 			},
 
 			edgeEffectiveness       = 0.7,
