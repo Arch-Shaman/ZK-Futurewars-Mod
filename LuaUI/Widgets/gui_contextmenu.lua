@@ -1681,10 +1681,13 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		statschildren[#statschildren+1] = Label:New{ caption = (energy > 0 and '+' or '') .. numformat(energy,2) .. " E/s", textColor = color.stats_fg, }
 		if ud.customParams and ud.customParams["decay_rate"] then
 			local baseoutput = ud.customParams.income_energy
-			local decayrate = tonumber(ud.customParams["decay_rate"]) * 100
+			local startperc = tonumber(ud.customParams["decay_initialrate"])
+			local decayperc = tonumber(ud.customParams["decay_rate"])
+			local decayrate = decayperc * 100
 			local mindecay = tonumber(ud.customParams["decay_minoutput"]) or 0
 			local decaytime = tonumber(ud.customParams["decay_time"]) or 1
 			local txt = ""
+			local timetoreach = 0
 			if decayrate > 0 then
 				txt = "Output decays over time:"
 			else
@@ -1693,19 +1696,39 @@ local function printunitinfo(ud, buttonWidth, unitID)
 			statschildren[#statschildren+1] = Label:New{ caption = txt, textColor = color.stats_fg, }
 			statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
 			statschildren[#statschildren+1] = Label:New{ caption = '- Rate: ', textColor = color.stats_fg, }
-			local timetoreach = 0 -- TODO: add time to reach max/min output.
+			local endperc
+			local decays
 			if decayrate > 0 then
 				txt = "- Minimum Output:"
 				mindecay = mindecay * baseoutput
+				endperc = 1
+				decays = true
 			else
 				txt = "- Maximum Output:"
 				mindecay = tonumber(ud.customParams["decay_maxoutput"]) or 0
+				endperc = mindecay
 				mindecay = mindecay * baseoutput
+				decays = false
 			end
+			local sim = startperc
+			while sim ~= endperc do
+				timetoreach = timetoreach + decaytime
+				sim = sim * (1 - decayperc)
+				if sim < endperc and decayrate > 0 then
+					sim = 1
+				elseif sim > endperc and decayrate < 0 then
+					sim = endperc
+				end
+			end
+			local mm = math.floor(timetoreach / 60)
+			local ss = timetoreach%60
+			timetoreach = string.format("%02d:%02d", mm, ss)
 			decayrate = math.abs(decayrate)
 			statschildren[#statschildren+1] = Label:New{ caption =  numformat(decayrate, 1) .. "%/" .. numformat(decaytime, 1) .. "s", textColor = color.stats_fg, }
 			statschildren[#statschildren+1] = Label:New{ caption = txt, textColor = color.stats_fg, }
 			statschildren[#statschildren+1] = Label:New{ caption = numformat(mindecay, 1), textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = '- Time To Reach: ', textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = timetoreach, textColor = color.stats_fg, }
 		end
 	end
 	do
