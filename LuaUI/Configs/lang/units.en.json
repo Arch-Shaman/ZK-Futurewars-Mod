@@ -812,7 +812,7 @@
 	"cloakriot" : {
 		"name" : "Assailant",
 		"description" : "Stealthy Machine Gun Bot",
-		"helptext" : "Designed as a specops riot, the Assailant is armed with a deadly machine gun. It's quite similiar to the older Reaver model, but cloaks. Unfortunately, the micro plasma generator draws a lot of power, so now it can only autorepair while cloaked."
+		"helptext" : "Designed as a specops riot, the Assailant is armed with a Chaingun. It's quite similiar to the older Reaver model, but cloaks and has a single heavy gun instead of two medium guns. Unfortunately, the micro plasma generator draws a lot of power, so now it can only autorepair while cloaked."
 	},
 	"chickenspire" : {
 		"name" : "Chicken Spire",

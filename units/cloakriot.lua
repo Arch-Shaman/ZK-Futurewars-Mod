@@ -36,6 +36,9 @@ return {
 			outline_y = 80,
 			outline_yoff = 15.5,
 			needsfirecontrol = 1,
+			cloakstrikeduration = 50,
+			cloakstrikespeed = 1.33,
+			cloakstrikeslow = 0.85,
 		},
 		explodeAs              = [[SMALL_UNITEX]],
 		footprintX             = 3,
@@ -104,6 +107,7 @@ return {
 					recycle_maxbonus = 24,
 					isFlak = 3,
 					flaktime = 5,
+					cloakstrike = 1.4,
 					reaim_time = 3, -- fast update needed
 				},
 
