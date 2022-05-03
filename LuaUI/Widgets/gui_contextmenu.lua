@@ -645,6 +645,10 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			end
 	
 			if show_damage then
+				if cp.cloakstrike then
+					cells[#cells+1] = ' - Damage (during cloak strike):'
+					cells[#cells+1] = dam_str * cp.cloakstrike
+				end
 				cells[#cells+1] = ' - Damage:'
 				cells[#cells+1] = dam_str
 			end
@@ -1080,9 +1084,9 @@ local function printAbilities(ud, unitID)
 		end
 		cells[#cells+1] = ' - Decloak radius: '
 		cells[#cells+1] = numformat(decloakDistance) .. " elmo"
-		if cp.cloakstrike_amp then
-			cells[#cells+1] = ' - Damage multipler when cloaked:'
-			cells[#cells+1] = "x" .. cp.cloakstrike_amp
+		if cp.cloakstrikeduration then
+			cells[#cells+1] = ' - Cloaked first strike advantage:'
+			cells[#cells+1] = "lasts " .. numformat(cp.cloakstrikeduration/30, 1) .. "s"
 			if ud.decloakOnFire then
 				cells[#cells+1] = ' - Loses multipler alongside cloak when shooting'
 				cells[#cells+1] = ''
@@ -1629,13 +1633,26 @@ local function printunitinfo(ud, buttonWidth, unitID)
 	
 	statschildren[#statschildren+1] = Label:New{ caption = 'Health: ', textColor = color.stats_fg, }
 	statschildren[#statschildren+1] = Label:New{ caption = health, textColor = color.stats_fg, }
-
+	
+	statschildren[#statschildren+1] = Label:New{ caption = 'HP/Cost: ', textColor = color.stats_fg, }
+	statschildren[#statschildren+1] = Label:New{ caption = string.format("%.2f", health / cost), textColor = color.stats_fg, }
+	
 	statschildren[#statschildren+1] = Label:New{ caption = 'Mass: ', textColor = color.stats_fg, }
 	statschildren[#statschildren+1] = Label:New{ caption = mass, textColor = color.stats_fg, }
-
+	local cp = ud.customParams
 	if not ud.isImmobile then
-		statschildren[#statschildren+1] = Label:New{ caption = 'Speed: ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = speed .. " elmo/s", textColor = color.stats_fg, }
+		
+		if cp.cloakstrikespeed then
+			local speedup = tonumber(cp.cloakstrikespeed)
+			local slowdown = tonumber(cp.cloakstrikeslow)
+			statschildren[#statschildren+1] = Label:New{ caption = 'Cloaked Speed: ', textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = speed * speedup .. "elmo/s", textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = 'Decloaked Speed: ', textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = speed * slowdown .. "elmo/s", textColor = color.stats_fg, }
+		else
+			statschildren[#statschildren+1] = Label:New{ caption = 'Speed: ', textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = speed .. " elmo/s", textColor = color.stats_fg, }
+		end
 
 		local mt, slope = GetMoveType(ud)
 		statschildren[#statschildren+1] = Label:New{ caption = 'Movement: ', textColor = color.stats_fg, }
