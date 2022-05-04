@@ -105,9 +105,6 @@ local projectile = byte("p")
 local feature = byte("f")
 local ALLIES = {allied = true}
 
-local projectileattributesCache = {pos = {0,0,0}, speed = {0,0,0}, owner = 0, team = 0, ttl= 0,gravity = 0,tracking = false,}
---projectileattributesCache["end"] = {0,0,0}
-
 local frame
 
 local targetCancelRadius = 50*50
@@ -271,7 +268,7 @@ local function SpawnSubProjectiles(id, wd)
 	end
 	--spawn all the subprojectiles
 	local projectiledata = IterableMap.Get(projectiles, id)
-	local projectileattributes = projectileattributesCache
+	local projectileattributes = {pos = {0,0,0}, speed = {0,0,0}, owner = 0, team = 0, ttl= 0,gravity = 0,tracking = false,}
 	if debug then
 		spEcho("Fire the submunitions!")
 	end
