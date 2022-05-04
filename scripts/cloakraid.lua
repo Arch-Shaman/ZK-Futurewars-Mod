@@ -37,6 +37,7 @@ local foot = {lfoot, rfoot}
 
 local smokePiece = {head, hips, chest}
 
+
 --constants
 local runspeed = 8.5 * (UnitDefs[unitDefID].speed / 115)  -- run animation rate, future-proofed
 local steptime = 40  -- how long legs stay extended during stride
@@ -47,6 +48,7 @@ local stride_bottom = -1.0  -- how low hips go during stride
 -- variables
 local moving = false
 local aiming = false
+local recoil = false
 
 --signals
 local SIG_Idle = 1
@@ -238,12 +240,16 @@ function script.AimFromWeapon(num)
 	return head
 end
 
+
+
 function script.AimWeapon(num, heading, pitch)
 	Signal(SIG_Aim)
 	Signal(SIG_Idle)
 	SetSignalMask(SIG_Aim)
 	aiming = true
-
+	if recoil then
+		return false
+	end
 	Turn(head, y_axis, 0, 4.0)
 	Turn(chest, y_axis, heading, 12)
 	Turn(lforearm, z_axis, 0, 6)
@@ -261,12 +267,20 @@ function script.AimWeapon(num, heading, pitch)
 	return true
 end
 
+local function RecoilThread()
+	recoil = true
+	Sleep(5)	
+	Turn(lshoulder, x_axis, math.rad(-105), math.rad(-280))
+    Turn(lforearm, x_axis, math.rad(-45), math.rad(-280))
+	WaitForTurn(lshoulder, x_axis)
+	recoil = false
+end
+
 function script.FireWeapon()
 	Spin(magazine, y_axis, 2)
 	EmitSfx(ejector, 1024)
 	EmitSfx(flare, 1025)
-	Turn(lshoulder, x_axis, math.rad(-105))
-    Turn(lforearm, x_axis, math.rad(-45))
+	StartThread(RecoilThread)
 	-- Generic attributes testing.
 	--GG.Attributes.RemoveEffect(unitID, math.floor(math.random()*10))
 	--GG.Attributes.AddEffect(unitID, math.floor(math.random()*10), {
