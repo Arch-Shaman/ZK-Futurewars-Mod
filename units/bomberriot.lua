@@ -65,7 +65,7 @@ local unitDef = {
 	weaponDefs          = {
 
 		NAPALM_SECONDARY = {
-			name 			= "Napalm Pellet",
+			name 					= "Napalm",
 			cegTag                  = [[flamer]],
 			areaOfEffect            = 216,
 			avoidFeature            = false,
@@ -89,7 +89,6 @@ local unitDef = {
 				light_color = [[0.25 0.13 0.05]],
 				light_radius = 460,
 				lups_napalm_fx = 1,
-				 
 			},
 			explosionGenerator      = [[custom:napalm_koda]],
 			fireStarter             = 250,
@@ -121,9 +120,9 @@ local unitDef = {
 				--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 				clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 				use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-				spawndist = 170, -- at what distance should we spawn the projectile(s)? REQUIRED.
+				spawndist = 220, -- at what distance should we spawn the projectile(s)? REQUIRED.
 				timeoutspawn = 0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-				vradius1 = "-5,0,-5,5,1,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+				vradius1 = "-6,0,-6,6,1,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 				groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 				proxy = 0, -- check for nearby units?
 				proxydist = 0, -- how far to check for units? Default: spawndist
