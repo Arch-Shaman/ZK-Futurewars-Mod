@@ -80,6 +80,7 @@ local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetUnitDefID = Spring.GetUnitDefID
+local spSetProjectileCEG = Spring.SetProjectileCEG
 
 
 local random = math.random
@@ -311,7 +312,8 @@ local function SpawnSubProjectiles(id, wd)
 		projectileattributes["ttl"] = WeaponDefs[me].flightTime or WeaponDefs[me].beamTTL
 		projectileattributes["tracking"] = WeaponDefs[me].tracks or false
 		projectileattributes["gravity"] = -WeaponDefs[me].myGravity or -1
-		projectileattributes["cegTag"] = WeaponDefs[me].cegTag
+		local ceg = WeaponDefs[me].cegTag
+		--spEcho(tostring(ceg))
 		local positioning = projectileConfig[j].clusterpos or "none"
 		local vectoring = projectileConfig[j].clustervec or "none"
 		local keepmomentum = projectileConfig[j].keepmomentum
@@ -410,7 +412,10 @@ local function SpawnSubProjectiles(id, wd)
 				end
 				--end
 			end
-			RegisterSubProjectiles(p,me)
+			RegisterSubProjectiles(p, me)
+			if ceg and ceg ~= "" then
+				spSetProjectileCEG(p, ceg)
+			end
 		end
 	end
 	-- create the explosion --
