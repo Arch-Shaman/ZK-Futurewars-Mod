@@ -25,6 +25,7 @@ local unitDef = {
 		modelradius    = [[10]],
 		refuelturnradius = [[80]],
 		requireammo    = [[1]],
+		reammoseconds    = [[4]],
 	},
 	explodeAs           = [[GUNSHIPEX]],
 	floater             = true,
