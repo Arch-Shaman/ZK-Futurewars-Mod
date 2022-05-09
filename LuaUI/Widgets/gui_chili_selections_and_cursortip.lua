@@ -1875,7 +1875,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			end
 		end
 		
-		if dynamicTooltipDefs[unitDefID] or UnitDefs[unitDefID].customParams.superweapon or UnitDefs[unitDefID].customParams.neededlink then
+		if unitDefID and UnitDefs[unitDefID] and (dynamicTooltipDefs[unitDefID] or UnitDefs[unitDefID].customParams.superweapon or UnitDefs[unitDefID].customParams.neededlink) then
 			unitDesc:SetText(GetDescription(ud, unitID))
 		end
 		
