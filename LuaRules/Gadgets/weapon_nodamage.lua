@@ -23,7 +23,7 @@ for wid = 1, #WeaponDefs do
 	end
 end
 
-function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID)
+function function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam, projectileID)
 	if fakeweapons[weaponDefID] then
 		return 0, 0
 	end

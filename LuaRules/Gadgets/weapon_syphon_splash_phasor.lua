@@ -73,7 +73,7 @@ for q=1, #WeaponDefs do
 	end
 end
 
-function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam, projectileID)
 	if debugmode then
 		spEcho("something got hurt. It still has " .. SpGetUnitHealth(unitID).. " hp remaining.")
 	end
