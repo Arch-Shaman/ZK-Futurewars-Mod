@@ -309,7 +309,7 @@ local function SpawnSubProjectiles(id, wd)
 		if debug then
 			spEcho("Velocity: " ..tostring(projectileConfig[j].clusterpos),tostring(projectileConfig[j].clustervec) .. "\nstep: " .. tostring(step))
 		end
-		projectileattributes["ttl"] = WeaponDefs[me].flightTime or WeaponDefs[me].beamTTL
+		projectileattributes["ttl"] = WeaponDefs[me].flightTime or WeaponDefs[me].beamTTL or 9000
 		projectileattributes["tracking"] = WeaponDefs[me].tracks or false
 		projectileattributes["gravity"] = -WeaponDefs[me].myGravity or -1
 		local ceg = WeaponDefs[me].cegTag
