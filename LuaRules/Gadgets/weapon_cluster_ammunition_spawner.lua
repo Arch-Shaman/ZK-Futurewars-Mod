@@ -312,6 +312,7 @@ local function SpawnSubProjectiles(id, wd)
 		projectileattributes["ttl"] = WeaponDefs[me].flightTime or WeaponDefs[me].beamTTL or 9000
 		projectileattributes["tracking"] = WeaponDefs[me].tracks or false
 		projectileattributes["gravity"] = -WeaponDefs[me].myGravity or -1
+		projectileattributes["cegTag"] = WeaponDefs[me].cegTag
 		local ceg = WeaponDefs[me].cegTag
 		--spEcho(tostring(ceg))
 		local positioning = projectileConfig[j].clusterpos or "none"
@@ -413,9 +414,9 @@ local function SpawnSubProjectiles(id, wd)
 				--end
 			end
 			RegisterSubProjectiles(p, me)
-			if ceg and ceg ~= "" then
-				spSetProjectileCEG(p, ceg)
-			end
+			--if ceg and ceg ~= "" then
+				--spSetProjectileCEG(p, [[custom:]] .. ceg)
+			--end
 		end
 	end
 	-- create the explosion --
