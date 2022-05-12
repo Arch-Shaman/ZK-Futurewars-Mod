@@ -4,7 +4,7 @@ return {
 		name                          = [[Strider Hub]],
 		description                   = [[Constructs Striders]],
 		buildCostMetal                = Shared.FACTORY_COST,
-		buildDistance                 = 300,
+		buildDistance                 = 450,
 		builder                       = true,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 6,
