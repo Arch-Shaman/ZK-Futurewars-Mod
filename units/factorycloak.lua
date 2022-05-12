@@ -31,7 +31,6 @@ return {
 		canPatrol                     = true,
 		category                      = [[SINK UNARMED]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			sortName        = [[1]],
 			default_spacing = 8,
@@ -71,22 +70,17 @@ return {
 		objectName                    = [[cremfactory.s3o]],
 		script                        = [[factorycloak.lua]],
 		selfDestructAs                = [[LARGE_BUILDINGEX]],
-
 		sfxtypes                      = {
-
 			explosiongenerators = {
 				[[custom:WhiteLight]],
 			},
-
 		},
-
 		showNanoSpray                 = false,
 		sightDistance                 = 273,
 		useBuildingGroundDecal        = true,
 		workerTime                    = Shared.FACTORY_BUILDPOWER,
 		yardMap                       = "ooooooo ooooooo ooooooo occccco occccco occccco occccco yyyyyyy yyyyyyy yyyyyyy",
 		featureDefs                   = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -94,14 +88,12 @@ return {
 				footprintZ       = 7,
 				object           = [[cremfactorywreck.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 7,
 				footprintZ       = 7,
 				object           = [[debris4x4b.s3o]],
 			},
-
 		},
 	} 
 }

@@ -3,8 +3,6 @@ return {
 		unitname                      = [[striderhub]],
 		name                          = [[Strider Hub]],
 		description                   = [[Constructs Striders]],
-		acceleration                  = 0,
-		brakeRate                     = 1.5,
 		buildCostMetal                = Shared.FACTORY_COST,
 		buildDistance                 = 300,
 		builder                       = true,
@@ -12,7 +10,6 @@ return {
 		buildingGroundDecalSizeX      = 6,
 		buildingGroundDecalSizeY      = 6,
 		buildingGroundDecalType       = [[striderhub_aoplane.dds]],
-
 		buildoptions                  = {
 			[[striderantiheavy]],
 			[[striderscorpion]],
@@ -24,7 +21,6 @@ return {
 			[[subtacmissile]],
 			[[nebula]],
 		},
-
 		buildPic                      = [[striderhub.png]],
 		canGuard                      = true,
 		canMove                       = false,
@@ -35,7 +31,6 @@ return {
 		collisionVolumeScales         = [[70 70 70]],
 		collisionVolumeType           = [[ellipsoid]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			aimposoffset      = [[0 0 0]],
 			midposoffset      = [[0 -10 0]],
@@ -46,7 +41,6 @@ return {
 			shared_energy_gen = 1,
 			like_structure    = 1,
 		},
-
 		explodeAs                     = [[ESTOR_BUILDINGEX]],
 		floater                       = true,
 		footprintX                    = 4,
@@ -58,7 +52,6 @@ return {
 		maneuverleashlength           = [[380]],
 		maxDamage                     = 2000,
 		maxSlope                      = 15,
-		maxVelocity                   = 0,
 		minCloakDistance              = 150,
 		movementClass                 = [[KBOT4]],
 		noAutoFire                    = false,
@@ -67,7 +60,6 @@ return {
 		selfDestructAs                = [[ESTOR_BUILDINGEX]],
 		showNanoSpray                 = false,
 		sightDistance                 = 380,
-		turnRate                      = 1,
 		upright                       = true,
 		useBuildingGroundDecal        = true,
 		workerTime                    = 10,

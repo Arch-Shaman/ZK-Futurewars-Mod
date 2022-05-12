@@ -3,9 +3,7 @@ return {
 		unitname                      = [[staticantinuke]],
 		name                          = [[Antinuke]],
 		description                   = [[Nuclear Interceptor (Needs Grid: 90E)]],
-		acceleration                  = 0,
 		activateWhenBuilt             = true,
-		brakeRate                     = 0,
 		buildCostMetal                = 1800,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -21,7 +19,6 @@ return {
 		selectionVolumeScales         = [[70 55 110]],
 		selectionVolumeType           = [[box]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			removewait     = 1,
 			removestop     = 1,
@@ -35,7 +32,6 @@ return {
 			outline_y = 185,
 			outline_yoff = 25,
 		},
-		
 		explodeAs                     = [[LARGE_BUILDINGEX]],
 		footprintX                    = 5,
 		footprintZ                    = 8,
@@ -45,16 +41,13 @@ return {
 		levelGround                   = false,
 		maxDamage                     = 3300,
 		maxSlope                      = 18,
-		maxVelocity                   = 0,
 		objectName                    = [[staticantinuke.s3o]],
 		radarDistance                 = 2500,
 		radarEmitHeight               = 24,
 		script                        = [[staticantinuke.lua]],
 		selfDestructAs                = [[LARGE_BUILDINGEX]],
 		sightDistance                 = 660,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
 		yardmap                       = [[oooooooooooooooooooooooooooooooooooooooo]],
 		floater                       = true,
 		weapons                       = {
@@ -63,7 +56,6 @@ return {
 			},
 		},
 		weaponDefs                    = {
-
 			AMD_ROCKET = {
 				name                    = [[Anti-Nuke Missile Fake]],
 				areaOfEffect            = 420,
@@ -82,11 +74,9 @@ return {
 					reaim_time = 15,
 					nuke_coverage = 2500,
 				},
-
 				damage                  = {
 					default = 1500,
 				},
-				
 				--spawning the intercept explosion is handled by exp_nuke_effect_chooser.lua
 				explosionGenerator      = [[custom:lrpc_expl]],
 				fireStarter             = 100,

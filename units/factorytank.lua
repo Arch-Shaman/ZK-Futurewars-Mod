@@ -3,8 +3,6 @@ return {
 		unitname                      = [[factorytank]],
 		name                          = [[Tank Foundry]],
 		description                   = [[Armed Tank Production Facility]],
-		acceleration                  = 0,
-		brakeRate                     = 0,
 		buildCostMetal                = Shared.FACTORY_COST,
 		buildDistance                 = Shared.FACTORY_PLATE_RANGE,
 		builder                       = true,
@@ -12,7 +10,6 @@ return {
 		buildingGroundDecalSizeX      = 11,
 		buildingGroundDecalSizeY      = 11,
 		buildingGroundDecalType       = [[factorytank_aoplane.dds]],
-
 		buildoptions                  = {
 			[[tankcon]],
 			[[tankraid]],
@@ -24,7 +21,6 @@ return {
 			[[tankheavyarty]],
 			[[tankaa]],
 		},
-
 		buildPic                      = [[factorytank.png]],
 		canMove                       = true,
 		canPatrol                     = true,
@@ -36,7 +32,6 @@ return {
 		selectionVolumeOffsets        = [[0 0 10]],
 		selectionVolumeScales         = [[120 28 120]],
 		selectionVolumeType           = [[box]],
-
 		customParams                  = {
 			sortName = [[6]],
 			solid_factory = [[4]],
@@ -56,7 +51,6 @@ return {
 			outline_y = 250,
 			outline_yoff = 5,
 		},
-
 		energyUse                     = 0,
 		explodeAs                     = [[LARGE_BUILDINGEX]],
 		footprintX                    = 8,
@@ -67,7 +61,6 @@ return {
 		levelGround                   = false,
 		maxDamage                     = 7000,
 		maxSlope                      = 15,
-		maxVelocity                   = 0,
 		maxWaterDepth                 = 0,
 		moveState                     = 1,
 		noAutoFire                    = false,
@@ -76,11 +69,9 @@ return {
 		selfDestructAs                = [[LARGE_BUILDINGEX]],
 		showNanoSpray                 = false,
 		sightDistance                 = 660,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
 		workerTime                    = Shared.FACTORY_BUILDPOWER,
 		yardMap                       = "oooooooo oooooooo oooooooo oooooooo yccccccy yccccccy yccccccy yccccccy",
-		
 		weapons             = {
 			{
 				def                = [[CANNON]],
@@ -97,7 +88,6 @@ return {
 				avoidGround             = true,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams            = {
 					restrict_in_widgets = 1,
 					-- light_color = [[3 2.33 1.5]], Not quite sure which ones are intentionally supposed to be here.
@@ -118,11 +108,9 @@ return {
 					shield_damage = (100*20) + 1200,
 					stats_shield_damage = (100*20) + 1200,
 				},
-
 				damage                  = {
 					default = 1200.2,
 				},
-				
 				explosionGenerator      = [[custom:DOT_Pillager_Explo]],
 				fireTolerance           = 1820, -- 10 degrees
 				impulseBoost            = 0.5,
@@ -148,7 +136,6 @@ return {
 				craterMult              = 2,
 				--cegTag                  = [[flamer]],
 				customParams              = {
-
 					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "factorytank_final",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
@@ -158,7 +145,6 @@ return {
 					noairburst = "Burning time", -- if true, this projectile will skip all airburst checks
 					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeddeploy = 10,
-
 					--lups_heat_fx = [[firewalker]],
 					light_camera_height = 2500,
 					light_color = [[0.25 0.13 0.05]],
@@ -168,7 +154,6 @@ return {
 				damage                  = {
 					default = 0,
 				},
-
 				--explosionGenerator      = [[custom:napalm_firewalker_small]],
 				firestarter             = 180,
 				impulseBoost            = 0,
@@ -197,24 +182,17 @@ return {
 				coreThickness           = 0.5,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams            = {
 					light_camera_height = 2000,
 					light_color = [[1 0.2 0.2]],
-					-- light_radius = 128,  Refer to line 100's comment.
-					reaim_time = 8, -- COB
 					isaa = [[1]],
-					light_radius = 0,
 					isFlak = 3,
 					flaktime = 15,
 				},
-
 				damage = {
-					default = 100,
+					default = 100.1,
 				},
-				--interceptor = 2,
 				edgeEffectiveness       = 0.8,
-				--duration                = 0.02,
 				explosionGenerator      = [[custom:EMG_HIT_HE]],
 				fireStarter             = 50,
 				heightMod               = 1,
@@ -226,7 +204,6 @@ return {
 				rgbColor                = [[1 0.95 0.4]],
 				soundHit                = [[weapon/cannon/emg_hit]],
 				soundHitVolume	        = 0.4,
-				--soundTrigger            = true,
 				sprayangle              = 1500,
 				size 					= 2,
 				thickness               = 2,
@@ -234,7 +211,6 @@ return {
 				turret                  = true,
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 880,
-				--coverage = 1000,
 			},
 		},
 		featureDefs                   = {

@@ -3,8 +3,6 @@ return {
 		unitname                      = [[plateship]],
 		name                          = [[Ship Plate]],
 		description                   = [[Parallel Unit Production]],
-		acceleration                  = 0,
-		brakeRate                     = 0,
 		buildCostMetal                = Shared.FACTORY_PLATE_COST,
 		buildDistance                 = Shared.FACTORY_PLATE_RANGE,
 		builder                       = true,
@@ -32,7 +30,6 @@ return {
 		selectionVolumeScales         = [[98 50 120]],
 		selectionVolumeType           = [[box]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			sortName               = [[7]],
 			unstick_help           = 1,
@@ -49,7 +46,6 @@ return {
 			outline_y = 165,
 			outline_yoff = 27.5,
 		},
-
 		energyUse                     = 0,
 		explodeAs                     = [[FAC_PLATEEX]],
 		footprintX                    = 6,
@@ -59,7 +55,6 @@ return {
 		idleTime                      = 1800,
 		maxDamage                     = Shared.FACTORY_PLATE_HEALTH * 2,
 		maxSlope                      = 15,
-		maxVelocity                   = 0,
 		minCloakDistance              = 150,
 		minWaterDepth                 = 15,
 		moveState                     = 1,
@@ -69,7 +64,6 @@ return {
 		showNanoSpray                 = false,
 		sightDistance                 = 850,
 		sonarDistance                 = 850,
-		turnRate                      = 0,
 		waterline                     = 0,
 		workerTime                    = Shared.FACTORY_BUILDPOWER,
 		yardMap                       = [[ooyyyy ooyyyy ooyyyy ooyyyy ooyyyy ooyyyy ooyyyy ooyyyy]],

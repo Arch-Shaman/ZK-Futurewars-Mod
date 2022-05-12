@@ -16,14 +16,12 @@ return {
 		selectionVolumeScales  = [[30 30 30]],
 		selectionVolumeType    = [[ellipsoid]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			amph_regen = 30,
 			amph_submerged_at = 40,
 			sink_on_emp    = 1,
 			floattoggle    = [[1]],
 		},
-
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 2,
 		footprintZ             = 2,
@@ -40,14 +38,12 @@ return {
 		objectName             = [[amphriot.s3o]],
 		script                 = [[amphriot.lua]],
 		selfDestructAs         = [[BIG_UNITEX]],
-
 		sfxtypes               = {
 			explosiongenerators = {
 				[[custom:HEAVY_CANNON_MUZZLE]],
 				[[custom:RIOT_SHELL_L]],
 			},
 		},
-
 		sightDistance          = 480,
 		sonarDistance          = 480,
 		trackOffset            = 0,
@@ -57,25 +53,20 @@ return {
 		trackWidth             = 28,
 		turnRate               = 1000,
 		upright                = false,
-
 		weapons                = {
-
 			{
 				def                = [[FLECHETTE]],
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-
 			--{
 				--def                = [[TORPEDO]],
 				--badTargetCategory  = [[FIXEDWING]],
 				--onlyTargetCategory = [[SWIM LAND SUB SINK TURRET FLOAT SHIP HOVER]],
 			--},
-
 		},
-
 		weaponDefs             = {
-			TORPEDO = {
+			TORPEDO = { -- UNUSED.
 				name                    = [[Undersea Charge Launcher]],
 				areaOfEffect            = 48,
 				burst                   = 2,
@@ -89,11 +80,12 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				cegTag                  = [[torpedo_trail]],
-
+				customParams = {
+					stays_underwater = 1, -- stop warning me about a nonused weapondef!
+				},
 				damage                  = {
 					default = 48.01,
 				},
-
 				edgeEffectiveness       = 0.6,
 				explosionGenerator      = [[custom:TORPEDO_HIT_SMALL_WEAK]],
 				flightTime              = 1.5,
@@ -120,7 +112,6 @@ return {
 				weaponType              = [[TorpedoLauncher]],
 				weaponVelocity          = 300,
 			},
-
 			FLECHETTE = {
 				name                    = [[Quad Grenade Launcher]],
 				areaOfEffect            = 96,
@@ -160,9 +151,7 @@ return {
 				weaponVelocity          = 380,
 			}
 		},
-
 		featureDefs            = {
-
 			DEAD      = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -170,7 +159,6 @@ return {
 				footprintZ       = 3,
 				object           = [[amphriot_wreck.s3o]],
 			},
-
 			HEAP      = {
 				blocking         = false,
 				footprintX       = 2,

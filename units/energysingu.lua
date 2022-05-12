@@ -3,9 +3,7 @@ return {
 		unitname                      = [[energysingu]],
 		name                          = [[Singularity Reactor]],
 		description                   = [[Powerplant: +225e, increases over time (HAZARDOUS)]],
-		acceleration                  = 0,
 		activateWhenBuilt             = true,
-		brakeRate                     = 0,
 		buildCostMetal                = 4000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -18,7 +16,6 @@ return {
 		collisionVolumeScales         = [[120 120 120]],
 		collisionVolumeType           = [[ellipsoid]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			pylonrange = 250,
 			aimposoffset   = [[0 12 0]],
@@ -35,9 +32,7 @@ return {
 			outline_y = 200,
 			outline_yoff = 55,
 		},
-
 		energyMake                    = 250,
-		energyUse                     = 0,
 		explodeAs                     = [[SINGULARITY]],
 		floater                       = true,
 		footprintX                    = 7,
@@ -47,7 +42,6 @@ return {
 		idleTime                      = 1800,
 		maxDamage                     = 6500,
 		maxSlope                      = 18,
-		maxVelocity                   = 0,
 		minCloakDistance              = 150,
 		noAutoFire                    = false,
 		objectName                    = [[fus.s3o]],
@@ -55,12 +49,9 @@ return {
 		script                        = [[energysingu.lua]],
 		selfDestructAs                = [[SINGULARITY]],
 		sightDistance                 = 273,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
 		yardMap                       = [[ooooooooooooooooooooooooooooooooooooooooooooooooo]],
-
 		featureDefs                   = {
-
 			DEAD = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -68,17 +59,13 @@ return {
 				footprintZ       = 7,
 				object           = [[fus_dead.s3o]],
 			},
-
-
 			HEAP = {
 				blocking         = false,
 				footprintX       = 7,
 				footprintZ       = 7,
 				object           = [[debris4x4a.s3o]],
 			},
-
 		},
-
 		weaponDefs = {
 			SINGULARITY = {
 				areaOfEffect       = 1000,

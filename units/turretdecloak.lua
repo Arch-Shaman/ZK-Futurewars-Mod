@@ -3,9 +3,7 @@ return {
 		unitname                      = [[turretdecloak]],
 		name                          = [[Clarity]],
 		description                   = [[Cloak Detection System]],
-		acceleration                  = 0,
 		activateWhenBuilt             = true,
-		brakeRate                     = 0,
 		buildCostMetal                = 350,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -19,13 +17,10 @@ return {
 		collisionVolumeScales         = [[32 90 32]],
 		collisionVolumeType           = [[CylY]],
 		corpse                        = [[DEAD]],
-  
 		customParams = {
 			modelradius    = [[16]],
-
 			priority_misc  = 2, -- High
 		},
-  
 		energyUse                     = 0,
 		explodeAs                     = [[SMALL_BUILDINGEX]],
 		floater                       = true,
@@ -37,16 +32,13 @@ return {
 		levelGround                   = false,
 		maxDamage                     = 2100,
 		maxSlope                      = 36,
-		maxVelocity                   = 0,
 		noAutoFire                    = false,
 		objectName                    = [[turretdecloak.s3o]],
 		script                        = [[turretdecloak.lua]],
 		onoffable                     = false,
 		selfDestructAs                = [[SMALL_BUILDINGEX]],
 		sightDistance                 = 600,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
 		yardMap                       = [[oooo]],
 		weapons             = {
 			{
@@ -65,7 +57,6 @@ return {
 				damage                  = {
 					default = 1,
 				},
-
 				customParams           = {
 					light_radius = 0,
 					--lups_explodespeed = 0.5,
@@ -75,7 +66,6 @@ return {
 					norealdamage = 1,
 					stats_hide_damage = 1,
 				},
-
 				edgeeffectiveness       = 0.4,
 				explosionGenerator      = [[custom:scanner_ping]],
 				explosionSpeed          = 12,
@@ -92,7 +82,6 @@ return {
 				weaponVelocity          = 230,
 			},
 		},
-  
 		sfxtypes               = {
 			explosiongenerators = {
 				[[custom:scanner_ping]],

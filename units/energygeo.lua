@@ -3,9 +3,7 @@ return {
 		unitname                      = [[energygeo]],
 		name                          = [[Geothermal Generator]],
 		description                   = [[Medium Powerplant (+6, increases over time)]],
-		acceleration                  = 0,
 		activateWhenBuilt             = true,
-		brakeRate                     = 0,
 		buildCostMetal                = 300,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -25,7 +23,6 @@ return {
 			modelradius    = [[42]],
 			removewait     = 1,
 			selectionscalemult = 1.15,
-
 			morphto = [[energyheavygeo]],
 			morphtime = [[120]],
 			decay_maxoutput= 1,
@@ -35,7 +32,6 @@ return {
 			priority_misc = 1, -- Medium
 			default_spacing = 0,
 		},
-
 		energyMake                    = 80,
 		energyUse                     = 0,
 		explodeAs                     = [[ESTOR_BUILDING]],
@@ -46,15 +42,12 @@ return {
 		idleTime                      = 1800,
 		maxDamage                     = 1750,
 		maxSlope                      = 18,
-		maxVelocity                   = 0,
 		noAutoFire                    = false,
 		objectName                    = [[geo.dae]],
 		script                        = [[energygeo.lua]],
 		selfDestructAs                = [[ESTOR_BUILDING]],
 		sightDistance                 = 273,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
 		yardMap                       = [[ooooo ogggo ogggo ogggo ooooo]],
 		featureDefs                   = {
 			DEAD  = {

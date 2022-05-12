@@ -3,8 +3,6 @@ return {
 		unitname                      = [[staticrepair]],
 		name                          = [[Rejuvenator]],
 		description                   = [[Repair Turret]],
-		acceleration                  = 0,
-		brakeRate                     = 1.5,
 		buildCostMetal                = 350,
 		buildDistance                 = 700,
 		builder                       = true,
@@ -25,7 +23,6 @@ return {
 		collisionVolumeScales         = [[48 56 48]],
 		collisionVolumeType           = [[ellipsoid]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			aimposoffset     = [[0 18 0]],
 			midposoffset     = [[0 -4 0]],
@@ -36,7 +33,6 @@ return {
 			outline_y = 85,
 			outline_yoff = 13.5,
 		},
-
 		explodeAs                     = [[NANOBOOM2]],
 		floater                       = true,
 		footprintX                    = 3,
@@ -47,7 +43,6 @@ return {
 		levelGround                   = false,
 		maxDamage                     = 1400,
 		maxSlope                      = 15,
-		maxVelocity                   = 0,
 		minCloakDistance              = 150,
 		movementClass                 = [[KBOT2]],
 		objectName                    = [[repairer.s3o]],
@@ -55,14 +50,11 @@ return {
 		selfDestructAs                = [[NANOBOOM2]],
 		showNanoSpray                 = false,
 		sightDistance                 = 380,
-		turnRate                      = 1,
 		upright                       = true,
 		useBuildingGroundDecal        = true,
 		workerTime                    = 30,
 		resurrectSpeed				  = 10,
-
 		featureDefs                   = {
-
 			DEAD = {
 				blocking         = false,
 				featureDead      = [[HEAP]],
@@ -70,7 +62,6 @@ return {
 				footprintZ       = 3,
 				object           = [[debris4x4a.s3o]],
 			},
-
 			HEAP = {
 				blocking         = false,
 				footprintX       = 3,
@@ -78,7 +69,6 @@ return {
 				object           = [[debris4x4a.s3o]],
 			},
 		},
-
 		weaponDefs = {
 			NANOBOOM2 = {
 				name = "Nano Explosion",
@@ -90,7 +80,6 @@ return {
 				impulseboost = 0,
 				impulsefactor = 0.4,
 				soundhit = [[explosion/ex_small1]],
-
 				damage = {
 					default = 1200,
 				},

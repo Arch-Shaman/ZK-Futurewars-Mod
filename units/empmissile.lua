@@ -33,7 +33,6 @@ return {
 				[[custom:RAIDMUZZLE]]
 			},
 		},
-
 		sightDistance          = 0,
 		useBuildingGroundDecal = false,
 		yardMap                = [[o]],
@@ -44,7 +43,6 @@ return {
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER FIXEDWING GUNSHIP SUB]],
 			},
 		},
-
 		weaponDefs             = {
 			EMP_WEAPON = {
 				name                    = [[EMP Missile]],

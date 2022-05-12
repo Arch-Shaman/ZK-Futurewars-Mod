@@ -16,13 +16,11 @@ return {
 		selectionVolumeScales  = [[28 28 28]],
 		selectionVolumeType    = [[ellipsoid]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			amph_regen        = 15,
 			amph_submerged_at = 40,
 			aim_lookahead     = 80,
 		},
-
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 2,
 		footprintZ             = 2,
@@ -38,11 +36,9 @@ return {
 		objectName             = [[amphraider3.s3o]],
 		script                 = [[amphraid.lua]],
 		selfDestructAs         = [[BIG_UNITEX]],
-
 		sfxtypes               = {
 			explosiongenerators = {},
 		},
-
 		sightDistance          = 660,
 		sonarDistance          = 660,
 		trackOffset            = 0,
@@ -52,7 +48,6 @@ return {
 		trackWidth             = 22,
 		turnRate               = 2100,
 		upright                = true,
-
 		weapons                = {
 			{
 				def                = [[TORPMISSILE]],
@@ -64,7 +59,6 @@ return {
 				onlyTargetCategory = [[SWIM FIXEDWING HOVER LAND SINK TURRET FLOAT SHIP GUNSHIP SUB]],
 			},
 		},
-
 		weaponDefs             = {
 			secondary = {
 				name                    = [[Hurricane Sonic Bomblet]],
@@ -88,7 +82,6 @@ return {
 				damage                  = {
 					default = 5.01,
 				},
-
 				edgeEffectiveness       = 0.6,
 				explosionGenerator      = [[custom:sonic_80]],
 				flightTime              = 1.5,
@@ -121,7 +114,6 @@ return {
 				--cegTag                  = [[missiletrailyellow]],
 				craterBoost             = 1,
 				craterMult              = 2,
-
 				customparams = {
 					numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "amphraid_secondary",
@@ -137,11 +129,9 @@ return {
 					light_color = [[1 0.6 0.2]],
 					light_radius = 180,
 				},
-
 				damage                  = {
 					default = 130.01,
 				},
-
 				explosionGenerator      = [[custom:INGEBORG]],
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
@@ -164,7 +154,6 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 420,
 			},
-
 			TORPEDO = {
 				name                    = [[Sawhead Torpedo]],
 				areaOfEffect            = 32,
@@ -182,7 +171,7 @@ return {
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 90, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					--timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-2,1,-2,2,2,2", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-2,1,-2,2,1,2", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 0, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?
 					reaim_time = 60, -- Fast update not required (maybe dangerous)
@@ -191,13 +180,13 @@ return {
 					cruise_ascendradius = 80,
 					cruisetracking = 1,
 					cruise_nolock = 1,
+					stays_underwater = 1,
 					cas_nocruisecheck = "periksiantamattomuus ja omista virheistään oppiminen ovat kaiken a ja o", -- katseletko? :D
 					--keepinwater = 1,
 				},
 				damage                  = {
 					default = 130.01,
 				},
-
 				edgeEffectiveness       = 0.99,
 				explosionGenerator      = [[custom:TORPEDO_HIT]],
 				flightTime              = 30.0,
@@ -227,9 +216,7 @@ return {
 				weaponVelocity          = 280,
 			},
 		},
-
 		featureDefs            = {
-
 			DEAD      = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -237,15 +224,12 @@ return {
 				footprintZ       = 2,
 				object           = [[amphraider3_dead.s3o]],
 			},
-
 			HEAP      = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
 				object           = [[debris2x2c.s3o]],
 			},
-
 		},
-
 	} 
 }

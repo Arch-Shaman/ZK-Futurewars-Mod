@@ -3,9 +3,7 @@ return {
 		unitname                      = [[staticarty]],
 		name                          = [[Cerberus]],
 		description                   = [[Plasma Artillery Battery]],
-		acceleration                  = 0,
 		activateWhenBuilt             = true,
-		brakeRate                     = 0,
 		buildCostMetal                = 2500,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -23,7 +21,6 @@ return {
 			midposoffset   = [[0 10 0]],
 			bait_level_default = 1,
 		},
-
 		explodeAs                     = [[LARGE_BUILDINGEX]],
 		footprintX                    = 5,
 		footprintZ                    = 5,
@@ -33,7 +30,6 @@ return {
 		idleTime                      = 1800,
 		maxDamage                     = 3750,
 		maxSlope                      = 18,
-		maxVelocity                   = 0,
 		maxWaterDepth                 = 0,
 		noAutoFire                    = false,
 		noChaseCategory               = [[FIXEDWING LAND SHIP SATELLITE SWIM GUNSHIP SUB HOVER]],
@@ -47,11 +43,8 @@ return {
 			},
 		},
 		sightDistance                 = 660,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
 		yardMap                       = [[ooooo ooooo ooooo ooooo ooooo]],
-
 		weapons                       = {
 			{
 				def                = [[PLASMA]],
@@ -59,10 +52,7 @@ return {
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP]],
 			},
 		},
-
-
 		weaponDefs                    = {
-
 			PLASMA = {
 				name                    = [[Long-Range Plasma Battery]],
 				areaOfEffect            = 192,

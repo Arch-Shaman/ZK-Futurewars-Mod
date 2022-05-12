@@ -16,7 +16,6 @@ return {
 		collisionVolumeScales         = [[30 60 30]],
 		collisionVolumeType           = [[CylY]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			bait_level_target = 1,
 			pylonrange     = 80,
@@ -30,7 +29,6 @@ return {
 			outline_y = 115,
 			outline_yoff = 30,
 		},
-
 		energyMake                    = 1.2, --[[ as tidal; NOT added to wind (which is fully gadgeted
                                             and cannot be found in this unit def file). Also used
                                             as the income of a "generic" turbine, i.e. unspecified
@@ -64,14 +62,12 @@ return {
 				footprintZ       = 3,
 				object           = [[arm_wind_generator_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,
 				footprintZ       = 3,
 				object           = [[debris4x4a.s3o]],
 			},
-
 			DEADWATER = {
 				blocking         = true,
 				featureDead      = [[HEAP]],

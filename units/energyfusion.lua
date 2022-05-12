@@ -13,7 +13,6 @@ return {
 		buildPic                      = [[energyfusion.png]],
 		category                      = [[SINK UNARMED]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			pylonrange = 200,
 			removewait = 1,
@@ -23,7 +22,6 @@ return {
 			decay_maxoutput = 4,
 			decay_initialrate = 1,
 		},
-
 		energyMake                    = 25,
 		energyUse                     = 0,
 		explodeAs                     = [[ESTOR_BUILDINGEX]],
@@ -41,9 +39,7 @@ return {
 		sightDistance                 = 273,
 		useBuildingGroundDecal        = true,
 		yardMap                       = [[ooooo ooooo ooooo ooooo]],
-
 		featureDefs                   = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -51,15 +47,12 @@ return {
 				footprintZ       = 4,
 				object           = [[energyfusion_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 5,
 				footprintZ       = 4,
 				object           = [[debris4x4b.s3o]],
 			},
-
 		},
-
 	} 
 }

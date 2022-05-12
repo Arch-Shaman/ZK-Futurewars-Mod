@@ -13,7 +13,6 @@ return {
 		buildPic                      = [[energyheavygeo.png]],
 		category                      = [[SINK UNARMED]],
 		corpse                        = [[DEAD]],
-    
 		customParams                  = {
 			pylonrange     = 150,
 			removewait     = 1,
@@ -24,7 +23,6 @@ return {
 			decay_rate     = -0.01,
 			stats_show_death_explosion = true,
 		},
-    
 		energyMake                    = 400, --ik the AI doesn't build geos, but when they do, hopefully they builds lots!
 		energyUse                     = 0,
 		explodeAs                     = [[energyheavygeo_DEATH]],
@@ -53,7 +51,6 @@ return {
 				customParams        = {
 					setunitsonfire = "1",
 					burntime = 1980,
-
 					numprojectiles1 = 60, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "energyheavygeo_napalm_fragment_dummy",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
@@ -66,17 +63,14 @@ return {
 					timeddeploy = 1,
 					--clustercharges = 60,
 					--clusterdelay = 2,
-
 					stats_damage = 9500,
 					stats_hide_dps = true,
 					stats_hide_reload = true,
 					stats_hide_range = true,
 				},
-
 				damage                  = {
 					default = 0,
 				},
-
 				fireStarter             = 70,
 				interceptedByShieldType = 0,
 				model                   = [[wep_b_fabby.s3o]],
@@ -123,7 +117,6 @@ return {
 				damage                  = {
 					default = 0,
 				},
-
 				explosionGenerator      = [[custom:smr_big]],
 				firestarter             = 180,
 				impulseBoost            = 0,
@@ -210,12 +203,10 @@ return {
 				customParams            = {
 					setunitsonfire = "1",
 					burntime = 450,
-
 					area_damage = 1,
 					area_damage_radius = 60,
 					area_damage_dps = 100,
 					area_damage_duration = 16,
-
 					--lups_heat_fx = [[firewalker]],
 					light_camera_height = 2500,
 					light_color = [[0.25 0.13 0.05]],
@@ -224,7 +215,6 @@ return {
 				damage                  = {
 					default = 560,
 				},
-
 				explosionGenerator      = [[custom:smr]],
 				firestarter             = 180,
 				impulseBoost            = 0,
@@ -251,7 +241,6 @@ return {
 				customParams            = {
 					setunitsonfire = "1",
 					burntime = 2700,
-
 					numprojectiles1 = 60, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "energyheavygeo_napalm_fragment_dummy",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
@@ -266,7 +255,6 @@ return {
 				damage                  = {
 					default = 9500,
 				},
-
 				explosionGenerator      = [[custom:NUKE_600]],
 				firestarter             = 400,
 				impulseBoost            = 0.5,
@@ -275,9 +263,7 @@ return {
 				soundHitVolume          = 10000,
 			}
 		},
-		
 		featureDefs                   = {
-    
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -285,14 +271,12 @@ return {
 				footprintZ       = 5,
 				object           = [[energyheavygeo_dead.s3o]],
 			},
-    
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 5,
 				footprintZ       = 5,
 				object           = [[debris4x4a.s3o]],
 			},
-    
 		},
 	}
 }

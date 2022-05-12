@@ -3,9 +3,7 @@ return {
 		unitname                      = [[staticshield]],
 		name                          = [[Aegis]],
 		description                   = [[Area Shield]],
-		acceleration                  = 0,
 		activateWhenBuilt             = true,
-		brakeRate                     = 0,
 		buildCostMetal                = 400,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -29,16 +27,13 @@ return {
 		levelGround                   = false,
 		maxDamage                     = 1000,
 		maxSlope                      = 36,
-		maxVelocity                   = 0,
 		noAutoFire                    = false,
 		objectName                    = [[m-8.s3o]],
 		onoffable                     = true,
 		script                        = [[staticshield.lua]],
 		selfDestructAs                = [[BIG_UNITEX]],
 		sightDistance                 = 200,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
 		yardMap                       = [[oooo]],
 		customParams        = {
 			removewait     = 1,
@@ -50,22 +45,18 @@ return {
 			addpatrol      = 1,
 		},
 		weapons                       = {
-
 			{
 				def         = [[COR_SHIELD_SMALL]],
 				maxAngleDif = 1,
 			},
-
 		},
 		weaponDefs                    = {
 			COR_SHIELD_SMALL = {
 				name                    = [[Energy Shield]],
 				craterMult              = 0,
-
 				damage                  = {
 					default = 10,
 				},
-
 				exteriorShield          = true,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,

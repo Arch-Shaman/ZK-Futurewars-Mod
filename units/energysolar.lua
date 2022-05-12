@@ -3,9 +3,7 @@ return {
 		unitname                      = [[energysolar]],
 		name                          = [[Solar Collector]],
 		description                   = [[Small Powerplant (+3)]],
-		acceleration                  = 0,
 		activateWhenBuilt             = true,
-		brakeRate                     = 0,
 		buildCostMetal                = 60,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -28,7 +26,7 @@ return {
 			outline_y = 110,
 			outline_yoff = 20,
 		},
-		damageModifier                = 0.25,
+		damageModifier                = 0.2,
 		energyMake                    = 3,
 		explodeAs                     = [[SMALL_BUILDINGEX]],
 		footprintX                    = 5,
@@ -38,7 +36,6 @@ return {
 		idleTime                      = 1800,
 		maxDamage                     = 1000,
 		maxSlope                      = 18,
-		maxVelocity                   = 0,
 		maxWaterDepth                 = 0,
 		noAutoFire                    = false,
 		objectName                    = [[arm_solar.s3o]],
@@ -46,12 +43,9 @@ return {
 		script                        = [[energysolar.lua]],
 		selfDestructAs                = [[SMALL_BUILDINGEX]],
 		sightDistance                 = 273,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
 		yardMap                       = [[ooooooooooooooooooooooooo]],
 		featureDefs                   = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -59,7 +53,6 @@ return {
 				footprintZ       = 5,
 				object           = [[arm_solar_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 5,

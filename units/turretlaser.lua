@@ -3,8 +3,6 @@ return {
 		unitname                      = [[turretlaser]],
 		name                          = [[Parapet]],
 		description                   = [[Medium Pulse Laser Tower]],
-		acceleration                  = 0,
-		brakeRate                     = 0,
 		buildCostMetal                = 120,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -34,32 +32,26 @@ return {
 		losEmitHeight                 = 60,
 		maxDamage                     = 960,
 		maxSlope                      = 36,
-		maxVelocity                   = 0,
 		noAutoFire                    = false,
 		noChaseCategory               = [[FIXEDWING LAND SHIP SATELLITE SWIM GUNSHIP SUB HOVER]],
 		objectName                    = [[lotustest2.s3o]],
 		script                        = [[turretlaser.lua]],
 		selfDestructAs                = [[SMALL_BUILDINGEX]],
-
 		sfxtypes                      = {
 			explosiongenerators = {
 				[[custom:BEAMWEAPON_MUZZLE_YELLOW]],
 			},
 		},
 		sightDistance                 = 554,  -- Range*1.1 + 48 for radar overshoot
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
 		waterline                     = 5,
-		workerTime                    = 0,
 		yardMap                       = [[oooo]],
 		weapons                       = {
-
 			{
 				def                = [[LASER]],
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-
 		},
 		weaponDefs                    = {
 			LASER = {
@@ -73,6 +65,7 @@ return {
 				customParams        = {
 					light_camera_height = 1200,
 					light_radius = 20,
+					light_color = [[1 0.7843 0.1647]],
 					sweepfire = 1,
 					sweepfire_maxangle = 45,
 					sweepfire_step = 0.5,

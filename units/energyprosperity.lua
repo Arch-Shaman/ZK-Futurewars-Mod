@@ -28,7 +28,6 @@ return {
 		energyUse = 0,
 		reclaimable = false,
 		useBuildingGroundDecal = false,
-		workerTime = 0,
 		selfdestructas = "NUCLEAR_MISSILE",
 		explodeas = "NUCLEAR_MISSILE",
 		energymake = 600,
@@ -40,7 +39,6 @@ return {
 		buildcostmetal = 40000,
 		yardMap = [[ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo]],
 		sightDistance = 750,
-		turnRate = 0,
 		featureDefs                   = {
 			DEAD  = {
 				blocking         = true,

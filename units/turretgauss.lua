@@ -3,7 +3,6 @@ return {
 		unitname                      = [[turretgauss]],
 		name                          = [[Gauss]],
 		description                   = [[Gauss Turret, 20 health/s when closed]],
-		acceleration                  = 0,
 		buildCostMetal                = 400,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -17,14 +16,12 @@ return {
 		collisionVolumeScales         = [[28 40 28]],
 		collisionVolumeType           = [[CylY]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			modelradius    = [[15]],
 			midposoffset   = [[0 15 0]],
 			aimposoffset   = [[0 25 0]],
 			armored_regen  = [[10]],
 		},
-
 		damageModifier                = 0.25,
 		explodeAs                     = [[SMALL_BUILDINGEX]],
 		floater                       = true,
@@ -36,7 +33,6 @@ return {
 		levelGround                   = false,
 		maxDamage                     = 2400,
 		maxSlope                      = 18,
-		maxVelocity                   = 0,
 		--maxWaterDepth                 = 0, -- model-derived would be 305: 35 elmo legs + 6x45 elmo pillar segments should be enough for everyone
 		minCloakDistance              = 150,
 		noAutoFire                    = false,
@@ -44,18 +40,15 @@ return {
 		objectName                    = [[gauss.dae]],
 		script                        = [[turretgauss.lua]],
 		selfDestructAs                = [[SMALL_BUILDINGEX]],
- 
 		sfxtypes               = {
 			explosiongenerators = {
 				[[custom:flashmuzzle1]],
 			},
 		},
-
 		sightDistance                 = 664, -- Range*1.1 + 48 for radar overshoot
 		sonarDistance                 = 664,
 		useBuildingGroundDecal        = true,
 		yardmap                       = [[ooooooooo]],
-
 		weapons                       = {
 
 			{
@@ -65,7 +58,6 @@ return {
 			},
 		},
 		weaponDefs                    = {
-
 			GAUSS = {
 				name                    = [[Light Gauss Cannon]],
 				alphaDecay              = 0.12,
@@ -76,7 +68,6 @@ return {
 				cegTag                  = [[gauss_tag_l]],
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams = {
 					burst = Shared.BURST_RELIABLE,
 					single_hit = true,
@@ -84,7 +75,6 @@ return {
 				damage                  = {
 					default = 200.1,
 				},
-      
 				explosionGenerator      = [[custom:gauss_hit_m]],
 				groundbounce            = 1,
 				impactOnly              = true,
@@ -111,10 +101,7 @@ return {
 				weaponVelocity          = 1200,
 			},
 		},
-
-
 		featureDefs                   = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -128,8 +115,6 @@ return {
 				footprintZ       = 2,
 				object           = [[debris2x2b.s3o]],
 			},
-
 		},
-
 	} 
 }

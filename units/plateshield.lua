@@ -3,8 +3,6 @@ return {
 		unitname                      = [[plateshield]],
 		name                          = [[Shieldbot Plate]],
 		description                   = [[Parallel Unit Production]],
-		acceleration                  = 0,
-		brakeRate                     = 0,
 		buildCostMetal                = Shared.FACTORY_PLATE_COST,
 		buildDistance                 = Shared.FACTORY_PLATE_RANGE,
 		builder                       = true,
@@ -12,7 +10,6 @@ return {
 		buildingGroundDecalSizeX      = 10,
 		buildingGroundDecalSizeY      = 10,
 		buildingGroundDecalType       = [[plateshield_aoplane.dds]],
-
 		buildoptions                  = {
 			[[shieldcon]],
 			[[shieldscout]],
@@ -26,7 +23,6 @@ return {
 			[[shieldbomb]],
 			[[shieldshield]],
 		},
-
 		buildPic                      = [[plateshield.png]],
 		canMove                       = true,
 		canPatrol                     = true,
@@ -38,7 +34,6 @@ return {
 		selectionVolumeScales         = [[70 42 96]],
 		selectionVolumeType           = [[box]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			sortName           = [[1]],
 			modelradius        = [[50]],
@@ -55,7 +50,6 @@ return {
 			outline_y = 165,
 			outline_yoff = 27.5,
 		},
-
 		energyUse                     = 0,
 		explodeAs                     = [[FAC_PLATEEX]],
 		footprintX                    = 5,
@@ -65,7 +59,6 @@ return {
 		idleTime                      = 1800,
 		maxDamage                     = Shared.FACTORY_PLATE_HEALTH,
 		maxSlope                      = 15,
-		maxVelocity                   = 0,
 		maxWaterDepth                 = 0,
 		minCloakDistance              = 150,
 		moveState                     = 1,
@@ -75,7 +68,6 @@ return {
 		selfDestructAs                = [[FAC_PLATEEX]],
 		showNanoSpray                 = false,
 		sightDistance                 = 273,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
 		workerTime                    = Shared.FACTORY_BUILDPOWER,
 		yardMap                       = [[ooooo ooooo ooooo yyyyy yyyyy yyyyy yyyyy]],
@@ -108,7 +100,6 @@ return {
 			},
 		},
 		featureDefs                   = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -116,15 +107,12 @@ return {
 				footprintZ           = 7,
 				object           = [[plate_shield_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 5,
 				footprintZ       = 7,
 				object           = [[debris4x4a.s3o]],
 			},
-
 		},
-
-	} 
+	}
 }

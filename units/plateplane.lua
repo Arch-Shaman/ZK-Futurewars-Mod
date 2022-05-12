@@ -3,9 +3,7 @@ return {
 		unitname                      = [[plateplane]],
 		name                          = [[Airplane Plate]],
 		description                   = [[Parallel Unit Production]],
-		acceleration                  = 0,
 		activateWhenBuilt             = false,
-		brakeRate                     = 0,
 		buildCostMetal                = Shared.FACTORY_PLATE_COST,
 		buildDistance                 = Shared.FACTORY_PLATE_RANGE,
 		builder                       = true,
@@ -13,7 +11,6 @@ return {
 		buildingGroundDecalSizeX      = 10,
 		buildingGroundDecalSizeY      = 10,
 		buildingGroundDecalType       = [[plateplane_aoplane.dds]],
-
 		buildoptions                  = {
 			[[planecon]],
 			[[planefighter]],
@@ -37,7 +34,6 @@ return {
 		selectionVolumeScales         = [[64 30 70]],
 		selectionVolumeType           = [[box]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			landflystate       = [[0]],
 			sortName           = [[4]],
@@ -61,7 +57,6 @@ return {
 		idleTime                      = 1800,
 		maxDamage                     = Shared.FACTORY_PLATE_HEALTH,
 		maxSlope                      = 15,
-		maxVelocity                   = 0,
 		minCloakDistance              = 150,
 		noAutoFire                    = false,
 		objectName                    = [[plate_plane.s3o]],
@@ -69,14 +64,11 @@ return {
 		selfDestructAs                = [[FAC_PLATEEX]],
 		showNanoSpray                 = false,
 		sightDistance                 = 273,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
 		waterline                     = 0,
 		workerTime                    = Shared.FACTORY_BUILDPOWER,
 		yardMap                       = [[oooooo oooooo oooooo oooooo oooooo oooooo oooooo]],
-
 		featureDefs                   = {
-
 			DEAD = {
 				blocking         = true,
 				featureDead      = [[HEAP]],

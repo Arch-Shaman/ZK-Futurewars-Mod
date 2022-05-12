@@ -21,9 +21,8 @@ return {
 		collisionVolumeTest    = 1,
 		collisionVolumeType    = [[box]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
-			description_fr = [[Sous-Marin Artilleur]],
+			description_fr = [[Sous-Marin Artilleur]], -- TODO: Transfer this.
 			description_de = [[Scharfschützen U-Boot]],
 			description_pl = [[Lodz podwodna dalekiego zasiegu]],
 			helptext       = [[The Serpent is truly a nightmare, for its long-range, deadly accurate, high lethality heavy torpedoes can sink almost any ship in a few shots. It is however extremely expensive and not particularly agile.]],
@@ -35,14 +34,12 @@ return {
 			midposoffset   = [[0 -5 0]],
 			turnatfullspeed = [[1]],
 		},
-
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 3,
 		footprintZ             = 3,
 		iconType               = [[snipersub]],
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
-		mass                   = 457,
 		maxDamage              = 1000,
 		maxVelocity            = 1.4,
 		minCloakDistance       = 75,
@@ -57,16 +54,13 @@ return {
 		selfDestructAs         = [[BIG_UNITEX]],
 		side                   = [[ARM]],
 		sightDistance          = 660,
-		smoothAnim             = true,
+		smoothAnim             = true, -- what does this even do?
 		sonarDistance          = 300,
 		turninplace            = 0,
 		turnRate               = 250,
 		upright                = true,
 		waterline              = 45,
-		workerTime             = 0,
-
 		weapons                = {
-
 			{
 				def                = [[STANDOFF_TORPEDO]],
 				badTargetCategory  = [[FIXEDWING]],
@@ -77,7 +71,6 @@ return {
 
 		},
 		weaponDefs             = {
-
 			STANDOFF_TORPEDO = {
 				name                    = [[Long Range Torpedo]],
 				areaOfEffect            = 16,
@@ -94,7 +87,6 @@ return {
 				damage                  = {
 					default = 900.5,
 				},
-
 				explosionGenerator      = [[custom:serpent_hit]],
 				fireSubmersed           = true,
 				flightTime              = 20,
@@ -122,7 +114,6 @@ return {
 			},
 		},
 		featureDefs            = {
-
 			DEAD = {
 				description      = [[Wreckage - Serpent]],
 				blocking         = true,
@@ -156,6 +147,5 @@ return {
 			},
 
 		},
-
 	}
 }

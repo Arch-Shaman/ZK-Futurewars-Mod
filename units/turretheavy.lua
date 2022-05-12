@@ -3,9 +3,7 @@ return {
 		unitname                      = [[turretheavy]],
 		name                          = [[Desolator]],
 		description                   = [[Medium Range Defense Fortress - Power by connecting to a 50 energy grid]],
-		acceleration                  = 0,
 		activateWhenBuilt             = true,
-		brakeRate                     = 0,
 		buildCostMetal                = 1600,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -18,7 +16,6 @@ return {
 		collisionVolumeScales         = [[45 100 45]],
 		collisionVolumeType           = [[CylY]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			keeptooltip    = [[any string I want]],
 			neededlink     = 50,
@@ -31,7 +28,6 @@ return {
 			outline_y = 150,
 			outline_yoff = 47.5,
 		},
-
 		damageModifier                = 0.25,
 		explodeAs                     = [[ESTOR_BUILDING]],
 		footprintX                    = 3,
@@ -51,19 +47,15 @@ return {
 		onoffable                     = true,
 		script                        = [[turretheavy.lua]],
 		selfDestructAs                = [[ESTOR_BUILDING]],
-
 		sfxtypes            = {
 			explosiongenerators = {
 				[[custom:LARGE_MUZZLE_FLASH_FX]],
 			},
 		},
 		sightDistance                 = 763, -- Range*1.1 + 48 for radar overshoot
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
 		yardMap                       = [[ooo ooo ooo]],
 		weapons                       = {
-
 			{
 				def                = [[PLASMA]],
 				badTargetCategory  = [[FIXEDWING GUNSHIP]],
@@ -75,10 +67,7 @@ return {
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
 		},
-
-
 		weaponDefs                    = {
-
 			HEATRAY = {
 				name                    = [[Heat Ray]],
 				accuracy                = 512,
@@ -86,7 +75,6 @@ return {
 				coreThickness           = 0.5,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams              = {
 					light_camera_height = 2000,
 					light_color = [[0.9 0.4 0.12]],
@@ -96,11 +84,9 @@ return {
 					light_beam_mult_frames = 9,
 					light_beam_mult = 8,
 				},
-
 				damage                  = {
 					default = 51.1,
 				},
-
 				duration                = 0.3,
 				dynDamageExp            = 1,
 				dynDamageInverted       = false,
@@ -126,8 +112,6 @@ return {
 				weaponType              = [[LaserCannon]],
 				weaponVelocity          = 500,
 			},
-
-
 			PLASMA  = {
 				name                    = [[Heavy Plasma Cannon]],
 				areaOfEffect            = 192,
@@ -135,16 +119,13 @@ return {
 				burnBlow                = true,
 				craterBoost             = 0.7,
 				craterMult              = 1.2,
-
 				customParams            = {
 					light_color = [[2.2 1.6 0.9]],
 					light_radius = 550,
 				},
-
 				damage                  = {
-					default = 1201,
+					default = 1201.1,
 				},
-
 				edgeEffectiveness       = 0.7,
 				explosionGenerator      = [[custom:FLASHSMALLBUILDING]],
 				fireStarter             = 99,
@@ -163,10 +144,8 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 750,
 			},
-
 		},
 		featureDefs                   = {
-
 			DEAD = {
 				blocking         = true,
 				featureDead      = [[HEAP]],

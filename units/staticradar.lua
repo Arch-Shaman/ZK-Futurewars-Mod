@@ -3,9 +3,7 @@ return {
 		unitname                      = [[staticradar]],
 		name                          = [[Radar Tower]],
 		description                   = [[Early Warning System]],
-		acceleration                  = 0,
 		activateWhenBuilt             = true,
-		brakeRate                     = 0,
 		buildCostMetal                = 50,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -19,7 +17,6 @@ return {
 		collisionVolumeScales         = [[32 90 32]],
 		collisionVolumeType           = [[CylY]],
 		corpse                        = [[DEAD]],
-		
 		customParams = {
 			morphto        = [[staticheavyradar]],
 			morphtime      = 30,
@@ -35,7 +32,6 @@ return {
 			outline_sea_y = 160,
 			outline_sea_yoff = 20,
 		},
-  
 		energyUse                     = 0.5,
 		explodeAs                     = [[SMALL_BUILDINGEX]],
 		floater                       = true,
@@ -47,7 +43,6 @@ return {
 		levelGround                   = false,
 		maxDamage                     = 200,
 		maxSlope                      = 36,
-		maxVelocity                   = 0,
 		minCloakDistance              = 150,
 		noAutoFire                    = false,
 		objectName                    = [[ARADARLVL1.s3o]],
@@ -58,17 +53,12 @@ return {
 		selfDestructAs                = [[SMALL_BUILDINGEX]],
 		sightDistance                 = 600,
 		sonarDistance       		  = 600,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
 		yardMap                       = [[oooo]],
-  
 		sfxtypes               = {
-
 			explosiongenerators = {
 				[[custom:scanner_ping]]
 			},
-
 		},
 		featureDefs                   = {
 			DEAD  = {

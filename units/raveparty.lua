@@ -3,8 +3,6 @@ return {
 		unitname                      = [[raveparty]],
 		name                          = [[Disco Rave Party]],
 		description                   = [[Destructive Rainbow Projector]],
-		acceleration                  = 0,
-		brakeRate                     = 0,
 		buildCostMetal                = 60000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -37,7 +35,6 @@ return {
 		losEmitHeight                 = 100,
 		maxDamage                     = 16000,
 		maxSlope                      = 18,
-		maxVelocity                   = 0,
 		maxWaterDepth                 = 0,
 		noChaseCategory               = [[FIXEDWING LAND SHIP SATELLITE SWIM GUNSHIP SUB HOVER]],
 		objectName                    = [[raveparty.s3o]],
@@ -52,9 +49,7 @@ return {
 			},
 		},
 		sightDistance                 = 660,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
 		yardMap                       = [[ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo]],
 		weapons                       = {
 			{
@@ -117,7 +112,6 @@ return {
 				damage                  = {
 					default = 10000.1,
 				},
-
 				edgeeffectiveness       = 0.1,
 				explosionGenerator      = [[custom:nukebigland]],
 				impulseBoost            = 0,
@@ -164,7 +158,6 @@ return {
 				damage                  = {
 					default = 10.1,
 				},
-
 				edgeeffectiveness       = 0.1,
 				explosionGenerator      = [[custom:FLASHSMALLUNITEX]],
 				impulseBoost            = 0,
@@ -212,7 +205,6 @@ return {
 				damage                  = {
 					default = 6*3*(8*25),
 				},
-
 				edgeeffectiveness       = 0.1,
 				explosionGenerator      = [[custom:NONE]],
 				impulseBoost            = 0,
@@ -240,7 +232,6 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams        	  = {
 					numprojectiles1 = 15, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "raveparty_ruby_tritary",
@@ -258,11 +249,9 @@ return {
 					light_color = [[1.35 0.5 0.36]],
 					light_radius = 550,
 				},
-
 				damage                  = {
 					default = 151,
 				},
-
 				edgeeffectiveness       = 0.1,
 				explosionGenerator      = [[custom:NONE]],
 				impulseBoost            = 0,
@@ -374,17 +363,14 @@ return {
 				burnblow                = true,
 				craterBoost             = 1,
 				craterMult              = 2,
-
 				customParams        = {
 					light_camera_height = 1500,
 					light_color = [[0.9 0.3 0]],
 					light_radius = 40,
 				},
-				
 				damage                  = {
 					default = 300.1,
 				},
-
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = [[custom:DOT_Pillager_Explo]],
 				firestarter             = 70,
@@ -414,7 +400,6 @@ return {
 				avoidGround             = false,
 				craterBoost             = 0.5,
 				craterMult              = 1,
-
 				customParams = {
 					script_reload = [[6]],
 					lups_explodelife = 1.0,
@@ -429,7 +414,6 @@ return {
 					damage_vs_shield = 200,
 					singuimmune = 1,
 				},
-
 				damage                  = {
 					default = 401.1,
 				},
@@ -540,19 +524,16 @@ return {
 				craterBoost             = 0.25,
 				craterMult              = 0.5,
 				cegTag                  = [[drp_blue_trail]],
-
 				customParams = {
 					script_reload = [[6]],
 					singuimmune = 1,
 				},
-
 				damage                  = {
 				--[[ huge value to burst Funnelweb shields, since most of DRP's
 					power is in effects normally crappy vs them but we don't want
 					DRP to arbitrarily suck vs Funnel if the other supers don't ]]
 					default        = 30000,
 				},
-
 				edgeEffectiveness       = 0.75,
 				explosionGenerator      = [[custom:POWERPLANT_EXPLOSION]],
 				impulseBoost            = 0,
@@ -591,7 +572,6 @@ return {
 					shield_damage = 150,
 
 				},
-
 				damage                  = {
 					default = 200,
 				},
@@ -621,7 +601,6 @@ return {
 				avoidGround             = false,
 				craterBoost             = 0.25,
 				craterMult              = 0.5,
-
 				customparams = {
 					timeslow_damagefactor = 10,
 					nofriendlyfire = "needs hax",
@@ -644,11 +623,9 @@ return {
 					stats_shield_damage = (200 * 24) + 450.1,
 					singuimmune = 1,
 				},
-      
 				damage                  = {
 					default = 450.1,
 				},
-
 				edgeeffectiveness       = 0.8,
 				explosionGenerator      = [[custom:riotballplus2_purple]],
 				explosionScar           = false,
@@ -686,7 +663,6 @@ return {
 					light_radius = 220,
 					shield_damage = 150,
 				},
-
 				damage                  = {
 					default = 200,
 				},
@@ -707,7 +683,6 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 450,
 			},
-			
 			PURPLE_FRAGMENT_FAKE = {
 				name                    = [[Shield Buster Chaff]],
 				areaOfEffect            = 120,
@@ -731,7 +706,6 @@ return {
 					shield_damage = 200,
 					bogus = 1
 				},
-
 				damage                  = {
 					default = 0,
 				},
@@ -770,7 +744,6 @@ return {
 				damage                  = {
 					default = 10000.1,
 				},
-
 				edgeeffectiveness       = 0.1,
 				explosionGenerator      = [[custom:nukebigland]],
 				impulseBoost            = 0,
@@ -852,11 +825,9 @@ return {
 					stats_shield_damage = (200 * 24) + 450.1,
 					singuimmune = 1,
 				},
-      
 				damage                  = {
 					default = 450.1,
 				},
-
 				edgeeffectiveness       = 0.8,
 				explosionGenerator      = [[custom:NONE]],
 				explosionScar           = false,
@@ -877,7 +848,6 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 1100,
 			},
-			
 		},
 		featureDefs                   = {
 			DEAD  = {
@@ -887,7 +857,6 @@ return {
 				footprintZ       = 3,
 				object           = [[raveparty_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,

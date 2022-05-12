@@ -3,9 +3,7 @@ return {
 		unitname                      = [[mahlazer]],
 		name                          = [[Starlight]],
 		description                   = [[Planetary Energy Chisel]],
-		acceleration                  = 0,
 		activateWhenBuilt             = true,
-		brakeRate                     = 0,
 		buildCostMetal                = 60000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -34,7 +32,6 @@ return {
 		idleTime                      = 1800,
 		maxDamage                     = 10000,
 		maxSlope                      = 18,
-		maxVelocity                   = 0,
 		maxWaterDepth                 = 0,
 		noChaseCategory               = [[FIXEDWING LAND SHIP SATELLITE SWIM GUNSHIP SUB HOVER]],
 		objectName                    = [[starlight.dae]],
@@ -47,9 +44,7 @@ return {
 			},
 		},
 		sightDistance                 = 660,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
 		yardMap                       = [[oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo]],
 		weapons                       = {
 			{
@@ -67,7 +62,6 @@ return {
 			},
 		},
 		weaponDefs                    = {
-
 			TARGETER = {
 				name                    = [[Aimer (Fake)]],
 				alwaysVisible           = 18,
@@ -81,7 +75,6 @@ return {
 				customParams              = {
 					light_radius = 0,
 				},
-
 				damage                  = {
 					default = -0.00001,
 				},
@@ -196,7 +189,6 @@ return {
 			},
 		},
 		featureDefs                   = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],

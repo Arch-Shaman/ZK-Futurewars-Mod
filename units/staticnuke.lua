@@ -3,8 +3,6 @@ return {
 		unitname                      = [[staticnuke]],
 		name                          = [[Oblivion]],
 		description                   = [[MIRV Launcher, Drains 25 m/s, 4 minute stockpile]],
-		acceleration                  = 0,
-		brakeRate                     = 0,
 		buildCostMetal                = 8000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -17,7 +15,6 @@ return {
 		collisionVolumeScales         = [[90 55 115]],
 		collisionVolumeType           = [[box]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			stockpiletime  = [[240]],
 			stockpilecost  = [[6000]],
@@ -26,7 +23,6 @@ return {
 			outline_y = 195,
 			outline_yoff = 15,
 		},
-
 		explodeAs                     = [[ATOMIC_BLAST]],
 		footprintX                    = 6,
 		footprintZ                    = 8,
@@ -35,7 +31,6 @@ return {
 		idleTime                      = 1800,
 		maxDamage                     = 5000,
 		maxSlope                      = 18,
-		maxVelocity                   = 0,
 		maxWaterDepth                 = 0,
 		minCloakDistance              = 150,
 		noAutoFire                    = false,
@@ -43,22 +38,16 @@ return {
 		script                        = [[staticnuke.lua]],
 		selfDestructAs                = [[ATOMIC_BLAST]],
 		sightDistance                 = 660,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
 		workerTime                    = 0,
 		yardmap                       = [[oooooooooooooooooooooooooooooooooooooooooooooooo]],
-
 		weapons                       = {
-
 			{
 				def                = [[crblmssl]],
 				badTargetCategory  = [[SWIM LAND SHIP HOVER]],
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 			},
-
 		},
-
-
 		weaponDefs                    = {
 			warhead = {
 				name                    = [[Nuclear Warhead]],
@@ -132,8 +121,6 @@ return {
 					reaim_time = 60, -- Fast update not required (maybe dangerous)
 					light_color = [[2.92 2.64 1.76]],
 					light_radius = 3000,
-					
-					
 					stats_custom_tooltip_1 = " - Carries MIRV Warheads",
 					stats_custom_tooltip_entry_1 = "",
 					stats_custom_tooltip_2 = "    - Warhead Count:",
@@ -169,9 +156,7 @@ return {
 				weaponType              = [[StarburstLauncher]],
 				weaponVelocity          = 1100,
 			},
-			
 		},
-
 		featureDefs                   = {
 			DEAD  = {
 				blocking         = true,
@@ -180,7 +165,6 @@ return {
 				footprintZ       = 8,
 				object           = [[staticnuke_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 6,

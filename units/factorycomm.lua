@@ -1,7 +1,6 @@
 -- Idea shamelessly stolen from Tankium's More Units mod.
 -- TODO: 
 -- * Replace model at some point or get the weapons to actually work.\\
--- * Probably also replace the select sound.
 
 return {
 	factorycomm = {
@@ -51,7 +50,6 @@ return {
 				footprintZ       = 2,
 				object           = [[pw_dropfac_dead.dae]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,

@@ -11,7 +11,6 @@ return {
 		buildingGroundDecalSizeX      = 10,
 		buildingGroundDecalSizeY      = 10,
 		buildingGroundDecalType       = [[factoryamph_aoplane.dds]],
-
 		buildoptions     = {
 			[[amphcon]],
 			[[amphraid]],
@@ -25,7 +24,6 @@ return {
 			[[amphbomb]],
 			[[amphtele]],
 		},
-
 		buildPic         = [[factoryamph.png]],
 		canMove          = true,
 		canPatrol        = true,
@@ -60,7 +58,6 @@ return {
 			outline_y = 250,
 			outline_yoff = 5,
 		},
-
 		energyUse        = 0,
 		explodeAs        = [[LARGE_BUILDINGEX]],
 		footprintX       = 7,
@@ -80,9 +77,7 @@ return {
 		useBuildingGroundDecal = true,
 		workerTime       = Shared.FACTORY_BUILDPOWER,
 		yardMap          = [[ooooooo ooooooo ooooooo ccccccc ccccccc ccccccc ccccccc]],
-
 		featureDefs      = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -93,7 +88,6 @@ return {
 				collisionVolumeScales  = [[104 70 36]],
 				collisionVolumeType    = [[box]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 7,

@@ -3,8 +3,6 @@ return {
 		unitname                      = [[turretmissile]],
 		name                          = [[Mirador]],
 		description                   = [[Missile Barrage Tower]],
-		acceleration                  = 0,
-		brakeRate                     = 0,
 		buildCostMetal                = 140,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -17,7 +15,6 @@ return {
 		collisionVolumeScales         = [[24 70 24]],
 		collisionVolumeType           = [[CylY]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			aimposoffset   = [[0 20 0]],
 			bait_level_default = 0,
@@ -25,7 +22,6 @@ return {
 			outline_y = 70,
 			outline_yoff = 27.5,
 		},
-
 		explodeAs                     = [[BIG_UNITEX]],
 		floater                       = true,
 		footprintX                    = 2,
@@ -37,13 +33,11 @@ return {
 		losEmitHeight                 = 40,
 		maxDamage                     = 560,
 		maxSlope                      = 36,
-		maxVelocity                   = 0,
 		noAutoFire                    = false,
 		noChaseCategory               = [[FIXEDWING LAND SINK TURRET SHIP SATELLITE SWIM GUNSHIP FLOAT SUB HOVER]],
 		objectName                    = [[lmt2.s3o]],
 		script                        = [[turretmissile.lua]],
 		selfDestructAs                = [[BIG_UNITEX]],
-
 		sfxtypes                      = {
 			explosiongenerators = {
 				[[custom:PULVMUZZLE]],
@@ -51,11 +45,8 @@ return {
 			},
 		},
 		sightDistance                 = 800, -- Range*1.1 + 48 for radar overshoot
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
 		yardMap                       = [[oo oo]],
-
 		weapons                       = {
 			{
 				def                = [[MISSILE]],
@@ -63,9 +54,7 @@ return {
 				onlyTargetCategory = [[LAND SINK TURRET SHIP SWIM FLOAT HOVER]],
 			},
 		},
-
 		weaponDefs                    = {
-		
 			BOMBLET = {
 				name                    = [[Palvo Bomblet]],
 				areaOfEffect            = 96,
@@ -81,7 +70,6 @@ return {
 				damage                  = {
 					default = 40.01,
 				},
-
 				edgeEffectiveness		= 1/3,
 				explosionGenerator      = [[custom:STARFIRE]],
 				fireStarter             = 70,
@@ -118,7 +106,6 @@ return {
 				craterMult              = 0,
 				--avoidGround				= false,
 				avoidFeature			= false,
-
 				customParams        = {
 					burst = Shared.BURST_RELIABLE,
 					light_camera_height = 1600,
@@ -135,11 +122,9 @@ return {
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 					vradius1 = "-4,-1,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 				},
-
 				damage                  = {
 					default = 40.01*6,
 				},
-
 				fireStarter             = 70,
 				flightTime              = 8.45,
 				impulseBoost            = 0,

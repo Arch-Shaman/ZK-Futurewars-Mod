@@ -3,8 +3,6 @@ return {
 		unitname                      = [[platetank]],
 		name                          = [[Tank Plate]],
 		description                   = [[Parallel Unit Production]],
-		acceleration                  = 0,
-		brakeRate                     = 0,
 		buildCostMetal                = Shared.FACTORY_PLATE_COST,
 		buildDistance                 = Shared.FACTORY_PLATE_RANGE,
 		builder                       = true,
@@ -12,7 +10,6 @@ return {
 		buildingGroundDecalSizeX      = 11,
 		buildingGroundDecalSizeY      = 11,
 		buildingGroundDecalType       = [[platetank_aoplane.dds]],
-
 		buildoptions                  = {
 			[[tankcon]],
 			[[tankraid]],
@@ -24,7 +21,6 @@ return {
 			[[tankheavyarty]],
 			[[tankaa]],
 		},
-
 		buildPic                      = [[platetank.png]],
 		canMove                       = true,
 		canPatrol                     = true,
@@ -36,7 +32,6 @@ return {
 		selectionVolumeOffsets        = [[0 2 35]],
 		selectionVolumeScales         = [[80 40 120]],
 		selectionVolumeType           = [[box]],
-
 		customParams                  = {
 			sortName           = [[6]],
 			solid_factory      = [[4]],
@@ -51,7 +46,6 @@ return {
 			outline_y = 165,
 			outline_yoff = 27.5,
 		},
-
 		energyUse                     = 0,
 		explodeAs                     = [[FAC_PLATEEX]],
 		footprintX                    = 6,
@@ -62,7 +56,6 @@ return {
 		levelGround                   = false,
 		maxDamage                     = 3500,
 		maxSlope                      = 15,
-		maxVelocity                   = 0,
 		maxWaterDepth                 = 0,
 		moveState                     = 1,
 		noAutoFire                    = false,
@@ -71,7 +64,6 @@ return {
 		selfDestructAs                = [[FAC_PLATEEX]],
 		showNanoSpray                 = false,
 		sightDistance                 = 273,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
 		workerTime                    = Shared.FACTORY_BUILDPOWER,
 		yardMap                       = "oooooo oooooo oooooo oooooo yyyyyy yyyyyy yyyyyy yyyyyy",
@@ -98,7 +90,7 @@ return {
 				intensity               = 0.7,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 605,
+				range                   = 600,
 				reloadtime              = 5/30,
 				rgbColor                = [[1 0.95 0.4]],
 				separation              = 1.5,

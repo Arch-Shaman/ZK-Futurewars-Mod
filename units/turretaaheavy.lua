@@ -3,9 +3,7 @@ return {
 		unitname                      = [[turretaaheavy]],
 		name                          = [[Artemis]],
 		description                   = [[Very Long-Range Anti-Air Missile Tower, Drains 4 m/s 20 second stockpile.]],
-		acceleration                  = 0,
 		activateWhenBuilt             = true,
-		brakeRate                     = 0,
 		buildCostMetal                = 2400,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -18,7 +16,6 @@ return {
 		collisionVolumeScales         = [[74 74 74]],
 		collisionVolumeType           = [[ellipsoid]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			bait_level_default = 2,
 			modelradius    = [[37]],
@@ -28,7 +25,6 @@ return {
 			dontfireatradarcommand = '0',
 			okp_damage = 1600,
 		},
-
 		explodeAs                     = [[ESTOR_BUILDING]],
 		footprintX                    = 4,
 		footprintZ                    = 4,
@@ -37,7 +33,6 @@ return {
 		idleTime                      = 1800,
 		maxDamage                     = 3200,
 		maxSlope                      = 18,
-		maxVelocity                   = 0,
 		maxWaterDepth                 = 0,
 		noAutoFire                    = false,
 		objectName                    = [[SCREAMER.s3o]],
@@ -45,9 +40,7 @@ return {
 		script                        = [[turretaaheavy.lua]],
 		selfDestructAs                = [[ESTOR_BUILDING]],
 		sightDistance                 = 660,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
 		yardMap                       = [[oooooooooooooooo]],
 		weapons                       = {
 			{

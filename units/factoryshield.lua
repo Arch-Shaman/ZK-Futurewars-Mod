@@ -3,8 +3,6 @@ return {
 		unitname                      = [[factoryshield]],
 		name                          = [[Shieldbot Factory]],
 		description                   = [[Produces Tough, Shielded Robots]],
-		acceleration                  = 0,
-		brakeRate                     = 0,
 		buildCostMetal                = Shared.FACTORY_COST,
 		buildDistance                 = Shared.FACTORY_PLATE_RANGE,
 		builder                       = true,
@@ -12,7 +10,6 @@ return {
 		buildingGroundDecalSizeX      = 12,
 		buildingGroundDecalSizeY      = 12,
 		buildingGroundDecalType       = [[factoryshield_aoplane.dds]],
-
 		buildoptions                  = {
 			[[shieldcon]],
 			[[shieldscout]],
@@ -31,7 +28,6 @@ return {
 		canPatrol                     = true,
 		category                      = [[SINK UNARMED]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			sortName          = [[1]],
 			midposoffset      = [[0 0 -24]],
@@ -45,7 +41,6 @@ return {
 			outline_y = 250,
 			outline_yoff = 5,
 		},
-
 		energyUse                     = 0,
 		explodeAs                     = [[LARGE_BUILDINGEX]],
 		footprintX                    = 7,
@@ -55,7 +50,6 @@ return {
 		idleTime                      = 1800,
 		maxDamage                     = 4000,
 		maxSlope                      = 15,
-		maxVelocity                   = 0,
 		maxWaterDepth                 = 0,
 		minCloakDistance              = 150,
 		moveState                     = 1,
@@ -65,7 +59,6 @@ return {
 		selfDestructAs                = [[LARGE_BUILDINGEX]],
 		showNanoSpray                 = false,
 		sightDistance                 = 273,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
 		workerTime                    = Shared.FACTORY_BUILDPOWER,
 		yardMap                       = [[ooooooo occccco occccco occccco occccco occccco yyyyyyy yyyyyyy yyyyyyy]],

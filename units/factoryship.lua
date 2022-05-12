@@ -3,12 +3,9 @@ return {
 		unitname               = [[factoryship]],
 		name                   = [[Shipyard]],
 		description            = [[Produces Naval Units]],
-		acceleration           = 0,
-		brakeRate              = 0,
 		buildCostMetal         = Shared.FACTORY_COST,
 		buildDistance          = Shared.FACTORY_PLATE_RANGE,
 		builder                = true,
-
 		buildoptions           = {
 			[[shipcon]],
 			[[shipscout]],
@@ -22,7 +19,6 @@ return {
 			[[shipcarrier]],
 			[[shipheavyarty]],
 		},
-
 		buildPic               = [[FACTORYSHIP.png]],
 		canMove                = true,
 		canPatrol              = true,
@@ -34,7 +30,6 @@ return {
 		selectionVolumeScales  = [[130 50 184]],
 		selectionVolumeType    = [[box]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			sortName       = [[7]],
 			unstick_help   = 1,
@@ -53,7 +48,6 @@ return {
 			outline_y = 340,
 			outline_yoff = 25,
 		},
-
 		energyUse              = 0,
 		explodeAs              = [[LARGE_BUILDINGEX]],
 		footprintX             = 8,
@@ -63,7 +57,6 @@ return {
 		idleTime               = 1800,
 		maxDamage              = 6000,
 		maxSlope               = 15,
-		maxVelocity            = 0,
 		minCloakDistance       = 150,
 		minWaterDepth          = 15,
 		moveState              = 1,
@@ -72,7 +65,6 @@ return {
 		selfDestructAs         = [[LARGE_BUILDINGEX]],
 		showNanoSpray          = false,
 		sightDistance          = 273,
-		turnRate               = 0,
 		waterline              = 0,
 		workerTime             = Shared.FACTORY_BUILDPOWER,
 		yardMap                = [[oocccccc oocccccc oocccccc oocccccc oocccccc oocccccc oocccccc oocccccc oocccccc oocccccc oocccccc oocccccc]],

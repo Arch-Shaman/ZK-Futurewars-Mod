@@ -13,14 +13,12 @@ unitDef = {
 	collisionVolumeOffsets        = [[0 15 0]],
 	collisionVolumeScales         = [[20 60 20]],
 	collisionVolumeType	        = [[CylY]],
-
 	customParams                  = {
 		mobilebuilding = [[1]],
 		outline_x = 55,
 		outline_y = 80,
 		outline_yoff = 55,
 	},
-
 	explodeAs                     = [[WEAPON]],
 	footprintX                    = 1,
 	footprintZ                    = 1,
@@ -48,7 +46,6 @@ unitDef = {
 			onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP]],
 		},
 	},
-
 	weaponDefs                    = {
 		SECONDARY = {
 			name 			= "Fireball",
@@ -89,7 +86,6 @@ unitDef = {
 			weaponType              = [[Cannon]],
 			weaponVelocity          = 320,
 		},
-
 		WEAPON = {
 			name                    = [[Napalm Missile]],
 			cegTag                  = [[napalmtrail]],
@@ -99,7 +95,6 @@ unitDef = {
 			collideFriendly         = false,
 			craterBoost             = 0,
 			craterMult              = 0,
-
 			customParams        	  = {
 				numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 				projectile1 = "napalmmissile_weapon2",
@@ -118,20 +113,15 @@ unitDef = {
 				burntime = 90,
 				cruisealt = 1300,
 				cruisedist = 400,
-
 				restrict_in_widgets = 1,
-
 				stats_hide_dps = 1, -- one use
 				stats_hide_reload = 1,
-
 				light_color = [[1.35 0.5 0.36]],
 				light_radius = 550,
 			},
-
 			damage                  = {
 				default = 151,
 			},
-
 			edgeEffectiveness       = 0.4,
 			--explosionGenerator      = [[custom:napalm_missile]],
 			fireStarter             = 220,
@@ -153,7 +143,6 @@ unitDef = {
 			weaponType              = [[StarburstLauncher]],
 			weaponVelocity          = 1200,
 		},
-	
 		WEAPON2 = {
 			name                    = [[Incendiary Warhead]],
 			cegTag                  = [[napalmtrail]],
@@ -163,7 +152,6 @@ unitDef = {
 			collideFriendly         = false,
 			craterBoost             = 4,
 			craterMult              = 3.5,
-
 			customParams        	  = {
 				numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 				projectile1 = "napalmmissile_secondary",
@@ -180,7 +168,6 @@ unitDef = {
 				useheight = 1,
 				setunitsonfire = "1",
 				burntime = 90,
-
 				restrict_in_widgets = 1,
 				reveal_unit = 3,
 				stats_hide_dps = 1, -- one use
@@ -188,11 +175,9 @@ unitDef = {
 				light_color = [[1.35 0.5 0.36]],
 				light_radius = 550,
 			},
-
 			damage                  = {
 				default = 151,
 			},
-
 			edgeEffectiveness       = 0.4,
 			--explosionGenerator      = [[custom:napalm_missile]],
 			fireStarter             = 220,

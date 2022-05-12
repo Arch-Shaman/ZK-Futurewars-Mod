@@ -3,7 +3,6 @@ return {
 		unitname                      = [[zenith]],
 		name                          = [[Zenith]],
 		description                   = [[Meteor Controller]],
-		acceleration                  = 0,
 		activateWhenBuilt             = true,
 		buildCostMetal                = 50000,
 		builder                       = false,
@@ -17,7 +16,6 @@ return {
 		collisionVolumeScales         = [[90 194 90]],
 		collisionVolumeType           = [[cylY]],
 		corpse                        = [[DEAD]],
-  
 		customParams                  = {
 			--keeptooltip = [[any string I want]],
 			neededlink  = 750,
@@ -36,7 +34,6 @@ return {
 		idleTime                      = 1800,
 		maxDamage                     = 12000,
 		maxSlope                      = 18,
-		maxVelocity                   = 0,
 		maxWaterDepth                 = 0,
 		noChaseCategory               = [[FIXEDWING GUNSHIP SUB STUPIDTARGET]],
 		objectName                    = [[zenith.s3o]],
@@ -44,18 +41,15 @@ return {
 		script                        = [[zenith.lua]],
 		selfDestructAs                = [[ATOMIC_BLAST]],
 		sightDistance                 = 660,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
 		workerTime                    = 0,
 		yardMap                       = [[oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo]],
-
 		weapons                       = {
 			{
 				def                = [[METEOR]],
 				badTargetCateogory = [[MOBILE]],
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP]],
 			},
-
 			{
 				def                = [[GRAVITY_NEG]],
 				onlyTargetCategory = [[NONE]],
@@ -76,12 +70,10 @@ return {
 					reveal_unit = 20,
 					singuimmune = 1,
 				},
-
 				damage                  = {
 					default = 0.001,
 					planes  = 0.001,
 				},
-
 				duration                = 0.9,
 				explosionGenerator      = [[custom:NONE]],
 				impactOnly              = true,
@@ -116,7 +108,6 @@ return {
 				collideFriendly         = true,
 				craterBoost             = 100,
 				craterMult              = 20,
-
 				customParams              = {
 					light_color = [[2.4 1.5 0.6]],
 					light_radius = 600,
@@ -143,11 +134,9 @@ return {
 					cruise_nolock = 1,
 					cruiserandomradius = 1200,
 				},
-
 				damage                  = {
 					default = 14000,
 				},
-
 				edgeEffectiveness       = 0.8,
 				explosionGenerator      = [[custom:big_meteor_smash]],
 				fireStarter             = 70,
@@ -203,7 +192,6 @@ return {
 				damage                  = {
 					default = 0,
 				},
-
 				--explosionGenerator      = [[custom:smr_big]],
 				model                   = [[asteroid.s3o]],
 				firestarter             = 180,
@@ -280,7 +268,6 @@ return {
 				craterBoost             = 1,
 				craterMult              = 2,
 				customParams              = {
-
 					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "zenith_fragment_secondary_fragment",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
@@ -296,7 +283,6 @@ return {
 				damage                  = {
 					default = 0,
 				},
-
 				firestarter             = 180,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
@@ -334,7 +320,6 @@ return {
 				damage                  = {
 					default = 560,
 				},
-
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
 				firestarter             = 180,
 				impulseBoost            = 0,
@@ -353,7 +338,6 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 320,
 			},
-
 			METEOR_AIM      = {
 				name                    = [[Meteor]],
 				accuracy                = 700,
@@ -366,17 +350,14 @@ return {
 				collideFriendly         = true,
 				craterBoost             = 3,
 				craterMult              = 6,
-
 				customParams              = {
 					light_radius = 0,
 					--spawns_name = "asteroid_dead",
 					--spawns_feature = 1,
 				},
-
 				damage                  = {
 					default = 1600,
 				},
-
 				edgeEffectiveness       = 0.8,
 				explosionGenerator      = [[custom:av_tess]],
 				fireStarter             = 70,
@@ -396,7 +377,6 @@ return {
 					[[null]],
 					[[null]],
 				},
-
 				tracks                  = true,
 				turret                  = true,
 				turnRate                = 25000,
@@ -427,7 +407,6 @@ return {
 				damage                  = {
 					default = 1600,
 				},
-
 				edgeEffectiveness       = 0.8,
 				explosionGenerator      = [[custom:av_tess]],
 				fireStarter             = 70,
@@ -447,7 +426,6 @@ return {
 					[[null]],
 					[[null]],
 				},
-
 				tracks                  = true,
 				trajectoryHeight        = 0,
 				turret                  = true,
@@ -457,7 +435,6 @@ return {
 				weaponVelocity          = 200,
 				wobble                  = 30000,
 			},
-
 			METEOR_UNCONTROLLED      = {
 				name                    = [[Asteroid]],
 				accuracy                = 700,
@@ -470,7 +447,6 @@ return {
 				collideFriendly         = true,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams              = {
 					light_color = [[2.4 1.5 0.6]],
 					light_radius = 600,
@@ -492,11 +468,9 @@ return {
 					stats_damage = 3000,
 					shield_damage = 8000,
 				},
-
 				damage                  = {
 					default = 8000,
 				},
-
 				edgeEffectiveness       = 0.8,
 				explosionGenerator      = [[custom:big_av_tess]],
 				fireStarter             = 70,

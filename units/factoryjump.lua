@@ -3,8 +3,6 @@ return {
 		unitname                      = [[factoryjump]],
 		name                          = [[Jumpbot Factory]],
 		description                   = [[Produces Jumpjet Equipped Robots]],
-		acceleration                  = 0,
-		brakeRate                     = 0,
 		buildCostMetal                = Shared.FACTORY_COST,
 		buildDistance                 = Shared.FACTORY_PLATE_RANGE,
 		builder                       = true,
@@ -12,7 +10,6 @@ return {
 		buildingGroundDecalSizeX      = 10,
 		buildingGroundDecalSizeY      = 10,
 		buildingGroundDecalType       = [[factoryjump_aoplane.dds]],
-
 		buildoptions                  = {
 			[[jumpcon]],
 			[[jumpscout]],
@@ -25,7 +22,6 @@ return {
 			[[jumpaa]],
 			[[jumpbomb]],
 		},
-
 		buildPic                      = [[factoryjump.png]],
 		canMove                       = true,
 		canPatrol                     = true,
@@ -37,7 +33,6 @@ return {
 		selectionVolumeScales         = [[104 70 100]],
 		selectionVolumeType           = [[box]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			aimposoffset   = [[0 0 -38]],
 			midposoffset   = [[0 0 -10]],
@@ -55,7 +50,6 @@ return {
 			outline_y = 250,
 			outline_yoff = 5,
 		},
-
 		energyUse                     = 0,
 		explodeAs                     = [[LARGE_BUILDINGEX]],
 		footprintX                    = 7,
@@ -65,7 +59,6 @@ return {
 		idleTime                      = 1800,
 		maxDamage                     = 4000,
 		maxSlope                      = 15,
-		maxVelocity                   = 0,
 		maxWaterDepth                 = 0,
 		minCloakDistance              = 150,
 		moveState                     = 1,
@@ -75,13 +68,10 @@ return {
 		selfDestructAs                = [[LARGE_BUILDINGEX]],
 		showNanoSpray                 = false,
 		sightDistance                 = 273,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
 		workerTime                    = Shared.FACTORY_BUILDPOWER,
 		yardMap                       = [[ooooooo ooooooo ooooooo ccccccc ccccccc ccccccc ccccccc]],
-
 		featureDefs                   = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -92,16 +82,12 @@ return {
 				collisionVolumeScales         = [[104 70 40]],
 				collisionVolumeType           = [[box]],
 			},
-
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 5,
 				footprintZ       = 5,
 				object           = [[debris4x4c.s3o]],
 			},
-
 		},
-
 	} 
 }

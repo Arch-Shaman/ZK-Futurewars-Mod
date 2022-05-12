@@ -3,8 +3,6 @@ return {
 		unitname                      = [[turretheavylaser]],
 		name                          = [[Rampart]],
 		description                   = [[Medium Range Plasma Bombarder (Needs Grid: 8E)]],
-		acceleration                  = 0,
-		brakeRate                     = 0,
 		buildCostMetal                = 500,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -17,14 +15,12 @@ return {
 		collisionVolumeScales         = [[36 110 36]],
 		collisionVolumeType           = [[CylY]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			aimposoffset   = [[0 15 0]],
 			keeptooltip = [[any string i want]],
 			neededlink  = 9,
 			pylonrange  = 150,
 		},
-
 		explodeAs                     = [[MEDIUM_BUILDINGEX]],
 		floater                       = true,
 		footprintX                    = 3,
@@ -36,7 +32,6 @@ return {
 		losEmitHeight                 = 80,
 		maxDamage                     = 3000,
 		maxSlope                      = 36,
-		maxVelocity                   = 0,
 		minCloakDistance              = 150,
 		noAutoFire                    = false,
 		noChaseCategory               = [[FIXEDWING LAND SHIP SATELLITE SWIM GUNSHIP SUB HOVER]],
@@ -50,18 +45,15 @@ return {
 			},
 		},
 		sightDistance                 = 796, -- Range*1.1 + 48 for radar overshoot
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
 		workerTime                    = 0,
 		yardMap                       = [[ooo ooo ooo]],
 		weapons                       = {
-
 			{
 				def                = [[LASER]],
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-
 		},
 		weaponDefs                    = {
 			LASER = {
@@ -76,7 +68,7 @@ return {
 					burst = Shared.BURST_UNRELIABLE,
 				},
 				damage                  = {
-					default = 160,
+					default = 160.1,
 				},
 				explosionGenerator      = [[custom:TESS]],
 				impulseBoost            = 0,
@@ -92,12 +84,8 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 740,
 			},
-
 		},
-
-
 		featureDefs                   = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -111,8 +99,6 @@ return {
 				footprintZ       = 3,
 				object           = [[debris3x3a.s3o]],
 			},
-
 		},
-
 	} 
 }

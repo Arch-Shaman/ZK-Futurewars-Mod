@@ -2,8 +2,6 @@ return { turretaaflak = {
 		unitname                      = [[turretaaflak]],
 		name                          = [[Thresher]],
 		description                   = [[Flak Canister AAA]],
-		acceleration                  = 0,
-		brakeRate                     = 0,
 		buildCostMetal                = 650,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -16,11 +14,9 @@ return { turretaaflak = {
 		collisionVolumeScales         = [[50 86 50]],
 		collisionVolumeType	        = [[CylY]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			aimposoffset   = [[0 16 0]],
 		},
-
 		explodeAs                     = [[MEDIUM_BUILDINGEX]],
 		floater                       = true,
 		footprintX                    = 3,
@@ -31,7 +27,6 @@ return { turretaaflak = {
 		levelGround                   = false,
 		maxDamage                     = 3000,
 		maxSlope                      = 18,
-		maxVelocity                   = 0,
 		maxWaterDepth                 = 5000,
 		minCloakDistance              = 150,
 		noAutoFire                    = false,
@@ -39,31 +34,22 @@ return { turretaaflak = {
 		objectName                    = [[corflak.s3o]],
 		script                        = [[turretaaflak.lua]],
 		selfDestructAs                = [[MEDIUM_BUILDINGEX]],
-
 		sfxtypes               = {
-
-		explosiongenerators = {
+			explosiongenerators = {
 				[[custom:heavy_cannon_muzzle]],
 			},
 		},
 		sightDistance                 = 660,
-		turnRate                      = 0,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
 		yardMap                       = [[ooo ooo ooo]],
-
 		weapons                       = {
 			{
 				def                = [[ARMFLAK_GUN]],
 				--badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING GUNSHIP]],
 			},
-
 		},
-
-
 		weaponDefs                    = {
-
 			ARMFLAK_GUN = {
 				name                    = [[Flak Canister]],
 				areaOfEffect            = 0,
@@ -73,7 +59,6 @@ return { turretaaflak = {
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting       = 1,
-
 				customParams        	  = {
 					reaim_time = 8, -- COB
 					isaa = [[1]],
@@ -89,7 +74,6 @@ return { turretaaflak = {
 					proxy = 1, -- check for nearby units?
 					damage_vs_shield = [[200]],
 				},
-
 				damage  = {
 					default = 5*4,
 					planes  = 100*4,
@@ -114,7 +98,6 @@ return { turretaaflak = {
 				weaponVelocity          = 1200,
 				--coverage = 2200,
 			},
-	
 			TRITARY = {
 				name                    = [[Flechette]],
 				cegTag                  = [[flak_trail]],
@@ -122,7 +105,6 @@ return { turretaaflak = {
 				coreThickness           = 0.5,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams            = {
 					light_camera_height = 2000,
 					light_color = [[1 0.2 0.2]],
@@ -132,7 +114,6 @@ return { turretaaflak = {
 					isFlak = 3,
 					flaktime = -25,
 				},
-
 				damage = {
 					default = 5,
 					planes  = 100,
@@ -161,10 +142,8 @@ return { turretaaflak = {
 				weaponVelocity          = 880,
 				--coverage = 1000,
 			},
-
 		},
 		featureDefs                   = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -172,16 +151,12 @@ return { turretaaflak = {
 				footprintZ       = 3,
 				object           = [[corflak_dead.s3o]],
 			},
-
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,
 				footprintZ       = 3,
 				object           = [[debris3x3a.s3o]],
 			},
-
 		},
-
 	}
 }
