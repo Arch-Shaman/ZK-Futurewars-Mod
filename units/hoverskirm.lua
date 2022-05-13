@@ -3,7 +3,7 @@ return {
 		unitname            = [[hoverskirm]],
 		name                = [[Pike]],
 		description         = [[Sonic Assault/Riot Hovercraft]],
-		acceleration        = 0.04,
+		acceleration        = 0.035,
 		activateWhenBuilt   = true,
 		brakeRate           = 0.15,
 		buildCostMetal      = 325,
@@ -14,14 +14,12 @@ return {
 		canPatrol           = true,
 		category            = [[HOVER]],
 		corpse              = [[DEAD]],
-
 		customParams        = {
 			modelradius    = [[25]],
 			nanoregen = 10,
 			nano_maxregen = 6.6,
 			bait_level_default = 1,
 		},
-
 		explodeAs           = [[BIG_UNITEX]],
 		footprintX          = 3,
 		footprintZ          = 3,
@@ -30,7 +28,7 @@ return {
 		idleTime            = 1800,
 		maxDamage           = 2000,
 		maxSlope            = 36,
-		maxVelocity         = 4.8,
+		maxVelocity         = 4.5,
 		movementClass       = [[HOVER3]],
 		noAutoFire          = false,
 		noChaseCategory     = [[TERRAFORM FIXEDWING SATELLITE SUB]],
