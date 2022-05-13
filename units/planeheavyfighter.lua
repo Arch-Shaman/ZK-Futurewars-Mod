@@ -79,18 +79,15 @@ local unitDef = {
 			colormap                = [[1 0.95 0.4 1   1 0.95 0.4 1    0 0 0 0.01    1 0.7 0.2 1]],
 			craterBoost             = 0,
 			craterMult              = 0,
-
 			customParams        = {
 				light_camera_height = 1200,
 				light_color = [[0.8 0.76 0.38]],
 				light_radius = 120,
 				antibaitbypass = "ärsytät minua",
 			},
-
 			damage                  = {
 				default = 8.1,
 			},
-
 			explosionGenerator      = [[custom:FLASHPLOSION]],
 			impactOnly              = true,
 			impulseBoost            = 0,
@@ -133,8 +130,7 @@ local unitDef = {
 				script_burst = [[4]],
 			},
 			damage                  = {
-				default = 26.1,
-				planes  = 260.1,
+				default = 260.1,
 			},
 			explosionGenerator      = [[custom:sonic]],
 			fireStarter             = 70,

@@ -16,7 +16,6 @@ return {
 		collisionVolumeScales  = [[18 20 40]],
 		collisionVolumeType    = [[box]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			modelradius    = [[9]],
 			bait_level_default = 0,
@@ -24,7 +23,6 @@ return {
 			outline_y = 80,
 			outline_yoff = 12.5,
 		},
-
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 3,
 		footprintZ             = 3,
@@ -44,9 +42,7 @@ return {
 		objectName             = [[vehaa.s3o]],
 		script                 = [[vehaa.lua]],
 		selfDestructAs         = [[BIG_UNITEX]],
-  
 		sfxtypes               = {
-
 			explosiongenerators = {
 				[[custom:rapiermuzzle]],
 				[[custom:STORMBACK]],
@@ -62,14 +58,11 @@ return {
 		turnRate               = 1044,
 		upright                = false,
 		workerTime             = 0,
-
 		weapons                       = {
-
 			{
 				def                = [[MISSILE]],
 				onlyTargetCategory = [[FIXEDWING GUNSHIP]],
 			},
-
 		},
 		weaponDefs                    = {
 			MISSILE = {
@@ -86,12 +79,9 @@ return {
 					light_color = [[0.5 0.6 0.6]],
 					timeslow_damagefactor = 0.5,
 				},
-
 				damage                  = {
-					default = 50.01,
-					planes  = 500.1,
+					default = 500.1,
 				},
-				
 				edgeeffectiveness		= 0.2,
 				explosionGenerator      = [[custom:riotballplus2_purple_small_darker]],
 				fixedlauncher           = true,
@@ -120,7 +110,6 @@ return {
 			},
 		},
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = true,
 				collisionVolumeOffsets = [[0 0 0]],
@@ -137,8 +126,6 @@ return {
 				footprintZ       = 2,
 				object           = [[debris2x2a.s3o]],
 			},
-
 		},
-
 	} 
 }

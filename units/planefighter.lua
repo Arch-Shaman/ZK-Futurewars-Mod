@@ -21,7 +21,6 @@ local unitDef = {
 	corpse                 = [[DEAD]],
 	crashDrag              = 0.01,
 	cruiseAlt              = 350,
-
 	customParams           = {
 		--specialreloadtime = [[850]],
 		--boost_speed_mult = 5,
@@ -39,7 +38,6 @@ local unitDef = {
 		outline_y = 85,
 		outline_yoff = 16,
 	},
-
 	explodeAs              = [[GUNSHIPEX]],
 	fireState              = 2,
 	floater                = true,
@@ -60,16 +58,13 @@ local unitDef = {
 	objectName             = [[fighter.s3o]],
 	script                 = [[planefighter.lua]],
 	selfDestructAs         = [[GUNSHIPEX]],
-
 	sfxtypes               = {
-
 		explosiongenerators = {
 			[[custom:MUZZLE_ORANGE]],
 			[[custom:FF_PUFF]],
 			[[custom:BEAMWEAPON_MUZZLE_RED]],
 			[[custom:FLAMER]],
 		},
-
 	},
 	sightDistance          = 660,
 	speedToFront           = 0,
@@ -100,17 +95,14 @@ local unitDef = {
 			colormap                = [[1 0.95 0.4 1   1 0.95 0.4 1    0 0 0 0.01    1 0.7 0.2 1]],
 			craterBoost             = 0,
 			craterMult              = 0,
-
 			customParams        = {
 				light_camera_height = 1200,
 				light_color = [[0.8 0.76 0.38]],
 				light_radius = 120,
 			},
-
 			damage                  = {
 				default = 4,
 			},
-
 			explosionGenerator      = [[custom:FLASHPLOSION]],
 			impactOnly              = true,
 			impulseBoost            = 0,
@@ -142,7 +134,6 @@ local unitDef = {
 			avoidGround             = false,
 			craterBoost             = 1,
 			craterMult              = 2,
-
 			customParams            = {
 				burst = Shared.BURST_RELIABLE,
 				isFlak = 3,
@@ -150,7 +141,6 @@ local unitDef = {
 				reaim_time = 8, -- COB
 				light_color = [[1.4 0.8 0.3]],
 			},
-
 			damage                  = {
 				default = 60.1,
 			},
@@ -172,7 +162,6 @@ local unitDef = {
 			weaponType              = [[Cannon]],
 			weaponVelocity          = 330,
 		},
-
 		MISSILE_AG = {
 			burst = 2,
 			burstRate = 0.5,
@@ -185,13 +174,11 @@ local unitDef = {
 			craterBoost             = 1,
 			craterMult              = 2,
 			--cylinderTargeting       = 6,
-
 			customParams        	  = {
 				burst = Shared.BURST_RELIABLE,
 				light_color = [[0.5 0.6 0.6]],
 				reaim_time = 60, -- Fast update not required (maybe dangerous)
 				--CAS--
-
 				numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 				projectile1 = "planefighter_ag",
 				--spreadradius1 = 6, -- used in clusters. OPTIONAL. Default: 100.
@@ -206,11 +193,9 @@ local unitDef = {
 				--proxy = 1, -- check for nearby units?
 				--proxydist = 100, -- how far to check for units? Default: spawndist
 			},
-
 			damage                  = {
 				default = 60.1*3,
 			},
-
 			edgeEffectiveness		= 0.2,
 			explosionGenerator      = [[custom:WEAPEXP_PUFF]],
 			fireStarter             = 70,
@@ -218,7 +203,6 @@ local unitDef = {
 			impulseBoost            = 0,
 			impulseFactor           = 0.4,
 			interceptedByShieldType = 2,
-			metalpershot            = 0,
 			model                   = [[wep_m_avalanche.s3o]],
 			noSelfDamage            = true,
 			range                   = 700,
@@ -235,7 +219,6 @@ local unitDef = {
 			weaponType              = [[MissileLauncher]],
 			weaponVelocity          = 350,
 		},
-
 		AA = {
 			burst = 2,
 			burstRate = 0.5,
@@ -248,7 +231,6 @@ local unitDef = {
 			craterBoost             = 1,
 			craterMult              = 2,
 			--cylinderTargeting       = 6,
-
 			customParams        	  = {
 				burst = Shared.BURST_RELIABLE,
 				isaa = [[1]],
@@ -259,12 +241,9 @@ local unitDef = {
 				--proxydist = 100, -- how far to check for units? Default: spawndist
 				--damage_vs_shield = [[475]],
 			},
-
 			damage                  = {
-				default = 15.1,
-				planes  = 150,
+				default = 150.1,
 			},
-
 			explosionGenerator      = [[custom:WEAPEXP_PUFF]],
 			fireStarter             = 70,
 			flightTime              = 15,
@@ -287,7 +266,6 @@ local unitDef = {
 			weaponType              = [[MissileLauncher]],
 			weaponVelocity          = 850,
 		},
-	
 		MISSILE_AA = {
 			burst = 2,
 			burstRate = 0.5,
@@ -300,7 +278,6 @@ local unitDef = {
 			craterBoost             = 1,
 			craterMult              = 2,
 			--cylinderTargeting       = 6,
-
 			customParams        	  = {
 				burst = Shared.BURST_RELIABLE,
 				isaa = [[1]],
@@ -322,10 +299,8 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 18.0,
-				planes  = 180.1,
+				default = 180.1,
 			},
-
 			explosionGenerator      = [[custom:WEAPEXP_PUFF]],
 			fireStarter             = 70,
 			flightTime              = 7,
@@ -349,12 +324,8 @@ local unitDef = {
 			weaponType              = [[MissileLauncher]],
 			weaponVelocity          = 550,
 		},
-
 	},
-
-
 	featureDefs            = {
-
 		DEAD  = {
 			blocking         = true,
 			featureDead      = [[HEAP]],
@@ -362,17 +333,12 @@ local unitDef = {
 			footprintZ       = 2,
 			object           = [[fighter_dead.s3o]],
 		},
-
-
 		HEAP  = {
 		  blocking         = false,
 		  footprintX       = 2,
 		  footprintZ       = 2,
 		  object           = [[debris2x2c.s3o]],
 		},
-
 	},
-
 }
-
 return { planefighter = unitDef }

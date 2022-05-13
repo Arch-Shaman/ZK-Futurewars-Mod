@@ -62,7 +62,6 @@ return {
 			},
 		},
 		weaponDefs             = {
-
 			ARMKBOT_MISSILE = {
 				name                    = [[Homing Missiles]],
 				areaOfEffect            = 48,
@@ -71,7 +70,6 @@ return {
 				craterBoost             = 1,
 				craterMult              = 2,
 				cylinderTargeting       = 1,
-
 				customParams              = {
 					burst = Shared.BURST_RELIABLE,
 					disarmDamageMult = 1.33,
@@ -81,10 +79,8 @@ return {
 					light_color = [[0.5 0.6 0.6]],
 					light_radius = 380,
 				},
-
 				damage                  = {
-					default = 15.0,
-					planes  = 150.1,
+					default = 150.1,
 				},
 				explosionGenerator      = [[custom:mixed_white_lightning_bomb_small]],
 				fireStarter             = 70,
@@ -131,9 +127,7 @@ return {
 				weaponType              = [[Shield]],
 			},
 		},
-
 		featureDefs            = {
-
 			DEAD = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -141,15 +135,12 @@ return {
 				footprintZ       = 2,
 				object           = [[crasher_dead.s3o]],
 			},
-
 			HEAP = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
 				object           = [[debris2x2a.s3o]],
 			},
-
 		},
-
 	}
 }

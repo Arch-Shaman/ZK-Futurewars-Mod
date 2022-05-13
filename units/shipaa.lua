@@ -24,7 +24,6 @@ return {
 			outline_y = 160,
 			outline_yoff = 25,
 		},
-
 		explodeAs              = [[BIG_UNITEX]],
 		floater                = true,
 		footprintX             = 4,
@@ -60,8 +59,6 @@ return {
 				onlyTargetCategory = [[FIXEDWING GUNSHIP]],
 			},
 		},
-
-
 		weaponDefs             = {
 			AALASER       = {
 				name                    = [[High Intensity Laser]],
@@ -80,7 +77,6 @@ return {
 					light_beam_mult_frames = 9,
 					light_beam_mult = 8,
 				},
-      
 				damage                  = {
 					default = 16.1,
 				},
@@ -100,7 +96,6 @@ return {
 				noSelfDamage            = true,
 				range                   = 1040,
 				proximityPriority       = 20,
-				
 				reloadtime              = 1/30,
 				rgbColor                = [[0.0588 0.3215 0.7294]],
 				rgbColor2               = [[0.3215 0.54509 0.898]],
@@ -125,7 +120,6 @@ return {
 				footprintZ       = 4,
 				object           = [[shipaa_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 4,

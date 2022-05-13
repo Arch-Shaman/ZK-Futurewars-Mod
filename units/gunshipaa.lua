@@ -22,14 +22,12 @@ return {
 		collide                = true,
 		corpse                 = [[DEAD]],
 		cruiseAlt              = 200,
-
 		customParams           = {
 			bait_level_default = 0,
 			modelradius    = [[18]],
 			midposoffset   = [[0 15 0]],
 			selection_velocity_heading = 1,
 		},
-
 		explodeAs              = [[GUNSHIPEX]],
 		floater                = true,
 		footprintX             = 3,
@@ -45,30 +43,21 @@ return {
 		objectName             = [[trifighter.s3o]],
 		script                 = [[gunshipaa.lua]],
 		selfDestructAs         = [[GUNSHIPEX]],
-
 		sfxtypes               = {
-
 			explosiongenerators = {
 				[[custom:rapiermuzzle]],
 			},
-
 		},
 		sightDistance          = 660,
 		turnRate               = 0,
-		workerTime             = 0,
-
 		weapons                = {
-
 			{
 				def                = [[AA_MISSILE]],
 				--badTargetCategory  = [[GUNSHIP]],
 				onlyTargetCategory = [[GUNSHIP FIXEDWING]],
 			},
-
 		},
-
 		weaponDefs             = {
-
 			AA_MISSILE = {
 				name                    = [[Homing Missiles]],
 				areaOfEffect            = 48,
@@ -79,25 +68,18 @@ return {
 				craterBoost             = 1,
 				craterMult              = 2,
 				cylinderTargeting       = 1,
-
 				customParams              = {
 					burst = Shared.BURST_RELIABLE,
-
 					isaa = [[1]],
 					script_reload = [[10]],
 					script_burst = [[6]],
-
 					light_camera_height = 2500,
 					light_radius = 200,
 					light_color = [[0.5 0.6 0.6]],
-					
 				},
-
 				damage                  = {
-					default = 16.01,
-					planes  = 160.1,
+					default = 160.1,
 				},
-
 				explosionGenerator      = [[custom:FLASH2]],
 				fireStarter             = 70,
 				fixedlauncher           = true,
@@ -125,7 +107,6 @@ return {
 				weaponVelocity          = 700,
 			},
 		},
-
 		featureDefs            = {
 			DEAD  = {
 				blocking         = true,
@@ -134,7 +115,6 @@ return {
 				footprintZ       = 2,
 				object           = [[trifighter_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,

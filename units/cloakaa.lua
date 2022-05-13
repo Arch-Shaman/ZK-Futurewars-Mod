@@ -18,7 +18,6 @@ return {
 		collisionVolumeScales  = [[22 28 22]],
 		collisionVolumeType    = [[cylY]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			modelradius    = [[11]],
 			cus_noflashlight = 1,
@@ -45,16 +44,12 @@ return {
 		objectName             = [[spherejeth.dae]],
 		script               = [[cloakaa.lua]],
 		selfDestructAs         = [[BIG_UNITEX]],
-
 		sfxtypes               = {
-
 			explosiongenerators = {
 				[[custom:NONE]],
 				[[custom:NONE]],
 			},
-
 		},
-
 		sightDistance          = 760,
 		trackOffset            = 0,
 		trackStrength          = 8,
@@ -63,18 +58,13 @@ return {
 		trackWidth             = 16,
 		turnRate               = 2640,
 		upright                = true,
-
 		weapons                = {
-
 			{
 				def                = [[AA_LASER]],
-				--badTargetCategory  = [[GUNSHIP]],
 				onlyTargetCategory = [[GUNSHIP FIXEDWING]],
 			},
 		},
-
 		weaponDefs             = {
-
 			AA_LASER      = {
 				name                    = [[Anti-Air Pulsar]],
 				areaOfEffect            = 12,
@@ -87,16 +77,13 @@ return {
 				burst					= 6,
 				burstRate				= 2/30,
 				predictBoost			= 1.1,
-
 				customParams              = {
 					isaa = [[1]],
 					light_color = [[0.2 1.2 1.2]],
 					light_radius = 120,
 				},
-
 				damage                  = {
-					default = 9.5,
-					planes  = 95.1,
+					default = 95.1,
 				},
 				duration                = 0.075,
 				beamDecay 				= 0.38,
@@ -126,9 +113,7 @@ return {
 				weaponVelocity          = 2200,
 			},
 		},
-
 		featureDefs            = {
-
 			DEAD = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -136,15 +121,12 @@ return {
 				footprintZ       = 2,
 				object           = [[spherejeth_dead.s3o]],
 			},
-
 			HEAP = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
 				object           = [[debris2x2a.s3o]],
 			},
-
 		},
-
 	} 
 }

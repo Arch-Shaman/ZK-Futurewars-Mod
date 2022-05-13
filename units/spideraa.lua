@@ -78,8 +78,7 @@ return {
 					isaa = [[1]],
 				},
 				damage                  = {
-					default = 200.1,
-					planes  = 2000.1,
+					default = 2000.1,
 				},
 				explosionGenerator      = [[custom:atagreen_flattened]],
 				fireTolerance           = 8192, -- 45 degrees
@@ -119,7 +118,6 @@ return {
 				coreThickness           = 0.5,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams            = {
 					--burst = Shared.BURST_RELIABLE,
 					stats_hide_damage = 1, -- continuous laser
@@ -131,7 +129,6 @@ return {
 				damage                  = {
 					default = 0,
 				},
-
 				--explosionGenerator      = [[custom:flash1red]],
 				fireTolerance           = 8192, -- 45 degrees
 				impactOnly              = true,
@@ -171,7 +168,6 @@ return {
 				collisionVolumeType    = [[ellipsoid]],
 				object           = [[tarantula_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,

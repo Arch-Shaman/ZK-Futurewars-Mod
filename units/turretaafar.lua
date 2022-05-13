@@ -77,8 +77,7 @@ return {
 					script_burst = [[28]],
 				},
 				damage                  = {
-					default = 20.01,
-					planes  = 200.1,
+					default = 200.1,
 				},
 				explosionGenerator      = [[custom:MISSILE_HIT_PIKES_160]],
 				fireStarter             = 20,

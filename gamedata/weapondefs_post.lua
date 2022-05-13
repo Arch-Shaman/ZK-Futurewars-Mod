@@ -135,6 +135,8 @@ local damagemult = modOptions.damagemult or 1
 local area_damage_defaults = VFS.Include("gamedata/unitdef_defaults/area_damage_defs.lua")
 local cratermults = modOptions.cratermult or 1
 
+local aaDamageToGroundMult = 0.1
+
 for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a series of for loops. I've just unified them. Probably shaves some time off loading.
 	-- customparams is never nil
 	weaponDef.customparams = weaponDef.customparams or {} 
@@ -144,8 +146,18 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 		weaponDef.customparams.reaim_time = 5
 	end
 	
+	if weaponDef.customparams["isaa"] then
+		--for name, damage in pairs(weaponDef.damage) do
+			--Spring.Echo(name, damage)
+		--end
+		--Spring.Echo(defname)
+		local damage = weaponDef.damage["default"]
+		weaponDef.damage["default"] = damage * aaDamageToGroundMult
+		weaponDef.damage["planes"] = damage
+	end
+	
 	-- Set shield starting power to 100%
-	if weaponDef.shieldpower and (weaponDef.shieldpower < 2000) then
+	if weaponDef.shieldpower and (weaponDef.shieldpower < 2000) and not weaponDef.shieldstartingpower then
 		weaponDef.shieldstartingpower = weaponDef.shieldpower
 		weaponDef.customparams.shieldstartingpower = weaponDef.shieldstartingpower
 	end
@@ -162,7 +174,6 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 		weaponDef.craterareaofeffect = tonumber(weaponDef.areaofeffect or 0) * 1.5
 	end
 	
-	
 	-- New engine seems to have covertly increased the effect of cratermult
 	weaponDef.cratermult = (weaponDef.cratermult or 1) * 0.3 * (modOptions.cratermult or 1)
 	
@@ -172,7 +183,7 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 	end
 	
 	-- Disable sweepfire until we know how to use it
-	weaponDef.sweepfire = false -- Shaman's note: Let's undo this at some point in time.
+	--weaponDef.sweepfire = false -- Shaman's note: Let's undo this at some point in time.
 	
 	-- Disable burnblow for LaserCannons because overshoot is not a problem for any
 	-- of them and is important for some.

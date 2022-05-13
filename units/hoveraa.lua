@@ -25,7 +25,6 @@ return {
 			midposoffset   = [[0 8 0]],
 			bait_level_default = 0,
 		},
-
 		explodeAs           = [[BIG_UNITEX]],
 		footprintX          = 3,
 		footprintZ          = 3,
@@ -42,31 +41,22 @@ return {
 		objectName          = [[hoveraa.s3o]],
 		script              = [[hoveraa.lua]],
 		selfDestructAs      = [[BIG_UNITEX]],
-
 		sfxtypes            = {
-
 			explosiongenerators = {
 				[[custom:HEAVYHOVERS_ON_GROUND]],
 				[[custom:RAIDMUZZLE]],
 			},
-
 		},
-
 		sightDistance       = 660,
 		sonarDistance       = 660,
 		turninplace         = 0,
 		turnRate            = 616,
-		workerTime          = 0,
 		weapons             = {
-
 			{
 				def                = [[WEAPON]],
 				onlyTargetCategory = [[FIXEDWING GUNSHIP]],
 			},
-			
 		},
-
-
 		weaponDefs          = {
 			WEAPON = {
 				name                    = [[Medium SAM]],
@@ -79,19 +69,14 @@ return {
 				cylinderTargeting       = 1,
 				burst					= 2,
 				burstRate				= 0.4,
-
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
-
 					isaa = [[1]],
 					light_color = [[0.5 0.6 0.6]],
 				},
-
 				damage                  = {
-					default = 24.1,
-					planes  = 240.1,
+					default = 240.1,
 				},
-
 				edgeEffectiveness       = 0.3,
 				explosionGenerator      = [[custom:STARFIRE]],
 				fireStarter             = 100,
@@ -120,7 +105,6 @@ return {
 			},
 		},
 		featureDefs         = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -128,15 +112,12 @@ return {
 				footprintZ       = 3,
 				object           = [[hoveraa_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,
 				footprintZ       = 3,
 				object           = [[debris3x3c.s3o]],
 			},
-
 		},
-		
 	} 
 }

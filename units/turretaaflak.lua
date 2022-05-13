@@ -61,7 +61,7 @@ return { turretaaflak = {
 				cylinderTargeting       = 1,
 				customParams        	  = {
 					reaim_time = 8, -- COB
-					isaa = [[1]],
+					isaa = [[1]], -- Weapondefs_post to set this to 10% for ground units.
 					light_radius = 0,
 					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "turretaaflak_tritary", -- the weapondef name. we will convert this to an ID in init. REQUIRED. If defined in the unitdef, it will be unitdefname_weapondefname.
@@ -72,11 +72,10 @@ return { turretaaflak = {
 					vradius1 = "-5,-3,-5,5,3,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?
-					damage_vs_shield = [[200]],
+					damage_vs_shield = [[300.3]],
 				},
 				damage  = {
-					default = 5*4,
-					planes  = 100*4,
+					default = 100.1*6,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.5,
@@ -113,10 +112,10 @@ return { turretaaflak = {
 					light_radius = 0,
 					isFlak = 3,
 					flaktime = -10,
+					cegtrail = "flak_trail",
 				},
 				damage = {
-					default = 5,
-					planes  = 100,
+					default = 100.1,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.8,

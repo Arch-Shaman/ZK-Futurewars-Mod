@@ -13,7 +13,6 @@ return {
 		collisionVolumeScales  = [[30 48 30]],
 		collisionVolumeType    = [[cylY]],
 		corpse              = [[DEAD]],
-		
 		customParams        = {
 			canjump            = 1,
 			jump_range         = 400,
@@ -25,7 +24,6 @@ return {
 			outline_y = 90,
 			outline_yoff = 30,
 		},
-		
 		explodeAs           = [[BIG_UNITEX]],
 		footprintX          = 2,
 		footprintZ          = 2,
@@ -51,26 +49,19 @@ return {
 		trackWidth          = 28,
 		turnRate            = 1680,
 		upright             = true,
-		
 		weapons             = {
-	
 			{
 				def                = [[HEATRAY]],
 				--badTargetCategory  = [[GUNSHIP]],
 				onlyTargetCategory = [[GUNSHIP FIXEDWING]],
 			},
-		
 			{
 				def                = [[GRAVITY_MISSILE]],
 				--badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING GUNSHIP]],
 			},
-	
 		},
-
-
 		weaponDefs          = {
-
 			GRAVITY_MISSILE = {
 				name                    = [[Graviton Missiles]],
 				areaOfEffect            = 48,
@@ -82,20 +73,16 @@ return {
 				cegTag                  = [[missiletrailgravattract]],
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams        = {
 					light_camera_height = 2500,
 					light_radius = 300,
 					light_color = [[0.33 0.33 1.28]],
 					impulse = [[-600]],
-					
 					stats_custom_tooltip_1 = " - Large amounts of impulse",
 				},
-
 				damage                  = {
 					default = 0.001,
 				},
-
 				explosionGenerator      = [[custom:FLASH2]],
 				flightTime              = 3,
 				--impulseBoost            = 0,
@@ -120,8 +107,6 @@ return {
 				weaponType              = [[MissileLauncher]],
 				weaponVelocity          = 645,
 			},
-
-
 			HEATRAY = {
 				name                    = [[Dual Anti-Air Heat Ray]],
 				areaOfEffect            = 20,
@@ -140,10 +125,10 @@ return {
 					light_fade_offset = 10,
 					light_beam_mult_frames = 9,
 					light_beam_mult = 8,
+					isaa = 1,
 				},
 				damage                  = {
-					default = 9.5,
-					planes = 95,
+					default = 95.1,
 				},
 				duration                = 0.3,
 				dynDamageExp            = 1,
@@ -172,28 +157,21 @@ return {
 				weaponType              = [[BeamLaser]],
 				weaponVelocity          = 1500,
 			},
-
-  },
-
-
-  featureDefs         = {
-
-    DEAD  = {
-      blocking         = true,
-      featureDead      = [[HEAP]],
-      footprintX       = 4,
-      footprintZ       = 4,
-      object           = [[hunchback_dead.s3o]],
-    },
-
-
-    HEAP  = {
-      blocking         = false,
-      footprintX       = 4,
-      footprintZ       = 4,
-      object           = [[debris4x4c.s3o]],
-    },
-
-  },
-
-} }
+		},
+		featureDefs         = {
+			DEAD  = {
+				blocking         = true,
+				featureDead      = [[HEAP]],
+				footprintX       = 4,
+				footprintZ       = 4,
+				object           = [[hunchback_dead.s3o]],
+			},
+			HEAP  = {
+				blocking         = false,
+				footprintX       = 4,
+				footprintZ       = 4,
+				object           = [[debris4x4c.s3o]],
+			},
+		},
+	} 
+}

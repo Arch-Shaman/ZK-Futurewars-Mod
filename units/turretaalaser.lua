@@ -47,26 +47,22 @@ return {
 				onlyTargetCategory = [[FIXEDWING GUNSHIP]],
 			},
 		},
-		
 		weaponDefs                    = {
 			AAGUN  = {
-				name                    = [[High Intensity Micropulse Laser]],
+				name                    = [[Medium Intensity Micropulse Laser]],
 				areaOfEffect            = 8,
 				coreThickness           = 0.5,
 				beamTime                = 1/30,
 				craterBoost             = 0,
 				craterMult              = 0,
-				
 				customParams        = {
 					isaa = [[1]],
 					light_camera_height = 1200,
 					light_radius = 20,
 				},
-      
 				damage                  = {
-					default = 100.1,
+					default = 55.1,
 				},
-
 				duration                = 2/30,
 				explosionGenerator      = [[custom:beamweapon_hit_orange]],
 				fireStarter             = 50,
@@ -77,7 +73,7 @@ return {
 				leadLimit               = 0,
 				noSelfDamage            = true,
 				range                   = 850,
-				reloadtime              = 10/30,
+				reloadtime              = 5/30,
 				rgbColor                = [[1 0.40059 0]],
 				soundStart              = [[weapon/laser/heavy_pulser]],
 				soundstartvolume	    = 135,

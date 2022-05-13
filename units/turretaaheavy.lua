@@ -62,12 +62,9 @@ return {
 					light_color = [[1.5 1.8 1.8]],
 					light_radius = 600,
 				},
-
 				damage                  = {
-					default    = 160.15,
-					planes     = 1601.5,
+					default    = 1601.5,
 				},
-
 				edgeEffectiveness       = 0.25,
 				energypershot           = 80,
 				explosionGenerator      = [[custom:MISSILE_HIT_SPHERE_120]],

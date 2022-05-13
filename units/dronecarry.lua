@@ -41,7 +41,6 @@ return {
 		repairable          = false, -- mostly not to waste constructor attention on area-repair; has regen anyway
 		script              = [[dronecarry.lua]],
 		selfDestructAs      = [[TINY_BUILDINGEX]],
-  
 		customParams        = {
 			bait_level_target      = 1,
 			is_drone = 1,
@@ -213,18 +212,15 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting       = 5,
-
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
 					isaa = [[1]],
 					light_camera_height = 2000,
 					light_radius = 200,
 				},
-
 				damage                  = {
-					default = 25,
+					default = 25.1,
 				},
-
 				explosionGenerator      = [[custom:FLASH2]],
 				fireStarter             = 70,
 				flightTime              = 4,

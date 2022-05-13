@@ -19,7 +19,6 @@ return {
 		collisionVolumeScales  = [[92 158 92]],
 		collisionVolumeType    = [[cylY]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			modelradius    = [[95]],
 			extradrawrange = 925,
@@ -55,7 +54,6 @@ return {
 		trackWidth             = 60,
 		turnRate               = 482,
 		upright                = true,
-
 		weapons                = {
 
 			{
@@ -75,7 +73,6 @@ return {
 
 		},
 		weaponDefs             = {
-
 			SECONDARY = {
 				name                    = [[Antimatter Pellet]],
 				areaOfEffect            = 108,
@@ -90,7 +87,6 @@ return {
 					isFlak = 3,
 					flaktime = -1/30,
 				},
-		  
 				damage                  = {
 					default = 720.1,
 				},
@@ -109,7 +105,6 @@ return {
 				weaponVelocity          = 470,
 				waterWeapon 			= true,
 			},
-
 			GAUSS         = {
 				name                    = [[Decimator Cannon Barrage]],
 				alphaDecay              = 0.12,
@@ -122,7 +117,6 @@ return {
 				cegTag                  = [[vulcanfx]],
 				craterBoost             = 0,
 				craterMult              = 0,
-      
 				customParams = {
 					reaim_time = 1,	
 					smoothradius     = [[120]],
@@ -138,11 +132,9 @@ return {
 					spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					vradius1 = "-6,-4,-6,2,3,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 				},
-
 				damage                  = {
 					default = 720.1*7,
 				},
-
 				explosionGenerator      = [[custom:100rlexplode]],
 				groundbounce            = 1,
 				impactOnly              = true,
@@ -165,7 +157,6 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 900,
 			},
-
 			FLAK = {
 				name                    = [[Flak Canister]],
 				areaOfEffect            = 0,
@@ -175,27 +166,24 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting       = 1,
-
 				customParams        	  = {
 					reaim_time = 8, -- COB
 					isaa = [[1]],
 					light_radius = 0,
-					numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "striderdetriment_tritary", -- the weapondef name. we will convert this to an ID in init. REQUIRED. If defined in the unitdef, it will be unitdefname_weapondefname.
 					--spreadradius1 = 3, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-1,-1,-1,1,1,1", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-4,-3,-4,4,3,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?
 					proxydist = 300, -- how far to check for units? Default: spawndist
 					damage_vs_shield = [[180]]
 				},
-
 				damage  = {
-					default = 16*3,
-					planes  = 120*3,
+					default = 120.1*5,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.25,
@@ -217,7 +205,6 @@ return {
 				weaponVelocity          = 600,
 				--coverage = 2200,
 			},
-	
 			TRITARY = {
 				name                    = [[Flechette]],
 				cegTag                  = [[flak_trail]],
@@ -225,7 +212,6 @@ return {
 				coreThickness           = 0.5,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams            = {
 					light_camera_height = 2000,
 					light_color = [[1 0.2 0.2]],
@@ -235,10 +221,8 @@ return {
 					isFlak = 3,
 					flaktime = -4,
 				},
-
 				damage = {
-					default = 16,
-					planes  = 120,
+					default = 120.1,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.3,
@@ -264,7 +248,6 @@ return {
 				weaponVelocity          = 880,
 				--coverage = 1000,
 			},
-			
 			TRILASER = {
 				name                    = [[Gigawatt Laser]],
 				areaOfEffect            = 36,
@@ -279,11 +262,9 @@ return {
 					light_color = [[0.2 0.8 0.2]],
 					reaim_time = 1,
 				},
-
 				damage                  = {
 					default = 16000.1,
 				},
-
 				explosionGenerator      = [[custom:beamlaser_hit_saphire]],
 				fireStarter             = 90,
 				fireTolerance           = 4200, -- about 50 degrees
@@ -317,7 +298,6 @@ return {
 			},
 		},
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -325,15 +305,12 @@ return {
 				footprintZ       = 6,
 				object           = [[Detriment_wreck.s3o]],
 			},
-
-    
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 4,
 				footprintZ       = 4,
 				object           = [[debris4x4b.s3o]],
 			},
-
 		},
 	} 
 }

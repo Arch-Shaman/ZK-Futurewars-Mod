@@ -16,7 +16,6 @@ return {
 		selectionVolumeScales  = [[42 42 42]],
 		selectionVolumeType    = [[ellipsoid]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			bait_level_default = 1,
 			amph_regen        = 20,
@@ -28,7 +27,6 @@ return {
 			outline_y = 80,
 			outline_yoff = 12.5,
 		},
-
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 3,
 		footprintZ             = 3,
@@ -45,7 +43,6 @@ return {
 		objectName             = [[amphaa.s3o]],
 		script                 = [[amphaa.lua]],
 		selfDestructAs         = [[BIG_UNITEX]],
-
 		sfxtypes               = {
 			explosiongenerators = {
 				[[custom:STORMMUZZLE]],
@@ -53,7 +50,6 @@ return {
 				[[custom:bubbles_small]],
 			},
 		},
-
 		sightDistance          = 660,
 		sonarDistance          = 660,
 		trackOffset            = 0,
@@ -63,7 +59,6 @@ return {
 		trackWidth             = 30,
 		turnRate               = 1200,
 		upright                = true,
-
 		weapons                = {
 			{
 				def                = [[MISSILE]],
@@ -71,9 +66,7 @@ return {
 				onlyTargetCategory = [[GUNSHIP FIXEDWING]],
 			},
 		},
-
 		weaponDefs             = {
-
 			MISSILE = {
 				name                    = [[Missile Pack]],
 				areaOfEffect            = 48,
@@ -82,22 +75,17 @@ return {
 				craterBoost             = 1,
 				craterMult              = 2,
 				cylinderTargeting       = 1,
-
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
-
 					isaa = [[1]],
 					script_reload = [[10]],
 					script_burst = [[8]],
 					light_color = [[0.5 0.6 0.6]],
 					light_radius = 380,
 				},
-
 				damage                  = {
-					default = 15.01,
-					planes  = 150.1,
+					default = 150.1,
 				},
-
 				explosionGenerator      = [[custom:FLASH2]],
 				fireStarter             = 70,
 				flightTime              = 3,
@@ -123,23 +111,19 @@ return {
 				weaponVelocity          = 850,
 			},
 		},
-
 		featureDefs            = {
-
 			DEAD      = {
 				blocking         = true,
 				footprintX       = 2,
 				footprintZ       = 2,
 				object           = [[amphaa_dead.s3o]],
 			},
-
 			HEAP      = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
 				object           = [[debris2x2c.s3o]],
 			},
-
 		},
 	} 
 }

@@ -66,7 +66,6 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting       = 3,
-
 				customParams = {
 					burst = Shared.BURST_RELIABLE,
 					isaa = [[1]],
@@ -75,12 +74,9 @@ return {
 					light_color = [[0.5 0.6 0.6]],
 					tracker = 1,
 				},
-
 				damage                  = {
-					default = 42.1,
-					planes  = 420.1,
+					default = 420.1,
 				},
-
 				explosionGenerator      = [[custom:FLASH2]],
 				fireStarter             = 70,
 				flightTime              = 14,
