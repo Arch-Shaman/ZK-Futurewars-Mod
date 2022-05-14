@@ -52,7 +52,7 @@ return {
 		script              = [[gunshipcon.lua]],
 		selfDestructAs      = [[GUNSHIPEX]],
 		showNanoSpray       = false,
-		sightDistance       = 375,
+		sightDistance       = 500,
 		turnRate            = 500,
 		workerTime          = 10,
 		featureDefs         = {

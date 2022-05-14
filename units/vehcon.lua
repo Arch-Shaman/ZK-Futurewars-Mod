@@ -6,11 +6,9 @@ return {
 		acceleration           = 0.4,
 		brakeRate              = 18.0,
 		buildCostMetal         = 150,
-		buildDistance          = 180,
+		buildDistance          = 300,
 		builder                = true,
-
 		buildoptions           = {},
-
 		buildPic               = [[vehcon.png]],
 		canGuard               = true,
 		canMove                = true,
@@ -45,7 +43,7 @@ return {
 		script                 = [[vehcon.lua]],
 		selfDestructAs         = [[BIG_UNITEX]],
 		showNanoSpray          = false,
-		sightDistance          = 300,
+		sightDistance          = 450,
 		trackOffset            = -3,
 		trackStrength          = 6,
 		trackStretch           = 1,
@@ -68,11 +66,9 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				damage                  = {
 					default = 1E-06,
 				},
-
 				explosionGenerator      = [[custom:NONE]],
 				fireStarter             = 0,
 				flightTime              = 1,
@@ -82,13 +78,11 @@ return {
 				reloadtime              = 1.233,
 				size                    = 1E-06,
 				smokeTrail              = false,
-
 				textures                = {
 					[[null]],
 					[[null]],
 					[[null]],
 				},
-
 				turnrate                = 1000000000,
 				turret                  = true,
 				weaponAcceleration      = 20000,
@@ -97,9 +91,7 @@ return {
 				weaponVelocity          = 20000,
 			},
 		},
-		
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],

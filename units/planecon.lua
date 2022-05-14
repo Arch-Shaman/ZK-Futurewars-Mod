@@ -7,7 +7,7 @@ return {
 		airStrafe           = 0,
 		brakeRate           = 0.44,
 		buildCostMetal      = 250,
-		buildDistance       = 200,
+		buildDistance       = 250,
 		selectionVolumeOffsets = [[0 0 0]],
 		selectionVolumeScales  = [[42 42 42]],
 		selectionVolumeType    = [[ellipsoid]],

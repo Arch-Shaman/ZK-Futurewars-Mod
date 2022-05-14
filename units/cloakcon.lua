@@ -7,7 +7,7 @@ return {
 		activateWhenBuilt      = true,
 		brakeRate              = 9.0,
 		buildCostMetal         = 100,
-		buildDistance          = 196,
+		buildDistance          = 250,
 		builder                = true,
 		buildoptions           = {},
 		buildPic               = [[cloakcon.png]],

@@ -6,7 +6,7 @@ return {
 		acceleration        = 1.0,
 		brakeRate           = 4.68,
 		buildCostMetal      = 175,
-		buildDistance       = 200,
+		buildDistance       = 250,
 		builder             = true,
 		buildoptions        = {},
 		buildPic            = [[jumpcon.png]],

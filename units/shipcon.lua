@@ -7,7 +7,7 @@ return {
 		activateWhenBuilt      = true,
 		brakeRate              = 0.732,
 		buildCostMetal         = 200,
-		buildDistance          = 330,
+		buildDistance          = 400,
 		builder                = true,
 		buildoptions           = {},
 		buildPic               = [[shipcon.png]],

@@ -7,11 +7,10 @@ return {
 		activateWhenBuilt      = true,
 		brakeRate              = 3.6,
 		buildCostMetal         = 170,
-		buildDistance          = 220,
+		buildDistance          = 400,
 		builder                = true,
 		cloakcost			   = 0,
 		buildoptions           = {},
-
 		buildPic               = [[spidercon.png]],
 		canGuard               = true,
 		canMove                = true,
@@ -21,13 +20,11 @@ return {
 		collisionVolumeScales  = [[30 30 30]],
 		collisionVolumeType    = [[ellipsoid]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			modelradius        = [[15]],
 			selection_scale    = 1.2,
 			idle_cloak         = 1,
 		},
-
 		energyUse              = 0,
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 2,
@@ -43,12 +40,12 @@ return {
 		minCloakDistance       = 75,
 		movementClass          = [[TKBOT2]],
 		objectName             = [[weaver.s3o]],
-		radarDistance          = 1200,
+		radarDistance          = 1400,
 		radarEmitHeight        = 12,
 		script                 = [[spidercon.lua]],
 		selfDestructAs         = [[BIG_UNITEX]],
 		showNanoSpray          = false,
-		sightDistance          = 375,
+		sightDistance          = 500,
 		trackOffset            = 0,
 		trackStrength          = 10,
 		trackStretch           = 1,
@@ -56,15 +53,12 @@ return {
 		trackWidth             = 54,
 		turnRate               = 1400,
 		workerTime             = 7.5,
-		
 		sfxtypes            = {
 			explosiongenerators = {
 				[[custom:digdig]],
 			},
 		},
-		
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -72,7 +66,6 @@ return {
 				footprintZ       = 3,
 				object           = [[weaver_wreck.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,

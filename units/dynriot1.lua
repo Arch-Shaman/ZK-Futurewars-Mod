@@ -8,7 +8,7 @@ return {
 		autoHeal            = 5,
 		brakeRate           = 2.25,
 		buildCostMetal      = 1200,
-		buildDistance       = 128,
+		buildDistance       = 250,
 		builder             = true,
 		buildoptions        = {},
 		buildPic            = [[corcom.png]],

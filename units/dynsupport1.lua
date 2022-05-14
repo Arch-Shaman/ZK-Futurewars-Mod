@@ -8,7 +8,7 @@ return {
 		autoheal            = 5,
 		brakeRate           = 2.7,
 		buildCostMetal      = 1200,
-		buildDistance       = 232,
+		buildDistance       = 400,
 		builder             = true,
 		buildoptions        = {},
 		buildPic            = [[commsupport.png]],

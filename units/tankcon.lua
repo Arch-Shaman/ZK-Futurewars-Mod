@@ -6,7 +6,7 @@ return {
 		acceleration           = 0.4,
 		brakeRate              = 18.0,
 		buildCostMetal         = 300,
-		buildDistance          = 200,
+		buildDistance          = 250,
 		builder                = true,
 		buildoptions           = {},
 		buildPic               = [[tankcon.png]],
@@ -18,7 +18,6 @@ return {
 		collisionVolumeScales  = [[34 18 46]],
 		collisionVolumeType    = [[box]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			aimposoffset   = [[0 0 0]],
 			midposoffset   = [[0 -4 0]],
@@ -32,7 +31,6 @@ return {
 			outline_y = 80,
 			outline_yoff = 12.5,
 		},
-
 		energyUse              = 0,
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 2,
@@ -52,14 +50,12 @@ return {
 		objectName             = [[welder.s3o]],
 		script                 = [[tankcon.lua]],
 		selfDestructAs         = [[BIG_UNITEX]],
-
 		sfxtypes               = {
 			explosiongenerators = {
 				[[custom:emg_shells_l]],
 				[[custom:flashmuzzle1]],
 			},
 		},
-
 		showNanoSpray          = false,
 		sightDistance          = 385,
 		trackOffset            = 3,
@@ -70,7 +66,6 @@ return {
 		turninplace            = 0,
 		turnRate               = 1000,
 		workerTime             = 10,
-
 		weapons                = {
 			{
 				def                = [[CANNON]],
@@ -163,11 +158,9 @@ return {
 					recycle_reductionframes = 0.5,
 					recycle_maxbonus = 20,
 				},
-
 				damage                  = {
 					default = 10.1,
 				},
-
 				explosionGenerator      = [[custom:EMG_HIT_HE]],
 				impactOnly              = true,
 				impulseBoost            = 0,

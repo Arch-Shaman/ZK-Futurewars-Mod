@@ -7,7 +7,7 @@ return {
 		activateWhenBuilt   = true,
 		brakeRate           = 18.0,
 		buildCostMetal      = 130,
-		buildDistance       = 200,
+		buildDistance       = 300,
 		builder             = true,
 		buildoptions        = {},
 		buildPic            = [[hovercon.png]],
@@ -23,7 +23,6 @@ return {
 			modelradius    = [[25]],
 			selection_scale = 1.2,
 		},
-
 		energyUse           = 0,
 		explodeAs           = [[BIG_UNITEX]],
 		floater             = true,
@@ -39,15 +38,11 @@ return {
 		noChaseCategory     = [[TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET]],
 		objectName          = [[corch.s3o]],
 		selfDestructAs      = [[BIG_UNITEX]],
-
 		sfxtypes            = {
-
 			explosiongenerators = {
 				[[custom:HOVERS_ON_GROUND]],
 			},
-
 		},
-
 		showNanoSpray       = false,
 		script              = [[hovercon.lua]],
 		sightDistance       = 300,
@@ -56,7 +51,6 @@ return {
 		turnRate            = 880,
 		workerTime          = 5,
 		featureDefs         = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -64,15 +58,12 @@ return {
 				footprintZ       = 3,
 				object           = [[corch_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,
 				footprintZ       = 3,
 				object           = [[debris3x3c.s3o]],
 			},
-
 		},
-
 	} 
 }

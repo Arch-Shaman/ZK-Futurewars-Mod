@@ -7,7 +7,7 @@ return {
 		activateWhenBuilt   = true,
 		brakeRate           = 1.5,
 		buildCostMetal      = 150,
-		buildDistance       = 200,
+		buildDistance       = 250,
 		builder             = true,
 		buildoptions        = {},
 		buildPic            = [[amphcon.png]],
