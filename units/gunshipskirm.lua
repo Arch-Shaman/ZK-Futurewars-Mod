@@ -35,7 +35,7 @@ return {
 		maxDamage              = 2400,
 		maxVelocity            = 3.5,
 		noChaseCategory        = [[TERRAFORM SUB]],
-		objectName             = [[rapier.s3o]],
+		objectName             = [[rapier.dae]],
 		script                 = [[gunshipskirm.lua]],
 		selfDestructAs         = [[GUNSHIPEX]],
 		sfxtypes               = {
