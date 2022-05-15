@@ -473,7 +473,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 	if cp.targeter then
 		name = name .. " (Guidance only)"
 	end
-	if not cp.bogus then
+	if not (cp.bogus or cp.hideweapon)  then
 		cells[#cells+1] = name
 		cells[#cells+1] = ''
 	end
@@ -499,7 +499,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 		end
 	else
 			-- calculate damages
-		if not cp.bogus then
+		if not (cp.bogus or cp.hideweapon) then
 			local dam  = 0
 			local damw = 0
 			local dams = 0
@@ -983,7 +983,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 		--cluster info
 		--RECURSION INCOMING!
 		if cp.numprojectiles1 then
-			if not cp.bogus then
+			if not (cp.bogus or cp.hideweapon) then
 				cells[#cells+1] = ' - Cluster Submuntions:'
 				cells[#cells+1] = ''
 			end
@@ -996,7 +996,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 					end
 				end
 				if isRecusive then
-					cells[#cells+1] = (not cp.bogus and '   ' or '') .. WeaponDefNames[cp["projectile" .. submunitionCount]].description .. ' x ' .. cp["numprojectiles" .. submunitionCount] .. ' (Previously Listed)'
+					cells[#cells+1] = (not (cp.bogus or cp.hideweapon) and '   ' or '') .. WeaponDefNames[cp["projectile" .. submunitionCount]].description .. ' x ' .. cp["numprojectiles" .. submunitionCount] .. ' (Previously Listed)'
 					cells[#cells+1] = ''
 				else
 					cells = weapons2Table(cells, cp["projectile" .. submunitionCount], unitID, cp["numprojectiles" .. submunitionCount] * (cp.bogus and bombletCount or 1) * (cp["clustercharges"] or 1), recursedWepIds, false)
@@ -1009,7 +1009,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			end
 		end
 	end
-	if bombletCount and not cp.bogus and not deathExplosion then
+	if bombletCount and not (cp.bogus or cp.hideweapon) and not deathExplosion then
 		for i = startPoint, #cells, 2 do
 			cells[i] = '    ' .. cells[i]
 		end
