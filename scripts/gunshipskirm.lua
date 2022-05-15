@@ -1,3 +1,6 @@
+include "pieceControl.lua"
+local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
+
 local base = piece 'base'
 local lWing = piece 'lWing'
 local rWing = piece 'rWing'
@@ -27,10 +30,52 @@ local smokePiece = {base}
 
 include "constants.lua"
 
-local gun_1 = false
+local gun = {
+	[0] = {firepoint = gun1, loaded = true},
+	[1] = {firepoint = gun2, loaded = true},
+	[2] = {firepoint = gun3, loaded = true},
+	[3] = {firepoint = gun4, loaded = true},
+	[4] = {firepoint = gun5, loaded = true},
+	[5] = {firepoint = gun6, loaded = true},
+	[6] = {firepoint = gun7, loaded = true},
+	[7] = {firepoint = gun8, loaded = true},
+	[8] = {firepoint = gun9, loaded = true},
+	[9] = {firepoint = gun10, loaded = true},
+	[10] = {firepoint = gun11, loaded = true},
+	[11] = {firepoint = gun12, loaded = true},
+	[12] = {firepoint = gun13, loaded = true},
+	[13] = {firepoint = gun14, loaded = true},
+	[14] = {firepoint = gun15, loaded = true},
+	[15] = {firepoint = gun16, loaded = true},
+	[16] = {firepoint = gun17, loaded = true},
+	[17] = {firepoint = gun18, loaded = true},
+	[18] = {firepoint = gun19, loaded = true},
+	[19] = {firepoint = gun20, loaded = true},
+}
+
+local loaded = 20
+local shot = 0
+
+local reloadtime = 12
+local gameSpeed = Game.gameSpeed
+
+local function reload(num)
+	Hide(gun[num].firepoint)
+	scriptReload.GunStartReload(num)
+	gun[num].loaded = false
+
+	SleepAndUpdateReload(num, reloadtime * gameSpeed)
+	if scriptReload.GunLoaded(num) then
+		shot = 0
+	end
+	gun[num].loaded = true
+	Show(gun[num].firepoint)
+	loaded = loaded + 1
+end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+	scriptReload.SetupScriptReload(19, reloadtime)
 end
 
 function script.Activate()
@@ -44,8 +89,7 @@ function script.Deactivate()
 end
 
 function script.QueryWeapon(num)
-	if gun_1 then return gun1
-	else return gun2 end
+	return gun[shot].firepoint
 end
 
 function script.AimFromWeapon(num)
@@ -56,15 +100,15 @@ function script.AimWeapon(num, heading, pitch)
 	return true
 end
 
-function script.FireWeapon(num)
-end
-
 function script.BlockShot(num, targetID)
-	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 190.1, 25)
+	return not gun[shot].loaded
 end
 
 function script.Shot(num)
-	gun_1 = not gun_1
+	EmitSfx(gun[shot].firepoint, GG.Script.UNIT_SFX1)
+	StartThread(reload, shot)
+	shot = (shot + 1) %20
+	loaded = loaded - 1
 end
 
 function script.Killed(recentDamage, maxHealth)
