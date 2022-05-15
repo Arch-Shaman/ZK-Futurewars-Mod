@@ -26,7 +26,7 @@ for i = 1, #WeaponDefs do
 	end
 end
 
-function function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam, projectileID)
+function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam, projectileID)
 	if config[weaponDefID] and damage > 0 then
 		GG.BlockCloakForUnit(unitID, config[weaponDefID] * damage)
 		return damage, 1
