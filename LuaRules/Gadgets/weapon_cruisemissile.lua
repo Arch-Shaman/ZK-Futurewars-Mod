@@ -59,6 +59,7 @@ for i=1, #WeaponDefs do
 		config[i].distance = tonumber(curRef.cruisedist)
 		config[i].track = curRef.cruisetracking ~= nil
 		config[i].airlaunched = curRef.airlaunched ~= nil
+		config[i].noascension = curRef.cruise_noascension ~= nil
 		config[i].radius = tonumber(curRef.cruiserandomradius)
 		config[i].permoffset = curRef.cruise_permoffset ~= nil
 		config[i].finaltracking = curRef.cruise_nolock == nil
@@ -212,7 +213,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local allyteam = spGetUnitAllyTeam(proOwnerID)
 		local _, py = spGetProjectilePosition(proID)
 		py = max(py, ty)
-		missiles[proID] = {target = target, type = type, cruising = false, takeoff = true, lastknownposition = last, configid = wep, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0}
+		missiles[proID] = {target = target, type = type, cruising = config[wep].noascension, takeoff = not config[wep].noascension, lastknownposition = last, configid = wep, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0}
 		if config[wep].radius then
 			ProccessOffset(wep, proID)
 		end

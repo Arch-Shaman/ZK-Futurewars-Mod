@@ -1,4 +1,4 @@
-include "pieceControl.lua"
+local scriptReload = include("scriptReload.lua")
 local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
 
 local base = piece 'base'
@@ -30,27 +30,29 @@ local smokePiece = {base}
 
 include "constants.lua"
 
+local upright = math.rad(90)
+
 local gun = {
-	[0] = {firepoint = gun1, loaded = true},
-	[1] = {firepoint = gun2, loaded = true},
-	[2] = {firepoint = gun3, loaded = true},
-	[3] = {firepoint = gun4, loaded = true},
-	[4] = {firepoint = gun5, loaded = true},
-	[5] = {firepoint = gun6, loaded = true},
-	[6] = {firepoint = gun7, loaded = true},
-	[7] = {firepoint = gun8, loaded = true},
-	[8] = {firepoint = gun9, loaded = true},
-	[9] = {firepoint = gun10, loaded = true},
-	[10] = {firepoint = gun11, loaded = true},
-	[11] = {firepoint = gun12, loaded = true},
-	[12] = {firepoint = gun13, loaded = true},
-	[13] = {firepoint = gun14, loaded = true},
-	[14] = {firepoint = gun15, loaded = true},
-	[15] = {firepoint = gun16, loaded = true},
-	[16] = {firepoint = gun17, loaded = true},
-	[17] = {firepoint = gun18, loaded = true},
-	[18] = {firepoint = gun19, loaded = true},
-	[19] = {firepoint = gun20, loaded = true},
+	[0] = {firepoint = gun1, loaded = true, bottom = false},
+	[1] = {firepoint = gun2, loaded = true, bottom = false},
+	[2] = {firepoint = gun3, loaded = true, bottom = true},
+	[3] = {firepoint = gun4, loaded = true, bottom = true},
+	[4] = {firepoint = gun5, loaded = true, bottom = false},
+	[5] = {firepoint = gun6, loaded = true, bottom = false},
+	[6] = {firepoint = gun7, loaded = true, bottom = true},
+	[7] = {firepoint = gun8, loaded = true, bottom = true},
+	[8] = {firepoint = gun9, loaded = true, bottom = false},
+	[9] = {firepoint = gun10, loaded = true, bottom = false},
+	[10] = {firepoint = gun11, loaded = true, bottom = true},
+	[11] = {firepoint = gun12, loaded = true, bottom = true},
+	[12] = {firepoint = gun13, loaded = true, bottom = false},
+	[13] = {firepoint = gun14, loaded = true, bottom = false},
+	[14] = {firepoint = gun15, loaded = true, bottom = true},
+	[15] = {firepoint = gun16, loaded = true, bottom = true},
+	[16] = {firepoint = gun17, loaded = true, bottom = false},
+	[17] = {firepoint = gun18, loaded = true, bottom = false},
+	[18] = {firepoint = gun19, loaded = true, bottom = true},
+	[19] = {firepoint = gun20, loaded = true, bottom = true},
 }
 
 local loaded = 20
@@ -60,7 +62,7 @@ local reloadtime = 12
 local gameSpeed = Game.gameSpeed
 
 local function reload(num)
-	Hide(gun[num].firepoint)
+	Turn(gun[num].firepoint, x_axis, 0)
 	scriptReload.GunStartReload(num)
 	gun[num].loaded = false
 
@@ -75,7 +77,7 @@ end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-	scriptReload.SetupScriptReload(19, reloadtime)
+	scriptReload.SetupScriptReload(20, reloadtime * gameSpeed)
 end
 
 function script.Activate()
@@ -93,7 +95,7 @@ function script.QueryWeapon(num)
 end
 
 function script.AimFromWeapon(num)
-	return base
+	return gun[shot].firepoint
 end
 
 function script.AimWeapon(num, heading, pitch)
@@ -101,15 +103,27 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.BlockShot(num, targetID)
-	return not gun[shot].loaded
+	if not gun[shot].loaded then
+		return true
+	else
+		--Spring.Echo("Shot: " .. shot, gun[shot].bottom)
+		return (num == 2 and gun[shot].bottom) or (num == 1 and not gun[shot].bottom)
+	end
 end
 
-function script.Shot(num)
+function script.FireWeapon(num)
+	--Spring.Echo("FireWeapon: " .. num, gun[shot].bottom)
+	--Turn(gun[shot].firepoint, x_axis, -upright) -- hax
 	EmitSfx(gun[shot].firepoint, GG.Script.UNIT_SFX1)
+	Hide(gun[shot].firepoint)
 	StartThread(reload, shot)
 	shot = (shot + 1) %20
 	loaded = loaded - 1
 end
+
+function script.Shot(num)
+end
+
 
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
