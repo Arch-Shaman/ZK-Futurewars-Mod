@@ -5,7 +5,6 @@ return {
 		description            = [[Ultimate Assault Strider]],
 		acceleration           = 0.328,
 		activateWhenBuilt      = true,
-		autoheal               = 200,
 		brakeRate              = 1.435,
 		buildCostMetal         = 30000,
 		builder                = false,
@@ -22,8 +21,8 @@ return {
 		customParams           = {
 			modelradius    = [[95]],
 			extradrawrange = 925,
-			nanoregen = 30,
-			nano_maxregen = 20,
+			nanoregen = 15,
+			nano_maxregen = 27,
 			outline_x = 230,
 			outline_y = 230,
 			outline_yoff = 70,
