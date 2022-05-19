@@ -183,7 +183,7 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 	end
 	
 	-- Disable sweepfire until we know how to use it
-	--weaponDef.sweepfire = false -- Shaman's note: Let's undo this at some point in time.
+	weaponDef.sweepfire = false -- Shaman's note: This is quite useless. Don't undisable it.
 	
 	-- Disable burnblow for LaserCannons because overshoot is not a problem for any
 	-- of them and is important for some.
