@@ -47,7 +47,7 @@ local unitDef = {
 	maxRudder              = 0.006,
 	maxVelocity            = 8,
 	maxDamage              = 2200,
-	mygravity              = 1,
+	mygravity              = 0.8,
 	noChaseCategory        = [[TERRAFORM]],
 	objectName             = [[fighter2.s3o]],
 	script                 = [[planeheavyfighter.lua]],
@@ -55,7 +55,14 @@ local unitDef = {
 	sightDistance          = 800,
 	speedToFront           = 0.5,
 	turnRadius             = 80,
+	canLoopbackAttack      = true,
 	weapons                = {
+		{
+			def                = [[CANNON]],
+			mainDir            = [[0 0 1]],
+			maxAngleDif        = 70,
+			onlyTargetCategory = [[LAND SINK TURRET SHIP SWIM FLOAT HOVER SINK SUB FIXEDWING GUNSHIP]],
+		},
 		{
 			def                = [[CANNON]],
 			mainDir            = [[0 0 1]],
@@ -73,20 +80,21 @@ local unitDef = {
 	},
 	weaponDefs             = {
 		CANNON = {
-			name                    = [[Chaingun]],
+			name                    = [[AP-33 Cannon]],
 			alphaDecay              = 0.1,
 			areaOfEffect            = 8,
 			colormap                = [[1 0.95 0.4 1   1 0.95 0.4 1    0 0 0 0.01    1 0.7 0.2 1]],
 			craterBoost             = 0,
 			craterMult              = 0,
+			projectiles				= 2,
 			customParams        = {
 				light_camera_height = 1200,
 				light_color = [[0.8 0.76 0.38]],
-				light_radius = 120,
+				light_radius = 60,
 				antibaitbypass = "ärsytät minua",
 			},
 			damage                  = {
-				default = 8.1,
+				default = 3.01,
 			},
 			explosionGenerator      = [[custom:FLASHPLOSION]],
 			impactOnly              = true,
@@ -104,12 +112,12 @@ local unitDef = {
 			sizeDecay               = 0,
 			soundStart              = [[weapon/cannon/brrt2fixed.wav]],
 			soundStartVolume        = 60,
-			sprayAngle              = 80,
+			sprayAngle              = 180,
 			stages                  = 10,
 			tolerance               = 5000,
 			turret                  = true,
 			weaponType              = [[Cannon]],
-			weaponVelocity          = 1500,
+			weaponVelocity          = 1800,
 		},
 		AA = {
 			name                    = [[ATA Sidewinder]],
