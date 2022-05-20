@@ -5,7 +5,7 @@ return {
 		description            = [[Skirmisher Spider (Indirect Line Fire)]],
 		acceleration           = 0.234,
 		brakeRate              = 1.38,
-		buildCostMetal         = 400,
+		buildCostMetal         = 300,
 		buildPic               = [[spiderskirm.png]],
 		canGuard               = true,
 		canMove                = true,
@@ -25,7 +25,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 780,
+		maxDamage              = 750,
 		maxSlope               = 72,
 		maxVelocity            = 2.1,
 		maxWaterDepth          = 22,
@@ -52,14 +52,12 @@ return {
 		},
 
 		weaponDefs             = {
-
 			ADV_ROCKET = {
 				name                    = [[Disruptor Rocket]],
 				areaOfEffect            = 48,
 				cegTag                  = [[missiletrailpurple]],
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams        = {
 					light_camera_height = 2500,
 					light_color = [[0.90 0.65 0.30]],
@@ -82,11 +80,9 @@ return {
 					timeslow_damagefactor = 1.7,
 					reveal_unit = 3,
 				},
-
 				damage                  = {
 					default = 69*7,
 				},
-
 				edgeEffectiveness       = 0.5,
 				fireStarter             = 70,
 				flightTime              = 4,
@@ -96,7 +92,7 @@ return {
 				model                   = [[recluse_missile.s3o]],
 				noSelfDamage            = true,
 				predictBoost            = 0.75,
-				range                   = 650,
+				range                   = 700,
 				reloadtime              = 4,
 				smokeTrail              = false,
 				soundHit                = [[weapon/laser/small_laser_fire3]],
@@ -112,7 +108,6 @@ return {
 				weaponVelocity          = 350,
 				wobble                  = 7000,
 			},
-
 			DISRUPTORBOMB = {
 				name                    = [[Disruptor Bomblet]],
 				accuracy                = 200,
@@ -120,16 +115,13 @@ return {
 				cegTag                  = [[beamweapon_muzzle_purple]],
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customparams = {
-					timeslow_damagefactor = 1.7,
+					timeslow_damagefactor = 2.1,
 					nofriendlyfire = 1,
 				},
-
 				damage                  = {
 					default = 69,
 				},
-
 				explosionGenerator      = [[custom:riotballplus2_purple_small120]],
 				fireStarter             = 180,
 				impactOnly              = false,
@@ -153,7 +145,6 @@ return {
 		},
 		
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -164,7 +155,6 @@ return {
 				collisionVolumeType    = [[ellipsoid]],
 				object           = [[recluse_wreck.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,
