@@ -58,7 +58,7 @@ return {
 				[[custom:NONE]],
 			},
 		},
-		sightDistance       = 473,
+		sightDistance       = 600,
 		trackOffset         = 0,
 		trackStrength       = 8,
 		trackStretch        = 0.8,
@@ -93,7 +93,7 @@ return {
 					light_radius = 320,
 				},
 				damage                  = {
-					default = 540.1,
+					default = 600.1,
 				},
 				explosionGenerator      = [[custom:riotballplus2_purple_small60]],
 				fireStarter             = 30,
@@ -115,7 +115,7 @@ return {
 				tolerance               = 18000,
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 675,
+				weaponVelocity          = 900,
 			},
 		},
 		featureDefs         = {
