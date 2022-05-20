@@ -4,7 +4,7 @@ return {
 		name                          = [[Energy Pylon]],
 		description                   = [[Extends overdrive grid]],
 		activateWhenBuilt             = true,
-		buildCostMetal                = 200,
+		buildCostMetal                = 125,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 5,
@@ -16,9 +16,8 @@ return {
 		collisionVolumeScales         = [[48 48 48]],
 		collisionVolumeType           = [[ellipsoid]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
-			pylonrange = 500,
+			pylonrange = 650,
 			aimposoffset   = [[0 0 0]],
 			midposoffset   = [[0 -6 0]],
 			modelradius    = [[24]],
@@ -32,7 +31,7 @@ return {
 		footprintZ                    = 3,
 		iconType                      = [[pylon]],
 		levelGround                   = false,
-		maxDamage                     = 1000,
+		maxDamage                     = 1250,
 		maxSlope                      = 18,
 		noAutoFire                    = false,
 		objectName                    = [[armestor.s3o]],
