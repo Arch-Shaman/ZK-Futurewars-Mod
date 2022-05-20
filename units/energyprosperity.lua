@@ -32,11 +32,11 @@ return {
 		explodeas = "NUCLEAR_MISSILE",
 		energymake = 600,
 		metalmake = 10,
-		maxdamage = 40000,
+		maxdamage = 35000,
 		maxSlope = 18,
 		footprintx = 7,
 		footprintz = 7,
-		buildcostmetal = 40000,
+		buildcostmetal = 35000,
 		yardMap = [[ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo]],
 		sightDistance = 1050,
 		featureDefs                   = {
