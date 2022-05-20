@@ -18,7 +18,7 @@ return {
 			canjump            = 1,
 			jump_range         = 450,
 			jump_speed         = 9,
-			jump_reload        = 6,
+			jump_reload        = 8,
 			jump_from_midair   = 1,
 			outline_x = 125,
 			outline_y = 125,
