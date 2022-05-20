@@ -19,9 +19,9 @@ return {
 		selectionVolumeScales  = [[45 45 45]],
 		selectionVolumeType    = [[ellipsoid]],
 		corpse                 = [[DEAD]],
-		initCloaked = true,
-		cloakCostMoving = 2.0,
-		cloakCost    = 0.2,
+		initCloaked            = true,
+		cloakCostMoving        = 2.0,
+		cloakCost              = 0.2,
 		customParams           = {
 			modelradius    = [[12]],
 			cus_noflashlight = 1,
@@ -29,8 +29,10 @@ return {
 			recloaktime 	   = 330,
 			cloaker_bestowed_radius = 75,
 			bait_level_default = 1,
+			cloakstrikeduration = 40,
+			cloakstrikespeed = 1.33,
+			cloakstrikeslow = 1.0,
 		},
-
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 3,
 		footprintZ             = 3,
@@ -49,16 +51,12 @@ return {
 		objectName             = [[spherezeus.s3o]],
 		script                 = [[cloakassault.lua]],
 		selfDestructAs         = [[BIG_UNITEX]],
-
 		sfxtypes               = {
-
 			explosiongenerators = {
 				[[custom:zeusmuzzle]],
 				[[custom:zeusgroundflash]],
 			},
-
 		},
-
 		sightDistance          = 385,
 		trackOffset            = 0,
 		trackStrength          = 8,
@@ -67,19 +65,14 @@ return {
 		trackWidth             = 24,
 		turnRate               = 1680,
 		upright                = true,
-
 		weapons                = {
-
 			{
 				def                = [[LIGHTNING]],
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-
 		},
-
 		weaponDefs             = {
-
 			LIGHTNING = {
 				name                    = [[Lightning Gun]],
 				areaOfEffect            = 64,
@@ -88,21 +81,16 @@ return {
 				burst					= 2,
 				burstrate				= 0.5,
 				cegtag					= [[antagonist_spark]],
-
 				customParams            = {
-					extra_damage = 756,
-
+					extra_damage = 475*1.6,
 					light_camera_height = 2000,
 					light_color = [[0.85 0.85 1.2]],
 					light_radius = 220,
 				},
-
 				cylinderTargeting      = 0,
-
 				damage                  = {
-					default        = 450.1,
+					default        = 475.1,
 				},
-
 				duration                = 10,
 				explosionGenerator      = [[custom:lightningplosion_nopost]],
 				edgeeffectiveness		= 0.05,
@@ -124,12 +112,10 @@ return {
 				turret                  = true,
 				waterweapon             = false,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 330,
+				weaponVelocity          = 475,
 			},
 		},
-
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -137,15 +123,12 @@ return {
 				footprintZ       = 2,
 				object           = [[spherezeus_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
 				object           = [[debris2x2c.s3o]],
 			},
-
 		},
-
 	} 
 }
