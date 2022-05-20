@@ -41,9 +41,7 @@ return {
 			is_drone = 1,
 		},
 		sfxtypes            = {
-			explosiongenerators = {
-				
-			},
+			explosiongenerators = {},
 		},
 		sightDistance       = 600,
 		turnRate            = 792,
@@ -67,18 +65,15 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting       = 1,
-
 				customParams            = {
 					light_camera_height = 1800,
 					light_color = [[0.25 1 0.25]],
 					light_radius = 130,
 					combatrange = 150,
 				},
-
 				damage                  = {
-					default = 25,
+					default = 25.1,
 				},
-
 				explosionGenerator      = [[custom:flash_teal7]],
 				fireStarter             = 100,
 				impactOnly              = true,
@@ -86,7 +81,7 @@ return {
 				interceptedByShieldType = 1,
 				laserFlareSize          = 3.25,
 				minIntensity            = 1,
-				range                   = 170,
+				range                   = 190,
 				reloadtime              = 1/3,
 				rgbColor                = [[0 1 0]],
 				soundStart              = [[weapon/laser/mini_laser]],
