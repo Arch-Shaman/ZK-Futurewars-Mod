@@ -45,7 +45,7 @@ local function TracerThread()
 			lockprogress = 0
 			ready = false
 		end
-		if lockprogress > 20 and not ready then
+		if lockprogress > 20 and not ready and currenttarget then
 			ready = true
 			local x, y, z = Spring.GetUnitPosition(currenttarget)
 			GG.PlayFogHiddenSound("sounds/weapon/laser/archer-trackingcomplete.wav", 2, x, y, z)
