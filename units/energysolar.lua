@@ -42,7 +42,7 @@ return {
 		onoffable                     = true,
 		script                        = [[energysolar.lua]],
 		selfDestructAs                = [[SMALL_BUILDINGEX]],
-		sightDistance                 = 273,
+		sightDistance                 = 150,
 		useBuildingGroundDecal        = true,
 		yardMap                       = [[ooooooooooooooooooooooooo]],
 		featureDefs                   = {

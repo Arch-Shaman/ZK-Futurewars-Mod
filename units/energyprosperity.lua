@@ -38,7 +38,7 @@ return {
 		footprintz = 7,
 		buildcostmetal = 40000,
 		yardMap = [[ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo]],
-		sightDistance = 750,
+		sightDistance = 1050,
 		featureDefs                   = {
 			DEAD  = {
 				blocking         = true,

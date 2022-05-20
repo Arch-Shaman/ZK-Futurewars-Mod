@@ -51,7 +51,7 @@ return {
 		objectName                    = [[arm_wind_generator.s3o]],
 		script                        = [[energywind.lua]],
 		selfDestructAs                = [[SMALL_BUILDINGEX]],
-		sightDistance                 = 273,
+		sightDistance                 = 120,
 		useBuildingGroundDecal        = true,
 		yardMap                       = [[ooooooooo]],
 		featureDefs                   = {

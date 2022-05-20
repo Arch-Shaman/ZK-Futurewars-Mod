@@ -48,7 +48,7 @@ return {
 		onoffable                     = false,
 		script                        = [[energysingu.lua]],
 		selfDestructAs                = [[SINGULARITY]],
-		sightDistance                 = 273,
+		sightDistance                 = 375,
 		useBuildingGroundDecal        = true,
 		yardMap                       = [[ooooooooooooooooooooooooooooooooooooooooooooooooo]],
 		featureDefs                   = {

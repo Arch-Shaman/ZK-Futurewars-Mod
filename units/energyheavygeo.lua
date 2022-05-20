@@ -36,7 +36,7 @@ return {
 		objectName                    = [[energyheavygeo.s3o]],
 		script                        = [[energyheavygeo.lua]],
 		selfDestructAs                = [[energyheavygeo_DEATH]],
-		sightDistance                 = 273,
+		sightDistance                 = 225,
 		useBuildingGroundDecal        = true,
 		yardMap                       = [[ooooo ogggo ogggo ogggo ooooo]],
 		weaponDefs            = {

@@ -46,7 +46,7 @@ return {
 		objectName                    = [[geo.dae]],
 		script                        = [[energygeo.lua]],
 		selfDestructAs                = [[ESTOR_BUILDING]],
-		sightDistance                 = 273,
+		sightDistance                 = 225,
 		useBuildingGroundDecal        = true,
 		yardMap                       = [[ooooo ogggo ogggo ogggo ooooo]],
 		featureDefs                   = {

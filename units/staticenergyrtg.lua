@@ -16,7 +16,6 @@ return {
 		collisionVolumeScales         = [[96 80 96]],
 		collisionVolumeType           = [[CylY]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			removewait     = 1,
 			removestop     = 1,
@@ -51,11 +50,9 @@ return {
 		selfDestructAs                = [[staticenergyrtg_DEATH]],
 		useBuildingGroundDecal        = true,
 		modelCenterOffset			  = [[0,10,0]],
-		sightDistance                 = 200,
+		sightDistance                 = 150,
 		yardMap                       = [[oooooooooooooooooooooooooooooooooooo]],
-		
 		featureDefs                   = {
-			
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -63,16 +60,13 @@ return {
 				footprintZ       = 6,
 				object           = [[staticenergyrtg_wreck.dae]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
 				object           = [[debris2x2b.s3o]],
 			},
-
 		},
-		
 		weaponDefs = {
 			staticenergyrtg_DEATH = {
 				name = "Atomic Blast",

@@ -36,7 +36,7 @@ return {
 		objectName                    = [[energyfusion.s3o]],
 		script                        = "energyfusion.lua",
 		selfDestructAs                = [[ESTOR_BUILDINGEX]],
-		sightDistance                 = 273,
+		sightDistance                 = 300,
 		useBuildingGroundDecal        = true,
 		yardMap                       = [[ooooo ooooo ooooo ooooo]],
 		featureDefs                   = {
