@@ -3,7 +3,7 @@ return {
 		unitname                      = [[tacnuke]],
 		name                          = [[Eos]],
 		description                   = [[Tactical Nuke]],
-		buildCostMetal                = 1200,
+		buildCostMetal                = 1500,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 3,
@@ -66,7 +66,7 @@ return {
 					light_radius = 400,
 					cruisealt = 1300,
 					cruisedist = 400,
-					reveal_unit = 3,
+					reveal_unit = 8,
 				},
 				damage                  = {
 					default = 5000.1,
