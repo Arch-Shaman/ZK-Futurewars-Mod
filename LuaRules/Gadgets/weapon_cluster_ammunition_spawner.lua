@@ -1,3 +1,7 @@
+if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Cluster Ammunition Spawner",
@@ -40,10 +44,6 @@ end
 		onexplode = value / nil -- if true, this projectile will cluster when it explodes
 	}
 ]]
-
-if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
-	return
-end
 
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 include("LuaRules/Configs/customcmds.h.lua")
