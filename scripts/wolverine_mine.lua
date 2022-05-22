@@ -35,7 +35,7 @@ local currentBomblet = 1
 local UNFURL_SPEED = 2.4
 local dead = false
 
-local function Remove ()
+local function Remove()
 	local x, _, z = Spring.GetUnitPosition(unitID)
 	
 	-- keep alive for a while (xp, stats etc)
