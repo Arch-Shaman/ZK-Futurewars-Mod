@@ -9,7 +9,6 @@ return {
 		buildCostMetal      = 750,
 		buildDistance       = 400,
 		builder             = true,
-
 		buildoptions        = {
 			[[staticmex]],
 			[[turretaalaser]],
@@ -49,7 +48,6 @@ return {
 			[[turretgauss]],
 			[[wolverine_mine_buildable]],
 		},
-
 		buildPic            = [[athena.png]],
 		buildRange3D        = false,
 		canFly              = true,
@@ -66,8 +64,7 @@ return {
 		collisionVolumeOffsets = [[0 0 0]],
 		collisionVolumeScales  = [[30 20 60]],
 		collisionVolumeType    = [[ellipsoid]],
-		cruiseAlt           = 80,
-
+		cruiseAlt           = 110,
 		customParams        = {
 			airstrafecontrol = [[1]],
 			modelradius    = [[15]],
@@ -79,7 +76,6 @@ return {
 			outline_y = 90,
 			outline_yoff = 12,
 		},
-
 		energyUse           = 0,
 		explodeAs           = [[GUNSHIPEX]],
 		floater             = true,
@@ -102,7 +98,7 @@ return {
 		showNanoSpray       = false,
 		sightDistance       = 600,
 		sonarDistance       = 600,
-		resurrectSpeed      = 7.5,
+		resurrectSpeed      = 15,
 		turnRate            = 148,
 		workerTime          = 30,
 		featureDefs         = {
