@@ -104,7 +104,7 @@ return {
 				sizeDecay               = 0,
 				soundhit			    = [[weapon/cannon/cannon_hit1]],
 				soundStart              = [[weapon/cannon/lurker_fire]],
-				soundStartVolume        = 0.7,
+				soundStartVolume        = 0.4,
 				sprayAngle              = 1800,
 				stages                  = 10,
 				tolerance               = 5000,
@@ -115,7 +115,6 @@ return {
 		},
 
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = false,
 				featureDead      = [[HEAP]],
@@ -123,7 +122,6 @@ return {
 				footprintZ       = 2,
 				object           = [[spherebot_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
