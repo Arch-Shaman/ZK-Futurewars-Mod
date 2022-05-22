@@ -113,10 +113,11 @@ end
 local function MakeDead()
 	dead = true
 	local _, _, _, _, bp = Spring.GetUnitHealth(unitID)
-	if bp >= 1.0 then
-		DeathAnim(1)
-		StartThread(Remove)
+	StartThread(Remove)
+	if bp < 1.0 then
+		return
 	end
+	DeathAnim(1)
 end
 
 function script.AimWeapon(num, heading, putch)
