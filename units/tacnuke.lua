@@ -1,9 +1,9 @@
 return { 
 	tacnuke = {
 		unitname                      = [[tacnuke]],
-		name                          = [[Eos]],
+		name                          = [[Armageddon]],
 		description                   = [[Tactical Nuke]],
-		buildCostMetal                = 1500,
+		buildCostMetal                = 1750,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 3,
@@ -49,7 +49,7 @@ return {
 		},
 		weaponDefs                    = {
 			WEAPON = {
-				name                    = [[BN-14 Tactical Nuclear Bomb]],
+				name                    = [[BN-14 Nuclear Warhead]],
 				areaOfEffect            = 800,
 				avoidFeature            = false,
 				avoidFriendly           = false,
