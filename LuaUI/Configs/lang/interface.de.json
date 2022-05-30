@@ -4,6 +4,7 @@
 		"other" : "%{count} Konstruktionseinheiten sind unbeschäftigt."
 	},
 	"aim" : "Zielen",
+	"battery" : "Batterieladung",
 	"quick_rallypoint_mode" : "Schneller Sammelpunkt Modus",
 	"tacnuke_and_emp" : "Tacnuke und EMP",
 	"seismic" : "Seismisch",

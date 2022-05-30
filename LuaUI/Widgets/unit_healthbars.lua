@@ -94,6 +94,7 @@ local messages = {
 	reclaim = "reclaim",
 	resurrect = "resurrect",
 	aim = "aim",
+	battery = "battery",
 }
 
 local function languageChanged ()
@@ -323,6 +324,7 @@ local barColors = {
 	tele           = { 0.00, 0.60, 0.60, barAlpha },
 	tele_pw        = { 0.00, 0.60, 0.60, barAlpha },
 	aim            = { 0.30, 0.50, 0.40, barAlpha },
+	battery        = { 0.76, 0.75, 0.31, barAlpha },
 
 	-- Features
 	resurrect = { 1.00, 0.50, 0.00, featureBarAlpha },
@@ -615,7 +617,8 @@ do
 				maxWaterTank  = ud.customParams.maxwatertank,
 				freeStockpile = (ud.customParams.freestockpile and true) or nil,
 				specialReload = ud.customParams.specialreloadtime,
-				delaytime     = GetUnitRulesParam(unitID, "comm_aimtime") or ud.customParams.aimdelay
+				delaytime     = GetUnitRulesParam(unitID, "comm_aimtime") or ud.customParams.aimdelay,
+				batterymax    = tonumber(ud.customParams.battery),
 			}
 		end
 		ci = customInfo[unitDefID]
@@ -834,6 +837,15 @@ do
 				local prog = 1 - aimProgress
 				--Spring.Echo("AimProgress: " .. aimProgress)
 				barDrawer.AddBar(addTitle and messages.aim, aimProgress, "aim", (addPercent and floor(prog*100) .. '%'))
+			end
+		end
+		
+		--// Battery
+		if ci.batterymax then
+			local currentBattery = GetUnitRulesParam(unitID, "battery")
+			if currentBattery then
+				local prog = currentBattery / ci.batterymax
+				barDrawer.AddBar(addTitle and messages.battery, prog, "battery", (addPercent and floor(prog*100) .. '%'))
 			end
 		end
 		

@@ -13,8 +13,8 @@ local smokePiece = {turret, barrel}
 local SIG_Idle = 1
 local SIG_Aim = 2
 local lastHeading = 0
-
-local OKP_DAMAGE = tonumber(UnitDefs[unitDefID].customParams.okp_damage)
+local LOS = {inlos = true}
+--local OKP_DAMAGE = tonumber(UnitDefs[unitDefID].customParams.okp_damage)
 
 local function IdleAnim()
 	Signal(SIG_Idle)
@@ -56,11 +56,17 @@ function script.AimWeapon(num, heading, pitch)
 	WaitForTurn(barrel, x_axis)
 	lastHeading = heading
 	StartThread(RestoreAfterDelay)
-	return true
+	return GG.BatteryManagement.CanFire(unitID, num)
 end
 
 function script.BlockShot(num, targetID)
-	return (targetID and (GG.DontFireRadar_CheckBlock(unitID, targetID) or GG.Script.OverkillPreventionCheck(unitID, targetID, OKP_DAMAGE, 2400, 55, -0.05, true, 100))) or false
+	local batteryCheck = not GG.BatteryManagement.CanFire(unitID, num)
+	local radarCheck = targetID and GG.DontFireRadar_CheckBlock(unitID, targetID)
+	return batteryCheck or radarCheck
+end
+
+function script.FireWeapon(num)
+	GG.BatteryManagement.WeaponFired(unitID, num)
 end
 
 function script.Killed(recentDamage, maxHealth)

@@ -125,9 +125,9 @@
 		"helptext" : "Large, angry and capable of fighting both air and land opposition, the Roc is a formidable flying chicken."
 	},
 	"turretaaheavy" : {
-		"name" : "Artemis",
-		"description" : "Very Long-Range Anti-Air Missile Tower, Drains 4 m/s, 20 second stockpile",
-		"helptext" : "The Artemis is an extremely long-ranging first strike anti-air weapon that sends a clear message to enemy aircraft - can't go here, sonny. Each shot costs 80 metal and takes 20 seconds to stockpile, but is well worth the cost, for a quick salvo of missiles will wipe out almost any air attack without fuss."
+		"name" : "Skyshield",
+		"description" : "Very Long-Range AA Maser Tower",
+		"helptext" : "The Skyshield directly pulls energy from its grid connection to charge supercapacitors which power its main weapon: an extremely powerful maser capable of knocking down even Hellas at astonishing rates. Scarier yet: the maser upon contact with an object is enough to even heat up other aircraft in an area around the targeted object, making a lethal area of effect weapon. When facing a Skyshield, the best course of action is to cut its connection to the enemy grid and wait for the supercapacitors to drain."
 	},
 	"chicken_drone" : {
 		"name" : "Drone",
