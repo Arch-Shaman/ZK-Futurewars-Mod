@@ -33,6 +33,7 @@ local sqrt = math.sqrt
 local max = math.max
 local atan2 = math.atan2
 
+local spGetProjectileVelocity = Spring.GetProjectileVelocity
 local spGetGroundHeight = Spring.GetGroundHeight
 local spValidUnitID = Spring.ValidUnitID
 local spIsUnitInLos = Spring.IsUnitInLos
@@ -302,6 +303,13 @@ function gadget:GameFrame(f)
 					missiles[projectile].cruising = true
 				end
 				if data.cruising then -- cruise phase
+					local vx, _, vz = spGetProjectileVelocity(projectile)
+					local px = cx + vx
+					local pz = cz + vz
+					local pxsec = cx + (vx * 2)
+					local pzsec = cx + (vz * 2)
+					local py = max(spGetGroundHeight(px, pz), spGetGroundHeight(pxsec, pzsec))
+					cy = py + missileconfig.altitude
 					spSetProjectileTarget(projectile, x, cy, z)
 					if distance <= mindist then -- end of cruise phase
 						data.cruising = false
