@@ -3,7 +3,7 @@ return {
 		unitname               = [[nebula]],
 		name                   = [[Nebula]],
 		description            = [[Atmospheric Mothership]],
-		acceleration           = 0.04,
+		acceleration           = 0.02,
 		activateWhenBuilt      = true,
 		airStrafe              = 0,
 		bankingAllowed         = false,
@@ -23,7 +23,6 @@ return {
 		collisionVolumeType    = [[box]],
 		corpse                 = [[DEAD]],
 		cruiseAlt              = 280,
-
 		customParams           = {
 			cantuseairpads = 1,
 			modelradius    = [[40]],
@@ -40,29 +39,25 @@ return {
 		iconType               = [[nebula]],
 		idleAutoHeal           = 440,
 		idleTime               = 1800,
-		maxDamage              = 44000,
-		maxVelocity            = 1.1,
+		maxDamage              = 45000,
+		maxVelocity            = 1.5,
 		noAutoFire             = false,
 		noChaseCategory        = [[TERRAFORM FIXEDWING SATELLITE SUB]],
 		objectName             = [[nebula.s3o]],
 		script                 = [[nebula.lua]],
 		selfDestructAs         = [[LARGE_BUILDINGEX]],
-
 		sfxtypes               = {
-
 			explosiongenerators = {
 				[[custom:brawlermuzzle]],
 				[[custom:plasma_hit_96]],
 				[[custom:EXP_MEDIUM_BUILDING_SMALL]],
 			},
 		},
-		sightDistance          = 1200,
+		sightDistance          = 1500,
 		turnRate               = 100,
 		upright                = true,
 		turninplace			   = false,
-		workerTime             = 0,
 		weapons                = {
-
 			{
 				def                = [[MISSILETOP]],
 				mainDir            = [[0 1 0]], -- top
@@ -89,13 +84,11 @@ return {
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-
 			{
 				def         = [[SHIELD]],
 			},
 		},
 		weaponDefs             = {
-	
 			AG = {
 				name                    = [[Destructo-Pods]],
 				accuracy                = 60,
@@ -132,7 +125,6 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 330,
 			},
-		
 			MISSILETOP = {
 				name                    = [[Typhoon Missile Barrage]],
 				areaOfEffect            = 60,
@@ -149,7 +141,6 @@ return {
 				craterBoost             = 1,
 				craterMult              = 2,
 				--cylinderTargeting       = 6,
-
 				customParams        	  = {
 					burst = Shared.BURST_RELIABLE,
 					light_color = [[0.5 0.6 0.6]],
@@ -175,11 +166,9 @@ return {
 					--proxy = 1, -- check for nearby units?
 					--proxydist = 100, -- how far to check for units? Default: spawndist
 				},
-
 				damage                  = {
 					default = 60*4,
 				},
-
 				edgeEffectiveness		= 0.2,
 				explosionGenerator      = [[custom:EMG_HIT_HE]],
 				fireStarter             = 70,
@@ -220,7 +209,6 @@ return {
 				craterBoost             = 1,
 				craterMult              = 2,
 				--cylinderTargeting       = 6,
-
 				customParams        	  = {
 					burst = Shared.BURST_RELIABLE,
 					light_color = [[0.5 0.6 0.6]],
@@ -246,11 +234,9 @@ return {
 					--proxy = 1, -- check for nearby units?
 					--proxydist = 100, -- how far to check for units? Default: spawndist
 				},
-
 				damage                  = {
-					default = 60*4,
+					default = 280,
 				},
-
 				edgeEffectiveness		= 0.2,
 				explosionGenerator      = [[custom:EMG_HIT_HE]],
 				fireStarter             = 70,
@@ -275,30 +261,23 @@ return {
 				weaponType              = [[MissileLauncher]],
 				weaponVelocity          = 650,
 			},
-		
 			fragment = {
-				name                    = [[R-40 Canister Cannon Fragment]],
+				name                    = [[Plasma Fragment]],
 				areaOfEffect            = 144,
 				avoidFeature            = true,
 				avoidFriendly           = true,
 				burnblow                = true,
 				craterBoost             = 1,
 				craterMult              = 0.5,
-
 				customParams            = {
-					gatherradius = [[120]],
-					smoothradius = [[80]],
-					smoothmult   = [[0.25]],
 					force_ignore_ground = [[1]],
 					isFlak = 3,
 					flaktime = 1/30,
 					light_camera_height = 1500,
 				},
-		  
 				damage                  = {
-					default = 18.2 * 2,
+					default = 37.1,
 				},
-
 				edgeEffectiveness       = 0.75,
 				explosionGenerator      = [[custom:FLASH64]],
 				impulseBoost            = 30,
@@ -312,7 +291,6 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 750,
 			},
-		
 			CANNON = {
 				name                    = [[Heavy Canister Driver]],
 				alphaDecay              = 0.1,
@@ -326,16 +304,15 @@ return {
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 185, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 210, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-6,0,-6,6,1,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-6,-3,-6,6,3,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?	
 				},
 				damage                  = {
-					default = 18.2 * 2 * 6,
+					default = 37.1 * 6,
 				},
-
 				explosionGenerator      = [[custom:plasma_hit_32]],
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
@@ -361,20 +338,18 @@ return {
 			},
 			SHIELD = {
 				name                    = [[Energy Shield]],
-
 				damage                  = {
 					default = 10,
 				},
 				customParams            = {
 					unlinked                = true,
 				},
-
 				exteriorShield          = true,
 				shieldAlpha             = 0.2,
 				shieldBadColor          = [[1 0.1 0.1 1]],
 				shieldGoodColor         = [[0.1 0.1 1 1]],
 				shieldInterceptType     = 3,
-				shieldPower             = 30000,
+				shieldPower             = 45000,
 				shieldPowerRegen        = 200,
 				shieldPowerRegenEnergy  = 45,
 				shieldRadius            = 400,
@@ -396,15 +371,12 @@ return {
 				footprintZ       = 5,
 				object           = [[nebula_dead.s3o]],
 			},
-
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 4,
 				footprintZ       = 4,
 				object           = [[debris4x4a.s3o]],
 			},
-
 		},
 	}
 }
