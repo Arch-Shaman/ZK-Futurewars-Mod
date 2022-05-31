@@ -56,6 +56,7 @@ return {
 				coreThickness           = 0.5,
 				craterBoost             = 0,
 				craterMult              = 0,
+				canAttackGround         = false,
 				cameraShake             = 10,
 				customParams              = {
 					isaa = [[1]],
