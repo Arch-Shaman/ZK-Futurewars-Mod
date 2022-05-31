@@ -133,6 +133,7 @@ return {
 					airlaunched = 1,
 					cruise_nolock = 1,
 					cruiserandomradius = 1200,
+					cruise_ignoreterrain = "1",
 				},
 				damage                  = {
 					default = 14000,

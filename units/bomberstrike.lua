@@ -64,8 +64,8 @@ return {
 				name                    = [[Air Launched Cruise Missile]],
 				areaOfEffect            = 192,
 				cegTag                  = [[tactrail]],
-				avoidGround = false,
-				collideFriendly = false,
+				avoidGround             = false,
+				collideFriendly         = false,
 				craterBoost             = 5,
 				craterMult              = 2.5,
 				customParams = {
@@ -73,11 +73,9 @@ return {
 					airlaunched = 1,
 					cruisedist = [[300]],
 				},
-
 				damage                  = {
 					default = 3500.1,
 				},
-
 				fireStarter             = 70,
 				fixedlauncher           = true,
 				flightTime              = 8,

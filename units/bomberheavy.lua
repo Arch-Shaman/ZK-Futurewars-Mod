@@ -82,6 +82,7 @@ return {
 					cruisealt = 600,
 					airlaunched = 1,
 					cruisedist = 280,
+					cruise_ignoreterrain = 1,
 				},
 
 				damage                  = {

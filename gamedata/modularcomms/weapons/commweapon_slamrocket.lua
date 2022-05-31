@@ -13,7 +13,6 @@ local weaponDef = {
 	--craterAreaOfEffect      = 106.66667,
 	craterBoost             = 800,
 	craterMult              = 1.0,
-
 	customParams            = {
 		is_unit_weapon = 1,
 		slot = [[3]],
@@ -29,11 +28,9 @@ local weaponDef = {
 		antibaitbypass = "ärsytät minua",
 	},
 	cylinderTargeting       = 1.0,
-
 	damage                  = {
 		default = 2000,
 	},
-
 	edgeEffectiveness       = 1,
 	explosionGenerator      = [[custom:slam]],
 	fireStarter             = 180,

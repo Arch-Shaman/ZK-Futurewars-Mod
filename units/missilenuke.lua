@@ -63,6 +63,7 @@ return {
 					cruisealt = 1800,
 					cruisedist = 800,
 					reveal_unit = 20,
+					cruise_ignoreterrain = "1",
 				},
 				damage                  = {
 					default = 11000.1,

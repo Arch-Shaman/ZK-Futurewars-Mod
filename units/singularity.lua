@@ -79,6 +79,7 @@ return {
 					light_color = [[1.2 1.6 0.55]],
 					light_radius = 550,
 					reveal_unit = 3,
+					cruise_ignoreterrain = "1",
 				},
       
 				damage                  = {

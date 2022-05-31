@@ -2,10 +2,10 @@ local name = "commweapon_rocketlauncher_nuclear"
 local weaponDef = {
 	name                    = [[Nuclear Cruise Missile Launcher]],
 	areaOfEffect            = 800,
+	avoidGround             = false,
 	cegTag                  = [[nucleartrail_small]],
 	craterBoost             = 1,
 	craterMult              = 4,
-
 	customParams            = {
 		is_unit_weapon = 1,
 		slot = [[5]],
@@ -28,11 +28,9 @@ local weaponDef = {
 		okp_damage = 5000.1,
 		onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 	},
-
 	damage                  = {
 		default = 5000.1,
 	},
-
 	edgeEffectiveness       = 0.4,
 	explosionGenerator      = [[custom:nukebigland]],
 	fireStarter             = 180,

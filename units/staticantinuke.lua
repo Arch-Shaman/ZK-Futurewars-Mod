@@ -68,7 +68,6 @@ return {
 				coverage                = 100000,
 				craterBoost             = 1,
 				craterMult              = 2,
-
 				customParams            = {
 					restrict_in_widgets = 1,
 					reaim_time = 15,

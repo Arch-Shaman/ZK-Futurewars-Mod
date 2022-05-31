@@ -12,12 +12,10 @@ return {
 		canPatrol              = true,
 		category               = [[LAND]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			turnatfullspeed = [[1]],
 			modelradius     = [[24]],
 		},
-
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 3,
 		footprintZ             = 3,
@@ -41,16 +39,12 @@ return {
 		trackType              = [[ChickenTrackPointyShort]],
 		trackWidth             = 52,
 		turnRate               = 1400,
-
 		weapons                = {
-
 			{
 				def                = [[ADV_ROCKET]],
 				onlyTargetCategory = [[LAND SINK TURRET SHIP SWIM FLOAT HOVER]],
 			},
-
 		},
-
 		weaponDefs             = {
 			ADV_ROCKET = {
 				name                    = [[Disruptor Rocket]],

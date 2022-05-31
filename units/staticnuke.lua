@@ -66,6 +66,7 @@ return {
 					cruisealt = 4000,
 					airlaunched = 1,
 					cruisedist = [[300]],
+					cruise_ignoreterrain = 1,
 				},
 				damage                  = {
 					default = 12000.1,
@@ -118,6 +119,7 @@ return {
 					vradius1 = 0, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1,
 					usertargetable = 1,
+					cruise_ignoreterrain = 1,
 					reaim_time = 60, -- Fast update not required (maybe dangerous)
 					light_color = [[2.92 2.64 1.76]],
 					light_radius = 3000,

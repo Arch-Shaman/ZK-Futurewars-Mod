@@ -5,7 +5,6 @@ local weaponDef = {
 	areaOfEffect            = 96,
 	craterBoost             = 1,
 	craterMult              = 2,
-
 	customParams            = {
 		is_unit_weapon = 1,
 		muzzleEffectFire = [[custom:HEAVY_CANNON_MUZZLE]],
@@ -20,11 +19,9 @@ local weaponDef = {
 		okp_timeout = 80,
 		okp_damage = 850,
 	},
-
 	damage                  = {
 		default = 850,
 	},
-
 	edgeEffectiveness       = 0.5,
 	explosionGenerator      = [[custom:PLASMA_HIT_96]],
 	impulseBoost            = 0,
