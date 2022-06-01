@@ -15,7 +15,6 @@ return {
 		collisionVolumeScales         = [[32 75 32]],
 		collisionVolumeType           = [[CylY]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			bait_level_default = 1,
 			bait_level_target_armor = 1,
@@ -23,7 +22,6 @@ return {
 			modelradius    = [[16]],
 			aim_lookahead  = 50,
 		},
-
 		damageModifier                = 0.25,
 		explodeAs                     = [[MEDIUM_BUILDINGEX]],
 		footprintX                    = 2,
@@ -65,7 +63,6 @@ return {
 					light_radius = 200,
 					extra_damage = 1100,
 				},
-
 				damage                  = {
 					default = 37.1*3,
 				},
@@ -86,7 +83,6 @@ return {
 				weaponVelocity          = 700,
 			},
 		},
-
 		featureDefs                   = {
 			DEAD  = {
 				blocking         = true,

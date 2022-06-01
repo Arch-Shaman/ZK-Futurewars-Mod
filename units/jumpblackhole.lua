@@ -16,7 +16,6 @@ return {
 		collisionVolumeScales  = [[30 48 30]],
 		collisionVolumeType    = [[cylY]],
 		corpse                = [[DEAD]],
-
 		customParams          = {
 			midposoffset   = [[0 10 0]],
 			canjump			 = 1,
@@ -30,7 +29,6 @@ return {
 			outline_y = 90,
 			outline_yoff = 30,
 		},
-
 		explodeAs             = [[BIG_UNITEX]],
 		footprintX            = 2,
 		footprintZ            = 2,
@@ -51,7 +49,6 @@ return {
 		selfDestructAs        = [[BIG_UNITEX]],
 		selfDestructCountdown = 5,
 		sfxtypes              = {
-
 			explosiongenerators = {
 				[[custom:PILOT]],
 				[[custom:PILOT2]],
@@ -67,10 +64,7 @@ return {
 		trackWidth            = 22,
 		turnRate              = 1680,
 		upright               = true,
-		workerTime            = 0,
-
 		weapons             = {
-
 			{
 				def                = [[BLACK_HOLE]],
 				badTargetCategory  = [[FIXEDWING]],
@@ -78,7 +72,6 @@ return {
 			},
 		},
 		weaponDefs          = {
-
 			BLACK_HOLE = {
 				name                    = [[Black Hole Launcher]],
 				accuracy                = 350,
@@ -90,23 +83,19 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams            = {
 					singularity = [[1]],
 					singuradius = [[200]],
 					singulifespan = [[200]],
-					singustrength = [[40]],
+					singustrength = [[48]],
 					singuheight = [[100]],
 					singuceg	= [[black_hole_200]],
-
 					light_color = [[1 1 1]],
 					light_radius = 500,
 				},
-      
 				damage                  = {
 					default = 0,
 				},
-
 				explosionGenerator      = [[custom:FLASHSMALLUNITEX]],
 				explosionSpeed          = 50,
 				impulseBoost            = 150,
@@ -127,10 +116,8 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 550,
 			},
-
 		},
 		featureDefs           = {
-	
 			DEAD  = {
 				blocking         = false,
 				featureDead      = [[HEAP]],
@@ -138,15 +125,12 @@ return {
 				footprintZ       = 2,
 				object           = [[freaker_dead.s3o]],
 			},
-
-    
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
 				object           = [[debris2x2c.s3o]],
 			},
-
 		},
 	} 
 }
