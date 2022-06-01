@@ -36,6 +36,7 @@ local max = math.max
 local atan = math.atan
 local atan2 = math.atan2
 local ceil = math.ceil
+local floor = math.floor
 
 local spGetProjectileVelocity = Spring.GetProjectileVelocity
 local spGetGroundHeight = Spring.GetGroundHeight
@@ -302,7 +303,7 @@ function gadget:GameFrame(f)
 			end
 		else
 			local cruiseheight = config[projectiledef].altitude
-			local originalgroundheight = spGetGroundHeight(cx, cz)
+			local originalgroundheight = max(spGetGroundHeight(cx, cz), 0)
 			local wantedheight = originalgroundheight + cruiseheight
 			--spEcho("Projectile ID: " .. projectile .. "\nAlt: " .. cy .. " / " .. wantedalt .. "\nCruising: " .. tostring(data.cruising) .. "\nAscending: " .. tostring(data.takeoff) .. "\nTargetCoords: " .. x .. ", " .. y .. ", " .. z .. "\nDistance: " .. distance .. "/" .. mindist)
 			if data.takeoff then -- begin ascent phase
@@ -318,7 +319,7 @@ function gadget:GameFrame(f)
 			if data.takeoff and ((cy >= wantedheight - 40 and not missileconfig.airlaunched) or (cy <= wantedheight + 20 and missileconfig.airlaunched)) then -- end ascent
 				data.takeoff = false
 				data.cruising = true
-				spEcho("No longer taking off")
+				--spEcho("No longer taking off")
 			end
 			if data.cruising then -- cruise phase
 				local vx, _, vz = spGetProjectileVelocity(projectile)
@@ -327,12 +328,12 @@ function gadget:GameFrame(f)
 				local angle = CalculateAngle(cx, cz, x, z)
 				--spEcho("V: " .. v)
 				if not missileconfig.ignoreterrain and v > 0 then
-					local looksteps = ceil((v * 5) / terrainGranularity) + 1
-					local groundheight = originalgroundheight
+					local looksteps = ceil((v * 4) / terrainGranularity) + 1
+					local groundheight = originalgroundheight + 10
 					local d = 0
 					for i = 1, looksteps do
 						local lx, lv = GetFiringPoint(i * terrainGranularity, cx, cz, angle)
-						local gy = spGetGroundHeight(lx, lv)
+						local gy = max(spGetGroundHeight(lx, lv), 0)
 						if gy > groundheight and gy + cruiseheight > data.wantedalt then
 							groundheight = gy
 							d = i * terrainGranularity
@@ -340,31 +341,38 @@ function gadget:GameFrame(f)
 					end
 					local t = d / v -- time it takes us to get there.
 					local eta = distance / v -- time it will take us to get to the final destination
-					if t > 0 then
+					if t > 0 and t <= eta then
 						wantedheight = groundheight + cruiseheight
 						local dy = wantedheight - cy
 						local wantedangle = atan2(dy, t)
 						_, ty = GetFiringPoint(eta, 0, cy, wantedangle) -- reframe the problem as a function of time. We want the height change over time (we don't care about positions)
 						ty = ty + wantedheight
 						--spEcho("TerrainCheck:\nGround level: " .. groundheight .. "\nCruise Height: " .. wantedheight .. "\nWanted: " .. ty)
-						data.wantedalt = ty
-						data.altitudestayframes = ceil(t) + 1
+						data.wantedalt = wantedheight
+						data.altitudestayframes = floor(t)
 					else
 						if data.altitudestayframes > 0 then
 							data.altitudestayframes = data.altitudestayframes - 1
 							local dy = data.wantedalt - cy
-							if dy > 0 then
+							if dy > 0 and data.altitudestayframes > 0 then
 								local wantedangle = atan2(dy, data.altitudestayframes)
-								_, ty = GetFiringPoint(eta, 0, dy, wantedangle)
-								ty = ty + cy
+								_, ty = GetFiringPoint(eta, 0, cy, wantedangle)
+								ty = ty + data.wantedalt
 							else
 								ty = cy
 							end
 							--spEcho("HoldTerrain: " .. ty)
 						else
-							local wantedheight = groundheight + cruiseheight
-							local wantedangle = atan((wantedheight - cy), eta)
-							_, ty = GetFiringPoint(eta, 0, cy, wantedangle)
+							local wantedheight = originalgroundheight + cruiseheight
+							local dy = wantedheight - cy
+							local wantedangle = atan2(dy, eta)
+							if dy < 0 then
+								_, ty = GetFiringPoint(eta, 0, cy, wantedangle)
+								--spEcho("TY: " .. ty)
+								ty = wantedheight - ty
+							else
+								ty = cy
+							end
 							data.wantedalt = wantedheight
 						end
 					end
