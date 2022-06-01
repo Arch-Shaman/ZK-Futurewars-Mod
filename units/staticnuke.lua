@@ -110,7 +110,7 @@ return {
 					restrict_in_widgets = 1,
 					cruisealt = 11000,
 					cruisedist = 400,
-					numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "staticnuke_warhead",
 					spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -126,9 +126,9 @@ return {
 					stats_custom_tooltip_1 = " - Carries MIRV Warheads",
 					stats_custom_tooltip_entry_1 = "",
 					stats_custom_tooltip_2 = "    - Warhead Count:",
-					stats_custom_tooltip_entry_2 = "3",
+					stats_custom_tooltip_entry_2 = "5",
 					stats_custom_tooltip_3 = "    - Warhead Range:",
-					stats_custom_tooltip_entry_3 = "1750 elmos",
+					stats_custom_tooltip_entry_3 = "2500 elmos",
 					reveal_unit = 25,
 				},
 				damage                  = {
