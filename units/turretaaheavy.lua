@@ -24,7 +24,7 @@ return {
     		neededlink     = 300,
    			pylonrange     = 250,
 			battery = 200,
-			batterygain = 1.2,
+			batterygain = 2.2,
 		},
 		explodeAs                     = [[ESTOR_BUILDING]],
 		footprintX                    = 4,
