@@ -16,7 +16,7 @@ local weaponDef = {
 		light_radius = 280,
 		reaim_time = 1,
 		cruiserandomradius = 100,
-		cruisealt = 200,
+		cruisealt = 400,
 		airlaunched = 1,
 		cruisedist = 280,
 		cruise_nolock = 1,
@@ -26,6 +26,7 @@ local weaponDef = {
 		okp_radarmult = 1,
 		okp_timeout = 120,
 		okp_damage = 5000.1,
+		cruise_ignoreterrain = "1",
 		onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 	},
 	damage                  = {
