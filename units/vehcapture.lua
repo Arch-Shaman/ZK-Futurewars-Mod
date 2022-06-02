@@ -5,7 +5,7 @@ return {
 		description         = [[Capture Rover]],
 		acceleration        = 0.222,
 		brakeRate           = 0.385,
-		buildCostMetal      = 420,
+		buildCostMetal      = 500,
 		builder             = false,
 		buildPic            = [[vehcapture.png]],
 		canGuard            = true,
@@ -32,9 +32,9 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
-		maxDamage           = 820,
+		maxDamage           = 1650,
 		maxSlope            = 18,
-		maxVelocity         = 1.95,
+		maxVelocity         = 2.1,
 		maxWaterDepth       = 22,
 		movementClass       = [[TANK3]],
 		noAutoFire          = false,
@@ -49,16 +49,14 @@ return {
 		trackType           = [[StdTank]],
 		trackWidth          = 28,
 		turninplace         = 0,
-		turnRate            = 420,
+		turnRate            = 320,
 		workerTime          = 0,
 		weapons             = {
-
 			{
 				def                = [[CAPTURERAY]],
 				badTargetCategory  = [[UNARMED FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-
 		},
 		weaponDefs          = {
 			CAPTURERAY = {
@@ -76,17 +74,14 @@ return {
 					disarmDamageOnly = 0,
 					disarmTimer      = 5, -- seconds
 					post_capture_reload = 360,
-
 					stats_hide_damage = 1, -- continuous laser
 					stats_hide_reload = 1,
-
 					light_radius = 120,
 					light_color = [[0 0.6 0.15]],
-
 					reload_override = 0.01, --causes the capture reload bar to show but not the reload bar
 				},
 				damage                  = {
-					default = 13.1,
+					default = 22.1,
 				},
 				explosionGenerator      = [[custom:NONE]],
 				fireStarter             = 30,
@@ -97,7 +92,7 @@ return {
 				largeBeamLaser          = true,
 				laserFlareSize          = 0,
 				minIntensity            = 1,
-				range                   = 450,
+				range                   = 500,
 				reloadtime              = 1/30,
 				rgbColor                = [[0 0.8 0.2]],
 				scrollSpeed             = 2,
