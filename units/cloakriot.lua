@@ -55,7 +55,6 @@ return {
 		objectName             = [[Spherewarrior.dae]],
 		script                 = [[cloakriot.lua]],
 		selfDestructAs         = [[SMALL_UNITEX]],
-
 		sfxtypes               = {
 
 			explosiongenerators = {
@@ -112,7 +111,7 @@ return {
 				},
 
 				damage                  = {
-					default = 34.01,
+					default = 36.01,
 				},
 
 				edgeEffectiveness       = 0.5,
