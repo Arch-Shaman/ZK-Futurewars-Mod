@@ -90,7 +90,7 @@ return {
 				impulseBoost            = 0,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
-				leadlimit               = 1,
+				predictboost			= 1,
 				myGravity               = 0.4,
 				model                   = [[diskball.s3o]],
 				numBounce               = 3,
