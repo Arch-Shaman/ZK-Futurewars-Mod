@@ -62,7 +62,6 @@ return {
 			},
 		},
 		weaponDefs             = {
-
 			ROCKET = {
 				name                    = [[CRE-82 Missile]],
 				areaOfEffect            = 75,
@@ -76,14 +75,13 @@ return {
 					cruisealt = 200,
 					airlaunched = 1, -- don't ask me why.
 					cruisedist = 420,
-					reveal_unit = 7,
+					reveal_unit = 10,
 				},
-
 				damage                  = {
-					default = 300,
+					default = 300.1,
 				},
 				fireStarter             = 70,
-				flightTime              = 10,
+				flightTime              = 30,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
@@ -100,10 +98,10 @@ return {
 				weaponAcceleration		= 200,
 				tracks                  = true,
 				trajectoryHeight        = 0.4,
-				turnrate                = 14000,
+				turnrate                = 44000,
 				turret                  = true,
 				weaponType              = [[MissileLauncher]],
-				weaponVelocity          = 300,
+				weaponVelocity          = 500,
 			},
 		},
 		featureDefs            = {
