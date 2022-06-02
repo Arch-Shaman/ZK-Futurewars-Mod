@@ -111,7 +111,7 @@ function gadget:GameFrame(f)
 			local gain = data.gain 
 			if (not powered) or bp < 1 then
 				if data.battery > 0 then
-					data.battery = max(current - (gain * 2), 0)
+					data.battery = max(data.battery - (gain * 2), 0)
 				end
 			elseif data.battery < data.maxbattery then
 				if data.scales then
