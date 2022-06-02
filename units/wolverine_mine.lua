@@ -89,13 +89,8 @@ return {
 					stats_shield_damage = 900.06,
 					stats_hide_dps = 1, -- one use
 					stats_hide_reload = 1,
-					blastwave_size = 20,
-					blastwave_impulse = 0,
-					blastwave_speed = 10,
-					blastwave_life = 6,
-					blastwave_lossfactor = 0.9,
-					blastwave_damage = 20,
 					nofriendlyfire = "needs hax",
+					lups_noshockwave = [[1]],
 				},
 
 				damage                  = {
@@ -139,6 +134,7 @@ return {
 					bogus = 1,
 					light_color = [[0.75 0.4 0.15]],
 					light_radius = 100,
+					lups_noshockwave = [[1]],
 				},
 				damage                  = {
 					default = 0,
@@ -179,6 +175,7 @@ return {
 					stats_hide_reload = 1,
 					light_color = [[0.75 0.4 0.15]],
 					light_radius = 100,
+					lups_noshockwave = [[1]],
 				},
 
 				damage                  = {

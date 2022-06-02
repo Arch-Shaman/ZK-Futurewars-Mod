@@ -88,12 +88,6 @@ return {
 					stats_shield_damage = 900.06,
 					stats_hide_dps = 1, -- one use
 					stats_hide_reload = 1,
-					blastwave_size = 20,
-					blastwave_impulse = 1,
-					blastwave_speed = 10,
-					blastwave_life = 6,
-					blastwave_lossfactor = 0.9,
-					blastwave_damage = 20,
 					nofriendlyfire = "needs hax",
 				},
 
