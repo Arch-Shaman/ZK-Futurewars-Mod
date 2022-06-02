@@ -328,52 +328,54 @@ function gadget:GameFrame(f)
 				local angle = CalculateAngle(cx, cz, x, z)
 				--spEcho("V: " .. v)
 				if not missileconfig.ignoreterrain and v > 0 then
-					local looksteps = ceil((v * 4) / terrainGranularity) + 1
-					local groundheight = originalgroundheight + 10
-					local d = 0
-					for i = 1, looksteps do
-						local lx, lv = GetFiringPoint(i * terrainGranularity, cx, cz, angle)
-						local gy = max(spGetGroundHeight(lx, lv), 0)
-						if gy > groundheight and gy + cruiseheight > data.wantedalt then
-							groundheight = gy
-							d = i * terrainGranularity
-						end
-					end
-					local t = d / v -- time it takes us to get there.
 					local eta = distance / v -- time it will take us to get to the final destination
-					if t > 0 and t <= eta then
-						wantedheight = groundheight + cruiseheight
-						local dy = wantedheight - cy
-						local wantedangle = atan2(dy, t)
-						_, ty = GetFiringPoint(eta, 0, cy, wantedangle) -- reframe the problem as a function of time. We want the height change over time (we don't care about positions)
-						ty = ty + wantedheight
-						--spEcho("TerrainCheck:\nGround level: " .. groundheight .. "\nCruise Height: " .. wantedheight .. "\nWanted: " .. ty)
-						data.wantedalt = wantedheight
-						data.altitudestayframes = floor(t)
-					else
-						if data.altitudestayframes > 0 then
-							data.altitudestayframes = data.altitudestayframes - 1
-							local dy = data.wantedalt - cy
-							if dy > 0 and data.altitudestayframes > 0 then
-								local wantedangle = atan2(dy, data.altitudestayframes)
-								_, ty = GetFiringPoint(eta, 0, cy, wantedangle)
-								ty = ty + data.wantedalt
-							else
-								ty = cy
+					if eta >= 6 and distance > v * 4 then
+						local looksteps = min(ceil((v * 4) / terrainGranularity) + 1, 20)
+						local groundheight = originalgroundheight + 10
+						local d = 0
+						for i = 1, looksteps do
+							local lx, lv = GetFiringPoint(i * terrainGranularity, cx, cz, angle)
+							local gy = max(spGetGroundHeight(lx, lv), 0)
+							if gy > groundheight and gy + cruiseheight > data.wantedalt then
+								groundheight = gy
+								d = i * terrainGranularity
 							end
-							--spEcho("HoldTerrain: " .. ty)
-						else
-							local wantedheight = originalgroundheight + cruiseheight
+						end
+						local t = d / v -- time it takes us to get there.
+						if t > 0 and t <= eta then
+							wantedheight = groundheight + cruiseheight
 							local dy = wantedheight - cy
-							local wantedangle = atan2(dy, eta)
-							if dy < 0 then
-								_, ty = GetFiringPoint(eta, 0, cy, wantedangle)
-								--spEcho("TY: " .. ty)
-								ty = wantedheight - ty
-							else
-								ty = cy
-							end
+							local wantedangle = atan2(dy, t)
+							_, ty = GetFiringPoint(eta, 0, cy, wantedangle) -- reframe the problem as a function of time. We want the height change over time (we don't care about positions)
+							ty = ty + wantedheight
+							--spEcho("TerrainCheck:\nGround level: " .. groundheight .. "\nCruise Height: " .. wantedheight .. "\nWanted: " .. ty)
 							data.wantedalt = wantedheight
+							data.altitudestayframes = floor(t)
+						else
+							if data.altitudestayframes > 0 then
+								data.altitudestayframes = data.altitudestayframes - 1
+								local dy = data.wantedalt - cy
+								if dy > 0 and data.altitudestayframes > 0 then
+									local wantedangle = atan2(dy, data.altitudestayframes)
+									_, ty = GetFiringPoint(eta, 0, cy, wantedangle)
+									ty = ty + data.wantedalt
+								else
+									ty = cy
+								end
+								--spEcho("HoldTerrain: " .. ty)
+							else
+								local wantedheight = originalgroundheight + cruiseheight
+								local dy = wantedheight - cy
+								local wantedangle = atan2(dy, eta)
+								if dy < 0 then
+									_, ty = GetFiringPoint(eta, 0, cy, wantedangle)
+									--spEcho("TY: " .. ty)
+									ty = wantedheight - ty
+								else
+									ty = cy
+								end
+								data.wantedalt = wantedheight
+							end
 						end
 					end
 				end

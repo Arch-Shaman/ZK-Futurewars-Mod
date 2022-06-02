@@ -152,6 +152,7 @@ return {
 					cruise_randomizationtype = "circular",
 					cruise_nolock = 1,
 					cruisetracking = 1,
+					cruise_ignoreterrain = 1,
 					--CAS--
 					--numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					--projectile1 = "nebula_ag",
