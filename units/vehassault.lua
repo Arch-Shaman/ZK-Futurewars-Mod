@@ -5,7 +5,7 @@ return {
 		description            = [[Assault Rover]],
 		acceleration           = 0.2,
 		brakeRate              = 0.6,
-		buildCostMetal         = 250,
+		buildCostMetal         = 240,
 		builder                = false,
 		buildPic               = [[vehassault.png]],
 		canGuard               = true,
@@ -16,7 +16,6 @@ return {
 		collisionVolumeScales  = [[42 42 42]],
 		collisionVolumeType    = [[ellipsoid]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			bait_level_default = 0,
 			aimposoffset   = [[0 8 0]],
@@ -32,7 +31,6 @@ return {
 			outline_y = 80,
 			outline_yoff = 12.5,
 		},
-
 		explodeAs              = [[BIG_UNITEX]],
 		footprintX             = 3,
 		footprintZ             = 3,
@@ -66,8 +64,6 @@ return {
 		trackWidth             = 38,
 		turninplace            = 0,
 		turnRate               = 688,
-		workerTime             = 0,
-
 		weapons                = {
 			{
 				def                = [[PLASMA]],
@@ -84,22 +80,20 @@ return {
 				customParams        = {
 					light_camera_height = 1500,
 					stats_custom_tooltip_1 = " - Spooling Weapon:",
-					stats_custom_tooltip_entry_1 = "-15% reload time per shot",
+					stats_custom_tooltip_entry_1 = "-33% reload time per shot",
 					stats_custom_tooltip_2 = " - Maximum DPS:",
 					stats_custom_tooltip_entry_2 = "985.7",
 					script_reload = [[1.4]],
 					recycler = 1,
 					recycle_reductiontime = 8/30,
 					recycle_reduction = 0.2,
-					recycle_bonus = 0.15,
+					recycle_bonus = 0.33,
 					recycle_reductionframes = 10/30,
 					recycle_maxbonus = 5,
 				},
-
 				damage                  = {
 					default = 230,
 				},
-
 				explosionGenerator      = [[custom:INGEBORG]],
 				mygravity				= 0.04,
 				impulseBoost            = 0,
