@@ -20,13 +20,13 @@ local weaponDef = {
 		recycler = 1,
 		recycle_reductiontime = 0.2,
 		recycle_reduction = 0.3,
-		recycle_bonus = 0.33,
+		recycle_bonus = 0.5,
 		recycle_reductionframes = 0.5,
 		recycle_maxbonus = 20,
 	},
 
 	damage                  = {
-		default = 25.1,
+		default = 30.1,
 	},
 
 	edgeEffectiveness       = 0.5,
