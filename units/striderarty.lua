@@ -54,7 +54,6 @@ return {
 			},
 		},
 		weaponDefs             = {
-
 			ROCKET = {
 				name                    = [[Long Range MRLS]],
 				areaOfEffect            = 128,
@@ -70,13 +69,14 @@ return {
 					light_camera_height = 2500,
 					light_color = [[0.35 0.17 0.04]],
 					light_radius = 400,
-					cruisealt = 310,
+					cruisealt = 510,
 					cruisedist = 500,
 					cruise_ascendradius = 330,
 					reveal_unit = 10,
 					cruisetracking = 0,
 					cruise_nolock = 1,
-					cruiserandomradius = 500,
+					cruiserandomradius = 380,
+					cruise_ignoreterrain = "1",
 				},
 				damage                  = {
 					default = 220.5,
@@ -86,7 +86,7 @@ return {
 				fireStarter             = 100,
 				flightTime              = 35,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 2,
 				model                   = [[hobbes.s3o]],
 				noSelfDamage            = true,
