@@ -33,9 +33,10 @@ return {
 		corpse                        = [[DEAD]],
 		customParams                  = {
 			pad_count = 1,
-			landflystate   = [[0]],
+			landflystate   = [[1]],
 			sortName = [[4]],
 			modelradius    = [[51]], -- at 50 planefighter won't respond to Bugger Off calls
+			factory_land_state = 1,
 			aimposoffset   = [[0 23 -25]],
 			midposoffset   = [[0 20 0]],
 			default_spacing = 8,
