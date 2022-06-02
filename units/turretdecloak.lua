@@ -65,6 +65,7 @@ return {
 					puredecloaktime = 200,
 					norealdamage = 1,
 					stats_hide_damage = 1,
+					lups_noshockwave = [[1]],
 				},
 				edgeeffectiveness       = 0.4,
 				explosionGenerator      = [[custom:scanner_ping]],

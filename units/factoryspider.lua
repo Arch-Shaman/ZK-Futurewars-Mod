@@ -101,6 +101,7 @@ return {
 					timeslow_damagefactor = [[400]],
 					timeslow_overslow_frames = [[60]],
 					timeslow_onlyslow = 1,
+					lups_noshockwave = [[1]],
 				},
 
 				edgeeffectiveness       = 0.01,
