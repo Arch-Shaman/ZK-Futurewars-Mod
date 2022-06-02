@@ -25,7 +25,7 @@ local weaponDef = {
 		okp_damage = 180*4,
 	},
 	damage                  = {
-		default = 180.01,
+		default = 120.01,
 	},
 
 	edgeEffectiveness       = 0.6,
@@ -41,11 +41,11 @@ local weaponDef = {
 	model                   = [[diskball.s3o]],
 	numBounce               = 6,
 	range                   = 440,
-	reloadtime              = 3,
+	reloadtime              = 2,
 	soundHit                = [[weapon/clusters/light_cluster_grenade_hit]],
 	soundHitVolume          = 8.6,
 	soundStart              = [[weapon/cannon/light_launcher]],
-	sprayAngle				= 6420,
+	sprayAngle				= 4420,
 	turret                  = true,
 	waterWeapon             = true,
 	weaponType              = [[Cannon]],
