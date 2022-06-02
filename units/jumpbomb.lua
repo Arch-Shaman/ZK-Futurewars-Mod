@@ -12,8 +12,8 @@ return {
 		canMove                = true,
 		canPatrol              = true,
 		category               = [[LAND]],
-		cloakCost              = 1.5,
-		cloakCostMoving        = 15,
+		cloakCost              = 3,
+		cloakCostMoving        = 30,
 		collisionVolumeOffsets = [[0 0 0]],
 		collisionVolumeScales  = [[20 20 20]],
 		collisionVolumeType    = [[ellipsoid]],
@@ -21,7 +21,6 @@ return {
 		selectionVolumeScales  = [[28 28 28]],
 		selectionVolumeType    = [[ellipsoid]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			canjump          = 1,
 			jump_range       = 450,
@@ -37,7 +36,6 @@ return {
 			recloaktime = 300,
 			cloaker_bestowed_radius = 75,
 		},
-
 		explodeAs              = [[jumpbomb_DEATH]],
 		fireState              = 0,
 		footprintX             = 2,
@@ -70,9 +68,7 @@ return {
 		trackType              = [[ChickenTrackPointy]],
 		trackWidth             = 34,
 		turnRate               = 2400,
-		workerTime             = 0,
 		featureDefs            = {
-
 			DEAD      = {
 				blocking         = false,
 				featureDead      = [[HEAP]],
@@ -80,14 +76,12 @@ return {
 				footprintZ       = 2,
 				object           = [[skuttle_dead.s3o]],
 			},
-
 			HEAP      = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
 				object           = [[debris2x2c.s3o]],
 			},
-
 		},
 		weaponDefs = {
 			jumpbomb_DEATH = {
