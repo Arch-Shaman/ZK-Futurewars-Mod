@@ -142,7 +142,7 @@ return {
 				flightTime              = 15,
 				impactOnly              = false,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 2,
 				model                   = [[wep_m_maverick.s3o]],
 				range                   = 780,

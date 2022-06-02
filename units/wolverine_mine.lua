@@ -104,7 +104,7 @@ return {
 				model                   = [[claw.s3o]],
 				explosionGenerator      = [[custom:DOT_Pillager_Explo]],
 				fireTolerance           = 1820, -- 10 degrees
-				impulseBoost            = 0.5,
+				impulseBoost            = 0,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,

@@ -48,7 +48,6 @@ return {
 		objectName             = [[corraid.s3o]],
 		script                 = [[vehassault.lua]],
 		selfDestructAs         = [[BIG_UNITEX]],
-
 		sfxtypes               = {
 			explosiongenerators = {
 				[[custom:RAIDMUZZLE]],

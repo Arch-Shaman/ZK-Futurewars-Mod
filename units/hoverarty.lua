@@ -71,7 +71,6 @@ unitDef = {
 		},
 	},
 	weaponDefs          = {
-
 		TRACKER = {
 			name                    = [[Tracking Beam]],
 			areaOfEffect            = 20,
@@ -94,13 +93,12 @@ unitDef = {
 			damage                  = {
 				default = 0,
 			},
-
 			--explosionGenerator      = [[custom:flash1red]],
 			fireTolerance           = 8192, -- 45 degrees
 			impactOnly              = true,
 			impulseBoost            = 0,
 			impulseFactor           = 0,
-			interceptedByShieldType = 1,
+			interceptedByShieldType = 0,
 			largeBeamLaser          = true,
 			laserFlareSize          = 2,
 			leadLimit               = 18,

@@ -72,7 +72,7 @@ return {
 				cegTag                  = [[torpedo_trail]],
 				customParams			= {
 					blastwave_size = 30,
-					blastwave_impulse = 0.5,
+					blastwave_impulse = 0,
 					blastwave_speed = 10,
 					blastwave_life = 5,
 					blastwave_lossfactor = 0.88,

@@ -40,9 +40,7 @@ return {
 		selfDestructAs      = [[GUNSHIPEX]],
 		sightDistance       = 620,
 		turnRate            = 1000,
-
 		weapons             = {
-
 			{
 				def                = [[VTOL_SALVO]],
 				mainDir            = [[0 -0.35 1]],
@@ -62,7 +60,6 @@ return {
 				burstrate               = 0.1,
 				craterBoost             = 0.15,
 				craterMult              = 0.3,
-
 				customParams        = {
 					light_camera_height = 1600,
 					light_color = [[0.8 0.76 0.38]],
@@ -70,16 +67,14 @@ return {
 					isFlak = 3,
 					flaktime = 1/30,
 				},
-				
 				damage                  = {
 					default = 50,
 				},
-
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = [[custom:EMG_HIT_HE]],
 				firestarter             = 70,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				intensity               = 0.7,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
@@ -105,7 +100,6 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0.123,
 				craterMult              = 0.246,
-
 				customparams = {
 					burst = Shared.BURST_UNRELIABLE,
 					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
@@ -125,18 +119,16 @@ return {
 					combatrange = 520,
 					useheight = 1,
 				},
-
 				damage                  = {
 					default = 50*6,
 				},
-
 				dance                   = 30,
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
 				fireStarter             = 70,
 				flightTime              = 7,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 2,
 				model                   = [[hobbes.s3o]],
 				noSelfDamage            = true,

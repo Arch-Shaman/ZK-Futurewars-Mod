@@ -22,7 +22,6 @@ return {
 		selectionVolumeType    = [[box]],
 		corpse              = [[DEAD]],
 		cruiseAlt           = 300,
-
 		customParams        = {
 			modelradius    = [[15]],
 			refuelturnradius = [[220]],
@@ -33,7 +32,6 @@ return {
 			outline_y = 130,
 			outline_yoff = 10,
 		},
-
 		explodeAs           = [[GUNSHIPEX]],
 		floater             = true,
 		footprintX          = 3,
@@ -113,7 +111,7 @@ return {
 				flightTime              = 3,
 				heightmod               = 0,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 2,
 				leadlimit               = 0,
 				model                   = [[hobbes.s3o]],

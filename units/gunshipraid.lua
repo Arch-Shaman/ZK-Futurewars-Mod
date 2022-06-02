@@ -5,7 +5,7 @@ return {
 		description            = [[Medium Laser Raider Gunship]],
 		acceleration           = 0.2,
 		brakeRate              = 0.4,
-		buildCostMetal         = 225,
+		buildCostMetal         = 250,
 		builder                = false,
 		buildPic               = [[gunshipraid.png]],
 		canFly                 = true,
@@ -33,7 +33,7 @@ return {
 		iconType               = [[gunshipraider]],
 		idleAutoHeal           = 25,
 		idleTime               = 150,
-		maxDamage              = 1125,
+		maxDamage              = 1100,
 		maxVelocity            = 6.5,
 		noChaseCategory        = [[TERRAFORM SUB]],
 		objectName             = [[banshee.s3o]],
@@ -44,7 +44,6 @@ return {
 				[[custom:VINDIBACK]],
 			},
 		},
-
 		sightDistance          = 700,
 		sonarDistance		   = 700,
 		radarDistance		   = 1300,
@@ -63,7 +62,6 @@ return {
 				--onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			--},
 		},
-
 		weaponDefs             = {
 			LASER = {
 				name                    = [[Light Modulated Laser System]],
@@ -78,17 +76,14 @@ return {
 				burst					= 7,
 				burstrate				= 2/30,
 				customparams = {
-
 					light_color = [[0.8941 0.7647 0.1255]],
 					light_radius = 175,
 					underwaterdamagereduction = 0.2,
 					combatrange = 250,
 				},
-
 				damage                  = {
 					default = 37.1,
 				},
-
 				explosionGenerator      = [[custom:heavybeamorangeimpactsmall]],
 				--heightMod             = 0.5,
 				impactOnly              = true,
