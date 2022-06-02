@@ -23,11 +23,9 @@ return {
 		collisionVolumeType    = [[cylY]],
 		corpse                 = [[DEAD]],
 		cruiseAlt              = 250,
-
 		customParams           = {
 			modelradius    = [[10]],
 		},
-
 		explodeAs              = [[LARGE_BUILDINGEX]],
 		floater                = true,
 		footprintX             = 5,
@@ -44,9 +42,7 @@ return {
 		objectName             = [[krow.s3o]],
 		script                 = [[gunshipkrow.lua]],
 		selfDestructAs         = [[LARGE_BUILDINGEX]],
-
 		sfxtypes               = {
-
 			explosiongenerators = {
 				[[custom:beamweapon_muzzle_green]],
 				[[custom:DOT_Pillager_Explo]],
@@ -54,6 +50,7 @@ return {
 
 		},
 		sightDistance          = 700,
+		sonarDistance          = 700,
 		turnRate               = 250,
 		upright                = true,
 		workerTime             = 0,
