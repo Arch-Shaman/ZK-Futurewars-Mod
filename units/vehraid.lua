@@ -5,7 +5,7 @@ return {
 		description            = [[Raider Rover]],
 		acceleration           = 0.342,
 		brakeRate              = 0.84,
-		buildCostMetal         = 120,
+		buildCostMetal         = 100,
 		builder                = false,
 		buildPic               = [[vehraid.png]],
 		canGuard               = true,
