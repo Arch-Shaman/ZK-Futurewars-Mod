@@ -86,6 +86,7 @@ local alwaysDisplay = {
 	[UnitDefNames.staticcon.id] = true,
 	[UnitDefNames.staticnuke.id] = true,
 	[UnitDefNames.staticenergyrtg.id] = true,
+	[UnitDefNames.energyprosperity.id] = true,
 }
 
 -----------------------------------------------------------------------------------
