@@ -16,18 +16,16 @@ return {
 		selectionVolumeScales  = [[55 55 55]],
 		selectionVolumeType    = [[ellipsoid]],
 		corpse              = [[DEAD]],
-
 		customParams        = {
 			cus_noflashlight  = 1,
 			selection_scale   = 0.92,
 			aim_lookahead     = 160,
-			nanoregen = 10,
+			nanoregen = 14,
 			nano_maxregen = 10,
 			outline_x = 110,
 			outline_y = 110,
 			outline_yoff = 13.5,
 		},
-
 		explodeAs           = [[BIG_UNITEX]],
 		footprintX          = 4,
 		footprintZ          = 4,
@@ -62,7 +60,6 @@ return {
 			},
 		},
 		weaponDefs          = {
-	
 			fragment = {
 				name                    = [[R-62 Fragment]],
 				areaOfEffect            = 144,
@@ -71,20 +68,14 @@ return {
 				burnblow                = true,
 				craterBoost             = 1,
 				craterMult              = 0.5,
-
 				customParams            = {
-					gatherradius = [[120]],
-					smoothradius = [[80]],
-					smoothmult   = [[0.25]],
 					isFlak = 3,
 					flaktime = 1/30,
 					light_camera_height = 1500,
 				},
-
 				damage                  = {
 					default = 20.2,
 				},
-
 				edgeEffectiveness       = 0.75,
 				explosionGenerator      = [[custom:FLASH64]],
 				impulseBoost            = 30,
@@ -98,22 +89,15 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 750,
 			},
-	
 			TAWF_BANISHER = {
 				name                    = [[R-22 Heavy Canister Missile]],
 				areaOfEffect            = 160,
 				cegTag                  = [[BANISHERTRAIL]],
 				craterBoost             = 1,
 				craterMult              = 2,
-
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
-
-					gatherradius = [[120]],
-					smoothradius = [[80]],
-					smoothmult   = [[0.25]],
 					force_ignore_ground = [[1]],
-
 					script_reload = [[3.4]],
 					script_burst = [[4]],
 					numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
@@ -131,11 +115,9 @@ return {
 					light_color = [[1.4 1 0.7]],
 					light_radius = 320,
 				},
-      
 				damage                  = {
 					default = 20.2 * 8,
 				},
-
 				edgeEffectiveness       = 0.4,
 				explosionGenerator      = [[custom:xamelimpact]],
 				fireStarter             = 20,
@@ -145,7 +127,7 @@ return {
 				interceptedByShieldType = 2,
 				model                   = [[corbanishrk.s3o]],
 				noSelfDamage            = true,
-				range                   = 395,
+				range                   = 420,
 				reloadtime              = 0.2,
 				smokeTrail              = false,
 				soundHit                = [[weapon/cannon/outlaw_gun]],
