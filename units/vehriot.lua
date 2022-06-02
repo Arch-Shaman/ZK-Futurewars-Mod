@@ -5,7 +5,7 @@ return {
 		description         = [[Riot Rover]],
 		acceleration        = 0.159,
 		brakeRate           = 1.24,
-		buildCostMetal      = 240,
+		buildCostMetal      = 230,
 		builder             = false,
 		buildPic            = [[vehriot.png]],
 		canGuard            = true,
@@ -16,7 +16,6 @@ return {
 		selectionVolumeScales  = [[42 42 42]],
 		selectionVolumeType    = [[ellipsoid]],
 		corpse              = [[DEAD]],
-
 		customParams        = {
 			selection_scale   = 0.85,
 			aim_lookahead     = 100,
@@ -24,7 +23,6 @@ return {
 			outline_y = 80,
 			outline_yoff = 12.5,
 		},
-
 		explodeAs           = [[BIG_UNITEX]],
 		footprintX          = 3,
 		footprintZ          = 3,
@@ -32,9 +30,9 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
-		maxDamage           = 1020,
+		maxDamage           = 1100,
 		maxSlope            = 18,
-		maxVelocity         = 2.1,
+		maxVelocity         = 2.2,
 		maxWaterDepth       = 22,
 		movementClass       = [[TANK3]],
 		noAutoFire          = false,
@@ -57,21 +55,14 @@ return {
 		trackWidth          = 28,
 		turninplace         = 0,
 		turnRate            = 624,
-		workerTime          = 0,
-
 		weapons             = {
-
 			{
 				def                = [[vehriot_WEAPON]],
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-
 		},
-
-
 		weaponDefs          = {
-		
 			secondary = {
 				name                    = [[Impulse Shard]],
 				accuracy                = 350,
@@ -80,7 +71,6 @@ return {
 				burnblow                = true,
 				craterBoost             = 0.15,
 				craterMult              = 0.3,
-
 				customParams        = {
 					gatherradius = [[90]],
 					smoothradius = [[60]],
@@ -90,11 +80,9 @@ return {
 					light_radius = 40,
 					isFlak = 2,
 				},
-				
 				damage                  = {
 					default = 40,
 				},
-
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = [[custom:EMG_HIT_HE]],
 				firestarter             = 70,
@@ -145,11 +133,9 @@ return {
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 40,
 				},
-				
 				damage                  = {
 					default = 40*14,
 				},
-				
 				edgeEffectiveness       = 0.75,
 				explosionGenerator      = [[custom:FLASH64]],
 				impulseBoost            = 30,
@@ -157,7 +143,7 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 280,
-				reloadtime              = 1.7 + 2/30,
+				reloadtime              = 1.6,
 				soundHit                = [[weapon/clusters/cluster_light]],
 				soundStart              = [[weapon/cannon/outlaw_gun]],
 				soundStartVolume        = 3,
