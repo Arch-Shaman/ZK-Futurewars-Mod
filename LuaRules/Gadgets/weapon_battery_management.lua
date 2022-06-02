@@ -108,12 +108,12 @@ function gadget:GameFrame(f)
 			local powered = (spGetUnitRulesParam(id, "lowpower") or 0) == 0
 			local _, _, _, _, bp = spGetUnitHealth(id)
 			local lastbattery = data.battery
+			local gain = data.gain 
 			if (not powered) or bp < 1 then
 				if data.battery > 0 then
 					data.battery = max(current - (gain * 2), 0)
 				end
 			elseif data.battery < data.maxbattery then
-				local gain = data.gain 
 				if data.scales then
 					local power = spGetUnitRulesParam(id, "superweapon_mult") or 0
 					gain = gain * power
