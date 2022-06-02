@@ -90,7 +90,7 @@ return {
 					stats_hide_dps = 1, -- one use
 					stats_hide_reload = 1,
 					blastwave_size = 20,
-					blastwave_impulse = 1,
+					blastwave_impulse = 0,
 					blastwave_speed = 10,
 					blastwave_life = 6,
 					blastwave_lossfactor = 0.9,
@@ -190,7 +190,7 @@ return {
 				fireStarter             = 70,
 				impactOnly              = false,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				model                   = [[wep_b_fabby.s3o]],
 				range                   = 300,
