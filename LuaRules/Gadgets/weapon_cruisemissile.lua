@@ -37,6 +37,7 @@ local atan = math.atan
 local atan2 = math.atan2
 local ceil = math.ceil
 local floor = math.floor
+local min = math.min
 
 local spGetProjectileVelocity = Spring.GetProjectileVelocity
 local spGetGroundHeight = Spring.GetGroundHeight
