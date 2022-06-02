@@ -5,7 +5,7 @@ return {
 		description            = [[Disruptive Scout]],
 		acceleration           = 0.84,
 		brakeRate              = 1.866,
-		buildCostMetal         = 85,
+		buildCostMetal         = 80,
 		builder                = false,
 		buildPic               = [[vehscout.png]],
 		canGuard               = true,
@@ -19,12 +19,10 @@ return {
 		selectionVolumeScales  = [[25 25 30]],
 		selectionVolumeType    = [[cylZ]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			modelradius    = [[7]],
 			aim_lookahead  = 80,
 		},
-
 		explodeAs              = [[SMALL_UNITEX]],
 		footprintX             = 2,
 		footprintZ             = 2,
@@ -52,7 +50,6 @@ return {
 		turninplace            = 0,
 		turnRate               = 1755,
 		workerTime             = 0,
-
 		weapons                = {
 
 			{
@@ -62,10 +59,7 @@ return {
 			},
 
 		},
-
-
 		weaponDefs             = {
-
 			DISRUPTOR      = {
 				name                    = [[Disruptor Pulse Bomb]],
 				areaOfEffect            = 120,
@@ -87,15 +81,13 @@ return {
 					blastwave_speed = 6.25,
 					blastwave_life = 8,
 					blastwave_lossfactor = 0.9,
-					blastwave_damage = 10.1,
+					blastwave_damage = 13.1,
 					blastwave_nofriendly = "Vittu momentums",
-					blastwave_slowdmg = 100,
+					blastwave_slowdmg = 130,
 				},
-      
 				damage                  = {
 					default = 4.1,
 				},
-  
 				explosionGenerator      = [[custom:riotballplus2_purple_small]],
 				explosionSpeed          = 5,
 				fireStarter             = 100,
@@ -120,10 +112,7 @@ return {
 			},
 
 		},
-
-
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -131,7 +120,6 @@ return {
 				footprintZ       = 2,
 				object           = [[vehscout_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
