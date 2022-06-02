@@ -1071,12 +1071,13 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_efficency.png",
 		limit = 4,
 		requireChassis = {"support"},
+		requireOneOf = {"econ"},
 		cost = 75 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			sharedData.metalIncome = (sharedData.metalIncome or 0) + 2.5
-			sharedData.energyIncome = (sharedData.energyIncome or 0) + 5
+			sharedData.metalIncome = (sharedData.metalIncome or 0) + 3
+			sharedData.energyIncome = (sharedData.energyIncome or 0) + 6
 		end
 	},
 	{
