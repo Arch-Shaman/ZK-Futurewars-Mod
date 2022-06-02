@@ -14,7 +14,7 @@ function gadget:GetInfo()
 	}
 end
 
-local debug = true
+local debug = false
 
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 
