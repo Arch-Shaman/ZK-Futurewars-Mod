@@ -16,8 +16,8 @@ return {
 		corpse              = [[DEAD]],
 		customParams        = {
 			modelradius    = [[25]],
-			nanoregen = 10,
-			nano_maxregen = 6.6,
+			nanoregen = 20,
+			nano_maxregen = 4.0,
 			bait_level_default = 1,
 		},
 		explodeAs           = [[BIG_UNITEX]],
@@ -46,7 +46,6 @@ return {
 		sonarDistance       = 450,
 		turninplace         = 0,
 		turnRate            = 200,
-		workerTime          = 0,
 		weapons             = {
 			{
 				def                = [[SONIC]],
@@ -73,7 +72,7 @@ return {
 					blastwave_speed = 1.5,
 					blastwave_life = 30,
 					blastwave_lossfactor = 0.80,
-					blastwave_damage = 200,
+					blastwave_damage = 250,
 					damage_vs_shield = 150,
 				},
 
