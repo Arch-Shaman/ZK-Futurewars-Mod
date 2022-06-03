@@ -647,7 +647,22 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			if show_damage then
 				if cp.cloakstrike then
 					cells[#cells+1] = ' - Damage (during cloak strike):'
-					cells[#cells+1] = dam_str * cp.cloakstrike
+					if type(dam_str) == "string" then
+						local dmg, p
+						for word in dam_str:gmatch("%d+%s") do
+							if dmg == nil then
+								dmg = tonumber(word)
+							elseif p == nil then
+								p = tonumber(word)
+							end
+						end
+						local ndmg = (tonumber(dmg) or 0) * cp.cloakstrike
+						local np = (tonumber(p) or 0) * cp.cloakstrike
+						local newstr = dam_str:gsub(dmg, ndmg):gsub(p, np)
+						cells[#cells+1] = newstr
+					else
+						cells[#cells+1] = dam_str * cp.cloakstrike
+					end
 				end
 				cells[#cells+1] = ' - Damage:'
 				cells[#cells+1] = dam_str
