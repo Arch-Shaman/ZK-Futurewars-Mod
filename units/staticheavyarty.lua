@@ -26,6 +26,7 @@ return {
 			outline_x = 270,
 			outline_y = 270,
 			outline_yoff = 90,
+			bait_level_default = 4,
 		},
 		
 		explodeAs                     = [[ATOMIC_BLAST]],
@@ -44,7 +45,6 @@ return {
 		objectName                    = [[armbrtha.s3o]],
 		script                        = [[staticheavyarty.lua]],
 		selfDestructAs                = [[ATOMIC_BLAST]],
-		
 		sfxtypes                      = {
 			explosiongenerators = {
 				[[custom:staticheavyarty_SHOCKWAVE]],

@@ -23,6 +23,7 @@ return {
 			--specialreloadtime = tostring(aimTime),
 			aimdelay = tostring(aimTime),
 			dontfireatradarcommand = '1',
+			bait_level_default = 4,
 		},
 
 		explodeAs                     = [[LARGE_BUILDINGEX]],
