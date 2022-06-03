@@ -75,7 +75,7 @@ return {
 					reveal_unit = 10,
 					cruisetracking = 0,
 					cruise_nolock = 1,
-					cruiserandomradius = 380,
+					cruiserandomradius = 430,
 					cruise_ignoreterrain = "1",
 				},
 				damage                  = {
