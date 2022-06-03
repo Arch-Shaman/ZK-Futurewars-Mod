@@ -17,16 +17,16 @@ local weaponDef = {
 		--muzzleEffectFire = [[custom:HEAVY_CANNON_MUZZLE]],
 		--miscEffectFire = [[custom:RIOT_SHELL_H]],
 		light_color = [[0.85 0.2 0.2]],
+		impulse = [[50]],
 	},
 	damage                  = {
-		default = 7.01,
+		default = 10.01,
 	},
 
 	edgeEffectiveness       = 0.6,
 	impactOnly              = false,
 	impulseBoost            = 180,
-	impulseFactor           = 3,
-	interceptedByShieldType = 1,
+	impulseFactor           = 5,
 	leadlimit               = 100,
 	myGravity               = 0.01,
 	falloffRate             = 0.5,
@@ -39,7 +39,7 @@ local weaponDef = {
 	interceptedByShieldType = 0,
 	noSelfDamage            = true,
 	proximityPriority       = 15,
-	range                   = 350,
+	range                   = 400,
 	thickness               = 5,
 	texture1                = [[spritegun]],
 	texture2                = [[flare]],
@@ -54,7 +54,7 @@ local weaponDef = {
 	turret                  = true,
 	waterWeapon             = true,
 	weaponType              = [[LaserCannon]],
-	weaponVelocity          = 500,
+	weaponVelocity          = 400,
 }
 
 return name, weaponDef

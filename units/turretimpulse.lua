@@ -58,10 +58,7 @@ return {
 			},
 
 		},
-
-
 		weaponDefs                    = {
-
 			GRAVITY_NEG = {
 				name                    = [[Attractive Gravity]],
 				areaOfEffect            = 8,
@@ -109,8 +106,6 @@ return {
 				texture3                = [[flare]],
 				texture4                = [[smallflare]],
 			},
-
-
 			GRAVITY_POS = {
 				name                    = [[Repulsive Gravity]],
 				areaOfEffect            = 8,
