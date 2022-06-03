@@ -227,6 +227,7 @@ return {
 				customParams            = {
 					light_color = [[1.25 0.8 1.75]],
 					light_radius = 480,
+					lups_noshockwave = [[1]],
 				},
 				damage                  = {
 					default = 40100,
