@@ -1,7 +1,7 @@
 return {
 	name='Future Wars',
 	description='Zero-K',
-	version='v0.26.14',
+	version='v0.26.15',
 	shortname='ZKFW',
 	mutator='1',
 	game='Zero-K',
