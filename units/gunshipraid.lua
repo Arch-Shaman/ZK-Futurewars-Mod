@@ -1,7 +1,7 @@
 return { 
 	gunshipraid = {
 		unitname               = [[gunshipraid]],
-		name                   = [[Locust]],
+		name                   = [[Whirlwind]],
 		description            = [[Medium Laser Raider Gunship]],
 		acceleration           = 0.2,
 		brakeRate              = 0.4,
