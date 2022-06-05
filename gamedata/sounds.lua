@@ -133,7 +133,7 @@ local Sounds = {
 			rollOff = 0.4,
 		},
 		LurkerFire = {
-			file = "sounds/weapon/cannon/lurker_fire",
+			file = "sounds/weapon/cannon/lurker_fire.wav",
 			gain = 0.8,
 			pitch = 1.0,
 			priority = 1,
