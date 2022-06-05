@@ -44,7 +44,7 @@ return {
 		idleTime                      = 1800,
 		initCloaked                   = true,
 		levelGround                   = false,
-		maxDamage                     = 700,
+		maxDamage                     = 2000,
 		maxSlope                      = 36,
 		minCloakDistance              = 100,
 		noAutoFire                    = false,
