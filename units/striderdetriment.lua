@@ -21,8 +21,8 @@ return {
 		customParams           = {
 			modelradius    = [[95]],
 			extradrawrange = 925,
-			nanoregen = 15,
-			nano_maxregen = 27,
+			nanoregen = 25,
+			nano_maxregen = 23,
 			outline_x = 230,
 			outline_y = 230,
 			outline_yoff = 70,
