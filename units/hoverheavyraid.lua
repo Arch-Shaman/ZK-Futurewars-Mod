@@ -67,7 +67,6 @@ return {
 					light_camera_height       = 2000,
 					light_color               = [[0.85 0.33 1]],
 					light_radius              = 120,
-					underwaterdamagereduction = 0.7,
 					nofriendlyfire            = 1,
 					script_reload = [[6]],
 					script_burst = [[3]],
