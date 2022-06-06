@@ -900,9 +900,9 @@
 		"helptext" : "The Wake is a compact singularity generator that pulls matter towards its detonation point. Projectiles, wrecks, trees, rocks, units, it doesn't matter; it will all be sucked into a compact point then spit out when the singularity collapses."
 	},
 	"dynstrike1" : {
-		"name" : "Ambush Commander",
+		"name" : "Ghost Commander",
 		"description" : "Stealthy Commander",
-		"helptext" : "The Ambush Commander is a flexible, speedy stealthy commander that can wield the fearsome Disintegrator. It is, however, locked out of support modules. It has an inherent cloaking device and excels at hit and run tactics."
+		"helptext" : "The Ghost Chassis is a flexible, speedy stealthy commander that can get in enemy bases and take out valuable targets, or use long range weaponry to harass heavy targets from afar. It is, however, locked out of support modules. It has an inherent cloaking device and excels at hit and run tactics."
 	},
 	"empmissile" : {
 		"name" : "Shockley",
