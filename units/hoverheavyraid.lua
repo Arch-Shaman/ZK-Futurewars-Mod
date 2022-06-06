@@ -98,7 +98,7 @@ return {
 				texture2                = [[flare]],
 				texture3                = [[flare]],
 				texture4                = [[smallflare]],
-				thickness               = 8,
+				thickness               = 3,
 				tolerance               = 18000,
 				turret                  = true,
 				weaponType              = [[LaserCannon]],
