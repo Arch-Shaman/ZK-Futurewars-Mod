@@ -80,9 +80,9 @@
 		"helptext" : "The Spear is the hover plant's raider/scout. It provides decent damage with its gauss scattergun and a semi-disposable method of getting intel while being moderately fast. Its Gauss Scattergun can also hit underwater targets, though with less efficiency."
 	},
 	"hoverheavyraid" : {
-		"name" : "Bolas",
-		"description" : "Disruptor Hovercraft",
-		"helptext" : "The Bolas is a heavy raider hovercraft armed with a rapid-fire disruptor beam. While its damage output is quite noticeable, it works even better alongside Longswords or Scalpels to hit the slowed-down enemies harder."
+		"name" : "Blade",
+		"description" : "Phaser Support Craft",
+		"helptext" : "The Blade uses its complement of disruptor phasers to slow enemy units. The phaser's blast has some mild aoe to it, which will help slow nearby units to a crawl."
 	},
 	"chicken_digger" : {
 		"name" : "Digger",
