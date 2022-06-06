@@ -90,7 +90,7 @@ return {
 				range                   = 380,
 				reloadtime              = 10/30,
 				rgbColor                = [[0.3 0 0.4]],
-				soundStart              = [[weapon/aoe_aurafast]],
+				soundStart              = [[weapon/impacts/aoe_aurafast]],
 				soundHit                = [[weapon/laser/disruptor_3]],
 				soundStartVolume        = 3,
 				sweepfire               = false,
