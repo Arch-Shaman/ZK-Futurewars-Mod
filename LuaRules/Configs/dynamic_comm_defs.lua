@@ -1305,7 +1305,7 @@ local moduleDefs = {
 	{
 		name = "module_detpack",
 		humanName = "\"Peaceful Wind\" Asset Denial System",
-		description = "Mutually Assured Destruction guaranteed or your metal back!\n\nIncreases the severity of the commander death explosion. At maximum level, it is equivalent to a nuclear detonation.\nReduces HP by " .. 1000*HP_MULT .. ".",
+		description = "Mutually Assured Destruction guaranteed or your metal back!\n\nIncreases the severity of the commander death explosion. At maximum level, it is equivalent to a nuclear detonation.\nReduces HP by " .. 1000*HP_MULT .. ".\n\n\255\255\061\06WARNING\255\255\255: Disarm/EMP will prevent explosion from going off.",
 		image = moduleImagePath .. "module_detpack.png",
 		limit = 3,
 		cost = 850 * COST_MULT,
@@ -1343,7 +1343,7 @@ local moduleDefs = {
 		description = "Increases jumpjet range by 50%.\nIncreases jump speed signifcantly.\nMutually Exclusive with: Improved Jumpjets & Efficient Jumpjets.",
 		image = moduleImagePath .. "module_jumpjetpower.png",
 		limit = 4,
-		cost = 200 * COST_MULT,
+		cost = 350 * COST_MULT,
 		requireChassis = {"recon"},
 		prohibitingModules = {"module_jumpreload", "module_jumpretrofit"},
 		requireLevel = 2,

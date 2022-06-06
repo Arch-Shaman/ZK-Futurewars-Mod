@@ -411,6 +411,10 @@ end
 
 local function DoDeathExplosion(x, y, z)
 	local explosion = Spring.GetUnitRulesParam(unitID, "comm_deathexplosion")
+	local alt = "commexplosion_default"
+	if Spring.GetUnitIsStunned(unitID) or (Spring.GetUnitRulesParam(unitID, "disarmed") == 1) then
+		explosion = alt
+	end
 	--Spring.Echo("Spawning " .. tostring(explosion))
 	Spring.SpawnProjectile(WeaponDefNames[explosion].id, {
 			pos = {x, y, z},
