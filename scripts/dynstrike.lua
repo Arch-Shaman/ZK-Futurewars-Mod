@@ -36,6 +36,9 @@ local FingerTipA = piece('FingerTipA')
 local FingerTipB = piece('FingerTipB')
 local FingerTipC = piece('FingerTipC')
 
+local autorepair0 = piece('autorepair0')
+local cloakrepair0 = piece('cloakrepair0')
+
 local TORSO_SPEED_YAW = math.rad(300)
 local ARM_SPEED_PITCH = math.rad(180)
 
@@ -69,6 +72,7 @@ local function GetOKP()
 		GG.OverkillPrevention_ForceAdd(unitID)
 	end
 end
+
 
 ---------------------------------------------------------------------
 ---  blender-exported animation: data (move to include file?)     ---
@@ -315,14 +319,14 @@ local walkAngle = {
 	{ -- Moving forwards
 		wait = HipLeft,
 		{
-			hip = {math.rad(-14), math.rad(40) * PACE},
+			hip = {math.rad(-28), math.rad(40) * PACE},
 			leg = {math.rad(80), math.rad(100) * PACE},
 			foot = {math.rad(15), math.rad(150) * PACE},
-			arm = {math.rad(5), math.rad(20) * PACE},
+			arm = {math.rad(-5), math.rad(20) * PACE},
 			hand = {math.rad(0), math.rad(20) * PACE},
 		},
 		{
-			hip = {math.rad(-32), math.rad(30) * PACE},
+			hip = {math.rad(-64), math.rad(30) * PACE},
 			leg = {math.rad(16), math.rad(90) * PACE},
 			foot = {math.rad(-40), math.rad(180) * PACE},
 		},
@@ -330,14 +334,14 @@ local walkAngle = {
 	{ -- Moving backwards
 		wait = HipRight,
 		{
-			hip = {math.rad(8), math.rad(35) * PACE},
+			hip = {math.rad(4), math.rad(35) * PACE},
 			leg = {math.rad(2), math.rad(50) * PACE},
 			foot = {math.rad(10), math.rad(40) * PACE},
-			arm = {math.rad(-20), math.rad(20) * PACE},
+			arm = {math.rad(20), math.rad(20) * PACE},
 			hand = {math.rad(-25), math.rad(20) * PACE},
 		},
 		{
-			hip = {math.rad(20), math.rad(35) * PACE},
+			hip = {math.rad(10), math.rad(35) * PACE},
 			leg = {math.rad(15), math.rad(25) * PACE},
 			foot = {math.rad(60), math.rad(30) * PACE},
 		}
@@ -368,11 +372,12 @@ local function Walk()
 		Turn(FootRight, x_axis,  right[1].foot[1], right[1].foot[2] * speedMult)
 		
 		if not aiming then
-			Turn(ArmLeft, x_axis, left[1].arm[1],  left[1].arm[2] * speedMult)
-			Turn(Gun, x_axis, left[1].hand[1], left[1].hand[2] * speedMult)
-			
-			Turn(ArmRight, x_axis, right[1].arm[1],  right[1].arm[2] * speedMult)
+		    Turn(ArmLeft, x_axis, left[1].arm[1],  left[1].arm[2] * speedMult)
 			Turn(HandRight, x_axis, right[1].hand[1], right[1].hand[2] * speedMult)
+			
+			Turn(Stomach, x_axis, math.rad(30), 1 * speedMult)
+			Turn(Head, x_axis, math.rad(-30), 1 * speedMult)
+			Turn(Gun, z_axis, math.rad(90), 10 * speedMult)
 		end
 		
 		Move(Base, z_axis, 0.5 * scaleMult, 40 * speedMult * scaleMult)
@@ -391,7 +396,8 @@ local function Walk()
 		Turn(FootRight, x_axis,  right[2].foot[1], right[2].foot[2] * speedMult)
 		
 		if not aiming then
-			Turn(Stomach, z_axis, -0.3*(walkCycle - 1.5), 0.4 * speedMult)
+			Turn(Stomach, x_axis, math.rad(15), 1 * speedMult)
+			Turn(Head, x_axis, math.rad(-15), 1 * speedMult)
 		end
 		
 		Move(Base, z_axis, 0.5 * scaleMult, 40 * speedMult * scaleMult)
@@ -415,13 +421,8 @@ local function RestoreLegs()
 	Turn(FootRight, x_axis, 0, 2.5)
 	
 	if not aiming then
-		Turn(ArmLeft, x_axis, math.rad(-5), 2)
-		Turn(Gun, x_axis, math.rad(-5), 2)
-		
-		Turn(ArmRight, x_axis, math.rad(-5), 2)
-		Turn(HandRight, x_axis, math.rad(-5), 2)
-	
-		Turn(Stomach, z_axis, 0, 1)
+	    Turn(Stomach, x_axis, math.rad(0), 1)
+	    Turn(Head, x_axis, math.rad(0), 1)
 	end
 	Move(Base, z_axis, 0, 4)
 end
@@ -474,7 +475,7 @@ local function RestoreRightAim(sleepTime)
 	SetSignalMask(SIG_RESTORE_RIGHT)
 	Sleep(sleepTime or RESTORE_DELAY)
 	if not nanoing then
-		Turn(ArmRight, x_axis, math.rad(-5), ARM_SPEED_PITCH)
+		Turn(ArmLeft, x_axis, math.rad(-5), ARM_SPEED_PITCH)
 		Turn(HandRight, x_axis, math.rad(-5), ARM_SPEED_PITCH)
 	end
 end
@@ -484,15 +485,16 @@ local function RestoreLeftAim(sleepTime)
 	Signal(SIG_RESTORE_LEFT)
 	SetSignalMask(SIG_RESTORE_LEFT)
 	Sleep(sleepTime or RESTORE_DELAY)
-	Turn(ArmLeft, x_axis, math.rad(-5), ARM_SPEED_PITCH)
+	Turn(ArmRight, x_axis, math.rad(-5), ARM_SPEED_PITCH)
 	Turn(Gun, x_axis, math.rad(-5), ARM_SPEED_PITCH)
 end
 
 local function AimArm(heading, pitch, arm, hand, wait)
 	aiming = true
-	Turn(arm, x_axis, -pitch/2 - 0.7, ARM_SPEED_PITCH)
+	Turn(Head, x_axis, math.rad(0), ARM_SPEED_PITCH)
+	Turn(Stomach, x_axis, math.rad(0), ARM_SPEED_PITCH)
+	Turn(arm, x_axis, -pitch, ARM_SPEED_PITCH)
 	Turn(Breast, z_axis, heading, TORSO_SPEED_YAW)
-	Turn(hand, x_axis, -pitch/2 - 0.85, ARM_SPEED_PITCH)
 	if wait then
 		WaitForTurn(Breast, z_axis)
 		WaitForTurn(arm, x_axis)
@@ -507,7 +509,8 @@ function script.AimWeapon(num, heading, pitch)
 		SetSignalMask(SIG_LEFT)
 		Signal(SIG_RESTORE_LEFT)
 		Signal(SIG_RESTORE_TORSO)
-		AimArm(heading, pitch, ArmLeft, Gun, true)
+		AimArm(heading, pitch, ArmRight, Gun, true)
+		Turn(Gun, z_axis, math.rad(0), 2 * ARM_SPEED_PITCH)
 		StartThread(RestoreLeftAim)
 		return true
 	elseif weaponNum == 2 then
@@ -515,7 +518,8 @@ function script.AimWeapon(num, heading, pitch)
 		SetSignalMask(SIG_RIGHT)
 		Signal(SIG_RESTORE_RIGHT)
 		Signal(SIG_RESTORE_TORSO)
-		AimArm(heading, pitch, ArmRight, HandRight, true)
+		AimArm(heading, pitch, ArmLeft, HandRight, true)
+		Turn(HandRight, x_axis, math.rad(-90), 2 * ARM_SPEED_PITCH)
 		StartThread(RestoreRightAim)
 		return true
 	elseif weaponNum == 3 then
@@ -546,6 +550,10 @@ local function NanoAnimation()
 	Signal(SIG_NANO)
 	SetSignalMask(SIG_NANO)
 	while true do
+	    Turn(Stomach, x_axis, math.rad(0), 1)
+		Turn(Head, x_axis, math.rad(0), 1)
+		Turn(ArmLeft, x_axis, math.rad(15), 1)
+		Turn(HandRight, x_axis, math.rad(-75), 1)
 		Turn(FingerA, x_axis, FINGER_ANGLE_OUT, FINGER_SPEED)
 		Sleep(200)
 		Turn(FingerB, x_axis, FINGER_ANGLE_IN, FINGER_SPEED)
@@ -565,6 +573,8 @@ local function NanoRestore()
 	Signal(SIG_NANO)
 	SetSignalMask(SIG_NANO)
 	Sleep(500)
+	Turn(ArmLeft, x_axis, math.rad(0), 1)
+	Turn(HandRight, x_axis, math.rad(0), 1)
 	Turn(FingerA, x_axis, 0, FINGER_SPEED)
 	Turn(FingerB, x_axis, 0, FINGER_SPEED)
 	Turn(FingerC, x_axis, 0, FINGER_SPEED)
@@ -578,7 +588,7 @@ function script.StopBuilding()
 end
 
 function script.StartBuilding(heading, pitch)
-	AimArm(heading, pitch, ArmRight, HandRight, false)
+	AimArm(heading, pitch, ArmLeft, HandRight, false)
 	SetUnitValue(COB.INBUILDSTANCE, 1)
 	StartThread(NanoAnimation)
 	nanoing = true
