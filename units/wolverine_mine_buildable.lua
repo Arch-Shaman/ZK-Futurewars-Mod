@@ -6,7 +6,7 @@ return {
 		acceleration           = 0.00001,
 		activateWhenBuilt      = true,
 		brakeRate              = 1.5,
-		buildCostMetal         = 45,
+		buildCostMetal         = 30,
 		builder                = false,
 		buildPic               = [[wolverine_mine.png]],
 		canGuard               = false,
