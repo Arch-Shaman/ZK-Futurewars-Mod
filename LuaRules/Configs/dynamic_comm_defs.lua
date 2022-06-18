@@ -1081,6 +1081,22 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "nanoplus",
+		humanName = "Support Package",
+		description = "The support package overhauls buildpower (+20) and storage capabilities (+1000) while allowing resurrection.",
+		image = moduleImagePath .. "module_efficency.png",
+		limit = 1,
+		requireChassis = {"support"},
+		cost = 100 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.canResurrect = true
+			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 20
+			sharedData.extrastorage = (sharedData.extrastorage or 0) + 1000
+		end
+	},
+	{
 		name = "commweapon_personal_shield",
 		humanName = "Personal Shield",
 		description = "A small, protective bubble shield.\nMutually Exclusive with Area Jammer and Personal Cloak.",
@@ -1277,7 +1293,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_resurrect.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
-		requireChassis = {"support", "knight"},
+		requireChassis = {"knight"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
@@ -1617,7 +1633,7 @@ local moduleDefs = {
 	{
 		name = "module_adv_nano",
 		humanName = "Advanced Nanolathe",
-		description = "Increases build power by 2.5 (+5 for support). Increases storage by 25 (50 for support).",
+		description = "Increases build power by 2.5 (+7.5 for support). Increases storage by 25 (75 for support).",
 		image = moduleImagePath .. "module_adv_nano.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1632,7 +1648,7 @@ local moduleDefs = {
 	{
 		name = "module_adv_nano_support",
 		humanName = "Advanced Nanolathe",
-		description = "Increases build power by 5 (+2.5 for others). Increases storage by 50 (25 for others).",
+		description = "Increases build power by 7.5 (+2.5 for others). Increases storage by 75 (25 for others).",
 		image = moduleImagePath .. "module_adv_nano.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1640,8 +1656,8 @@ local moduleDefs = {
 		slotType = "module",
 		requireChassis = {"support"},
 		applicationFunction = function (modules, sharedData)
-			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 5
-			sharedData.extrastorage = (sharedData.extrastorage or 0) + 50
+			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 7.5
+			sharedData.extrastorage = (sharedData.extrastorage or 0) + 75
 		end
 	},
 	
