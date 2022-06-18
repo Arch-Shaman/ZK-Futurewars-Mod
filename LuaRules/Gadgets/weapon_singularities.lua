@@ -82,7 +82,7 @@ local function GetEffectStrength(radius, strength, distance, mass)
 	end
 	mass = max(mass, 0.01) -- prevent divbyzero
 	local distance = max(distance, 0.01) -- gate to prevent divbyzero
-	return min(((radius/distance) * strength)^(1/1.05), 2 * strength) / mass
+	return min(((radius/distance) * strength)^(0.95), 2 * strength) / mass
 end
 
 local function GetFinalEffectStrength(radius, strength, distance, mass)
@@ -91,7 +91,7 @@ local function GetFinalEffectStrength(radius, strength, distance, mass)
 		strength = 10 -- affect projectiles weakly.
 	end
 	local distance = max(distance, 0.01)
-	return max(- ((radius/distance) * strength)^(1/1.05), -2 * strength) / mass
+	return max(- ((radius/distance) * strength)^(0.95), -2 * strength) / mass
 end
 
 local function ProcessProjectiles(sx, sy, sz, radius, strength, list, rev)
@@ -170,11 +170,7 @@ local function ProcessUnits(sx, sy, sz, radius, strength, list, rev)
 				ez = -ez
 			end
 			--spEcho("Wanted velocity: " .. ex .. "," .. ey .. "," .. ez)
-			if py - gy == 0 then -- reliable unstick
-				Spring.MoveCtrl.Enable(unitID)
-				Spring.MoveCtrl.SetPosition(unitID, px,  gy + 1, pz)
-				Spring.MoveCtrl.Disable(unitID)
-			end
+			GG.DetatchFromGround(unitID, 0.5, 0.1, 1)
 			spSetUnitVelocity(unitID, ex + vx, ey + vy, ez + vz)
 			GG.SetUnitFallDamageImmunity(unitID, spGetGameFrame() + 2)
 			--spSetUnitVelocity(unitID, vx, vy, vz)
