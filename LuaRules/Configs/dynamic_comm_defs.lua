@@ -1619,7 +1619,7 @@ local moduleDefs = {
 	{
 		name = "module_adv_nano",
 		humanName = "Advanced Nanolathe",
-		description = "Increases build power by 2.5 (+5 for support). Increases storage by 25 (50 for support).",
+		description = "Increases build power by 2.5. Increases storage by 25.",
 		image = moduleImagePath .. "module_adv_nano.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1634,7 +1634,7 @@ local moduleDefs = {
 	{
 		name = "module_adv_nano_support",
 		humanName = "Advanced Nanolathe",
-		description = "Increases build power by 5 (+2.5 for others). Increases storage by 50 (25 for others).",
+		description = "Increases build power by 7.5. Increases storage by 75.",
 		image = moduleImagePath .. "module_adv_nano.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1642,8 +1642,8 @@ local moduleDefs = {
 		slotType = "module",
 		requireChassis = {"support"},
 		applicationFunction = function (modules, sharedData)
-			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 5
-			sharedData.extrastorage = (sharedData.extrastorage or 0) + 50
+			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 7.5
+			sharedData.extrastorage = (sharedData.extrastorage or 0) + 75
 		end
 	},
 	
