@@ -17,7 +17,8 @@ local weaponDef = {
 		--muzzleEffectFire = [[custom:HEAVY_CANNON_MUZZLE]],
 		--miscEffectFire = [[custom:RIOT_SHELL_H]],
 		light_color = [[0.85 0.2 0.2]],
-		impulse = [[50]],
+		impulse = [[80]],
+		notoggleimpulse = [[1]],
 	},
 	damage                  = {
 		default = 10.01,
