@@ -34,9 +34,11 @@ include("LuaRules/Configs/customcmds.h.lua")
 local spGetTeamResources = Spring.GetTeamResources
 local spEcho = Spring.Echo
 local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc
+local spGetFeatureResurrect = Spring.GetFeatureResurrect
 local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
 local exceptionUnits = {} -- units that bypass ORP
 local wantedUnits = {}
+
 
 for i = 1, #UnitDefs do
 	if UnitDefs[i].canReclaim and UnitDefs[i].buildSpeed > 0 then
@@ -73,7 +75,7 @@ function gadget:AllowFeatureBuildStep(builderID, builderTeam, featureID, feature
 	--local reclaimspeed = part * metalvalue * -1
 	--Spring.Echo("Reclaim seems to be " .. reclaimspeed)
 	--spEcho("Current Storage: " .. currentMetal .. " / " .. metalStorage .. " -> " .. currentMetal + reclaimspeed .. " / " .. metalStorage)
-	return part > 0 or metalvalue <= 0.1 or CheckStorage(builderTeam) or exceptionUnits[builderID]
+	return part > 0 or metalvalue <= 0.1 or CheckStorage(builderTeam) or exceptionUnits[builderID] or spGetFeatureResurrect(featureID) == "staticmex"
 end
 
 local function Command(unitID, cmdID, cmdParams, cmdOptions)
