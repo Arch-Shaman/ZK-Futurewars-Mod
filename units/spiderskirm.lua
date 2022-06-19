@@ -71,6 +71,7 @@ return {
 					cruisealt = 200,
 					airlaunched = 1,
 					cruisedist = -1,
+					cruisetracking = 0,
 					timeslow_damagefactor = 2.5,
 					reveal_unit = 5,
 				},
