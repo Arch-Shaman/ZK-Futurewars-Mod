@@ -5,7 +5,7 @@ return {
 		description         = [[Assault/Riot Strider]],
 		acceleration        = 0.295,
 		brakeRate           = 1.435,
-		buildCostMetal      = 5000,
+		buildCostMetal      = 5250,
 		builder             = false,
 		buildPic            = [[striderdante.png]],
 		canGuard            = true,
@@ -25,7 +25,7 @@ return {
 		idleTime            = 600,
 		leaveTracks         = true,
 		losEmitHeight       = 50,
-		maxDamage           = 25000,
+		maxDamage           = 35700,
 		maxSlope            = 36,
 		maxVelocity         = 1.45,
 		maxWaterDepth       = 22,
@@ -43,7 +43,7 @@ return {
 				[[custom:RAIDMUZZLE]],
 			},
 		},
-		sightDistance       = 600,
+		sightDistance       = 700,
 		trackOffset         = 0,
 		trackStrength       = 8,
 		trackStretch        = 0.6,
@@ -106,7 +106,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 25,
+					default = 27.1,
 				},
 			
 				duration                  = 0.01,
@@ -163,7 +163,7 @@ return {
 					stats_custom_tooltip_entry_3 = "100deg/s",
 				},
 				damage                  = {
-					default = 20,
+					default = 25.1,
 				},
 				duration                = 0.3,
 				dynDamageExp            = 1,
@@ -220,7 +220,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 120.8,
+					default = 140.1,
 				},
 			
 				edgeEffectiveness       = 0.75,
@@ -321,7 +321,7 @@ return {
 					light_radius = 500,
 				},
 				damage                  = {
-					default = 165,
+					default = 200.1,
 				},
 
 				explosionGenerator      = [[custom:napalm_phoenix]],
@@ -379,7 +379,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 120.8,
+					default = 140.1,
 				},
 			
 				dance                   = 15,
