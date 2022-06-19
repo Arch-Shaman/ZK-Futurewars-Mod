@@ -15,6 +15,7 @@ function gadget:GetInfo()
 end
 
 local blastwaveDefs = {}
+local shieldDefs = {}
 local wanted = {}
 
 Spring.Echo("[Blastwaves] Loading defs")
@@ -33,6 +34,12 @@ for i = 1, #WeaponDefs do
 		local slowdmg = tonumber(cp["blastwave_slowdmg"]) or 0
 		local overslow = tonumber(cp["blastwave_overslow"]) or 0
 		local damagesfriendly = cp["blastwave_nofriendly"] == nil
+		local healing = tonumber(cp["blastwave_healing"]) or 0
+		local onlyallies = cp["blastwave_onlyfriendly"] ~= nil
+		local reductshealing = tonumber(cp["blastwave_healing_reduction"]) or 0
+		--local shieldrestore = tonumber(cp["blastwave_shieldhealing"]) or 0  -- TODO shield restore actually does something
+		--local shielddamage = tonumber(cp["blastwave_shielddamage"]) or 0
+		
 		blastwaveDefs[id] = {
 			size = size,
 			impulse = impulse,
@@ -44,7 +51,11 @@ for i = 1, #WeaponDefs do
 			paratime = paratime,
 			slowdmg = slowdmg,
 			damagesfriendly = damagesfriendly,
+			healshostiles = onlyallies,
+			healing = healing,
 			overslow = overslow / 30,
+			healingreduction = reductshealing,
+			--shielddamage = shielddamage,
 		}
 		wanted[#wanted + 1] = id
 		Script.SetWatchExplosion(id, true)
@@ -62,39 +73,67 @@ local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spGetUnitTeam = Spring.GetUnitTeam
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitPosition = Spring.GetUnitPosition
+local spSetUnitHealth = Spring.SetUnitHealth
 local sqrt = math.sqrt
+local min = math.min
 
 local function distance2d(x1,y1,x2,y2)
 	return sqrt(((x2-x1)*(x2-x1))+((y2-y1)*(y2-y1)))
 end
 
-local function Updateblastwave(x, y, z, size, impulse, damage, attackerID, attackerTeam, weaponDefID, slow, para, attackerTeamID)
+local function Updateblastwave(data) -- Updateblastwave(x, y, z, size, impulse, damage, attackerID, attackerTeam, weaponDefID, slow, para, attackerTeamID)
+	local x, y, z, size = data.x, data.y, data.z, data.size
 	local affected = spGetUnitsInSphere(x, y, z, size)
-	if #affected == 0 then
-		return
-	end
-	for i = 1, #affected do
-		local unitID = affected[i]
-		--Spring.Echo("attacker Ally Team: " .. tostring(attackerTeam) .. "\nMyTeam: " .. tostring(spGetUnitAllyTeam(unitID)))
-		if blastwaveDefs[weaponDefID].damagesfriendly or (not blastwaveDefs[weaponDefID].damagesfriendly and (attackerTeam == nil or spGetUnitAllyTeam(unitID) ~=  attackerTeam)) then
-			local ux, uy, uz = spGetUnitPosition(unitID)
-			local dx, dy, dz = (ux - x)/size, (uy - y)/size, (uz - z)/size
-			local distance = distance2d(ux, uz, x, z)
-			local ddist = (size - distance) / size
-			local vx, vy, vz = impulse * dx, dy * impulse, dz * impulse
-			local incoming = damage * ddist
-			spAddUnitImpulse(unitID, vx, vy, vz)
-			spAddUnitDamage(unitID, incoming, 0, attackerID, weaponDefID, vx, vy, vz) -- real damage first
-			if para and para > 0 then
-				local paratime = blastwaveDefs[weaponDefID].paratime or 1
-				spAddUnitDamage(unitID, para * ddist, paratime, attackerID, weaponDefID, 0, 0, 0)
+	local weaponDefID = data.wepID
+	local def = blastwaveDefs[weaponDefID]
+	if #affected > 0 then
+		local attackerID, attackerTeamID, attackerTeam = data.attacker, data.attackerteamID, data.attackerteam
+		local damage, impulse, slow, para = data.damage, data.impulse, data.slowdmg, data.paradmg
+		local healing = data.healing
+		for i = 1, #affected do
+			local unitID = affected[i]
+			local unitTeam = spGetUnitAllyTeam(unitID)
+			
+			local hostileCheck = def.damagesfriendly or (not def.damagesfriendly) and (attackerTeam == nil or unitTeam ~=  attackerTeam)
+			local friendlyCheck = def.healshostiles or (attackerTeam ~= nil and unitTeam == attackerTeam)
+			--Spring.Echo("attacker Ally Team: " .. tostring(attackerTeam) .. "\nMyTeam: " .. tostring(spGetUnitAllyTeam(unitID)))
+			if hostileCheck then
+				local ux, uy, uz = spGetUnitPosition(unitID)
+				local dx, dy, dz = (ux - x)/size, (uy - y)/size, (uz - z)/size
+				local distance = distance2d(ux, uz, x, z)
+				local ddist = (size - distance) / size
+				local vx, vy, vz = impulse * dx, dy * impulse, dz * impulse
+				local incoming = damage * ddist
+				spAddUnitImpulse(unitID, vx, vy, vz)
+				spAddUnitDamage(unitID, incoming, 0, attackerID, weaponDefID, vx, vy, vz) -- real damage first
+				if para and para > 0 then
+					local paratime = blastwaveDefs[weaponDefID].paratime or 1
+					spAddUnitDamage(unitID, para * ddist, paratime, attackerID, weaponDefID, 0, 0, 0)
+				end
+				if slow and slow > 0 then
+					GG.dealSlowToUnit(unitID, slow * ddist, blastwaveDefs[weaponDefID].overslow, attackerTeamID)
+				end
+				--Spring.Echo("Did " .. incoming .. " and " .. vx .. ", " .. vy .. ", " .. vz .. " to " .. unitID)
 			end
-			if slow and slow > 0 then
-				GG.dealSlowToUnit(unitID, slow * ddist, blastwaveDefs[weaponDefID].overslow, attackerTeamID)
+			if healing > 0 and friendlyCheck then -- deals healing.
+				local hp, maxhp = spGetUnitHealth(unitID)
+				if hp ~= maxhp then
+					local ux, uy, uz = spGetUnitPosition(unitID)
+					local ddist = (size - distance) / size
+					local missinghp = maxhp - hp
+					local healingtodo = min(ddist * healing, missinghp)
+					spSetUnitHealth(unitID, healingtodo + hp)
+					if def.healingreduction > 0 then
+						data.healing = data.healing - healingtodo
+					end
+				end
 			end
-			--Spring.Echo("Did " .. incoming .. " and " .. vx .. ", " .. vy .. ", " .. vz .. " to " .. unitID)
+			--if shielddamage > 0 and hostileCheck then
+				--
+			--end
 		end
 	end
+	return data
 end
 
 local function AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID)
@@ -115,7 +154,9 @@ local function AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID)
 		attacker = attackerID,
 		slowdmg = conf.slowdmg,
 		paradmg = conf.paradmg,
+		healing = conf.healing,
 		coef = conf.losscoef,
+		shielddmg = conf.shielddamage,
 	}
 	--Spring.Echo("attackerID: " .. tostring(attackerID) .."\nDamages Friendly: " .. tostring(conf.damagesfriendly))
 	if attackerID and Spring.ValidUnitID(attackerID) then
@@ -163,7 +204,7 @@ GG.AddBlastwave = AddBlastwave
 function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(handled) do
 		local config = blastwaveDefs[data.wepID]
-		Updateblastwave(data.x, data.y, data.z, data.size, data.impulse, data.damage, data.attacker, data.attackerteam, data.wepID, data.slowdmg, data.paradmg, data.attackerteamID)
+		data = Updateblastwave(data)
 		if data.lifespan == 0 then
 			--Spring.Echo("Removing blastwave " .. id)
 			IterableMap.Remove(handled, id)
@@ -175,6 +216,7 @@ function gadget:GameFrame(f)
 			data.lifespan = data.lifespan - 1
 			data.slowdmg = data.slowdmg * losscoef
 			data.paradmg = data.paradmg * losscoef
+			data.healing = data.healing * losscoef
 			--Spring.Echo("Update:\nSize: " .. data.size .. "\nimpulse: " .. data.impulse .. "\ndamage: " .. data.damage .. "\nlifespan: " .. data.lifespan)
 		end
 	end
