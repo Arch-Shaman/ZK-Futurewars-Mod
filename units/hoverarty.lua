@@ -43,15 +43,11 @@ unitDef = {
 	objectName          = [[penetrator_lordmuffe.s3o]],
 	script	          = [[hoverarty.lua]],
 	selfDestructAs      = [[MEDIUM_BUILDINGEX]],
-  
 	sfxtypes            = {
-
 		explosiongenerators = {
 			[[custom:HEAVYHOVERS_ON_GROUND]],
 		},
-
 	},
-  
 	sightDistance       = 660,
 	sonarDistance       = 660,
 	turninplace         = 0,
@@ -87,7 +83,7 @@ unitDef = {
 				stats_hide_damage = 1, -- continuous laser
 				stats_hide_reload = 1,
 				light_color = [[1.25 0 0]],
-				light_radius = 120,
+				light_radius = 90,
 				norealdamage = 1,
 			},
 			damage                  = {

@@ -129,7 +129,7 @@ return {
 					stats_hide_damage = 1, -- continuous laser
 					stats_hide_reload = 1,
 					light_color = [[1.25 0 0]],
-					light_radius = 120,
+					light_radius = 30,
 					combatrange = 460,
 				},
 				damage                  = {
