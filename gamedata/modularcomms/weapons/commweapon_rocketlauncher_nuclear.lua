@@ -15,11 +15,12 @@ local weaponDef = {
 		light_color = [[0.95 0.65 0.30]],
 		light_radius = 280,
 		reaim_time = 1,
-		cruiserandomradius = 100,
+		cruiserandomradius = 240,
 		cruisealt = 400,
 		airlaunched = 1,
 		cruisedist = 280,
 		cruise_nolock = 1,
+		cruisetracking = 0,
 		reveal_unit = 49,
 		use_okp = 1,
 		okp_speedmult = 0.9,
@@ -30,12 +31,12 @@ local weaponDef = {
 		onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 	},
 	damage                  = {
-		default = 5000.1,
+		default = 4250.1,
 	},
-	edgeEffectiveness       = 0.4,
+	edgeEffectiveness       = 0.2,
 	explosionGenerator      = [[custom:nukebigland]],
 	fireStarter             = 180,
-	flightTime              = 30,
+	flightTime              = 45,
 	impulseBoost            = 0,
 	impulseFactor           = 1.15,
 	interceptedByShieldType = 2,
@@ -56,7 +57,7 @@ local weaponDef = {
 	weaponAcceleration      = 200,
 	--dance					= 100,
 	weaponType              = [[MissileLauncher]],
-	weaponVelocity          = 420,
+	weaponVelocity          = 360,
 }
 
 return name, weaponDef
