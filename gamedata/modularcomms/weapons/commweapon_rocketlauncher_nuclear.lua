@@ -20,7 +20,6 @@ local weaponDef = {
 		airlaunched = 1,
 		cruisedist = 280,
 		cruise_nolock = 1,
-		cruisetracking = 0,
 		reveal_unit = 49,
 		use_okp = 1,
 		okp_speedmult = 0.9,
