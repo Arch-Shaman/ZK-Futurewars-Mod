@@ -32,7 +32,7 @@ local weaponDef = {
 	soundStart              = [[weapon/cannon/med_rifle_fire]],
 	turret                  = true,
 	weaponType              = [[Cannon]],
-	weaponVelocity          = 450,
+	weaponVelocity          = 1050,
 }
 
 return name, weaponDef
