@@ -39,7 +39,7 @@ return {
 		objectName             = [[claw.s3o]],
 		onoffable              = false,
 		reclaimable            = false,
-		repairable             = false,
+		repairable             = true,
 		script                 = [[wolverine_mine.lua]],
 		selfDestructAs         = [[wolverine_mine_bomb]],
 		selfDestructCountdown  = 0,
