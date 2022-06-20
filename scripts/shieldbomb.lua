@@ -221,6 +221,10 @@ function script.Create()
 end
 
 local function DeathAnim(num)
+	local _, _, _, _, bp = Spring.GetUnitHealth(unitID)
+	if bp < 1.0 then
+		return
+	end
 	local px, py, pz = Spring.GetUnitPosition(unitID)
 	for i = 1, num do
 		px, py, pz = Spring.GetUnitPosition(unitID)
