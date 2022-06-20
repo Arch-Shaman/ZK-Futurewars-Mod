@@ -69,9 +69,9 @@ return {
 				craterBoost             = 5,
 				craterMult              = 2.5,
 				customParams = {
-					cruisealt = 250,
+					cruisealt = 500,
 					airlaunched = 1,
-					cruisedist = [[300]],
+					cruisedist = 300,
 				},
 				damage                  = {
 					default = 3500.1,
