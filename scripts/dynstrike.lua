@@ -35,7 +35,7 @@ local Shield = piece('Shield')
 local FingerTipA = piece('FingerTipA')
 local FingerTipB = piece('FingerTipB')
 local FingerTipC = piece('FingerTipC')
-
+-- Modules --
 local ablativearmor0 = piece('ablativearmor0')
 local ablativearmor3 = piece('ablativearmor3') -- hide ablativearmor0
 local ablativearmor6 = piece('ablativearmor6')
@@ -69,6 +69,51 @@ local powerservos82 = piece('powerservos82') -- hide HipLeft
 local strikeservos3 = piece('strikeservos3')
 local strikeservos6 = piece('strikeservos6')
 local strikeservos8 = piece('strikeservos8')
+-- Right Arm Module Weapon --
+local busterdisrupt = piece('busterdisrupt') -- hide Gun UnderGun tankbuster undertankbuster
+local underbusterdisrupt = piece('underbusterdisrupt') -- hide Gun UnderGun tankbuster undertankbuster
+local heavyrifle = piece('heavyrifle') -- hide Gun UnderGun
+local underheavyrifle = piece('underheavyrifle') -- hide Gun UnderGun
+local heavyrifledisrupt = piece('heavyrifledisrupt') -- hide Gun UnderGun heavyrifle underheavyrifle
+local underheavyrifledisrupt = piece('underheavyrifledisrupt') -- hide Gun UnderGun heavyrifle underheavyrifle
+local lightninggun = piece('lightninggun') -- hide Gun UnderGun
+local underlightninggun = piece('underlightninggun') -- hide Gun UnderGun
+local lightninggunimproved = piece('lightninggunimproved') -- hide Gun UnderGun lightninggun underlightninggun
+local underlightninggunimproved = piece('underlightninggunimproved') -- hide Gun UnderGun lightninggun underlightninggun
+local shotgun = piece('shotgun') -- hide Gun UnderGun
+local undershotgun = piece('undershotgun') -- hide Gun UnderGun
+local shotgundisrupt = piece('shotgundisrupt') -- hide Gun UnderGun shotgun undershotgun
+local undershotgundisrupt = piece('undershotgundisrupt') -- hide Gun UnderGun shotgun undershotgun
+local tankbuster = piece('tankbuster') -- hide Gun UnderGun
+local undertankbuster = piece('undertankbuster') -- hide Gun UnderGun
+-- Left Arm Module Weapon --
+local disintegrator = piece('disintegrator') -- hide HandRight FingerA FingerB FingerC
+local underdisintegrator = piece('underdisintegrator') -- hide HandRight FingerA FingerB FingerC
+local disintegratorFingerA = piece('disintegratorFingerA') -- hide HandRight FingerA FingerB FingerC
+local disintegratorFingerB = piece('disintegratorFingerB') -- hide HandRight FingerA FingerB FingerC
+local disintegratorFingerC = piece('disintegratorFingerC') -- hide HandRight FingerA FingerB FingerC
+local minefieldinacan = piece('minefieldinacan') -- hide HandRight FingerA FingerB FingerC
+local underminefieldinacan = piece('underminefieldinacan') -- hide HandRight FingerA FingerB FingerC
+local multistunner = piece('multistunner') -- hide HandRight FingerA FingerB FingerC
+local undermultistunner = piece('undermultistunner') -- hide HandRight FingerA FingerB FingerC
+local rightbusterdisrupt = piece('busterdisrupt') -- hide HandRight FingerA FingerB FingerC tankbuster undertankbuster
+local rightunderbusterdisrupt = piece('underbusterdisrupt') -- hide HandRight FingerA FingerB FingerC tankbuster undertankbuster
+local rightheavyrifle = piece('heavyrifle') -- hide HandRight FingerA FingerB FingerC
+local rightunderheavyrifle = piece('underheavyrifle') -- hide HandRight FingerA FingerB FingerC
+local rightheavyrifledisrupt = piece('heavyrifledisrupt') -- hide HandRight FingerA FingerB FingerC heavyrifle underheavyrifle
+local rightunderheavyrifledisrupt = piece('underheavyrifledisrupt') -- hide HandRight FingerA FingerB FingerC heavyrifle underheavyrifle
+local rightlightninggun = piece('lightninggun') -- hide HandRight FingerA FingerB FingerC
+local rightunderlightninggun = piece('underlightninggun') -- hide HandRight FingerA FingerB FingerC
+local rightlightninggunimproved = piece('lightninggunimproved') -- hide HandRight FingerA FingerB FingerC lightninggun underlightninggun
+local rightunderlightninggunimproved = piece('underlightninggunimproved') -- hide HandRight FingerA FingerB FingerC lightninggun underlightninggun
+local rightshotgun = piece('shotgun') -- hide HandRight FingerA FingerB FingerC
+local rightundershotgun = piece('undershotgun') -- hide HandRight FingerA FingerB FingerC
+local rightshotgundisrupt = piece('shotgundisrupt') -- hide HandRight FingerA FingerB FingerC shotgun undershotgun
+local rightundershotgundisrupt = piece('undershotgundisrupt') -- hide HandRight FingerA FingerB FingerC shotgun undershotgun
+local righttankbuster = piece('tankbuster') -- hide HandRight FingerA FingerB FingerC
+local rightundertankbuster = piece('undertankbuster') -- hide HandRight FingerA FingerB FingerC
+local sunburst = piece('sunburst') -- hide HandRight FingerA FingerB FingerC
+local undersunburst = piece('undersunburst') -- hide HandRight FingerA FingerB FingerC
 
 local TORSO_SPEED_YAW = math.rad(300)
 local ARM_SPEED_PITCH = math.rad(180)
@@ -409,6 +454,8 @@ local function Walk()
 			Turn(Stomach, x_axis, math.rad(30), 1 * speedMult)
 			Turn(Head, x_axis, math.rad(-30), 1 * speedMult)
 			Turn(Gun, z_axis, math.rad(90), 10 * speedMult)
+                        Spin(undersunburst, z_axis, 1)
+			Spin(underdisintegrator, z_axis, 1)
 		end
 		
 		Move(Base, z_axis, 0.5 * scaleMult, 40 * speedMult * scaleMult)
@@ -505,6 +552,10 @@ local function RestoreRightAim(sleepTime)
 	Signal(SIG_RESTORE_RIGHT)
 	SetSignalMask(SIG_RESTORE_RIGHT)
 	Sleep(sleepTime or RESTORE_DELAY)
+	Spin(undermultistunner, z_axis, 0)
+	Turn(disintegratorFingerA, x_axis, math.rad(0), 2 * ARM_SPEED_PITCH)
+	Turn(disintegratorFingerB, x_axis, math.rad(0), 2 * ARM_SPEED_PITCH)
+	Turn(disintegratorFingerC, x_axis, math.rad(0), 2 * ARM_SPEED_PITCH)	
 	if not nanoing then
 		Turn(ArmLeft, x_axis, math.rad(-5), ARM_SPEED_PITCH)
 		Turn(HandRight, x_axis, math.rad(-5), ARM_SPEED_PITCH)
@@ -551,6 +602,11 @@ function script.AimWeapon(num, heading, pitch)
 		Signal(SIG_RESTORE_TORSO)
 		AimArm(heading, pitch, ArmLeft, HandRight, true)
 		Turn(HandRight, x_axis, math.rad(-90), 2 * ARM_SPEED_PITCH)
+		Spin(undermultistunner, z_axis, 4)
+		Spin(undersunburst, z_axis, 4)
+		Turn(disintegratorFingerA, x_axis, math.rad(-40), 2 * ARM_SPEED_PITCH)
+		Turn(disintegratorFingerB, x_axis, math.rad(-40), 2 * ARM_SPEED_PITCH)
+		Turn(disintegratorFingerC, x_axis, math.rad(-40), 2 * ARM_SPEED_PITCH)
 		StartThread(RestoreRightAim)
 		return true
 	elseif weaponNum == 3 then
