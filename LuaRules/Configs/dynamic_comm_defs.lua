@@ -1405,17 +1405,17 @@ local moduleDefs = {
 	{
 		name = "module_autorepair",
 		humanName = "Damage Control Systems",
-		description = "Commander self-repairs at +10 hp/s. Reduces Health by " .. 75*HP_MULT,
+		description = "Commander self-repairs at +10 hp/s.",
 		image = moduleImagePath .. "module_autorepair.png",
 		limit = 8,
-		cost = 150 * COST_MULT,
+		cost = 175 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"recon", "assault", "support", "strike", "knight"},
 		prohibitingModules = {"module_striderpower"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10
-			sharedData.healthBonus = (sharedData.healthBonus or 0) - 75*HP_MULT
+			--sharedData.healthBonus = (sharedData.healthBonus or 0) - 75*HP_MULT
 		end
 	},
 	{
