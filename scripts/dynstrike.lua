@@ -607,16 +607,18 @@ local function UpdateModulesThread()
 	end
 	HideModules()
 	-- modules -- module_high_power_servos
-	local ablativearmorcount = Spring.GetUnitRulesParam(unitID, "comm_module_ablative_armor_count")             or 0 
-	local advnanocount       = Spring.GetUnitRulesParam(unitID, "comm_module_adv_nano_count")                   or 0 
-	local advtargetingcount  = Spring.GetUnitRulesParam(unitID, "comm_module_adv_targeting_count")              or 0 
-	local autorepaircount    = Spring.GetUnitRulesParam(unitID, "comm_module_autorepair_count")                 or 0 
-	local cloakrepaircount   = Spring.GetUnitRulesParam(unitID, "comm_module_cloakregen_count")                 or 0 
-	local detpackcount       = Spring.GetUnitRulesParam(unitID, "comm_module_detpack_count")                    or 0 
-	local damageboostercount = Spring.GetUnitRulesParam(unitID, "comm_module_dmg_booster_count")                or 0 
-	local servoscount        = Spring.GetUnitRulesParam(unitID, "comm_module_high_power_servos_count")          or 0 
-	local strikecount        = Spring.GetUnitRulesParam(unitID, "comm_module_high_power_servos_improved_count") or 0 
-	local hasRadarStealth    = (Spring.GetUnitRulesParam(unitID, "comm_module_personaljammer") or 0) == 1            
+	local ablativearmorcount = Spring.GetUnitRulesParam(unitID, "module_ablative_armor_count")             or 0 
+	local advnanocount       = Spring.GetUnitRulesParam(unitID, "module_adv_nano_count")                   or 0 
+	local advtargetingcount  = Spring.GetUnitRulesParam(unitID, "module_adv_targeting_count")              or 0 
+	local autorepaircount    = Spring.GetUnitRulesParam(unitID, "module_autorepair_count")                 or 0 
+	local cloakrepaircount   = Spring.GetUnitRulesParam(unitID, "module_cloakregen_count")                 or 0 
+	local detpackcount       = Spring.GetUnitRulesParam(unitID, "module_detpack_count")                    or 0 
+	local damageboostercount = Spring.GetUnitRulesParam(unitID, "module_dmg_booster_count")                or 0 
+	local servoscount        = Spring.GetUnitRulesParam(unitID, "module_high_power_servos_count")          or 0 
+	local strikecount        = Spring.GetUnitRulesParam(unitID, "module_high_power_servos_improved_count") or 0 
+	local hasRadarStealth    = (Spring.GetUnitRulesParam(unitID, "module_personaljammer_count") or 0) == 1            
+	
+	Spring.Echo("Module Count: " .. ablativearmorcount, advnanocount, advtargetingcount, autorepaircount, cloakrepaircount, detpackcount, damageboostercount, servoscount, strikecount, hasRadarStealth)
 	
 	-- Set up modules. PERKELEEN PERKELE LEOJ.
 	if ablativearmorcount < 3 then

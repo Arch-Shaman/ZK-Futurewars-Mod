@@ -259,10 +259,27 @@ local function SetUnitRulesModule(unitID, counts, moduleDefID)
 	spSetUnitRulesParam(unitID, "comm_" .. slotType .. "_" .. counts[slotType], moduleDefID, INLOS)
 end
 
+local function SetModuleCounts(unitID) -- used by some dynamic comm LUS.
+	local modules = {}
+	local count = spGetUnitRulesParam(unitID, "comm_module_count")
+	if count > 0 then
+		for i = 1, count do
+			local moduleID = Spring.GetUnitRulesParam(unitID, "comm_module_" .. i)
+			modules[moduleID] = (modules[moduleID] or 0) + 1
+		end
+		for moduleID, moduleCount in pairs(modules) do
+			local name = moduleDefs[moduleID].name
+			spSetUnitRulesParam(unitID, name .. "_count", moduleCount, INLOS)
+		end
+	end
+end
+	
+
 local function SetUnitRulesModuleCounts(unitID, counts)
 	for name, value in pairs(counts) do
 		spSetUnitRulesParam(unitID, "comm_" .. name .. "_count", value, INLOS)
 	end
+	SetModuleCounts(unitID)
 end
 
 local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, damageMult, chassis)
