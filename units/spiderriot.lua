@@ -80,6 +80,7 @@ return {
 					sweepfire_maxangle = 25,
 					sweepfire_step = 3,
 					sweepfire_fastupdate = 1,
+					sweepfire_maxrangemult = 0.95,
 					usefirecycle = 1,
 					light_color = [[0.6 0.39 0.18]],
 					light_radius = 100,
