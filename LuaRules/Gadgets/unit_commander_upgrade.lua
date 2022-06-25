@@ -1,3 +1,7 @@
+if (not gadgetHandler:IsSyncedCode()) then
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Commander Upgrade",
@@ -8,14 +12,6 @@ function gadget:GetInfo()
 		layer     = 1,
 		enabled   = true  --  loaded by default?
 	}
-end
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
---SYNCED
-if (not gadgetHandler:IsSyncedCode()) then
-	return
 end
 
 include("LuaRules/Configs/constants.lua")
@@ -249,16 +245,41 @@ local moduleSlotTypeMap = {
 	adv_weapon = "module",
 }
 
+local spUnitScript = Spring.UnitScript -- CallAsUnit can't be localized directly because a later-layered gadget modifies it
+local function CallAsUnitIfExists(unitID, func, ...)
+	if func then
+		spUnitScript.CallAsUnit(unitID, func, ...)
+	end
+end
+
+
 local function SetUnitRulesModule(unitID, counts, moduleDefID)
 	local slotType = moduleSlotTypeMap[moduleDefs[moduleDefID].slotType]
 	counts[slotType] = counts[slotType] + 1
 	spSetUnitRulesParam(unitID, "comm_" .. slotType .. "_" .. counts[slotType], moduleDefID, INLOS)
 end
 
+local function SetModuleCounts(unitID) -- used by some dynamic comm LUS.
+	local modules = {}
+	local count = spGetUnitRulesParam(unitID, "comm_module_count")
+	if count > 0 then
+		for i = 1, count do
+			local moduleID = Spring.GetUnitRulesParam(unitID, "comm_module_" .. i)
+			modules[moduleID] = (modules[moduleID] or 0) + 1
+		end
+		for moduleID, moduleCount in pairs(modules) do
+			local name = moduleDefs[moduleID].name
+			spSetUnitRulesParam(unitID, name .. "_count", moduleCount, INLOS)
+		end
+	end
+end
+	
+
 local function SetUnitRulesModuleCounts(unitID, counts)
 	for name, value in pairs(counts) do
 		spSetUnitRulesParam(unitID, "comm_" .. name .. "_count", value, INLOS)
 	end
+	SetModuleCounts(unitID)
 end
 
 local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, damageMult, chassis)
@@ -286,8 +307,8 @@ local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, dama
 	damageMult = damageMult or spGetUnitRulesParam(unitID, "comm_damage_mult") or 1
 	spSetUnitRulesParam(unitID, "comm_damage_mult", damageMult,  INLOS)
 	
-	local env = Spring.UnitScript.GetScriptEnv(unitID)
-	Spring.UnitScript.CallAsUnit(unitID, env.dyncomm.UpdateWeapons, weapon1, weapon2, shield, rangeMult, damageMult)
+	local env = Spring.UnitScript.GetScriptEnv(unitID) or {}
+	CallAsUnitIfExists(unitID, env.dyncomm.UpdateWeapons, weapon1, weapon2, shield, rangeMult, damageMult)
 end
 
 local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
@@ -418,6 +439,8 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	
 	-- Do this all the time as it will be needed almost always.
 	GG.UpdateUnitAttributes(unitID)
+	local env = Spring.UnitScript.GetScriptEnv(unitID) or {}
+	CallAsUnitIfExists(unitID, env.OnMorphComplete) -- tell LUS we've upgraded apparently.
 end
 
 local function ApplyModuleEffectsFromUnitRulesParams(unitID)

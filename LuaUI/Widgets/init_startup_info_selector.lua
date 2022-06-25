@@ -78,7 +78,7 @@ end
 local commTips = {
 	["LuaUI/Images/startup_info_selector/chassis_benzcom.png"] = "Select Bombard Chassis\nA slow chassis that focuses on dealing damage from afar. Gains extra range per level.\nAbility: Range bonus\nStarting weapon: Canister Cannon (Riot AOE, Will be replaced soon)",
 	["LuaUI/Images/startup_info_selector/chassis_commrecon.png"] = "Select Recon Chassis\nA nimble chassis that excels at speed and DPS at the cost of multi-target weapons.\nAbility: Jump\nStarting Weapon: Heatray (Short range High single target DPS)",
-	["LuaUI/Images/startup_info_selector/chassis_commstrike.png"] = "Select Ambush Chassis\nA fast, stealthy chassis that excels at alpha strikes. Gains regeneration while cloaked.\nAbility: Cloak\nStarting Weapon: Heavy Rifle (Short range AOE)",
+	["LuaUI/Images/startup_info_selector/chassis_commstrike.png"] = "Select Ghost Chassis\nA fast, stealthy chassis that excels at alpha strikes. Gains regeneration while cloaked.\nAbility: Cloak\nStarting Weapon: Heavy Rifle (Short range AOE)",
 	["LuaUI/Images/startup_info_selector/chassis_commsupport.png"] = "Select Engineer Chassis\nA chassis focused on support, disruption and economy. Rather slow, but has access to exotic weapons with status effects or medium to long range single target weapons.\nAbility: Eco Generation / Storage\nStarting Weapon: Beam laser (Single target)",
 	["LuaUI/Images/startup_info_selector/chassis_commriot.png"] = "Select Riot Chassis\nA durable chassis focused on short range AOE weapons. Quite slow, but effective against raiders.\nAbility: Damage Bonus\nStarting Weapon: Chain Gun",
 	["LuaUI/Images/startup_info_selector/chassis_cremcom.png"] = "Select Campaign Chassis\nCan mount any module.",
