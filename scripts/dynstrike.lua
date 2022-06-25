@@ -625,31 +625,44 @@ local function UpdateModulesThread()
 		Show(ablativearmor0)
 	elseif ablativearmorcount < 6 then
 		Show(ablativearmor3)
-	elseif ablativearmorcount <= 7 then
+	elseif ablativearmorcount < 8 then
+	    Show(ablativearmor3)
 		Show(ablativearmor6)
 	else
 		Show(ablativearmor8)
 	end
-	if advnanocount > 2 and advnanocount < 6 then
+    if advnanocount < 3 then
+	    Show(Stomach)
+	elseif advnanocount < 6 then
 		Show(advnano3)
-	elseif advnanocount <= 7 then
+	elseif advnanocount < 8 then
+	    Hide(ArmLeft)
 		Show(advnano6)
-	elseif advnanocount == 8 then
+	else
+	    Hide(ArmLeft)
+	    Show(advnano6)
 		Show(advnano8)
 	end
-	if advtargetingcount > 2 and advtargetingcount < 6 then
-		Show(advtargeting3)
-	elseif advtargetingcount <= 7 then
-		Show(advtargeting6)
-	elseif advtargetingcount == 8 then
-		Show(advtargeting8)
+    if advtargetingcount < 3 then
+	    Show(Stomach)
+	elseif advtargetingcount < 6 then
+	    Show(advtargeting3)
+	elseif advtargetingcount < 8 then
+	    Show(advtargeting6)
+	else
+	    Show(advtargeting8)
 	end
-	if autorepaircount > 2 and autorepaircount < 6 then
-		Show(autorepair3)
-	elseif autorepaircount <= 7 then
+    if autorepaircount < 3 then
+	    Show(Stomach)
+	elseif autorepaircount < 6 then
+	    Show(autorepair3)
+	elseif autorepaircount < 8 then
+	    Show(autorepair3)
+	    Show(autorepair6)
+	else
+	    Show(autorepair3)
 		Show(autorepair6)
-	elseif autorepaircount == 8 then
-		Show(autorepair8)
+	    Show(autorepair8)
 	end
 	if cloakrepaircount < 3 then
 		Show(cloakrepair0)
@@ -661,12 +674,14 @@ local function UpdateModulesThread()
 		Show(cloakrepair8)
 		Hide(Breast)
 	end
-	if damageboostercount > 2 and damageboostercount < 5 then
-		Show(dmgbooster3)
-	elseif damageboostercount <= 7 then
-		Show(dmgbooster6)
-	elseif damageboostercount == 8 then
-		Show(dmgbooster8)
+    if damageboostercount < 3 then
+	    Show(Stomach)
+	elseif damageboostercount < 6 then
+	    Show(dmgbooster3)
+	elseif damageboostercount < 8 then
+	    Show(dmgbooster6)
+	else
+	    Show(dmgbooster8)
 	end
 	if detpackcount >= 1 then
 		Show(detpack1)
