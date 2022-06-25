@@ -116,16 +116,13 @@ local undersunburst = piece('undersunburst') -- hide HandRight FingerA FingerB F
 
 local TORSO_SPEED_YAW = math.rad(300)
 local ARM_SPEED_PITCH = math.rad(180)
-
 local smokePiece = {Breast, Head}
 local nanoPieces = {Nano}
 local nanoing = false
 local aiming = false
-
 local FINGER_ANGLE_IN = math.rad(10)
 local FINGER_ANGLE_OUT = math.rad(-25)
 local FINGER_SPEED = math.rad(60)
-
 local SIG_RIGHT = 1
 local SIG_RESTORE_RIGHT = 2
 local SIG_LEFT = 4
@@ -134,7 +131,6 @@ local SIG_RESTORE_TORSO = 16
 local SIG_WALK = 32
 local SIG_NANO = 64
 local okpconfig
-
 local RESTORE_DELAY = 2500
 
 local function GetOKP()
