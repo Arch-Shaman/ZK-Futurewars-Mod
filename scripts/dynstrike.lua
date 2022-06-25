@@ -595,6 +595,7 @@ function script.StopMoving()
 end
 
 local function trimstring(weaponname)
+	weaponname = string.lower(weaponname)
 	weaponname = weaponname:gsub("_", "")
 	weaponname = weaponname:gsub("commweapon", "")
 	weaponname = weaponname:gsub("%d+", "")
@@ -605,14 +606,9 @@ local function WaitAndUpgradeThread() -- MIDNIGHT CODING DANGER AHEAD!
 	while Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") == nil do -- script.Create is called before unit_commander_upgrade.lua sets our data.
 		Sleep(33)
 	end
-	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
+	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") or "heavyrifle"
 	local weaponname2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2") or ""
-	
-	if weaponname1 then
-		weaponname1 = trimstring(weaponname1)
-	else
-		weaponname1 = "heavyrifle"
-	end
+	weaponname1 = trimstring(weaponname1)
 	if weaponname2 ~= "" then
 		weaponname2 = trimstring(weaponname2)
 	end
@@ -823,6 +819,52 @@ local function WaitAndUpgradeThread() -- MIDNIGHT CODING DANGER AHEAD!
 	end
 	-- Weapons --
 	
+	-- Weapon 1 --
+	Spring.Echo("Weapons: " .. tostring(weaponname1), weaponname2)
+	-- Hide All Weapons --
+	Hide(Gun)
+	Hide(UnderGun)
+	Hide(busterdisrupt)
+	Hide(tankbuster) -- hide Gun UnderGun
+	Hide(undertankbuster) -- hide Gun UnderGun
+	Hide(underbusterdisrupt) -- hide Gun UnderGun tankbuster undertankbuster
+	Hide(heavyrifle)
+	Hide(underheavyrifle)
+	Hide(heavyrifledisrupt)
+	Hide(underheavyrifledisrupt)
+	Hide(lightninggun)
+	Hide(underlightninggun)
+	Hide(lightninggunimproved)
+	Hide(underlightninggunimproved)
+	Hide(shotgun)
+	Hide(undershotgun)
+	Hide(shotgundisrupt)
+	Hide(undershotgundisrupt)
+	if weaponname1 == "tankbuster" then
+		Show(tankbuster)
+		Show(undertankbuster)
+	elseif weaponname1 == "busterdisrupt" then
+		Show(underbusterdisrupt)
+		Show(busterdisrupt)
+	elseif weaponname1 == "shotgun" then
+		Show(shotgun)
+		Show(undershotgun)
+	elseif weaponname1 == "shotgundisrupt" then
+		Show(undershotgundisrupt)
+		Show(shotgundisrupt)
+	elseif weaponname1 == "lightninggun" then
+		Show(lightninggun)
+		Show(underlightninggun)
+	elseif weaponname1 == "lightninggunimproved" then
+		Show(lightninggunimproved)
+		Show(underlightninggunimproved)
+	elseif weaponname1 == "heavyrifledisrupt" then
+		Show(heavyrifledisrupt)
+		Show(underheavyrifledisrupt)
+	else -- "heavyrifle"
+		Show(heavyrifle)
+		Show(underheavyrifle)
+	end
 end
 
 function OnMorphComplete()
