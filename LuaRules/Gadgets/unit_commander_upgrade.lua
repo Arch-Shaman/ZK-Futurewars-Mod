@@ -290,8 +290,8 @@ local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, dama
 	damageMult = damageMult or spGetUnitRulesParam(unitID, "comm_damage_mult") or 1
 	spSetUnitRulesParam(unitID, "comm_damage_mult", damageMult,  INLOS)
 	
-	local env = Spring.UnitScript.GetScriptEnv(unitID)
-	Spring.UnitScript.CallAsUnit(unitID, env.dyncomm.UpdateWeapons, weapon1, weapon2, shield, rangeMult, damageMult)
+	local env = Spring.UnitScript.GetScriptEnv(unitID) or {}
+	CallAsUnitIfExists(unitID, env.dyncomm.UpdateWeapons, weapon1, weapon2, shield, rangeMult, damageMult)
 end
 
 local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)

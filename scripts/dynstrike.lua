@@ -449,7 +449,7 @@ local function Walk()
 			Turn(Stomach, x_axis, math.rad(30), 1 * speedMult)
 			Turn(Head, x_axis, math.rad(-30), 1 * speedMult)
 			Turn(Gun, z_axis, math.rad(90), 10 * speedMult)
-                        Spin(undersunburst, z_axis, 1)
+            Spin(undersunburst, z_axis, 1)
 			Spin(underdisintegrator, z_axis, 1)
 		end
 		
@@ -516,226 +516,7 @@ local function trimstring(weaponname)
 	return weaponname
 end
 
-local function WaitAndUpgradeThread() -- MIDNIGHT CODING DANGER AHEAD!
-	while Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") == nil do -- script.Create is called before unit_commander_upgrade.lua sets our data.
-		Sleep(33)
-	end
-	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") or "heavyrifle"
-	local weaponname2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2") or ""
-	weaponname1 = trimstring(weaponname1)
-	if weaponname2 ~= "" then
-		weaponname2 = trimstring(weaponname2)
-	end
-	-- modules -- module_high_power_servos
-	local ablativearmorcount = Spring.GetUnitRulesParam(unitID, "comm_module_ablative_armor_count")             or 0 
-	local advnanocount       = Spring.GetUnitRulesParam(unitID, "comm_module_adv_nano_count")                   or 0 
-	local advtargetingcount  = Spring.GetUnitRulesParam(unitID, "comm_module_adv_targeting_count")              or 0 
-	local autorepaircount    = Spring.GetUnitRulesParam(unitID, "comm_module_autorepair_count")                 or 0 
-	local cloakrepaircount   = Spring.GetUnitRulesParam(unitID, "comm_module_cloakregen_count")                 or 0 
-	local detpackcount       = Spring.GetUnitRulesParam(unitID, "comm_module_detpack_count")                    or 0 
-	local damageboostercount = Spring.GetUnitRulesParam(unitID, "comm_module_dmg_booster_count")                or 0 
-	local servoscount        = Spring.GetUnitRulesParam(unitID, "comm_module_high_power_servos_count")          or 0 
-	local strikecount        = Spring.GetUnitRulesParam(unitID, "comm_module_high_power_servos_improved_count") or 0 
-	local hasRadarStealth    = (Spring.GetUnitRulesParam(unitID, "comm_module_personaljammer") or 0) == 1            
-	
-	-- Set up modules. PERKELEEN PERKELE LEOJ.
-	if ablativearmorcount < 3 then
-		Hide(ablativearmor3)
-		Hide(ablativearmor6)
-		Hide(ablativearmor8)
-		Show(ablativearmor0)
-	elseif ablativearmorcount < 6 then
-		Hide(ablativearmor0)
-		Hide(ablativearmor6)
-		Hide(ablativearmor8)
-		Show(ablativearmor3)
-	elseif ablativearmorcount <= 7 then
-		Hide(ablativearmor0)
-		Hide(ablativearmor3)
-		Show(ablativearmor6)
-		Hide(ablativearmor8)
-	else
-		Hide(ablativearmor0)
-		Hide(ablativearmor3)
-		Hide(ablativearmor6)
-		Show(ablativearmor8)
-	end
-	if advnanocount < 3 then
-		Hide(advnano3)
-		Hide(advnano6)
-		Hide(advnano8)
-	elseif advnanocount < 6 then
-		Hide(advnano6)
-		Hide(advnano8)
-		Show(advnano3)
-	elseif advnanocount <= 7 then
-		Hide(advnano3)
-		Show(advnano6)
-		Hide(advnano8)
-	else
-		Hide(advnano3)
-		Hide(advnano6)
-		Show(advnano8)
-	end
-	if advtargetingcount < 3 then
-		Hide(advtargeting3)
-		Hide(advtargeting6)
-		Hide(advtargeting8)
-	elseif advtargetingcount < 6 then
-		Hide(advtargeting6)
-		Hide(advtargeting8)
-		Show(advtargeting3)
-	elseif advtargetingcount <= 7 then
-		Show(advtargeting6)
-		Hide(advtargeting8)
-		Hide(advtargeting3)
-	else
-		Hide(advtargeting6)
-		Show(advtargeting8)
-		Hide(advtargeting3)
-	end
-	if autorepaircount < 3 then
-		Hide(autorepair3)
-		Hide(autorepair6)
-		Hide(autorepair8)
-	elseif autorepaircount < 6 then
-		Show(autorepair3)
-		Hide(autorepair6)
-		Hide(autorepair8)
-	elseif autorepaircount <= 7 then
-		Hide(autorepair3)
-		Show(autorepair6)
-		Hide(autorepair8)
-	else
-		Hide(autorepair3)
-		Hide(autorepair6)
-		Show(autorepair8)
-	end
-	if cloakrepaircount < 3 then
-		Show(cloakrepair0)
-		Hide(cloakrepair3)
-		Hide(cloakrepair6)
-		Hide(cloakrepair8)
-	elseif cloakrepaircount < 6 then
-		Hide(cloakrepair0)
-		Show(cloakrepair3)
-		Hide(cloakrepair6)
-		Hide(cloakrepair8)
-	elseif cloakrepaircount <= 7 then
-		Hide(cloakrepair0)
-		Hide(cloakrepair3)
-		Show(cloakrepair6)
-		Hide(cloakrepair8)
-	else
-		Hide(cloakrepair0)
-		Hide(cloakrepair3)
-		Hide(cloakrepair6)
-		Show(cloakrepair8)
-		Hide(Breast)
-	end
-	if damageboostercount < 3 then
-		Hide(dmgbooster3)
-		Hide(dmgbooster6)
-		Hide(dmgbooster8)
-	elseif damageboostercount < 6 then
-		Show(dmgbooster3)
-		Hide(dmgbooster6)
-		Hide(dmgbooster8)
-	elseif damageboostercount <= 7 then
-		Hide(dmgbooster3)
-		Show(dmgbooster6)
-		Hide(dmgbooster8)
-	else
-		Hide(dmgbooster3)
-		Hide(dmgbooster6)
-		Show(dmgbooster8)
-	end
-	if detpackcount == 0 then
-		Hide(detpack1)
-		Hide(detpack2)
-		Hide(detpack3)
-	elseif detpackcount == 1 then
-		Show(detpack1)
-		Hide(detpack2)
-		Hide(detpack3)
-	elseif detpackcount == 2 then
-		Show(detpack1)
-		Show(detpack2)
-		Hide(detpack3)
-	else
-		Show(detpack1)
-		Show(detpack2)
-		Show(detpack3)
-	end
-	if servoscount < 3 then
-		Hide(powerservos31)
-		Hide(powerservos32)
-		Hide(powerservos61)
-		Hide(powerservos62)
-		Hide(powerservos81)
-		Hide(powerservos82)
-	elseif autorepaircount < 6 then
-		Show(powerservos31)
-		Show(powerservos32)
-		Hide(FootLeft)
-		Hide(FootRight)
-		Hide(powerservos61)
-		Hide(powerservos62)
-		Hide(powerservos81)
-		Hide(powerservos82)
-	elseif autorepaircount <= 7 then
-		Show(powerservos31)
-		Show(powerservos32)
-		Hide(FootLeft)
-		Hide(FootRight)
-		Hide(CalfLeft)
-		Hide(CalfRight)
-		Show(powerservos61)
-		Show(powerservos62)
-		Hide(powerservos81)
-		Hide(powerservos82)
-	else
-		Show(powerservos31)
-		Show(powerservos32)
-		Hide(FootLeft)
-		Hide(FootRight)
-		Hide(CalfLeft)
-		Hide(CalfRight)
-		Hide(HipLeft)
-		Hide(HipRight)
-		Show(powerservos61)
-		Show(powerservos62)
-		Show(powerservos81)
-		Show(powerservos82)
-	end
-	if damageboostercount < 3 then
-		Hide(strikeservos3)
-		Hide(strikeservos6)
-		Hide(strikeservos8)
-	elseif damageboostercount < 6 then
-		Show(strikeservos3)
-		Hide(strikeservos6)
-		Hide(strikeservos8)
-	elseif damageboostercount <= 7 then
-		Hide(strikeservos3)
-		Show(strikeservos6)
-		Hide(strikeservos8)
-	else
-		Hide(strikeservos3)
-		Hide(strikeservos6)
-		Show(strikeservos8)
-	end
-	
-	if hasRadarStealth then
-		Show(jammer1)
-	else
-		Hide(jammer1)
-	end
-	-- Weapons --
-	
-	-- Weapon 1 --
-	Spring.Echo("Weapons: " .. tostring(weaponname1), weaponname2)
-	-- Hide All Weapons --
+local function HideAllWeapons()
 	Hide(Gun)
 	Hide(UnderGun)
 	Hide(busterdisrupt)
@@ -754,6 +535,193 @@ local function WaitAndUpgradeThread() -- MIDNIGHT CODING DANGER AHEAD!
 	Hide(undershotgun)
 	Hide(shotgundisrupt)
 	Hide(undershotgundisrupt)
+	-- Right hand --
+	Hide(disintegrator) -- hide HandRight FingerA FingerB FingerC
+	Hide(underdisintegrator)
+	Hide(disintegratorFingerA)
+	Hide(disintegratorFingerB)
+	Hide(disintegratorFingerC)
+	Hide(minefieldinacan)
+	Hide(underminefieldinacan)
+	Hide(multistunner)
+	Hide(undermultistunner)
+	Hide(rightbusterdisrupt)
+	Hide(rightunderbusterdisrupt)
+	Hide(rightheavyrifle)
+	Hide(rightunderheavyrifle)
+	Hide(rightheavyrifledisrupt)
+	Hide(rightunderheavyrifledisrupt)
+	Hide(rightlightninggun)
+	Hide(rightunderlightninggun)
+	Hide(rightlightninggunimproved)
+	Hide(rightunderlightninggunimproved)
+	Hide(rightshotgun)
+	Hide(rightundershotgun)
+	Hide(rightshotgundisrupt)
+	Hide(rightundershotgundisrupt)
+	Hide(righttankbuster)
+	Hide(rightundertankbuster)
+	Hide(sunburst)
+	Hide(undersunburst)
+end
+
+local function HideModules()
+	Hide(ablativearmor0)
+	Hide(ablativearmor3)
+	Hide(ablativearmor6)
+	Hide(ablativearmor8)
+	Hide(advnano3)
+	Hide(advnano6)
+	Hide(advnano8)
+	Hide(advtargeting3)
+	Hide(advtargeting6)
+	Hide(advtargeting8)
+	Hide(autorepair3)
+	Hide(autorepair6)
+	Hide(autorepair8)
+	Hide(cloakrepair0)
+	Hide(cloakrepair3)
+	Hide(cloakrepair6)
+	Hide(cloakrepair8)
+	Hide(dmgbooster3)
+	Hide(dmgbooster6)
+	Hide(dmgbooster8)
+	Hide(detpack1)
+	Hide(detpack2)
+	Hide(detpack3)
+	Hide(powerservos31)
+	Hide(powerservos32)
+	Hide(powerservos61)
+	Hide(powerservos62)
+	Hide(powerservos81)
+	Hide(powerservos82)
+	Hide(jammer1)
+	Hide(strikeservos3)
+	Hide(strikeservos6)
+	Hide(strikeservos8)
+end
+
+local function UpdateModulesThread()
+	while Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") == nil do -- script.Create is called before unit_commander_upgrade.lua sets our data.
+		Sleep(33)
+	end
+	HideModules()
+	-- modules -- module_high_power_servos
+	local ablativearmorcount = Spring.GetUnitRulesParam(unitID, "comm_module_ablative_armor_count")             or 0 
+	local advnanocount       = Spring.GetUnitRulesParam(unitID, "comm_module_adv_nano_count")                   or 0 
+	local advtargetingcount  = Spring.GetUnitRulesParam(unitID, "comm_module_adv_targeting_count")              or 0 
+	local autorepaircount    = Spring.GetUnitRulesParam(unitID, "comm_module_autorepair_count")                 or 0 
+	local cloakrepaircount   = Spring.GetUnitRulesParam(unitID, "comm_module_cloakregen_count")                 or 0 
+	local detpackcount       = Spring.GetUnitRulesParam(unitID, "comm_module_detpack_count")                    or 0 
+	local damageboostercount = Spring.GetUnitRulesParam(unitID, "comm_module_dmg_booster_count")                or 0 
+	local servoscount        = Spring.GetUnitRulesParam(unitID, "comm_module_high_power_servos_count")          or 0 
+	local strikecount        = Spring.GetUnitRulesParam(unitID, "comm_module_high_power_servos_improved_count") or 0 
+	local hasRadarStealth    = (Spring.GetUnitRulesParam(unitID, "comm_module_personaljammer") or 0) == 1            
+	
+	-- Set up modules. PERKELEEN PERKELE LEOJ.
+	if ablativearmorcount < 3 then
+		Show(ablativearmor0)
+	elseif ablativearmorcount < 6 then
+		Show(ablativearmor3)
+	elseif ablativearmorcount <= 7 then
+		Show(ablativearmor6)
+	else
+		Show(ablativearmor8)
+	end
+	if advnanocount > 2 and advnanocount < 6 then
+		Show(advnano3)
+	elseif advnanocount <= 7 then
+		Show(advnano6)
+	elseif advnanocount == 8 then
+		Show(advnano8)
+	end
+	if advtargetingcount > 2 and advtargetingcount < 6 then
+		Show(advtargeting3)
+	elseif advtargetingcount <= 7 then
+		Show(advtargeting6)
+	elseif advtargetingcount == 8 then
+		Show(advtargeting8)
+	end
+	if autorepaircount > 2 and autorepaircount < 6 then
+		Show(autorepair3)
+	elseif autorepaircount <= 7 then
+		Show(autorepair6)
+	elseif autorepaircount == 8 then
+		Show(autorepair8)
+	end
+	if cloakrepaircount < 3 then
+		Show(cloakrepair0)
+	elseif cloakrepaircount < 6 then
+		Show(cloakrepair3)
+	elseif cloakrepaircount <= 7 then
+		Show(cloakrepair6)
+	else
+		Show(cloakrepair8)
+		Hide(Breast)
+	end
+	if damageboostercount > 2 and damageboostercount < 5 then
+		Show(dmgbooster3)
+	elseif damageboostercount <= 7 then
+		Show(dmgbooster6)
+	elseif damageboostercount == 8 then
+		Show(dmgbooster8)
+	end
+	if detpackcount >= 1 then
+		Show(detpack1)
+	end
+	if detpackcount >= 2 then
+		Show(detpack2)
+	end
+	if detpackcount >= 3 then
+		Show(detpack3)
+	end
+	if servoscount > 2 then
+		Show(powerservos31)
+		Show(powerservos32)
+		Hide(FootLeft)
+		Hide(FootRight)
+	end
+	if servoscount > 6 then
+		Hide(CalfLeft)
+		Hide(CalfRight)
+		Show(powerservos61)
+		Show(powerservos62)
+	end
+	if servoscount == 8 then
+		Hide(HipLeft)
+		Hide(HipRight)
+		Show(powerservos81)
+		Show(powerservos82)
+	end
+	if strikecount > 2 then
+		Show(strikeservos3)
+	end
+	if strikecount > 5 then
+		Show(strikeservos6)
+	end
+	if strikecount == 8 then
+		Show(strikeservos8)
+	end
+	if hasRadarStealth then
+		Show(jammer1)
+	end
+end
+
+
+local function UpdateWeaponsThread() -- MIDNIGHT CODING DANGER AHEAD!
+	HideAllWeapons()
+	while Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") == nil do -- script.Create is called before unit_commander_upgrade.lua sets our data.
+		Sleep(33)
+	end
+	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") or "heavyrifle"
+	local weaponname2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2") or ""
+	weaponname1 = trimstring(weaponname1)
+	if weaponname2 ~= "" then
+		weaponname2 = trimstring(weaponname2)
+	end
+	-- Weapon 1 --
+	Spring.Echo("Weapons: " .. tostring(weaponname1), weaponname2)
+	-- Hide All Weapons --
 	if weaponname1 == "tankbuster" then
 		Show(tankbuster)
 		Show(undertankbuster)
@@ -779,10 +747,58 @@ local function WaitAndUpgradeThread() -- MIDNIGHT CODING DANGER AHEAD!
 		Show(heavyrifle)
 		Show(underheavyrifle)
 	end
+	-- Weapon 2 --
+	if weaponname2 ~= "" then
+		Hide(HandRight)
+		Hide(FingerA)
+		Hide(FingerB)
+		Hide(FingerC)
+		if weaponname2 == "disintegrator" then
+			Show(disintegrator)
+			Show(underdisintegrator)
+			Show(disintegratorFingerA)
+			Show(disintegratorFingerB)
+			Show(disintegratorFingerC)
+		elseif weaponname2 == "minefieldinacan" then
+			Show(minefieldinacan)
+			Show(underminefieldinacan)
+		elseif weaponname2 == "multistunner" or weaponname2 == "multistunnerimproved" then
+			Show(multistunner)
+			Show(undermultistunner)
+		elseif weaponname2 == "busterdisrupt" then
+			Show(rightbusterdisrupt)
+			Show(rightunderbusterdisrupt)
+		elseif weaponname2 == "heavyrifledisrupt" then
+			Show(rightheavyrifledisrupt)
+			Show(rightunderheavyrifledisrupt)
+		elseif weaponname2 == "lightninggun" then
+			Show(rightlightninggun)
+			Show(rightunderlightninggun)
+		elseif weaponname2 == "lightninggunimproved" then
+			Show(rightlightninggunimproved)
+			Show(rightunderlightninggunimproved)
+		elseif weaponname2 == "shotgun" then
+			Show(rightshotgun)
+			Show(rightundershotgun)
+		elseif weaponname2 == "shotgundisrupt" then
+			Show(rightshotgundisrupt)
+			Show(rightundershotgundisrupt)
+		elseif weaponname2 == "tankbuster" then
+			Show(righttankbuster)
+			Show(rightundertankbuster)
+		elseif weaponname2 == "sunburst" then
+			Show(sunburst)
+			Show(undersunburst)
+		else
+			Show(rightheavyrifle)
+			Show(rightunderheavyrifle)
+		end
+	end
 end
 
 function OnMorphComplete()
-	StartThread(WaitAndUpgradeThread)
+	StartThread(UpdateModulesThread)
+	StartThread(UpdateWeaponsThread)
 end
 
 ---------------------------------------------------------------------
@@ -972,8 +988,8 @@ end
 function script.Create()
     local map = Spring.GetUnitPieceMap(unitID);
     local offsets = constructSkeleton(unitID,map.Scene, {0,0,0});
-	Spin(detpack1, 1)
-	Spin(detpack3, -2)
+	Spin(detpack1, z_axis, 1)
+	Spin(detpack3, z_axis, -2)
     
     for a,anim in pairs(Animations) do
         for i,keyframe in pairs(anim) do
@@ -994,7 +1010,7 @@ function script.Create()
 	
 	dyncomm.Create()
 	StartThread(GetOKP)
-	StartThread(WaitAndUpgradeThread)
+	OnMorphComplete()
 	Spring.SetUnitNanoPieces(unitID, nanoPieces)
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 end
