@@ -1,3 +1,7 @@
+if (not gadgetHandler:IsSyncedCode()) then
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Commander Upgrade",
@@ -8,14 +12,6 @@ function gadget:GetInfo()
 		layer     = 1,
 		enabled   = true  --  loaded by default?
 	}
-end
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
---SYNCED
-if (not gadgetHandler:IsSyncedCode()) then
-	return
 end
 
 include("LuaRules/Configs/constants.lua")
@@ -249,6 +245,14 @@ local moduleSlotTypeMap = {
 	adv_weapon = "module",
 }
 
+local spUnitScript = Spring.UnitScript -- CallAsUnit can't be localized directly because a later-layered gadget modifies it
+local function CallAsUnitIfExists(unitID, func, ...)
+	if func then
+		spUnitScript.CallAsUnit(unitID, func, ...)
+	end
+end
+
+
 local function SetUnitRulesModule(unitID, counts, moduleDefID)
 	local slotType = moduleSlotTypeMap[moduleDefs[moduleDefID].slotType]
 	counts[slotType] = counts[slotType] + 1
@@ -418,6 +422,8 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	
 	-- Do this all the time as it will be needed almost always.
 	GG.UpdateUnitAttributes(unitID)
+	local env = Spring.UnitScript.GetScriptEnv(unitID) or {}
+	CallAsUnitIfExists(unitID, env.OnMorphComplete) -- tell LUS we've upgraded apparently.
 end
 
 local function ApplyModuleEffectsFromUnitRulesParams(unitID)
