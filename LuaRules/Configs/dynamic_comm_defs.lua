@@ -1481,7 +1481,7 @@ local moduleDefs = {
 	{
 		name = "module_heavy_armor",
 		humanName = "High Density Plating",
-		description = "Provides " .. 3000*HP_MULT .. " health but reduces speed by 1.\nRiot Commander exclusive.",
+		description = "Provides " .. 4000*HP_MULT .. " health but reduces speed by 1.\nRiot Commander exclusive.",
 		image = moduleImagePath .. "module_heavy_armor.png",
 		limit = 8,
 		cost = 200 * COST_MULT,
@@ -1490,7 +1490,7 @@ local moduleDefs = {
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			sharedData.healthBonus = (sharedData.healthBonus or 0) + 3000*HP_MULT
+			sharedData.healthBonus = (sharedData.healthBonus or 0) + 4000*HP_MULT
 			sharedData.speedMod = (sharedData.speedMod or 0) - 1
 		end
 	},
