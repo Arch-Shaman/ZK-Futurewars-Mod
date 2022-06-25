@@ -115,6 +115,87 @@ local rightundertankbuster = piece('rightundertankbuster') -- hide HandRight Fin
 local sunburst = piece('sunburst') -- hide HandRight FingerA FingerB FingerC
 local undersunburst = piece('undersunburst') -- hide HandRight FingerA FingerB FingerC
 
+
+-- Modules --
+local ablativearmor0 = piece('ablativearmor0')
+local ablativearmor3 = piece('ablativearmor3') -- hide ablativearmor0
+local ablativearmor6 = piece('ablativearmor6')
+local ablativearmor8 = piece('ablativearmor8') -- hide ablativearmor3 ablativearmor6
+local advnano3 = piece('advnano3')
+local advnano6 = piece('advnano6') -- hide advnano3 ArmLeft
+local advnano8 = piece('advnano8')
+local advtargeting3 = piece('advtargeting3')
+local advtargeting6 = piece('advtargeting6') -- hide advtargeting3
+local advtargeting8 = piece('advtargeting8') -- hide advtargeting6
+local autorepair3 = piece('autorepair3')
+local autorepair6 = piece('autorepair6')
+local autorepair8 = piece('autorepair8')
+local cloakrepair0 = piece('cloakrepair0')
+local cloakrepair3 = piece('cloakrepair3') -- hide cloakrepair0
+local cloakrepair6 = piece('cloakrepair6') -- hide cloakrepair3
+local cloakrepair8 = piece('cloakrepair8') -- hide cloakrepair6 Breast
+local detpack1 = piece('detpack1') -- spin detpack1 in value 1
+local detpack2 = piece('detpack2')
+local detpack3 = piece('detpack3') -- spin detpack3 in value -2
+local dmgbooster3 = piece('dmgbooster3')
+local dmgbooster6 = piece('dmgbooster6') -- hide dmgbooster3
+local dmgbooster8 = piece('dmgbooster8') -- hide dmgbooster6
+local jammer1 = piece('jammer1')
+local powerservos31 = piece('powerservos31') -- hide FootRight
+local powerservos32 = piece('powerservos32') -- hide FootLeft
+local powerservos61 = piece('powerservos61') -- hide CalfRight
+local powerservos62 = piece('powerservos62') -- hide CalfLeft
+local powerservos81 = piece('powerservos81') -- hide HipRight
+local powerservos82 = piece('powerservos82') -- hide HipLeft
+local strikeservos3 = piece('strikeservos3')
+local strikeservos6 = piece('strikeservos6')
+local strikeservos8 = piece('strikeservos8')
+-- Right Arm Module Weapon --
+local busterdisrupt = piece('busterdisrupt') -- hide Gun UnderGun tankbuster undertankbuster
+local underbusterdisrupt = piece('underbusterdisrupt') -- hide Gun UnderGun tankbuster undertankbuster
+local heavyrifle = piece('heavyrifle') -- hide Gun UnderGun
+local underheavyrifle = piece('underheavyrifle') -- hide Gun UnderGun
+local heavyrifledisrupt = piece('heavyrifledisrupt') -- hide Gun UnderGun heavyrifle underheavyrifle
+local underheavyrifledisrupt = piece('underheavyrifledisrupt') -- hide Gun UnderGun heavyrifle underheavyrifle
+local lightninggun = piece('lightninggun') -- hide Gun UnderGun
+local underlightninggun = piece('underlightninggun') -- hide Gun UnderGun
+local lightninggunimproved = piece('lightninggunimproved') -- hide Gun UnderGun lightninggun underlightninggun
+local underlightninggunimproved = piece('underlightninggunimproved') -- hide Gun UnderGun lightninggun underlightninggun
+local shotgun = piece('shotgun') -- hide Gun UnderGun
+local undershotgun = piece('undershotgun') -- hide Gun UnderGun
+local shotgundisrupt = piece('shotgundisrupt') -- hide Gun UnderGun shotgun undershotgun
+local undershotgundisrupt = piece('undershotgundisrupt') -- hide Gun UnderGun shotgun undershotgun
+local tankbuster = piece('tankbuster') -- hide Gun UnderGun
+local undertankbuster = piece('undertankbuster') -- hide Gun UnderGun
+-- Left Arm Module Weapon --
+local disintegrator = piece('disintegrator') -- hide HandRight FingerA FingerB FingerC
+local underdisintegrator = piece('underdisintegrator') -- hide HandRight FingerA FingerB FingerC
+local disintegratorFingerA = piece('disintegratorFingerA') -- hide HandRight FingerA FingerB FingerC
+local disintegratorFingerB = piece('disintegratorFingerB') -- hide HandRight FingerA FingerB FingerC
+local disintegratorFingerC = piece('disintegratorFingerC') -- hide HandRight FingerA FingerB FingerC
+local minefieldinacan = piece('minefieldinacan') -- hide HandRight FingerA FingerB FingerC
+local underminefieldinacan = piece('underminefieldinacan') -- hide HandRight FingerA FingerB FingerC
+local multistunner = piece('multistunner') -- hide HandRight FingerA FingerB FingerC
+local undermultistunner = piece('undermultistunner') -- hide HandRight FingerA FingerB FingerC
+local rightbusterdisrupt = piece('rightbusterdisrupt') -- hide HandRight FingerA FingerB FingerC tankbuster undertankbuster
+local rightunderbusterdisrupt = piece('rightunderbusterdisrupt') -- hide HandRight FingerA FingerB FingerC tankbuster undertankbuster
+local rightheavyrifle = piece('rightheavyrifle') -- hide HandRight FingerA FingerB FingerC
+local rightunderheavyrifle = piece('rightunderheavyrifle') -- hide HandRight FingerA FingerB FingerC
+local rightheavyrifledisrupt = piece('rightheavyrifledisrupt') -- hide HandRight FingerA FingerB FingerC heavyrifle underheavyrifle
+local rightunderheavyrifledisrupt = piece('rightunderheavyrifledisrupt') -- hide HandRight FingerA FingerB FingerC heavyrifle underheavyrifle
+local rightlightninggun = piece('rightlightninggun') -- hide HandRight FingerA FingerB FingerC
+local rightunderlightninggun = piece('rightunderlightninggun') -- hide HandRight FingerA FingerB FingerC
+local rightlightninggunimproved = piece('rightlightninggunimproved') -- hide HandRight FingerA FingerB FingerC lightninggun underlightninggun
+local rightunderlightninggunimproved = piece('rightunderlightninggunimproved') -- hide HandRight FingerA FingerB FingerC lightninggun underlightninggun
+local rightshotgun = piece('rightshotgun') -- hide HandRight FingerA FingerB FingerC
+local rightundershotgun = piece('rightundershotgun') -- hide HandRight FingerA FingerB FingerC
+local rightshotgundisrupt = piece('rightshotgundisrupt') -- hide HandRight FingerA FingerB FingerC shotgun undershotgun
+local rightundershotgundisrupt = piece('rightundershotgundisrupt') -- hide HandRight FingerA FingerB FingerC shotgun undershotgun
+local righttankbuster = piece('righttankbuster') -- hide HandRight FingerA FingerB FingerC
+local rightundertankbuster = piece('rightundertankbuster') -- hide HandRight FingerA FingerB FingerC
+local sunburst = piece('sunburst') -- hide HandRight FingerA FingerB FingerC
+local undersunburst = piece('undersunburst') -- hide HandRight FingerA FingerB FingerC
+
 local TORSO_SPEED_YAW = math.rad(300)
 local ARM_SPEED_PITCH = math.rad(180)
 
@@ -513,6 +594,241 @@ function script.StopMoving()
 	StartThread(RestoreLegs)
 end
 
+local function trimstring(weaponname)
+	weaponname = weaponname:gsub("_", "")
+	weaponname = weaponname:gsub("commweapon", "")
+	weaponname = weaponname:gsub("%d+", "")
+	return weaponname
+end
+
+local function WaitAndUpgradeThread() -- MIDNIGHT CODING DANGER AHEAD!
+	while Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") == nil do -- script.Create is called before unit_commander_upgrade.lua sets our data.
+		Sleep(33)
+	end
+	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
+	local weaponname2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2") or ""
+	
+	if weaponname1 then
+		weaponname1 = trimstring(weaponname1)
+	else
+		weaponname1 = "heavyrifle"
+	end
+	if weaponname2 ~= "" then
+		weaponname2 = trimstring(weaponname2)
+	end
+	-- modules -- module_high_power_servos
+	local ablativearmorcount = Spring.GetUnitRulesParam(unitID, "comm_module_ablative_armor_count")             or 0 
+	local advnanocount       = Spring.GetUnitRulesParam(unitID, "comm_module_adv_nano_count")                   or 0 
+	local advtargetingcount  = Spring.GetUnitRulesParam(unitID, "comm_module_adv_targeting_count")              or 0 
+	local autorepaircount    = Spring.GetUnitRulesParam(unitID, "comm_module_autorepair_count")                 or 0 
+	local cloakrepaircount   = Spring.GetUnitRulesParam(unitID, "comm_module_cloakregen_count")                 or 0 
+	local detpackcount       = Spring.GetUnitRulesParam(unitID, "comm_module_detpack_count")                    or 0 
+	local damageboostercount = Spring.GetUnitRulesParam(unitID, "comm_module_dmg_booster_count")                or 0 
+	local servoscount        = Spring.GetUnitRulesParam(unitID, "comm_module_high_power_servos_count")          or 0 
+	local strikecount        = Spring.GetUnitRulesParam(unitID, "comm_module_high_power_servos_improved_count") or 0 
+	local hasRadarStealth    = (Spring.GetUnitRulesParam(unitID, "comm_module_personaljammer") or 0) == 1            
+	
+	-- Set up modules. PERKELEEN PERKELE LEOJ.
+	if ablativearmorcount < 3 then
+		Hide(ablativearmor3)
+		Hide(ablativearmor6)
+		Hide(ablativearmor8)
+		Show(ablativearmor0)
+	elseif ablativearmorcount < 6 then
+		Hide(ablativearmor0)
+		Hide(ablativearmor6)
+		Hide(ablativearmor8)
+		Show(ablativearmor3)
+	elseif ablativearmorcount <= 7 then
+		Hide(ablativearmor0)
+		Hide(ablativearmor3)
+		Show(ablativearmor6)
+		Hide(ablativearmor8)
+	else
+		Hide(ablativearmor0)
+		Hide(ablativearmor3)
+		Hide(ablativearmor6)
+		Show(ablativearmor8)
+	end
+	if advnanocount < 3 then
+		Hide(advnano3)
+		Hide(advnano6)
+		Hide(advnano8)
+	elseif advnanocount < 6 then
+		Hide(advnano6)
+		Hide(advnano8)
+		Show(advnano3)
+	elseif advnanocount <= 7 then
+		Hide(advnano3)
+		Show(advnano6)
+		Hide(advnano8)
+	else
+		Hide(advnano3)
+		Hide(advnano6)
+		Show(advnano8)
+	end
+	if advtargetingcount < 3 then
+		Hide(advtargeting3)
+		Hide(advtargeting6)
+		Hide(advtargeting8)
+	elseif advtargetingcount < 6 then
+		Hide(advtargeting6)
+		Hide(advtargeting8)
+		Show(advtargeting3)
+	elseif advtargetingcount <= 7 then
+		Show(advtargeting6)
+		Hide(advtargeting8)
+		Hide(advtargeting3)
+	else
+		Hide(advtargeting6)
+		Show(advtargeting8)
+		Hide(advtargeting3)
+	end
+	if autorepaircount < 3 then
+		Hide(autorepair3)
+		Hide(autorepair6)
+		Hide(autorepair8)
+	elseif autorepaircount < 6 then
+		Show(autorepair3)
+		Hide(autorepair6)
+		Hide(autorepair8)
+	elseif autorepaircount <= 7 then
+		Hide(autorepair3)
+		Show(autorepair6)
+		Hide(autorepair8)
+	else
+		Hide(autorepair3)
+		Hide(autorepair6)
+		Show(autorepair8)
+	end
+	if cloakrepaircount < 3 then
+		Show(cloakrepair0)
+		Hide(cloakrepair3)
+		Hide(cloakrepair6)
+		Hide(cloakrepair8)
+	elseif cloakrepaircount < 6 then
+		Hide(cloakrepair0)
+		Show(cloakrepair3)
+		Hide(cloakrepair6)
+		Hide(cloakrepair8)
+	elseif cloakrepaircount <= 7 then
+		Hide(cloakrepair0)
+		Hide(cloakrepair3)
+		Show(cloakrepair6)
+		Hide(cloakrepair8)
+	else
+		Hide(cloakrepair0)
+		Hide(cloakrepair3)
+		Hide(cloakrepair6)
+		Show(cloakrepair8)
+		Hide(Breast)
+	end
+	if damageboostercount < 3 then
+		Hide(dmgbooster3)
+		Hide(dmgbooster6)
+		Hide(dmgbooster8)
+	elseif damageboostercount < 6 then
+		Show(dmgbooster3)
+		Hide(dmgbooster6)
+		Hide(dmgbooster8)
+	elseif damageboostercount <= 7 then
+		Hide(dmgbooster3)
+		Show(dmgbooster6)
+		Hide(dmgbooster8)
+	else
+		Hide(dmgbooster3)
+		Hide(dmgbooster6)
+		Show(dmgbooster8)
+	end
+	if detpackcount == 0 then
+		Hide(detpack1)
+		Hide(detpack2)
+		Hide(detpack3)
+	elseif detpackcount == 1 then
+		Show(detpack1)
+		Hide(detpack2)
+		Hide(detpack3)
+	elseif detpackcount == 2 then
+		Show(detpack1)
+		Show(detpack2)
+		Hide(detpack3)
+	else
+		Show(detpack1)
+		Show(detpack2)
+		Show(detpack3)
+	end
+	if servoscount < 3 then
+		Hide(powerservos31)
+		Hide(powerservos32)
+		Hide(powerservos61)
+		Hide(powerservos62)
+		Hide(powerservos81)
+		Hide(powerservos82)
+	elseif autorepaircount < 6 then
+		Show(powerservos31)
+		Show(powerservos32)
+		Hide(FootLeft)
+		Hide(FootRight)
+		Hide(powerservos61)
+		Hide(powerservos62)
+		Hide(powerservos81)
+		Hide(powerservos82)
+	elseif autorepaircount <= 7 then
+		Show(powerservos31)
+		Show(powerservos32)
+		Hide(FootLeft)
+		Hide(FootRight)
+		Hide(CalfLeft)
+		Hide(CalfRight)
+		Show(powerservos61)
+		Show(powerservos62)
+		Hide(powerservos81)
+		Hide(powerservos82)
+	else
+		Show(powerservos31)
+		Show(powerservos32)
+		Hide(FootLeft)
+		Hide(FootRight)
+		Hide(CalfLeft)
+		Hide(CalfRight)
+		Hide(HipLeft)
+		Hide(HipRight)
+		Show(powerservos61)
+		Show(powerservos62)
+		Show(powerservos81)
+		Show(powerservos82)
+	end
+	if damageboostercount < 3 then
+		Hide(strikeservos3)
+		Hide(strikeservos6)
+		Hide(strikeservos8)
+	elseif damageboostercount < 6 then
+		Show(strikeservos3)
+		Hide(strikeservos6)
+		Hide(strikeservos8)
+	elseif damageboostercount <= 7 then
+		Hide(strikeservos3)
+		Show(strikeservos6)
+		Hide(strikeservos8)
+	else
+		Hide(strikeservos3)
+		Hide(strikeservos6)
+		Show(strikeservos8)
+	end
+	
+	if hasRadarStealth then
+		Show(jammer1)
+	else
+		Hide(jammer1)
+	end
+	-- Weapons --
+	
+end
+
+function OnMorphComplete()
+	StartThread(WaitAndUpgradeThread)
+end
+
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 -- Aiming and Firing
@@ -700,6 +1016,8 @@ end
 function script.Create()
     local map = Spring.GetUnitPieceMap(unitID);
     local offsets = constructSkeleton(unitID,map.Scene, {0,0,0});
+	Spin(detpack1, 1)
+	Spin(detpack3, -2)
     
     for a,anim in pairs(Animations) do
         for i,keyframe in pairs(anim) do
@@ -720,6 +1038,7 @@ function script.Create()
 	
 	dyncomm.Create()
 	StartThread(GetOKP)
+	StartThread(WaitAndUpgradeThread)
 	Spring.SetUnitNanoPieces(unitID, nanoPieces)
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 end
