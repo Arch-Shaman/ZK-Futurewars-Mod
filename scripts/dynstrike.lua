@@ -85,6 +85,16 @@ local shotgundisrupt = piece('shotgundisrupt') -- hide Gun UnderGun shotgun unde
 local undershotgundisrupt = piece('undershotgundisrupt') -- hide Gun UnderGun shotgun undershotgun
 local tankbuster = piece('tankbuster') -- hide Gun UnderGun
 local undertankbuster = piece('undertankbuster') -- hide Gun UnderGun
+local WeaponsRight = {
+	busterdisrupt = {busterdisrupt, underbusterdisrupt},
+	heavyrifle = {heavyrifle, underheavyrifle},
+	heavyrifledisrupt = {heavyrifledisrupt, underheavyrifledisrupt},
+	lightninggun = {lightninggun, underlightninggun},
+	lightninggunimproved = {lightninggunimproved, underlightninggunimproved},
+	shotgun = {shotgun, undershotgun},
+	shotgundisrupt = {shotgundisrupt, undershotgundisrupt},
+	tankbuster = {tankbuster, undertankbuster}
+}
 -- Left Arm Module Weapon --
 local disintegrator = piece('disintegrator') -- hide HandRight FingerA FingerB FingerC
 local underdisintegrator = piece('underdisintegrator') -- hide HandRight FingerA FingerB FingerC
@@ -113,6 +123,22 @@ local righttankbuster = piece('righttankbuster') -- hide HandRight FingerA Finge
 local rightundertankbuster = piece('rightundertankbuster') -- hide HandRight FingerA FingerB FingerC
 local sunburst = piece('sunburst') -- hide HandRight FingerA FingerB FingerC
 local undersunburst = piece('undersunburst') -- hide HandRight FingerA FingerB FingerC
+
+local WeaponsLeft = {
+	disintegrator = {disintegrator, underdisintegrator, disintegratorFingerA, disintegratorFingerB, disintegratorFingerC},
+	minefieldinacan = {minefieldinacan, underminefieldinacan},
+	sunburst = {sunburst, undersunburst},
+	multistunner = {multistunner, undermultistunner},
+	multistunnerimproved = {multistunner, undermultistunner},
+	tankbuster = {righttankbuster, rightundertankbuster},
+	busterdisrupt = {rightbusterdisrupt, rightunderbusterdisrupt},
+	lightninggun = {rightlightninggun, rightunderlightninggun},
+	lightninggunimproved = {rightlightninggunimproved, rightunderlightninggunimproved},
+	shotgun = {rightshotgun, rightundershotgun},
+	shotgundisrupt = {rightshotgundisrupt, rightundershotgundisrupt},
+	heavyrifle = {rightheavyrifle, rightunderheavyrifle},
+	heavyrifledisrupt = {rightheavyrifledisrupt, rightunderheavyrifledisrupt}
+}
 
 local TORSO_SPEED_YAW = math.rad(300)
 local ARM_SPEED_PITCH = math.rad(180)
@@ -725,7 +751,7 @@ local function UpdateModulesThread()
 end
 
 
-local function UpdateWeaponsThread() -- MIDNIGHT CODING DANGER AHEAD!
+local function UpdateWeaponsThread()
 	HideAllWeapons()
 	while Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") == nil do -- script.Create is called before unit_commander_upgrade.lua sets our data.
 		Sleep(33)
@@ -736,80 +762,14 @@ local function UpdateWeaponsThread() -- MIDNIGHT CODING DANGER AHEAD!
 	if weaponname2 ~= "" then
 		weaponname2 = trimstring(weaponname2)
 	end
-	-- Weapon 1 --
 	Spring.Echo("Weapons: " .. tostring(weaponname1), weaponname2)
-	-- Hide All Weapons --
-	if weaponname1 == "tankbuster" then
-		Show(tankbuster)
-		Show(undertankbuster)
-	elseif weaponname1 == "busterdisrupt" then
-		Show(underbusterdisrupt)
-		Show(busterdisrupt)
-	elseif weaponname1 == "shotgun" then
-		Show(shotgun)
-		Show(undershotgun)
-	elseif weaponname1 == "shotgundisrupt" then
-		Show(undershotgundisrupt)
-		Show(shotgundisrupt)
-	elseif weaponname1 == "lightninggun" then
-		Show(lightninggun)
-		Show(underlightninggun)
-	elseif weaponname1 == "lightninggunimproved" then
-		Show(lightninggunimproved)
-		Show(underlightninggunimproved)
-	elseif weaponname1 == "heavyrifledisrupt" then
-		Show(heavyrifledisrupt)
-		Show(underheavyrifledisrupt)
-	else -- "heavyrifle"
-		Show(heavyrifle)
-		Show(underheavyrifle)
-	end
-	-- Weapon 2 --
+	for key, piece in ipairs(WeaponsRight[weaponname1]) do Show(piece) end
 	if weaponname2 ~= "" then
 		Hide(HandRight)
 		Hide(FingerA)
 		Hide(FingerB)
 		Hide(FingerC)
-		if weaponname2 == "disintegrator" then
-			Show(disintegrator)
-			Show(underdisintegrator)
-			Show(disintegratorFingerA)
-			Show(disintegratorFingerB)
-			Show(disintegratorFingerC)
-		elseif weaponname2 == "minefieldinacan" then
-			Show(minefieldinacan)
-			Show(underminefieldinacan)
-		elseif weaponname2 == "multistunner" or weaponname2 == "multistunnerimproved" then
-			Show(multistunner)
-			Show(undermultistunner)
-		elseif weaponname2 == "busterdisrupt" then
-			Show(rightbusterdisrupt)
-			Show(rightunderbusterdisrupt)
-		elseif weaponname2 == "heavyrifledisrupt" then
-			Show(rightheavyrifledisrupt)
-			Show(rightunderheavyrifledisrupt)
-		elseif weaponname2 == "lightninggun" then
-			Show(rightlightninggun)
-			Show(rightunderlightninggun)
-		elseif weaponname2 == "lightninggunimproved" then
-			Show(rightlightninggunimproved)
-			Show(rightunderlightninggunimproved)
-		elseif weaponname2 == "shotgun" then
-			Show(rightshotgun)
-			Show(rightundershotgun)
-		elseif weaponname2 == "shotgundisrupt" then
-			Show(rightshotgundisrupt)
-			Show(rightundershotgundisrupt)
-		elseif weaponname2 == "tankbuster" then
-			Show(righttankbuster)
-			Show(rightundertankbuster)
-		elseif weaponname2 == "sunburst" then
-			Show(sunburst)
-			Show(undersunburst)
-		else
-			Show(rightheavyrifle)
-			Show(rightunderheavyrifle)
-		end
+		for key, piece in ipairs(WeaponsLeft[weaponname2]) do Show(piece) end
 	end
 end
 
