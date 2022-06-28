@@ -644,7 +644,7 @@ local function UpdateModulesThread()
 	local strikecount        = Spring.GetUnitRulesParam(unitID, "module_high_power_servos_improved_count") or 0 
 	local hasRadarStealth    = (Spring.GetUnitRulesParam(unitID, "module_personaljammer_count") or 0) == 1            
 	
-	Spring.Echo("Module Count: " .. ablativearmorcount, advnanocount, advtargetingcount, autorepaircount, cloakrepaircount, detpackcount, damageboostercount, servoscount, strikecount, hasRadarStealth)
+	--Spring.Echo("Module Count: " .. ablativearmorcount, advnanocount, advtargetingcount, autorepaircount, cloakrepaircount, detpackcount, damageboostercount, servoscount, strikecount, hasRadarStealth)
 	
 	-- Set up modules. PERKELEEN PERKELE LEOJ.
 	if ablativearmorcount < 3 then
@@ -762,7 +762,7 @@ local function UpdateWeaponsThread()
 	if weaponname2 ~= "" then
 		weaponname2 = trimstring(weaponname2)
 	end
-	Spring.Echo("Weapons: " .. tostring(weaponname1), weaponname2)
+	--Spring.Echo("Weapons: " .. tostring(weaponname1), weaponname2)
 	for key, piece in ipairs(WeaponsRight[weaponname1]) do Show(piece) end
 	if weaponname2 ~= "" then
 		Hide(HandRight)
