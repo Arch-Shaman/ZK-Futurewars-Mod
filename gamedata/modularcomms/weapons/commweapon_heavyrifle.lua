@@ -7,8 +7,9 @@ local weaponDef = {
 
 	customParams            = {
 		is_unit_weapon = 1,
-		muzzleEffectFire = [[custom:HEAVY_CANNON_MUZZLE]],
+		muzzleEffectShot = [[custom:HEAVY_CANNON_MUZZLE]],
 		miscEffectFire = [[custom:emg_shells_l]],
+		--muzzleEffectShot = [[custom:LEVLRMUZZLE_CLOUDLESS]],
 
 		light_color = [[0.8 0.76 0.38]],
 		light_radius = 120,

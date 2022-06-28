@@ -7,7 +7,7 @@ local weaponDef = {
 
 	customParams            = {
 		is_unit_weapon = 1,
-		muzzleEffectFire = [[custom:HEAVY_CANNON_MUZZLE]],
+		muzzleEffectShot = [[custom:beamlaser_violet_muzzle]],
 		miscEffectFire = [[custom:emg_shells_l]],
 		timeslow_damageFactor = 2,
 		light_color = [[1.3 0.5 1.6]],
