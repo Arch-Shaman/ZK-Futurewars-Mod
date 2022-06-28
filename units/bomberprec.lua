@@ -66,7 +66,7 @@ return {
 			{
 				def                = [[BOMBSABOT]],
 				mainDir            = [[0 -1 0]],
-				onlyTargetCategory = [[LAND TURRET SHIP SWIM FLOAT HOVER UNARMED]],
+				onlyTargetCategory = [[LAND TURRET SHIP SWIM SINK FLOAT HOVER UNARMED]],
 			},
 		},
 		weaponDefs          = {
@@ -88,7 +88,6 @@ return {
 				damage                  = {
 					default = 12*125,
 				},
-      
 				customParams            = {
 					light_color = [[1.1 0.9 0.45]],
 					light_radius = 220,
@@ -105,7 +104,6 @@ return {
 					groundimpact = 1,
 					reaim_time = 60, -- see what the hell this does.
 				},
-
 				explosionGenerator      = [[custom:WEAPEXP_PUFF]],
 				fireStarter             = 70,
 				flightTime              = 3,
@@ -137,11 +135,9 @@ return {
 				areaOfEffect            = 128,
 				craterBoost             = 10,
 				craterMult              = 5,
-
 				damage                  = {
-					default = 125,
+					default = 125.01,
 				},
-
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
 				fireStarter             = 180,
 				impulseBoost            = 0,
@@ -164,7 +160,6 @@ return {
 			},
 		},
 		featureDefs         = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -172,7 +167,6 @@ return {
 				footprintZ       = 2,
 				object           = [[spirit_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
