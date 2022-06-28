@@ -65,7 +65,7 @@ return {
 		weapons             = {
 			{
 				def                = [[BOMBSABOT]],
-				mainDir            = [[0 -1 0]],
+				mainDir            = [[0 0 0]],
 				onlyTargetCategory = [[LAND TURRET SHIP SWIM SINK FLOAT HOVER UNARMED]],
 			},
 		},
@@ -81,53 +81,51 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting       = 1,
-				burst					= 2,
-				burstRate				= 10/30,
-				projectiles				= 1,
-
+				burst                   = 6,
+				projectiles             = 3,
+				burstrate				= 4/30,
 				damage                  = {
-					default = 12*125,
+					default = 3*125,
 				},
 				customParams            = {
 					light_color = [[1.1 0.9 0.45]],
 					light_radius = 220,
 					--torp_underwater = [[bomberprec_a_torpedo]],
-					numprojectiles1 = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "bomberprec_bomblet",
 					--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					proxy = 0, -- check for nearby units?
 					useheight = 1,
-					spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-5,0,-5,5,2,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					spawndist = 150, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					vradius1 = "-8,-4,-8,8,4,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1,
 					reaim_time = 60, -- see what the hell this does.
 				},
 				explosionGenerator      = [[custom:WEAPEXP_PUFF]],
 				fireStarter             = 70,
 				flightTime              = 3,
-				heightmod               = 0,
 				impulseBoost            = 0,
 				impulseFactor           = 0,
 				interceptedByShieldType = 2,
-				leadlimit               = 0,
 				model                   = [[hobbes.s3o]],
-				mygravity		        = 0.4,
+				mygravity		        = 0.1,
 				reloadtime              = 5,
+				range                   = 100,
 				texture2                = [[darksmoketrail]],
 				soundHit                = [[weapon/cannon/cannonfire_001]],
 				soundStart              = [[weapon/bomb_drop]],
-				startVelocity           = 150,
+				startVelocity           = 800,
 				tolerance               = 65536/2, -- 180 degrees
 				fireTolerance		    = 65536/2,
 				accuracy		        = 2800,
-				sprayangle		        = 300,
+				sprayangle		        = 1800,
 				turnRate                = 2500,
 				turret                  = true,
-				weaponAcceleration      = 150,
+				weaponAcceleration      = 750,
 				weaponType              = [[AircraftBomb]],
-				weaponVelocity          = 440,
+				weaponVelocity          = 800,
 			},
 			BOMBLET = {
 				name                    = [[High Explosive Bomblet]],

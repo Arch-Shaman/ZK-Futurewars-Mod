@@ -44,7 +44,8 @@ function script.Create()
 	SetInitialBomberSettings()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	StartThread(GG.TakeOffFuncs.TakeOffThread, takeoffHeight, SIG_TAKEOFF)
-	--StartThread(Lights)
+	StartThread(Lights)
+	Move(drop, z_axis, 60)
 end
 
 function script.AimWeapon(num)
@@ -52,7 +53,7 @@ function script.AimWeapon(num)
 end
 
 function script.QueryWeapon(num)
-	return base
+	return drop
 end
 
 function script.BlockShot(num)
