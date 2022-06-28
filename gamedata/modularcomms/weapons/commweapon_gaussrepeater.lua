@@ -22,7 +22,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 40.1,
+		default = 50.1,
 	},
 
 	explosionGenerator      = [[custom:gauss_hit_m]],
@@ -34,7 +34,7 @@ local weaponDef = {
 	noExplode               = true,
 	noSelfDamage            = true,
 	numbounce               = 10,
-	range                   = 260,
+	range                   = 280,
 	reloadtime              = 2/3,
 	rgbColor                = [[0.5 1 1]],
 	separation              = 0.5,
