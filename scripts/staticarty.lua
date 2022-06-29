@@ -77,10 +77,7 @@ function script.Shot(num)
 	EmitSfx(gunPieces[gun_1].flare, 1024)
 	Move(gunPieces[gun_1].barrel, z_axis, RECOIL_DISTANCE)
 	Move(gunPieces[gun_1].barrel, z_axis, 0, RECOIL_RESTORE_SPEED)
-	gun_1 = gun_1 + 1
-	if gun_1 > 3 then
-		gun_1 = 1
-	end
+	gun_1 = gun_1%3 + 1
 end
 
 function script.QueryWeapon(num)
