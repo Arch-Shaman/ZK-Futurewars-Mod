@@ -58,7 +58,7 @@ return {
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 				mainDir            = [[0 1 0]],
-				maxAngleDif        = 240,
+				maxAngleDif        = 320,
 			},
 
 		},
