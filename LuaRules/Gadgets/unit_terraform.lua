@@ -154,6 +154,7 @@ local enemyDistConst = 36 -- Constant added to enemy distinct check
 local nearbyEnemyPenalty = 20 -- Cost multiplier for terraform on enemy units
 
 local pyramidLimitExtra = 8 -- Extra limit on pyramid height before terraform is cancelled.
+local restoreCostFactor = 0.5 -- How much restore costs compared to normal terraform.
 
 local costMult = 1
 local modOptions = Spring.GetModOptions()
@@ -1432,8 +1433,13 @@ local function TerraformWall(terraform_type, mPoint, mPoints, terraformHeight, u
 		end
 		
 		if totalCost ~= 0 then
+			local isRestore = terraform_type == 5
 			local baseCost = areaCost*pointExtraAreaCost + perimeterCost*pointExtraPerimeterCost + baseTerraunitCost
 			totalCost = totalCost*volumeCost + baseCost
+			if isRestore then -- restore has
+				baseCost = baseCost * restoreCostFactor
+				totalCost = totalCost * restoreCostFactor
+			end
 			
 			--Spring.Echo(totalCost .. "\t" .. baseCost)
 			local pos = segment[i].position
@@ -1486,7 +1492,7 @@ local function TerraformWall(terraform_type, mPoint, mPoints, terraformHeight, u
 					lastHealth = 0,
 					disableForceCompletion = disableForceCompletion,
 					noDecay = noDecay,
-					restore = terraform_type == 5,
+					restore = isRestore,
 				}
 				InitialiseNearbyEnemy(id)
 				
@@ -1917,6 +1923,11 @@ local function TerraformArea(terraform_type, mPoint, mPoints, terraformHeight, u
 		if totalCost ~= 0 then
 			local baseCost = areaCost*pointExtraAreaCost + perimeterCost*pointExtraPerimeterCost + baseTerraunitCost
 			totalCost = totalCost*volumeCost + baseCost
+			local isRestore = terraform_type == 5
+			if isRestore then
+				totalCost = totalCost * restoreCostFactor
+				baseCost = baseCost * restoreCostFactor
+			end
 			
 			--Spring.Echo("Total Cost", totalCost, "Area Cost", areaCost*pointExtraAreaCost, "Perimeter Cost", perimeterCost*pointExtraPerimeterCost)
 			local pos = segment[i].position
@@ -1974,7 +1985,7 @@ local function TerraformArea(terraform_type, mPoint, mPoints, terraformHeight, u
 					lastHealth = 0,
 					disableForceCompletion = disableForceCompletion,
 					noDecay = noDecay,
-					restore = terraform_type == 5,
+					restore = isRestore,
 				}
 				InitialiseNearbyEnemy(id)
 
