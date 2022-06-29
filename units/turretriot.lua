@@ -16,7 +16,6 @@ return {
 		collisionVolumeScales         = [[45 45 45]],
 		collisionVolumeType           = [[ellipsoid]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			aimposoffset   = [[0 12 0]],
 			midposoffset   = [[0 4 0]],
@@ -25,7 +24,6 @@ return {
 			pylonrange  = 150,
 			keeptooltip = [[any string i want]],
 		},
-
 		explodeAs                     = [[LARGE_BUILDINGEX]],
 		floater                       = true,
 		footprintX                    = 3,
@@ -40,19 +38,15 @@ return {
 		script                        = "turretriot.lua",
 		selfDestructAs                = [[LARGE_BUILDINGEX]],
 		sfxtypes                      = {
-
 			explosiongenerators = {
 				[[custom:WARMUZZLE]],
 				[[custom:DEVA_SHELLS]],
 			},
-
 		},
-
 		sightDistance                 = 351, -- Range*1.1 + 48 for radar overshoot
 		useBuildingGroundDecal        = true,
 		yardMap                       = [[ooo ooo ooo]],
 		weapons                       = {
-
 			{
 				def                = [[turretriot_WEAPON]],
 				badTargetCategory  = [[FIXEDWING]],
@@ -60,9 +54,7 @@ return {
 				mainDir            = [[0 1 0]],
 				maxAngleDif        = 320,
 			},
-
 		},
-
 		weaponDefs                    = {
 			secondary = {
 				name                    = [[Plasma Flechette]],
@@ -74,7 +66,6 @@ return {
 				burstrate               = 0.1,
 				craterBoost             = 0.15,
 				craterMult              = 0.3,
-
 				customParams        = {
 					light_camera_height = 1600,
 					light_color = [[0.8 0.76 0.38]],
@@ -82,11 +73,9 @@ return {
 					isFlak = 3,
 					flaktime = -15,
 				},
-				
 				damage                  = {
 					default = 11.1,
 				},
-
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = [[custom:EMG_HIT_HE]],
 				firestarter             = 70,
@@ -115,7 +104,6 @@ return {
 				burnblow                = true,
 				craterBoost             = 0.15,
 				craterMult              = 0.3,
-
 				customparams = {
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 180,
@@ -135,11 +123,9 @@ return {
 					sweepfire_fastupdate = 1,
 					sweepfire_maxrangemult = 0.98,
 				},
-
 				damage                  = {
 					default = 11.1*10,
 				},
-
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = [[custom:NONE]],
 				firestarter             = 70,
@@ -162,9 +148,7 @@ return {
 				weaponVelocity          = 900,
 			},
 		},
-
 		featureDefs                   = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -172,14 +156,12 @@ return {
 				footprintZ       = 3,
 				object           = [[afury_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,
 				footprintZ       = 3,
 				object           = [[debris4x4b.s3o]],
 			},
-
 		},
 	} 
 }
