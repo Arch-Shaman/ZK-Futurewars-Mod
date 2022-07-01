@@ -18,7 +18,6 @@ return {
 		selectionVolumeScales  = [[34 45 34]],
 		selectionVolumeType    = [[cylY]],
 		corpse                 = [[DEAD]],
-
 		customParams           = {
 			canjump            = 1,
 			jump_range         = 400,
@@ -27,7 +26,6 @@ return {
 			jump_from_midair   = 0,
 			jump_spread_exception = 1,
 		},
-
 		explodeAs              = [[CLOGGER_EXPLODE]],
 		footprintX             = 2,
 		footprintZ             = 2,
@@ -64,7 +62,6 @@ return {
 				def                = [[SHIELD]],
 			},
 		},
-  
 		weaponDefs          = {	
 			Headbutt = {
 				name                    = [[Headbutt]],
@@ -79,16 +76,13 @@ return {
 				coreThickness           = 0.5,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams              = {
 					light_radius = 0,
-					combatrange = 5,
+					combatrange = 15,
 				},
-
 				damage                  = {
-					default = 70,
+					default = 70.01,
 				},
-
 				explosionGenerator      = [[custom:none]],
 				fireStarter             = 90,
 				impactOnly              = true,
@@ -97,7 +91,7 @@ return {
 				interceptedByShieldType = 0,
 				lodDistance             = 10000,
 				noSelfDamage            = true,
-				range                   = 50,
+				range                   = 80,
 				reloadtime              = 1,
 				rgbColor                = [[1 0.25 0]],
 				soundStart              = [[explosion/ex_small4_2]],
@@ -115,7 +109,6 @@ return {
 				damage                  = {	
 					default = 10,	
 				},	
-				
 				exteriorShield          = true,	
 				shieldAlpha             = 0.2,	
 				shieldBadColor          = [[1 0.1 0.1 1]],	
@@ -124,7 +117,7 @@ return {
 				shieldPower             = 380,	
 				shieldPowerRegen        = 10,	
 				shieldPowerRegenEnergy  = 0,
-				shieldRadius            = 80,
+				shieldRadius            = 75,
 				shieldRepulser          = false,
 				smartShield             = true,	
 				visibleShield           = false,	
