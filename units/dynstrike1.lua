@@ -43,7 +43,7 @@ return {
 		explodeAs              = [[ESTOR_BUILDINGEX]],
 		footprintX             = 2,
 		footprintZ             = 2,
-		iconType               = [[commander1]],
+		iconType               = [[ghostcom1]],
 		leaveTracks            = true,
 		losEmitHeight          = 40,
 		maxDamage              = 4200,

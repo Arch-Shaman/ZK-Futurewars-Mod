@@ -250,30 +250,35 @@ local copy = {
 		dynstrike0 = {
 			level = 0,
 			customparams = {shield_emit_height = 38},
+			icon = "ghostcom",
 		},
 		dynstrike2 = {
 			level = 2,
 			mainstats = {maxdamage = 4000, objectname = "strikecom_1.dae", collisionvolumescales  = [[50 55 50]],},
 			customparams = {modelradius = [[28]], shield_emit_height = 41.8},
 			wreckmodel = "strikecom_dead_1.dae",
+			icon = "ghostcom",
 		},
 		dynstrike3 = {
 			level = 3,
 			mainstats = {maxdamage = 5000, objectname = "strikecom_2.dae", collisionvolumescales  = [[55 60 55]],},
 			customparams = {modelradius = [[30]], shield_emit_height = 45.6},
 			wreckmodel = "strikecom_dead_2.dae",
+			icon = "ghostcom",
 		},
 		dynstrike4 = {
 			level = 4,
 			mainstats = {maxdamage = 6000, objectname = "strikecom_3.dae", collisionvolumescales  = [[58 66 58]],},
 			customparams = {modelradius = [[33]], shield_emit_height = 47.5},
 			wreckmodel = "strikecom_dead_3.dae",
+			icon = "ghostcom",
 		},
 		dynstrike5 = {
 			level = 5,
 			mainstats = {maxdamage = 7000, objectname = "strikecom_4.dae", collisionvolumescales  = [[60 72 60]],},
 			customparams = {modelradius = [[36]], shield_emit_height = 49.4},
 			wreckmodel = "strikecom_dead_4.dae",
+			icon = "ghostcom",
 		},
 	},
 	dynrecon1 = {
@@ -459,9 +464,9 @@ for sourceName, copyTable in pairs(copy) do
 			UnitDefs[cloneName].featuredefs.heap.footprintx = UnitDefs[cloneName].footprintx
 			UnitDefs[cloneName].featuredefs.heap.footprintz = UnitDefs[cloneName].footprintz
 		end
-		
+		local icon = stats.icon or "commander"
 		UnitDefs[cloneName].customparams.level = stats.level
 		UnitDefs[cloneName].name = (UnitDefs[cloneName].name) .. " - Level " .. stats.level
-		UnitDefs[cloneName].icontype = "commander"..stats.level
+		UnitDefs[cloneName].icontype = icon..stats.level
 	end
 end
