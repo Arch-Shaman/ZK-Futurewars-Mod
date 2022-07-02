@@ -1,9 +1,9 @@
 return { 
 	staticheavyarty = {
 		unitname                      = [[staticheavyarty]],
-		name                          = [[Big Bertha]],
+		name                          = [[Liberator]],
 		description                   = [[Canister Barrage Artillery]],
-		buildCostMetal                = 9000,
+		buildCostMetal                = 11000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 6,
@@ -15,20 +15,18 @@ return {
 		collisionVolumeScales         = [[65 194 65]],
 		collisionVolumeType           = [[cylY]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			aimposoffset = [[0 50 -7]],
 			modelradius    = [[35]],
 			selectionscalemult = 1,
     		superweapon    = 1,
-    		neededlink     = 100,
+    		neededlink     = 250,
    			pylonrange     = 150,
 			outline_x = 270,
 			outline_y = 270,
 			outline_yoff = 90,
 			bait_level_default = 4,
 		},
-		
 		explodeAs                     = [[ATOMIC_BLAST]],
 		footprintX                    = 4,
 		footprintZ                    = 4,
@@ -37,7 +35,7 @@ return {
 		idleTime                      = 1800,
 		levelGround                   = false,
 		losEmitHeight                 = 90,
-		maxDamage                     = 9000,
+		maxDamage                     = 11000,
 		maxSlope                      = 18,
 		maxWaterDepth                 = 0,
 		minCloakDistance              = 150,
@@ -52,7 +50,6 @@ return {
 				[[custom:staticheavyarty_FLARE]],
 			},
 		},
-
 		sightDistance                 = 660,
 		useBuildingGroundDecal        = true,
 		yardMap                       = [[oooo oooo oooo oooo]],
@@ -63,18 +60,15 @@ return {
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 			},
 		},
-		
 		weaponDefs                    = {
-	
 			secondary = {
-				name                    = [[Fragmention Bomb]],
+				name                    = [[Cluster Bomb]],
 				accuracy                = 350,
 				alphaDecay              = 0.7,
 				areaOfEffect            = 0,
 				burnblow                = true,
 				craterBoost             = 0.15,
 				craterMult              = 0.3,
-
 				customParams        = {
 					lups_noshockwave = [[1]],
 					light_camera_height = 1600,
@@ -90,11 +84,9 @@ return {
 					vradius1 = "-8,-2,-8,8,3,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
 				},
-				
 				damage                  = {
-					default = 145*2*4,
+					default = 290.01*4,
 				},
-
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = [[custom:tremor]],
 				firestarter             = 70,
@@ -128,11 +120,9 @@ return {
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 110,
 				},
-				
 				damage                  = {
-					default = 145*2,
+					default = 290.01,
 				},
-
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = [[custom:spidercrabe_EXPLOSION]],
 				firestarter             = 70,
@@ -164,7 +154,7 @@ return {
 				craterMult              = 0,
 				customParams            = {
 					restrict_in_widgets = 1,
-					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "staticheavyarty_secondary",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -178,11 +168,9 @@ return {
 					light_color = [[2.4 1.5 0.6]],
 					reveal_unit = 26,
 				},
-      
 				damage                  = {
-					default = 145*32,
+					default = 55680,
 				},
-				
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
 				fireTolerance           = 1820, -- 10 degrees
 				impulseBoost            = 0.5,
@@ -199,11 +187,8 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 1350,
 			},
-
 		},
-
 		featureDefs                   = {
-
 			DEAD  = {
 				blocking         = true,
 				collisionVolumeOffsets        = [[0 0 -7]],
@@ -214,15 +199,12 @@ return {
 				footprintZ       = 4,
 				object           = [[armbrtha_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 4,
 				footprintZ       = 4,
 				object           = [[debris4x4c.s3o]],
 			},
-
 		},
-
 	}
 }
