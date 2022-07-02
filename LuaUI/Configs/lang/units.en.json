@@ -770,9 +770,9 @@
 		"helptext" : "The Phantom's energy rifle inflicts heavy damage to a single target. It can fire while cloaked; however its visible round betrays its position. It requires quite a bit of energy to keep cloaked, especially when moving. The best way to locate a Phantom is by sweeping the area with many cheap units."
 	},
 	"staticarty" : {
-		"name" : "Cerberus",
-		"description" : "Plasma Artillery Battery",
-		"helptext" : "The Cerberus offers long-range artillery/counter-artillery capability, making it excellent for area denial. It is not designed as a defense turret, and will go down if attacked directly."
+		"name" : "Garmr Cannon",
+		"description" : "Tactical Artillery Battery",
+		"helptext" : "The Garmr Cannon is a tactical artillery piece that can fire its heavy plasma across the front, with increasing speeds and ranges based on the current overdrive level. Unlike the Liberator, it is capable of direct fire, in which it fires its FENIX Shells that allow it to concentrate damage on a smaller group of units. During High Trajectory mode, it will fire its Tempest shells, which split into smaller fragments before fragmenting again on impact. Use high trajectory mode against shields and clusters of defenses and low trajectory against heavies and medium targets."
 	},
 	"wolverine_mine" : {
 		"name" : "Disperser",
