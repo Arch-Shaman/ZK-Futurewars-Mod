@@ -156,9 +156,6 @@ function script.AimWeapon(num, heading, pitch)
 		Sleep (34)
 	end
 	--Spring.Echo("Loaded " .. shot .. ": " .. tostring(gun[shot].loaded))
-	if not gun[shot].loaded then
-		return false
-	end
 	local slowMult = (Spring.GetUnitRulesParam (unitID, "baseSpeedMult") or 1)
 	Turn (turret, y_axis, heading, math.rad(200)*slowMult)
 	Turn (sleeve, x_axis, -pitch, math.rad(200)*slowMult)
@@ -205,26 +202,20 @@ function script.Shot(num)
 		StartThread(ReloadThread, shot)
 		StartThread(GG.ScriptRock.Rock, dynamicRockData[z_axis], gunHeading, ROCK_FIRE_FORCE)
 		StartThread(GG.ScriptRock.Rock, dynamicRockData[x_axis], gunHeading - hpi, ROCK_FIRE_FORCE)
-	end
-end
-
-function script.EndBurst()
-	StartThread(reload, shot)
-	shot = shot + 1
-	if shot == 4 then
-		shot = 0
+		StartThread(reload, shot)
+		shot = (shot + 1)%4
 	end
 end
 
 function script.BlockShot(num, targetID)
-	if not targetID and gun[shot].loaded then
+	if not gun[shot].loaded then
+		return true
+	end
+	if not targetID then
 		return false
 	end
-	if num == 1 and gun[shot].loaded then
-		local distMult = (Spring.GetUnitSeparation(unitID, targetID) or 0) * 0.083
-		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 181.2, distMult)
-	end
-	return true
+	local distMult = (Spring.GetUnitSeparation(unitID, targetID) or 0) * 0.083
+	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 181.2, distMult)
 end
 
 function script.Create()
