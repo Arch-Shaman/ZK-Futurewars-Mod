@@ -48,7 +48,30 @@ local icontypes = {
 		bitmap='icons/armcommander.dds',
 		size=2.8,
 	},
-	
+	ghostcom0 = {
+		bitmap='icons/ghostcommander.dds',
+		size=1.9,
+	},
+	ghostcom1 = {
+		bitmap='icons/ghostcommander.dds',
+		size=2,
+	},
+	ghostcom2 = {
+		bitmap='icons/ghostcommander.dds',
+		size=2.2,
+	},
+	ghostcom3 = {
+		bitmap='icons/ghostcommander.dds',
+		size=2.4,
+	},
+	ghostcom4 = {
+		bitmap='icons/ghostcommander.dds',
+		size=2.6,
+	},
+	ghostcom5 = {
+		bitmap='icons/ghostcommander.dds',
+		size=2.8,
+	},
 
 	corcommander = {
 		bitmap='icons/corcommander.dds',
