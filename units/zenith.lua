@@ -130,7 +130,6 @@ return {
 					shield_damage = (100*10) + 3000,
 					cruisealt = 2200,
 					cruisedist = 820,
-					airlaunched = 1,
 					cruise_nolock = 1,
 					cruiserandomradius = 1200,
 					cruise_ignoreterrain = "1",
