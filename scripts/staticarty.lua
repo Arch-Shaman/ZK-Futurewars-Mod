@@ -52,9 +52,9 @@ local function reload(num)
 end
 
 local function RangeThread()
-	local baseRange = 3000
-	local baseSpeedLow = 800 / 30
-	local baseSpeedHigh = 1100 / 30
+	local baseRange = WeaponDefs[UnitDefs[Spring.GetUnitDefID(unitID)].weapons[1].weaponDef].range
+	local baseSpeedLow = WeaponDefs[UnitDefs[Spring.GetUnitDefID(unitID)].weapons[2].weaponDef].projectilespeed
+	local baseSpeedHigh = WeaponDefs[UnitDefs[Spring.GetUnitDefID(unitID)].weapons[1].weaponDef].projectilespeed
 	local overdrive, range, speed
 	while true do
 		overdrive = Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0

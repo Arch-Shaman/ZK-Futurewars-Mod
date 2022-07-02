@@ -10,6 +10,7 @@ local buildPlate = {}
 local buildPowerCache = {}
 local rangeCache = {}
 local dynComm = {}
+local garmrRange = WeaponDefs[UnitDefNames["staticarty"].weapons[1].weaponDef].range
 local variableCostUnit = {
 	[UnitDefNames["terraunit"].id] = true
 }
@@ -189,7 +190,7 @@ local function GetSuperweaponTooltip(unitID, ud)
 			return base .. "\n\255\255\061\061" .. (WG.Translate("interface", "needs_grid") or "Grid Power: ") .. grid .. " / " .. ud.customParams.neededlink .. "\255\255\255\255"
 		end
 		local od = (Spring.GetUnitRulesParam(unitID, "superweapon_mult") or 0)
-		local range = math.max(3000 * od, 1800)
+		local range = math.max(garmrRange * od, 1000)
 		od = string.format("%.2f %%", math.round(od * 100, 2))
 		return base .. "\n" .. (WG.Translate("interface", "range") or "Current Range:") .. " " .. math.floor(range) .. "(" .. od .. ")" 
 	end
