@@ -19,6 +19,7 @@ local gameSpeed = Game.gameSpeed
 local RELOAD_TIME = 7.5 * gameSpeed
 local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
 
+
 local gunPieces = {
 	{ barrel = barrel1, flare = flare1 },
 	{ barrel = barrel2, flare = flare2 },
@@ -36,6 +37,7 @@ local SIG_AIM = 2
 
 local RECOIL_DISTANCE = -3
 local RECOIL_RESTORE_SPEED = 1
+local aimspeed = math.rad(20)
 
 local smokePiece = {base, turret}
 
@@ -49,27 +51,50 @@ local function reload(num)
 	end
 end
 
+local function RangeThread()
+	local baseRange = 3000
+	local overdrive, range
+	while true do
+		overdrive = Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0
+		range = math.max(baseRange * overdrive, 1800)
+		Spring.SetUnitWeaponState(unitID, 1, "range", range)
+		Spring.SetUnitWeaponState(unitID, 2, "range", range)
+		Spring.SetUnitMaxRange(unitID, range)
+		Sleep(330)
+	end
+end
+
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	scriptReload.SetupScriptReload(3, RELOAD_TIME)
+	StartThread(RangeThread)
+end
+
+local function IsRightWeapon(num)
+	local traj = Spring.GetUnitStates(unitID)["trajectory"] or false
+	if traj and num == 2 then -- 2 = low traj weapon
+		return false
+	elseif not traj and num == 1 then -- 1 = high traj weapon
+		return false
+	end
+	return true
 end
 
 function script.AimWeapon(num, heading, pitch)
-	if (spGetUnitRulesParam(unitID, "lowpower") == 1) then
+	if not IsRightWeapon(num) or (spGetUnitRulesParam(unitID, "lowpower") == 1) then
 		return
 	end
-
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
-	Turn(turret, y_axis, heading, math.rad(75))
-	Turn(sleeve, x_axis, -pitch, math.rad(30))
+	Turn(turret, y_axis, heading, aimspeed)
+	Turn(sleeve, x_axis, -pitch, aimspeed * 0.8)
 	WaitForTurn(turret, y_axis)
 	WaitForTurn(sleeve, x_axis)
 	return (spGetUnitRulesParam(unitID, "lowpower") == 0)	--checks for sufficient energy in grid
 end
 
 function script.BlockShot(num, targetID)
-	return not gun[gun_1].loaded
+	return not gun[gun_1].loaded or not IsRightWeapon(num)
 end
 
 function script.Shot(num)
