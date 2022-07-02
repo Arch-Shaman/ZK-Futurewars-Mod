@@ -53,13 +53,19 @@ end
 
 local function RangeThread()
 	local baseRange = 3000
-	local overdrive, range
+	local baseSpeedLow = 800
+	local baseSpeedHigh = 1100
+	local overdrive, range, speed
 	while true do
 		overdrive = Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0
-		range = math.max(baseRange * overdrive, 1800)
+		range = math.max(baseRange * overdrive, 2000)
 		Spring.SetUnitWeaponState(unitID, 1, "range", range)
 		Spring.SetUnitWeaponState(unitID, 2, "range", range)
 		Spring.SetUnitMaxRange(unitID, range)
+		
+		speed = math.max((overdrive / 3), 0.85)
+		--Spring.SetUnitWeaponState(unitID, 1, "projectileSpeed", math.ceil(speed * baseSpeedHigh))
+		Spring.SetUnitWeaponState(unitID, 2, "projectileSpeed", math.ceil(speed * baseSpeedLow))
 		Sleep(330)
 	end
 end
