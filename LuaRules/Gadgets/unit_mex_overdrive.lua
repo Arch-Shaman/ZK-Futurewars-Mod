@@ -76,6 +76,8 @@ for i = 1, #UnitDefs do
 			neededLink = tonumber(udef.customParams.neededlink) or false,
 			keeptooltip = udef.customParams.keeptooltip or false,
 			isSuperWeapon = udef.customParams.superweapon ~= nil,
+			swCoef = tonumber(udef.customParams.superweaponcoef) or 0.5
+			swDenom = tonumber(udef.customParams.swDenom) or 20
 		}
 	end
 	local metalIncome = tonumber(udef.customParams.income_metal) or 0
@@ -1268,7 +1270,7 @@ function gadget:GameFrame(n)
 						local e = maxGridCapacity[grid]
 						if grid ~= 0 and e > need then
 							--Spring.Echo("Avaliable Energy: " .. gridEnergySpent[grid] .. "\nFire rate: " ..  sqrt(gridEnergySpent[grid] - need)/20)
-							spSetUnitRulesParam(unitID, "superweapon_mult", sqrt(e - need)/20, alliedTrueTable)
+							spSetUnitRulesParam(unitID, "superweapon_mult", ((e - need)^pylonDefs[unitDefID].swCoef)/pylondefs[unitDefID].swDenom, alliedTrueTable)
 							spSetUnitRulesParam(unitID, "OD_gridCurrent", gridEnergySpent[grid], alliedTrueTable)
 							spSetUnitRulesParam(unitID, "OD_gridMaximum", maxGridCapacity[grid], alliedTrueTable)
 						else
