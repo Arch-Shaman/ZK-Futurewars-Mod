@@ -1270,7 +1270,7 @@ function gadget:GameFrame(n)
 						local e = maxGridCapacity[grid]
 						if grid ~= 0 and e > need then
 							--Spring.Echo("Avaliable Energy: " .. gridEnergySpent[grid] .. "\nFire rate: " ..  sqrt(gridEnergySpent[grid] - need)/20)
-							spSetUnitRulesParam(unitID, "superweapon_mult", ((e - need)^pylonDefs[unitDefID].swCoef)/pylondefs[unitDefID].swDenom, alliedTrueTable)
+							spSetUnitRulesParam(unitID, "superweapon_mult", ((e - need)^pylonDefs[unitDefID].swCoef)/pylonDefs[unitDefID].swDenom, alliedTrueTable)
 							spSetUnitRulesParam(unitID, "OD_gridCurrent", gridEnergySpent[grid], alliedTrueTable)
 							spSetUnitRulesParam(unitID, "OD_gridMaximum", maxGridCapacity[grid], alliedTrueTable)
 						else
