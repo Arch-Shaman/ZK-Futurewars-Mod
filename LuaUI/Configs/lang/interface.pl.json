@@ -12,6 +12,7 @@
 	"seismic" : "Rakiety sejsmiczne",
 	"emp_aoe" : "Maks. obszar rażenia EMP",
 	"emp_vertical" : "Pionowy spad EMP",
+	"range" : "Bieżący zakres",
 	"tacnuke_vertical" : "Pionowy spad rakiet taktycznych",
 	"clear_factory_queue" : "Wyczyść kolejkę",
 	"space_click_show_stats" : "Spacja+klik: Pokaż statystyki jednostki",

@@ -15,6 +15,7 @@
 	"needs_grid" : "Insufficient grid power: ",
 	"fire_rate" : "Current Firerate:",
 	"gather_rate" : "Meteor Gathering Rate:",
+	"range" : "Current Range:",
 	"emp_vertical" : "EMP vertical",
 	"tacnuke_vertical" : "Seismic and Tacnuke vertical",
 	"nuke_range" : "Silencer MkIII", 

@@ -10,6 +10,7 @@
 	"seismic" : "Seismisch",
 	"emp_aoe" : "EMP AOE",
 	"emp_vertical" : "EMP vertikal",
+	"range" : "Aktueller Bereich:",
 	"tacnuke_vertical" : "Seismisch und Tacnuke vertikal",
 	"clear_factory_queue" : "Entferne alle zum Bau geplanten Einheiten",
 	"space_click_show_stats" : "Leertaste+Linksklick: Zeige Einheitenstatistik",

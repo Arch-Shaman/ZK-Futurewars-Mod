@@ -23,6 +23,7 @@
 	"evac_nothing_to_evac" : "Tahliye edecek birşey yok",
 	"evac_broken" : "Tahliye bozuldu",
 	"planet" : "Gezegen %{planet}",
+	"range" : "Geçerli Aralık:",
 	"pw_battle_instructions" : "Savaş Talimatları",
 	"pw_instruction_who_pvp_defender" : "%{defender} %{planet} Gezegenini %{attacker} tarafından koruyorsun. Saldırganlar %{ip} %{needed} gezegenini fethetmek için gereken etkiye sahipler. ",
 	"pw_instruction_who_pvp_attacker" : "%{defender} %{planet} Gezegenine saldırıyosun ve %{ip} %{needed} fethetmek için gerekli etkiye sahipler.",

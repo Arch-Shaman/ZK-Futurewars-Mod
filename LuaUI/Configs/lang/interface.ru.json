@@ -24,6 +24,7 @@
 	"evac_nothing_to_evac" : "Нечего эвакуировать",
 	"evac_broken" : "Эвакуация провалена",
 	"planet" : "Планета %{planet}",
+	"range" : "Текущий диапазон:",
 	"pw_battle_instructions" : "Инструктаж",
 	"pw_instruction_who_pvp_defender" : "Вы защищаете планету %{planet} принадлежащую %{defender} от %{attacker}. Нападающие имеют %{ip} влияния из %{needed} необходимого для завоевания этой планеты.",
 	"pw_instruction_who_pvp_attacker" : "Вы атакуете планету %{planet} принадлежащую %{defender} имея %{ip} влияния из %{needed} необходимого для завоевания этой планеты.",
