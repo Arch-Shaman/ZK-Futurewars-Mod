@@ -61,7 +61,7 @@ return {
 		},
 		weaponDefs          = {
 			fragment = {
-				name                    = [[R-62 Fragment]],
+				name                    = [[R-62 Bomblet]],
 				areaOfEffect            = 144,
 				avoidFeature            = true,
 				avoidFriendly           = true,
@@ -74,14 +74,15 @@ return {
 					light_camera_height = 1500,
 				},
 				damage                  = {
-					default = 20.2,
+					default = 40.1,
 				},
 				edgeEffectiveness       = 0.75,
-				explosionGenerator      = [[custom:FLASH64]],
+				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
 				impulseBoost            = 30,
 				impulseFactor           = 0.6,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
+				mygravity               = 0.03,
 				soundHit                = [[weapon/cannon/generic_cannon]],
 				soundStart              = [[weapon/cannon/outlaw_gun]],
 				soundStartVolume        = 3,
@@ -98,16 +99,16 @@ return {
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
 					force_ignore_ground = [[1]],
-					script_reload = [[3.4]],
+					script_reload = [[4.4]],
 					script_burst = [[4]],
-					numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "tankriot_fragment",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 230, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-1,-2,-1,1,-1,1", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-5,-2,-5,5,-1,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?
 					proxydist = 110, -- how far to check for units? Default: spawndist
@@ -116,7 +117,7 @@ return {
 					light_radius = 320,
 				},
 				damage                  = {
-					default = 20.2 * 8,
+					default = 40.1 * 5,
 				},
 				edgeEffectiveness       = 0.4,
 				explosionGenerator      = [[custom:xamelimpact]],
@@ -135,7 +136,7 @@ return {
 				startVelocity           = 300,
 				tolerance               = 9000,
 				tracks                  = true,
-				trajectoryHeight        = 0.15,
+				trajectoryHeight        = 0.45,
 				turnRate                = 22000,
 				turret                  = true,
 				weaponAcceleration      = 200,
