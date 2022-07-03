@@ -64,7 +64,6 @@ return {
 					light_color = [[2.92 2.64 1.76]],
 					light_radius = 3000,
 					cruisealt = 4000,
-					airlaunched = 1,
 					cruisedist = [[300]],
 					cruise_ignoreterrain = 1,
 				},
