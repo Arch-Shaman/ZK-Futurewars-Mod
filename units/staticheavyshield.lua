@@ -57,7 +57,7 @@ return {
 				craterMult              = 0,
 				customParams = {
 					unlinked                = true,
-					shield_recharge_delay   = 20,
+					shield_recharge_delay   = 5,
 				},
 				damage                  = {
 					default = 10,
