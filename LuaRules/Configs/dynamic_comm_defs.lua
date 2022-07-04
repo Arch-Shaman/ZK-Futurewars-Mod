@@ -1481,7 +1481,7 @@ local moduleDefs = {
 	{
 		name = "module_heavy_armor",
 		humanName = "High Density Plating",
-		description = "Provides " .. 4000*HP_MULT .. " health but reduces speed by 1.\nRiot Commander exclusive.",
+		description = "Provides " .. 4000*HP_MULT .. " health but reduces speed by 0.25.\nRiot Commander exclusive.",
 		image = moduleImagePath .. "module_heavy_armor.png",
 		limit = 8,
 		cost = 200 * COST_MULT,
@@ -1491,13 +1491,13 @@ local moduleDefs = {
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			sharedData.healthBonus = (sharedData.healthBonus or 0) + 4000*HP_MULT
-			sharedData.speedMod = (sharedData.speedMod or 0) - 1
+			sharedData.speedMod = (sharedData.speedMod or 0) - 0.25
 		end
 	},
 	{
 		name = "module_dmg_booster_adv",
 		humanName = "Weapon Retrofits",
-		description = "Provides a 15% boost in firepower. Increases HP by " .. 200*HP_MULT ..	". Decreases speed by 0.5.\nRiot Exclusive.",
+		description = "Provides a 15% boost in firepower. Increases HP by " .. 200*HP_MULT ..	".\nRiot Exclusive.",
 		image = moduleImagePath .. "module_dmg_booster.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1509,7 +1509,7 @@ local moduleDefs = {
 			-- Damage boost is applied via clone swapping
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.15
 			sharedData.healthBonus = (sharedData.healthBonus or 0) + 200*HP_MULT
-			sharedData.speedMod = (sharedData.speedMod or 0) - 0.5
+			--sharedData.speedMod = (sharedData.speedMod or 0) - 0.1
 		end
 	},
 	{
@@ -1540,7 +1540,7 @@ local moduleDefs = {
 		requireChassis = {"riot"},
 		prohibitingModules = {"module_high_power_servos", "module_autorepair"},
 		applicationFunction = function (modules, sharedData)
-			sharedData.speedMod = (sharedData.speedMod or 0) - 2.2
+			sharedData.speedMod = (sharedData.speedMod or 0) - 1.1
 		end
 	},
 	{
