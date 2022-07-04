@@ -1,5 +1,4 @@
 include "constants.lua"
-
 local spGetUnitRulesParam 	= Spring.GetUnitRulesParam
 local scriptReload = include("scriptReload.lua")
 
@@ -12,31 +11,22 @@ local barrel2 = piece 'barrel2'
 local flare2 = piece 'flare2'
 local barrel3 = piece 'barrel3'
 local flare3 = piece 'flare3'
+local gun = {
+	[1] = {firepoint = barrel1, loaded = true, flare = flare1},
+	[2] = {firepoint = barrel2, loaded = true, flare = flare2},
+	[3] = {firepoint = barrel3, loaded = true, flare = flare3},
+}
 
 local gun_1 = 1
-
 local gameSpeed = Game.gameSpeed
 local RELOAD_TIME = 7.5 * gameSpeed
 local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
 
-
-local gunPieces = {
-	{ barrel = barrel1, flare = flare1 },
-	{ barrel = barrel2, flare = flare2 },
-	{ barrel = barrel3, flare = flare3 }
-}
-
-local gun = {
-	[1] = {firepoint = barrel1, loaded = true},
-	[2] = {firepoint = barrel2, loaded = true},
-	[3] = {firepoint = barrel3, loaded = true},
-}
-
 -- Signal definitions
 local SIG_AIM = 2
 
-local RECOIL_DISTANCE = -3
-local RECOIL_RESTORE_SPEED = 1
+local RECOIL_DISTANCE = -5
+local RECOIL_RESTORE_SPEED = -(RECOIL_DISTANCE)/7.3 -- should be setup just before it fires
 local aimspeed = math.rad(20)
 
 local smokePiece = {base, turret}
@@ -57,7 +47,7 @@ local function RangeThread()
 	local baseSpeedHigh = WeaponDefs[UnitDefs[Spring.GetUnitDefID(unitID)].weapons[1].weaponDef].projectilespeed
 	local overdrive, range, speed
 	while true do
-		overdrive = Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0
+		overdrive = spGetUnitRulesParam(unitID,"superweapon_mult") or 0
 		range = math.max(baseRange * overdrive, 1000)
 		Spring.SetUnitWeaponState(unitID, 1, "range", range)
 		Spring.SetUnitWeaponState(unitID, 2, "range", range)
@@ -104,16 +94,22 @@ function script.BlockShot(num, targetID)
 	return not gun[gun_1].loaded or not IsRightWeapon(num)
 end
 
-function script.Shot(num)
-	StartThread(reload, gun_1)
-	EmitSfx(gunPieces[gun_1].flare, 1024)
-	Move(gunPieces[gun_1].barrel, z_axis, RECOIL_DISTANCE)
-	Move(gunPieces[gun_1].barrel, z_axis, 0, RECOIL_RESTORE_SPEED)
-	gun_1 = gun_1%3 + 1
+function script.QueryWeapon(num)
+	return gun[gun_1].flare
 end
 
-function script.QueryWeapon(num)
-	return gunPieces[gun_1].flare
+local function RecoilThread(num)
+	Move(gun[num].firepoint, z_axis, RECOIL_DISTANCE, 30)
+	Sleep(166)
+	Move(gun[num].firepoint, z_axis, 0, RECOIL_RESTORE_SPEED)
+end
+
+
+function script.Shot(num)
+	StartThread(reload, gun_1)
+	EmitSfx(gun[gun_1].flare, 1024)
+	StartThread(RecoilThread, gun_1)
+	gun_1 = gun_1%3 + 1
 end
 
 function script.AimFromWeapon(num)
