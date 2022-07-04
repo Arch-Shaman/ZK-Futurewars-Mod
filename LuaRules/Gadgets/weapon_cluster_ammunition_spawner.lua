@@ -526,10 +526,8 @@ local function CheckProjectile(id)
 							spEcho("Spawn by ground height")
 						end
 						SpawnSubProjectiles(id,wd)
-						return
-					else
-						return
 					end
+					return
 				end
 				if use3d then
 					distance = distance3d(x2,y2,z2,x1,y1,z1)
