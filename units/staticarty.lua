@@ -15,14 +15,14 @@ return {
 		corpse                        = [[DEAD]],
 		customParams                  = {
 			keeptooltip        = [[any string I want]],
-			neededlink         = 250,
+			neededlink         = 150,
 			pylonrange         = 200,
 			aimposoffset       = [[0 26 0]],
 			midposoffset       = [[0 10 0]],
 			bait_level_default = 1,
 			superweapon        = 1,
-			superweaponcoef    = 0.25,
-			superweapondenom   = 6,
+			superweaponcoef    = 0.26,
+			superweapondenom   = 5,
 		},
 		explodeAs                     = [[LARGE_BUILDINGEX]],
 		footprintX                    = 5,
@@ -87,6 +87,7 @@ return {
 				damage                  = {
 					default = 200*10,
 				},
+				heightboostfactor       = 0, -- no auto calculated range bonus. Uses OD to gain range instead!
 				edgeEffectiveness       = 0.1,
 				explosionGenerator      = [[custom:100rlexplode]],
 				fireStarter             = 120,
@@ -132,6 +133,7 @@ return {
 				},
 				edgeEffectiveness       = 0.1,
 				explosionGenerator      = [[custom:nce_128]],
+				heightboostfactor       = 0, -- no auto calculated range bonus. Uses OD to gain range instead!
 				fireStarter             = 120,
 				impulseBoost            = 0,
 				impulseFactor           = 0,
