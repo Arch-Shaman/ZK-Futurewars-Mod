@@ -521,7 +521,7 @@ local function CheckProjectile(id)
 					if debug then
 						spEcho("Useheight check")
 					end
-					if y2 - spGetGroundHeight(x2,z2) < myConfig.spawndist and vy < 0 then
+					if y2 - spGetGroundHeight(x2,z2) <= myConfig.spawndist and vy <= myConfig.minvelocity then
 						if debug then
 							spEcho("Spawn by ground height")
 						end
