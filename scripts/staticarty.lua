@@ -1,5 +1,5 @@
 include "constants.lua"
-local spGetUnitRulesParam 	= Spring.GetUnitRulesParam
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local scriptReload = include("scriptReload.lua")
 
 local base = piece 'base'
