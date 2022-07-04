@@ -58,7 +58,7 @@ for i=1, #WeaponDefs do
 					config[i]["noceg"] = curRef.clusternoceg ~= nil
 					config[i]["block_check_during_cruise"] = curRef["cas_nocruisecheck"] ~= nil
 					if config[i].useheight then
-						config[i].minvelocity = tonumber(curRef.minvelocity) or -0.1
+						config[i].minvelocity = tonumber(curRef.minvelocity) or 0
 					end
 					
 					--sonny projectile defs
