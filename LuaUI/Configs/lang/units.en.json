@@ -666,8 +666,8 @@
 	},
 	"cloakraid" : {
 		"name" : "Lurker",
-		"description" : "Ambush Raider Bot",
-		"helptext" : "The lurker was a response to heavy defenses as the aging glaive design faired poorly against defenses. Armed with a new heavy burst rifle, the Lurker hides in the shadows until its opportunity arises."
+		"description" : "Stealth Raider Bot (Radar Invisible)",
+		"helptext" : "The Lurker is the terrifying raider of the Ambusher factory. It is coated in a radar reflective material which makes it invisible to enemy radar. Armed with a shotgun and only light armored, the lurker quickly decimates undefended expansions and can use its stealth capabilities to avoid enemy positions. In addition to its stealth capabilities, it can deploy optical countermeasures when stationary, allowing it to set up ambushes as well as heal. Do be aware: It does not do well in a straight up fight. Use its cheap production cost to create packs of them to take on larger units."
 	},
 	"gunshipaa" : {
 		"name" : "Trident",

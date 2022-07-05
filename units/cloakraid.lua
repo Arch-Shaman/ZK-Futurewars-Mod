@@ -2,7 +2,7 @@ return {
 	cloakraid = {
 		unitname               = [[cloakraid]],
 		name                   = [[Lurker]],
-		description            = [[Ambush Raider Bot]],
+		description            = [[Stealth Raider Bot (Radar Invisible)]],
 		acceleration           = 1.5,
 		brakeRate              = 2.4,
 		buildCostMetal         = 50,
