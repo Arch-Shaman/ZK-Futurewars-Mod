@@ -77,9 +77,10 @@ return {
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 800, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-3,0,-3,3,0,3", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-3,-2,-3,3,0,3", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 					useheight = 1,
+					minvelocity = -9.5,
 					stats_damage =  200*10,
 					groundimpact = 1,
 					shield_damage = 200*10,
@@ -87,7 +88,7 @@ return {
 				damage                  = {
 					default = 200*10,
 				},
-				heightboostfactor       = 0, -- no auto calculated range bonus. Uses OD to gain range instead!
+				heightboostfactor       = 1, -- no auto calculated range bonus. Uses OD to gain range instead!
 				edgeEffectiveness       = 0.1,
 				explosionGenerator      = [[custom:100rlexplode]],
 				fireStarter             = 120,
@@ -133,12 +134,12 @@ return {
 				},
 				edgeEffectiveness       = 0.1,
 				explosionGenerator      = [[custom:nce_128]],
-				heightboostfactor       = 0, -- no auto calculated range bonus. Uses OD to gain range instead!
+				heightboostfactor       = 1, -- no auto calculated range bonus. Uses OD to gain range instead!
 				fireStarter             = 120,
 				impulseBoost            = 0,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
-				mygravity               = 0.07,
+				mygravity               = 0.20,
 				range                   = 3000,
 				reloadtime              = 10/30,
 				soundHit                = [[weapon/cannon/frag_impact]],
@@ -146,7 +147,7 @@ return {
 				sprayangle              = 400,
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 800,
+				weaponVelocity          = 620,
 			},
 			SECONDARY = {
 				name                    = [[Aerial Clusterbomb]],
@@ -182,7 +183,7 @@ return {
 				noSelfDamage            = true,
 				range                   = 800,
 				reloadtime              = 5.5,
-				mygravity               = 0.6,
+				mygravity               = 0.75,
 				soundHit                = [[weapon/clusters/cluster_grenade_hit2]],
 				soundHitVolume			= 3,
 				soundStart              = [[weapon/cannon/behe_fire2]],
