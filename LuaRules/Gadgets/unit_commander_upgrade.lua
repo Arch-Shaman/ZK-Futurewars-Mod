@@ -612,6 +612,12 @@ local function Upgrades_CreateUpgradedUnit(defName, x, y, z, face, unitTeam, isB
 	internalCreationModuleEffectData = moduleEffectData
 	
 	local unitID = Spring.CreateUnit(defName, x, y, z, face, unitTeam, isBeingBuilt)
+	if not unitID then
+		Spring.Echo("game_message: [unit_commander_upgrade] Warning: Upgraded unit NOT created successfully.\nTHIS MAY RESULT IN BUGS.\nDefname, teamID ", defName, unitTeam)
+		Spring.MarkerAddPoint(x, y, z, "This unit did not morph correctly!", true)
+		return false
+	end
+	
 	if moduleEffectData.wantsfireatradar then
 		GG.AddUnitRadarTargeting(unitID)
 	end
@@ -628,10 +634,6 @@ local function Upgrades_CreateUpgradedUnit(defName, x, y, z, face, unitTeam, isB
 	unitCreatedJammingRange = nil
 	unitCreatedCloakShield = nil
 	unitCreatedWeaponNums = nil
-	
-	if not unitID then
-		return false
-	end
 	
 	return unitID
 end
