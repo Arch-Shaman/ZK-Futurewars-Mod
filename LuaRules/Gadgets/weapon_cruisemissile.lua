@@ -240,157 +240,167 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 end
 
 function gadget:ProjectileDestroyed(proID)
-	if IterableMap.Get(missiles, proID) then
-		IterableMap.Remove(missiles, proID)
+	local data = IterableMap.Get(missiles, proID)
+	if data then
+		data.destroyed = true
 	end
 end
 
 function gadget:GameFrame(f)
 	for projectile, data in IterableMap.Iterator(missiles) do
-		local cx, cy, cz = spGetProjectilePosition(projectile)
-		local x, y, z = GetMissileDestination(projectile, data.allyteam)
-		--spEcho("Target: " .. x .. ", " .. y .. ", " .. z)
-		--spEcho("Position: " .. cx .. ", " .. cz)
-		local projectiledef = data.configid
-		local missileconfig = config[projectiledef]
-		local wantedalt = data.wantedalt
-		local mindist = missileconfig.distance
-		local distance = Distance(cx, x, cz, z)
-		if data.offset.x then
-			x = x + data.offset.x
-			z = z + data.offset.z
-			y = spGetGroundHeight(x, z)
-			if not missileconfig.permoffset and missileconfig.radius and data.updates%15 == 0 then
-				ProccessOffset(data.configid, projectile)
-			end
-		end
-		data.updates = data.updates + 1
-		if missileconfig.torpedo then
-			if cy <= 0 then -- we're not in the water, so don't bother.
-				local success
-				if not missileconfig.splittarget then
-					wantedalt = missileconfig.altitude
-				end
-				--spEcho("Current Depth: " .. cy .. "(" .. wantedalt .. ")")
-				if data.takeoff and (cy > math.min(wantedalt + 40, -5) or cy < wantedalt - 40) then -- we aren't at the correct height yet, but avoid aiming out of water or at ground.
-					if missileconfig.ascendradius then
-						local targetx, targetz = GetFiringPoint(missileconfig.ascendradius, cx, cz, CalculateAngle(cx, cz, x, z))
-						success = spSetProjectileTarget(projectile, targetx, wantedalt, targetz) -- we don't particularly care if it's UW or surface based, we just want to get within 10 elmos of the target depth
-						--spEcho("target: " .. targetx .. ", " .. targetz)
-					else
-						success = spSetProjectileTarget(projectile, cx, wantedalt, cz) -- we don't particularly care if it's UW or surface based, we just want to get within 10 elmos of the target depth
-					end
-				elseif data.takeoff then
-					--spEcho("Torpedo is now cruising")
-					data.takeoff = false
-					data.cruising = true
-				end
-				if data.cruising then
-					--spEcho("Distance to target: " .. distance .. " / " .. mindist)
-					if distance < mindist then -- final approach
-						if missileconfig.finaltracking and data.type == "unit" then
-							--Spring.Echo("Set target to unit and releasing!")
-							success = spSetProjectileTarget(projectile, data.target, targettypes.unit)
-							IterableMap.Remove(missiles, projectile)
-						else
-							success = spSetProjectileTarget(projectile, x, y, z)
-							IterableMap.Remove(missiles, projectile)
-						end
-					else
-						success = spSetProjectileTarget(projectile, x, wantedalt, z)
-					end
-				end
-				--spEcho("Successful torpedo target: " .. tostring(success))
-			end
+		if data.destroyed then
+			IterableMap.Remove(missiles, projectile)
 		else
-			local cruiseheight = config[projectiledef].altitude
-			local originalgroundheight = max(spGetGroundHeight(cx, cz), 0)
-			local wantedheight = originalgroundheight + cruiseheight
-			--spEcho("Projectile ID: " .. projectile .. "\nAlt: " .. cy .. " / " .. wantedalt .. "\nCruising: " .. tostring(data.cruising) .. "\nAscending: " .. tostring(data.takeoff) .. "\nTargetCoords: " .. x .. ", " .. y .. ", " .. z .. "\nDistance: " .. distance .. "/" .. mindist)
-			if data.takeoff then -- begin ascent phase
-				if missileconfig.ascendradius and missileconfig.ascendradius > 0 then
-					local targetx, targetz = GetFiringPoint(missileconfig.ascendradius, cx, cz, CalculateAngle(cx, cz, x, z))
-					--Spring.Echo("Aiming for " .. targetx .. "," .. targetz)
-					spSetProjectileTarget(projectile, targetx, spGetGroundHeight(targetx, targetz) + cruiseheight, targetz)
-				else
-					spSetProjectileTarget(projectile, cx, originalgroundheight + cruiseheight, cz)
+			local cx, cy, cz = spGetProjectilePosition(projectile)
+			if cx == nil then
+				Spring.Echo("[CruiseMissiles] Error: Projectile Position for " .. projectile .. " is nil. Removing.")
+				data.destroyed = true
+			else
+				local x, y, z = GetMissileDestination(projectile, data.allyteam)
+				--spEcho("Target: " .. x .. ", " .. y .. ", " .. z)
+				--spEcho("Position: " .. cx .. ", " .. cz)
+				local projectiledef = data.configid
+				local missileconfig = config[projectiledef]
+				local wantedalt = data.wantedalt
+				local mindist = missileconfig.distance
+				local distance = Distance(cx, x, cz, z)
+				if data.offset.x then
+					x = x + data.offset.x
+					z = z + data.offset.z
+					y = spGetGroundHeight(x, z)
+					if not missileconfig.permoffset and missileconfig.radius and data.updates%15 == 0 then
+						ProccessOffset(data.configid, projectile)
+					end
 				end
-				--spEcho("Taking off: " .. cy .. " / " .. wantedheight)
-			end
-			if data.takeoff and ((cy >= wantedheight - 40 and not missileconfig.airlaunched) or (cy <= wantedheight + 20 and missileconfig.airlaunched)) then -- end ascent
-				data.takeoff = false
-				data.cruising = true
-				--spEcho("No longer taking off")
-			end
-			if data.cruising then -- cruise phase
-				local vx, _, vz = spGetProjectileVelocity(projectile)
-				local v = sqrt((vx * vx) + (vz * vz))
-				local ty = data.wantedalt
-				local angle = CalculateAngle(cx, cz, x, z)
-				--spEcho("V: " .. v)
-				if not missileconfig.ignoreterrain and v > 0 then
-					local eta = distance / v -- time it will take us to get to the final destination
-					if eta >= 6 and distance > v * 4 then
-						local looksteps = min(ceil((v * 4) / terrainGranularity) + 1, 20)
-						local groundheight = originalgroundheight + 10
-						local d = 0
-						for i = 1, looksteps do
-							local lx, lv = GetFiringPoint(i * terrainGranularity, cx, cz, angle)
-							local gy = max(spGetGroundHeight(lx, lv), 0)
-							if gy > groundheight and gy + cruiseheight > data.wantedalt then
-								groundheight = gy
-								d = i * terrainGranularity
-							end
+				data.updates = data.updates + 1
+				if missileconfig.torpedo then
+					if cy <= 0 then -- we're not in the water, so don't bother.
+						local success
+						if not missileconfig.splittarget then
+							wantedalt = missileconfig.altitude
 						end
-						local t = d / v -- time it takes us to get there.
-						if t > 0 and t <= eta then
-							wantedheight = groundheight + cruiseheight
-							local dy = wantedheight - cy
-							local wantedangle = atan2(dy, t)
-							_, ty = GetFiringPoint(eta, 0, cy, wantedangle) -- reframe the problem as a function of time. We want the height change over time (we don't care about positions)
-							ty = ty + wantedheight
-							--spEcho("TerrainCheck:\nGround level: " .. groundheight .. "\nCruise Height: " .. wantedheight .. "\nWanted: " .. ty)
-							data.wantedalt = wantedheight
-							data.altitudestayframes = floor(t)
-						else
-							if data.altitudestayframes > 0 then
-								data.altitudestayframes = data.altitudestayframes - 1
-								local dy = data.wantedalt - cy
-								if dy > 0 and data.altitudestayframes > 0 then
-									local wantedangle = atan2(dy, data.altitudestayframes)
-									_, ty = GetFiringPoint(eta, 0, cy, wantedangle)
-									ty = ty + data.wantedalt
-								else
-									ty = cy
-								end
-								--spEcho("HoldTerrain: " .. ty)
+						--spEcho("Current Depth: " .. cy .. "(" .. wantedalt .. ")")
+						if data.takeoff and (cy > math.min(wantedalt + 40, -5) or cy < wantedalt - 40) then -- we aren't at the correct height yet, but avoid aiming out of water or at ground.
+							if missileconfig.ascendradius then
+								local targetx, targetz = GetFiringPoint(missileconfig.ascendradius, cx, cz, CalculateAngle(cx, cz, x, z))
+								success = spSetProjectileTarget(projectile, targetx, wantedalt, targetz) -- we don't particularly care if it's UW or surface based, we just want to get within 10 elmos of the target depth
+								--spEcho("target: " .. targetx .. ", " .. targetz)
 							else
-								local wantedheight = originalgroundheight + cruiseheight
-								local dy = wantedheight - cy
-								local wantedangle = atan2(dy, eta)
-								if dy < 0 then
-									_, ty = GetFiringPoint(eta, 0, cy, wantedangle)
-									--spEcho("TY: " .. ty)
-									ty = wantedheight - ty
+								success = spSetProjectileTarget(projectile, cx, wantedalt, cz) -- we don't particularly care if it's UW or surface based, we just want to get within 10 elmos of the target depth
+							end
+						elseif data.takeoff then
+							--spEcho("Torpedo is now cruising")
+							data.takeoff = false
+							data.cruising = true
+						end
+						if data.cruising then
+							--spEcho("Distance to target: " .. distance .. " / " .. mindist)
+							if distance < mindist then -- final approach
+								if missileconfig.finaltracking and data.type == "unit" then
+									--Spring.Echo("Set target to unit and releasing!")
+									success = spSetProjectileTarget(projectile, data.target, targettypes.unit)
+									IterableMap.Remove(missiles, projectile)
 								else
-									ty = cy
+									success = spSetProjectileTarget(projectile, x, y, z)
+									IterableMap.Remove(missiles, projectile)
 								end
-								data.wantedalt = wantedheight
+							else
+								success = spSetProjectileTarget(projectile, x, wantedalt, z)
 							end
 						end
+						--spEcho("Successful torpedo target: " .. tostring(success))
 					end
-				end
-				if distance <= mindist then -- end of cruise phase
-					data.cruising = false
-					if missileconfig.track and missileconfig.finaltracking and data.type == "unit" then
-						spSetProjectileTarget(projectile, data.target, targettypes.unit)
-					else
-						spSetProjectileTarget(projectile, x, y, z)
-					end
-					IterableMap.Remove(missiles, projectile)
 				else
-					--spEcho("Setting target to: " .. x, ty, z)
-					spSetProjectileTarget(projectile, x, ty, z)
+					local cruiseheight = config[projectiledef].altitude
+					local originalgroundheight = max(spGetGroundHeight(cx, cz), 0)
+					local wantedheight = originalgroundheight + cruiseheight
+					--spEcho("Projectile ID: " .. projectile .. "\nAlt: " .. cy .. " / " .. wantedalt .. "\nCruising: " .. tostring(data.cruising) .. "\nAscending: " .. tostring(data.takeoff) .. "\nTargetCoords: " .. x .. ", " .. y .. ", " .. z .. "\nDistance: " .. distance .. "/" .. mindist)
+					if data.takeoff then -- begin ascent phase
+						if missileconfig.ascendradius and missileconfig.ascendradius > 0 then
+							local targetx, targetz = GetFiringPoint(missileconfig.ascendradius, cx, cz, CalculateAngle(cx, cz, x, z))
+							--Spring.Echo("Aiming for " .. targetx .. "," .. targetz)
+							spSetProjectileTarget(projectile, targetx, spGetGroundHeight(targetx, targetz) + cruiseheight, targetz)
+						else
+							spSetProjectileTarget(projectile, cx, originalgroundheight + cruiseheight, cz)
+						end
+						--spEcho("Taking off: " .. cy .. " / " .. wantedheight)
+					end
+					if data.takeoff and ((cy >= wantedheight - 40 and not missileconfig.airlaunched) or (cy <= wantedheight + 20 and missileconfig.airlaunched)) then -- end ascent
+						data.takeoff = false
+						data.cruising = true
+						--spEcho("No longer taking off")
+					end
+					if data.cruising then -- cruise phase
+						local vx, _, vz = spGetProjectileVelocity(projectile)
+						local v = sqrt((vx * vx) + (vz * vz))
+						local ty = data.wantedalt
+						local angle = CalculateAngle(cx, cz, x, z)
+						--spEcho("V: " .. v)
+						if not missileconfig.ignoreterrain and v > 0 then
+							local eta = distance / v -- time it will take us to get to the final destination
+							if eta >= 6 and distance > v * 4 then
+								local looksteps = min(ceil((v * 4) / terrainGranularity) + 1, 20)
+								local groundheight = originalgroundheight + 10
+								local d = 0
+								for i = 1, looksteps do
+									local lx, lv = GetFiringPoint(i * terrainGranularity, cx, cz, angle)
+									local gy = max(spGetGroundHeight(lx, lv), 0)
+									if gy > groundheight and gy + cruiseheight > data.wantedalt then
+										groundheight = gy
+										d = i * terrainGranularity
+									end
+								end
+								local t = d / v -- time it takes us to get there.
+								if t > 0 and t <= eta then
+									wantedheight = groundheight + cruiseheight
+									local dy = wantedheight - cy
+									local wantedangle = atan2(dy, t)
+									_, ty = GetFiringPoint(eta, 0, cy, wantedangle) -- reframe the problem as a function of time. We want the height change over time (we don't care about positions)
+									ty = ty + wantedheight
+									--spEcho("TerrainCheck:\nGround level: " .. groundheight .. "\nCruise Height: " .. wantedheight .. "\nWanted: " .. ty)
+									data.wantedalt = wantedheight
+									data.altitudestayframes = floor(t)
+								else
+									if data.altitudestayframes > 0 then
+										data.altitudestayframes = data.altitudestayframes - 1
+										local dy = data.wantedalt - cy
+										if dy > 0 and data.altitudestayframes > 0 then
+											local wantedangle = atan2(dy, data.altitudestayframes)
+											_, ty = GetFiringPoint(eta, 0, cy, wantedangle)
+											ty = ty + data.wantedalt
+										else
+											ty = cy
+										end
+										--spEcho("HoldTerrain: " .. ty)
+									else
+										local wantedheight = originalgroundheight + cruiseheight
+										local dy = wantedheight - cy
+										local wantedangle = atan2(dy, eta)
+										if dy < 0 then
+											_, ty = GetFiringPoint(eta, 0, cy, wantedangle)
+											--spEcho("TY: " .. ty)
+											ty = wantedheight - ty
+										else
+											ty = cy
+										end
+										data.wantedalt = wantedheight
+									end
+								end
+							end
+						end
+						if distance <= mindist then -- end of cruise phase
+							data.cruising = false
+							if missileconfig.track and missileconfig.finaltracking and data.type == "unit" then
+								spSetProjectileTarget(projectile, data.target, targettypes.unit)
+							else
+								spSetProjectileTarget(projectile, x, y, z)
+							end
+							IterableMap.Remove(missiles, projectile)
+						else
+							--spEcho("Setting target to: " .. x, ty, z)
+							spSetProjectileTarget(projectile, x, ty, z)
+						end
+					end
 				end
 			end
 		end
