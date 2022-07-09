@@ -20,6 +20,7 @@ end
 
 local COST_MULT = 1
 local HP_MULT = 1
+local allowCommEco = false
 
 if (Spring.GetModOptions) then
 	local modOptions = Spring.GetModOptions()
@@ -27,6 +28,7 @@ if (Spring.GetModOptions) then
         if modOptions.hpmult and modOptions.hpmult ~= 1 then
             HP_MULT = modOptions.hpmult
         end
+		allowCommEco = (modOptions.commeco or 0) == 1
     end
 end
 
@@ -1065,22 +1067,6 @@ local moduleDefs = {
 		end
 	},
 	{
-		name = "efficiency",
-		humanName = "Efficient Resourcing",
-		description = "By upgrading the Support comm's resource allocation algorithms, some extra metal and energy can be squeezed out of the chassis's resource generator.\nProvides 2.5m/sec and 5e/sec income",
-		image = moduleImagePath .. "module_efficency.png",
-		limit = 4,
-		requireChassis = {"knight"},
-		requireOneOf = {"econ"},
-		cost = 100 * COST_MULT,
-		requireLevel = 2,
-		slotType = "module",
-		applicationFunction = function (modules, sharedData)
-			sharedData.metalIncome = (sharedData.metalIncome or 0) + 4
-			sharedData.energyIncome = (sharedData.energyIncome or 0) + 6
-		end
-	},
-	{
 		name = "commweapon_personal_shield",
 		humanName = "Personal Shield",
 		description = "A small, protective bubble shield.\nMutually Exclusive with Area Jammer and Personal Cloak.",
@@ -1632,6 +1618,22 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "efficiency",
+		humanName = "Efficient Resourcing",
+		description = "By upgrading the Support comm's resource allocation algorithms, some extra metal and energy can be squeezed out of the chassis's resource generator.\nProvides 2.5m/sec and 5e/sec income",
+		image = moduleImagePath .. "module_efficency.png",
+		limit = 4,
+		requireChassis = {"knight"},
+		requireOneOf = {"econ"},
+		cost = 100 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.metalIncome = (sharedData.metalIncome or 0) + 4
+			sharedData.energyIncome = (sharedData.energyIncome or 0) + 6
+		end
+	},
+	{
 		name = "module_adv_nano_support",
 		humanName = "Advanced Nanolathe",
 		description = "Increases build power by 7.5. Increases storage by 75.",
@@ -1683,6 +1685,9 @@ for name, data in pairs(skinDefs) do
 end
 
 for i = 1, #moduleDefs do
+	if moduleDefs[i].name == "efficiency" and allowCommEco then
+		moduleDefs[i].requireChassis[2] = "support"
+	end
 	moduleDefNames[moduleDefs[i].name] = i
 end
 

@@ -93,6 +93,14 @@ local options = {
 		def = false,
 	},
 	{
+		key    = 'commeco',
+		name   = 'Enable Efficient Resourcing',
+		desc   = "Support commander regains Efficient Resourcing Module.",
+		type   = 'bool',
+		section= 'a_important',
+		def    = false,
+	},
+	{
 		key     = 'mutespec',
 		name    = 'Mute Spectators',
 		desc    = 'Determines whether spectators can talk to players.',
@@ -142,7 +150,7 @@ local options = {
 		desc   = "All features self-resurrect.",
 		type   = 'bool',
 		section= 'silly',
-		def    = false,
+		def    = false, --commeco
 	},
 	{
 		key    = 'zombies_delay',
