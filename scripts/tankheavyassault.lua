@@ -145,14 +145,10 @@ function script.AimWeapon(num, heading, pitch)
 	elseif num == 2 and dgunning then
 	    Signal(SIG_AIM2)
 		SetSignalMask(SIG_AIM2)
-		
-		WaitForTurn(turret1, z_axis)
 		return true
 	elseif num == 3 and dgunning then
 	    Signal(SIG_AIM2)
 		SetSignalMask(SIG_AIM2)
-		
-		WaitForTurn(turret1, z_axis)
 		return true
 	end
 end
@@ -179,45 +175,30 @@ function script.Shot(num)
 end
 
 local function MinigunThread()
+    available = false
     Turn(turret2, y_axis, math.rad(90), 2)
 	Turn(turret3, y_axis, math.rad(-90), 2)
 	WaitForTurn(turret2, y_axis)
 	WaitForTurn(turret3, y_axis)
-    Sleep(200)
-	Move(barrel2, z_axis, 1, 3)
-	Move(barrel3, z_axis, 1, 3)
-	WaitForMove(barrel2, z_axis)
-	WaitForMove(barrel3, z_axis)
-	Sleep(100)
-	Move(barrel2, z_axis, 3, 6)
-	Move(barrel3, z_axis, 3, 6)
-	WaitForMove(barrel2, z_axis)
-	WaitForMove(barrel3, z_axis)
-	Sleep(100)
-	Move(barrel2, z_axis, 7, 12)
-	Move(barrel3, z_axis, 7, 12)
-	WaitForMove(barrel2, z_axis)
-	WaitForMove(barrel3, z_axis)
-	Sleep(100)
-	Move(barrel2, z_axis, 13, 18)
-	Move(barrel3, z_axis, 13, 18)
+	Move(barrel2, z_axis, 13, 9)
+	Move(barrel3, z_axis, 13, 9)
 	WaitForMove(barrel2, z_axis)
 	WaitForMove(barrel3, z_axis)
 	Spin(sleeve2, z_axis, 1.875)
 	Spin(sleeve3, z_axis, -1.875)
-	Sleep(500)
+	Sleep(250)
 	Spin(sleeve2, z_axis, 3.75)
 	Spin(sleeve3, z_axis, -3.75)
-	Sleep(500)
+	Sleep(250)
 	Spin(sleeve2, z_axis, 7.5)
 	Spin(sleeve3, z_axis, -7.5)
-	Sleep(500)
+	Sleep(250)
 	Spin(sleeve2, z_axis, 15)
 	Spin(sleeve3, z_axis, -15)
-	Sleep(500)
+	Sleep(250)
 	Spin(sleeve2, z_axis, 30)
 	Spin(sleeve3, z_axis, -30)
-	Sleep(500)
+	Sleep(250)
 	Spin(sleeve2, z_axis, 60)
 	Spin(sleeve3, z_axis, -60)
 	dgunning = true
@@ -249,16 +230,14 @@ local function MinigunThread()
 	WaitForMove(barrel3, z_axis)
 	Turn(turret2, y_axis, math.rad(0), 2)
 	Turn(turret3, y_axis, math.rad(0), 2)
-end
-
-local function CooldownThread()
-    available = false
-	sleep(60000)
+	Sleep(30000)
 	available = true
 end
 
-function Minigun(available)
-    StartThread(MinigunThread)
+function Minigun()
+    if available then
+        StartThread(MinigunThread)
+	end
 end
 
 function script.Killed(recentDamage, maxHealth)
