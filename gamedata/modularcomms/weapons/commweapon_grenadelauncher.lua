@@ -30,7 +30,7 @@ local weaponDef = {
 
 	edgeEffectiveness       = 0.6,
 	explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
-	flightTime              = 1.5,
+	flightTime              = 2.2,
 	groundbounce            = 1,
 	impactOnly              = false,
 	impulseBoost            = 0,
