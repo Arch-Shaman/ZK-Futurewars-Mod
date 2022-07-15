@@ -61,20 +61,17 @@ return {
 				areaOfEffect            = 36,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams        = {
 					light_camera_height = 1800,
 					light_color = [[0.80 0.54 0.23]],
 					light_radius = 200,
 				},
-
 				damage                  = {
-					default = 141,
+					default = 141.01,
 				},
-
 				explosionGenerator      = [[custom:MARY_SUE]],
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 350,
