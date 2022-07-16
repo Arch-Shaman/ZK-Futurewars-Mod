@@ -5,7 +5,7 @@ return {
 		description         = [[Heavy Riot Support Tank]],
 		acceleration        = 0.109,
 		brakeRate           = 0.428,
-		buildCostMetal      = 500,
+		buildCostMetal      = 900,
 		builder             = false,
 		buildPic            = [[tankriot.png]],
 		canGuard            = true,
@@ -33,9 +33,9 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
-		maxDamage           = 3200,
+		maxDamage           = 3000,
 		maxSlope            = 18,
-		maxVelocity         = 2.1,
+		maxVelocity         = 1.75,
 		maxWaterDepth       = 22,
 		movementClass       = [[TANK4]],
 		noAutoFire          = false,
@@ -82,13 +82,13 @@ return {
 				impulseFactor           = 0.6,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				mygravity               = 0.03,
+				mygravity               = 0.02,
 				soundHit                = [[weapon/cannon/generic_cannon]],
 				soundStart              = [[weapon/cannon/outlaw_gun]],
 				soundStartVolume        = 3,
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 750,
+				weaponVelocity          = 1000,
 			},
 			TAWF_BANISHER = {
 				name                    = [[R-22 Heavy Canister Missile]],
@@ -101,17 +101,17 @@ return {
 					force_ignore_ground = [[1]],
 					script_reload = [[4.4]],
 					script_burst = [[4]],
-					numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 7, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "tankriot_fragment",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 230, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 115, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 					vradius1 = "-5,-2,-5,5,-1,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?
-					proxydist = 110, -- how far to check for units? Default: spawndist
+					proxydist = 115, -- how far to check for units? Default: spawndist
 					reaim_time = 60, -- Fast update not required (maybe dangerous)
 					light_color = [[1.4 1 0.7]],
 					light_radius = 320,
@@ -128,20 +128,20 @@ return {
 				interceptedByShieldType = 2,
 				model                   = [[corbanishrk.s3o]],
 				noSelfDamage            = true,
-				range                   = 420,
-				reloadtime              = 0.2,
+				range                   = 700,
+				reloadtime              = 0.3,
 				smokeTrail              = false,
 				soundHit                = [[weapon/cannon/outlaw_gun]],
 				soundStart              = [[weapon/missile/banisher_fire]],
-				startVelocity           = 300,
+				startVelocity           = 0,
 				tolerance               = 9000,
 				tracks                  = true,
 				trajectoryHeight        = 0.45,
 				turnRate                = 22000,
 				turret                  = true,
-				weaponAcceleration      = 200,
+				weaponAcceleration      = 300,
 				weaponType              = [[MissileLauncher]],
-				weaponVelocity          = 750,
+				weaponVelocity          = 300,
 			},
 		},
 		featureDefs         = {
