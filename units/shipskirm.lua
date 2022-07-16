@@ -57,8 +57,7 @@ return {
 		weapons                = {
 			{
 				def                = [[ROCKET]],
-				badTargetCategory  = [[FIXEDWING GUNSHIP]],
-				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
+				onlyTargetCategory = [[LAND SINK TURRET SHIP SWIM FLOAT HOVER]],
 			},
 		},
 		weaponDefs             = {
