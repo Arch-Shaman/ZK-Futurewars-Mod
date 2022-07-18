@@ -74,7 +74,7 @@ return {
 					light_radius = 200,
 				},
 				damage                  = {
-					default = 200.01,
+					default = 120.01,
 				},
 				explosionGenerator      = [[custom:MARY_SUE]],
 				impulseBoost            = 0,
