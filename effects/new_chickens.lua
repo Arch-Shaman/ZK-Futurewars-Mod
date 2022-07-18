@@ -1,0 +1,31 @@
+return {
+	["spidermonkey_web"] = {
+		splashes = {
+			air                = true,
+			class              = [[CSimpleParticleSystem]],
+			count              = 1,
+			ground             = true,
+			water              = true,
+			properties = {
+				airdrag            = 0.9,
+				colormap           = [[1 1 1 1   0.5 0.5 0.5 1   0 0 0 0]],
+				directional        = true,
+				emitrot            = 1,
+				emitrotspread      = -2,
+				emitvector         = [[dir]],
+				gravity            = [[0, 0, 0]],
+				numparticles       = 1,
+				particlelife       = 5,
+				particlelifespread = 5,
+				particlesize       = 4,
+				particlesizespread = 4,
+				particlespeed      = 0.05,
+				particlespeedspread = 0,
+				pos                = [[0, 0, 0]],
+				sizegrowth         = 2,
+				sizemod            = 1,
+				texture            = [[blooddropwhite]],
+			},
+		},
+	},
+}
