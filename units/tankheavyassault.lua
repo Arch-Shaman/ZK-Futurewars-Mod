@@ -16,7 +16,6 @@ return {
 		collisionVolumeScales  = [[70 70 100]],
 		collisionVolumeType    = [[cylZ]],
 		corpse              = [[DEAD]],
-
 		customParams        = {
 			bait_level_default = 0,
 			decloak_footprint  = 5,
@@ -27,7 +26,6 @@ return {
 			outline_y = 110,
 			outline_yoff = 13.5,
 		},
-
 		explodeAs           = [[BIG_UNIT]],
 		footprintX          = 4,
 		footprintZ          = 4,
@@ -45,14 +43,11 @@ return {
 		objectName          = [[corgol_512.dae]],
 		script              = [[tankheavyassault.lua]],
 		selfDestructAs      = [[BIG_UNIT]],
-
 		sfxtypes            = {
-
 			explosiongenerators = {
 				[[custom:LARGE_MUZZLE_FLASH_FX]],
 			},
 		},
-		
 		sightDistance       = 650,
 		trackOffset         = 8,
 		trackStrength       = 10,
@@ -61,8 +56,6 @@ return {
 		trackWidth          = 50,
 		turninplace         = 0,
 		turnRate            = 400,
-		workerTime          = 0,
-
 		weapons             = {
 			{
 				def                = [[CANNON]],
@@ -75,12 +68,11 @@ return {
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
 			{
-				def                = [[MINIGUN2]],
+				def                = [[MINIGUN]],
 				badTargetCategory  = [[FIXEDWING UNARMED]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
 		},
-
 		weaponDefs          = {
 			CANNON = {
 				name                    = [[Oblivion Cannon]],
@@ -88,12 +80,11 @@ return {
 				areaOfEffect            = 120,
 				avoidFeature            = false,
 				avoidGround             = true,
-				craterBoost             = 0,
-				craterMult              = 0,
+				craterBoost             = 10,
+				craterMult              = 1.7,
 				damage                  = {
-					default = 5200,
+					default = 5200.01,
 				},
-				
 				explosionGenerator      = [[custom:lrpc_expl]],
 				edgeEffectiveness		= 0.1,
 				fireTolerance           = 1820, -- 10 degrees
@@ -135,49 +126,7 @@ return {
 				fireTolerance           = 1820, -- 10 degrees
 				impulseBoost            = 0,
 				impulseFactor           = 0,
-				impactonly				= true,
-				interceptedByShieldType = 1,
-				minIntensity            = 1,
-				noSelfDamage            = true,
-				range                   = 680,
-				reloadtime              = 1/30,
-				rgbColor                = [[1 0.5 0.2]],
-				soundHit				= [[flamethrowerhit]],
-				soundHitVolume          = 2.2,
-				soundStart              = [[flamethrowerfire]],
-				soundStartVolume        = 3.5,
-				stages                  = 10,
-				separation              = 1.5,
-				size					= 4.5,
-				turret                  = true,
-				weaponType              = [[Cannon]],
-				weaponVelocity          = 1000,
-			},
-			MINIGUN2 = {
-				name                    = [[Hellfire Minigun]],
-				accuracy                = 0,
-				areaOfEffect            = 64,
-				craterBoost             = 0,
-				craterMult              = 0,
-				coreThickness			= 0.5,
-				collisionsize			= 0.8,
-				customParams            = {
-					light_camera_height = 2000,
-					light_color = [[1 0.5 0.2]],
-					light_radius = 120,
-					setunitsonfire = "1",
-					antibaitbypass = "ärsytät minua",
-				},
-				damage                  = {
-					default = 33.33,
-				},
-				explosionGenerator      = [[custom:napalm_phoenix]],
-				explosionSpeed          = 5,
-				fireStarter             = 100,
-				fireTolerance           = 1820, -- 10 degrees
-				impulseBoost            = 0,
-				impulseFactor           = 0,
-				impactonly				= true,
+				impactonly				= false,
 				interceptedByShieldType = 1,
 				minIntensity            = 1,
 				noSelfDamage            = true,
@@ -210,7 +159,6 @@ return {
 				footprintZ       = 4,
 				object           = [[debris4x4c.s3o]],
 			},
-
 		},
 	}
 }
