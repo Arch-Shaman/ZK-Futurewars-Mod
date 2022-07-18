@@ -337,6 +337,7 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
 		end
 		return false
 	elseif cmdID == CMD.STOP then
+		GG.RemoveTemporaryPosTarget(unitID)
 		RemoveUnit(unitID)
 		return true
 	end
