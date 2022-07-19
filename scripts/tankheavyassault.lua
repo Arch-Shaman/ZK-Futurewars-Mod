@@ -50,7 +50,7 @@ rockData = {
 
 local trackData = {
 	wheels = {
-		large = {piece('wheels1'), piece('wheels6')},
+		large = {piece('wheels1'), piece('wheels8')},
 		small = {},
 	},
 	tracks = {},
@@ -67,7 +67,7 @@ local trackData = {
 for i = 1, 3 do
 	trackData.tracks[i] = piece ('tracks' .. i)
 end
-for i = 2, 5 do
+for i = 2, 7 do
 	trackData.wheels.small[i - 1] = piece('wheels' .. i)
 end
 
