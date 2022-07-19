@@ -38,7 +38,7 @@ return {
 		footprintZ          = 3,
 		iconType            = [[bomberassault]],
 		idleAutoHeal        = 10,
-		idleTime            = 1800,
+		idleTime            = 2000,
 		maneuverleashlength = [[1380]],
 		maxAcc              = 0.5,
 		maxBank             = 0.6,
