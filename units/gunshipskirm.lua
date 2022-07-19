@@ -49,10 +49,12 @@ return {
 			{
 				def                = [[VTOL_ROCKET]],
 				onlyTargetCategory = [[LAND SINK TURRET SHIP SWIM FLOAT HOVER]],
+				mainDir            = [[0 1 0]], -- top
 			},
 			{
-				def                = [[VTOL_ROCKET_BOTTOM]],
+				def                = [[VTOL_ROCKET]],
 				onlyTargetCategory = [[LAND SINK TURRET SHIP SWIM FLOAT HOVER]],
+				mainDir            = [[0 -1 0]], -- bottom
 			},
 		},
 		weaponDefs             = {
