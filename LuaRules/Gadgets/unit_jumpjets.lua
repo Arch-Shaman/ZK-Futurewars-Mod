@@ -560,7 +560,13 @@ function gadget:CommandFallback(unitID, unitDefID, teamID, cmdID, cmdParams, cmd
 	if ((Spring.GetUnitRulesParam(unitID, "orbitalDrop") or 0) == 1) then
 		return true, false
 	end
-
+	
+	if Spring.GetUnitIsStunned(unitID) then
+		-- these normally don't receive CommandFallback,
+		-- but can be reached via CMD.INSERT (engine bug?)
+		return true, false
+	end
+	
 	if (jumping[unitID]) then
 		return true, false -- command was used but don't remove it (unit is still jumping)
 	end
