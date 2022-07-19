@@ -166,7 +166,7 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 680,
-				reloadtime              = 70,
+				reloadtime              = 75,
 				mygravity               = 0.18,
 				rgbColor                = [[1 0.5 0.2]],
 				soundHit				= [[flamethrowerhit]],
