@@ -43,7 +43,7 @@ local oneClickWepDefNames = {
 		{ functionToCall = "FlameTrail", reloadTime = 450, name = "Afterburner Overload", tooltip = "Blast ahead and leave a path of devastating flame in your wake", useSpecialReloadFrame = true, texture = "LuaUI/Images/Commands/Bold/sprint.png",},
 	},
 	tankheavyassault = {
-		{ functionToCall = "Minigun", reloadTime = 2250, name = "Hellfire Minigun", tooltip = "Activate the Hellfire Miniguns to melt everything in sight", texture = "LuaUI/Images/commands/Bold/dgun.png",},
+		{ functionToCall = "Minigun", reloadTime = 2250, name = "Hellfire Minigun", tooltip = "Activate the Hellfire Miniguns to spray incendiary rounds around the front of the turret.", useSpecialReloadFrame = true, texture = "LuaUI/Images/commands/Bold/dgun.png",},
 	},
 	--planefighter = {
 	--	{ functionToCall = "Sprint", reloadTime = 850, name = "Speed Boost", tooltip = "Speed boost (5x for 1 second)", useSpecialReloadFrame = true, texture = "LuaUI/Images/Commands/Bold/sprint.png",},

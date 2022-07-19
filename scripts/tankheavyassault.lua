@@ -142,14 +142,10 @@ function script.AimWeapon(num, heading, pitch)
 		StartThread(RestoreMainGun)
 		gunHeading = heading
 		return true
-	elseif num == 2 and dgunning then
-	    Signal(SIG_AIM2)
-		SetSignalMask(SIG_AIM2)
-		return true
-	elseif num == 3 and dgunning then
-	    Signal(SIG_AIM2)
-		SetSignalMask(SIG_AIM2)
-		return true
+	elseif num == 2 then
+		return false
+	elseif num == 3 then
+		return false
 	end
 end
 
@@ -174,8 +170,24 @@ function script.Shot(num)
 	StartThread(RestoreBarrel)
 end
 
+local sprayoffset = math.rad(35)
+local maxoffset = math.rad(22.5)
+local minigunrange = 680 * 0.92
+
+local function TurnMinigunsThread()
+	local traveling = 1
+	while dgunning do
+		Turn(turret2, x_axis, maxoffset * traveling, sprayoffset)
+		Turn(turret3, x_axis, maxoffset * traveling, sprayoffset)
+		WaitForTurn(turret2, x_axis)
+		traveling = -traveling
+		Sleep(10)
+	end
+	Turn(turret2, x_axis, 0, sprayoffset * 3)
+	Turn(turret3, x_axis, 0, sprayoffset * 3)
+end
+
 local function MinigunThread()
-    available = false
     Turn(turret2, y_axis, math.rad(90), 2)
 	Turn(turret3, y_axis, math.rad(-90), 2)
 	WaitForTurn(turret2, y_axis)
@@ -201,9 +213,22 @@ local function MinigunThread()
 	Sleep(250)
 	Spin(sleeve2, z_axis, 60)
 	Spin(sleeve3, z_axis, -60)
+	local t = 0
+	local offset = 0
+	local traveling = -1
+	local x, y, z, tx, tz, facing
 	dgunning = true
-	Sleep(10000)
+	StartThread(TurnMinigunsThread)
+	while t <= 10000 do
+		t = t + 33
+		EmitSfx(firepoint2, GG.Script.FIRE_W2)
+		EmitSfx(firepoint3, GG.Script.FIRE_W2)
+		Sleep(33)
+	end
 	dgunning = false
+	Turn(turret2, z_axis, 0, sprayoffset * 3)
+	Turn(turret3, z_axis, 0, sprayoffset * 3)
+	WaitForTurn(turret2, z_axis)
 	Spin(sleeve2, z_axis, 30)
 	Spin(sleeve3, z_axis, -30)
 	Sleep(500)
@@ -230,14 +255,11 @@ local function MinigunThread()
 	WaitForMove(barrel3, z_axis)
 	Turn(turret2, y_axis, math.rad(0), 2)
 	Turn(turret3, y_axis, math.rad(0), 2)
-	Sleep(30000)
-	available = true
 end
 
 function Minigun()
-    if available then
-        StartThread(MinigunThread)
-	end
+	Spring.SetUnitWeaponState(unitID, 3, "reloadFrame", 2250 + Spring.GetGameFrame())
+	StartThread(MinigunThread)
 end
 
 function script.Killed(recentDamage, maxHealth)

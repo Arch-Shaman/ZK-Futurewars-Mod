@@ -41,6 +41,32 @@ local cegs = {
 			},
 		},
 	},
+	["napalm_tiny"] = {
+		usedefaultexplosions = false,
+		groundflash = {
+			flashalpha         = 1,
+			flashsize          = 40,
+			ttl                = 75,
+			color = {
+				[1]  = 0.7,
+				[2]  = 0.3,
+				[3]  = 0.1,
+			},
+		},
+		redploom = {
+			air                = true,
+			class              = [[CExpGenSpawner]],
+			count              = 6,
+			ground             = true,
+			water              = true,
+			underwater         = true,
+			properties = {
+				delay              = 0,
+				explosiongenerator = [[custom:napalmfireball_45]],
+				pos                = [[-20 r40, 30, -20 r40]],
+			},
+		},
+	},
 	["napalm_koda"] = {
 		usedefaultexplosions = false,
 		groundflash = {
@@ -455,6 +481,7 @@ local cegs = {
 			},
 		},
 	},
+	
 	-- A version of Sak's effect
 	["firewalker_impact"] = {
 	usedefaultexplosions = false,
@@ -540,6 +567,14 @@ local altforms = {
 		modifications = {
 			rocks = {
 				properties = {particlelife = 25, particlelifespread = 50},
+			},
+		},
+	},
+	napalmfireball_45 = {
+		source = "napalmfireball_200",
+		modifications = {
+			rocks = {
+				properties = {particlelife = 15, particlelifespread = 30},
 			},
 		},
 	},
