@@ -152,7 +152,7 @@
 	"turretgauss" : {
 		"name" : "Hardpoint",
 		"description" : "Gauss Turret, 30 health/s when closed",
-		"helptext" : "The Hardpoint is a compact, resilient turret with a medium-range gauss cannon. When popped down, it recieves a fifth of incoming damage as well as small amount of health regeneration. It can also attack underwater targets."
+		"helptext" : "The Hardpoint is a compact, resilient turret with a medium-range gauss cannon. When popped down, it recieves a fifth of incoming damage as well as small amount of health regeneration. Like all gauss weapons, it can fire at underwater targets and deals extra damage vs shields.."
 	},
 	"nebula" : {
 		"name" : "Nebula",
