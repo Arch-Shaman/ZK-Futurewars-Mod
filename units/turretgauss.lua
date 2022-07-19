@@ -1,9 +1,9 @@
 return { 
 	turretgauss = {
 		unitname                      = [[turretgauss]],
-		name                          = [[Gauss]],
-		description                   = [[Gauss Turret, 20 health/s when closed]],
-		buildCostMetal                = 400,
+		name                          = [[Hardpoint]],
+		description                   = [[Gauss Turret, 30 health/s when closed]],
+		buildCostMetal                = 500,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 4,
@@ -20,9 +20,9 @@ return {
 			modelradius    = [[15]],
 			midposoffset   = [[0 15 0]],
 			aimposoffset   = [[0 25 0]],
-			armored_regen  = [[10]],
+			armored_regen  = [[30]],
 		},
-		damageModifier                = 0.25,
+		damageModifier                = 0.2,
 		explodeAs                     = [[SMALL_BUILDINGEX]],
 		floater                       = true,
 		footprintX                    = 3,
@@ -31,7 +31,7 @@ return {
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 2400,
+		maxDamage                     = 3500,
 		maxSlope                      = 18,
 		--maxWaterDepth                 = 0, -- model-derived would be 305: 35 elmo legs + 6x45 elmo pillar segments should be enough for everyone
 		minCloakDistance              = 150,
@@ -59,7 +59,7 @@ return {
 		},
 		weaponDefs                    = {
 			GAUSS = {
-				name                    = [[Light Gauss Cannon]],
+				name                    = [[Gauss Cannon]],
 				alphaDecay              = 0.12,
 				areaOfEffect            = 16,
 				avoidfeature            = false,
@@ -70,10 +70,10 @@ return {
 				craterMult              = 0,
 				customParams = {
 					burst = Shared.BURST_RELIABLE,
-					single_hit = true,
+					shield_damage = 200.4,
 				},
 				damage                  = {
-					default = 200.1,
+					default = 75.1,
 				},
 				explosionGenerator      = [[custom:gauss_hit_m]],
 				groundbounce            = 1,
@@ -83,9 +83,9 @@ return {
 				interceptedByShieldType = 1,
 				noExplode               = true,
 				noSelfDamage            = true,
-				numbounce               = 40,
-				range                   = 560,
-				reloadtime              = 2,
+				numbounce               = 10,
+				range                   = 600,
+				reloadtime              = 1.2,
 				rgbColor                = [[0.5 1 1]],
 				separation              = 0.5,
 				size                    = 0.8,

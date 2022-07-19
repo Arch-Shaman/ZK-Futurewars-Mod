@@ -150,9 +150,9 @@
 		"helptext" : "A traditional favourite, the Rover Assembly is the ideal blitzkrieg fac with its fast, highly aggressive units. Those units that lack speed make up for it with copious firepower. Comes equipped with a drone autofabricator for defense. Key Units: Flare, Sunbeam, Ravager, Striker, Slasher"
 	},
 	"turretgauss" : {
-		"name" : "Gauss",
-		"description" : "Gauss Turret, 10 health/s when closed",
-		"helptext" : "The Gauss is a compact, resilient turret with a medium-range gauss cannon. When popped down, it recieves a quarter of incoming damage as well as small amount of health regeneration. It can also attack underwater targets."
+		"name" : "Hardpoint",
+		"description" : "Gauss Turret, 30 health/s when closed",
+		"helptext" : "The Hardpoint is a compact, resilient turret with a medium-range gauss cannon. When popped down, it recieves a fifth of incoming damage as well as small amount of health regeneration. It can also attack underwater targets."
 	},
 	"nebula" : {
 		"name" : "Nebula",
