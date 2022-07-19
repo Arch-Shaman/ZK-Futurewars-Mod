@@ -23,7 +23,7 @@ return {
 			bait_level_default = 1,
 		},
 
-		damageModifier      = 0.25,
+		damageModifier      = 0.2,
 		explodeAs           = [[BIG_UNITEX]],
 		footprintX          = 3,
 		footprintZ          = 3,
