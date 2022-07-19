@@ -1501,7 +1501,7 @@ local moduleDefs = {
 	{
 		name = "module_dmg_booster",
 		humanName = "Enhanced Weapon Systems",
-		description = "Increases damage by 10% but reduces speed by 0.75.",
+		description = "Increases damage by 12.5%.",
 		image = moduleImagePath .. "module_dmg_booster.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1510,8 +1510,7 @@ local moduleDefs = {
 		requireChassis = {"support", "assault", "recon", "knight", "strike"},
 		applicationFunction = function (modules, sharedData)
 			-- Damage boost is applied via clone swapping
-			sharedData.damageMult = (sharedData.damageMult or 1) + 0.1
-			sharedData.speedMod = (sharedData.speedMod or 0) - 0.75
+			sharedData.damageMult = (sharedData.damageMult or 1) + 0.125
 		end
 	},
 	{
@@ -1530,32 +1529,63 @@ local moduleDefs = {
 		end
 	},
 	{
-		name = "module_high_power_servos",
-		humanName = "High Power Servos",
-		description = "Increases speed by 2.2.",
+		name = "module_high_power_servos_slow",
+		humanName = "Slow High Power Servos",
+		description = "Increases speed by 1.5.",
 		image = moduleImagePath .. "module_high_power_servos.png",
 		limit = 8,
-		cost = 100 * COST_MULT,
+		cost = 200 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
+                requireChassis = {"riot", "assault"},
 		prohibitingModules = {"module_striderpower"},
 		applicationFunction = function (modules, sharedData)
-			sharedData.speedMod = (sharedData.speedMod or 0) + 2.2
+			sharedData.speedMod = (sharedData.speedMod or 0) + 1.5
+		end
+	},
+	{
+		name = "module_high_power_servos_medium",
+		humanName = "Medium High Power Servos",
+		description = "Increases speed by 2.5.",
+		image = moduleImagePath .. "module_high_power_servos.png",
+		limit = 8,
+		cost = 175 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+                requireChassis = {"support", "strike"},
+		prohibitingModules = {"module_striderpower"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.speedMod = (sharedData.speedMod or 0) + 2.5
+		end
+	},
+	{
+		name = "module_high_power_servos_fast",
+		humanName = "Fast High Power Servos",
+		description = "Increases speed by 3.",
+		image = moduleImagePath .. "module_high_power_servos.png",
+		limit = 8,
+		cost = 150 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+                requireChassis = {"recon"},
+		prohibitingModules = {"module_striderpower"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.speedMod = (sharedData.speedMod or 0) + 3
 		end
 	},
 	{
 		name = "module_high_power_servos_improved",
 		humanName = "Strike Servos",
-		description = "Increases speed by 4, decreases health by " .. 275*HP_MULT,
+		description = "Increases speed by 6, decreases health by " .. 600*HP_MULT,
 		image = moduleImagePath .. "module_strike_servos.png",
 		limit = 8,
-		cost = 100 * COST_MULT,
+		cost = 175 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"strike", "recon"},
 		applicationFunction = function (modules, sharedData)
-			sharedData.speedMod = (sharedData.speedMod or 0) + 4
-			sharedData.healthBonus = (sharedData.healthBonus or 0) - 275*HP_MULT
+			sharedData.speedMod = (sharedData.speedMod or 0) + 6
+			sharedData.healthBonus = (sharedData.healthBonus or 0) - 600*HP_MULT
 		end
 	},
 	{
@@ -1575,16 +1605,15 @@ local moduleDefs = {
 	{
 		name = "module_adv_targeting",
 		humanName = "Adv. Targeting System",
-		description = "Increases range by 7.5% but reduces speed by 0.75.",
+		description = "Increases range by 12.5%.",
 		image = moduleImagePath .. "module_adv_targeting.png",
 		limit = 8,
-		cost = 100 * COST_MULT,
+		cost = 300 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"strike", "recon", "support", "riot"},
 		applicationFunction = function (modules, sharedData)
-			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.075
-			sharedData.speedMod = (sharedData.speedMod or 0) - 0.75
+			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.125
 		end
 	},
 	{
