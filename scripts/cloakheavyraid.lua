@@ -259,7 +259,7 @@ function script.AimWeapon(num, heading, pitch)
 	return true
 end
 
-function script.FireWeapon()
+function script.FireWeapon(num)
 	if num == 1 then
 		Turn(lforearm, x_axis, 0.4, 5)
 		Turn(lshoulder, z_axis, - 0, 12)
