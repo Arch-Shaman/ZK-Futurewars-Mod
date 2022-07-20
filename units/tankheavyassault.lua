@@ -19,8 +19,8 @@ return {
 		customParams        = {
 			bait_level_default = 0,
 			decloak_footprint  = 5,
-			nanoregen = 25,
-			nano_maxregen = 24,
+			nanoregen = 30,
+			nano_maxregen = 20,
 			dontfireatradarcommand = '1',
 			outline_x = 110,
 			outline_y = 110,
