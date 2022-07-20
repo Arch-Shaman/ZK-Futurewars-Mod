@@ -30,7 +30,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 480,
 		maxSlope               = 36,
-		maxVelocity            = 1.6,
+		maxVelocity            = 1.8,
 		movementClass          = [[AKBOT2]],
 		noChaseCategory        = [[TERRAFORM FIXEDWING GUNSHIP]],
 		objectName             = [[amphraider3.s3o]],
@@ -76,7 +76,7 @@ return {
 					blastwave_speed = 10,
 					blastwave_life = 5,
 					blastwave_lossfactor = 0.88,
-					blastwave_damage = 100,
+					blastwave_damage = 65,
 					damage_vs_shield = 200,
 				},
 				damage                  = {
@@ -84,7 +84,7 @@ return {
 				},
 				edgeEffectiveness       = 0.6,
 				explosionGenerator      = [[custom:sonic_80]],
-				flightTime              = 1.5,
+				flightTime              = 3.5,
 				groundbounce            = 1,
 				impactOnly              = false,
 				impulseBoost            = 0,
@@ -97,6 +97,7 @@ return {
 				reloadtime              = 2,
 				soundHit                = [[weapon/cannon/ultrasonic_fire]],
 				soundHitVolume          = 8.6,
+				soundStart              = [[weapon/clusters/light_cluster_grenade_hit]],
 				--soundStart            = [[weapon/torpedo]],
 				startVelocity           = 90,
 				tracks                  = true,
@@ -109,7 +110,7 @@ return {
 			TORPMISSILE = {
 				name                    = [[Sawhead Torpedo]],
 				areaOfEffect            = 32,
-				accuracy				= 220,
+				--accuracy				= 220,
 				--cegTag                  = [[missiletrailyellow]],
 				craterBoost             = 1,
 				craterMult              = 2,
@@ -119,10 +120,9 @@ return {
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 120, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-2,-1,-2,2,2,2", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
+					vradius1 = "-4,-1,-4,4,2,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					proxy = 0, -- check for nearby units?
 					reaim_time = 60, -- Fast update not required (maybe dangerous)
 					light_color = [[1 0.6 0.2]],
@@ -133,25 +133,27 @@ return {
 				},
 				explosionGenerator      = [[custom:INGEBORG]],
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
+				leadlimit               = -1,
 				model                   = [[wep_m_ajax.s3o]],
 				noSelfDamage            = true,
-				predictboost			= 1,
+				--predictboost			= 1,
 				projectiles             = 1,
-				range                   = 570,
+				range                   = 600,
 				reloadtime              = 4,
-				mygravity				= 0.25,
+				mygravity				= 0.09,
 				smokeTrail              = true,
-				soundHit                = [[weapon/clusters/cluster_grenade_hit]],
+				soundHit                = [[weapon/clusters/light_cluster_grenade_hit]],
+				soundHitVolume          = 4,
 				soundStart              = [[weapon/missile/air_launched_missile]],
 				startVelocity           = 140,
 				texture2                = [[lightsmoketrail]],
 				tolerance               = 1000,
-				highTrajectory          = 1,
+				--highTrajectory          = 1,
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 420,
+				weaponVelocity          = 270,
 			},
 			TORPEDO = {
 				name                    = [[Sawhead Torpedo]],
