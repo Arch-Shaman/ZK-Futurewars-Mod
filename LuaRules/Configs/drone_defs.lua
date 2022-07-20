@@ -175,23 +175,23 @@ local carrierDefNames = {
 local presets = {
 	module_companion_drone = {
 		drone = UnitDefNames.dronelight.id,
-		reloadTime = 12,
+		reloadTime = 3,
 		maxDrones = 2,
 		spawnSize = 1,
-		range = 600,
-		maxChaseRange = 1200,
-		buildTime = 6,
+		range = 800,
+		maxChaseRange = 1600,
+		buildTime = 2,
 		maxBuild = 1,
 		offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
 	},
 	module_battle_drone = {
 		drone = UnitDefNames.droneheavyslow.id,
-		reloadTime = 18,
+		reloadTime = 6,
 		maxDrones = 1,
 		spawnSize = 1,
-		range = 600,
-		maxChaseRange = 1200,
-		buildTime = 9,
+		range = 800,
+		maxChaseRange = 1600,
+		buildTime = 4,
 		maxBuild = 1,
 		offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
 	},
