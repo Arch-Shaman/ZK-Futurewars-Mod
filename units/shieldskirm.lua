@@ -118,10 +118,12 @@ return {
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-6,-2,-6,6,2,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-3,-4,-3,3,4,3", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					reveal_unit = 3,
-					cruisealt = 110,
-					cruisedist = 200,
+					cruisealt = 190,
+					cruisedist = 140,
+					useheight = 1,
+					minvelocity = -9.5,
 					cas_nocruisecheck = 1,
 					airlaunched = 1,
 				},
