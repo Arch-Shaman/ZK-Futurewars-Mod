@@ -24,7 +24,7 @@ return {
 			modelradius    = [[14]],
 			cus_noflashlight = 1,
 			cloakregen = 10,
-			recloaktime = 300,
+			recloaktime = 180,
 			cloaker_bestowed_radius = 75,
 			cloakstrikeduration = 30,
 			cloakstrikespeed = 1.25,
