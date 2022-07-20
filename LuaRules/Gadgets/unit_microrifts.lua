@@ -108,7 +108,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 			Spring.MoveCtrl.Enable(proOwnerID)
 			Spring.MoveCtrl.SetPosition(proOwnerID, teleportX, teleportY, teleportZ)
 			Spring.MoveCtrl.Disable(proOwnerID)
-			GG.PlayFogHiddenSound(cfg.sound, 10, teleportX, teleportY, teleportZ)
+			GG.PlayFogHiddenSound(cfg.sound, 10, x, y, z)
 		else
 			local weaponNum = cfg.weaponID
 			if weaponNum then
