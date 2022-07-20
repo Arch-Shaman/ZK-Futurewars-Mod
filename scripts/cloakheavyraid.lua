@@ -133,6 +133,8 @@ end
 local retreating = false
 local range = WeaponDefNames["cloakheavyraid_teleport"].range or 700
 
+local GiveClampedOrderToUnit = Spring.Utilities.GiveClampedOrderToUnit
+
 local function RetreatThread(hx, hy, hz)
 	local reloadframe, frame, t, disScale, cx, cy, cz, moveDistance, ux, uy, uz
 	while retreating do
@@ -145,9 +147,7 @@ local function RetreatThread(hx, hy, hz)
 				disScale = range/moveDistance*0.99
 				cx, cy, cz = ux + disScale*(hx - ux), hy, uz + disScale*(hz - uz)
 				cy = Spring.GetGroundHeight(cx, cz)
-				Spring.SetUnitTarget(unitID, cx, cy, cz, false, false, 2) 
-				Sleep(66)
-				Spring.SetUnitTarget(unitID, nil, false, false, 2)
+				GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, 105, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
 			end
 		end
 		Sleep(100)
