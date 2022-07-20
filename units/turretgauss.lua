@@ -76,6 +76,7 @@ return {
 					default = 75.1,
 				},
 				explosionGenerator      = [[custom:gauss_hit_m]],
+				flighttime				= 6,
 				groundbounce            = 1,
 				impactOnly              = true,
 				impulseBoost            = 0,
@@ -98,7 +99,7 @@ return {
 				turret                  = true,
 				waterweapon             = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 1200,
+				weaponVelocity          = 900,
 			},
 		},
 		featureDefs                   = {
