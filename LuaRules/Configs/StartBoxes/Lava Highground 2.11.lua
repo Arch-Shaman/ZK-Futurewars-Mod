@@ -69,7 +69,7 @@ local box1_aggressive = {
 }
 
 local box2_aggressive = {
-	{2577, 0},
+	{2577, 2},
 	{2557, 31},
 	{2515, 44},
 	{2505, 57},
@@ -123,8 +123,7 @@ local box2_aggressive = {
 	{3983, 1383},
 	{4025, 1370},
 	{4094, 1370},
-	{4094, 0},
-	{3995, 0},
+	{4094, 2},
 }
 
 local box3_aggressive = {
@@ -255,13 +254,13 @@ local box1 = {
 	{51, 2524},
 	{54, 2548},
 	{45, 2560},
-	{0, 2566},
+	{2, 2566},
 	{2, 4091},
 	{1426, 4092},
 }
 
 local box2 = {
-{4088, 1361},
+	{4088, 1361},
 	{4002, 1364},
 	{3953, 1391},
 	{3864, 1394},
@@ -293,7 +292,7 @@ local box2 = {
 	{2551, 267},
 	{2526, 42},
 	{2577, 49},
-	{2586, 1},
+	{2586, 2},
 	{4089, 4},
 	{4088, 1320},
 }
@@ -354,7 +353,7 @@ local box3 = {
 }
 
 local box4 = {
-	{1, 1466},
+	{2, 1466},
 	{47, 1475},
 	{131, 1485},
 	{185, 1483},
@@ -393,7 +392,7 @@ local box4 = {
 	{1367, 195},
 	{1371, 110},
 	{1371, 2},
-	{1, 2},
+	{2, 2},
 	{2, 1380},
 	{6, 1428},
 }
@@ -409,19 +408,20 @@ end
 
 local boxes = {}
 if sputGametype.isFFA() then 
-	boxes[0] = {startpoints = start1, boxes = box1, nameLong = "Southwest", nameShort = "SW"}
-	boxes[1] = {startpoints = start2, boxes = box2, nameLong = "Northeast", nameShort = "NE"}
-	boxes[2] = {startpoints = start3, boxes = box3, nameLong = "Southeast", nameShort = "SE"}
-	boxes[3] = {startpoints = start4, boxes = box4, nameLong = "Northwest", nameShort = "NW"}
-	return boxes, {4}
+	boxes[0] = {startpoints = {start1}, boxes = {box1}, nameLong = "Southwest", nameShort = "SW"}
+	boxes[1] = {startpoints = {start2}, boxes = {box2}, nameLong = "Northeast", nameShort = "NE"}
+	boxes[2] = {startpoints = {start3}, boxes = {box3}, nameLong = "Southeast", nameShort = "SE"}
+	boxes[3] = {startpoints = {start4}, boxes = {box4}, nameLong = "Northwest", nameShort = "NW"}
+	return boxes
 end
 
 
 boxes[0] = {startpoints = {}, boxes = {}, nameLong = "Magma Fanatics", nameShort = "Magma"}
 boxes[1] = {startpoints = {}, boxes = {}, nameLong = "Lava Lovers", nameShort = "Lava"}
 
-if sputGametype.isBigTeams() or sputGametype.isCompStomp() then -- pick two. team vs team.
+if (sputGametype.isBigTeams() or sputGametype.isCompStomp()) then -- pick two. team vs team.
 	local r = math.random(1, 6)
+	Spring.Echo("Big config: " .. r)
 	if r == 1 then
 		boxes[0].startpoints = {start1, start2}
 		boxes[0].boxes = {box1, box2}
@@ -455,6 +455,7 @@ if sputGametype.isBigTeams() or sputGametype.isCompStomp() then -- pick two. tea
 	end
 else -- pick 1
 	r = math.random(1, 6)
+	Spring.Echo("Config: " .. r)
 	if r == 1 then -- NE vs SW
 		boxes[0].startpoints = {start1}
 		boxes[0].boxes = {box1}
@@ -470,12 +471,12 @@ else -- pick 1
 		boxes[0].boxes = {box4}
 		boxes[1].startpoints = {start2}
 		boxes[1].boxes = {box2}
-	elseif r == 4 then -- NW vs SE
+	elseif r == 4 then -- NW vs SE -- fine.
 		boxes[0].startpoints = {start4}
 		boxes[0].boxes = {box4}
 		boxes[1].startpoints = {start3}
 		boxes[1].boxes = {box3}
-	elseif r == 5 then -- NvS
+	elseif r == 5 then -- NvS -- fine
 		boxes[0].startpoints = {start1}
 		boxes[0].boxes = {box1}
 		boxes[1].startpoints = {start4}
@@ -488,4 +489,4 @@ else -- pick 1
 	end
 end
 
-return boxes, {2}	
+return boxes
