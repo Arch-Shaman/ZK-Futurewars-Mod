@@ -400,7 +400,7 @@ local box4 = {
 
 local sputGametype = Spring.Utilities.Gametype
 
-if sputGametype.isCoop() or sputGametype.isBigTeams() then -- coop & big teams both use aggressive boxes.
+if sputGametype.isCompStomp() or sputGametype.isBigTeams() then -- coop & big teams both use aggressive boxes.
 	box1 = box1_aggressive
 	box2 = box2_aggressive
 	box3 = box3_aggressive
