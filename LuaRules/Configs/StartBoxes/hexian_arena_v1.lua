@@ -6,8 +6,7 @@
 --		[3] = {startPos = {x = 10240-2370, z = 5120+1600}},	-- e2
 --		[5] = {startPos = {x = 10240-2370, z = 5120-1600}},	-- e3
 
-
-return {
+local boxes = {
 	[0] = {
 		boxes = {
 			{
@@ -16,7 +15,7 @@ return {
 				{2600, 5120+1800},
 				{2600, 5120-1800},
 			},
-			},
+		},
 		startpoints = {
 			{2370, 5120},
 			{2370, 5120+1600},
@@ -42,5 +41,6 @@ return {
 		nameLong = "East",
 		nameShort = "E",
 	},
-},
-{2}
+}
+
+return boxes, {2}
