@@ -1,6 +1,6 @@
 local chassisDefs = {
 	{
-		name = "dynstrike1", -- 21/31 (UPDATE ME AS YOU ADD MORE WEAPONS)
+		name = "dynstrike1", -- 22/31 (UPDATE ME AS YOU ADD MORE WEAPONS)
 		weapons = {
 			"commweapon_tankbuster",
 			"commweapon_tankbuster",
@@ -23,6 +23,7 @@ local chassisDefs = {
 			"commweapon_sunburst",
 			"commweapon_disintegrator",
 			"commweapon_minefieldinacan",
+			"commweapon_microriftgenerator",
 			-- Space for shield
 		}
 	},

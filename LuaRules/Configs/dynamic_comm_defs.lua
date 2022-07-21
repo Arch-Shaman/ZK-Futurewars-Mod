@@ -194,6 +194,23 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "commweapon_microriftgenerator",
+		humanName = "Microrift Generator",
+		description = "Instantly teleports your commander to any location within range.",
+		image = moduleImagePath .. "commweapon_microrift.png",
+		limit = 1,
+		cost = 100 * COST_MULT,
+		requireChassis = {"strike"},
+		requireLevel = 3,
+		slotType = "adv_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			sharedData.weapon2 = "commweapon_microriftgenerator"
+		end
+	},
+	{
 		name = "commweapon_megalaser",
 		humanName = "Brillant Star Tactical Laser",
 		description = "A long recharge tactical laser that can be used to carve a line in the dirt or to rapidly melt enemy units. Manual fire only.",

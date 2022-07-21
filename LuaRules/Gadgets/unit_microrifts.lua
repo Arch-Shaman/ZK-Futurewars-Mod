@@ -27,6 +27,7 @@ local spGetUnitPosition = Spring.GetUnitPosition
 
 
 local config = {}
+local overrides = {}
 
 for i = 1, #WeaponDefs do
 	local wd = WeaponDefs[i]
@@ -110,10 +111,20 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 			Spring.MoveCtrl.Disable(proOwnerID)
 			GG.PlayFogHiddenSound(cfg.sound, 10, x, y, z)
 		else
-			local weaponNum = cfg.weaponID
+			local weaponNum = overrides[proOwnerID] or cfg.weaponID
 			if weaponNum then
 				Spring.SetUnitWeaponState(proOwnerID, weaponNum, "reloadFrame", Spring.GetGameFrame()) -- Reload the weapon.
 			end
 		end
 	end
 end
+
+local function AddOverride(unitID, weaponNum)
+	overrides[unitID] = weaponNum
+end
+
+function gadget:UnitDestroyed(unitID)
+	overrides[unitID] = nil
+end
+
+GG.Microrifts_AddUnitOverride = AddOverride

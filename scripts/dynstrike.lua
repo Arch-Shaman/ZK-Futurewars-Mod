@@ -158,6 +158,7 @@ local SIG_WALK = 32
 local SIG_NANO = 64
 local okpconfig
 local RESTORE_DELAY = 2500
+local instantaimweapon2 = false
 
 local function GetOKP()
 	while Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") == nil do
@@ -762,6 +763,10 @@ local function UpdateWeaponsThread()
 	if weaponname2 ~= "" then
 		weaponname2 = trimstring(weaponname2)
 	end
+	if weaponname2 == "microriftgenerator" then -- microrift isn't a "weapon"
+		weaponname2 = ""
+		instantaimweapon2 = true
+	end
 	--Spring.Echo("Weapons: " .. tostring(weaponname1), weaponname2)
 	for key, piece in ipairs(WeaponsRight[weaponname1]) do Show(piece) end
 	if weaponname2 ~= "" then
@@ -848,7 +853,9 @@ local function AimArm(heading, pitch, arm, hand, wait)
 	end
 end
 
-function script.AimWeapon(num, heading, pitch)
+local overriden = false
+
+function script.AimWeapon(num, heading, pitch) 
 	local weaponNum = dyncomm.GetWeapon(num)
 	GG.DontFireRadar_CheckAim(unitID)
 	if weaponNum == 1 then
@@ -862,6 +869,13 @@ function script.AimWeapon(num, heading, pitch)
 		StartThread(RestoreLeftAim)
 		return true
 	elseif weaponNum == 2 then
+		if instantaimweapon2 then
+			if not overriden then
+				GG.Microrifts_AddUnitOverride(unitID, num)
+				overriden = true
+			end
+			return true
+		end
 		Signal(SIG_RIGHT)
 		SetSignalMask(SIG_RIGHT)
 		Signal(SIG_RESTORE_RIGHT)
