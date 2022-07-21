@@ -416,7 +416,7 @@ if sputGametype.isFFA() then
 end
 
 
-boxes[0] = {startpoints = {}, boxes = {}, nameLong = "Magma Fanatics", nameShort = "Magma"}
+boxes[0] = {startpoints = {}, boxes = {}, nameLong = "Magma Maniacs", nameShort = "Magma"}
 boxes[1] = {startpoints = {}, boxes = {}, nameLong = "Lava Lovers", nameShort = "Lava"}
 
 if (sputGametype.isBigTeams() or sputGametype.isCompStomp()) then -- pick two. team vs team.
