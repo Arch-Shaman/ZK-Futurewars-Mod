@@ -407,6 +407,7 @@ if sputGametype.isCompStomp() or sputGametype.isBigTeams() then -- coop & big te
 	box4 = box4_aggressive
 end
 
+local boxes = {}
 if sputGametype.isFFA() then 
 	boxes[0] = {startpoints = start1, boxes = box1, nameLong = "Southwest", nameShort = "SW"}
 	boxes[1] = {startpoints = start2, boxes = box2, nameLong = "Northeast", nameShort = "NE"}
@@ -415,11 +416,11 @@ if sputGametype.isFFA() then
 	return boxes, {4}
 end
 
-local boxes = {}
+
 boxes[0] = {startpoints = {}, boxes = {}, nameLong = "Magma Fanatics", nameShort = "Magma"}
 boxes[1] = {startpoints = {}, boxes = {}, nameLong = "Lava Lovers", nameShort = "Lava"}
 
-if sputGametype.isBigTeams() or sputGametype.isCompStomp() then -- pick two.
+if sputGametype.isBigTeams() or sputGametype.isCompStomp() then -- pick two. team vs team.
 	local r = math.random(1, 6)
 	if r == 1 then
 		boxes[0].startpoints = {start1, start2}
