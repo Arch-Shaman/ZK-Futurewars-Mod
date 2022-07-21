@@ -156,7 +156,7 @@ return {
 					stats_custom_tooltip_entry_2 = "22.5 degrees",
 				},
 				damage                  = {
-					default = 30.1,
+					default = 50.1,
 				},
 				explosionGenerator      = [[custom:napalm_phoenix]],
 				fireStarter             = 100,
