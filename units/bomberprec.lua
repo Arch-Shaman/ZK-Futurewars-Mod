@@ -4,7 +4,7 @@ return {
 		name                = [[Divinity]],
 		description         = [[Cluster Bomber]],
 		brakerate           = 0.4,
-		buildCostMetal      = 500,
+		buildCostMetal      = 450,
 		builder             = false,
 		buildPic            = [[bomberprec.png]],
 		canFly              = true,
@@ -25,7 +25,7 @@ return {
 		customParams        = {
 			modelradius    = [[15]],
 			refuelturnradius = [[220]],
-			reammoseconds    = [[8]],
+			reammoseconds    = [[5]],
 			requireammo    = [[1]],
 			reallyabomber    = [[1]],
 			outline_x = 130,
@@ -37,8 +37,6 @@ return {
 		footprintX          = 3,
 		footprintZ          = 3,
 		iconType            = [[bomberassault]],
-		idleAutoHeal        = 10,
-		idleTime            = 2000,
 		maneuverleashlength = [[1380]],
 		maxAcc              = 0.5,
 		maxBank             = 0.6,
@@ -59,9 +57,8 @@ return {
 				[[custom:light_green]],
 			},
 		},
-		sightDistance       = 780,
+		sightDistance       = 900,
 		turnRadius          = 300,
-		workerTime          = 0,
 		weapons             = {
 			{
 				def                = [[BOMBSABOT]],
