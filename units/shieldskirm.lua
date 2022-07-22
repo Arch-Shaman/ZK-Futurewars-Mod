@@ -77,7 +77,7 @@ return {
 					flaktime = 1/30,
 				},
 				damage                  = {
-					default = 200,
+					default = 200.01,
 				},
 				explosionGenerator      = [[custom:xamelimpact]],
 				fireStarter             = 70,
