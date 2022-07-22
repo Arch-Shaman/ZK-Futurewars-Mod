@@ -95,7 +95,7 @@ return {
 				minIntensity            = 1,
 				noSelfDamage            = true,
 				range                   = 341,
-				reloadtime              = 2.0,
+				reloadtime              = 2.3,
 				rgbColor                = [[0.8941 0.7647 0.1255]],
 				soundStart              = [[weapon/laser/medium_phaser]],
 				soundHit				= [[weapon/impacts/impact-light01]],
