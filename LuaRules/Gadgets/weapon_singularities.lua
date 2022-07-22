@@ -260,9 +260,9 @@ function gadget:GameFrame(f)
 			ProcessSingularity(id, data)
 			data.lifespan = data.lifespan - 1
 			if data.lifespan%30 == 0 and data.lifespan > 50 then
-				spPlaySoundFile("sounds\\blackholeloop.ogg", 15, data.position[1], data.position[2], data.position[3])
+				spPlaySoundFile("sounds\\blackholeloop.ogg", 15, data.position[1], data.position[2], data.position[3], 0, 0, 0, "battle")
 			elseif data.lifespan == 15 then
-				spPlaySoundFile("sounds\\blackhole_final.ogg", 30, data.position[1], data.position[2], data.position[3])
+				spPlaySoundFile("sounds\\blackhole_final.ogg", 30, data.position[1], data.position[2], data.position[3], 0, 0, 0, "battle")
 			elseif data.lifespan == 1 then
 				--spPlaySoundFile("sounds\\explosions\\ex_burn1.wav", 12, data.position[1], data.position[2], data.position[3]) -- needs replacement file?
 			end
