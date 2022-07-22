@@ -31,7 +31,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 450,
+		maxDamage              = 400,
 		maxSlope               = 18,
 		maxVelocity            = 3.9,
 		maxWaterDepth          = 22,
@@ -87,7 +87,7 @@ return {
 					sweepfire_fastupdate = 1,
 				},
 				damage                  = {
-					default = 50,
+					default = 53.1,
 				},
 				duration                = 0.3,
 				dynDamageExp            = 1,
