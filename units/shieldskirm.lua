@@ -121,7 +121,7 @@ return {
 					vradius1 = "-3,-4,-3,3,4,3", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					reveal_unit = 3,
 					cruisealt = 190,
-					cruisedist = 140,
+					cruisedist = 160,
 					useheight = 1,
 					minvelocity = -9.5,
 					cas_nocruisecheck = 1,
