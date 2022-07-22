@@ -93,7 +93,7 @@ return {
 				soundHit                = [[explosion/mini_nuke_2]],
 				soundStart              = [[weapon/missile/missile_fire2]],
 				tolerance               = 4000,
-				turnrate                = 22500,
+				turnrate                = 42500,
 				startVelocity           = 80,
 				weaponAcceleration      = 315,
 				tracks                  = true, -- doesn't actually track. Needed for cruise missile.
