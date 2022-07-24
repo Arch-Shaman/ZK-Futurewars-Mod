@@ -31,6 +31,7 @@ local spEditUnitCmdDesc     = Spring.EditUnitCmdDesc
 local spFindUnitCmdDesc     = Spring.FindUnitCmdDesc
 local spGetUnitAllyTeam     = Spring.GetUnitAllyTeam
 local spIsPosInLos          = Spring.IsPosInLos
+local spGetPositionLosState = Spring.GetPositionLosState
 local spGetGroundHeight     = Spring.GetGroundHeight
 local sqrt                  = math.sqrt
 
@@ -261,7 +262,8 @@ local function DoMexShootUnitUpdate(unitID, unitData)
 	if not spotX then
 		return
 	end
-	if (not enemyID) and spIsPosInLos(spotX, 0, spotZ, unitData.allyTeamID) then
+	local inRadarOrLos, _ = spGetPositionLosState(spotX, spGetGroundHeight(spotX, spotZ), spotZ, unitData.allyTeamID)
+	if (not enemyID) and inRadarOrLos then
 		return
 	end
 	local spotY = math.max(0, CallAsTeam(unitData.teamID, function () return spGetGroundHeight(spotX, spotZ) end))
