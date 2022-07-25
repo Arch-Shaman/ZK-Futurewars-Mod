@@ -69,11 +69,23 @@ return {
 					disarmDamageMult = 1,
 					disarmDamageOnly = 1,
 					disarmTimer      = 6, -- seconds
-
+					
+					numprojectiles1 = 20,
+					projectile1 = "shieldarty_lightning",
+					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
+					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
+					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
+					spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
+					vradius1 = "-6,-4,-6,6,4,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
+					reaim_time = 60, -- Fast update not required (maybe dangerous)
+					
 					light_camera_height = 1500,
 					light_color = [[1 1 1]],
-					cruisealt = 400,
-					cruisedist = 200,
+					cruisealt = 500,
+					cruisedist = 250,
+					useheight = 1,
 					cruisetracking = true,
 					reveal_unit = 10,
 				},
@@ -93,7 +105,7 @@ return {
 				range                   = 1050,
 				reloadtime              = 10,
 				smokeTrail              = false,
-				soundHit                = [[weapon/missile/vlaunch_emp_hit]],
+				soundHit                = [[weapon/more_lightning_fast]],
 				soundHitVolume          = 9.0,
 				soundStart              = [[weapon/missile/missile_launch_high]],
 				soundStartVolume        = 11.0,
@@ -106,6 +118,52 @@ return {
 				weaponAcceleration      = 275,
 				weaponType              = [[StarburstLauncher]],
 				weaponVelocity          = 800,
+			},
+			LIGHTNING = {
+				name                    = [[Lightning Burst]],
+				accuracy                = 1000,
+				areaOfEffect            = 64,
+				corethickness           = 0.1,
+				craterBoost             = 0,
+				craterMult              = 0,
+				customParams        = {
+					light_camera_height = 1800,
+					light_color = [[2 2 2]],
+					light_radius = 20,
+					disarmDamageMult = 1,
+					disarmDamageOnly = 1,
+					disarmTimer      = 6, -- seconds
+				},
+				damage                  = {
+					default = 162.5,
+				},
+				duration                = 0.1,
+				edgeEffectiveness       = 0.4,
+				explosionGenerator      = [[custom:mixed_white_lightning_bomb_small]],
+				explosionScar           = false,
+				flightTime              = 1,
+				impulseBoost            = 0,
+				impulseFactor           = 0,
+				interceptedByShieldType = 1,
+				noSelfDamage            = true,
+				hardStop                = true,
+				fallOffRate             = 1,
+				largebeamlaser			= true,
+				range                   = 1000,
+				reloadtime              = 1.4,
+				targetborder            = 1,
+				texture1                = [[lightning]],
+				texture2                = [[]],
+				texture3                = [[]],
+				texture4                = [[]],
+				tileLength              = 50,
+				thickness               = 18,
+				rgbColor                = [[1 1 1]],
+				soundHit                = [[weapon/LightningBolt]],
+				soundHitVolume          = 0.7,
+				turret                  = true,
+				weaponType              = [[LaserCannon]],
+				weaponVelocity          = 2500,
 			},
 			SHIELD = {
 				name                    = [[Energy Shield]],	
