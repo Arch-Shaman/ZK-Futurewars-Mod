@@ -27,7 +27,6 @@ local SIG_AIM = 2
 local SIG_RESTORE = 4
 
 -- variables
-local gun_1
 local turretspeed = math.rad(125)
 
 local function Step(front, back)
@@ -64,7 +63,6 @@ local function Walk()
 end
 
 function script.Create()
-	gun_1 = true
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	Move(base, x_axis, -2)
 end
@@ -105,12 +103,9 @@ end
 
 function script.QueryWeapon(num)
 	if num == 1 then
-		-- Gun
-		if gun_1 then
-			return firept1
-		else
-			return firept2
-		end
+		return firept1
+	elseif num == 2 then
+		return firept2
 	else
 		-- Shield
 		return shield
@@ -122,6 +117,7 @@ function script.AimFromWeapon()
 end
 
 function script.AimWeapon(num, heading, pitch)
+	if num == 3 then return end
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
 	
@@ -131,28 +127,39 @@ function script.AimWeapon(num, heading, pitch)
 	WaitForTurn(head, y_axis)
 	
 	StartThread(RestoreAfterDelay)
-	return 1 -- allows fire weapon after WaitForTurn
+	if num == 1 then
+		return 1 -- allows fire weapon after WaitForTurn
+	else
+		Sleep(99) -- introduce a delay to stagger the guns.
+		return true
+	end
 end
 
-function script.Shot()
-	if gun_1 then
-		EmitSfx(firept1, GG.Script.UNIT_SFX1)
-		EmitSfx(firept1, GG.Script.UNIT_SFX2)
-		Move(r_barrel, z_axis, -4, 0)
-		Move(r_gun, z_axis, -2, 0)
-
+local function RecoilThread(num)
+	if num == 1 then
+		Move(r_barrel, z_axis, -4, 4)
+		Move(r_gun, z_axis, -2, 4)
+		Sleep(66)
 		Move(r_barrel, z_axis, 0, 2.5)
 		Move(r_gun, z_axis, 0, 1.25)
 	else
-		EmitSfx(firept2, GG.Script.UNIT_SFX1)
-		EmitSfx(firept2, GG.Script.UNIT_SFX2)
-		Move(l_barrel, z_axis, -4, 0)
-		Move(l_gun, z_axis, -2, 0)
-
+		Move(l_barrel, z_axis, -4, 4)
+		Move(l_gun, z_axis, -2, 4)
+		Sleep(66)
 		Move(l_barrel, z_axis, 0, 2.5)
 		Move(l_gun, z_axis, 0, 1.25)
 	end
-	gun_1 = not gun_1
+end
+
+function script.Shot(num)
+	if num == 1 then
+		EmitSfx(firept1, GG.Script.UNIT_SFX1)
+		EmitSfx(firept1, GG.Script.UNIT_SFX2)
+	else
+		EmitSfx(firept2, GG.Script.UNIT_SFX1)
+		EmitSfx(firept2, GG.Script.UNIT_SFX2)
+	end
+	StartThread(RecoilThread, num)
 end
 
 function script.BlockShot(num, targetID)
