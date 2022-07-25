@@ -12,8 +12,8 @@ return {
 		buildPic                      = [[turretgauss.png]],
 		canMove                       = false,
 		category                      = [[FLOAT TURRET]],
-		collisionVolumeOffsets        = [[0 5 0]],
-		collisionVolumeScales         = [[28 40 28]],
+		collisionVolumeOffsets        = [[0 15 0]],
+		collisionVolumeScales         = [[32 65 32]],
 		collisionVolumeType           = [[CylY]],
 		corpse                        = [[DEAD]],
 		customParams                  = {
