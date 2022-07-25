@@ -4,7 +4,7 @@ return {
 		name                   = [[Waylayer]],
 		description            = [[Ambusher Skirmish Bot (Laser-Guided)]],
 		acceleration           = 0.9,
-		brakeRate              = 1.2,
+		brakeRate              = 2.25,
 		buildCostMetal         = 130,
 		buildPic               = [[cloakskirm.png]],
 		canGuard               = true,
@@ -42,6 +42,7 @@ return {
 		maxDamage              = 360,
 		maxSlope               = 36,
 		maxVelocity            = 2.4,
+		maxReverseVelocity     = 2.4,
 		maxWaterDepth          = 20,
 		minCloakDistance       = 200,
 		
