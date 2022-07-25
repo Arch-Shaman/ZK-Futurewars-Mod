@@ -140,6 +140,15 @@ local Sounds = {
 			maxdist = nil,
 			rollOff = 0.4,
 		},
+		PreserverSecondaryHit = {
+			file = "sounds/weapon/LightningBolt.wav",
+			gain = 0.4,
+			pitch = 1.0,
+			maxconcurrent = 20,
+			preload = false,
+			maxdist = nil,
+			rollOff = 0.4,
+		},
 		flamethrowerfire = {
 			file = "sounds/weapon/cannon/flamethrower_fire.wav",
 			gain = 1.0,
