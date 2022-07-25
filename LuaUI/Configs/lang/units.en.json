@@ -652,7 +652,7 @@
 	"shieldarty" : {
 		"name" : "Preserver",
 		"description" : "Disarming Cruise Artillery",
-		"helptext" : "The Preserver launches long range cruise missiles that can disarm key enemy defenses or units before assaulting them. It is only modestly shielded itself, however, its high shield regen makes it ideal for supporting other shield units."
+		"helptext" : "The Preserver launches long range cruise missiles that burst out EMP bolts, which can disarm key enemy defenses or units. It is only modestly shielded itself, however, so don't use it as an assault unit."
 	},
 	"roost" : {
 		"name" : "Roost",
