@@ -156,8 +156,12 @@ local function GetMissileDestination(num, allyteam)
 					missile.lastknownposition[2] = y
 					missile.lastknownposition[3] = z
 				end
+			else
+				x = missile.lastknownposition[1]
+				y = missile.lastknownposition[2]
+				z = missile.lastknownposition[3]
 			end
-			return x or missile.lastknownposition[1], y or missile.lastknownposition[2], z or missile.lastknownposition[3]
+			return x, y, z
 		end
 	end
 end
@@ -390,7 +394,7 @@ function gadget:GameFrame(f)
 						end
 						if distance <= mindist then -- end of cruise phase
 							data.cruising = false
-							if missileconfig.track and missileconfig.finaltracking and data.type == "unit" then
+							if missileconfig.track and missileconfig.finaltracking and data.type == "unit" and spValidUnitID(data.target) then
 								spSetProjectileTarget(projectile, data.target, targettypes.unit)
 							else
 								spSetProjectileTarget(projectile, x, y, z)
