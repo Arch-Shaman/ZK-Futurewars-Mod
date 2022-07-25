@@ -73,7 +73,7 @@ return {
 					shield_damage = 200.4,
 				},
 				damage                  = {
-					default = 75.1,
+					default = 90.01,
 				},
 				explosionGenerator      = [[custom:gauss_hit_m]],
 				flighttime				= 6,
