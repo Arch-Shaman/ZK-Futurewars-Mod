@@ -57,8 +57,7 @@ return {
 
 			{
 				def                = [[ATA]],
-				badTargetCategory  = [[FIXEDWING GUNSHIP]],
-				onlyTargetCategory = [[SWIM LAND SHIP SINK TURRET FLOAT GUNSHIP FIXEDWING HOVER]],
+				onlyTargetCategory = [[SWIM LAND SHIP SINK TURRET FLOAT HOVER]],
 			},        
 			{
 				def                = [[BOGUS_PHASER]],
