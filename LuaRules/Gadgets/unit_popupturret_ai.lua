@@ -107,7 +107,7 @@ function gadget:GameFrame(f)
 	if f%CHECK_RATE == 0 then
 		for unitID, data in IterableMap.Iterator(handled) do
 			local disarmFrame = spGetUnitRulesParam(unitID, "disarmframe") or -1
-			local disarm = (spGetUnitRulesParam(unitID, "disarmed") or 0) == 1
+			local disarmed = (spGetUnitRulesParam(unitID, "disarmed") or 0) == 1
 			local disarmProp = (disarmFrame - f)/1200
 			local hp, maxhp, _ = spGetUnitHealth(unitID)
 			local hpProp = hp/maxhp
@@ -120,7 +120,7 @@ function gadget:GameFrame(f)
 			end
 			if data.disarmHoldFire and disarmProp <= config.maxdisarm then
 				data.disarmHoldFire = false
-			elseif not data.disarmHoldFire and disarm then
+			elseif not data.disarmHoldFire and disarmed then
 				data.disarmHoldFire = true
 			end
 			if data.holdFire and (not data.hpHoldFire and not data.disarmHoldFire) then
@@ -134,10 +134,10 @@ function gadget:GameFrame(f)
 			
 			if isHoldFire ~= data.holdFire then
 				if data.holdFire then
-					GG.DelegateOrder(unitID, CMD.STOP, {}, 0)
-					GG.DelegateOrder(unitID, CMD.FIRE_STATE, {0}, 0)
+					GG.DelegateOrder(unitID, CMD.STOP, {}, 0) -- stop force fire / set target / etc. We want to close up immediately.
+					GG.DelegateOrder(unitID, CMD.FIRE_STATE, {0}, 0) -- set hold fire
 				else
-					GG.DelegateOrder(unitID, CMD.FIRE_STATE, {2}, 0)
+					GG.DelegateOrder(unitID, CMD.FIRE_STATE, {2}, 0) -- clear hold fire.
 				end
 			end
 		end
