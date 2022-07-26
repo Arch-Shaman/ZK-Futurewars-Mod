@@ -1592,7 +1592,7 @@ local moduleDefs = {
 	{
 		name = "module_high_power_servos_improved",
 		humanName = "Strike Servos",
-		description = "Increases speed by 4, decreases health by " .. 275*HP_MULT,
+		description = "Increases speed by 5, decreases health by " .. 500*HP_MULT,
 		image = moduleImagePath .. "module_strike_servos.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1600,8 +1600,8 @@ local moduleDefs = {
 		slotType = "module",
 		requireChassis = {"strike", "recon"},
 		applicationFunction = function (modules, sharedData)
-			sharedData.speedMod = (sharedData.speedMod or 0) + 4
-			sharedData.healthBonus = (sharedData.healthBonus or 0) - 275*HP_MULT
+			sharedData.speedMod = (sharedData.speedMod or 0) + 5
+			sharedData.healthBonus = (sharedData.healthBonus or 0) - 500*HP_MULT
 		end
 	},
 	{
