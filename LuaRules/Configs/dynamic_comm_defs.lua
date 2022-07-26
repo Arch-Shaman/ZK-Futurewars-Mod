@@ -1544,6 +1544,7 @@ local moduleDefs = {
 		prohibitingModules = {"module_high_power_servos", "module_autorepair"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.speedMod = (sharedData.speedMod or 0) - 1.1
+			sharedData.damageMult = (sharedData.damageMult or 1) + 0.25
 		end
 	},
 	{
