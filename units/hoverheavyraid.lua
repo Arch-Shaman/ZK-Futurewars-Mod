@@ -106,7 +106,6 @@ return {
 			},
 		},
 		featureDefs         = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -114,8 +113,6 @@ return {
 				footprintZ       = 2,
 				object           = [[hoverskirm_dead.s3o]],
 			},
-
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
