@@ -317,6 +317,7 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	-- Update ApplyModuleEffectsFromUnitRulesParams if any non-unitRulesParams changes are made.
 	if data.speedMod then
 		local speedMult = (data.speedMod + ud.speed)/ud.speed
+		speedMult = speedMult - ((data.speedMalus or 0) * (data.malusMult or 1))
 		spSetUnitRulesParam(unitID, "upgradesSpeedMult", speedMult, INLOS)
 	end
 	if data.cloakregen then

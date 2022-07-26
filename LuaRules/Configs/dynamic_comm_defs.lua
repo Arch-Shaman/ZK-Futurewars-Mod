@@ -1484,7 +1484,7 @@ local moduleDefs = {
 	{
 		name = "module_heavy_armor",
 		humanName = "High Density Plating",
-		description = "Provides " .. 4000*HP_MULT .. " health but reduces speed by 0.25.\nRiot Commander exclusive.",
+		description = "Provides " .. 4000*HP_MULT .. " health but reduces speed by 0.35.\nRiot exclusive.",
 		image = moduleImagePath .. "module_heavy_armor.png",
 		limit = 8,
 		cost = 200 * COST_MULT,
@@ -1494,7 +1494,7 @@ local moduleDefs = {
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			sharedData.healthBonus = (sharedData.healthBonus or 0) + 4000*HP_MULT
-			sharedData.speedMod = (sharedData.speedMod or 0) - 0.25
+			sharedData.speedMalus = (sharedData.speedMalus or 0) + 0.35
 		end
 	},
 	{
@@ -1512,13 +1512,12 @@ local moduleDefs = {
 			-- Damage boost is applied via clone swapping
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.15
 			sharedData.healthBonus = (sharedData.healthBonus or 0) + 200*HP_MULT
-			--sharedData.speedMod = (sharedData.speedMod or 0) - 0.1
 		end
 	},
 	{
 		name = "module_dmg_booster",
 		humanName = "Enhanced Weapon Systems",
-		description = "Increases damage by 10% but reduces speed by 0.75.",
+		description = "Increases damage by 10% but reduces speed by 1.",
 		image = moduleImagePath .. "module_dmg_booster.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1528,7 +1527,7 @@ local moduleDefs = {
 		applicationFunction = function (modules, sharedData)
 			-- Damage boost is applied via clone swapping
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.1
-			sharedData.speedMod = (sharedData.speedMod or 0) - 0.75
+			sharedData.speedMalus = (sharedData.speedMalus or 0) + 1
 		end
 	},
 	{
@@ -1543,7 +1542,7 @@ local moduleDefs = {
 		requireChassis = {"riot"},
 		prohibitingModules = {"module_autorepair"},
 		applicationFunction = function (modules, sharedData)
-			sharedData.speedMod = (sharedData.speedMod or 0) - 1.1
+			sharedData.speedMalus = (sharedData.speedMalus or 0) + 1.1
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.25
 		end
 	},
@@ -1559,6 +1558,19 @@ local moduleDefs = {
 		requireChassis = {"riot", "assault"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.speedMod = (sharedData.speedMod or 0) + 1.5
+		end
+	},
+	{
+		name = "module_malus_remover",
+		humanName = "Load Reengineering Overhaul",
+		description = "Removes 25% of all speed reductions from modules.",
+		image = moduleImagePath .. "module_improved_servos.png",
+		limit = 4,
+		cost = 250 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.malusMult = math.max((sharedData.malusMult or 1) - 0.25, 0)
 		end
 	},
 	{
@@ -1630,7 +1642,7 @@ local moduleDefs = {
 		requireChassis = {"strike", "recon", "support", "riot"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.075
-			sharedData.speedMod = (sharedData.speedMod or 0) - 0.75
+			sharedData.speedMalus = (sharedData.speedMalus or 0) + 0.75
 		end
 	},
 	{
@@ -1645,7 +1657,7 @@ local moduleDefs = {
 		requireChassis = {"assault"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.1
-			sharedData.speedMod = (sharedData.speedMod or 0) - 2
+			sharedData.speedMalus = (sharedData.speedMalus or 0) + 2
 		end
 	},
 	{
