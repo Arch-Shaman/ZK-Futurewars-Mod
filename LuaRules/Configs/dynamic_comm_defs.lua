@@ -1548,17 +1548,45 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "module_high_power_servos_slow",
+		humanName = "Additional Servos",
+		description = "Increases speed by 1.5.",
+		image = moduleImagePath .. "module_high_power_servos.png",
+		limit = 8,
+		cost = 200 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+		requireChassis = {"riot", "assault"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.speedMod = (sharedData.speedMod or 0) + 1.5
+		end
+	},
+	{
 		name = "module_high_power_servos",
-		humanName = "High Power Servos",
-		description = "Increases speed by 2.2.",
+		humanName = "Super Servos",
+		description = "Increases speed by 2.5.",
+		image = moduleImagePath .. "module_high_power_servos.png",
+		limit = 8,
+		cost = 150 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+		requireChassis = {"strike", "support"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.speedMod = (sharedData.speedMod or 0) + 2.5
+		end
+	},
+	{
+		name = "module_high_power_servos_extreme",
+		humanName = "Recon Servos",
+		description = "Increases speed by 3.25.",
 		image = moduleImagePath .. "module_high_power_servos.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
+		requireChassis = {"recon"},
 		slotType = "module",
-		prohibitingModules = {"module_striderpower"},
 		applicationFunction = function (modules, sharedData)
-			sharedData.speedMod = (sharedData.speedMod or 0) + 2.2
+			sharedData.speedMod = (sharedData.speedMod or 0) + 3.25
 		end
 	},
 	{
