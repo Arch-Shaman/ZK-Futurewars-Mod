@@ -1620,21 +1620,6 @@ local moduleDefs = {
 		end
 	},
 	{
-		name = "module_adv_nano",
-		humanName = "Advanced Nanolathe",
-		description = "Increases build power by 2.5. Increases storage by 25.",
-		image = moduleImagePath .. "module_adv_nano.png",
-		limit = 8,
-		cost = 100 * COST_MULT,
-		requireLevel = 1,
-		slotType = "module",
-		requireChassis = {"assault", "strike", "recon"},
-		applicationFunction = function (modules, sharedData)
-			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 2.5
-			sharedData.extrastorage = (sharedData.extrastorage or 0) + 25
-		end
-	},
-	{
 		name = "efficiency",
 		humanName = "Efficient Resourcing",
 		description = "By upgrading the Support comm's resource allocation algorithms, some extra metal and energy can be squeezed out of the chassis's resource generator.\nProvides 2.5m/sec and 5e/sec income",
@@ -1651,8 +1636,38 @@ local moduleDefs = {
 		end
 	},
 	{
-		name = "module_adv_nano_support",
+		name = "module_basic_nano",
+		humanName = "Basic Nanolathe",
+		description = "Increases build power by 1.5. Increases storage by 10.",
+		image = moduleImagePath .. "module_adv_nano.png",
+		limit = 8,
+		cost = 100 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+		requireChassis = {"assault", "riot"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 1.5
+			sharedData.extrastorage = (sharedData.extrastorage or 0) + 10
+		end
+	},
+	{
+		name = "module_adv_nano",
 		humanName = "Advanced Nanolathe",
+		description = "Increases build power by 2.5. Increases storage by 25.",
+		image = moduleImagePath .. "module_adv_nano.png",
+		limit = 8,
+		cost = 100 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+		requireChassis = {"strike", "recon"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 2.5
+			sharedData.extrastorage = (sharedData.extrastorage or 0) + 25
+		end
+	},
+	{
+		name = "module_adv_nano_support",
+		humanName = "Superior Nanolathe",
 		description = "Increases build power by 7.5. Increases storage by 75.",
 		image = moduleImagePath .. "module_adv_nano.png",
 		limit = 8,
