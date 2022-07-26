@@ -1534,14 +1534,14 @@ local moduleDefs = {
 	{
 		name = "module_striderpower",
 		humanName = "Massive Weapons Relays",
-		description = "Increases damage by 15%. Blocks access to High Power Servos and Autorepair and grants access to strong powered modules. Commanders undertaking this should be considered strider level units.",
+		description = "Increases damage by 25%. Blocks access to Autorepair and grants access to strong powered modules. Commanders undertaking this should be considered strider level units.",
 		image = moduleImagePath .. "module_energy_cell.png",
 		limit = 1,
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"riot"},
-		prohibitingModules = {"module_high_power_servos", "module_autorepair"},
+		prohibitingModules = {"module_autorepair"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.speedMod = (sharedData.speedMod or 0) - 1.1
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.25
