@@ -21,6 +21,8 @@ return {
 			aimposoffset   = [[0 10 0]],
 			modelradius    = [[16]],
 			aim_lookahead  = 50,
+			popupholdfirehp = 0.45,
+			popupunholdfirehp = 0.66,
 		},
 		damageModifier                = 0.2,
 		explodeAs                     = [[MEDIUM_BUILDINGEX]],

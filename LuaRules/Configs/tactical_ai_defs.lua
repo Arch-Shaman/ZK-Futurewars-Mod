@@ -2414,6 +2414,14 @@ local behaviourConfig = {
 		name = "turretimpulse",
 		externallyHandled = true,
 	},
+	{
+		name = "turretgauss",
+		externallyHandled = true,
+	},
+	{
+		name = "turretaalaser",
+		externallyHandled = true,
+	},
 }
 
 --------------------------------------------------------------------------------

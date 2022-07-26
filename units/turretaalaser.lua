@@ -15,7 +15,10 @@ return {
 		collisionVolumeScales         = [[50 36 50]],
 		collisionVolumeType            = [[CylY]],
 		corpse                        = [[DEAD]],
-		customParams                  = {},
+		customParams                  = {
+			popupholdfirehp = 0.4,
+			popupunholdfirehp = 0.66,
+		},
 		damageModifier                = 0.25,
 		explodeAs                     = [[SMALL_BUILDINGEX]],
 		floater                       = true,
