@@ -147,7 +147,7 @@ local Sounds = {
 			maxconcurrent = 20,
 			preload = false,
 			maxdist = nil,
-			rollOff = 0.4,
+			rollOff = 0.6,
 		},
 		flamethrowerfire = {
 			file = "sounds/weapon/cannon/flamethrower_fire.wav",
