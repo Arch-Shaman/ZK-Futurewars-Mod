@@ -631,17 +631,15 @@ local function GetUnitRegenString(unitID, ud)
 			if ((ud.idleTime <= 600) and (regen_timer > 0)) then
 				return "  (" .. math.ceil(regen_timer / 30) .. "s)"
 			else
+				local totalregen = 0
 				local regenMult = (1 - (spGetUnitRulesParam(unitID, "slowState") or 0)) * (1 - (spGetUnitRulesParam(unitID,"disarmed") or 0))
-				if regenMult == 0 then
-					return
-				end
-
 				local regen = 0
+				
 				if (regen_timer <= 0) then
 					regen = regen + (spGetUnitRulesParam(unitID, "comm_autorepair_rate") or ud.customParams.idle_regen)
 				end
 				regen = regen + (spGetUnitRulesParam(unitID, "cloakregen") or 0)
-				regen = regen + (spGetUnitRulesParam(unitID, "nanoregen") or 0)
+				totalregen = totalregen + (spGetUnitRulesParam(unitID, "nanoregen") or 0)
 				if ud.customParams.amph_regen then
 					local x,y,z = Spring.GetUnitPosition(unitID)
 					local h = Spring.GetGroundHeight(x,z) or y
@@ -649,11 +647,14 @@ local function GetUnitRegenString(unitID, ud)
 						regen = regen + math.min(ud.customParams.amph_regen, ud.customParams.amph_regen*(-h / ud.customParams.amph_submerged_at))
 					end
 				end
+				
 				if ud.customParams.armored_regen and Spring.GetUnitArmored(unitID) then
-					regen = regen + ud.customParams.armored_regen
+					totalregen = totalregen + ud.customParams.armored_regen
 				end
-				if (regen > 0) then
-					return "  (+" .. math.ceil(regenMult*regen) .. ")"
+				regen = regen * regenMult
+				totalregen = totalregen + regen
+				if (totalregen > 0) then
+					return "  (+" .. math.ceil(totalregen) .. ")"
 				end
 			end
 		end
