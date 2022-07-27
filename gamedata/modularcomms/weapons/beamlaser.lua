@@ -37,7 +37,7 @@ local weaponDef = {
 		stats_hide_damage = 1, -- continuous laser
 		stats_hide_reload = 1,
 
-		light_color = [[0.4 1.1 1.1]],
+		light_color = [[1 1 0]],
 		light_radius = 120,
 		reaim_time = 1,
 		dpshax = 210, -- because the gadget is loading some basegame stuff, for reasons.
