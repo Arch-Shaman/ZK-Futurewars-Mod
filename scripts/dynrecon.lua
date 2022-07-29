@@ -66,10 +66,23 @@ local bAiming = false
 local shieldOn = true
 local inJumpMode = false
 local okpconfig
+local reconpulse = false
 
 --------------------------------------------------------------------------------
 -- funcs
 --------------------------------------------------------------------------------
+
+local reconpulseweapon = WeaponDefNames["comm_reconpulse"].id
+
+local function ReconPulse()
+	local disarmed = false
+	local properties = {pos = {0, 0, 0}, team = 0}
+	while true do
+		properties.team = Spring.GetUnitTeam(unitID)
+		properties.pos[1], properties.pos[2], properties.pos[3] = Spring.GetUnitPosition(unitID)
+		disarmed = Spring.GetUnitRulesParam(unitID, 
+	end
+end
 
 local function GetOKP()
 	while Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") == nil do
@@ -79,6 +92,16 @@ local function GetOKP()
 	--Spring.Echo("Use OKP: " .. tostring(okpconfig[1].useokp or okpconfig[2].useokp))
 	if okpconfig[1].useokp or okpconfig[2].useokp then
 		GG.OverkillPrevention_ForceAdd(unitID)
+	end
+end
+
+function OnMorphComplete()
+	if not reconpulse then
+		Sleep(100)
+		if Spring.GetUnitRulesParam(unitID, "comm_reconpulse") then
+			StartThread(ReconPulse)
+			reconpulse = true
+		end
 	end
 end
 
