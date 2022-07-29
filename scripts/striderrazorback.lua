@@ -57,6 +57,10 @@ local armsfree = true
 local smokePiece = {smokeemit}
 
 function script.Create()
+	Turn(muzzlea, z_axis, -math.rad(90))
+	Turn(muzzleb, z_axis, -math.rad(90))
+	Turn(muzzlea, x_axis, math.rad(90))
+	Turn(muzzleb, x_axis, math.rad(90))
 	Hide(flare)
 	Hide(flarea)
 	Hide(flareb)
