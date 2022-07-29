@@ -40,6 +40,7 @@ unitDef = {
 	noAutoFire             = false,
 	noChaseCategory        = [[TERRAFORM SATELLITE SUB]],
 	objectName             = [[ARMRAZ.s3o]],
+	script                 = "striderrazorback.lua",
 	selfDestructAs         = [[CRAWL_BLASTSML]],
 	sfxtypes               = {
 		explosiongenerators = {
