@@ -1,3 +1,6 @@
+-- Converted by hand by Shaman.
+-- Feel free to steal, but PR any improvements!
+
 include "constants.lua"
 -- unused pieces: b1, b2, arm1, arm2, ar?, al
 
