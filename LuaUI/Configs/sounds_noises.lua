@@ -43,6 +43,16 @@ local sounds = {
 			[1] = "bot_select",
 		},
 	},
+	striderrazorback = {
+		ok = {
+			volume = 0.58,
+			[1] = "heavy_bot_move",
+		},
+		select = {
+			volume = 0.5,
+			[1] = "medium_bot_select",
+		},
+	},
 	armcom = {
 		build = { "builder_start" },
 		ok = {
