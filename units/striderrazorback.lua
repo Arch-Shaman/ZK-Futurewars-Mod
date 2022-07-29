@@ -20,7 +20,6 @@ unitDef = {
 	collisionVolumeTest    = 1,
 	collisionVolumeType    = [[ellipsoid]],
 	corpse                 = [[DEAD]],
-
 	customParams           = {
 		description_fr = [[Mechwarrior d'Assaut]],
 		description_de = [[Sturm/Riot Läufer]],
@@ -30,7 +29,6 @@ unitDef = {
 		helptext_de    = [[Der Razorback ist ausgerüstet mit doppelläufien Impulskanonen als Gegenwehr gegen viele Einheiten, sowie einen, am Kopf befestigten, Laser für den Nahbereich. Nutze ihn nicht unbesonnen - seine kurze Reichweite erzeugt eine große Anfälligkeit.]],
 		helptext_pl    = [[Razorback posiada podwojne dzialka obrotowe, ktore pozwalaja mu walczyc z hordami mniejszych jednostek, oraz mocny laser krotkiego zasiegu. Mimo ze jego sila jest duza, w jej uzytku moze przeszkadzac jego krotki zasieg.]],
 	},
-
 	explodeAs              = [[CRAWL_BLASTSML]],
 	footprintX             = 4,
 	footprintZ             = 4,
@@ -49,12 +47,10 @@ unitDef = {
 	seismicSignature       = 4,
 	selfDestructAs         = [[CRAWL_BLASTSML]],
 	sfxtypes               = {
-
 		explosiongenerators = {
 			[[custom:WARMUZZLE]],
 			[[custom:razorbackejector]],
 		},
-
 	},
 	sightDistance          = 578,
 	smoothAnim             = true,
@@ -158,7 +154,6 @@ unitDef = {
 
 	},
 	featureDefs            = {
-
 		DEAD  = {
 			description      = [[Wreckage - Razorback]],
 			blocking         = true,
@@ -197,8 +192,6 @@ unitDef = {
 			seqnamereclamate = [[TREE1RECLAMATE]],
 			world            = [[All Worlds]],
 		},
-
-
 		HEAP  = {
 			description      = [[Debris - Razorback]],
 			blocking         = false,
