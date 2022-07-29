@@ -59,13 +59,32 @@ local function ApplyHighFrequencyBeamKit(modules, sharedData)
 	end
 end
 
-local function ApplyHeavyOrdinance(modules, sharedData)
+local function ApplyHeavyOrdinance1(modules, sharedData)
 	local upgrade = {
 		["commweapon_artillery_heavy"] = "commweapon_artillery_heavy_nuclear",
 		["commweapon_rocketbarrage"] = "commweapon_rocketbarrage_nuclear",
 		["commweapon_rocketlauncher"] = "commweapon_rocketlauncher_nuclear",
 		["commweapon_artillery_light"] = "commweapon_artillery_light_nuclear",
 	}
+	
+local function ApplyHeavyOrdinance2(modules, sharedData)
+	local upgrade = {
+		["commweapon_artillery_heavy"] = "commweapon_artillery_heavy_nuclear",
+		["commweapon_rocketbarrage"] = "commweapon_rocketbarrage_nuclear",
+		["commweapon_rocketlauncher"] = "commweapon_rocketlauncher_nuclear",
+		["commweapon_artillery_light"] = "commweapon_artillery_light_nuclear",
+	}
+	local wantsfireatradar = {
+		["commweapon_artillery_heavy_nuclear"] = true,
+		["commweapon_rocketbarrage_nuclear"] = false,
+		["commweapon_rocketlauncher_nuclear"] = false,
+		["commweapon_artillery_light_nuclear"] = false,
+	}
+	if sharedData.weapon2 and upgrade[sharedData.weapon2] then
+		sharedData.weapon2 = upgrade[sharedData.weapon2]
+		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon2]
+	end
+end
 	local wantsfireatradar = {
 		["commweapon_artillery_heavy_nuclear"] = true,
 		["commweapon_rocketbarrage_nuclear"] = false,
@@ -692,7 +711,7 @@ local moduleDefs = {
 		requireOneOf = {"commweapon_artillery_heavy", "commweapon_rocketbarrage", "commweapon_rocketlauncher", "commweapon_artillery_light"},
 		requireLevel = 5,
 		slotType = "module",
-		applicationFunction = ApplyHeavyOrdinance
+		applicationFunction = ApplyHeavyOrdinance1
 	},
 	{
 		name = "module_shotgunlaser",
@@ -731,8 +750,7 @@ local moduleDefs = {
 		requireTwoOf = {"commweapon_artillery_heavy", "commweapon_rocketbarrage", "commweapon_rocketlauncher"},
 		requireLevel = 5,
 		slotType = "module",
-		applicationFunction = ApplyHeavyOrdinance
-	},
+		applicationFunction = ApplyHeavyOrdinance2
 	{
 		name = "module_heavyprojector_second",
 		humanName = "High Frequency Beam Kit",
