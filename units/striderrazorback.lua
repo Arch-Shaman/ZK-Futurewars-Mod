@@ -1,10 +1,10 @@
 unitDef = {
 	unitname               = [[striderrazorback]],
-	name                   = [[Razorback]],
-	description            = [[Assault/Riot Strider]],
+	name                   = [[Champion]],
+	description            = [[Shielded Assault/Riot Strider]],
 	acceleration           = 0.156,
 	brakeRate              = 0.262,
-	buildCostMetal         = 4000,
+	buildCostMetal         = 5000,
 	builder                = false,
 	buildPic               = [[striderrazorback.png]],
 	canAttack              = true,
@@ -57,21 +57,19 @@ unitDef = {
 			badTargetCategory  = [[FIXEDWING]],
 			onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 		},
-
-
 		{
 			def                = [[RAZORBACK_EMG]],
 			badTargetCategory  = [[FIXEDWING]],
 			onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			slaveTo            = 1,
 		},
-
-
 		{
 			def                = [[LASER]],
 			onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 		},
-
+		{
+			def                = [[SHIELD]],
+		},
 	},
 
 
@@ -114,13 +112,23 @@ unitDef = {
 			weaponVelocity          = 500,
 		},
 		RAZORBACK_EMG = {
-			name                    = [[Heavy Pulse Autocannon]],
+			name                    = [[Heavy Minigun]],
 			alphaDecay              = 0.7,
 			areaOfEffect            = 32,
 			craterBoost             = 1,
 			craterMult              = 2,
+			customParams = {
+				script_reload = [[1.1]],
+				recycler = 1,
+				recycle_reductiontime = 0.1,
+				recycle_reduction = 0.1,
+				recycle_bonus = 0.45,
+				recycle_reductionframes = 0.5,
+				recycle_maxbonus = 24,
+				recycle_maxbonus = 20,
+			},
 			damage                  = {
-				default = 12,
+				default = 12.01,
 			},
 			explosionGenerator      = [[custom:EMG_HIT]],
 			impulseBoost            = 0,
@@ -134,7 +142,7 @@ unitDef = {
 			separation              = 1.5,
 			size                    = 1.7,
 			soundHit                = [[weapon/cannon/emg_hit]],
-			soundStart              = [[weapon/heavy_emg]],
+			soundStart              = [[weapon/cannon/minigun_1]],
 			soundStartVolume        = 4,
 			sprayAngle              = 2048,
 			stages                  = 10,
@@ -144,7 +152,31 @@ unitDef = {
 			weaponType              = [[Cannon]],
 			weaponVelocity          = 550,
 		},
-
+		SHIELD      = {
+				name                    = [[Energy Shield]],
+				damage                  = {
+					default = 10,
+				},
+				customParams			= {
+					--shield_recharge_delay   = 10,
+					unlinked            = true,
+				},
+				exteriorShield          = true,
+				shieldAlpha             = 0.2,
+				shieldBadColor          = [[1 0.1 0.1 1]],
+				shieldGoodColor         = [[0.1 0.1 1 1]],
+				shieldInterceptType     = 3,
+				shieldPower             = 25000,
+				shieldPowerRegen        = 80,
+				shieldPowerRegenEnergy  = 20,
+				shieldRadius            = 270,
+				shieldRepulser          = false,
+				shieldStartingPower     = 15000,
+				smartShield             = true,
+				visibleShield           = false,
+				visibleShieldRepulse    = false,
+				weaponType              = [[Shield]],
+			},
 	},
 	featureDefs            = {
 		DEAD  = {
