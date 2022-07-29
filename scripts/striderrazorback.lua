@@ -57,6 +57,7 @@ local armsfree = true
 local smokePiece = {smokeemit}
 
 function script.Create()
+	Move(ground, z_axis, 10)
 	Turn(muzzlea, z_axis, -math.rad(90))
 	Turn(muzzleb, z_axis, -math.rad(90))
 	Turn(muzzlea, x_axis, math.rad(90))
@@ -211,7 +212,7 @@ local function WalkThread()
 		Turn(fingerrb, x_axis, zero, math.rad(100))
 		Sleep(450)
 		Turn(thumbr, x_axis, 0, math.rad(100))
-		Move(hips, x_axis, 1, 1)
+		Move(hips, y_axis, 11, 1)
 		Turn(hips, z_axis, math.rad(3), math.rad(7))
 		if armsfree then
 			Turn(arml, x_axis, -math.rad(18), math.rad(20))
