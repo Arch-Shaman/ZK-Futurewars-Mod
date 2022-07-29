@@ -112,6 +112,13 @@ function widget:UnitTaken(unitID, unitDefID, oldTeam, newTeam)
 	end
 end
 
+function widget:StockpileChanged(unitID, unitDefID, unitTeam, weaponNum, oldCount, newCount)
+	if UnitDefs[unitDefID].name == "staticnuke" and (newCount - oldCount) == 1 and spGetGameFrame() >= globalcooldown then
+		AddToConsole("Oblivion MIRV Ready")
+		PlaySound("strategic_missile_ready.wav", 1.0)
+	end
+end
+
 function widget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
 	if spGetUnitRulesParam(unitID, "comm_level") and newTeam == spGetMyTeamID() then
 		commanders[unitID] = 0
