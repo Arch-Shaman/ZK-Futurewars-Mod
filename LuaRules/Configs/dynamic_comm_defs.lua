@@ -1616,6 +1616,20 @@ local moduleDefs = {
 			sharedData.healthBonus = (sharedData.healthBonus or 0) - 500*HP_MULT
 		end
 	},
+		{
+		name = "module_recon_pulse",
+		humanName = "TrueSight Module",
+		description = "Generates a passive ping that reveals enemy units. Prevents cloaking.",
+		image = moduleImagePath .. "module_recon_pulse.png",
+		limit = 1,
+		cost = 200 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		requireChassis = {"recon"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.reconpulse = true
+		end
+	},
 	{
 		name = "module_cloakregen",
 		humanName = "Nanobot Sleeve",
