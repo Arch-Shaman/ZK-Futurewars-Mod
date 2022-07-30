@@ -34,6 +34,11 @@
 		"description" : "Ağır Saldırı/İsyan Yürüyüşü",
 		"helptext" : "Terkedilmiş, Koalisyon Savaşlarından bile önce gelen eski bir tasarımdır. Unutulmuş insanlar tarafından geçmiş bir çağda inşa edilen ve ancak yakın zamanda kurtarılan Forsaken, akıl almaz hasarı emebilen güçlü bir saldırı kalkanına sahiptir. İki yüksek patlayıcı makineli tüfek ve ağır bir lazerle donanmış olan Forsaken, bir ton ön güç toplar. Ancak zayıflığı, yaklaşmayı ve kalkanının altına girmeyi başaran düşmanlardır. Çürük zırhı (bir adım atıcı için) ve yavaş dönüş hızı, akıncıların onu hızlı bir şekilde kuşatmasına ve bitirmesine olanak tanır."
 	},
+	"platestrider" : {
+		"name" : "Yolgezer Plakası",
+		"description" : "Striders inşa eder",
+		"helptext" : "Strider Plate, Strider Hub'ın minyatür versiyonudur. Ağabeyi gibi, savaş alanında huşu ve korku uyandıran "devasa mecha" olan strider'ları dağıtır. Normal bir fabrikadan farklı olarak, plaka sadece bir projeye başlamak için gereklidir, bitirmek için değil."
+	},
     "staticmissilesilo": {
         "name": "Füze Silosu",
         "description": "Tactiksel Füzeler Hazırlar, 10 m/s de inşa eder",

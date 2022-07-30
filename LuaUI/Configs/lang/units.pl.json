@@ -29,6 +29,11 @@
 		"description" : "Ciężki szturmowiec/Wędrowiec zamieszek",
 		"helptext" : "Opuszczeni to starożytny projekt sprzed nawet Wojen Koalicji. Zbudowany w minionej epoce przez zapomnianych ludzi i dopiero niedawno odzyskany, Opuszczeni mogą pochwalić się potężną tarczą szturmową, zdolną pochłaniać niezgłębione obrażenia. Uzbrojony w dwa karabiny maszynowe odłamkowo-burzące i ciężki laser, Opuszczeni dysponują ogromną mocą na froncie. Jednak jego słabością są przeciwnicy, którym udaje się zbliżyć i dostać się pod jego tarczę. Jego wątły pancerz (jak na stridera) i niska prędkość obrotu pozwalają najeźdźcom na szybkie flankowanie i dobijanie."
 	},
+	"platestrider" : {
+		"name" : "Płyta Stridera",
+		"description" : "Konstrukcje Striders",
+		"helptext" : "Strider Plate to miniaturowa wersja Strider Hub. Podobnie jak jego większy brat, używa striderów, „potężnego mecha”, który wzbudza podziw i strach na polu bitwy. W przeciwieństwie do normalnej fabryki płyta jest potrzebna tylko do rozpoczęcia projektu, a nie do jego ukończenia."
+	},
 	"tankarty" : {
 		"name" : "Emissary",
 		"description" : "Czołg artyleryjski",

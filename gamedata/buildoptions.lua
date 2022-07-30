@@ -34,6 +34,7 @@ local buildOpts = {
 	[[platetank]],
 	[[plateship]],
 	[[striderhub]],
+	[[platestrider]],
 	[[staticradar]],
 	[[staticshield]],
 	[[staticjammer]],

@@ -19,6 +19,11 @@
 		"description" : "Heavy Assault/Riot Walker",
 		"helptext" : "The Forsaken is an ancient design predating even the Coalition Wars. Built in a bygone era by forgotten people and only recently recovered, the Forsaken boasts a powerful assault shield capable of soaking up unfathomable damage. Armed with two high explosive machine guns and a heavy laser, the Forsaken packs a ton of frontal power. However, its weakness is enemies that manage to close in and get under its shield. Its flimsy armor (for a strider) and slow turn rate allows raiders to flank and finish it quickly."
 	},
+	"platestrider" : {
+		"name" : "Strider Plate",
+		"description" : "Constructs Striders",
+		"helptext" : "The Strider Plate is the miniture version of the Strider Hub. Like its bigger brother, it deploys striders, the \"humongous mecha\" that inspire awe and fear on the battlefield. Unlike a normal factory, the plate is only required to start a project, not to finish it."
+	},
 	"factorycloak" : {
 		"name" : "Ambusher Factory",
 		"description" : "Produces Cloaked, Mobile Robots",

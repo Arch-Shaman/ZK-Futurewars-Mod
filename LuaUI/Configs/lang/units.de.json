@@ -24,6 +24,11 @@
 		"description" : "Schwerer Angriff/Riot Walker",
 		"helptext" : "Die Forsaken ist ein uraltes Design, das sogar vor den Koalitionskriegen entstand. In einer vergangenen Ära von vergessenen Menschen gebaut und erst kürzlich wiederhergestellt, verfügt die Forsaken über einen mächtigen Angriffsschild, der unergründlichen Schaden aufsaugen kann. Bewaffnet mit zwei hochexplosiven Maschinen Kanonen und einem schweren Laser bietet der Forsaken eine Menge Frontalkraft. Seine Schwäche sind jedoch Feinde, die es schaffen, sich ihm zu nähern und unter seinen Schild zu gelangen. Seine schwache Panzerung (für einen Schreiter) und seine langsame Wendegeschwindigkeit ermöglichen es Angreifern, zu flankieren und zu beenden es schnell."
 	},
+	"platestrider" : {
+		"name" : "Strider-Platte",
+		"description" : "Konstruiert Schreiter",
+		"helptext" : "Die Strider Plate ist die Miniaturversion der Strider Nabe. Wie sein größerer Bruder setzt es Strider ein, die „riesigen Mechas“, die Ehrfurcht und Angst auf dem Schlachtfeld hervorrufen. Im Gegensatz zu einer normalen Fabrik wird die Platte nur benötigt, um ein Projekt zu starten, nicht um es abzuschließen."
+	},
 	"hoverdepthcharge" : {
 		"name" : "Claymore",
 		"description" : "Anti-Sub Hovercraft",

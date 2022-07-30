@@ -1364,6 +1364,12 @@ local sounds = {
 			[1] = "building_select1",
 		},
 	},
+	platestrider = {
+		build = { "builder_start" },
+		select = {
+			[1] = "building_select1",
+		},
+	},
 	
 	-- Factory
 	factorycloak = {
