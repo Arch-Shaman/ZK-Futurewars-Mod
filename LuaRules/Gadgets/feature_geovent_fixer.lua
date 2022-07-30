@@ -23,7 +23,7 @@ function gadget:GameStart()
 			local featureID = geos[i]
 			local x, _, z = Spring.GetFeaturePosition(featureID)
 			local gy = Spring.GetGroundHeight(x, z)
-			Spring.Echo("[geofixer]: Setting up for " .. featureID)
+			--Spring.Echo("[geofixer]: Setting up for " .. featureID)
 			Spring.SetFeatureMoveCtrl(featureID, true)
 			Spring.SetFeaturePosition(featureID, x, gy, z, true)
 			Spring.SetFeatureMoveCtrl(featureID, false, 0, 1, 0, 0, 1, 0, 0, 1, 0) -- unlock y axis movement, so geo can move with terrain
@@ -34,7 +34,7 @@ end
 
 function gadget:FeatureCreated(featureID, allyTeamID)
 	local defID = Spring.GetFeatureDefID(featureID)
-	Spring.Echo("FeatureCreated: " .. FeatureDefs[defID].name)
+	--Spring.Echo("FeatureCreated: " .. FeatureDefs[defID].name)
 	if defID == geoDef then -- this is a geo.
 		geos[#geos + 1] = featureID
 	end
