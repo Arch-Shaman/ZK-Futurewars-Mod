@@ -751,6 +751,7 @@ local moduleDefs = {
 		requireLevel = 5,
 		slotType = "module",
 		applicationFunction = ApplyHeavyOrdinance2
+	},
 	{
 		name = "module_heavyprojector_second",
 		humanName = "High Frequency Beam Kit",
@@ -1754,7 +1755,7 @@ local moduleDefs = {
 		applicationFunction = function (modules, sharedData)
 			sharedData.bannerOverhead = true
 		end
-	}
+	},
 }
 
 for name, data in pairs(skinDefs) do
