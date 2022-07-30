@@ -50,14 +50,33 @@ local SIG_AIM2 = 8
 
 -- Other --
 local restoredelay = 4500
-local secondaryturnrate = math.rad(120)
+local secondaryturnrate = math.rad(200)
 local primaryturnrate = math.rad(100)
-local deacceleration = math.rad(25)
 local zero = math.rad(0)
 local moving = false
 local armsfree = true
 
 local smokePiece = {smokeemit}
+
+local function BarrelAnim()
+	local speedMod = 0
+	local last = 0
+	local acceleration = math.rad(20)
+	while true do
+		speedMod = GG.FireControl.GetBonusFirerate(unitID, 1) - 1 -- Barrel linked to MG weapon
+		if speedMod ~= last then
+			if speedMod < last then
+				Spin(canonbarrel1, z_axis, speedMod, -acceleration)
+				Spin(canonbarrel2, z_axis, speedMod, -acceleration)
+			else
+				Spin(canonbarrel1, z_axis, speedMod, acceleration)
+				Spin(canonbarrel2, z_axis, speedMod, acceleration)
+			end
+		end
+		last = speedMod
+		Sleep(66) -- happens every 3rd frame.
+	end
+end
 
 function script.Create()
 	Move(ground, z_axis, 10)
@@ -76,6 +95,7 @@ function script.Create()
 	Turn(calcarm, x_axis, 0)
 	Spin(smokepoint, y_axis, 300) -- not sure what this does
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+	StartThread(BarrelAnim)
 end
 
 local function RestoreLaserThread()
@@ -86,8 +106,6 @@ end
 
 local function RestoreBody()
 	Sleep(restoredelay)
-	StopSpin(canonbarrel1, z_axis, deacceleration)
-	StopSpin(canonbarrel2, z_axis, deacceleration)
 	Turn(cannonr, y_axis, zero, primaryturnrate / 2)
 	Turn(cannonl, y_axis, zero, primaryturnrate / 2)
 	if not moving then
@@ -287,8 +305,6 @@ function script.AimWeapon(num, heading, pitch)
 		armsfree = false
 		Signal(SIG_AIM)
 		SetSignalMask(SIG_AIM)
-		Spin(canonbarrel1, z_axis, math.rad(1500), math.rad(25))
-		Spin(canonbarrel2, z_axis, math.rad(1500), math.rad(25))
 		local calcy, flarey
 		_, calcy = Spring.UnitScript.GetPieceRotation(calcpoint)
 		_, flarey = Spring.UnitScript.GetPieceRotation(calcflare)
@@ -309,6 +325,18 @@ function script.AimWeapon(num, heading, pitch)
 		WaitForTurn(arml, x_axis)
 		StartThread(RestoreBody)
 		return true
+	end
+end
+
+function script.FireWeapon(num)
+	GG.FireControl.WeaponFired(unitID, num)
+end
+
+function script.BlockShot(num)
+	if num == 1 or num == 2 then
+		return not GG.FireControl.CanFireWeapon(unitID, num)
+	else
+		return false
 	end
 end
 
