@@ -56,12 +56,10 @@ return {
 		script                 = [[cloakriot.lua]],
 		selfDestructAs         = [[SMALL_UNITEX]],
 		sfxtypes               = {
-
 			explosiongenerators = {
 				[[custom:RAIDMUZZLE]],
 				[[custom:emg_shells_l]],
 			},
-
 		},
 		sightDistance          = 500,
 		trackOffset            = 0,
@@ -72,13 +70,11 @@ return {
 		turnRate               = 2160,
 		upright                = true,
 		weapons                = {
-
 			{
 				def                = [[WARRIOR_WEAPON]],
 				badTargetCategory  = [[FIXEDWING]],
 				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 			},
-
 		},
 		weaponDefs             = {
 			WARRIOR_WEAPON = {
@@ -110,11 +106,9 @@ return {
 					cloakstrike = 1.4,
 					reaim_time = 3, -- fast update needed
 				},
-
 				damage                  = {
 					default = 36.01,
 				},
-
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = [[custom:EMG_HIT_HE]],
 				firestarter             = 70,
@@ -135,11 +129,8 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 880,
 			},
-
 		},
-
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -147,15 +138,12 @@ return {
 				footprintZ       = 2,
 				object           = [[spherewarrior_dead.s3o]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
 				object           = [[debris3x3a.s3o]],
 			},
-
 		},
-
 	} 
 }
