@@ -14,6 +14,7 @@ return {
 			[[striderantiheavy]],
 			[[striderscorpion]],
 			[[striderdante]],
+			[[striderrazorback]],
 			[[striderarty]],
 			[[striderfunnelweb]],
 			[[striderbantha]],
