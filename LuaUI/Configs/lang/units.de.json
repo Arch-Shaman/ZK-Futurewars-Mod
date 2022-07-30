@@ -19,6 +19,11 @@
 		"description" : "Produziert Tarnroboter",
 		"helptext" : "List statt pure Gewalt lautet hier das Motto. Die Cloakbot Plant ermöglicht die Nutzung von Tarnung, Mobilität und EMP-Waffen, um die feindlichen Schwachstellen empfindlich zu treffen. Wichtigste Einheiten: Glaive, Ronin, Reaver, Knight, Sling"
 	},
+	"striderrazorback" : {
+		"name" : "Forsaken",
+		"description" : "Schwerer Angriff/Riot Walker",
+		"helptext" : "Die Forsaken ist ein uraltes Design, das sogar vor den Koalitionskriegen entstand. In einer vergangenen Ära von vergessenen Menschen gebaut und erst kürzlich wiederhergestellt, verfügt die Forsaken über einen mächtigen Angriffsschild, der unergründlichen Schaden aufsaugen kann. Bewaffnet mit zwei hochexplosiven Maschinen Kanonen und einem schweren Laser bietet der Forsaken eine Menge Frontalkraft. Seine Schwäche sind jedoch Feinde, die es schaffen, sich ihm zu nähern und unter seinen Schild zu gelangen. Seine schwache Panzerung (für einen Schreiter) und seine langsame Wendegeschwindigkeit ermöglichen es Angreifern, zu flankieren und zu beenden es schnell."
+	},
 	"hoverdepthcharge" : {
 		"name" : "Claymore",
 		"description" : "Anti-Sub Hovercraft",

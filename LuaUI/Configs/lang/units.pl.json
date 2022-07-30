@@ -24,6 +24,11 @@
 		"description" : "Amfibijna wyrzutnia jednostek",
 		"helptext" : "Lobster nie ma zwykłego uzbrojenia - jego sposobem na rozwiązywanie problemów jest rzucanie nań innych jednostek. Choć stworzony do przerzucania amfibii z wody na ląd, pozwala także na inne kreatywne zastosowania, w tym rzucanie przeciwnikami."
 	},
+	"striderrazorback" : {
+		"name" : "Forsaken",
+		"description" : "Ciężki szturmowiec/Wędrowiec zamieszek",
+		"helptext" : "Opuszczeni to starożytny projekt sprzed nawet Wojen Koalicji. Zbudowany w minionej epoce przez zapomnianych ludzi i dopiero niedawno odzyskany, Opuszczeni mogą pochwalić się potężną tarczą szturmową, zdolną pochłaniać niezgłębione obrażenia. Uzbrojony w dwa karabiny maszynowe odłamkowo-burzące i ciężki laser, Opuszczeni dysponują ogromną mocą na froncie. Jednak jego słabością są przeciwnicy, którym udaje się zbliżyć i dostać się pod jego tarczę. Jego wątły pancerz (jak na stridera) i niska prędkość obrotu pozwalają najeźdźcom na szybkie flankowanie i dobijanie."
+	},
 	"tankarty" : {
 		"name" : "Emissary",
 		"description" : "Czołg artyleryjski",
