@@ -1,7 +1,9 @@
 local name = "commweapon_heavyrifle_disrupt"
 local weaponDef = {
 	name                    = [[Heavy Disruption Rifle]],
-	areaOfEffect            = 48,
+	areaOfEffect            = 96,
+	burst                   = 3,
+	burstrate               = 0.2,
 	craterBoost             = 0,
 	craterMult              = 0,
 
@@ -17,7 +19,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 125.1*.85,
+		default = 250.1*.85,
 	},
 
 	edgeEffectiveness       = 0.5,
@@ -27,7 +29,7 @@ local weaponDef = {
 	interceptedByShieldType = 1,
 	myGravity               = 0.1,
 	range                   = 320,
-	reloadtime              = .5,
+	reloadtime              = 2,
 	rgbColor				= "0.9 0.1 0.9",
 	soundHit                = [[weapon/aoe_aura2]],
 	soundStart              = [[weapon/laser/heavydisruptor]],

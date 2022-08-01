@@ -1,7 +1,9 @@
 local name = "commweapon_heavyrifle"
 local weaponDef = {
 	name                    = [[Heavy Rifle]],
-	areaOfEffect            = 48,
+	areaOfEffect            = 96,
+	burst                   = 6,
+	burstrate               = 0.1,
 	craterBoost             = 0,
 	craterMult              = 0,
 
@@ -28,7 +30,7 @@ local weaponDef = {
 	interceptedByShieldType = 1,
 	myGravity               = 0.1,
 	range                   = 320,
-	reloadtime              = .5,
+	reloadtime              = 2,
 	soundHit                = [[weapon/cannon/cannon_hit1]],
 	soundStart              = [[weapon/cannon/med_rifle_fire]],
 	turret                  = true,
