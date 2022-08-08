@@ -59,26 +59,27 @@ local terrainGranularity = 6
 -- proccess config --
 for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
-	local curRef = wd.customParams -- hold table for referencing
-	if tonumber(curRef.cruisealt) ~= nil and tonumber(curRef.cruisedist) ~= nil then -- found it!
+	local customParams = wd.customParams -- hold table for referencing
+	if tonumber(customParams.cruisealt) ~= nil and tonumber(customParams.cruisedist) ~= nil then -- found it!
 		Spring.Echo("[CruiseMissiles] Adding " .. i .. "(" .. tostring(wd.name) .. ")")
 		config[i] = {}
-		config[i].altitude = tonumber(curRef.cruisealt)
-		config[i].randomizationtype = curRef.cruise_randomizationtype or "?"
-		config[i].distance = tonumber(curRef.cruisedist)
-		config[i].track = curRef.cruisetracking ~= nil
-		config[i].airlaunched = curRef.airlaunched ~= nil
-		config[i].noascension = curRef.cruise_noascension ~= nil
-		config[i].radius = tonumber(curRef.cruiserandomradius)
-		config[i].permoffset = curRef.cruise_permoffset ~= nil
-		config[i].finaltracking = curRef.cruise_nolock == nil
+		config[i].altitude = tonumber(customParams.cruisealt)
+		config[i].randomizationtype = customParams.cruise_randomizationtype or "?"
+		config[i].distance = tonumber(customParams.cruisedist)
+		config[i].track = customParams.cruisetracking ~= nil
+		config[i].airlaunched = customParams.airlaunched ~= nil
+		config[i].noascension = customParams.cruise_noascension ~= nil
+		config[i].radius = tonumber(customParams.cruiserandomradius)
+		config[i].permoffset = customParams.cruise_permoffset ~= nil
+		config[i].finaltracking = customParams.cruise_nolock == nil
 		config[i].torpedo = wd.type == "TorpedoLauncher"
-		config[i].ascendradius = tonumber(curRef.cruise_ascendradius)
-		config[i].splittarget = curRef.cruise_torpedosplittarget ~= nil
-		config[i].ignoreterrain = curRef.cruise_ignoreterrain ~= nil
-		Spring.Echo(tostring(wd.type))
+		config[i].ascendradius = tonumber(customParams.cruise_ascendradius)
+		config[i].splittarget = customParams.cruise_torpedosplittarget ~= nil
+		config[i].ignoreterrain = customParams.cruise_ignoreterrain ~= nil
+		config[i].minterrainheight = tonumber(customParams.cruise_minterrainheight) or config[i].altitude
+		--Spring.Echo(tostring(wd.type))
 		SetWatchWeapon(i, true)
-	elseif curRef.cruisealt ~= nil or curRef.cruisedist ~= nil then
+	elseif customParams.cruisealt ~= nil or customParams.cruisedist ~= nil then
 		spEcho("[Cruise Missiles] Bad def " .. WeaponDefs[i].name .. " (Missing Altitude or Distance field)")
 	end
 end
@@ -268,6 +269,7 @@ function gadget:GameFrame(f)
 				local wantedalt = data.wantedalt
 				local mindist = missileconfig.distance
 				local distance = Distance(cx, x, cz, z)
+				local terrainheight = missileconfig.minterrainheight
 				if data.offset.x then
 					x = x + data.offset.x
 					z = z + data.offset.z
@@ -349,14 +351,14 @@ function gadget:GameFrame(f)
 								for i = 1, looksteps do
 									local lx, lv = GetFiringPoint(i * terrainGranularity, cx, cz, angle)
 									local gy = max(spGetGroundHeight(lx, lv), 0)
-									if gy > groundheight and gy + cruiseheight > data.wantedalt then
+									if gy > groundheight and gy + terrainheight > data.wantedalt then
 										groundheight = gy
 										d = i * terrainGranularity
 									end
 								end
 								local t = d / v -- time it takes us to get there.
 								if t > 0 and t <= eta then
-									wantedheight = groundheight + cruiseheight
+									wantedheight = groundheight + terrainheight
 									local dy = wantedheight - cy
 									local wantedangle = atan2(dy, t)
 									_, ty = GetFiringPoint(eta, 0, cy, wantedangle) -- reframe the problem as a function of time. We want the height change over time (we don't care about positions)

@@ -21,7 +21,7 @@ return {
 		cruiseAlt           = 410,
 		customParams        = {
 			reallyabomber    = [[1]],
-			fighter_pullup_dist = 1000,
+			fighter_pullup_dist = 3500, -- dont bother.
 			reammoseconds    = [[10]],
 			refuelturnradius = [[150]],
 			requireammo      = [[1]],
@@ -50,7 +50,6 @@ return {
 		sfxtypes            = {},
 		sightDistance       = 840,
 		turnRadius          = 420,
-		workerTime          = 0,
 		weapons             = {
 			{
 				def                = [[MISSILE]],
@@ -67,17 +66,17 @@ return {
 				avoidGround             = false,
 				collideFriendly         = false,
 				craterBoost             = 5,
-				craterMult              = 2.5,
+				craterMult              = 3,
 				customParams = {
 					cruisealt = 500,
-					airlaunched = 1,
 					cruisedist = 300,
+					cruise_noascension = 1,
+					cruise_minterrainheight = 120, -- only avoid terrain if the difference between the terrain and our altitude is below this.
 				},
 				damage                  = {
 					default = 3500.1,
 				},
 				fireStarter             = 70,
-				fixedlauncher           = true,
 				flightTime              = 8,
 				impulseBoost            = 0.75,
 				impulseFactor           = 0.3,
@@ -96,12 +95,9 @@ return {
 				texture2                = [[lightsmoketrail]],
 				tolerance               = 16000,
 				tracks                  = true,
-				trajectoryHeight        = 0,
-				fireTolerance		    = 10192*3,
-				turnRate                = 25000,
-				turret                  = false,
+				turnRate                = 45000,
 				weaponAcceleration      = 250,
-				weaponType              = [[StarburstLauncher]],
+				weaponType              = [[MissileLauncher]],
 				weaponVelocity          = 800,
 			},
 		},
