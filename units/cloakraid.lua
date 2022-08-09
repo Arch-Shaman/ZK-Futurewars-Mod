@@ -25,13 +25,12 @@ return {
 			cloakregen		   = 15,
 			idle_cloak = 1,
 		},
-
 		explodeAs              = [[SMALL_UNITEX]],
 		footprintX             = 2,
 		footprintZ             = 2,
 		iconType               = [[kbotraider]],
 		leaveTracks            = true,
-		maxDamage              = 130,
+		maxDamage              = 120,
 		maxSlope               = 36,
 		maxVelocity            = 4.9,
 		maxWaterDepth          = 22,
@@ -57,7 +56,6 @@ return {
 		trackWidth             = 14,
 		turnRate               = 3000,
 		upright                = true,
-
 		weapons                = {
 
 			{
@@ -66,7 +64,6 @@ return {
 			},
 
 		},
-
 		weaponDefs             = {
 			EMG = {
 				name                    = [[TRV-886 Shotgun]],
@@ -107,7 +104,7 @@ return {
 				soundHitVolume          = 0.2,
 				soundStartVolume        = 0.2,
 				soundTrigger            = true,
-				sprayAngle              = 1800,
+				sprayAngle              = 2000,
 				stages                  = 10,
 				tolerance               = 5000,
 				turret                  = true,
