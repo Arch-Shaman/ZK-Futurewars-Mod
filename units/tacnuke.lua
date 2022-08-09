@@ -3,7 +3,7 @@ return {
 		unitname                      = [[tacnuke]],
 		name                          = [[Armageddon]],
 		description                   = [[Tactical Nuke]],
-		buildCostMetal                = 1750,
+		buildCostMetal                = 2000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 3,
@@ -70,7 +70,7 @@ return {
 					cruise_ignoreterrain = "1",
 				},
 				damage                  = {
-					default = 5000.1,
+					default = 7000.1,
 				},
 				edgeEffectiveness       = 0.25,
 				explosionGenerator      = [[custom:nukebigland]],
