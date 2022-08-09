@@ -49,6 +49,7 @@ return {
 		script                 = [[shieldbomb.lua]],
 		selfDestructAs         = [[shieldbomb_DEATH]],
 		selfDestructCountdown  = 0,
+		stealth                = true,
 		sfxtypes               = {
 			explosiongenerators = {
 				[[custom:RAIDMUZZLE]],
@@ -56,7 +57,6 @@ return {
 				[[custom:digdig]],
 			},
 		},
-
 		sightDistance          = 240,
 		trackOffset            = 0,
 		trackStrength          = 8,
@@ -72,7 +72,6 @@ return {
 				footprintZ       = 2,
 				object           = [[logroach_dead.s3o]],
 			},
-
 			HEAP      = {
 				blocking         = false,
 				footprintX       = 2,
@@ -115,7 +114,6 @@ return {
 				commandFire             = true,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams        = {
 					light_camera_height = 3500,
 					light_color = [[0.75 0.4 0.15]],
@@ -126,7 +124,6 @@ return {
 					blastwave_life = 4,
 					blastwave_lossfactor = 0.66,
 					blastwave_damage = 1000,
-
 					numprojectiles1 = 10, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "shieldbomb_fragment_dummy",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
@@ -164,7 +161,6 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 255,
 			},
-			
 			FRAGMENT_DUMMY = {
 				name                    = [[merkityksetön räjähdys]], -- nobody should read this anyways?
 				accuracy                = 400,
@@ -174,7 +170,6 @@ return {
 				craterMult              = 2,
 				cegTag                  = [[flamer]],
 				customParams              = {
-
 					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "shieldbomb_cluster_fragment",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
@@ -190,7 +185,6 @@ return {
 				damage                  = {
 					default = 0,
 				},
-
 				firestarter             = 180,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
@@ -212,14 +206,12 @@ return {
 				weaponVelocity          = 320,
 				waterWeapon             = true,
 			},
-			
 			cluster_fragment = {
 				name                    = [[High Explosive Bomblet]],
 				accuracy                = 200,
 				areaOfEffect            = 128,
 				craterBoost             = 10,
 				craterMult              = 5,
-
 				damage                  = {
 					default = 400,
 				},
