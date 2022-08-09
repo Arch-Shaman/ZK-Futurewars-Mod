@@ -77,6 +77,10 @@ unitDef = {
 			craterMult              = 0,
 			customParams            = {
 				reaim_time = 3, -- fast update needed
+				stats_hide_damage = 1, -- continuous laser
+				stats_hide_reload = 1,
+				light_color = [[0.25 1 0.25]],
+				light_radius = 120,
 			},
 			damage                  = {
 				default = 25.01,
@@ -161,30 +165,30 @@ unitDef = {
 			weaponVelocity          = 650,
 		},
 		SHIELD      = {
-				name                    = [[Energy Shield]],
-				damage                  = {
-					default = 10,
-				},
-				customParams			= {
-					--shield_recharge_delay   = 10,
-					unlinked            = true,
-				},
-				exteriorShield          = true,
-				shieldAlpha             = 0.2,
-				shieldBadColor          = [[1 0.1 0.1 1]],
-				shieldGoodColor         = [[0.1 0.1 1 1]],
-				shieldInterceptType     = 3,
-				shieldPower             = 25000,
-				shieldPowerRegen        = 150,
-				shieldPowerRegenEnergy  = 20,
-				shieldRadius            = 120,
-				shieldRepulser          = false,
-				shieldStartingPower     = 15000,
-				smartShield             = true,
-				visibleShield           = false,
-				visibleShieldRepulse    = false,
-				weaponType              = [[Shield]],
+			name                    = [[Energy Shield]],
+			damage                  = {
+				default = 10,
 			},
+			customParams			= {
+				--shield_recharge_delay   = 10,
+				unlinked            = true,
+			},
+			exteriorShield          = true,
+			shieldAlpha             = 0.2,
+			shieldBadColor          = [[1 0.1 0.1 1]],
+			shieldGoodColor         = [[0.1 0.1 1 1]],
+			shieldInterceptType     = 3,
+			shieldPower             = 25000,
+			shieldPowerRegen        = 150,
+			shieldPowerRegenEnergy  = 20,
+			shieldRadius            = 120,
+			shieldRepulser          = false,
+			shieldStartingPower     = 15000,
+			smartShield             = true,
+			visibleShield           = false,
+			visibleShieldRepulse    = false,
+			weaponType              = [[Shield]],
+		},
 	},
 	featureDefs            = {
 		DEAD  = {

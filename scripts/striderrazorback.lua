@@ -50,7 +50,7 @@ local SIG_AIM2 = 8
 
 -- Other --
 local restoredelay = 4500
-local secondaryturnrate = math.rad(200)
+local secondaryturnrate = math.rad(250)
 local primaryturnrate = math.rad(100)
 local zero = math.rad(0)
 local moving = false
@@ -329,7 +329,9 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.FireWeapon(num)
-	GG.FireControl.WeaponFired(unitID, num)
+	if num == 1 or num == 2 then
+		GG.FireControl.WeaponFired(unitID, num)
+	end
 end
 
 function script.BlockShot(num)
