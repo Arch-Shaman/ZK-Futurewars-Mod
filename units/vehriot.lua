@@ -3,9 +3,10 @@ return {
 		unitname            = [[vehriot]],
 		name                = [[Striker]],
 		description         = [[Riot Rover]],
-		acceleration        = 0.159,
-		brakeRate           = 1.24,
-		buildCostMetal      = 230,
+		acceleration        = 0.077,
+		autoheal            = 20,
+		brakeRate           = 0.64,
+		buildCostMetal      = 220,
 		builder             = false,
 		buildPic            = [[vehriot.png]],
 		canGuard            = true,
@@ -27,12 +28,10 @@ return {
 		footprintX          = 3,
 		footprintZ          = 3,
 		iconType            = [[vehicleriot]],
-		idleAutoHeal        = 5,
-		idleTime            = 1800,
 		leaveTracks         = true,
-		maxDamage           = 1100,
+		maxDamage           = 1200,
 		maxSlope            = 18,
-		maxVelocity         = 2.8,
+		maxVelocity         = 3,
 		maxWaterDepth       = 22,
 		movementClass       = [[TANK3]],
 		noAutoFire          = false,
@@ -47,14 +46,14 @@ return {
 				[[custom:RIOT_SHELL_L]],
 			},
 		},
-		sightDistance       = 350,
+		sightDistance       = 385,
 		trackOffset         = 7,
 		trackStrength       = 6,
 		trackStretch        = 1,
 		trackType           = [[StdTank]],
 		trackWidth          = 28,
 		turninplace         = 0,
-		turnRate            = 624,
+		turnRate            = 420,
 		weapons             = {
 			{
 				def                = [[vehriot_WEAPON]],
@@ -81,9 +80,9 @@ return {
 					isFlak = 2,
 				},
 				damage                  = {
-					default = 40,
+					default = 55.01,
 				},
-				edgeEffectiveness       = 0.5,
+				edgeEffectiveness       = 0.75,
 				explosionGenerator      = [[custom:EMG_HIT_HE]],
 				firestarter             = 70,
 				impulseBoost            = 0,
@@ -102,16 +101,13 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 550,
 			},
-			
 			vehriot_WEAPON = {
 				name                    = [[Impulse Cannon]],
 				areaOfEffect            = 0,
 				avoidFeature            = true,
 				avoidFriendly           = true,
-				burnblow                = true,
 				craterBoost             = 1,
 				craterMult              = 0.5,
-
 				customParams            = {
 					gatherradius = [[90]],
 					smoothradius = [[60]],
@@ -122,19 +118,19 @@ return {
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 120, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-6,-2,-6,6,0,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-6,-1,-6,6,1,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 0, -- check for nearby units?
 					proxydist = 100, -- how far to check for units? Default: spawndist
-					reaim_time = 60, -- Fast update not required (maybe dangerous)
+					reaim_time = 10,
 					light_camera_height = 1500,
 					light_color = [[0.8 0.76 0.38]],
 					light_radius = 40,
 				},
 				damage                  = {
-					default = 40*14,
+					default = 55*14,
 				},
 				edgeEffectiveness       = 0.75,
 				explosionGenerator      = [[custom:FLASH64]],
@@ -142,20 +138,17 @@ return {
 				impulseFactor           = 0.6,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 280,
+				range                   = 320,
 				reloadtime              = 1.6,
 				soundHit                = [[weapon/clusters/cluster_light]],
 				soundStart              = [[weapon/cannon/outlaw_gun]],
 				soundStartVolume        = 3,
 				turret                  = true,
 				weaponType              = [[Cannon]],
-				weaponVelocity          = 550,
+				weaponVelocity          = 650,
 			},
 		},
-		
-		
 		featureDefs         = {
-			
 			DEAD  = {
 				blocking         = true,
 				featureDead      = [[HEAP]],
@@ -163,14 +156,12 @@ return {
 				footprintZ       = 2,
 				object           = [[leveler_d.dae]],
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
 				object           = [[debris2x2a.s3o]],
 			},
-
 		},
 	}
 }
