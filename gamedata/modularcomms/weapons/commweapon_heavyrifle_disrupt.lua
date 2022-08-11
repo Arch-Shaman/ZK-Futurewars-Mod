@@ -6,7 +6,6 @@ local weaponDef = {
 	burstrate               = 0.2,
 	craterBoost             = 0,
 	craterMult              = 0,
-
 	customParams            = {
 		is_unit_weapon = 1,
 		muzzleEffectShot = [[custom:beamlaser_violet_muzzle]],
@@ -17,11 +16,9 @@ local weaponDef = {
 		reaim_time = 1,
 		antibaitbypass = "ärsytät minua",
 	},
-
 	damage                  = {
 		default = 250.1*.85,
 	},
-
 	edgeEffectiveness       = 0.5,
 	explosionGenerator      = [[custom:BEAMWEAPON_HIT_PURPLE]],
 	impulseBoost            = 0,
