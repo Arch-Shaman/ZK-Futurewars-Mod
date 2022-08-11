@@ -315,9 +315,11 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	local ud = UnitDefs[spGetUnitDefID(unitID)]
 	spSetUnitRulesParam(unitID, "resurrectableCommander", 1, INLOS)
 	-- Update ApplyModuleEffectsFromUnitRulesParams if any non-unitRulesParams changes are made.
-	if data.speedMod then
-		local speedMult = (data.speedMod + ud.speed)/ud.speed
-		speedMult = speedMult - ((data.speedMalus or 0) * (data.malusMult or 1))
+	if data.speedMod or data.speedMalus then
+		local speedMalus = ((data.speedMalus or 0) * (data.malusMult or 1))
+		local speedBonus = data.speedMod or 0
+		local finalSpeed = speedBonus + ud.speed - speedMalus
+		local speedMult = finalSpeed/ud.speed
 		spSetUnitRulesParam(unitID, "upgradesSpeedMult", speedMult, INLOS)
 	end
 	if data.cloakregen then
