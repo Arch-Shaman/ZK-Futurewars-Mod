@@ -109,7 +109,7 @@ end
 
 function script.BlockShot(num, targetID)
 	if targetID and Spring.ValidUnitID(targetID) then
-		return not gun[fireNum].loaded or GG.OverkillPrevention_CheckBlock(unitID, targetID, 180.1, 12, false, false, true)
+		return not gun[fireNum].loaded or GG.OverkillPrevention_CheckBlock(unitID, targetID, 210.1, 17)
 	else
 		return not gun[fireNum].loaded
 	end

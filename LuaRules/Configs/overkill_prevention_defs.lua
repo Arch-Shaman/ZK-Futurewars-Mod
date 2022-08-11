@@ -24,6 +24,7 @@ local handledUnitDefIDs = {
 	[UnitDefNames["amphriot"].id] = 1,
 	[UnitDefNames["shieldaa"].id] = 1,
 	[UnitDefNames["vehsupport"].id] = 1,
+	[UnitDefNames["hoverheavyraid"].id] = 1,
 	[UnitDefNames["tankriot"].id] = 1, --HT's banisher
 	[UnitDefNames["shieldarty"].id] = 1, --Shields's racketeer
 	[UnitDefNames["bomberprec"].id] = 1,
