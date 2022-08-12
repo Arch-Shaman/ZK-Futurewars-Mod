@@ -19,6 +19,7 @@ unitDef = {
 	corpse                 = [[DEAD]],
 	customParams           = {
 		needsfirecontrol = 1,
+		shield_emit_height = 50,
 	},
 	explodeAs              = [[CRAWL_BLASTSML]],
 	footprintX             = 4,
