@@ -79,7 +79,7 @@ local function BarrelAnim()
 end
 
 function script.Create()
-	Move(ground, z_axis, 10)
+	--Move(ground, z_axis, 10)
 	Turn(muzzlea, z_axis, -math.rad(90))
 	Turn(muzzleb, z_axis, -math.rad(90))
 	Turn(muzzlea, x_axis, math.rad(90))
