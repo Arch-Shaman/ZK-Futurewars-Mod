@@ -217,11 +217,11 @@ effectUnitDefs = {
 	},
 	
 	striderbantha = {
-	{class='StaticParticles', options=MergeTable(blinkyLightBlue, {piece="light", delay = 20, size = 25}) },
+		{class='StaticParticles', options=MergeTable(blinkyLightBlue, {piece="light", delay = 20, size = 25}) },
 	},
 	
 	striderdetriment = {
-	{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="light", delay = 20, size = 30}) },
+		{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="light", delay = 20, size = 30}) },
 	},
 
 	-- length tag does nothing
@@ -300,8 +300,8 @@ effectUnitDefs = {
 		{class='AirJet', options={color={0.2,0.4,0.8}, width=4, length=30, piece="thrustl", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true, noIconDraw = true}},
 		{class='Ribbon', options={width=1, piece="wingtipl", noIconDraw = true}},
 		{class='Ribbon', options={width=1, piece="wingtipr", noIconDraw = true}},
-	{class='StaticParticles', options=MergeTable(blinkyLightRed, {piece="wingtipl"}) },
-	{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="wingtipr"}) },
+		{class='StaticParticles', options=MergeTable(blinkyLightRed, {piece="wingtipl"}) },
+		{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="wingtipr"}) },
 	},
 	planefighter = {
 		{class='AirJet', options={color={0.6,0.1,0.0}, width=3.5, length=55, piece="nozzle1", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true, noIconDraw = true}},
@@ -319,8 +319,8 @@ effectUnitDefs = {
 		{class='AirJet', options={color={0.7,0.3,0.1}, width=5, length=40, piece="exhaust", onActive=true, noIconDraw = true}},
 		{class='Ribbon', options={width=1, piece="wingtipl", noIconDraw = true}},
 		{class='Ribbon', options={width=1, piece="wingtipr", noIconDraw = true}},
-	{class='StaticParticles', options=MergeTable(blinkyLightRed, {piece="wingtipr"}) },
-	{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="wingtipl"}) },
+		{class='StaticParticles', options=MergeTable(blinkyLightRed, {piece="wingtipr"}) },
+		{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="wingtipl"}) },
 	},
 	planeheavyfighter = {
 		-- jets done in gadget
