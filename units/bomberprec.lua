@@ -31,6 +31,7 @@ return {
 			outline_x = 130,
 			outline_y = 130,
 			outline_yoff = 10,
+			fighter_pullup_dist = 3500, -- dont bother.
 		},
 		explodeAs           = [[GUNSHIPEX]],
 		floater             = true,
@@ -44,7 +45,6 @@ return {
 		maxElevator         = 0.02,
 		maxRudder           = 0.013,
 		maxFuel             = 1000000,
-		maxPitch            = 0.4,
 		maxVelocity         = 6.3,
 		noAutoFire          = false,
 		noChaseCategory     = [[TERRAFORM FIXEDWING SATELLITE GUNSHIP]],
@@ -62,7 +62,7 @@ return {
 		weapons             = {
 			{
 				def                = [[BOMBSABOT]],
-				mainDir            = [[0 0 0]],
+				mainDir            = [[0 -1 0]],
 				onlyTargetCategory = [[LAND TURRET SHIP SWIM SINK FLOAT HOVER UNARMED]],
 			},
 		},
@@ -95,8 +95,9 @@ return {
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					proxy = 0, -- check for nearby units?
 					useheight = 1,
-					spawndist = 150, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-8,-4,-8,8,4,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					vradius1 = "-8,-4,-8,8,-8,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					keepmomentum1 = 0,
 					groundimpact = 1,
 					reaim_time = 60, -- see what the hell this does.
 				},
@@ -107,7 +108,7 @@ return {
 				impulseFactor           = 0,
 				interceptedByShieldType = 2,
 				model                   = [[hobbes.s3o]],
-				mygravity		        = 0.1,
+				mygravity		        = 0.65,
 				reloadtime              = 5,
 				range                   = 100,
 				texture2                = [[darksmoketrail]],
@@ -122,7 +123,7 @@ return {
 				turret                  = true,
 				weaponAcceleration      = 750,
 				weaponType              = [[AircraftBomb]],
-				weaponVelocity          = 800,
+				weaponVelocity          = 100,
 			},
 			BOMBLET = {
 				name                    = [[High Explosive Bomblet]],
