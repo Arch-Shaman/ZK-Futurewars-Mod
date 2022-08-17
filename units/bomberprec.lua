@@ -82,7 +82,7 @@ return {
 				projectiles             = 3,
 				burstrate				= 4/30,
 				damage                  = {
-					default = 3*125,
+					default = 200*3,
 				},
 				customParams            = {
 					light_color = [[1.1 0.9 0.45]],
@@ -132,7 +132,7 @@ return {
 				craterBoost             = 10,
 				craterMult              = 5,
 				damage                  = {
-					default = 125.01,
+					default = 200.01,
 				},
 				explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
 				fireStarter             = 180,
