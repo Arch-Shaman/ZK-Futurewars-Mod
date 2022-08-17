@@ -32,7 +32,6 @@ return {
 			transport_speed_light   = [[1]],
 			transport_speed_medium  = [[0.75]],
 			transport_speed_heavy   = [[0.5]],
-
 			outline_x = 145,
 			outline_y = 145,
 			outline_yoff = 17.5,
@@ -96,17 +95,14 @@ return {
 				coreThickness           = 0.5,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams        = {
 					combatrange = 60,
 					light_camera_height = 1200,
 					light_radius = 160,
 				},
-
 				damage                  = {
 					default = 10,
 				},
-
 				duration                = 0.02,
 				explosionGenerator      = [[custom:BEAMWEAPON_HIT_RED]],
 				fireStarter             = 50,
@@ -139,16 +135,13 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting      = 1,
-
 				customParams        = {
 					combatrange = 100,
 				},
-
 				damage                  = {
 					default = 2,
 					planes  = 20,
 				},
-
 				explosionGenerator      = [[custom:flash_teal7]],
 				fireStarter             = 100,
 				impactOnly              = true,
