@@ -1272,7 +1272,7 @@
 	"planelightscout" : {
 		"name" : "Informer",
 		"description" : "Light Scout Plane",
-		"helptext" : "The Informer is a light scout that can be built from a Radar Tower, making it the only plane that is availible without a Plane Factory. Such an accessible scouting option is invaluable to those without access to planes, but is generally outclassed by the extremely fast Deserter and larger Agitator."
+		"helptext" : "The Informer is a light scout. It's pretty useless in Future Wars at the moment."
 	},
 	"amphfloater" : {
 		"name" : "Bully",
