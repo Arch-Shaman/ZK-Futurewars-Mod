@@ -1260,9 +1260,9 @@
 		"helptext" : "The Merlin is an MLRS strider. It can launch a volley of rockets that guarantees the destruction of almost anything in the target area, then quickly retreat behind friendly forces."
 	},
 	"gunshipheavytrans" : {
-		"name" : "Hercules",
-		"description" : "Armed Heavy Air Transport",
-		"helptext" : "The Hercules can haul any land unit in the game. Its twin laser guns and automated cargo ejection system make it ideal for drops into hot LZs."
+		"name" : "Breacher",
+		"description" : "Assault Transport",
+		"helptext" : "The Breacher earned its place as a ubiquitous fab file after the downfall of the Coalition. Coalition forces had injected a shield module on their Hercules fab file to help cover LZs, and after the war, the Alliance recovered this file and modded the lasers out for a more reliable shock cannon called the L-Saw or Light Surface Assault Weapon. The L-Saw, while being inaccurate, can suppress surface targets and even air units. In addition, the armor of the Hercules fab file got beefed up in order to survive deep incursions into enemy territory."
 	},
 	"planescout" : {
 		"name" : "Agitator",
