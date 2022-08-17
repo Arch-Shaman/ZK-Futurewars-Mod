@@ -626,6 +626,7 @@ local factoryPlates = {
 	"platetank",
 	"plateamph",
 	"plateship",
+	"platestrider",
 }
 
 -- Hide factory plates
