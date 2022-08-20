@@ -16,12 +16,10 @@ return {
 		collisionVolumeScales         = [[50 50 50]],
 		collisionVolumeType           = [[ellipsoid]],
 		corpse                        = [[DEAD]],
-
 		customParams                  = {
 			modelradius    = [[25]],
 			can_target_allies = 1,
 		},
-
 		explodeAs                     = [[MEDIUM_BUILDINGEX]],
 		footprintX                    = 2,
 		footprintZ                    = 2,
@@ -39,24 +37,18 @@ return {
 		sightDistance                 = 554, -- Range*1.1 + 48 for radar overshoot
 		sonarDistance				  = 554,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
 		yardMap                       = [[oooo]],
-
 		weapons                       = {
-
 			{
 				def                = [[GRAVITY_POS]],
 				badTargetCategory  = [[]],
 				onlyTargetCategory = [[FIXEDWING HOVER SWIM LAND SHIP GUNSHIP]],
 			},
-
-
 			{
 				def                = [[GRAVITY_NEG]],
 				badTargetCategory  = [[]],
 				onlyTargetCategory = [[FIXEDWING HOVER SWIM LAND SHIP GUNSHIP]],
 			},
-
 		},
 		weaponDefs                    = {
 			GRAVITY_NEG = {
@@ -77,7 +69,6 @@ return {
 					light_radius = 140,
 					can_target_allies  = 1,
 				},
-
 				damage                  = {
 					default = 0.001,
 				},
@@ -124,7 +115,6 @@ return {
 					light_radius = 140,
 					can_target_allies  = 1,
 				},
-
 				damage                  = {
 					default = 0.001,
 				},
@@ -154,7 +144,6 @@ return {
 				weaponType              = [[BeamLaser]],
 				weaponVelocity          = 2200,
 			},
-
 		},
 		featureDefs                   = {
 			DEAD  = {
