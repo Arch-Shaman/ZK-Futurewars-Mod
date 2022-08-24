@@ -16,7 +16,7 @@ end
 
 local wantedDef = {
 	[UnitDefNames["platestrider"].id] = true
-end
+}
 
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
