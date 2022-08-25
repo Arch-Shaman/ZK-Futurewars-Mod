@@ -6,8 +6,8 @@ local weaponDef = {
 	cegTag                  = [[rocket_trail_bar_flameboosted]],
 	craterBoost             = 0,
 	craterMult              = 0,
-	burst					= 10,
-	burstrate				= 0.1,
+	burst					= 30,
+	burstrate				= 2/30,
 	customParams            = {
 		is_unit_weapon = 1,
 		slot = [[5]],
@@ -17,7 +17,7 @@ local weaponDef = {
 		light_color = [[0.95 0.65 0.30]],
 		light_radius = 280,
 		reaim_time = 1,
-		cruiserandomradius = 320,
+		cruiserandomradius = 420,
 		cruisealt = 200,
 		airlaunched = 1,
 		cruisedist = 280,
@@ -28,7 +28,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 800.1,
+		default = 500.1,
 	},
 
 	edgeEffectiveness       = 0.1,
@@ -40,7 +40,7 @@ local weaponDef = {
 	interceptedByShieldType = 2,
 	model                   = [[wep_b_fabby.s3o]],
 	range                   = 800,
-	reloadtime              = 30,
+	reloadtime              = 25,
 	smokeTrail              = false,
 	soundHit                = [[explosion/mini_nuke]],
 	soundHitVolume          = 5,
