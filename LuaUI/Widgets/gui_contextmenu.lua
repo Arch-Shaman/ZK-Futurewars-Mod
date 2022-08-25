@@ -848,6 +848,61 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 					cells[#cells+1] = cp.spawns_expire .. "s"
 				end
 			end
+			if cp.blastwave_size then
+				cells[#cells+1] = ' - Creates a blastwave:'
+				cells[#cells+1] = ''
+				cells[#cells+1] = '\t - Initial Size:'
+				cells[#cells+1] = cp.blastwave_size
+				if blastwave_healing then
+					if cp.blastwave_healing_reduction then
+						cells[#cells+1] = '\t - Heals up to: '
+						cells[#cells+1] = blastwave_healing .. ' hp'
+					else
+						cells[#cells+1] = '\t - Initial Healing:'
+						cells[#cells+1] = blastwave_healing
+					end
+				end
+				local slowdmg = tonumber(cp.blastwave_slowdmg) or 0 
+				local empdmg = tonumber(cp.blastwave_empdmg) or 0
+				local overslow = tonumber(cp.blastwave_overslow) or 0
+				local emptime = tonumber(cp.blastwave_emptime) or 0
+				local damage = tonumber(cp.blastwave_damage) or 0
+				local damagestring = damage .. " "
+				if empdmg > 0 then
+					damagestring = damagestring .. color2incolor(colorCyan) .. empdmg .. "( " .. emptime .. "s)\008 "
+				end
+				if slowdmg > 0 then
+					damagestring = damagestring .. color2incolor(colorPurple) ..slowdmg .. "\008 "
+				end
+				cells[#cells+1] = '\t - Initial damage:'
+				cells[#cells+1] = damagestring
+				if overslow > 0 then
+					cells[#cells+1] = "\t - Overslows:"
+					cells[#cells+1] = numformat(overslow / 30, 3) .. "s"
+				end
+				if cp.blastwave_onlyfriendly then
+					cells[#cells+1] = '\t - Only affects allies'
+					cells[#cells+1] = ''
+				end
+				local speed = tonumber(cp.blastwave_speed) or 0
+				local size = tonumber(cp.blastwave_size) or 0
+				local life = tonumber(cp.blastwave_life) or 1
+				local impulse = tonumber(cp.blastwave_impulse) or 0
+				if impulse > 0 then
+					cells[#cells+1] = '\t - Impulse:'
+					cells[#cells+1] = numformat(impulse, 3)
+				end
+				cells[#cells+1] = '\t - Initial radius:'
+				cells[#cells+1] = size .. " elmos"
+				cells[#cells+1] = '\t - Expansion rate:'
+				cells[#cells+1] = numformat(speed * 30, 2) .. " elmo/sec"
+				cells[#cells+1] = '\t - Power loss:'
+				cells[#cells+1] = numformat((1 - (tonumber(cp.blastwave_lossfactor) or 0.95)) * 100, 2) .. "%/frame"
+				cells[#cells+1] = '\t - Lifespan:'
+				cells[#cells+1] = numformat(life / 30, 3) .. "sec"
+				cells[#cells+1] = '\t - Final radius:'
+				cells[#cells+1] = numformat(size + (speed * life), 2) .. " elmos"
+			end
 			
 			if cp.reload_move_mod_time  and not bombletCount then
 				cells[#cells+1] = ' - Move mult time: '
