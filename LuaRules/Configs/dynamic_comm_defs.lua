@@ -66,6 +66,20 @@ local function ApplyHeavyOrdinance1(modules, sharedData)
 		["commweapon_rocketlauncher"] = "commweapon_rocketlauncher_nuclear",
 		["commweapon_artillery_light"] = "commweapon_artillery_light_nuclear",
 	}
+	local wantsfireatradar = {
+		["commweapon_artillery_heavy_nuclear"] = true,
+		["commweapon_rocketbarrage_nuclear"] = false,
+		["commweapon_rocketlauncher_nuclear"] = false,
+		["commweapon_artillery_light_nuclear"] = false,
+	}
+	if sharedData.weapon1 and upgrade[sharedData.weapon1] then
+		sharedData.weapon1 = upgrade[sharedData.weapon1]
+		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon1]
+	elseif sharedData.weapon2 and upgrade[sharedData.weapon2] then
+		sharedData.weapon2 = upgrade[sharedData.weapon2]
+		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon2]
+	end
+end
 	
 local function ApplyHeavyOrdinance2(modules, sharedData)
 	local upgrade = {
@@ -81,20 +95,6 @@ local function ApplyHeavyOrdinance2(modules, sharedData)
 		["commweapon_artillery_light_nuclear"] = false,
 	}
 	if sharedData.weapon2 and upgrade[sharedData.weapon2] then
-		sharedData.weapon2 = upgrade[sharedData.weapon2]
-		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon2]
-	end
-end
-	local wantsfireatradar = {
-		["commweapon_artillery_heavy_nuclear"] = true,
-		["commweapon_rocketbarrage_nuclear"] = false,
-		["commweapon_rocketlauncher_nuclear"] = false,
-		["commweapon_artillery_light_nuclear"] = false,
-	}
-	if sharedData.weapon1 and upgrade[sharedData.weapon1] then
-		sharedData.weapon1 = upgrade[sharedData.weapon1]
-		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon1]
-	elseif sharedData.weapon2 and upgrade[sharedData.weapon2] then
 		sharedData.weapon2 = upgrade[sharedData.weapon2]
 		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon2]
 	end
