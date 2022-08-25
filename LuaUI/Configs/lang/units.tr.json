@@ -9,6 +9,11 @@
         "description": "Ağır Kopter Mühendis, 7.5 M/s de kurar ",
         "helptext": "Yüksek inşa gücü ile uçmanın kolaylığını birleştiren ağır bir yapıcı."
     },
+	"missilekinetic": {
+		"name" : "Apogee",
+		"description" : "Kinetik Öldürme Aracı"",
+		"helptext" : "Apogee, bir hedefe sert bir şekilde düşmeden önce uzaya uçan ve büyük hasar veren ucuz bir kinetik saldırı silahıdır. AOE'si arzulanan çok şey bıraksa da, ucuz ve istenmeyen posta gönderilebilir, bu da ona karşı yarı iyi kalkanlar."
+	},
     "gunshipskirm": {
         "name": "Harpy",
         "description": "Çok rollü Destek Kopteri",

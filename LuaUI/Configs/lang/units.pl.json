@@ -9,6 +9,11 @@
 		"description" : "Ciężki powietrzny konstruktor",
 		"helptext" : "Wasp łączy w sobie mobilność statku powietrznego i wysoką moc budowy."
 	},
+	"missilekinetic" : {
+		"name" : "Apogee",
+		"description" : "Kinetyczny pojazd zabijania",
+		"helptext" : "Apogee to tania broń kinetyczna, która leci w kosmos, zanim opadnie mocno na cel, zadając ogromne obrażenia. Chociaż jej obszar działania pozostawia wiele do życzenia, jest tania i można ją spamować, co czyni ją przyzwoitą przeciwko tarcze."
+	},
 	"gunshipskirm" : {
 		"name" : "Harpy",
 		"description" : "Wielozadaniowy statek powietrzny",

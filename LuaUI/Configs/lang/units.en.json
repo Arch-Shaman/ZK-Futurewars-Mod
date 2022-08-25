@@ -1254,6 +1254,11 @@
 		"description" : "Fiery Cluster Bomber",
 		"helptext" : "The aging Phoenix design was replaced with the Firebrand due to its success as an area denial aircraft during the Folsom Crisis. The Firebrand drops a series of 3 airburst napalm bombs onto an army or area. This causes intense fires to break out that ruin lighter units or shielded targets."
 	},
+	"missilekinetic" : {
+		"name" : "Apogee",
+		"description" : "Kinetic Kill Vehicle",
+		"helptext" : "The Apogee is a cheap kinetic strike weapon that flies into space before plummeting down hard onto a target, dealing massive damage. While its AOE leaves a lot to be desired, it is cheap and spammable making it semi-decent against shields."
+	},
 	"striderarty" : {
 		"name" : "Merlin",
 		"description" : "Heavy Saturation Artillery Strider",

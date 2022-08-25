@@ -9,6 +9,11 @@
 		"description" : "Erweitert den Bereich des Overdrive-Energienetzes",
 		"helptext" : "Durch das Energy Pylon wird es dir ermöglicht, weitere Energiequellen oder Metallextraktoren an ein bestehendes Overdrive-Energienetz anzuschließen."
 	},
+	"missilekinetic" : {
+		"name" : "Apogee",
+		"description" : "Kinetisches Tötungsfahrzeug",
+		"helptext" : "Die Apogee ist eine billige kinetische Schlagwaffe, die in den Weltraum fliegt, bevor sie hart auf ein Ziel stürzt und massiven Schaden verursacht. Während ihre AOE viel zu wünschen übrig lässt, ist sie billig und spammbar, was sie halbwegs anständig macht Schilde."
+	},
 	"dynstrike1" : {
 		"name" : "Strike Commander",
 		"description" : "Mobiler Sturmkommandant",
