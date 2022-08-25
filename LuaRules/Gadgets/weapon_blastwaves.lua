@@ -24,7 +24,7 @@ for i = 1, #WeaponDefs do
 	local id = WeaponDefs[i].id
 	if cp["blastwave_size"] then
 		local size = tonumber(cp["blastwave_size"]) or 0 -- how big does the blastwave start off?
-		local impulse = tonumber(cp["blastwave_impulse"]) or 180 -- how much impulse it has.
+		local impulse = tonumber(cp["blastwave_impulse"]) or 0 -- how much impulse it has.
 		local speed = tonumber(cp["blastwave_speed"]) or 30 -- how fast outwards the blastwave travels. In elmos/frame
 		local lifespan = tonumber(cp["blastwave_life"]) or 30 -- how long it lasts before disappaiting.
 		local losscoef = tonumber(cp["blastwave_lossfactor"]) or 0.95 -- how much energy does it lose each check?
