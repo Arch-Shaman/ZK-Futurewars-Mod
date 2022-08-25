@@ -1076,6 +1076,10 @@ local icontypes = {
 		bitmap='icons/cruisemissile.dds',
 		size=2.5,
 	},
+	missilesilo = {
+		bitmap='icons/missilesilo.dds',
+		size=2.5,
+	},
 	cruisemissilesmall = {
 		bitmap='icons/cruisemissile.dds',
 		size=1,

@@ -34,7 +34,7 @@ return {
 		fireState                     = 0,
 		footprintX                    = 6,
 		footprintZ                    = 6,
-		iconType                      = [[cruisemissile]],
+		iconType                      = [[missilesilo]],
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		maxDamage                     = 4000,
