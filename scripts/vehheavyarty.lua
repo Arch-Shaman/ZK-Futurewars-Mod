@@ -139,9 +139,9 @@ function script.AimWeapon(num, heading, pitch)
 	GG.DontFireRadar_CheckAim(unitID)
 	if isLoaded then
 		StartThread(Prepare)
-		if doStrobe then
-			EmitSfx(strobe, 1024)
-		end
+		--if doStrobe then
+			--EmitSfx(strobe, 1024)
+		--end
 	end
 	while (not isReady) do
 		Sleep(250)
