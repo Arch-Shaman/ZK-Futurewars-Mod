@@ -19,7 +19,7 @@ unitDef = {
 
 	customParams        = {
 		dontfireatradarcommand = '0',
-		aimposoffset   = [[0 15 0]],
+		aimposoffset   = [[0 11 0]],
 		aimdelay = 75,
 		bait_level_default = 2,
 	},
