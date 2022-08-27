@@ -26,7 +26,7 @@ local function RemoveMissile()
 	end
 	
 	-- Intentionally non-positional
-	Spring.PlaySoundFile("sounds/weapon/missile/heavymissile_launch.wav", 15)
+	Spring.PlaySoundFile("sounds/weapon/missile/heavymissile_launch.wav", 15, "battle")
 	Sleep(2000)
 
 	-- keep alive for stats
