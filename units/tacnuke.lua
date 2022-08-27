@@ -15,6 +15,7 @@ return {
 		collisionVolumeScales         = [[20 60 20]],
 		collisionVolumeType           = [[CylY]],
 		customParams                  = {
+			aimposoffset   = [[0 45 0]],
 			mobilebuilding = [[1]],
 			outline_x = 55,
 			outline_y = 80,
