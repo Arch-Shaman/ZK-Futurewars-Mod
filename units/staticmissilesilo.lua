@@ -24,7 +24,7 @@ return {
 		canPatrol                     = false,
 		category                      = "SINK UNARMED",
 		corpse                        = "DEAD",
-		collisionVolumeType           = "box",
+		collisionVolumeType           = "CylY",
 		collisionVolumeScales         = "85 40 85",
 		collisionVolumeOffsets        = "0 20 0",
 		customParams                  = {
