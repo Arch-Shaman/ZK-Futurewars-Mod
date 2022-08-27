@@ -65,12 +65,12 @@ local carrierDefNames = {
 		spawnPieces = {"turret"},
 		{
 			drone = UnitDefNames.dronelight.id, 
-			reloadTime = 30, 
+			reloadTime = 15, 
 			maxDrones = 1, 
 			spawnSize = 1, 
 			range = 500,
 			maxChaseRange = 600,
-			buildTime = 15, 
+			buildTime = 8, 
 			maxBuild = 1,
 			offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
 		},
