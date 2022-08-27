@@ -41,13 +41,13 @@ return {
 		selectionVolumeType    = [[box]],
 		weapons                       = {
 			{
-				def                = [[CRBLMSSL]],
+				def                = [[NUKE]],
 				badTargetCategory  = [[SWIM LAND SHIP HOVER]],
 				onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 			},
 		},
 		weaponDefs                    = {
-			CRBLMSSL = {
+			NUKE = {
 				name                    = [[Nuclear Missile]],
 				areaOfEffect            = 1920,
 				cegTag                  = [[nucleartrail]],
@@ -75,7 +75,7 @@ return {
 				impulseBoost            = 0.5,
 				impulseFactor           = 0.2,
 				interceptedByShieldType = 65,
-				model                   = [[crblmsslr.s3o]],
+				model                   = [[staticnuke_projectile.s3o]],
 				noSelfDamage            = false,
 				range                   = 9000,
 				reloadtime              = 10,
