@@ -32,7 +32,7 @@ local weaponDef = {
 	damage = {
 		default          = 0,
 	},
-	--model                   = [[crblmsslr.s3o]],
+	--model                   = [[staticnuke_projectile.s3o]],
 	noSelfDamage            = false,
 	range                   = 550,
 	reloadtime              = 10,
