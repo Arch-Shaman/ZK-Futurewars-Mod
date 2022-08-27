@@ -1,5 +1,5 @@
 return {
-	tex1 = "Silencer1.dds",
-	tex2 = "Silencer2.dds",
+	tex1 = "staticnuke1.dds",
+	tex2 = "staticnuke2.dds",
 	invertteamcolor = false
 }
