@@ -215,7 +215,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_microriftgenerator",
 		humanName = "Microrift Generator",
-		description = "Instantly teleports your commander to any location within range.",
+		description = "Instantly teleports your commander to any location within range. +100% damage.",
 		image = moduleImagePath .. "commweapon_microrift.png",
 		limit = 1,
 		cost = 100 * COST_MULT,
@@ -227,6 +227,7 @@ local moduleDefs = {
 				return
 			end
 			sharedData.weapon2 = "commweapon_microriftgenerator"
+			sharedData.damageMult = (sharedData.damageMult or 1) + 1
 		end
 	},
 	{
