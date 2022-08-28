@@ -53,10 +53,10 @@ function script.QueryWeapon()
 end
 
 function script.Create()
-	Turn(base, x_axis, math.rad(-90)) -- fix orientation
+	--Turn(base, x_axis, math.rad(-90)) -- fix orientation
 	--Move(base, x_axis, 20)
-	Move(base, z_axis, -57)
-	Move(base, y_axis, 80) -- Move up a bit.
+	--Move(base, x_axis, 80)
+	Move(base, z_axis, 45) -- Move up a bit.
 end
 
 function script.HitByWeapon(x, z, weaponDefID, damage)
