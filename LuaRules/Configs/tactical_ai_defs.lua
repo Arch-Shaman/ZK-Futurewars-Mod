@@ -916,7 +916,7 @@ local behaviourConfig = {
 	{
 		name = "vehscout",
 		skirms = veryShortRangeSkirmieeArray,
-		swarms = lowRangeSwarmieeArray,
+		swarms = {},
 		flees = fleeables,
 		idleFlee = veryShortRangeRaiderIdleFleeArray,
 		avoidHeightDiff = explodableFull,
@@ -935,7 +935,7 @@ local behaviourConfig = {
 		minCircleStrafeDistance = 50,
 		fleeLeeway = 140,
 		fleeDistance = 150,
-		
+		reloadFlee = true,
 		wardFireTargets = personalShieldUnits,
 		wardFireEnableLeeway = 8,
 		wardFireShield = 50,
