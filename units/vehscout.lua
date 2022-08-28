@@ -78,9 +78,9 @@ return {
 					blastwave_speed = 6.25,
 					blastwave_life = 8,
 					blastwave_lossfactor = 0.9,
-					blastwave_damage = 20.1,
+					blastwave_damage = 14.1,
 					blastwave_nofriendly = "Vittu momentums",
-					blastwave_slowdmg = 130,
+					blastwave_slowdmg = 180,
 				},
 				damage                  = {
 					default = 15.1,
