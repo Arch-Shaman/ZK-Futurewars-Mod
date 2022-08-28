@@ -6,11 +6,12 @@ local weaponDef = {
 	cegTag                  = [[nucleartrail_small]],
 	craterBoost             = 1,
 	craterMult              = 4,
+	commandFire             = true,
 	customParams            = {
 		is_unit_weapon = 1,
 		slot = [[5]],
 		muzzleEffectShot = [[custom:SLAM_MUZZLE]],
-
+		manualfire = 1,
 		light_camera_height = 2200,
 		light_color = [[0.95 0.65 0.30]],
 		light_radius = 280,
@@ -25,7 +26,7 @@ local weaponDef = {
 		okp_speedmult = 0.9,
 		okp_radarmult = 1,
 		okp_timeout = 120,
-		okp_damage = 5000.1,
+		okp_damage = 4250.1,
 		cruise_ignoreterrain = "1",
 		onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 	},
