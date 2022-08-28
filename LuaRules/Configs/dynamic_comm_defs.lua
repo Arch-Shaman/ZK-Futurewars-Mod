@@ -65,12 +65,14 @@ local function ApplyHeavyOrdinance1(modules, sharedData)
 		["commweapon_rocketbarrage"] = "commweapon_rocketbarrage_nuclear",
 		["commweapon_rocketlauncher"] = "commweapon_rocketlauncher_nuclear",
 		["commweapon_artillery_light"] = "commweapon_artillery_light_nuclear",
+		["commweapon_taclaser"] = "commweapon_megalaser",
 	}
 	local wantsfireatradar = {
 		["commweapon_artillery_heavy_nuclear"] = true,
 		["commweapon_rocketbarrage_nuclear"] = false,
 		["commweapon_rocketlauncher_nuclear"] = false,
 		["commweapon_artillery_light_nuclear"] = false,
+		["commweapon_megalaser"] = false,
 	}
 	if sharedData.weapon1 and upgrade[sharedData.weapon1] then
 		sharedData.weapon1 = upgrade[sharedData.weapon1]
@@ -87,12 +89,14 @@ local function ApplyHeavyOrdinance2(modules, sharedData)
 		["commweapon_rocketbarrage"] = "commweapon_rocketbarrage_nuclear",
 		["commweapon_rocketlauncher"] = "commweapon_rocketlauncher_nuclear",
 		["commweapon_artillery_light"] = "commweapon_artillery_light_nuclear",
+		["commweapon_taclaser"] = "commweapon_megalaser",
 	}
 	local wantsfireatradar = {
 		["commweapon_artillery_heavy_nuclear"] = true,
 		["commweapon_rocketbarrage_nuclear"] = false,
 		["commweapon_rocketlauncher_nuclear"] = false,
 		["commweapon_artillery_light_nuclear"] = false,
+		["commweapon_megalaser"] = false,
 	}
 	if sharedData.weapon2 and upgrade[sharedData.weapon2] then
 		sharedData.weapon2 = upgrade[sharedData.weapon2]
@@ -231,23 +235,23 @@ local moduleDefs = {
 		end
 	},
 	{
-		name = "commweapon_megalaser",
-		humanName = "Brillant Star Tactical Laser",
-		description = "A long recharge tactical laser that can be used to carve a line in the dirt or to rapidly melt enemy units. Manual fire only.",
+		name = "commweapon_taclaser",
+		humanName = "Flare Tactical Laser",
+		description = "Miniture tachyon emitter designed to snipe units from afar. Requires unimpeded path to enemy making it poor in hilly regions.",
 		image = moduleImagePath .. "commweapon_heatray.png",
-		limit = 1,
-		cost = 500 * COST_MULT,
+		limit = 2,
+		cost = 200 * COST_MULT,
 		requireChassis = {"assault"},
-		requireLevel = 3,
-		slotType = "adv_weapon",
+		requireLevel = 1,
+		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
 			end
 			if not sharedData.weapon1 then
-				sharedData.weapon1 = "commweapon_megalaser"
+				sharedData.weapon1 = "commweapon_taclaser"
 			else
-				sharedData.weapon2 = "commweapon_megalaser"
+				sharedData.weapon2 = "commweapon_taclaser"
 			end
 		end
 	},
@@ -709,7 +713,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 1000 * COST_MULT,
 		requireChassis = {"assault"},
-		requireOneOf = {"commweapon_artillery_heavy", "commweapon_rocketbarrage", "commweapon_rocketlauncher", "commweapon_artillery_light"},
+		requireOneOf = {"commweapon_artillery_heavy", "commweapon_taclaser", "commweapon_rocketbarrage", "commweapon_rocketlauncher", "commweapon_artillery_light"},
 		requireLevel = 5,
 		slotType = "module",
 		applicationFunction = ApplyHeavyOrdinance1
@@ -748,7 +752,7 @@ local moduleDefs = {
 		limit = 1,
 		cost = 600 * COST_MULT,
 		requireChassis = {"assault"},
-		requireTwoOf = {"commweapon_artillery_heavy", "commweapon_rocketbarrage", "commweapon_rocketlauncher"},
+		requireTwoOf = {"commweapon_artillery_heavy", "commweapon_taclaser", "commweapon_rocketbarrage", "commweapon_rocketlauncher"},
 		requireLevel = 5,
 		slotType = "module",
 		applicationFunction = ApplyHeavyOrdinance2

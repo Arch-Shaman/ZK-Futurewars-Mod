@@ -95,7 +95,7 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynassault1", --15/31
+		name = "dynassault1", --18/31
 		weapons = {
 			"commweapon_rocketlauncher", -- 430
 			"commweapon_rocketlauncher", -- 430
@@ -112,6 +112,9 @@ local chassisDefs = {
 			"commweapon_napalmgrenade", -- TODO: replace with napalm mortar
 			"commweapon_clusterbomb", -- TODO: replace with mortar
 			"commweapon_megalaser", -- DEATH LASER LETS GO GAMERS.
+			"commweapon_megalaser", -- DEATH LASER LETS GO GAMERS.
+			"commweapon_taclaser",
+			"commweapon_taclaser",
 			-- Space for shield
 		}
 	},
