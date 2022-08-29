@@ -15,7 +15,6 @@ local weaponDef = {
 		light_color = [[1.25 0.8 1.75]],
 		light_radius = 255,
 		reveal_unit = 66,
-		antibaitbypass = "ärsytät minua",
 		shield_damage = 4500,
 		use_okp = 1,
 		okp_speedmult = 1,

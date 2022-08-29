@@ -72,7 +72,7 @@ local function ApplyHeavyOrdinance1(modules, sharedData)
 		["commweapon_rocketbarrage_nuclear"] = false,
 		["commweapon_rocketlauncher_nuclear"] = false,
 		["commweapon_artillery_light_nuclear"] = false,
-		["commweapon_megalaser"] = false,
+		["commweapon_megalaser"] = true,
 	}
 	if sharedData.weapon1 and upgrade[sharedData.weapon1] then
 		sharedData.weapon1 = upgrade[sharedData.weapon1]
@@ -96,7 +96,7 @@ local function ApplyHeavyOrdinance2(modules, sharedData)
 		["commweapon_rocketbarrage_nuclear"] = false,
 		["commweapon_rocketlauncher_nuclear"] = false,
 		["commweapon_artillery_light_nuclear"] = false,
-		["commweapon_megalaser"] = false,
+		["commweapon_megalaser"] = true,
 	}
 	if sharedData.weapon2 and upgrade[sharedData.weapon2] then
 		sharedData.weapon2 = upgrade[sharedData.weapon2]
@@ -248,6 +248,7 @@ local moduleDefs = {
 			if sharedData.noMoreWeapons then
 				return
 			end
+			sharedData.wantsfireatradar = true
 			if not sharedData.weapon1 then
 				sharedData.weapon1 = "commweapon_taclaser"
 			else
