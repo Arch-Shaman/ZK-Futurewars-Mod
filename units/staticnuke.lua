@@ -77,7 +77,7 @@ return {
 				impulseBoost            = 0.5,
 				impulseFactor           = 0.2,
 				interceptedByShieldType = 65,
-				model                   = [[cstaticnuke_projectile.s3o]],
+				model                   = [[staticnuke_projectile.s3o]],
 				noSelfDamage            = false,
 				range                   = 72000,
 				reloadtime              = 10,
