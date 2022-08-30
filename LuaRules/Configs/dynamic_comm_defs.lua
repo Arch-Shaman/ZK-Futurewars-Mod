@@ -1490,7 +1490,7 @@ local moduleDefs = {
 		requireOneOf = {"module_nanorepair"},
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			sharedData.nanoregen = (sharedData.nanomax or 0) + 2
+			sharedData.nanomax = (sharedData.nanomax or 0) + 2
 		end
 	},
 	{
