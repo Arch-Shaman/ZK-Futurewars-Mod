@@ -398,7 +398,7 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	if data.healthBonus then
 		local health, maxHealth = spGetUnitHealth(unitID)
 		local newHealth = math.max(health + data.healthBonus, 1)
-		local newMaxHealth = math.max(maxHealth + data.healthBonus, 1)
+		local newMaxHealth = math.max(maxHealth + data.healthBonus, 100)
 		spSetUnitHealth(unitID, newHealth)
 		Spring.SetUnitMaxHealth(unitID, newMaxHealth)
 		Spring.SetUnitRulesParam(unitID, "commander_healthbonus", healthBonus, INLOS)
