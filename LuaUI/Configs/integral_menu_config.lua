@@ -42,6 +42,7 @@ local tooltips = {
 	TOGGLE_DRONES = "Drone Construction (_STATE_)\n  Toggle drone creation.",
 	OVERRECLAIM = "Overreclaim Prevention (_STATE_)\nBlocks constructors from reclaiming when storage is nearly full.",
 	FIRECYCLE = "Spread napalm (_STATE_)\nSets whether this unit should prioritize spreading burning status.",
+	ARMORSTATE = "Hunker (_STATE_)\n Hunker down to reduce damage but lose access to weapons.",
 }
 
 local tooltipsAlternate = {
@@ -288,6 +289,10 @@ local commandDisplayConfig = {
 	[CMD_DISABLE_ATTACK] = {
 		texture = {imageDir .. 'states/disableattack_off.png', imageDir .. 'states/disableattack_on.png'},
 		stateTooltip = {tooltips.DISABLE_ATTACK:gsub("_STATE_", "Allowed"), tooltips.DISABLE_ATTACK:gsub("_STATE_", "Blocked")}
+	},
+	[CMD_ARMORSTATE] = {
+		texture = {imageDir .. 'states/armor_off.png', imageDir .. 'states/armor_on.png'},
+		stateTooltip = {tooltips.ARMORSTATE:gsub("_STATE_", "Off"), tooltips.ARMORSTATE:gsub("_STATE_", "On")}
 	},
 	[CMD_PUSH_PULL] = {
 		texture = {imageDir .. 'states/pull_alt.png', imageDir .. 'states/push_alt.png'},

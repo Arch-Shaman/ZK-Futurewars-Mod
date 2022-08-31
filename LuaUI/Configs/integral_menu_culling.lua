@@ -55,6 +55,7 @@ local configList = {
 	{cmdID = CMD_RETREAT               , state = true, default = true, name = "Retreat"},
 	{cmdID = CMD.TRAJECTORY            , state = true, default = true, name = "Trajectory"},
 	{cmdID = CMD_AUTOJUMP              , state = true, default = true, name = "Autojump"},
+	{cmdID = CMD_ARMORSTATE            , state = true, default = true, name = "Hunker Down"},
 
 	{label = "Advanced States (hidden by default)"},
 	{cmdID = CMD_DISABLE_ATTACK        , state = true, default = false, name = "Allow Attack Commands"},

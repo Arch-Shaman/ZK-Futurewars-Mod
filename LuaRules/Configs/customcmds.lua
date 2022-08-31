@@ -107,6 +107,7 @@ local cmds = {
 	OVERRECLAIM = 38950,
 	AIR_STRAFE = 39381,
 	AUTOJUMP = 39382, -- Tactical AI / Jump Fall Avoidance
+	ARMORSTATE = 39383, -- Bastion / Azimuth command.
 	-- terraform
 	RAMP = 39734,
 	LEVEL = 39736,

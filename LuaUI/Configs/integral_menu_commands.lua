@@ -90,6 +90,7 @@ local cmdPosDef = {
 	[CMD_PUSH_PULL]        = {pos = 1, priority = 17},
 	[CMD.IDLEMODE]         = {pos = 1, priority = 18},
 	[CMD_AP_FLY_STATE]     = {pos = 1, priority = 19},
+	[CMD_ARMORSTATE]       = {pos = 1, priority = 20},
 	[CMD_AUTO_CALL_TRANSPORT] = {pos = 1, priority = 21},
 }
 

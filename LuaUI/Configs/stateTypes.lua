@@ -35,6 +35,7 @@ local stateData = {
 	[CMD_UNIT_AI] = 2,
 	[CMD_OVERRECLAIM] = 2,
 	[CMD_FIRECYCLE] = 2,
+	[CMD_ARMORSTATE] = 2,
 }
 
 local specialHandling = {
@@ -65,6 +66,7 @@ local gadgetReverse = {
 	[CMD_GOO_GATHER] = true,
 	[CMD_OVERRECLAIM] = true,
 	[CMD_FIRECYCLE] = true,
+	[CMD_ARMORSTATE] = true,
 }
 
 return stateData, gadgetReverse, specialHandling
