@@ -121,6 +121,7 @@ end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+	Spin(radar, y_axis, math.rad(1000))
 end
 
 local on = true
