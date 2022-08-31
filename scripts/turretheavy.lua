@@ -160,13 +160,15 @@ function Close()
 	Spring.SetUnitArmored(unitID,true)
 end
 
-function script.Activate()
-	StartThread(Open)
-end
-
-function script.Deactivate()
-	on = false
-	StartThread(Close)
+function OnArmorStateChanged(state)
+	local armored = state == 1
+	if armored and on then
+		StartThread(Close)
+		on = false
+	elseif not armored and not on then
+		StartThread(Open)
+		on = true
+	end
 end
 
 function script.Create()
