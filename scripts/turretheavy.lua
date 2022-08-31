@@ -51,8 +51,6 @@ local function Open()
 		Sleep(500)
 	end
 
-	Spring.SetUnitArmored(unitID,false)
-
 	-- Open Main Shell
 	Move(shell_1, x_axis, 0, shellSpeed)
 	Move(shell_2, x_axis, 0, shellSpeed)
@@ -78,6 +76,7 @@ local function Open()
 	
 	WaitForTurn(cannonbase, x_axis)
 	WaitForMove(heatray, z_axis)
+	Spring.SetUnitArmored(unitID,false)
 	if spGetUnitRulesParam(unitID, "lowpower") == 1 then
 		return
 	end
