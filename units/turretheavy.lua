@@ -27,6 +27,7 @@ return {
 			outline_x			= 130,
 			outline_y			= 150,
 			outline_yoff		= 47.5,
+			hasarmorstate = 1,
 		},
 		damageModifier					= 0.25,
 		explodeAs						= "ESTOR_BUILDING",
@@ -40,7 +41,6 @@ return {
 		maxWaterDepth					= 0,
 		noChaseCategory					= "FIXEDWING LAND SHIP SATELLITE SWIM GUNSHIP SUB HOVER",
 		objectName						= "DDM.s3o",
-		onoffable						= true,
 		script							= "turretheavy.lua",
 		selfDestructAs					= "ESTOR_BUILDING",
 		sfxtypes						= {
