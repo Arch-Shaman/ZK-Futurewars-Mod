@@ -122,16 +122,22 @@ end
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 end
-function script.Activate()
-	Spin(radar, y_axis, math.rad(1000))
-	StartThread(Open)
-end
 
-function script.Deactivate()
-	StopSpin(radar, y_axis)
-	Signal(SIG_AIM)
-	Turn(radar, y_axis, 0, math.rad(1000))
-	StartThread(Close)
+local on = true
+
+function OnArmorStateChanged(state)
+	local armored = state == 1
+	if armored and on then
+		StopSpin(radar, y_axis)
+		Signal(SIG_AIM)
+		Turn(radar, y_axis, 0, math.rad(1000))
+		StartThread(Close)
+		on = false
+	elseif not armored and not on then
+		Spin(radar, y_axis, math.rad(1000))
+		StartThread(Open)
+		on = true
+	end
 end
 
 function script.AimWeapon(weaponNum, heading, pitch)
