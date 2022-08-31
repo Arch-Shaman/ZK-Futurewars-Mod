@@ -6,7 +6,7 @@ function gadget:GetInfo() return {
 	author    = "Shaman",
 	date      = "31 August 2022",
 	license   = "CC-0",
-	layer     = 0,
+	layer     = 1, -- purposefully lower than popup turret ai to allow it to see the commands.
 	enabled   = true,
 } end
 

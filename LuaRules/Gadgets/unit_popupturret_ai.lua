@@ -16,6 +16,7 @@ VFS.Include("LuaRules/Configs/customcmds.h.lua")
 
 local CHECK_RATE = 3 -- 10Hz
 local wanted = {}
+local exceptions = {}
 
 for i = 1, #UnitDefs do
 	local ud = UnitDefs[i]
@@ -24,6 +25,7 @@ for i = 1, #UnitDefs do
 			minhealth = tonumber(ud.customParams.popupholdfirehp) or 0.33, -- hp % required to trigger hold fire
 			maxhealth = tonumber(ud.customParams.popupunholdfirehp) or 0.5, -- hp % require to lift hold fire
 			maxdisarm = 0.75, -- after being disarmed, wait until this much disarm before lifting hold fire.
+			usearmorstate = ud.customParams.popupusearmorstate ~= nil,
 		}
 	end
 end
@@ -64,7 +66,7 @@ local unitAICmdDesc = {
 	params     = {1, 'AI Off','AI On'}
 }
 
-local function AIToggleCommand(unitID, cmdParams, cmdOptions)
+local function AIToggleCommand(unitID, cmdParams)
 	local def = spGetUnitDefID(unitID)
 	if wanted[def] then
 		local state = cmdParams[1]
@@ -81,10 +83,36 @@ local function AIToggleCommand(unitID, cmdParams, cmdOptions)
 	end
 end
 
+local function CheckState(unitID, state) -- user overrides something.
+	local data = IterableMap.Get(handled, unitID)
+	if data then
+		return data.holdFire ~= state
+	else
+		return false
+	end
+end
+
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced) -- we get unitAI cmd from tactical ai. this just plugs it into this script.
 	if (cmdID == CMD_UNIT_AI) and wanted[unitDefID] then
-		AIToggleCommand(unitID, cmdParams, cmdOptions)
+		AIToggleCommand(unitID, cmdParams)
 		return false  -- command was used
+	end
+	if cmdID == CMD_ARMORSTATE and wanted[unitDefID] then
+		if CheckState(unitID, cmdParams[1] == 1) then
+			--Spring.Echo("added an exception")
+			exceptions[unitID] = true
+		else
+			exceptions[unitID] = nil
+		end
+	end
+	if cmdID == CMD.FIRE_STATE and wanted[unitDefID] and not wanted[unitDefID].usearmorstate then
+		local isHoldFire = cmdParams[1] == 0
+		if CheckState(unitID, isHoldFire) then
+			--Spring.Echo("added an exception")
+			exceptions[unitID] = true
+		else
+			exceptions[unitID] = nil
+		end
 	end
 	return true  -- command wasnt used
 end
@@ -112,6 +140,7 @@ function gadget:GameFrame(f)
 			local hp, maxhp, _ = spGetUnitHealth(unitID)
 			local hpProp = hp/maxhp
 			local config = data.config
+			local useArmorState = config.usearmorstate
 			
 			if data.hpHoldFire and hpProp >= config.maxhealth then
 				data.hpHoldFire = false
@@ -130,14 +159,24 @@ function gadget:GameFrame(f)
 			end
 			
 			-- ensure our state matches --
-			local isHoldFire = spGetUnitStates(unitID).firestate == 0
-			
-			if isHoldFire ~= data.holdFire then
-				if data.holdFire then
-					GG.DelegateOrder(unitID, CMD.STOP, {}, 0) -- stop force fire / set target / etc. We want to close up immediately.
-					GG.DelegateOrder(unitID, CMD.FIRE_STATE, {0}, 0) -- set hold fire
+			if exceptions[unitID] == nil then
+				if useArmorState then
+					local armorstate = spGetUnitRulesParam(unitID, "hunkerstate") == 1
+					if data.holdFire and not armorstate then
+						GG.DelegateOrder(unitID, CMD_ARMORSTATE, {1}, 0)
+					elseif not data.holdFire and armorstate then
+						GG.DelegateOrder(unitID, CMD_ARMORSTATE, {0}, 0)
+					end
 				else
-					GG.DelegateOrder(unitID, CMD.FIRE_STATE, {2}, 0) -- clear hold fire.
+					local isHoldFire = spGetUnitStates(unitID).firestate == 0
+					if isHoldFire ~= data.holdFire then
+						if data.holdFire then
+							GG.DelegateOrder(unitID, CMD.STOP, {}, 0) -- stop force fire / set target / etc. We want to close up immediately.
+							GG.DelegateOrder(unitID, CMD.FIRE_STATE, {0}, 0) -- set hold fire
+						else
+							GG.DelegateOrder(unitID, CMD.FIRE_STATE, {2}, 0) -- clear hold fire.
+						end
+					end
 				end
 			end
 		end
