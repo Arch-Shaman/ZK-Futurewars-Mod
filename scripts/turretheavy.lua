@@ -52,37 +52,32 @@ local function Open()
 	end
 
 	-- Open Main Shell
-	Move(shell_1, x_axis, 0, shellSpeed)
-	Move(shell_2, x_axis, 0, shellSpeed)
+	Move(shell_1, x_axis, 0, shellSpeed * 4)
+	Move(shell_2, x_axis, 0, shellSpeed * 4)
+	-- Unsquish heatray
+	Move(shellbase, y_axis, 0, 3 * 4)
+	Move(heatraybase, y_axis, 0, 1.5 * 4)
 	
 	WaitForMove(shell_1, x_axis)
-	while spGetUnitRulesParam(unitID, "lowpower") == 1 do
-		Sleep(500)
-	end
-	
-	-- Unsquish heatray
-	Move(shellbase, y_axis, 0, 3)
-	Move(heatraybase, y_axis, 0, 1.5)
-	
 	WaitForMove(shellbase, y_axis)
 	WaitForMove(heatraybase, y_axis)
+	Spring.SetUnitArmored(unitID, false)
 	while spGetUnitRulesParam(unitID, "lowpower") == 1 do
 		Sleep(500)
 	end
 	
 	-- Unstow Guns
-	Turn(cannonbase, x_axis, 0, mainPitch)
-	Move(heatray,z_axis, 0, 8)
+	Turn(cannonbase, x_axis, 0, mainPitch * 4)
+	Move(heatray,z_axis, 0, 8 * 4)
 	
 	WaitForTurn(cannonbase, x_axis)
 	WaitForMove(heatray, z_axis)
-	Spring.SetUnitArmored(unitID,false)
 	if spGetUnitRulesParam(unitID, "lowpower") == 1 then
 		return
 	end
 
 	-- Ready Cannon Head
-	Move(cannon, z_axis, 0, 10)
+	Move(cannon, z_axis, 0, 10 * 4)
 	WaitForMove(cannon, z_axis)
 	while spGetUnitRulesParam(unitID, "lowpower") == 1 do
 		Sleep(500)
@@ -118,8 +113,8 @@ function Close()
 	end
 	
 	-- Prepare both guns to be stowed.
-	Move(cannon, z_axis, -10, 10)
-	Turn(heatray, x_axis, 0, 2)
+	Move(cannon, z_axis, -10, 10 * 4)
+	Turn(heatray, x_axis, 0, 2 * 4)
 	
 	WaitForTurn(heatray, x_axis)
 	WaitForMove(cannon, z_axis)
@@ -128,8 +123,8 @@ function Close()
 	end
 	
 	-- Stow Guns
-	Turn(cannonbase, x_axis, 1.57, mainPitch)
-	Move(heatray,z_axis, -10, 4)
+	Turn(cannonbase, x_axis, 1.57, mainPitch * 4)
+	Move(heatray,z_axis, -10, 4 * 4)
 	
 	WaitForTurn(cannonbase, x_axis)
 	WaitForMove(heatray, z_axis)
@@ -138,31 +133,26 @@ function Close()
 	end
 	
 	-- Squish Heatray area
-	Turn(shellbase, y_axis, tauOn8*position, mainHeading/4)
-	Turn(heatraybase, y_axis, tauOn8*position, 1)
+	Turn(shellbase, y_axis, tauOn8*position, mainHeading/4 * 4)
+	Turn(heatraybase, y_axis, tauOn8*position, 1 * 3)
 	WaitForTurn(shellbase, y_axis)
 	WaitForTurn(heatraybase, y_axis)
 	while spGetUnitRulesParam(unitID, "lowpower") == 1 do
 		Sleep(500)
 	end
 	
-	Move(shellbase, y_axis, -12.6, 3)
-	Move(heatraybase, y_axis, -6.3, 1.5)
-	
-	WaitForMove(shellbase,y_axis)
-	WaitForMove(heatraybase,y_axis)
-	while spGetUnitRulesParam(unitID, "lowpower") == 1 do
-		Sleep(500)
-	end
-
+	Move(shellbase, y_axis, -12.6, 3 * 4)
+	Move(heatraybase, y_axis, -6.3, 1.5 * 4)
 	-- Close Main Shell
-	Move(shell_1,x_axis,  5, shellSpeed)
-	Move(shell_2,x_axis, -5, shellSpeed)
-	
-	StartThread(FinalCloseInterrupt)
+	Move(shell_1,x_axis,  5, shellSpeed * 4)
+	Move(shell_2,x_axis, -5, shellSpeed * 4)
 	
 	WaitForMove(shell_1,x_axis)
 	WaitForMove(shell_2,x_axis)
+	WaitForMove(shellbase,y_axis)
+	WaitForMove(heatraybase,y_axis)
+	
+	StartThread(FinalCloseInterrupt)
 	
 	Signal(closeInterrupt)
 	
