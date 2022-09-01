@@ -80,7 +80,6 @@ local unitDef = {
 				light_color = "1.25 0 0",
 				light_radius = 90,
 				norealdamage = 1,
-				reaim_time = 120, -- reaiming causes losses.
 			},
 			damage                  = {
 				default = 0,
@@ -130,7 +129,6 @@ local unitDef = {
 				reveal_unit = 10,
 				allowedpitcherror = 0.8,
 				allowedheadingerror = 0.8,
-				reaim_time = 120, -- reaiming causes losses.
 			},
 			damage                  = {
 				default = 6000.1,
