@@ -20,9 +20,12 @@ local flare2 = piece "flare2"
 local flare3 = piece "flare3"
 
 local spGetUnitRulesParam 	= Spring.GetUnitRulesParam
+local spGetUnitIsStunned = Spring.GetUnitIsStunned
+local spSetUnitHealth = Spring.SetUnitHealth
 
 local smokePiece = { shell_1, shell_2, cannonbase, heatray }
 
+local BUNKERED_AUTOHEAL = tonumber (UnitDef.customParams.armored_regen or 20) / 2 -- applied every 0.5s
 
 --variables
 local heat = false
@@ -42,6 +45,8 @@ local position = 0
 
 local tauOn16 = GG.Script.tau/16
 local tauOn8 = GG.Script.tau/8
+
+local spGetUnitHealth = Spring.GetUnitHealth
 
 local function Open()
 	Signal(close) --kill the closing animation if it is in process
@@ -158,6 +163,17 @@ function Close()
 	
 	-- Set Armour
 	Spring.SetUnitArmored(unitID,true)
+	
+	while true do
+		local stunned_or_inbuild = spGetUnitIsStunned(unitID) or (spGetUnitRulesParam(unitID, "disarmed") == 1)
+		if not stunned_or_inbuild then
+			local hp = spGetUnitHealth(unitID)
+			local slowMult = (spGetUnitRulesParam(unitID,"baseSpeedMult") or 1)
+			local newHp = hp + slowMult*BUNKERED_AUTOHEAL
+			spSetUnitHealth(unitID, newHp)
+		end
+		Sleep(500)
+	end
 end
 
 function OnArmorStateChanged(state)
@@ -175,9 +191,10 @@ function script.Create()
 	on = true
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	SetupQueryWeaponFixHax(cannonAim, flare1)
+	Hide(flare1)
 end
 
-local aimFromSet = {cannonAim, heatraybase}
+local aimFromSet = {cannonAim, heatraybase, heatraybase, base}
 
 function script.AimFromWeapon(num)
 	return aimFromSet[num]
@@ -201,7 +218,7 @@ function script.AimWeapon(num, heading, pitch)
 		StartThread(AimingDone)
 		
 		return (spGetUnitRulesParam(unitID, "lowpower") == 0)	--checks for sufficient energy in grid
-	elseif num == 2 then
+	elseif num == 2 or num == 3 then
 		Signal(aim2)
 		SetSignalMask(aim2)
 		
@@ -219,23 +236,24 @@ function script.QueryWeapon(num)
 	if num == 1 then
 		return GetQueryPiece()
 	elseif num == 2 then
-		if heat then
-			return flare2
-		else
-			return flare3
-		end
+		return flare2
+	elseif num == 3 then
+		return flare3
+	else
+		return base
 	end
+end
+
+local function RecoilThread()
+	Move(cannon, z_axis, -24, 50)
+	Sleep(400)
+	Move(cannon, z_axis, 0, 3.68)
 end
 
 function script.FireWeapon(num)
 	if num == 1 then
 		EmitSfx(flare1, 1024)
-		Move(cannon, z_axis, -24)
-		Move(cannon, z_axis, 0, 10)
-		Sleep(20)
-		Hide(flare1)
-	elseif num == 2 then
-		heat = not heat
+		StartThread(RecoilThread)
 	end
 end
 
