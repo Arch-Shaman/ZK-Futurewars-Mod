@@ -136,7 +136,7 @@ function script.FireWeapon()
 	end
 	
 	-- Intentionally non-positional
-	Spring.PlaySoundFile("sounds/weapon/missile/heavymissile_launch.wav", 15)
+	Spring.PlaySoundFile("sounds/weapon/missile/heavymissile_launch.wav", 15, "battle")
 end
 
 function script.QueryWeapon()
