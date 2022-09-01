@@ -129,6 +129,10 @@ local tooltips = {
 		[0] = "Disabled.",
 		[1] = "Prioritize spreading burning status.",
 	},
+	armor = {
+		[0] = "Unhunkered",
+		[1] = "Hunkered",
+	},
 }
 
 for name, values in pairs(tooltips) do
@@ -1111,6 +1115,17 @@ local function addUnit(defName, path)
 		end
 	end
 	
+	if ud.customParams.hasarmorstate then
+		options[defName .. "_armored"] = {
+			name = "  Hunkered State",
+			desc = "Check box to set the unit to hunkered when built.",
+			type = 'bool',
+			value = false,
+			path = path,
+		}
+		options_order[#options_order+1] = defName .. "_armored"
+	end
+	
 	if ud.customParams.attack_toggle then
 		options[defName .. "_disableattack"] = {
 			name = "  Disable Attack Commands",
@@ -1400,6 +1415,7 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		QueueState(name, "floattoggle", CMD_UNIT_FLOAT_STATE, orderArray)
 		QueueState(name, "goostate", CMD_GOO_GATHER, orderArray)
 		
+		local armored = GetStateValue(name, "armored")
 		local retreat = GetStateValue(name, "retreatpercent")
 		local retreatshield = GetStateValue(name, "retreatpercent_shield")
 		local autojump = GetStateValue(name, "autojump")
@@ -1407,6 +1423,9 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 			if autojump == 0 then
 				orderArray[#orderArray + 1] = {CMD_AUTOJUMP, {0}, CMD.OPT_SHIFT + CMD.OPT_RIGHT}
 			end
+		end
+		if armored then
+			orderArray[#orderArray + 1] = {CMD_ARMORSTATE, {1}, CMD.OPT_SHIFT + CMD.OPT_RIGHT}
 		end
 		if retreat == -1 then --if inherit
 			if builderID then
