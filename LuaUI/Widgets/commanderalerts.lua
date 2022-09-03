@@ -59,7 +59,7 @@ end
 
 function widget:UnitEnteredRadar(unitID, unitTeam, allyTeam, unitDefID)
 	local x, y, z = Spring.GetUnitPosition(unitID)
-	local gy = Spring.GetGroundHeight(x, z)
+	local gy = math.max(Spring.GetGroundHeight(x, z), 0)
 	if (unitDefID and UnitDefs[unitDefID].isAirUnit) or (y - gy > airlevel) then
 		ReportEnemyAircraft()
 	end
