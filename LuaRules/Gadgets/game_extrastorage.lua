@@ -96,7 +96,7 @@ GG.SetupUnitStorage = SetupUnitStorage
 
 function gadget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
 	if handledunits[unitID] then
-		local storageamount = sGetUnitRulesParam(unitID, "extra_storage") or 0
+		local storageamount = spGetUnitRulesParam(unitID, "extra_storage") or 0
 		if storageamount ~= 0 then
 			AddTeamStorage(oldTeam, -storageamount)
 		end
