@@ -98,7 +98,7 @@ local function Updateblastwave(data) -- Updateblastwave(x, y, z, size, impulse, 
 			local friendlyCheck = def.healshostiles or (attackerTeam ~= nil and unitTeam == attackerTeam)
 			--Spring.Echo("attacker Ally Team: " .. tostring(attackerTeam) .. "\nMyTeam: " .. tostring(spGetUnitAllyTeam(unitID)))
 			if hostileCheck then
-				local ux, uy, uz = spGetUnitPosition(unitID)
+				local _, _, _, ux, uy, uz = spGetUnitPosition(unitID, true)
 				local dx, dy, dz = (ux - x)/size, (uy - y)/size, (uz - z)/size
 				local distance = distance2d(ux, uz, x, z)
 				local ddist = (size - distance) / size
