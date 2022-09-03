@@ -849,6 +849,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				end
 			end
 			if cp.blastwave_size then
+				local damagemult = (unitID and Spring.GetUnitRulesParam(unitID, "comm_damage_mult")) or 1
 				cells[#cells+1] = ' - Creates a blastwave:'
 				cells[#cells+1] = ''
 				cells[#cells+1] = '\t - Initial Size:'
@@ -862,11 +863,11 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 						cells[#cells+1] = blastwave_healing
 					end
 				end
-				local slowdmg = tonumber(cp.blastwave_slowdmg) or 0 
-				local empdmg = tonumber(cp.blastwave_empdmg) or 0
-				local overslow = tonumber(cp.blastwave_overslow) or 0
-				local emptime = tonumber(cp.blastwave_emptime) or 0
-				local damage = tonumber(cp.blastwave_damage) or 0
+				local slowdmg = tonumber(cp.blastwave_slowdmg) or 0 * damagemult
+				local empdmg = tonumber(cp.blastwave_empdmg) or 0 * damagemult
+				local overslow = tonumber(cp.blastwave_overslow) or 0 * damagemult
+				local emptime = tonumber(cp.blastwave_emptime) or 0 * damagemult
+				local damage = tonumber(cp.blastwave_damage) or 0 * damagemult
 				local damagestring = damage .. " "
 				if empdmg > 0 then
 					damagestring = damagestring .. color2incolor(colorCyan) .. empdmg .. "( " .. emptime .. "s)\008 "
