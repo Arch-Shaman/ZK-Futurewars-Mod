@@ -87,6 +87,7 @@ local alwaysDisplay = {
 	[UnitDefNames.staticnuke.id] = true,
 	[UnitDefNames.staticenergyrtg.id] = true,
 	[UnitDefNames.energyprosperity.id] = true,
+	[UnitDefNames.energygeo.id] = true,
 }
 
 -----------------------------------------------------------------------------------
@@ -159,6 +160,32 @@ function ChangeBlastColor()
 	lastColorChangeTime = time
 end
 
+local function DrawRadiusOnUnit(centerX, height, centerZ, blastRadius, text)
+	glLineWidth(blastLineWidth)
+	glColor( expBlastColor[1], expBlastColor[2], expBlastColor[3], blastAlphaValue )
+	
+	--draw static ground circle
+	glDrawGroundCircle(centerX, 0, centerZ, blastRadius, blastCircleDivs )
+	glPushMatrix()
+	
+	glTranslate(centerX , height, centerZ)
+	--gl.Rotate(90,1,0,0)
+	--glTexRect(-halfSquare, halfSquare, halfSquare, -halfSquare)
+	--gl.Rotate(-90,1,0,0)
+	glTranslate(-blastRadius / 2, 0, blastRadius / 2 )
+	glBillboard()
+	glText(text, 0.0, 0.0, sqrt(blastRadius), "cn")
+	glPopMatrix()
+	
+	--tidy up
+	glLineWidth(1)
+	glColor(1, 1, 1, 1)
+	
+	--cycle colors for next frame
+	ChangeBlastColor()
+end
+	
+
 function DrawBuildMenuBlastRange()
 	--check if valid command
 	local idx, cmd_id, cmd_type, cmd_name = spGetActiveCommand()
@@ -185,23 +212,38 @@ function DrawBuildMenuBlastRange()
 	local unitDefID = -cmd_id
 		
 	local udef = udefTab[unitDefID]
-	if ( weapNamTab[lower(udef["deathExplosion"])] == nil ) then
+	local morphdef = UnitDefs[unitDefID].customParams.morphto and UnitDefNames[UnitDefs[unitDefID].customParams.morphto]
+	local baseExplosionDef = weapNamTab[lower(udef["deathExplosion"])] 
+	local morphExplosionDef = morphdef and weapNamTab[lower(morphdef["deathExplosion"])]
+	if not (baseExplosionDef or morphExplosionDef) then
 		return
 	end
 	
-	local deathBlasId = weapNamTab[lower(udef["deathExplosion"])].id
-	local blastRadius = weapTab[deathBlasId].damageAreaOfEffect
-	local defaultDamage = weapTab[deathBlasId].customParams.shield_damage	--get default damage
-		
 	local mx, my = spGetMouseState()
 	local _, coords = spTraceScreenRay(mx, my, true, true)
-	
 	if not coords then return end
-		
 	local centerX = coords[1]
 	local centerZ = coords[3]
-		
 	centerX, _, centerZ = spPos2BuildPos( unitDefID, centerX, 0, centerZ, spGetBuildFacing() )
+	local height = Spring.GetGroundHeight(centerX,centerZ)
+	
+	if baseExplosionDef then
+		local blastRadius = baseExplosionDef.damageAreaOfEffect
+		local damage = baseExplosionDef.customParams.shield_damage
+		local text = ""
+		if morphExplosionDef == nil or morphExplosionDef.id == baseExplosionDef.id then
+			text = "Damage: " .. damage
+		else
+			text = "Unmorphed: " .. damage
+		end
+		DrawRadiusOnUnit(centerX, height, centerZ, blastRadius, text)
+	end
+	if morphExplosionDef and morphExplosionDef.id ~= baseExplosionDef.id then
+		local blastRadius = morphExplosionDef.damageAreaOfEffect
+		local defaultDamage = morphExplosionDef.customParams.shield_damage	--get default damage
+		DrawRadiusOnUnit(centerX, height, centerZ, blastRadius, "Morphed: " .. defaultDamage)
+	end
+	
 	--this replaced the following
 	--subsample to map grid
 --[[
@@ -217,20 +259,15 @@ function DrawBuildMenuBlastRange()
 		centerZ = (floor(centerZ / mapSquareSize) + 0.5) * mapSquareSize
 	end
 --]]
-	glLineWidth(blastLineWidth)
-	glColor( expBlastColor[1], expBlastColor[2], expBlastColor[3], blastAlphaValue )
 	
-	--draw static ground circle
-	glDrawGroundCircle(centerX, 0, centerZ, blastRadius, blastCircleDivs )
 
 	--dynamic ground circle -- sucks
 	--glDrawGroundCircle(centerX, 0, centerZ, blastRadius * (( spGetGameSeconds() % 3 ) / 3.0 ), blastCircleDivs )
 	
-	local height = Spring.GetGroundHeight(centerX,centerZ)
-	local halfSquare = blastRadius*0.5
+	--local halfSquare = blastRadius*0.5
 	
 	--draw EXPLODE text and icon
-	glPushMatrix()
+	--[[glPushMatrix()
 	
 	glTranslate(centerX , height, centerZ)
 	--gl.Rotate(90,1,0,0)
@@ -246,7 +283,7 @@ function DrawBuildMenuBlastRange()
 	glColor(1, 1, 1, 1)
 	
 	--cycle colors for next frame
-	ChangeBlastColor()
+	ChangeBlastColor()]]
 end
 
 function DrawUnitBlastRadius( unitID )
