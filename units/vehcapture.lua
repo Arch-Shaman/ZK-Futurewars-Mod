@@ -5,7 +5,7 @@ return {
 		description         = "Capture Rover",
 		acceleration        = 0.222,
 		brakeRate           = 0.385,
-		buildCostMetal      = 500,
+		buildCostMetal      = 450,
 		builder             = false,
 		buildPic            = "vehcapture.png",
 		canGuard            = true,
@@ -34,7 +34,7 @@ return {
 		leaveTracks         = true,
 		maxDamage           = 1650,
 		maxSlope            = 18,
-		maxVelocity         = 2.1,
+		maxVelocity         = 2,
 		maxWaterDepth       = 22,
 		movementClass       = "TANK3",
 		noAutoFire          = false,
@@ -49,7 +49,7 @@ return {
 		trackType           = "StdTank",
 		trackWidth          = 28,
 		turninplace         = 0,
-		turnRate            = 320,
+		turnRate            = 250,
 		workerTime          = 0,
 		weapons             = {
 			{
@@ -72,7 +72,7 @@ return {
 					is_capture = 1,
 					disarmDamageMult = 5/3,
 					disarmDamageOnly = 0,
-					disarmTimer      = 5, -- seconds
+					disarmTimer      = 7, -- seconds
 					post_capture_reload = 360,
 					stats_hide_damage = 1, -- continuous laser
 					stats_hide_reload = 1,
@@ -92,7 +92,7 @@ return {
 				largeBeamLaser          = true,
 				laserFlareSize          = 0,
 				minIntensity            = 1,
-				range                   = 500,
+				range                   = 720,
 				reloadtime              = 1/30,
 				rgbColor                = "0 0.8 0.2",
 				scrollSpeed             = 2,
