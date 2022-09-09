@@ -92,7 +92,7 @@ return {
 				largeBeamLaser          = true,
 				laserFlareSize          = 0,
 				minIntensity            = 1,
-				range                   = 720,
+				range                   = 650,
 				reloadtime              = 1/30,
 				rgbColor                = "0 0.8 0.2",
 				scrollSpeed             = 2,
