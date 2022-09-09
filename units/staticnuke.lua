@@ -157,6 +157,45 @@ return {
 				weaponType              = "StarburstLauncher",
 				weaponVelocity          = 1100,
 			},
+			death = {
+				name                    = "Nuclear Death",
+				areaOfEffect            = 1920, --1920,
+				cegTag                  = "nucleartrail",
+				collideFriendly         = false,
+				collideFeature          = false,
+				craterBoost             = 6,
+				craterMult              = 6,
+				customParams              = {
+					restrict_in_widgets = 1,
+					reaim_time = 60, -- Fast update not required (maybe dangerous)
+					light_color = "2.92 2.64 1.76",
+					light_radius = 3000,
+				},
+				damage                  = {
+					default = 9000.1,
+				},
+				edgeEffectiveness       = 0.3,
+				explosionGenerator      = "custom:LONDON_FLAT",      -- note, spawning of the explosion is handled by exp_nuke_effect_chooser.lua
+				fireStarter             = 0,
+				flightTime              = 900,
+				impulseBoost            = 0.5,
+				impulseFactor           = 0.2,
+				interceptedByShieldType = 65,
+				model                   = "staticnuke_projectile.s3o",
+				noSelfDamage            = false,
+				range                   = 140000,
+				reloadtime              = 30,
+				smokeTrail              = false,
+				soundHit                = "explosion/ex_ultra8",
+				startVelocity           = 100,
+				texture1                = "null", --flare
+				tolerance               = 4000,
+				weaponAcceleration      = 100,
+				turnrate                = 18000,
+				tracks                  = true,
+				weaponType              = "Cannon",
+				weaponVelocity          = 1100,
+			},
 		},
 		featureDefs                   = {
 			DEAD  = {
