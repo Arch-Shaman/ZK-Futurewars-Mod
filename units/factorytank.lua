@@ -85,7 +85,7 @@ return {
 				accuracy                = 0,
 				areaOfEffect            = 32,
 				avoidFeature            = false,
-				avoidFriendly           = true,
+				avoidFriendly           = false,
 				avoidGround             = true,
 				collideFriendly         = false,
 				craterBoost             = 0,
