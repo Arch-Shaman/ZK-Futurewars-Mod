@@ -120,7 +120,7 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 600,
-				reloadtime              = 4,
+				reloadtime              = 4.7,
 				rgbColor                = "0.2 0.2 0.2",
 				soundHit                = "weapon/cannon/frag_impact",
 				soundStart              = "explosion/ex_large5",
