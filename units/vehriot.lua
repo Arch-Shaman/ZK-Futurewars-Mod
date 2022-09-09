@@ -148,7 +148,7 @@ return {
 				range                   = 320,
 				reloadtime              = 1.6,
 				soundHit                = "weapon/clusters/cluster_light",
-				soundStart              = "weapon/cannon/outlaw_gun",
+				soundStart              = "weapon/cannon/cannonfire_005",
 				soundStartVolume        = 3,
 				turret                  = true,
 				weaponType              = "Cannon",
