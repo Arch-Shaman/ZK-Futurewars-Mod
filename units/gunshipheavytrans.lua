@@ -108,7 +108,7 @@ return {
 					disarmTimer      = 1,
 				},
 				damage                  = {
-					default = 10.01,
+					default = 8.01,
 				},
 				duration                = 0.02,
 				explosionGenerator      = "custom:WHITE_LIGHTNING_BOMB",
