@@ -97,9 +97,9 @@ local function Death(target)
 	--Spring.Echo("Death: " .. vx .. ", " .. vy .. ", " .. vz .. "\nGravity: " .. myGravity .. "\nEstimated range: " .. range)
 	local pro
 	if vx + vz == 0 then
-		pro = Spring.SpawnProjectile(projectileDef, {pos = {x, y, z}, speed = {0, random(1,8), 0}, owner = unitID, gravity = -myGravity})
+		pro = Spring.SpawnProjectile(projectileDef, {pos = {x, y, z}, speed = {0, random(1,8), 0}, owner = unitID, gravity = -myGravity, team = Spring.GetUnitTeam(unitID)})
 	else
-		pro = Spring.SpawnProjectile(projectileDef, {pos = {x, y, z}, speed = {vx, 0, vz}, owner = unitID, gravity = -myGravity})
+		pro = Spring.SpawnProjectile(projectileDef, {pos = {x, y, z}, speed = {vx, 0, vz}, owner = unitID, gravity = -myGravity, team = Spring.GetUnitTeam(unitID)})
 	end
 	if pro and target then
 		Spring.SetProjectileTarget(pro, target[1], target[2], target[3])
@@ -111,8 +111,19 @@ end
 
 local function Terminate(ex, ey, ez)
 	Death({ex, ey, ez})
-	Spring.DestroyUnit(unitID, false, true)
+	--Spring.DestroyUnit(unitID, false, true)
 	terminated = true
+	Spring.SetUnitNoSelect(unitID, true)
+	Spring.SetUnitNoDraw(unitID, true)
+	Spring.SetUnitNoMinimap(unitID, true)
+	Spring.SetUnitHealth(unitID, {paralyze = 99999999, health = maxHealth}) -- also heal to drop (now off-map) repair orders
+	Spring.SetUnitCloak(unitID, 4)
+	Spring.SetUnitStealth(unitID, true)
+	Spring.SetUnitBlocking(unitID,false,false,false)
+	Spring.GiveOrderToUnit(unitID, CMD.STOP, 0, 0)
+	
+	Sleep(15000)
+	Spring.DestroyUnit(unitID, false, true)
 end
 
 local function GetHeading()
@@ -136,6 +147,9 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.BlockShot() -- after verifying aim and before firing so we're suiciding.
+	if terminated then
+		return true
+	end
 	local typ, _, target = Spring.GetUnitWeaponTarget(unitID, 1)
 	local x, _, z = Spring.GetUnitPosition(unitID)
 	local ex, _, ez
