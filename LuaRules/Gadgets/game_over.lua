@@ -357,7 +357,7 @@ local function DestroyAlliance(allianceID, delayLossToNextGameFrame)
 				toDestroy[destroyFrame] = toDestroy[destroyFrame] or {}
 				toDestroy[destroyFrame][unitID] = true
 			end
-
+			explodeUnits = not SPARE_REGULAR_UNITS
 			for i = 1, #teamList do
 				local t = teamList[i]
 				
