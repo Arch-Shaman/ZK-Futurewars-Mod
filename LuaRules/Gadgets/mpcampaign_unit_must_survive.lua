@@ -27,6 +27,7 @@ local function DefeatMessage(unitDefID, allyTeamID, allyName, wasLast)
 	end
 	defeatMsg = defeatMsg:gsub("<allyname>", allyName):gsub("<defname>", UnitDefs[unitDefID].humanName)
 	Spring.Echo("game_message: " .. defeatMsg)
+	GG.DestroyAlliance(allyTeamID)
 end
 
 -- adding stuff
@@ -61,8 +62,10 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
 		oneOfReverse[unitID] = nil
 		if count == 0 then
 			local allyTeamID = Spring.GetUnitAllyTeam(unitID)
+			local allyName = Spring.GetGameRulesParam("allyteam_short_name_" .. allyTeamID)
 			DefeatMessage(unitDefID, allyTeamID, allyName, false)
-		return
+			return
+		end
 	end
 	if mustSurvive[unitID] then
 		local morphed = Spring.GetUnitRulesParam(unitID, "wasMorphedTo")
@@ -72,9 +75,9 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
 			DefeatMessage(unitDefID, allyTeamID, allyName, false)
 			return
 		else
-			mustSurvive[unitID] = nil
 			AddUnit(morphed)
 		end
+		mustSurvive[unitID] = nil
 	end
 end
 
