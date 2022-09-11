@@ -303,13 +303,6 @@ local function RevealAllianceUnits(allianceID)
 	end
 end
 
-local function QueueDestruction(unitID)
-	local frame = Spring.GetGameFrame() + 50
-	local destroyFrame = frame - math.ceil((math.random()*7)^2)
-	toDestroy[destroyFrame] = toDestroy[destroyFrame] or {}
-	toDestroy[destroyFrame][unitID] = true
-end
-
 -- purge the alliance! for the horde!
 local function DestroyAlliance(allianceID, delayLossToNextGameFrame)
 	if DEBUG_MSG then
@@ -358,6 +351,12 @@ local function DestroyAlliance(allianceID, delayLossToNextGameFrame)
 				EchoUIMessage(name .. " has been destroyed!")
 			end
 
+			local frame = Spring.GetGameFrame() + 50
+			local function QueueDestruction(unitID)
+				local destroyFrame = frame - math.ceil((math.random()*7)^2)
+				toDestroy[destroyFrame] = toDestroy[destroyFrame] or {}
+				toDestroy[destroyFrame][unitID] = true
+			end
 
 			for i = 1, #teamList do
 				local t = teamList[i]
