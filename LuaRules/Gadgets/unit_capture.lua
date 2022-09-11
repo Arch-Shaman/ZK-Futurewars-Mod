@@ -253,7 +253,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		return damage
 	end
 
-	if ((not attackerTeam) or spAreTeamsAllied(unitTeam, attackerTeam) or (damage == 0)) then
+	if ((not attackerTeam) or spAreTeamsAllied(unitTeam, attackerTeam) or (damage == 0) or GG.UMS.IsUnitSpecial(unitID)) then
 		return 0
 	end
 	
