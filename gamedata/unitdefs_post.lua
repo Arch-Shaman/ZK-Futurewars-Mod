@@ -455,7 +455,7 @@ for name, ud in pairs(UnitDefs) do
 	
 	--setting uniform M/E storage
 	local storage = math.max (ud.metalstorage or 0, ud.energystorage or 0)
-	if name:find("factory") then
+	if name:find("factory") or name == "striderhub" then
 		storage = factorybonus
 	end
 	if name:find("plate") then
