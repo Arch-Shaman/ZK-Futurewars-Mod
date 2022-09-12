@@ -1,5 +1,8 @@
--- Assuming max HP/Cost is 50.
--- Max useful HP/Cost is 11, Only Dirtbag and Claw are higher at 32.5 and 40 respectively.
+-- Assuming max HP/Cost is 50 (for setting crappy targets above this threshold).
+--   Max useful HP/Cost is 11 (open Razor).
+--   Some chaff (Gull and Viper drones; Djinn's Lamps) are 12-15.
+--   Dirtbag is the highest among regular units at 20.
+--   Planet Wars buildings reach up to 40 (basic Wormhole).
 
 local DISARM_BASE = 0.3
 local DISARM_ADD = 0.2
@@ -177,7 +180,8 @@ local velocityPenaltyDefs = {
 	[WeaponDefNames["spidercrabe_arm_crabe_gauss"].id]    = {2.5},
 	[WeaponDefNames["spideraa_aa"].id]                    = {11.0},
 	[WeaponDefNames["jumpscout_missile"].id]              = {8.0},
-	[WeaponDefNames["tankassault_cor_reap"].id]           = {1.25},
+	[WeaponDefNames["tankassault_cor_reap"].id]           = {2.5},
+	[WeaponDefNames["tankheavyassault_cor_gol"].id]       = {2.0},
 	[WeaponDefNames["tankarty_core_artillery"].id]        = {1.5},
 	[WeaponDefNames["tankheavyarty_plasma"].id]           = {0.5},
 	[WeaponDefNames["striderantiheavy_disintegrator"].id] = {2.8},
@@ -295,11 +299,17 @@ end
 
 --Time("Reduce WeaponDefs access")
 
--- Generate full target table
+-- Cache for dynamic table generation
 local targetTable = {}
 
-local priority, damage
-for uid = 1, udCount do
+local function GetPriority(uid, wid)
+	if not targetTable[uid] then
+		targetTable[uid] = {}
+	end
+	if targetTable[uid][wid] then
+		return targetTable[uid][wid]
+	end
+	
 	local ud = UnitDefs[uid]
 	local unitHealth = ud.health
 	local inverseUnitCost = 1 / ud.buildTime
@@ -330,7 +340,15 @@ for uid = 1, udCount do
 			targetTable[uid][wid] = priority
 		end
 	end
+	return targetTable[uid][wid]
 end
+
+-- Fill the cache, but this costs 20MB so maybe better not.
+--for uid = 1, udCount do
+--	for wid = 1, wdCount do
+--		GetPriority(uid, wid)
+--	end
+--end
 
 --Time("Generate full target table")
 
@@ -369,4 +387,4 @@ end
 
 --Time("highAlphaWeaponDamages")
 
-return targetTable, disarmWeaponTimeDefs, disarmPenaltyDefs, captureWeaponDefs, gravityWeaponDefs, proximityWeaponDefs, velocityPenaltyDefs, radarWobblePenalty, radarDotPenalty, transportMult, highAlphaWeaponDamages, DISARM_BASE, DISARM_ADD, DISARM_ADD_TIME
+return GetPriority, disarmWeaponTimeDefs, disarmPenaltyDefs, captureWeaponDefs, gravityWeaponDefs, proximityWeaponDefs, velocityPenaltyDefs, radarWobblePenalty, radarDotPenalty, transportMult, highAlphaWeaponDamages, DISARM_BASE, DISARM_ADD, DISARM_ADD_TIME
