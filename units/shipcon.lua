@@ -16,10 +16,11 @@ return {
 		canPatrol              = true,
 		category               = "SHIP UNARMED",
 		collisionVolumeOffsets = "0 8 0",
-		collisionVolumeScales  = "25 25 96",
+		collisionVolumeScales  = "25 35 96",
 		collisionVolumeType    = "cylZ",
 		corpse                 = "DEAD",
 		customParams           = {
+			aimposoffset   = "0 8 0",
 			modelradius    = "40",
 			turnatfullspeed = "1",
 			selection_scale = 1.2,
