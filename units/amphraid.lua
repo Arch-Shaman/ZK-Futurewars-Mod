@@ -177,7 +177,7 @@ return {
 					proxy = 1, -- check for nearby units?
 					reaim_time = 60, -- Fast update not required (maybe dangerous)
 					cruisealt = -0.05,
-					cruisedist = 100,
+					cruisedist = 150,
 					cruise_ascendradius = 80,
 					cruisetracking = 1,
 					cruise_nolock = 1,
