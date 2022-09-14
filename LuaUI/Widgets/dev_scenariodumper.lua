@@ -10,7 +10,7 @@ function widget:GetInfo()
 	}
 end
 
-local dumpstring = "return {"
+local dumpstring = "return "
 
 local teamToRoleID = {}
 
@@ -72,11 +72,11 @@ function widget:KeyPress(v)
 			local hp, maxhp, empdmg, captureprogress, buildprogress = Spring.GetUnitHealth(unitID)
 			local building = Spring.GetUnitIsBuilding(unitID) 
 			local unitTable = {
-				unitDef = UnitDefs[Spring.GetUnitDefID(unitID)].name,
-				positionState = {position = {x, y, z}, facing = heading, rotation = {rx, ry, rz}},
-				healthState = {hp = hp, maxhp = maxhp, paralysis = empdmg, captureprogress = captureprogress, buildprogress = buildprogress},
+				unitdef = UnitDefs[Spring.GetUnitDefID(unitID)].name,
+				position = {position = {x, y, z}, facing = heading, rotation = {rx, ry, rz}},
+				health = {hp = hp, maxhp = maxhp, paralysis = empdmg, captureprogress = captureprogress, buildprogress = buildprogress},
 				role = teamToRoleID[Spring.GetUnitTeam(unitID)],
-				allyID = Spring.GetUnitAllyTeam(unitID),
+				allyid = Spring.GetUnitAllyTeam(unitID),
 				queue = {},
 				states = Spring.GetUnitStates(unitID),
 				builder = builders[i],
@@ -120,7 +120,7 @@ function widget:KeyPress(v)
 		file:write(dumpstring)
 		file:flush()
 		file:close()
-		dumpstring = "return {"
+		dumpstring = "return "
 		Spring.Echo("game_message:Unitlist dumped.")
 	end
 end
