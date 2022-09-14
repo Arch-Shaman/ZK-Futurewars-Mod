@@ -3968,8 +3968,10 @@ local terraUnits = {}
 function gadget:Initialize()
 	for _, unitID in ipairs(Spring.GetAllUnits()) do
 		local unitDefID = Spring.GetUnitDefID(unitID)
-		local teamID = spGetUnitTeam(unitID)
-		gadget:UnitCreated(unitID, unitDefID, teamID)
+		if unitDefID == terraunitDefID then
+			terraUnits[unitID] = true
+			Spring.UnitRendering.SetUnitLuaDraw(unitID, true)
+		end
 	end
 end
 
