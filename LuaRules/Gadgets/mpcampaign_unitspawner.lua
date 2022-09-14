@@ -10,7 +10,7 @@ function gadget:GetInfo()
 		date      = "10 Sept 2022",
 		license   = "CC-0",
 		layer     = 1005,
-		enabled   = true,
+		enabled   = false,
 	}
 end
 
