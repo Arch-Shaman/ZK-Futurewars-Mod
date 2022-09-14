@@ -61,7 +61,7 @@ function widget:KeyPress(v)
 	if v == 268 then
 		Spring.Echo("Dumping units.")
 		local allUnits = Spring.GetAllUnits()
-		local file = io.open("luaui\\dumps\\scenarios\\" .. Game.mapName .. ".lua","w")
+		local file = io.open("luaui\\dumps\\scenarios\\" .. Game.mapName .. "_units.lua","w")
 		local builders = {}
 		local finaltable = {}
 		for i = 1, #allUnits do
