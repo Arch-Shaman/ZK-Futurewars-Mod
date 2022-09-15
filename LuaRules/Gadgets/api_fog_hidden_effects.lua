@@ -1,12 +1,14 @@
-function gadget:GetInfo() return {
-	name      = "Fog Hidden Effects API",
-	desc      = "API for playing sounds only for players with vision",
-	author    = "Google Frog",
-	date      = "17 Jan 2016",
-	license   = "GNU GPL, v2 or later",
-	layer     = 0,
-	enabled   = true,
-} end
+function gadget:GetInfo() 
+	return {
+		name      = "Fog Hidden Effects API",
+		desc      = "API for playing sounds only for players with vision",
+		author    = "Google Frog",
+		date      = "17 Jan 2016",
+		license   = "GNU GPL, v2 or later",
+		layer     = 0,
+		enabled   = true,
+	} 
+end
 
 if gadgetHandler:IsSyncedCode() then
 	local SendToUnsync = SendToUnsynced
