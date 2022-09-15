@@ -84,8 +84,23 @@ local function WeaponFired(unitID, weaponID)
 	spSetUnitRulesParam(unitID, "battery", data.battery, INLOS)
 end
 
+local function IsBatteryRecharged(unitID)
+	local data = IterableMap.Get(handled, unitID)
+	return data == nil or data.battery / data.maxbattery >= 1
+end
+
+local function RechargeBattery(unitID, amount)
+	local data = IterableMap.Get(handled, unitID)
+	if data == nil then
+		return
+	end
+	data.battery = math.min(data.battery + amount, data.maxbattery)
+	spSetUnitRulesParam(unitID, "battery", data.battery, INLOS)
+	IterableMap.Set(handled, unitID, data)
+end
+
 function gadget:Initialize()
-	GG.BatteryManagement = {CanFire = CanFire, WeaponFired = WeaponFired}
+	GG.BatteryManagement = {CanFire = CanFire, WeaponFired = WeaponFired, IsBatteryRecharged = IsBatteryRecharged, RechargeBattery = RechargeBattery}
 end
 
 function gadget:UnitCreated(unitID, unitDefID)
