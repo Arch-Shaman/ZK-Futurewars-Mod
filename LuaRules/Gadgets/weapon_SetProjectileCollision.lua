@@ -1,3 +1,9 @@
+-- Is this even used?
+
+if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "SetProjectileCollsion",
@@ -8,10 +14,6 @@ function gadget:GetInfo()
 		layer     = -9999,
 		enabled   = true,
 	}
-end
-
-if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
-	return
 end
 
 local projectiles = {}

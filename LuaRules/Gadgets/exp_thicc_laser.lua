@@ -1,3 +1,7 @@
+if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "CEG d overrider",
@@ -37,11 +41,6 @@ local handledExplosions = {}
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 local debugmode = false
----------------------------------------------------------------------
----------------------------------------------------------------------
-if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
-	return
-end
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 

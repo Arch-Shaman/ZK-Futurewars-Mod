@@ -1,3 +1,7 @@
+if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Notice",
@@ -8,10 +12,6 @@ function gadget:GetInfo()
 		layer     = -math.huge,
 		enabled   = true,
 	}
-end
-
-if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
-	return
 end
 
 Spring.Echo("DEVELOPER NOTICE: This is a FUTURE WARS game. If you're getting any unusual crash reports with this message, please kindly open an issue here: https://github.com/Arch-Shaman/ZK-Futurewars-Mod/issues")

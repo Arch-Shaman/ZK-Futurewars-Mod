@@ -1,3 +1,6 @@
+if not (gadgetHandler:IsSyncedCode()) then
+	return false
+end
 
 function gadget:GetInfo()
   return {

@@ -1,3 +1,7 @@
+if (not gadgetHandler:IsSyncedCode()) then
+	return false  --  silent removal
+end
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -31,10 +35,6 @@ local unitWantCloakCommandDesc = {
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-
-if (not gadgetHandler:IsSyncedCode()) then
-	return false  --  silent removal
-end
 
 local alliedTrueTable = {allied = true}
 

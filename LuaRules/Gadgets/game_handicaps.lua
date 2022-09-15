@@ -1,3 +1,7 @@
+if not gadgetHandler:IsSyncedCode() then
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Handicaps",
@@ -8,10 +12,6 @@ function gadget:GetInfo()
 		layer     = -999000,
 		enabled   = true
 	}
-end
-
-if not gadgetHandler:IsSyncedCode() then
-	return
 end
 
 local handicaps = {}

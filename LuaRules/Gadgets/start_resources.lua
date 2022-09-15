@@ -1,3 +1,7 @@
+if not (gadgetHandler:IsSyncedCode()) then
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Resource Setup",
@@ -8,10 +12,6 @@ function gadget:GetInfo()
 		layer     = -2, -- before facplop and start_unit_setup
 		enabled   = true  --  loaded by default?
 	}
-end
-
-if not (gadgetHandler:IsSyncedCode()) then
-	return
 end
 
 local storagedefs = {}

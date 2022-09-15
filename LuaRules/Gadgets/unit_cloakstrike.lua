@@ -1,3 +1,7 @@
+if (not gadgetHandler:IsSyncedCode()) then
+	return false  --  silent removal
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Cloak-strike",
@@ -8,10 +12,6 @@ function gadget:GetInfo()
 		layer     = 0,
 		enabled   = true  --  loaded by default?
 	}
-end
-
-if (not gadgetHandler:IsSyncedCode()) then
-	return false  --  silent removal
 end
 
 local spSetUnitWeaponState = Spring.SetUnitWeaponState

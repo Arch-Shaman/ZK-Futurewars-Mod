@@ -1,3 +1,7 @@
+if not (gadgetHandler:IsSyncedCode()) then
+	return false
+end
+
 function gadget:GetInfo()
   return {
     name      = "Projectile Gravity",
@@ -10,11 +14,6 @@ function gadget:GetInfo()
   }
 end
 
--------------------------------------------------------------
--------------------------------------------------------------
-if not (gadgetHandler:IsSyncedCode()) then
-	return false
-end
 -------------------------------------------------------------
 -------------------------------------------------------------
 

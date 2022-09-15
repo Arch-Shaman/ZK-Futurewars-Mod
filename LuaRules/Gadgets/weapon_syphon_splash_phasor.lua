@@ -1,3 +1,7 @@
+if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Syphon/Phaser Handler",
@@ -8,10 +12,6 @@ function gadget:GetInfo()
 		layer     = 0,
 		enabled   = true,
 	}
-end
-
-if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
-	return
 end
 
 --[[

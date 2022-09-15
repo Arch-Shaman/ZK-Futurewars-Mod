@@ -1,3 +1,7 @@
+if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Pure Decloak",
@@ -14,10 +18,6 @@ end
 				WARNING:
 ALL DECLOAK DAMAGE MUST BE 1 FOR THIS TO WORK.
 ]]
-
-if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
-	return
-end
 
 local config = {}
 for i = 1, #WeaponDefs do

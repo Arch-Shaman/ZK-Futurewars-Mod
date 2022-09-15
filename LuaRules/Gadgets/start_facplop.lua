@@ -1,3 +1,7 @@
+if not (gadgetHandler:IsSyncedCode()) then
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Facplop",
@@ -8,10 +12,6 @@ function gadget:GetInfo()
 		layer     = -1, -- Before terraforming gadget (for facplop terraforming)
 		enabled   = true,  --  loaded by default?
 	}
-end
-
-if not (gadgetHandler:IsSyncedCode()) then
-	return
 end
 
 include("LuaRules/Configs/start_facplops.lua")

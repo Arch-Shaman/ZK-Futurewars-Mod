@@ -1,3 +1,7 @@
+if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
+	return
+end
+
 function gadget:GetInfo()
   return {
     name      = "Sweepfire",
@@ -8,10 +12,6 @@ function gadget:GetInfo()
     layer     = 5,
     enabled   = true,
   }
-end
-
-if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
-	return
 end
 
 -- Speedups --

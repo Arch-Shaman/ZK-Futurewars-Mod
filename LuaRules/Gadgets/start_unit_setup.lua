@@ -180,18 +180,12 @@ local loadGame = false	-- was this loaded from a savegame?
 	CheckFacplopUse(unitID, unitDefID, teamID, builderID)
 end]]
 
-local function InitUnsafe()
-	
-end
-
 function gadget:Initialize()
 	-- needed if you reload luarules
 	local frame = Spring.GetGameFrame()
 	if frame and frame > 0 then
 		gamestart = true
 	end
-
-	InitUnsafe()
 	local allUnits = Spring.GetAllUnits()
 	for _, unitID in pairs(allUnits) do
 		local udid = Spring.GetUnitDefID(unitID)

@@ -1,4 +1,3 @@
-
 if not gadgetHandler:IsSyncedCode() then
 	return
 end

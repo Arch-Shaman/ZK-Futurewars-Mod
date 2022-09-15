@@ -1,3 +1,7 @@
+if not (gadgetHandler:IsSyncedCode()) then
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Glancefire AI",
@@ -8,10 +12,6 @@ function gadget:GetInfo()
 		layer     = 5,
 		enabled   = false,
 	}
-end
-
-if not (gadgetHandler:IsSyncedCode()) then
-	return
 end
 
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
