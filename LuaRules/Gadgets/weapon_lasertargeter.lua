@@ -14,44 +14,15 @@ function gadget:GetInfo()
 	}
 end
 
-local movectrlOn = Spring.MoveCtrl.Enable
-local movectrlOff = Spring.MoveCtrl.Disable
 local spEcho = Spring.Echo
 local spGetGameFrame = Spring.GetGameFrame
 local spGetProjectilePosition = Spring.GetProjectilePosition
-local spGetProjectileTarget = Spring.GetProjectileTarget
-local spGetProjectileTimeToLive = Spring.GetProjectileTimeToLive
 local spGetGroundHeight = Spring.GetGroundHeight
-local spDeleteProjectile = Spring.DeleteProjectile
-local spGetProjectileOwnerID = Spring.GetProjectileOwnerID
-local spGetProjectileVelocity = Spring.GetProjectileVelocity
-local spGetUnitTeam = Spring.GetUnitTeam
-local spPlaySoundFile = Spring.PlaySoundFile
-local spSpawnExplosion = Spring.SpawnExplosion
-local spSpawnProjectile = Spring.SpawnProjectile
-local spGetFeaturePosition = Spring.GetFeaturePosition
 local spGetUnitPosition = Spring.GetUnitPosition
-local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
-local spGetUnitsInSphere = Spring.GetUnitsInSphere
 local spSetProjectileTarget = Spring.SetProjectileTarget
-local spSetProjectileIgnoreTrackingError = Spring.SetProjectileIgnoreTrackingError
-local spGetProjectileDefID = Spring.GetProjectileDefID
-local spAreTeamsAllied = Spring.AreTeamsAllied
-local spGetUnitIsCloaked = Spring.GetUnitIsCloaked
 local SetWatchWeapon = Script.SetWatchWeapon
-local spSetProjectileAlwaysVisible = Spring.SetProjectileAlwaysVisible
-local spSetUnitPosition = Spring.SetUnitPosition
-local spCreateUnit = Spring.CreateUnit
-local spDestroyUnit = Spring.DestroyUnit
 local spGetValidUnitID = Spring.ValidUnitID
-local random = math.random
-local sqrt = math.sqrt
-local byte = string.byte
-local abs = math.abs
-local pi = math.pi
-local strfind = string.find
 local debug = false
-local gaiaID = Spring.GetGaiaTeamID()
 
 local missiles = {} -- id = {missiles = {projIDs},target = {x,y,z}, numMissiles = 0, fake = uid}
 local config = {} -- targeter or tracker
@@ -100,9 +71,7 @@ function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, projectileID)
 			local z = missiles[AttackerID].target[3]
 			spEcho("position is: " .. tostring(x) .. ", " .. tostring(y) .. "," .. tostring(z))
 			spEcho("Set " .. AttackerID .. " target: " .. tostring(px) .. "," .. tostring(py) .. "," .. tostring(pz))
-		end
-		local ux,uy,uz = spGetUnitPosition(AttackerID)
-		if debug then
+			local ux,uy,uz = spGetUnitPosition(AttackerID)
 			spEcho("UnitPosition: " .. ux .. "," .. uy .. "," .. uz)
 		end
 		missiles[AttackerID].lastframe = spGetGameFrame()
@@ -110,32 +79,13 @@ function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, projectileID)
 end
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID) -- proOwnerID is the unitID that fired the projectile
-	--debugecho("ProjectileCreated: " .. tostring(proID, proOwnerID, weaponDefID))
 	if config[weaponDefID] and not missiles[proOwnerID] then
-		--debugecho("added UnitID#" .. proOwnerID)
-		--local fakeid = spCreateUnit("missiletarget",0,0,0,0,gaiaID,false,false)
-		--movectrlOn(fakeid)
 		missiles[proOwnerID] = {missiles = {}, target = {[1] = 0, [2] = 0, [3] = 0}, numMissiles = 0, lastframe = spGetGameFrame(), state = "normal"}
 	end
-	--[[if config[weaponDefID] and config[weaponDefID] == 'targeter' then
-		local x,y,z = spGetProjectilePosition(proID)
-		debugecho("projectileID: " .. proID .. "\nPosition: " .. "\nX: " .. tostring(x) .. "\nY: " .. tostring(y) .. "\nZ: " .. tostring(z))
-		spSetUnitPosition(missiles[proOwnerID].target, x,y,z)
-		if debug then
-			x,y,z = spGetUnitPosition(missiles[proOwnerID].target)
-			debugecho("Fake unit position: " .. "x: " .. x .. ", y: " .. y .. " z: " ..z)
-		end
-		missiles[proOwnerID].lastframe = spGetGameFrame()]]
 	if config[weaponDefID] and config[weaponDefID] == 'tracker' then
 		if debug then
 			spEcho("Added " .. proID .. " to " .. proOwnerID)
 		end
-		--local x,y,z = spGetProjectilePosition(proID)
-		--local vx,vy,vz = spGetProjectileVelocity(proID)
-		--debugecho("velocity: " .. vx .. "," .. vy .. "," .. vz)
-		--vy = vy + 10
-		--spDeleteProjectile(proID)
-		--local nproID = spSpawnProjectile(weaponDefID, {pos = {x,y,z}, speed = {vx,vy,vz}, team = spGetUnitTeam(proOwnerID), owner = proOwnerID, tracking = missiles[proOwnerID].target})
 		spSetProjectileTarget(proID, missiles[proOwnerID].target[1], missiles[proOwnerID].target[2], missiles[proOwnerID].target[3])
 		--debugecho(tostring(success))
 		missiles[proOwnerID].missiles[proID] = true
@@ -201,7 +151,6 @@ function gadget:GameFrame(f)
 			end
 			if not spGetValidUnitID(id) and data.numMissiles == 0 then
 				--debugecho("removing " .. id)
-				--spDestroyUnit(data.target)
 				for pid,_ in pairs(data.missiles) do
 					local x,y,z = spGetProjectilePosition(pid)
 					y = spGetGroundHeight(x,z)
