@@ -6,7 +6,7 @@ function gadget:GetInfo()
 	return {
 		name      = "Missile Laser Targeter",
 		desc      = "Missiles follow their targeter.",
-		author    = "_Shaman",
+		author    = "Shaman",
 		date      = "June 20, 2019",
 		license   = "CC-0",
 		layer     = 5,
