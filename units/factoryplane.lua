@@ -41,7 +41,7 @@ return {
 			midposoffset   = "0 20 0",
 			default_spacing = 8,
 			factorytab       = 1,
-			pad_bp           = 10,
+			pad_bp           = 30,
 			shared_energy_gen = 1,
 			ispad         = 1,
 			parent_of_plate   = "plateplane",
