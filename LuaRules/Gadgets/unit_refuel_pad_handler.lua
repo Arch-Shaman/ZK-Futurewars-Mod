@@ -1,3 +1,7 @@
+if (not gadgetHandler:IsSyncedCode()) then
+	return false -- no unsynced code
+end
+
 function gadget:GetInfo()
 	return {
 		name    = "Refuel Pad Handler",
@@ -8,10 +12,6 @@ function gadget:GetInfo()
 		layer   = 0,
 		enabled = true, -- loaded by default?
 	}
-end
-
-if (not gadgetHandler:IsSyncedCode()) then
-	return false -- no unsynced code
 end
 
 --------------------------------------------------------------------------------
