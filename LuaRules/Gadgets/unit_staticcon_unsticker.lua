@@ -108,7 +108,7 @@ local function HandleUnit(unitID, f)
 			end
 			if debug then DebugEcho(unitID .. ": " .. tostring(cmdID) .. ", " .. tostring(cmdParam1) .. ", " .. tostring(cmdParam2)) end
 			local range = buildRanges[spGetUnitDefID(unitID)]
-			if cmdID and cmdParam1 and (spValidFeatureID(cmdParam1) or spValidUnitID(cmdParam1)) then
+			if cmdID and (cmdID == CMD_RECLAIM or cmdID == CMD_RESURRECT) and cmdParam1 and (spValidFeatureID(cmdParam1) or spValidUnitID(cmdParam1)) then
 				if debug then DebugEcho(unitID .. ": Valid command, checking distance.") end
 				if not IsObjectCloseEnough(unitID, cmdParam1, cmdID) or (cmdID == CMD_RECLAIM and cmdParam5 and cmdParam5 == range and not GG.CheckORPForTeam(spGetUnitTeam(unitID)) and not GG.GetORPState(unitID)) then
 					if debug then DebugEcho(unitID .. ": Command dropped (Out of Range / ORP)") end
