@@ -1,3 +1,7 @@
+if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Flak Controller",
@@ -10,49 +14,30 @@ function gadget:GetInfo()
 	}
 end
 
-if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
-	return
-end
-
 local config = {} -- stores table
 local projectiles = {}
 local debug = false
 
 --Speedups--
 local spEcho = Spring.Echo
-local spGetGameFrame = Spring.GetGameFrame
 local spGetProjectilePosition = Spring.GetProjectilePosition
 local spGetProjectileTarget = Spring.GetProjectileTarget
-local spGetProjectileTimeToLive = Spring.GetProjectileTimeToLive
-local spGetGroundHeight = Spring.GetGroundHeight
 local spDeleteProjectile = Spring.DeleteProjectile
 local spGetProjectileOwnerID = Spring.GetProjectileOwnerID
 local spGetProjectileVelocity = Spring.GetProjectileVelocity
-local spGetUnitTeam = Spring.GetUnitTeam
 local spPlaySoundFile = Spring.PlaySoundFile
 local spSpawnExplosion = Spring.SpawnExplosion
-local spSpawnProjectile = Spring.SpawnProjectile
 local spGetFeaturePosition = Spring.GetFeaturePosition
 local spGetUnitPosition = Spring.GetUnitPosition
-local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
-local spGetUnitsInSphere = Spring.GetUnitsInSphere
-local spSetProjectileTarget = Spring.SetProjectileTarget
-local spSetProjectileIgnoreTrackingError = Spring.SetProjectileIgnoreTrackingError
-local spGetProjectileDefID = Spring.GetProjectileDefID
-local spAreTeamsAllied = Spring.AreTeamsAllied
 local spGetUnitIsCloaked = Spring.GetUnitIsCloaked
 local spValidUnitID = Spring.ValidUnitID
 local random = math.random
 local sqrt = math.sqrt
-local byte = string.byte
-local abs = math.abs
-local pi = math.pi
-local blanktable = {}
 
-local ground = byte("g")
-local feature = byte("f")
-local unit = byte("u")
-local projectile = byte("p")
+local ground = string.byte("g")
+local feature = string.byte("f")
+local unit = string.byte("u")
+local projectile = string.byte("p")
 
 for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
@@ -87,7 +72,7 @@ end
 
 local function ExplodeProjectile(id,wd,x,y,z)
 	spSpawnExplosion(x,y,z,0,0,0,{weaponDef = wd, owner = spGetProjectileOwnerID(id), craterAreaOfEffect = WeaponDefs[wd].craterAreaOfEffect, damageAreaOfEffect = WeaponDefs[wd].damageAreaOfEffect, edgeEffectiveness = WeaponDefs[wd].edgeEffectiveness, explosionSpeed = WeaponDefs[wd].explosionSpeed, impactOnly = WeaponDefs[wd].impactOnly, ignoreOwner = WeaponDefs[wd].noSelfDamage, damageGround = true})
-	spPlaySoundFile(WeaponDefs[wd].hitSound[1].name,WeaponDefs[wd].hitSound[1].volume,x,y,z)
+	spPlaySoundFile(WeaponDefs[wd].hitSound[1].name,WeaponDefs[wd].hitSound[1].volume,x,y,z, 0, 0, 0, "battle")
 	spDeleteProjectile(id)
 	projectiles[id] = nil
 end
