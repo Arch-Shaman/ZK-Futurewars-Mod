@@ -14,8 +14,10 @@ function gadget:GetInfo()
 	}
 end
 
+local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+
 local config = {} -- stores table
-local projectiles = {}
+local projectiles = IterableMap.New()
 local debug = false
 
 --Speedups--
@@ -34,10 +36,12 @@ local spValidUnitID = Spring.ValidUnitID
 local random = math.random
 local sqrt = math.sqrt
 
-local ground = string.byte("g")
-local feature = string.byte("f")
-local unit = string.byte("u")
-local projectile = string.byte("p")
+local targettypes = {
+	[string.byte("g")] = 'ground',
+	[string.byte("f")] = 'feature',
+	[string.byte("u")] = 'unit',
+	[string.byte("p")] = 'projectile',
+}
 
 for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
@@ -70,91 +74,83 @@ local function distance2d(x1,y1,x2,y2)
 	return sqrt((x2-x1)^2+(y2-y1)^2)
 end
 
-local function ExplodeProjectile(id,wd,x,y,z)
-	spSpawnExplosion(x,y,z,0,0,0,{weaponDef = wd, owner = spGetProjectileOwnerID(id), craterAreaOfEffect = WeaponDefs[wd].craterAreaOfEffect, damageAreaOfEffect = WeaponDefs[wd].damageAreaOfEffect, edgeEffectiveness = WeaponDefs[wd].edgeEffectiveness, explosionSpeed = WeaponDefs[wd].explosionSpeed, impactOnly = WeaponDefs[wd].impactOnly, ignoreOwner = WeaponDefs[wd].noSelfDamage, damageGround = true})
-	spPlaySoundFile(WeaponDefs[wd].hitSound[1].name,WeaponDefs[wd].hitSound[1].volume,x,y,z, 0, 0, 0, "battle")
+local function ExplodeProjectile(id, wd, x, y, z)
+	spSpawnExplosion(x, y, z, 0, 0, 0, {weaponDef = wd, owner = spGetProjectileOwnerID(id), craterAreaOfEffect = WeaponDefs[wd].craterAreaOfEffect, damageAreaOfEffect = WeaponDefs[wd].damageAreaOfEffect, edgeEffectiveness = WeaponDefs[wd].edgeEffectiveness, explosionSpeed = WeaponDefs[wd].explosionSpeed, impactOnly = WeaponDefs[wd].impactOnly, ignoreOwner = WeaponDefs[wd].noSelfDamage, damageGround = true})
+	spPlaySoundFile(WeaponDefs[wd].hitSound[1].name, WeaponDefs[wd].hitSound[1].volume,x,y,z, 0, 0, 0, "battle")
 	spDeleteProjectile(id)
-	projectiles[id] = nil
-end
-
-local function CheckProjectile(id, wd)
-	--spEcho(id .. " : " .. tostring(wd))
-	local x,y,z = spGetProjectilePosition(id)
-	if x == nil then
-		projectiles[id] = nil
-		return
-	end
-	if config[wd].type == 3 then
-		projectiles[id].timer = projectiles[id].timer - 2
-		local explode = 100 - random(10,80) + projectiles[id].timer
-		if debug then spEcho("Explode: " .. explode) end
-		if explode <= 0  then
-			ExplodeProjectile(id,wd,x,y,z)
-		end
-		return
-	end
-	local ttype,target = spGetProjectileTarget(id)
-	local vx,vy,vz = spGetProjectileVelocity(id)
-	local olddistance = projectiles[id].distance or 0
-	local x2,y2,z2
-	--spEcho("Target: " .. target .. "(" .. ttype .. ")")
-	if ttype == ground then
-		x2 = target[1]
-		y2 = target[2]
-		z2 = target[3]
-	elseif ttype == unit then
-		if not spValidUnitID(target) then
-			ExplodeProjectile(id,wd,x,y,z)
-			return
-		end
-		if not spGetUnitIsCloaked(target) then
-			x2,y2,z2 = spGetUnitPosition(target, false, true)
-			projectiles[id].targetlastposition[1] = x2
-			projectiles[id].targetlastposition[2] = y2
-			projectiles[id].targetlastposition[3] = z2
-		else
-			x2 = projectiles[id].targetlastposition[1]
-			y2 = projectiles[id].targetlastposition[2]
-			z2 = projectiles[id].targetlastposition[3]
-		end
-	elseif ttype == feature then
-		x2,y2,z2 = spGetFeaturePosition(target)
-	elseif ttype == projectile then
-		x2,y2,z2 = spGetProjectilePosition(target)
-	else
-		projectiles[id] = nil
-		spEcho("Weird projectile: " .. id)
-		return
-	end
-	if x2 == nil or y2 == nil or z2 == nil then
-		ExplodeProjectile(id,wd,x,y,z)
-		return
-	end
-	if config[wd].type == 1 then
-		projectiles[id].distance = distance2d(x,z,x2,z2)
-	else
-		projectiles[id].distance = distance3d(x,y,z,x2,y2,z2)
-	end
-	if olddistance < projectiles[id].distance and projectiles[id].distance >= WeaponDefs[wd].damageAreaOfEffect/2 then
-		ExplodeProjectile(id,wd,x,y,z)
-	end
+	IterableMap.Remove(projectiles, id)
 end
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	if config[weaponDefID] then
 		if config[weaponDefID].type == 3 then
-			projectiles[proID] = {timer = config[weaponDefID]["timer"], defid = weaponDefID}
+			IterableMap.Add(projectiles, proID, {timer = config[weaponDefID]["timer"], defid = weaponDefID})
 			--spEcho("Timed demo charge for " .. proID)
 		else
-			projectiles[proID] = {distance = 999999999, defid = weaponDefID, targetlastposition = {}} -- distance stored here 
+			IterableMap.Add(projectiles, proID, {distance = 999999999, defid = weaponDefID, targetlastposition = {}}) -- distance stored here 
 		end
 	end
 end
 
 function gadget:GameFrame(f)
 	if f%2 == 1 then
-		for id, data in pairs(projectiles) do
-			CheckProjectile(id,data.defid)
+		for id, data in IterableMap.Iterator(projectiles) do
+			local x, y, z = spGetProjectilePosition(id)
+			if x == nil then
+				IterableMap.Remove(projectiles, id) -- invalid id
+			elseif config[wd].type == 3 then
+				data.timer = data.timer - 2
+				local explode = 100 - random(10, 80) + data.timer
+				if debug then spEcho("Explode: " .. explode) end
+				if explode <= 0 then
+					ExplodeProjectile(id, wd, x, y, z)
+				end
+			else
+				local ttype,target = spGetProjectileTarget(id)
+				--spEcho("Target: " .. target .. "(" .. ttype .. ")")
+				local targettype = targettypes[ttype]
+				if targettypes ~= nil then
+					local x2,y2,z2
+					local vx,vy,vz = spGetProjectileVelocity(id)
+					local olddistance = projectiles[id].distance or 0
+					ExplodeProjectile(id,wd,x,y,z)
+					if targettype == 'ground' then
+						x2 = target[1]
+						y2 = target[2]
+						z2 = target[3]
+					elseif targettype == 'unit' and spValidUnitID(target) then
+						if not spGetUnitIsCloaked(target) then
+							x2,y2,z2 = spGetUnitPosition(target, false, true)
+							projectiles[id].targetlastposition[1] = x2
+							projectiles[id].targetlastposition[2] = y2
+							projectiles[id].targetlastposition[3] = z2
+						else
+							x2 = projectiles[id].targetlastposition[1]
+							y2 = projectiles[id].targetlastposition[2]
+							z2 = projectiles[id].targetlastposition[3]
+						end
+					elseif ttype == 'feature' then
+						x2,y2,z2 = spGetFeaturePosition(target)
+					elseif ttype == projectile then
+						x2,y2,z2 = spGetProjectilePosition(target)
+					end
+					if x2 == nil or y2 == nil or z2 == nil then
+						ExplodeProjectile(id, wd, x, y, z)
+					else
+						if config[wd].type == 1 then
+							data.distance = distance2d(x,z,x2,z2)
+						else
+							data.distance = distance3d(x,y,z,x2,y2,z2)
+						end
+						if olddistance < data.distance and data.distance >= WeaponDefs[wd].damageAreaOfEffect/2 then
+							ExplodeProjectile(id, wd, x, y, z)
+						end
+					end
+				else
+					IterableMap.Remove(projectiles, id)
+					spEcho("[FlakCon] Weird projectile: " .. id)
+				end
+			end
 		end
 	end
 end
