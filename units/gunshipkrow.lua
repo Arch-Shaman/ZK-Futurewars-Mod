@@ -8,7 +8,7 @@ return {
 		airStrafe              = 0,
 		bankingAllowed         = false,
 		brakeRate              = 0.15,
-		buildCostMetal         = 5750,
+		buildCostMetal         = 6000,
 		builder                = false,
 		buildPic               = [[gunshipkrow.png]],
 		canFly                 = true,
