@@ -95,6 +95,7 @@ end
 function gadget:GameFrame(f)
 	if f%2 == 1 then
 		for id, data in IterableMap.Iterator(projectiles) do
+			local wd = data.defid
 			local x, y, z = spGetProjectilePosition(id)
 			if x == nil then
 				IterableMap.Remove(projectiles, id) -- invalid id
@@ -112,7 +113,7 @@ function gadget:GameFrame(f)
 				if targettypes ~= nil then
 					local x2,y2,z2
 					local vx,vy,vz = spGetProjectileVelocity(id)
-					local olddistance = projectiles[id].distance or 0
+					local olddistance = data.distance or 0
 					ExplodeProjectile(id,wd,x,y,z)
 					if targettype == 'ground' then
 						x2 = target[1]
@@ -121,13 +122,13 @@ function gadget:GameFrame(f)
 					elseif targettype == 'unit' and spValidUnitID(target) then
 						if not spGetUnitIsCloaked(target) then
 							x2,y2,z2 = spGetUnitPosition(target, false, true)
-							projectiles[id].targetlastposition[1] = x2
-							projectiles[id].targetlastposition[2] = y2
-							projectiles[id].targetlastposition[3] = z2
+							data.targetlastposition[1] = x2
+							data.targetlastposition[2] = y2
+							data.targetlastposition[3] = z2
 						else
-							x2 = projectiles[id].targetlastposition[1]
-							y2 = projectiles[id].targetlastposition[2]
-							z2 = projectiles[id].targetlastposition[3]
+							x2 = data.targetlastposition[1]
+							y2 = data.targetlastposition[2]
+							z2 = data.targetlastposition[3]
 						end
 					elseif ttype == 'feature' then
 						x2,y2,z2 = spGetFeaturePosition(target)
