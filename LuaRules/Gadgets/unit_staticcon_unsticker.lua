@@ -157,3 +157,14 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 		handled[f][#handled[f] + 1] = unitID
 	end
 end
+
+function gadget:Initialize()
+	-- load active units
+	for _, unitID in ipairs(Spring.GetAllUnits()) do
+		local unitDefID = Spring.GetUnitDefID(unitID)
+		local _,_,inBuild = Spring.GetUnitIsStunned(unitID)
+		if not inBuild then
+			gadget:UnitFinished(unitID, unitDefID)
+		end
+	end
+end
