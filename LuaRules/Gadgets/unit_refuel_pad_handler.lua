@@ -581,7 +581,7 @@ local function UpdateCoroutines()
 	end
 end
 
-local function UpdatePadLocations(f)
+local function UpdatePadLocations()
 	for unitID, data in pairs(landingUnit) do
 		if data.mobilePad and not data.landed then
 			local px, py, pz = Spring.GetUnitPiecePosDir(data.padID, data.padPieceID)
