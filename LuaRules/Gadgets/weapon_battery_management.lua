@@ -99,8 +99,17 @@ local function RechargeBattery(unitID, amount)
 	IterableMap.Set(handled, unitID, data)
 end
 
+local function HasBattery(unitID)
+	local data = IterableMap.Get(handled, unitID)
+	if data then
+		return true
+	else
+		return false
+	end
+end
+
 function gadget:Initialize()
-	GG.BatteryManagement = {CanFire = CanFire, WeaponFired = WeaponFired, IsBatteryRecharged = IsBatteryRecharged, RechargeBattery = RechargeBattery}
+	GG.BatteryManagement = {CanFire = CanFire, WeaponFired = WeaponFired, IsBatteryRecharged = IsBatteryRecharged, RechargeBattery = RechargeBattery, HasBattery = HasBattery}
 end
 
 function gadget:UnitCreated(unitID, unitDefID)
