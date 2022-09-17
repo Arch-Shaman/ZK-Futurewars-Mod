@@ -100,12 +100,7 @@ local function RechargeBattery(unitID, amount)
 end
 
 local function HasBattery(unitID)
-	local data = IterableMap.Get(handled, unitID)
-	if data then
-		return true
-	else
-		return false
-	end
+	return IterableMap.InMap(handled, unitID)
 end
 
 function gadget:Initialize()
