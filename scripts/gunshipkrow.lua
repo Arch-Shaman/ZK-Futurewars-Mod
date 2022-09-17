@@ -289,6 +289,8 @@ local function DeathLaserThread()
 	Sleep(2443)
 	frame = Spring.GetGameFrame()
 	Spring.SetUnitWeaponState(unitID, 3, "reloadFrame", (30*30) + frame)
+	px, py, pz = Spring.GetUnitPosition(unitID)
+	Spring.SpawnCEG("purifier_brillance", px, Spring.GetGroundHeight(px, pz), pz, 0, 0, 1, 1)
 	local sleepTime = 33
 	local lased = 0
 	for lased = 0, lasermax do

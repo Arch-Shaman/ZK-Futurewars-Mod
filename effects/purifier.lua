@@ -1,4 +1,32 @@
 return {
+	["purifier_brillance"] = {
+    groundflash = {
+      circlealpha        = 0.2,
+      circlegrowth       = -20,
+      flashalpha         = 0.6,
+      flashsize          = 150,
+      ttl                = 60,
+      color = {
+        [1]  = 0.25,
+        [2]  = 0,
+        [3]  = 1,
+      },
+    },
+  },
+	["lasers_melt_purifier"] = {
+    groundflash = {
+      circlealpha        = 0.2,
+      circlegrowth       = 0,
+      flashalpha         = 0.4,
+      flashsize          = 150,
+      ttl                = 255,
+      color = {
+        [1]  = 1,
+        [2]  = 0.5,
+        [3]  = 0,
+      },
+    },
+  },
   ["craterpuncher_short"] = {
     usedefaultexplosions = false,
     groundflash = {
@@ -21,7 +49,7 @@ return {
       water              = true,
       properties = {
         delay              = 0,
-        explosiongenerator = [[custom:LASERS_MELT2]],
+        explosiongenerator = [[custom:LASERS_MELT_PURIFIER]],
         pos                = [[0, 0, 0]],
       },
     },
