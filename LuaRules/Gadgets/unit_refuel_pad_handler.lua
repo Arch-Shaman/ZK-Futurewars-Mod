@@ -60,12 +60,6 @@ local min = math.min
 
 local mobilePadDefs = {}
 
-for unitDefID, ud in pairs(UnitDefs) do
-	if ud.customParams.ispad and (not ud.isImmobile) then
-		mobilePadDefs[unitDefID] = true
-	end
-end
-
 local DEFAULT_REAMMO_TIME = 5
 local DEFAULT_REAMMO_DRAIN = 10
 local DEFAULT_REPAIR_BP = 2.5
@@ -84,6 +78,9 @@ local rotateUnit = {}
 for i = 1, #UnitDefs do
 	local movetype = Spring.Utilities.getMovetype(UnitDefs[i])
 	local ud = UnitDefs[i]
+	if ud.customParams.ispad and (not ud.isImmobile) then
+		mobilePadDefs[i] = true
+	end
 	if movetype == 0 then -- fixedwing
 		if ud.customParams and ud.customParams.refuelturnradius then
 			turnRadius[i] = tonumber(ud.customParams.refuelturnradius)
