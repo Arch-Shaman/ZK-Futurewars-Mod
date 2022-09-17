@@ -35,22 +35,19 @@ do
 			class = ANTI,
 			color = { 1, 1, 1 },
 			colorInBuild = { 0, 0.6, 0.8 },
-			lineWidth = 6,
+			lineWidth = 2.75,
 		},
 		turretemp = {
 			color = {1, 0.56, 0},
 			class = GROUND,
-			lineWidth = 3,
 		},
 		turretriot = {
 			color = {1, 0.54, 0},
 			class = GROUND,
-			lineWidth = 3,
 		},
 		turretgauss = {
 			color = {1, 0, 0},
 			class = GROUND,
-			lineWidth = 3,
 		},
 		turretdecloak = {
 			color = {0.8, 0.8, 0.2},
@@ -65,33 +62,27 @@ do
 		mahlazer = {
 			color = {1, 0, 0},
 			class = GROUND,
-			lineWidth = 9,
 		},
 		turretantiheavy = {
 			color = {1, 0.47, 0},
 			class = GROUND,
-			lineWidth = 7,
 		},
 		staticheavyarty = {
 			color = {1, 0.3, 0},
 			class = GROUND,
-			lineWidth = 7,
 		},
 		tacnuke = {
 			color = {1, 0.4, 0},
 			class = GROUND,
-			lineWidth = 5,
 		},
 		turretaafar = {
 			color = {0, 0.56, 0.44},
 			class = AIR,
-			lineWidth = 4.5,
 		},
 		turretmissile = {
 			color = {1, 0, 0},
 			color2 = {0, 1, 0},
 			class = GROUND,
-			lineWidth = 2.5,
 		},
 		turretlaser = {
 			color = {1, 0, 0},
@@ -100,37 +91,30 @@ do
 		turretheavylaser = {
 			color = {1, 0.15, 0},
 			class = GROUND,
-			lineWidth = 4,
 		},
 		turretheavy = {
 			color = {1, 0.47, 0},
 			class = GROUND,
-			lineWidth = 6,
 		},
 		turretaalaser = {
 			color = {0, 0.8, 0.2},
 			class = AIR,
-			lineWidth = 2,
 		},
 		turretaaflak = {
 			color = {0, 0.43, 0.57},
 			class = AIR,
-			lineWidth = 4.5,
 		},
 		turretaaheavy = {
 			color = {0, 0, 1},
 			class = AIR,
-			lineWidth = 7,
 		},
 		turretaaclose = {
 			color = {0, 0, 1},
 			class = AIR,
-			lineWidth = 3,
 		},
 		staticarty = {
 			color = {1, 0.13, 0},
 			class = GROUND,
-			lineWidth = 5,
 		},
 		turrettorp = {
 			color = {1, 0, 0},
@@ -181,7 +165,7 @@ do
 		end
 
 		if not conf.lineWidth then
-			conf.lineWidth = 1.0
+			conf.lineWidth = 1.8
 		end
 
 		conf.color[4] = alphaValue
