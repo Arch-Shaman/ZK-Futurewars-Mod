@@ -81,7 +81,7 @@ return {
 			BLACK_HOLE = {
 				name                    = [[Black Hole Launcher]],
 				accuracy                = 350,
-				areaOfEffect            = 200,
+				areaOfEffect            = 300,
 				avoidFeature            = false,
 				avoidFriendly           = false,
 				burnblow                = true,
@@ -91,11 +91,11 @@ return {
 				craterMult              = 0,
 				customParams            = {
 					singularity = [[1]],
-					singuradius = [[200]],
+					singuradius = [[300]],
 					singulifespan = [[200]],
 					singustrength = [[48]],
 					singuheight = [[50]],
-					singuceg	= [[black_hole_200]],
+					singuceg	= [[black_hole_300]],
 					light_color = [[1 1 1]],
 					light_radius = 500,
 				},
