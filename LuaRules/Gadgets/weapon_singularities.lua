@@ -111,42 +111,48 @@ local function ProcessProjectiles(sx, sy, sz, radius, strength, list, rev)
 		--local radiussqr = radius * radius -- no idea why this was sqr.
 		--spEcho("Distance: " .. distance .. "\nBeamWeapon: " .. tostring(GetIsBeamWeapon(projectileID)))
 		if distance <= radius and not GetIsBeamWeapon(projectileID) then -- this is affected.
-			local cp = WeaponDefs[spGetProjectileDefID(projectileID)].customParams
-			local mass = tonumber(cp.mass) or 1
-			--spSetProjectileMoveControl(projectileID, true)
-			local vx, vy, vz = spGetProjectileVelocity(projectileID)
-			--spEcho("projectileID: " .. projectileID .. "\nVelocity: " .. vx .. "," .. vy .. "," .. vz)
-			local ex, ey, ez = 0, 0, 0 -- effect's velocity change
-			if rev then
-				ex = GetFinalEffectStrength(radius, strength, abs(sx - px), mass)
-				ey = GetFinalEffectStrength(radius, strength, abs(sy - py), mass)
-				ez = GetFinalEffectStrength(radius, strength, abs(sz - pz), mass)
-			else
-				ex = GetEffectStrength(radius, strength, abs(sx - px), mass)
-				ey = GetEffectStrength(radius, strength, abs(sy - py), mass)
-				ez = GetEffectStrength(radius, strength, abs(sz - pz), mass)
+			local projectileDefID = spGetProjectileDefID(projectileID)
+			if projectileDefID then
+				local cp = WeaponDefs[projectileDefID].customParams
+				if cp.bogus and cp.projectile1 then -- fake projectiles need their real projectile mass.
+					cp = WeaponDefNames[cp.projectile1]
+				end
+				local mass = tonumber(cp.mass) or 1
+				--spSetProjectileMoveControl(projectileID, true)
+				local vx, vy, vz = spGetProjectileVelocity(projectileID)
+				--spEcho("projectileID: " .. projectileID .. "\nVelocity: " .. vx .. "," .. vy .. "," .. vz)
+				local ex, ey, ez = 0, 0, 0 -- effect's velocity change
+				if rev then
+					ex = GetFinalEffectStrength(radius, strength, abs(sx - px), mass)
+					ey = GetFinalEffectStrength(radius, strength, abs(sy - py), mass)
+					ez = GetFinalEffectStrength(radius, strength, abs(sz - pz), mass)
+				else
+					ex = GetEffectStrength(radius, strength, abs(sx - px), mass)
+					ey = GetEffectStrength(radius, strength, abs(sy - py), mass)
+					ez = GetEffectStrength(radius, strength, abs(sz - pz), mass)
+				end
+				if sx - px < 0 then
+					ex = - ex
+				elseif sx - px == 0 and not rev then
+					ex = 0
+					vx = 0
+				end
+				if sy - py < 0 then
+					ey = - ey
+				elseif sy - py == 0 and not rev then
+					ey = 0
+					vy = 0
+				end
+				if sz - pz < 0 then
+					ez = -ez
+				elseif sz - pz == 0 and not rev then
+					ez = 0
+					vz = 0
+				end
+				spSetProjectileVelocity(projectileID, ex + vx, ey + vy, ez + vz)
+				--spSetProjectileGravity(projectileID, -ey)
+				--projectiles[projectileID] = frame
 			end
-			if sx - px < 0 then
-				ex = - ex
-			elseif sx - px == 0 and not rev then
-				ex = 0
-				vx = 0
-			end
-			if sy - py < 0 then
-				ey = - ey
-			elseif sy - py == 0 and not rev then
-				ey = 0
-				vy = 0
-			end
-			if sz - pz < 0 then
-				ez = -ez
-			elseif sz - pz == 0 and not rev then
-				ez = 0
-				vz = 0
-			end
-			spSetProjectileVelocity(projectileID, ex + vx, ey + vy, ez + vz)
-			--spSetProjectileGravity(projectileID, -ey)
-			--projectiles[projectileID] = frame
 		end
 	end
 end
