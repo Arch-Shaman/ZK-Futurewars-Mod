@@ -27,6 +27,7 @@ for i = 1, #WeaponDefs do
 	local cp = WeaponDefs[i].customParams
 	if cp and cp.singularity then
 		singularitydefs[i] = {radius = (tonumber(cp.singuradius) or 400)/2, lifespan = math.max(tonumber(cp.singulifespan) or 300, 10), strength = tonumber(cp.singustrength) or 20, height = tonumber(cp.singuheight) or 0, ceg = cp.singuceg or 'black_hole_singu', finalceg = cp.singufinalceg or 'riotballgrav'}
+		singularitydefs[i].push = singularitydefs[i].strength < 0
 	end
 end
 
@@ -228,6 +229,11 @@ local function ProcessSingularity(singu, data)
 	local strength = data.strength
 	local ceg = data.ceg
 	local finalceg = data.finalceg
+	local push = strength < 0
+	local finale = lifespan == 0
+	if strength < 0 then
+		strength = -strength
+	end
 	if lifespan == 1 then
 		--spSpawnCEG("opticblast_charge", sx, sy, sz, 0, 0, 0 , radius, 3000) -- note: radius doesn't seem to do anything here.
 	elseif lifespan%15 == 0 and lifespan > 20 then
@@ -238,15 +244,15 @@ local function ProcessSingularity(singu, data)
 	end
 	local units = spGetUnitsInSphere(sx, sy, sz, radius)
 	if #units > 0 then
-		ProcessUnits(sx, sy, sz, radius, strength, units, lifespan == 0)
+		ProcessUnits(sx, sy, sz, radius, strength, units, finale or push)
 	end
 	local projectiles = spGetProjectilesInRectangle(sx - radius, sz - radius, sx + radius, sz + radius, false, false)
 	if #projectiles > 0 then
-		ProcessProjectiles(sx, sy, sz, radius, strength, projectiles, lifespan == 0)
+		ProcessProjectiles(sx, sy, sz, radius, strength, projectiles, finale or push)
 	end
 	local features = spGetFeaturesInSphere(sx, sy, sz, radius)
 	if #features > 0 then
-		ProcessFeatures(sx, sy, sz, radius, strength, features, lifespan == 0)
+		ProcessFeatures(sx, sy, sz, radius, strength, features, finale or push)
 	end
 	--if lifespan%30 == 0 then
 		--Spring.Echo("Projectiles: " .. #projectiles .. ", " .. #features) 
