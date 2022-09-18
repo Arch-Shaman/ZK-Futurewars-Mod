@@ -60,8 +60,15 @@ local gravity = Game.gravity
 local spSpawnCEG = Spring.SpawnCEG
 local spPlaySoundFile = Spring.PlaySoundFile
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spGetFeatureDefID = Spring.GetFeatureDefID
 
 local projectiles = {}
+
+local illegalFeatureDefs = {
+	["Metal Vein"] = true,
+	["Coagulation Node"] = true,
+	["contains metal"] = true, -- Zed
+} -- Some maps have metal spot markers. Don't mess with these.
 
 local function Distance3d(x1,y1,z1,x2,y2,z2) -- TODO: make this the spring utilities thing.
 	return sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2) + (z1 - z2)*(z1 - z2))
@@ -185,39 +192,41 @@ local function ProcessFeatures(sx, sy, sz, radius, strength, list, rev, sid)
 	local frame = spGetGameFrame() + 1
 	for i = 1, #list do
 		local featureID = list[i]
-		local vx, vy, vz = spGetFeatureVelocity(featureID)
-		local px, py, pz = spGetFeaturePosition(featureID)
-		local ex, ey, ez = 0, 0, 0
-		local mass = spGetFeatureMass(featureID) or 1
-		if rev then
-			ex = GetFinalEffectStrength(radius, strength, abs(sx - px), mass)
-			ey = GetFinalEffectStrength(radius, strength, abs(sy - py), mass)
-			ez = GetFinalEffectStrength(radius, strength, abs(sz - pz), mass)
-		else
-			ex = GetEffectStrength(radius, strength, abs(sx - px), mass)
-			ey = GetEffectStrength(radius, strength, abs(sy - py), mass)
-			ez = GetEffectStrength(radius, strength, abs(sz - pz), mass)
+		if illegalFeatureDefs[FeatureDefs[spGetFeatureDefID(featureID)].tooltip] == nil then
+			local vx, vy, vz = spGetFeatureVelocity(featureID)
+			local px, py, pz = spGetFeaturePosition(featureID)
+			local ex, ey, ez = 0, 0, 0
+			local mass = spGetFeatureMass(featureID) or 1
+			if rev then
+				ex = GetFinalEffectStrength(radius, strength, abs(sx - px), mass)
+				ey = GetFinalEffectStrength(radius, strength, abs(sy - py), mass)
+				ez = GetFinalEffectStrength(radius, strength, abs(sz - pz), mass)
+			else
+				ex = GetEffectStrength(radius, strength, abs(sx - px), mass)
+				ey = GetEffectStrength(radius, strength, abs(sy - py), mass)
+				ez = GetEffectStrength(radius, strength, abs(sz - pz), mass)
+			end
+			if sx - px < 0 then
+				ex = - ex
+			elseif sx - px == 0 and not rev then
+				ex = 0
+				vx = 0
+			end
+			if sy - py < 0 then
+				ey = - ey
+			elseif sy - py == 0 and not rev then
+				ey = 0
+				vy = 0
+			end
+			if sz - pz < 0 then
+				ez = -ez
+			elseif sz - pz == 0 and not rev then
+				ez = 0
+				vz = 0
+			end
+			spSetFeatureMoveControl(featureID,false,1,1,1,1,1,1,1,1,1)
+			spSetFeatureVelocity(featureID, ex + vx, ey + vy, ez + vz)
 		end
-		if sx - px < 0 then
-			ex = - ex
-		elseif sx - px == 0 and not rev then
-			ex = 0
-			vx = 0
-		end
-		if sy - py < 0 then
-			ey = - ey
-		elseif sy - py == 0 and not rev then
-			ey = 0
-			vy = 0
-		end
-		if sz - pz < 0 then
-			ez = -ez
-		elseif sz - pz == 0 and not rev then
-			ez = 0
-			vz = 0
-		end
-		spSetFeatureMoveControl(featureID,false,1,1,1,1,1,1,1,1,1)
-		spSetFeatureVelocity(featureID, ex + vx, ey + vy, ez + vz)
 	end
 end
 
