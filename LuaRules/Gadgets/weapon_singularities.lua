@@ -104,18 +104,20 @@ local function ProcessProjectiles(sx, sy, sz, radius, strength, list, rev)
 		local radiussqr = radius * radius
 		--spEcho("Distance: " .. distance .. "\nBeamWeapon: " .. tostring(GetIsBeamWeapon(projectileID)))
 		if distance <= radiussqr and not GetIsBeamWeapon(projectileID) then -- this is affected.
+			local cp = WeaponDefs[spGetProjectileDefID(projectileID)].customParams
+			local mass = tonumber(cp.mass) or 1
 			--spSetProjectileMoveControl(projectileID, true)
 			local vx, vy, vz = spGetProjectileVelocity(projectileID)
 			--spEcho("projectileID: " .. projectileID .. "\nVelocity: " .. vx .. "," .. vy .. "," .. vz)
 			local ex, ey, ez = 0, 0, 0 -- effect's velocity change
 			if rev then
-				ex = GetFinalEffectStrength(radius, strength, abs(sx - px), 1)
-				ey = GetFinalEffectStrength(radius, strength, abs(sy - py), 1)
-				ez = GetFinalEffectStrength(radius, strength, abs(sz - pz), 1)
+				ex = GetFinalEffectStrength(radius, strength, abs(sx - px), mass)
+				ey = GetFinalEffectStrength(radius, strength, abs(sy - py), mass)
+				ez = GetFinalEffectStrength(radius, strength, abs(sz - pz), mass)
 			else
-				ex = GetEffectStrength(radius, strength, abs(sx - px), 1)
-				ey = GetEffectStrength(radius, strength, abs(sy - py), 1)
-				ez = GetEffectStrength(radius, strength, abs(sz - pz), 1)
+				ex = GetEffectStrength(radius, strength, abs(sx - px), mass)
+				ey = GetEffectStrength(radius, strength, abs(sy - py), mass)
+				ez = GetEffectStrength(radius, strength, abs(sz - pz), mass)
 			end
 			if sx - px < 0 then
 				ex = - ex
