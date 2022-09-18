@@ -26,7 +26,7 @@ local singularitydefs = {}
 for i = 1, #WeaponDefs do
 	local cp = WeaponDefs[i].customParams
 	if cp and cp.singularity then
-		singularitydefs[i] = {radius = tonumber(cp.singuradius) or 400, lifespan = math.max(tonumber(cp.singulifespan) or 300, 10), strength = tonumber(cp.singustrength) or 20, height = tonumber(cp.singuheight) or 0, ceg = cp.singuceg or 'black_hole_singu', finalceg = cp.singufinalceg or 'riotballgrav'}
+		singularitydefs[i] = {radius = (tonumber(cp.singuradius) or 400)/2, lifespan = math.max(tonumber(cp.singulifespan) or 300, 10), strength = tonumber(cp.singustrength) or 20, height = tonumber(cp.singuheight) or 0, ceg = cp.singuceg or 'black_hole_singu', finalceg = cp.singufinalceg or 'riotballgrav'}
 	end
 end
 
