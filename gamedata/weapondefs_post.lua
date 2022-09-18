@@ -276,7 +276,20 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 	if weaponDef.name == "NoWeapon" then
 		weaponDef.customparams.norealdamage = 1
 	end
+	-- mass calculations
 	
+	if weaponDef.customparams.bogus == nil and weaponDef.customparams.mass == nil and weaponDef.weapontype ~= "Shield" and weaponDef.weapontype ~= "Laser" and not string.lower(weaponDef.name):find("fake") then
+		local damageformass = 0
+		local default = tonumber(weaponDef.damage["default"]) or 0
+		local air = tonumber(weaponDef.damage["planes"]) or 0
+		damageformass = math.max(default, air)
+		local grav = weaponDef.mygravity or 0
+		if grav == 0 then
+			grav = 0.1
+		end
+		weaponDef.customparams.mass = math.max((damageformass / 100) / grav , 1)
+		Spring.Echo("ID: " .. weaponDef.name, weaponDef.customparams.mass)
+	end
 	-- Modoptions --
 	if (weaponDef.damage and weaponDef.name and not string.find(weaponDef.name, "Disintegrator")) then
 		for damagetype, amount in pairs(weaponDef.damage) do
