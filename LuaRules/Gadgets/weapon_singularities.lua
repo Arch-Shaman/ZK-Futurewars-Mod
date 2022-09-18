@@ -101,9 +101,9 @@ local function ProcessProjectiles(sx, sy, sz, radius, strength, list, rev)
 		local projectileID = list[i]
 		local px, py, pz = spGetProjectilePosition(projectileID)
 		local distance = Distance3d(sx, sy, sz, px, py, pz)
-		local radiussqr = radius * radius
+		--local radiussqr = radius * radius -- no idea why this was sqr.
 		--spEcho("Distance: " .. distance .. "\nBeamWeapon: " .. tostring(GetIsBeamWeapon(projectileID)))
-		if distance <= radiussqr and not GetIsBeamWeapon(projectileID) then -- this is affected.
+		if distance <= radius and not GetIsBeamWeapon(projectileID) then -- this is affected.
 			local cp = WeaponDefs[spGetProjectileDefID(projectileID)].customParams
 			local mass = tonumber(cp.mass) or 1
 			--spSetProjectileMoveControl(projectileID, true)
