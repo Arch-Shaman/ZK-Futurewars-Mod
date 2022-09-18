@@ -31,6 +31,36 @@ return {
 			},
 		},
 	},
+	["gravitywell_200"] = {
+		usedefaultexplosions = false,
+		sparks = {
+			air                = true,
+			ground             = true,
+			water              = true,
+			underwater         = true,
+			class              = [[CSimpleParticleSystem]],
+			properties = {
+				airdrag            = 1,
+				colormap           = [[0 .8 1 .1   0 0 0 0]],
+				directional        = true,
+				emitrot            = 0,
+				emitrotspread      = 120,
+				emitvector         = [[0,1,0]],
+				gravity            = [[0, 0, 0]],
+				numparticles       = 24,
+				particlelife       = 120,
+				particlelifespread = 0,
+				particlesize       = 0, -- this is the value for creating new ones. It would be nice to autogenerate this from a template.
+				particlesizespread = 0,
+				particlespeed      = 0.15,
+				particlespeedspread = 0.05,
+				pos                = [[0, 0, 0]],
+				sizegrowth         = 2,
+				sizemod            = 0.96,
+				texture            = [[chargeparticles]],
+			},
+		},
+	},
 	["black_hole_400"] = {
 		usedefaultexplosions = false,
 		sparks = {
