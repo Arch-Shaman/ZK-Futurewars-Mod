@@ -68,12 +68,12 @@ return {
 		},
 		weaponDefs = {
 			SINGULARITY = {
-				areaOfEffect       = 1000,
+				areaOfEffect       = 1280,
 				craterMult         = 1,
 				edgeEffectiveness  = 0,
 				customParams            = {
 					singularity = [[1]],
-					singuradius = [[1000]],
+					singuradius = [[1280]],
 					singulifespan = [[300]],
 					singustrength = [[185]],
 					singuheight = [[200]],

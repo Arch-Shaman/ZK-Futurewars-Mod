@@ -62,7 +62,7 @@ return {
 					singulifespan = "540",
 					singustrength = "120",
 					detachmentradius = "500",
-					singuheight = "250",
+					singuheight = "75",
 					singuceg = "black_hole_400",
 					restrict_in_widgets = 1,
 					stats_hide_dps = 1, -- one use

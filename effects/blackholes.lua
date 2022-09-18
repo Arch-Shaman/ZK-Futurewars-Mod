@@ -110,12 +110,12 @@ return {
 				numparticles       = 24,
 				particlelife       = 120,
 				particlelifespread = 0,
-				particlesize       = 640, -- this is the value for creating new ones. It would be nice to autogenerate this from a template.
+				particlesize       = 1280, -- this is the value for creating new ones. It would be nice to autogenerate this from a template.
 				particlesizespread = 0,
 				particlespeed      = 0.15,
 				particlespeedspread = 0.05,
 				pos                = [[0, 0, 0]],
-				sizegrowth         = -1,
+				sizegrowth         = -5,
 				sizemod            = 0.96,
 				texture            = [[chargeparticles]],
 			},
