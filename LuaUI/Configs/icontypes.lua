@@ -977,6 +977,34 @@ local icontypes = {
 		bitmap='icons/subraider.dds',
 		size=3.0,
 	},
+	subbomb = {
+		bitmap='icons/subbomb.dds',
+		size=3.0,
+	},
+	subnuclear = {
+		bitmap='icons/subnuclear.dds',
+		size=3.0,
+	},
+	subcon = {
+		bitmap='icons/subcon.dds',
+		size=3.0,
+	},
+	subtacnuke = {
+		bitmap='icons/subtacnuke.dds',
+		size=3.0,
+	},
+	subarty = {
+		bitmap='icons/subarty.dds',
+		size=3.0,
+	},
+	facsub = {
+		bitmap='icons/facsub.dds',
+		size=3.0,
+	},
+	padsub = {
+		bitmap='icons/padsub.png',
+		size=3.0,
+	},
 	shipriot = {
 		bitmap='icons/shipriot.dds',
 		size=2.8,
