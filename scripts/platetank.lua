@@ -96,7 +96,7 @@ end
 
 function script.AimWeapon(num, heading, pitch)
 	if IsDisabled() then
-		return
+		return false
 	end
 	Signal(SIG_AIM)
 	SetSignalMask (SIG_AIM)
