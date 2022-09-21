@@ -104,10 +104,14 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		
 		if teleported then
 			local x, y, z = spGetUnitPosition(proOwnerID)
+			local rotation = math.atan2(targetZ - teleportZ, targetX - teleportX)
+			local cx, cy, cz = Spring.GetUnitRotation(proOwnerID)
 			Spring.SpawnCEG("teleport_out", x, y, z)
 			Spring.SpawnCEG("teleport_in", teleportX, teleportY, teleportZ)
 			Spring.MoveCtrl.Enable(proOwnerID)
 			Spring.MoveCtrl.SetPosition(proOwnerID, teleportX, teleportY, teleportZ)
+			Spring.MoveCtrl.SetHeading(proOwnerID, 1)
+			Spring.MoveCtrl.SetRotation(proOwnerID, 0, rotation, 0)
 			Spring.MoveCtrl.Disable(proOwnerID)
 			GG.PlayFogHiddenSound(cfg.sound, 10, x, y, z)
 		else
