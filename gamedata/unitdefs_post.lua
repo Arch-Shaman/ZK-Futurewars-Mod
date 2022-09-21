@@ -555,38 +555,57 @@ for name, ud in pairs(UnitDefs) do
 	-- unitspeedmult
 	if (modOptions and modOptions.unitspeedmult and modOptions.unitspeedmult ~= 1) then
 		local unitspeedmult = modOptions.unitspeedmult
-		if (unitDef.maxvelocity) then
-			unitDef.maxvelocity = unitDef.maxvelocity * unitspeedmult
+		if (ud.maxvelocity) then
+			ud.maxvelocity = ud.maxvelocity * unitspeedmult
 		end
-		if (unitDef.acceleration) then
-			unitDef.acceleration = unitDef.acceleration * unitspeedmult
+		if (ud.acceleration) then
+			ud.acceleration = ud.acceleration * unitspeedmult
 		end
-		if (unitDef.brakerate) then
-			unitDef.brakerate = unitDef.brakerate * unitspeedmult
+		if (ud.brakerate) then
+			ud.brakerate = ud.brakerate * unitspeedmult
 		end
-		if (unitDef.turnrate) then
-			unitDef.turnrate = unitDef.turnrate * unitspeedmult
+		if (ud.turnrate) then
+			ud.turnrate = ud.turnrate * unitspeedmult
 		end
 	end
 	if (modOptions and modOptions.damagemult and modOptions.damagemult ~= 1) then
 		local damagemult = modOptions.damagemult
-		if (unitDef.autoheal) then
-			unitDef.autoheal = unitDef.autoheal * damagemult
+		if (ud.autoheal) then
+			ud.autoheal = ud.autoheal * damagemult
 		end
-		if (unitDef.idleautoheal) then
-			unitDef.idleautoheal = unitDef.idleautoheal * damagemult
+		if (ud.idleautoheal) then
+			ud.idleautoheal = ud.idleautoheal * damagemult
 		end
-		if (unitDef.capturespeed) then 
-			unitDef.capturespeed = unitDef.capturespeed * damagemult
-		elseif (unitDef.workertime) then
-			unitDef.capturespeed = unitDef.workertime * damagemult
+		if (ud.capturespeed) then 
+			ud.capturespeed = ud.capturespeed * damagemult
+		elseif (ud.workertime) then
+			ud.capturespeed = ud.workertime * damagemult
 		end
 		
-		if (unitDef.repairspeed) then 
-			unitDef.repairspeed = unitDef.repairspeed * damagemult
-		elseif (unitDef.workertime) then
-			unitDef.repairspeed = unitDef.workertime * damagemult
+		if (ud.repairspeed) then 
+			ud.repairspeed = ud.repairspeed * damagemult
+		elseif (ud.workertime) then
+			ud.repairspeed = ud.workertime * damagemult
 		end
+	end
+	
+	-- Lua access to colvol axis is impossible I think, so let's add it to CP.
+	if ud.collisionvolumetype then
+		local t = ud.collisionvolumetype
+		local r
+		t = t:lower()
+		if t == "sphere" or t == "box" then
+			r = 0
+		elseif t == "cylx" then
+			r = 0
+		elseif t == "cyly" then
+			r = 1
+		elseif t == "cylz" then
+			r = 2
+		else
+			r = 0
+		end
+		ud.customparams.colvolaxis = r
 	end
 	
 	-- Set turnInPlace speed limits, reverse velocities (but not for ships)
@@ -614,15 +633,15 @@ for name, ud in pairs(UnitDefs) do
 	end
 	
 	-- 2x repair speed than BP
-	if (unitDef.repairspeed) then
-		unitDef.repairspeed = unitDef.repairspeed / REPAIR_ENERGY_COST_FACTOR
-	elseif (unitDef.workertime) then
-		unitDef.repairspeed = unitDef.workertime / REPAIR_ENERGY_COST_FACTOR
+	if (ud.repairspeed) then
+		ud.repairspeed = ud.repairspeed / REPAIR_ENERGY_COST_FACTOR
+	elseif (ud.workertime) then
+		ud.repairspeed = ud.workertime / REPAIR_ENERGY_COST_FACTOR
 	end
 	
 	-- Set higher default losEmitHeight. Engine default is 20.
-	if not unitDef.losEmitHeight then
-		unitDef.losEmitHeight = 30
+	if not ud.losEmitHeight then
+		ud.losEmitHeight = 30
 	end
 	
 	-- Avoid firing at unarmed
@@ -763,8 +782,8 @@ for name, ud in pairs(UnitDefs) do
 	-- Altered unit health mod option
 	if modOptions and modOptions.hpmult and modOptions.hpmult ~= 1 then
 		local hpMulti = modOptions.hpmult
-		if unitDef.maxdamage and unitDef.unitname ~= "terraunit" then
-			unitDef.maxdamage = math.max(unitDef.maxdamage * hpMulti, 1)
+		if ud.maxdamage and ud.unitname ~= "terraunit" then
+			ud.maxdamage = math.max(ud.maxdamage * hpMulti, 1)
 		end
 	end
 	
