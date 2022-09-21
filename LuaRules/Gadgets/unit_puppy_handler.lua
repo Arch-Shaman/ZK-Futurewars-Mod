@@ -50,15 +50,14 @@ for i = 1, #UnitDefs do
 	local ud = UnitDefs[i]
 	if ud.customParams.ispuppy then
 		--config[i] = ud.losRadius
-		config[i] = true
-		local weapon = ud.weapons[1].id
+		local weapon = ud.weapons[1].weaponDef
+		config[i] = weapon
 		wantedList[#wantedList + 1] = weapon
+		Script.SetWatchExplosion(weapon, true)
 	end
 end
 
-local puppyDefID
-local puppyWeaponID
-local puppyLosRadius
+--local puppyLosRadius
 
 local cannotBeDamage = {}
 local stuckPuppyWorkaround = {}
@@ -104,6 +103,7 @@ local function RestorePuppy(unitID, x, y, z)
 		puppyGoodPosition[unitID] = puppyGoodPosition[unitID] or {x = x, y = y, z = z}
 		return
 	end
+	local unitDefID = spGetUnitDefID(unitID)
 	--Spring.Echo("RestorePuppy DONE")
 	hiddenPuppy[unitID] = nil
 	spSetUnitPosition(unitID, x, z) -- fixes rectangle selection
@@ -135,13 +135,9 @@ function GG.PuppyHandler_Shot(unitID)
 end
 
 function gadget:Initialize()
-	local puppyDef =  UnitDefNames.jumpscout
-	puppyDefID = puppyDef.id
-	puppyWeaponID = puppyDef.weapons[1].weaponDef
+	--local puppyDef =  UnitDefNames.jumpscout
+	--puppyWeaponID = puppyDef.weapons[1].weaponDef
 	--puppyLosRadius = puppyDef.losRadius
-	for i = 1, #wantedList do
-		Script.SetWatchExplosion(wantedList[i], true)
-	end
 end
 
 -- in event of shield impact, gets data about both units and passes it to UnitPreDamaged
@@ -157,7 +153,7 @@ function gadget:ShieldPreDamaged(proID, proOwnerID, shieldEmitterWeaponNum, shie
 		defenderDefID = spGetUnitDefID(shieldCarrierUnitID)
 	end
 	-- we don't actually have the weaponID, but can assume it is puppyWeaponID
-	gadget:UnitPreDamaged(shieldCarrierID, defenderDefID, defenderTeam, 0, false, puppyWeaponID, proOwnerID, attackerDefID, attackerTeam, proID)
+	gadget:UnitPreDamaged(shieldCarrierID, defenderDefID, defenderTeam, 0, false, config[attackerDefID], proOwnerID, attackerDefID, attackerTeam, proID)
 	return false
 end
 
@@ -171,7 +167,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 			-- attacker and attacked units are known (both units are alive)
 			if spAreTeamsAllied(unitTeam, attackerTeam) then
 				-- attacked unit is an ally
-				if unitDefID == puppyDefID then
+				if config[unitDefID] then
 					-- attacked unit is an allied puppy, cancel damage
 					--Spring.Echo("UnitPreDamaged " .. attackerID)
 					return 0
@@ -219,7 +215,8 @@ function gadget:Explosion_GetWantedWeaponDef()
 end
 
 function gadget:Explosion(weaponID, px, py, pz, ownerID)
-	if weaponID == puppyWeaponID and ownerID and spValidUnitID(ownerID) then
+	--Spring.Echo("Explosion: " .. weaponID)
+	if ownerID and spValidUnitID(ownerID) then -- no need to check if this explosion is handled. GetWantedWeaponDef above sorts it for us.
 		-- the puppy landed
 		RestorePuppy(ownerID, px, py, pz)
 	end
