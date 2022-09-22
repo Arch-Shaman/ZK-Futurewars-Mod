@@ -270,7 +270,7 @@ local function SitOnPad(unitID)
 			else -- repairs
 				health = spGetUnitHealth(unitID)
 				if health < maxHP and (updateRate > 0) and ((updateCost == 0) or spUseUnitResource(landData.padID, resTable)) then
-					local heals = landData.repairBp/count * healPerBP)
+					local heals = landData.repairBp/count * healPerBP
 					local newHealth = min(maxHP, health + heals)
 					local healing = newHealth - health
 					local padTeam = spGetUnitTeam(landData.padID)
