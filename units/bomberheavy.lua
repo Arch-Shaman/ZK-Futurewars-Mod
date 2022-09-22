@@ -27,8 +27,8 @@ return {
 		customParams        = {
 			modelradius      = "10",
 			requireammo      = "1",
-			reammoseconds    = "55",
-			refuelturnradius = "550",
+			reammoseconds    = "80",
+			refuelturnradius = "350",
 			reallyabomber    = "1",
 			fighter_pullup_dist = 1500, -- pullup at the end of attack dive to avoid hitting terrain
 		},
