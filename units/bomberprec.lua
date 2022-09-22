@@ -25,7 +25,7 @@ return {
 		customParams        = {
 			modelradius    = [[15]],
 			refuelturnradius = [[220]],
-			reammoseconds    = [[5]],
+			reammoseconds    = [[7]],
 			requireammo    = [[1]],
 			reallyabomber    = [[1]],
 			outline_x = 130,
