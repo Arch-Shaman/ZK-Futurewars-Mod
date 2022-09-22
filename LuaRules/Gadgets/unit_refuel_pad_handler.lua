@@ -58,6 +58,8 @@ local min = math.min
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+VFS.Include("LuaRules/Configs/customcmds.h.lua")
+
 local mobilePadDefs = {}
 local padCount = {}
 
@@ -75,6 +77,7 @@ local reammoFrames = {}
 local reammoDrain = {}
 local padRepairBp = {}
 local rotateUnit = {}
+
 
 for i = 1, #UnitDefs do
 	local movetype = Spring.Utilities.getMovetype(UnitDefs[i])
@@ -134,6 +137,9 @@ local function ForceImmediateAbort(unitID, padID, isLanded)
 			GG.StopMiscPriorityResourcing(padID, miscPriorityKey)
 			-- activate unit and its jets. An attempt at the Vulture-losing-radar bug.
 			Spring.SetUnitCOBValue(unitID, COB.ACTIVATION, 1)
+		end
+		if Spring.GetUnitRulesParam(unitID, "reammoProgress") ~= nil or Spring.GetUnitRulesParam(unitID, "noammo") == 2 then
+			Spring.SetUnitRulesParam(unitID, "noammo", 1) -- mark bomber as no longer refueling.
 		end
 		if padCount[padID] then
 			padCount[padID] = padCount[padID] - 1
@@ -616,4 +622,13 @@ function gadget:GameFrame(f)
 	if f%3 == 1 then
 		UpdatePadLocations()
 	end
+end
+
+function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions)
+	local isMoveCommand = (cmdID == CMD.MOVE or cmdID == CMD_RAW_MOVE)
+	--Spring.Echo("AllowCommand: " .. cmdID .. ", isMoveCommand: " .. tostring(isMoveCommand) .. ", shift: " .. tostring(cmdParams.shift))
+	if landingUnit[unitID] and (isMoveCommand and not cmdOptions.shift) or cmdID == CMD_IMMEDIATETAKEOFF then -- abort landing.
+		landingUnit[unitID].abort = true
+	end
+	return true
 end

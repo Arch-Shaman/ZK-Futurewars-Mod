@@ -108,6 +108,7 @@ local cmds = {
 	AIR_STRAFE = 39381,
 	AUTOJUMP = 39382, -- Tactical AI / Jump Fall Avoidance
 	ARMORSTATE = 39383, -- Bastion / Azimuth command.
+	IMMEDIATETAKEOFF = 39384, -- Airpad abort.
 	-- terraform
 	RAMP = 39734,
 	LEVEL = 39736,
