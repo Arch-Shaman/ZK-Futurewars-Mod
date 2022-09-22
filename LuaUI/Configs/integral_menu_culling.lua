@@ -21,6 +21,7 @@ local configList = {
 	{cmdID = CMD_FIND_PAD              , default = true, name = "Resupply"},
 	{cmdID = CMD.RESURRECT             , default = true, name = "Resurrect"},
 	{cmdID = CMD.UNLOAD_UNITS          , default = true, name = "Unload"},
+	{cmdID = CMD_IMMEDIATETAKEOFF      , default = true, name = "Take off"},
 	{label = "Advanced Commands (hidden by default)"},
 	{cmdID = CMD.AREA_ATTACK           , default = false, name = "Area Attack"},
 	{cmdID = CMD_AREA_TERRA_MEX        , default = false, name = "Area Terra Mex"},

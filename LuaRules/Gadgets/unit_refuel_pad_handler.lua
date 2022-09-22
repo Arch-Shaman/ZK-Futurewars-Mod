@@ -624,11 +624,20 @@ function gadget:GameFrame(f)
 	end
 end
 
+function gadget:AllowCommand_GetWantedCommand()
+	return {[CMD_IMMEDIATETAKEOFF] = true}
+end
+
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions)
-	local isMoveCommand = (cmdID == CMD.MOVE or cmdID == CMD_RAW_MOVE)
-	--Spring.Echo("AllowCommand: " .. cmdID .. ", isMoveCommand: " .. tostring(isMoveCommand) .. ", shift: " .. tostring(cmdParams.shift))
-	if landingUnit[unitID] and (isMoveCommand and not cmdOptions.shift) or cmdID == CMD_IMMEDIATETAKEOFF then -- abort landing.
-		landingUnit[unitID].abort = true
+	--local isMoveCommand = (cmdID == CMD.MOVE or cmdID == CMD_RAW_MOVE)
+	if landingUnit[unitID] then -- not one of us.
+		landingUnit[unitID].abort = true -- abort landing.
+		local cmdID, _, cmdTag = Spring.GetUnitCurrentCommand(unitID)
+		if cmdID == CMD_REARM or cmdID == CMD_FIND_PAD then
+			Spring.GiveOrderToUnit(unitID, CMD.REMOVE, cmdTag, 0)
+		end
 	end
-	return true
+	return false
+	--elseif isMoveCommand and cmdOptions.shift == false and not landingUnit.landed then -- user wants to move somewhere else.
+	--landingUnit[unitID].abort = true
 end
