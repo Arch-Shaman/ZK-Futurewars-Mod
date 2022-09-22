@@ -288,7 +288,7 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 			grav = 0.1
 		end
 		weaponDef.customparams.mass = math.max((damageformass / 100) / grav , 1)
-		Spring.Echo("ID: " .. weaponDef.name, weaponDef.customparams.mass)
+		--Spring.Echo("ID: " .. weaponDef.name, weaponDef.customparams.mass)
 	end
 	-- Modoptions --
 	if (weaponDef.damage and weaponDef.name and not string.find(weaponDef.name, "Disintegrator")) then
