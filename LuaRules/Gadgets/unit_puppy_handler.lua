@@ -45,6 +45,7 @@ local CMD_WAIT = CMD.WAIT
 
 local wantedList = {}
 local config = {}
+local watchWeapons = {}
 
 for i = 1, #UnitDefs do
 	local ud = UnitDefs[i]
@@ -53,6 +54,7 @@ for i = 1, #UnitDefs do
 		local weapon = ud.weapons[1].weaponDef
 		config[i] = weapon
 		wantedList[#wantedList + 1] = weapon
+		watchWeapons[weapon] = true
 		Script.SetWatchExplosion(weapon, true)
 	end
 end
@@ -162,7 +164,7 @@ function gadget:UnitPreDamaged_GetWantedWeaponDef()
 end
 
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam,projectileID)
-	if wantedList[weaponDefID] and attackerID and spValidUnitID(attackerID) then
+	if watchWeapons[weaponDefID] and attackerID and spValidUnitID(attackerID) then
 		if attackerTeam and unitTeam then
 			-- attacker and attacked units are known (both units are alive)
 			if spAreTeamsAllied(unitTeam, attackerTeam) then
