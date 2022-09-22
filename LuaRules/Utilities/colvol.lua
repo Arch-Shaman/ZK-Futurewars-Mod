@@ -17,7 +17,7 @@ function Spring.Utilities.ResetUnitColVol(unitID)
 	local colvol = UnitDefs[Spring.GetUnitDefID(unitID)].collisionVolume
 	local vtype = colvol.type or "sphere" -- default is sphere, apparently.
 	vtype = GetCollisionVolumeType(vtype)
-	Spring.Echo("Reset colvol: " .. axis)
+	--Spring.Echo("Reset colvol: " .. axis)
 	Spring.SetUnitCollisionVolumeData(unitID, colvol.scaleX, colvol.scaleY, colvol.scaleZ, colvol.offsetX, colvol.offsetY, colvol.offsetZ, vtype, 1, axis)
 end
 
@@ -26,6 +26,6 @@ function Spring.Utilities.SetUnitColVolOffsets(unitID, x, y, z)
 	local axis = UnitDefs[Spring.GetUnitDefID(unitID)].customParams.colvolaxis or 0
 	local vtype = colvol.type or "sphere" -- default is sphere, apparently.
 	vtype = GetCollisionVolumeType(vtype)
-	Spring.Echo("Setting colvol: " .. axis)
+	--Spring.Echo("Setting colvol: " .. axis)
 	Spring.SetUnitCollisionVolumeData(unitID, colvol.scaleX, colvol.scaleY, colvol.scaleZ, x, y, z, vtype, 1, axis)
 end
