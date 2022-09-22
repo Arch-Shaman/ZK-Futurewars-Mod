@@ -59,6 +59,7 @@ local min = math.min
 --------------------------------------------------------------------------------
 
 local mobilePadDefs = {}
+local padCount = {}
 
 local DEFAULT_REAMMO_TIME = 5
 local DEFAULT_REAMMO_DRAIN = 10
@@ -122,7 +123,7 @@ local function GetBuildRate(unitID)
 	if stunned_or_inbuild then
 		return 0
 	end
-	return spGetUnitRulesParam(unitID, "totalBuildPowerChange") or 1
+	return (spGetUnitRulesParam(unitID, "totalBuildPowerChange") or 1)
 end
 
 local function ForceImmediateAbort(unitID, padID, isLanded)
@@ -133,6 +134,9 @@ local function ForceImmediateAbort(unitID, padID, isLanded)
 			GG.StopMiscPriorityResourcing(padID, miscPriorityKey)
 			-- activate unit and its jets. An attempt at the Vulture-losing-radar bug.
 			Spring.SetUnitCOBValue(unitID, COB.ACTIVATION, 1)
+		end
+		if padCount[padID] then
+			padCount[padID] = padCount[padID] - 1
 		end
 		mcDisable(unitID)
 		GG.UpdateUnitAttributes(unitID)
@@ -162,10 +166,9 @@ local function SitOnPad(unitID)
 	
 	local unitDefID        = Spring.GetUnitDefID(unitID)
 	local ud               = UnitDefs[unitDefID]
-	local cost             = ud.metalCost
 	local maxHP            = ud.health
-	local healPerFrame     = landData.repairBp*maxHP/(REPAIR_COST_FACTOR*30*cost)
-	local repairFrameDrain = landData.repairBp/30
+	local healPerBP        = maxHP/(REPAIR_COST_FACTOR*30*ud.metalCost)
+	--local repairFrameDrain = landData.repairBp/30
 	local reammoMaxTime     = reammoFrames[unitDefID]
 	
 	if not unitMovectrled[unitID] then
@@ -194,7 +197,7 @@ local function SitOnPad(unitID)
 	
 	-- deactivate unit to cause the lups jets away
 	Spring.SetUnitCOBValue(unitID, COB.ACTIVATION, 0)
-	
+	padCount[landData.padID] = (padCount[landData.padID] or 0) + 1
 	local function SitLoop()
 		-- read unitrulesparam for save/load handling
 		local reammoProgress = GG.RequireRefuel(unitID) and reammoMaxTime and (Spring.GetUnitRulesParam(unitID, "reammoProgress") or 0) * reammoMaxTime
@@ -202,6 +205,8 @@ local function SitOnPad(unitID)
 		local oldBuildRate = 0
 		local oldUpdateCost = 0
 		local updateRate = 1
+		local padunitDef = spGetUnitDefID(landData.padID)
+		local effectiveBuildRate, count
 		
 		Sleep() -- Avoid recursion in instantly cancelled commands.
 		
@@ -227,28 +232,33 @@ local function SitOnPad(unitID)
 			end
 			
 			buildRate = GetBuildRate(landData.padID)
-			updateCost = ((reammoProgress and (reammoDrain[unitDefID] or 0)) or repairFrameDrain)
-			if updateCost ~= oldUpdateCost or oldBuildRate ~= buildRate then
-				oldBuildRate = buildRate
-				oldUpdateCost = updateCost
-				if updateCost > 0 then
-					GG.StartMiscPriorityResourcing(landData.padID, buildRate*updateCost*30, true, miscPriorityKey)
-				else
-					GG.StopMiscPriorityResourcing(landData.padID, miscPriorityKey)
-				end
-			end
 			
+			updateRate = updateRate*buildRate
+			count = padCount[landData.padID]
+			effectiveBuildRate = updateRate * ((padRepairBp[padunitDef]/count)/padRepairBp[padunitDef])
+			--Spring.Echo("Effective build rate: " .. effectiveBuildRate)
+			
+			updateCost = ((reammoProgress and (reammoDrain[unitDefID] or 0)) or (padRepairBp[padunitDef])/30) * effectiveBuildRate
 			if (updateCost > 0) then
 				updateRate = GG.GetMiscPrioritySpendScale(landData.padID, padTeamID, true)
 			else
 				updateRate = 1
 			end
-			updateRate = updateRate*buildRate
+			if updateCost ~= oldUpdateCost or oldBuildRate ~= buildRate then
+				oldBuildRate = buildRate
+				oldUpdateCost = updateCost
+				if updateCost > 0 then
+					GG.StartMiscPriorityResourcing(landData.padID, updateCost*30, true, miscPriorityKey)
+				else
+					GG.StopMiscPriorityResourcing(landData.padID, miscPriorityKey)
+				end
+			end
 			resTable.e = updateCost*updateRate
-			
 			if reammoProgress then
 				if (updateRate > 0) and ((updateCost == 0) or spUseUnitResource(landData.padID, resTable)) then
-					reammoProgress = reammoProgress + updateRate
+					local progressToAdd = (padRepairBp[padunitDef] * effectiveBuildRate) / 10
+					--Spring.Echo("Adding " .. progressToAdd .. " instead of " .. updateRate)
+					reammoProgress = reammoProgress + progressToAdd
 					if reammoProgress > reammoMaxTime then
 						reammoProgress = false
 						GG.RefuelComplete(unitID)
@@ -257,16 +267,17 @@ local function SitOnPad(unitID)
 						Spring.SetUnitRulesParam(unitID, "reammoProgress", reammoProgress/reammoMaxTime, LOS_ACCESS)
 					end
 				end
-			else
+			else -- repairs
 				health = spGetUnitHealth(unitID)
 				if health < maxHP and (updateRate > 0) and ((updateCost == 0) or spUseUnitResource(landData.padID, resTable)) then
-					local newHealth = min(maxHP, health + updateRate*healPerFrame)
+					local heals = landData.repairBp/count * healPerBP)
+					local newHealth = min(maxHP, health + heals)
 					local healing = newHealth - health
 					local padTeam = spGetUnitTeam(landData.padID)
 					if spGetUnitTeam(unitID) ~= padTeam then
 						GG.Awards.AddAwardPoints('repair', padTeam, healing)
 					end
-					spSetUnitHealth(unitID, min(maxHP, health + updateRate*healPerFrame))
+					spSetUnitHealth(unitID, newHealth)
 				else
 					GG.StopMiscPriorityResourcing(landData.padID, miscPriorityKey)
 					break
@@ -278,6 +289,7 @@ local function SitOnPad(unitID)
 			if landDuration%300 == 0 then
 				if spGetUnitIsDead(unitID) or (not Spring.ValidUnitID(unitID)) or (Spring.GetUnitMoveTypeData(unitID).aircraftState == "crashing") then
 					GG.StopMiscPriorityResourcing(landData.padID, miscPriorityKey)
+					padCount[landData.padID] = padCount[landData.padID] - 1
 					Spring.DestroyUnit(unitID)
 				end
 			end
@@ -292,6 +304,7 @@ local function SitOnPad(unitID)
 		GG.UpdateUnitAttributes(unitID) --update pending attribute changes in unit_attributes.lua if available
 		unitMovectrled[unitID] = nil
 		landingUnit[unitID] = nil
+		padCount[landData.padID] = padCount[landData.padID] - 1
 		
 		-- activate unit and its jets
 		Spring.SetUnitCOBValue(unitID, COB.ACTIVATION, 1)
@@ -588,6 +601,14 @@ local function UpdatePadLocations()
 			CircleToLand(unitID, {px,py,pz})
 		end
 	end
+end
+
+function gadget:UnitDestroyed(unitID)
+	padCount[unitID] = nil
+end
+
+function gadget:UnitReverseBuilt(unitID, unitDefID, unitTeam)
+	padCount[unitID] = nil
 end
 
 function gadget:GameFrame(f)
