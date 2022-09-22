@@ -22,7 +22,7 @@ return {
 		customParams        = {
 			reallyabomber    = [[1]],
 			fighter_pullup_dist = 3500, -- dont bother.
-			reammoseconds    = [[10]],
+			reammoseconds    = [[12]],
 			refuelturnradius = [[150]],
 			requireammo      = [[1]],
 			modelradius      = [[10]],
