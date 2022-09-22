@@ -1236,8 +1236,8 @@
 	},
 	"staticrearm" : {
 		"name" : "Airpad",
-		"description" : "Repairs and Rearms Aircraft, repairs at 2.5 e/s per pad",
-		"helptext" : "The Airpad repairs up to four aircraft at a time. It also refuels/rearms bombers."
+		"description" : "Repairs and Rearms Aircraft at 20bp",
+		"helptext" : "The second generation of Airpad now rearms and repairs aircraft at 20 buildpower (shared between aircraft) instead of just 2.5. Multiple aircraft can slow down rearming speed so it is best to build some Rejuvenators nearby."
 	},
 	"dynrecon1" : {
 		"name" : "Recon Commander",

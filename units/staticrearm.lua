@@ -2,7 +2,7 @@ return {
 	staticrearm = {
 		unitname            = "staticrearm",
 		name                = "Airpad",
-		description         = "Repairs and Rearms Aircraft, repairs at 2.5 e/s per pad",
+		description         = "Repairs and Rearms Aircraft at 20bp.",
 		activateWhenBuilt   = true,
 		buildCostMetal      = 350,
 		buildDistance       = 6,
@@ -28,6 +28,7 @@ return {
 		customParams        = {
 			pad_count = 4,
 			nobuildpower   = 1,
+			pad_bp = 20,
 			notreallyafactory = 1,
 			selection_rank  = "1",
 			selectionscalemult = 1,
@@ -47,10 +48,12 @@ return {
 		script              = "staticrearm.lua",
 		selfDestructAs      = "LARGE_BUILDINGEX",
 		showNanoSpray       = false,
-		sightDistance       = 273,
+		sightDistance       = 500,
+		radarDistance		= 1000,
+		sonarDistance		= 500,
 		useBuildingGroundDecal        = true,
 		waterline           = 8,
-		workerTime          = 10,
+		workerTime          = 20,
 		yardMap             = "ooooooooo ooooooooo ooooooooo ooooooooo ooooooooo ooooooooo ooooooooo ooooooooo ooooooooo",
 		featureDefs         = {
 			DEAD  = {
