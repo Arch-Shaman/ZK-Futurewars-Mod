@@ -109,10 +109,7 @@ local function Death(target)
 	GG.PlayFogHiddenSound("sounds/weapon/missile/sabot_hit.wav", 1600, x, y, z)
 end
 
-local function Terminate(ex, ey, ez)
-	Death({ex, ey, ez})
-	--Spring.DestroyUnit(unitID, false, true)
-	terminated = true
+local function CleanupThread()
 	Spring.SetUnitNoSelect(unitID, true)
 	Spring.SetUnitNoDraw(unitID, true)
 	Spring.SetUnitNoMinimap(unitID, true)
@@ -122,8 +119,15 @@ local function Terminate(ex, ey, ez)
 	Spring.SetUnitBlocking(unitID,false,false,false)
 	Spring.GiveOrderToUnit(unitID, CMD.STOP, 0, 0)
 	
-	Sleep(15000)
+	Sleep(5000)
 	Spring.DestroyUnit(unitID, false, true)
+end
+
+local function Terminate(ex, ey, ez)
+	Death({ex, ey, ez})
+	--Spring.DestroyUnit(unitID, false, true)
+	terminated = true
+	StartThread(CleanupThread)
 end
 
 local function GetHeading()
