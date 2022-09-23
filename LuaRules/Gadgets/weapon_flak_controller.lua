@@ -144,8 +144,8 @@ function gadget:GameFrame(f)
 						end
 					end
 				else
-					IterableMap.Remove(projectiles, id)
-					spEcho("[FlakCon] Weird projectile: " .. id)
+					ExplodeProjectile(id, wd, x, y, z)
+					--spEcho("[FlakCon] Weird projectile: " .. id)
 				end
 			end
 		end
