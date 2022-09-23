@@ -28,6 +28,7 @@ return {
 		iconType               = [[mine]],
 		idleAutoHeal           = 10,
 		idleTime               = 300,
+		floater                = true,
 		initCloaked            = true,
 		maxDamage              = 40,
 		maxSlope               = 255,
