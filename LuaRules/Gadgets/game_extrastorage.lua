@@ -62,8 +62,9 @@ local function SetupCommanderStorage(unitID)
 	local oldstorage = UnitDefs[spGetUnitDefID(unitID)].energyStorage
 	local mult = GG.GetTeamHandicap(spGetUnitTeam(unitID))
 	storageamount = storageamount * mult
+	local extrastorage = storageamount - oldstorage
 	--Spring.Echo("Setting up commander storage for " .. unitID .. " (" .. storageamount .. ")")
-	if storageamount - oldstorage ~= 0 then
+	if extrastorage ~= 0 then
 		AddUnitStorage(unitID, storageamount - oldstorage)
 	end
 end
