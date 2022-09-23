@@ -36,6 +36,11 @@ local spValidUnitID = Spring.ValidUnitID
 local random = math.random
 local sqrt = math.sqrt
 
+local ground = string.byte("g")
+local feature = string.byte("f")
+local unit = string.byte("u")
+local projectile = string.byte("p")
+
 local targettypes = {
 	[string.byte("g")] = 'ground',
 	[string.byte("f")] = 'feature',
@@ -109,17 +114,15 @@ function gadget:GameFrame(f)
 			else
 				local ttype,target = spGetProjectileTarget(id)
 				--spEcho("Target: " .. target .. "(" .. ttype .. ")")
-				local targettype = targettypes[ttype]
-				if targettypes ~= nil then
+				if ttype == unit or ttype == feature or ttype == projectile then
 					local x2,y2,z2
 					local vx,vy,vz = spGetProjectileVelocity(id)
 					local olddistance = data.distance or 0
-					ExplodeProjectile(id,wd,x,y,z)
-					if targettype == 'ground' then
+					if ttype == ground then
 						x2 = target[1]
 						y2 = target[2]
 						z2 = target[3]
-					elseif targettype == 'unit' and spValidUnitID(target) then
+					elseif ttype == unit and spValidUnitID(target) then
 						if not spGetUnitIsCloaked(target) then
 							x2,y2,z2 = spGetUnitPosition(target, false, true)
 							data.targetlastposition[1] = x2
@@ -130,7 +133,7 @@ function gadget:GameFrame(f)
 							y2 = data.targetlastposition[2]
 							z2 = data.targetlastposition[3]
 						end
-					elseif ttype == 'feature' then
+					elseif ttype == feature then
 						x2,y2,z2 = spGetFeaturePosition(target)
 					elseif ttype == projectile then
 						x2,y2,z2 = spGetProjectilePosition(target)
