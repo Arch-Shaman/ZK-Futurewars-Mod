@@ -41,13 +41,6 @@ local feature = string.byte("f")
 local unit = string.byte("u")
 local projectile = string.byte("p")
 
-local targettypes = {
-	[string.byte("g")] = 'ground',
-	[string.byte("f")] = 'feature',
-	[string.byte("u")] = 'unit',
-	[string.byte("p")] = 'projectile',
-}
-
 for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
