@@ -35,7 +35,7 @@ local max = math.max
 local sounddir = 'sounds/reply/advisor/'
 local spottedsuperweapons = {}
 
-local airlevel = 50 -- how high up units must be before being declared an airborn threat.
+local airlevel = 110 -- how high up units must be before being declared an airborn threat.
 
 local spottedair = false
 
