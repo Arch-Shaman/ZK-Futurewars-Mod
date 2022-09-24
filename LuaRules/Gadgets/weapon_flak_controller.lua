@@ -107,7 +107,7 @@ function gadget:GameFrame(f)
 			else
 				local ttype,target = spGetProjectileTarget(id)
 				--spEcho("Target: " .. target .. "(" .. ttype .. ")")
-				if ttype == unit or ttype == feature or ttype == projectile then
+				if ttype == unit or ttype == feature or ttype == projectile or ttype == ground then
 					local x2,y2,z2
 					local vx,vy,vz = spGetProjectileVelocity(id)
 					local olddistance = data.distance or 0
@@ -145,7 +145,7 @@ function gadget:GameFrame(f)
 					end
 				else
 					ExplodeProjectile(id, wd, x, y, z)
-					--spEcho("[FlakCon] Weird projectile: " .. id)
+					spEcho("[FlakCon] Weird projectile: " .. id)
 				end
 			end
 		end
