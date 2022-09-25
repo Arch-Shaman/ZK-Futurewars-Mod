@@ -15,7 +15,7 @@ function gadget:GetInfo()
 end
 
 local handledunits = {}
-local debugMode = true
+local debugMode = false
 
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetTeamResources = Spring.GetTeamResources
@@ -68,7 +68,7 @@ local function SetUnitStorage(unitID, amount)
 end
 
 local function SetupCommanderStorage(unitID)
-	local storageamount = spGetUnitRulesParam(unitID, "commander_storage_override") or 0
+	local storageamount = spGetUnitRulesParam(unitID, "commander_storage_override") or UnitDefs[spGetUnitDefID(unitID)].energyStorage
 	local oldstorage = UnitDefs[spGetUnitDefID(unitID)].energyStorage
 	local mult = GG.GetTeamHandicap(spGetUnitTeam(unitID))
 	storageamount = storageamount * mult
@@ -77,8 +77,8 @@ local function SetupCommanderStorage(unitID)
 		Spring.Echo("[game_extrastorage.lua] Setup Commander Storage", extrastorage, oldstorage)
 	end
 	--Spring.Echo("Setting up commander storage for " .. unitID .. " (" .. storageamount .. ")")
-	if extrastorage ~= 0 then
-		AddUnitStorage(unitID, storageamount - oldstorage)
+	if extrastorage >= 0 then
+		AddUnitStorage(unitID, extrastorage)
 	end
 end
 
