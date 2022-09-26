@@ -132,7 +132,7 @@ function gadget:GameFrame(f)
 				if data.battery > 0 then
 					data.battery = max(data.battery - (gain * 2), 0)
 				end
-			elseif data.battery < data.maxbattery then
+			elseif data.battery < data.maxbattery and gain > 0 then
 				if data.scales then
 					local power = spGetUnitRulesParam(id, "superweapon_mult") or 0
 					gain = gain * power
