@@ -36,6 +36,7 @@ for i = 1, #UnitDefs do
 	if cp.battery then
 		local maxbat = tonumber(cp.battery)
 		local gain = (tonumber(cp.batterygain) or 1)
+		local startBattery = tonumber(cp.initialbattery) or 0
 		gain = gain / (30 / checkTime)
 		local costs = {}
 		local checks = {}
@@ -52,7 +53,7 @@ for i = 1, #UnitDefs do
 			end
 		end
 		if maxbat then
-			wantedUnits[i] = {maximum = maxbat, gain = gain, batterycost = costs, scales = scales, checks = checks}
+			wantedUnits[i] = {maximum = maxbat, initialCharge = startBattery, gain = gain, batterycost = costs, scales = scales, checks = checks}
 		end
 	end
 end
@@ -135,7 +136,7 @@ end
 function gadget:UnitCreated(unitID, unitDefID)
 	if wantedUnits[unitDefID] then
 		local config = wantedUnits[unitDefID]
-		IterableMap.Add(handled, unitID, {battery = 0, gain = config.gain, maxbattery = config.maximum, costs = config.batterycost, scales = config.scales, checks = config.checks})
+		IterableMap.Add(handled, unitID, {battery = config.initialCharge, gain = config.gain, maxbattery = config.maximum, costs = config.batterycost, scales = config.scales, checks = config.checks})
 		spSetUnitRulesParam(unitID, "battery", 0, INLOS)
 	end
 end
