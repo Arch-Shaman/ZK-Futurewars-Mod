@@ -89,6 +89,14 @@ local function IsBatteryRecharged(unitID)
 	return data == nil or data.battery / data.maxbattery >= 1
 end
 
+local function CanUseCharge(unitID, chargeamt)
+	local data = IterableMap.Get(handled, unitID)
+	if data == nil then
+		return true
+	end
+	return data.battery >= chargeamt
+end
+
 local function RechargeBattery(unitID, amount)
 	local data = IterableMap.Get(handled, unitID)
 	if data == nil then
@@ -103,8 +111,25 @@ local function HasBattery(unitID)
 	return IterableMap.InMap(handled, unitID)
 end
 
+local function UseCharge(unitID, amount)
+	local data = IterableMap.Get(handled, unitID)
+	if data == nil then
+		return 1
+	end
+	local newCharge = data.battery - amount
+	if newCharge < 0 then
+		local newAmount = data.battery
+		data.battery = 0
+		return data.battery / amount
+	else
+		data.battery = data.battery - amount
+		return 1
+	end
+end
+	
+
 function gadget:Initialize()
-	GG.BatteryManagement = {CanFire = CanFire, WeaponFired = WeaponFired, IsBatteryRecharged = IsBatteryRecharged, RechargeBattery = RechargeBattery, HasBattery = HasBattery}
+	GG.BatteryManagement = {CanFire = CanFire, CanUseCharge = CanUseCharge, WeaponFired = WeaponFired, IsBatteryRecharged = IsBatteryRecharged, UseCharge = UseCharge, RechargeBattery = RechargeBattery, HasBattery = HasBattery}
 end
 
 function gadget:UnitCreated(unitID, unitDefID)

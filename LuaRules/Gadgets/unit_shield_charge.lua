@@ -56,6 +56,7 @@ for unitDefID = 1, #UnitDefs do
 					perSecondCost = tonumber(shieldWep.customParams.shield_drain),
 					startPower = shieldWep.customParams.shieldstartingpower and tonumber(shieldWep.customParams.shieldstartingpower),
 					rechargeDelay = shieldWep.customParams.shield_recharge_delay and tonumber(shieldWep.customParams.shield_recharge_delay),
+					batterychargecost = tonumber(shieldWep.customParams.shield_regenbatterycost)
 				}
 			else
 				shieldUnitDefID[unitDefID] = {
@@ -122,6 +123,7 @@ function gadget:GameFrame(n)
 				spSetUnitShieldState(unitID, data.shieldNum, charge)
 				data.restoreCharge = nil
 			end
+			local batteryCost = shieldUnitDefID[unitID].batterychargecost
 			if data.resTable then
 				-- The engine handles charging for free shields.
 				local hitTime = Spring.GetUnitRulesParam(unitID, "shieldHitFrame") or -999999
@@ -143,19 +145,26 @@ function gadget:GameFrame(n)
 						data.oldChargeRate = newChargeRate
 						data.resTable.e = def.perUpdateCost*newChargeRate
 					end
-					
 					-- Deal with overflow
 					local chargeAdd = newChargeRate*def.chargePerUpdate
 					if charge + chargeAdd > def.maxCharge then
 						local overProportion = 1 - (charge + chargeAdd - def.maxCharge)/chargeAdd
 						data.resTable.e = data.resTable.e*overProportion
 						chargeAdd = chargeAdd*overProportion
+						if batteryCost then
+							local batteryAvailable = GG.BatteryManagement.UseCharge(unitID, batteryCost)
+							chargeAdd = chargeAdd * batteryAvailable
+						end
+					elseif batteryCost then
+						local batteryAvailable = GG.BatteryManagement.UseCharge(unitID, batteryCost)
+						chargeAdd = chargeAdd * batteryAvailable
 					end
 
 					-- Check if the change can be carried out
-					if (GG.AllowMiscPriorityBuildStep(unitID, data.teamID, true, data.resTable) and spUseUnitResource(unitID, data.resTable)) then
+					if chargeAdd > 0 and (GG.AllowMiscPriorityBuildStep(unitID, data.teamID, true, data.resTable) and spUseUnitResource(unitID, data.resTable)) then
 						spSetUnitShieldState(unitID, data.shieldNum, charge + chargeAdd)
 					end
+					
 				else
 					if data.oldChargeRate ~= 0 then
 						GG.StopMiscPriorityResourcing(unitID)
