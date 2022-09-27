@@ -160,7 +160,7 @@ return {
 				thickness               = 18,
 				rgbColor                = [[1 1 1]],
 				soundHit                = [[PreserverSecondaryHit]],
-				soundHitVolume          = 0.3,
+				soundHitVolume          = 0.1,
 				turret                  = true,
 				weaponType              = [[LaserCannon]],
 				weaponVelocity          = 2500,
