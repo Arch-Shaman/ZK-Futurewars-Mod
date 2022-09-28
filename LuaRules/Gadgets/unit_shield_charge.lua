@@ -34,6 +34,7 @@ local spGetUnitIsStunned  = Spring.GetUnitIsStunned
 local spUseUnitResource   = Spring.UseUnitResource
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
+local spGetUnitDefID      = Spring.GetUnitDefID
 local losTable = {inlos = true}
 
 local unitMap = {}
@@ -56,11 +57,13 @@ for unitDefID = 1, #UnitDefs do
 					perSecondCost = tonumber(shieldWep.customParams.shield_drain),
 					startPower = shieldWep.customParams.shieldstartingpower and tonumber(shieldWep.customParams.shieldstartingpower),
 					rechargeDelay = shieldWep.customParams.shield_recharge_delay and tonumber(shieldWep.customParams.shield_recharge_delay),
-					batterychargecost = tonumber(shieldWep.customParams.shield_regenbatterycost)
+					batterychargecost = tonumber(shieldWep.customParams.shield_regenbatterycost),
 				}
 			else
 				shieldUnitDefID[unitDefID] = {
 					startPower = shieldWep.customParams.shieldstartingpower and tonumber(shieldWep.customParams.shieldstartingpower),
+					batterychargecost = tonumber(shieldWep.customParams.shield_regenbatterycost),
+					maxCharge = shieldWep.shieldPower,
 				}
 			end
 		end
@@ -103,6 +106,16 @@ end
 
 local spValidUnitID = Spring.ValidUnitID
 
+function GG.GetShieldChargePercent(unitID)
+	local index = unitMap[unitID] and unitMap[unitID].index
+	if index then
+		local _, charge = spGetUnitShieldState(unitID)
+		return charge / shieldUnitDefID[spGetUnitDefID(unitID)].maxCharge
+	else
+		return 1
+	end
+end
+
 function gadget:GameFrame(n)
 	if n%PERIOD ~= 0 then
 		return
@@ -123,7 +136,7 @@ function gadget:GameFrame(n)
 				spSetUnitShieldState(unitID, data.shieldNum, charge)
 				data.restoreCharge = nil
 			end
-			local batteryCost = shieldUnitDefID[unitID].batterychargecost
+			local batteryCost = shieldUnitDefID[spGetUnitDefID(unitID)].batterychargecost
 			if data.resTable then
 				-- The engine handles charging for free shields.
 				local hitTime = Spring.GetUnitRulesParam(unitID, "shieldHitFrame") or -999999

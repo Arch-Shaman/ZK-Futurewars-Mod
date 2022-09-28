@@ -118,26 +118,32 @@ local function UseCharge(unitID, amount)
 		return 1
 	end
 	local newCharge = data.battery - amount
+	local ret = 1
 	if newCharge < 0 then
 		local newAmount = data.battery
 		data.battery = 0
-		return data.battery / amount
+		ret = data.battery / amount
 	else
 		data.battery = data.battery - amount
-		return 1
 	end
+	spSetUnitRulesParam(unitID, "battery", data.battery, INLOS)
+	return ret
 end
-	
+
+local function GetChargeLevel(unitID)
+	local data = IterableMap.Get(handled, unitID)
+	return data and data.battery / data.maxbattery or 1
+end
 
 function gadget:Initialize()
-	GG.BatteryManagement = {CanFire = CanFire, CanUseCharge = CanUseCharge, WeaponFired = WeaponFired, IsBatteryRecharged = IsBatteryRecharged, UseCharge = UseCharge, RechargeBattery = RechargeBattery, HasBattery = HasBattery}
+	GG.BatteryManagement = {CanFire = CanFire, GetChargeLevel = GetChargeLevel, CanUseCharge = CanUseCharge, WeaponFired = WeaponFired, IsBatteryRecharged = IsBatteryRecharged, UseCharge = UseCharge, RechargeBattery = RechargeBattery, HasBattery = HasBattery}
 end
 
 function gadget:UnitCreated(unitID, unitDefID)
 	if wantedUnits[unitDefID] then
 		local config = wantedUnits[unitDefID]
 		IterableMap.Add(handled, unitID, {battery = config.initialCharge, gain = config.gain, maxbattery = config.maximum, costs = config.batterycost, scales = config.scales, checks = config.checks})
-		spSetUnitRulesParam(unitID, "battery", 0, INLOS)
+		spSetUnitRulesParam(unitID, "battery", config.initialCharge, INLOS)
 	end
 end
 
