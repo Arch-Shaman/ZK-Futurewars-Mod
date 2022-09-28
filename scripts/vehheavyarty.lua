@@ -14,7 +14,7 @@ local SIG_AIM = 2
 local SIG_MOVE = 1
 
 local RESTORE_DELAY = 5000
-local LOAD_DELAY = 22000
+local LOAD_DELAY = 18000
 local RELEASE_DELAY = 400 -- How long gantry waits after missile leaves
 local TRACK_PERIOD = 50
 
