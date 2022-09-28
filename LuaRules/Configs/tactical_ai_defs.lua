@@ -2138,17 +2138,17 @@ local behaviourConfig = {
 	},
 	
 	-- Flying scouts
-	{
-		name = "planelightscout",
+	--{
+		--name = "planelightscout",
 		--skirms = {},
 		--swarms = {},
 		--flees = {},
-		searchRange = 1000,
-		fleeEverything = true,
-		minFleeRange = 600, -- Avoid enemies standing in front of Pickets
-		fleeLeeway = 650,
-		fleeDistance = 650,
-	},
+		--searchRange = 1000,
+		--fleeEverything = true,
+		--minFleeRange = 600, -- Avoid enemies standing in front of Pickets
+		--fleeLeeway = 650,
+		--fleeDistance = 650,
+	--},
 	{
 		name = "planescout",
 		--skirms = {},

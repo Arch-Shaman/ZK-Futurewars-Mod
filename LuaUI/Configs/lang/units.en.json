@@ -1275,9 +1275,9 @@
 		"helptext" : "The Agitator boasts improved sensors over its predecessor, the Owl. It can jam an area and prevent enemy radars from picking up on activity in an area as well as spy on enemy units underwater."
 	},
 	"planelightscout" : {
-		"name" : "Informer",
-		"description" : "Light Scout Plane",
-		"helptext" : "The Informer is a light scout. It's pretty useless in Future Wars at the moment."
+		"name" : "Fenix",
+		"description" : "HiTech Fighter",
+		"helptext" : "The Fenix is a shielded fighter that can attack both ground and air units. While being somewhat similar in role to the heavier, bulkier Hades, the Fenix is not a fighter built for long combat sorties. It has several things going for it though: a strong shield, a powerful laser array, and a decent sized battery array to power both. When low on battery, it must return to a repair pad to recharge."
 	},
 	"amphfloater" : {
 		"name" : "Bully",
