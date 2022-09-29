@@ -101,6 +101,14 @@ local function Dgun()
 	Spring.SetUnitRulesParam(unitID, "noammo", 1)
 end
 
+function script.Deactivate()
+	Spring.SetUnitShieldState(unitID, -1, false)
+end
+
+function script.Activate()
+	Spring.SetUnitShieldState(unitID, -1, true)
+end
+
 function script.BlockShot(num)
 	if num == 3 then
 		return true
