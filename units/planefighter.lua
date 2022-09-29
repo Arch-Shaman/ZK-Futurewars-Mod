@@ -137,12 +137,12 @@ local unitDef = {
 			customParams            = {
 				burst = Shared.BURST_RELIABLE,
 				isFlak = 3,
-				flaktime = 8,
+				flaktime = 20,
 				reaim_time = 8, -- COB
 				light_color = [[1.4 0.8 0.3]],
 			},
 			damage                  = {
-				default = 60.1,
+				default = 80.1,
 			},
 			groundbounce = false,
 			--bounceslip = 0.25,
@@ -184,7 +184,7 @@ local unitDef = {
 				--spreadradius1 = 6, -- used in clusters. OPTIONAL. Default: 100.
 				clustervec1 = "randomxz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 				use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-				spawndist = 100, -- at what distance should we spawn the projectile(s)? REQUIRED.
+				spawndist = 150, -- at what distance should we spawn the projectile(s)? REQUIRED.
 				useheight = 1,
 				timeoutspawn = 0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 				vradius1 = 3, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
@@ -194,7 +194,7 @@ local unitDef = {
 				--proxydist = 100, -- how far to check for units? Default: spawndist
 			},
 			damage                  = {
-				default = 60.1*3,
+				default = 80.1*3,
 			},
 			edgeEffectiveness		= 0.2,
 			explosionGenerator      = [[custom:WEAPEXP_PUFF]],
@@ -299,7 +299,7 @@ local unitDef = {
 			},
 
 			damage                  = {
-				default = 180.1,
+				default = 240.1,
 			},
 			explosionGenerator      = [[custom:WEAPEXP_PUFF]],
 			fireStarter             = 70,
