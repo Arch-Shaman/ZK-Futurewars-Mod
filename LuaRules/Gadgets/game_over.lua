@@ -69,8 +69,14 @@ local campaignBattleID = Spring.GetModOptions().singleplayercampaignbattleid and
 local planetIndex = Spring.GetModOptions().singleplayercampaignbattleid
 planetIndex = planetIndex and tonumber(planetIndex)
 
+local SPARE_REGULAR_UNITS 
 local SPARE_PLANETWARS_UNITS = false
-local SPARE_REGULAR_UNITS = (modOptions.explodeondefeat == "0" or modOptions.explodeondefeat == 0)
+do
+	local explodeUnits = Spring.GetModOptions()["explodeondefeat"] or 0
+	SPARE_REGULAR_UNITS = tonumber(explodeUnits) == 0
+end
+
+Spring.Echo("[gameover] Sparing units", SPARE_REGULAR_UNITS, Spring.GetModOptions()["explodeondefeat"])
 
 local revealed = false
 local gameIsOver = false
