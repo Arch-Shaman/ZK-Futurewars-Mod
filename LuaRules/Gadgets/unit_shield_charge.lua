@@ -136,7 +136,7 @@ function gadget:GameFrame(n)
 				spSetUnitShieldState(unitID, data.shieldNum, charge)
 				data.restoreCharge = nil
 			end
-			local batteryCost = shieldUnitDefID[spGetUnitDefID(unitID)].batterychargecost
+			local batteryCost = def and def.batterychargecost
 			if data.resTable then
 				-- The engine handles charging for free shields.
 				local hitTime = Spring.GetUnitRulesParam(unitID, "shieldHitFrame") or -999999
