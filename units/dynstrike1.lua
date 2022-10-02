@@ -38,7 +38,7 @@ return {
 			outline_x = 110,
 			outline_y = 110,
 			outline_yoff = 31.25,
-			initcloaked = "1"
+			--initcloaked = "1"
 		},
 		energyStorage          = 500,
 		explodeAs              = "ESTOR_BUILDINGEX",
