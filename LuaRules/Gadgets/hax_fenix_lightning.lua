@@ -24,6 +24,10 @@ end
 
 local weaponDefID = WeaponDefNames["planelightscout_laser_dgun"].id
 
+function gadget:Explosion_GetWantedWeaponDef()
+	return {[1] = WeaponDefNames["planelightscout_laser_actual"].id}
+end
+
 function gadget:Explosion(weaponID, px, py, pz, ownerID, proID)
 	if Spring.ValidUnitID(ownerID) then
 		projectileAttributes.pos[1], projectileAttributes.pos[2], projectileAttributes.pos[3] = Spring.GetUnitPosition(ownerID)
