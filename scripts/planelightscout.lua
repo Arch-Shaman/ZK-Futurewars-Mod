@@ -65,28 +65,25 @@ local function Dgun()
 	local sound_index = 0
 	local stunned_or_inbuild = Spring.GetUnitIsStunned(unitID) or (Spring.GetUnitRulesParam(unitID,"disarmed") == 1)
 	local hasCharge = true
-	local px, py, pz, gy, tx, tz
-	local projectileAttributes = {pos = {0, 0, 0}, speed = {0,-10,0}, gravity = -1, owner = unitID, team = Spring.GetUnitTeam(unitID), maxRange = 1000, ttl = 3}
-	projectileAttributes["end"] = {0, 0, 0}  -- Seriously, who the hell thought this was a good idea to make a table entry a reserved keyword?! "endPos" would be better!
+	--local projectileAttributes = {pos = {0, 0, 0}, speed = {0,-10,0}, gravity = -1, owner = unitID, team = Spring.GetUnitTeam(unitID), maxRange = 1000, ttl = 3}
+	local actualAttributes = {pos = {0, 0, 0}, speed = {0, -10, 0}, gravity = -2, owner = unitID, team = Spring.GetUnitTeam(unitID)}
+	--projectileAttributes["end"] = {0, 0, 0}  -- Seriously, who the hell thought this was a good idea to make a table entry a reserved keyword?! "endPos" would be better!
 	--StartThread(DgunRotation)
+	local speed = 3.2 * 15
+	local actualDef = WeaponDefNames["planelightscout_laser_actual"].id
 	while hasCharge do
 		if not stunned_or_inbuild then -- TODO: Figure out how to make this spray better.
-			_, _, _, px, py, pz = Spring.GetUnitPosition(unitID, true)
-			projectileAttributes.pos[1] = px
-			projectileAttributes.pos[2] = py
-			projectileAttributes.pos[3] = pz
-			for i = 1, 5 do
-				tx = px + (math.random()*120)
-				tz = pz + (math.random()*120)
-				gy = math.max(Spring.GetGroundHeight(tx, tz) + 10, 10)
-				projectileAttributes["end"][1] = tx
-				projectileAttributes["end"][2] = gy
-				projectileAttributes["end"][3] = tz
-				Spring.SpawnProjectile(weaponDef, projectileAttributes)
+			_, _, _, actualAttributes.pos[1], actualAttributes.pos[2], actualAttributes.pos[3] = Spring.GetUnitPosition(unitID, true)
+			actualAttributes.pos[2] = actualAttributes.pos[2] - 5 -- spawn below the plane.
+			for i = 1, 3 do
+				actualAttributes.speed[2] = 0 - math.random(10, 100)
+				actualAttributes.speed[1] = math.random(-1, 1) * math.random() * speed
+				actualAttributes.speed[3] = math.random(-1, 1) * math.random() * speed
+				Spring.SpawnProjectile(actualDef, actualAttributes)
 			end
 			GG.BatteryManagement.UseCharge(unitID, costToFire)
 			if sound_index == 0 then
-				Spring.PlaySoundFile("sounds/weapon/LightningBolt.wav", 4, px, py, pz, 0, 0, 0, "battle")
+				Spring.PlaySoundFile("sounds/weapon/LightningBolt.wav", 4.4, actualAttributes.pos[1], actualAttributes.pos[2], actualAttributes.pos[3], 0, 0, 0, "battle")
 			end
 			sound_index = sound_index + 1
 			if sound_index >= 6 then
