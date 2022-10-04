@@ -134,7 +134,7 @@ function script.FireWeapon(num)
 		--EmitSfx(wingtipr, 1024)
 	--end
 	GG.BatteryManagement.WeaponFired(unitID, num)
-	if not GG.BatteryManagement.CanUseCharge(unitID, costToFire * 5) then
+	if not GG.BatteryManagement.CanFire(unitID, num) then
 		Spring.SetUnitRulesParam(unitID, "noammo", 1)
 		Reload()
 	end
