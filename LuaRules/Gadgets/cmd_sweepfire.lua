@@ -327,6 +327,11 @@ function gadget:UnitDestroyed(unitID)
 	end
 end
 	
+function gadget:gadget:AllowCommand_GetWantedCommand()
+	local wanted = {[1] = CMD_SWEEPFIRE, [2] = CMD_SWEEPFIRE_MINES, [3] = CMD.STOP}
+	return wanted
+end
+
 
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions) -- route commands.
 	if cmdID == CMD_SWEEPFIRE or cmdID == CMD_SWEEPFIRE_MINES then
@@ -336,12 +341,11 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
 			UpdateUnitInfo(unitID, cmdParams)
 		end
 		return false
-	elseif cmdID == CMD.STOP then
+	else
 		GG.RemoveTemporaryPosTarget(unitID)
 		RemoveUnit(unitID)
 		return true
 	end
-	return true
 end
 
 function gadget:GameFrame(f)
