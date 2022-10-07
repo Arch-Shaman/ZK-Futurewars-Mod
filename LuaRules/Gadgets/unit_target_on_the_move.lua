@@ -402,6 +402,17 @@ local function removeUnit(unitID)
 		unit.data[unit.count] = nil
 		unit.count = unit.count - 1
 		unitById[unitID] = nil
+	elseif unitDefID then
+		clearTarget(unitID)
+		if unitById[unitID] then
+			if unitById[unitID] ~= unit.count then
+				unit.data[unitById[unitID]] = unit.data[unit.count]
+				unitById[unit.data[unit.count].id] = unitById[unitID]
+			end
+			unit.data[unit.count] = nil
+			unit.count = unit.count - 1
+			unitById[unitID] = nil
+		end
 	end
 end
 
