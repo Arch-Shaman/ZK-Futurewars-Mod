@@ -10,7 +10,7 @@ function gadget:GetInfo()
 		date      = "November 9, 2020",
 		license   = "PD",
 		layer     = 5,
-		enabled   = false,
+		enabled   = true,
 	}
 end
 
