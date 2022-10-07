@@ -327,11 +327,10 @@ function gadget:UnitDestroyed(unitID)
 	end
 end
 	
-function gadget:gadget:AllowCommand_GetWantedCommand()
-	local wanted = {[1] = CMD_SWEEPFIRE, [2] = CMD_SWEEPFIRE_MINES, [3] = CMD.STOP}
+function gadget:AllowCommand_GetWantedCommand()
+	local wanted = {[CMD_SWEEPFIRE] = true, [CMD_SWEEPFIRE_MINES] = true, [CMD.STOP] = true}
 	return wanted
 end
-
 
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions) -- route commands.
 	if cmdID == CMD_SWEEPFIRE or cmdID == CMD_SWEEPFIRE_MINES then
