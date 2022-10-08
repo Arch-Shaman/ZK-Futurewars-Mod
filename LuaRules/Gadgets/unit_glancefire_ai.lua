@@ -18,7 +18,7 @@ local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 
 local overshootdefs = {} -- unitdefs to watch
 local unitstocheck = IterableMap.New()
-local updaterate = 3 -- the rate we update units.
+local updaterate = 2 -- the rate we update units.
 local terrainupdaterate = 20 -- update range checks every 12 updates. EG: update rate of 5 means we update ranges every 60 frames.
 
 local spGetUnitWeaponTarget = Spring.GetUnitWeaponTarget
@@ -99,7 +99,7 @@ local function GetFirePoint(radius, x, z, targetx, targetz)
 end
 
 local function AttackPosition(unitID, x, y, z, weaponID, data)
-	GG.SetTemporaryPosTarget(unitID, x, y, z, false, updaterate + 1)
+	GG.SetTemporaryPosTarget(unitID, x, y, z, false, updaterate + 1, true, weaponID)
 	data.engaged = true
 end
 
@@ -207,6 +207,7 @@ local function UpdateUnitTarget(unitID, unitDefID, weaponID)
 	if data.engaged and not attacking then
 		--Spring.Echo("STOP")
 		spGiveOrderToUnit(unitID, CMD.STOP, EMPTY, 0)
+		GG.RemoveTemporaryPosTarget(unitID)
 		data.engaged = false
 	end
 end
