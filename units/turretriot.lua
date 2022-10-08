@@ -92,7 +92,7 @@ return {
 				weaponType              = "Cannon",
 				weaponVelocity          = 550,
 			},
-			turretriot_WEAPON = {
+			WEAPON = {
 				name                    = "Canister Autocannon",
 				accuracy                = 200,
 				alphaDecay              = 0.7,
