@@ -65,6 +65,8 @@ local UPDATE_RATE = 20
 local MAX_UPRATE_RATE = 2
 
 local unitAIBehaviour = include("LuaRules/Configs/tactical_ai_defs.lua")
+local bombardDef = UnitDefNames["turretriot"].id
+local bombardRange = WeaponDefNames["turretriot_weapon"].range
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -1305,6 +1307,12 @@ end
 
 function gadget:UnitIdle(unitID, unitDefID)
 	AddIdleUnit(unitID, unitDefID)
+	if unitDefID == bombardDef then
+		local enemy = Spring.GetUnitNearestEnemy(unitID, bombardRange, true)
+		if enemy then
+			spGiveOrderToUnit(unitID, CMD_ATTACK, {enemy}, 0)
+		end
+	end
 end
 
 function gadget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts, cmdTag, playerID, fromSynced, fromLua)
