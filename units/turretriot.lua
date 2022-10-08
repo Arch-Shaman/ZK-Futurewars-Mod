@@ -48,7 +48,7 @@ return {
 		yardMap                       = "ooo ooo ooo",
 		weapons                       = {
 			{
-				def                = "turretriot_WEAPON",
+				def                = "WEAPON",
 				badTargetCategory  = "FIXEDWING",
 				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
 				mainDir            = "0 1 0",
