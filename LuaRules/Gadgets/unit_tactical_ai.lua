@@ -1,3 +1,6 @@
+if (not gadgetHandler:IsSyncedCode()) then
+	return false  --  no unsynced code
+end
 
 function gadget:GetInfo()
 	return {
@@ -9,13 +12,6 @@ function gadget:GetInfo()
 		layer    = 0,
 		enabled = true,
 	}
-end
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
-if (not gadgetHandler:IsSyncedCode()) then
-	return false  --  no unsynced code
 end
 
 --------------------------------------------------------------------------------
