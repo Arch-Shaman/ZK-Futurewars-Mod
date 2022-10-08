@@ -36,6 +36,7 @@ local spUtilitiesGetEffectiveWeaponRange = Spring.Utilities.GetEffectiveWeaponRa
 local spGetUnitVelocity = Spring.GetUnitVelocity
 local spGetUnitSeparation = Spring.GetUnitSeparation
 local spGetUnitWeaponTestRange = Spring.GetUnitWeaponTestRange
+local spGetUnitCommands = Spring.GetUnitCommands
 local EMPTY = {}
 
 for i = 1, #UnitDefs do
@@ -160,7 +161,19 @@ local function UpdateWeaponRange(unitID, unitDefID, weaponID, init) -- updates w
 	end
 end
 
-local function GetWeaponIsFiringAtSomething(unitID, weaponID)
+local function GetWeaponIsFiringAtSomething(unitID, weaponID, data)
+	local t, userTarget, targetID = spGetUnitWeaponTarget(unitID, weaponID)
+	if t == 1 then
+		if spGetUnitSeparation(unitID, targetID) < data.effectiverange then
+			local cmds = spGetUnitCommands(unitID, 1)
+			if not cmds or not (cmds[1] and cmds[1].params[1] == targetID) then
+				spGiveOrderToUnit(unitID, CMD.ATTACK, {targetID}, 0) -- force unit to be attacking. We need this so our fix in unitAI will work.
+			end
+		end
+		return true
+	else
+		return false
+	end
 	return spGetUnitWeaponTarget(unitID, weaponID) == 1
 end
 
@@ -276,7 +289,7 @@ function gadget:GameFrame(f)
 				local weapons = data.weapons
 				for w = 1, #weapons do
 					local weaponID = weapons[w].id
-					local isusefultargeting = GetWeaponIsFiringAtSomething(unitID, weaponID)
+					local isusefultargeting = GetWeaponIsFiringAtSomething(unitID, weaponID, data)
 					if isusefultargeting or weapons[w].notbeingused > 2 then
 						data.weapons[w].notbeingused = 0
 					else
