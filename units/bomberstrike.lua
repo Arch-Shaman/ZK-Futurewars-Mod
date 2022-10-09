@@ -55,7 +55,7 @@ return {
 				def                = "MISSILE",
 				mainDir            = "0 0 1",
 				maxAngleDif        = 145,
-				onlyTargetCategory = "LAND TURRET SHIP SWIM FLOAT HOVER UNARMED",
+				onlyTargetCategory = "LAND TURRET SINK SHIP SWIM FLOAT HOVER UNARMED",
 			},
 		},
 		weaponDefs          = {
