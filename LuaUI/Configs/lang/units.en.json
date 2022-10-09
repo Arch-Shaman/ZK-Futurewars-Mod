@@ -496,8 +496,8 @@
 	},
 	"chicken" : {
 		"name" : "Chicken",
-		"description" : "Swarmer",
-		"helptext" : "The footsoldier of the Thunderbirds is an aggressive zergling-type unit. What it lacks in individual strength, it compensates for with its sheer numbers, overwhelming enemies with floods and floods of little chickens. A good riot unit is recommended for stopping them."
+		"description" : "Novacula maxillas",
+		"helptext" : "The common chicken, also known as Novacula maxillas is an invasive species of strange rectiles that have appeared on this planet. The common chicken can nourish itself when it attacks other units, including robots!"
 	},
 	"chicken_sporeshooter" : {
 		"name" : "Sporeshooter",
