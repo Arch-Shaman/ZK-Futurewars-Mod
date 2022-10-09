@@ -46,6 +46,7 @@ return {
 		},
 		sightDistance       = 256,
 		sonarDistance       = 256,
+		script              = "chicken.lua",
 		trackOffset         = 0,
 		trackStrength       = 8,
 		trackStretch        = 1,
