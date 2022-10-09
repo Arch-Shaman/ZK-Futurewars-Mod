@@ -544,6 +544,10 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			else
 				dam = val
 			end
+			if cp.vampirism then
+				cells[#cells + 1] = ' - Heals self for '
+				cells[#cells + 1] = numformat(tonumber(cp.vampirism) * dam, 1) .. ' hp on hit'
+			end
 			-- get reloadtime and calculate dps
 			local reloadtime = tonumber(cp.script_reload) or wd.reload
 			
@@ -1109,6 +1113,11 @@ local function printAbilities(ud, unitID)
 		end
 		cells[#cells+1] = ''
 		cells[#cells+1] = ''
+	end
+	
+	if cp.vampirism_kill then
+		cells[#cells+1] = ' - Vampirism: Increases max hp up to '
+		cells[#cells+1] = numformat(cp.vampirism_kill * 100, 1) .. "% of victim's max hp"
 	end
 
 	if ud.armoredMultiple < 1 then
