@@ -40,13 +40,14 @@ for w = 1, #WeaponDefs do
 	end
 end
 
-local function RewardVampire(unitID, value)
-	local unitDef = Spring.GetUnitDefID(unitID)
-	local eff = vampireDefs.units[unitDef]
-	value = eff * value
-	local health, maxhealth = Spring.GetUnitHealth(unitID)
-	Spring.SetUnitHealth(unitID, health + value)
-	Spring.SetUnitMaxHealth(unitID, maxhealth + value)
+local function RewardVampire(unitID, unitDef, value)
+	if Spring.ValidUnitID(unitID) then
+		local eff = vampireDefs.units[unitDef]
+		value = eff * value
+		local health, maxhealth = Spring.GetUnitHealth(unitID)
+		Spring.SetUnitHealth(unitID, health + value)
+		Spring.SetUnitMaxHealth(unitID, maxhealth + value)
+	end
 end
 
 local function RewardVampires(unitID)
@@ -83,7 +84,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		else
 			local health, maxhealth = Spring.GetUnitHealth(unitID)
 			if damage > health then
-				RewardVampire(unitID, health)
+				RewardVampire(unitID, unitDef, health)
 			else
 				local data = {lastAttack = Spring.GetGameFrame(), rewards = IterableMap.New()}
 				IterableMap.Add(data.rewards, attackerID, damage)
