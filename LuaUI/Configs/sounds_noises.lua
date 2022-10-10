@@ -64,6 +64,16 @@ local sounds = {
 			[1] = "bot_select",
 		},
 	},
+	chicken = {
+		select = {
+			volume = 0.5,
+			[1] = "chicken_select",
+		},
+		ok = {
+			volume = 0.58,
+			[1] = "chicken_move",
+		},
+	},
 	commsupport = {
 		build = { "builder_start" },
 		ok = {
