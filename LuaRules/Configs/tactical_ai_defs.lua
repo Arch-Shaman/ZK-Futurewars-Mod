@@ -2383,6 +2383,20 @@ local behaviourConfig = {
 		hugs = allGround,
 		hugRange = 150,
 	},
+	{
+		name = "chickens",
+		flees = {},
+		skirms = {},
+		idleChaseEnemyLeeway = 500,
+		fleeLeeway = 400,
+		fleeDistance = 300,
+		reloadFlee = true,
+		wardFireTargets = personalShieldUnits,
+		wardFireLeeway = 10,
+		wardFirePredict = 35,
+		wardFireShield = 60,
+		wardFireDefault = true,
+	},
 	
 	-- Ward fire only units.
 	{
