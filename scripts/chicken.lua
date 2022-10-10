@@ -6,35 +6,49 @@ local rforearm, rupperarm, rblade = piece('rforearm', 'rupperarm', 'rblade')
 
 local bMoving = false
 local shooting = false
-local lasthit
+local lasthit = 0
 local mood = 0 -- 0: idle, 1: moving, 2: attack, 3: dying
 
+local berth = math.rad(28)
+local speed = math.rad(30)
+
 local SIG_AIM = 2
-local SIG_AIM_2 = 4
+local SIG_AIM_2 = 4 -- unused?
 local SIG_MOVE = 8
-local SIG_WAGTAIL = 16
+
+local function MoodWatcher()
+	local lastmood = 0
+	while true do
+		if lasthit > 1 then
+			lasthit = lasthit - 1
+		end
+		if lasthit == 0 and mood == 2 then
+			mood = (bMoving and 1) or 0
+		end
+		if lastmood ~= mood then
+			if mood == 2 then
+				berth = math.rad(12) -- short
+				speed = math.rad(80)
+				Turn(tail, x_axis, math.rad(49.2), math.rad(40))
+			elseif mood == 0 then
+				berth = math.rad(20)
+				speed = math.rad(50)
+				Turn(tail, x_axis, math.rad(24.8), math.rad(40))
+			elseif mood == 1 then
+				berth = math.rad(30)
+				speed = math.rad(34)
+			else
+				Turn(tail, x_axis, math.rad(-38.2), math.rad(40))
+				berth = math.rad(28)
+				speed = math.rad(30)
+			end
+			lastmood = mood
+		end
+		Sleep(100)
+	end
+end
 
 local function WagTailThread(mode)
-	local berth
-	local speed
-	if mode == "threatened" then
-		berth = math.rad(12) -- short
-		speed = math.rad(80)
-		Turn(tail, x_axis, math.rad(49.2), math.rad(40))
-	elseif mode == "neutral" then
-		berth = math.rad(20)
-		speed = math.rad(50)
-		Turn(tail, x_axis, math.rad(24.8), math.rad(40))
-	elseif mode == "moving" then
-		berth = math.rad(30)
-		speed = math.rad(34)
-	else
-		Turn(tail, x_axis, math.rad(-38.2), math.rad(40))
-		berth = math.rad(28)
-		speed = math.rad(30)
-	end
-	Signal(SIG_WAGTAIL)
-	SetSignalMask(SIG_WAGTAIL)
 	while true do
 		Turn(tail, y_axis, berth, speed)
 		WaitForTurn(tail, y_axis)
@@ -48,7 +62,7 @@ end
 local function Walk()
 	bMoving = true
 	if mood == 0 then
-		StartThread(WagTailThread, "moving")
+		mood = 1
 	end
 	Signal(SIG_MOVE)
 	SetSignalMask(SIG_MOVE)
@@ -136,17 +150,15 @@ local function StopWalking()
 	Turn(rknee, x_axis, 0, math.rad(200))
 	if mood == 1 then
 		mood = 0
-		StartThread(WagTailThread, "neutral")
 	end
 end
 
 local function Idle()
-	SetSignalMask(SIG_AIM_2)
 	Sleep(15000)
 	if not bMoving then
-		StartThread(WagTailThread, "neutral")
+		mood = 0
 	else
-		StartThread(WagTailThread, "moving")
+		mood = 1
 	end
 end
 
@@ -161,9 +173,7 @@ end
 function script.AimWeapon(num, heading, pitch)
 	if mood < 2 then
 		mood = 3
-		StartThread(WagTailThread, "threatened")
 	end
-	Signal(SIG_AIM_2)
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
 	Turn(head, y_axis, heading, math.rad(250))
@@ -172,14 +182,17 @@ function script.AimWeapon(num, heading, pitch)
 	return true
 end
 
-function script.HitByWeapon(x, z, weaponDef, damage)
-	EmitSfx(body, 1024)
+--[[function script.HitByWeapon(x, z, weaponDef, damage)
+	if weaponDef > 0 then
+		EmitSfx(body, 1024)
+	end
 	return damage
-end
+end]]
 
 function script.Create()
 	EmitSfx(body, 1026)
-	StartThread(WagTailThread, "neutral")
+	StartThread(WagTailThread)
+	StartThread(MoodWatcher)
 end
 
 function script.BlockShot(num)
@@ -201,9 +214,11 @@ local function Recovery()
 	shooting = false
 end
 
-function script.Shot()
-	StartThread(Recovery)
-	StartThread(Idle)
+function script.Shot(num)
+	if num == 1 then
+		StartThread(Recovery)
+	end
+	lasthit = 30
 end
 
 function script.StopMoving()
@@ -214,17 +229,15 @@ function script.StartMoving()
 	StartThread(Walk)
 end
 
-function script.StartMoving()
-	StartThread(Walk)
-	if mood == 0 then
-		mood = 1
-	end
-end
-
 function script.Killed(recentDamage, maxHealth)
-	local explodables = {body, head, tail, lforearm, lblade, rforearm, rblade}
+	local explodables = {body, head, lforearm, lblade, rforearm, rblade}
 	EmitSfx(body, 1025)
 	for i = 1, #explodables do
-		Explode(explodables[i], SFX.FALL + SFX.EXPLODE)
+		local r = math.random() * 10
+		if r > 7 then
+			Explode(explodables[i], SFX.FALL + SFX.EXPLODE)
+		elseif r > 3 then 
+			Explode(explodables[i], SFX.FALL)
+		end
 	end
 end
