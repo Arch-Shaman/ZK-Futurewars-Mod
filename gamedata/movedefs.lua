@@ -180,12 +180,13 @@ local moveDefs = {
 		crushstrength = 50,
 	},
 
-	BHOVER5 = { --for white dragons
-		footprintx = 5,
-		footprintz = 5,
+	BHOVER1 = {
+		footprintx = 1,
+		footprintz = 1,
 		maxslope = 36,
 		maxwaterdepth = 5000,
-		crushstrength = 150,
+		--slopemod = 30,
+		crushstrength = 50,
 	},
 	BHOVER2 = { --hover with bot slope
 		footprintx = 2,
@@ -203,13 +204,12 @@ local moveDefs = {
 		--slopemod = 60,
 		crushstrength = 150,
 	},
-	BHOVER1 = {
-		footprintx = 1,
-		footprintz = 1,
+	BHOVER5 = { --for white dragons
+		footprintx = 5,
+		footprintz = 5,
 		maxslope = 36,
 		maxwaterdepth = 5000,
-		--slopemod = 30,
-		crushstrength = 50,
+		crushstrength = 150,
 	},
 
 	BOAT3 = {
