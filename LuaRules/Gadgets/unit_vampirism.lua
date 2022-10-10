@@ -59,10 +59,12 @@ local function RewardVampires(unitID)
 				local eff = vampireDefs.units[unitDef]
 				value = eff * value
 				local health, maxhealth = Spring.GetUnitHealth(id)
-				local hpratio = health/maxhealth
-				local newmax = maxhealth + value
-				Spring.SetUnitMaxHealth(id, newmax)
-				Spring.SetUnitHealth(id, hpratio * newmax)
+				if health > 0 then
+					local hpratio = health/maxhealth
+					local newmax = maxhealth + value
+					Spring.SetUnitMaxHealth(id, newmax)
+					Spring.SetUnitHealth(id, hpratio * newmax)
+				end
 			end
 		end
 		IterableMap.Remove(vampirism_rewards, unitID)
@@ -92,10 +94,12 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 			end
 		end
 	end
-	if vampireDefs.weapons[weaponID] then
+	if vampireDefs.weapons[weaponID] and Spring.ValidUnitID(attackerID) then
 		local health, maxhealth = Spring.GetUnitHealth(attackerID)
-		local value = damage * vampireDefs.weapons[weaponID]
-		Spring.SetUnitHealth(attackerID, math.min(health + value, maxhealth))
+		if health > 0 and health < maxhealth then
+			local value = damage * vampireDefs.weapons[weaponID]
+			Spring.SetUnitHealth(attackerID, math.min(health + value, maxhealth))
+		end
 	end
 end
 
