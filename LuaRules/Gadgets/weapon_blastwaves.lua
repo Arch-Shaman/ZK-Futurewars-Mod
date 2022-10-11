@@ -38,7 +38,7 @@ for i = 1, #WeaponDefs do
 		local onlyallies = cp["blastwave_onlyfriendly"] ~= nil
 		local reductshealing = tonumber(cp["blastwave_healing_reduction"]) or 0
 		local spawnCeg = cp["blastwave_spawnceg"]
-		local cegFreq = tonumber(cp["blastwave_spawncegfreq"])
+		local cegFreq = tonumber(cp["blastwave_spawncegfreq"]) or 3
 		--local shieldrestore = tonumber(cp["blastwave_shieldhealing"]) or 0  -- TODO shield restore actually does something
 		--local shielddamage = tonumber(cp["blastwave_shielddamage"]) or 0
 		
@@ -78,6 +78,7 @@ local spGetUnitTeam = Spring.GetUnitTeam
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitPosition = Spring.GetUnitPosition
 local spSetUnitHealth = Spring.SetUnitHealth
+local spSpawnCEG = Spring.SpawnCEG
 local sqrt = math.sqrt
 local min = math.min
 
@@ -226,7 +227,7 @@ function gadget:GameFrame(f)
 					if data.healing and data.healing > 0 then
 						damage = data.healing
 					end
-					Spring.SpawnCeg(data.wantedceg, data.x, data.y, data.z, 0, 0, 0, 0, damage)
+					spSpawnCEG(data.wantedceg, data.x, data.y, data.z, 0, 0, 0, 0, damage)
 				end
 			end
 			data.size = data.size + config.speed
