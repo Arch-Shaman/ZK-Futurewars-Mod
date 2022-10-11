@@ -37,6 +37,8 @@ for i = 1, #WeaponDefs do
 		local healing = tonumber(cp["blastwave_healing"]) or 0
 		local onlyallies = cp["blastwave_onlyfriendly"] ~= nil
 		local reductshealing = tonumber(cp["blastwave_healing_reduction"]) or 0
+		local spawnCeg = cp["blastwave_spawnceg"]
+		local cegFreq = tonumber(cp["blastwave_spawncegfreq"])
 		--local shieldrestore = tonumber(cp["blastwave_shieldhealing"]) or 0  -- TODO shield restore actually does something
 		--local shielddamage = tonumber(cp["blastwave_shielddamage"]) or 0
 		
@@ -55,6 +57,8 @@ for i = 1, #WeaponDefs do
 			healing = healing,
 			overslow = overslow / 30,
 			healingreduction = reductshealing,
+			spawnCeg = spawnCeg,
+			cegFreq = cegFreq,
 			--shielddamage = shielddamage,
 		}
 		wanted[#wanted + 1] = id
@@ -158,6 +162,10 @@ local function AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID)
 		coef = conf.losscoef,
 		shielddmg = conf.shielddamage,
 	}
+	if conf.spawnCeg then
+		tab.cegcounter = 0
+		tab.wantedceg = conf.spawnCeg
+	end
 	--Spring.Echo("attackerID: " .. tostring(attackerID) .."\nDamages Friendly: " .. tostring(conf.damagesfriendly))
 	if attackerID and Spring.ValidUnitID(attackerID) then
 		if not conf.damagesfriendly then
@@ -210,6 +218,17 @@ function gadget:GameFrame(f)
 			IterableMap.Remove(handled, id)
 		else
 			local losscoef = data.coef
+			if data.cegcounter then
+				data.cegcounter = data.cegcounter + 1
+				if data.cegcounter > config.cegFreq then
+					data.cegcounter = 0
+					local damage = data.damage
+					if data.healing and data.healing > 0 then
+						damage = data.healing
+					end
+					Spring.SpawnCeg(data.wantedceg, data.x, data.y, data.z, 0, 0, 0, 0, damage)
+				end
+			end
 			data.size = data.size + config.speed
 			data.impulse = data.impulse * losscoef
 			data.damage = data.damage * losscoef
