@@ -16,6 +16,7 @@ local scriptReload = include("scriptReload.lua")
 local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
 local gameSpeed = Game.gameSpeed
 local RELOAD_TIME = 4.5 * gameSpeed
+local lastshot = 0
 
 local firePieces = {
 	[1] = {
@@ -39,6 +40,7 @@ local firePieces = {
 }
 
 local bladenum = 1
+local special = 0
 
 local function Walk()
 	Signal(SIG_MOVE)
@@ -114,6 +116,18 @@ local function Walk()
 	end
 end
 
+local function SpecialThread()
+	while true do
+		Sleep(2000)
+		if lastshot > 0 then
+			lastshot = lastshot - 2
+		end
+		if special > 0 and lastshot < 0 then
+			special = math.max(special - 1, 0)
+		end
+	end
+end
+
 function script.StopMoving()
 	Signal(SIG_MOVE)
 	Turn(lfoot, x_axis, 0, math.rad(200))
@@ -134,8 +148,9 @@ local function FireSpike(num)
 	SleepAndUpdateReload(num, RELOAD_TIME)
 	firePieces[num].loaded = true
 	if scriptReload.GunLoaded(num) then
-		shot = 0
+		bladenum = 1
 	end
+	
 end
 
 --[[local function RecoilThread()
@@ -153,17 +168,33 @@ end
 end]] -- base game uses this, not future wars!
 
 function script.Shot(num)
-	EmitSfx(firePieces[bladenum].firepoint, 1027)
-	StartThread(FireSpike, bladenum) -- Needed because of WaitForTurn.
-	bladenum = bladenum % 3 + 1
+	if num == 1 then
+		EmitSfx(firePieces[bladenum].firepoint, 1027)
+		StartThread(FireSpike, bladenum) -- Needed because of WaitForTurn.
+		bladenum = bladenum % 3 + 1
+		special = special + 1.5
+		lastshot = 7
+	else
+		EmitSfx(mblade, 1027)
+		special = special - 10
+	end
 end
 
 function script.BlockShot(num)
-	return num == 1 and not firePieces[bladenum].loaded
+	if num == 2 then
+		return special < 10
+	elseif num == 1 then
+		return not firePieces[bladenum].loaded or special >= 10
+	end
+	return false
 end
 
 function script.QueryWeapon(num)
-	return firePieces[bladenum].firepoint
+	if num == 1 then
+		return firePieces[bladenum].firepoint
+	else
+		return head
+	end
 end
 
 function script.AimFromWeapon(num)
@@ -190,6 +221,7 @@ end
 
 function script.Create()
 	scriptReload.SetupScriptReload(3, RELOAD_TIME)
+	StartThread(SpecialThread)
 	EmitSfx(body, 1026)
 end
 
