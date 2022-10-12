@@ -75,7 +75,6 @@ return {
 			},
 		},
 		weaponDefs             = {
-
 			CANNON = {
 				name                    = "Plasma Cannon",
 				accuracy                = 480,
