@@ -62,7 +62,7 @@ local modrules  = {
 	},
 
 	sensors = {
-		requireSonarUnderWater = true,  -- defaults to true
+		requireSonarUnderWater = false,  -- defaults to true
 		alwaysVisibleOverridesCloaked = true, -- default false
 		decloakRequiresLineOfSight = true, -- default false
     
