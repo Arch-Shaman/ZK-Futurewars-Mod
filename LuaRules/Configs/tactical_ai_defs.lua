@@ -2388,6 +2388,7 @@ local behaviourConfig = {
 		flees = {},
 		skirms = {},
 		idleChaseEnemyLeeway = 500,
+		skirmBlockedApproachFrames = 16,
 		fleeLeeway = 400,
 		fleeDistance = 300,
 		reloadFlee = true,
