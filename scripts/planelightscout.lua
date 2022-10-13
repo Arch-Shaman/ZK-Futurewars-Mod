@@ -69,7 +69,7 @@ local function Dgun()
 	local actualAttributes = {pos = {0, 0, 0}, speed = {0, -10, 0}, gravity = -2, owner = unitID, team = Spring.GetUnitTeam(unitID)}
 	--projectileAttributes["end"] = {0, 0, 0}  -- Seriously, who the hell thought this was a good idea to make a table entry a reserved keyword?! "endPos" would be better!
 	--StartThread(DgunRotation)
-	local speed = 3.2 * 15
+	local speed = 2.5 * 15
 	local actualDef = WeaponDefNames["planelightscout_laser_actual"].id
 	while hasCharge do
 		if not stunned_or_inbuild then -- TODO: Figure out how to make this spray better.
