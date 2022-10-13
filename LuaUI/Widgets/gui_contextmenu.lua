@@ -550,12 +550,14 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			end
 			-- get reloadtime and calculate dps
 			local reloadtime = tonumber(cp.script_reload) or wd.reload
+			local aimtime = (tonumber(cp.aimdelay) or 0) / 30
+			local fixedreload = reloadtime + aimtime
 			
-			local dps  = math.floor(dam /reloadtime + 0.5)
-			local dpsw = math.floor(damw/reloadtime + 0.5)
-			local dpss = math.floor(dams/reloadtime + 0.5)
-			local dpsd = math.floor(damd/reloadtime + 0.5)
-			local dpsc = math.floor(damc/reloadtime + 0.5)
+			local dps  = math.floor(dam /fixedreload + 0.5)
+			local dpsw = math.floor(damw/fixedreload + 0.5)
+			local dpss = math.floor(dams/fixedreload + 0.5)
+			local dpsd = math.floor(damd/fixedreload + 0.5)
+			local dpsc = math.floor(damc/fixedreload + 0.5)
 	
 			local mult = tonumber(cp.statsprojectiles) or ((tonumber(cp.script_burst) or wd.salvoSize) * wd.projectiles)
 	
@@ -693,6 +695,17 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			elseif show_reload and not bombletCount then
 				cells[#cells+1] = ' - Reloadtime:'
 				cells[#cells+1] = numformat (reloadtime,2) .. 's'
+			end
+			
+			if aimtime > 0 then
+				local headingerror = tonumber(cp.allowedheadingerror) or 0.000001
+				local pitcherror = tonumber(cp.allowedpitcherror) or 0.01
+				cells[#cells+1] = ' - Aim time: '
+				cells[#cells+1] = numformat(aimtime, 2) .. 's'
+				cells[#cells+1] = '\t* Max Horizontal deviation:'
+				cells[#cells+1] = '±' .. numformat(math.deg(headingerror/2), 1) .. "°"
+				cells[#cells+1] = '\t* Max Vertical Deviation:'
+				cells[#cells+1] = '±' .. numformat(math.deg(pitcherror/2), 1) .. "°"
 			end
 			
 			if show_dps and not bombletCount then
