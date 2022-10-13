@@ -690,10 +690,10 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			end
 			
 			if cp.post_capture_reload then
-				cells[#cells+1] = ' - Reloadtime:'
+				cells[#cells+1] = ' - Reload time:'
 				cells[#cells+1] = numformat (tonumber(cp.post_capture_reload)/30,2) .. 's'
 			elseif show_reload and not bombletCount then
-				cells[#cells+1] = ' - Reloadtime:'
+				cells[#cells+1] = ' - Reload time:'
 				cells[#cells+1] = numformat (reloadtime,2) .. 's'
 			end
 			
