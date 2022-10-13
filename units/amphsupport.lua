@@ -88,6 +88,7 @@ return {
 					light_radius = 230,
 					script_reload = "15",
 					script_burst = "6",
+					reveal_unit = 20,
 				},
 				damage                  = {
 					default = 400.1,
