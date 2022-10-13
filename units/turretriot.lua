@@ -105,7 +105,7 @@ return {
 					light_color = "0.8 0.76 0.38",
 					light_radius = 180,
 					--proximity_priority = 5, -- Don't use this unless required as it causes O(N^2) seperation checks per slow update.
-					numprojectiles1 = 7, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "turretriot_secondary",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
