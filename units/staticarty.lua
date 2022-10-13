@@ -133,7 +133,7 @@ return {
 					default = 2000.1,
 				},
 				edgeEffectiveness       = 0.1,
-				explosionGenerator      = "custom:nce_128",
+				explosionGenerator      = "custom:nce_128_lp",
 				heightboostfactor       = 1, -- no auto calculated range bonus. Uses OD to gain range instead!
 				fireStarter             = 120,
 				impulseBoost            = 0,
