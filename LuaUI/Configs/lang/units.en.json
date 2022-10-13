@@ -1285,9 +1285,9 @@
 		"helptext" : "The Bully is the Amphibious Factory's assault unit of choice. It armed with a ponderous Assault Disruptor that slows its foes with a mass of slow bolts. It can attack underwater as well as float to the surface, though while firing underwater, it is slightly inaccurate against surface targets."
 	},
 	"amphsupport" : {
-		"name" : "Bulkhead",
-		"description" : "Deployable Amphibious Fire Support (must stop to fire)",
-		"helptext" : "The Bulkhead is a heavily armored dual plasma cannon balanced atop a cheap set of legs. While this gives it an impressive combination of health and range, it is unable to aim or fire its cannons without first stopping to brace itself. This drawback is less pronounced in the water, where it can float to fire then sink to reposition."
+		"name" : "Riptide",
+		"description" : "Deployable Amphibious Artillery Support (must stop to fire)",
+		"helptext" : "As naval warfare began to develop during the Coalition wars, the Riptide began its service career as a simple fabmod to the Bulkhead design to improve amphibious assault forces. It began as a simple mortar system and eventually gained greater plasma generators. This granted it greater range capabilities and damage at the cost of armor."
 	},
 	"dynknight1" : {
 		"name" : "Commander",
