@@ -804,24 +804,24 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			if cp.cruisealt and cp.cruisedist then
 				cells[#cells+1] = ' - Cruise Missile:'
 				cells[#cells+1] = ''
-				cells[#cells+1] = 'Cruise Height: '
+				cells[#cells+1] = '\t- Cruise Height: '
 				cells[#cells+1] = cp.cruisealt .. ' elmo AGL'
-				cells[#cells+1] = 'Begins descent: ' 
+				cells[#cells+1] = '\t- Begins descent: ' 
 				cells[#cells+1] = wd.customParams.cruisedist .. ' elmo from target'
 				if cp.cruisetracking and cp.cruise_nolock == nil then
 					local turnrate = wd.turnRate * 30 * 180 / math.pi
-					cells[#cells+1] = 'Tracks target: ' 
+					cells[#cells+1] = '\t- Tracks target: ' 
 					cells[#cells+1] =  numformat(turnrate, 1) .. ' deg/s'
 				end
 				if cp.cruisetracking and cp.cruise_nolock then
-					cells[#cells+1] = 'Guided Cruise, unguided descent'
+					cells[#cells+1] = '\t- Guided Cruise, unguided descent'
 					cells[#cells+1] = ''
 				end
 				if wd.customParams.cruise_randomizationtype == "circle" then
-					cells[#cells+1] = 'Has circular spread (' .. cp.cruiserandomradius .. ' elmo around the target)'
+					cells[#cells+1] = '\t- Has circular spread (' .. cp.cruiserandomradius .. ' elmo around the target)'
 					cells[#cells+1] = ''
 				elseif wd.customParams.cruiserandomradius then
-					cells[#cells+1] = 'Strikes within ' .. cp.cruiserandomradius .. ' elmo of the target'
+					cells[#cells+1] = '\t- Strikes within ' .. cp.cruiserandomradius .. ' elmo of the target'
 					cells[#cells+1] = ''
 				end
 			end
