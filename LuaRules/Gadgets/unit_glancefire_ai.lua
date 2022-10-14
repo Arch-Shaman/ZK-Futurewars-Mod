@@ -38,6 +38,7 @@ local spGetUnitSeparation = Spring.GetUnitSeparation
 local spGetUnitWeaponTestRange = Spring.GetUnitWeaponTestRange
 local spGetUnitCommands = Spring.GetUnitCommands
 local EMPTY = {}
+local DEFAULT_RANGE = WeaponDefNames["turretriot_weapon"].range or 380
 
 for i = 1, #UnitDefs do
 	local weapons = UnitDefs[i].weapons
@@ -190,14 +191,21 @@ local function UpdateUnitTarget(unitID, unitDefID, weaponID)
 	if enemy then
 		local _, enemybaseY, _, _, _, _, enemyX, enemyY, enemyZ = spGetUnitPosition(enemy, true, true)
 		distance = spGetUnitSeparation(unitID, enemy)
-		local groundUnderEnemy = math.max(spGetGroundHeight(enemyX, enemyZ), 0)
+		local heightDiff = myY - enemyY
+		local groundUnderEnemy
+		if heightDiff > 0 then
+			groundUnderEnemy = math.max(spGetGroundHeight(enemyX, enemyZ), 0)
+			actualRange = math.floor(Spring.Utilities.GetEffectiveWeaponRange(unitDefID, heightDiff, weaponNum)
+		else
+			groundUnderEnemy = enemyY
+			actualRange = DEFAULT_RANGE - 10
+		end
 		local overshootdef = overshootdefs[unitDefID][weaponID]
 		local miny = -15 -- because attacking SUBMERGED is just lol
 		if weapon.canattackuw then
 			miny = - overshootdef.aoe
 		end
 		--actualRange = math.floor(spUtilitiesGetEffectiveWeaponRange(unitDefID, myY - enemyY, weaponNum)) -- the actual range we have against the unit. Needed to be able to set the target reliably.
-		actualRange = math.floor(Spring.Utilities.GetEffectiveWeaponRange(unitDefID, myY - enemyY, weaponNum))
 		local pvelocity = overshootdef.velocity
 		local traveltime = distance / pvelocity
 		local velx, vely, velz, enemyvel = spGetUnitVelocity(enemy)
