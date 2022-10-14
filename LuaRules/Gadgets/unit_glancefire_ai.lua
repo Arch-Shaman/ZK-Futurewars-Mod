@@ -195,7 +195,7 @@ local function UpdateUnitTarget(unitID, unitDefID, weaponID)
 		local groundUnderEnemy
 		if heightDiff > 0 then
 			groundUnderEnemy = math.max(spGetGroundHeight(enemyX, enemyZ), 0)
-			actualRange = math.floor(Spring.Utilities.GetEffectiveWeaponRange(unitDefID, heightDiff, weaponNum)
+			actualRange = math.floor(Spring.Utilities.GetEffectiveWeaponRange(unitDefID, heightDiff, weaponNum))
 		else
 			groundUnderEnemy = enemyY
 			actualRange = DEFAULT_RANGE - 10
