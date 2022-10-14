@@ -219,7 +219,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_microriftgenerator",
 		humanName = "Microrift Generator",
-		description = "Instantly teleports your commander to any location within range. +100% damage.",
+		description = "Instantly teleports your commander to any location within range. +100% damage.\nDisables Peaceful Wind module.",
 		image = moduleImagePath .. "commweapon_microrift.png",
 		limit = 1,
 		cost = 100 * COST_MULT,
@@ -1341,6 +1341,7 @@ local moduleDefs = {
 		cost = 850 * COST_MULT,
 		requireLevel = 5,
 		slotType = "module",
+		prohibitingModules = {"commweapon_microriftgenerator"},
 		applicationFunction = function (modules, sharedData)
 			local detpacklv = (sharedData.detpacklv or 0) + 1
 			sharedData.healthBonus = (sharedData.healthBonus or 0) - 1000*HP_MULT
