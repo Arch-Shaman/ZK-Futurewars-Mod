@@ -22,6 +22,8 @@ local decaytime = 50*30
 local decayfreq = 60
 local decaymult = 0.6
 
+local INLOS = {inlos = true}
+
 Spring.Echo("[Vampirism] Loading config.")
 for i = 1, #UnitDefs do
 	local def = UnitDefs[i]
@@ -40,13 +42,21 @@ for w = 1, #WeaponDefs do
 	end
 end
 
-local function RewardVampire(unitID, unitDef, value)
-	if Spring.ValidUnitID(unitID) then
-		local eff = vampireDefs.units[unitDef]
-		value = eff * value
-		local health, maxhealth = Spring.GetUnitHealth(unitID)
-		Spring.SetUnitHealth(unitID, health + value)
+local function AddValueAndCleanup(unitID, unitDef, value)
+	if not Spring.ValidUnitID(unitID) then
+		return
+	end
+	local health, maxhealth = Spring.GetUnitHealth(unitID)
+	if health > 0 then
+		local commParam = Spring.GetUnitRulesParam(unitID, "comm_vampire")
+		local eff = commParam or vampireDefs.units[unitDef]
+		value = value * eff
 		Spring.SetUnitMaxHealth(unitID, maxhealth + value)
+		Spring.SetUnitHealth(unitID, health + value)
+		if commParam then
+			local old = Spring.GetUnitRulesParam(unitID, "comm_vampirebonus") or 0
+			Spring.SetUnitRulesParam(unitID, "comm_vampire", old + value, INLOS)
+		end
 	end
 end
 
@@ -54,25 +64,23 @@ local function RewardVampires(unitID)
 	local data = IterableMap.Get(vampirism_rewards, unitID)
 	if data then
 		for id, value in IterableMap.Iterator(data.rewards) do
-			if Spring.ValidUnitID(id) then
-				local unitDef = Spring.GetUnitDefID(id)
-				local eff = vampireDefs.units[unitDef]
-				value = eff * value
-				local health, maxhealth = Spring.GetUnitHealth(id)
-				if health > 0 then
-					local hpratio = health/maxhealth
-					local newmax = maxhealth + value
-					Spring.SetUnitMaxHealth(id, newmax)
-					Spring.SetUnitHealth(id, hpratio * newmax)
-				end
-			end
+			AddValueAndCleanup(unitID, Spring.GetUnitDefID(unitID), value)
 		end
 		IterableMap.Remove(vampirism_rewards, unitID)
 	end
 end
 
 function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponID, attackerID, attackerDefID, attackerTeam)
-	if vampireDefs.units[attackerDefID] and damage > 0 and not Spring.AreTeamsAllied(unitTeam, attackerTeam) then
+	local validAttacker = Spring.ValidUnitID(attackerID)
+	if not validAttacker then
+		return
+	end
+	local isVampire = (vampireDefs.units[attackerDefID] or Spring.GetUnitRulesParam(attackerID, "comm_vampire") ~= nil)
+	local vampirismMod = Spring.GetUnitRulesParam(attackerID, "comm_weapon_healing") or vampireDefs.weapons[weaponID]
+	if not (isVampire or vampirismMod) then
+		return
+	end
+	if isVampire and damage > 0 and not Spring.AreTeamsAllied(unitTeam, attackerTeam) then
 		local data = IterableMap.Get(vampirism_rewards, unitID)
 		if data then
 			local reward = IterableMap.Get(data.rewards, attackerID)
@@ -86,7 +94,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		else
 			local health, maxhealth = Spring.GetUnitHealth(unitID)
 			if damage > health then
-				RewardVampire(unitID, unitDef, health)
+				AddValueAndCleanup(unitID, unitDef, health)
 			else
 				local data = {lastAttack = Spring.GetGameFrame(), rewards = IterableMap.New()}
 				IterableMap.Add(data.rewards, attackerID, damage)
@@ -94,17 +102,20 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 			end
 		end
 	end
-	if vampireDefs.weapons[weaponID] and Spring.ValidUnitID(attackerID) then
+	if vampirismMod then
 		local health, maxhealth = Spring.GetUnitHealth(attackerID)
 		if health > 0 and health < maxhealth then
-			local value = damage * vampireDefs.weapons[weaponID]
+			local value = damage * vampirismMod
 			Spring.SetUnitHealth(attackerID, math.min(health + value, maxhealth))
 		end
 	end
 end
 
 function gadget:UnitDestroyed(unitID)
-	RewardVampires(unitID)
+	local morphedFrom = Spring.GetUnitRulesParam(unitID, "wasMorphedTo")
+	if not morphedFrom then
+		RewardVampires(unitID)
+	end
 end
 
 function gadget:GameFrame(f)
