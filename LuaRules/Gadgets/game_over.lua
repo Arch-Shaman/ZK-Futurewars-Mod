@@ -801,8 +801,8 @@ function gadget:GameOver()
 		Spring.Echo("gadget:GameOver")
 	end
 	gameIsOver = true
-	if noElo then
-		Spring.SendCommands("wbynum 255 SPRINGIE:noElo")
-	end
+	--if noElo then
+	Spring.SendCommands("wbynum 255 SPRINGIE:noElo")
+	--end
 	Spring.Log(gadget:GetInfo().name, LOG.INFO, "GAME OVER!!")
 end
