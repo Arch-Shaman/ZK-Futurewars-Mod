@@ -169,7 +169,7 @@ return {
 					reveal_unit = 26,
 				},
 				damage                  = {
-					default = 55680,
+					default = 9280,
 				},
 				explosionGenerator      = "custom:MEDMISSILE_EXPLOSION",
 				fireTolerance           = 1820, -- 10 degrees
