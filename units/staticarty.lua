@@ -4,7 +4,7 @@ return {
 		name                          = "Garmr Cannon",
 		description                   = "Tactical Artillery Battery",
 		activateWhenBuilt             = true,
-		buildCostMetal                = 5000,
+		buildCostMetal                = 6000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 8,
