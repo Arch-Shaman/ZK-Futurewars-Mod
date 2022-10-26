@@ -464,8 +464,11 @@ for name, ud in pairs(UnitDefs) do
 	--[[if name == "striderfunnelweb" then
 		storage = 1200
 	end]] -- no longer a builder
-	if (ud.workertime and name:find("con") and not name:find("dyn")) or name == "athena" then
+	if (ud.workertime and name:find("con") and not name:find("dyn")) then
 		storage = storage + (ud.workertime * conbonus)
+	end
+	if name == "athena" then
+		storage = storage + (ud.workertime * 2.5 * conbonus)
 	end
 	
 	if storage > 0 then
