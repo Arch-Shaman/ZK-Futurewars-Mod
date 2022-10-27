@@ -136,8 +136,6 @@ local function SetState(unitID, state, wanted)
 		spGiveOrderToUnit(unitID, CMD_PUSH_PULL, pushparam, 0)
 	elseif state and not wanted then
 		spGiveOrderToUnit(unitID, CMD_PUSH_PULL, pullparam, 0)
-	elseif not state and not wanted then
-		return
 	end
 end
 
