@@ -220,10 +220,10 @@ return {
 					light_camera_height = 2000,
 					light_color = "0.85 0.85 1.2",
 					light_radius = 150,
-					batterydrain = 5,
+					batterydrain = 10,
 				},
 				damage                  = {
-					default        = 60.1,
+					default        = 40.1,
 				},
 				explosionGenerator      = "custom:LIGHTNINGPLOSION_NOPOST",
 				duration                = 10,
