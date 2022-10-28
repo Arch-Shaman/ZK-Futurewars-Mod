@@ -124,7 +124,7 @@ local Sounds = {
 		},
 		LurkerHit = {
 			file = "sounds/weapon/cannon/lurker_hit.wav",
-			gain = 0.6,
+			gain = 0.69,
 			pitch = 1.0,
 			maxconcurrent = 16,
 			preload = false,
@@ -133,7 +133,7 @@ local Sounds = {
 		},
 		LurkerFire = {
 			file = "sounds/weapon/cannon/lurker_fire.wav",
-			gain = 0.6,
+			gain = 0.69,
 			pitch = 1.0,
 			maxconcurrent = 20,
 			preload = false,
