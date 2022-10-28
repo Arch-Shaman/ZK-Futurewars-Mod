@@ -142,7 +142,7 @@ local Sounds = {
 		},
 		PreserverSecondaryHit = {
 			file = "sounds/weapon/LightningBolt.wav",
-			gain = 0.4,
+			gain = 0.35,
 			pitch = 1.0,
 			maxconcurrent = 20,
 			preload = false,
