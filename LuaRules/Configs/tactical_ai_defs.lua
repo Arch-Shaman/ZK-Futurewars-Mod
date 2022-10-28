@@ -2289,7 +2289,6 @@ local behaviourConfig = {
 		skirms = allGround,
 		flees = {},
 		onlyIdleHandling = false,
-		reloadFlee = true,
 		fleeLeeway = 400,
 		fleeDistance = 400,
 		minFleeRange = 100,
