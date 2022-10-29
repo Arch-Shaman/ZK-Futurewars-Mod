@@ -202,7 +202,7 @@ return {
 				weaponVelocity          = 400,
 			},
 			LASER_ACTUAL = {
-				name                    = "Lightning Discharge (Actual)", -- HAX for dgun.
+				name                    = "Lightning Discharge (Tracer)", -- HAX for dgun.
 				accuracy                = 900,
 				areaOfEffect            = 150,
 				avoidFeature            = false,
@@ -216,7 +216,7 @@ return {
 				craterMult              = 0,
 				--commandfire             = true,
 				customParams        = {
-					extra_damage = 220,
+					extra_damage = 300,
 					light_camera_height = 2000,
 					light_color = "0.85 0.85 1.2",
 					light_radius = 150,
