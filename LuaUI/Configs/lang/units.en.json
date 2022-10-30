@@ -957,7 +957,7 @@
 	"chicken_pigeon" : {
 		"name" : "Pigeon",
 		"description" : "Flying Pest",
-		"helptext" : "The Pigeon is a basic flying chicken that drops acidic spit on its pray in order to make it easier to digest. It is a major threat against static or stationary units who will take a lot of damage. Best countered with longer ranged AA."
+		"helptext" : "The Pigeon is a basic flying chicken that drops acidic spit on its pray in order to make it easier to digest. It is a major threat against static or stationary units who will take a lot of damage. Best countered with longer ranged AA to kill it before it gets into range."
 	},
 	"cloakheavyraid" : {
 		"name" : "Assassin",
