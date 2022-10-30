@@ -55,7 +55,7 @@ local function AddValueAndCleanup(unitID, unitDef, value)
 		Spring.SetUnitHealth(unitID, health + value)
 		if commParam then
 			local old = Spring.GetUnitRulesParam(unitID, "comm_vampirebonus") or 0
-			Spring.SetUnitRulesParam(unitID, "comm_vampire", old + value, INLOS)
+			Spring.SetUnitRulesParam(unitID, "comm_vampirebonus", old + value, INLOS)
 		end
 	end
 end
