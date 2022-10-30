@@ -1102,7 +1102,7 @@
 	"jumpsumo" : {
 		"name" : "Jugglenaut",
 		"description" : "Heavy Riot Jumper",
-		"helptext" : "The Jugglenaut is... well, 2 gravity manipulation devices stuck on 15.79 kilotons of nothing but solid armor. The ultimate frontline bulwark. It can disrupt enemy formations with gravity fields strong enough to rend units apart while soaking in enemy fire with it's utterly impervious armor. Though it's autorepair systems are of an antiquated design, the sheer size of them allows it to shrug off most weapons fire. And when push comes to shove, overloading of the hydralics systems allows it to peform a jump... and crash down with the force of a tactical nuke, leveling hills and sending anything that survived the shockwave flying."
+		"helptext" : "The Jugglenaut is... well, 2 gravity manipulation devices stuck on 15.79 kilotons of nothing but solid armor. The ultimate frontline bulwark. It can disrupt enemy formations with gravity fields strong enough to rend units apart while soaking in enemy fire with it's utterly impervious armor. Though it's autorepair systems are of an antiquated design, the sheer size of them allows it to shrug off most weapons fire. And when push comes to shove, overloading of the hydraulics systems allows it to perform a jump... and crash down with the force of a tactical nuke, leveling hills and sending anything that survived the shockwave flying."
 	},
 	"jumpscout" : {
 		"name" : "Puppy",
