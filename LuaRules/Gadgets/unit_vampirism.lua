@@ -12,8 +12,8 @@ function gadget:GetInfo()
 		layer   = 0,
 		enabled = true,
 	}
-end
 
+end
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 local vampirism_rewards = IterableMap.New() -- killed = {damager = damageValue}
 local vampireDefs = {units = {}, weapons = {}}
@@ -64,7 +64,7 @@ local function RewardVampires(unitID)
 	local data = IterableMap.Get(vampirism_rewards, unitID)
 	if data then
 		for id, value in IterableMap.Iterator(data.rewards) do
-			AddValueAndCleanup(unitID, Spring.GetUnitDefID(unitID), value)
+			AddValueAndCleanup(id, Spring.GetUnitDefID(id), value)
 		end
 		IterableMap.Remove(vampirism_rewards, unitID)
 	end
@@ -94,7 +94,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		else
 			local health, maxhealth = Spring.GetUnitHealth(unitID)
 			if damage > health then
-				AddValueAndCleanup(unitID, unitDef, health)
+				AddValueAndCleanup(attackerID, attackerDefID, health)
 			else
 				local data = {lastAttack = Spring.GetGameFrame(), rewards = IterableMap.New()}
 				IterableMap.Add(data.rewards, attackerID, damage)
