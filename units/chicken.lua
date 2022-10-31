@@ -34,7 +34,7 @@ return {
 		maxVelocity         = 5.4,
 		movementClass       = "BHOVER2",
 		noAutoFire          = false,
-		noChaseCategory     = "SINK TERRAFORM FIXEDWING SATELLITE GUNSHIP",
+		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP",
 		objectName          = "chicken.s3o",
 		power               = 100,
 		reclaimable         = false,
