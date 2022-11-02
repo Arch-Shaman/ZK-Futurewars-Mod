@@ -141,8 +141,8 @@ local Sounds = {
 			rollOff = 0.4,
 		},
 		PreserverSecondaryHit = {
-			file = "sounds/weapon/LightningBolt.wav",
-			gain = 0.35,
+			file = "sounds/weapon/emp/LightningBolt3.wav",
+			gain = 0.65,
 			pitch = 1.0,
 			maxconcurrent = 20,
 			preload = false,
