@@ -229,6 +229,13 @@ function script.StartMoving()
 	StartThread(Walk)
 end
 
+function script.HitByWeapon(x, z, weaponDefID, damage)
+	if damage > 0 then
+		EmitSfx(body, 1024)
+	end
+	return damage
+end
+
 function script.Killed(recentDamage, maxHealth)
 	local explodables = {body, head, lforearm, lblade, rforearm, rblade}
 	EmitSfx(body, 1025)
