@@ -31,6 +31,7 @@ return {
 		maxSlope            = 36,
 		maxVelocity         = 3.5,
 		movementClass       = "BHOVER2",
+		movestate           = 2,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE SUB",
 		objectName          = "chickens.s3o",
