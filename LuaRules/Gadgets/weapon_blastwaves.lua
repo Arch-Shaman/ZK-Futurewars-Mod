@@ -64,8 +64,8 @@ for i = 1, #WeaponDefs do
 		}
 		if not luaOnly then
 			wanted[#wanted + 1] = id
+			Script.SetWatchExplosion(id, true)
 		end
-		Script.SetWatchExplosion(id, true)
 		Spring.Echo("[Blastwaves] Added " .. id)
 	end
 end
