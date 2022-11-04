@@ -39,6 +39,7 @@ for i = 1, #WeaponDefs do
 		local reductshealing = tonumber(cp["blastwave_healing_reduction"]) or 0
 		local spawnCeg = cp["blastwave_spawnceg"]
 		local cegFreq = tonumber(cp["blastwave_spawncegfreq"]) or 3
+		local luaOnly = cp["blastwave_luaspawnonly"] ~= nil
 		--local shieldrestore = tonumber(cp["blastwave_shieldhealing"]) or 0  -- TODO shield restore actually does something
 		--local shielddamage = tonumber(cp["blastwave_shielddamage"]) or 0
 		
@@ -61,7 +62,9 @@ for i = 1, #WeaponDefs do
 			cegFreq = cegFreq,
 			--shielddamage = shielddamage,
 		}
-		wanted[#wanted + 1] = id
+		if not luaOnly then
+			wanted[#wanted + 1] = id
+		end
 		Script.SetWatchExplosion(id, true)
 		Spring.Echo("[Blastwaves] Added " .. id)
 	end
