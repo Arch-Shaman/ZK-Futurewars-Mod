@@ -154,7 +154,7 @@ return {
 				interceptedByShieldType = 2,
 				model                   = "spike.s3o",
 				projectiles				= 9,
-				range                   = 780,
+				range                   = 580,
 				reloadtime              = 10,
 				sprayAngle				= 1300,
 				myGravity				= 0.83,
