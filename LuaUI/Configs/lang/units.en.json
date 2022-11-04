@@ -366,8 +366,8 @@
 	},
 	"chicken_dodo" : {
 		"name" : "Dodo",
-		"description" : "Chicken Bomb",
-		"helptext" : "The Dodo's body contains a volatile mixture of organic explosives. At the slightest provocation, it explodes spectacularly, with the resulting shockwave throwing nearby units into the air. Beware as its flying limbs and spikes will do residual damage."
+		"description" : "Sacrifical Pheromone Bomb",
+		"helptext" : "The Dodo's body contains a volatile mixture of organic explosives and pheromones. At the slightest provocation, it explodes spectacularly, with the resulting shockwave throwing nearby units into the air. Beware, it leaves an acidic pool that releases phermones that aid other chickens' regeneration!"
 	},
 	"bomberheavy" : {
 		"name" : "Hella",
