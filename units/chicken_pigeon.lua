@@ -49,10 +49,6 @@ return {
 		turnRate            = 6000,
 		weapons             = {
 			{
-				def                = "BOGUS_BOMB",
-				onlyTargetCategory = "LAND SINK TURRET SHIP SWIM FLOAT HOVER",
-			},
-			{
 				def                = "SPORES",
 				mainDir            = "0 -1 0",
 				maxAngleDif        = 120,
@@ -60,35 +56,6 @@ return {
 			},
 		},
 		weaponDefs          = {
-			BOGUS_BOMB = {
-				name                    = "BogusBomb",
-				areaOfEffect            = 80,
-				burst                   = 1,
-				burstrate               = 1,
-				commandfire             = true,
-				craterBoost             = 0,
-				craterMult              = 0,
-
-				customParams            = {
-					bogus = 1,
-				},
-
-				damage                  = {
-					default = 0,
-				},
-
-				edgeEffectiveness       = 0,
-				explosionGenerator      = "custom:NONE",
-				impulseBoost            = 0,
-				impulseFactor           = 0,
-				interceptedByShieldType = 1,
-				model                   = "",
-				myGravity               = 1000,
-				noSelfDamage            = true,
-				range                   = 10,
-				reloadtime              = 2,
-				weaponType              = "AircraftBomb",
-			},
 			SPORES     = {
 				name                    = "Acidic Spit",
 				areaOfEffect            = 96,
