@@ -146,7 +146,7 @@ local function Updateblastwave(data) -- Updateblastwave(x, y, z, size, impulse, 
 	return data
 end
 
-local function AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID)
+local function AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID, team)
 	--Spring.Echo("Spawning a blastwave!")
 	if projectileID and IterableMap.InMap(handled, projectileID) then
 		return
@@ -174,8 +174,8 @@ local function AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID)
 	end
 	--Spring.Echo("attackerID: " .. tostring(attackerID) .."\nDamages Friendly: " .. tostring(conf.damagesfriendly))
 	if attackerID and Spring.ValidUnitID(attackerID) then
-		if not conf.damagesfriendly then
-			tab.attackerteam = spGetUnitAllyTeam(attackerID)
+		if not (conf.damagesfriendly or conf.healshostiles) then
+			tab.attackerteam = team or spGetUnitAllyTeam(attackerID)
 		end
 		tab.attackerteamID = spGetUnitTeam(attackerID)
 		local damagebonus = spGetUnitRulesParam(attackerID, "comm_damage_mult") or 1
