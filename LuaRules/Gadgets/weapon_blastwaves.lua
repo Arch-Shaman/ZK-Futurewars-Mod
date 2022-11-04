@@ -78,6 +78,7 @@ local spGetUnitTeam = Spring.GetUnitTeam
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitPosition = Spring.GetUnitPosition
 local spSetUnitHealth = Spring.SetUnitHealth
+local spGetUnitHealth = Spring.GetUnitHealth
 local spSpawnCEG = Spring.SpawnCEG
 local sqrt = math.sqrt
 local min = math.min
@@ -124,6 +125,7 @@ local function Updateblastwave(data) -- Updateblastwave(x, y, z, size, impulse, 
 				local hp, maxhp = spGetUnitHealth(unitID)
 				if hp ~= maxhp then
 					local ux, uy, uz = spGetUnitPosition(unitID)
+					local distance = distance2d(ux, uz, x, z)
 					local ddist = (size - distance) / size
 					local missinghp = maxhp - hp
 					local healingtodo = min(ddist * healing, missinghp)
