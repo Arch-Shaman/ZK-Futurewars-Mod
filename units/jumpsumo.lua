@@ -163,7 +163,6 @@ return {
 				craterMult              = 0,
 				cylinderTargeting       = 100,
 				customParams            = {
-					impulse = "-150",
 					singularity = "UwU I'm back from the dark side of compsci~",
 					singuradius = "450",
 					singulifespan = "10",
