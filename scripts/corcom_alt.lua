@@ -74,6 +74,8 @@ local RESTORE_DELAY_DGUN = 2500
 local okpconfig
 local spooling1 = false
 local spooling2 = false
+local priorityAim = false
+local priorityAimNum = 0
 
 --------------------------------------------------------------------------------
 -- vars
@@ -213,6 +215,9 @@ function script.FireWeapon(num)
 			GG.FireControl.WeaponFired(unitID, weaponNum)
 		end
 	end
+	if dyncomm.IsManualFire(num) then
+		priorityAim = false
+	end
 end
 
 function script.Shot(num)
@@ -268,9 +273,30 @@ local function RestoreDgun()
 	end
 end
 
+local function StartPriorityAim(num)
+	priorityAim = true
+	priorityAimNum = num
+	Sleep(5000)
+	priorityAim = false
+end
+
 function script.AimWeapon(num, heading, pitch)
 	local weaponNum = dyncomm.GetWeapon(num)
+	if weaponNum == 3 then
+		return true
+	end
 	GG.DontFireRadar_CheckAim(unitID)
+	if priorityAim and weaponNum ~= priorityAimNum then
+		return false
+	end
+	if dyncomm.IsManualFire(num) and not priorityAim then
+		StartThread(StartPriorityAim, weaponNum)
+		if weaponNum == 1 then
+			Signal(SIG_DGUN)
+		else
+			Signal(SIG_LASER)
+		end
+	end
 	if weaponNum == 1 then
 		Signal(SIG_LASER)
 		SetSignalMask(SIG_LASER)
@@ -297,8 +323,6 @@ function script.AimWeapon(num, heading, pitch)
 		WaitForTurn(torso, y_axis)
 		WaitForTurn(ruparm, x_axis)
 		StartThread(RestoreDgun)
-		return true
-	elseif weaponNum == 3 then
 		return true
 	end
 	return false

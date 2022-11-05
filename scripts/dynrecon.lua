@@ -43,6 +43,8 @@ local nanoPieces = {nanospray}
 
 local SPEED_MULT = 1
 local sizeSpeedMult = 1
+local priorityAim = false
+local priorityAimNum = 0
 
 --------------------------------------------------------------------------------
 -- constants
@@ -80,6 +82,13 @@ local function GetOKP()
 	if okpconfig[1].useokp or okpconfig[2].useokp then
 		GG.OverkillPrevention_ForceAdd(unitID)
 	end
+end
+
+local function StartPriorityAim(num)
+	priorityAim = true
+	priorityAimNum = num
+	Sleep(5000)
+	priorityAim = false
 end
 
 local function BuildPose(heading, pitch)
@@ -447,7 +456,17 @@ function script.AimWeapon(num, heading, pitch)
 	if weaponNum == 3 then -- shield
 		return true
 	end
-	
+	if priorityAim and weaponNum ~= priorityAimNum then
+		return false
+	end
+	if dyncomm.IsManualFire(num) and not priorityAim then
+		StartThread(StartPriorityAim, weaponNum)
+		if weaponNum == 1 then
+			Signal(SIG_AIM)
+		else
+			Signal(SIG_AIM_2)
+		end
+	end
 	if weaponNum == 1 then
 		Signal(SIG_AIM)
 		SetSignalMask(SIG_AIM)
@@ -481,6 +500,9 @@ end
 
 function script.FireWeapon(num)
 	dyncomm.EmitWeaponFireSfx(flare, num)
+	if dyncomm.IsManualFire(num) then
+		priorityAim = false
+	end
 end
 
 function script.Shot(num)

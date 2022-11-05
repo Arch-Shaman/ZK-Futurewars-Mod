@@ -76,6 +76,8 @@ local TORSO_SPEED_MOTION = math.rad(7)*PACE
 
 local RESTORE_DELAY = 2500
 local okpconfig
+local priorityAim = false
+local priorityAimNum = 0
 
 --------------------------------------------------------------------------------
 -- vars
@@ -103,6 +105,13 @@ local function GetOKP()
 	if okpconfig[1].useokp or okpconfig[2].useokp then
 		GG.OverkillPrevention_ForceAdd(unitID)
 	end
+end
+
+local function StartPriorityAim(num)
+	priorityAim = true
+	priorityAimNum = num
+	Sleep(5000)
+	priorityAim = false
 end
 
 
@@ -274,7 +283,21 @@ end
 
 function script.AimWeapon(num, heading, pitch)
 	local weaponNum = dyncomm.GetWeapon(num)
+	if weaponNum == 3 then
+		return true
+	end
 	GG.DontFireRadar_CheckAim(unitID)
+	if priorityAim and weaponNum ~= priorityAimNum then
+		return false
+	end
+	if dyncomm.IsManualFire(num) and not priorityAim then
+		StartThread(StartPriorityAim, weaponNum)
+		if weaponNum == 1 then
+			Signal(SIG_DGUN)
+		else
+			Signal(SIG_LASER)
+		end
+	end
 	if weaponNum == 1 then
 		Signal(SIG_LASER)
 		SetSignalMask(SIG_LASER)
@@ -300,8 +323,6 @@ function script.AimWeapon(num, heading, pitch)
 		WaitForTurn(rarm, x_axis)
 		StartThread(RestoreDGun)
 		return true
-	elseif weaponNum == 3 then
-		return true
 	end
 	return false
 end
@@ -312,6 +333,9 @@ function script.FireWeapon(num)
 		dyncomm.EmitWeaponFireSfx(rcannon_flare, num)
 	elseif weaponNum == 2 then
 		dyncomm.EmitWeaponFireSfx(lcannon_flare, num)
+	end
+	if dyncomm.IsManualFire(num) then
+		priorityAim = false
 	end
 end
 

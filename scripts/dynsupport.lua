@@ -38,6 +38,9 @@ local smokePiece = {torso}
 local nanoPieces = {nanospray}
 local okpconfig
 
+local priorityAim = false
+local priorityAimNum = 0
+
 --------------------------------------------------------------------------------
 -- constants
 --------------------------------------------------------------------------------
@@ -90,6 +93,13 @@ local function BuildDecloakThread()
 		GG.PokeDecloakUnit(unitID, unitDefID)
 		Sleep(1000)
 	end
+end
+
+local function StartPriorityAim(num)
+	priorityAim = true
+	priorityAimNum = num
+	Sleep(5000)
+	priorityAim = false
 end
 
 local function BuildPose(heading, pitch)
@@ -493,6 +503,20 @@ function script.AimWeapon(num, heading, pitch)
 	local weaponNum = dyncomm.GetWeapon(num)
 	inBuildAnim = false
 	GG.DontFireRadar_CheckAim(unitID)
+	if weaponNum == 3 then
+		return true
+	end
+	if priorityAim and weaponNum ~= priorityAimNum then
+		return false
+	end
+	if dyncomm.IsManualFire(num) and not priorityAim then
+		StartThread(StartPriorityAim, weaponNum)
+		if weaponNum == 1 then
+			Signal(SIG_DGUN)
+		else
+			Signal(SIG_LASER)
+		end
+	end
 	if weaponNum == 1 then
 		Signal(SIG_AIM)
 		SetSignalMask(SIG_AIM)
@@ -504,8 +528,6 @@ function script.AimWeapon(num, heading, pitch)
 		SetSignalMask(SIG_AIM_2)
 		bAiming = true
 		return AimRifle(heading, pitch, canDgun)
-	elseif weaponNum == 3 then
-		return true
 	end
 	return false
 end
@@ -524,6 +546,9 @@ end
 
 function script.Shot(num)
 	dyncomm.EmitWeaponShotSfx(flare, num)
+	if dyncomm.IsManualFire(num) then
+		priorityAim = false
+	end
 end
 
 function script.QueryNanoPiece()

@@ -159,6 +159,8 @@ local SIG_NANO = 64
 local okpconfig
 local RESTORE_DELAY = 2500
 local instantaimweapon2 = false
+local priorityAim = false
+local priorityAimNum = 0
 
 local function GetOKP()
 	while Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") == nil do
@@ -855,9 +857,30 @@ end
 
 local overriden = false
 
+local function StartPriorityAim(num)
+	priorityAim = true
+	priorityAimNum = num
+	Sleep(5000)
+	priorityAim = false
+end
+
 function script.AimWeapon(num, heading, pitch) 
 	local weaponNum = dyncomm.GetWeapon(num)
 	GG.DontFireRadar_CheckAim(unitID)
+	if weaponNum == 3 then
+		return true
+	end
+	if priorityAim and weaponNum ~= priorityAimNum then
+		return false
+	end
+	if dyncomm.IsManualFire(num) and not priorityAim then
+		StartThread(StartPriorityAim, weaponNum)
+		if weaponNum == 1 then
+			Signal(SIG_DGUN)
+		else
+			Signal(SIG_LASER)
+		end
+	end
 	if weaponNum == 1 then
 		Signal(SIG_LEFT)
 		SetSignalMask(SIG_LEFT)
@@ -890,8 +913,6 @@ function script.AimWeapon(num, heading, pitch)
 		WaitForTurn(HandRight, x_axis)
 		StartThread(RestoreRightAim)
 		return true
-	elseif weaponNum == 3 then
-		return true
 	end
 	return false
 end
@@ -907,6 +928,9 @@ end
 
 function script.Shot(num)
 	local weaponNum = dyncomm.GetWeapon(num)
+	if dyncomm.IsManualFire(num) then
+		priorityAim = false
+	end
 	if weaponNum == 1 then
 		dyncomm.EmitWeaponShotSfx(Muzzle, num)
 	elseif weaponNum == 2 then
