@@ -16,7 +16,7 @@ local weaponDef = {
 		muzzleEffectFire = [[custom:RAIDMUZZLE]],
 		flamethrower = [[1]],
 		setunitsonfire = "1",
-        burnchance = "0.8", -- Per-impact
+        burnchance = "1", -- Per-impact
 		burntime = [[450]],
 
 		light_camera_height = 2800,
