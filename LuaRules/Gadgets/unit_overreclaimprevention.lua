@@ -33,6 +33,7 @@ include("LuaRules/Configs/customcmds.h.lua")
 
 local spGetTeamResources = Spring.GetTeamResources
 local spEcho = Spring.Echo
+local spGetUnitDefID = Spring.GetUnitDefID
 local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc
 local spGetFeatureResurrect = Spring.GetFeatureResurrect
 local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
@@ -78,7 +79,7 @@ function gadget:AllowFeatureBuildStep(builderID, builderTeam, featureID, feature
 	return part > 0 or metalvalue <= 0.1 or CheckStorage(builderTeam) or exceptionUnits[builderID] or spGetFeatureResurrect(featureID) == "staticmex"
 end
 
-local function Command(unitID, cmdID, cmdParams, cmdOptions)
+local function Command(unitID, cmdParams)
 	local cmdDescID = spFindUnitCmdDesc(unitID, CMD_OVERRECLAIM)
 	if cmdDescID then
 		local state = cmdParams[1]
@@ -88,7 +89,13 @@ local function Command(unitID, cmdID, cmdParams, cmdOptions)
 	end
 end
 
-function gadget:UnitDestroyed(unitID)
+function gadget:UnitDestroyed(unitID, unitDefID)
+	local morphedFrom = Spring.GetUnitRulesParam(unitID, "wasMorphedTo")
+	if morphedFrom and wantedUnits[unitDefID] then
+		local state = exceptionUnits[unitID]
+		exceptionUnits[morphedFrom] = state
+		Command(unitID, {state and 1 or 0})
+	end
 	exceptionUnits[unitID] = nil
 end
 
@@ -98,7 +105,8 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 			CommandDesc.params[1] = 1
 			exceptionUnits[unitID] = true
 		else
-			CommandDesc.params[1] = 0
+			local wanted = exceptionUnits[unitID] and 1 or 0
+			CommandDesc.params[1] = wanted
 		end
 		spInsertUnitCmdDesc(unitID, CommandOrder, CommandDesc)
 	end
@@ -106,7 +114,7 @@ end
 
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced)
 	if cmdID == CMD_OVERRECLAIM then
-		Command(unitID, cmdID, cmdParams, cmdOptions)
+		Command(unitID, cmdParams)
 		return false
 	end
 	return true
@@ -124,6 +132,13 @@ end
 
 function GG.CheckORPForTeam(teamID)
 	return CheckStorage(teamID)
+end
+
+function GG.SetORPState(unitID, state)
+	if wantedUnits[spGetUnitDefID(unitID)] then
+		exceptionUnits[unitID] = state
+		Command(unitID, {state and 1 or 0})
+	end
 end
 
 function gadget:Load(zip)

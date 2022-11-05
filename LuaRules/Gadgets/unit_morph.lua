@@ -472,8 +472,12 @@ local function FinishMorph(unitID, morphData)
 	
 	-- Copy radar targeting state --
 	local radarstate = GG.GetUnitRadarTargeting(unitID)
+	local orpState = GG.GetORPState(unitID)
 	if radarstate then
 		GG.SetUnitRadarTargeting(newUnit, radarstate)
+	end
+	if orpState then
+		GG.SetORPState(newUnit, orpState)
 	end
 	
 	-- copy disarmed
