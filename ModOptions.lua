@@ -221,6 +221,14 @@ local options = {
 		def		= "",
 	},
 	{
+		key		= "disabledcommmodules",
+		name	= "Disable Modules",
+		desc	= "Prevents commanders from having access to certain weapons or modules. Specify multiple by using + ",
+		section	= 'startconds',
+		type	= "string",
+		def		= "",
+	},
+	{
 		key		= "metaladjustment",
 		name	= "Adjust Metal Values",
 		desc	= "Adjusts metal values if playercount is above 5.",
