@@ -36,6 +36,8 @@ local spUtilitiesGetEffectiveWeaponRange = Spring.Utilities.GetEffectiveWeaponRa
 local spGetUnitVelocity = Spring.GetUnitVelocity
 local spGetUnitSeparation = Spring.GetUnitSeparation
 local spGetUnitWeaponTestRange = Spring.GetUnitWeaponTestRange
+local spGetUnitWeaponHaveFreeLineOfFire  = Spring.GetUnitWeaponHaveFreeLineOfFire 
+--local spGetUnitWeaponTestTarget = Spring.GetUnitWeaponTestTarget
 local spGetUnitCommands = Spring.GetUnitCommands
 local EMPTY = {}
 local DEFAULT_RANGE = WeaponDefNames["turretriot_weapon"].range or 380
@@ -101,7 +103,7 @@ local function GetFirePoint(radius, x, z, targetx, targetz)
 end
 
 local function AttackPosition(unitID, x, y, z, weaponID, data)
-	GG.SetTemporaryPosTarget(unitID, x, y, z, false, updaterate + 1, true, weaponID)
+	GG.SetTemporaryPosTarget(unitID, x, y, z, false, updaterate, true, weaponID)
 	data.engaged = true
 end
 
@@ -111,14 +113,14 @@ end
 
 local function WeaponCorrection(unitID, weaponNum, x, y, z, range, tx, tz, sx, sz)
 	local trys = 0
-	local result = spGetUnitWeaponTestRange(unitID, weaponNum, x, y, z)
+	local result = spGetUnitWeaponTestRange(unitID, weaponNum, x, y, z) and spGetUnitWeaponHaveFreeLineOfFire(unitID, weaponNum, x, y, z)
 	if not result then
 		repeat
 			trys = trys + 1
 			range = range - (2 * trys)
 			x, z = GetFirePoint(range, sx, sz, tx, tz)
 			y = spGetGroundHeight(x, z)
-			result = spGetUnitWeaponTestRange(unitID, weaponNum, x, y, z)
+			result = spGetUnitWeaponTestRange(unitID, weaponNum, x, y, z) and spGetUnitWeaponHaveFreeLineOfFire(unitID, weaponNum, x, y, z)
 		until trys == 10 or result
 		if result then
 			trys = 0
@@ -131,7 +133,7 @@ local function WeaponCorrection(unitID, weaponNum, x, y, z, range, tx, tz, sx, s
 				range = range + 1
 				x, z = GetFirePoint(range, sx, sz, tx, tz)
 				y = spGetGroundHeight(x, z)
-				result = spGetUnitWeaponTestRange(unitID, weaponNum, x, y, z)
+				result = spGetUnitWeaponTestRange(unitID, weaponNum, x, y, z) and spGetUnitWeaponHaveFreeLineOfFire(unitID, weaponNum, x, y, z)
 			until not result or trys == 10
 			x = lastx
 			y = lasty
