@@ -561,8 +561,8 @@
 	},
 	"staticmex" : {
 		"name" : "Metal Extractor",
-		"description" : "Produces Metal",
-		"helptext" : "The metal extractor is the primary means of getting metal. If you have excess energy, metal extractors will automatically use it to extract more metal."
+		"description" : "Produces Metal for team",
+		"helptext" : "The metal extractor (or mex) drills down deep into the earth to pull out a variety of metals. While initially slow, the drill is equipped with a variable speed motor which allows it to be overdriven by grid energy. This process has diminishing returns though, making it better to acquire more extraction sites than to overdrive your current ones. You should always acquire these as soon as possible and as aggressively as possible.\n\nDuring team games, it is important to note that owning a Metal Extractor does not entitle you to the full production value, but instead gives you a share of it, even if you did not construct it. This makes it even more important to focus on acquiring new Metal Extractors instead of worrying about who owns what."
 	},
 	"vehsupport" : {
 		"name" : "Fractal",
@@ -582,7 +582,7 @@
 	"shieldbomb" : {
 		"name" : "Parcel",
 		"description" : "Crawling Cluster Bomb (Burrows)",
-		"helptext" : "The simplistic Parcel is just a cluster bomb with legs. When receiving fatal damage or the command to explode, it will release its payload: a detonation shockwave along side 20 small high explosive bombs. These extra bomblets allow it to drain shields along with inflicting direct damage to shield units, detect suspected cloakbots, or inflict mild area damage to nearby enemy units. Especially effective if used with a Charon for air deployment or cloakfield.\nWhile some have hinted at it being used as munitions for cluster bombers, these are just rumors and not part of any planned upgrade to air unit designs."
+		"helptext" : "The simplistic Parcel is just a cluster bomb with legs. When receiving fatal damage or the command to explode, it will release its payload: a detonation shockwave along with 20 small high explosive bombs. These extra bomblets allow it to drain shields along with inflicting direct damage to shield units, detect suspected cloakbots, or inflict mild area damage to nearby enemy units. Especially effective if used with a Charon for air deployment or cloakfield.\nWhile some have hinted at it being used as munitions for cluster bombers, these are just rumors and not part of any planned upgrade to air unit designs."
 	},
 	"cloakjammer" : {
 		"name" : "Iris",
