@@ -110,7 +110,7 @@ return {
 				tolerance               = 8192,
 				turret                  = true,
 				weaponType              = "LaserCannon",
-				weaponVelocity          = 2200,
+				weaponVelocity          = 2250,
 			},
 		},
 		featureDefs            = {
