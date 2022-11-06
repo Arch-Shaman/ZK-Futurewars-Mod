@@ -19,6 +19,11 @@ local openrate = math.rad(275*6)
 
 local SigAim = 1
 
+local spGetUnitHealth = Spring.GetUnitHealth
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spGetUnitIsStunned = Spring.GetUnitIsStunned
+local spSetUnitHealth = Spring.SetUnitHealth
+
 local function ArmoredThread()
 	local stunned_or_inbuild = false
 	while closed do
