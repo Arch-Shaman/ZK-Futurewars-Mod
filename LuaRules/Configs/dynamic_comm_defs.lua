@@ -185,12 +185,12 @@ local moduleDefs = {
 	},
 	{
 		name = "commweapon_flamethrower",
-		humanName = "Flamethrower",
-		description = "Good for deep-frying swarmers and large targets alike",
+		humanName = "Heavy Flamethrower",
+		description = "Good for deep-frying swarmers and large targets alike, but poor range.",
 		image = moduleImagePath .. "commweapon_flamethrower.png",
 		limit = 2,
-		cost = 50 * COST_MULT,
-		requireChassis = {"recon", "riot", "knight"},
+		cost = 100 * COST_MULT,
+		requireChassis = {"riot", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
 		applicationFunction = function (modules, sharedData)
@@ -201,6 +201,27 @@ local moduleDefs = {
 				sharedData.weapon1 = "commweapon_flamethrower"
 			else
 				sharedData.weapon2 = "commweapon_flamethrower"
+			end
+		end
+	},
+	{
+		name = "commweapon_light_flamethrower",
+		humanName = "Light Flamethrower",
+		description = "A lighter version of the Riot commander's flamethrower. Good at rapidly melting nearby units, set back by its poor range.",
+		image = moduleImagePath .. "commweapon_flamethrower.png",
+		limit = 2,
+		cost = 75 * COST_MULT,
+		requireChassis = {"recon"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = "commweapon_light_flamethrower"
+			else
+				sharedData.weapon2 = "commweapon_light_flamethrower"
 			end
 		end
 	},

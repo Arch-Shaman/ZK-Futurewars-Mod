@@ -34,8 +34,8 @@ local chassisDefs = {
 			"commweapon_lparticlebeam",
 			"commweapon_disruptor", -- TODO: Remove
 			"commweapon_disruptor",
-			"commweapon_flamethrower",
-			"commweapon_flamethrower",
+			"commweapon_light_flamethrower",
+			"commweapon_light_flamethrower",
 			"commweapon_emg",
 			"commweapon_emg",
 			"commweapon_emg_disrupt",

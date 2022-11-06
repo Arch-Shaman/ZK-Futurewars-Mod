@@ -1,7 +1,7 @@
-local name = "commweapon_flamethrower"
+local name = "commweapon_light_flamethrower"
 local weaponDef = {
-	name                    = [[Flame Thrower]],
-	areaOfEffect            = 96,
+	name                    = [[Light Flamethrower]],
+	areaOfEffect            = 64,
 	avoidGround             = false,
 	avoidFeature            = false,
 	cegTag                  = [[flamer]],
@@ -30,7 +30,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 17.1,
+		default = 14.1,
 	},
 
 	explosionGenerator      = [[custom:SMOKE]],
@@ -42,7 +42,7 @@ local weaponDef = {
 	interceptedByShieldType = 1,
 	noExplode               = true,
 	noSelfDamage            = true,
-	range                   = 240,
+	range                   = 200,
 	reloadtime              = 1/30,
 	rgbColor                = [[1 1 1]],
 	soundStart              = [[weapon/flamethrower]],
