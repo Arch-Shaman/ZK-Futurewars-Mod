@@ -68,6 +68,7 @@ local bAiming = false
 local shieldOn = true
 local inJumpMode = false
 local okpconfig
+local reconPulse = false
 
 --------------------------------------------------------------------------------
 -- funcs
@@ -89,6 +90,43 @@ local function StartPriorityAim(num)
 	priorityAimNum = num
 	Sleep(5000)
 	priorityAim = false
+end
+
+local function ReconPulseThread()
+	--local x, y, z, gy, t
+	local defID = WeaponDefNames["commweapon_revealaura"].id
+	local projectileAttributes = {
+		pos = {0, 0, 0},
+		speed = {0, 0, 0},
+		owner = unitID,
+		gravity = 0,
+		ttl = 1,
+		team = Spring.GetUnitTeam(unitID),
+	}
+	--projectileAttributes["end"] = {0, 0, 0}
+	local spGetUnitPosition = Spring.GetUnitPosition
+	local spGetUnitTeam = Spring.GetUnitTeam
+	local stunned
+	t = 2000
+	while true do
+		--x, y, z = Spring.GetUnitPosition(unitID)
+		--gy = Spring.GetGroundHeight(x, z)
+		--if y - gy > 10 then -- airborn
+			--t = 100
+		--else
+		stunned = Spring.GetUnitIsStunned(unitID) or (Spring.GetUnitRulesParam(unitID, "disarmed") == 1)
+		if reconPulse and not stunned then
+			projectileAttributes.team = spGetUnitTeam(unitID)
+			projectileAttributes.pos[1], projectileAttributes.pos[2], projectileAttributes.pos[3] = spGetUnitPosition(unitID)
+			--projectileAttributes["end"] = projectileAttributes.pos
+			Spring.SpawnProjectile(defID, projectileAttributes)
+			--Spring.Echo("Spawned with defID ", defID)
+			GG.PokeDecloakUnit(unitID, unitDefID)
+			Sleep(2000)
+		else
+			Sleep(100)
+		end
+	end
 end
 
 local function BuildPose(heading, pitch)
@@ -574,6 +612,11 @@ end
 function script.QueryNanoPiece()
 	GG.LUPS.QueryNanoPiece(unitID,unitDefID,Spring.GetUnitTeam(unitID),nanospray)
 	return nanospray
+end
+
+function StartReconPulse()
+	StartThread(ReconPulseThread)
+	reconPulse = true
 end
 
 function script.Killed(recentDamage, maxHealth)

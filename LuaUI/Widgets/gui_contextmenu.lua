@@ -2,7 +2,7 @@ function widget:GetInfo()
   return {
     name      = "Context Menu",
     desc      = "v0.088 Chili Context Menu\nPress [Space] while clicking for a context menu.",
-    author    = "CarRepairer",
+    author    = "CarRepairer, Shaman",
     date      = "2009-06-02",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
@@ -1156,6 +1156,14 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = areaCloakRadius .. " elmo"
 		cells[#cells+1] = ''
 		cells[#cells+1] = ''
+	end
+	if unitID and Spring.GetUnitRulesParam(unitID, "commander_reconpulse") then
+		cells[#cells+1] = 'Recon Pulse'
+		cells[#cells+1] = ''
+		cells[#cells+1] = ' - Uncloaks enemy units within 400 range.'
+		cells[#cells+1] = ''
+		cells[#cells+1] = ' - Refresh Rate:'
+		cells[#cells+1] = '2s'
 	end
 
 	if ud.canCloak and (not unitID or Spring.GetUnitRulesParam(unitID, "comm_personal_cloak")) then

@@ -311,6 +311,13 @@ local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, dama
 	CallAsUnitIfExists(unitID, env.dyncomm.UpdateWeapons, weapon1, weapon2, shield, rangeMult, damageMult)
 end
 
+local function StartReconPulse(unitID)
+	local env = Spring.UnitScript.GetScriptEnv(unitID)
+	if env then
+		Spring.UnitScript.CallAsUnit(unitID, env.StartReconPulse)
+	end
+end
+
 local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	local ud = UnitDefs[spGetUnitDefID(unitID)]
 	spSetUnitRulesParam(unitID, "resurrectableCommander", 1, INLOS)
@@ -321,6 +328,10 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 		local finalSpeed = speedBonus + ud.speed - speedMalus
 		local speedMult = finalSpeed/ud.speed
 		spSetUnitRulesParam(unitID, "upgradesSpeedMult", speedMult, INLOS)
+	end
+	if data.reconPulse then
+		spSetUnitRulesParam(unitID, "commander_reconpulse", 1, INLOS)
+		StartReconPulse(unitID)
 	end
 	if data.cloakregen then
 		GG.AddCloakRegenOverride(unitID, data.cloakregen)

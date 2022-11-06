@@ -1756,6 +1756,21 @@ local moduleDefs = {
 			sharedData.extrastorage = (sharedData.extrastorage or 0) + 75
 		end
 	},
+	{
+		name = "module_recon_pulse",
+		humanName = "Recon Pulse",
+		description = "Adds a pulse that decloaks enemy cloaked units every 2 seconds. WARNING: DISABLES THE ABILITY TO CLOAK.\n- Range: 400\n- Does not trigger while airborn.",
+		image = moduleImagePath .. "module_recon_pulse.png",
+		limit = 1,
+		cost = 350 * COST_MULT,
+		requireLevel = 3,
+		slotType = "module",
+		requireChassis = {"recon"},
+		prohibitingModules = {"module_personal_cloak"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.reconPulse = 1
+		end
+	},
 	
 	-- Decorative Modules
 	{
