@@ -191,40 +191,40 @@ local function UpdateUnitTarget(unitID, unitDefID, weaponID)
 	local distance, actualRange, actualEffectiveRange
 	local attacking = false
 	if enemy then
-		local _, enemybaseY, _, _, _, _, enemyX, enemyY, enemyZ = spGetUnitPosition(enemy, true, true)
-		distance = spGetUnitSeparation(unitID, enemy)
-		local heightDiff = myY - enemyY
-		local groundUnderEnemy
-		if heightDiff > 0 then
-			groundUnderEnemy = math.max(spGetGroundHeight(enemyX, enemyZ), 0)
-			actualRange = math.floor(Spring.Utilities.GetEffectiveWeaponRange(unitDefID, heightDiff, weaponNum))
-		else
-			groundUnderEnemy = enemyY
-			actualRange = DEFAULT_RANGE - 10
-		end
-		local overshootdef = overshootdefs[unitDefID][weaponID]
-		local miny = -15 -- because attacking SUBMERGED is just lol
-		if weapon.canattackuw then
-			miny = - overshootdef.aoe
-		end
-		--actualRange = math.floor(spUtilitiesGetEffectiveWeaponRange(unitDefID, myY - enemyY, weaponNum)) -- the actual range we have against the unit. Needed to be able to set the target reliably.
-		local pvelocity = overshootdef.velocity
-		local traveltime = distance / pvelocity
-		local velx, vely, velz, enemyvel = spGetUnitVelocity(enemy)
-		local wantedX, wantedZ
-		wantedX = enemyX + (traveltime * velx) -- crude leader (surprisingly effective)
-		wantedZ = enemyZ + (traveltime * velz)
-		local wantedRange = Distance(myX, myZ, wantedX, wantedZ)
-		actualEffectiveRange = actualRange + overshootdef.bonus + overshootdef.aoe -- this is the range after weapon inaccuracy range gain takes effect.
-		--Spring.Echo("Can attack UW: " .. tostring(weapon.canattackuw))
-		--Spring.Echo("Actual range: " .. actualEffectiveRange .. "(" .. actualRange .. ", " ..  distance .. ")" .. "\n")
-		if (distance > actualRange or (enemybaseY < -5 and weapon.canattackuw and weapon.notbeingused == 2)) and enemybaseY - groundUnderEnemy < 5 and enemyY >= miny and wantedRange <= actualEffectiveRange and (overshootdef.maxvel == nil or enemyvel <= overshootdef.maxvel) then -- only attack when there's nothing in our actual range that isn't flying
-			local targetX, targetZ = GetFirePoint(wantedRange, myX, myZ, wantedX, wantedZ)
-			local targetY
-			targetX, targetY, targetZ = WeaponCorrection(unitID, weaponNum, targetX, groundUnderEnemy, targetZ, actualRange, enemyX, enemyZ, myX, myZ)
-			--Spring.MarkerAddPoint(targetX, 0, targetZ, "Targeting " .. targetX .. "," .. targetZ, true)
-			AttackPosition(unitID, targetX, targetY, targetZ, weaponNum, data)
-			attacking = true
+		local enemyUnitDef = spGetUnitDefID(enemy)
+		if not UnitDefs[enemyUnitDef].isAirUnit
+			local _, enemybaseY, _, _, _, _, enemyX, enemyY, enemyZ = spGetUnitPosition(enemy, true, true)
+			distance = spGetUnitSeparation(unitID, enemy)
+			local heightDiff = myY - enemyY
+			local groundUnderEnemy
+			if heightDiff > 0 then
+				groundUnderEnemy = math.max(spGetGroundHeight(enemyX, enemyZ), 0)
+				actualRange = math.floor(Spring.Utilities.GetEffectiveWeaponRange(unitDefID, heightDiff, weaponNum))
+				local overshootdef = overshootdefs[unitDefID][weaponID]
+				local miny = -15 -- because attacking SUBMERGED is just lol
+				if weapon.canattackuw then
+					miny = - overshootdef.aoe
+				end
+				--actualRange = math.floor(spUtilitiesGetEffectiveWeaponRange(unitDefID, myY - enemyY, weaponNum)) -- the actual range we have against the unit. Needed to be able to set the target reliably.
+				local pvelocity = overshootdef.velocity
+				local traveltime = distance / pvelocity
+				local velx, vely, velz, enemyvel = spGetUnitVelocity(enemy)
+				local wantedX, wantedZ
+				wantedX = enemyX + (traveltime * velx) -- crude leader (surprisingly effective)
+				wantedZ = enemyZ + (traveltime * velz)
+				local wantedRange = Distance(myX, myZ, wantedX, wantedZ)
+				actualEffectiveRange = actualRange + overshootdef.bonus + overshootdef.aoe -- this is the range after weapon inaccuracy range gain takes effect.
+				--Spring.Echo("Can attack UW: " .. tostring(weapon.canattackuw))
+				--Spring.Echo("Actual range: " .. actualEffectiveRange .. "(" .. actualRange .. ", " ..  distance .. ")" .. "\n")
+				if (distance > actualRange or (enemybaseY < -5 and weapon.canattackuw and weapon.notbeingused == 2)) and enemybaseY - groundUnderEnemy < 5 and enemyY >= miny and wantedRange <= actualEffectiveRange and (overshootdef.maxvel == nil or enemyvel <= overshootdef.maxvel) then -- only attack when there's nothing in our actual range that isn't flying
+					local targetX, targetZ = GetFirePoint(wantedRange, myX, myZ, wantedX, wantedZ)
+					local targetY
+					targetX, targetY, targetZ = WeaponCorrection(unitID, weaponNum, targetX, groundUnderEnemy, targetZ, actualRange, enemyX, enemyZ, myX, myZ)
+					--Spring.MarkerAddPoint(targetX, 0, targetZ, "Targeting " .. targetX .. "," .. targetZ, true)
+					AttackPosition(unitID, targetX, targetY, targetZ, weaponNum, data)
+					attacking = true
+				end
+			end
 		end
 	end
 	if data.engaged and not attacking then
