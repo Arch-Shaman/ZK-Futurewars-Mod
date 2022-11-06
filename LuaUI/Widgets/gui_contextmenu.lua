@@ -1109,7 +1109,6 @@ local function printAbilities(ud, unitID)
 
 	local cp = ud.customParams
 
-	
 	if ud.buildSpeed > 0 and not cp.nobuildpower then
 		local buildSpeed = ud.buildSpeed * (unitID and Spring.GetUnitRulesParam(unitID, "buildpower_mult") or 1)
 		cells[#cells+1] = 'Construction'
@@ -1460,6 +1459,8 @@ local function printAbilities(ud, unitID)
 
 	if cp.ismex then
 		cells[#cells+1] = 'Extracts metal'
+		cells[#cells+1] = ''
+		cells[#cells+1] = ' - Shares metal extraction to team'
 		cells[#cells+1] = ''
 	end
 
