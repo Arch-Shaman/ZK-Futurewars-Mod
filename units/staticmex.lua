@@ -15,7 +15,7 @@ return {
 		corpse                 = "DEAD",
 		customParams           = {
 			occupationStrength = 1,
-			pylonrange         = 50,
+			pylonrange         = 80,
 			ismex              = 1,
 			aimposoffset       = "0 11 0",
 			midposoffset       = "0 0 0",
@@ -37,7 +37,7 @@ return {
 		footprintZ             = 3,
 		iconType               = "mex",
 		levelGround            = false,
-		maxDamage              = 600,
+		maxDamage              = 900,
 		maxSlope               = 28,
 		maxVelocity            = 0,
 		maxWaterDepth          = 5000,
@@ -46,7 +46,7 @@ return {
 		onoffable              = false,
 		script                 = "staticmex.lua",
 		selfDestructAs         = "SMALL_BUILDINGEX",
-		sightDistance          = 273,
+		sightDistance          = 300,
 		waterline              = 1,
 		yardMap                = "ooooooooo",
 		featureDefs            = {
