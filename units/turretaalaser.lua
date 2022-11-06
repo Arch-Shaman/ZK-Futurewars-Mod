@@ -19,7 +19,7 @@ return {
 			popupholdfirehp = 0.4,
 			popupunholdfirehp = 0.66,
 		},
-		damageModifier                = 0.25,
+		damageModifier                = 0.2,
 		explodeAs                     = "SMALL_BUILDINGEX",
 		floater                       = true,
 		footprintX                    = 3,
