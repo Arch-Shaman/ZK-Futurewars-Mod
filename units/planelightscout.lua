@@ -111,7 +111,7 @@ return {
 				impulseBoost            = 0,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
-				range                   = 680,
+				range                   = 675,
 				reloadtime              = 5/30,
 				rgbColor                = "1 0.843 0",
 				soundHit                = "weapon/laser/emerald_hit",
