@@ -29,7 +29,7 @@ return {
 			--dontfireatradarcommand = '0',
 		},
 
-		damageModifier					= 0.15,
+		damageModifier					= 0.2,
 		explodeAs						= "ESTOR_BUILDING",
 		footprintX						= 4,
 		footprintZ						= 4,
