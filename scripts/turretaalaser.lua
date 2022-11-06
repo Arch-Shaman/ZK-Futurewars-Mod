@@ -23,6 +23,7 @@ local spGetUnitHealth = Spring.GetUnitHealth
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spSetUnitHealth = Spring.SetUnitHealth
+local BUNKERED_AUTOHEAL = tonumber (UnitDef.customParams.armored_regen or 20) / 2 -- applied every 0.5s
 
 local function ArmoredThread()
 	local stunned_or_inbuild = false
