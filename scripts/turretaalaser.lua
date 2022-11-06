@@ -32,8 +32,10 @@ local function ArmoredThread()
 		if not stunned_or_inbuild then
 			local hp = spGetUnitHealth(unitID)
 			local slowMult = (spGetUnitRulesParam(unitID,"baseSpeedMult") or 1)
-			local newHp = hp + slowMult*BUNKERED_AUTOHEAL
-			spSetUnitHealth(unitID, newHp)
+			if hp then
+				local newHp = hp + slowMult*BUNKERED_AUTOHEAL
+				spSetUnitHealth(unitID, newHp)
+			end
 		end
 		Sleep(500)
 	end
