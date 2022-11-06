@@ -21,6 +21,7 @@ end
 local COST_MULT = 1
 local HP_MULT = 1
 local allowCommEco = false
+local disabledModules = {}
 
 if (Spring.GetModOptions) then
 	local modOptions = Spring.GetModOptions()
@@ -29,6 +30,14 @@ if (Spring.GetModOptions) then
             HP_MULT = modOptions.hpmult
         end
 		allowCommEco = (modOptions.commeco or 0) == 1
+		if modOptions.disabledcommmodules and modOptions.disabledcommmodules ~= "" then
+			local s = modOptions.disabledcommmodules
+			s = string.gsub(s, " ", "") -- remove whitespace
+			for w in s:gmatch("[a-zA-Z_0-9]+") do
+				disabledModules[w] = true
+			end
+			disabledModules["econ"] = nil -- do not ban basic income!
+		end
     end
 end
 
@@ -2813,6 +2822,9 @@ for i = 1, #moduleDefs do -- Add name, cost, dps, etc
 			moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\255\031Shield Radius:\255\255\255\255 " .. wd.shieldRadius .. "\n\255\255\255\031Shield HP:\255\255\255\255 " .. wd.shieldPower .. "\n\255\255\255\031Shield Regen:\255\255\255\255 " .. wd.shieldPowerRegen .. "\n\255\255\255\031Shield Regen Cost:\255\255\255\255 " .. wd.shieldPowerRegenEnergy
 		elseif not name:find("null") then
 			moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\061\061Limit: " .. tostring(moduleDefs[i].limit) .. "\255\255\255\255" -- why does this have a boolean?
+		end
+		if disabledModules[name] then
+			moduleDefs[i].requireChassis = {"banned"}
 		end
 		--Spring.Echo("Final description: " .. moduleDefs[i].description)
 	end
