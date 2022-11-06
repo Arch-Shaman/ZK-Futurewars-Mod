@@ -33,7 +33,7 @@ return {
 		movementClass       = "BHOVER2",
 		movestate           = 2,
 		noAutoFire          = false,
-		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE SUB",
+		noChaseCategory     = "TERRAFORM GUNSHIP FIXEDWING SATELLITE SUB",
 		objectName          = "chickens.s3o",
 		power               = 200,
 		reclaimable         = false,
