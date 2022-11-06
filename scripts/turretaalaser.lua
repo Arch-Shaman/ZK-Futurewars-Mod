@@ -19,6 +19,20 @@ local openrate = math.rad(275*6)
 
 local SigAim = 1
 
+local function ArmoredThread()
+	local stunned_or_inbuild = false
+	while closed do
+		stunned_or_inbuild = spGetUnitIsStunned(unitID) or (spGetUnitRulesParam(unitID, "disarmed") == 1)
+		if not stunned_or_inbuild then
+			local hp = spGetUnitHealth(unitID)
+			local slowMult = (spGetUnitRulesParam(unitID,"baseSpeedMult") or 1)
+			local newHp = hp + slowMult*BUNKERED_AUTOHEAL
+			spSetUnitHealth(unitID, newHp)
+		end
+		Sleep(500)
+	end
+end
+
 local function Close ()
 	currentTask = 1
 	if disarmed then return end
@@ -36,6 +50,7 @@ local function Close ()
 
 	currentTask = 0
 	Spring.SetUnitArmored (unitID, true)
+	StartThread(ArmoredThread)
 end
 
 local function RestoreAfterDelay()

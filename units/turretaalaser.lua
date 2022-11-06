@@ -18,6 +18,7 @@ return {
 		customParams                  = {
 			popupholdfirehp = 0.4,
 			popupunholdfirehp = 0.66,
+			armored_regen  = 10,
 		},
 		damageModifier                = 0.2,
 		explodeAs                     = "SMALL_BUILDINGEX",
