@@ -37,7 +37,7 @@ return {
 		maxWaterDepth       = 22,
 		movementClass       = "TANK4",
 		noAutoFire          = false,
-		noChaseCategory     = "TERRAFORM SATELLITE SUB",
+		noChaseCategory     = "GUNSHIP FIXEDWING TERRAFORM SATELLITE SUB",
 		objectName          = "corbanish.s3o",
 		script              = "tankriot.lua",
 		selfDestructAs      = "BIG_UNITEX",
@@ -53,7 +53,7 @@ return {
 			{
 				def                = "TAWF_BANISHER",
 				mainDir            = "0 0 1",
-				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
+				onlyTargetCategory = "LAND SINK TURRET SHIP SWIM FLOAT HOVER",
 			},
 		},
 		weaponDefs          = {
