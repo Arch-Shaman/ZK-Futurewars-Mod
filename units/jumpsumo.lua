@@ -7,7 +7,7 @@ return {
 		activateWhenBuilt   = true,
 		autoheal            = 100,
 		brakeRate           = 1.8,
-		buildCostMetal      = 4350,
+		buildCostMetal      = 5500,
 		builder             = false,
 		buildPic            = "jumpsumo.png",
 		canGuard            = true,
@@ -41,7 +41,7 @@ return {
 		iconType            = "t3jumpjetriot",
 		leaveTracks         = true,
 		losEmitHeight       = 60,
-		maxDamage           = 43500,
+		maxDamage           = 45000,
 		maxSlope            = 36,
 		maxVelocity         = 1.15,
 		maxWaterDepth       = 22,
@@ -53,11 +53,10 @@ return {
 		script              = "jumpsumo.lua",
 		selfDestructAs      = "BIG_UNIT",
   		sfxtypes            = {
-    			explosiongenerators = {
-      				"custom:sumosmoke",
-      				"custom:BEAMWEAPON_MUZZLE_ORANGE",
-    			},
-
+			explosiongenerators = {
+				"custom:sumosmoke",
+				"custom:BEAMWEAPON_MUZZLE_ORANGE",
+			},
   		},
 		sightDistance       = 680,
 		trackOffset         = 0,
@@ -148,7 +147,7 @@ return {
 			},
 			GRAVITY_NEG = {
 				name                    = "Gravity Well Generator",
-				areaOfEffect            = 450,
+				areaOfEffect            = 300,
 				avoidFriendly           = false,
 				avoidFeature            = false,
 				beamtime                = 1/30,
@@ -159,9 +158,9 @@ return {
 				cylinderTargeting       = 100,
 				customParams            = {
 					singularity = "UwU I'm back from the dark side of compsci~",
-					singuradius = "450",
+					singuradius = "300",
 					singulifespan = "10",
-					singustrength = "60",
+					singustrength = "50",
 					singuheight = "0",
 					singufinalceg = "black_hole_300",
 					stats_hide_damage = 1, -- continuous laser
@@ -176,7 +175,7 @@ return {
 				explosionGenerator      = "custom:NONE",
 				explosionSpeed          = 10000,
 				intensity               = 1,
-				interceptedByShieldType = 0,
+				interceptedByShieldType = 1,
 				largeBeamLaser          = true,
 				laserFlareSize          = 6,
 				noSelfDamage            = true,
@@ -200,7 +199,7 @@ return {
 			},
 			GRAVITY_POS = {
 				name                    = "Gravity Hill Generator",
-				areaOfEffect            = 450,
+				areaOfEffect            = 300,
 				avoidFriendly           = false,
 				avoidFeature            = false,
 				beamtime                = 1/30,
@@ -211,9 +210,9 @@ return {
 				cylinderTargeting       = 100,
 				customParams            = {
 					singularity = "Feeling horny, might come out soon~",
-					singuradius = "450",
+					singuradius = "300",
 					singulifespan = "10",
-					singustrength = "-60",
+					singustrength = "-50",
 					singuheight = "0",
 					singufinalceg = "black_hole_300",
 					stats_hide_damage = 1, -- continuous laser
