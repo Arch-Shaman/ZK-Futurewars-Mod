@@ -435,7 +435,7 @@ local function GetShieldRegenDrain(wd)
 	return shieldRegen, shieldDrain
 end
 
-local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, deathExplosion)
+local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, deathExplosion, cost)
 	local cells = cells
 	local startPoint = #cells+1
 	
@@ -482,6 +482,8 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 		local regen, drain = GetShieldRegenDrain(wd)
 		cells[#cells+1] = ' - Strength:'
 		cells[#cells+1] = wd.shieldPower .. " HP"
+		cells[#cells+1] = ' - Strength per metal:'
+		cells[#cells+1] = numformat(wd.shieldPower / cost, 2)
 		cells[#cells+1] = ' - Regen:'
 		cells[#cells+1] = regen .. " HP/s"
 		cells[#cells+1] = ' - Regen cost:'
@@ -1087,7 +1089,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 					cells[#cells+1] = (not (cp.bogus or cp.hideweapon) and '   ' or '') .. WeaponDefNames[cp["projectile" .. submunitionCount]].description .. ' x ' .. cp["numprojectiles" .. submunitionCount] .. ' (Previously Listed)'
 					cells[#cells+1] = ''
 				else
-					cells = weapons2Table(cells, cp["projectile" .. submunitionCount], unitID, cp["numprojectiles" .. submunitionCount] * (cp.bogus and bombletCount or 1) * (cp["clustercharges"] or 1), recursedWepIds, false)
+					cells = weapons2Table(cells, cp["projectile" .. submunitionCount], unitID, cp["numprojectiles" .. submunitionCount] * (cp.bogus and bombletCount or 1) * (cp["clustercharges"] or 1), recursedWepIds, false, cost)
 				end
 				submunitionCount = submunitionCount + 1
 			end
@@ -1556,7 +1558,7 @@ local function printWeapons(unitDef, unitID)
 			cells[#cells+1] = ''
 			cells[#cells+1] = ''
 		end
-		cells = weapons2Table(cells, ws, unitID, false, {}, false)
+		cells = weapons2Table(cells, ws, unitID, false, {}, false, unitDef.metalCost)
 		--end
 	end
 	
@@ -2011,7 +2013,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		-- edge damage is always 0, see http://springrts.com/mediawiki/images/1/1c/EdgeEffectiveness.png
 		]]--
 		
-		local cells = weapons2Table({}, ud.deathExplosion:lower(), unitID, 1, {}, true)
+		local cells = weapons2Table({}, ud.deathExplosion:lower(), unitID, 1, {}, true, ud.metalCost)
 		
 		if cells and #cells > 0 then
 			for i=1, #cells do
