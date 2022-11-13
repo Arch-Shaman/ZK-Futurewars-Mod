@@ -34,6 +34,7 @@ return {
 			midposoffset   = "0 6 0",
 			modelradius    = "32",
 			lookahead      = 120,
+			jumpretreattype = "none",
 		},
 		explodeAs           = "BIG_UNIT",
 		footprintX          = 4,
