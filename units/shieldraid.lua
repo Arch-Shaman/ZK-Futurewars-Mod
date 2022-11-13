@@ -6,7 +6,7 @@ return {
 		acceleration           = 1.5,
 		activateWhenBuilt      = true,
 		brakeRate              = 2.4,
-		buildCostMetal         = 100,
+		buildCostMetal         = 90,
 		buildPic               = "shieldraid.png",
 		canGuard               = true,
 		canMove                = true,
@@ -28,7 +28,7 @@ return {
 		idleAutoHeal           = 10,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 330,
+		maxDamage              = 280,
 		maxSlope               = 36,
 		maxVelocity            = 3.0,
 		maxWaterDepth          = 22,
@@ -60,7 +60,6 @@ return {
 				def                = "SHIELD",
 			},
 		},
-
 		weaponDefs             = {
 			LASER = {
 				name                    = "Orange Micropulse Laser",
@@ -79,7 +78,7 @@ return {
 					sweepfire_fastupdate = 1,
 				},
 				damage                  = {
-					default = 8,
+					default = 8.5,
 				},
 				duration                = 2/30,
 				explosionGenerator      = "custom:beamweapon_hit_orange",
@@ -111,7 +110,7 @@ return {
 				shieldBadColor          = "1 0.1 0.1 1",	
 				shieldGoodColor         = "0.1 0.1 1 1",	
 				shieldInterceptType     = 3,	
-				shieldPower             = 600,	
+				shieldPower             = 900,	
 				shieldPowerRegen        = 15,	
 				shieldPowerRegenEnergy  = 0.1,
 				shieldRadius            = 60,	
