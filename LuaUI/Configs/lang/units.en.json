@@ -316,8 +316,8 @@
 	},
 	"shieldskirm" : {
 		"name" : "Vigilante",
-		"description" : "Shielded Cluster Rocket Bot",
-		"helptext" : "The Vigilante's arcing rockets have a low rate of fire, but do a lot of damage, making it very good at dodging in and out of range of enemy units or defense, or in a powerful initial salvo. Counter them by attacking them with fast units, or crawling bombs when massed."
+		"description" : "Cruise Missile Skirmisher/Artillery Bot",
+		"helptext" : "The Vigilante's long range Deluge Rockets allow it to get the first strike against other skirmishers, but its slow speed and weak armor make it an easy target for raiders and other fast targets. While excellent at area bombardment and shield draining duties, it is betrayed by a lack of upfront ability at close range. Counter it with anything that moves fast enough to evade its rockets."
 	},
 	"dronelight" : {
 		"name" : "Firefly",
