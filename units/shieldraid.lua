@@ -1,32 +1,30 @@
 return { 
 	shieldraid = {
-		unitname               = [[shieldraid]],
-		name                   = [[Bandit]],
-		description            = [[Medium-Light Raider Bot]],
+		unitname               = "shieldraid",
+		name                   = "Warden",
+		description            = "Medium-Light Raider Bot",
 		acceleration           = 1.5,
 		activateWhenBuilt      = true,
 		brakeRate              = 2.4,
 		buildCostMetal         = 100,
-		buildPic               = [[shieldraid.png]],
+		buildPic               = "shieldraid.png",
 		canGuard               = true,
 		canMove                = true,
 		canPatrol              = true,
-		category               = [[LAND TOOFAST]],
-		collisionVolumeOffsets = [[0 0 0]],
-		collisionVolumeScales  = [[24 29 24]],
-		collisionVolumeType    = [[cylY]],
-		corpse                 = [[DEAD]],
-
+		category               = "LAND TOOFAST",
+		collisionVolumeOffsets = "0 0 0",
+		collisionVolumeScales  = "24 29 24",
+		collisionVolumeType    = "cylY",
+		corpse                 = "DEAD",
 		customParams           = {
-			--modelradius        = [[12]],
+			--modelradius        = "12",
 			aim_lookahead      = 80,
 			shield_emit_height = 17,
 		},
-
-		explodeAs              = [[SMALL_UNITEX]],
+		explodeAs              = "SMALL_UNITEX",
 		footprintX             = 2,
 		footprintZ             = 2,
-		iconType               = [[walkerraider]],
+		iconType               = "walkerraider",
 		idleAutoHeal           = 10,
 		idleTime               = 1800,
 		leaveTracks            = true,
@@ -35,49 +33,43 @@ return {
 		maxVelocity            = 3.0,
 		maxWaterDepth          = 22,
 		minCloakDistance       = 75,
-		movementClass          = [[KBOT2]],
-		noChaseCategory        = [[TERRAFORM FIXEDWING SUB]],
-		objectName             = [[mbot.s3o]],
-		script                 = [[shieldraid.lua]],
-		selfDestructAs         = [[SMALL_UNITEX]],
-
+		movementClass          = "KBOT2",
+		noChaseCategory        = "TERRAFORM FIXEDWING SUB",
+		objectName             = "mbot.s3o",
+		script                 = "shieldraid.lua",
+		selfDestructAs         = "SMALL_UNITEX",
 		sfxtypes               = {
 			explosiongenerators = {
-				[[custom:BEAMWEAPON_MUZZLE_RED]],
+				"custom:BEAMWEAPON_MUZZLE_RED",
 			},
 		},
-
 		sightDistance          = 560,
 		trackOffset            = 0,
 		trackStrength          = 8,
 		trackStretch           = 1,
-		trackType              = [[ComTrack]],
+		trackType              = "ComTrack",
 		trackWidth             = 18,
 		turnRate               = 3000,
 		upright                = true,
-
 		weapons                = {
-
 			{
-				def                = [[LASER]],
-				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
+				def                = "LASER",
+				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
 			},
 			{
-				def                = [[SHIELD]],
+				def                = "SHIELD",
 			},
-
 		},
 
 		weaponDefs             = {
 			LASER = {
-				name                    = [[Orange Micropulse Laser]],
+				name                    = "Orange Micropulse Laser",
 				areaOfEffect            = 8,
 				accuracy				= 550,
 				coreThickness           = 0.5,
 				beamTime                = 1/30,
 				craterBoost             = 0,
 				craterMult              = 0,
-				
 				customParams        = {
 					light_camera_height = 1200,
 					light_radius = 20,
@@ -86,13 +78,11 @@ return {
 					sweepfire_step = 0.5,
 					sweepfire_fastupdate = 1,
 				},
-      
 				damage                  = {
 					default = 8,
 				},
-
 				duration                = 2/30,
-				explosionGenerator      = [[custom:beamweapon_hit_orange]],
+				explosionGenerator      = "custom:beamweapon_hit_orange",
 				fireStarter             = 50,
 				impactOnly              = true,
 				impulseBoost            = 0,
@@ -102,25 +92,24 @@ return {
 				noSelfDamage            = true,
 				range                   = 255,
 				reloadtime              = 2/30,
-				rgbColor                = [[1 0.27059 0]],
-				soundStart              = [[weapon/laser/orange_micropulse]],
+				rgbColor                = "1 0.27059 0",
+				soundStart              = "weapon/laser/orange_micropulse",
 				soundstartvolume	    = 75,
 				thickness               = 2.55,
 				tolerance               = 10000,
 				turret                  = true,
-				weaponType              = [[BeamLaser]],
+				weaponType              = "BeamLaser",
 				weaponVelocity          = 880,
 			},
 			SHIELD = {
-				name                    = [[Energy Shield]],	
+				name                    = "Energy Shield",	
 				damage                  = {	
 					default = 10,	
 				},	
-				
 				exteriorShield          = true,	
 				shieldAlpha             = 0.2,	
-				shieldBadColor          = [[1 0.1 0.1 1]],	
-				shieldGoodColor         = [[0.1 0.1 1 1]],	
+				shieldBadColor          = "1 0.1 0.1 1",	
+				shieldGoodColor         = "0.1 0.1 1 1",	
 				shieldInterceptType     = 3,	
 				shieldPower             = 600,	
 				shieldPowerRegen        = 15,	
@@ -131,27 +120,23 @@ return {
 				smartShield             = true,	
 				visibleShield           = false,	
 				visibleShieldRepulse    = false,	
-				weaponType              = [[Shield]],	
+				weaponType              = "Shield",	
 			},
 		},
-
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = true,
-				featureDead      = [[HEAP]],
+				featureDead      = "HEAP",
 				footprintX       = 2,
 				footprintZ       = 2,
-				object           = [[mbot_d.s3o]],
+				object           = "mbot_d.s3o",
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
-				object           = [[debris2x2b.s3o]],
+				object           = "debris2x2b.s3o",
 			},
-
 		},
 	} 
 }
