@@ -107,7 +107,6 @@ return {
 					light_color = "1 0.1 0.1",
 					light_radius = 40,
 					light_camera_height = 1500,
-					singuimmune = 1,
 				},
 				damage                  = {
 					default = 10000.1,
@@ -153,7 +152,6 @@ return {
 					light_color = "0.059 0.322 0.729",
 					light_radius = 550,
 					reveal_unit = 12,
-					singuimmune = 1,
 				},
 				damage                  = {
 					default = 10.1,
@@ -200,7 +198,6 @@ return {
 					proxy = 0, -- check for nearby units?
 					proxydist = 0, -- how far to check for units? Default: spawndist
 					reaim_time = 60, -- Fast update not required (maybe dangerous)
-					singuimmune = 1,
 				},
 				damage                  = {
 					default = 6*3*(8*25),
@@ -245,7 +242,6 @@ return {
 					setunitsonfire = "1",
 					burntime = 90,
 					restrict_in_widgets = 1,
-					singuimmune = 1,
 					light_color = "1.35 0.5 0.36",
 					light_radius = 550,
 				},
@@ -332,7 +328,6 @@ return {
 					light_camera_height = 1500,
 					light_color = "0.9 0.3 0",
 					light_radius = 240,
-					singuimmune = 1,
 				},
 				damage                  = {
 					default = 300.1*30,
@@ -412,7 +407,6 @@ return {
 					blastwave_lossfactor = 0.99,
 					blastwave_damage = 60,
 					damage_vs_shield = 200,
-					singuimmune = 1,
 				},
 				damage                  = {
 					default = 401.1,
@@ -458,7 +452,6 @@ return {
 					light_camera_height = 1500,
 					light_color = "0.1 1 0.1",
 					light_radius = 40,
-					singuimmune = 1,
 				},
 				damage                  = {
 					default = 40*800.1,
@@ -526,7 +519,6 @@ return {
 				cegTag                  = "drp_blue_trail",
 				customParams = {
 					script_reload = "6",
-					singuimmune = 1,
 				},
 				damage                  = {
 					default        = 30000,
@@ -567,7 +559,6 @@ return {
 					light_color = "0.5 0.0 0.5",
 					light_radius = 220,
 					shield_damage = 150,
-
 				},
 				damage                  = {
 					default = 200,
@@ -618,7 +609,6 @@ return {
 					stats_damage = 450.1 + (200 * 24),
 					shield_damage = 1, -- we want it to impact the shield to cause a lot of projectiles to spawn on it and damage it.
 					stats_shield_damage = (200 * 24) + 450.1,
-					singuimmune = 1,
 				},
 				damage                  = {
 					default = 450.1,
@@ -820,7 +810,6 @@ return {
 					stats_damage = 450.1 + (200 * 24),
 					shield_damage = 1, -- we want it to impact the shield to cause a lot of projectiles to spawn on it and damage it.
 					stats_shield_damage = (200 * 24) + 450.1,
-					singuimmune = 1,
 				},
 				damage                  = {
 					default = 450.1,
