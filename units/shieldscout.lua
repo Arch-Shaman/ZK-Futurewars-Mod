@@ -33,7 +33,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 600,
+		maxDamage              = 360,
 		maxSlope               = 36,
 		maxVelocity            = 2.8,
 		maxWaterDepth          = 22,
@@ -45,7 +45,7 @@ return {
 		script                 = "shieldscout.lua",
 		selfDestructAs         = "CLOGGER_EXPLODE",
 		selfDestructCountdown  = 0,
-		sightDistance          = 600,
+		sightDistance          = 720,
 		trackOffset            = 0,
 		trackStrength          = 8,
 		trackStretch           = 1,
@@ -103,7 +103,6 @@ return {
 				waterweapon             = true,
 				weaponType              = "BeamLaser",
 			},
-
 			SHIELD = {
 				name                    = "Energy Shield",	
 				damage                  = {	
@@ -114,7 +113,7 @@ return {
 				shieldBadColor          = "1 0.1 0.1 1",	
 				shieldGoodColor         = "0.1 0.1 1 1",	
 				shieldInterceptType     = 3,	
-				shieldPower             = 380,	
+				shieldPower             = 600,	
 				shieldPowerRegen        = 10,	
 				shieldPowerRegenEnergy  = 0,
 				shieldRadius            = 75,
