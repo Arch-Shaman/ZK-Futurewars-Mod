@@ -431,7 +431,7 @@ return {
 				weaponVelocity          = 1100,
 			},
 			GREEN_STAMPER = {
-				name                    = "Green Mangler",
+				name                    = "Green Grazer",
 				accuracy                = 750,
 				areaOfEffect            = 384,
 				avoidFeature            = false,
@@ -750,7 +750,7 @@ return {
 				weaponVelocity          = 1100,
 			},
 			RAINBOW = {
-				name                    = "Rainbow of Ruin",
+				name                    = "Ruinous Rainbow",
 				accuracy                = 750,
 				areaOfEffect            = 720,
 				craterAreaOfEffect      = 90,
