@@ -290,7 +290,7 @@ function script.AimWeapon(num, heading, pitch)
 	if priorityAim and weaponNum ~= priorityAimNum then
 		return false
 	end
-	if dyncomm.IsManualFire(num) and not priorityAim then
+	if weaponNum and dyncomm.IsManualFire(num) and not priorityAim and dyncomm.PriorityAimCheck(num) then
 		StartThread(StartPriorityAim, weaponNum)
 		if weaponNum == 1 then
 			Signal(SIG_DGUN)

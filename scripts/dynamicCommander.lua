@@ -427,6 +427,13 @@ local function DoDeathExplosion(x, y, z)
 		})
 end
 
+local function PriorityAimCheck(weaponNum)
+	--local num = unitWeaponNames[Spring.GetUnitRulesParam(unitID, "comm_weapon_name_" .. weaponNum].num
+	local reloadFrame = Spring.GetUnitWeaponState(unitID, weaponNum, "reloadState")
+	if reloadFrame == nil then return true end
+	return reloadFrame <= Spring.GetGameFrame()
+end
+
 local function SpawnModuleWreck(moduleDefID, wreckLevel, totalCount, teamID, x, y, z, vx, vy, vz)
 	local featureDefID = FeatureDefNames[moduleWreckNamePrefix[wreckLevel] .. moduleDefID]
 	if not featureDefID then
@@ -490,4 +497,5 @@ return {
 	GetOKPConfig      = GetOKP,
 	Explode			  = DoDeathExplosion,
 	SetupSpooling     = SetupSpooling,
+	PriorityAimCheck  = PriorityAimCheck,
 }
