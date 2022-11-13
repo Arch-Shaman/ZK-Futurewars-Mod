@@ -171,7 +171,7 @@ return {
 					can_target_allies  = 1,
 				},
 				damage                  = {
-					default = 75.1,
+					default = 50.1,
 				},
 				explosionGenerator      = "custom:NONE",
 				explosionSpeed          = 10000,
@@ -223,7 +223,7 @@ return {
 					can_target_allies  = 1,
 				},
 				damage                  = {
-					default = 75.1,
+					default = 50.1,
 				},
 				largeBeamLaser          = true,
 				laserFlareSize          = 2,
