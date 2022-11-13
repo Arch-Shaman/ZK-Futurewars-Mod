@@ -1,29 +1,27 @@
 return { 
 	shieldfelon = {
-		unitname            = [[shieldfelon]],
-		name                = [[Guardian]],
-		description         = [[Shielded Riot/Skirmisher Bot]],
+		unitname            = "shieldfelon",
+		name                = "Guardian",
+		description         = "Shielded Riot/Skirmisher Bot",
 		acceleration        = 0.75,
 		activateWhenBuilt   = true,
 		brakeRate           = 1.32,
 		buildCostMetal      = 600,
-		buildPic            = [[shieldfelon.png]],
+		buildPic            = "shieldfelon.png",
 		canGuard            = true,
 		canMove             = true,
 		canPatrol           = true,
-		category            = [[LAND]],
-		corpse              = [[DEAD]],
-
+		category            = "LAND",
+		corpse              = "DEAD",
 		customParams        = {
 			shield_emit_height = 25,
 			shield_color_mult = 1.1,
 			dontfireatradarcommand = '1',
 		},
-
-		explodeAs           = [[BIG_UNITEX]],
+		explodeAs           = "BIG_UNITEX",
 		footprintX          = 3,
 		footprintZ          = 3,
-		iconType            = [[walkersupport]],
+		iconType            = "walkersupport",
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
@@ -33,53 +31,47 @@ return {
 		maxVelocity         = 1.5,
 		maxWaterDepth       = 22,
 		minCloakDistance    = 75,
-		movementClass       = [[KBOT3]],
-		noChaseCategory     = [[TERRAFORM FIXEDWING SUB]],
-		objectName          = [[shieldfelon.s3o]],
+		movementClass       = "KBOT3",
+		noChaseCategory     = "TERRAFORM FIXEDWING SUB",
+		objectName          = "shieldfelon.s3o",
 		onoffable           = false,
-		script              = [[shieldfelon.lua]],
-		selfDestructAs      = [[BIG_UNITEX]],
+		script              = "shieldfelon.lua",
+		selfDestructAs      = "BIG_UNITEX",
 		sfxtypes            = {
-
 			explosiongenerators = {
-				[[custom:lightningplosion_smallbolts_purple]],
+				"custom:lightningplosion_smallbolts_purple",
 			},
-
 		},
-
 		sightDistance       = 520,
 		trackOffset         = 0,
 		trackStrength       = 8,
 		trackStretch        = 1,
-		trackType           = [[ComTrack]],
+		trackType           = "ComTrack",
 		trackWidth          = 30,
 		turnRate            = 1200,
 		upright             = true,
 		weapons             = {
 			{
-				def                = [[SHIELDGUN]],
-				badTargetCategory  = [[UNARMED]],
-				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
-				--mainDir            = [[0 1 0]],
+				def                = "SHIELDGUN",
+				badTargetCategory  = "UNARMED",
+				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
+				--mainDir            = "0 1 0",
 				--maxAngleDif        = 180,
 			},
 			{
-				def = [[SHIELD]],
+				def = "SHIELD",
 			},
 		},
-
 		weaponDefs          = {
 			SHIELD      = {
-				name                    = [[Energy Shield]],
-
+				name                    = "Energy Shield",
 				damage                  = {
 					default = 9.79,
 				},
-
 				exteriorShield          = true,
 				shieldAlpha             = 0.4,
-				shieldBadColor          = [[1 0.1 0.1 1]],
-				shieldGoodColor         = [[0.1 0.1 1 1]],
+				shieldBadColor          = "1 0.1 0.1 1",
+				shieldGoodColor         = "0.1 0.1 1 1",
 				shieldInterceptType     = 3,
 				shieldPower             = 2500,
 				shieldPowerRegen        = 10,
@@ -90,28 +82,25 @@ return {
 				smartShield             = true,
 				visibleShield           = false,
 				visibleShieldRepulse    = false,
-				weaponType              = [[Shield]],
+				weaponType              = "Shield",
 			},
 			SHIELDGUN = {
-				name                    = [[Shield Gun]],
+				name                    = "Shield Gun",
 				areaOfEffect            = 8,
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting       = 0.3,
-
 				customParams            = {
 					shield_drain = 100,
 
 					light_camera_height = 2500,
-					light_color = [[0.66 0.32 0.90]],
+					light_color = "0.66 0.32 0.90",
 					light_radius = 120,
 				},
-
 				damage                  = {
 					default        = 120.1,
 				},
-
-				explosionGenerator      = [[custom:flash2purple]],
+				explosionGenerator      = "custom:flash2purple",
 				fireStarter             = 50,
 				impactOnly              = true,
 				impulseBoost            = 0,
@@ -120,35 +109,30 @@ return {
 				interceptedByShieldType = 1,
 				range                   = 460,
 				reloadtime              = 0.133,
-				rgbColor                = [[0.5 0 0.7]],
-				soundStart              = [[weapon/constant_electric]],
+				rgbColor                = "0.5 0 0.7",
+				soundStart              = "weapon/constant_electric",
 				soundStartVolume        = 9,
 				soundTrigger            = true,
-				texture1                = [[corelaser]],
+				texture1                = "corelaser",
 				thickness               = 2,
 				turret                  = true,
-				weaponType              = [[LightningCannon]],
+				weaponType              = "LightningCannon",
 			},
-
-	},
-
+		},
 		featureDefs         = {
-
 			DEAD  = {
 				blocking         = true,
-				featureDead      = [[HEAP]],
+				featureDead      = "HEAP",
 				footprintX       = 2,
 				footprintZ       = 2,
-				object           = [[shieldfelon_dead.s3o]],
+				object           = "shieldfelon_dead.s3o",
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
-				object           = [[debris2x2c.s3o]],
+				object           = "debris2x2c.s3o",
 			},
 		},
-	
 	} 
 }
