@@ -1896,6 +1896,9 @@ for level = 1, maxCommLevel do
 	morphCosts[level] = extraLevelCostFunction(level)
 end
 
+-- generate the verbose, repetitive structures that define properties of dynamic commanders at various levels
+-- these were (apparently) designed to be extremely flexible, but that flexibility wasn't used, so they were just complex
+-- by generating this structure dynamically, we simplify but leave other parts of the code alone
 local function levelDefGenerator(commname, cloneModulesStringFunc, weapon2Level)
 	local res = {
 		[0] = {
@@ -1962,20 +1965,7 @@ local function levelDefGenerator(commname, cloneModulesStringFunc, weapon2Level)
 	return res
 end
 
-local function starts_with(str, start)
-	return str:sub(1, #start) == start
- end
-
-if UnitDefNames then
-	for name, ud in pairs(UnitDefNames) do
-		if starts_with(name, "dyn") then
-			Spring.Echo("Have a unit def named: " .. name .. ".")
-		end
-	end
-else
-	Spring.Echo("The var UnitDefNames is not defined when dynamic_comm_defs.lua is being loaded.")
-end
-
+-- data structure that defines properties of dynamic comms for each level in which they have distinct properties
 local chassisDefs = {
 	{
 		name = "strike",
@@ -2094,7 +2084,6 @@ local chassisDefs = {
 		levelDefs = levelDefGenerator("dynknight", GetKnightCloneModulesString, 3)
 	},
 }
-
 
 local chassisDefByBaseDef = {}
 if UnitDefNames then
