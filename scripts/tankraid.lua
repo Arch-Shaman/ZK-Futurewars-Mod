@@ -303,6 +303,10 @@ function script.BlockShot(num, targetID)
 end
 
 local function DeathAnim(num)
+	local _, inBuild = Spring.GetUnitIsStunned(unitID)
+	if inBuild then
+		return
+	end
 	Spring.PlaySoundFile("Sounds/explosion/tankraid_deathexplo.wav", 80.0, px, py, pz, 1, 1, 1, 1)
 	EmitSfx(turret, 1024)
 	Sleep(33)
