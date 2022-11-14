@@ -506,12 +506,12 @@ local function GetModuleEffectsData(moduleList, level, chassis)
 		end
 	end
 	
-	-- Apply the magic benefits of level-up
+	-- Apply the magical free benefits of level-up
 	-- Note that level is here 1 less than the value that is shown to the player
 	if chassis ~= nil and level ~= nil then    -- paranoid variable checking, similar to the original code
 		local levelFunction = chassisDefs[chassis].chassisApplicationFunction
 		if levelFunction then
-			levelFunction(level+1, moduleByDefID, moduleEffectData)
+			levelFunction(level, moduleByDefID, moduleEffectData)
 		end
 	end
 	

@@ -1984,9 +1984,14 @@ local chassisDefs = {
 		extraLevelCostFunction = extraLevelCostFunction,
 		maxNormalLevel = maxCommLevel,
 		secondPeashooter = true,
-		chassisApplicationFunction = function (level, modules, sharedData)  -- level expected to match the value player sees
-			Spring.Echo("Apply level-up function to Ambusher lvl " .. level .. ".")
-			sharedData.healthBonus = (sharedData.healthBonus or 0) + 1000 * math.max(0,level - 1)    -- base 4200
+		chassisApplicationFunction = function (level, modules, sharedData)
+			-- level expected to be 1 less than the value the player sees
+			Spring.Echo("Apply level-up function to Ambusher lvl " .. (level+1) .. ".")
+			if level > 1 then
+				-- hit points (in terms of player-visible level) was 1=4200, 2=4200, 3=4000, 3=5000 ....
+				-- (a change is now made over in dynstrike.lua to reduce the first levels to 3000)
+				sharedData.healthBonus = (sharedData.healthBonus or 0) + 1000 * (level - 1)
+			end
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 			sharedData.decloakDistance = 200 - 20 * math.min(level,6)
 			sharedData.cloakregen = (sharedData.cloakregen or 0) + 10 * (level + 1)
@@ -2002,9 +2007,13 @@ local chassisDefs = {
 		baseUnitDef = UnitDefNames and UnitDefNames["dynrecon0"].id,
 		extraLevelCostFunction = extraLevelCostFunction,
 		maxNormalLevel = maxCommLevel,
-		chassisApplicationFunction = function (level, modules, sharedData)  -- level expected to match the value player sees
-			Spring.Echo("Apply level-up function to Recon lvl " .. level .. ".")
-			sharedData.healthBonus = (sharedData.healthBonus or 0) + 250 + 750 * math.max(0,level - 1)    -- base 3250
+		chassisApplicationFunction = function (level, modules, sharedData)
+			-- level expected to be 1 less than the value the player sees
+			Spring.Echo("Apply level-up function to Recon lvl " .. (level+1) .. ".")
+			if level > 1 then
+				-- hit points (in terms of player-visible level) was 1=3250, 2=3250, 3=4000, 3=4750 ....
+				sharedData.healthBonus = (sharedData.healthBonus or 0) + 750 * (level - 1)
+			end
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 			sharedData.speedMod = (sharedData.speedMod or 0) + 5 + 2 * level
 		end,
@@ -2016,9 +2025,13 @@ local chassisDefs = {
 		baseUnitDef = UnitDefNames and UnitDefNames["dynsupport0"].id,
 		extraLevelCostFunction = extraLevelCostFunction,
 		maxNormalLevel = maxCommLevel,
-		chassisApplicationFunction = function (level, modules, sharedData)  -- level expected to match the value player sees
-			Spring.Echo("Apply level-up function to Support lvl " .. level .. ".")
-			sharedData.healthBonus = (sharedData.healthBonus or 0) + 1250 + 500 * math.max(0,level - 1)   -- base 3800, 2=4750, 3=5250
+		chassisApplicationFunction = function (level, modules, sharedData)
+			-- level expected to be 1 less than the value the player sees
+			Spring.Echo("Apply level-up function to Support lvl " .. (level+1) .. ".")
+			if level > 1 then
+				-- hit points (in terms of player-visible level) was 1=3800, 2=3800, 3=4750, 3=5250 ....
+				sharedData.healthBonus = (sharedData.healthBonus or 0) + 450 + 500 * (level - 1)
+			end
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 2 * level
 			sharedData.extrastorage = (sharedData.extrastorage or 0) + 100 + 100 * level
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
@@ -2032,9 +2045,14 @@ local chassisDefs = {
 		extraLevelCostFunction = extraLevelCostFunction,
 		maxNormalLevel = maxCommLevel,
 		secondPeashooter = true,
-		chassisApplicationFunction = function (level, modules, sharedData)  -- level expected to match the value player sees
-			Spring.Echo("Apply level-up function to Bombard lvl " .. level .. ".")
-			sharedData.healthBonus = (sharedData.healthBonus or 0) + 750 * math.max(0,level - 1)  -- base 4400
+		chassisApplicationFunction = function (level, modules, sharedData)
+			-- level expected to be 1 less than the value the player sees
+			Spring.Echo("Apply level-up function to Bombard lvl " .. (level+1) .. ".")
+			if level > 1 then
+				-- hit points (in terms of player-visible level) was 1=4400, 2=4400, 3=3000, 4=3750, 5=4500 ....
+				-- (a change is now made over in dynassault.lua to reduce the first levels to 2250)
+				sharedData.healthBonus = (sharedData.healthBonus or 0) - 400 + 750 * (level - 1)
+			end
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.075 * (level + 1)
 		end,
@@ -2047,9 +2065,13 @@ local chassisDefs = {
 		extraLevelCostFunction = extraLevelCostFunction,
 		maxNormalLevel = maxCommLevel,
 		secondPeashooter = true,
-		chassisApplicationFunction = function (level, modules, sharedData)  -- level expected to match the value player sees
-			Spring.Echo("Apply level-up function to Riot (comm) lvl " .. level .. ".")
-			sharedData.healthBonus = (sharedData.healthBonus or 0) + 1500 * math.max(0,level - 1)   -- base 5500
+		chassisApplicationFunction = function (level, modules, sharedData)
+			-- level expected to be 1 less than the value the player sees
+			Spring.Echo("Apply level-up function to Riot (comm) lvl " .. (level+1) .. ".")
+			if level > 1 then
+				-- hit points (in terms of player-visible level) was 1=5500, 2=5500, 3=7500, 3=9000, 4=10500 ....
+				sharedData.healthBonus = (sharedData.healthBonus or 0) + 500 + 1500 * (level - 1)
+			end
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10 * level
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.05 * (level+1)
 		end,
@@ -2063,9 +2085,10 @@ local chassisDefs = {
 		maxNormalLevel = maxCommLevel,
 		notSelectable = (Spring.GetModOptions().campaign_chassis ~= "1"),
 		secondPeashooter = true,
-		chassisApplicationFunction = function (level, modules, sharedData)  -- level expected to match the value player sees
-			Spring.Echo("Apply level-up function to Knight (comm) lvl " .. level .. ".")
-			sharedData.healthBonus = (sharedData.healthBonus or 0) + 1200 + 400 * math.max(0,level - 1)    -- FIXME: base damage unknown
+		chassisApplicationFunction = function (level, modules, sharedData)
+			-- level expected to be 1 less than the value the player sees
+			Spring.Echo("Apply level-up function to Knight (comm) lvl " .. (level+1) .. ".")
+			sharedData.healthBonus = (sharedData.healthBonus or 0) + 1200 + 600 * level    -- 2=4600, 3=5200, 4=5800
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 		end,
 		levelDefs = levelDefGenerator("dynknight", GetKnightCloneModulesString, 3)
