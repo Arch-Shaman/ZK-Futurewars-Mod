@@ -506,9 +506,13 @@ local function GetModuleEffectsData(moduleList, level, chassis)
 		end
 	end
 	
-	local levelFunction = chassisDefs[chassis or 1].levelDefs[math.min(chassisDefs[chassis or 1].maxNormalLevel, level or 1)].chassisApplicationFunction
-	if levelFunction then
-		levelFunction(moduleByDefID, moduleEffectData)
+	-- Apply the magic benefits of level-up
+	-- Note that level is here 1 less than the value that is shown to the player
+	if chassis ~= nil and level ~= nil then    -- paranoid variable checking, similar to the original code
+		local levelFunction = chassisDefs[chassis].chassisApplicationFunction
+		if levelFunction then
+			levelFunction(level+1, moduleByDefID, moduleEffectData)
+		end
 	end
 	
 	return moduleEffectData
@@ -871,6 +875,8 @@ local function Upgrades_GetValidAndMorphAttributes(unitID, params)
 		return false
 	end
 	
+	-- Increase level, and bound it by the available config
+	-- Note that level is 1 less than the player-visible value
 	local newLevel = level + 1
 	local newLevelBounded = math.min(chassisDefs[chassis].maxNormalLevel, level + 1)
 	
