@@ -19,5 +19,6 @@ Credits:
 * Terve886: Balancing suggestions, Purifier idea.
 * Fenrave: Fixes
 * pengvado: Early Commander weapon fixes.
+* skuggmodzer0: Commander growth, commander passives per level.
 
 Please note: if I have missed you, please feel free to contact me or submit a PR to correct this.
