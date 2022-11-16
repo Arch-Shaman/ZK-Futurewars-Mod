@@ -16,13 +16,11 @@ return {
 		collisionVolumeScales  = "34 34 50",
 		collisionVolumeType    = "cylZ",
 		corpse                 = "DEAD",
-
 		customParams           = {
 			modelradius       = "17",
 			cus_noflashlight  = 1,
 			selection_scale   = 0.92,
 		},
-
 		explodeAs              = "BIG_UNIT",
 		footprintX             = 4,
 		footprintZ             = 4,
@@ -43,7 +41,6 @@ return {
 		objectName             = "cortrem.s3o",
 		selfDestructAs         = "BIG_UNIT",
 		script                 = "tankheavyarty.lua",
-
 		sfxtypes               = {
 			explosiongenerators = {
 				"custom:wolvmuzzle1",
@@ -59,7 +56,6 @@ return {
 		turnRate               = 312,
 		workerTime             = 0,
 		weapons                = {
-
 			{
 				def                = "PLASMA",
 				badTargetCategory  = "SWIM LAND SHIP HOVER",
@@ -67,7 +63,6 @@ return {
 				maxAngleDif        = 270,
 				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER",
 			},
-
 		},
 		weaponDefs             = {
 			PLASMA = {
@@ -79,7 +74,6 @@ return {
 				craterAreaOfEffect      = 5,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams            = {
 					reaim_time = 15, -- Some sort of bug prevents firing.
 					gatherradius     = "240",
@@ -89,11 +83,9 @@ return {
 					lups_noshockwave = "1",
 					light_ground_height = 200,
 				},
-
 				damage                  = {
 					default = 145,
 				},
-
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = "custom:tremor",
 				impulseBoost            = 0,
