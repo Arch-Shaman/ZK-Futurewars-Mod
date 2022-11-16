@@ -316,7 +316,7 @@
 	},
 	"shieldskirm" : {
 		"name" : "Vigilante",
-		"description" : "Cruise Missile Skirmisher/Artillery Bot",
+		"description" : "Cruise Missile Skirmisher Bot",
 		"helptext" : "The Vigilante's long range Deluge Rockets allow it to get the first strike against other skirmishers, but its slow speed and weak armor make it an easy target for raiders and other fast targets. While excellent at area bombardment and shield draining duties, it is betrayed by a lack of upfront ability at close range. Counter it with anything that moves fast enough to evade its rockets."
 	},
 	"dronelight" : {

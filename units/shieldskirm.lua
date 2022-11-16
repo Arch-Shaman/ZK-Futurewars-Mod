@@ -2,7 +2,7 @@ return {
 	shieldskirm = {
 		unitname               = "shieldskirm",
 		name                   = "Vigilante",
-		description            = "Cruise Missile Skirmisher/Artillery Bot",
+		description            = "Cruise Missile Skirmisher Bot",
 		activatewhenbuilt	   = true,
 		acceleration           = 0.75,
 		brakeRate              = 1.2,
@@ -118,7 +118,7 @@ return {
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 130, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-7,-4,-7,7,4,7", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-9,-4,-9,9,4,9", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					reveal_unit = 3,
 					cruisealt = 300,
 					cruisedist = 110,
@@ -142,7 +142,7 @@ return {
 				noSelfDamage            = true,
 				predictBoost            = 2,
 				targetMoveError         = 0.4,
-				range                   = 820,
+				range                   = 690,
 				reloadtime              = 0.2,
 				smokeTrail              = false,
 				soundHit                = "weapon/missile/sabot_hit",
