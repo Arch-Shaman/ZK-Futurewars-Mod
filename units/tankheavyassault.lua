@@ -33,7 +33,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
-		maxDamage           = 34750,
+		maxDamage           = 38500,
 		maxSlope            = 18,
 		maxVelocity         = 1.5,
 		maxWaterDepth       = 22,
@@ -104,7 +104,7 @@ return {
 			},
 			MINIGUN = {
 				name                    = "Hellfire Minigun",
-				areaOfEffect            = 90,
+				areaOfEffect            = 100,
 				craterBoost             = 0,
 				craterMult              = 0,
 				customParams            = {
