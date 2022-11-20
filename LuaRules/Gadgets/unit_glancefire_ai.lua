@@ -192,7 +192,7 @@ local function UpdateUnitTarget(unitID, unitDefID, weaponID)
 	local attacking = false
 	if enemy then
 		local enemyUnitDef = spGetUnitDefID(enemy)
-		if not UnitDefs[enemyUnitDef].isAirUnit
+		if not UnitDefs[enemyUnitDef].isAirUnit then
 			local _, enemybaseY, _, _, _, _, enemyX, enemyY, enemyZ = spGetUnitPosition(enemy, true, true)
 			distance = spGetUnitSeparation(unitID, enemy)
 			local heightDiff = myY - enemyY
