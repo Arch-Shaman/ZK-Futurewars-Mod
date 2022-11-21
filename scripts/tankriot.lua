@@ -208,14 +208,7 @@ function script.Shot(num)
 end
 
 function script.BlockShot(num, targetID)
-	if not gun[shot].loaded then
-		return true
-	end
-	if not targetID then
-		return false
-	end
-	local distMult = (Spring.GetUnitSeparation(unitID, targetID) or 0) * 0.083
-	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 181.2, distMult)
+	return not gun[shot].loaded
 end
 
 function script.Create()
