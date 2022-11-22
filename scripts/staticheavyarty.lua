@@ -39,7 +39,7 @@ end
 function script.Create()
 	Hide(flare)
 	Hide(muzzle)
-	Hide(barrel_back)
+	--Hide(barrel_back)
 	Turn(sleeve, x_axis, -math.rad(60))
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	StartThread(DisableCheck)
