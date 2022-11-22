@@ -299,7 +299,6 @@ local medRangeSkirmieeArray = NameToDefID({
 
 	"tankassault",
 	"tankheavyassault",
-	"tankriot", -- banisher
 	"striderscorpion",
 })
 
@@ -319,6 +318,7 @@ local longRangeSkirmieeArray = NameToDefID({
 	"turretlaser",
 	"turretriot",
 	"turretemp",
+	"tankriot", -- banisher
 })
 
 local artyRangeSkirmieeArray = NameToDefID({
@@ -351,7 +351,6 @@ local slasherSkirmieeArray = NameToDefID({
 	"vehassault",
 	"vehriot",
 	"hoverriot",
-	"tankriot",
 	"shieldfelon",
 	"tankassault",
 	"cloakskirm",
@@ -427,7 +426,7 @@ artyRangeSkirmieeArray        = Union(artyRangeSkirmieeArray, longRangeSkirmieeA
 -- Personal shield draining
 ---------------------------------------------------------------------------
 
-local personalShieldUnits = {
+--[[local personalShieldUnits = {
 	[UnitDefNames["shieldassault"].id] = 68,
 	[UnitDefNames["shieldcon"].id] = 68,
 	--[UnitDefNames["shieldraid"].id] = 51,
@@ -437,9 +436,43 @@ local personalShieldUnits = {
 	[UnitDefNames["shieldarty"].id] = 102,
 	[UnitDefNames["shieldfelon"].id] = 118,
 	[UnitDefNames["staticmex"].id] = 118,
+}]]
+
+local wardFireBigPersonalShieldsOnly = {
+	[UnitDefNames["shieldskirm"].id] = 68,
+	[UnitDefNames["shieldfelon"].id] = 118,
+	[UnitDefNames["shieldarty"].id] = 102,
+	[UnitDefNames["shieldriot"].id] = 68,
+	[UnitDefNames["shieldaa"].id] = 72,
 }
 
-local personalShieldUnitsWithSafetyMargin = {
+local wardFireAllPersonalShields = {
+	[UnitDefNames["shieldscout"].id] = 51,
+	[UnitDefNames["shieldraid"].id] = 51,
+}
+
+local wardFireSmallShieldsOnly = {
+	[UnitDefNames["shieldscout"].id] = 51,
+	[UnitDefNames["shieldraid"].id] = 51,
+}
+
+local wardFireAllShieldsNoMex = {
+	[UnitDefNames["shieldassault"].id] = 250,
+	[UnitDefNames["shieldshield"].id] = 320,
+	[UnitDefNames["shieldcon"].id] = 290,
+}
+
+
+local wardFireWithMex = {
+	[UnitDefNames["staticmex"].id] = 118,
+}
+
+local wardFireAllBigShields = Union(wardFireBigPersonalShieldsOnly, wardFireAllShieldsNoMex)
+wardFireAllPersonalShields = Union(wardFireAllPersonalShields, wardFireBigPersonalShieldsOnly)
+wardFireWithMex = Union(wardFireAllShieldsNoMex, wardFireWithMex)
+
+
+--[[local personalShieldUnitsWithSafetyMargin = {
 	[UnitDefNames["shieldassault"].id] = 50,
 	[UnitDefNames["shieldcon"].id] = 50,
 	--[UnitDefNames["shieldraid"].id] = 37,
@@ -448,7 +481,7 @@ local personalShieldUnitsWithSafetyMargin = {
 	[UnitDefNames["shieldriot"].id] = 50,
 	[UnitDefNames["shieldskirm"].id] = 50,
 	[UnitDefNames["shieldfelon"].id] = 100,
-}
+}]]
 
 ---------------------------------------------------------------------------
 -- Explosion avoidance
@@ -600,7 +633,6 @@ local sapperselfdarray = NameToDefID({
 	"tankassault",
 	"tankriot",
 	"vehriot",
-	"striderdante",
 	"tankheavyassault",
 	"tankheavyarty",
 	"tankraid",
@@ -608,6 +640,14 @@ local sapperselfdarray = NameToDefID({
 	"vehheavyarty",
 	"vehcapture",
 	"hoverskirm",
+	"hoverarty",
+	"tankskirm",
+	"tankarty",
+	"vehsupport",
+	"veharty",
+	"vehraid",
+	"hoverriot",
+	"amphassault",
 })
 
 -- Not currently used as air scouts flee everything.
@@ -884,7 +924,7 @@ local behaviourConfig = {
 		fleeLeeway = 140,
 		idleCommitDistMult = 0.05,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireBigPersonalShieldsOnly,
 		wardFireEnableLeeway = 8,
 		wardFirePredict = 2,
 		wardFireShield = 50,
@@ -908,7 +948,7 @@ local behaviourConfig = {
 		fleeLeeway = 160,
 		fleeDistance = 150,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireBigPersonalShieldsOnly,
 		wardFireEnableLeeway = 8,
 		wardFireShield = 50,
 		wardFireDefault = true,
@@ -936,7 +976,7 @@ local behaviourConfig = {
 		fleeLeeway = 140,
 		fleeDistance = 150,
 		reloadFlee = true,
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = ward,
 		wardFireEnableLeeway = 8,
 		wardFireShield = 50,
 		wardFireDefault = true,
@@ -959,7 +999,7 @@ local behaviourConfig = {
 		fleeLeeway = 140,
 		velocityPrediction = 30,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireEnableLeeway = 8,
 		wardFirePredict = 2,
 		wardFireShield = 50,
@@ -981,7 +1021,7 @@ local behaviourConfig = {
 		skirmLeeway = 10,
 		skirmBlockedApproachFrames = 90,
 		reloadFlee = true,
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireLeeway = 10,
 		wardFirePredict = 80,
 		wardFireShield = 400,
@@ -1011,7 +1051,7 @@ local behaviourConfig = {
 		fleeLeeway = 120,
 		idlePushAggressDist = 320,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllBigShields,
 		wardFireEnableLeeway = 10,
 		wardFirePredict = 10,
 		wardFireShield = 50,
@@ -1033,7 +1073,7 @@ local behaviourConfig = {
 		skirmOrderDis = 150,
 		fleeLeeway = 120,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireBigPersonalShieldsOnly,
 		wardFireEnableLeeway = 8,
 		wardFirePredict = 10,
 		wardFireShield = 130,
@@ -1054,7 +1094,7 @@ local behaviourConfig = {
 		skirmOrderDis = 150,
 		reloadFlee = true,
 		fleeOrderDis = 100,
-		wardFireTargets = personalShieldUnitsWithSafetyMargin,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireLeeway = 10,
 		wardFirePredict = 20,
 		wardFireShield = 400,
@@ -1081,7 +1121,7 @@ local behaviourConfig = {
 		velocityPrediction = 20,
 		fleeLeeway = 200,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllBigShields,
 		wardFireEnableLeeway = 25,
 		wardFirePredict = 5,
 		wardFireShield = 50,
@@ -1107,11 +1147,11 @@ local behaviourConfig = {
 		idlePushAggressDist = 350,
 		fleeLeeway = 120,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllBigShields,
 		wardFireEnableLeeway = 10,
 		wardFirePredict = 5,
 		wardFireShield = 50,
-		wardFireDefault = true,
+		wardFireDefault = false,
 	},
 	{
 		name = "tankheavyraid",
@@ -1127,10 +1167,10 @@ local behaviourConfig = {
 		stoppingDistance = 15,
 		skirmOrderDis = 150,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllBigShields,
 		wardFireEnableLeeway = 10,
 		wardFireShield = 380,
-		wardFireDefault = true,
+		wardFireDefault = false,
 	},
 	{
 		name = "amphimpulse",
@@ -1146,7 +1186,7 @@ local behaviourConfig = {
 		minCircleStrafeDistance = 10,
 		velocityPrediction = 20,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireSmallShieldsOnly,
 		wardFireEnableLeeway = 8,
 		wardFireShield = 180,
 		wardFirePredict = 10,
@@ -1206,7 +1246,7 @@ local behaviourConfig = {
 		idleCommitDistMult = 0.5,
 		idleEnemyDistMult = 0.5,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireShield = 20,
 		wardFirePredict = 5,
 		wardFireDefault = true,
@@ -1222,7 +1262,7 @@ local behaviourConfig = {
 		skirmLeeway = 80,
 		velocityPrediction = 20,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireEnableLeeway = 5,
 		wardFireShield = 90,
 		wardFireDefault = true,
@@ -1243,7 +1283,7 @@ local behaviourConfig = {
 		idleCommitDistMult = 0.5,
 		idleEnemyDistMult = 0.5,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireShield = 50,
 		wardFireDefault = true,
 	},
@@ -1262,7 +1302,7 @@ local behaviourConfig = {
 		velocityPrediction = 20,
 		idlePushAggressDist = 200,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireShield = 210,
 		wardFireDefault = true,
 	},
@@ -1297,7 +1337,7 @@ local behaviourConfig = {
 		idleCommitDistMult = 0.5,
 		idleEnemyDistMult = 0.5,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireShield = 300,
 		wardFirePredict = 5,
 		wardFireDefault = true,
@@ -1314,7 +1354,7 @@ local behaviourConfig = {
 		stoppingDistance = 5,
 		skirmBlockedApproachFrames = 40,
 		
-		wardFireTargets = personalShieldUnitsWithSafetyMargin,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireShield = 880,
 		wardFireDefault = true,
 	},
@@ -1339,13 +1379,13 @@ local behaviourConfig = {
 		idleCommitDistMult = 0.5,
 		idleEnemyDistMult = 0.5,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireShield = 0,
 		wardFireDefault = true,
 	},
 	{
 		name = "tankriot",
-		skirms = medRangeSkirmieeArray,
+		skirms = allMobileGround,
 		--swarms = {},
 		--flees = {},
 		idleFlee = skirmRangeRiotIdleFleeArray,
@@ -1364,7 +1404,7 @@ local behaviourConfig = {
 		idleCommitDistMult = 0.5,
 		idleEnemyDistMult = 0.5,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllBigShields,
 		wardFireShield = 250,
 		wardFirePredict = 20,
 		wardFireDefault = true,
@@ -1390,7 +1430,7 @@ local behaviourConfig = {
 			idleEnemyDistMult = 0.5,
 			fleeLeeway = 250,
 			fleeDistance = 300,
-			wardFireTargets = personalShieldUnits,
+			wardFireTargets = wardFireAllShieldsNoMex,
 			wardFireShield = 300,
 			wardFirePredict = 10,
 			minFleeRange = 50,
@@ -1415,7 +1455,7 @@ local behaviourConfig = {
 			idleEnemyDistMult = 0.5,
 			fleeLeeway = 250,
 			fleeDistance = 300,
-			wardFireTargets = personalShieldUnits,
+			wardFireTargets = wardFireAllShieldsNoMex,
 			minFleeRange = 50,
 			fleeOrderDis = 100,
 			reloadFlee = true,
@@ -1468,7 +1508,7 @@ local behaviourConfig = {
 			stoppingDistance = 8,
 			skirmOrderDis = 150,
 			
-			wardFireTargets = personalShieldUnitsWithSafetyMargin,
+			wardFireTargets = wardFireAllShieldsNoMex,
 			wardFireShield = 500,
 			wardFirePredict = 35,
 			wardFireDefault = true,
@@ -1502,7 +1542,7 @@ local behaviourConfig = {
 		skirmLeeway = 40,
 		skirmBlockedApproachFrames = 10,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireShield = 450,
 		wardFireDefault = true,
 	},
@@ -1515,10 +1555,10 @@ local behaviourConfig = {
 		fightOnlyUnits = shortRangeExplodables,
 		maxSwarmLeeway = 50,
 		minSwarmLeeway = 120,
-		jinkPeriod = 2,
+		jinkPeriod = 4,
 		skirmLeeway = 40,
-		skirmBlockedApproachFrames = 10,
-		wardFireTargets = personalShieldUnits,
+		skirmBlockedApproachFrames = 20,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireShield = 180,
 		wardFirePredict = 20,
 		wardFireDefault = true,
@@ -1535,7 +1575,7 @@ local behaviourConfig = {
 		jinkPeriod = 2,
 		skirmLeeway = 40,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireShield = 160,
 		wardFirePredict = 30,
 		wardFireDefault = true,
@@ -1557,7 +1597,7 @@ local behaviourConfig = {
 		minSwarmLeeway = 120,
 		skirmLeeway = 40,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireShield = 250,
 		wardFirePredict = 20,
 		wardFireDefault = true,
@@ -1572,7 +1612,7 @@ local behaviourConfig = {
 		skirmOrderDis = 220,
 		skirmLeeway = 50,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireShield = 350,
 		wardFirePredict = 25,
 		wardFireDefault = true,
@@ -1596,8 +1636,8 @@ local behaviourConfig = {
 		fleeDistance = 100,
 		fleeOrderDis = 100,
 		fleeLeeway   = 50,
-		bonusRangeUnits = personalShieldUnits,
-		wardFireTargets = personalShieldUnits,
+		bonusRangeUnits = wardFireAllShieldsNoMex,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireLeeway = 10,
 		wardFireHeight = 20,
 		wardFirePredict = 50,
@@ -1619,8 +1659,8 @@ local behaviourConfig = {
 		skirmBlockedApproachFrames = 60,
 		velPredChaseFactor = 0.5,
 
-		bonusRangeUnits = personalShieldUnits,
-		wardFireTargets = personalShieldUnits,
+		bonusRangeUnits = wardFireAllShieldsNoMex,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireLeeway = 10,
 		wardFireHeight = 20,
 		wardFirePredict = 0,
@@ -1648,8 +1688,8 @@ local behaviourConfig = {
 		skirmOrderDis = 220,
 		skirmLeeway = 50,
 
-		bonusRangeUnits = personalShieldUnits,
-		wardFireTargets = personalShieldUnits,
+		bonusRangeUnits = wardFireAllShieldsNoMex,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireLeeway = 20,
 		wardFireHeight = 5,
 		wardFirePredict = 50,
@@ -1672,7 +1712,7 @@ local behaviourConfig = {
 		skirmBlockApproachHeadingBlock = 0,
 		reloadFlee = true,
 		fleeOrderDis = 100,
-		wardFireTargets = personalShieldUnitsWithSafetyMargin,
+		wardFireTargets = wardFireSmallShieldsOnly,
 		wardFireLeeway = 10,
 		wardFirePredict = 20,
 		wardFireShield = 400,
@@ -1692,11 +1732,11 @@ local behaviourConfig = {
 		skirmLeeway = 50,
 		skirmBlockedApproachFrames = 60,
 		
-		wardFireTargets = personalShieldUnitsWithSafetyMargin,
+		wardFireTargets = wardFireAllBigShields,
 		wardFireLeeway = 10,
 		wardFirePredict = 50,
 		wardFireShield = 1100,
-		wardFireDefault = true,
+		wardFireDefault = false,
 	},
 	{
 		name = "gunshipskirm",
@@ -1713,7 +1753,7 @@ local behaviourConfig = {
 		fleeDistance = 100,
 		minFleeRange = 100,
 		fleeOrderDis = 100,
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireLeeway = 10,
 		wardFirePredict = 20,
 		wardFireShield = 400,
@@ -1751,7 +1791,7 @@ local behaviourConfig = {
 		fleeLeeway = 100,
 		fleeDistance = 100,
 		skirmOrderDis = 80,
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireLeeway = 10,
 		wardFirePredict = 80,
 		wardFireShield = 400,
@@ -1833,7 +1873,7 @@ local behaviourConfig = {
 		skirmOnlyNearEnemyRange = 80,
 		velPredChaseFactor = 0.5,
 		
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireLeeway = 10,
 		wardFirePredict = 35,
 		wardFireShield = 60,
@@ -2223,23 +2263,27 @@ local behaviourConfig = {
 	{
 		name = "shieldscout",
 		onlyIdleHandling = false,
-		swarms = SetMinus(allGround, SetMinus(riotsgoaway, sapperselfdarray)),
+		swarms = SetMinus(allGround, SetMinus(Union(riotsgoaway, raiderFleeables), sapperselfdarray)),
+		hugs = sapperselfdarray,
 		flees = Union(raiderFleeables, SetMinus(riotsgoaway, sapperselfdarray)),
-		minCircleStrafeDistance = 40,
-		strafeOrderLength = 50,
+		minCircleStrafeDistance = 5,
+		strafeOrderLength = 10,
 		minSwarmRange = 5,
+		maxSwarmRange = 5,
 		fleeLeeway = 200,
 		fleeDistance = 400,
 		minFleeRange = 500,
+		minSwarmLeeway = 79,
+		maxSwarmLeeway = 77,
         skirmLeeway = 200,
 		hugRange = 5,
 		fleeOrderDis = 200,
 		jumpAttack = true,
 		jumpMove = true,
-		minJumpRange = 0.1,
+		minJumpRange = 0.05,
 		emergencyJumpRange = 200,
 		selfDestructSwarm = sapperselfdarray,
-		selfdrange = 8,
+		selfdrange = 10,
 	},
 	{
 		name = "cloakheavyraid",
@@ -2304,7 +2348,7 @@ local behaviourConfig = {
 		fleeLeeway = 1000,
 		fleeDistance = 500,
 		reloadFlee = true,
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireSmallShieldsOnly,
 		wardFireLeeway = 10,
 		wardFirePredict = 35,
 		wardFireShield = 60,
@@ -2391,7 +2435,7 @@ local behaviourConfig = {
 		fleeLeeway = 400,
 		fleeDistance = 300,
 		reloadFlee = true,
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireLeeway = 10,
 		wardFirePredict = 35,
 		wardFireShield = 60,
@@ -2401,19 +2445,19 @@ local behaviourConfig = {
 	-- Ward fire only units.
 	{
 		name = "turretlaser",
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireShield = 0,
 		wardFireDefault = true,
 	},
 	{
 		name = "turretemp",
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireShield = 450,
 		wardFireDefault = true,
 	},
 	{
 		name = "amphsupport",
-		wardFireTargets = personalShieldUnits,
+		wardFireTargets = wardFireAllShieldsNoMex,
 		wardFireShield = 300,
 		wardFirePredict = 35,
 		wardFireDefault = true,
