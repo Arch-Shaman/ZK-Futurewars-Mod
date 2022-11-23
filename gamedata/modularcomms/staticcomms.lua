@@ -236,7 +236,7 @@ MakeCommanderChassisClones("dynassault",
 
 -- does not matter because it does not get shields anyways.
 MakeCommanderChassisClones("dynstrike",
-	{0, 0}, {1, 0}, {1, 1}, {1, 1}, {1, 1}}, 
+	{{0, 0}, {1, 0}, {1, 1}, {1, 1}, {1, 1}}, 
 	{"module_personal_shield", "module_areashield"}
 )
 
