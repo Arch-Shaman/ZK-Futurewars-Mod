@@ -235,10 +235,10 @@ MakeCommanderChassisClones("dynassault",
 )
 
 -- does not matter because it does not get shields anyways.
---MakeCommanderChassisClones("dynstrike",
-	--{{0, 0}, {1, 0}, {1, 1}, {1, 1}, {1, 1}}, 
-	--{"module_personal_shield", "module_areashield"}
---)
+MakeCommanderChassisClones("dynstrike",
+	{0, 0}, {1, 0}, {1, 1}, {1, 1}, {1, 1}}, 
+	{"module_personal_shield", "module_areashield"}
+)
 
 -- All modules may be available at any level, depending on campaign layout.
 -- TODO: remove from def side, add to lua side. This would allow any commander to gain the jump ability.
