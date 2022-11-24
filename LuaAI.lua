@@ -9,12 +9,12 @@
 --
 
 return {
-	--{
-		-- to be recognised as a CAI there must be an entry with this name in
-		-- LuaRules\Configs\cai\configCoordinator.lua
-		--name = 'CAI',
-		--desc = 'AI that plays regular Zero-K'
-	--},
+--	{
+--		-- to be recognised as a CAI there must be an entry with this name in
+--		-- LuaRules\Configs\cai\configCoordinator.lua
+--		name = 'CAI',
+--		desc = 'AI that plays regular Zero-K'
+--	},
 --	{
 --		name = 'CAI2',
 --		desc = 'Another AI that plays regular Zero-K'
