@@ -39,6 +39,7 @@ local spGetGroundHeight = Spring.GetGroundHeight
 local spGetPiecePosition = Spring.GetUnitPiecePosition
 local spGetUnitVelocity = Spring.GetUnitVelocity
 local spGetUnitPosition = Spring.GetUnitPosition
+local spSetUnitRulesParam = Spring.GetUnitRulesParam
 
 local function IsStunnedOrDisarmed()
 	local disarmed = (Spring.GetUnitRulesParam(unitID, "disarmed") or 0) == 1
@@ -48,26 +49,20 @@ end
 function SprintThread()
 	local disarmed = false
 	local f = 0
+	GG.UpdateUnitAttributes(unitID)
+	GG.Sprint.Start(unitID, SPEEDUP_FACTOR)
 	while f < SPEEDUP_DURATION do
 		disarmed = IsStunnedOrDisarmed()
-		if disarmed then
-			Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
-			GG.UpdateUnitAttributes(unitID)
-			GG.UpdateUnitAttributes(unitID)
-			while disarmed do
-				Sleep(66)
-				disarmed = IsStunnedOrDisarmed()
-			end
-			Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", SPEEDUP_FACTOR)
-			GG.UpdateUnitAttributes(unitID)
-			GG.UpdateUnitAttributes(unitID)
+		while disarmed do
+			Sleep(33)
+			disarmed = IsStunnedOrDisarmed()
 		end
 		EmitSfx(rwheel2, 1025)
 		EmitSfx(lwheel2, 1025)
 		Sleep(33)
 		f = f + 1
 	end
-	
+	GG.Sprint.End(unitID)
 	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", POSTSPRINT_SPEED)
 	GG.UpdateUnitAttributes(unitID)
 	Sleep(POSTSPRINT_DURATION * 33)
@@ -79,9 +74,7 @@ end
 
 function Sprint()
 	StartThread(SprintThread)
-	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", SPEEDUP_FACTOR)
 	-- Spring.MoveCtrl.SetAirMoveTypeData(unitID, "maxAcc", 3)
-	GG.UpdateUnitAttributes(unitID)
 end
 
 local function GetWheelHeight(piece)

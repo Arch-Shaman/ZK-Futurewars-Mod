@@ -49,26 +49,21 @@ local function IsStunnedOrDisarmed()
 end
 
 function SprintThread()
+	GG.Sprint.Start(unitID, SPEEDUP_FACTOR)
 	local disarmed = false
 	local f = 0
 	while f < SPEEDUP_DURATION do
 		disarmed = IsStunnedOrDisarmed()
-		if disarmed then
-			Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
-			GG.UpdateUnitAttributes(unitID)
-			while disarmed do
-				Sleep(66)
-				disarmed = IsStunnedOrDisarmed()
-			end
-			Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", SPEEDUP_FACTOR)
-			GG.UpdateUnitAttributes(unitID)
+		while disarmed do
+			Sleep(66)
+			disarmed = IsStunnedOrDisarmed()
 		end
 		EmitSfx(rwheel4, 1026)
 		EmitSfx(lwheel4, 1026)
 		Sleep(33)
 		f = f + 1
 	end
-	
+	GG.Sprint.End(unitID)
 	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", POSTSPRINT_SPEED)
 	GG.UpdateUnitAttributes(unitID)
 	Sleep(POSTSPRINT_DURATION * 33)
@@ -80,9 +75,7 @@ end
 
 function Sprint()
 	StartThread(SprintThread)
-	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", SPEEDUP_FACTOR)
 	-- Spring.MoveCtrl.SetAirMoveTypeData(unitID, "maxAcc", 3)
-	GG.UpdateUnitAttributes(unitID)
 end
 
 local CMD_ONECLICK_WEAPON = Spring.Utilities.CMD.ONECLICK_WEAPON
