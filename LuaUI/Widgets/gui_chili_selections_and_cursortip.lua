@@ -1846,7 +1846,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		
 		local healthPos
 		if shieldBarUpdate then
-			local shieldHP = ud.shieldPower or 0
+			local shieldHP = maxShield[unitDefID] or 0
 			if ud and (shieldHP > 0 or ud.level) then
 				local shieldPower = spGetUnitRulesParam(unitID, "comm_shield_max") or shieldHP
 				local _, shieldCurrentPower = spGetUnitShieldState(unitID, -1)
