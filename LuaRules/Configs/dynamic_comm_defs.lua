@@ -2005,7 +2005,7 @@ local chassisDefs = {
 				sharedData.healthBonus = (sharedData.healthBonus or 0) + 750 * (level - 1)
 			end
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-			sharedData.speedMod = (sharedData.speedMod or 0) + 5 + 2 * level
+			sharedData.speedMod = (sharedData.speedMod or 0) + 7.5 + 3 * level
 		end,
 		levelDefs = levelDefGenerator("dynrecon", GetReconCloneModulesString, 3)
 	},
@@ -2063,7 +2063,7 @@ local chassisDefs = {
 				sharedData.healthBonus = (sharedData.healthBonus or 0) + 500 + 1750 * (level - 1)
 			end
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10 * level
-			sharedData.damageMult = (sharedData.damageMult or 1) + 0.1 * (level+1)
+			sharedData.damageMult = (sharedData.damageMult or 1) + 0.1 * (level + 1)
 		end,
 		levelDefs = levelDefGenerator("dynriot", GetRiotCloneModulesString, 2)
 	},
