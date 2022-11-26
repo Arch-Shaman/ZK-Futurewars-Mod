@@ -59,6 +59,11 @@ local sweepAngle = 0
 local sweepMax = math.rad(30)
 local sweepStep = math.rad(10)
 
+local function IsStunnedOrDisarmed()
+	local disarmed = (Spring.GetUnitRulesParam(unitID, "disarmed") or 0) == 1
+	return Spring.GetUnitIsStunned(unitID) or disarmed
+end
+
 local function RestoreAfterDelay()
 	Signal(SIG_Restore)
 	SetSignalMask(SIG_Restore)
@@ -109,8 +114,26 @@ function FlameTrailThread()
 	
 	--spAddUnitDamage(unitID, 30) --this is to reset regen times. there seems to be a minium enforced by either a gadget or the engine of 20 damage.
 	local n = 0
+	local disarmed, needsRestore = false, false
 	while (n < boostTime) do
-		local health = spGetUnitHealth(unitID) 
+		local health = spGetUnitHealth(unitID)
+		disarmed = IsStunnedOrDisarmed()
+		if disarmed then
+			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", normalSpeed)
+			spSetUnitRulesParam(unitID, "maxAcc", normalSpeed)
+			GG.UpdateUnitAttributes(unitID)
+			needsRestore = true
+		end
+		while disarmed do
+			Sleep(33)
+			disarmed = IsStunnedOrDisarmed()
+		end
+		if needsRestore then
+			needsRestore = false
+			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", boostSpeed)
+			spSetUnitRulesParam(unitID, "maxAcc", boostSpeed)
+			GG.UpdateUnitAttributes(unitID)
+		end
 		if moving then
 			EmitSfx(firepoint, GG.Script.FIRE_W2)
 			spSetUnitHealth(unitID, health-15)
