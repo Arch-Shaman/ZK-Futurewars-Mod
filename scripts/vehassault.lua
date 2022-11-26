@@ -43,11 +43,30 @@ end
 local xtiltv, ztiltv = 0, 0
 local spGetUnitVelocity = Spring.GetUnitVelocity
 
+local function IsStunnedOrDisarmed()
+	local disarmed = (Spring.GetUnitRulesParam(unitID, "disarmed") or 0) == 1
+	return Spring.GetUnitIsStunned(unitID) or disarmed
+end
+
 function SprintThread()
-	for i=1, SPEEDUP_DURATION do
+	local disarmed = false
+	local f = 0
+	while f < SPEEDUP_DURATION do
+		disarmed = IsStunnedOrDisarmed()
+		if disarmed then
+			Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
+			GG.UpdateUnitAttributes(unitID)
+			while disarmed do
+				Sleep(66)
+				disarmed = IsStunnedOrDisarmed()
+			end
+			Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", SPEEDUP_FACTOR)
+			GG.UpdateUnitAttributes(unitID)
+		end
 		EmitSfx(rwheel4, 1026)
 		EmitSfx(lwheel4, 1026)
 		Sleep(33)
+		f = f + 1
 	end
 	
 	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", POSTSPRINT_SPEED)
