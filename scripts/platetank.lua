@@ -55,7 +55,7 @@ local function Open ()
 	
 	SetUnitValue (COB.YARD_OPEN, 1)
 	SetInBuildDistance(true)
-	SetUnitValue (COB.BUGGER_OFF, 1)
+	--SetUnitValue (COB.BUGGER_OFF, 1)
 end
 
 local function Close()
@@ -63,7 +63,7 @@ local function Close()
 	SetSignalMask (1)
 
 	SetUnitValue (COB.YARD_OPEN, 0)
-	SetUnitValue (COB.BUGGER_OFF, 0)
+	--SetUnitValue (COB.BUGGER_OFF, 0)
 	SetInBuildDistance(false)
 end
 

@@ -22,7 +22,7 @@ local function Open ()
 
 	SetUnitValue (COB.YARD_OPEN, 1)
 	SetUnitValue (COB.INBUILDSTANCE, 1)
-	SetUnitValue (COB.BUGGER_OFF, 1)
+	--SetUnitValue (COB.BUGGER_OFF, 1)
 	GG.Script.UnstickFactory(unitID)
 end
 
@@ -31,7 +31,7 @@ local function Close()
 	SetSignalMask (1)
 
 	SetUnitValue (COB.YARD_OPEN, 0)
-	SetUnitValue (COB.BUGGER_OFF, 0)
+	--SetUnitValue (COB.BUGGER_OFF, 0)
 	SetUnitValue (COB.INBUILDSTANCE, 0)
 
 	Turn (leftpiece,  z_axis, 0, math.rad(36))
