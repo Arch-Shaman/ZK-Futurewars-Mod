@@ -21,7 +21,7 @@ local weaponDef = {
 		notoggleimpulse = [[1]],
 	},
 	damage                  = {
-		default = 15.01,
+		default = 17.01,
 	},
 
 	edgeEffectiveness       = 0.6,
