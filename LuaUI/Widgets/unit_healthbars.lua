@@ -824,6 +824,8 @@ do
 			local specialReloadState = GetUnitRulesParam(unitID, "specialReloadFrame")
 			if (specialReloadState and specialReloadState > gameFrame) then
 				local special = 1-(specialReloadState-gameFrame)/ci.specialReload	-- don't divide by gamespeed, since specialReload is also in gameframes
+				local per = (addPercent and floor(special*100) or 0
+				per = math.max(0, per) -- do not allow it to go below 0%.
 				barDrawer.AddBar(addTitle and messages.ability, special, "reload2", (addPercent and floor(special*100) .. '%'))
 			end
 		end
