@@ -2020,7 +2020,7 @@ local chassisDefs = {
 			--Spring.Echo("Apply level-up function to Support lvl " .. (level+1) .. ".")
 			if level > 1 then
 				-- hit points (in terms of player-visible level) was 1=3800, 2=3800, 3=4750, 3=5250 ....
-				sharedData.healthBonus = (sharedData.healthBonus or 0) + 450 + 500 * (level - 1)
+				sharedData.healthBonus = (sharedData.healthBonus or 0) + 450 + 750 * (level - 1)
 			end
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 4 * level
 			sharedData.extrastorage = (sharedData.extrastorage or 0) + 100 + (200 * level)
