@@ -82,7 +82,7 @@ local function applyEffect(unitID)
 	Spring.SetUnitRulesParam(unitID, "disarmed", 1, LOS_ACCESS)
 	GG.UpdateUnitAttributes(unitID)
 	GG.ScriptNotifyDisarmed(unitID, true)
-	local special = Spring.GetUnitRulesParam(unitID, "specialReloadFrame")
+	local special = Spring.GetUnitRulesParam(unitID, "specialReloadFrame") or 0
 	if special > f then
 		GG.SpecialReloadWhileDisarmed(unitID)
 	end
