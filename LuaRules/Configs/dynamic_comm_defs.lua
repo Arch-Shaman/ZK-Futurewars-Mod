@@ -1914,7 +1914,7 @@ local function levelDefGenerator(commname, cloneModulesStringFunc, weapon2Level)
 	for i = 1, maxCommLevel do
 		--Spring.Echo("Do idx " .. i .. " for comm " .. commname .. ".")
 		res[i] = {
-			morphBuildPower = 5 + math.ceil(i/2)*5,
+			morphBuildPower = 10 + math.ceil(i/2)*5,
 			morphBaseCost = morphCosts[i],
 			morphUnitDefFunction = function(modulesByDefID)
 				local oneUnitDefName = commname .. math.ceil(i/2) .. "_" .. cloneModulesStringFunc(modulesByDefID)
