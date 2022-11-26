@@ -2022,8 +2022,8 @@ local chassisDefs = {
 				-- hit points (in terms of player-visible level) was 1=3800, 2=3800, 3=4750, 3=5250 ....
 				sharedData.healthBonus = (sharedData.healthBonus or 0) + 450 + 500 * (level - 1)
 			end
-			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 2 * level
-			sharedData.extrastorage = (sharedData.extrastorage or 0) + 100 + 100 * level
+			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 4 * level
+			sharedData.extrastorage = (sharedData.extrastorage or 0) + 100 + (200 * level)
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 		end,
 		levelDefs = levelDefGenerator("dynsupport", GetSupportCloneModulesString, 3)
