@@ -148,7 +148,7 @@ return {
 			},
 			GRAVITY_NEG = {
 				name                    = "Gravity Well Generator",
-				areaOfEffect            = 300,
+				areaOfEffect            = 180,
 				avoidFriendly           = false,
 				avoidFeature            = false,
 				beamtime                = 1/30,
@@ -159,11 +159,12 @@ return {
 				cylinderTargeting       = 100,
 				customParams            = {
 					singularity = "UwU I'm back from the dark side of compsci~",
-					singuradius = "300",
-					singulifespan = "10",
-					singustrength = "50",
+					singuradius = "180",
+					singulifespan = "9",
+					singustrength = "65",
 					singuheight = "0",
-					singufinalceg = "black_hole_300",
+					singufinalstrength = 0,
+					singufinalceg = "black_hole_180",
 					stats_hide_damage = 1, -- continuous laser
 					stats_hide_reload = 1,
 					light_color = "0.33 0.33 1.28",
@@ -200,7 +201,7 @@ return {
 			},
 			GRAVITY_POS = {
 				name                    = "Gravity Hill Generator",
-				areaOfEffect            = 300,
+				areaOfEffect            = 180,
 				avoidFriendly           = false,
 				avoidFeature            = false,
 				beamtime                = 1/30,
@@ -211,11 +212,12 @@ return {
 				cylinderTargeting       = 100,
 				customParams            = {
 					singularity = "Feeling horny, might come out soon~",
-					singuradius = "300",
-					singulifespan = "10",
-					singustrength = "-50",
+					singuradius = "180",
+					singulifespan = "9",
+					singustrength = "-65",
 					singuheight = "0",
-					singufinalceg = "black_hole_300",
+					singufinalceg = "gravwell_180",
+					singufinalstrength = 0,
 					stats_hide_damage = 1, -- continuous laser
 					stats_hide_reload = 1,
 					light_color = "0.85 0.2 0.2",
