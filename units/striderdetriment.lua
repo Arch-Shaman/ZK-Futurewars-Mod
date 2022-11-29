@@ -21,8 +21,8 @@ return {
 		customParams           = {
 			modelradius    = "95",
 			extradrawrange = 925,
-			nanoregen = 25,
-			nano_maxregen = 23,
+			nanoregen = 30,
+			nano_maxregen = 30,
 			outline_x = 230,
 			outline_y = 230,
 			outline_yoff = 70,
@@ -34,7 +34,7 @@ return {
 		iconType               = "krogoth",
 		leaveTracks            = true,
 		losEmitHeight          = 100,
-		maxDamage              = 180000,
+		maxDamage              = 250000,
 		maxSlope               = 37,
 		maxVelocity            = 1.0,
 		maxWaterDepth          = 5000,
@@ -55,12 +55,10 @@ return {
 		turnRate               = 482,
 		upright                = true,
 		weapons                = {
-
 			{
 				def                = "GAUSS",
 				onlyTargetCategory = "LAND SINK TURRET SUB SHIP SWIM FLOAT HOVER GUNSHIP",
 			},
-
 			{
 				def                = "FLAK",
 				badTargetCategory  = "FIXEDWING",
@@ -88,7 +86,7 @@ return {
 					flaktime = -1/30,
 				},
 				damage                  = {
-					default = 720.1,
+					default = 1020.1,
 				},
 				edgeEffectiveness = 0.4,
 				explosionGenerator      = "custom:TESS",
@@ -133,7 +131,7 @@ return {
 					vradius1 = "-6,-4,-6,2,3,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 				},
 				damage                  = {
-					default = 720.1*7,
+					default = 1020.1*7,
 				},
 				explosionGenerator      = "custom:100rlexplode",
 				groundbounce            = 1,
@@ -143,7 +141,7 @@ return {
 				interceptedByShieldType = 0,
 				noSelfDamage            = true,
 				range                   = 1600,
-				reloadtime              = 9,
+				reloadtime              = 7,
 				separation              = 0.5,
 				size                    = 0.8,
 				sizeDecay               = -0.1,
@@ -215,7 +213,6 @@ return {
 				customParams            = {
 					light_camera_height = 2000,
 					light_color = "1 0.2 0.2",
-					reaim_time = 8, -- COB
 					isaa = "1",
 					light_radius = 0,
 					isFlak = 3,
@@ -278,7 +275,7 @@ return {
 				minIntensity            = 1,
 				noSelfDamage            = true,
 				range                   = 1200,
-				reloadtime              = 7.5,
+				reloadtime              = 6.5,
 				rgbColor                = "0.0588 0.3215 0.7294",
 				rgbColor2               = "0.3215 0.54509 0.898",
 				scrollSpeed             = 5,
