@@ -26,6 +26,7 @@ return {
 			outline_x = 230,
 			outline_y = 230,
 			outline_yoff = 70,
+			singuimmune = 1,
 		},
 		explodeAs              = "NUCLEAR_MISSILE",
 		footprintX             = 6,
