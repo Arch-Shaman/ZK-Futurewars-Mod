@@ -99,7 +99,7 @@ return {
 				impulseBoost            = 0,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
-				leadLimit               = 0.1,
+				leadLimit               = 0,
 				lodDistance             = 10000,
 				noSelfDamage            = true,
 				proximityPriority       = 10,
