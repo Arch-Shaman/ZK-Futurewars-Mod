@@ -77,7 +77,7 @@ return {
 				name                    = "Disintegrator",
 				areaOfEffect            = 48,
 				avoidFeature            = false,
-				avoidFriendly           = false,
+				avoidFriendly           = true,
 				avoidGround             = false,
 				avoidNeutral            = false,
 				commandfire             = false,
