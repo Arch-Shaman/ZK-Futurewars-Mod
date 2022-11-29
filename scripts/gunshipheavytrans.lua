@@ -110,10 +110,7 @@ function ForceDropUnit()
 	StartThread(script.EndTransport) --formalize unit drop (finish animation, clear tag, ect)
 end
 
-local function CrashWatcher()
-	while GetUnitValue(COB.CRASHING) ~= 1 do
-		Sleep(33)
-	end
+function OnStartingCrash()
 	ForceDropUnit()
 end
 
@@ -470,7 +467,6 @@ function script.Create()
 	
 	Spring.MoveCtrl.SetGunshipMoveTypeData(unitID,"bankingAllowed",false)
 	--Spring.MoveCtrl.SetGunshipMoveTypeData(unitID,"turnRate",0)
-	StartThread(CrashWatcher)
 	Move(LTurretDoor, y_axis, 3)
 	Move(LTurretBase, x_axis, 10)
 	Move(RTurretDoor, y_axis, 3, 10)
