@@ -90,7 +90,7 @@ return {
 				impulseBoost            = 0,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
-				myGravity               = 0.4,
+				myGravity               = 0.1,
 				model                   = "diskball.s3o",
 				numBounce               = 3,
 				range                   = 300,
