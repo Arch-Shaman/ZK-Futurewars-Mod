@@ -40,7 +40,7 @@ return {
 				"custom:STORMBACK",
 			},
 		},
-		sightDistance                 = 1200,
+		sightDistance                 = 1300,
 		useBuildingGroundDecal        = true,
 		waterline                     = 10,
 		yardMap                       = "ooooooooo",
