@@ -51,6 +51,7 @@ local spGetGroundHeight = Spring.GetGroundHeight
 local spGetUnitVelocity = Spring.GetUnitVelocity
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
+local spGetUnitDefID = Spring.GetUnitDefID
 local spEcho = Spring.Echo
 local GiveClampedOrderToUnit = Spring.Utilities.GiveClampedOrderToUnit
 
@@ -116,12 +117,15 @@ function GG.GetAutoJumpState(unitID)
 end
 
 function GG.AutoJumpFromTransport(unitID)
+	local distance = spGetUnitRulesParam(unitID, "comm_jumprange_bonus") or wantedDefs[spGetUnitDefID(unitID)] or 0
+	if distance == 0 then
+		return
+	end
 	local data = IterableMap.Get(units, unitID)
-	local canJump = (spGetUnitRulesParam(id, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(id, "disarmed") or 0) == 0 and not spGetUnitIsStunned(id)
+	local canJump = (spGetUnitRulesParam(unitID, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not spGetUnitIsStunned(unitID)
 	if unitStates[unitID] and canJump then
 		local x, y, z = spGetUnitPosition(unitID)
 		local vx, _, vz = spGetUnitVelocity(unitID)
-		local distance = spGetUnitRulesParam(unitID, "comm_jumprange_bonus") or wantedDefs[data.unitdef]
 		DoJump(data, unitID, x, y, z, vx, vz, distance)
 	end
 end
@@ -181,7 +185,7 @@ function gadget:GameFrame(f)
 							spEcho("Velocity: " .. vx .. ", " .. vy .. ", " .. vz)
 						end
 						if vy < minimumDownwardVelocity then
-							local distance = spGetUnitRulesParam(unitID, "comm_jumprange_bonus") or wantedDefs[data.unitdef]
+							local distance = spGetUnitRulesParam(id, "comm_jumprange_bonus") or wantedDefs[data.unitdef]
 							DoJump(data, id, x, y, z, vx, vz, distance)
 						end
 					end
