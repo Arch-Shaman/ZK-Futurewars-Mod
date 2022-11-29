@@ -1478,6 +1478,10 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = 'Immunity to afterburn'
 		cells[#cells+1] = ''
 	end
+	if cp.singuimmune then
+		cells[#cells+1] = 'Gravitronic Regulation (Singularity/Blastwave knockback Immunity)'
+		cells[#cells+1] = ''
+	end
 	local storageoverride = unitID and Spring.GetUnitRulesParam(unitID, "commander_storage_override") or ud.metalStorage
 	if ud.metalStorage > 0 then
 		cells[#cells+1] = 'Stores resources: '
