@@ -13,7 +13,7 @@ return {
 		category               = "LAND",
 		corpse                 = "DEAD",
 		customParams           = {
-			bait_level_default = 2,
+			bait_level_default = 3,
 			cus_noflashlight = 1,
 			dontfireatradarcommand = '0',
 			aimdelay = 60,
