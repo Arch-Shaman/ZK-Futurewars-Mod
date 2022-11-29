@@ -116,7 +116,7 @@ function GG.GetAutoJumpState(unitID)
 	return unitStates[unitID]
 end
 
-function GG.AutoJumpFromTransport(unitID)
+--[[function GG.AutoJumpFromTransport(unitID)
 	local distance = spGetUnitRulesParam(unitID, "comm_jumprange_bonus") or wantedDefs[spGetUnitDefID(unitID)] or 0
 	if distance == 0 then
 		return
@@ -128,7 +128,7 @@ function GG.AutoJumpFromTransport(unitID)
 		local vx, _, vz = spGetUnitVelocity(unitID)
 		DoJump(data, unitID, x, y, z, vx, vz, distance)
 	end
-end
+end]]
 
 function gadget:UnitCreated(unitID, unitDefID)
 	if canJumpDefs[unitDefID] then
