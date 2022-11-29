@@ -42,7 +42,7 @@ return {
 		iconType            = "t3jumpjetriot",
 		leaveTracks         = true,
 		losEmitHeight       = 60,
-		maxDamage           = 42000,
+		maxDamage           = 30000,
 		maxSlope            = 36,
 		maxVelocity         = 1.15,
 		maxWaterDepth       = 22,
