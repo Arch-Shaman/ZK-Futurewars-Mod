@@ -1,6 +1,6 @@
 local name = "commweapon_disintegrator"
 local weaponDef = {
-	name                    = [[Disintegrator]],
+	name                    = "Disintegrator",
 	areaOfEffect            = 48,
 	avoidFeature            = false,
 	avoidFriendly           = false,
@@ -12,18 +12,19 @@ local weaponDef = {
 
 	customParams            = {
 		is_unit_weapon = 1,
-		muzzleEffectShot = [[custom:ataalaser]],
-		slot = [[3]],
+		muzzleEffectShot = "custom:ataalaser",
+		slot = "3",
 		manualfire = 1,
 		reaim_time = 1,
 		antibaitbypass = "ärsytät minua",
+		mass = 450.5,
 	},
 
 	damage                  = {
 		default    = 2000,
 	},
 
-	explosionGenerator      = [[custom:DGUNTRACE]],
+	explosionGenerator      = "custom:DGUNTRACE",
 	impulseBoost            = 0,
 	impulseFactor           = 0,
 	interceptedByShieldType = 0,
@@ -33,12 +34,12 @@ local weaponDef = {
 	range                   = 270,
 	reloadtime              = 14,
 	size                    = 6,
-	soundHit                = [[explosion/ex_med6]],
-	soundStart              = [[weapon/laser/heavy_laser4]],
+	soundHit                = "explosion/ex_med6",
+	soundStart              = "weapon/laser/heavy_laser4",
 	soundTrigger            = true,
 	turret                  = true,
 	waterWeapon             = true,
-	weaponType              = [[DGun]],
+	weaponType              = "DGun",
 	weaponVelocity          = 300,
 }
 
