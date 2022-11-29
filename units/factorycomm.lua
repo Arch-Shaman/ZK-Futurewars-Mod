@@ -5,6 +5,7 @@
 return {
 	factorycomm = {
 		maxdamage = 10000,
+		unitname = "factorycomm",
 		name = "Commander Chassis Factory",
 		description = "Produces Commanders",
 		objectname = "pw_dropfac.dae",
