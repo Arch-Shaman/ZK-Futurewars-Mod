@@ -58,12 +58,12 @@ return {
 				craterMult              = 1,
 				customParams            = {
 					singularity = "1",
-					singuradius = "400",
-					singulifespan = "540",
-					singustrength = "120",
+					singuradius = "800",
+					singulifespan = "600",
+					singustrength = "150",
 					detachmentradius = "500",
 					singuheight = "75",
-					singuceg = "black_hole_400",
+					singuceg = "black_hole_800",
 					restrict_in_widgets = 1,
 					stats_hide_dps = 1, -- one use
 					stats_hide_reload = 1,
