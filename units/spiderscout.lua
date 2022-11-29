@@ -89,6 +89,7 @@ return {
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				laserFlareSize          = 3.22,
+				leadLimit               = 0,
 				minIntensity            = 1,
 				noSelfDamage            = true,
 				range                   = 200,
