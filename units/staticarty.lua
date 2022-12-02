@@ -21,7 +21,7 @@ return {
 			midposoffset       = "0 10 0",
 			bait_level_default = 1,
 			superweapon        = 1,
-			superweaponcoef    = 0.2,
+			superweaponcoef    = 0.185,
 			superweapondenom   = 2.5,
 		},
 		explodeAs                     = "LARGE_BUILDINGEX",
