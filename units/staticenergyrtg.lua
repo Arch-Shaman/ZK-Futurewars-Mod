@@ -70,7 +70,7 @@ return {
 		weaponDefs = {
 			staticenergyrtg_DEATH = {
 				name = "Atomic Blast",
-				areaOfEffect       = 192,
+				areaOfEffect       = 380,
 				craterBoost        = 1,
 				craterMult         = 3.6,
 				customParams       = {
