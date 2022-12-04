@@ -55,6 +55,12 @@ return {
 				badTargetCategory  = "GUNSHIP FIXEDWING",
 				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP FIXEDWING",
 			},
+			{
+				def                = "FAKE",
+				badTargetCategory  = "GUNSHIP FIXEDWING",
+				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP FIXEDWING",
+				slaveTo            = 1,
+			},
 		},
 		weaponDefs                    = {
 			PLASMA = {
@@ -87,6 +93,33 @@ return {
 				reloadtime              = 6.5,
 				soundHit                = "weapon/cannon/cannonfire_004",
 				soundStart              = "weapon/cannon/sniperturret_fire",
+				turret                  = true,
+				weaponType              = "Cannon",
+				weaponVelocity          = 880,
+			},
+			FAKE = {
+				name                    = "Fake Cannon",
+				accuracy                = 0,
+				areaOfEffect            = 32,
+				avoidFriendly           = false,
+				avoidFeature            = false,
+				avoidGround             = true,
+				craterBoost             = 0,
+				craterMult              = 0,
+				customParams            = {
+					restrict_in_widgets = 1,
+					bogus = 1,
+				},
+				damage                  = {
+					default = 0.0,
+				},
+				fireTolerance           = 1820, -- 10 degrees
+				impulseBoost            = 0,
+				impulseFactor           = 0.2,
+				interceptedByShieldType = 1,
+				noSelfDamage            = true,
+				range                   = 1970,
+				reloadtime              = 6.5,
 				turret                  = true,
 				weaponType              = "Cannon",
 				weaponVelocity          = 880,
