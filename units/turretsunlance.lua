@@ -4,7 +4,7 @@ return {
 	turretsunlance = {
 		unitname                      = "turretsunlance",
 		name                          = "Tracer",
-		description                   = "Sniper Turret - Requires 75 Power",
+		description                   = "Sniper Turret",
 		activateWhenBuilt             = true,
 		buildCostMetal                = 1500,
 		builder                       = false,
