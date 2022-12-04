@@ -55,7 +55,7 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				damage                  = {
-					default = 1,
+					default = 2.5,
 				},
 				customParams           = {
 					light_radius = 0,
