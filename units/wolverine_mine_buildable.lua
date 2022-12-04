@@ -6,7 +6,7 @@ return {
 		acceleration           = 0.00001,
 		activateWhenBuilt      = true,
 		brakeRate              = 1.5,
-		buildCostMetal         = 30,
+		buildCostMetal         = 20,
 		builder                = false,
 		buildPic               = "wolverine_mine.png",
 		canGuard               = false,
@@ -17,7 +17,6 @@ return {
 		collisionVolumeOffsets = "0 -4 0",
 		collisionVolumeScales  = "20 20 20",
 		collisionVolumeType    = "ellipsoid",
-		cantBeTransported = true,
 		customParams           = {
 			notselectable = "1",
 			massoverride = 80,
