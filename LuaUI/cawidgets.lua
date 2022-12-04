@@ -1440,10 +1440,12 @@ do
 		local teamLuaAI = Spring.GetTeamLuaAI(teamID)
 		if ((teamLuaAI == nil or teamLuaAI == "") and teamID ~= gaiaTeam) then
 			local _, _, _, ai, side, ally = Spring.GetTeamInfo(teamID, false)
-			if (not ai) and (not humanAlly[ally]) then
+			if not ai then
 				humanCount = humanCount + 1
-				humanAlly[ally] = true
-				humanAllyCount = humanAllyCount + 1
+				if (not humanAlly[ally]) then
+					humanAlly[ally] = true
+					humanAllyCount = humanAllyCount + 1
+				end
 			end
 		end
 	end
