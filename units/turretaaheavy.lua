@@ -21,7 +21,7 @@ return {
 			modelradius    = "37",
 			dontfireatradarcommand = '0',
 			superweapon    = 1,
-			superweaponcoef    = 0.66,
+			superweaponcoef    = 0.59,
 			superweapondenom   = 22,
     		neededlink     = 300,
    			pylonrange     = 250,
