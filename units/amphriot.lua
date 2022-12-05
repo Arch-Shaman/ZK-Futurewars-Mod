@@ -1,7 +1,7 @@
 return { 
 	amphriot = {
 		unitname               = "amphriot",
-		name                   = "Frother",
+		name                   = "Froth",
 		description            = "Amphibious Riot Bot",
 		acceleration           = 0.54,
 		activateWhenBuilt      = true,
