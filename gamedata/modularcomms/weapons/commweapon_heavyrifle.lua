@@ -17,7 +17,7 @@ local weaponDef = {
 		antibaitbypass = "ärsytät minua",
 	},
 	damage                  = {
-		default = 125.1,
+		default = 89.1,
 	},
 	edgeEffectiveness       = 0.5,
 	explosionGenerator      = [[custom:EMG_HIT_HE]],
