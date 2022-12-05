@@ -124,7 +124,7 @@ return {
 				burnblow                = false,
 				cegTag                  = "hydromissile",
 				damage                  = {
-					default = 180.01,
+					default = 140.01,
 				},
 
 				edgeEffectiveness       = 0.6,
