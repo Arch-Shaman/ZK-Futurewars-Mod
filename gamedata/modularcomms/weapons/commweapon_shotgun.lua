@@ -24,7 +24,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 40.1,
+		default = 42.1,
 	},
 
 	duration                = 0.02,
@@ -35,7 +35,7 @@ local weaponDef = {
 	impulseFactor           = 1.1,
 	interceptedByShieldType = 1,
 	projectiles             = 20,
-	range                   = 250,
+	range                   = 230,
 	reloadtime              = 1.3,
 	rgbColor                = "1 1 0",
 	soundHit                = "impacts/shotgun_impactv5",
