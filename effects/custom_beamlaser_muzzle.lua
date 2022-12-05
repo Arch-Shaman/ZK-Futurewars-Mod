@@ -9,11 +9,11 @@ return {
 			water              = true,
 			properties = {
 				alpha              = 1,
-				alphadecay         = 0.02,
+				alphadecay         = 0.2,
 				color              = [[0.75,0.5,1]],
 				dir                = [[-1 r1 r1, 1 r1, -1 r1 r1]],
 				length             = 0.5,
-				lengthgrowth       = 6,
+				lengthgrowth       = 25,
 				width              = 1,
 			},
 		},
@@ -25,7 +25,7 @@ return {
 			water              = true,
 			properties = {
 				airdrag            = 0.97,
-				colormap           = [[1 1 1 0.01  1 0.75 0 0.01  0 0 0 0]],
+				colormap           = [[0.75 0.5 1 0.03  0.66 0.33 1 0.01  0 0 0 0]],
 				directional        = true,
 				emitrot            = 0,
 				emitrotspread      = 80,
