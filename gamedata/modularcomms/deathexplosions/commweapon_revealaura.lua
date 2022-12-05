@@ -1,7 +1,7 @@
 local name = "commweapon_revealaura"
 local weaponDef = {
-	name                    = [[Cloak Disruptor Pulse]],
-	areaOfEffect            = 400,
+	name                    = "Cloak Disruptor Pulse",
+	areaOfEffect            = 1000,
 	craterBoost             = 0,
 	craterMult              = 0,
 	collideFriendly         = false,
@@ -17,10 +17,10 @@ local weaponDef = {
 		puredecloaktime = 120,
 		norealdamage = 1,
 		stats_hide_damage = 1,
-		lups_noshockwave = [[1]],
+		lups_noshockwave = "1",
 	},
 	edgeeffectiveness       = 0.7,
-	explosionGenerator      = [[custom:scanner_ping_400]],
+	explosionGenerator      = "custom:scanner_ping",
 	explosionSpeed          = 60,
 	impulseBoost            = 0,
 	impulseFactor           = 0,
@@ -32,7 +32,7 @@ local weaponDef = {
 	reloadtime              = 2.0,
 	soundHitVolume          = 1,
 	turret                  = true,
-	weaponType              = [[Cannon]],
+	weaponType              = "Cannon",
 	weaponVelocity          = 230,
 }
 

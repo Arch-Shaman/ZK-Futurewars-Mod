@@ -61,8 +61,46 @@ return {
 			},
 		},
 		weaponDefs                    = {
+			tritary = {
+				name                    = "High Energy Plasma",
+				alphaDecay              = 0.7,
+				areaOfEffect            = 120,
+				craterBoost             = 0,
+				craterMult              = 3.2,
+				cegtag                  = "waketrail_small",
+				--colorMap				= [[0 0.1843 0.4235  0.7294 0.04705 0.1843  0 0.125 0.3568]],
+				customParams        = {
+					lups_noshockwave = "1",
+					light_camera_height = 1600,
+					light_color = "0.8 0.76 0.38",
+					light_radius = 110,
+				},
+				damage                  = {
+					default = 400.01,
+				},
+				explosionScar           = false,
+				edgeEffectiveness       = 0.5,
+				explosionGenerator      = "custom:artillery_explosion",
+				firestarter             = 70,
+				impulseBoost            = 0,
+				impulseFactor           = 0.4,
+				intensity               = 0.7,
+				interceptedByShieldType = 1,
+				noSelfDamage            = true,
+				range                   = 275,
+				reloadtime              = 0.5,
+				rgbColor                = "1 0.95 0.4",
+				seperation				= 1,
+				sizeDecay				= -1.4,
+				soundHit                = "weapon/cannon/rhino4",
+				soundStart              = "weapon/heavy_emg",
+				stages                  = 15,
+				turret                  = true,
+				weaponType              = "Cannon",
+				weaponVelocity          = 550,
+			},
 			secondary = {
-				name                    = "Cluster Bomb",
+				name                    = "Unstable Plasma",
 				accuracy                = 350,
 				alphaDecay              = 0.7,
 				areaOfEffect            = 0,
@@ -74,18 +112,18 @@ return {
 					light_camera_height = 1600,
 					light_color = "0.8 0.76 0.38",
 					light_radius = 110,
-					numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "staticheavyarty_tritary",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 600, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 1200, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-8,-2,-8,8,3,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-8,-3,-8,8,3,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
 				},
 				damage                  = {
-					default = 290.01*4,
+					default = 400.01*6,
 				},
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = "custom:tremor",
@@ -98,51 +136,15 @@ return {
 				range                   = 275,
 				reloadtime              = 0.5,
 				rgbColor                = "1 0.95 0.4",
-				separation              = 1.5,
+				separation              = 2.2,
+				sizeDecay				= -3.4,
 				soundHit                = "weapon/clusters/cluster_light",
 				soundStart              = "weapon/heavy_emg",
-				stages                  = 10,
+				stages                  = 20,
 				turret                  = true,
 				weaponType              = "Cannon",
 				weaponVelocity          = 550,
 			},
-			
-			tritary = {
-				name                    = "Heavy Fragment",
-				alphaDecay              = 0.7,
-				areaOfEffect            = 192,
-				craterBoost             = 0.15,
-				craterMult              = 0.3,
-				customParams        = {
-					lups_noshockwave = "1",
-					light_camera_height = 1600,
-					light_color = "0.8 0.76 0.38",
-					light_radius = 110,
-				},
-				damage                  = {
-					default = 290.01,
-				},
-				explosionScar           = false,
-				edgeEffectiveness       = 0.5,
-				explosionGenerator      = "custom:spidercrabe_EXPLOSION",
-				firestarter             = 70,
-				impulseBoost            = 0,
-				impulseFactor           = 0.4,
-				intensity               = 0.7,
-				interceptedByShieldType = 1,
-				noSelfDamage            = true,
-				range                   = 275,
-				reloadtime              = 0.5,
-				rgbColor                = "1 0.95 0.4",
-				separation              = 1.5,
-				soundHit                = "weapon/cannon/rhino4",
-				soundStart              = "weapon/heavy_emg",
-				stages                  = 10,
-				turret                  = true,
-				weaponType              = "Cannon",
-				weaponVelocity          = 550,
-			},
-	
 			PLASMA = {
 				name                    = "Cluster Artillery Shell",
 				highTrajectory		    = 1,
@@ -160,16 +162,16 @@ return {
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 2200, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-5,-5,-5,5,5,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-6,-10,-6,6,4,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
 					light_camera_height = 1500,
 					light_radius = 120,
-					script_reload = "14", -- NB: Superweapon field in CP makes this handled by FireControl.
+					script_reload = "18", -- NB: Superweapon field in CP makes this handled by FireControl.
 					light_color = "2.4 1.5 0.6",
 					reveal_unit = 26,
 				},
 				damage                  = {
-					default = 9280,
+					default = 19200,
 				},
 				explosionGenerator      = "custom:MEDMISSILE_EXPLOSION",
 				fireTolerance           = 1820, -- 10 degrees

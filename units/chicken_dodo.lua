@@ -66,7 +66,7 @@ return {
 				cratermult = 3.5,
 				edgeeffectiveness = 0.4,
 				impulseboost = 0,
-				impulsefactor = 0.4,
+				impulsefactor = 0,
 				explosionspeed = 500, -- try to make it instant.
 				explosiongenerator = "custom:large_green_goo",
 				soundhit = "weapon/chickens/dodo_die",

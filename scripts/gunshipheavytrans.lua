@@ -104,15 +104,13 @@ function ForceDropUnit()
 		Spring.AddUnitImpulse(unitLoaded,0,-4,0) --hax to prevent teleport to ground
 		Spring.SetUnitVelocity(unitLoaded,0,0,0) --remove any random velocity caused by collision with transport (especially Spring 91)
 		Spring.AddUnitImpulse(unitLoaded,vx,vy,vz) --readd transport momentum
+		--GG.AutoJumpFromTransport(unitLoaded)
 	end
 	unitLoaded = nil
 	StartThread(script.EndTransport) --formalize unit drop (finish animation, clear tag, ect)
 end
 
-local function CrashWatcher()
-	while GetUnitValue(COB.CRASHING) ~= 1 do
-		Sleep(33)
-	end
+function OnStartingCrash()
 	ForceDropUnit()
 end
 
@@ -469,7 +467,6 @@ function script.Create()
 	
 	Spring.MoveCtrl.SetGunshipMoveTypeData(unitID,"bankingAllowed",false)
 	--Spring.MoveCtrl.SetGunshipMoveTypeData(unitID,"turnRate",0)
-	StartThread(CrashWatcher)
 	Move(LTurretDoor, y_axis, 3)
 	Move(LTurretBase, x_axis, 10)
 	Move(RTurretDoor, y_axis, 3, 10)

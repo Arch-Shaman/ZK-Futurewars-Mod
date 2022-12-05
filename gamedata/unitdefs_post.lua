@@ -312,6 +312,11 @@ for name, ud in pairs(UnitDefs) do
 		ud.customparams.ignoreplacementrestriction = "true"
 	end
 	
+	-- Add lowflying cat --
+	if ud.cruisealt and ud.cruisealt <= 200 then
+		ud.category = ud.category .. " lowflying"
+	end
+	
 	-- set build options
 	if ud.buildoptions and (#ud.buildoptions == 0) then
 		ud.buildoptions = buildOpts

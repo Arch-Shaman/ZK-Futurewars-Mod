@@ -59,6 +59,11 @@ local sweepAngle = 0
 local sweepMax = math.rad(30)
 local sweepStep = math.rad(10)
 
+local function IsStunnedOrDisarmed()
+	local disarmed = (Spring.GetUnitRulesParam(unitID, "disarmed") or 0) == 1
+	return Spring.GetUnitIsStunned(unitID) or disarmed
+end
+
 local function RestoreAfterDelay()
 	Signal(SIG_Restore)
 	SetSignalMask(SIG_Restore)
@@ -109,8 +114,15 @@ function FlameTrailThread()
 	
 	--spAddUnitDamage(unitID, 30) --this is to reset regen times. there seems to be a minium enforced by either a gadget or the engine of 20 damage.
 	local n = 0
+	local disarmed, needsRestore = false, false
+	GG.Sprint.Start(unitID, boostSpeed)
 	while (n < boostTime) do
-		local health = spGetUnitHealth(unitID) 
+		local health = spGetUnitHealth(unitID)
+		disarmed = IsStunnedOrDisarmed()
+		while disarmed do
+			Sleep(33)
+			disarmed = IsStunnedOrDisarmed()
+		end
 		if moving then
 			EmitSfx(firepoint, GG.Script.FIRE_W2)
 			spSetUnitHealth(unitID, health-15)
@@ -121,6 +133,7 @@ function FlameTrailThread()
 		Sleep(100)
 		n = n + 1
 	end
+	GG.Sprint.End(unitID)
 	spSetUnitRulesParam(unitID, "selfMoveSpeedChange", normalSpeed)
 	spSetUnitRulesParam(unitID, "maxAcc", normalSpeed)
 	GG.UpdateUnitAttributes(unitID)
@@ -307,10 +320,10 @@ local function DeathAnim(num)
 	if inBuild then
 		return
 	end
-	Spring.PlaySoundFile("Sounds/explosion/tankraid_deathexplo.wav", 80.0, px, py, pz, 1, 1, 1, 1)
 	EmitSfx(turret, 1024)
 	Sleep(33)
 	local px, py, pz = Spring.GetUnitPosition(unitID)
+	Spring.PlaySoundFile("Sounds/explosion/tankraid_deathexplo.wav", 80.0, px, py, pz, 0, 0, 0, "battle")
 	EmitSfx(base, 1024)
 	EmitSfx(deathanimtab[math.random(5,7)], GG.Script.UNIT_SFX1)
 	EmitSfx(deathanimtab[math.random(1,4)], GG.Script.UNIT_SFX1)

@@ -3,9 +3,9 @@ return {
 		unitname               = "gunshipbomb",
 		name                   = "Seeker",
 		description            = "Guidable Canister Missile",
-		acceleration           = 0.4,
+		acceleration           = 0.3,
 		airStrafe              = 0,
-		brakeRate              = 0.2,
+		brakeRate              = 0.4,
 		buildCostMetal         = 50,
 		builder                = false,
 		buildPic               = "gunshipbomb.png",
@@ -42,7 +42,7 @@ return {
 		maneuverleashlength    = "1240",
 		maxDamage              = 200,
 		maxSlope               = 36,
-		maxVelocity            = 13.2,
+		maxVelocity            = 10.2,
 		noAutoFire             = false,
 		noChaseCategory        = "TERRAFORM SATELLITE SUB",
 		objectName             = "f-1.s3o",
@@ -97,7 +97,7 @@ return {
 				},
 
 				damage                  = {
-					default = 75.1,
+					default = 65.1,
 				},
 				
 				edgeEffectiveness       = 0.33,
@@ -206,7 +206,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 20*75.1,
+					default = 20*65.1,
 				},
 				mygravity               = 0.07,
 				cegTag                  = "VINDIBACK",

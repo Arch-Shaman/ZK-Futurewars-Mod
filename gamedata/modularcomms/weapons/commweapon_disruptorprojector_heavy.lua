@@ -29,7 +29,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 700.1,
+		default = 800.1,
 	},
 	edgeEffectiveness		= 0.01,
 	explosionGenerator      = [[custom:heavybeampurpleimpact]],

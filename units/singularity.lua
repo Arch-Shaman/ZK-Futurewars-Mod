@@ -49,8 +49,8 @@ return {
 		},
 		weaponDefs                    = {
 			SINGULARITY_WEAPON = {
-				name                    = "Singularity",
-				areaOfEffect            = 400,
+				name                    = "Singularity Missile",
+				areaOfEffect            = 800,
 				avoidFriendly           = false,
 				cegTag                  = "waketrail",
 				collideFriendly         = false,
@@ -58,12 +58,12 @@ return {
 				craterMult              = 1,
 				customParams            = {
 					singularity = "1",
-					singuradius = "400",
-					singulifespan = "540",
-					singustrength = "120",
+					singuradius = "800",
+					singulifespan = "600",
+					singustrength = "150",
 					detachmentradius = "500",
-					singuheight = "75",
-					singuceg = "black_hole_400",
+					singuheight = "125",
+					singuceg = "black_hole_800",
 					restrict_in_widgets = 1,
 					stats_hide_dps = 1, -- one use
 					stats_hide_reload = 1,
@@ -92,7 +92,7 @@ return {
 				soundHit                = "explosion/ex_med14",
 				soundStart              = "weapon/missile/tacnuke_launch",
 				tolerance               = 4000,
-				turnrate                = 18000,
+				turnrate                = 37000,
 				waterWeapon             = true,
 				weaponAcceleration      = 180,
 				tracks = true,

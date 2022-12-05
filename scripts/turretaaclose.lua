@@ -34,6 +34,7 @@ local SIG_SPIN = 2
 local RESTORE_DELAY = 2000
 
 local gameSpeed = Game.gameSpeed
+local reloadTime = 4.7
 
 local function TracerThread()
 	while true do
@@ -116,7 +117,7 @@ local function reload(num)
 	scriptReload.GunStartReload(num)
 	gun[num].loaded = false
 
-	SleepAndUpdateReload(num, 6 * gameSpeed)
+	SleepAndUpdateReload(num, reloadTime * gameSpeed)
 
 	if scriptReload.GunLoaded(num) then
 		shot = 0
@@ -162,7 +163,7 @@ function script.BlockShot(num, targetID)
 end
 
 function script.Create()
-	scriptReload.SetupScriptReload(4, 6 * gameSpeed)
+	scriptReload.SetupScriptReload(4, reloadTime * gameSpeed)
 	StartThread(GG.Script.SmokeUnit, unitID, {base})
 	StartThread(RestoreAfterDelay)
 	StartThread(TracerThread)

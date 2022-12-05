@@ -1,7 +1,7 @@
 return { 
 	amphriot = {
 		unitname               = "amphriot",
-		name                   = "Frother",
+		name                   = "Froth",
 		description            = "Amphibious Riot Bot",
 		acceleration           = 0.54,
 		activateWhenBuilt      = true,
@@ -117,14 +117,14 @@ return {
 				areaOfEffect            = 96,
 				bouncerebound           = 0.5,
 				bounceslip              = 0.4,
-				burst                   = 4,
-				burstRate               = 4/30,
+				burst                   = 8,
+				burstRate               = 2/30,
 				craterBoost             = 0,
 				craterMult              = 1,
 				burnblow                = false,
 				cegTag                  = "hydromissile",
 				damage                  = {
-					default = 180.01,
+					default = 140.01,
 				},
 
 				edgeEffectiveness       = 0.6,

@@ -166,7 +166,7 @@ local function ProcessUnits(sx, sy, sz, radius, strength, list, rev)
 		local gy = Spring.GetGroundHeight(px, pz)
 		local mass = spGetUnitMass(unitID)
 		local unitdefID = spGetUnitDefID(unitID)
-		if not (UnitDefs[unitdefID].isBuilding or UnitDefs[unitdefID].isImmobile) then
+		if not (UnitDefs[unitdefID].isBuilding or UnitDefs[unitdefID].isImmobile or UnitDefs[unitdefID].customParams.singuimmune) then
 			if rev then
 				ex = GetFinalEffectStrength(radius, strength, abs(sx - px), mass)
 				ey = GetFinalEffectStrength(radius, strength, abs(sy - py), mass)

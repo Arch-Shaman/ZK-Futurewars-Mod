@@ -76,7 +76,7 @@ return {
 		trackWidth          = 22,
 		turnRate            = 1620,
 		upright             = true,
-		workerTime          = 12,
+		workerTime          = 16,
 		featureDefs         = {
 			DEAD      = {
 				blocking         = true,

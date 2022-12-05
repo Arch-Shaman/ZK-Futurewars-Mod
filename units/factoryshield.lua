@@ -40,6 +40,7 @@ return {
 			outline_x = 250,
 			outline_y = 250,
 			outline_yoff = 5,
+			buggeroff_offset    = 28,
 		},
 		energyUse                     = 0,
 		explodeAs                     = "LARGE_BUILDINGEX",

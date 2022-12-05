@@ -43,6 +43,7 @@ function script.AimWeapon(num, heading, pitch)
 	Turn(breech, x_axis, 0 - pitch, turnrate)
 	WaitForTurn(breech, x_axis)
 	WaitForTurn(turret, y_axis)
+	if num == 2 then return false end
 	if reloading then
 		return false
 	else
@@ -53,6 +54,7 @@ end
 function script.AimFromWeapon(num) return breech end
 
 function script.BlockShot(num, targetID)
+	if num == 2 then return true end
 	return (targetID and GG.DontFireRadar_CheckBlock(unitID, targetID)) or false
 end
 

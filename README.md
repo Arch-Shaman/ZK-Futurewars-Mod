@@ -22,3 +22,6 @@ Credits:
 * skuggmodzer0: Commander growth, commander passives per level.
 
 Please note: if I have missed you, please feel free to contact me or submit a PR to correct this.
+
+Additional links:
+* WIP: https://github.com/Arch-Shaman/FutureWars-CircuitAIConfigs

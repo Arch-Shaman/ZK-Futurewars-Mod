@@ -83,6 +83,7 @@ local spGetUnitPosition = Spring.GetUnitPosition
 local spSetUnitHealth = Spring.SetUnitHealth
 local spGetUnitHealth = Spring.GetUnitHealth
 local spSpawnCEG = Spring.SpawnCEG
+local spGetUnitDefID = Spring.GetUnitDefID
 local sqrt = math.sqrt
 local min = math.min
 
@@ -113,7 +114,9 @@ local function Updateblastwave(data) -- Updateblastwave(x, y, z, size, impulse, 
 				local ddist = (size - distance) / size
 				local vx, vy, vz = impulse * dx, dy * impulse, dz * impulse
 				local incoming = damage * ddist
-				spAddUnitImpulse(unitID, vx, vy, vz)
+				if not UnitDefs[spGetUnitDefID(unitID)].customParams.singuimmune then
+					spAddUnitImpulse(unitID, vx, vy, vz)
+				end
 				spAddUnitDamage(unitID, incoming, 0, attackerID, weaponDefID, vx, vy, vz) -- real damage first
 				if para and para > 0 then
 					local paratime = blastwaveDefs[weaponDefID].paratime or 1

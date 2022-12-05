@@ -51,6 +51,7 @@ local spGetGroundHeight = Spring.GetGroundHeight
 local spGetUnitVelocity = Spring.GetUnitVelocity
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
+local spGetUnitDefID = Spring.GetUnitDefID
 local spEcho = Spring.Echo
 local GiveClampedOrderToUnit = Spring.Utilities.GiveClampedOrderToUnit
 
@@ -66,7 +67,8 @@ local sweapfire_desc = {
 	params      = {1, 'Autojump Off', 'Autojump On'},
 }
 
-
+local velocityCoef = 5
+local minimumDownwardVelocity = -0.75
 
 local function GetPoints(angle, x, z, dist)
 	return x + (dist * cos(angle)), z + (dist * sin(angle))
@@ -75,12 +77,15 @@ end
 local function DoJump(data, unitID, x, y, z, vx, vz, distance)
 	local cx, cy, cz
 	cy = y
-	if vx == 0 and vz == 0 then -- jump in place
+	local absoluteX, absoluteZ = math.abs(vx), math.abs(vz)
+	if absoluteX <= 1 and absoluteZ <= 1 then -- jump in place
 		cx = x
 		cz = z
 	else
 		local a = atan2(vz, vx) -- returns angle in radians
-		cx, cz = GetPoints(a, x, z, distance * 0.98)
+		local velocity = math.sqrt((vz * vz) + (vx * vx))
+		local coef = math.min(velocity / velocityCoef, 1) * 0.98
+		cx, cz = GetPoints(a, x, z, distance * coef)
 	end
 	if debug then
 		spEcho("DoJump: " .. cx .. "," .. cy .. "," .. cz)
@@ -110,6 +115,20 @@ function GG.GetAutoJumpState(unitID)
 	end
 	return unitStates[unitID]
 end
+
+--[[function GG.AutoJumpFromTransport(unitID)
+	local distance = spGetUnitRulesParam(unitID, "comm_jumprange_bonus") or wantedDefs[spGetUnitDefID(unitID)] or 0
+	if distance == 0 then
+		return
+	end
+	local data = IterableMap.Get(units, unitID)
+	local canJump = (spGetUnitRulesParam(unitID, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not spGetUnitIsStunned(unitID)
+	if unitStates[unitID] and canJump then
+		local x, y, z = spGetUnitPosition(unitID)
+		local vx, _, vz = spGetUnitVelocity(unitID)
+		DoJump(data, unitID, x, y, z, vx, vz, distance)
+	end
+end]]
 
 function gadget:UnitCreated(unitID, unitDefID)
 	if canJumpDefs[unitDefID] then
@@ -165,8 +184,9 @@ function gadget:GameFrame(f)
 						if debug then
 							spEcho("Velocity: " .. vx .. ", " .. vy .. ", " .. vz)
 						end
-						if vy < -0.04 then
-							DoJump(data, id, x, y, z, vx, vz, wantedDefs[data.unitdef])
+						if vy < minimumDownwardVelocity then
+							local distance = spGetUnitRulesParam(id, "comm_jumprange_bonus") or wantedDefs[data.unitdef]
+							DoJump(data, id, x, y, z, vx, vz, distance)
 						end
 					end
 				else

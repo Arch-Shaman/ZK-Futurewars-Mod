@@ -219,34 +219,36 @@ end
 -- Must match dynamic_comm_defs.lua around line 800 (top of the chassis defs)
 --------------------------------------------------------------------------------------
 MakeCommanderChassisClones("dynrecon",
-	{{0}, {1}, {1}, {1}, {1}},
+	{{1}, {1}, {1}, {1}, {1}},
 	{"module_personal_shield"}
 )
 
+-- TODO: make better area shields.
 MakeCommanderChassisClones("dynsupport",
-	{{0, 0, 0}, {1, 0, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}},
+	{{1, 0, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 1}},
 	{"module_personal_shield", "module_areashield", "module_resurrect"}
 )
 
 MakeCommanderChassisClones("dynassault",
-	{{0, 0}, {1, 0}, {1, 1}, {1, 1}, {1, 1}},
+	{{1, 0}, {1, 0}, {1, 1}, {1, 1}, {1, 1}},
 	{"module_personal_shield", "module_areashield"}
 )
 
-
+-- does not matter because it does not get shields anyways.
 MakeCommanderChassisClones("dynstrike",
-	{{0, 0}, {1, 0}, {1, 1}, {1, 1}, {1, 1}},
+	{{0, 0}, {1, 0}, {1, 1}, {1, 1}, {1, 1}}, 
 	{"module_personal_shield", "module_areashield"}
 )
 
 -- All modules may be available at any level, depending on campaign layout.
+-- TODO: remove from def side, add to lua side. This would allow any commander to gain the jump ability.
 MakeCommanderChassisClones("dynknight",
 	{{1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}, {1, 1, 1, 1}},
 	{"module_personal_shield", "module_areashield", "module_resurrect", "module_jumpjet"}
 )
 
 MakeCommanderChassisClones("dynriot",
-	{{0, 0}, {1, 0}, {1, 1}, {1, 1}, {1, 1}},
+	{{1, 0}, {1, 1}, {1, 1}, {1, 1}, {1, 1}},
 	{"module_personal_shield", "module_areashield"}
 )
 

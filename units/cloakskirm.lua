@@ -21,7 +21,6 @@ return {
 		initCloaked = true,
 		cloakCostMoving = 1,
 		cloakCost    = 0.1,
-
 		customParams           = {
 			modelradius    = "18",
 			midposoffset   = "0 6 0",
@@ -31,8 +30,8 @@ return {
 			recloaktime = 210,
 			cloaker_bestowed_radius = 75,
 			cloakstrikeduration = 90,
-			cloakstrikespeed = 1.25,
-			cloakstrikeslow = 1.0,
+			cloakstrikespeed = 1.375,
+			cloakstrikeslow = 0.875,
 		},
 		explodeAs              = "BIG_UNITEX",
 		footprintX             = 2,
@@ -45,13 +44,11 @@ return {
 		maxReverseVelocity     = 2.4,
 		maxWaterDepth          = 20,
 		minCloakDistance       = 200,
-		
 		movementClass          = "KBOT2",
 		noChaseCategory        = "TERRAFORM FIXEDWING SUB",
 		objectName             = "sphererock.s3o",
 		script                 = "cloakskirm.lua",
 		selfDestructAs         = "BIG_UNITEX",
-
 		sfxtypes               = {
 			explosiongenerators = {
 				"custom:rockomuzzle",
@@ -85,27 +82,25 @@ return {
 				craterMult              = 0,
 				customParams        = {
 					burst = Shared.BURST_RELIABLE,
-
 					light_camera_height = 1600,
 					light_color = "0.90 0.65 0.30",
 					light_radius = 250,
 					reload_move_mod_time = 3,
 					tracker = 1,
-					cloakstrike = 1.33,
+					cloakstrike = 1 + 1/3,
 				},
 				damage                  = {
-					default = 300.01,
+					default = 360.01,
 				},
-
 				fireStarter             = 70,
-				flightTime              = 8,
+				flightTime              = 6,
 				impulseBoost            = 0,
-				impulseFactor           = 0.2,
+				impulseFactor           = 0.75,
 				interceptedByShieldType = 2,
 				model                   = "wep_m_ajax.s3o",
 				noSelfDamage            = true,
 				tolerance               = 65536/4,
-				turnRate                = 9000,
+				turnRate                = 18000,
 				range                   = 470,
 				reloadtime              = 3.5,
 				smokeTrail              = false,
@@ -116,9 +111,9 @@ return {
 				startVelocity           = 100,
 				tracks                  = true,
 				turret                  = true,
-				weaponAcceleration      = 500,
+				weaponAcceleration      = 400,
 				weaponType              = "MissileLauncher",
-				weaponVelocity          = 600,
+				weaponVelocity          = 800,
 			},
 			TRACKER = {
 				name                    = "Missile Target Painter",
@@ -135,7 +130,7 @@ return {
 					stats_hide_reload = 1,
 					light_color = "1.25 0 0",
 					light_radius = 30,
-					combatrange = 460,
+					combatrange = 470,
 				},
 				damage                  = {
 					default = 0.00,
@@ -160,9 +155,9 @@ return {
 				--soundHit		= "trackercompleted.wav"
 				soundStartVolume        = 15,
 				texture1                = "tracker",
-				--texture2              = "flare",
+				texture2                = "null",
 				texture3                = "flare",
-				texture4                = "smallflare",
+				texture4                = "null",
 				thickness               = 2,
 				tolerance               = 65536/4,
 				turret                  = true,
