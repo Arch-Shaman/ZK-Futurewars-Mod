@@ -56,7 +56,7 @@ holdatrange[UnitDefNames["bomberriot"].id] = true
 
 -- important config --
 local handleallies = false
-local debug = false
+local debugMode = false
 
 local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc
 local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
@@ -140,7 +140,7 @@ local function SetState(unitID, state, wanted)
 end
 
 local function AddUnit(unitID)
-	if debug then
+	if debugMode then
 		spEcho("[NewtonAI]: Add Unit " .. unitID)
 	end
 	local state = GetUnitIsActive(unitID)
@@ -149,7 +149,7 @@ local function AddUnit(unitID)
 end
 
 local function RemoveUnit(unitID)
-	if debug then
+	if debugMode then
 		spEcho("[NewtonAI] Removing Unit " .. unitID)
 	end
 	IterableMap.Remove(newtons, unitID)
@@ -250,7 +250,7 @@ end
 function gadget:GameFrame(f)
 	for unitID, data in IterableMap.Iterator(newtons) do
 		if not spValidUnitID(unitID) then
-			if debug then
+			if debugMode then
 				spEcho("[NewtonAI] Invalid unit detected.")
 			end
 			RemoveUnit(unitID)

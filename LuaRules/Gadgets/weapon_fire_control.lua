@@ -22,7 +22,7 @@ local config = {}
 local min = math.min
 local max = math.max
 local ceil = math.ceil
-local debug = false
+local debugMode = false
 
 local INLOS = {inlos = true}
 local spGetGameFrame = Spring.GetGameFrame
@@ -45,7 +45,7 @@ for i = 1, #UnitDefs do
 			local reload = (tonumber(weaponDef.customParams.script_reload) or 10) * 30
 			data[j] = {origReload = reload, progress = reload, recycler = weaponDef.customParams.recycler ~= nil}
 			if data[j].recycler then
-				if debug then Spring.Echo(j .. " recycler!") end
+				if debugMode then Spring.Echo(j .. " recycler!") end
 				recycler = true
 				data[j].currentbonus = 0
 				data[j].framesuntilreduction = (tonumber(weaponDef.customParams.recycle_reductiontime) or 3.0) * 30
@@ -80,7 +80,7 @@ end
 
 local function WeaponFired(unitID, weaponNum)
 	local data = IterableMap.Get(units, unitID)
-	if debug then spEcho("[FireControl] WeaponFired: " .. unitID .. "," .. weaponNum) end
+	if debugMode then spEcho("[FireControl] WeaponFired: " .. unitID .. "," .. weaponNum) end
 	if data ~= nil and data.commWeaponMap then
 		weaponNum = data.commWeaponMap[weaponNum]
 	end
@@ -88,7 +88,7 @@ local function WeaponFired(unitID, weaponNum)
 		local firerate = spGetUnitRulesParam(unitID,"superweapon_mult") or 0
 		if firerate < data.weapons[weaponNum].origReload and data.weapons[weaponNum].lastfire == nil then
 			data.weapons[weaponNum].progress = 0
-			if debug then spEcho("progress reset") end
+			if debugMode then spEcho("progress reset") end
 		elseif data.weapons[weaponNum].lastfire then -- recycler.
 			data.weapons[weaponNum].lastfire = spGetGameFrame() + (data.weapons[weaponNum].origReload / (1 + data.weapons[weaponNum].currentbonus))
 			if firerate < data.weapons[weaponNum].origReload and data.weapons[weaponNum].currentbonus < data.weapons[weaponNum].maxbonus then
@@ -98,7 +98,7 @@ local function WeaponFired(unitID, weaponNum)
 			if firerate < data.weapons[weaponNum].origReload then
 				data.weapons[weaponNum].progress = 0
 			end
-			if debug then spEcho("new bonus: " .. data.weapons[weaponNum].currentbonus) end
+			if debugMode then spEcho("new bonus: " .. data.weapons[weaponNum].currentbonus) end
 		end
 		IterableMap.Set(units, unitID, data)
 	end
@@ -107,19 +107,19 @@ end
 local function CanFireWeapon(unitID, weaponNum)
 	local data = IterableMap.Get(units, unitID)
 	if data == nil then
-		if debug then spEcho("CanFireWeapon nil") end
+		if debugMode then spEcho("CanFireWeapon nil") end
 		return false
 	end
 	if data.commWeaponMap then
 		weaponNum = data.commWeaponMap[weaponNum]
 	end
-	if debug then spEcho("CanFireWeapon: " .. tostring(data.weapons[weaponNum].progress >= data.weapons[weaponNum].origReload and (spGetUnitRulesParam(unitID, "lowpower") or 0) == 0)) end
+	if debugMode then spEcho("CanFireWeapon: " .. tostring(data.weapons[weaponNum].progress >= data.weapons[weaponNum].origReload and (spGetUnitRulesParam(unitID, "lowpower") or 0) == 0)) end
 	return data.weapons[weaponNum].progress >= data.weapons[weaponNum].origReload and (spGetUnitRulesParam(unitID, "lowpower") or 0) == 0
 end
 
 function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	if config[unitDefID] then
-		if debug then spEcho("[FireControl] Added " .. unitID) end
+		if debugMode then spEcho("[FireControl] Added " .. unitID) end
 		local data = {unitDef = unitDefID}
 		data.weapons = deepcopy(config[unitDefID])
 		IterableMap.Add(units, unitID, data)
@@ -143,7 +143,7 @@ local function GetBonusFirerate(unitID, weaponNum)
 end
 
 local function ForceAddUnit(unitID, weaponNum, origReload, bonus, reductionframes, reduction, framesuntilreduction, maxbonus, currentbonus)
-	if debug then
+	if debugMode then
 		spEcho("ForceAddUnit: " .. unitID .. ", " .. weaponNum)
 	end
 	local data = IterableMap.Get(units, unitID) or {}
@@ -184,19 +184,19 @@ function gadget:GameFrame(f)
 		local firespeed
 		if recyclers[data.unitDef] or forcerecycle[unitID] then
 			firespeed = 1
-			if debug then spEcho("Firespeed set to 1 due to recycler") end
+			if debugMode then spEcho("Firespeed set to 1 due to recycler") end
 		else
 			firespeed = Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0
 		end
-		--if debug then spEcho("firespeed: " .. firespeed .. "\nslowMult : " .. slowMult) end
+		--if debugMode then spEcho("firespeed: " .. firespeed .. "\nslowMult : " .. slowMult) end
 		effectiveSpeed = firespeed * slowMult * (1 - unpowered)
-		if debug then spEcho("effectiveSpeed: " .. effectiveSpeed) end
+		if debugMode then spEcho("effectiveSpeed: " .. effectiveSpeed) end
 		for i = 1, #data.weapons do
 			if data.weapons[i].progress < data.weapons[i].origReload then
 				local progressToAdd = effectiveSpeed
 				if data.weapons[i].currentbonus then
 					progressToAdd = progressToAdd * (1 + data.weapons[i].currentbonus)
-					if debug then spEcho("Progress: " .. progressToAdd) end
+					if debugMode then spEcho("Progress: " .. progressToAdd) end
 				end
 				data.weapons[i].progress = data.weapons[i].progress + progressToAdd
 				local estimatedTimeToReload
@@ -205,16 +205,16 @@ function gadget:GameFrame(f)
 				else
 					estimatedTimeToReload = f
 				end
-				if debug then spEcho("[FireControl] WeaponUpdated: " .. unitID .. "," .. i .. ": " .. data.weapons[i].progress .. "/" .. data.weapons[i].origReload) end
+				if debugMode then spEcho("[FireControl] WeaponUpdated: " .. unitID .. "," .. i .. ": " .. data.weapons[i].progress .. "/" .. data.weapons[i].origReload) end
 				spSetUnitWeaponState(unitID, i, "reloadFrame", estimatedTimeToReload)
 				spSetUnitRulesParam(unitID, i .. "_reload", min(data.weapons[i].progress / data.weapons[i].origReload, 1), INLOS)
 			elseif data.weapons[i].currentbonus and data.weapons[i].currentbonus > 0 then
 				local f2 = data.weapons[i].lastfire + data.weapons[i].framesuntilreduction
-				if debug then spEcho("Reduction in " .. f2 - f) end
+				if debugMode then spEcho("Reduction in " .. f2 - f) end
 				if f2 - f < 0 then
 					data.weapons[i].lastfire = data.weapons[i].reductionframes + f
 					data.weapons[i].currentbonus = max((data.weapons[i].currentbonus * (1 + data.weapons[i].reductionpenalty)) + data.weapons[i].reductionpenalty, 0)
-					if debug then spEcho("New firerate: " .. data.weapons[i].currentbonus) end
+					if debugMode then spEcho("New firerate: " .. data.weapons[i].currentbonus) end
 				end
 			end
 		end

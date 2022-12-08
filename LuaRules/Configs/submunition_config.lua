@@ -4,14 +4,14 @@ for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
 	if curRef and curRef.projectile1 then -- found it!
-		if debug then
+		if debugMode then
 			Spring.Echo("CAS: Discovered " .. i .. "(" .. wd.name .. ")")
 		end
 		if type(curRef.projectile1) == "string" then -- reason we use it like this is to provide an error if something doesn't seem right.
 			if WeaponDefNames[curRef.projectile1] then
 				if type(curRef.spawndist) == "string" then -- all ok
 					Script.SetWatchWeapon(i, true)
-					if debug then
+					if debugMode then
 						Spring.Echo("[CAS] Enabled watch for " .. i)
 					end
 					--Mommy projectile Defs
@@ -22,7 +22,7 @@ for i=1, #WeaponDefs do
 					end
 					if type(curRef.use2ddist) ~= "string" then
 						config[i]["use2ddist"] = 0
-						if debug then
+						if debugMode then
 							Spring.Echo("[CAS] Set 2ddist to false for " .. wd.name)
 						end
 					else
@@ -169,7 +169,7 @@ for i=1, #WeaponDefs do
 						fragnum = fragnum + 1
 					end
 					config[i].fragcount =  fragnum - 1
-					if debug then
+					if debugMode then
 						Spring.Echo("[CAS] Frag count: " .. fragnum - 1)
 					end
 				else

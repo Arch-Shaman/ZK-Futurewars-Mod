@@ -71,7 +71,7 @@ local minelayer_desc = {
 
 -- Variables --
 local UnitData = IterableMap.New()
-local debug = false
+local debugMode = false
 local CommandOrder = 123456
 local overrides = {}
 
@@ -94,7 +94,7 @@ local function PrintConfig()
 	DebugEcho("Starting Game with configuration: " .. str)
 end
 
-if debug then
+if debugMode then
 	PrintConfig()
 end
 
@@ -167,7 +167,7 @@ end
 local function CalculateAngle(x, z, targetx, targetz) -- first set of coords: center, second: point
 	--local heading = GetUnitHeading(unitID)
 	local angle = atan2(targetz - z, targetx - x )
-	if debug then
+	if debugMode then
 		DebugEcho("Initial heading: " .. deg(angle))
 	end
 	return angle -- Used for determining the center of the arc.
@@ -187,7 +187,7 @@ local function UpdateOffset(unitID, weaponID)
 	local configuration = config[data.unitdef][weaponID]
 	local currentoffset = data.weaponstates[weaponID].currentoffset
 	local offset = currentoffset + (((data.weaponstates[weaponID].reversed and -1) or 1) * configuration.step)
-	if debug then
+	if debugMode then
 		DebugEcho(unitID .. " Offset: " .. currentoffset .. " -> " .. offset)
 	end
 	data.weaponstates[weaponID].currentoffset = offset
@@ -202,7 +202,7 @@ local function UpdateFiringPoint(unitID, weapon, angle, unitdef)
 	local myconfig = config[unitdef][weapon]
 	if myconfig.minelayer then
 		range = random(ceil(range * 0.4), range)
-		if debug then
+		if debugMode then
 			DebugEcho("New range: " .. range)
 		end
 	end
@@ -212,7 +212,7 @@ end
 
 local function GetWeaponIsFiringAtSomething(unitID, weaponID)
 	local type, isUserTarget = spGetUnitWeaponTarget(unitID, weaponID)
-	if debug then
+	if debugMode then
 		DebugEcho("isUser: " .. tostring(isUserTarget) .. "\ntype: " .. tostring(type) .. "\nReturn: " .. tostring(type == 1 or isUserTarget == true))
 	end
 	return type == 1 or isUserTarget == true
@@ -220,7 +220,7 @@ end
 
 
 local function AddUnit(unitID, cmdParams)
-	if debug then
+	if debugMode then
 		local paramstr = ''
 		if type(cmdParams):lower() == 'table' then
 			for id, data in pairs(cmdParams) do
@@ -246,7 +246,7 @@ local function AddUnit(unitID, cmdParams)
 end
 
 local function CheckUnitHasTargetInRange(unitID, range)
-	if debug then
+	if debugMode then
 		DebugEcho("HasTargetInRange: " .. tostring(spGetUnitNearestEnemy(unitID, range, true) ~= nil))
 	end
 	return spGetUnitNearestEnemy(unitID, range, true) ~= nil
@@ -371,7 +371,7 @@ function gadget:GameFrame(f)
 							end
 							UpdateOffset(id, weaponnum)
 							nextupdate = f + ((configuration[w].fastupdate and 0) or 3)
-							if debug then
+							if debugMode then
 								DebugEcho("Next update: " .. nextupdate)
 							end
 							local wantedangle = data.weaponstates[weaponnum].currentoffset + data.initialangle

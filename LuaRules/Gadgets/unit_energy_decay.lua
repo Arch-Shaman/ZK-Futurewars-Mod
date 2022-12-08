@@ -38,13 +38,13 @@ local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetGameFrame = Spring.GetGameFrame
 local spSetUnitResourcing = Spring.SetUnitResourcing
 local spEcho = Spring.Echo
-local debug = false
+local debugMode = false
 local max = math.max
 local min = math.min
 
 function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	if config[unitDefID] then
-		if debug then spEcho("Added decayer " .. unitID) end
+		if debugMode then spEcho("Added decayer " .. unitID) end
 		local mult = GG.GetTeamHandicap(unitTeam) or 1
 		local config = config[unitDefID]
 		IterableMap.Add(decayers, unitID, {currentrate = config.initialrate, nextupdate = spGetGameFrame() + config.time, def = unitDefID, mult = mult})
@@ -62,7 +62,7 @@ end
 
 function gadget:UnitReverseBuilt(unitID, unitDefID, unitTeam)
 	if IterableMap.InMap(decayers, unitID) then
-		if debug then spEcho("reverse built removed " .. unitID) end
+		if debugMode then spEcho("reverse built removed " .. unitID) end
 		IterableMap.Remove(decayers, unitID)
 	end
 end
@@ -85,12 +85,12 @@ function gadget:GameFrame(f)
 			else -- depreciates
 				newrate = max(data.currentrate * (1 - config.rate), 1)
 			end
-			if debug then spEcho(id .. ": Decayed from " .. data.currentrate * 10 .. "% -> " .. newrate * 10 .. "%") end
+			if debugMode then spEcho(id .. ": Decayed from " .. data.currentrate * 10 .. "% -> " .. newrate * 10 .. "%") end
 			data.currentrate = newrate
 			spSetUnitRulesParam(id, "selfIncomeChange", data.currentrate * data.mult)
 			GG.UpdateUnitAttributes(id)
 			GG.UpdateUnitAttributes(id)
-			--if debug then spEcho("Updated " .. id) end
+			--if debugMode then spEcho("Updated " .. id) end
 			if (not config.appreciates and data.currentrate == 1) or (config.appreciates and data.currentrate == config.maxoutput) then
 				IterableMap.Remove(decayers, id)
 			else
