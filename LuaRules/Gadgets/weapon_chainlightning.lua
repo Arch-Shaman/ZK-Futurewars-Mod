@@ -19,13 +19,18 @@ local wantedWeapons = {}
 
 local spGetUnitsInSphere           = Spring.GetUnitsInSphere
 local spGetUnitPosition            = Spring.GetUnitPosition
+local spGetFeaturePosition         = Spring.GetFeaturePosition
 local spGetUnitAllyTeam            = Spring.GetUnitAllyTeam
 local spGetUnitsInBox              = Spring.GetUnitsInBox
 local spSpawnSFX                   = Spring.SpawnSFX
 local spGetUnitDefID               = Spring.GetUnitDefID
 local spGetUnitCollisionVolumeData = Spring.GetUnitCollisionVolumeData
+local spGetFeatureCollisionVolumeData = Spring.GetFeatureCollisionVolumeData
+--local spSpawnProjectile            = Spring.SpawnProjectile 
+local spGetUnitWeaponTarget        = Spring.GetUnitWeaponTarget
 
-local debug = true
+local debugMode = false
+local subProjectileDefs = {}
 
 for i = 1, #WeaponDefs do
 	local cp = WeaponDefs[i].customParams
@@ -36,11 +41,17 @@ for i = 1, #WeaponDefs do
 			maxTargets = tonumber(cp.chainlightning_maxtargets),
 			friendlyFire = cp.chainlightning_ff == nil,
 			weaponIndex = tonumber(cp.chainlightning_index),
+			forksub = cp.chainlightning_sub ~= nil,
+			weaponNum = tonumber(cp.chainlightning_num) or 1,
 		}
 		Spring.Echo("[ChainLightning] Added " .. i)
 		Script.SetWatchExplosion(i, true)
+		if config[i].forksub then
+			subProjectileDefs[i] = true
+		end
 	end
 end
+
 
 function gadget:Explosion_GetWantedWeaponDef()
 	return wantedWeapons
@@ -66,55 +77,76 @@ local function GetValidTargets(x, y, z, radius, allowFriendlyFire, attackerTeam,
 	return validTargets, disallowedUnitIDs
 end
 
-local function PointToDir(originX, originY, originZ, targetX, targetY, targetZ)
-	local vx, vy, vz = originX - targetX, originY - targetY, originZ - targetZ -- points -> vector
+local function PointToDir(targetX, targetY, targetZ, originX, originY, originZ)
+	local vx = originX - targetX 
+	local vy = originY - targetY
+	local vz = originZ - targetZ -- points -> vector
 	local mag = math.sqrt(vx * vx + vy * vy + vz * vz)
 	return vx / mag, vy / mag, vz / mag
 end
 
+local function Distance(x, z, x2, z2)
+	return math.sqrt((x2 - x) * (x2 - x) + (z2 - z) * (z2 - z) )
+end
+
 local function GetPointOutsideOfColvol(target, dirX, dirY, dirZ)
 	Spring.Echo("Dir: " .. dirX .. ", " .. dirY .. ", " .. dirZ)
-	local cx, cy, cz = spGetUnitPosition(target) -- base position
+	local _, _, _, cx, cy, cz = spGetUnitPosition(target, true) -- midpos position
 	local scaleX, scaleY, scaleZ, offX, offY, offZ = spGetUnitCollisionVolumeData(target)
 	cx, cy, cz = cx + offX, cy + offY, cz + offZ
-	scaleX = scaleX/2 + 0.5 -- take half the scale, add 0.5
-	scaleY = scaleY/2 + 0.5
-	scaleZ = scaleZ/2 + 0.5
+	scaleX = scaleX / 2 + 1 -- take half the scale, add 0.5
+	scaleY = scaleY / 2 + 1
+	scaleZ = scaleZ / 2 + 1
+	--Spring.MarkerAddPoint(cx + (scaleX * dirX), cy + (scaleY * dirY), cz + (scaleZ * dirZ), "v", true)
 	return cx + (scaleX * dirX), cy + (scaleY * dirY), cz + (scaleZ * dirZ)
 end
 
-local function SpawnLightningFromUnit(attackerID, index, x, y, z, targetX, targetY, targetZ, dirx, diry, dirz)
-	--local dirx, diry, dirz = PointToDir(targetX, targetY, targetZ, x, y, z)
-	if debug then
+local function GetPointOutsideOfFeatureColvol(featureID, dirX, dirY, dirZ)
+	Spring.Echo("Dir: " .. dirX .. ", " .. dirY .. ", " .. dirZ)
+	local _, _, _, cx, cy, cz = spGetFeaturePosition(featureID, true) -- base position
+	local scaleX, scaleY, scaleZ, offX, offY, offZ = spGetFeatureCollisionVolumeData(featureID)
+	cx, cy, cz = cx + offX, cy + offY, cz + offZ
+	scaleX = scaleX / 2 + 1 -- take half the scale so we're outside of the colvol and add 1.
+	scaleY = scaleY / 2 + 1
+	scaleZ = scaleZ / 2 + 1
+	if debugMode then
+		Spring.MarkerAddPoint(cx + (scaleX * dirX), cy + (scaleY * dirY), cz + (scaleZ * dirZ), dirY, true)
+	end
+	return cx + (scaleX * dirX), cy + (scaleY * dirY), cz + (scaleZ * dirZ)
+end
+
+
+local function SpawnLightning(attackerID, index, x, y, z, targetX, targetY, targetZ, dirx, diry, dirz)
+	dirx, diry, dirz = PointToDir(x, y, z, targetX, targetY, targetZ)
+	if debugMode then
 		Spring.Echo("Chain Lightning: Spawning using weaponIndex ", index)
 		Spring.MarkerAddLine(x, y, z, targetX, targetY, targetZ)
 	end
-	spSpawnSFX(attackerID, 2047 + index, x, y, z, dirx, diry, dirz, true)
-end
-
-local function SpawnLightningFromPoint(attackerID, index, x, y, z, dirx, diry, dirz)
-	if debug then
-		Spring.Echo("Chain Lightning: Spawning using weaponIndex ", index)
+	if Distance(x, z, targetX, targetZ) <= 5 then
+		spSpawnSFX(attackerID, 2047 + index, targetX, targetY, targetZ, 1, 1, 1, true)
+	else
+		spSpawnSFX(attackerID, 2047 + index, x, y, z, dirx, diry, dirz, true)
 	end
-	spSpawnSFX(attackerID, 2047 + index, x, y, z, dirx, diry, dirz, true)
 end
-
 
 local function GetDirectionFromUnit(targetID, originX, originY, originZ)
-	local _, _, _, _, _, _, x2, y2, z2 = spGetUnitPosition(targetID, true, true)
-	local dirx, diry, dirz = PointToDir(x2, y2, z2, originX, originY, originZ)
-	return x2, y2, z2, dirx, diry, dirz
+	local _, _, _, targetX, targetY, targetZ = spGetUnitPosition(targetID, true)
+	local dirx, diry, dirz = PointToDir(originX, originY, originZ, targetX, targetY, targetZ)
+	return targetX, targetY, targetZ, dirx, diry, dirz
 end
 
-local function DoChainLightning(weaponDefID, px, py, pz, AttackerID, damagedUnit)
+local function DoChainLightning(weaponDefID, px, py, pz, AttackerID, damagedUnit, isFeature)
 	local c = config[weaponDefID]
-	if debug then
+	if debugMode then
 		Spring.Echo("DoChainLightning: ", px, py, pz, AttackerID, damagedUnit)
 	end
 	local attackerTeam = spGetUnitAllyTeam(AttackerID)
 	local badTargets = {}
-	if damagedUnit then
+	if damagedUnit and not isFeature then
 		badTargets[damagedUnit] = true
+		_, _, _, px, py, pz = spGetUnitPosition(damagedUnit, true)
+	elseif damagedUnit and isFeature then
+		px, py, pz = spGetFeaturePosition(damagedUnit)
 	end
 	local potentialTargets
 	for targetNum = 1, c.maxTargets do
@@ -123,34 +155,82 @@ local function DoChainLightning(weaponDefID, px, py, pz, AttackerID, damagedUnit
 			local newTarget = potentialTargets[math.random(1, #potentialTargets)]
 			badTargets[newTarget] = true
 			local x2, y2, z2, dirx, diry, dirz = GetDirectionFromUnit(newTarget, px, py, pz)
+			local sx, sy, sz
 			if damagedUnit then
-				local sx, sy, sz = GetPointOutsideOfColvol(damagedUnit, dirx, diry, dirz)
-				SpawnLightningFromUnit(AttackerID, c.weaponIndex, sx, sy, sz, x2, y2, z2, dirx, diry, dirz)
+				if isFeature then
+					sx, sy, sz = GetPointOutsideOfFeatureColvol(damagedUnit, dirx, diry, dirz)
+				else
+					sx, sy, sz = GetPointOutsideOfColvol(damagedUnit, dirx, diry, dirz)
+				end
 			else
-				SpawnLightningFromPoint(AttackerID, c.weaponIndex, px, py, pz, dirx, diry, dirz)
+				sx, sy, sz = px, py, pz
 			end
-			if debug then
+			SpawnLightning(AttackerID, c.weaponIndex, sx, sy, sz, x2, y2, z2, dirx, diry, dirz)
+			if debugMode then
 				Spring.Echo("ChainLightning DoChainLightning: Target " .. targetNum .. ": " .. newTarget)
 			end
 		else
-			if debug then Spring.Echo("Breaking due to no valid targets") end
+			if debugMode then Spring.Echo("Breaking due to no valid targets") end
 			break
 		end
 	end
 end
 
 function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, ProjectileID)
-	if debug then
-		Spring.Echo("Chainlightning: Explosion: ", px, py, pz, AttackerID)
+	if debugMode then
+		Spring.Echo("Chainlightning: Explosion: ", px, py, pz, AttackerID, ProjectileID)
 	end
-	DoChainLightning(weaponDefID, px, py, pz, AttackerID)
-	return false
+	local num, _, target = spGetUnitWeaponTarget(AttackerID, config[weaponDefID].weaponNum)
+	if subProjectileDefs[weaponDefID] then -- we can't rely on checking target (for obvious reasons, we're not actually aiming at any of these sub targets!)
+		local potentialUnits = spGetUnitsInSphere(px, py, pz, 30) -- did we hit another unit?
+		if potentialUnits and #potentialUnits > 0 then
+			DoChainLightning(weaponDefID, px, py, pz, AttackerID, potentialUnits[1])
+			return false
+		end
+		local potentialFeatures = Spring.GetFeaturesInSphere(px, py, pz, 20) -- did we unintentionally hit a feature?
+		if potentialFeatures and #potentialFeatures > 0 then
+			local x, y, z = spGetFeaturePosition(potentialFeatures[1], true)
+			DoChainLightning(weaponDefID, x, y, z, AttackerID, potentialFeatures[1], true)
+			return false
+		end
+		-- probably a shield?
+		return false
+	elseif num == 1 then
+		local ux, uy, uz = spGetUnitPosition(target)
+		if not ux then
+			Spring.Echo("[ChainLightning]: Invalid UnitID!")
+			return false
+		end
+		local d = math.sqrt(((px - ux) * (px - ux)) + ((pz - uz) * (pz - uz)))
+		if d < 15 then -- this is probably a direct hit.
+			local _, _, _, x, y, z = spGetUnitPosition(target, true)
+			DoChainLightning(weaponDefID, x, y, z, AttackerID, target, false)
+			return false
+		else
+			local potentialUnits = spGetUnitsInSphere(px, py, pz, 30) -- did we hit another unit unintentionally?
+			if potentialUnits and #potentialUnits > 0 then
+				DoChainLightning(weaponDefID, px, py, pz, AttackerID, potentialUnits[1], false)
+				return false
+			end
+			local potentialFeatures = Spring.GetFeaturesInSphere(px, py, pz, 20) -- did we unintentionally hit a feature?
+			if potentialFeatures and #potentialFeatures > 0 then
+				--local x, y, z = spGetFeaturePosition(potentialFeatures[1], true)
+				DoChainLightning(weaponDefID, px, py, pz, AttackerID, potentialFeatures[1], true)
+				return false
+			end
+			-- probably a shield?
+			return false
+		end
+	else
+		DoChainLightning(weaponDefID, px, py, pz, AttackerID, nil, false)
+		return false
+	end
 end
 
-function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
-	if config[weaponDefID] then
-		Spring.Echo("ChainLightning: UnitPreDamaged")
+--[[function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+	if subProjectileDefs[weaponDefID] then
+		--Spring.Echo("ChainLightning: UnitPreDamaged")
 		local x, y, z = spGetUnitPosition(unitID, true)
 		DoChainLightning(weaponDefID, x, y, z, attackerID, unitID)
 	end
-end
+end]]
