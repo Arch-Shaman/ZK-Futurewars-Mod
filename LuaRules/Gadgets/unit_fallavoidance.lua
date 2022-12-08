@@ -24,7 +24,7 @@ local units = IterableMap.New()
 
 -- config --
 local UpdateRate = 5 -- 6hz
-local debug = false
+local debugMode = false
 
 
 for i = 1, #UnitDefs do
@@ -87,7 +87,7 @@ local function DoJump(data, unitID, x, y, z, vx, vz, distance)
 		local coef = math.min(velocity / velocityCoef, 1) * 0.98
 		cx, cz = GetPoints(a, x, z, distance * coef)
 	end
-	if debug then
+	if debugMode then
 		spEcho("DoJump: " .. cx .. "," .. cy .. "," .. cz)
 	end
 	if spGetGroundHeight(cx, cz) > -10 then
@@ -176,12 +176,12 @@ function gadget:GameFrame(f)
 					local x, y, z = spGetUnitPosition(id)
 					local gy = spGetGroundHeight(x, z)
 					local currentheight = y - gy
-					if debug then
+					if debugMode then
 						spEcho("GroundHeight: " .. currentheight)
 					end
 					if not GG.GetUnitFallDamageImmunity(id) and currentheight > 10 and currentheight <= 50 then
 						local vx, vy, vz = spGetUnitVelocity(id)
-						if debug then
+						if debugMode then
 							spEcho("Velocity: " .. vx .. ", " .. vy .. ", " .. vz)
 						end
 						if vy < minimumDownwardVelocity then

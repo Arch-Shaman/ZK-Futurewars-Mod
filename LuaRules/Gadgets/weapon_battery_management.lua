@@ -14,7 +14,7 @@ function gadget:GetInfo()
 	}
 end
 
-local debug = false
+local debugMode = false
 
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 
@@ -48,7 +48,7 @@ for i = 1, #UnitDefs do
 				if wd.customParams.batterydrain then
 					costs[i] = tonumber(wd.customParams.batterydrain)
 					checks[i] = tonumber(wd.customParams.batterychecklevel)
-					if debug then spEcho("[BatteryManagement]: Cost of weapon " .. i .. ": " .. tostring(costs[i])) end
+					if debugMode then spEcho("[BatteryManagement]: Cost of weapon " .. i .. ": " .. tostring(costs[i])) end
 				end
 			end
 		end
@@ -61,7 +61,7 @@ end
 local function CanFire(unitID, weaponID)
 	local data = IterableMap.Get(handled, unitID)
 	if data then
-		if debug then spEcho("CanFire", weaponID, data.costs[weaponID]) end
+		if debugMode then spEcho("CanFire", weaponID, data.costs[weaponID]) end
 		if data.costs[weaponID] then
 			local checkval = data.checks[weaponID] or data.costs[weaponID]
 			return data.battery > checkval
@@ -79,7 +79,7 @@ local function WeaponFired(unitID, weaponID)
 		return
 	end
 	data.battery = data.battery - data.costs[weaponID]
-	if debug then
+	if debugMode then
 		spEcho("[BatteryManagement] " .. unitID .. " fired weapon " .. weaponID .. ": " .. tostring(data.battery) .. " / " .. tostring(data.maxbattery) .. " left.")
 	end
 	spSetUnitRulesParam(unitID, "battery", data.battery, INLOS)

@@ -22,7 +22,7 @@ local spGetUnitPosition = Spring.GetUnitPosition
 local spSetProjectileTarget = Spring.SetProjectileTarget
 local SetWatchWeapon = Script.SetWatchWeapon
 local spGetValidUnitID = Spring.ValidUnitID
-local debug = false
+local debugMode = false
 
 local missiles = {} -- id = {missiles = {projIDs},target = {x,y,z}, numMissiles = 0, fake = uid}
 local config = {} -- targeter or tracker
@@ -56,7 +56,7 @@ end
 
 GG.GetLaserTrackingEnabled = GetMissileTracking
 
-if debug then PrintConfig() end
+if debugMode then PrintConfig() end
 
 function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, projectileID)
 	--debugecho("Explosion: " .. tostring(weaponDefID, px, py, pz, AttackerID, projectileID))
@@ -65,7 +65,7 @@ function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, projectileID)
 		missiles[AttackerID].target[1] = px
 		missiles[AttackerID].target[2] = py
 		missiles[AttackerID].target[3] = pz
-		if debug then
+		if debugMode then
 			local x = missiles[AttackerID].target[1]
 			local y = missiles[AttackerID].target[2]
 			local z = missiles[AttackerID].target[3]
@@ -83,7 +83,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID) -- proOwnerID 
 		missiles[proOwnerID] = {missiles = {}, target = {[1] = 0, [2] = 0, [3] = 0}, numMissiles = 0, lastframe = spGetGameFrame(), state = "normal"}
 	end
 	if config[weaponDefID] and config[weaponDefID] == 'tracker' then
-		if debug then
+		if debugMode then
 			spEcho("Added " .. proID .. " to " .. proOwnerID)
 		end
 		spSetProjectileTarget(proID, missiles[proOwnerID].target[1], missiles[proOwnerID].target[2], missiles[proOwnerID].target[3])
@@ -126,11 +126,11 @@ function gadget:GameFrame(f)
 					local x,y,z = spGetProjectilePosition(pid)
 					y = spGetGroundHeight(x,z)
 					if not GG.GetMissileCruising(pid) then
-						if debug then
+						if debugMode then
 							spEcho("Setting " .. pid .. " lost target:" .. x .. "," .. y .. "," .. z)
 						end
 						local success = spSetProjectileTarget(pid, x, y, z)
-						if debug then
+						if debugMode then
 							spEcho("Success: " .. tostring(success))
 						end
 					else
@@ -154,11 +154,11 @@ function gadget:GameFrame(f)
 				for pid,_ in pairs(data.missiles) do
 					local x,y,z = spGetProjectilePosition(pid)
 					y = spGetGroundHeight(x,z)
-					if debug then
+					if debugMode then
 						spEcho("Setting " .. pid .. " lost target:" .. x .. "," .. y .. "," .. z)
 					end
 					local success = spSetProjectileTarget(pid, x, y, z)
-					if debug then
+					if debugMode then
 						spEcho("Success: " .. tostring(success))
 					end
 				end

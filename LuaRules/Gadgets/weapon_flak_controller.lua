@@ -18,7 +18,7 @@ local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 
 local config = {} -- stores table
 local projectiles = IterableMap.New()
-local debug = false
+local debugMode = false
 
 --Speedups--
 local spEcho = Spring.Echo
@@ -45,7 +45,7 @@ for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
 	if curRef and curRef.isflak then -- found it!
-		if debug then
+		if debugMode then
 			spEcho("FlakCon: Discovered " .. i .. "(" .. wd.name .. ")")
 		end
 		Script.SetWatchWeapon(i, true)
@@ -56,7 +56,7 @@ for i=1, #WeaponDefs do
 	end
 end
 spEcho("FlakCon: done.")
-if debug then
+if debugMode then
 	for name,data in pairs(config) do
 		for k,v in pairs(data) do
 			spEcho(k .. ": " .. tostring(v))
@@ -100,7 +100,7 @@ function gadget:GameFrame(f)
 			elseif config[wd].type == 3 then
 				data.timer = data.timer - 2
 				local explode = 100 - random(10, 80) + data.timer
-				if debug then spEcho("Explode: " .. explode) end
+				if debugMode then spEcho("Explode: " .. explode) end
 				if explode <= 0 then
 					ExplodeProjectile(id, wd, x, y, z)
 				end
