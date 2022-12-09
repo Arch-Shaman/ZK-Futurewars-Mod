@@ -17,6 +17,7 @@ end
 local config = {}
 local wantedWeapons = {}
 
+local spGetFeaturesInSphere        = Spring.GetFeaturesInSphere 
 local spGetUnitsInSphere           = Spring.GetUnitsInSphere
 local spGetUnitPosition            = Spring.GetUnitPosition
 local spGetFeaturePosition         = Spring.GetFeaturePosition
@@ -31,6 +32,7 @@ local spGetUnitWeaponTarget        = Spring.GetUnitWeaponTarget
 
 local debugMode = false
 local subProjectileDefs = {}
+local invalidFeatures = {}
 
 for i = 1, #WeaponDefs do
 	local cp = WeaponDefs[i].customParams
@@ -43,6 +45,7 @@ for i = 1, #WeaponDefs do
 			weaponIndex = tonumber(cp.chainlightning_index),
 			forksub = cp.chainlightning_sub ~= nil,
 			weaponNum = tonumber(cp.chainlightning_num) or 1,
+			canTargetFeature = cp.chainlightning_donttargetfeature == nil,
 		}
 		Spring.Echo("[ChainLightning] Added " .. i)
 		Script.SetWatchExplosion(i, true)
@@ -52,6 +55,14 @@ for i = 1, #WeaponDefs do
 	end
 end
 
+for i = 1, #FeatureDefs do
+	local name = FeatureDefs[i].description
+	if string.find(name, "Shards") or string.find(name, "Debris -") or name == "Metal Vein" or name == "Coagulation Node" or name == "contains metal" then
+		invalidFeatures[i] = true
+	elseif FeatureDefs[i].damage > 1000000 then -- probably some untargetable thing
+		invalidFeatures[i] = true
+	end
+end
 
 function gadget:Explosion_GetWantedWeaponDef()
 	return wantedWeapons
@@ -75,6 +86,22 @@ local function GetValidTargets(x, y, z, radius, allowFriendlyFire, attackerTeam,
 		end
 	end
 	return validTargets, disallowedUnitIDs
+end
+
+local function GetValidFeatureTargets(x, y, z, radius, disallowedFeatureIDs) 
+	local potentialTargets = spGetFeaturesInSphere(x, y, z, radius)
+	local validTargets = {}
+	for i = 1, #potentialTargets do
+		local featureID = potentialTargets[i]
+		if not disallowedFeatureIDs[featureID] then
+			if invalidFeatures[Spring.GetFeatureDefID(featureID)] then
+				disallowedFeatureIDs[featureID] = true
+			else
+				validTargets[#validTargets + 1] = featureID
+			end
+		end
+	end
+	return validTargets, disallowedFeatureIDs
 end
 
 local function PointToDir(targetX, targetY, targetZ, originX, originY, originZ)
@@ -129,8 +156,13 @@ local function SpawnLightning(attackerID, index, x, y, z, targetX, targetY, targ
 	end
 end
 
-local function GetDirectionFromUnit(targetID, originX, originY, originZ)
-	local _, _, _, targetX, targetY, targetZ = spGetUnitPosition(targetID, true)
+local function GetDirectionFromSomething(targetID, originX, originY, originZ, isFeature)
+	local targetX, targetY, targetZ
+	if not isFeature then
+		_, _, _, targetX, targetY, targetZ = spGetUnitPosition(targetID, true)
+	else
+		_, _, _, targetX, targetY, targetZ = spGetFeaturePosition(targetID, true)
+	end
 	local dirx, diry, dirz = PointToDir(originX, originY, originZ, targetX, targetY, targetZ)
 	return targetX, targetY, targetZ, dirx, diry, dirz
 end
@@ -138,41 +170,68 @@ end
 local function DoChainLightning(weaponDefID, px, py, pz, AttackerID, damagedUnit, isFeature)
 	local c = config[weaponDefID]
 	if debugMode then
-		Spring.Echo("DoChainLightning: ", px, py, pz, AttackerID, damagedUnit)
+		Spring.Echo("DoChainLightning: ", px, py, pz, AttackerID, damagedUnit, isFeature)
 	end
 	local attackerTeam = spGetUnitAllyTeam(AttackerID)
 	local badTargets = {}
+	local badFeatures = {}
 	if damagedUnit and not isFeature then
 		badTargets[damagedUnit] = true
 		_, _, _, px, py, pz = spGetUnitPosition(damagedUnit, true)
 	elseif damagedUnit and isFeature then
 		px, py, pz = spGetFeaturePosition(damagedUnit)
+		badFeatures[damagedUnit] = true
 	end
-	local potentialTargets
+	local potentialTargets, potentialFeatures = {}, {}
+	local canTargetFeatures = c.canTargetFeature
 	for targetNum = 1, c.maxTargets do
 		potentialTargets, badTargets = GetValidTargets(px, py, pz, c.targetSearchDistance, c.friendlyFire, attackerTeam, badTargets)
-		if #potentialTargets > 0 then
-			local newTarget = potentialTargets[math.random(1, #potentialTargets)]
+		if canTargetFeatures then
+			potentialFeatures, badFeatures = GetValidFeatureTargets(px, py, pz, c.targetSearchDistance, badFeatures)
+		end
+		local x2, y2, z2, dirx, diry, dirz
+		local sx, sy, sz, newTarget, targetFeature
+		if #potentialTargets > 0 and (not canTargetFeatures or #potentialFeatures == 0) then
+			newTarget = potentialTargets[math.random(1, #potentialTargets)]
 			badTargets[newTarget] = true
-			local x2, y2, z2, dirx, diry, dirz = GetDirectionFromUnit(newTarget, px, py, pz)
-			local sx, sy, sz
-			if damagedUnit then
-				if isFeature then
-					sx, sy, sz = GetPointOutsideOfFeatureColvol(damagedUnit, dirx, diry, dirz)
-				else
-					sx, sy, sz = GetPointOutsideOfColvol(damagedUnit, dirx, diry, dirz)
-				end
-			else
-				sx, sy, sz = px, py, pz
-			end
-			SpawnLightning(AttackerID, c.weaponIndex, sx, sy, sz, x2, y2, z2, dirx, diry, dirz)
+			targetFeature = false
 			if debugMode then
 				Spring.Echo("ChainLightning DoChainLightning: Target " .. targetNum .. ": " .. newTarget)
 			end
-		else
+		elseif #potentialTargets > 0 and (canTargetFeatures and #potentialFeatures > 0) then -- pick a feature or target at random
+			local fChance = 1 - (#potentialFeatures / (#potentialTargets + #potentialFeatures)) -- chance to pick a feature instead of a unit
+			if math.random() * 100 >= fChance then -- we picked a feature.
+				newTarget = potentialFeatures[math.random(1, #potentialFeatures)]
+				badFeatures[newTarget] = true
+				targetFeature = true
+			else
+				newTarget = potentialTargets[math.random(1, #potentialTargets)]
+				badTargets[newTarget] = true
+				targetFeature = false
+			end
+		elseif #potentialTargets == 0 and canTargetFeatures and #potentialFeatures > 0 then -- pick a feature at random
+			newTarget = potentialFeatures[math.random(1, #potentialFeatures)]
+			badFeatures[newTarget] = true
+			targetFeature = true
+		else -- nothing left.
 			if debugMode then Spring.Echo("Breaking due to no valid targets") end
-			break
+			return
 		end
+		x2, y2, z2, dirx, diry, dirz = GetDirectionFromSomething(newTarget, px, py, pz, targetFeature)
+		if damagedUnit then
+			if isFeature then
+				sx, sy, sz = GetPointOutsideOfFeatureColvol(damagedUnit, dirx, diry, dirz)
+			else
+				sx, sy, sz = GetPointOutsideOfColvol(damagedUnit, dirx, diry, dirz)
+			end
+		else
+			sx, sy, sz = px, py, pz
+		end
+		if sx == nil then
+			Spring.Echo("ChainLightning: Fallback due to nil sx")
+			sx, sy, sz = px, py, pz
+		end
+		SpawnLightning(AttackerID, c.weaponIndex, sx, sy, sz, x2, y2, z2, dirx, diry, dirz)
 	end
 end
 
