@@ -29,6 +29,7 @@ local spGetUnitCollisionVolumeData = Spring.GetUnitCollisionVolumeData
 local spGetFeatureCollisionVolumeData = Spring.GetFeatureCollisionVolumeData
 --local spSpawnProjectile            = Spring.SpawnProjectile 
 local spGetUnitWeaponTarget        = Spring.GetUnitWeaponTarget
+local spGetFeatureDefID            = Spring.GetFeatureDefID
 
 local debugMode = false
 local subProjectileDefs = {}
@@ -56,11 +57,11 @@ for i = 1, #WeaponDefs do
 end
 
 for i = 1, #FeatureDefs do
-	local name = FeatureDefs[i].description
+	local name = FeatureDefs[i].tooltip
+	--Spring.Echo(i .. ": " .. tostring(name))
 	if string.find(name, "Shards") or string.find(name, "Debris -") or name == "Metal Vein" or name == "Coagulation Node" or name == "contains metal" then
 		invalidFeatures[i] = true
-	elseif FeatureDefs[i].damage > 1000000 then -- probably some untargetable thing
-		invalidFeatures[i] = true
+		Spring.Echo(i .. " ( " .. name .. ") is invalid")
 	end
 end
 
@@ -94,7 +95,7 @@ local function GetValidFeatureTargets(x, y, z, radius, disallowedFeatureIDs)
 	for i = 1, #potentialTargets do
 		local featureID = potentialTargets[i]
 		if not disallowedFeatureIDs[featureID] then
-			if invalidFeatures[Spring.GetFeatureDefID(featureID)] then
+			if invalidFeatures[spGetFeatureDefID(featureID)] then
 				disallowedFeatureIDs[featureID] = true
 			else
 				validTargets[#validTargets + 1] = featureID
@@ -183,35 +184,66 @@ local function DoChainLightning(weaponDefID, px, py, pz, AttackerID, damagedUnit
 		badFeatures[damagedUnit] = true
 	end
 	local potentialTargets, potentialFeatures = {}, {}
-	local canTargetFeatures = c.canTargetFeature
+	potentialTargets, badTargets = GetValidTargets(px, py, pz, c.targetSearchDistance, c.friendlyFire, attackerTeam, badTargets) 
+	if c.canTargetFeature then
+		potentialFeatures, badFeatures = GetValidFeatureTargets(px, py, pz, c.targetSearchDistance, badFeatures)
+	end
 	for targetNum = 1, c.maxTargets do
-		potentialTargets, badTargets = GetValidTargets(px, py, pz, c.targetSearchDistance, c.friendlyFire, attackerTeam, badTargets)
-		if canTargetFeatures then
-			potentialFeatures, badFeatures = GetValidFeatureTargets(px, py, pz, c.targetSearchDistance, badFeatures)
-		end
 		local x2, y2, z2, dirx, diry, dirz
 		local sx, sy, sz, newTarget, targetFeature
-		if #potentialTargets > 0 and (not canTargetFeatures or #potentialFeatures == 0) then
-			newTarget = potentialTargets[math.random(1, #potentialTargets)]
+		if #potentialTargets > 0 and #potentialFeatures == 0 then
+			local selection = math.random(1, #potentialTargets)
+			newTarget = potentialTargets[selection]
 			badTargets[newTarget] = true
+			if #potentialTargets ~= 1 then
+				local n = potentialTargets[#potentialTargets]
+				potentialTargets[selection] = n
+				potentialTargets[#potentialTargets] = nil
+			else
+				potentialTargets[1] = nil
+			end
 			targetFeature = false
 			if debugMode then
 				Spring.Echo("ChainLightning DoChainLightning: Target " .. targetNum .. ": " .. newTarget)
 			end
-		elseif #potentialTargets > 0 and (canTargetFeatures and #potentialFeatures > 0) then -- pick a feature or target at random
+		elseif #potentialTargets > 0 and #potentialFeatures > 0 then -- pick a feature or target at random
 			local fChance = 1 - (#potentialFeatures / (#potentialTargets + #potentialFeatures)) -- chance to pick a feature instead of a unit
 			if math.random() * 100 >= fChance then -- we picked a feature.
-				newTarget = potentialFeatures[math.random(1, #potentialFeatures)]
+				local selection = math.random(1, #potentialFeatures)
+				newTarget = potentialFeatures[selection]
 				badFeatures[newTarget] = true
+				if #potentialFeatures == 1 then
+					potentialFeatures[1] = nil
+				else
+					local n = potentialFeatures[#potentialFeatures]
+					potentialFeatures[selection] = n
+					potentialFeatures[#potentialFeatures] = nil
+				end
 				targetFeature = true
 			else
-				newTarget = potentialTargets[math.random(1, #potentialTargets)]
+				local selection = math.random(1, #potentialTargets)
+				newTarget = potentialTargets[selection]
 				badTargets[newTarget] = true
+				if #potentialTargets ~= 1 then
+					local n = potentialTargets[#potentialTargets]
+					potentialTargets[selection] = n
+					potentialTargets[#potentialTargets] = nil
+				else
+					potentialTargets[1] = nil
+				end
 				targetFeature = false
 			end
-		elseif #potentialTargets == 0 and canTargetFeatures and #potentialFeatures > 0 then -- pick a feature at random
-			newTarget = potentialFeatures[math.random(1, #potentialFeatures)]
+		elseif #potentialTargets == 0 and #potentialFeatures > 0 then -- pick a feature at random
+			local selection = math.random(1, #potentialFeatures)
+			newTarget = potentialFeatures[selection]
 			badFeatures[newTarget] = true
+			if #potentialFeatures == 1 then
+				potentialFeatures[1] = nil
+			else
+				local n = potentialFeatures[#potentialFeatures]
+				potentialFeatures[selection] = n
+				potentialFeatures[#potentialFeatures] = nil
+			end
 			targetFeature = true
 		else -- nothing left.
 			if debugMode then Spring.Echo("Breaking due to no valid targets") end
@@ -278,6 +310,7 @@ function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, ProjectileID)
 				return false
 			end
 			-- probably a shield?
+			DoChainLightning(weaponDefID, px, py, pz, AttackerID, nil, false)
 			return false
 		end
 	else
