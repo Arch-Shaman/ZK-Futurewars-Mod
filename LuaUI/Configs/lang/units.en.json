@@ -1057,7 +1057,7 @@
 	"shieldfelon" : {
 		"name" : "Guardian",
 		"description" : "Shielded Riot/Skirmisher Bot",
-		"helptext" : "The Guardian draws energy from its shield, discharging it in accurate bursts. Link it to other shields to increase its rate of fire. Do be warned that it cannot hit high flying targets."
+		"helptext" : "The Guardian is a modernized Felon with a larger, heavier shield bubble. However, where it sets itself apart from its older generation model is in its application of Keskian Mechanics to produce arcing bolts of energy. These bolts seek out nearby targets, dealing damage and jumping off to more nearby targets."
 	},
 	"seismic" : {
 		"name" : "Quake",
