@@ -47,6 +47,7 @@ for i = 1, #WeaponDefs do
 			forksub = cp.chainlightning_sub ~= nil,
 			weaponNum = tonumber(cp.chainlightning_num) or 1,
 			canTargetFeature = cp.chainlightning_donttargetfeature == nil,
+			canStrikeTwice = cp.chainlightning_hittwice ~= nil,
 		}
 		Spring.Echo("[ChainLightning] Added " .. i)
 		Script.SetWatchExplosion(i, true)
@@ -176,12 +177,17 @@ local function DoChainLightning(weaponDefID, px, py, pz, AttackerID, damagedUnit
 	local attackerTeam = spGetUnitAllyTeam(AttackerID)
 	local badTargets = {}
 	local badFeatures = {}
+	local canStrikeTwice = c.canStrikeTwice
 	if damagedUnit and not isFeature then
-		badTargets[damagedUnit] = true
+		if not canStrikeTwice then
+			badTargets[damagedUnit] = true
+		end
 		_, _, _, px, py, pz = spGetUnitPosition(damagedUnit, true)
 	elseif damagedUnit and isFeature then
 		px, py, pz = spGetFeaturePosition(damagedUnit)
-		badFeatures[damagedUnit] = true
+		if not canStrikeTwice then
+			badFeatures[damagedUnit] = true
+		end
 	end
 	local potentialTargets, potentialFeatures = {}, {}
 	potentialTargets, badTargets = GetValidTargets(px, py, pz, c.targetSearchDistance, c.friendlyFire, attackerTeam, badTargets) 
@@ -195,13 +201,15 @@ local function DoChainLightning(weaponDefID, px, py, pz, AttackerID, damagedUnit
 			local selection = math.random(1, #potentialTargets)
 			newTarget = potentialTargets[selection]
 			badTargets[newTarget] = true
-			if #potentialTargets ~= 1 then
-				local n = potentialTargets[#potentialTargets]
-				potentialTargets[selection] = n
-				potentialTargets[#potentialTargets] = nil
-			else
-				potentialTargets[1] = nil
-			end
+			if not canStrikeTwice then
+				if #potentialTargets ~= 1 then
+					local n = potentialTargets[#potentialTargets]
+					potentialTargets[selection] = n
+					potentialTargets[#potentialTargets] = nil
+				else
+					potentialTargets[1] = nil
+				end
+			end 
 			targetFeature = false
 			if debugMode then
 				Spring.Echo("ChainLightning DoChainLightning: Target " .. targetNum .. ": " .. newTarget)
@@ -212,24 +220,28 @@ local function DoChainLightning(weaponDefID, px, py, pz, AttackerID, damagedUnit
 				local selection = math.random(1, #potentialFeatures)
 				newTarget = potentialFeatures[selection]
 				badFeatures[newTarget] = true
-				if #potentialFeatures == 1 then
-					potentialFeatures[1] = nil
-				else
-					local n = potentialFeatures[#potentialFeatures]
-					potentialFeatures[selection] = n
-					potentialFeatures[#potentialFeatures] = nil
+				if not canStrikeTwice then
+					if #potentialFeatures == 1 then
+						potentialFeatures[1] = nil
+					else
+						local n = potentialFeatures[#potentialFeatures]
+						potentialFeatures[selection] = n
+						potentialFeatures[#potentialFeatures] = nil
+					end
 				end
 				targetFeature = true
 			else
 				local selection = math.random(1, #potentialTargets)
 				newTarget = potentialTargets[selection]
 				badTargets[newTarget] = true
-				if #potentialTargets ~= 1 then
-					local n = potentialTargets[#potentialTargets]
-					potentialTargets[selection] = n
-					potentialTargets[#potentialTargets] = nil
-				else
-					potentialTargets[1] = nil
+				if not canStrikeTwice then
+					if #potentialTargets ~= 1 then
+						local n = potentialTargets[#potentialTargets]
+						potentialTargets[selection] = n
+						potentialTargets[#potentialTargets] = nil
+					else
+						potentialTargets[1] = nil
+					end
 				end
 				targetFeature = false
 			end
@@ -237,12 +249,14 @@ local function DoChainLightning(weaponDefID, px, py, pz, AttackerID, damagedUnit
 			local selection = math.random(1, #potentialFeatures)
 			newTarget = potentialFeatures[selection]
 			badFeatures[newTarget] = true
-			if #potentialFeatures == 1 then
-				potentialFeatures[1] = nil
-			else
-				local n = potentialFeatures[#potentialFeatures]
-				potentialFeatures[selection] = n
-				potentialFeatures[#potentialFeatures] = nil
+			if not canStrikeTwice then
+				if #potentialFeatures == 1 then
+					potentialFeatures[1] = nil
+				else
+					local n = potentialFeatures[#potentialFeatures]
+					potentialFeatures[selection] = n
+					potentialFeatures[#potentialFeatures] = nil
+				end
 			end
 			targetFeature = true
 		else -- nothing left.
