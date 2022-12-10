@@ -118,11 +118,11 @@ local function Distance(x, z, x2, z2)
 end
 
 local function GetPointOutsideOfColvol(target, dirX, dirY, dirZ)
-	Spring.Echo("Dir: " .. dirX .. ", " .. dirY .. ", " .. dirZ)
+	if debugMode then Spring.Echo("Dir: " .. dirX .. ", " .. dirY .. ", " .. dirZ) end
 	local _, _, _, cx, cy, cz = spGetUnitPosition(target, true) -- midpos position
 	local scaleX, scaleY, scaleZ, offX, offY, offZ = spGetUnitCollisionVolumeData(target)
 	cx, cy, cz = cx + offX, cy + offY, cz + offZ
-	scaleX = scaleX / 2 + 1 -- take half the scale, add 0.5
+	scaleX = scaleX / 2 + 1 -- take half the scale, add 1, this should get us outside the colvol at any point.
 	scaleY = scaleY / 2 + 1
 	scaleZ = scaleZ / 2 + 1
 	--Spring.MarkerAddPoint(cx + (scaleX * dirX), cy + (scaleY * dirY), cz + (scaleZ * dirZ), "v", true)
@@ -130,8 +130,8 @@ local function GetPointOutsideOfColvol(target, dirX, dirY, dirZ)
 end
 
 local function GetPointOutsideOfFeatureColvol(featureID, dirX, dirY, dirZ)
-	Spring.Echo("Dir: " .. dirX .. ", " .. dirY .. ", " .. dirZ)
-	local _, _, _, cx, cy, cz = spGetFeaturePosition(featureID, true) -- base position
+	if debugMode then Spring.Echo("Dir: " .. dirX .. ", " .. dirY .. ", " .. dirZ) end
+	local _, _, _, cx, cy, cz = spGetFeaturePosition(featureID, true) -- midpoint
 	local scaleX, scaleY, scaleZ, offX, offY, offZ = spGetFeatureCollisionVolumeData(featureID)
 	cx, cy, cz = cx + offX, cy + offY, cz + offZ
 	scaleX = scaleX / 2 + 1 -- take half the scale so we're outside of the colvol and add 1.
