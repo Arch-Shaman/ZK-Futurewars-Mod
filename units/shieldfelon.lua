@@ -97,6 +97,7 @@ return {
 			SHIELDGUN = {
 				name                    = "Heavy Keksian Pulse",
 				areaOfEffect            = 8,
+				avoidFeature            = false,
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting       = 0.3,
