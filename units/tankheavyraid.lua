@@ -152,7 +152,6 @@ return {
 					chainlightning_ff = 0,
 					chainlightning_maxtargets = 3,
 					chainlightning_index = 2,
-					hideweapon = 1,
 				},
 				cylinderTargeting      = 0,
 				damage                  = {
@@ -179,7 +178,7 @@ return {
 				weaponVelocity          = 400,
 			},
 			sublightning_1 = {
-				name                    = "Lightning Gun",
+				name                    = "Forked Lightning",
 				areaOfEffect            = 8,
 				craterBoost             = 0,
 				craterMult              = 0,
@@ -222,7 +221,7 @@ return {
 				weaponVelocity          = 400,
 			},
 			sublightning_2 = {
-				name                    = "Lightning Gun",
+				name                    = "Forked Lightning 2",
 				areaOfEffect            = 8,
 				craterBoost             = 0,
 				craterMult              = 0,
@@ -233,6 +232,7 @@ return {
 					light_camera_height = 1600,
 					light_color = "0.14 0.14 0.5625",
 					light_radius = 10,
+					hideweapon = 1,
 				},
 				cylinderTargeting      = 0,
 				damage                  = {
