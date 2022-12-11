@@ -31,7 +31,7 @@ local GUN_TURN_SPEED = 150
 local WHEEL_TURN_SPEED1 = 480
 local WHEEL_TURN_SPEED1_ACCELERATION = 75
 local WHEEL_TURN_SPEED1_DECELERATION = 200
-
+local dead = false
 local smokePiece = {main, turret}
 
 local function RestoreAfterDelay()
@@ -143,7 +143,9 @@ function script.QueryWeapon()
 end
 
 function script.AimWeapon(num, heading, pitch)
-	
+	if num ~= 1 or dead then
+		return false
+	end
 	Signal(SIG_AIM1)
 	SetSignalMask(SIG_AIM1)
 	
@@ -186,7 +188,7 @@ local function Recoil()
 	Move(barrel2, z_axis, 0, 10)
 end
 
-function script.Shot(num)
+function script.FireWeapon(num)
 	--Turn(firepoint, y_axis, math.rad(25))
 	EmitSfx(barrel1, 1024)
 	EmitSfx(barrel2, 1025)
@@ -196,26 +198,57 @@ function script.Shot(num)
 	StartThread(Recoil)
 end
 
+local function DeathAnimation(severity)
+	local _, _, isInBuild = Spring.GetUnitIsStunned(unitID)
+	if isInBuild then -- don't do death explosion when in build!
+		return
+	end
+	local wantedDefID = WeaponDefNames["tankheavyraid_panther_death"].id
+	local finalID = WeaponDefNames["tankheavyraid_panther_death_final"].id
+	local explodables = {[1] = barrel2, [2] = barrel1, [3] = turret, [4] = mainfan1, [5] = mainfan2, [6] = door1, [7] = door2, [8] = sleeve, [9] = main}
+	local x, y, z = Spring.GetUnitPosition(unitID)
+	local empty = {}
+	Spring.GiveOrderToUnit(unitID, CMD.STOP, empty, CMD.OPT_INTERNAL)
+	Spring.GiveOrderToUnit(unitID, CMD.FIRE_STATE, CMD.FIRESTATE_HOLDFIRE, CMD.OPT_INTERNAL)
+	Spring.SetUnitNoSelect(unitID, true)
+	local projectileAttributes = {
+		pos = {x, y + 5, z},
+		speed = {0, -10, 0},
+		ttl = 1,
+		gravity = 1,
+		team = Spring.GetUnitTeam(unitID),
+		owner = unitID,
+	}
+	local sfxType = SFX.FALL + SFX.SMOKE + SFX.FIRE
+	for i = 1, #explodables do
+		if i%3 == 0 then
+			x, y, z = Spring.GetUnitPosition(unitID)
+			projectileAttributes.pos[1] = x
+			projectileAttributes.pos[2] = y + 5
+			projectileAttributes.pos[3] = z
+			Spring.SpawnProjectile(wantedDefID, projectileAttributes)
+		end
+		Explode(explodables[i], sfxType)
+		Hide(explodables[i])
+		if i ~= 9 then
+			Sleep(100)
+		end
+	end
+	x, y, z = Spring.GetUnitPosition(unitID)
+	projectileAttributes.pos = {x, y + 5, z}
+	Spring.SpawnProjectile(finalID, projectileAttributes)
+	Sleep(33) -- Wait a frame to explode so blastwaves can do their thing.
+end
+
 function script.Killed(severity, maxHealth)
 	severity = severity / maxHealth
+	DeathAnimation(severity)
 	if severity <= 0.25 then
-		Explode(main, SFX.NONE)
-		Explode(turret, SFX.NONE)
 		return 1
 	end
 	if severity <= 0.50 then
-		Explode(main, SFX.NONE)
-		Explode(turret,SFX.NONE)
-		Explode(barrel1, SFX.FALL + SFX.SMOKE + SFX.FIRE)
 		return 1
 	else
-		Explode(main, SFX.NONE)
-		Explode(turret, SFX.NONE)
-		Explode(barrel2, SFX.FALL + SFX.SMOKE + SFX.FIRE)
-		Explode(tracks1, SFX.SHATTER + SFX.SMOKE + SFX.FIRE)
-		Hide(tracks2)
-		Hide(tracks3)
-		Hide(tracks4)
 		return 2
 	end
 end

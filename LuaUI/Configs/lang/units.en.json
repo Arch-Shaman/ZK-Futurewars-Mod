@@ -1057,7 +1057,7 @@
 	"shieldfelon" : {
 		"name" : "Guardian",
 		"description" : "Shielded Riot/Skirmisher Bot",
-		"helptext" : "The Guardian is a modernized Felon with a larger, heavier shield bubble. However, where it sets itself apart from its older generation model is in its application of Keskian Mechanics to produce arcing bolts of energy. These bolts seek out nearby targets, dealing damage and jumping off to more nearby targets."
+		"helptext" : "The Guardian is a modernized Felon with a larger, heavier shield bubble. However, where it sets itself apart from its older generation model is in its application of Keksian Discharges to produce arcing bolts of energy. These bolts seek out nearby targets, dealing damage and jumping off to more nearby targets."
 	},
 	"seismic" : {
 		"name" : "Quake",
@@ -1125,9 +1125,9 @@
 		"helptext" : "The Toad packs twin anti-air lasers and an autocannon for slaying enemy aircraft rapidly. It can also jump to quickly access high ground or to escape."
 	},
 	"tankheavyraid" : {
-		"name" : "Blitz",
-		"description" : "Lightning Assault/Raider Tank",
-		"helptext" : "The Blitz is a high-tech raider. Its weapon, a lightning gun, deals mostly paralyze damage. This way, the Blitz can disable turrets, waltz through the defensive line, and proceed to level the economic heart of the opponent's base. When killed, it sets off an EMP explosion that can stun surrounding raiders."
+		"name" : "Thunderclap",
+		"description" : "Lightning Riot Tank",
+		"helptext" : "One of the few very examples of an update to a Coalition Wars fabmod, the Thunderclap Tank is based off of recent breakthroughs in Keksian Discharges. Its X-09 Fulminator sends out extremely high energy discharges which bounce off nearby matter making it an extremely efficient riot when facing multiple light units. Beware fighting it in forests or in contested areas as it can gain range by exploiting wrecks or nearby units."
 	},
 	"staticheavyradar" : {
 		"name" : "Advanced Radar",
