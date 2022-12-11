@@ -60,7 +60,7 @@ end
 for i = 1, #FeatureDefs do
 	local name = FeatureDefs[i].tooltip
 	--Spring.Echo(i .. ": " .. tostring(name))
-	if string.find(name, "Shards") or string.find(name, "Debris -") or name == "Metal Vein" or name == "Coagulation Node" or name == "contains metal" then
+	if string.find(name, "Shards") or string.find(name, "Debris -") or name == "Metal Vein" or name == "Coagulation Node" or name == "contains metal" or string.find(name, "Geothermal vent") then
 		invalidFeatures[i] = true
 		Spring.Echo(i .. " ( " .. name .. ") is invalid")
 	end
