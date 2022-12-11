@@ -80,7 +80,6 @@ return {
 					singuceg = "black_hole_1280",
 				},
 				--explosionGenerator = "custom:grav_danger_spikes",
-				explosionSpeed     = 100000,
 				impulseBoost       = 100,
 				impulseFactor      = -10,
 				name               = "Naked Singularity",
