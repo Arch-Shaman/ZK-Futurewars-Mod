@@ -2,8 +2,8 @@ local name = "commweapon_heavyrifle_disrupt"
 local weaponDef = {
 	name                    = "Heavy Disruption Rifle",
 	areaOfEffect            = 96,
-	burst                   = 3,
-	burstrate               = 0.2,
+	burst                   = 6,
+	burstrate               = 0.1,
 	craterBoost             = 0,
 	craterMult              = 0,
 	customParams            = {
@@ -17,7 +17,7 @@ local weaponDef = {
 		antibaitbypass = "ärsytät minua",
 	},
 	damage                  = {
-		default = 250.1*.85,
+		default = 89.1*.85,
 	},
 	edgeEffectiveness       = 0.5,
 	explosionGenerator      = "custom:BEAMWEAPON_HIT_PURPLE",
