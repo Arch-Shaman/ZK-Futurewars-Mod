@@ -167,7 +167,7 @@ return {
 				interceptedByShieldType = 1,
 				paralyzeTime            = 1,
 				range                   = 300,
-				reloadtime              = 2.2,
+				reloadtime              = 2.6,
 				rgbColor                = "0.5 0.5 1",
 				soundStart              = "weapon/emp/lightningcannon_fire",
 				soundTrigger            = true,
