@@ -579,7 +579,7 @@ local function FinishMorph(unitID, morphData)
 			Spring.GiveOrderToUnit(newUnit, cmd.id, cmd.params, coded)
 		end
 	end
-	if cmds[1].id == CMD_RAW_MOVE then
+	if cmds[1] and cmds[1].id == CMD_RAW_MOVE then
 		--Spring.Echo("Fixing move order for unit " .. newUnit)
 		Spring.SetUnitMoveGoal(newUnit, cmds[1].params[1], cmds[1].params[2], cmds[1].params[3], cmds[1].params[4] or 16, nil, false)
 	end
