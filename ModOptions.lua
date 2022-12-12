@@ -69,7 +69,7 @@ local options = {
 		def    = false,
 		section= 'a_important',
 	},
-
+	
 	{
 		key     = 'sharemode',
 		name    = 'Commshare',
@@ -454,6 +454,14 @@ local options = {
 			{key = 'share', name = "Impact sharing", desc = 'On impact, neighbours contribute charge to make up the required charge.'},
 			{key = 'penetrate', name = "Partial Penetrate", desc = 'Projectiles drain shields that they penetrate but lose effective damage for subsequent shield impacts.'},
 		},
+	},
+	{
+		key    = 'mtpath',
+		name   = 'Multithread Pathfinding',
+		desc   = 'Use multiple cores for pathfinding calculations.',
+		type   = 'bool',
+		section= 'experimental',
+		def    = true,
 	},
 	{
 		key    = 'terracostmult',
