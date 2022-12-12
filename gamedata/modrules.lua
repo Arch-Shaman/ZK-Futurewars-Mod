@@ -8,6 +8,16 @@
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+local pfForceSingleThreaded = false
+local forceSingleThreaded = false
+local modoptions = Spring.GetModOptions()
+if (modoptions and (modoptions.mtpath == 0 or modoptions.mtpath == "0")) then
+	multithreadPathing = true
+	forceSingleThreaded = true
+end
+Spring.Echo("pfForceSingleThreaded", pfForceSingleThreaded)
+Spring.Echo("forceSingleThreaded", forceSingleThreaded)
+
 local modrules  = {
 	
 	movement = {
@@ -18,6 +28,9 @@ local modrules  = {
 		allowUnitCollisionOverlap = false,	-- defaults to true	-- this lets units clump close together when moving, after which they are pushed apart
 		allowGroundUnitGravity = (Spring.GetModOptions() and (Spring.GetModOptions().groundunitygravity == "1")) or false,
 		allowDirectionalPathing = true,
+		
+		forceCollisionsSingleThreaded  = forceSingleThreaded,
+		forceCollisionAvoidanceSingleThreaded  = forceSingleThreaded,
 	},
 	
 	construction = {
@@ -126,8 +139,10 @@ local modrules  = {
 	system = {
 		pathFinderSystem = 0, --(Spring.GetModOptions() and (Spring.GetModOptions().pathfinder == "qtpfs") and 1) or 0, -- QTPFS causes desync https://springrts.com/mantis/view.php?id=5936
 		pathFinderUpdateRate = 0.0000001,
-		pathFinderRawDistMult = 1.25,
+		pathFinderRawDistMult = 100000,
+		pfForceSingleThreaded = forceSingleThreaded,
 		allowTake = false,
+		enableSmoothMesh = false,
 	},
 }
 --------------------------------------------------------------------------------
