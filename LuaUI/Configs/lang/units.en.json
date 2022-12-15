@@ -761,8 +761,8 @@
 	},
 	"tankriot" : {
 		"name" : "Cobbler",
-		"description" : "Heavy Riot Support Tank",
-		"helptext" : "The Cobbler is a heavy riot support tank with canister rockets that spew projectiles across an area. Its fabricators can hold up to 4 missiles at a time, though it must slowly rebuild them."
+		"description" : "Heavy Fire Support Tank (Skirmisher)",
+		"helptext" : "The Cobbler is a heavy fire support tank with canister rockets that spew projectiles across an area. Its fabricators can hold up to 4 missiles at a time, though it must slowly rebuild them."
 	},
 	"staticantinuke" : {
 		"name" : "Antinuke",

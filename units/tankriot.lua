@@ -2,7 +2,7 @@ return {
 	tankriot = {
 		unitname            = "tankriot",
 		name                = "Cobbler",
-		description         = "Heavy Riot Support Tank",
+		description         = "Heavy Fire Support Tank (Skirmisher)",
 		acceleration        = 0.109,
 		brakeRate           = 0.428,
 		buildCostMetal      = 720,
