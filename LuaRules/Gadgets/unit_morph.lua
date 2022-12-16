@@ -91,6 +91,7 @@ local emptyTable = {} -- for speedups
 local MAX_MORPH = 0 -- Set in morph defs
 
 local shields = {}
+local unitsNeedingHax = {}
 
 for i = 1, #UnitDefs do
 	local def = UnitDefs[i]
@@ -349,19 +350,22 @@ local function CreateMorphedToUnit(defName, x, y, z, face, unitTeam, isBeingBuil
 end
 
 local function DoesCMDNeedHax(cmdID, unitID, cmdParams)
-	if cmdID ~= CMD.FIGHT or cmdID == CMD.MOVE or cmdID == CMD.ATTACK then return false end -- probably fine
-	if cmdID == CMD_RAW_MOVE then return true end
+	if cmdID == CMD.FIGHT or cmdID == CMD.MOVE or cmdID == CMD.ATTACK or cmdID == CMD.PATROL then return false end -- probably fine
+	if cmdID == CMD_RAW_MOVE then return true, 16 end
 	local ux, _, uz = spGetUnitPosition(unitID)
 	local px, py, pz = cmdParams[1], cmdParams[2], cmdParams[3]
-	if cmdParams[1] and cmdParams[3] and (cmdID == CMD.RECLAIM or cmdID == CMD.REPAIR or cmdID < 0) then
+	--Spring.Echo("Unit needs hax")
+	if px and pz then
 		local xdiff = ux - px
 		local zdiff = uz - pz
 		local d = math.sqrt((xdiff * xdiff) + (zdiff * zdiff))
 		local ud = UnitDefs[Spring.GetUnitDefID(unitID)]
 		local buildDist = ud.buildDistance
-		if ud.isMobileBuilder and d >= buildDist then
+		if d >= buildDist then
+			--Spring.Echo("Apply build hax")
 			return true, buildDist
 		else
+			--Spring.Echo("Build dist too close")
 			return false
 		end
 	else
@@ -604,13 +608,9 @@ local function FinishMorph(unitID, morphData)
 		--Spring.Echo("Fixing move order for unit " .. newUnit)
 		Spring.SetUnitMoveGoal(newUnit, cmds[1].params[1], cmds[1].params[2], cmds[1].params[3], cmds[1].params[4] or 16, nil, false)
 	elseif cmds[1] then
-		local needsHax, buildHaxDist = DoesCMDNeedHax(cmds[1], newUnit, cmds[1].params)
+		local needsHax, buildHaxDist = DoesCMDNeedHax(cmds[1].id, newUnit, cmds[1].params)
 		if needsHax then
-			if buildHaxDist then
-				Spring.SetUnitMoveGoal(newUnit, cmds[1].params[1], cmds[1].params[2], cmds[1].params[3], buildHaxDist, nil, false)
-			else
-				Spring.SetUnitMoveGoal(newUnit, cmds[1].params[1], cmds[1].params[2], cmds[1].params[3], 16, nil, false)
-			end
+			unitsNeedingHax[newUnit] = {[1] = cmds[1].params[1], [2] = cmds[1].params[2], [3] = cmds[1].params[3], [4] = buildHaxDist or 16}
 		end
 	end
 end
@@ -784,6 +784,14 @@ function gadget:GameFrame(n)
 		if StartMorph(unitID, unpack(data)) then
 			morphToStart[unitID] = nil
 		end
+	end
+	for unitID, data in pairs(unitsNeedingHax) do
+		local ud = UnitDefs[Spring.GetUnitDefID(unitID)]
+		local speedmult = (Spring.GetUnitRulesParam(unitID, "upgradesSpeedMult") or 1)
+		local speed = ud.speed * speedmult
+		Spring.SetUnitMoveGoal(unitID, data[1], data[2], data[3], data[4], speed, false)
+		--Spring.Echo("Applied hax")
+		unitsNeedingHax[unitID] = nil
 	end
 
 	for unitID, morphData in pairs(morphUnits) do
