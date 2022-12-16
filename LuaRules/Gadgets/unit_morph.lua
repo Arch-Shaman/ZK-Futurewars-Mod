@@ -353,7 +353,7 @@ local function DoesCMDNeedHax(cmdID, unitID, cmdParams)
 	if cmdID == CMD_RAW_MOVE then return true end
 	local ux, _, uz = spGetUnitPosition(unitID)
 	local px, py, pz = cmdParams[1], cmdParams[2], cmdParams[3]
-	if cmdParams[1] and cmdParams[3] and (cmdID == CMD.RECLAIM or cmdID == CMD.REPAIR) then
+	if cmdParams[1] and cmdParams[3] and (cmdID == CMD.RECLAIM or cmdID == CMD.REPAIR or cmdID < 0) then
 		local xdiff = ux - px
 		local zdiff = uz - pz
 		local d = math.sqrt((xdiff * xdiff) + (zdiff * zdiff))
