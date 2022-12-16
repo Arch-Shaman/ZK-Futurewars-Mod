@@ -53,7 +53,7 @@ local function ReportEnemyAircraft()
 		widgetHandler:RemoveCallIn("UnitEnteredRadar")
 		spottedair = true
 		PlaySound("airborn_threat.wav", 1.0)
-		AddToConsole("Airborn enemy on radar!")
+		AddToConsole("Airborne enemy on radar!")
 	end
 end
 
