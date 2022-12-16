@@ -1382,6 +1382,13 @@ local sounds = {
 	},
 	
 	-- Factory
+	factorycomm  = {
+		build = { "builder_start" },
+		select = {
+			volume = 0.8,
+			[1] = "cpl_select",
+		},
+	},
 	factorycloak = {
 		build = { "builder_start" },
 		select = {
