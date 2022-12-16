@@ -348,6 +348,27 @@ local function CreateMorphedToUnit(defName, x, y, z, face, unitTeam, isBeingBuil
 	end
 end
 
+local function DoesCMDNeedHax(cmdID, unitID, cmdParams)
+	if cmdID ~= CMD.FIGHT or cmdID == CMD.MOVE or cmdID == CMD.ATTACK then return false end -- probably fine
+	if cmdID == CMD_RAW_MOVE then return true end
+	local ux, _, uz = spGetUnitPosition(unitID)
+	local px, py, pz = cmdParams[1], cmdParams[2], cmdParams[3]
+	if cmdParams[1] and cmdParams[3] and (cmdID == CMD.RECLAIM or cmdID == CMD.REPAIR) then
+		local xdiff = ux - px
+		local zdiff = uz - pz
+		local d = math.sqrt((xdiff * xdiff) + (zdiff * zdiff))
+		local ud = UnitDefs[Spring.GetUnitDefID(unitID)]
+		local buildDist = ud.buildDistance
+		if ud.isMobileBuilder and d >= buildDist then
+			return true, buildDist
+		else
+			return false
+		end
+	else
+		return false
+	end
+end
+
 local function FinishMorph(unitID, morphData)
 	local udDst = UnitDefs[morphData.def.into]
 	local unitDefID = Spring.GetUnitDefID(unitID)
@@ -582,6 +603,15 @@ local function FinishMorph(unitID, morphData)
 	if cmds[1] and cmds[1].id == CMD_RAW_MOVE then
 		--Spring.Echo("Fixing move order for unit " .. newUnit)
 		Spring.SetUnitMoveGoal(newUnit, cmds[1].params[1], cmds[1].params[2], cmds[1].params[3], cmds[1].params[4] or 16, nil, false)
+	elseif cmds[1] then
+		local needsHax, buildHaxDist = DoesCMDNeedHax(cmds[1], newUnit, cmds[1].params)
+		if needsHax then
+			if buildHaxDist then
+				Spring.SetUnitMoveGoal(newUnit, cmds[1].params[1], cmds[1].params[2], cmds[1].params[3], buildHaxDist, nil, false)
+			else
+				Spring.SetUnitMoveGoal(newUnit, cmds[1].params[1], cmds[1].params[2], cmds[1].params[3], 16, nil, false)
+			end
+		end
 	end
 end
 
