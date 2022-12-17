@@ -27,7 +27,7 @@ return {
 		iconType            = "hoversupport",
 		maxDamage           = 600,
 		maxSlope            = 36,
-		maxVelocity         = 2.8,
+		maxVelocity         = 2.5,
 		movementClass       = "HOVER3",
 		noChaseCategory     = "TERRAFORM FIXEDWING SUB",
 		objectName          = "hoverskirm.s3o",
