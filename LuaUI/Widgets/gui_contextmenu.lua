@@ -555,13 +555,13 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			local aimtime = (tonumber(cp.aimdelay) or 0) / 30
 			local fixedreload = reloadtime + aimtime
 			
-			local dps  = math.floor(dam /fixedreload + 0.5)
-			local dpsw = math.floor(damw/fixedreload + 0.5)
-			local dpss = math.floor(dams/fixedreload + 0.5)
-			local dpsd = math.floor(damd/fixedreload + 0.5)
-			local dpsc = math.floor(damc/fixedreload + 0.5)
-	
 			local mult = tonumber(cp.statsprojectiles) or ((tonumber(cp.script_burst) or wd.salvoSize) * wd.projectiles)
+			
+			local dps  = dam /fixedreload
+			local dpsw = damw/fixedreload
+			local dpss = dams/fixedreload
+			local dpsd = damd/fixedreload
+			local dpsc = damc/fixedreload
 	
 			local dps_str, dam_str, shield_dam_str = '', '', ''
 			local damageTypes = 0
