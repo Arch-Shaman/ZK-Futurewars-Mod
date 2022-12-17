@@ -1825,8 +1825,8 @@ local function printunitinfo(ud, buttonWidth, unitID)
 			local decays
 			if decayrate > 0 then
 				txt = "- Minimum Output:"
+				endperc = mindecay
 				mindecay = mindecay * baseoutput
-				endperc = 1
 				decays = true
 			else
 				txt = "- Maximum Output:"
@@ -1838,11 +1838,10 @@ local function printunitinfo(ud, buttonWidth, unitID)
 			local sim = startperc
 			while sim ~= endperc do
 				timetoreach = timetoreach + decaytime
-				sim = sim * (1 - decayperc)
-				if sim < endperc and decayrate > 0 then
-					sim = 1
-				elseif sim > endperc and decayrate < 0 then
-					sim = endperc
+				if decayrate < 0 then
+					sim = math.min(sim * (1 - decayperc), endperc)
+				else
+					sim = math.max(sim * (1 - decayperc), endperc)
 				end
 			end
 			local mm = math.floor(timetoreach / 60)
