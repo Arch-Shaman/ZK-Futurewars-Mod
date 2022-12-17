@@ -31,8 +31,18 @@ local function ChangeToZombie(playerID)
 	Spring.Echo("game_message: " .. name .. " became a zombie!")
 end
 
+function gadget:RecvLuaMsg(msg, playerID)
+	if msg:find("zombieismupdate") then
+		local name, active, spectator = Spring.GetPlayerInfo(playerID)
+		if spectator then
+			ChangeToZombie(playerID)
+		end
+	end
+	
+end
+
 function gadget:GameStart()
-	local playerList = Spring.GetPlayerList()
+	local playerList = Spring.GetPlayerList(-1, false)
 	for i = 1, #playerList do
 		local playerID = playerList[i]
 		local name, active, spectator = Spring.GetPlayerInfo(playerID)
@@ -44,24 +54,12 @@ function gadget:GameStart()
 	if zombieCount == 0 then
 		zombieCount = math.random(1, 10)
 	end
-end
-
-function gadget:RecvLuaMsg(msg, playerID)
-	if msg:find("zombieismupdate") then
-		local name, active, spectator = Spring.GetPlayerInfo(playerID)
-		if spectator then
-			ChangeToZombie(playerID)
-		end
-	end
-end
-
-function gadget:GameStart()
 	local randomTable = {"dynsupport0", "dynstrike0", "dynriot0", "dynassault0", "dynrecon0"}
 	local xBound = Game.mapSizeX
 	local yBound = Game.mapSizeZ
 	for i = 1, zombieCount do
 		local x = math.random(xBound * 0.4, xBound * 0.6)
-		local z = math.random(zBound * 0.4, zBound * 0.6)
+		local z = math.random(yBound * 0.4, yBound * 0.6)
 		Spring.CreateUnit(randomTable[math.random(1, #randomTable)], x, Spring.GetGroundHeight(x, z), z)
 	end
 end
