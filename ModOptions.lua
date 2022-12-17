@@ -145,6 +145,14 @@ local options = {
 		step = 0.1,
 	},
 	{
+		key    = 'playable_zombies',
+		name   = 'Spectators Become Zombies',
+		desc   = "Spectators are allowed to control zombies.",
+		type   = 'bool',
+		section= 'silly',
+		def    = false, --commeco
+	},
+	{
 		key    = 'zombies',
 		name   = 'Enable zombies',
 		desc   = "All features self-resurrect.",

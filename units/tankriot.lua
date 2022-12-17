@@ -110,7 +110,7 @@ return {
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
 					force_ignore_ground = "1",
-					script_reload = "8.5",
+					script_reload = "10.5",
 					script_burst = "4",
 					numprojectiles1 = 10, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "tankriot_bomblet",

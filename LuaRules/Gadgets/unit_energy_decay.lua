@@ -83,7 +83,7 @@ function gadget:GameFrame(f)
 			if config.appreciates then
 				newrate = min(data.currentrate * (1 - config.rate), config.maxoutput)
 			else -- depreciates
-				newrate = max(data.currentrate * (1 - config.rate), 1)
+				newrate = max(data.currentrate * (1 - config.rate), config.minoutput)
 			end
 			if debugMode then spEcho(id .. ": Decayed from " .. data.currentrate * 10 .. "% -> " .. newrate * 10 .. "%") end
 			data.currentrate = newrate
@@ -91,7 +91,7 @@ function gadget:GameFrame(f)
 			GG.UpdateUnitAttributes(id)
 			GG.UpdateUnitAttributes(id)
 			--if debugMode then spEcho("Updated " .. id) end
-			if (not config.appreciates and data.currentrate == 1) or (config.appreciates and data.currentrate == config.maxoutput) then
+			if (not config.appreciates and data.currentrate == config.minoutput) or (config.appreciates and data.currentrate == config.maxoutput) then
 				IterableMap.Remove(decayers, id)
 			else
 				data.nextupdate = f + config.time

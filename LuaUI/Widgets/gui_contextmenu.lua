@@ -555,13 +555,13 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			local aimtime = (tonumber(cp.aimdelay) or 0) / 30
 			local fixedreload = reloadtime + aimtime
 			
-			local dps  = math.floor(dam /fixedreload + 0.5)
-			local dpsw = math.floor(damw/fixedreload + 0.5)
-			local dpss = math.floor(dams/fixedreload + 0.5)
-			local dpsd = math.floor(damd/fixedreload + 0.5)
-			local dpsc = math.floor(damc/fixedreload + 0.5)
-	
 			local mult = tonumber(cp.statsprojectiles) or ((tonumber(cp.script_burst) or wd.salvoSize) * wd.projectiles)
+			
+			local dps  = dam /fixedreload
+			local dpsw = damw/fixedreload
+			local dpss = dams/fixedreload
+			local dpsd = damd/fixedreload
+			local dpsc = damc/fixedreload
 	
 			local dps_str, dam_str, shield_dam_str = '', '', ''
 			local damageTypes = 0
@@ -1825,8 +1825,8 @@ local function printunitinfo(ud, buttonWidth, unitID)
 			local decays
 			if decayrate > 0 then
 				txt = "- Minimum Output:"
+				endperc = mindecay
 				mindecay = mindecay * baseoutput
-				endperc = 1
 				decays = true
 			else
 				txt = "- Maximum Output:"
@@ -1838,11 +1838,10 @@ local function printunitinfo(ud, buttonWidth, unitID)
 			local sim = startperc
 			while sim ~= endperc do
 				timetoreach = timetoreach + decaytime
-				sim = sim * (1 - decayperc)
-				if sim < endperc and decayrate > 0 then
-					sim = 1
-				elseif sim > endperc and decayrate < 0 then
-					sim = endperc
+				if decayrate < 0 then
+					sim = math.min(sim * (1 - decayperc), endperc)
+				else
+					sim = math.max(sim * (1 - decayperc), endperc)
 				end
 			end
 			local mm = math.floor(timetoreach / 60)

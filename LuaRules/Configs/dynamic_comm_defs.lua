@@ -2118,9 +2118,9 @@ for i = 1, #moduleDefs do -- Add name, cost, dps, etc
 				--Spring.Echo("Falling back to base game")
 				_, wd = VFS.Include("gamedata\\modularcomms\\weapons\\" .. name:gsub("commweapon_", "") .. ".lua")
 			end
-			if VFS.FileExists("gamedata\\modularcomms\\weapons\\" .. string.gsub(name:gsub("commweapon_", ""), "_", "") .. ".lua") then
-				_, wd = VFS.Include("gamedata\\modularcomms\\weapons\\" .. string.gsub(name:gsub("commweapon_", ""), "_", "") .. ".lua")
-			end
+			--if VFS.FileExists("gamedata\\modularcomms\\weapons\\" .. string.gsub(name:gsub("commweapon_", ""), "_", "") .. ".lua") then
+				--_, wd = VFS.Include("gamedata\\modularcomms\\weapons\\" .. string.gsub(name:gsub("commweapon_", ""), "_", "") .. ".lua")
+			--end
 		end
 		if wd and not name:find("shield") then
 			local projectiles = wd.projectiles or 1
