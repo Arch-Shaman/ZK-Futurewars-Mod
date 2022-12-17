@@ -88,7 +88,7 @@ local isAiming = false
 local shot = 0
 local smokePiece = {base, turret}
 local gameSpeed = Game.gameSpeed
-local RELOAD_TIME = 8.5 * gameSpeed
+local RELOAD_TIME = 10.5 * gameSpeed
 
 local function RestoreAfterDelay()
 	SetSignalMask (SIG_AIM)
