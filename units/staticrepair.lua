@@ -53,7 +53,7 @@ return {
 		upright                       = true,
 		useBuildingGroundDecal        = true,
 		workerTime                    = 30,
-		resurrectSpeed				  = 10,
+		resurrectSpeed				  = 15,
 		featureDefs                   = {
 			DEAD = {
 				blocking         = false,
