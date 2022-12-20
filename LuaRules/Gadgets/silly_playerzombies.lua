@@ -25,7 +25,6 @@ if (not gadgetHandler:IsSyncedCode()) then
 			Spring.SendLuaRulesMsg("zombieismupdate")
 		end
 	end
-	
 	return 
 end
 
@@ -45,7 +44,6 @@ function gadget:RecvLuaMsg(msg, playerID)
 			ChangeToZombie(playerID)
 		end
 	end
-	
 end
 
 function gadget:GameStart()
