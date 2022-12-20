@@ -425,6 +425,7 @@ local function DoDeathExplosion(x, y, z)
 			team = Spring.GetGaiaTeamID(),
 			owner = unitID,
 		})
+	return explosion ~= alt
 end
 
 local function PriorityAimCheck(weaponNum)
