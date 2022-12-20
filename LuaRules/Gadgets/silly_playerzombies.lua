@@ -8,6 +8,17 @@ function gadget:GetInfo() return {
 	enabled   = true,
 } end
 
+local isEnabled
+do
+	local modoptions = Spring.GetModOptions()
+	local playableZombies = tonumber(modoptions.playable_zombies or "0")
+	Spring.Echo("PlayableZombies: " .. playableZombies)
+	local zombies = tonumber(modoptions.zombies or "0")
+	isEnabled = zombies == 1 and playableZombies == 1
+end
+
+if not isEnabled then return end
+
 if (not gadgetHandler:IsSyncedCode()) then 
 	function gadget:PlayerChanged(playerID)
 		if playerID == Spring.GetMyPlayerID() then
@@ -17,10 +28,6 @@ if (not gadgetHandler:IsSyncedCode()) then
 	
 	return 
 end
-
-local isEnabled = tonumber(Spring.GetModOptions()["playable_zombies"] or "1") == 1
-
-if not isEnabled then return end
 
 local zombieCount = 0
 local gaiaTeamID = Spring.GetGaiaTeamID()
@@ -60,6 +67,6 @@ function gadget:GameStart()
 	for i = 1, zombieCount do
 		local x = math.random(xBound * 0.4, xBound * 0.6)
 		local z = math.random(yBound * 0.4, yBound * 0.6)
-		Spring.CreateUnit(randomTable[math.random(1, #randomTable)], x, Spring.GetGroundHeight(x, z), z)
+		Spring.CreateUnit(randomTable[math.random(1, #randomTable)], x, Spring.GetGroundHeight(x, z), z, math.random(1, 4) - 1, gaiaTeamID)
 	end
 end
