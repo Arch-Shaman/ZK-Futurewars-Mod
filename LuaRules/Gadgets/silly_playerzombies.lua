@@ -62,9 +62,13 @@ function gadget:GameStart()
 	local randomTable = {"dynsupport0", "dynstrike0", "dynriot0", "dynassault0", "dynrecon0"}
 	local xBound = Game.mapSizeX
 	local yBound = Game.mapSizeZ
+	local minX = xBound * 0.4
+	local maxX = xBound * 0.6
+	local minY = yBound * 0.4
+	local maxY = yBound * 0.6
 	for i = 1, zombieCount do
-		local x = math.random(xBound * 0.4, xBound * 0.6)
-		local z = math.random(yBound * 0.4, yBound * 0.6)
+		local x = math.random(minX, maxX)
+		local z = math.random(minY, maxY)
 		Spring.CreateUnit(randomTable[math.random(1, #randomTable)], x, Spring.GetGroundHeight(x, z), z, math.random(1, 4) - 1, gaiaTeamID)
 	end
 end
