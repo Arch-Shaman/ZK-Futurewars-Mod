@@ -353,6 +353,25 @@ function Spring.Utilities.GetDescription(ud, unitID)
 	return desc
 end
 
+function Spring.Utilities.GetFeatureDescription(ud, unitID)
+	if not ud then
+		return ""
+	end
+
+	local name_override = ud.customParams.statsname or ud.name
+	local desc = WG.Translate ("units", name_override .. ".description") or ud.tooltip
+	local isValidUnit = Spring.ValidFeatureID(unitID)
+	
+	local buildSpeed = unitID and Spring.GetFeatureRulesParam(unitID, "buildpower_mult") or 1
+	buildSpeed = buildSpeed * GetCachedBaseBuildPower(ud.id)
+	if buildSpeed > 0 and ud.canAssist then
+		return WG.Translate("interface", "builds_at", {desc = desc, bp = math.round(buildSpeed, 1)}) or desc
+	elseif buildSpeed > 0 and ud.canRepair then
+		return WG.Translate("interface", "repairs_at", {desc = desc, bp = math.round(buildSpeed, 1)}) or desc
+	end
+	return desc
+end
+
 function Spring.Utilities.GetFeatureName(ud, featureID)
 	if Spring.GetFeatureRulesParam(featureID, "comm_name") then
 		return Spring.Utilities.GetCommanderFeatureName(featureID)
