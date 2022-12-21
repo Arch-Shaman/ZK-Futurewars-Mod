@@ -474,10 +474,8 @@ local function SetUpFeatureRules(featureID)
 	local mass = Spring.GetUnitRulesParam(unitID, "massOverride")
 	local _, maxHealth = Spring.GetUnitHealth(unitID)
 	local cost = Spring.GetUnitRulesParam(unitID, "comm_cost")
-	if profileID then
-		Spring.SetFeatureRulesParam(featureID, "comm_profileID", profileID, INLOS)
-	end
 	-- For context menu purposes --
+	
 	TransferParamToFeature(featureID, "upgradesSpeedMult")
 	TransferParamToFeature(featureID, "carrier_count_drone")
 	TransferParamToFeature(featureID, "comm_weapon_num_1")
@@ -513,6 +511,7 @@ local function SetUpFeatureRules(featureID)
 	Spring.SetFeatureMaxHealth(featureID, maxHealth)
 	Spring.SetFeatureHealth(featureID, maxHealth)
 	-- Things we actually need --
+	TransferParamToFeature(featureID, "comm_profileID")
 	TransferParamToFeature(featureID, "comm_chassis")
 	TransferParamToFeature(featureID, "comm_baseWreckID")
 	TransferParamToFeature(featureID, "comm_baseHeapID")
