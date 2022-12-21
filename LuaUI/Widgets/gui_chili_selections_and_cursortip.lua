@@ -1973,6 +1973,8 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			healthBarUpdate(false)
 			if featureUnitDefID then
 				unitDefID = featureUnitDefID
+				featureTooltip = featureTooltip or GetHumanName(UnitDefs[unitDefID], nil)
+				unitNameUpdate(true, featureTooltip, GetUnitIcon(unitDefID))
 				if playerNameLabel then
 					playerNameLabel:SetPos(nil, PIC_HEIGHT + 8, nil, nil, nil, true)
 					spaceClickLabel:SetPos(nil, PIC_HEIGHT + 32, nil, nil, nil, true)
@@ -2017,7 +2019,11 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			if extraTooltip then
 				unitDesc:SetText(GetDescription(ud, unitID) .. extraTooltip)
 			else
-				unitDesc:SetText(GetDescription(ud, unitID))
+				if featureID then
+					unitDesc:SetText(Spring.Utilities.GetFeatureDescription(ud, featureID))
+				else
+					unitDesc:SetText(GetDescription(ud, unitID))
+				end
 			end
 			unitDesc:Invalidate()
 			if not featureID then
