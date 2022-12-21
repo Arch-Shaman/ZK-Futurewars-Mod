@@ -353,6 +353,14 @@ function Spring.Utilities.GetDescription(ud, unitID)
 	return desc
 end
 
+function Spring.Utilities.GetFeatureName(ud, featureID)
+	if Spring.GetFeatureRulesParam(featureID, "comm_name") then
+		return Spring.Utilities.GetCommanderFeatureName(featureID)
+	else
+		return Spring.Utilities.GetDescription(ud, nil)
+	end
+end
+
 function Spring.Utilities.GetHelptext(ud, unitID)
 	local name_override = ud.customParams.statsname or ud.name
 	return WG.Translate ("units", name_override .. ".helptext") or WG.Translate("interface", "no_helptext")
