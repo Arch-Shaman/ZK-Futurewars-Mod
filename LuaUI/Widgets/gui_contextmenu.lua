@@ -435,7 +435,7 @@ local function GetShieldRegenDrain(wd)
 	return shieldRegen, shieldDrain
 end
 
-local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, deathExplosion, cost)
+local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, deathExplosion, cost, isFeature)
 	local cells = cells
 	local startPoint = #cells+1
 	
@@ -448,8 +448,12 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 	local recursedWepIds = recursedWepIds
 	recursedWepIds[#recursedWepIds+1] = wd.name
 	local cp = wd.customParams or emptyTable
-	
-	local comm_mult = (unitID and Spring.GetUnitRulesParam(unitID, "comm_damage_mult")) or 1
+	local comm_mult
+	if isFeature then
+		comm_mult = (unitID and Spring.GetFeatureRulesParam(unitID, "comm_damage_mult")) or 1
+	else
+		comm_mult = (unitID and Spring.GetUnitRulesParam(unitID, "comm_damage_mult")) or 1
+	end
 	local name = wd.description or "Weapon"
 	if bombletCount then
 		if not deathExplosion then
@@ -746,7 +750,13 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			if show_range and not bombletCount then
 				local range = cp.truerange or wd.range
 				cells[#cells+1] = ' - Range:'
-				cells[#cells+1] = numformat(range * ((unitID and Spring.GetUnitRulesParam(unitID, "comm_range_mult")) or 1),2) .. " elmo"
+				local rangemult
+				if isFeature then
+					rangemult = (unitID and Spring.GetFeatureRulesParam(unitID, "comm_range_mult")) or 1
+				else
+					rangemult = (unitID and Spring.GetUnitRulesParam(unitID, "comm_range_mult")) or 1
+				end
+				cells[#cells+1] = numformat(range * rangemult, 2) .. " elmo"
 			end
 			if wd.customParams.puredecloaktime then
 				cells[#cells+1] = ' - Forces decloak for'
@@ -868,7 +878,6 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				end
 			end
 			if cp.blastwave_size then
-				local damagemult = (unitID and Spring.GetUnitRulesParam(unitID, "comm_damage_mult")) or 1
 				cells[#cells+1] = ' - Creates a blastwave:'
 				cells[#cells+1] = ''
 				cells[#cells+1] = '\t - Initial Size:'
@@ -882,11 +891,11 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 						cells[#cells+1] = blastwave_healing
 					end
 				end
-				local slowdmg = tonumber(cp.blastwave_slowdmg) or 0 * damagemult
-				local empdmg = tonumber(cp.blastwave_empdmg) or 0 * damagemult
-				local overslow = tonumber(cp.blastwave_overslow) or 0 * damagemult
-				local emptime = tonumber(cp.blastwave_emptime) or 0 * damagemult
-				local damage = tonumber(cp.blastwave_damage) or 0 * damagemult
+				local slowdmg = tonumber(cp.blastwave_slowdmg) or 0 * comm_mult
+				local empdmg = tonumber(cp.blastwave_empdmg) or 0 * comm_mult
+				local overslow = tonumber(cp.blastwave_overslow) or 0 * comm_mult
+				local emptime = tonumber(cp.blastwave_emptime) or 0 * comm_mult
+				local damage = tonumber(cp.blastwave_damage) or 0 * comm_mult
 				local damagestring = damage .. " "
 				if empdmg > 0 then
 					damagestring = damagestring .. color2incolor(colorCyan) .. empdmg .. "( " .. emptime .. "s)\008 "
@@ -944,13 +953,12 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				cells[#cells+1] = numformat(tonumber(cp.area_damage_duration)) .. " s"
 			end
 			if cp.singularity then
-				local bonus = (unitID and (Spring.GetUnitRulesParam(unitID, "comm_damage_mult") or 1)) or 1
 				cells[#cells+1] = '- Creates a Singularity:'
 				cells[#cells+1] = ''
 				cells[#cells+1] = '\tDuration:'
 				cells[#cells+1] = numformat(cp.singulifespan/30, 1) .. "s"
 				cells[#cells+1] = '\tStrength:'
-				cells[#cells+1] = numformat(cp.singustrength * bonus, 1) .. "elmo/s pull"
+				cells[#cells+1] = numformat(cp.singustrength * comm_mult, 1) .. "elmo/s pull"
 				cells[#cells+1] = '\tRadius:'
 				cells[#cells+1] = cp.singuradius .. " elmo"
 			end
@@ -1106,13 +1114,19 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 	end
 	return cells
 end
-local function printAbilities(ud, unitID)
+local function printAbilities(ud, unitID, isFeature)
 	local cells = {}
 
 	local cp = ud.customParams
 
 	if ud.buildSpeed > 0 and not cp.nobuildpower then
-		local buildSpeed = ud.buildSpeed * (unitID and Spring.GetUnitRulesParam(unitID, "buildpower_mult") or 1)
+		local bpMult
+		if isFeature then
+			bpMult = Spring.GetFeatureRulesParam(unitID, "buildpower_mult") or 1
+		else
+			bpMult = unitID and Spring.GetUnitRulesParam(unitID, "buildpower_mult") or 1
+		end
+		local buildSpeed = ud.buildSpeed * bpMult
 		cells[#cells+1] = 'Construction'
 		cells[#cells+1] = ''
 		cells[#cells+1] = ' - Buildpower: '
@@ -1146,10 +1160,24 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = ''
 		cells[#cells+1] = ''
 	end
-
-	if cp.area_cloak or (unitID and Spring.GetUnitRulesParam(unitID, "comm_area_cloak")) then
-		local areaCloakUpkeep = (unitID and Spring.GetUnitRulesParam(unitID, "comm_area_cloak_upkeep") or cp.area_cloak_upkeep)
-		local areaCloakRadius = ((unitID and Spring.GetUnitRulesParam(unitID, "comm_area_cloak_radius")) or cp.area_cloak_radius)
+	local commHasAreaCloak
+	if unitID and isFeature then
+		commHasAreaCloak = Spring.GetFeatureRulesParam(unitID, "comm_area_cloak") ~= nil
+	elseif unitID then
+		commHasAreaCloak = Spring.GetUnitRulesParam(unitID, "comm_area_cloak") ~= nil
+	end
+	if cp.area_cloak or commHasAreaCloak then
+		local areaCloakRadius, areaCloakUpkeep
+		if unitID and isFeature then
+			areaCloakUpkeep = unitID and Spring.GetFeatureRulesParam(unitID, "comm_area_cloak_upkeep")
+			areaCloakRadius = unitID and Spring.GetFeatureRulesParam(unitID, "comm_area_cloak_radius")
+		elseif unitID then
+			areaCloakUpkeep = unitID and Spring.GetUnitRulesParam(unitID, "comm_area_cloak_upkeep")
+			areaCloakRadius = unitID and Spring.GetUnitRulesParam(unitID, "comm_area_cloak_radius")
+		else
+			areaCloakUpkeep = cp.area_cloak_upkeep
+			areaCloakRadius = cp.area_cloak_radius
+		end
 		cells[#cells+1] = 'Area cloak'
 		cells[#cells+1] = ''
 		cells[#cells+1] = ' - Upkeep:'
@@ -1159,7 +1187,13 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = ''
 		cells[#cells+1] = ''
 	end
-	if unitID and Spring.GetUnitRulesParam(unitID, "commander_reconpulse") then
+	local hasReconPulse = unitID ~= nil
+	if hasReconPulse and isFeature then
+		hasReconPulse = Spring.GetFeatureRulesParam(unitID, "commander_reconpulse") ~= nil
+	elseif hasReconPulse then
+		hasReconPulse = Spring.GetUnitRulesParam(unitID, "commander_reconpulse") ~= nil
+	end
+	if hasReconPulse then
 		cells[#cells+1] = 'Recon Pulse'
 		cells[#cells+1] = ''
 		cells[#cells+1] = ' - Uncloaks enemy units within 400 range.'
@@ -1167,9 +1201,21 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = ' - Refresh Rate:'
 		cells[#cells+1] = '2s'
 	end
-
-	if ud.canCloak and (not unitID or Spring.GetUnitRulesParam(unitID, "comm_personal_cloak")) then
-		local decloakDistance = (unitID and Spring.GetUnitRulesParam(unitID, "comm_decloak_distance")) or ud.decloakDistance
+	local canCloak
+	if unitID and isFeature then
+		canCloak = Spring.GetFeatureRulesParam(unitID, "comm_personal_cloak") ~= nil
+	elseif unitID then
+		canCloak = Spring.GetUnitRulesParam(unitID, "comm_personal_cloak") ~= nil
+	end
+	if ud.canCloak and (not unitID or canCloak) then
+		local decloakDistance
+		if not unitID then
+			decloakDistance = ud.decloakDistance
+		elseif isFeature then
+			decloakDistance = Spring.GetFeatureRulesParam(unitID, "comm_decloak_distance") or ud.decloakDistance
+		else
+			decloakDistance = Spring.GetUnitRulesParam(unitID, "comm_decloak_distance") or ud.decloakDistance
+		end
 		cells[#cells+1] = 'Personal cloak'
 		cells[#cells+1] = ''
 		if not ud.isImmobile and ud.cloakCost ~= ud.cloakCostMoving and ud.cloakCost > 0 then
@@ -1210,21 +1256,40 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = ' - Decloak radius: '
 		cells[#cells+1] = numformat(ud.decloakDistance) .. " elmo"
 	end
-
-	if cp.cloakregen or (unitID and Spring.GetUnitRulesParam(unitID, "commcloakregen")) then
-		local cloakregen = (unitID and Spring.GetUnitRulesParam(unitID, "commcloakregen")) or cp.cloakregen
+	local commcloakregen, commrecloaktime, commjammerrange, commradarrange, nanoregen, nanomax
+	if unitID then
+		if isFeature then
+			commcloakregen = Spring.GetFeatureRulesParam(unitID, "commcloakregen")
+			commrecloaktime = Spring.GetFeatureRulesParam(unitID, "commrecloaktime")
+			commjammerrange = Spring.GetFeatureRulesParam(unitID, "jammingRangeOverride")
+			commradarrange = Spring.GetFeatureRulesParam(unitID, "radarRangeOverride")
+			nanoregen = Spring.GetFeatureRulesParam(unitID, "commander_regen")
+			nanomax = Spring.GetFeatureRulesParam(unitID, "commander_max")
+		else
+			commcloakregen = Spring.GetUnitRulesParam(unitID, "commcloakregen")
+			commrecloaktime = Spring.GetUnitRulesParam(unitID, "commrecloaktime")
+			commjammerrange = Spring.GetUnitRulesParam(unitID, "jammingRangeOverride")
+			commradarrange = Spring.GetUnitRulesParam(unitID, "radarRangeOverride")
+			nanoregen = Spring.GetUnitRulesParam(unitID, "commander_regen")
+			nanomax = Spring.GetUnitRulesParam(unitID, "commander_max")
+		end
+	end
+	nanomax = nanomax or cp.nano_maxregen
+	nanoregen = nanoregen or cp.nanoregen
+	if cp.cloakregen or commcloakregen then
+		local cloakregen = commcloakregen or cp.cloakregen
 		cells[#cells+1] = " - Cloaked Regen:"
 		cells[#cells+1] = cloakregen .. "HP/s"
 	end
-	if cp.recloaktime or (unitID and Spring.GetUnitRulesParam(unitID, "commrecloaktime")) then
-		local recloaktime = (unitID and Spring.GetUnitRulesParam(unitID, "commrecloaktime")) or cp.recloaktime
+	if cp.recloaktime or commrecloaktime then
+		local recloaktime = commrecloaktime or cp.recloaktime
 		cells[#cells+1] = " - Recloaks after: "
 		cells[#cells+1] = numformat(recloaktime / 30, 1) .. "s without area cloaker"
 	end
 	cells[#cells+1] = ''
 	cells[#cells+1] = ''
-	local radarRadius = unitID and Spring.GetUnitRulesParam(unitID, "radarRangeOverride") or ud.radarRadius
-	local jammerRadius = unitID and Spring.GetUnitRulesParam(unitID, "jammingRangeOverride") or ud.jammerRadius
+	local radarRadius = commradarrange or ud.radarRadius
+	local jammerRadius = commjammerrange or ud.jammerRadius
 	
 	if (radarRadius > 0) or (jammerRadius > 0) or ud.targfac then
 		cells[#cells+1] = 'Provides intel'
@@ -1246,8 +1311,18 @@ local function printAbilities(ud, unitID)
 	end
 
 	if cp.canjump and (not cp.no_jump_handling) then
-		local rangebonus = ((unitID and Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus")) or 0) + 1
-		local reloadbonus = 1 - ((unitID and Spring.GetUnitRulesParam(unitID, "comm_jumpreload_bonus")) or 0)
+		local rangebonus, reloadbonus = 0, 0
+		if unitID then
+			if isFeature then
+				rangebonus = Spring.GetFeatureRulesParam(unitID, "comm_jumprange_bonus") or 0
+				reloadbonus = Spring.GetFeatureRulesParam(unitID, "comm_jumpreload_bonus") or 0
+			else
+				rangebonus = Spring.GetUnitRulesParam(unitID, "comm_jumprange_bonus") or 0
+				reloadbonus = Spring.GetUnitRulesParam(unitID, "comm_jumpreload_bonus") or 0
+			end
+		end
+		rangebonus = rangebonus + 1
+		reloadbonus = 1 - reloadbonus
 		cells[#cells+1] = 'Jumping'
 		cells[#cells+1] = ''
 		cells[#cells+1] = ' - Range:'
@@ -1284,7 +1359,7 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = ''
 		cells[#cells+1] = ''
 	end
-
+	
 	if (ud.idleTime < 1800) or (cp.amph_regen) or (cp.armored_regen) or (cp.nanoregen) then
 		cells[#cells+1] = 'Improved regeneration'
 		cells[#cells+1] = ''
@@ -1300,10 +1375,16 @@ local function printAbilities(ud, unitID)
 				cells[#cells+1] = numformat(dynamic_regen) .. ' HP/s'
 			end
 		end
-		local nanoregen = (unitID and Spring.GetUnitRulesParam(unitID, "commander_regen")) or cp.nanoregen
-		local nanomax = (unitID and Spring.GetUnitRulesParam(unitID, "commander_max")) or cp.nano_maxregen
 		if nanoregen then
-			local hp = ud.health + ((unitID and Spring.GetUnitRulesParam(unitID, "commander_healthbonus")) or 0)
+			local commHP = 0
+			if unitID then
+				if isFeature then
+					commHP = Spring.GetFeatureRulesParam(unitID, "commander_healthbonus") or 0
+				else
+					commHP = Spring.GetUnitRulesParam(unitID, "commander_healthbonus") or 0
+				end
+			end
+			local hp = ud.health + commHP
 			cells[#cells+1] = " - Nanite Regeneration:"
 			cells[#cells+1] = ''
 			cells[#cells+1] = "Base Regeneration:"
@@ -1451,8 +1532,15 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = 'Combat slowdown: '
 		cells[#cells+1] = numformat(100*tonumber(cp.combat_slowdown)) .. "%"
 	end
-
-	if ud.stealth or (unitID and Spring.GetUnitRulesParam(unitID, "comm_jammed")) then
+	local commJammed
+	if unitID then
+		if isFeature then
+			commJammed = Spring.GetFeatureRulesParam(unitID, "comm_jammed") ~= nil
+		else
+			commJammed = Spring.GetUnitRulesParam(unitID, "comm_jammed") ~= nil
+		end
+	end
+	if ud.stealth or commJammed then
 		cells[#cells+1] = 'Invisible to radar'
 		cells[#cells+1] = ''
 	end
@@ -1482,8 +1570,15 @@ local function printAbilities(ud, unitID)
 		cells[#cells+1] = 'Gravitronic Regulation (Singularity/Blastwave knockback Immunity)'
 		cells[#cells+1] = ''
 	end
-	local storageoverride = unitID and Spring.GetUnitRulesParam(unitID, "commander_storage_override") or ud.metalStorage
-	if ud.metalStorage > 0 then
+	local storageoverride = ud.metalStorage
+	if unitID then
+		if isFeature then
+			storageoverride = Spring.GetFeatureRulesParam(unitID, "commander_storage_override") or ud.metalStorage
+		else
+			storageoverride = Spring.GetUnitRulesParam(unitID, "commander_storage_override") or ud.metalStorage
+		end
+	end
+	if storageoverride > 0 then
 		cells[#cells+1] = 'Stores resources: '
 		cells[#cells+1] = math.max(storageoverride, ud.metalStorage) .. " M/E"
 	end
@@ -1496,7 +1591,7 @@ local function printAbilities(ud, unitID)
 	return cells
 end
 
-local function printWeapons(unitDef, unitID)
+local function printWeapons(unitDef, unitID, isFeature)
 	local weaponStats = {}
 
 	local wd = WeaponDefs
@@ -1504,11 +1599,23 @@ local function printWeapons(unitDef, unitID)
 	
 	local ucp = unitDef.customParams
 	
+	local commweapon1, commweapon2, commshield
+	if unitID then
+		if isFeature then
+			commweapon1 = Spring.GetFeatureRulesParam(unitID, "comm_weapon_num_1")
+			commweapon2 = Spring.GetFeatureRulesParam(unitID, "comm_weapon_num_2")
+			commshield  = Spring.GetFeatureRulesParam(unitID, "comm_shield_num")
+		else
+			commweapon1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_num_1")
+			commweapon2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_num_2")
+			commshield = Spring.GetUnitRulesParam(unitID, "comm_shield_num")
+		end
+	end
 	for i=1, #unitDef.weapons do
 		if not unitID or -- filter out commander weapons not in current loadout
-		(  i == Spring.GetUnitRulesParam(unitID, "comm_weapon_num_1")
-		or i == Spring.GetUnitRulesParam(unitID, "comm_weapon_num_2")
-		or i == Spring.GetUnitRulesParam(unitID, "comm_shield_num")) then
+		(  i == commweapon1
+		or i == commweapon2
+		or i == commshield) then
 			local weapon = unitDef.weapons[i]
 			local weaponID = weapon.weaponDef
 			local weaponDef = WeaponDefs[weaponID]
@@ -1546,7 +1653,7 @@ local function printWeapons(unitDef, unitID)
 				}
 				
 				-- dual wielding comms
-				if (unitID and i == Spring.GetUnitRulesParam(unitID, "comm_weapon_id_1") and i == Spring.GetUnitRulesParam(unitID, "comm_weapon_id_2")) then
+				if (unitID and i == commweapon1 and i == commweapon2) then
 					wsTemp.count = 2
 				end
 				weaponStats[#weaponStats+1] = wsTemp
@@ -1562,7 +1669,7 @@ local function printWeapons(unitDef, unitID)
 			cells[#cells+1] = ''
 			cells[#cells+1] = ''
 		end
-		cells = weapons2Table(cells, ws, unitID, false, {}, false, unitDef.metalCost)
+		cells = weapons2Table(cells, ws, unitID, false, {}, false, unitDef.metalCost, isFeature)
 		--end
 	end
 	
@@ -1628,7 +1735,7 @@ local function GetWeapon(weaponName)
 	return WeaponDefNames[weaponName]
 end
 
-local function printunitinfo(ud, buttonWidth, unitID)
+local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 	local icons = {
 		Image:New{
 			file2 = (WG.GetBuildIconFrame)and(WG.GetBuildIconFrame(ud)),
@@ -1675,8 +1782,13 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		}
 	
 	local statschildren = {}
-
-	local isCommander = (unitID and Spring.GetUnitRulesParam(unitID, "comm_level"))
+	
+	local isCommander
+	if isFeature then
+		isCommander = unitID and Spring.GetFeatureRulesParam(unitID, "comm_level")
+	else
+		isCommander = (unitID and Spring.GetUnitRulesParam(unitID, "comm_level"))
+	end
 
 	local cost = numformat(ud.metalCost)
 	local health = numformat(ud.health)
@@ -1692,36 +1804,69 @@ local function printunitinfo(ud, buttonWidth, unitID)
 
 	-- dynamic comms get special treatment
 	if isCommander then
-		cost = Spring.GetUnitRulesParam(unitID, "comm_cost") or 1200
-		health = select(2, Spring.GetUnitHealth(unitID))
-		speed = numformat(ud.speed * (Spring.GetUnitRulesParam(unitID, "upgradesSpeedMult") or 1))
-		mass = numformat(Spring.GetUnitRulesParam(unitID, "massOverride") or ud.mass)
+		local level, chassisID, speedMult
+		if isFeature then
+			cost = Spring.GetFeatureRulesParam(unitID, "comm_cost") or 1200
+			health = select(2, Spring.GetFeatureHealth(unitID))
+			speedMult = Spring.GetFeatureRulesParam(unitID, "upgradesSpeedMult") or 1
+			mass = numformat(Spring.GetFeatureRulesParam(unitID, "massOverride") or ud.mass)
+			level = Spring.GetFeatureRulesParam(unitID, "comm_level") or 0
+			chassisID = Spring.GetFeatureRulesParam(unitID, "comm_chassis")
+		else
+			cost = Spring.GetUnitRulesParam(unitID, "comm_cost") or 1200
+			health = select(2, Spring.GetUnitHealth(unitID))
+			speedMult = Spring.GetUnitRulesParam(unitID, "upgradesSpeedMult") or 1
+			mass = numformat(Spring.GetUnitRulesParam(unitID, "massOverride") or ud.mass)
+			level = Spring.GetUnitRulesParam(unitID, "comm_level") or 0
+			chassisID = Spring.GetUnitRulesParam(unitID, "comm_chassis")
+		end
+		speed =  numformat(ud.speed * speedMult)
+		
+		
 
 		statschildren[#statschildren+1] = Label:New{ caption = "COMMANDER", textColor = color.stats_header, }
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header, }
 		statschildren[#statschildren+1] = Label:New{ caption = 'Level: ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = Spring.GetUnitRulesParam(unitID, "comm_level")+1, textColor = color.stats_fg, }
+		statschildren[#statschildren+1] = Label:New{ caption = level + 1, textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = 'Chassis: ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = chassisDefs[Spring.GetUnitRulesParam(unitID, "comm_chassis")].humanName, textColor = color.stats_fg, }
+		statschildren[#statschildren+1] = Label:New{ caption = chassisDefs[chassisID].humanName, textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
 
 		statschildren[#statschildren+1] = Label:New{ caption = 'MODULES', textColor = color.stats_header, }
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header, }
+		
+		if isFeature then
+			local modules = Spring.GetFeatureRulesParam(unitID, "comm_module_count")
 
-		local modules = Spring.GetUnitRulesParam(unitID, "comm_module_count")
-
-		if modules > 0 then
-			local module_instances = {}
-			for i = 1, modules do
-				local moduleID = Spring.GetUnitRulesParam(unitID, "comm_module_" .. i)
-				module_instances[moduleID] = (module_instances[moduleID] or 0) + 1
+			if modules > 0 then
+				local module_instances = {}
+				for i = 1, modules do
+					local moduleID = Spring.GetFeatureRulesParam(unitID, "comm_module_" .. i)
+					module_instances[moduleID] = (module_instances[moduleID] or 0) + 1
+				end
+				for moduleID, moduleCount in pairs(module_instances) do
+					local moduleStr = moduleDefs[moduleID].humanName
+					if moduleCount > 1 then moduleStr = moduleStr .. "  x" .. moduleCount end
+					statschildren[#statschildren+1] = Label:New{ caption = moduleStr, textColor = color.stats_fg, }
+					statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
+				end
 			end
-			for moduleID, moduleCount in pairs(module_instances) do
-				local moduleStr = moduleDefs[moduleID].humanName
-				if moduleCount > 1 then moduleStr = moduleStr .. "  x" .. moduleCount end
-				statschildren[#statschildren+1] = Label:New{ caption = moduleStr, textColor = color.stats_fg, }
-				statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
+		else
+			local modules = Spring.GetUnitRulesParam(unitID, "comm_module_count")
+
+			if modules > 0 then
+				local module_instances = {}
+				for i = 1, modules do
+					local moduleID = Spring.GetUnitRulesParam(unitID, "comm_module_" .. i)
+					module_instances[moduleID] = (module_instances[moduleID] or 0) + 1
+				end
+				for moduleID, moduleCount in pairs(module_instances) do
+					local moduleStr = moduleDefs[moduleID].humanName
+					if moduleCount > 1 then moduleStr = moduleStr .. "  x" .. moduleCount end
+					statschildren[#statschildren+1] = Label:New{ caption = moduleStr, textColor = color.stats_fg, }
+					statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
+				end
 			end
 		end
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
@@ -1788,15 +1933,24 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		statschildren[#statschildren+1] = Label:New{ caption = 'Turn rate: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = numformat(ud.turnRate * Game.gameSpeed * COB_angle_to_degree) .. " deg/s", textColor = color.stats_fg, }
 	end
-
-	local metal = (isCommander and (Spring.GetUnitRulesParam(unitID, "wanted_metalIncome") or 0) or ((ud.metalMake or 0) + (ud.customParams.income_metal or 0)))
+	local metal, energy
+	if isCommander and unitID then
+		if isFeature then
+			metal = Spring.GetFeatureRulesParam(unitID, "wanted_metalIncome") or 0
+			energy = Spring.GetFeatureRulesParam(unitID, "wanted_energyIncome") or 0
+		else
+			metal = Spring.GetUnitRulesParam(unitID, "wanted_metalIncome") or 0
+			energy = Spring.GetUnitRulesParam(unitID, "wanted_energyIncome") or 0
+		end
+	else
+		metal = (ud.metalMake or 0) + (ud.customParams.income_metal or 0)
+		energy = (ud.energyMake or 0) - (ud.customParams.upkeep_energy or 0) + (ud.customParams.income_energy or 0)
+	end
 
 	if metal ~= 0 then
 		statschildren[#statschildren+1] = Label:New{ caption = 'Metal: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = (metal > 0 and '+' or '') .. numformat(metal,2) .. " M/s", textColor = color.stats_fg, }
 	end
-	
-	local energy = (isCommander and (Spring.GetUnitRulesParam(unitID, "wanted_energyIncome") or 0) or ((ud.energyMake or 0) - (ud.customParams.upkeep_energy or 0) + (ud.customParams.income_energy or 0)))
 
 	if energy ~= 0 then
 		if ud.customParams and ud.customParams["decay_rate"] then
@@ -1856,7 +2010,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		end
 	end
 	do
-		local sonar
+		--[[local sonar
 		if unitID then
 			sonar = Spring.GetUnitRulesParam(unitID, "sonarRangeOverride") or ud.sonarRadius
 		else
@@ -1865,10 +2019,14 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		if sonar > 0 then
 			statschildren[#statschildren+1] = Label:New{ caption = 'Sonar: ', textColor = color.stats_fg, }
 			statschildren[#statschildren+1] = Label:New{ caption = numformat(sonar) .. " elmo", textColor = color.stats_fg, }
-		end
+		end]] -- Irrelevant because Sonar is dead.
 		local sight
 		if unitID then
-			sight = Spring.GetUnitRulesParam(unitID, "sightRangeOverride") or ud.losRadius
+			if isFeature then
+				sight = Spring.GetFeatureRulesParam(unitID, "sightRangeOverride") or ud.losRadius
+			else
+				sight = Spring.GetUnitRulesParam(unitID, "sightRangeOverride") or ud.losRadius
+			end
 		else
 			sight = ud.losRadius
 		end
@@ -1894,12 +2052,18 @@ local function printunitinfo(ud, buttonWidth, unitID)
 	end
 
 	if isCommander then
-		local batDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_droneheavyslow")
+		local batDrones, compDrones
+		if isFeature then
+			batDrones = Spring.GetFeatureRulesParam(unitID, "carrier_count_droneheavyslow")
+			compDrones = Spring.GetFeatureRulesParam(unitID, "carrier_count_drone")
+		else
+			batDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_droneheavyslow")
+			compDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_drone")
+		end
 		if batDrones and batDrones > 0 then
 			statschildren[#statschildren+1] = Label:New{ caption = 'Battle Drones: ', textColor = color.stats_fg, }
 			statschildren[#statschildren+1] = Label:New{ caption = batDrones, textColor = color.stats_fg, }
 		end
-		local compDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_drone")
 		if compDrones and compDrones > 0 then
 			statschildren[#statschildren+1] = Label:New{ caption = 'Companion Drones: ', textColor = color.stats_fg, }
 			statschildren[#statschildren+1] = Label:New{ caption = compDrones, textColor = color.stats_fg, }
@@ -1924,7 +2088,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		end
 	end
 
-	local cells = printAbilities(ud, isCommander and unitID)
+	local cells = printAbilities(ud, isCommander and unitID, isFeature)
 	
 	if cells and #cells > 0 then
 
@@ -1938,7 +2102,7 @@ local function printunitinfo(ud, buttonWidth, unitID)
 		end
 	end
 
-	cells = printWeapons(ud, isCommander and unitID)
+	cells = printWeapons(ud, isCommander and unitID, isFeature)
 	
 	
 	if cells and #cells > 0 then
@@ -2118,7 +2282,7 @@ local function KillStatsWindow(num)
 	statswindows[num] = nil
 end
 
-MakeStatsWindow = function(ud, x,y, unitID)
+MakeStatsWindow = function(ud, x,y, unitID, isFeature)
 	hideWindow(window_unitcontext)
 	local x = x
 	local y = y
@@ -2143,7 +2307,7 @@ MakeStatsWindow = function(ud, x,y, unitID)
 			right = 5,
 			bottom = B_HEIGHT + 10,
 			padding = {2,2,2,2},
-			children = printunitinfo(ud, window_width, unitID) ,
+			children = printunitinfo(ud, window_width, unitID, isFeature),
 		},
 		Button:New{
 			caption = 'Close',
@@ -2159,24 +2323,43 @@ MakeStatsWindow = function(ud, x,y, unitID)
 			--classname = "back_button",
 		}
 	}
-
-	statswindows[num] = Window:New{
-		x = x,
-		y = y,
-		width  = WINDOW_WIDTH,
-		height = options.window_height.value,
-		resizable = true,
-		parent = screen0,
-		backgroundColor = color.stats_bg,
-		classname = "main_window_small",
-		
-		minWidth = 250,
-		minHeight = 300,
-		
-		caption = Spring.Utilities.GetHumanName(ud, unitID) ..' - '.. Spring.Utilities.GetDescription(ud, unitID),
-		
-		children = children,
-	}
+	if isFeature then
+		statswindows[num] = Window:New{
+			x = x,
+			y = y,
+			width  = WINDOW_WIDTH,
+			height = options.window_height.value,
+			resizable = true,
+			parent = screen0,
+			backgroundColor = color.stats_bg,
+			classname = "main_window_small",
+			
+			minWidth = 250,
+			minHeight = 300,
+			
+			caption = Spring.Utilities.GetFeatureName(ud, unitID) ..' - '.. Spring.Utilities.GetFeatureDescription(ud, unitID),
+			
+			children = children,
+		}
+	else
+		statswindows[num] = Window:New{
+			x = x,
+			y = y,
+			width  = WINDOW_WIDTH,
+			height = options.window_height.value,
+			resizable = true,
+			parent = screen0,
+			backgroundColor = color.stats_bg,
+			classname = "main_window_small",
+			
+			minWidth = 250,
+			minHeight = 300,
+			
+			caption = Spring.Utilities.GetHumanName(ud, unitID) ..' - '.. Spring.Utilities.GetDescription(ud, unitID),
+			
+			children = children,
+		}
+	end
 	AdjustWindow(statswindows[num])
 end
 
@@ -2421,7 +2604,7 @@ function widget:MousePress(x,y,button)
 			local udid = UnitDefs[Spring.GetUnitDefID(unitID)]
 			
 			if udid then
-				MakeStatsWindow(udid,x,y, unitID)
+				MakeStatsWindow(udid,x, y, unitID, false)
 			end
 			-- FIXME enable later when does not show useless info
 			return true
@@ -2440,7 +2623,7 @@ function widget:MousePress(x,y,button)
 				
 				local ud = UnitDefNames[live_name]
 				if ud then
-					MakeStatsWindow(ud,x,y)
+					MakeStatsWindow(ud, x, y, data, true)
 					return true
 				end
 			end
