@@ -80,7 +80,7 @@ return {
 
 					area_damage = 1,
 					area_damage_radius = 60,
-					area_damage_dps = 25,
+					area_damage_dps = 40,
 					area_damage_duration = 14,
 
 					--lups_heat_fx = "firewalker",
@@ -122,7 +122,7 @@ return {
 					light_camera_height = 2500,
 					light_color = "0.25 0.13 0.05",
 					light_radius = 460,
-					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 2, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "jumparty_napalm_fragment",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -133,8 +133,8 @@ return {
 					vradius1 = "-2,-4,-2,2,0,2", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
 					noairburst = "Friendship is Magic... and Magic throws missiles off course!",
-					clustercharges = 18,
-					clusterdelay = 7,
+					clustercharges = 33,
+					clusterdelay = 4,
 					timeddeploy = 40,
 					
 					setunitsonfire = "1",
@@ -142,7 +142,7 @@ return {
 
 					area_damage = 1,
 					area_damage_radius = 100,
-					area_damage_dps = 50,
+					area_damage_dps = 80,
 					area_damage_duration = 14,
 					
 					sweepfire = 1,
@@ -164,14 +164,14 @@ return {
 				interceptedByShieldType = 1,
 				--myGravity               = 0.1,
 				--projectiles             = 10,
-				range                   = 1000,
+				range                   = 1280,
 				reloadtime              = 6,
 				rgbColor                = "1 0.5 0.2",
 				--size                    = 5,
 				soundHit                = "weapon/clusters/cluster_light_napalm",
 				soundStart              = "weapon/missile/air_launched_missile",
 				soundStartVolume        = 3.2,
-				trajectoryHeight		= 0.5,
+				trajectoryHeight		= 1.2,
 				turret                  = true,
 				weaponAcceleration		= 420,
 				weaponType              = "MissileLauncher",
