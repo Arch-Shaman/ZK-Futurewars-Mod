@@ -414,33 +414,20 @@ end
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
 	local x, y, z = Spring.GetUnitPosition(unitID)
-	if severity < 0.5 then
-		Explode(torso, SFX.NONE)
-		Explode(larm, SFX.NONE)
-		Explode(rarm, SFX.NONE)
-		Explode(pelvis, SFX.NONE)
-		Explode(lupleg, SFX.NONE)
-		Explode(rupleg, SFX.NONE)
-		Explode(lnanoflare, SFX.NONE)
-		Explode(rhand, SFX.NONE)
-		Explode(lleg, SFX.NONE)
-		Explode(rleg, SFX.NONE)
-		dyncomm.Explode(x, y, z)
-		dyncomm.SpawnModuleWrecks(1)
+	local assetDenialSystemActivated = dyncomm.Explode(x, y, z)
+	local explodables = {[1] = torso, [2] = larm, [3] = rarm, [4] = pelvis, [5] = lupleg, [6] = rupleg, [7] = lnanoflare, [8] = rhand, [9] = lleg, [10] = rleg}
+	local flags = SFX.SMOKE + SFX.FIRE + SFX.EXPLODE
+	if assetDenialSystemActivated then
+		for i = 1, #explodables do
+			Explode(explodables[i], flags)
+		end
+	elseif severity < 0.5 then
 		dyncomm.SpawnWreck(1)
 	else
 		Explode(torso, SFX.SHATTER)
-		Explode(larm, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(rarm, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(pelvis, SFX.SHATTER)
-		Explode(lupleg, SFX.SHATTER)
-		Explode(rupleg, SFX.SHATTER)
-		Explode(lnanoflare, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(rhand, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(lleg, SFX.SHATTER)
-		Explode(rleg, SFX.SHATTER)
-		dyncomm.Explode(x, y, z)
-		dyncomm.SpawnModuleWrecks(2)
+		for i = 2, #explodables do
+			Explode(explodables[i], flags)
+		end
 		dyncomm.SpawnWreck(2)
 	end
 end

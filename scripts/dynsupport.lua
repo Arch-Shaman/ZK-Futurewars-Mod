@@ -591,39 +591,27 @@ function script.Killed(recentDamage, maxHealth)
 	local x, y, z = Spring.GetUnitPosition(unitID)
 	--Turn(turret, y_axis, 0, math.rad(500))
 	if severity <= 0.5 then
-		dyncomm.Explode(x, y, z)
-		dyncomm.SpawnModuleWrecks(1)
 		Turn(base, x_axis, math.rad(79), math.rad(80))
 		Turn(rloleg, x_axis, math.rad(25), math.rad(250))
 		Turn(lupleg, x_axis, math.rad(7), math.rad(250))
 		Turn(lupleg, y_axis, math.rad(34), math.rad(250))
 		Turn(lupleg, z_axis, math.rad(-(-9)), math.rad(250))
-		
 		GG.Script.InitializeDeathAnimation(unitID)
 		Sleep(200) --give time to fall
 		Turn(luparm, y_axis, math.rad(18), math.rad(350))
 		Turn(luparm, z_axis, math.rad(-(-45)), math.rad(350))
 		Sleep(650)
-		--EmitSfx(turret, 1026) --impact
-
-		Sleep(100)
---[[
-		Explode(gun)
-		Explode(head)
-		Explode(pelvis)
-		Explode(lloarm)
-		Explode(luparm)
-		Explode(lloleg)
-		Explode(lupleg)
-		Explode(rloarm)
-		Explode(rloleg)
-		Explode(ruparm)
-		Explode(rupleg)
-		Explode(torso)
-]]--
+	end
+	local assetDenialSystemActivated = dyncomm.Explode(x, y, z)
+	local explodables = {gun, head, pelvis, lloarm, luparm, lloleg, lupleg, rloarm, rloleg, ruparm, rupleg}
+	local flag = SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE
+	if assetDenialSystemActivated then
+		for i = 1, #explodables do
+			Explode(explodables[i], flag)
+		end
+	elseif severity <= 0.5 then
 		dyncomm.SpawnWreck(1)
 	else
-		dyncomm.Explode(x, y, z)
 		Explode(gun, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
 		Explode(head, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
 		Explode(pelvis, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
@@ -636,7 +624,6 @@ function script.Killed(recentDamage, maxHealth)
 		Explode(ruparm, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
 		Explode(rupleg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
 		Explode(torso, SFX.SHATTER + SFX.EXPLODE)
-		dyncomm.SpawnModuleWrecks(2)
 		dyncomm.SpawnWreck(2)
 	end
 end

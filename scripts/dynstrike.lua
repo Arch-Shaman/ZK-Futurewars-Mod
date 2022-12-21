@@ -1036,22 +1036,13 @@ function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
 	local x, y, z = Spring.GetUnitPosition(unitID)
 	if severity < 0.5 then
-		-- Pointless because deathclone contains head.
-		--Explode(Head, SFX.FALL)
-		--Hide(Head)
-		
 		GG.Script.InitializeDeathAnimation(unitID)
 		PlayAnimation('die')
-		dyncomm.Explode(x, y, z)
-		Explode(ArmLeft, SFX.NONE)
-		Explode(ArmRight, SFX.NONE)
-		Explode(CalfLeft, SFX.NONE)
-		Explode(CalfRight, SFX.NONE)
-		
-		dyncomm.SpawnModuleWrecks(1)
+	end
+	local assetDenialSystemActivated = dyncomm.Explode(x, y, z)
+	if severity < 0.5 and not assetDenialSystemActivated then
 		dyncomm.SpawnWreck(1)
 	else
-		dyncomm.Explode(x, y, z)
 		Explode(Head, SFX.FALL + SFX.FIRE)
 		Explode(Stomach, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
 		Explode(ArmLeft, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
@@ -1063,7 +1054,8 @@ function script.Killed(recentDamage, maxHealth)
 		Explode(HipLeft, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
 		Explode(HipRight, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
 		Explode(Breast, SFX.SHATTER + SFX.EXPLODE)
-		dyncomm.SpawnModuleWrecks(2)
-		dyncomm.SpawnWreck(2)
+		if not assetDenialSystemActivated then
+			dyncomm.SpawnWreck(2)
+		end
 	end
 end

@@ -349,19 +349,14 @@ end
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
 	local x, y, z = Spring.GetUnitPosition(unitID)
-	if severity < 0.5 then
-		Explode(torso, SFX.NONE)
-		Explode(luparm, SFX.NONE)
-		Explode(ruparm, SFX.NONE)
-		Explode(pelvis, SFX.NONE)
-		Explode(lthigh, SFX.NONE)
-		Explode(rthigh, SFX.NONE)
-		Explode(nanospray, SFX.NONE)
-		Explode(biggun, SFX.NONE)
-		Explode(lleg, SFX.NONE)
-		Explode(rleg, SFX.NONE)
-		dyncomm.Explode(x, y, z)
-		dyncomm.SpawnModuleWrecks(1)
+	local explodables = {torso, luparm, ruparm, pelvis, lthigh, rthigh, nanospray, biggun, lleg, rleg, head}
+	local flag = SFX.SMOKE + SFX.FIRE + SFX.EXPLODE + SFX.FALL
+	local assetDenialSystemActivated = dyncomm.Explode(x, y, z)
+	if assetDenialSystemActivated then
+		for i = 1, #explodables do
+			Explode(explodables[i], flag)
+		end
+	elseif severity < 0.5 then
 		dyncomm.SpawnWreck(1)
 	else
 		Explode(torso, SFX.SHATTER)
@@ -375,8 +370,6 @@ function script.Killed(recentDamage, maxHealth)
 		Explode(lleg, SFX.SHATTER)
 		Explode(rleg, SFX.SHATTER)
 		Explode(head, SFX.SMOKE + SFX.FIRE)
-		dyncomm.Explode(x, y, z)
-		dyncomm.SpawnModuleWrecks(2)
 		dyncomm.SpawnWreck(2)
 	end
 end

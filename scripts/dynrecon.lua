@@ -624,9 +624,7 @@ function script.Killed(recentDamage, maxHealth)
 	dead = true
 	local x, y, z = Spring.GetUnitPosition(unitID)
 --	Turn(turret, y_axis, 0, math.rad(500))
-	if severity <= 0.5 and not inJumpMode then
-		dyncomm.Explode(x, y, z)
-		dyncomm.SpawnModuleWrecks(1)
+	if not inJumpMode then
 		Turn(base, x_axis, math.rad(80), math.rad(80))
 		Turn(turret, x_axis, math.rad(-16), math.rad(50))
 		Turn(turret, y_axis, 0, math.rad(90))
@@ -636,7 +634,6 @@ function script.Killed(recentDamage, maxHealth)
 		Turn(lupleg, x_axis, math.rad(7), math.rad(250))
 		Turn(lloleg, y_axis, math.rad(21), math.rad(250))
 		Turn(lfoot, x_axis, math.rad(24), math.rad(250))
-		
 		GG.Script.InitializeDeathAnimation(unitID)
 		Sleep(200) --give time to fall
 		Turn(ruparm, x_axis, math.rad(-48), math.rad(350))
@@ -649,37 +646,21 @@ function script.Killed(recentDamage, maxHealth)
 		--StartThread(burn)
 		--Sleep((1000 * rand (2, 5)))
 		Sleep(100)
-		dyncomm.SpawnWreck(1)
+	end
+	local assetDenialSystemActivated = dyncomm.Explode(x, y, z)
+	local explodables = {[1] = head, [2] = gun, [3] = pelvis, [4] = lloarm, [5] = luparm, [6] = lloleg, [7] = lupleg, [8] = rloarm, [9] = rloleg, [10] = ruparm, [11] = rupleg}
+	local flags = SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE
+	if assetDenialSystemActivated then
+		for i = 1, #explodables do
+			Explode(explodables[i], flags)
+		end
+		Explode(torso, flags)
 	elseif severity <= 0.5 then
-		dyncomm.Explode(x, y, z)
-		dyncomm.SpawnModuleWrecks(1)
-		Explode(gun,	SFX.FALL + SFX.SMOKE + SFX.EXPLODE)
-		Explode(head, SFX.FIRE + SFX.EXPLODE)
-		Explode(pelvis, SFX.FIRE + SFX.EXPLODE)
-		Explode(lloarm, SFX.FIRE + SFX.EXPLODE)
-		Explode(luparm, SFX.FIRE + SFX.EXPLODE)
-		Explode(lloleg, SFX.FIRE + SFX.EXPLODE)
-		Explode(lupleg, SFX.FIRE + SFX.EXPLODE)
-		Explode(rloarm, SFX.FIRE + SFX.EXPLODE)
-		Explode(rloleg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(ruparm, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(rupleg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(torso, SFX.SHATTER + SFX.EXPLODE)
 		dyncomm.SpawnWreck(1)
 	else
-		dyncomm.Explode(x, y, z)
-		dyncomm.SpawnModuleWrecks(2)
-		Explode(gun, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(head, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(pelvis, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(lloarm, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(luparm, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(lloleg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(lupleg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(rloarm, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(rloleg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(ruparm, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(rupleg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
+		for i = 1, #explodables do
+			Explode(explodables[i], flags)
+		end
 		Explode(torso, SFX.SHATTER + SFX.EXPLODE)
 		dyncomm.SpawnWreck(2)
 	end
