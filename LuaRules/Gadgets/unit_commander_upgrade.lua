@@ -531,7 +531,7 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 	-- This function sets the UnitRulesParams and updates the unit attributes after
 	-- a commander has been created. This can either happen internally due to a request
 	-- to spawn a commander or with rezz/construction/spawning.
-	if level == 0 or staticLevel then
+	if (level == 0 or staticLevel) and #moduleList == 0 then
 		moduleList = AddAddons(moduleList, chassis)
 	end
 	moduleEffectData = GetModuleEffectsData(moduleList, level, chassis)
