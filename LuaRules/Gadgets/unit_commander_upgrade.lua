@@ -793,7 +793,6 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 	local profileID = GG.ModularCommAPI.GetProfileIDByBaseDefID(unitDefID)
 	if profileID then
 		local commProfileInfo = GG.ModularCommAPI.GetCommProfileInfo(profileID)
-		
 		-- Add decorations
 		local moduleList = {}
 		if commProfileInfo.decorations then
