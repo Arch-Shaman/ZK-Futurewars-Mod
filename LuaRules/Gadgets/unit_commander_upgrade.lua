@@ -521,7 +521,10 @@ end
 local function IsModuleUnique(moduleList, moduleName)
 	local id = moduleDefNames[moduleName]
 	local ret = true
-	for i = 1, #moduleList
+	if #moduleList == 0 then
+		return true
+	end
+	for i = 1, #moduleList do
 		if moduleList[i] == id then
 			ret = false
 			break
@@ -534,10 +537,7 @@ local function AddAddons(moduleList, chassis)
 	moduleList = moduleList or {}
 	local addons = defaultaddons[chassis]
 	for _, v in pairs(addons) do
-		local id = moduleDefNames[v]
-		if #modules == 0 then
-			moduleList[#moduleList + 1] = id
-		elseif IsModuleUnique(moduleList, v) then
+		if IsModuleUnique(moduleList, v) then
 			moduleList[#moduleList + 1] = moduleDefNames[v]
 		end
 	end
