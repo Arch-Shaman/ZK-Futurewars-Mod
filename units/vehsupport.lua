@@ -97,7 +97,7 @@ return {
 					proxy = 1, -- check for nearby units?
 					useheight = 0,
 					timeoutspawn = 0,
-					spawndist = 80, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 70, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					vradius1 = "0,0,0,0,0,0", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 0,
 					spawnsfx1 = 2049,
@@ -105,7 +105,7 @@ return {
 					damage_vs_shield = 72*8*0.5,
 				},
 				damage                  = {
-					default = 72*8,
+					default = 80*8,
 				},
 				explosionGenerator      = "custom:FLASH2",
 				fireStarter             = 70,
@@ -146,7 +146,7 @@ return {
 					bogus = 1,
 				},
 				damage                  = {
-					default = 72.01,
+					default = 80.01,
 				},
 				dynDamageExp            = 1,
 				dynDamageRange          = 135,
