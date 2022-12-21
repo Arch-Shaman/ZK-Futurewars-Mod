@@ -4,7 +4,7 @@ function gadget:GetInfo() return {
 	author    = "Shaman",
 	date      = "22 September 2022",
 	license   = "CC-0",
-	layer     = 22,
+	layer     = 8000,
 	enabled   = true,
 } end
 
@@ -46,6 +46,16 @@ function gadget:RecvLuaMsg(msg, playerID)
 	end
 end
 
+function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
+	if builderID and unitTeam == gaiaTeamID then
+		local _, _, _, _, bp = Spring.GetUnitHealth(unitID)
+		if bp < 1 then
+			local cost = UnitDefs[unitDefID].metalCost
+			Spring.SetUnitCosts(unitID, {buildTime = cost, metalCost = 0, energyCost = cost})
+		end
+	end
+end
+
 function gadget:GameStart()
 	local playerList = Spring.GetPlayerList(-1, false)
 	for i = 1, #playerList do
@@ -69,6 +79,7 @@ function gadget:GameStart()
 	for i = 1, zombieCount do
 		local x = math.random(minX, maxX)
 		local z = math.random(minY, maxY)
-		Spring.CreateUnit(randomTable[math.random(1, #randomTable)], x, Spring.GetGroundHeight(x, z), z, math.random(1, 4) - 1, gaiaTeamID)
+		local id = Spring.CreateUnit(randomTable[math.random(1, #randomTable)], x, Spring.GetGroundHeight(x, z), z, math.random(1, 4) - 1, gaiaTeamID)
+		Spring.SetUnitResourcing(id, "ume", 6/zombieCount)
 	end
 end

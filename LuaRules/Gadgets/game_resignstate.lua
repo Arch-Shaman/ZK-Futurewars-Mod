@@ -171,6 +171,9 @@ local function UpdateAllyTeam(allyTeamID)
 end
 
 local function AFKUpdate(playerID)
+	if not playerMap[playerID] then
+		return
+	end
 	local state = Spring.GetPlayerRulesParam(playerID, "lagmonitor_lagging") or 0
 	local allyTeamID = playerMap[playerID]
 	if state == 1 and not afkplayers[playerID] then
