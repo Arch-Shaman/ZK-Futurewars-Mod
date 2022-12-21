@@ -392,6 +392,10 @@ function gadget:UnitCreated(unitID, unitDefID)
 	end
 end
 
+function GG.ReinitCloak(unitID, unitDefID)
+	gadget:UnitCreated(unitID, unitDefID)
+end
+
 function gadget:Initialize()
 	for _, unitID in ipairs(Spring.GetAllUnits()) do
 		local unitDefID = spGetUnitDefID(unitID)
