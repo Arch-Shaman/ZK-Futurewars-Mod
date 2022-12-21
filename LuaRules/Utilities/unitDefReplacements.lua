@@ -319,6 +319,16 @@ function Spring.Utilities.GetHumanName(ud, unitID)
 	return WG.Translate ("units", name_override .. ".name") or ud.humanName
 end
 
+function Spring.Utilities.GetCommanderFeatureName(featureID)
+	if not Spring.ValidFeatureID(featureID) then
+		return "??NAME??"
+	else
+		local name = Spring.GetFeatureRulesParam(featureID, "comm_name") or "??NAME??"
+		local level = Spring.GetFeatureRulesParam(featureID, "comm_level") or 0
+		return name .. " " .. WG.Translate("interface", "lvl") .. " " .. (level + 1)
+	end
+end
+
 function Spring.Utilities.GetDescription(ud, unitID)
 	if not ud then
 		return ""
