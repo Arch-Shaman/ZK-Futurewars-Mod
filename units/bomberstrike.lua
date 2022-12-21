@@ -83,7 +83,7 @@ return {
 				interceptedByShieldType = 2,
 				edgeEffectiveness       = 0.4,
 				explosionGenerator      = "custom:NUKE_150",
-				model                   = "wep_tacnuke.s3o",
+				model                   = "wep_minitacnuke.dae",
 				range                   = 1350,
 				reloadtime              = 10,
 				smokeTrail              = false,
