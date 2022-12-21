@@ -766,7 +766,11 @@ local function GetRandomZombieName()
 	end
 end
 
-local function GetCommanderInfoFromWreck(featureID)
+local function TransferParamFromFeature(featureID, unitID, param)
+	spSetUnitRulesParam(unitID, param, Spring.GetFeatureRulesParam(featureID, param), INLOS)
+end
+
+local function GetCommanderInfoFromWreck(featureID, unitID)
 	local modules = {}
 	local count = Spring.GetFeatureRulesParam(featureID, "comm_module_count")
 	local name = Spring.GetFeatureRulesParam(featureID, "comm_name")
@@ -780,7 +784,15 @@ local function GetCommanderInfoFromWreck(featureID)
 	for i = 1, count do
 		modules[i] = Spring.GetFeatureRulesParam(featureID, "comm_module_" .. i)
 	end
-	Spring.Echo("Got:" .. totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID)
+	-- do some transfer --
+	TransferParamFromFeature(featureID, unitID, "commander_owner")
+	TransferParamFromFeature(featureID, unitID, "comm_personal_cloak")
+	TransferParamFromFeature(featureID, unitID, "comm_jammed")
+	TransferParamFromFeature(featureID, unitID, "comm_shield_num")
+	TransferParamFromFeature(featureID, unitID, "comm_banner_overhead")
+	TransferParamFromFeature(featureID, unitID, "comm_texture")
+	--
+	--Spring.Echo("Got:" .. totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID)
 	return modules, totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID
 end
 
@@ -805,7 +817,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 				end
 				local featureID = cmd.params[1] - Game.maxUnits
 				Spring.Echo("FeatureID", featureID)
-				local modules, totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID = GetCommanderInfoFromWreck(featureID)
+				local modules, totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID = GetCommanderInfoFromWreck(featureID, unitID)
 				local profileID = profileID or GG.ModularCommAPI.GetProfileIDByBaseDefID(unitDefID)
 				local commProfileInfo = GG.ModularCommAPI.GetCommProfileInfo(profileID)
 				if commProfileInfo then
