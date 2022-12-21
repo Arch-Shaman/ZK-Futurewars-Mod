@@ -780,7 +780,7 @@ local function GetCommanderInfoFromWreck(featureID, unitID)
 	local baseWreckID = Spring.GetFeatureRulesParam(featureID, "comm_baseWreckID")
 	local baseHeapID = Spring.GetFeatureRulesParam(featureID, "comm_baseHeapID")
 	local chassisID = Spring.GetFeatureRulesParam(featureID, "comm_chassis")
-	Spring.Echo("Module count: " .. tostring(count))
+	--Spring.Echo("Module count: " .. tostring(count))
 	for i = 1, count do
 		modules[i] = Spring.GetFeatureRulesParam(featureID, "comm_module_" .. i)
 	end
@@ -811,12 +811,12 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 			cmd = cmd[1]
 			local cmdID = cmd.id
 			if cmdID == CMD.RESURRECT then
-				Spring.Echo("Unit was resurrected!")
-				for k, v in pairs(cmd.params) do
-					Spring.Echo(k .. ": " .. tostring(v))
-				end
+				--Spring.Echo("Unit was resurrected!")
+				--for k, v in pairs(cmd.params) do
+					--Spring.Echo(k .. ": " .. tostring(v))
+				--end
 				local featureID = cmd.params[1] - Game.maxUnits
-				Spring.Echo("FeatureID", featureID)
+				--Spring.Echo("FeatureID", featureID)
 				local modules, totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID = GetCommanderInfoFromWreck(featureID, unitID)
 				local profileID = profileID or GG.ModularCommAPI.GetProfileIDByBaseDefID(unitDefID)
 				local commProfileInfo = GG.ModularCommAPI.GetCommProfileInfo(profileID)
