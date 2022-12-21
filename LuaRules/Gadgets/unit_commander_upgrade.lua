@@ -518,11 +518,28 @@ local function GetModuleEffectsData(moduleList, level, chassis)
 	return moduleEffectData
 end
 
+local function IsModuleUnique(moduleList, moduleName)
+	local id = moduleDefNames[moduleName]
+	local ret = true
+	for i = 1, #moduleList
+		if moduleList[i] == id then
+			ret = false
+			break
+		end
+	end
+	return ret
+end
+
 local function AddAddons(moduleList, chassis)
 	moduleList = moduleList or {}
 	local addons = defaultaddons[chassis]
 	for _, v in pairs(addons) do
-		moduleList[#moduleList + 1] = moduleDefNames[v]
+		local id = moduleDefNames[v]
+		if #modules == 0 then
+			moduleList[#moduleList + 1] = id
+		elseif IsModuleUnique(moduleList, v) then
+			moduleList[#moduleList + 1] = moduleDefNames[v]
+		end
 	end
 	return moduleList
 end
@@ -531,7 +548,7 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 	-- This function sets the UnitRulesParams and updates the unit attributes after
 	-- a commander has been created. This can either happen internally due to a request
 	-- to spawn a commander or with rezz/construction/spawning.
-	if (level == 0 or staticLevel) and #moduleList == 0 then
+	if (level == 0 or staticLevel) then
 		moduleList = AddAddons(moduleList, chassis)
 	end
 	moduleEffectData = GetModuleEffectsData(moduleList, level, chassis)
@@ -925,7 +942,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 			chassisData.baseWreckID,
 			chassisData.baseHeapID,
 			{},
-			{}
+			GG.ModularCommAPI.GetProfileIDByBaseDefID(unitDefID) or {}
 		)
 		return
 	end
