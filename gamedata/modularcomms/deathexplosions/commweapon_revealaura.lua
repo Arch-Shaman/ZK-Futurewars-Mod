@@ -21,7 +21,7 @@ local weaponDef = {
 	},
 	edgeeffectiveness       = 0.7,
 	explosionGenerator      = "custom:scanner_ping",
-	explosionSpeed          = 60,
+	explosionSpeed          = 250,
 	impulseBoost            = 0,
 	impulseFactor           = 0,
 	interceptedByShieldType = 1,

@@ -106,7 +106,7 @@ return {
 
 				edgeeffectiveness       = 0.01,
 				explosionGenerator      = "custom:scanner_slow",
-				explosionSpeed          = 12,
+				explosionSpeed          = 450,
 				impulseBoost            = 0,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
