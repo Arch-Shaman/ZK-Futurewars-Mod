@@ -457,6 +457,7 @@ local function SpawnModuleWrecks(wreckLevel)
 	local x, y, z, mx, my, mz = Spring.GetUnitPosition(unitID, true)
 	local vx, vy, vz = Spring.GetUnitVelocity(unitID)
 	local teamID	= Spring.GetUnitTeam(unitID)
+	local wreckLevel = wreckLevel or 2
 	
 	local moduleCount = Spring.GetUnitRulesParam(unitID, "comm_module_count") or 0;
 	for i = 1, moduleCount do
@@ -464,10 +465,74 @@ local function SpawnModuleWrecks(wreckLevel)
 	end
 end
 
+local function TransferParamToFeature(featureID, paramName)
+	Spring.SetFeatureRulesParam(featureID, paramName, Spring.GetUnitRulesParam(unitID, paramName), INLOS)
+end
+
+local function SetUpFeatureRules(featureID)
+	local moduleCount = Spring.GetUnitRulesParam(unitID, "comm_module_count") or 0;
+	local mass = Spring.GetUnitRulesParam(unitID, "massOverride")
+	local _, maxHealth = Spring.GetUnitHealth(unitID)
+	local cost = Spring.GetUnitRulesParam(unitID, "comm_cost")
+	if profileID then
+		Spring.SetFeatureRulesParam(featureID, "comm_profileID", profileID, INLOS)
+	end
+	-- For context menu purposes --
+	TransferParamToFeature(featureID, "upgradesSpeedMult")
+	TransferParamToFeature(featureID, "carrier_count_drone")
+	TransferParamToFeature(featureID, "comm_weapon_num_1")
+	TransferParamToFeature(featureID, "comm_weapon_num_2")
+	TransferParamToFeature(featureID, "comm_shield_num")
+	TransferParamToFeature(featureID, "comm_damage_mult")
+	TransferParamToFeature(featureID, "comm_range_mult")
+	TransferParamToFeature(featureID, "buildpower_mult")
+	TransferParamToFeature(featureID, "comm_area_cloak")
+	TransferParamToFeature(featureID, "comm_area_cloak_upkeep")
+	TransferParamToFeature(featureID, "comm_area_cloak_radius")
+	TransferParamToFeature(featureID, "commander_reconpulse")
+	TransferParamToFeature(featureID, "comm_personal_cloak")
+	TransferParamToFeature(featureID, "comm_decloak_distance")
+	TransferParamToFeature(featureID, "commcloakregen")
+	TransferParamToFeature(featureID, "commrecloaktime")
+	TransferParamToFeature(featureID, "radarRangeOverride")
+	TransferParamToFeature(featureID, "jammingRangeOverride")
+	TransferParamToFeature(featureID, "comm_jumprange_bonus")
+	TransferParamToFeature(featureID, "comm_jumpreload_bonus")
+	TransferParamToFeature(featureID, "comm_autorepair_rate")
+	TransferParamToFeature(featureID, "commander_healthbonus")
+	TransferParamToFeature(featureID, "comm_jammed")
+	TransferParamToFeature(featureID, "commander_storage_override")
+	TransferParamToFeature(featureID, "wanted_metalIncome")
+	TransferParamToFeature(featureID, "wanted_energyIncome")
+	TransferParamToFeature(featureID, "sightRangeOverride")
+	
+	-- Things tooltips need --
+	TransferParamToFeature(featureID, "commander_owner")
+	
+	-- Set health --
+	Spring.SetFeatureMaxHealth(featureID, maxHealth)
+	Spring.SetFeatureHealth(featureID, maxHealth)
+	-- Things we actually need --
+	TransferParamToFeature(featureID, "comm_chassis")
+	TransferParamToFeature(featureID, "comm_baseWreckID")
+	TransferParamToFeature(featureID, "comm_baseHeapID")
+	TransferParamToFeature(featureID, "comm_baseUnitDefID")
+	TransferParamToFeature(featureID, "comm_module_count")
+	TransferParamToFeature(featureID, "comm_name")
+	TransferParamToFeature(featureID, "comm_level")
+	TransferParamToFeature(featureID, "comm_cost")
+	TransferParamToFeature(featureID, "massOverride") -- may not be necessary!
+	Spring.SetFeatureMass(featureID, mass)
+	Spring.SetFeatureResources(featureID, cost * 0.4, 0, cost * 0.4, 1.0, cost, cost)
+	for i = 1, moduleCount do
+		local commanderModule = Spring.GetUnitRulesParam(unitID, "comm_module_" .. i)
+		Spring.SetFeatureRulesParam(featureID, "comm_module_" .. i, commanderModule)
+	end
+end
+
 local function SpawnWreck(wreckLevel)
 	local makeRezzable = (wreckLevel == 1)
 	local wreckDef = FeatureDefs[Spring.GetUnitRulesParam(unitID, commWreckUnitRulesParam[wreckLevel])]
-	
 	local x, y, z = Spring.GetUnitPosition(unitID)
 	
 	local vx, vy, vz = Spring.GetUnitVelocity(unitID)
@@ -478,8 +543,11 @@ local function SpawnWreck(wreckLevel)
 		local featureID = Spring.CreateFeature(wreckDef.id, x, y, z, heading, teamID)
 		Spring.SetFeatureVelocity(featureID, vx, vy, vz)
 		if makeRezzable then
-			local baseUnitDefID = Spring.GetUnitRulesParam(unitID, "comm_baseUnitDefID") or unitDefID
-			Spring.SetFeatureResurrect(featureID, UnitDefs[baseUnitDefID].name)
+			--local baseUnitDefID = Spring.GetUnitRulesParam(unitID, "comm_baseUnitDefID") or unitDefID
+			Spring.SetFeatureResurrect(featureID, UnitDefs[Spring.GetUnitDefID(unitID)].name)
+			SetUpFeatureRules(featureID)
+		else
+			SpawnModuleWrecks(2)
 		end
 	end
 end

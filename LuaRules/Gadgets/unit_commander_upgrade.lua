@@ -766,9 +766,83 @@ local function GetRandomZombieName()
 	end
 end
 
-function gadget:UnitCreated(unitID, unitDefID, unitTeam)
+local function GetCommanderInfoFromWreck(featureID)
+	local modules = {}
+	local count = Spring.GetFeatureRulesParam(featureID, "comm_module_count")
+	local name = Spring.GetFeatureRulesParam(featureID, "comm_name")
+	local totalCost = Spring.GetFeatureRulesParam(featureID, "comm_cost")
+	local level = Spring.GetFeatureRulesParam(featureID, "comm_level")
+	local profileID = Spring.GetFeatureRulesParam(featureID, "comm_profileID")
+	local baseWreckID = Spring.GetFeatureRulesParam(featureID, "comm_baseWreckID")
+	local baseHeapID = Spring.GetFeatureRulesParam(featureID, "comm_baseHeapID")
+	local chassisID = Spring.GetFeatureRulesParam(featureID, "comm_chassis")
+	Spring.Echo("Module count: " .. tostring(count))
+	for i = 1, count do
+		modules[i] = Spring.GetFeatureRulesParam(featureID, "comm_module_" .. i)
+	end
+	Spring.Echo("Got:" .. totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID)
+	return modules, totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID
+end
+
+function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
+	local isCommander = UnitDefs[unitDefID].customParams.commtype or UnitDefs[unitDefID].customParams.level or UnitDefs[unitDefID].customParams.dynamic_comm
+	if not isCommander then -- filter out the normal units
+		return
+	end
 	if spGetUnitRulesParam(unitID, "comm_level") then
 		return
+	end
+	
+	if builderID then
+		local cmd = Spring.GetUnitCommands(builderID, 1) or {}
+		if cmd[1] then
+			cmd = cmd[1]
+			local cmdID = cmd.id
+			if cmdID == CMD.RESURRECT then
+				Spring.Echo("Unit was resurrected!")
+				for k, v in pairs(cmd.params) do
+					Spring.Echo(k .. ": " .. tostring(v))
+				end
+				local featureID = cmd.params[1] - Game.maxUnits
+				Spring.Echo("FeatureID", featureID)
+				local modules, totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID = GetCommanderInfoFromWreck(featureID)
+				local profileID = profileID or GG.ModularCommAPI.GetProfileIDByBaseDefID(unitDefID)
+				local commProfileInfo = GG.ModularCommAPI.GetCommProfileInfo(profileID)
+				if commProfileInfo then
+					InitializeDynamicCommander(
+						unitID,
+						level,
+						chassisID,
+						totalCost,
+						name,
+						unitDefID,
+						baseWreckID,
+						baseHeapID,
+						modules,
+						false,
+						commProfileInfo.images,
+						profileID
+					)
+				else
+					InitializeDynamicCommander(
+						unitID,
+						level,
+						chassisID,
+						totalCost,
+						name,
+						unitDefID,
+						baseWreckID,
+						baseHeapID,
+						modules,
+						false,
+						{},
+						profileID
+					)
+				end
+				GG.ReinitCloak(unitID, unitDefID)
+				return
+			end
+		end
 	end
 	
 	if interallyCreatedUnit then
