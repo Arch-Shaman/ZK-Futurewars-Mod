@@ -961,18 +961,26 @@ end
 
 local cacheFeatureTooltip = {}
 local cacheFeatureUnitDefID = {}
-local function GetFeatureDisplayAttributes(featureDefID)
-	if cacheFeatureTooltip[featureDefID] or cacheFeatureUnitDefID[featureDefID] then
+local function GetFeatureDisplayAttributes(featureDefID, featureID)
+	local specialName = Spring.GetFeatureRulesParam(featureID, "comm_name")
+	--Spring.Echo("Special name: " .. tostring(specialName))
+	if not specialName and (cacheFeatureTooltip[featureDefID] or cacheFeatureUnitDefID[featureDefID]) then
 		return cacheFeatureTooltip[featureDefID], cacheFeatureUnitDefID[featureDefID]
 	end
 	local fd = FeatureDefs[featureDefID]
+
 	
-	local featureName = fd and fd.name
+	local featureName = (fd and fd.name)
 	local unitName
 	if fd and fd.customParams and fd.customParams.unit then
 		unitName = fd.customParams.unit
 	else
 		unitName = featureName:gsub('(.*)_.*', '%1') --filter out _dead or _dead2 or _anything
+	end
+	
+	if specialName then
+		specialName = Spring.Utilities.GetCommanderFeatureName(featureID)
+		return specialName, UnitDefNames[unitName].id
 	end
 	
 	local unitDefID
@@ -1959,10 +1967,9 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			end
 			return
 		end
-		
 		if featureID then
 			teamID = Spring.GetFeatureTeam(featureID)
-			local featureTooltip, featureUnitDefID = GetFeatureDisplayAttributes(featureDefID)
+			local featureTooltip, featureUnitDefID = GetFeatureDisplayAttributes(featureDefID, featureID)
 			healthBarUpdate(false)
 			if featureUnitDefID then
 				unitDefID = featureUnitDefID
@@ -1993,8 +2000,10 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			unitImage.file = "#" .. unitDefID
 			unitImage.file2 = GetUnitBorder(unitDefID)
 			unitImage:Invalidate()
-
 			local unitCost = math.floor(GetUnitCost(unitID, unitDefID) or 0)
+			if featureID and UnitDefs[unitDefID].customParams.dynamic_comm then
+				unitCost = Spring.GetFeatureRulesParam(featureID, "comm_cost") or 0
+			end
 			local smallCostDisplay = unitCost
 			if smallCostDisplay >= 10000 then
 				smallCostDisplay = math.floor(smallCostDisplay / 1000) .. "k"
@@ -2011,9 +2020,10 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 				unitDesc:SetText(GetDescription(ud, unitID))
 			end
 			unitDesc:Invalidate()
-			
-			local unitName = GetHumanName(ud, unitID)
-			unitNameUpdate(true, unitName, GetUnitIcon(unitDefID))
+			if not featureID then
+				local unitName = GetHumanName(ud, unitID)
+				unitNameUpdate(true, unitName, GetUnitIcon(unitDefID))
+			end
 			
 			if unitID then
 				if playerNameLabel then
