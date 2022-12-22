@@ -28,12 +28,8 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynrecon1", -- 26/31
+		name = "dynrecon1", -- 22/31
 		weapons = {
-			"commweapon_lparticlebeam", -- TODO: Remove
-			"commweapon_lparticlebeam",
-			"commweapon_disruptor", -- TODO: Remove
-			"commweapon_disruptor",
 			"commweapon_light_flamethrower",
 			"commweapon_light_flamethrower",
 			"commweapon_emg",
