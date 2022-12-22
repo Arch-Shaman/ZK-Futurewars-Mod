@@ -1,6 +1,6 @@
 local name = "commweapon_canistercannon"
 local weaponDef = {
-	name                    = [[Medium Canister Cannon]],
+	name                    = [[Heavy Canister Cannon]],
 	areaOfEffect            = 0,
 	avoidFeature            = true,
 	avoidFriendly           = true,
@@ -15,12 +15,12 @@ local weaponDef = {
 		force_ignore_ground = [[1]],
 		is_unit_weapon = 1,
 		slot = [[5]],
-		numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+		numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 		projectile1 = "commweapon_impulsecannon_secondary",
 		--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 		clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 		use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-		spawndist = 100, -- at what distance should we spawn the projectile(s)? REQUIRED.
+		spawndist = 170, -- at what distance should we spawn the projectile(s)? REQUIRED.
 		timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 		vradius1 = "-4,-1,-4,4,0,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 		groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
@@ -35,7 +35,7 @@ local weaponDef = {
 	},
 	
 	damage                  = {
-		default = 420,
+		default = 90*8,
 	},
 	
 	edgeEffectiveness       = 0.75,
@@ -44,8 +44,8 @@ local weaponDef = {
 	impulseFactor           = 0.6,
 	interceptedByShieldType = 1,
 	noSelfDamage            = true,
-	range                   = 280,
-	reloadtime              = 2,
+	range                   = 330,
+	reloadtime              = 1.4,
 	soundHit                = [[weapon/clusters/cluster_light]],
 	soundStart              = [[weapon/cannon/cannonfire_001]],
 	soundStartVolume        = 3,
