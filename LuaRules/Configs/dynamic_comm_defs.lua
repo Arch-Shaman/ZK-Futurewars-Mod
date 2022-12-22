@@ -2002,7 +2002,7 @@ local chassisDefs = {
 			--Spring.Echo("Apply level-up function to Recon lvl " .. (level+1) .. ".")
 			if level > 1 then
 				-- hit points (in terms of player-visible level) was 1=3250, 2=3250, 3=4000, 3=4750 ....
-				sharedData.healthBonus = (sharedData.healthBonus or 0) + 750 * (level - 1)
+				sharedData.healthBonus = (sharedData.healthBonus or 0) + 1000 * (level - 1)
 			end
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 			sharedData.speedMod = (sharedData.speedMod or 0) + 7.5 + 3 * level
