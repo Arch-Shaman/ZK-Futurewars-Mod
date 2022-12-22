@@ -359,6 +359,10 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 			spRemoveUnitCmdDesc(unitID, onOffCmd)
 		end
 	end
+	if data.fireproof then
+		spSetUnitRulesParam(unitID, "fireproof", 1, INLOS)
+		GG.MakeUnitFireproof(unitID)
+	end
 	if data.sightrangebonus then
 		spSetUnitRulesParam(unitID, "sightBonus", data.sightrangebonus, INLOS)
 	end

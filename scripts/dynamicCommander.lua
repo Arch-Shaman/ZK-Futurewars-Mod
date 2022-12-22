@@ -503,6 +503,7 @@ local function SetUpFeatureRules(featureID)
 	TransferParamToFeature(featureID, "wanted_metalIncome")
 	TransferParamToFeature(featureID, "wanted_energyIncome")
 	TransferParamToFeature(featureID, "sightRangeOverride")
+	TransferParamToFeature(featureID, "fireproof")
 	
 	-- Things tooltips need --
 	TransferParamToFeature(featureID, "commander_owner")

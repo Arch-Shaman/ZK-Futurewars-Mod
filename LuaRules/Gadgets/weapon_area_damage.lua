@@ -52,6 +52,10 @@ function gadget:UnitDestroyed(unitID)
 	burnproof[unitID] = nil
 end
 
+function GG.MakeUnitFireproof(unitID)
+	burnproof[unitID] = true
+end
+
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam)
 	if weaponInfo[weaponDefID] and weaponInfo[weaponDefID].impulse then
 		return 0

@@ -1561,9 +1561,17 @@ local function printAbilities(ud, unitID, isFeature)
 		cells[#cells+1] = ' - Shares metal extraction to team'
 		cells[#cells+1] = ''
 	end
-
-	if cp.fireproof then
-		cells[#cells+1] = 'Immunity to afterburn'
+	local isFireproof
+	if not unitID then
+			isFireproof = cp.fireproof
+		elseif isFeature then
+			isFireproof = Spring.GetFeatureRulesParam(unitID, "fireproof") or cp.fireproof
+		else
+			isFireproof = Spring.GetUnitRulesParam(unitID, "fireproof") or cp.fireproof
+		end
+	
+	if isFireproof then
+		cells[#cells+1] = 'Fireproof (Immune to burning / ground fire)'
 		cells[#cells+1] = ''
 	end
 	if cp.singuimmune then

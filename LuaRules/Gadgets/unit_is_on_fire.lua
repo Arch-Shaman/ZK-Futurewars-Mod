@@ -115,6 +115,13 @@ local function CheckImmersion(unitID)
 	return false
 end
 
+local function IsUnitFireProof(unitID, unitDefID)
+	if fireproof[unitDefID] then
+		return true
+	end
+	return Spring.GetUnitRulesParam(unitID, "fireproof")
+end
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 function gadget:UnitEnteredWater(unitID, unitDefID, unitTeam)
@@ -128,7 +135,7 @@ end
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam, projectileID)
 	--Spring.Echo("PreDamaged: " .. unitID .. ", " .. unitDefID .. ", " .. unitTeam .. ", " .. tostring(damage) .. ", " .. tostring(paralyzer) .. ", " .. weaponDefID .. ", " .. tostring(projectileID) .. ", " .. tostring(attackerID) .."," .. tostring(attackerTeam))
 	--Spring.Echo("Fireproof: " .. tostring(fireproof[unitDefID] == nil) .. "\nAllied: " .. tostring(allied) .. "\nflamerDef: " .. tostring(flamerWeaponDefs[weaponDefID] == nil))
-	if flamerWeaponDefs[weaponDefID] and fireproof[unitDefID] and (attackerTeam == nil or spAreTeamsAllied(attackerTeam, unitTeam)) then
+	if flamerWeaponDefs[weaponDefID] and IsUnitFireProof(unitID, unitDefID) and (attackerTeam == nil or spAreTeamsAllied(attackerTeam, unitTeam)) then
 		return 0, 0
 	else
 		return damage, 1
@@ -148,7 +155,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		return
 	end
 
-	if fireproof[unitDefID] then
+	if IsUnitFireProof(unitID, unitDefID) then
 		return
 	end
 
