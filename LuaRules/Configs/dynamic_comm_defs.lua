@@ -1969,7 +1969,7 @@ end
 local chassisDefs = {
 	{
 		name = "strike",
-		humanName = "Ambusher",
+		humanName = "Ghost",
 		baseUnitDef = UnitDefNames and UnitDefNames["dynstrike0"].id,
 		extraLevelCostFunction = extraLevelCostFunction,
 		maxNormalLevel = maxCommLevel,
@@ -2003,6 +2003,8 @@ local chassisDefs = {
 			if level > 1 then
 				-- hit points (in terms of player-visible level) was 1=3250, 2=3250, 3=4000, 3=4750 ....
 				sharedData.healthBonus = (sharedData.healthBonus or 0) + 1000 * (level - 1)
+				sharedData.jumpspeedbonus = (sharedData.jumpspeedbonus or 0) + 0.1 * (level - 1)
+				sharedData.jumprangebonus = (sharedData.jumprangebonus or 0) + 0.025 * (level - 1)
 			end
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 			sharedData.speedMod = (sharedData.speedMod or 0) + 7.5 + 3 * level
