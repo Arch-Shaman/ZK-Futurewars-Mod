@@ -671,8 +671,8 @@
 	},
 	"dynsupport1" : {
 		"name" : "Support Commander",
-		"description" : "Economy/Support Commander",
-		"helptext" : "The esoteric Engineer chassis uses a more unorthodox weapon set. Though lacking armor or speed, this chassis is still favored due to its intrinsic buildpower bonus."
+		"description" : "Disruptor / Builder Commander",
+		"helptext" : "The Support Commander Chassis focuses on build power, support, and status infliction to provide an advantage to its army. While lacking in upfront combat capabilities of the other commanders, it has an unusual assortment of status inflicting weapons that it can use to turn the tides of a battle.\n\n- Gains 5 BP per level\n - +750 hp per level."
 	},
 	"cloakraid" : {
 		"name" : "Lurker",
@@ -857,12 +857,12 @@
 	"dynassault1" : {
 		"name" : "Bombardment Commander",
 		"description" : "Heavy Ranged Commander",
-		"helptext" : "The Bombard Chassis emphasizes range and firepower at the expense of speed and support equipment."
+		"helptext" : "The Bombard Chassis emphasizes range and firepower at the expense of speed and support equipment. While it lacks any sort of close range weapons or armor, it has access to many nuclear weapons and artillery.\n\n- +7,5% range per level\n- +500 hp per level"
 	},
 	"dynriot1" : {
-		"name" : "Guardian Commander",
+		"name" : "Riot Commander",
 		"description" : "Crowd Control Commander",
-		"helptext" : "The Guardian Chassis emphasizes close range fire power and area of effect to effectively control raiders. It can also specialize in assaulting positions."
+		"helptext" : "The inviolable Riot Commander makes use of the strongest armor ever put on a commander to keep it safe during combat. It's heavily armed, being able to quickly gain a second weapon "
 	},
 	"chickenbroodqueen" : {
 		"name" : "Chicken Brood Queen",
@@ -912,7 +912,7 @@
 	"dynstrike1" : {
 		"name" : "Ghost Commander",
 		"description" : "Stealthy Commander",
-		"helptext" : "The Ghost Chassis is a flexible, speedy stealthy commander that can get in enemy bases and take out valuable targets, or use long range weaponry to harass heavy targets from afar. It is, however, locked out of support modules. It has an inherent cloaking device and excels at hit and run tactics."
+		"helptext" : "The Ghost Chassis is a flexible, fast and stealthy commander that can get in enemy bases and take out valuable targets, or use high alpha weaponry to harass heavy targets from afar. It is, however, locked out of support modules. It has an inherent cloaking device and excels at hit and run tactics. It is, however, somewhat vulnerable to being swarmed.\n\n- Decloak radius, cloak cost, and recloak time decreases with every upgrade (up to lv6)\n- +1000 hp per level.\n- +10hp/sec cloak regen per level."
 	},
 	"empmissile" : {
 		"name" : "Shockley",
@@ -1242,7 +1242,7 @@
 	"dynrecon1" : {
 		"name" : "Recon Commander",
 		"description" : "High Mobility Commander",
-		"helptext" : "The Recon Commander revolves around mobility and guile; this lightly armored platform can mount many special weapons and modules and comes pre-equipped with jumpjets."
+		"helptext" : "The Recon Commander revolves around mobility and single target DPS. It has jump jets that it can use to get into normally unreachable places or to quickly reposition itself quickly in the field. Like its name sake, it can also upgrade its sensor capabilities and gain access to a decloak pulse.\n\n - +1000 hp per level\n - +3 speed per level.\n - +2,5% jump range per level."
 	},
 	"gunshipemp" : {
 		"name" : "Gnat",
