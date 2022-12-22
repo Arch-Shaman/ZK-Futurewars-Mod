@@ -115,10 +115,12 @@ local chassisDefs = {
 		}
 	},
 	{
-		name = "dynriot1", --18/31
+		name = "dynriot1", --20/31
 		weapons = {
 			"commweapon_canistercannon",
 			"commweapon_canistercannon",
+			"commweapon_canistercannon_napalm",
+			"commweapon_canistercannon_napalm",
 			"commweapon_heavymachinegun",
 			"commweapon_heavymachinegun",
 			"commweapon_sonicgun",
