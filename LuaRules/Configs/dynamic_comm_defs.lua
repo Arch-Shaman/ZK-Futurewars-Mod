@@ -1545,6 +1545,22 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "module_fireproofing",
+		humanName = "Heat-Dissipating Armor",
+		description = "Installs an additional mixture of heat resistant, fireproof, and dissipative materials to the commander's outer armor layers. Provides afterburn and napalm immunity. Increases health by " .. 550 * HP_MULT .. " but reduces speed by 6.",
+		image = moduleImagePath .. "module_fireproof_armor.png",
+		limit = 1,
+		cost = 350 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		requireChassis = {"riot"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.healthBonus = (sharedData.healthBonus or 0) + 550 * HP_MULT
+			sharedData.speedMalus = (sharedData.speedMalus or 0) + 6
+			sharedData.fireproof = true
+		end
+	},
+	{
 		name = "module_heavy_armor",
 		humanName = "High Density Plating",
 		description = "Provides " .. 4000*HP_MULT .. " health but reduces speed by 0.35.\nRiot exclusive.",
