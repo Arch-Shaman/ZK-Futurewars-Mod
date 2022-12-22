@@ -1372,7 +1372,7 @@ local moduleDefs = {
 	{
 		name = "module_detpack",
 		humanName = "\"Peaceful Wind\" Asset Denial System",
-		description = "Mutually Assured Destruction guaranteed or your metal back!\n\nIncreases the severity of the commander death explosion. At maximum level, it is equivalent to a nuclear detonation.\nReduces HP by " .. 1000*HP_MULT .. ".\n\n\255\255\061\06WARNING\255\255\255: Disarm/EMP will prevent explosion from going off.",
+		description = "Mutually Assured Destruction guaranteed or your metal back!\n\nThe commander will no longer leave a wreck when it dies. Increases the severity of the commander death explosion. At maximum level, it is equivalent to a nuclear detonation.\nReduces HP by " .. 1000*HP_MULT .. ".\n\n\255\255\061\06WARNING\255\255\255: Disarm/EMP will prevent explosion from going off.",
 		image = moduleImagePath .. "module_detpack.png",
 		limit = 3,
 		cost = 850 * COST_MULT,
