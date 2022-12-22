@@ -322,7 +322,14 @@ local moduleDefs = {
 			if sharedData.noMoreWeapons then
 				return
 			end
-			local weaponName = (modules[moduleDefNames.conversion_disruptor] and "commweapon_heavymachinegun_disrupt") or "commweapon_heavymachinegun"
+			local modifiers = ""
+			if modules[moduleDefNames.conversion_disruptor] then -- Not implemented?
+				modifiers = "_disrupt"
+			end
+			if modules[moduleDefNames.weaponmod_napalm_warhead_riot] then
+				modifiers = modifiers .. "_napalm"
+			end
+			local weaponName = "commweapon_heavymachinegun" .. modifiers
 			if not sharedData.weapon1 then
 				sharedData.weapon1 = weaponName
 			else
@@ -527,8 +534,8 @@ local moduleDefs = {
 	},
 	{
 		name = "commweapon_riotcannon",
-		humanName = "Riot Cannon",
-		description = "The weapon of choice for crowd control",
+		humanName = "Riot Burst Cannon",
+		description = "Fragmentation cannon that breaks into small pieces on impact.",
 		image = moduleImagePath .. "commweapon_riotcannon.png",
 		limit = 2,
 		cost = 75 * COST_MULT,
@@ -539,7 +546,7 @@ local moduleDefs = {
 			if sharedData.noMoreWeapons then
 				return
 			end
-			local weaponName = (modules[moduleDefNames.weaponmod_napalm_warhead] and "commweapon_riotcannon_napalm") or "commweapon_riotcannon"
+			local weaponName = (modules[moduleDefNames.weaponmod_napalm_warhead_riot] and "commweapon_riotcannon_napalm") or "commweapon_riotcannon"
 			if not sharedData.weapon1 then
 				sharedData.weapon1 = weaponName
 			else
@@ -1171,14 +1178,14 @@ local moduleDefs = {
 		end
 	},
 	{
-		name = "weaponmod_napalm_warhead",
-		humanName = "Napalm Warhead",
-		description = "Riot Cannon and Rocket Launcher set targets on fire. Reduced direct damage.",
+		name = "weaponmod_napalm_warhead_riot",
+		humanName = "Incendiary Rounds",
+		description = "Reduces direct damage by 20% in exchange for setting an area on fire.\nRequires: Canister Cannon, Chaingun, or Riot Cannon.",
 		image = moduleImagePath .. "weaponmod_napalm_warhead.png",
 		limit = 1,
-		cost = 350 * COST_MULT,
-		requireChassis = {"knight"},
-		requireOneOf = {"commweapon_rocketlauncher", "commweapon_artillery_heavy", "commweapon_riotcannon"},
+		cost = 225 * COST_MULT,
+		requireChassis = {"knight", "riot"},
+		requireOneOf = {"commweapon_riotcannon", "commweapon_canistercannon", "commweapon_heavymachinegun"},
 		requireLevel = 2,
 		slotType = "module",
 	},
