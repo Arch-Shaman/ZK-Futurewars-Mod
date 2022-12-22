@@ -12,6 +12,7 @@ def.customParams.burntime = 420 -- blaze it!
 def.customParams.burnchance = 1
 def.customParams.setunitsonfire = 1
 def.explosiongenerator = "custom:napalm_phoenix"
+def.customParams.projectile1 = "commweapon_napalm_fragment_dummy"
 def.rgbColor = "1 0.3 0.1"
 def.soundHit = "weapon/burn_mixed"
 
