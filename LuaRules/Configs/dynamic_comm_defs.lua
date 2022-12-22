@@ -657,6 +657,9 @@ local moduleDefs = {
 				return
 			end
 			local weaponName = "commweapon_canistercannon"
+			if modules[moduleDefNames.weaponmod_napalm_warhead_riot] then
+				weaponName = weaponName .. "_napalm"
+			end
 			if not sharedData.weapon1 then
 				sharedData.weapon1 = weaponName
 			else
