@@ -3,7 +3,7 @@ local _, def = VFS.Include("gamedata/modularcomms/weapons/commweapon_riotcannon.
 def.name = "Napalm " .. def.name
 def.areaOfEffect = def.areaOfEffect * 1.25
 for armorType, damage in pairs (def.damage) do
-	def.damage[armorType] = damage * 0.75
+	def.damage[armorType] = damage * 0.8
 end
 def.craterBoost = 1
 def.craterMult = 1
