@@ -2043,9 +2043,9 @@ local chassisDefs = {
 			if level > 1 then
 				-- hit points (in terms of player-visible level) was 1=4400, 2=4400, 3=3000, 4=3750, 5=4500 ....
 				-- (a change is now made over in dynassault.lua to reduce the first levels to 2250)
-				sharedData.healthBonus = (sharedData.healthBonus or 0) - 400 + 750 * (level - 1)
+				sharedData.healthBonus = (sharedData.healthBonus or 0) + 500 * (level - 1)
 			end
-			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 2.5
 			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.075 * (level + 1)
 		end,
 		levelDefs = levelDefGenerator("dynassault", GetAssaultCloneModulesString, 3)
