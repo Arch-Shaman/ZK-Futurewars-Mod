@@ -2060,10 +2060,10 @@ local chassisDefs = {
 			--Spring.Echo("Apply level-up function to Riot (comm) lvl " .. (level+1) .. ".")
 			if level > 1 then
 				-- hit points (in terms of player-visible level) was 1=5500, 2=5500, 3=7500, 3=9000, 4=10500 ....
-				sharedData.healthBonus = (sharedData.healthBonus or 0) + 500 + 1750 * (level - 1)
+				sharedData.healthBonus = (sharedData.healthBonus or 0) + 1000 + 1750 * (level - 1)
 			end
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10 * level
-			sharedData.damageMult = (sharedData.damageMult or 1) + 0.1 * (level + 1)
+			sharedData.damageMult = (sharedData.damageMult or 1) + 0.125 * (level + 1)
 		end,
 		levelDefs = levelDefGenerator("dynriot", GetRiotCloneModulesString, 2)
 	},
