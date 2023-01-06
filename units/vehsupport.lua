@@ -5,7 +5,7 @@ return {
 		description            = "Deployable HEAT Missile Rover (must stop to fire)",
 		acceleration           = 0.15,
 		brakeRate              = 0.3,
-		buildCostMetal         = 140,
+		buildCostMetal         = 160,
 		builder                = false,
 		buildPic               = "vehsupport.png",
 		canGuard               = true,
@@ -34,9 +34,9 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 560,
+		maxDamage              = 750,
 		maxSlope               = 18,
-		maxVelocity            = 2.8,
+		maxVelocity            = 2.6,
 		maxWaterDepth          = 22,
 		movementClass          = "TANK3",
 		moveState              = 0,
@@ -46,14 +46,11 @@ return {
 		script                 = "vehsupport.lua",
 		pushResistant          = 0,
 		selfDestructAs         = "BIG_UNITEX",
-
 		sfxtypes               = {
-
 			explosiongenerators = {
 				"custom:SLASHMUZZLE",
 				"custom:SLASHREARMUZZLE",
 			},
-
 		},
 		sightDistance          = 660,
 		trackOffset            = -6,
@@ -63,8 +60,6 @@ return {
 		trackWidth             = 34,
 		turninplace            = 0,
 		turnRate               = 420,
-		workerTime             = 0,
-
 		weapons                = {
 
 			{
@@ -77,11 +72,9 @@ return {
 		},
 		weaponDefs             = {
 			CORTRUCK_MISSILE = {
-				name                    = "Frostshard HEAT Missiles",
+				name                    = "Frostshard HEAT Missile",
 				areaOfEffect            = 48,
 				avoidFeature            = true,
-				burst                   = 2,
-				burstrate               = 0.166,
 				cegTag                  = "missiletrailgreen",
 				craterBoost             = 0,
 				craterMult              = 0,
@@ -97,7 +90,7 @@ return {
 					proxy = 1, -- check for nearby units?
 					useheight = 0,
 					timeoutspawn = 0,
-					spawndist = 70, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 90, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					vradius1 = "0,0,0,0,0,0", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 0,
 					spawnsfx1 = 2049,
@@ -114,8 +107,8 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
 				model                   = "wep_m_frostshard.s3o",
-				range                   = 600,
-				reloadtime              = 1.633,
+				range                   = 770,
+				reloadtime              = 1.2,
 				smokeTrail              = true,
 				soundHit                = "explosion/ex_med17",
 				soundStart              = "weapon/missile/missile_fire11",
@@ -169,7 +162,6 @@ return {
 				turret                  = true,
 				weaponType              = "BeamLaser",
 			},
-
 		},
 		featureDefs            = {
 			DEAD  = {
