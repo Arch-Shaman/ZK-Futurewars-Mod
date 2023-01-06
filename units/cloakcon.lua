@@ -33,7 +33,7 @@ return {
 			area_cloak_self_decloak_distance = 40,
 			area_cloak_grow_rate = 350,
 			area_cloak_shrink_rate = 1400,
-			recloaktime = 45,
+			recloaktime = 60,
 			priority_misc = 2, -- High
 			cloakstrikeduration = 30,
 			cloakstrikespeed = 1.25,
