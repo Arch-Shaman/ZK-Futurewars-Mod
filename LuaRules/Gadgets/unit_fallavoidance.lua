@@ -163,6 +163,10 @@ end
 
 function gadget:UnitDestroyed(unitID, unitDefID)
 	if wantedDefs[unitDefID] then
+		local newID = Spring.GetUnitRulesParam(unitID, "wasMorphedTo")
+		if newID then
+			ToggleCommand(newID, unitStates[unitID] and {1} or {0}, {})
+		end
 		IterableMap.Remove(units, unitID)
 	end
 end
