@@ -185,7 +185,8 @@ function gadget:GameFrame(f)
 							spEcho("Velocity: " .. vx .. ", " .. vy .. ", " .. vz)
 						end
 						if vy < minimumDownwardVelocity then
-							local distance = spGetUnitRulesParam(id, "comm_jumprange_bonus") or wantedDefs[data.unitdef]
+							local distance = spGetUnitRulesParam(id, "comm_jumprange_bonus") or 1
+							distance = distance * wantedDefs[data.unitdef]
 							DoJump(data, id, x, y, z, vx, vz, distance)
 						end
 					end
