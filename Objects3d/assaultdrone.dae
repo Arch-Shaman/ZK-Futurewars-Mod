@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 3.4.1 commit date:2022-12-19, commit time:17:00, hash:55485cb379f7</authoring_tool>
     </contributor>
-    <created>2023-01-07T20:42:28</created>
-    <modified>2023-01-07T20:42:28</modified>
+    <created>2023-01-08T00:03:54</created>
+    <modified>2023-01-08T00:03:54</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -242,7 +242,7 @@
             </bind_material>
           </instance_geometry>
           <node id="flare" name="flare" type="NODE">
-            <matrix sid="transform">1 0 0 0 0 -4.37114e-8 1 7.13634e-7 0 -1 -4.37114e-8 16.32604 0 0 0 1</matrix>
+            <matrix sid="transform">1 0 0 0 0 -4.37114e-8 1 8.60329e-7 0 -1 -4.37114e-8 19.68203 0 0 0 1</matrix>
           </node>
         </node>
         <node id="wings" name="wings" type="NODE">
@@ -257,10 +257,10 @@
             </bind_material>
           </instance_geometry>
           <node id="Lwingengine" name="Lwingengine" type="NODE">
-            <matrix sid="transform">1 0 0 -8.89448 0 -4.37114e-8 1 -0.8573685 0 -1 -4.37114e-8 -13.46707 0 0 0 1</matrix>
+            <matrix sid="transform">1 0 0 -10.80571 0 1 0 -0.09665632 0 0 1 -15.45789 0 0 0 1</matrix>
           </node>
           <node id="Rwingengine" name="Rwingengine" type="NODE">
-            <matrix sid="transform">1 0 0 8.89448 0 -4.37114e-8 1 -0.8573685 0 -1 -4.37114e-8 -13.46708 0 0 0 1</matrix>
+            <matrix sid="transform">1 0 0 10.85303 0 1 0 -0.09665632 0 0 1 -15.45789 0 0 0 1</matrix>
           </node>
         </node>
       </node>
