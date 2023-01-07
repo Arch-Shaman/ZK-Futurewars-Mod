@@ -37,6 +37,7 @@ local weaponDef = {
 	turret                  = true,
 	weaponType              = [[Cannon]],
 	weaponVelocity          = 2250,
+	waterweapon				= true,
 }
 
 return name, weaponDef
