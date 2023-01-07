@@ -391,6 +391,12 @@ effectUnitDefs = {
 		{class='AirJet', options={color={0.8,0.1,0.0}, width=5, length=20, jitterWidthScale=2, distortion=0.01, piece="Lwingengine", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true, noIconDraw = true}},
 		{class='AirJet', options={color={0.8,0.1,0.0}, width=5, length=20, jitterWidthScale=2, distortion=0.01, piece="Rwingengine", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true, noIconDraw = true}},
 	},
+	dronecon = {
+		{class='AirJet', options={color={0.1,0.4,0.6}, width=4, length=25, piece="exhaust1", onActive=true, emitVector = {0, 0, -1}, noIconDraw = true}},
+		{class='AirJet', options={color={0.1,0.4,0.6}, width=4, length=25, piece="exhaust2", onActive=true, emitVector = {0, 0, -1}, noIconDraw = true}},
+		{class='AirJet', options={color={0.1,0.4,0.6}, width=4, length=25, piece="exhaust3", onActive=true, emitVector = {0, 0, -1}, noIconDraw = true}},
+		{class='AirJet', options={color={0.1,0.4,0.6}, width=4, length=25, piece="exhaust4", onActive=true, emitVector = {0, 0, -1}, noIconDraw = true}},
+	 },
  }
 
 effectUnitDefsXmas = {}
