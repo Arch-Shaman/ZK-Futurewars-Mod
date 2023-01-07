@@ -18,8 +18,8 @@ end
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 include("LuaRules/Configs/customcmds.h.lua")
 
-local wantedDefs = {}
-local canJumpDefs = {}
+local wantedDefs = {} -- stores jump ranges of units that can midair jump.
+local canJumpDefs = {} -- we need a separate table for units that can jump because this gadget also gives out the autojump command.
 local units = IterableMap.New()
 
 -- config --
@@ -58,7 +58,7 @@ local GiveClampedOrderToUnit = Spring.Utilities.GiveClampedOrderToUnit
 local unitStates = {}
 
 local CommandOrder = 123456
-local sweapfire_desc = {
+local commandDescription = {
 	id          = CMD_AUTOJUMP,
 	type        = CMDTYPE.ICON_MODE,
 	name        = 'Autojump',
@@ -103,8 +103,8 @@ local function ToggleCommand(unitID, cmdParams)
 	local cmdDescID = spFindUnitCmdDesc(unitID, CMD_AUTOJUMP)
 	
 	if (cmdDescID) then
-		sweapfire_desc.params[1] = state
-		spEditUnitCmdDesc(unitID, cmdDescID, { params = sweapfire_desc.params})
+		commandDescription.params[1] = state
+		spEditUnitCmdDesc(unitID, cmdDescID, { params = commandDescription.params})
 	end
 	unitStates[unitID] = state == 1
 end
@@ -133,7 +133,7 @@ end]]
 function gadget:UnitCreated(unitID, unitDefID)
 	if canJumpDefs[unitDefID] then
 		unitStates[unitID] = true -- default to ON.
-		spInsertUnitCmdDesc(unitID, sweapfire_desc)
+		spInsertUnitCmdDesc(unitID, commandDescription)
 		ToggleCommand(unitID, {1}, {})
 	end
 end
