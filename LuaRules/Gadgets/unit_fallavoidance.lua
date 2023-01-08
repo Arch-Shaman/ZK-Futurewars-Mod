@@ -94,7 +94,8 @@ local function DoJump(data, unitID, x, y, z, vx, vz, distance)
 		GG.recursion_GiveOrderToUnit = true
 		GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
 		GG.recursion_GiveOrderToUnit = false
-		data.nextupdate = spGetGameFrame() + tonumber(UnitDefs[data.unitdef].customParams.jump_reload) -- assume we were successful.
+		local reloadTime = math.max(1 - (spGetUnitRulesParam(unitID, "comm_jumpreload_bonus") or 0), 0) * tonumber(UnitDefs[data.unitdef].customParams.jump_reload)
+		data.nextupdate = spGetGameFrame() + reloadTime -- assume we were successful.
 	end
 end
 
