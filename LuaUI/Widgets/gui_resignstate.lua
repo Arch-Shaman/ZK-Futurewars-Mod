@@ -65,6 +65,8 @@ local function ToggleState()
 	switches = switches - 1
 end
 
+WG.ToggleResignState = ToggleState
+
 options_path = 'Settings/Interface/Resign State/'
 options = {
 	unmerge = {
