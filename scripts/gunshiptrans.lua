@@ -180,7 +180,7 @@ local function PickupAndDropFixer()
 	while true do
 		local passengerId = getPassengerId()
 		if passengerId and (getCommandId() == 75) and isValidCargo(passengerId) and isNearPickupPoint(passengerId, 120) then
-			Sleep(1500)
+			Sleep(200)
 			local passengerId = getPassengerId()
 			if passengerId and (getCommandId() == 75) and isValidCargo(passengerId) and isNearPickupPoint(passengerId, 120) then
 				Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
@@ -189,7 +189,7 @@ local function PickupAndDropFixer()
 		end
 		
 		if unitLoaded and (getCommandId() == 81) and isNearDropPoint(unitLoaded, 80) then
-			Sleep(1500)
+			Sleep(200)
 			if unitLoaded and (getCommandId() == 81) and isNearDropPoint(unitLoaded, 80) then
 				Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
 				Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)

@@ -353,20 +353,21 @@ function isValidCargo(soonPassenger, passenger)
 end
 
 local function PickupAndDropFixer()
+	local UNLOADUNIT = 81
+	local LOADUNIT = 75
 	while true do
 		local passengerId = getPassengerId()
-		if passengerId and (getCommandId() == 75) and isValidCargo(passengerId) and isNearPickupPoint(passengerId, 120) then
-			Sleep(1500)
+		if passengerId and (getCommandId() == LOADUNIT) and isValidCargo(passengerId) and isNearPickupPoint(passengerId, 120) then
 			local passengerId = getPassengerId()
-			if passengerId and (getCommandId() == 75) and isValidCargo(passengerId) and isNearPickupPoint(passengerId, 120) then
+			if passengerId and (getCommandId() == UNLOADUNIT) and isValidCargo(passengerId) and isNearPickupPoint(passengerId, 120) then
 				Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
 				Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
 			end
 		end
 		
-		if unitLoaded and (getCommandId() == 81) and isNearDropPoint(unitLoaded, 80) then
-			Sleep(1500)
-			if unitLoaded and (getCommandId() == 81) and isNearDropPoint(unitLoaded, 80) then
+		if unitLoaded and (getCommandId() == UNLOADUNIT) and isNearDropPoint(unitLoaded, 120) then
+			Sleep(200)
+			if unitLoaded and (getCommandId() == UNLOADUNIT) and isNearDropPoint(unitLoaded, 120) then
 				Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
 				Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
 			end
