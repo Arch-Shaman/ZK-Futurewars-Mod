@@ -132,6 +132,7 @@ local unitDef = {
 			reloadtime              = 10,
 			smokeTrail              = false,
 			soundHit                = "weapon/impacts/kinetic_kill_entry",
+			soundHitVolume          = 20,
 			soundStart              = "SiloLaunch",
 			startVelocity           = 20,
 			tolerance               = 4000,
