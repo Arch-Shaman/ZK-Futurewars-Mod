@@ -77,7 +77,7 @@ function ForceDropUnit()
 		Spring.AddUnitImpulse(unitLoaded,0,-4,0) --hax to prevent teleport to ground
 		Spring.SetUnitVelocity(unitLoaded,0,0,0) --remove any random velocity caused by collision with transport (especially Spring 91)
 		Spring.AddUnitImpulse(unitLoaded,vx,vy,vz) --readd transport momentum
-		--GG.AutoJumpFromTransport(unitLoaded)
+		GG.AutoJumpFromTransport(unitLoaded)
 	end
 	unitLoaded = nil
 	StartThread(script.EndTransport) --formalize unit drop (finish animation, clear tag, ect)
