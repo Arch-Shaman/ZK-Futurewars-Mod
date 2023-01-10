@@ -141,7 +141,6 @@ return {
 				model                   = "wep_m_hailstorm.s3o",
 				noSelfDamage            = true,
 				predictBoost            = 2,
-				targetMoveError         = 0.4,
 				range                   = 690,
 				reloadtime              = 0.2,
 				smokeTrail              = false,
