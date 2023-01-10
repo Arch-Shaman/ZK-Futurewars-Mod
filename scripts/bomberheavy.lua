@@ -39,7 +39,7 @@ local movectrlGetTag = Spring.MoveCtrl.GetTag
 local deathexplosiontriggered = false
 
 local function DeathExplosion()
-	if Spring.GetUnitRulesParam(unitID, "noammo") ~= 1 then
+	if Spring.GetUnitRulesParam(unitID, "noammo") == 0 then
 		local px, py, pz = Spring.GetUnitPosition(unitID)
 		Spring.SpawnProjectile(WeaponDefNames["bomberheavy_deathexplo"].id, {
 			pos = {px, py + 5, pz},
