@@ -68,19 +68,24 @@ local commandDescription = {
 }
 
 local velocityCoef = 5
-local minimumDownwardVelocity = -0.75
+local minimumDownwardVelocity = -0.15
+local minimumUpwardVelocity = 2.0
+local minimumDownwardVelocityForFalling = -2
+local minimumRisingHeight = 5
+-- The actual value is around 3.140525698661803977174145074968 for a lv3 recon commander to take fall damage.
+
 
 local function GetPoints(angle, x, z, dist)
 	return x + (dist * cos(angle)), z + (dist * sin(angle))
 end	
 
-local function DoJump(data, unitID, x, y, z, vx, vz, distance)
+local function DoJump(unitID, x, y, z, vx, vz, distance)
 	local cx, cy, cz
 	cy = y
 	local absoluteX, absoluteZ = math.abs(vx), math.abs(vz)
 	if absoluteX <= 1 and absoluteZ <= 1 then -- jump in place
-		cx = x
-		cz = z
+		cx = x + math.random(-5, 5)
+		cz = z + math.random(-5, 5)
 	else
 		local a = atan2(vz, vx) -- returns angle in radians
 		local velocity = math.sqrt((vz * vz) + (vx * vx))
@@ -91,12 +96,10 @@ local function DoJump(data, unitID, x, y, z, vx, vz, distance)
 		spEcho("DoJump: " .. cx .. "," .. cy .. "," .. cz)
 	end
 	if spGetGroundHeight(cx, cz) > -10 then
-		GG.recursion_GiveOrderToUnit = true
 		GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
-		GG.recursion_GiveOrderToUnit = false
-		local reloadTime = math.max(1 - (spGetUnitRulesParam(unitID, "comm_jumpreload_bonus") or 0), 0) * tonumber(UnitDefs[data.unitdef].customParams.jump_reload)
-		data.nextupdate = spGetGameFrame() + reloadTime -- assume we were successful.
+		return true
 	end
+	return false
 end
 
 local function ToggleCommand(unitID, cmdParams)
@@ -117,19 +120,14 @@ function GG.GetAutoJumpState(unitID)
 	return unitStates[unitID]
 end
 
---[[function GG.AutoJumpFromTransport(unitID)
-	local distance = spGetUnitRulesParam(unitID, "comm_jumprange_bonus") or wantedDefs[spGetUnitDefID(unitID)] or 0
-	if distance == 0 then
+function GG.AutoJumpFromTransport(unitID)
+	if not wantedDefs[spGetUnitDefID(unitID)] then
 		return
 	end
 	local data = IterableMap.Get(units, unitID)
-	local canJump = (spGetUnitRulesParam(unitID, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not spGetUnitIsStunned(unitID)
-	if unitStates[unitID] and canJump then
-		local x, y, z = spGetUnitPosition(unitID)
-		local vx, _, vz = spGetUnitVelocity(unitID)
-		DoJump(data, unitID, x, y, z, vx, vz, distance)
-	end
-end]]
+	data.inAir = true
+	IterableMap.Set(units, unitID, data)
+end
 
 function gadget:UnitCreated(unitID, unitDefID)
 	if canJumpDefs[unitDefID] then
@@ -152,7 +150,7 @@ end
 
 function gadget:UnitFinished(unitID, unitDefID)
 	if wantedDefs[unitDefID] then
-		IterableMap.Add(units, unitID, {nextupdate = 0, unitdef = unitDefID})
+		IterableMap.Add(units, unitID, {nextupdate = 0, unitdef = unitDefID, inAir = false})
 	end
 end
 
@@ -184,16 +182,26 @@ function gadget:GameFrame(f)
 					if debugMode then
 						spEcho("GroundHeight: " .. currentheight)
 					end
-					if not GG.GetUnitFallDamageImmunity(id) and currentheight > 10 and currentheight <= 50 then
+					if not GG.GetUnitFallDamageImmunity(id) and currentheight >= 1 and data.inAir then
 						local vx, vy, vz = spGetUnitVelocity(id)
+						local minimumFallingHeight = vy * -10
+						Spring.Echo("min height: " .. minimumFallingHeight) 
 						if debugMode then
 							spEcho("Velocity: " .. vx .. ", " .. vy .. ", " .. vz)
 						end
-						if vy < minimumDownwardVelocity then
+						if vy <= minimumDownwardVelocity and currentheight <= minimumFallingHeight then
 							local distance = spGetUnitRulesParam(id, "comm_jumprange_bonus") or 1
 							distance = distance * wantedDefs[data.unitdef]
-							DoJump(data, id, x, y, z, vx, vz, distance)
+							local jumped = DoJump(id, x, y, z, vx, vz, distance)
+							data.inAir = not jumped
+							if jumped then
+								local reloadTime = math.floor(math.max(1 - (spGetUnitRulesParam(id, "comm_jumpreload_bonus") or 0), 0) * tonumber(UnitDefs[data.unitdef].customParams.jump_reload) * 30)
+								data.nextupdate = spGetGameFrame() + reloadTime -- assume we were successful.
+							end
 						end
+					elseif currentheight >= minimumRisingHeight and not data.inAir then
+						local vx, vy, vz = spGetUnitVelocity(id)
+						data.inAir = vy >= minimumUpwardVelocity or vy <= minimumDownwardVelocityForFalling
 					end
 				else
 					data.nextupdate = f + (2 * UpdateRate)
