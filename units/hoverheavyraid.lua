@@ -55,7 +55,7 @@ return {
 		weaponDefs          = {
 			DISRUPTOR      = {
 				name                    = "Disruptor Phaser",
-				areaOfEffect            = 60,
+				areaOfEffect            = 30,
 				beamdecay               = 0.9,
 				beamTime                = 4/30,
 				beamttl                 = 50,
@@ -76,7 +76,7 @@ return {
 				},
 				duration                = 0.4,
 				edgeEffectiveness		= 0.1,
-				explosionGenerator      = "custom:riotballplus2_purple_small60",
+				explosionGenerator      = "custom:riotballplus2_purple_small",
 				fireStarter             = 30,
 				impactOnly              = false,
 				impulseBoost            = 0,
