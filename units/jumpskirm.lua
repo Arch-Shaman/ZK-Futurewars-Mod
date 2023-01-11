@@ -45,7 +45,7 @@ return {
 		leaveTracks         = true,
 		maxDamage           = 660,
 		maxSlope            = 36,
-		maxVelocity         = 1.9,
+		maxVelocity         = 2.1,
 		maxWaterDepth       = 22,
 		movementClass       = "KBOT3",
 		noAutoFire          = false,
@@ -66,7 +66,6 @@ return {
 		trackWidth          = 14,
 		turnRate            = 2880,
 		upright             = true,
-		workerTime          = 0,
 		weapons             = {
 			{
 				def                = "DISRUPTOR_BEAM",
@@ -84,7 +83,7 @@ return {
 				coreThickness           = 0.25,
 				craterBoost             = 0,
 				craterMult              = 0,
-				cegtag					= "disruptortrail",
+				cegtag					= "beamweapon_muzzle_purple",
 				customparams = {
 					burst = Shared.BURST_RELIABLE,
 					timeslow_damagefactor = 4,
@@ -93,7 +92,7 @@ return {
 					light_radius = 320,
 				},
 				damage                  = {
-					default = 600.1,
+					default = 650.1,
 				},
 				explosionGenerator      = "custom:riotballplus2_purple_small60",
 				fireStarter             = 30,
