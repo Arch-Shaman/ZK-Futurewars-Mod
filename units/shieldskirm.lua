@@ -128,6 +128,7 @@ return {
 					cruise_noascension = 1,
 					script_reload = "6.5",
 					script_burst = "2",
+					cruise_useprediction = 25,
 				},
 				damage                  = {
 					default = 600.01,
