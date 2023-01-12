@@ -1,6 +1,7 @@
 include "constants.lua"
 
 local body = piece 'body'
+local barrel = piece 'barrel'
 local flare = piece 'flare'
 local wings = piece 'wings'
 local fan = piece 'fan'
@@ -14,12 +15,12 @@ local spGetUnitVelocity = Spring.GetUnitVelocity
 local function TiltWings()
 	while true do
 		if attacking then
-			Turn(wings, x_axis, 0, math.rad(60))
+			Turn(wings, x_axis, 0, math.rad(75))
 			Sleep(250)
 		else
 			local vx,_,vz = spGetUnitVelocity(unitID)
 			local speed = vx*vx + vz*vz
-			Turn(wings, x_axis, math.rad(2.5 * speed), math.rad(60))
+			Turn(wings, x_axis, math.rad(4.4 * speed), math.rad(75))
 			Sleep(250)
 		end
 	end
@@ -41,6 +42,13 @@ end
 
 function script.AimWeapon(num, heading, pitch)
 	return true
+end
+
+function script.FireWeapon()
+    Sleep(1)
+    Move(barrel, z_axis, -5, 1000)
+	Sleep(100)
+	Move(barrel, z_axis, 0, 10)
 end
 
 function script.Killed(recentDamage, maxHealth)
