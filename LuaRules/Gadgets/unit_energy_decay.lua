@@ -28,6 +28,7 @@ for i=1, #UnitDefs do
 			baseoutput = UnitDefs[i].energyMake,
 			maxoutput = tonumber(cp["decay_maxoutput"]) or 10,
 			initialrate = tonumber(cp["decay_initialrate"]) or 10,
+			progressnotsaved = cp["decay_noprogressonmorph"] ~= nil
 		}
 		config[i].appreciates = config[i].rate < 0
 	end
@@ -43,7 +44,7 @@ local max = math.max
 local min = math.min
 
 function gadget:UnitFinished(unitID, unitDefID, unitTeam)
-	if config[unitDefID] then
+	if config[unitDefID] and not IterableMap.InMap(decayers, unitID) then
 		if debugMode then spEcho("Added decayer " .. unitID) end
 		local mult = GG.GetTeamHandicap(unitTeam) or 1
 		local config = config[unitDefID]
@@ -54,9 +55,59 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	end
 end
 
-function gadget:UnitDestroyed(unitID)
-	if IterableMap.InMap(decayers, unitID) then
-		IterableMap.Remove(decayers, unitID)
+function gadget:UnitDestroyed(unitID, unitDefID)
+	local inMap = IterableMap.InMap(decayers, unitID)
+	if inMap or (config[unitDefID]) then
+		local newUnit = Spring.GetUnitRulesParam(unitID, "wasMorphedTo")
+		if newUnit then
+			local data = IterableMap.Get(decayers, unitID)
+			local unitconfig = config[unitDefID]
+			if not unitconfig.progressnotsaved then
+				local currentrate
+				if data then
+					currentrate = data.currentrate
+					local totalchange
+					if unitconfig.appreciates then
+						totalchange = unitconfig.maxoutput - unitconfig.initialrate
+						currentrate = currentrate - unitconfig.initialrate
+						currentrate = currentrate / totalchange
+					else
+						currentrate = unitconfig.initialrate - currentrate -- 1 ->0.1 current is 0.9. we've progressed 0.1 through it.
+						totalchange = unitconfig.initialrate - unitconfig.minoutput -- 0.9 is total change.
+						currentrate = currentrate / totalchange
+					end
+				else
+					currentrate = 1 -- we've completed the cycle totally.
+				end
+				local newconfig = config[Spring.GetUnitDefID(newUnit)]
+				if newconfig then
+					--check if it appreciates
+					if unitconfig.appreciates == newconfig.appreciates then
+						local newCurrentRate = newconfig.initialrate
+						local newTotalChange
+						if newconfig.appreciates then
+							newTotalChange = newconfig.maxoutput - newCurrentRate
+							newCurrentRate = newCurrentRate + (newTotalChange * currentrate)
+						else
+							newTotalChange = newCurrentRate - newconfig.minoutput
+							newCurrentRate = newCurrentRate - (newTotalChange * currentrate)
+						end
+						local newData = {currentrate = newCurrentRate, nextupdate = spGetGameFrame() + newconfig.time, def = Spring.GetUnitDefID(newUnit), mult = GG.GetTeamHandicap(unitTeam) or 1}
+						if IterableMap.InMap(decayers, newUnit) then
+							IterableMap.Set(decayers, newUnit, newData)
+						else
+							IterableMap.Add(decayers, newUnit, newData)
+						end
+						spSetUnitRulesParam(newUnit, "selfIncomeChange", newCurrentRate)
+						GG.UpdateUnitAttributes(newUnit)
+						GG.UpdateUnitAttributes(newUnit)
+					end
+				end
+			end
+		end
+		if inMap then -- cleanup.
+			IterableMap.Remove(decayers, unitID)
+		end
 	end
 end
 
@@ -73,6 +124,7 @@ function gadget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
 		data.mult = GG.GetTeamHandicap(newTeam)
 	end
 end
+
 
 function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(decayers) do
