@@ -123,8 +123,6 @@ return {
 					cruisealt = 400,
 					keepmomentum1 = 0,
 					cruisedist = 110,
-					cruiserandomradius = 35,
-					cruisetracking = 1,
 					--cruise_nolock = 1,
 					cas_nocruisecheck = 1,
 					cruise_noascension = 1,
@@ -132,6 +130,7 @@ return {
 					vradius1 = "-5,-11,-5,5,-8,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					light_color = "1.4 1 0.7",
 					light_radius = 120,
+					cruise_useprediction = 28,
 				},
 				damage                  = {
 					default = 60.1 * 10,
