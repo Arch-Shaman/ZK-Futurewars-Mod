@@ -77,6 +77,8 @@ for i=1, #WeaponDefs do
 		config[i].splittarget = customParams.cruise_torpedosplittarget ~= nil
 		config[i].ignoreterrain = customParams.cruise_ignoreterrain ~= nil
 		config[i].minterrainheight = tonumber(customParams.cruise_minterrainheight) or config[i].altitude
+		config[i].useprediction = customParams.cruise_useprediction ~= nil
+		config[i].predicttime = tonumber(customParams.cruise_useprediction) or 15
 		--Spring.Echo(tostring(wd.type))
 		SetWatchWeapon(i, true)
 	elseif customParams.cruisealt ~= nil or customParams.cruisedist ~= nil then
@@ -210,6 +212,7 @@ GG.GetCruiseTarget = GetTargetPosition
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	local wep = weaponDefID or spGetProjectileDefID(proID) -- needed for bursts.
+	local originalTarget
 	if config[wep] then
 		local type, target = spGetProjectileTarget(proID)
 		local ty = 0
@@ -228,6 +231,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 			last = {x, y, z}
 			if not config[wep].track then
 				type = 'ground'
+				originalTarget = target
 				target = last
 			end
 		end
@@ -237,7 +241,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local allyteam = spGetUnitAllyTeam(proOwnerID)
 		local _, py = spGetProjectilePosition(proID)
 		py = max(py, ty)
-		IterableMap.Add(missiles, proID, {target = target, altitudestayframes = 0, type = type, cruising = config[wep].noascension, takeoff = not config[wep].noascension, lastknownposition = last, configid = wep, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0, offset = {}})
+		IterableMap.Add(missiles, proID, {target = target, originaltarget = originalTarget, useprediction = config[wep].useprediction, altitudestayframes = 0, type = type, cruising = config[wep].noascension, takeoff = not config[wep].noascension, lastknownposition = last, configid = wep, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0, offset = {}})
 		if config[wep].radius then
 			ProccessOffset(wep, proID)
 		end
@@ -339,6 +343,24 @@ function gadget:GameFrame(f)
 					if data.cruising then -- cruise phase
 						local vx, _, vz = spGetProjectileVelocity(projectile)
 						local v = sqrt((vx * vx) + (vz * vz))
+						if data.useprediction and not missileconfig.track then
+							data.useprediction = false
+							if data.originaltarget then
+								local targetx, targety, targetz = spGetUnitPosition(data.originaltarget)
+								local tvx, tvy, tvz = Spring.GetUnitVelocity(data.originaltarget)
+								local errorx, errory, errorz = spGetUnitPosErrorParams(data.originaltarget)
+								targetx = targetx + errorx
+								targety = targety + errory
+								targetz = targetz + errorz
+								local d = sqrt(((targetx - cx)^2) + ((targetz - cz)^2))
+								local t = math.min(math.ceil(d/v), missileconfig.predicttime) -- time it takes to get to the location
+								data.target[1] = targetx + (tvx * t)
+								data.target[2] = targety
+								data.target[3] = targetz + (tvz * t) 
+								x, z = data.target[1], data.target[3]
+								data.lastknownposition = data.target
+							end
+						end
 						local ty = data.wantedalt
 						local angle = CalculateAngle(cx, cz, x, z)
 						--spEcho("V: " .. v)
