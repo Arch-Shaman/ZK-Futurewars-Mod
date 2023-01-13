@@ -261,7 +261,8 @@ local thingsWhichAreDrones = {
 	[UnitDefNames.dronecarry.id] = true,
 	[UnitDefNames.dronelight.id] = true,
 	[UnitDefNames.droneheavyslow.id] = true,
-	[UnitDefNames.dronefighter.id] = true
+	[UnitDefNames.dronefighter.id] = true,
+	[UnitDefNames.dronecon.id] = true,
 }
 
 local function ProcessCarrierDef(carrierData)
