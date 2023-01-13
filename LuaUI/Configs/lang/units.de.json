@@ -54,6 +54,11 @@
 		"description" : "Entwaffnungbomber",
 		"helptext" : "Schneller Entwaffnungbomber, der mit einem Stossspannungsgenerator zum Entwaffnen großflächiger Gebiete bewaffnet ist."
 	},
+	"droneassault" : {
+		"name" : "Python",
+		"description" : "Angriffsdrohne",
+		"helptext" : "Die Python ist eine High-Tech-Drohne mit schwerer Panzerung und einem Gluon-Beschleuniger. Sie kann Schläge einstecken und einen zurückgeben."
+	},
 	"gunshipassault" : {
 		"name" : "Revenant",
 		"description" : "Bodenangriff-Kampfhubschrauber",

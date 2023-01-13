@@ -44,6 +44,11 @@
 		"description" : "通用火炮",
 		"helptext" : "使者的重型长射程枪使其成为敌方机动车辆或建筑物的对峙炮击的选择单位。像往常一样，它应该警惕任何接近它的东西。"
 	},
+	"droneassault" : {
+		"name" : "蟒蛇",
+		"description" : "突击无人机",
+		"helptext" : "蟒蛇是一种高科技无人机，拥有重型装甲和 Gluon 加速器。它可以挨打并还击。"
+	},
 	"dronecon": {
 		"name": "响应者",
 		"description": "维修无人机",

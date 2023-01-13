@@ -39,6 +39,11 @@
 		"description" : "Napraw drona",
 		"helptext" : "Responsor to prosty dron wyposażony w tarczę i wiązkę naprawczą. Nie może pomagać budynkom ani odzyskiwać."
 	},
+	"droneassault" : {
+		"name" : "Python",
+		"description" : "Dron szturmowy",
+		"helptext" : "Pyton to zaawansowany technologicznie dron z ciężkim pancerzem i akceleratorem gluonu. Może znieść pobicie i oddać."
+	},
 	"platestrider" : {
 		"name" : "Płyta Stridera",
 		"description" : "Konstrukcje Striders",
