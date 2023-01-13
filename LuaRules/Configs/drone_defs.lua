@@ -88,6 +88,17 @@ local carrierDefNames = {
 			maxBuild = 1,
 			offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
 		},
+		{
+			drone = UnitDefNames.dronecon.id,
+			reloadTime = 15,
+			maxDrones = 1,
+			spawnSize = 1,
+			range = 700,
+			maxChaseRange = 700,
+			buildTime = 15,
+			maxBuild = 1,
+			offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0} --shift colvol to avoid collision.
+		},
 	},
 	plateveh = {
 		spawnPieces = {"train"},
