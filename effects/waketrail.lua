@@ -59,7 +59,7 @@ return {
 				colormap           = [[0.329 0.78 0.8196 0.01 0.251 0.608 0.639 0.01  0.08 0.235 0.251 0.01]],
 				dir                = [[dir]],
 				frontoffset        = 0,
-				fronttexture       = [[null]],
+				fronttexture       = [[muzzlefront]],
 				length             = -2,
 				sidetexture        = [[muzzleside]],
 				size               = -8,
