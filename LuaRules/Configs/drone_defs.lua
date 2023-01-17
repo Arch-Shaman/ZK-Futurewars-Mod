@@ -211,23 +211,23 @@ local presets = {
 local unitRulesCarrierDefs = {
 	drone = {
 		drone = UnitDefNames.dronelight.id,
-		reloadTime = 12,
+		reloadTime = 15,
 		maxDrones = 2,
 		spawnSize = 1,
 		range = 600,
 		maxChaseRange = 1200,
-		buildTime = 10,
+		buildTime = 20,
 		maxBuild = 1,
 		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
 	},
 	droneheavyslow = {
 		drone = UnitDefNames.droneheavyslow.id,
-		reloadTime = 18,
+		reloadTime = 20,
 		maxDrones = 1,
 		spawnSize = 1,
 		range = 600,
 		maxChaseRange = 1200,
-		buildTime = 15,
+		buildTime = 20,
 		maxBuild = 1,
 		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
 	}
