@@ -230,7 +230,29 @@ local unitRulesCarrierDefs = {
 		buildTime = 20,
 		maxBuild = 1,
 		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
-	}
+	},
+	dronecon = {
+		drone = UnitDefNames.dronecon.id,
+		reloadTime = 20,
+		maxDrones = 1,
+		spawnSize = 1,
+		range = 600,
+		maxChaseRange = 1200,
+		buildTime = 20,
+		maxBuild = 1,
+		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+	},
+	droneassault = {
+		drone = UnitDefNames.droneassault.id,
+		reloadTime = 20,
+		maxDrones = 1,
+		spawnSize = 1,
+		range = 600,
+		maxChaseRange = 1200,
+		buildTime = 20,
+		maxBuild = 1,
+		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+	},
 }
 
 --[[
