@@ -78,12 +78,13 @@ function gadget:GameSetup(label, ready, playerStates)
 	waitingFor = {}
 	local activeAllies = {}
 	local totalAllies = {}
-		
-	for num, state in pairs(playerStates) do
+	
+	for num, state in pairs(playerStates) do -- this is a 0 indexed table. state can be "notready", "ready"
 		local name,active,spec,teamID,allyTeamID,ping = Spring.GetPlayerInfo(num, false)
 		--Note: BUG, startPosSet returned by GetTeamStartPosition() always return true for Spring 96.0.1-442-g7191625 (game always start immediately)
 		-- therefore, a reasonable indicator for placing startPos could be x>0 because 0 is precisely an impossible position to be place by hand.
 		-- we might not need to check for -100 anymore IMHO.
+		-- Note in BAR105, this check is no longer necessary as startPosSet is set to false correctly.
 		local x,y,z,startPosSet = Spring.GetTeamStartPosition(teamID)
 		local _,_,_,isAI = Spring.GetTeamInfo(teamID, false)
 		startPosSet = x and x > 0
@@ -98,7 +99,7 @@ function gadget:GameSetup(label, ready, playerStates)
 					readyCount = readyCount + 1
 					if isReady[name] == nil then
 						isReady[name] = true
-						Spring.SendCommands("wbynum 255 SPRINGIE:READY:".. name)
+						Spring.SendCommands("wbynum 255 SPRINGIE:READY:".. name) -- not sure what this does?
 					end
 				else
 					waitingCount = waitingCount + 1
