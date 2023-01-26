@@ -87,8 +87,8 @@ function gadget:GameSetup(label, ready, playerStates)
 		-- Note in BAR105, this check is no longer necessary as startPosSet is set to false correctly.
 		local x,y,z,startPosSet = Spring.GetTeamStartPosition(teamID)
 		local _,_,_,isAI = Spring.GetTeamInfo(teamID, false)
-		startPosSet = x and x > 0
-	
+		--startPosSet = x and x > 0
+		
 		if not spec and not isAI then
 			totalCount = totalCount + 1
 			if not active then
