@@ -46,7 +46,6 @@ end
 
 local MAX_TIME_DIFF = 150 -- wait this long for disconnected players
 
-local allReady = false
 local startTimer = nil
 local readyTimer = nil
 local lastLabel = nil
