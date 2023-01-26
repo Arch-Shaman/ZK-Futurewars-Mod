@@ -353,6 +353,14 @@ local options = {
 		def=false,
 	},
 	{
+		key='disable_forcestart',
+		name='Disable Autostart',
+		desc='Disables the force start while waiting for players.',
+		type='bool',
+		section= 'a_important',
+		def=false,
+	},
+	{
 		key='disable_overwhelming_advantage',
 		name='Disable Overwhelming Advantage',
 		desc='Disable team reveal when the opposing team has 25x more assets.',
