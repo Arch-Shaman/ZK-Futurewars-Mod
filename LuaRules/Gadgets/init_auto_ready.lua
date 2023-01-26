@@ -9,8 +9,22 @@ end
 
 local singleplayer = false
 do
-	local playerlist = Spring.GetPlayerList() or {}
-	if (#playerlist <= 1) then
+	local playerCount
+	local allylist = Spring.GetAllyTeamList()
+	for i=1, #allylist-1 do
+		local teamlist = Spring.GetTeamList(allylist[i])
+		for j=1, #teamlist do
+			local playersOnTeam = Spring.GetPlayerList(teamlist[j])
+			for k=1, #playersOnTeam do
+				local playerID = playersOnTeam[k]
+				local _, active = Spring.GetPlayerInfo(playerID)
+				if active then
+					playerCount = playerCount + 1
+				end
+			end
+		end
+	end
+	if (playerCount <= 1) then
 		singleplayer = true
 	end
 end
@@ -20,7 +34,7 @@ function gadget:GetInfo()
 	return {
 		name      = "AutoReadyStartpos",
 		desc      = "Automatically readies all people after they all pick start positons, replaces default wait screen",
-		author    = "Licho",
+		author    = "Licho, modified by Shaman",
 		date      = "15.4.2012",
 		license   = "Nobody can do anything except me, Microsoft and Apple! Thieves hands off",
 		layer     = 0,
