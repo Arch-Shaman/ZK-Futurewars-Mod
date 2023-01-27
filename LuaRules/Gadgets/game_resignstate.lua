@@ -26,6 +26,7 @@ if not gadgetHandler:IsSyncedCode() then
 	
 	function gadget:Initialize()
 		gadgetHandler:AddSyncAction("MakeUpdate", MakeUpdate)
+		gadgetHandler:AddSyncAction("MakePlayerUpdate", MakePlayerUpdate)
 	end
 	return
 end
