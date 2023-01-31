@@ -9,16 +9,16 @@ end
 
 local singleplayer = false
 do
-	local playerCount
+	local playerCount = 0
 	local allylist = Spring.GetAllyTeamList()
-	for i=1, #allylist-1 do
+	for i = 1, #allylist - 1 do
 		local teamlist = Spring.GetTeamList(allylist[i])
-		for j=1, #teamlist do
+		for j = 1, #teamlist do
 			local playersOnTeam = Spring.GetPlayerList(teamlist[j])
-			for k=1, #playersOnTeam do
+			for k = 1, #playersOnTeam do
 				local playerID = playersOnTeam[k]
-				local _, active = Spring.GetPlayerInfo(playerID)
-				if active then
+				local _, _, spec = Spring.GetPlayerInfo(playerID)
+				if not spec then
 					playerCount = playerCount + 1
 				end
 			end
