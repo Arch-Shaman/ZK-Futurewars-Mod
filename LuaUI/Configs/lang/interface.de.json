@@ -94,5 +94,11 @@
 	"x_units_in_queue" : {
 		"one" : "%{count} Einheit in Warteschlange",
 		"other" : "%{count} Einheiten in Warteschlange"
-	}
+	},
+	"waiting_for_players" : "Warten auf ",
+	"type_force" : "Sagen sie !force, um früher zu beginnen",
+	"time_until_force" : "Verbleibende Zeit bis zum Zwangsstart: ",
+	"loading_game" : "Spiel wird geladen...",
+	"choose_startpos" : "Startort wählen",
+	"starting_game" : "Spielstart in "
 }

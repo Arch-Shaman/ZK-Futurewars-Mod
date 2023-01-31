@@ -114,5 +114,11 @@
 		"few" : "%{count} units in queue",
 		"many" : "%{count} units in queue",
 		"other" : "%{count} units in queue"
-	}
+	},
+	"waiting_for_players" : "Waiting for ",
+	"type_force" : "Say !force to start sooner",
+	"time_until_force" : "Time remaining until force start: ",
+	"loading_game" : "Loading game...",
+	"choose_startpos" : "Choose start position",
+	"starting_game" : "Starting in "
 }
