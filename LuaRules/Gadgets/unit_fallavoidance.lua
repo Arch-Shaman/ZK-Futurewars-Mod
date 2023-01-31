@@ -185,7 +185,7 @@ function gadget:GameFrame(f)
 					if not GG.GetUnitFallDamageImmunity(id) and currentheight >= 1 and data.inAir then
 						local vx, vy, vz = spGetUnitVelocity(id)
 						local minimumFallingHeight = vy * -10
-						Spring.Echo("min height: " .. minimumFallingHeight) 
+						--Spring.Echo("min height: " .. minimumFallingHeight) 
 						if debugMode then
 							spEcho("Velocity: " .. vx .. ", " .. vy .. ", " .. vz)
 						end
