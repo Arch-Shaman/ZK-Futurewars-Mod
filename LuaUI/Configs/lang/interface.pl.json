@@ -109,5 +109,11 @@
 		"few" : "%{count} jednostki w kolejce",
 		"many" : "%{count} jednostek w kolejce",
 		"other" : "%{count} jednostek w kolejce"
-	}
+	},
+	"waiting_for_players" : "Czekając na ",
+	"type_force" : "Powiedz !force, żeby zacząć szybciej",
+	"time_until_force" : "Czas pozostały do startu siłowego: ",
+	"loading_game" : "Ładowanie gry...",
+	"choose_startpos" : "Wybierz miejsce startu",
+	"starting_game" : "Rozpoczęcie gry w "
 }

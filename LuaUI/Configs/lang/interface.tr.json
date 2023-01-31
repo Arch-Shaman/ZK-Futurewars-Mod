@@ -106,5 +106,10 @@
 	"x_units_in_queue" : {
 		"one" : "%{count} ünite kuyrukta",
 		"other" : "%{count} üniteler kuyrukta"
-	}
+	},
+	"waiting_for_players" : "Bekliyor ",
+	"type_force" : "Daha erken başlamak için !force deyin",
+	"time_until_force" : "Zorla başlatmaya kadar kalan süre: ",
+	"loading_game" : "Oyun yükleniyor...",
+	"choose_startpos" : "Başlangıç konumunu seçin"
 }
