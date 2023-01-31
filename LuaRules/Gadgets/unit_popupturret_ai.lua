@@ -138,43 +138,48 @@ function gadget:GameFrame(f)
 			local disarmed = (spGetUnitRulesParam(unitID, "disarmed") or 0) == 1
 			local disarmProp = (disarmFrame - f)/1200
 			local hp, maxhp, _ = spGetUnitHealth(unitID)
-			local hpProp = hp/maxhp
-			local config = data.config
-			local useArmorState = config.usearmorstate
-			
-			if data.hpHoldFire and hpProp >= config.maxhealth then
-				data.hpHoldFire = false
-			elseif not data.hpHoldFire and hpProp < config.minhealth then
-				data.hpHoldFire = true
-			end
-			if data.disarmHoldFire and disarmProp <= config.maxdisarm then
-				data.disarmHoldFire = false
-			elseif not data.disarmHoldFire and disarmed then
-				data.disarmHoldFire = true
-			end
-			if data.holdFire and (not data.hpHoldFire and not data.disarmHoldFire) then
-				data.holdFire = false
-			elseif not data.holdFire and (data.hpHoldFire or data.disarmHoldFire) then
-				data.holdFire = true
-			end
-			
-			-- ensure our state matches --
-			if exceptions[unitID] == nil then
-				if useArmorState then
-					local armorstate = spGetUnitRulesParam(unitID, "hunkerstate") == 1
-					if data.holdFire and not armorstate then
-						GG.DelegateOrder(unitID, CMD_ARMORSTATE, {1}, 0)
-					elseif not data.holdFire and armorstate then
-						GG.DelegateOrder(unitID, CMD_ARMORSTATE, {0}, 0)
-					end
-				else
-					local isHoldFire = spGetUnitStates(unitID).firestate == 0
-					if isHoldFire ~= data.holdFire then
-						if data.holdFire then
-							GG.DelegateOrder(unitID, CMD.STOP, {}, 0) -- stop force fire / set target / etc. We want to close up immediately.
-							GG.DelegateOrder(unitID, CMD.FIRE_STATE, {0}, 0) -- set hold fire
-						else
-							GG.DelegateOrder(unitID, CMD.FIRE_STATE, {2}, 0) -- clear hold fire.
+			if not hp then
+				Spring.Echo("[Popup Turret] Safety: " .. unitID .. " is nil, removing.")
+				RemoveUnit(unitID)
+			else
+				local hpProp = hp/maxhp
+				local config = data.config
+				local useArmorState = config.usearmorstate
+				
+				if data.hpHoldFire and hpProp >= config.maxhealth then
+					data.hpHoldFire = false
+				elseif not data.hpHoldFire and hpProp < config.minhealth then
+					data.hpHoldFire = true
+				end
+				if data.disarmHoldFire and disarmProp <= config.maxdisarm then
+					data.disarmHoldFire = false
+				elseif not data.disarmHoldFire and disarmed then
+					data.disarmHoldFire = true
+				end
+				if data.holdFire and (not data.hpHoldFire and not data.disarmHoldFire) then
+					data.holdFire = false
+				elseif not data.holdFire and (data.hpHoldFire or data.disarmHoldFire) then
+					data.holdFire = true
+				end
+				
+				-- ensure our state matches --
+				if exceptions[unitID] == nil then
+					if useArmorState then
+						local armorstate = spGetUnitRulesParam(unitID, "hunkerstate") == 1
+						if data.holdFire and not armorstate then
+							GG.DelegateOrder(unitID, CMD_ARMORSTATE, {1}, 0)
+						elseif not data.holdFire and armorstate then
+							GG.DelegateOrder(unitID, CMD_ARMORSTATE, {0}, 0)
+						end
+					else
+						local isHoldFire = spGetUnitStates(unitID).firestate == 0
+						if isHoldFire ~= data.holdFire then
+							if data.holdFire then
+								GG.DelegateOrder(unitID, CMD.STOP, {}, 0) -- stop force fire / set target / etc. We want to close up immediately.
+								GG.DelegateOrder(unitID, CMD.FIRE_STATE, {0}, 0) -- set hold fire
+							else
+								GG.DelegateOrder(unitID, CMD.FIRE_STATE, {2}, 0) -- clear hold fire.
+							end
 						end
 					end
 				end
