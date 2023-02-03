@@ -43,7 +43,7 @@ return {
 		explodeAs           = "ESTOR_BUILDINGEX",
 		footprintX          = 2,
 		footprintZ          = 2,
-		iconType            = "commander1",
+		iconType            = "supportcom1",
 		leaveTracks         = true,
 		losEmitHeight       = 40,
 		maxDamage           = 3800,
@@ -53,7 +53,7 @@ return {
 		metalStorage        = 500,
 		movementClass       = "AKBOT2",
 		noChaseCategory     = "TERRAFORM FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET",
-		objectName          = "commsupport.s3o",
+		objectName          = "supportcom.dae",
 		script              = "dynsupport.lua",
 		selfDestructAs      = "ESTOR_BUILDINGEX",
 		sfxtypes            = {
