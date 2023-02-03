@@ -72,6 +72,30 @@ local icontypes = {
 		bitmap='icons/ghostcommander.dds',
 		size=2.8,
 	},
+	supportcom0 = {
+		bitmap='icons/supportcommander.dds',
+		size=1.9,
+	},
+	supportcom1 = {
+		bitmap='icons/supportcommander.dds',
+		size=2,
+	},
+	supportcom2 = {
+		bitmap='icons/supportcommander.dds',
+		size=2.2,
+	},
+	supportcom3 = {
+		bitmap='icons/supportcommander.dds',
+		size=2.4,
+	},
+	supportcom4 = {
+		bitmap='icons/supportcommander.dds',
+		size=2.6,
+	},
+	supportcom5 = {
+		bitmap='icons/supportcommander.dds',
+		size=2.8,
+	},
 
 	corcommander = {
 		bitmap='icons/corcommander.dds',
