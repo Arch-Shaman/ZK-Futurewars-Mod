@@ -512,6 +512,8 @@ local function SetUpFeatureRules(featureID)
 	Spring.SetFeatureMaxHealth(featureID, maxHealth)
 	Spring.SetFeatureHealth(featureID, maxHealth)
 	-- Things we actually need --
+	TransferParamToFeature(featureID, "comm_extra_drones")
+	TransferParamToFeature(featureID, "comm_drone_buildrate")
 	TransferParamToFeature(featureID, "comm_banner_overhead")
 	TransferParamToFeature(featureID, "comm_texture")
 	TransferParamToFeature(featureID, "comm_profileID")

@@ -383,6 +383,12 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 		spSetUnitRulesParam(unitID, "comm_area_cloak_upkeep", data.cloakFieldUpkeep, INLOS)
 		spSetUnitRulesParam(unitID, "comm_area_cloak_radius", data.cloakFieldRange, INLOS)
 	end
+	if data.extradroneslots then
+		spSetUnitRulesParam(unitID, "comm_extra_drones", data.extradroneslots, INLOS)
+	end
+	if data.dronebuildmod then
+		spSetUnitRulesParam(unitID, "comm_drone_buildrate", data.dronebuildmod, INLOS)
+	end
 	
 	if data.nanoregen and data.nanomax then
 		GG.NanoRegen.AddUnit(unitID, data.nanoregen, data.nanomax)
