@@ -148,13 +148,17 @@ local function Drones_InitializeDynamicCarrier(unitID)
 	
 	local carrierData = {}
 	local maxDronesOverride = {}
+	local hasDrones = false
 	for name, data in pairs(unitRulesCarrierDefs) do
 		local drones = Spring.GetUnitRulesParam(unitID, "carrier_count_" .. name)
 		if drones then
 			carrierData[#carrierData + 1] = data
 			maxDronesOverride[#maxDronesOverride + 1] = drones
-			CreateCarrier(unitID)
+			hasDrones = true
 		end
+	end
+	if hasDrones then
+		CreateCarrier(unitID)
 	end
 	carrierList[unitID] = InitCarrier(unitID, carrierData, Spring.GetUnitTeam(unitID), maxDronesOverride)
 end
