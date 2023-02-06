@@ -2060,13 +2060,25 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 	end
 
 	if isCommander then
-		local batDrones, compDrones
+		local batDrones, compDrones, droneSlots, droneBuildSpeed
 		if isFeature then
 			batDrones = Spring.GetFeatureRulesParam(unitID, "carrier_count_droneheavyslow")
 			compDrones = Spring.GetFeatureRulesParam(unitID, "carrier_count_drone")
+			droneBuildSpeed = Spring.GetFeatureRulesParam(unitID, "comm_drone_buildrate") or 1
+			droneSlots = Spring.GetFeatureRulesParam(unitID, "comm_extra_drones") or 1
 		else
 			batDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_droneheavyslow")
 			compDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_drone")
+			droneBuildSpeed = Spring.GetUnitRulesParam(unitID, "comm_drone_buildrate") or 1
+			droneSlots = Spring.GetUnitRulesParam(unitID, "comm_extra_drones") or 1
+		end
+		if droneBuildSpeed ~= 1 then
+			statschildren[#statschildren+1] = Label:New{ caption = 'Drone Build Speed: ', textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = numformat(100*droneBuildSpeed, 2) .. '%', textColor = color.stats_fg, }
+		end
+		if droneSlots > 1 then
+			statschildren[#statschildren+1] = Label:New{ caption = 'Drone autofabs: ', textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = droneSlots, textColor = color.stats_fg, }
 		end
 		if batDrones and batDrones > 0 then
 			statschildren[#statschildren+1] = Label:New{ caption = 'Battle Drones: ', textColor = color.stats_fg, }
