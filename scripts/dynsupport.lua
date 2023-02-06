@@ -41,6 +41,14 @@ local okpconfig
 local priorityAim = false
 local priorityAimNum = 0
 
+-- Drone spots --
+local drone1 = piece 'drone1'
+local drone2 = piece 'drone2'
+local drone3 = piece 'drone3'
+local drone4 = piece 'drone4'
+local drone5 = piece 'drone5'
+local drone6 = piece 'drone6'
+
 --------------------------------------------------------------------------------
 -- constants
 --------------------------------------------------------------------------------
