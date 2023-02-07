@@ -433,12 +433,18 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 		spSetUnitRulesParam(unitID, "comm_banner_overhead", images.overhead or "fakeunit", INLOS)
 	end
 	
-	if data.drones or data.droneheavyslows then
+	if data.drones or data.droneheavyslows or data.dronecon or data.droneassault then
 		if data.drones then
 			spSetUnitRulesParam(unitID, "carrier_count_drone", data.drones, INLOS)
 		end
 		if data.droneheavyslows then
 			spSetUnitRulesParam(unitID, "carrier_count_droneheavyslow", data.droneheavyslows, INLOS)
+		end
+		if data.dronecon then
+			spSetUnitRulesParam(unitID, "carrier_count_dronecon", data.dronecon, INLOS)
+		end
+		if data.droneassault then
+			spSetUnitRulesParam(unitID, "carrier_count_droneassault", data.droneassault, INLOS)
 		end
 		if GG.Drones_InitializeDynamicCarrier then
 			GG.Drones_InitializeDynamicCarrier(unitID)
