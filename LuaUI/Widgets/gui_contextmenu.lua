@@ -2060,17 +2060,21 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 	end
 
 	if isCommander then
-		local batDrones, compDrones, droneSlots, droneBuildSpeed
+		local batDrones, compDrones, droneSlots, droneBuildSpeed, assaultDrones, repairDrones
 		if isFeature then
 			batDrones = Spring.GetFeatureRulesParam(unitID, "carrier_count_droneheavyslow")
 			compDrones = Spring.GetFeatureRulesParam(unitID, "carrier_count_drone")
 			droneBuildSpeed = Spring.GetFeatureRulesParam(unitID, "comm_drone_buildrate") or 1
 			droneSlots = Spring.GetFeatureRulesParam(unitID, "comm_extra_drones") or 1
+			repairDrones = Spring.GetFeatureRulesParam(unitID, "carrier_count_dronecon")
+			assaultDrones = Spring.GetFeatureRulesParam(unitID, "carrier_count_droneassault")
 		else
 			batDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_droneheavyslow")
 			compDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_drone")
 			droneBuildSpeed = Spring.GetUnitRulesParam(unitID, "comm_drone_buildrate") or 1
 			droneSlots = Spring.GetUnitRulesParam(unitID, "comm_extra_drones") or 1
+			repairDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_dronecon")
+			assaultDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_droneassault")
 		end
 		if droneBuildSpeed ~= 1 then
 			statschildren[#statschildren+1] = Label:New{ caption = 'Drone Build Speed: ', textColor = color.stats_fg, }
@@ -2087,6 +2091,14 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 		if compDrones and compDrones > 0 then
 			statschildren[#statschildren+1] = Label:New{ caption = 'Companion Drones: ', textColor = color.stats_fg, }
 			statschildren[#statschildren+1] = Label:New{ caption = compDrones, textColor = color.stats_fg, }
+		end
+		if assaultDrones and assaultDrones > 0 then
+			statschildren[#statschildren+1] = Label:New{ caption = 'Assault Drones: ', textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = assaultDrones, textColor = color.stats_fg, }
+		end
+		if repairDrones and repairDrones > 0 then
+			statschildren[#statschildren+1] = Label:New{ caption = 'Repair Drones: ', textColor = color.stats_fg, }
+			statschildren[#statschildren+1] = Label:New{ caption = repairDrones, textColor = color.stats_fg, }
 		end
 	-- else
 		-- Do something for Reef and other carriers
