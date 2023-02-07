@@ -69,6 +69,15 @@ local recall_frame_start = {}
 
 local GiveClampedOrderToUnit = Spring.Utilities.GiveClampedOrderToUnit
 
+local supportCommanderDroneSpawnTable = {
+	[1] = {'drone6'},
+	[2] = {'drone6', 'drone1'},
+	[3] = {'drone6', 'drone1', 'drone2'},
+	[4] = {'drone6', 'drone1', 'drone2', 'drone5'},
+	[5] = {'drone6', 'drone1', 'drone2', 'drone5', 'drone4'},
+	[6] = {'drone6', 'drone1', 'drone2', 'drone5', 'drone4', 'drone3'},
+}
+
 local recallDronesCmdDesc = {
 	id      = CMD_RECALL_DRONES,
 	type    = CMDTYPE.ICON,
