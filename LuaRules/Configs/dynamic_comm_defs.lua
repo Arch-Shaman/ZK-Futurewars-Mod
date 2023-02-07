@@ -1341,13 +1341,14 @@ local moduleDefs = {
 	{
 		name = "module_resurrect",
 		humanName = "Support Package",
-		description = "Upgrade nanolathe to allow resurrection and adds 20 bp along with 1k storage.",
+		description = "Upgrade nanolathe to allow resurrection and adds 20 bp along with 1k storage.\nExclusive with Drone Package.",
 		image = moduleImagePath .. "module_resurrect.png",
 		limit = 1,
 		cost = 140 * COST_MULT,
 		requireChassis = {"support", "knight"},
 		requireLevel = 2, -- hard limit
 		slotType = "module",
+		prohibitingModules = {"module_drone_package"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.canResurrect = true
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 20
