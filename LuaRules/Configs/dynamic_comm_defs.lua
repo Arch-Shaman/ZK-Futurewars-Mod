@@ -1358,7 +1358,7 @@ local moduleDefs = {
 	{
 		name = "module_drone_package",
 		humanName = "Drone Package",
-		description = "Unlocks advanced drone production moudles, Increases drone build slots by 1 and improves drone build speed by 50%. Adds 1 heavy drone, 1 repair drone, and 2 companion drones.\nExclusive with Support Package.",
+		description = "Unlocks advanced drone production moudles, Increases drone build slots by 1 and improves drone build speed by 50%. Adds 1 heavy drone, 1 repair drone, and 2 companion drones. Companion Drone modules add an extra drone.\nExclusive with Support Package.",
 		image = moduleImagePath .. "module_dronepackage.png",
 		limit = 1,
 		cost = 200 * COST_MULT,
@@ -1465,7 +1465,7 @@ local moduleDefs = {
 	{
 		name = "module_companion_drone",
 		humanName = "Companion Drone",
-		description = "Adds a protective drone.",
+		description = "Adds a light protective drone. With the Drone Package, spawn 2 instead.",
 		image = moduleImagePath .. "module_companiondrone.png",
 		limit = 8,
 		cost = 50 * COST_MULT,
@@ -1473,7 +1473,11 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			sharedData.drones = (sharedData.drones or 0) + 1
+			if modules[moduleDefNames.module_drone_package] then
+				sharedData.drones = (sharedData.drones or 0) + 2
+			else
+				sharedData.drones = (sharedData.drones or 0) + 1
+			end
 		end
 	},
 	{
@@ -1489,6 +1493,36 @@ local moduleDefs = {
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			sharedData.droneheavyslows = (sharedData.droneheavyslows or 0) + 1
+		end
+	},
+	{
+		name = "module_repair_drone",
+		humanName = "Repair Drone",
+		description = "Adds a Repair Drone to your maximum drone control. Repair drones have a shield and can repair friendly units at 10 bp.",
+		image = moduleImagePath .. "module_dronecon.png",
+		limit = 8,
+		cost = 100 * COST_MULT,
+		requireChassis = {"support"},
+		requireOneOf = {"module_drone_package"},
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.dronecon = (sharedData.dronecon or 0) + 1
+		end
+	},
+	{
+		name = "module_assault_drone",
+		humanName = "Assault Drone",
+		description = "Adds an Assault Drone to your maximum drone control. Assault drones have high hp, and fire a cannon at targets.",
+		image = moduleImagePath .. "module_droneassault.png",
+		limit = 8,
+		cost = 100 * COST_MULT,
+		requireChassis = {"support"},
+		requireOneOf = {"module_drone_package"},
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.droneassault = (sharedData.droneassault or 0) + 1
 		end
 	},
 	{
