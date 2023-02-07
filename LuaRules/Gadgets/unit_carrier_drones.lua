@@ -166,6 +166,11 @@ local function Drones_InitializeDynamicCarrier(unitID)
 			hasDrones = true
 		end
 	end
+	local droneSlots = Spring.GetUnitRulesParam(unitID, "comm_extra_drones") or 1
+	local isSupportComm = tonumber(UnitDefs[Spring.GetUnitDefID(unitID)].customParams.commtype) or 0 == 4
+	if isSupportComm then
+		carrierData.spawnPieces = supportCommanderDroneSpawnTable[droneSlots]
+	end
 	if hasDrones then
 		CreateCarrier(unitID)
 	end
