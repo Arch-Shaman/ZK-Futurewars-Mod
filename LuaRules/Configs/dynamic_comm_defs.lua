@@ -1356,6 +1356,25 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "module_drone_package",
+		humanName = "Drone Package",
+		description = "Unlocks advanced drone production moudles, Increases drone build slots by 1 and improves drone build speed by 50%. Adds 1 heavy drone, 1 repair drone, and 2 companion drones.\nExclusive with Support Package.",
+		image = moduleImagePath .. "module_dronepackage.png",
+		limit = 1,
+		cost = 200 * COST_MULT,
+		requireChassis = {"support"},
+		requireLevel = 2,
+		slotType = "module",
+		prohibitingModules = {"module_resurrect"},
+		applicationFunction = function (modules, sharedData)
+			data.extradroneslots = (data.extradroneslots or 1) + 1
+			data.dronebuildmod = (data.dronebuildmod or 1) + 0.5
+			data.drone = (data.drone or 0) + 2
+			data.droneheavyslows = (data.droneheavyslows or 1) + 1
+			data.dronecon = (data.dronecon or 0) + 1
+		end
+	},
+	{
 		name = "module_jumpreload",
 		humanName = "Efficient Jumpjets",
 		description = "Reduces jumpjet cooldown by 20%.\nIncreases jump speed slightly.\nMutually Exclusive with: Improved Jumpjets & High Performance Jumpjets.",
