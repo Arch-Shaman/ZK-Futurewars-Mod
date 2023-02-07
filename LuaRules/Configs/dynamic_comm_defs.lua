@@ -1367,11 +1367,11 @@ local moduleDefs = {
 		slotType = "module",
 		prohibitingModules = {"module_resurrect"},
 		applicationFunction = function (modules, sharedData)
-			data.extradroneslots = (data.extradroneslots or 1) + 1
-			data.dronebuildmod = (data.dronebuildmod or 1) + 0.5
-			data.drone = (data.drone or 0) + 2
-			data.droneheavyslows = (data.droneheavyslows or 1) + 1
-			data.dronecon = (data.dronecon or 0) + 1
+			sharedData.extradroneslots = (sharedData.extradroneslots or 1) + 1
+			sharedData.dronebuildmod = (sharedData.dronebuildmod or 1) + 0.5
+			sharedData.drone = (sharedData.drone or 0) + 2
+			sharedData.droneheavyslows = (sharedData.droneheavyslows or 1) + 1
+			sharedData.dronecon = (sharedData.dronecon or 0) + 1
 		end
 	},
 	{
