@@ -1526,6 +1526,39 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "module_drone_buildslot",
+		humanName = "Drone Autofab",
+		description = "Requires Drone Package.\nAdds a drone build slot. +10% drone build speed.",
+		image = moduleImagePath .. "module_extraslots.png",
+		limit = 4,
+		cost = 120 * COST_MULT,
+		requireChassis = {"support"},
+		requireLevel = 2,
+		slotType = "module",
+		requireOneOf = {"module_drone_package"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.extradroneslots = (sharedData.extradroneslots or 1) + 1 -- should equal 6 at max level. 1 from drone package + 4 from this.
+			sharedData.dronebuildmod = (sharedData.dronebuildmod or 1) + 0.1
+			sharedData.dronereloadtime = math.max((sharedData.dronereloadtime or 1) - 0.1, 0.01)
+		end
+	},
+	{
+		name = "module_drone_buildspeed",
+		humanName = "Drone Autofab Improvements",
+		description = "Requires Drone Package.\n+50% drone build speed.",
+		image = moduleImagePath .. "module_drone_buildspeed.png",
+		limit = 8,
+		cost = 120 * COST_MULT,
+		requireChassis = {"support"},
+		requireLevel = 2,
+		slotType = "module",
+		requireOneOf = {"module_drone_package"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.dronebuildmod = (sharedData.dronebuildmod or 1) + 0.5
+			sharedData.dronereloadtime = math.max((sharedData.dronereloadtime or 1) - 0.05, 0.01)
+		end
+	},
+	{
 		name = "module_autorepair",
 		humanName = "Damage Control Systems",
 		description = "Commander self-repairs at +10 hp/s.",
