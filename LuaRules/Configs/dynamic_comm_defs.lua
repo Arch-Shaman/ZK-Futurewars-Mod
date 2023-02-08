@@ -1539,7 +1539,7 @@ local moduleDefs = {
 		applicationFunction = function (modules, sharedData)
 			sharedData.extradroneslots = (sharedData.extradroneslots or 1) + 1 -- should equal 6 at max level. 1 from drone package + 4 from this.
 			sharedData.dronebuildmod = (sharedData.dronebuildmod or 1) + 0.1
-			sharedData.dronereloadtime = math.max((sharedData.dronereloadtime or 1) - 0.1, 0.01)
+			sharedData.dronereloadtime = (sharedData.dronereloadtime or 1) + 0.1
 		end
 	},
 	{
@@ -1555,7 +1555,7 @@ local moduleDefs = {
 		requireOneOf = {"module_drone_package"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.dronebuildmod = (sharedData.dronebuildmod or 1) + 0.5
-			sharedData.dronereloadtime = math.max((sharedData.dronereloadtime or 1) - 0.05, 0.01)
+			sharedData.dronereloadtime = (sharedData.dronereloadtime or 1) + 0.2
 		end
 	},
 	{

@@ -389,6 +389,9 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	if data.dronebuildmod then
 		spSetUnitRulesParam(unitID, "comm_drone_buildrate", data.dronebuildmod, INLOS)
 	end
+	if data.dronereloadtime then
+		spSetUnitRulesParam(unitID, "comm_drone_rebuildrate", data.dronereloadtime, INLOS)
+	end
 	
 	if data.nanoregen and data.nanomax then
 		GG.NanoRegen.AddUnit(unitID, data.nanoregen, data.nanomax)

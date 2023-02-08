@@ -477,6 +477,8 @@ function SitOnPad(unitID, carrierID, padPieceID, offsets)
 			mcSetRotation(unitID, pitch, -yaw, roll) --Spring conveniently rotate Y-axis first, X-axis 2nd, and Z-axis 3rd which allow Yaw, Pitch & Roll control.
 			
 			local buildRate = GetBuildRate(carrierID)
+			local buildratemod = spGetUnitRulesParam(carrierID, "comm_drone_buildrate") or 1
+			buildRate = buildRate * buildratemod
 			if perSecondCost and oldBuildRate ~= buildRate then
 				oldBuildRate = buildRate
 				GG.StartMiscPriorityResourcing(carrierID, perSecondCost*buildRate, false, miscPriorityKey)
@@ -834,7 +836,8 @@ function gadget:GameFrame(f)
 					local set = carrier.droneSets[i]
 					if (set.reload > 0) then
 						local reloadMult = spGetUnitRulesParam(carrierID, "totalReloadSpeedChange") or 1
-						set.reload = (set.reload - reloadMult)
+						local droneReloadMod = spGetUnitRulesParam(carrierID, "comm_drone_rebuildrate") or 1
+						set.reload = set.reload - (reloadMult * droneReloadMod)
 						
 					elseif (set.droneCount + set.queueCount < set.maxDrones) and set.buildCount < set.config.maxBuild then
 						if generateDrones[carrierID] then
