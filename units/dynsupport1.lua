@@ -53,7 +53,7 @@ return {
 		metalStorage        = 500,
 		movementClass       = "AKBOT2",
 		noChaseCategory     = "TERRAFORM FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET",
-		objectName          = "commsupport.dae",
+		objectName          = "fwcommsupport.dae",
 		script              = "dynsupport.lua",
 		selfDestructAs      = "ESTOR_BUILDINGEX",
 		sfxtypes            = {
