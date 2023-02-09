@@ -5,7 +5,7 @@ return {
 		description            = "All Terrain EMP Bomb (Burrows)",
 		acceleration           = 0.75,
 		brakeRate              = 3.6,
-		buildCostMetal         = 120,
+		buildCostMetal         = 100,
 		buildPic               = "cloakbomb.png",
 		canMove                = true,
 		category               = "LAND TOOFAST",
@@ -91,7 +91,7 @@ return {
 				customParams = {
 					blastwave_speed = 15,
 					blastwave_life = 10,
-					blastwave_lossfactor = 0.88,
+					blastwave_lossfactor = 0.9,
 					blastwave_damage = 0,
 					blastwave_empdmg = 2000,
 					blastwave_emptime = 10,
