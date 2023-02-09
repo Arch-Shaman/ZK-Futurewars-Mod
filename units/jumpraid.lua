@@ -48,7 +48,6 @@ return {
 		script                = "jumpraid.lua",
 		selfDestructAs        = "PYRO_DEATH",
 		selfDestructCountdown = 5,
-		
 		sfxtypes              = {
 		
 			explosiongenerators = {
@@ -59,7 +58,6 @@ return {
 			},
 		
 		},
-		
 		sightDistance         = 560,
 		trackOffset           = 0,
 		trackStrength         = 8,
@@ -145,8 +143,6 @@ return {
 				weaponType              = "LaserCannon",
 				weaponVelocity          = 840,
 			},
-
-
 			SWEEPER = {
 				name                    = "Sweeping Flamethrower",
 				areaOfEffect            = 64,
@@ -160,32 +156,26 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				cegTag                  = "flamer",
-			
 				customParams            = {
 					flamethrower = "1",
 					setunitsonfire = "1",
 					burnchance = "1", -- Per-impact
 					burntime = "540",
-					
 					light_camera_height = 2800,
 					light_color = "0.6 0.39 0.18",
 					light_radius = 260,
 					light_fade_time = 10,
 					light_beam_mult_frames = 5,
 					light_beam_mult = 5,
-				
 					combatrange = 220,
-					
 					stats_custom_tooltip_1 = " - Sweeping Arc:",
 					stats_custom_tooltip_entry_1 = "80 deg",
 					stats_custom_tooltip_2 = " - Sweeping Speed:",
 					stats_custom_tooltip_entry_2 = "60 deg/s",
 				},
-				
 				damage                  = {
 					default = 4.7,
 				},
-			
 				duration                = 0.01,
 				explosionGenerator      = "custom:SMOKE",
 				fallOffRate             = 1,
@@ -210,8 +200,6 @@ return {
 				weaponType              = "LaserCannon",
 				weaponVelocity          = 840,
 			},
-			
-			
 			COCKTAIL = {
 				name                    = "Molotov Cocktail", --CREDITS: Cliver5
 				areaOfEffect            = 48,
@@ -220,14 +208,11 @@ return {
 				commandFire             = true,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams        = {
 					light_camera_height = 3500,
 					light_color = "0.75 0.4 0.15",
 					light_radius = 220,
-					
 					manualfire = 1,
-					
 					numprojectiles1 = 24, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "jumpraid_napalm_fragment_dummy",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
@@ -248,11 +233,9 @@ return {
 					shield_damage = (35*24) + 200,
 					stats_shield_damage = (35*24) + 200,
 				},
-
 				damage                  = {
 					default = 200,
 				},
-
 				explosionGenerator      = "custom:napalm_hellfire",
 				fireStarter             = 70,
 				flightTime              = 3,
@@ -273,8 +256,6 @@ return {
 				weaponType              = "Cannon",
 				weaponVelocity          = 255,
 			},
-		
-
 			NAPALM_FRAGMENT_DUMMY = {
 				name                    = "Napalm Fragment",
 				accuracy                = 400,
@@ -284,7 +265,6 @@ return {
 				craterMult              = 2,
 				cegTag                  = "flamer",
 				customParams              = {
-
 					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "jumpraid_napalm_fragment",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
@@ -294,7 +274,6 @@ return {
 					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
 					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeddeploy = 20,
-
 					--lups_heat_fx = "firewalker",
 					light_camera_height = 2500,
 					light_color = "0.25 0.13 0.05",
@@ -305,7 +284,6 @@ return {
 				damage                  = {
 					default = 0,
 				},
-
 				--explosionGenerator      = "custom:napalm_firewalker_small",
 				firestarter             = 180,
 				impulseBoost            = 0,
@@ -326,7 +304,6 @@ return {
 				weaponType              = "Cannon",
 				weaponVelocity          = 320,
 			},
-
 			NAPALM_FRAGMENT = {
 				name                    = "Napalm Fragment",
 				accuracy                = 400,
@@ -350,9 +327,8 @@ return {
 					light_radius = 500,
 				},
 				damage                  = {
-					default = 35,
+					default = 50,
 				},
-
 				explosionGenerator      = "custom:napalm_firewalker_small",
 				firestarter             = 180,
 				impulseBoost            = 0,
@@ -372,28 +348,23 @@ return {
 				weaponType              = "Cannon",
 				weaponVelocity          = 320,
 			},
-
 			PYRO_DEATH = {
 				name                    = "Napalm Blast",
 				areaofeffect            = 256,
 				craterboost             = 1,
 				cratermult              = 3.5,
-		
 				customparams              = {
 					setunitsonfire = "1",
 					burnchance     = "1",
 					burntime       = 60,
-		
 					area_damage = 1,
 					area_damage_radius = 128,
 					area_damage_dps = 80,
 					area_damage_duration = 13.3,
 				},
-		
 				damage                  = {
 					default = 50,
 				},
-		
 				edgeeffectiveness       = 0.5,
 				explosionGenerator      = "custom:napalm_pyro",
 				impulseboost            = 0,
@@ -401,20 +372,19 @@ return {
 				soundhit                = "explosion/ex_med3",
 			},
 		},
-
 		featureDefs           = {
 			DEAD  = {
-			blocking         = true,
-			featureDead      = "HEAP",
-			footprintX       = 2,
-			footprintZ       = 2,
-			object           = "m-5_dead.s3o",
+				blocking         = true,
+				featureDead      = "HEAP",
+				footprintX       = 2,
+				footprintZ       = 2,
+				object           = "m-5_dead.s3o",
 			},
 			HEAP  = {
-			blocking         = false,
-			footprintX       = 2,
-			footprintZ       = 2,
-			object           = "debris2x2c.s3o",
+				blocking         = false,
+				footprintX       = 2,
+				footprintZ       = 2,
+				object           = "debris2x2c.s3o",
 			},
 		},
 	}
