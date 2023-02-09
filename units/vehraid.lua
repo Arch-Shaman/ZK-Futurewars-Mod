@@ -33,7 +33,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 420,
 		maxSlope               = 18,
-		maxVelocity            = 4,
+		maxVelocity            = 4.1,
 		maxWaterDepth          = 22,
 		movementClass          = "TANK2",
 		noAutoFire             = false,
@@ -87,7 +87,7 @@ return {
 					sweepfire_fastupdate = 1,
 				},
 				damage                  = {
-					default = 55.1,
+					default = 60.1,
 				},
 				duration                = 0.3,
 				dynDamageExp            = 1,
