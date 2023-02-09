@@ -819,10 +819,10 @@ function gadget:UnitGiven(unitID, unitDefID, newTeam)
 				-- drone will take up a slot on the carrier and attack the carriers allies.
 				-- A captured carrier will need to have its drones killed or captured to
 				-- free up slots.
-				local droneTeam = Spring.GetUnitTeam(droneID)
-				if droneTeam and Spring.AreTeamsAllied(droneTeam, newTeam) then
+				--local droneTeam = Spring.GetUnitTeam(droneID)
+				--if droneTeam and Spring.AreTeamsAllied(droneTeam, newTeam) then
 					drones_to_move[droneID] = newTeam
-				end
+				--end
 			end
 		end
 	end
