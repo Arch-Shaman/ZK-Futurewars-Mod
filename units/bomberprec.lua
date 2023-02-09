@@ -82,13 +82,13 @@ return {
 				projectiles             = 3,
 				burstrate				= 4/30,
 				damage                  = {
-					default = 200*3,
+					default = 250*4,
 				},
 				customParams            = {
 					light_color = "1.1 0.9 0.45",
 					light_radius = 220,
 					--torp_underwater = "bomberprec_a_torpedo",
-					numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "bomberprec_bomblet",
 					--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -132,7 +132,7 @@ return {
 				craterBoost             = 10,
 				craterMult              = 5,
 				damage                  = {
-					default = 200.01,
+					default = 250.01,
 				},
 				explosionGenerator      = "custom:MEDMISSILE_EXPLOSION",
 				fireStarter             = 180,
