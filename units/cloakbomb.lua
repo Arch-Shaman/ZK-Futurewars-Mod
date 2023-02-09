@@ -14,7 +14,6 @@ return {
 		collisionVolumeScales  = "16 16 16",
 		collisionVolumeType    = "ellipsoid",
 		corpse                 = "DEAD",
-
 		customParams           = {
 			midposoffset   = "0 0 -2",
 			modelradius    = "8",
@@ -43,7 +42,6 @@ return {
 		script                 = "cloakbomb.lua",
 		selfDestructAs         = "cloakbomb_DEATH",
 		selfDestructCountdown  = 0,
-
 		sfxtypes               = {
 
 			explosiongenerators = {
@@ -51,7 +49,6 @@ return {
 			},
 
 		},
-
 		sightDistance          = 240,
 		trackOffset            = 0,
 		trackStrength          = 8,
@@ -59,7 +56,6 @@ return {
 		trackType              = "ChickenTrackPointyShortLarge",
 		trackWidth             = 20,
 		turnRate               = 3600,
-  
 		featureDefs            = {
 			DEAD  = {
 				blocking         = true,
@@ -74,7 +70,6 @@ return {
 				footprintZ       = 1,
 				object           = "debris1x1a.s3o",
 			},
-
 		},
 		weaponDefs = {
 			cloakbomb_DEATH = {
