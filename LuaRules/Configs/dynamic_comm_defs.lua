@@ -1496,6 +1496,21 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "module_drone_range",
+		humanName = "Drone Order Transmission Array",
+		description = "Increases the range drones acquire and chase targets by 50%.",
+		image = moduleImagePath .. "module_droneheavyslow.png",
+		limit = 8,
+		cost = 200 * COST_MULT,
+		requireChassis = {"support"},
+		requireOneOf = {"module_drone_package"},
+		requireLevel = 5,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.dronerange = (sharedData.dronerange or 1) + 0.5
+		end
+	},
+	{
 		name = "module_repair_drone",
 		humanName = "Repair Drone",
 		description = "Adds a Repair Drone to your maximum drone control. Repair drones have a shield and can repair friendly units at 10 bp.",
