@@ -2052,6 +2052,10 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 		statschildren[#statschildren+1] = Label:New{ caption = 'Grid link range: ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = numformat(ud.customParams.pylonrange) .. " elmo", textColor = color.stats_fg, }
 	end
+	if ud.customParams.neededlink then
+		statschildren[#statschildren+1] = Label:New{ caption = 'Required Grid Energy: ', textColor = color.stats_fg, }
+		statschildren[#statschildren+1] = Label:New{ caption = numformat(ud.customParams.neededlink) .. "E", textColor = color.stats_fg, }
+	end
 
 	-- transportability by light or heavy airtrans
 	if not (ud.canFly or ud.cantBeTransported) then
