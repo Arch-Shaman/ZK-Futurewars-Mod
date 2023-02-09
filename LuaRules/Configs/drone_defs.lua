@@ -217,7 +217,7 @@ local unitRulesCarrierDefs = {
 		range = 600,
 		maxChaseRange = 1200,
 		buildTime = 20,
-		maxBuild = 1,
+		maxBuild = 6,
 		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
 	},
 	droneheavyslow = {
@@ -228,7 +228,7 @@ local unitRulesCarrierDefs = {
 		range = 600,
 		maxChaseRange = 1200,
 		buildTime = 20,
-		maxBuild = 1,
+		maxBuild = 6,
 		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
 	},
 	dronecon = {
@@ -239,7 +239,7 @@ local unitRulesCarrierDefs = {
 		range = 600,
 		maxChaseRange = 1200,
 		buildTime = 20,
-		maxBuild = 1,
+		maxBuild = 6,
 		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
 	},
 	droneassault = {
@@ -250,7 +250,7 @@ local unitRulesCarrierDefs = {
 		range = 600,
 		maxChaseRange = 1200,
 		buildTime = 20,
-		maxBuild = 1,
+		maxBuild = 6,
 		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
 	},
 }

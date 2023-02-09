@@ -281,6 +281,19 @@ function AddUnitToEmptyPad(carrierID, droneType)
 	return unitIDAdded
 end
 
+function GetCarrierFreePadsCount(carrierID)
+	local carrierData = carrierList[carrierID]
+	local currentIndex = carrierData.pieceIndex
+	local length = #carrierData.spawnPieces
+	local count = 0
+	for i = 1, length do
+		if not carrierData.occupiedPieces[carrierData.spawnPieces[i]] then
+			count = count + 1
+		end
+	end
+	return count
+end
+
 local coroutines = {}
 local coroutineCount = 0
 local coroutine = coroutine
@@ -832,6 +845,7 @@ function gadget:GameFrame(f)
 	if (((f+1) % 30) == 0) then
 		for carrierID, carrier in pairs(carrierList) do
 			if (not GetUnitIsStunned(carrierID)) then
+				local freePads = GetCarrierFreePadsCount(carrierID)
 				for i = 1, #carrier.droneSets do
 					local set = carrier.droneSets[i]
 					if (set.reload > 0) then
@@ -841,7 +855,11 @@ function gadget:GameFrame(f)
 						
 					elseif (set.droneCount + set.queueCount < set.maxDrones) and set.buildCount < set.config.maxBuild then
 						if generateDrones[carrierID] then
-							for n = 1, set.config.spawnSize do
+							local spawnSize = set.config.spawnSize
+							if freePads > 1 then -- extra spawns for empty pads.
+								spawnSize = math.min(freePads, set.maxDrones - set.queueCount - set.buildCount) -- shove as many as possible out the door.
+							end
+							for n = 1, spawnSize do
 								if set.droneCount + set.queueCount >= set.maxDrones
 								or set.buildCount >= set.config.maxBuild then
 									break
