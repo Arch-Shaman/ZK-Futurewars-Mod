@@ -16,7 +16,6 @@ return {
 		collisionVolumeScales  = "28 43 28",
 		collisionVolumeType    = "cylY",
 		corpse                 = "DEAD",
-
 		customParams           = {
 			modelradius        = "14",
 			selection_scale    = 0.85,
@@ -56,7 +55,6 @@ return {
 			},
 
 		},
-
 		sightDistance          = 660,
 		trackOffset            = 0,
 		trackStrength          = 8,
@@ -65,7 +63,6 @@ return {
 		trackWidth             = 22,
 		turnRate               = 1800,
 		upright                = true,
-
 		weapons                = {
 			{
 				def                = "HAMMER_WEAPON",
@@ -73,9 +70,7 @@ return {
 				onlyTargetCategory = "SWIM LAND SHIP SINK TURRET FLOAT GUNSHIP HOVER",
 			},
 		},
-
 		weaponDefs             = {
-
 			HAMMER_WEAPON = {
 				name                    = "Light EMP Shockcannon",
 				accuracy                = 80,
@@ -86,7 +81,6 @@ return {
 				craterMult              = 0,
 				--highTrajectory			= 1,
 				burst					= 1,
-
 				customParams        = {
 					light_camera_height = 1400,
 					light_color = "0.3 0.3 0.7",
@@ -94,11 +88,9 @@ return {
 					extra_damage = 400,
 					reveal_unit = 6,
 				},
-
 				damage                  = {
-					default = 200,
+					default = 200.1,
 				},
-
 				edgeEffectiveness       = 0.05,
 				paralyzeTime            = 1,
 				explosionGenerator      = "custom:hammer_artillery_hit",
@@ -118,9 +110,7 @@ return {
 				weaponVelocity          = 235,
 			},
 		},
-
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = "HEAP",
@@ -128,7 +118,6 @@ return {
 				footprintZ       = 2,
 				object           = "cloakarty_dead.s3o",
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
