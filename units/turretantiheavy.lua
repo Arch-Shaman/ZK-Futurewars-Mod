@@ -101,7 +101,7 @@ return {
 				impactOnly				= true,
 				impulseBoost			= 0,
 				impulseFactor			= 0,
-				interceptedByShieldType	= 0, --maybe set back to 1?
+				interceptedByShieldType	= 1, --maybe set back to 1?
 				largeBeamLaser			= true,
 				laserFlareSize			= 16.94,
 				leadLimit				= 18,
