@@ -631,6 +631,8 @@ local function UpdateCarrierTarget(carrierID, frame)
 	local holdfire = (firestate == 0)
 	local rx, rz
 	
+	local rangeBonus = spGetUnitRulesParam(carrierID, "comm_drone_range") or 1
+	
 	for i = 1, #carrierList[carrierID].droneSets do
 		local set = carrierList[carrierID].droneSets[i]
 		local tempCONTAINER
@@ -649,13 +651,15 @@ local function UpdateCarrierTarget(carrierID, frame)
 			end
 			
 			local separation = spGetUnitSeparation(droneID, carrierID, true)
-			if recallDrones or (separation and separation > set.config.maxChaseRange) then
+			local maxRange = set.config.maxChaseRange * rangeBonus
+			local sendRange = set.config.range * rangeBonus
+			if recallDrones or (separation and separation > maxRange) then
 				-- move drones to carrier
 				px, py, pz = spGetUnitPosition(carrierID)
 				rx, rz = RandomPointInUnitCircle()
 				GiveClampedOrderToUnit(droneID, CMD.MOVE, {px + rx*IDLE_DISTANCE, py+DRONE_HEIGHT, pz + rz*IDLE_DISTANCE}, 0, false, true)
 				GiveOrderToUnit(droneID, CMD.GUARD, {carrierID} , CMD.OPT_SHIFT)
-			elseif droneSendDistance and droneSendDistance < set.config.range then
+			elseif droneSendDistance and droneSendDistance < sendRange then
 				-- attacking
 				if target then
 					GiveOrderToUnit(droneID, CMD.ATTACK, target, 0)
@@ -911,9 +915,9 @@ function gadget:Initialize()
 end
 
 function gadget:Shutdown()
-	for unitID in pairs(droneList) do
-		Spring.DestroyUnit(unitID, true)
-	end
+	--for unitID in pairs(droneList) do
+	--	Spring.DestroyUnit(unitID, true)
+	--end
 end
 
 --------------------------------------------------------------------------------
