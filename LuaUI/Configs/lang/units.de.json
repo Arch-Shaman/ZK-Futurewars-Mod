@@ -39,6 +39,11 @@
 		"description" : "Anti-Sub Hovercraft",
 		"helptext" : "The somewhat suicidal Claymore is armed with a heavy depthcharge launcher and has no qualms about dropping it on land."
 	},
+	"dronecon" : {
+		"name" : "Responder",
+		"description" : "Drohne reparieren",
+		"helptext" : "Der Responder ist eine einfache Drohne, die mit einem Schild und einem Reparaturstrahl ausgestattet ist. Sie kann keine Gebäude unterstützen oder zurückfordern."
+	},
 	"staticheavyshield" : {
 		"name" : "Safeguard",
 		"description" : "Massiver Bereichsschild",
@@ -48,6 +53,11 @@
 		"name" : "Thunderbird",
 		"description" : "Entwaffnungbomber",
 		"helptext" : "Schneller Entwaffnungbomber, der mit einem Stossspannungsgenerator zum Entwaffnen großflächiger Gebiete bewaffnet ist."
+	},
+	"droneassault" : {
+		"name" : "Python",
+		"description" : "Angriffsdrohne",
+		"helptext" : "Die Python ist eine High-Tech-Drohne mit schwerer Panzerung und einem Gluon-Beschleuniger. Sie kann Schläge einstecken und einen zurückgeben."
 	},
 	"gunshipassault" : {
 		"name" : "Revenant",

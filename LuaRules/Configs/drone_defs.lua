@@ -88,6 +88,17 @@ local carrierDefNames = {
 			maxBuild = 1,
 			offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
 		},
+		{
+			drone = UnitDefNames.dronecon.id,
+			reloadTime = 15,
+			maxDrones = 1,
+			spawnSize = 1,
+			range = 700,
+			maxChaseRange = 700,
+			buildTime = 15,
+			maxBuild = 1,
+			offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 30, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0} --shift colvol to avoid collision.
+		},
 	},
 	plateveh = {
 		spawnPieces = {"train"},
@@ -177,7 +188,7 @@ local presets = {
 		drone = UnitDefNames.dronelight.id,
 		reloadTime = 3,
 		maxDrones = 2,
-		spawnSize = 1,
+		spawnSize = 2,
 		range = 800,
 		maxChaseRange = 1600,
 		buildTime = 2,
@@ -188,7 +199,7 @@ local presets = {
 		drone = UnitDefNames.droneheavyslow.id,
 		reloadTime = 6,
 		maxDrones = 1,
-		spawnSize = 1,
+		spawnSize = 2,
 		range = 800,
 		maxChaseRange = 1600,
 		buildTime = 4,
@@ -200,26 +211,48 @@ local presets = {
 local unitRulesCarrierDefs = {
 	drone = {
 		drone = UnitDefNames.dronelight.id,
-		reloadTime = 12,
-		maxDrones = 2,
-		spawnSize = 1,
+		reloadTime = 15,
+		maxDrones = 1,
+		spawnSize = 2,
 		range = 600,
 		maxChaseRange = 1200,
-		buildTime = 10,
-		maxBuild = 1,
+		buildTime = 20,
+		maxBuild = 6,
 		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
 	},
 	droneheavyslow = {
 		drone = UnitDefNames.droneheavyslow.id,
-		reloadTime = 18,
+		reloadTime = 20,
 		maxDrones = 1,
-		spawnSize = 1,
+		spawnSize = 2,
 		range = 600,
 		maxChaseRange = 1200,
-		buildTime = 15,
-		maxBuild = 1,
+		buildTime = 20,
+		maxBuild = 6,
 		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
-	}
+	},
+	dronecon = {
+		drone = UnitDefNames.dronecon.id,
+		reloadTime = 20,
+		maxDrones = 1,
+		spawnSize = 2,
+		range = 600,
+		maxChaseRange = 1200,
+		buildTime = 20,
+		maxBuild = 6,
+		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+	},
+	droneassault = {
+		drone = UnitDefNames.droneassault.id,
+		reloadTime = 20,
+		maxDrones = 1,
+		spawnSize = 2,
+		range = 600,
+		maxChaseRange = 1200,
+		buildTime = 20,
+		maxBuild = 6,
+		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+	},
 }
 
 --[[
@@ -250,7 +283,9 @@ local thingsWhichAreDrones = {
 	[UnitDefNames.dronecarry.id] = true,
 	[UnitDefNames.dronelight.id] = true,
 	[UnitDefNames.droneheavyslow.id] = true,
-	[UnitDefNames.dronefighter.id] = true
+	[UnitDefNames.dronefighter.id] = true,
+	[UnitDefNames.dronecon.id] = true,
+	[UnitDefNames.droneassault.id] = true,
 }
 
 local function ProcessCarrierDef(carrierData)

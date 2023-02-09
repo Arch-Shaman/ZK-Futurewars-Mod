@@ -383,6 +383,18 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 		spSetUnitRulesParam(unitID, "comm_area_cloak_upkeep", data.cloakFieldUpkeep, INLOS)
 		spSetUnitRulesParam(unitID, "comm_area_cloak_radius", data.cloakFieldRange, INLOS)
 	end
+	if data.extradroneslots then
+		spSetUnitRulesParam(unitID, "comm_extra_drones", data.extradroneslots, INLOS)
+	end
+	if data.dronebuildmod then
+		spSetUnitRulesParam(unitID, "comm_drone_buildrate", data.dronebuildmod, INLOS)
+	end
+	if data.dronereloadtime then
+		spSetUnitRulesParam(unitID, "comm_drone_rebuildrate", data.dronereloadtime, INLOS)
+	end
+	if data.dronerange then
+		spSetUnitRulesParam(unitID, "comm_drone_range", data.dronerange, INLOS)
+	end
 	
 	if data.nanoregen and data.nanomax then
 		GG.NanoRegen.AddUnit(unitID, data.nanoregen, data.nanomax)
@@ -427,12 +439,18 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 		spSetUnitRulesParam(unitID, "comm_banner_overhead", images.overhead or "fakeunit", INLOS)
 	end
 	
-	if data.drones or data.droneheavyslows then
+	if data.drones or data.droneheavyslows or data.dronecon or data.droneassault then
 		if data.drones then
 			spSetUnitRulesParam(unitID, "carrier_count_drone", data.drones, INLOS)
 		end
 		if data.droneheavyslows then
 			spSetUnitRulesParam(unitID, "carrier_count_droneheavyslow", data.droneheavyslows, INLOS)
+		end
+		if data.dronecon then
+			spSetUnitRulesParam(unitID, "carrier_count_dronecon", data.dronecon, INLOS)
+		end
+		if data.droneassault then
+			spSetUnitRulesParam(unitID, "carrier_count_droneassault", data.droneassault, INLOS)
 		end
 		if GG.Drones_InitializeDynamicCarrier then
 			GG.Drones_InitializeDynamicCarrier(unitID)

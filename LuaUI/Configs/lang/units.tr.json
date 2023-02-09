@@ -49,6 +49,16 @@
         "description": "Tactiksel Füzeler Hazırlar, 10 m/s de inşa eder",
         "helptext": "Füze Silosu, her biri benzersiz bir savaş başlığına sahip dört farklı seyir füzesi inşa eder ve tutar. Saldırgan ve savunucu amaçlar için mükemmel yeteneği sunuyor."
     },
+	"droneassault" : {
+		"name" : "Python",
+		"description" : "Saldırı Uçağı",
+		"helptext" : "Python, ağır zırhı ve Gluon Hızlandırıcısı olan yüksek teknoloji ürünü bir insansız hava aracıdır. Dayak yiyebilir ve birini geri verebilir."
+	},
+	"dronecon": {
+		"name": "Yanıtlayıcı",
+		"description": "Uçağı Onar",
+		"helptext": "Yanıtlayıcı, bir kalkan ve bir onarım ışını ile donatılmış basit bir insansız hava aracıdır. Yapı inşa edemez veya enkazları geri dönüştüremez."
+	},
     "spiderscout": {
         "name": "Pire",
         "description": "Ultra hafif Gözcü Böcek (Kazar)",

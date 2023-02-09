@@ -34,6 +34,16 @@
 		"description" : "Ciężki szturmowiec/Wędrowiec zamieszek",
 		"helptext" : "Opuszczeni to starożytny projekt sprzed nawet Wojen Koalicji. Zbudowany w minionej epoce przez zapomnianych ludzi i dopiero niedawno odzyskany, Opuszczeni mogą pochwalić się potężną tarczą szturmową, zdolną pochłaniać niezgłębione obrażenia. Uzbrojony w dwa karabiny maszynowe odłamkowo-burzące i ciężki laser, Opuszczeni dysponują ogromną mocą na froncie. Jednak jego słabością są przeciwnicy, którym udaje się zbliżyć i dostać się pod jego tarczę. Jego wątły pancerz (jak na stridera) i niska prędkość obrotu pozwalają najeźdźcom na szybkie flankowanie i dobijanie."
 	},
+	"dronecon" : {
+		"name" : "Responder",
+		"description" : "Napraw drona",
+		"helptext" : "Responsor to prosty dron wyposażony w tarczę i wiązkę naprawczą. Nie może pomagać budynkom ani odzyskiwać."
+	},
+	"droneassault" : {
+		"name" : "Python",
+		"description" : "Dron szturmowy",
+		"helptext" : "Pyton to zaawansowany technologicznie dron z ciężkim pancerzem i akceleratorem gluonu. Może znieść pobicie i oddać."
+	},
 	"platestrider" : {
 		"name" : "Płyta Stridera",
 		"description" : "Konstrukcje Striders",

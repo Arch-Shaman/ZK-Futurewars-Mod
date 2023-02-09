@@ -126,7 +126,7 @@ return {
 				stages                  = 18,
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 880,
+				weaponVelocity          = 950,
 			},
 		},
 		featureDefs            = {

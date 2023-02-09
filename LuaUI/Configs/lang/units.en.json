@@ -674,6 +674,16 @@
 		"description" : "Disruptor / Builder Commander",
 		"helptext" : "The Support Commander Chassis focuses on build power, support, and status infliction to provide an advantage to its army. While lacking in upfront combat capabilities of the other commanders, it has an unusual assortment of status inflicting weapons that it can use to turn the tides of a battle."
 	},
+	"droneassault" : {
+		"name" : "Python",
+		"description" : "Assault Drone",
+		"helptext" : "The Python is a high tech drone with heavy armor and a Gluon Accelerator. It can take a beating and give one back."
+	},
+	"dronecon" : {
+		"name" : "Responder",
+		"description" : "Repair Drone",
+		"helptext" : "The Responder is a simple drone equipped with a shield and a repair beam. It cannot assist buildings or reclaim."
+	},
 	"cloakraid" : {
 		"name" : "Lurker",
 		"description" : "Stealth Raider Bot (Radar Invisible)",

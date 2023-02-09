@@ -1341,17 +1341,37 @@ local moduleDefs = {
 	{
 		name = "module_resurrect",
 		humanName = "Support Package",
-		description = "Upgrade nanolathe to allow resurrection and adds 20 bp along with 1k storage.",
+		description = "Upgrade nanolathe to allow resurrection and adds 20 bp along with 1k storage.\nExclusive with Drone Package.",
 		image = moduleImagePath .. "module_resurrect.png",
 		limit = 1,
 		cost = 140 * COST_MULT,
 		requireChassis = {"support", "knight"},
 		requireLevel = 2, -- hard limit
 		slotType = "module",
+		prohibitingModules = {"module_drone_package"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.canResurrect = true
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 20
 			sharedData.extrastorage = (sharedData.extrastorage or 0) + 1000
+		end
+	},
+	{
+		name = "module_drone_package",
+		humanName = "Drone Package",
+		description = "Unlocks advanced drone production moudles, Increases drone build slots by 1 and improves drone build speed by 50%. Adds 1 heavy drone, 1 repair drone, and 2 companion drones. Companion Drone modules add an extra drone.\nExclusive with Support Package.",
+		image = moduleImagePath .. "module_dronepackage.png",
+		limit = 1,
+		cost = 200 * COST_MULT,
+		requireChassis = {"support"},
+		requireLevel = 2,
+		slotType = "module",
+		prohibitingModules = {"module_resurrect"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.extradroneslots = (sharedData.extradroneslots or 1) + 1
+			sharedData.dronebuildmod = (sharedData.dronebuildmod or 1) + 0.5
+			sharedData.drone = (sharedData.drone or 0) + 2
+			sharedData.droneheavyslows = (sharedData.droneheavyslows or 1) + 1
+			sharedData.dronecon = (sharedData.dronecon or 0) + 1
 		end
 	},
 	{
@@ -1445,30 +1465,112 @@ local moduleDefs = {
 	{
 		name = "module_companion_drone",
 		humanName = "Companion Drone",
-		description = "Adds a protective drone.",
-		image = moduleImagePath .. "module_companion_drone.png",
+		description = "Adds a light protective drone. With the Drone Package, spawn 2 instead.",
+		image = moduleImagePath .. "module_companiondrone.png",
 		limit = 8,
-		cost = 50 * COST_MULT,
+		cost = 75 * COST_MULT,
 		requireChassis = {"support", "knight"},
 		requireLevel = 1,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
-			sharedData.drones = (sharedData.drones or 0) + 1
+			if modules[moduleDefNames.module_drone_package] then
+				sharedData.drones = (sharedData.drones or 0) + 2
+			else
+				sharedData.drones = (sharedData.drones or 0) + 1
+			end
 		end
 	},
 	{
 		name = "module_battle_drone",
 		humanName = "Battle Drone",
 		description = "Commander spawns a heavy drone.",
-		image = moduleImagePath .. "module_battle_drone.png",
+		image = moduleImagePath .. "module_droneheavyslow.png",
 		limit = 8,
-		cost = 125 * COST_MULT,
-		requireChassis = {"support", "knight"},
-		requireOneOf = {"module_companion_drone"},
+		cost = 100 * COST_MULT,
+		requireChassis = {"support"},
+		requireOneOf = {"module_drone_package"},
 		requireLevel = 2,
 		slotType = "module",
 		applicationFunction = function (modules, sharedData)
 			sharedData.droneheavyslows = (sharedData.droneheavyslows or 0) + 1
+		end
+	},
+	{
+		name = "module_drone_range",
+		humanName = "Drone Order Transmission Array",
+		description = "Increases the range drones acquire and chase targets by 50%.",
+		image = moduleImagePath .. "module_droneheavyslow.png",
+		limit = 8,
+		cost = 200 * COST_MULT,
+		requireChassis = {"support"},
+		requireOneOf = {"module_drone_package"},
+		requireLevel = 5,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.dronerange = (sharedData.dronerange or 1) + 0.5
+		end
+	},
+	{
+		name = "module_repair_drone",
+		humanName = "Repair Drone",
+		description = "Adds a Repair Drone to your maximum drone control. Repair drones have a shield and can repair friendly units at 10 bp.",
+		image = moduleImagePath .. "module_dronecon.png",
+		limit = 8,
+		cost = 100 * COST_MULT,
+		requireChassis = {"support"},
+		requireOneOf = {"module_drone_package"},
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.dronecon = (sharedData.dronecon or 0) + 1
+		end
+	},
+	{
+		name = "module_assault_drone",
+		humanName = "Assault Drone",
+		description = "Adds an Assault Drone to your maximum drone control. Assault drones have high hp, and fire a cannon at targets.",
+		image = moduleImagePath .. "module_droneassault.png",
+		limit = 8,
+		cost = 100 * COST_MULT,
+		requireChassis = {"support"},
+		requireOneOf = {"module_drone_package"},
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			sharedData.droneassault = (sharedData.droneassault or 0) + 1
+		end
+	},
+	{
+		name = "module_drone_buildslot",
+		humanName = "Drone Autofab",
+		description = "Requires Drone Package.\nAdds a drone build slot. +10% drone build speed.",
+		image = moduleImagePath .. "module_extraslots.png",
+		limit = 4,
+		cost = 120 * COST_MULT,
+		requireChassis = {"support"},
+		requireLevel = 2,
+		slotType = "module",
+		requireOneOf = {"module_drone_package"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.extradroneslots = (sharedData.extradroneslots or 1) + 1 -- should equal 6 at max level. 1 from drone package + 4 from this.
+			sharedData.dronebuildmod = (sharedData.dronebuildmod or 1) + 0.1
+			sharedData.dronereloadtime = (sharedData.dronereloadtime or 1) + 0.1
+		end
+	},
+	{
+		name = "module_drone_buildspeed",
+		humanName = "Drone Autofab Improvements",
+		description = "Requires Drone Package.\n+50% drone build speed.",
+		image = moduleImagePath .. "module_drone_buildspeed.png",
+		limit = 8,
+		cost = 120 * COST_MULT,
+		requireChassis = {"support"},
+		requireLevel = 2,
+		slotType = "module",
+		requireOneOf = {"module_drone_package"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.dronebuildmod = (sharedData.dronebuildmod or 1) + 0.5
+			sharedData.dronereloadtime = (sharedData.dronereloadtime or 1) + 0.2
 		end
 	},
 	{
