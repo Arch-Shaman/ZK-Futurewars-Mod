@@ -504,6 +504,12 @@ local function SetUpFeatureRules(featureID)
 	TransferParamToFeature(featureID, "wanted_energyIncome")
 	TransferParamToFeature(featureID, "sightRangeOverride")
 	TransferParamToFeature(featureID, "fireproof")
+	TransferParamToFeature(featureID, "comm_drone_range")
+	TransferParamToFeature(featureID, "carrier_count_dronecon")
+	TransferParamToFeature(featureID, "carrier_count_droneassault")
+	TransferParamToFeature(featureID, "carrier_count_droneheavyslow")
+	TransferParamToFeature(featureID, "carrier_count_drone")
+	
 	
 	-- Things tooltips need --
 	TransferParamToFeature(featureID, "commander_owner")
