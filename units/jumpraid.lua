@@ -117,7 +117,7 @@ return {
 					combatrange = 280,
 				},
 				damage                  = {
-					default = 6.8,
+					default = 7.1,
 				},
 				duration                = 0.01,
 				explosionGenerator      = "custom:SMOKE",
@@ -141,7 +141,7 @@ return {
 				tolerance               = 5000,
 				turret                  = true,
 				weaponType              = "LaserCannon",
-				weaponVelocity          = 840,
+				weaponVelocity          = 600,
 			},
 			SWEEPER = {
 				name                    = "Sweeping Flamethrower",
@@ -174,7 +174,7 @@ return {
 					stats_custom_tooltip_entry_2 = "60 deg/s",
 				},
 				damage                  = {
-					default = 4.7,
+					default = 5.1,
 				},
 				duration                = 0.01,
 				explosionGenerator      = "custom:SMOKE",
@@ -198,7 +198,7 @@ return {
 				tolerance               = 5000,
 				turret                  = true,
 				weaponType              = "LaserCannon",
-				weaponVelocity          = 840,
+				weaponVelocity          = 600,
 			},
 			COCKTAIL = {
 				name                    = "Molotov Cocktail", --CREDITS: Cliver5
@@ -318,7 +318,7 @@ return {
 					
 					area_damage = 1,
 					area_damage_radius = 48,
-					area_damage_dps = 15,
+					area_damage_dps = 20,
 					area_damage_duration = 10,
 
 					--lups_heat_fx = "firewalker",
