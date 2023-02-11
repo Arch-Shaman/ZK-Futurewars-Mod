@@ -1285,7 +1285,6 @@ do
 end --//end do
 
 do
-	local GetGameFrame         = Spring.GetGameFrame
 	local GetVisibleUnits      = Spring.GetVisibleUnits
 	local GetVisibleFeatures   = Spring.GetVisibleFeatures
 	local GetFeatureDefID      = Spring.GetFeatureDefID
@@ -1307,7 +1306,6 @@ do
 		sec = sec+dt
 		blink = (sec%1) < 0.5
 
-		gameFrame = GetGameFrame()
 		visibleUnits = GetVisibleUnits(-1, nil, false) --this don't need any delayed update or caching or optimization since its already done in "LUAUI/cache.lua"
 
 		sec2 = sec2+dt
@@ -1334,6 +1332,10 @@ do
 	end
 
 end --//end do
+
+function widget:GameFrame(f)
+	gameFrame = f
+end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
