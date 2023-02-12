@@ -521,7 +521,7 @@ local function GetBarDrawer()
 			end
 			if (drawBarTitles and barInfo.title) then
 				glColor(1, 1, 1, titlesAlpha)
-				glText(barInfo.title, 0, yoffset, 2.5, "cd")
+				glText(barInfo.title, 0, yoffset, 2.5, "cdo")
 			end
 			yoffset = yoffset - barHeightL
 		end
@@ -540,7 +540,7 @@ local function GetBarDrawer()
 			end
 			if (drawBarTitles and barInfo.title) then
 				glColor(1, 1, 1, featureTitlesAlpha)
-				glText(barInfo.title, 0, yoffset, 2.5, "cd")
+				glText(barInfo.title, 0, yoffset, 2.5, "cdo")
 			end
 			yoffset = yoffset - fBarHeightL
 		end
