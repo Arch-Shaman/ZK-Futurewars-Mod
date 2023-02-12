@@ -517,7 +517,7 @@ local function GetBarDrawer()
 			DrawUnitBar(yoffset, barInfo.progress, barInfo.color)
 			if (drawBarPercentages and barInfo.text) then
 				glColor(1, 1, 1, barAlpha)
-				glText(barInfo.text, barStart, yoffset, 4, "r")
+				glText(barInfo.text, barStart, yoffset, 4, "ro")
 			end
 			if (drawBarTitles and barInfo.title) then
 				glColor(1, 1, 1, titlesAlpha)
@@ -536,7 +536,7 @@ local function GetBarDrawer()
 			DrawFeatureBar(yoffset, barInfo.progress, barInfo.color)
 			if (drawBarPercentages and barInfo.text) then
 				glColor(1, 1, 1, featureBarAlpha)
-				glText(barInfo.text, fBarStart, yoffset, 4, "r")
+				glText(barInfo.text, fBarStart, yoffset, 4, "ro")
 			end
 			if (drawBarTitles and barInfo.title) then
 				glColor(1, 1, 1, featureTitlesAlpha)
