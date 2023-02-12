@@ -177,7 +177,7 @@ options = {
 	barScale = {
 		name = 'Bar size scale',
 		type = 'number',
-		value = 1,
+		value = 1.5,
 		min = 0.5,
 		max = 6,
 		step = 0.25,
@@ -215,7 +215,7 @@ options = {
 		desc = 'If the camera is above this height, health bar percentages will not be drawn.',
 		type = 'number',
 		min = 0, max = 7000, step = 50,
-		value = 700,
+		value = 1500,
 		OnChange = OptionsChanged,
 	},
 	unitTitleHeight = {
@@ -223,7 +223,7 @@ options = {
 		desc = 'If the camera is above this height, health bar titles will not be drawn.',
 		type = 'number',
 		min = 0, max = 7000, step = 50,
-		value = 500,
+		value = 1500,
 		OnChange = OptionsChanged,
 	},
 	featureMaxHeight = {
