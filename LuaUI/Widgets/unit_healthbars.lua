@@ -272,26 +272,27 @@ local glDepthTest            = gl.DepthTest
 local glTexture              = gl.Texture
 local GetCameraVectors       = Spring.GetCameraVectors
 local abs                    = math.abs
-local GL_QUADS        = GL.QUADS
-local glVertex        = gl.Vertex
-local glBeginEnd      = gl.BeginEnd
-local glMultiTexCoord = gl.MultiTexCoord
-local glTexRect       = gl.TexRect
-local glCallList      = gl.CallList
-local glText          = gl.Text
-local glTranslate     = gl.Translate
-local glPushMatrix    = gl.PushMatrix
-local glPopMatrix     = gl.PopMatrix
-local glBillboard     = gl.Billboard
-local GetUnitIsStunned     = Spring.GetUnitIsStunned
-local GetUnitHealth        = Spring.GetUnitHealth
-local GetUnitWeaponState   = Spring.GetUnitWeaponState
-local GetUnitShieldState   = Spring.GetUnitShieldState
-local GetUnitViewPosition  = Spring.GetUnitViewPosition
-local GetUnitStockpile     = Spring.GetUnitStockpile
-local GetUnitRulesParam    = Spring.GetUnitRulesParam
-local GetFeatureHealth     = Spring.GetFeatureHealth
-local GetFeatureResources  = Spring.GetFeatureResources
+local GL_QUADS               = GL.QUADS
+local glVertex               = gl.Vertex
+local glBeginEnd             = gl.BeginEnd
+local glMultiTexCoord        = gl.MultiTexCoord
+local glTexRect              = gl.TexRect
+local glCallList             = gl.CallList
+local glText                 = gl.Text
+local glTranslate            = gl.Translate
+local glPushMatrix           = gl.PushMatrix
+local glPopMatrix            = gl.PopMatrix
+local glBillboard            = gl.Billboard
+local glColor                = gl.Color
+local GetUnitIsStunned       = Spring.GetUnitIsStunned
+local GetUnitHealth          = Spring.GetUnitHealth
+local GetUnitWeaponState     = Spring.GetUnitWeaponState
+local GetUnitShieldState     = Spring.GetUnitShieldState
+local GetUnitViewPosition    = Spring.GetUnitViewPosition
+local GetUnitStockpile       = Spring.GetUnitStockpile
+local GetUnitRulesParam      = Spring.GetUnitRulesParam
+local GetFeatureHealth       = Spring.GetFeatureHealth
+local GetFeatureResources    = Spring.GetFeatureResources
 
 
 local function lowerkeys(t)
@@ -432,8 +433,6 @@ end
 
 local function GetBarDrawer()
 	--//speedup
-	local glColor      = gl.Color
-	local glText       = gl.Text
 
 	local barsN = 0
 	local maxBars = 20
