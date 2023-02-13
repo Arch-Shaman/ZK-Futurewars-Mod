@@ -624,6 +624,7 @@ function DrawUnitInfos(unitID, unitDefID)
 			specialReload = ud.customParams.specialreloadtime,
 			delaytime     = ud.customParams.aimdelay,
 			batterymax    = tonumber(ud.customParams.battery),
+			bpoverdrivebonus = tonumber(ud.customParams.bp_overdrive_bonus),
 		}
 	end
 	local ci = customInfoUnits[unitDefID]
@@ -854,8 +855,21 @@ function DrawUnitInfos(unitID, unitDefID)
 	end
 	local bpOverdrive = GetUnitRulesParam(unitID, "bp_overdrive")
 	if bpOverdrive then
-		bpOverdrive = floor(bpOverdrive * 100)
-		barDrawer.AddBar(addTitle and messages.engioverdrive, aimProgress, "aim", (addPercent and bpOverdrive .. '%'))
+		local bpProgress = floor(bpOverdrive * 100)
+		if ci.bpoverdrivebonus then -- normal unit, not a commander.
+			if ci.bpoverdrivebonus < 0 and bpOverdrive > 0 then
+				barDrawer.AddBar(addTitle and messages.engioverdrive, bpOverdrive, "aim", (addPercent and 100 - bpProgress .. '%'))
+			elseif ci.bpoverdrivebonus > 0 and bpOverdrive < 1 then
+				barDrawer.AddBar(addTitle and messages.engioverdrive, bpOverdrive, "aim", (addPercent and bpProgress * ci.bpoverdrivebonus .. '%'))
+			end
+		else
+			local bonus = GetUnitRulesParam(unitID, "comm_bpoverdrive_bonus") or 0
+			if bonus > 0 and bpOverdrive < 100 then
+				barDrawer.AddBar(addTitle and messages.engioverdrive, bpOverdrive, "aim", (addPercent and 100 - bpProgress .. '%'))
+			elseif bonus < 1 and bpOverdrive > 0 then
+				barDrawer.AddBar(addTitle and messages.engioverdrive, bpOverdrive, "aim", (addPercent and bpProgress * bonus .. '%'))
+			end
+		end
 	end
 	
 	--// Battery
