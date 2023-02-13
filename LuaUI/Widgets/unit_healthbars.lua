@@ -95,6 +95,7 @@ local messages = {
 	resurrect = "resurrect",
 	aim = "aim",
 	battery = "battery",
+	engioverdrive = "Fab Overdrive",
 }
 
 local function languageChanged ()
@@ -849,6 +850,11 @@ function DrawUnitInfos(unitID, unitDefID)
 			--Spring.Echo("AimProgress: " .. aimProgress)
 			barDrawer.AddBar(addTitle and messages.aim, aimProgress, "aim", (addPercent and floor(prog*100) .. '%'))
 		end
+	end
+	local bpOverdrive = GetUnitRulesParam(unitID, "bp_overdrive")
+	if bpOverdrive then
+		bpOverdrive = floor(bpOverdrive * 100)
+		barDrawer.AddBar(addTitle and messages.engioverdrive, aimProgress, "aim", (addPercent and bpOverdrive .. '%'))
 	end
 	
 	--// Battery
