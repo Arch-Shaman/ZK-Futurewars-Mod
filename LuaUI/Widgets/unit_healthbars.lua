@@ -622,7 +622,7 @@ function DrawUnitInfos(unitID, unitDefID)
 			maxWaterTank  = ud.customParams.maxwatertank,
 			freeStockpile = (ud.customParams.freestockpile and true) or nil,
 			specialReload = ud.customParams.specialreloadtime,
-			delaytime     = GetUnitRulesParam(unitID, "comm_aimtime") or ud.customParams.aimdelay,
+			delaytime     = ud.customParams.aimdelay,
 			batterymax    = tonumber(ud.customParams.battery),
 		}
 	end
@@ -842,10 +842,11 @@ function DrawUnitInfos(unitID, unitDefID)
 	
 	--// AIMING
 	
-	if ci.delaytime then
+	if ci.delaytime or GetUnitRulesParam(unitID, "comm_aimtime") then
 		local aiming = GetUnitRulesParam(unitID, "aimdelay")
 		if (aiming and aiming > gameFrame) then
-			local aimProgress = (aiming-gameFrame)/ci.delaytime	-- don't divide by gamespeed, since specialReload is also in gameframes
+			local delaytime = GetUnitRulesParam(unitID, "comm_aimtime") or ci.delaytime
+			local aimProgress = (aiming-gameFrame)/delaytime	-- don't divide by gamespeed, since specialReload is also in gameframes
 			local prog = 1 - aimProgress
 			--Spring.Echo("AimProgress: " .. aimProgress)
 			barDrawer.AddBar(addTitle and messages.aim, aimProgress, "aim", (addPercent and floor(prog*100) .. '%'))
