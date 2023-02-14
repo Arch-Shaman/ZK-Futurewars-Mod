@@ -95,6 +95,15 @@ local names = {
 	"Buy me for only 4928 credits!", -- Poking fun at space capitalism.
 	"Hazy_uhyR's Plight", -- Just because I want to.
 	"Emperor's Guard",
+	-- other, volume 2 --
+	"Legendary GhostFenixx", -- GhostFenixx collected all the versions!
+	"I didn't die, it was selfd!",
+	"Traitor Coffee", -- Shaman Meme
+	"Surprise Base Trader",
+	"Bomb disguised as a Comm",
+	"Im not Oppressive, just uncounterable!",
+	"Mudosaka's Murder Machine",
+	"Buzzing Bees, Deadly Drones!",
 	-- Shamelessly stolen from Users --
 	"Ukraine BM", -- User: Ukraine
 	"ICE COLD BUT HOT", -- User: Ukraine
