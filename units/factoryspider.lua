@@ -85,7 +85,7 @@ return {
 		weaponDefs = {
 			DECLOAK    = {
 				name                    = "Dualwave Pulse",
-				areaOfEffect            = 1400,
+				areaOfEffect            = 1500,
 				craterBoost             = 0,
 				craterMult              = 0,
 				damage                  = {

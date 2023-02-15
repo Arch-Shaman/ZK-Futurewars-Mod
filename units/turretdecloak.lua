@@ -69,7 +69,7 @@ return {
 				},
 				edgeeffectiveness       = 0.4,
 				explosionGenerator      = "custom:scanner_ping",
-				explosionSpeed          = 250,
+				explosionSpeed          = 500,
 				impulseBoost            = 0,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
