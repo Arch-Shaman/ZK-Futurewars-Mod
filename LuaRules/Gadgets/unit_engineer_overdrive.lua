@@ -85,7 +85,7 @@ local function UpdateWorker(unitID, workRate, unitConfig)
 			Spring.Echo("[EngieOverdrive] UpdateWorker: Unit spools")
 		end
 		if data.charge < unitConfig.chargetotal then
-			local theoreticalSpeed = 1 - ((1 - (data.charge / unitConfig.chargetotal)) * unitConfig.overdrivebonus) * baseSpeed
+			local theoreticalSpeed = 1 + ((1 - (data.charge / unitConfig.chargetotal)) * unitConfig.overdrivebonus) * baseSpeed
 			if debugMode then 
 				Spring.Echo("[EngieOverdrive] UpdateWorker: theoretical Speed: " .. theoreticalSpeed) 
 			end
@@ -97,7 +97,7 @@ local function UpdateWorker(unitID, workRate, unitConfig)
 		data.replinishtimer = unitConfig.chargetime
 	else
 		local allowcooloff = unitConfig.allowcooloff
-		if workRate > baseSpeed and data.charge ~= 0 then
+		if workRate > baseSpeed and data.charge > 0 then
 			local chargeUse = (workRate - baseSpeed) / 30 -- convert from per second -> per frame
 			newCharge = newCharge - chargeUse
 			if debugMode then
