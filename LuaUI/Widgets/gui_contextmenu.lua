@@ -1120,10 +1120,10 @@ local function printAbilities(ud, unitID, isFeature)
 	local cp = ud.customParams
 	
 	if ud.buildSpeed > 0 and not cp.nobuildpower then
-		local bpMult
+		local bpMult = 1
 		if isFeature then
 			bpMult = Spring.GetFeatureRulesParam(unitID, "buildpower_mult") or 1
-		elseif Spring.GetUnitRulesParam(unitID, "comm_level") then
+		elseif unitID and Spring.GetUnitRulesParam(unitID, "comm_level") then
 			bpMult = unitID and Spring.GetUnitRulesParam(unitID, "buildpower_mult") or 1
 		end
 		local buildSpeed = ud.buildSpeed * bpMult
