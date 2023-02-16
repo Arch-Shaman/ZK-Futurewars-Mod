@@ -1147,6 +1147,8 @@ local function printAbilities(ud, unitID, isFeature)
 				cells[#cells+1] = ' - Decay rate:'
 				cells[#cells+1] = numformat((rechargeRate / maxCharge) * 100, 1) .. '%/sec'
 			else
+				cells[#cells+1] = ' - Base Buildpower:'
+				cells[#cells+1] = numformat(buildSpeed)
 				cells[#cells+1] = ' - Starting buildpower:'
 				cells[#cells+1] = buildSpeed * (1 + bonusBP)
 				cells[#cells+1] = ' - Recharge delay:'
