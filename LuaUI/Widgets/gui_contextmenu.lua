@@ -1118,19 +1118,46 @@ local function printAbilities(ud, unitID, isFeature)
 	local cells = {}
 
 	local cp = ud.customParams
-
+	
 	if ud.buildSpeed > 0 and not cp.nobuildpower then
 		local bpMult
 		if isFeature then
 			bpMult = Spring.GetFeatureRulesParam(unitID, "buildpower_mult") or 1
-		else
+		elseif Spring.GetUnitRulesParam(unitID, "comm_level") then
 			bpMult = unitID and Spring.GetUnitRulesParam(unitID, "buildpower_mult") or 1
 		end
 		local buildSpeed = ud.buildSpeed * bpMult
 		cells[#cells+1] = 'Construction'
 		cells[#cells+1] = ''
-		cells[#cells+1] = ' - Buildpower: '
-		cells[#cells+1] = numformat(buildSpeed)
+		if ud.customParams.bp_overdrive then
+			local charge = tonumber(ud.customParams.bp_overdrive_initialcharge)
+			local maxCharge = tonumber(ud.customParams.bp_overdrive_totalcharge)
+			local bonusBP = tonumber(ud.customParams.bp_overdrive_bonus) -- negative for spooling, positive for decremental
+			local delay = tonumber(ud.customParams.bp_overdrive_chargedelay) -- in frames
+			local rechargeRate = tonumber(ud.customParams.bp_overdrive_chargerate) -- in per second.
+			local spooling = bonusBP < 0
+			if spooling then
+				cells[#cells+1] = ' - Starting buildpower:'
+				cells[#cells+1] = numformat((1 - bonusBP) * buildSpeed)
+				cells[#cells+1] = ' - Buildpower increases with use'
+				cells[#cells+1] = ''
+				cells[#cells+1] = ' - Maximum buildpower: ' .. numformat(buildSpeed)
+				cells[#cells+1] = ' - Buildpower decreases after disuse: '
+				cells[#cells+1] = numformat(delay / 30, 1) .. 's'
+				cells[#cells+1] = ' - Decay rate:'
+				cells[#cells+1] = numformat((rechargeRate / maxCharge) * 100, 1) .. '%/sec'
+			else
+				cells[#cells+1] = ' - Starting buildpower:'
+				cells[#cells+1] = buildSpeed * (1 + bonusBP)
+				cells[#cells+1] = ' - Recharge delay:'
+				cells[#cells+1] = numformat(delay / 30, 1) .. 's'
+				cells[#cells+1] = ' - Regeneration rate:'
+				cells[#cells+1] = numformat((rechargeRate / maxCharge) * 100, 1) .. '%/sec'
+			end
+		else
+			cells[#cells+1] = ' - Buildpower: '
+			cells[#cells+1] = numformat(buildSpeed)
+		end
 		if ud.canResurrect then
 			cells[#cells+1] = ' - Can resurrect wreckage'
 			cells[#cells+1] = ''
