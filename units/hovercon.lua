@@ -27,7 +27,7 @@ return {
 			bp_overdrive_chargedelay = 90, -- in frames.
 			bp_overdrive_bonus = 4,
 			bp_overdrive_totalcharge = 350,
-			bp_overdrive_chargerate = 60,
+			bp_overdrive_chargerate = 10,
 		},
 		energyUse           = 0,
 		explodeAs           = "BIG_UNITEX",
