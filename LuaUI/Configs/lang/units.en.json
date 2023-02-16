@@ -1125,9 +1125,9 @@
 		"helptext" : "The Razor is a hardy anti-air turret. Its high hit points and 4x armour bonus when closed makes it very hard for the enemy to dislodge."
 	},
 	"hovercon" : {
-		"name" : "Quill",
-		"description" : "Construction Hovercraft",
-		"helptext" : "The Quill allows smooth expansion across both land and sea."
+		"name" : "Spike",
+		"description" : "Express Construction Hovercraft",
+		"helptext" : "The Spike is an upgraded Quill with an overdriven nanofabricator. While this initially gives it a large burst of build speed, it quickly falls off due to overheating. This makes the Spike useful for rapid wreakage recovery on the front line."
 	},
 	"jumpaa" : {
 		"name" : "Toad",
