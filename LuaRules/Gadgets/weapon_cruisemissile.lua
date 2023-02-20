@@ -345,8 +345,11 @@ function gadget:GameFrame(f)
 						local v = sqrt((vx * vx) + (vz * vz))
 						if data.useprediction and not missileconfig.track then
 							data.useprediction = false
-							if data.originaltarget then
+							if data.originaltarget and spValidUnitID(data.originalTarget) then
 								local targetx, targety, targetz = spGetUnitPosition(data.originaltarget)
+								if not targetx then
+									targetx, targety, targetz = data.target[1], data.target[2], data.target[3]
+								end
 								local tvx, tvy, tvz = Spring.GetUnitVelocity(data.originaltarget)
 								local errorx, errory, errorz = spGetUnitPosErrorParams(data.originaltarget)
 								targetx = targetx + errorx
