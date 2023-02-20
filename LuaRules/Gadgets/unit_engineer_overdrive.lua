@@ -59,15 +59,18 @@ local function UpdateUnitRules(unitID, data)
 	local currentCharge = data.charge / chargeMax
 	local currentBonus = unitConfig.overdrivebonus
 	currentBonus = 1 + (currentBonus * currentCharge)
-	if debugMode then
-		Spring.Echo("[EngieOverdrive] Update Unit: " .. unitID .. "\nCharge: " .. tostring(data.charge) .. " / " .. chargeMax .. "\nCurrent Bonus: " .. currentBonus)
-	end
 	spSetUnitRulesParam(unitID, "bp_overdrive", currentCharge, INLOS)
 	local handicap = GetTeamHandicap(spGetUnitTeam(unitID))
 	--if spGetUnitRulesParam(unitID, "comm_level") then
 		--currentBonus = currentBonus * unitRulesUnits[unitID].bpmult
 	--end
+	if debugMode then
+		Spring.Echo("[EngieOverdrive] Update Unit: " .. unitID .. "\nCharge: " .. tostring(data.charge) .. " / " .. chargeMax .. "\nCurrent Bonus: " .. currentBonus .. "\nHandicap: " .. handicap)
+	end
 	currentBonus = currentBonus * handicap
+	if debugMode then
+		Spring.Echo("[EngieOverdrive] Setting unit bonus to " .. currentBonus)
+	end
 	spSetUnitRulesParam(unitID, "buildpower_mult", currentBonus, INLOS)
 	GG.UpdateUnitAttributes(unitID)
 	GG.UpdateUnitAttributes(unitID)
