@@ -164,6 +164,9 @@ function tele_deployTeleport(unitID)
 end
 
 function tele_undeployTeleport(unitID)
+	if tele[unitID].factoryHack then
+		return
+	end
 	if tele[unitID].deployed then
 		interruptTeleport(unitID)
 	end
@@ -197,7 +200,7 @@ function tele_createBeacon(unitID, x, z, beaconID)
 end
 
 local function undeployTeleport(unitID)
-	if tele[unitID].deployed then
+	if tele[unitID].deployed and not tele[unitID].factoryHack then
 		local func = Spring.UnitScript.GetScriptEnv(unitID).UndeployTeleport
 		Spring.UnitScript.CallAsUnit(unitID,func)
 		tele_undeployTeleport(unitID)
@@ -488,7 +491,7 @@ function gadget:GameFrame(f)
 			local tid = teleID.data[i]
 			local bid = tele[tid].link
 			
-			if bid and tele[tid].deployed then
+			if bid and (tele[tid].deployed or tele[tid].factoryHack) then
 				
 				local teleFinished = tele[tid].teleFrame and f >= tele[tid].teleFrame
 				
@@ -644,6 +647,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 			offset = tonumber(UnitDefs[unitDefID].customParams.teleporter_offset) or 40,
 			stunned = isUnitDisabled(unitID),
 			throughput = tonumber(UnitDefs[unitDefID].customParams.teleporter_throughput) / Game.gameSpeed,
+			factoryHack = UnitDefs[unitDefID].isFactory,
 		}
 	end
 	if canTeleport[unitDefID] then
