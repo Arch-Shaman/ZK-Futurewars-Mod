@@ -942,7 +942,7 @@ local function DoTacticalAI(unitID, cmdID, cmdOpts, cmdTag, cp_1, cp_2, cp_3,
 	if enemy then
 		local ex, _, ez = spGetUnitPosition(enemy)
 		local myx, _, myz = spGetUnitPosition(unitID)
-		distance = math.sqrt(((myx - ex)*(myx - ex)) + ((myz - ez)*(myz - ez)))
+		distance = ex and math.sqrt(((myx - ex)*(myx - ex)) + ((myz - ez)*(myz - ez))) or 90000
 	end
 	if (typeKnown and (not haveFight) and behaviour.fightOnlyUnits and behaviour.fightOnlyUnits[enemyUnitDef]) then
 		return false -- Do not tactical AI enemy if it is fight-only.
