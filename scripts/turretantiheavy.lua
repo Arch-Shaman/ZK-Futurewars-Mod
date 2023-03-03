@@ -43,6 +43,7 @@ local lastPitch
 local registeredGroundFire = false
 local registeredTarget = false
 local firingTime = 0
+local reloadGrace = 30
 
 --[[
 TO DO:
@@ -221,7 +222,9 @@ end
 function StartReload()
 	firing = false
 	turnrateMod = 0.5
-	frame = SpGetGameFrame() + 420
+	local reloadmod = firingTime/reloadGrace
+	if reloadmod > 1 then reloadmod = 1 elseif reloadmod < 0.15 then reloadmod = 0.15 end
+	frame = SpGetGameFrame() + math.ceil(420 * reloadmod)
 	SpetUnitWeaponState(unitID, 1, "reloadState", frame)
 	SpetUnitWeaponState(unitID, 2, "reloadState", frame)
 	registeredGroundFire = false
