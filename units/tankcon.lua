@@ -73,7 +73,7 @@ return {
 				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
 			},
 			{
-				def                = "CANNON2",
+				def                = "CANNON",
 				badTargetCategory  = "FIXEDWING",
 				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
 			},
