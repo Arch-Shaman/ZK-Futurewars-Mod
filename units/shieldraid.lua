@@ -71,7 +71,8 @@ return {
 				craterMult              = 0,
 				customParams        = {
 					light_camera_height = 1200,
-					light_radius = 20,
+					light_radius = 40,
+					light_color = "1 0.27059 0",
 					sweepfire = 1,
 					sweepfire_maxangle = 45,
 					sweepfire_step = 0.5,
