@@ -26,7 +26,6 @@ return {
 			extradrawrange = 3000,
 			ispad         = 1,
 			pad_count     = 2,
-
 			outline_x = 300,
 			outline_y = 300,
 			outline_yoff = 55,
