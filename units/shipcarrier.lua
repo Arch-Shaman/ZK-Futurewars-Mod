@@ -11,7 +11,6 @@ return {
 		buildPic               = "shipcarrier.png",
 		canMove                = true,
 		canManualFire          = true,
-		cantBeTransported      = true,
 		category               = "SHIP",
 		CollisionSphereScale   = 0.6,
 		collisionVolumeOffsets = "10 -10 0",
