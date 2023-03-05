@@ -48,12 +48,12 @@ return {
 		yardMap                       = "oo oo",
 		weapons                       = {
 			{
-				def                = "arm_det_weapon",
+				def                = "emp",
 				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER FIXEDWING GUNSHIP",
 			},
 		},
 		weaponDefs                    = {
-			arm_det_weapon = {
+			emp = {
 				name                    = "Light EMP Bolter",
 				areaOfEffect            = 120,
 				cegtag					= "artillery_spark_small_commander",
