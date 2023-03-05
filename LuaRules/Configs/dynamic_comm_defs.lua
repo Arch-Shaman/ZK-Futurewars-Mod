@@ -139,7 +139,7 @@ local moduleDefs = {
 		slotType = "module",
 	},
 	{
-		name = "nullbasicweapon",
+		name = "nullbasicweapon", -- TODO: Remove.
 		humanName = "No Weapon",
 		description = "",
 		image = "LuaUI/Images/dynamic_comm_menu/cross.png",
@@ -150,7 +150,7 @@ local moduleDefs = {
 		slotType = "basic_weapon",
 	},
 	{
-		name = "nulladvweapon",
+		name = "nulladvweapon", -- TODO: Remove.
 		humanName = "No Weapon",
 		description = "",
 		image = "LuaUI/Images/dynamic_comm_menu/cross.png",
