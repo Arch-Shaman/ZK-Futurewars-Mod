@@ -62,7 +62,7 @@ local function Close ()
 end
 
 local function RestoreAfterDelay()
-	Sleep (5000)
+	Sleep (1500)
 	Close()
 end
 
