@@ -40,7 +40,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 60,
 		maxSlope               = 36,
-		maxVelocity            = 3.9,
+		maxVelocity            = 4.9,
 		maxWaterDepth          = 15,
 		movementClass          = "SKBOT2",
 		noChaseCategory        = "FIXEDWING LAND SINK TURRET SHIP SWIM GUNSHIP FLOAT SUB HOVER",

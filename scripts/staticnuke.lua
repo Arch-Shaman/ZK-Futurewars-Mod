@@ -85,10 +85,10 @@ local function CloseDoors()
 end
 
 function StockpileChanged(newStock)
+	mystock = newStock
 	if newStock <= 0 then
 		return
 	end
-	mystock = newStock
 	if not missileLoaded then
 		primingQueued = true
 	elseif not doorsAreOpen and not openingDoors and not closingDoors then
@@ -131,7 +131,6 @@ function script.FireWeapon()
 	Hide(nuke)
 	missileLoaded = false
 	doorsAreOpen = false
-
 	if GG.GameRules_NukeLaunched then
 		GG.GameRules_NukeLaunched(unitID)
 	end
