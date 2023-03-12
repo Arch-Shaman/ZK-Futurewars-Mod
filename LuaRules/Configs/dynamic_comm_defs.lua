@@ -139,7 +139,7 @@ local moduleDefs = {
 		slotType = "module",
 	},
 	{
-		name = "nullbasicweapon",
+		name = "nullbasicweapon", -- TODO: Remove.
 		humanName = "No Weapon",
 		description = "",
 		image = "LuaUI/Images/dynamic_comm_menu/cross.png",
@@ -150,7 +150,7 @@ local moduleDefs = {
 		slotType = "basic_weapon",
 	},
 	{
-		name = "nulladvweapon",
+		name = "nulladvweapon", -- TODO: Remove.
 		humanName = "No Weapon",
 		description = "",
 		image = "LuaUI/Images/dynamic_comm_menu/cross.png",
@@ -270,7 +270,7 @@ local moduleDefs = {
 		description = "Miniture tachyon emitter designed to snipe units from afar. Requires unimpeded path to enemy making it poor in hilly regions.",
 		image = moduleImagePath .. "commweapon_heatray.png",
 		limit = 2,
-		cost = 200 * COST_MULT,
+		cost = 125 * COST_MULT,
 		requireChassis = {"assault"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
@@ -314,7 +314,7 @@ local moduleDefs = {
 		description = "Automatic weapon with AoE that spools up over time.\nShaman's note: The actual DPS is much higher!",
 		image = moduleImagePath .. "commweapon_heavymachinegun.png",
 		limit = 2,
-		cost = 50 * COST_MULT,
+		cost = 0 * COST_MULT,
 		requireChassis = {"riot", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",

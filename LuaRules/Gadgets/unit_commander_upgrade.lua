@@ -36,6 +36,16 @@ local spSetUnitStealth = Spring.SetUnitStealth
 local spGetUnitHealth = Spring.GetUnitHealth
 local zombies = false
 
+local defaultProfiles = {
+	[1] = "dyntrainer_strike",
+	[2] = "dyntrainer_recon",
+	[3] = "dyntrainer_support",
+	[4] = "dyntrainer_assault",
+	[5] = "dyntrainer_riot",
+	[6] = "dyntrainer_support", -- Probably bad!
+	[7] = "dyntrainer_riot",
+}
+
 do
 	local modoptions = Spring.GetModOptions()
 	if tonumber(modoptions.zombies) == 1 then
@@ -604,6 +614,9 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 	spSetUnitRulesParam(unitID, "comm_baseHeapID",    baseHeapID, INLOS)
 	spSetUnitRulesParam(unitID, "commander_storage_override", 500, INLOS)
 	if profileID then
+		spSetUnitRulesParam(unitID, "comm_profileID",     profileID, INLOS)
+	else -- we need the default profileIDs.
+		profileID = defaultProfiles[chassis]
 		spSetUnitRulesParam(unitID, "comm_profileID",     profileID, INLOS)
 	end
 	
