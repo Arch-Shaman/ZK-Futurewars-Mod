@@ -72,7 +72,7 @@ return {
 					chainlightning_num = 1,
 					chainlightning_searchdist = 180,
 					chainlightning_ff = 0,
-					chainlightning_maxtargets = 3,
+					chainlightning_maxtargets = 5,
 					chainlightning_index = 2,
 					chainlightning_spawn = "turretemp_sublightning_end",
 					stats_custom_tooltip_1 = " - Forks to 5 different targets up to 250 elmos away on impact",
