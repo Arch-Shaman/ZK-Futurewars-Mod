@@ -141,9 +141,9 @@ return {
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
 					extra_damage = 33,
-					light_camera_height = 1600,
-					light_color = "0.85 0.85 1.2",
-					light_radius = 180,
+					light_camera_height = 1200,
+					light_color = "0.5 0.5 1.0",
+					light_radius = 75,
 					stats_custom_tooltip_1 = " - Forks to up to 6 targets up to 180 elmos away",
 					stats_custom_tooltip_2 = " - Forking Efficiency: 33%",
 					stats_custom_tooltip_3 = " - Forks bounce to 4 additional targets each",
