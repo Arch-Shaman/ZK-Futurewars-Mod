@@ -87,7 +87,7 @@ return {
 					sweepfire_fastupdate = 1,
 				},
 				damage                  = {
-					default = 60.1,
+					default = 65.1,
 				},
 				duration                = 0.3,
 				dynDamageExp            = 1,
