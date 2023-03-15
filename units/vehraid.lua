@@ -94,7 +94,7 @@ return {
 				dynDamageInverted       = false,
 				explosionGenerator      = "custom:HEATRAY_HIT",
 				fallOffRate             = 1,
-				fireStarter             = 90,
+				fireStarter             = 100,
 				impactOnly              = true,
 				impulseBoost            = 0,
 				impulseFactor           = 0,
