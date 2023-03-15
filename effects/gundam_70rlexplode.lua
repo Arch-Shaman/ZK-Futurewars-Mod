@@ -271,7 +271,7 @@ return {
 				maxheat            = 15,
 				pos                = [[r-2 r2, 5, r-2 r2]],
 				size               = 5,
-				sizegrowth         = 12,
+				sizegrowth         = 6,
 				speed              = [[0, 1 0, 0]],
 				texture            = [[electnovaexplo]],
 			},
