@@ -2,11 +2,11 @@ return {
 	shieldbomb = {
 		unitname               = "shieldbomb",
 		name                   = "Parcel",
-		description            = "Crawling Cluster Bomb (Burrows)",
-		acceleration           = 0.75,
+		description            = "Shielded Cluster Bomb",
+		acceleration           = 2.4,
 		activateWhenBuilt      = true,
-		brakeRate              = 2.4,
-		buildCostMetal         = 160,
+		brakeRate              = 4.8,
+		buildCostMetal         = 140,
 		buildPic               = "shieldbomb.png",
 		canGuard               = true,
 		canMove                = true,
@@ -23,7 +23,6 @@ return {
 
 		customParams           = {
 			modelradius    = "7",
-			idle_cloak = 1,
 			selection_scale = 1, -- Maybe change later
 		},
 
@@ -35,12 +34,12 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		kamikaze               = true,
-		kamikazeDistance       = 80,
+		kamikazeDistance       = 40,
 		kamikazeUseLOS         = true,
 		leaveTracks            = true,
-		maxDamage              = 60,
+		maxDamage              = 270,
 		maxSlope               = 36,
-		maxVelocity            = 4.9,
+		maxVelocity            = 5.2,
 		maxWaterDepth          = 15,
 		movementClass          = "SKBOT2",
 		noChaseCategory        = "FIXEDWING LAND SINK TURRET SHIP SWIM GUNSHIP FLOAT SUB HOVER",
@@ -49,7 +48,6 @@ return {
 		script                 = "shieldbomb.lua",
 		selfDestructAs         = "shieldbomb_DEATH",
 		selfDestructCountdown  = 0,
-		stealth                = true,
 		sfxtypes               = {
 			explosiongenerators = {
 				"custom:RAIDMUZZLE",
@@ -57,7 +55,7 @@ return {
 				"custom:digdig",
 			},
 		},
-		sightDistance          = 240,
+		sightDistance          = 400,
 		trackOffset            = 0,
 		trackStrength          = 8,
 		trackStretch           = 1,
@@ -79,36 +77,36 @@ return {
 				object           = "debris2x2c.s3o",
 			},
 		},
---		weapons = {
---			{
---				def                = "SHIELD",
---			},
---		},
+		weapons = {
+			{
+				def                = "SHIELD",
+			},
+		},
 		weaponDefs = {
---			SHIELD = {
---				name                    = "Energy Shield",	
---				damage                  = {	
---					default = 10,	
---				},	
---				exteriorShield          = true,	
---				shieldAlpha             = 0.2,	
---				shieldBadColor          = "1 0.1 0.1 1",	
---				shieldGoodColor         = "0.1 0.1 1 1",	
---				shieldInterceptType     = 3,	
---				shieldPower             = 650,	
---				shieldPowerRegen        = 12,	
---				shieldPowerRegenEnergy  = 0.2,	
---				shieldRadius            = 50,	
---				shieldRepulser          = false,	
---				shieldStartingPower     = 850,	
---				smartShield             = true,	
---				visibleShield           = false,	
---				visibleShieldRepulse    = false,	
---				weaponType              = "Shield",	
---			},
+			SHIELD = {
+				name                    = "Energy Shield",	
+				damage                  = {	
+					default = 10,	
+				},	
+				exteriorShield          = true,	
+				shieldAlpha             = 0.2,	
+				shieldBadColor          = "1 0.1 0.1 1",	
+				shieldGoodColor         = "0.1 0.1 1 1",	
+				shieldInterceptType     = 3,	
+				shieldPower             = 2000,	
+				shieldPowerRegen        = 100,	
+				shieldPowerRegenEnergy  = 2,	
+				shieldRadius            = 60,	
+				shieldRepulser          = false,	
+				shieldStartingPower     = 1500,	
+				smartShield             = true,	
+				visibleShield           = false,	
+				visibleShieldRepulse    = false,	
+				weaponType              = "Shield",	
+			},
 			death = {
 				name                    = "Cluster Bomb Dispenser",
-				areaOfEffect            = 216,
+				areaOfEffect            = 290,
 				avoidFeature            = true,
 				--cegTag                  = "missiletrailred",
 				commandFire             = true,
@@ -119,25 +117,25 @@ return {
 					light_color = "0.75 0.4 0.15",
 					light_radius = 220,
 					blastwave_size = 25,
-					blastwave_impulse = 4,
+					blastwave_impulse = 0.075,
 					blastwave_speed = 30,
 					blastwave_life = 4,
-					blastwave_lossfactor = 0.66,
-					blastwave_damage = 1000,
+					blastwave_lossfactor = 0.8,
+					blastwave_damage = 1200,
 					numprojectiles1 = 10, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "shieldbomb_fragment_dummy",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					keepmomentum1 = 0,
 					timeoutspawn = 0,
-					vradius1 = "-3,1,-3,3,3,3",
+					vradius1 = "-4,1,-4,4,4,4",
 					noairburst = "Merkityksetön räjähdys", -- if true, this projectile will skip all airburst checks
 					onexplode = "Sattuu ihan vitusti", -- if true, this projectile will cluster when it explodes
 					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
 				},
 
 				damage                  = {
-					default = 200,
+					default = 100,
 				},
 
 				explosionGenerator      = "custom:ROACHPLOSION",
@@ -177,7 +175,7 @@ return {
 					blastwave_impulse = 4,
 					blastwave_speed = 30,
 					blastwave_life = 4,
-					blastwave_lossfactor = 0.66,
+					blastwave_lossfactor = 0.75,
 					blastwave_damage = 1000,
 					numprojectiles1 = 10, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "shieldbomb_fragment_dummy",
@@ -192,7 +190,7 @@ return {
 				},
 
 				damage                  = {
-					default = 200,
+					default = 500,
 				},
 
 				explosionGenerator      = "custom:ROACHPLOSION",
@@ -234,7 +232,7 @@ return {
 					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
 					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeddeploy = 20,
-					shield_damage = 300,
+					shield_damage = 720,
 					bogus = 1
 				},
 				damage                  = {
@@ -251,7 +249,7 @@ return {
 				range                   = 900,
 				reloadtime              = 12,
 				rgbColor                = "1 0.5 0.2",
-				size                    = 5,
+				size                    = 2.5,
 				soundHit                = "nosound",
 				soundStart              = "weapon/cannon/wolverine_fire",
 				soundStartVolume        = 3.2,
@@ -268,18 +266,19 @@ return {
 				craterBoost             = 10,
 				craterMult              = 5,
 				damage                  = {
-					default = 400,
+					default = 720,
 				},
 				edgeEffectiveness		= 0.4,
 				explosionGenerator      = "custom:MEDMISSILE_EXPLOSION",
 				fireStarter             = 180,
 				impulseBoost            = 0,
-				impulseFactor           = 0.2,
+				impulseFactor           = 0,
 				interceptedByShieldType = 2,
 				model                   = "wep_b_fabby.s3o",
 				range                   = 200,
 				reloadtime              = 1,
 				smokeTrail              = true,
+				size                    = 2.5,
 				soundHit                = "explosion/explosion_roach",
 				soundHitVolume          = 8,
 				soundStart              = "weapon/cannon/mini_cannon",

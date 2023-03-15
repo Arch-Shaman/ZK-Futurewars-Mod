@@ -73,6 +73,14 @@ local SIG_Walk = 2
 	end
 end]]
 
+function script.QueryWeapon()
+	return body
+end
+
+function script.AimWeapon()
+	return true
+end
+
 local function Burrow()
 	Signal(SIG_BURROW)
 	SetSignalMask(SIG_BURROW)
@@ -192,19 +200,15 @@ end
 function script.StartMoving()
 	--Spring.Utilities.UnitEcho(unitID, "a")
 	movingData.moving = true
-	Signal(SIG_BURROW)
-	if burrowed then
-		StartThread(UnBurrow)
-	else
-		StartThread(Walk)
-	end
+	StartThread(Walk)
 	--StartThread(Talk)
 end
 
 function script.StopMoving()
 	--Spring.Utilities.UnitEcho(unitID, "p")
 	movingData.moving = false
-	StartThread(Burrow)
+	Signal(SIG_Walk)
+	
 end
 
 function Detonate() -- Giving an order causes recursion.
@@ -215,9 +219,6 @@ function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	StartThread(GG.StartStopMovingControl, unitID, script.StartMoving, script.StopMoving, nil, true, movingData)
 	--StartThread(ShieldControlThread)
-	if not Spring.GetUnitIsStunned(unitID) then
-		Burrow()
-	end
 end
 
 local function DeathAnim(num)
