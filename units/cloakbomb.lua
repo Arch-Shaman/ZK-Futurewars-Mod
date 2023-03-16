@@ -21,7 +21,7 @@ return {
 			idle_cloak = 1,
 			selection_scale = 1, -- Maybe change later
 			cloakstrikeduration = 20,
-			cloakstrikespeed = 1.4,
+			cloakstrikespeed = 1.5,
 			cloakstrikeslow = 1.0,
 			cloaker_bestowed_radius = 75,
 			recloaktime 	   = 90,
@@ -38,8 +38,8 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 50,
 		maxSlope               = 72,
-		maxVelocity            = 3.0,
-		minCloakDistance       = 250,
+		maxVelocity            = 3.5,
+		minCloakDistance       = 150,
 		movementClass          = "TKBOT2",
 		noChaseCategory        = "FIXEDWING LAND SINK TURRET SHIP SWIM GUNSHIP FLOAT SUB HOVER",
 		objectName             = "armtick.s3o",
@@ -95,7 +95,7 @@ return {
 					default          = 0,
 				},
 				customParams = {
-					blastwave_speed = 15,
+					blastwave_speed = 20,
 					blastwave_life = 10,
 					blastwave_lossfactor = 0.9,
 					blastwave_damage = 10,
