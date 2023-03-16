@@ -37,7 +37,7 @@ return {
 		idleAutoHeal					= 5,
 		idleTime						= 1800,
 		losEmitHeight					= 65,
-		maxDamage						= 8000,
+		maxDamage						= 12000,
 		maxSlope						= 18,
 		maxWaterDepth					= 0,
 		minCloakDistance				= 150,
@@ -94,7 +94,7 @@ return {
 					explosion_generator = "ataalasergrow",
 				},
 				damage					= {
-					default = 40.1,
+					default = 60.1,
 				},
 				explosionGenerator		= "custom:ataalaser",
 				fireTolerance			= 8192, -- 45 degrees
@@ -107,7 +107,7 @@ return {
 				leadLimit				= 18,
 				minIntensity			= 1,
 				noSelfDamage			= true,
-				range					= 1200,
+				range					= 1300,
 				reloadtime				= 1/30,
 				rgbColor				= "1 0.25 0",
 				soundStart				= "weapon/laser/heavy_laser6",
