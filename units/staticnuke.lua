@@ -2,7 +2,7 @@ return {
 	staticnuke = {
 		unitname                      = "staticnuke",
 		name                          = "Oblivion",
-		description                   = "MIRV Launcher, Drains 25 m/s, 4 minute stockpile",
+		description                   = "MIRV Launcher, Drains 35 m/s, 2 minute stockpile",
 		buildCostMetal                = 8000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -16,8 +16,8 @@ return {
 		collisionVolumeType           = "box",
 		corpse                        = "DEAD",
 		customParams                  = {
-			stockpiletime  = "240",
-			stockpilecost  = "6000",
+			stockpiletime  = "120",
+			stockpilecost  = "4200",
 			priority_misc  = 1, -- Medium
 			outline_x = 195,
 			outline_y = 195,
