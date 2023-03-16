@@ -71,8 +71,8 @@
 	},
 	"cloakbomb" : {
 		"name" : "Imp",
-		"description" : "All Terrain EMP Bomb (Burrows)",
-		"helptext" : "The Imp relies on its speed and small size to dodge inaccurate weapons, especially those of assaults and many skirmishers. It can paralyze heavy units or packs of lighter raiders which cannot kill it before it is already in range. Reavers or Glaives can then eliminate the helpless enemies without risk. Counter with defenses or single cheap units to set off a premature detonation. This unit cloaks when otherwise idle."
+		"description" : "Cloaked EMP Bomb",
+		"helptext" : "The Imp relies on its speed and stealth to dodge inaccurate weapons, especially those of assaults and many skirmishers. It can paralyze heavy units or packs of lighter raiders which cannot kill it before it is already in range. Assailants or Lurkers can then eliminate the helpless enemies without risk. Counter with defenses or single cheap units to set off a premature detonation."
 	},
 	"shieldriot" : {
 		"name" : "Sentry",
