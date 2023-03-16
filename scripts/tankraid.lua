@@ -49,11 +49,12 @@ local spGetUnitHealth = Spring.GetUnitHealth
 local spAddUnitDamage = Spring.AddUnitDamage
 
 local flaming = false
+local isFiring = false
 
 local boostSpeed = 2
 local boostTime = 4*10
 local normalSpeed = 1
-local firingSpeed = 2/3
+local firingSpeed = 0.8
 
 local sweepAngle = 0
 local sweepMax = math.rad(30)
@@ -82,7 +83,7 @@ local function RestoreAfterDelay()
 	WaitForTurn(turret, y_axis)
 	WaitForTurn(sleeve, x_axis)
 	
-	
+	isFiring = false
 	spSetUnitRulesParam(unitID, "selfMoveSpeedChange", normalSpeed)
 	spSetUnitRulesParam(unitID, "maxAcc", normalSpeed)
 	GG.UpdateUnitAttributes(unitID)
@@ -250,10 +251,12 @@ function script.AimWeapon(num, heading, pitch)
 	
 	Signal(SIG_AIM1)
 	SetSignalMask(SIG_AIM1)
-	
-	spSetUnitRulesParam(unitID, "selfMoveSpeedChange", firingSpeed)
-	spSetUnitRulesParam(unitID, "maxAcc", firingSpeed)
-	GG.UpdateUnitAttributes(unitID)
+	if not isFiring then
+		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", firingSpeed)
+		spSetUnitRulesParam(unitID, "maxAcc", firingSpeed)
+		GG.UpdateUnitAttributes(unitID)
+		isFiring = true
+	end
 	
 	Turn(turret, y_axis, heading, TURRET_TURN_SPEED)
 	Turn(sleeve, x_axis, -pitch, GUN_TURN_SPEED)
