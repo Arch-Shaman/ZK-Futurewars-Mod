@@ -110,8 +110,8 @@ local function AddUnit(unitID, value, duration)
 end
 
 function gadget:UnitDestroyed(unitID)
-	if IterableMap.InMap(unitID) then
-		IterableMap.Remove(unitID)
+	if IterableMap.InMap(handledUnits, unitID) then
+		IterableMap.Remove(handledUnits, unitID)
 	end
 	armoredUnits[unitID] = nil
 end
