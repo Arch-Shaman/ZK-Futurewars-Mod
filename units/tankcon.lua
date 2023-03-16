@@ -110,7 +110,7 @@ return {
 				},
 
 				explosionGenerator      = "custom:EMG_HIT_HE",
-				impactOnly              = true,
+				impactOnly              = false,
 				impulseBoost            = 0,
 				impulseFactor           = 0,
 				intensity               = 0.7,
@@ -126,12 +126,12 @@ return {
 				soundhit			    = "weapon/cannon/cannon_hit1",
 				soundStart              = "weapon/brawler_emg5",
 				soundStartVolume        = 2,
-				sprayAngle              = 380,
+				sprayAngle              = 600,
 				stages                  = 35,
 				tolerance               = 5000,
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 600,
+				weaponVelocity          = 720,
 			},
 		},
 		featureDefs            = {
