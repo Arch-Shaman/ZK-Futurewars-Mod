@@ -130,7 +130,7 @@ return {
 				explosionGenerator      = "custom:NONE",
 				firestarter             = 70,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				intensity               = 0.7,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
