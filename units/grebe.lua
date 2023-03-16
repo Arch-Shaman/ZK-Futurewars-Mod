@@ -90,7 +90,6 @@ return {
 				soundHit                = "weapon/cannon/amph_light_mg_hit",
 				soundHitVolume          = 2.5,
 				soundStart              = "weapon/cannon/amph_light_mg_fire",
-				soundTrigger            = true,
 				soundStartVolume        = 1,5,
 				turret                  = true,
 				waterweapon             = true,
