@@ -249,7 +249,7 @@ local factoryUnitPosDef = {
 		amphassault       = unitTypes.HEAVY_SOMETHING,
 		amphlaunch        = unitTypes.UTILITY,
 		amphbomb          = unitTypes.SPECIAL,
-		amphtele          = unitTypes.SPECIAL2,
+		--amphtele          = unitTypes.SPECIAL2, -- TODO: Fix.
 	},
 	factoryship = {
 		shipcon           = unitTypes.CONSTRUCTOR,
