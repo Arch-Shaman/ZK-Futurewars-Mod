@@ -226,7 +226,7 @@ local factoryUnitPosDef = {
 		jumpbomb          = unitTypes.SPECIAL,
 	},
 	factorytank = {
-		tankcon           = unitTypes. CONSTRUCTOR,
+		tankcon           = unitTypes.CONSTRUCTOR,
 		tankraid          = unitTypes.WEIRD_RAIDER,
 		tankheavyraid     = unitTypes.RAIDER,
 		tankriot          = unitTypes.RIOT,
