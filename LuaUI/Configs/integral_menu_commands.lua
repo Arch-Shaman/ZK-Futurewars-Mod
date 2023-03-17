@@ -116,6 +116,7 @@ local unitTypes = {
 	HEAVY_SOMETHING = {order = 9, row = 2, col = 4},
 	SPECIAL         = {order = 10, row = 2, col = 5},
 	UTILITY         = {order = 11, row = 2, col = 6},
+	SPECIAL2        = {order = 12, row = 3, col = 1},
 }
 
 local factoryUnitPosDef = {
