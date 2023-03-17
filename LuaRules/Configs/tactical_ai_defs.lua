@@ -1232,7 +1232,7 @@ local behaviourConfig = {
 	-- riots
 	{
 		name = "cloakriot",
-		skirms = riotRangeSkirmieeArray,
+		skirms = lowMedRangeSkirmieeArray,
 		--swarms = {},
 		--flees = {},
 		idleFlee = longRangeRiotIdleFleeArray,
