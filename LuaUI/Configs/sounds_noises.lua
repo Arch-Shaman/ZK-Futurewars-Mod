@@ -534,6 +534,16 @@ local sounds = {
 			volume = 0.6,
 		},
 	},
+	amphskirm = {
+		ok = {
+			[1] = "amph_move",
+			volume = 0.8,
+		},
+		select = {
+			[1] = "amph_select",
+			volume = 0.6,
+		},
+	},
 	amphfloater = {
 		ok = {
 			[1] = "amph_move",
@@ -556,11 +566,11 @@ local sounds = {
 	},
 	amphriot = {
 		ok = {
-			[1] = "amph_move",
+			[1] = "amph_heavy_move",
 			volume = 0.8,
 		},
 		select = {
-			[1] = "amph_select",
+			[1] = "amph_heavy_select",
 			volume = 0.6,
 		},
 	},
