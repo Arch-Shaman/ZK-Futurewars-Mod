@@ -117,8 +117,7 @@ function script.FireWeapon(num)
 end
 
 function script.BlockShot(num, targetID)
-	local batteryCheck = not GG.BatteryManagement.CanFire(unitID, num)
-	return batteryCheck
+	return (targetID and GG.OverkillPrevention_CheckBlock(unitID, targetID, 85.1, 35, false, false, true)) or  not GG.BatteryManagement.CanFire(unitID, num)
 end
 
 function script.Killed(recentDamage, maxHealth)

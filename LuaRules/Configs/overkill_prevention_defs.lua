@@ -20,6 +20,7 @@ local handledUnitDefIDs = {
 	[UnitDefNames["gunshipassault"].id] = 1,
 	[UnitDefNames["cloaksnipe"].id] = 1,
 	[UnitDefNames["amphraid"].id] = 1,
+	[UnitDefNames["amphskirm"].id] = 1,
 	[UnitDefNames["amphimpulse"].id] = 1,
 	[UnitDefNames["amphriot"].id] = 1,
 	[UnitDefNames["shieldaa"].id] = 1,
