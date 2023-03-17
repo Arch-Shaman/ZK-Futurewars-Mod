@@ -108,22 +108,22 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.QueryWeapon(num)
-	return firepoints[num]
+	return firepoints[gun_1]
+end
+
+function script.FireWeapon(num)
+	GG.BatteryManagement.WeaponFired(unitID, num)
+	gun_1 = gun_1 %2 + 1
+end
+
+function script.BlockShot(num, targetID)
+	local batteryCheck = not GG.BatteryManagement.CanFire(unitID, num)
+	return batteryCheck
 end
 
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
-	if severity >= .25 then
-		Explode(lfoot, SFX.NONE)
-		Explode(lshin, SFX.NONE)
-		Explode(lthigh, SFX.NONE)
-		Explode(pelvis, SFX.NONE)
-		Explode(rfoot, SFX.NONE)
-		Explode(rshin, SFX.NONE)
-		Explode(rthigh, SFX.NONE)
-		Explode(body, SFX.NONE)
-		return 1
-	elseif severity >= .50 then
+	if severity <= .50 then
 		Explode(lfoot, SFX.FALL)
 		Explode(lshin, SFX.FALL)
 		Explode(lthigh, SFX.FALL)
@@ -133,16 +133,6 @@ function script.Killed(recentDamage, maxHealth)
 		Explode(rthigh, SFX.FALL)
 		Explode(body, SFX.SHATTER)
 		return 1
-	elseif severity >= .99 then
-		Explode(lfoot, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(lshin, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(lthigh, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(pelvis, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(rfoot, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(rshin, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(rthigh, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(body, SFX.SHATTER)
-		return 2
 	else
 		Explode(lfoot, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
 		Explode(lshin, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)

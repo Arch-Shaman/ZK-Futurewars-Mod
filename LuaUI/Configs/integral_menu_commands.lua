@@ -243,6 +243,7 @@ local factoryUnitPosDef = {
 		amphimpulse       = unitTypes.WEIRD_RAIDER,
 		amphriot          = unitTypes.RIOT,
 		amphfloater       = unitTypes.ASSAULT,
+		amphskirm         = unitTypes.SKIRMISHER,
 		amphsupport       = unitTypes.ARTILLERY,
 		amphaa            = unitTypes.ANTI_AIR,
 		amphassault       = unitTypes.HEAVY_SOMETHING,

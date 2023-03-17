@@ -14,6 +14,7 @@ return {
 		buildoptions     = {
 			"amphcon",
 			"amphraid",
+			"amphskirm",
 			"amphimpulse",
 			"amphfloater",
 			"amphriot",

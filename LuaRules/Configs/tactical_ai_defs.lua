@@ -333,7 +333,7 @@ local artyRangeSkirmieeArray = NameToDefID({
 	"turretheavy",
 	"striderdetriment",
 	"ampharty",
-	"amphraid",
+	"amphskirm",
 	
 	"shipskirm",
 })
@@ -562,6 +562,7 @@ local armedSea = NameToDefID({
 	"ampharty",
 	"amphriot",
 	"amphraid",
+	"amphskirm",
 	"amphbomb",
 	"subraider",
 	"amphassault",
@@ -574,6 +575,7 @@ local armedSea = NameToDefID({
 -- Armed UW capable targets --
 local seaASW = NameToDefID({
 	"amphraid",
+	"amphskirm",
 	"amphriot",
 	"amphbomb",
 	"shiptorpraider",
@@ -736,6 +738,7 @@ local jumpraidhug = NameToDefID({
 	"tankheavyarty",
 	"tankheavyraid", -- might not be 100% good outcome.
 	"amphraid",
+	"amphskirm",
 	"ampharty",
 	"amphcon",
 	"amphaa",
@@ -1007,6 +1010,27 @@ local behaviourConfig = {
 	},
 	{
 		name = "amphraid",
+		skirms = riotRangeSkirmieeArray,
+		swarms = lowRangeSwarmieeArray,
+		flees = raiderFleeables,
+		fightOnlyUnits = medRangeExplodables,
+		maxSwarmLeeway = 30,
+		minSwarmLeeway = 130,
+		minFleeRange = 50,
+		fleeLeeway = 60,
+		fleeOrderDis = 80,
+		fleeDistance = 100,
+		jinkPeriod = 2,
+		skirmLeeway = 10,
+		skirmBlockedApproachFrames = 90,
+		wardFireTargets = wardFireAllShieldsNoMex,
+		wardFireLeeway = 10,
+		wardFirePredict = 80,
+		wardFireShield = 400,
+		wardFireDefault = true,
+	},
+	{
+		name = "amphskirm",
 		skirms = longRangeSkirmieeArray,
 		swarms = longRangeSwarmieeArray,
 		--flees = {},

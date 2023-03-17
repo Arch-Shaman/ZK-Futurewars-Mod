@@ -1210,6 +1210,11 @@
 		"helptext" : "The Warden was made on the chasis of a bandit, but given a shield and an orange micropulser. In groups, they can be especially dangerous due to their ability to link shields."
 	},
 	"amphraid" : {
+		"name" : "Surge",
+		"description" : "Amphibious Raider Bot",
+		"helptext" : "The Surge is a moderate power raider that uses solar power to generate plasma. While initially high dps, its battery rapidly runs out. Use hit and run tactics to maximize effectiveness."
+	},
+	"amphskirm" : {
 		"name" : "Milta",
 		"description" : "Amphibious Light Skirmisher/Artillery",
 		"helptext" : "The Milta's sawhead torpedos can be fired as a long range mortar or against sea based threats. The sawhead delivers a payload of 3 sonic emitters that deal damage and push units away. It is rather inaccurate in land, so is best used as a light artillery piece."
