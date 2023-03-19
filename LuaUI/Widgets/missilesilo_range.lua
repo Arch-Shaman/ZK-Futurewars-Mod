@@ -70,6 +70,7 @@ local circleDivs = 64
 -- Speedup
 
 VFS.Include("LuaRules/Utilities/glVolumes.lua")
+local GetMiniMapFlipped = Spring.Utilities.IsMinimapFlipped
 
 local spGetActiveCommand = Spring.GetActiveCommand
 local spTraceScreenRay   = Spring.TraceScreenRay
@@ -127,12 +128,12 @@ local function DrawActiveCommandRanges()
 	local height = spGetGroundHeight(mouseX, mouseZ)
 	
 	--handle COFC rotation
-	local cs = spGetCameraState()
-	local dx,dz = 0, 1
-	if cs.ry then
-		local rotY = cs.ry - 1.5707
-		dx = cos(rotY)
-		dz = sin(rotY)
+	if GetMiniMapFlipped() then
+		glTranslate(minimapY, 0, 0)
+		glScale(-minimapX/mapX, minimapY/mapZ, 1)
+	else
+		glTranslate(0, minimapY, 0)
+		glScale(minimapX/mapX, -minimapY/mapZ, 1)
 	end
 	
 	for i = 1, #drawRadius do
