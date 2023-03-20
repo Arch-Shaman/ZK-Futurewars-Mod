@@ -49,7 +49,7 @@ unitDef = {
 	},
 	weaponDefs                    = {
 		SECONDARY = {
-			name 			= "Fireball",
+			name 			= "Napalm Fireball",
 			cegTag                  = "flamer",
 			areaOfEffect            = 216,
 			avoidFeature            = false,
