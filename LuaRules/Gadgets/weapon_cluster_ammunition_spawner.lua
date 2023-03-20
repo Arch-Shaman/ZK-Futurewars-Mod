@@ -322,12 +322,16 @@ local function SpawnSubProjectiles(id, wd)
 		if debugMode then
 			spEcho("Velocity: " ..tostring(projectileConfig[j].clusterpos),tostring(projectileConfig[j].clustervec) .. "\nstep: " .. tostring(step))
 		end
-		projectileattributes["ttl"] = WeaponDefs[me].flightTime or WeaponDefs[me].beamTTL or 9000
+		if WeaponDefs[me].type == "Cannon" and WeaponDefs[me].flightTime == 0 then
+			projectileattributes["ttl"] = 300 -- Needed to appease the unspeakable evil: https://github.com/beyond-all-reason/spring/issues/704
+		else
+			projectileattributes["ttl"] = WeaponDefs[me].flightTime or WeaponDefs[me].beamTTL or 9000
+		end
 		projectileattributes["tracking"] = WeaponDefs[me].tracks or false
 		projectileattributes["gravity"] = -WeaponDefs[me].myGravity or -1
-		projectileattributes["cegTag"] = WeaponDefs[me].cegTag
 		local ceg = WeaponDefs[me].cegTag
 		--spEcho(tostring(ceg))
+		projectileattributes["cegTag"] = ceg
 		local positioning = projectileConfig[j].clusterpos or "none"
 		local vectoring = projectileConfig[j].clustervec or "none"
 		local keepmomentum = projectileConfig[j].keepmomentum
