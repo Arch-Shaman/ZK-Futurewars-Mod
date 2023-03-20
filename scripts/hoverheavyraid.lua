@@ -6,7 +6,7 @@ local base = piece 'base'
 local turret = piece 'turret'
 local fireNum = 1
 local gameSpeed = Game.gameSpeed
-local RELOAD_TIME = 6 * gameSpeed
+local RELOAD_TIME = 6.5 * gameSpeed
 
 local fire = {
 	piece 'fire1',

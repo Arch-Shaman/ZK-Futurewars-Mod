@@ -44,7 +44,7 @@ return {
 		sightDistance       = 600,
 		sonarDistance       = 600,
 		turninplace         = 0,
-		turnRate            = 575,
+		turnRate            = 520,
 		weapons             = {
 			{
 				def                = "DISRUPTOR",
@@ -63,12 +63,12 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				customParams            = {
-					timeslow_damagefactor     = 3.25,
+					timeslow_damagefactor     = 3.15,
 					light_camera_height       = 2000,
 					light_color               = "0.85 0.33 1",
 					light_radius              = 120,
 					nofriendlyfire            = 1,
-					script_reload = "6",
+					script_reload = "6.5",
 					script_burst = "3",
 				},
 				damage                  = {
@@ -101,7 +101,7 @@ return {
 				tolerance               = 18000,
 				turret                  = true,
 				weaponType              = "LaserCannon",
-				weaponVelocity          = 530,
+				weaponVelocity          = 460,
 				waterweapon				= true,
 			},
 		},
