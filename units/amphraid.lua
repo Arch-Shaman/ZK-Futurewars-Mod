@@ -66,8 +66,8 @@ return {
 					light_camera_height = 1200,
 					light_radius        = 30,
 					light_color = "0 0.1843 0.4235",
-					batterydrain = 10,
-					batterychecklevel = 11,
+					batterydrain = 8,
+					batterychecklevel = 9,
 				},
 				damage                  = {
 					default = 85.1,
