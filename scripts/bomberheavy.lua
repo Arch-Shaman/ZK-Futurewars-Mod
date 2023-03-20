@@ -37,9 +37,10 @@ local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local SetAirMoveTypeData = Spring.MoveCtrl.SetAirMoveTypeData
 local movectrlGetTag = Spring.MoveCtrl.GetTag
 local deathexplosiontriggered = false
+local ammoState = 0
 
 local function DeathExplosion()
-	if Spring.GetUnitRulesParam(unitID, "noammo") == 0 then
+	if ammoState == 0 then
 		local px, py, pz = Spring.GetUnitPosition(unitID)
 		Spring.SpawnProjectile(WeaponDefNames["bomberheavy_deathexplo"].id, {
 			pos = {px, py + 5, pz},
@@ -54,28 +55,22 @@ local function DeathExplosion()
 	end
 end
 
-function SpeedThread()
-	local reloading = false
-	local oldstate = false
-	while spGetUnitMoveTypeData(unitID).aircraftState ~= "crashing" do
-		ammo = spGetUnitRulesParam(unitID,"noammo") or 0
-		if ammo == 0 and reloading then -- being reloaded.
-			while movectrlGetTag(unitID) ~= nil do
-				Sleep(33)
-			end
-			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
-			SetAirMoveTypeData(unitID, "maxAcc", 1)
-			GG.UpdateUnitAttributes(unitID)
-			Sleep(330)
-			reloading = false
-		elseif ammo == 1 and not reloading then
-			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", unarmedspeed)
-			SetAirMoveTypeData(unitID, "maxAcc", unarmedspeed)
-			GG.UpdateUnitAttributes(unitID)
-			reloading = true
-		end
-		Sleep(50)
+function OnAmmoChange(newState)
+	ammoState = newState
+	if newState == 0 then
+		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
+		SetAirMoveTypeData(unitID, "maxAcc", 1)
+		GG.UpdateUnitAttributes(unitID)
+		GG.UpdateUnitAttributes(unitID)
+	elseif newState == 1 then
+		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", unarmedspeed)
+		SetAirMoveTypeData(unitID, "maxAcc", unarmedspeed)
+		GG.UpdateUnitAttributes(unitID)
+		GG.UpdateUnitAttributes(unitID)
 	end
+end
+
+function OnStartingCrash()
 	DeathExplosion()
 end
 
@@ -126,7 +121,6 @@ function script.Create()
 	SetInitialBomberSettings()
 	StartThread(GG.TakeOffFuncs.TakeOffThread, takeoffHeight, SIG_TAKEOFF)
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-	StartThread(SpeedThread)
 	Hide(rearthrust)
 	Hide(wingthrust1)
 	Hide(wingthrust2)
@@ -138,6 +132,7 @@ end
 function script.FireWeapon(num)
 	gun_1 = not gun_1
 	SetUnarmedAI()
+	OnAmmoChange(1)
 	Sleep(50)	-- delay before clearing attack order; else bomb loses target and fails to home
 	Reload()
 end
