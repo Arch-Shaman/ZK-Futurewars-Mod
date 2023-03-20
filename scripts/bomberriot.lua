@@ -13,6 +13,7 @@ include "fixedwingTakeOff.lua"
 
 local SIG_TAKEOFF = 1
 local takeoffHeight = UnitDefNames["bomberriot"].wantedHeight
+local ammoState = 0
 
 local function Lights()
 	while select(5, Spring.GetUnitHealth(unitID)) < 1 do
@@ -23,6 +24,55 @@ local function Lights()
 		EmitSfx(wingtipr, 1026)
 		Sleep(2000)
 	end
+end
+
+local function DeathThread()
+	local wd = WeaponDefNames["bomberriot_napalm"]
+	local count = wd.salvoSize
+	local weaponID = wd.id
+	local delay = math.floor(wd.salvoDelay * 1000)
+	local x, y, z = Spring.GetUnitPosition(unitID)
+	local vx, vy, vz = Spring.GetUnitVelocity(unitID) 
+	local params = {
+			pos = {x, y + 5, z},
+			speed = {vx, vy, vz},
+			gravity = -1,
+			team = Spring.GetGaiaTeamID(),
+			owner = unitID,
+		}
+	for i = 1, count do
+		Spring.SpawnProjectile(weaponID, params)
+		Sleep(delay)
+		if Spring.ValidUnitID(unitID) then
+			params.pos[1], params.pos[2], params.pos[3] = Spring.GetUnitPosition(unitID)
+			params.pos[2] = params.pos[2] + 5
+			params.speed[1], params.speed[2], params.speed[3] = Spring.GetUnitVelocity(unitID)
+		else
+			break
+		end
+	end
+	ammoState = 1
+end
+
+function OnStartingCrash()
+	if ammoState == 0 then
+		StartThread(DeathThread)
+	end
+end
+
+function OnAmmoChange(newState)
+	ammoState = newState
+	--[[if newState == 0 then
+		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
+		SetAirMoveTypeData(unitID, "maxAcc", 1)
+		GG.UpdateUnitAttributes(unitID)
+		GG.UpdateUnitAttributes(unitID)
+	elseif newState == 1 then
+		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", 1.15)
+		SetAirMoveTypeData(unitID, "maxAcc", 1.15)
+		GG.UpdateUnitAttributes(unitID)
+		GG.UpdateUnitAttributes(unitID)
+	end]]
 end
 
 function script.StopMoving()
