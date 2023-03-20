@@ -90,6 +90,8 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 	elseif health > 0 then
 		local removalFrame = gameFrame + DAMAGE_MEMORY
 		data.removalFrames[removalFrame] = (data.removalFrames[removalFrame] or 0) + damage
+	else
+		IterableMap.Remove(recentDamage, unitID)
 	end
 end
 
