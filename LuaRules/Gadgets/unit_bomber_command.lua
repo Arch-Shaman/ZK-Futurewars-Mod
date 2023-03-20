@@ -188,6 +188,21 @@ local function MakeOptsWithShift(opts)
 	return opts.coded + (opts.shift and 0 or CMD_OPT_SHIFT)
 end
 
+local function CallAsUnitIfExists(unitID, funcName, ...)
+	local env = Spring.UnitScript.GetScriptEnv(unitID)
+	if not env then
+		return
+	end
+	if env and env[funcName] then
+		Spring.UnitScript.CallAsUnit(unitID, env[funcName], ...)
+	end
+end
+
+local function ChangeBomberAmmoState(unitID, newState)
+	spSetUnitRulesParam(unitID, "noammo", newState)
+	CallAsUnitIfExists(unitID, "OnAmmoChange", newState)
+end
+
 local function InsertCommand(unitID, index, cmdID, params, opts, toReplace)
 	--Note: 'toReplace==true' means command at 'index' is replaced with 'cmdID' instead of being sandwiched between old commands at 'index'
 	
@@ -477,9 +492,9 @@ local function CancelAirpadReservation(unitID)
 		if env and env.SetArmedAI then
 			Spring.UnitScript.CallAsUnit(unitID, env.SetArmedAI)
 		end
-		spSetUnitRulesParam(unitID, "noammo", 0)
+		ChangeBomberAmmoState(unitID, 0)
 	elseif spGetUnitRulesParam(unitID, "noammo") == 2 then -- refueling
-		spSetUnitRulesParam(unitID, "noammo", 1)
+		ChangeBomberAmmoState(unitID, 1)
 	end
 	
 	local targetPad
@@ -630,9 +645,9 @@ function gadget:GameFrame(n)
 						--value greater than 1 is for icon state, and it block bomber from firing while on airpad:
 						local noAmmo = spGetUnitRulesParam(bomberID, "noammo")
 						if noAmmo == 1 then
-							spSetUnitRulesParam(bomberID, "noammo", 2) -- mark bomber as refuelling
+							ChangeBomberAmmoState(bomberID, 2) -- mark bomber as refuelling
 						elseif not noAmmo or noAmmo==0 then
-							spSetUnitRulesParam(bomberID, "noammo", 3) -- mark bomber as repairing
+							ChangeBomberAmmoState(bomberID, 3) -- mark bomber as repairing
 						end
 					end
 				end
@@ -655,7 +670,7 @@ function GG.RequireRefuel(bomberID)
 end
 
 function GG.RefuelComplete(bomberID)
-	spSetUnitRulesParam(bomberID, "noammo", 3) -- mark bomber as repairing/ not refueling anymore
+	ChangeBomberAmmoState(bomberID, 3) -- mark bomber as repairing/ not refueling anymore
 end
 
 function GG.LandComplete(bomberID)
