@@ -36,7 +36,7 @@ function gadget:Initialize()
 end
 
 local LOS_ACCESS = {inlos = true}
-local DAMAGE_MEMORY = 60	-- gameframes
+local DAMAGE_MEMORY = 30	-- gameframes
 
 
 local recentDamage = IterableMap.New()	-- indexed by unitID
