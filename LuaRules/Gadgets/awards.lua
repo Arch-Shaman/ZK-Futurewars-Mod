@@ -688,7 +688,7 @@ local function SendEconomyDataToWidget()
 		for i = 1, count do
 			if data[i] then
 				local toSend = data[i].t .. " "
-				for allyTeamID, allyData in spairs(data[i].allyRes) do
+				for allyTeamID, allyData in pairs(data[i].allyRes) do
 					toSend = toSend .. " " .. allyTeamID .. " " ..
 					allyData.metal_income_total .. " " ..
 					allyData.metal_income_base .. " " ..
