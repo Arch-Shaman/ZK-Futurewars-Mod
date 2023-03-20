@@ -29,7 +29,7 @@ local aircraftDefIDs = {}
 
 function gadget:Initialize()
 	for i = 1, #UnitDefs do
-		if UnitDefs[i].canFly then
+		if UnitDefs[i].canFly and not UnitDefs[i].customParams.is_drone then
 			aircraftDefIDs[i] = true
 		end
 	end
