@@ -116,7 +116,7 @@ return {
 				craterMult              = 2,
 				customparams = {
 					numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile1 = "amphraid_secondary",
+					projectile1 = "amphskirm_secondary",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
@@ -166,7 +166,7 @@ return {
 				cegTag                  = "torpedo_trail",
 				customParams            = {
 					numprojectiles1 = 3, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile1 = "amphraid_secondary",
+					projectile1 = "amphskirm_secondary",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
