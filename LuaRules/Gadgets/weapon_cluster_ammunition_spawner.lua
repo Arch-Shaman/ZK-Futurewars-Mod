@@ -263,6 +263,19 @@ local function ConvertProjectileTargetToPos(targettype, targetID, projX, projY, 
 	return x1, y1, z1
 end
 
+local function GetFixedHeight(wd, x, z)
+	if WeaponDefs[wd].waterWeapon then
+		return spGetGroundHeight(x, z)
+	else
+		local h = spGetGroundHeight(x, z)
+		if h >= 0 then 
+			return h 
+		else 
+			return 0
+		end
+	end
+end
+
 local function SpawnSubProjectiles(id, wd)
 	if id == nil then
 		return
@@ -522,7 +535,7 @@ local function CheckProjectile(id)
 					if debugMode then
 						spEcho("Useheight check")
 					end
-					if y2 - spGetGroundHeight(x2,z2) <= myConfig.spawndist and vy <= myConfig.minvelocity then
+					if y2 - GetFixedHeight(wd, x2,z2) <= myConfig.spawndist and vy <= myConfig.minvelocity then
 						if debugMode then
 							spEcho("Spawn by ground height")
 						end
@@ -535,7 +548,7 @@ local function CheckProjectile(id)
 				else
 					distance = distance2d(x2,z2,x1,z1)
 				end
-				local height = y2 - spGetGroundHeight(x2,z2)
+				local height = y2 - GetFixedHeight(wd, x2,z2)
 				if debugMode then
 					spEcho("d: " .. distance .. "\nisBomb: " .. tostring(myConfig["isBomb"]) .. "\nVelocity: (" .. vx,vy,vz .. ")" .. "\nH: " .. height .. "\nexplosion dist: " .. height - myConfig.spawndist)
 				end
