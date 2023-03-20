@@ -309,7 +309,7 @@ return {
 				avoidFeature            = false,
 				craterBoost             = 1,
 				craterMult              = 2,
-				cegTag                  = [[flamer]],
+				--cegTag                  = [[flamer]],
 				customParams            = {
 
 					--lups_heat_fx = [[firewalker]],
