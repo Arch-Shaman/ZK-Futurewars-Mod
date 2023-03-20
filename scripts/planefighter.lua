@@ -24,6 +24,7 @@ local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local SetAirMoveTypeData = Spring.MoveCtrl.SetAirMoveTypeData
 local movectrlGetTag = Spring.MoveCtrl.GetTag
 local block = false
+local ammoState = 0
 
 ----------------------------------------------------------
 
@@ -57,38 +58,25 @@ end]]
 	--GG.UpdateUnitAttributes(unitID)
 --end
 
-function SpeedThread()
-	spSetUnitRulesParam(unitID, "selfMoveSpeedChange", fast)
-	SetAirMoveTypeData(unitID, "maxAcc", 1)
-	GG.UpdateUnitAttributes(unitID)
-	local ammo = 0
-	local reloading = false
-	while spGetUnitMoveTypeData(unitID).aircraftState ~= "crashing" do
-		ammo = spGetUnitRulesParam(unitID,"noammo") or 0
-		if ammo == 0 and reloading then -- being reloaded.
-			while movectrlGetTag(unitID) ~= nil do
-				Sleep(33)
-			end
-			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", fast)
-			SetAirMoveTypeData(unitID, "maxAcc", 1)
-			GG.UpdateUnitAttributes(unitID)
-			Sleep(330)
-			reloading = false
-			block = false
-		elseif ammo == 1 and not reloading then
-			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", slow)
-			SetAirMoveTypeData(unitID, "maxAcc", slow/2)
-			GG.UpdateUnitAttributes(unitID)
-			reloading = true
-		else
-			Sleep(66)
-		end
+function OnAmmoChange(newState)
+	ammoState = newState
+	if newState == 0 then
+		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", fast)
+		SetAirMoveTypeData(unitID, "maxAcc", 1)
+		GG.UpdateUnitAttributes(unitID)
+		GG.UpdateUnitAttributes(unitID)
+	elseif newState == 1 then
+		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", slow)
+		SetAirMoveTypeData(unitID, "maxAcc", slow/2)
+		GG.UpdateUnitAttributes(unitID)
+		GG.UpdateUnitAttributes(unitID)
 	end
 end
-		
 
 function OnLoadGame()
 	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
+	ammoState = Spring.GetUnitRulesParam(unitID, "noammo") or 0
+	OnAmmoChange(ammoState)
 	GG.UpdateUnitAttributes(unitID)
 end
 
@@ -112,7 +100,7 @@ function script.Create()
 	Move(rwing, x_axis, WING_DISTANCE)
 	Move(lwing, x_axis, -WING_DISTANCE)
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-	StartThread(SpeedThread)
+	OnAmmoChange(0)
 end
 
 function script.StartMoving()
@@ -132,7 +120,7 @@ function script.AimFromWeapon(num)
 end
 
 function script.AimWeapon(num, heading, pitch)
-	if (GetUnitValue(COB.CRASHING) == 1)  or spGetUnitRulesParam(unitID, "noammo") == 1 then
+	if (GetUnitValue(COB.CRASHING) == 1) or ammoState ~= 0 then
 		return false
 	else
 		return true
@@ -143,12 +131,13 @@ function script.FireWeapon(num)
 	EmitSfx(missile, UNIT_SFX2)
 	shotCycle = 1 - shotCycle
 	if num ~= 3 then
-		spSetUnitRulesParam(unitID,"noammo",1)
+		spSetUnitRulesParam(unitID, "noammo", 1)
+		OnAmmoChange(1)
 	end
 end
 
 function script.BlockShot(num, targetID)
-	if (GetUnitValue(COB.CRASHING) == 1) or spGetUnitRulesParam(unitID, "noammo") == 1 or movectrlGetTag(unitID) ~= nil or block then
+	if (GetUnitValue(COB.CRASHING) == 1) or ammoState ~= 0 or movectrlGetTag(unitID) ~= nil then
 		return true
 	end
 	if num == 1 then -- ATA overkill prevention
