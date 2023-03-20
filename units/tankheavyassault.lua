@@ -107,6 +107,7 @@ return {
 				areaOfEffect            = 100,
 				craterBoost             = 0,
 				craterMult              = 0,
+				cegTag                  = "flamer",
 				customParams            = {
 					light_camera_height = 2000,
 					light_color = "1 0.5 0.2",
@@ -145,6 +146,7 @@ return {
 				burst                   = 303,
 				burstrate				= 1/30,
 				craterMult              = 0,
+				cegTag                  = "flamer",
 				customParams            = {
 					light_camera_height = 2000,
 					light_color = "1 0.5 0.2",
