@@ -43,10 +43,11 @@ local function DeathThread()
 	local weaponID = wd.id
 	local delay = math.floor(wd.salvoDelay * 1000)
 	local x, y, z = Spring.GetUnitPosition(unitID)
+	local vx, vy, vz = Spring.GetUnitVelocity(unitID)
 	local params = {
 			pos = {x, y + 5, z},
-			speed = {0, 0, 0},
-			gravity = 1,
+			speed = {vx, vy, vz},
+			gravity = -1,
 			team = Spring.GetGaiaTeamID(),
 			owner = unitID,
 		}
@@ -56,6 +57,7 @@ local function DeathThread()
 		if Spring.ValidUnitID(unitID) then
 			params.pos[1], params.pos[2], params.pos[3] = Spring.GetUnitPosition(unitID)
 			params.pos[2] = params.pos[2] + 5
+			params.speed[1], params.speed[2], params.speed[3] = Spring.GetUnitVelocity(unitID)
 		else
 			break
 		end

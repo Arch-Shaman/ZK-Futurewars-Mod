@@ -42,12 +42,11 @@ local ammoState = 0
 local function DeathExplosion()
 	if ammoState == 0 then
 		local px, py, pz = Spring.GetUnitPosition(unitID)
+		local vx, vy, vz = Spring.GetUnitVelocity(unitID)
 		Spring.SpawnProjectile(WeaponDefNames["bomberheavy_deathexplo"].id, {
 			pos = {px, py + 5, pz},
-			["end"] = {px, py, pz},
-			speed = {0, 0, 0},
-			ttl = 10,
-			gravity = 1,
+			speed = {vx, vy, vz},
+			gravity = -1,
 			team = Spring.GetGaiaTeamID(),
 			owner = unitID,
 		})
