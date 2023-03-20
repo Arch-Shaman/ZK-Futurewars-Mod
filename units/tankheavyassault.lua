@@ -167,7 +167,7 @@ return {
 				noSelfDamage            = true,
 				range                   = 680,
 				reloadtime              = 75,
-				mygravity               = 0.18,
+				mygravity               = 0.2,
 				rgbColor                = "1 0.5 0.2",
 				soundHit				= "flamethrowerhit",
 				soundHitVolume          = 2.2,
