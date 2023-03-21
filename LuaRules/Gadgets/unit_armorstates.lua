@@ -89,6 +89,9 @@ local function CleanUpUnit(unitID)
 		spSetUnitArmored(unitID, false)
 	end
 	IterableMap.Remove(handledUnits, unitID)
+	Spring.SetUnitRulesParam(unitID, "temporaryarmorduration", nil)
+	Spring.SetUnitRulesParam(unitID, "temporaryarmormaxduration", nil)
+	Spring.SetUnitRulesParam(unitID, "temporaryarmor", nil)
 end
 
 local function UpdateArmor(unitID, value, duration)
@@ -100,6 +103,7 @@ local function UpdateArmor(unitID, value, duration)
 	end
 	Spring.SetUnitRulesParam(unitID, "temporaryarmor", value, INLOS)
 	Spring.SetUnitRulesParam(unitID, "temporaryarmorduration", duration, INLOS)
+	Spring.SetUnitRulesParam(unitID, "temporaryarmormaxduration", duration, INLOS)
 	if debugMode then Spring.Echo("Update Armor: " .. unitID .. ", " .. value) end
 end
 	

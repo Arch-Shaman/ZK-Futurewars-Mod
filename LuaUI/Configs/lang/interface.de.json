@@ -4,6 +4,7 @@
 		"other" : "%{count} Konstruktionseinheiten sind unbeschäftigt."
 	},
 	"aim" : "Zielen",
+	"temporaryarmor" : "Verstärkte Rüstung: {0}",
 	"engioverdrive" : "Hersteller übertakten",
 	"battery" : "Batterieladung",
 	"quick_rallypoint_mode" : "Schneller Sammelpunkt Modus",

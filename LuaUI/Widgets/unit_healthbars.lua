@@ -96,6 +96,7 @@ local messages = {
 	aim = "aim",
 	battery = "battery",
 	engioverdrive = "Fab Overdrive",
+	temporaryarmor = "Temp Armor",
 }
 
 local function languageChanged ()
@@ -369,6 +370,7 @@ local barColors = {
 	-- Features
 	resurrect = { 1.00, 0.50, 0.00, featureBarAlpha },
 	reclaim   = { 0.75, 0.75, 0.75, featureBarAlpha },
+	temporaryarmor = {0.678, 0.847, 0.902, featureBarAlpha},
 }
 
 --------------------------------------------------------------------------------
@@ -814,6 +816,13 @@ function DrawUnitInfos(unitID, unitDefID)
 		end
 		if prog < 1 then
 			barDrawer.AddBar(addTitle and messages.teleport, prog, "tele", (addPercent and floor(prog*100) .. '%'))
+		end
+	end
+	local tempArmor = GetUnitRulesParam(unitID, "temporaryarmor")
+	if tempArmor then
+		local tempArmorDuration = GetUnitRulesParam(unitID, "temporaryarmorduration") / GetUnitRulesParam(unitID, "temporaryarmormaxduration")
+		if prog < 1 then
+			barDrawer.AddBar(addTitle and string.gsub(messages.temporaryarmor, "{0}", floor(tempArmor * 100) .. "%"), prog, "temporaryarmor", (addPercent and floor(prog*100) .. '%'))
 		end
 	end
 	

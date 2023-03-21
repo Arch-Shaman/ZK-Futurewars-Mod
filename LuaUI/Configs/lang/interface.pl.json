@@ -6,6 +6,7 @@
 		"other" : "%{count} wolnego konstruktora"
 	},
 	"aim" : "Pozyskiwanie celu",
+	"temporaryarmor" : "Wzmocniony Pancerz: {0}",
 	"engioverdrive" : "Przetaktowanie producenta",
 	"battery" : "Ładowanie baterii",
 	"quick_rallypoint_mode" : "Tryb szybkiej kolejki",

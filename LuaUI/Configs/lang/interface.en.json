@@ -6,6 +6,7 @@
 		"other" : "You have %{count} idle constructors."
 	},
 	"aim" : "Aiming",
+	"temporaryarmor" : "Boosted Armor: {0}",
 	"engioverdrive" : "Fabricator Overclock",
 	"battery" : "Battery Charge",
 	"quick_rallypoint_mode" : "Quick rallypoint mode",
