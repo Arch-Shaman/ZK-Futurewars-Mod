@@ -868,7 +868,30 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				cells[#cells+1] = ' - Burst time:'
 				cells[#cells+1] = numformat(wd.beamtime) .. "s"
 			end
-	
+			if cp.grants_armor then
+				local impactsEnemies = cp.affects_enemy ~= nil
+				local duration = tonumber(cp.armor_duration)
+				local noScaling = cp.noscaling ~= nil
+				local noTimeScaling = noScaling or cp.notimescaling ~= nil
+				if not impactsEnemies then
+					cells[#cells+1] = " - Boosts Allied Units' Armor:"
+				else
+					cells[#cells+1] = " - Boosts All Units' Armor:"
+				end
+				cells[#cells+1] = ""
+				cells[#cells+1] = "   - Armor Boost:"
+				cells[#cells+1] = numformat(tonumber(cp.grants_armor) * 100, 1) .. "%"
+				cells[#cells+1] = "   - Duration:"
+				cells[#cells+1] = numformat(duration, 1) .. "s"
+				if not noScaling and noTimeScaling then
+					cells[#cells+1] = "   - Duration does not diminish with distance"
+				elseif noScaling then
+					cells[#cells+1] = "   - Effect does not diminish with distance"
+				else
+					cells[#cells+1] = "   - Dimished effect and duration with distance"
+				end
+				cells[#cells+1] = ""
+			end
 			if cp.spawns_name then
 				cells[#cells+1] = ' - Spawns: '
 				cells[#cells+1] = Spring.Utilities.GetHumanName(UnitDefNames[cp.spawns_name])
