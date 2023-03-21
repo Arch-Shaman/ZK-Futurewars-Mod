@@ -99,7 +99,7 @@ return {
 				impulseBoost            = 0,
 				impulseFactor           = 2,
 				interceptedByShieldType = 1,
-				myGravity               = 0.5,
+				myGravity               = 0.42,
 				noSelfDamage            = true,
 				range                   = 1100,
 				reloadtime              = 0.8,
