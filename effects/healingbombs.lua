@@ -32,31 +32,5 @@ return {
 				pos                = [[-140 r280, 1, -140 r280]],
 			},
 		},
-		vapor2 = {
-			air                = true,
-			class              = [[CExpGenSpawner]],
-			count              = 50,
-			ground             = true,
-			water              = true,
-			underwater            = true,
-			properties = {
-				delay              = [[8]],
-				explosiongenerator = [[custom:GREEN_VAPOR]],
-				pos                = [[-140 r280, 1, -140 r280]],
-			},
-		},
-		vapor3 = {
-			air                = true,
-			class              = [[CExpGenSpawner]],
-			count              = 50,
-			ground             = true,
-			water              = true,
-			underwater            = true,
-			properties = {
-				delay              = [[16]],
-				explosiongenerator = [[custom:GREEN_VAPOR]],
-				pos                = [[-140 r280, 1, -140 r280]],
-			},
-		},
 	},
 }
