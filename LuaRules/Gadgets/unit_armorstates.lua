@@ -131,6 +131,12 @@ function gadget:UnitDestroyed(unitID)
 	end
 	armoredUnits[unitID] = nil
 end
+
+local function SpawnCEGForUnit(unitID)
+	local x, y, z = Spring.GetUnitPosition(unitID)
+	Spring.SpawnCEG("armor_vaporspawner", x, y, z, 0, 0, 0)
+end
+
 --              UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam, projectileID)
 	local armorerTeam = (bufferProjectiles[projectileID] and bufferProjectiles[projectileID].teamID) or attackerTeam
@@ -159,6 +165,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 			duration = duration * mult
 		end
 		AddUnit(unitID, 1 - (configs[weaponDefID].value * mult), duration)
+		SpawnCEGForUnit(unitID)
 	end
 	if bufferProjectiles[projectileID] and not bufferProjectiles[projectileID].willBeDeleted then
 		local f = Spring.GetGameFrame() + (CHECKTIME * 10)
