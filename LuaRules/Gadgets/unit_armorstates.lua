@@ -90,7 +90,12 @@ local function CleanUpUnit(unitID)
 end
 
 local function UpdateArmor(unitID, value, duration)
-	spSetUnitArmored(unitID, true, value)
+	if armoredUnits[unitID] then
+		local newValue = math.max(value * armoredUnits[unitID], MAXARMOR)
+		spSetUnitArmored(unitID, true, newValue)
+	else
+		spSetUnitArmored(unitID, true, value)
+	end
 	Spring.SetUnitRulesParam(unitID, "temporaryarmor", value, INLOS)
 	Spring.SetUnitRulesParam(unitID, "temporaryarmorduration", duration, INLOS)
 	if debugMode then Spring.Echo("Update Armor: " .. unitID .. ", " .. value) end
@@ -109,8 +114,8 @@ local function AddUnit(unitID, value, duration)
 			UpdateArmor(unitID, newValue, newDuration)
 		end
 	else
-		local data = {duration = duration, data.armorValue}
-		IterableMap.Add(handledUnits, unitID, data)
+		IterableMap.Add(handledUnits, unitID, {duration = duration, armorValue = value})
+		UpdateArmor(unitID, value, duration)
 	end
 end
 
@@ -120,15 +125,25 @@ function gadget:UnitDestroyed(unitID)
 	end
 	armoredUnits[unitID] = nil
 end
-
-function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
-	if debugMode then Spring.Echo("UnitPreDamaged: " .. unitID .. ", " .. weaponDefID) end
+--              UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam, projectileID)
 	local armorerTeam = (bufferProjectiles[projectileID] and bufferProjectiles[projectileID].teamID) or attackerTeam
-	if not armorerTeam then return 0, 0 end
-	if (not configs[weaponDefID].alliedOnly) or Spring.AreTeamsAllied(unitTeam, armorerTeam) then
-		local potentialDamage = WeaponDefs[weaponDefID].damages["default"]
+	if debugMode then Spring.Echo("UnitPreDamaged: " .. unitID .. ", weaponDefID: " .. weaponDefID .. ", attackerTeam: " .. tostring(attackerTeam) .. ", AttackerID: " .. tostring(armorerTeam)) end
+	if not armorerTeam then 
+		if debugMode then 
+			Spring.Echo("No Armorer Team") 
+		end 
+		return 0, 0 
+	end
+	local allyCheck = not configs[weaponDefID].alliedOnly or Spring.AreTeamsAllied(unitTeam, armorerTeam)
+	if debugMode then 
+		Spring.Echo("UnitPreDamaged: Teams are allied: " .. tostring(allyCheck)) 
+	end
+	if allyCheck then
+		local wd = WeaponDefs[weaponDefID]
+		local potentialDamage = wd.damages[0] -- probably default?
 		local mult = (damage / potentialDamage)
-		AddUnit(unitID, configs[weaponDefID].value * mult, configs[weaponDefID].duration * mult)
+		AddUnit(unitID, 1 - (configs[weaponDefID].value * mult), configs[weaponDefID].duration * mult)
 	end
 	if bufferProjectiles[projectileID] and not bufferProjectiles[projectileID].willBeDeleted then
 		local f = Spring.GetGameFrame() + (CHECKTIME * 10)
