@@ -880,7 +880,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				end
 				cells[#cells+1] = ""
 				cells[#cells+1] = "   - Armor Boost:"
-				cells[#cells+1] = numformat(tonumber(cp.grants_armor) * 100, 1) .. "%"
+				cells[#cells+1] = numformat(1 - tonumber(cp.grants_armor) * 100, 1) .. "%"
 				cells[#cells+1] = "   - Duration:"
 				cells[#cells+1] = numformat(duration, 1) .. "s"
 				if not noScaling and noTimeScaling then
