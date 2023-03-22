@@ -36,6 +36,43 @@ return {
 			},
 		},
 	},
+	["armor_ring1200"] = {
+		usedefaultexplosions = false, -- TODO: Remove groundflashes and replace with dynlighting
+		groundflash = {
+			alwaysvisible      = false,
+			circlealpha        = 0.1,
+			circlegrowth       = 3.6,
+			flashalpha         = 0.1,
+			flashsize          = 600,
+			ttl                = 90,
+			color = {
+				[1]  = 0.41960784,
+				[2]  = 0.73333333,
+				[3]  = 0.89019608,
+			},
+		},
+		ring1 = {
+			air                = true,
+			useAirLos 		   = true,
+			class              = [[CBitmapMuzzleFlame]],
+			ground             = true,
+			water              = true,
+			unit               = true,
+			count              = 1,
+			properties = {
+				colormap           = [[0.41960784 0.73333333 0.89019608 0.1   0.443137 0.6 0.851 .2    0.2784313 0.3568627 0.4784313 0.1   0 0 0 0]],
+				dir                = [[-0.01 r0.01, 1, -0.01 r0.01]],
+				frontoffset        = 0,
+				fronttexture       = [[shockwave]],
+				sidetexture        = [[null]],
+				length             = 1,
+				pos                = [[0, 0, 0]],
+				size               = 1,
+				sizegrowth         = 1200,
+				ttl                = 30,
+			},
+		},
+	},
 	["armor_vaporspawner"] = {
 		vapor = {
 			air                = true,
