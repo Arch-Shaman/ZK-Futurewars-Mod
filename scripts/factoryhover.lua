@@ -43,9 +43,52 @@ local function Close()
 	-- WaitForTurn (gate_l, z_axis)
 end
 
+local function AutoAttack()
+	--Signal(SIG_ACTIVATE)
+	--SetSignalMask(SIG_ACTIVATE)
+	local spGetUnitHealth = Spring.GetUnitHealth
+	local spGetUnitWeaponState = Spring.GetUnitWeaponState
+	local spGetUnitRulesParam = Spring.GetUnitRulesParam
+	local spSetUnitWeaponState = Spring.SetUnitWeaponState
+	local spGetGameFrame = Spring.GetGameFrame
+	
+	local health, _, _, _, build = spGetUnitHealth(unitID)
+	local WAVE_RELOAD = WeaponDefNames["factoryhover_armorfield"].reload * 30
+	local reloaded
+	while true do
+		Sleep(100)
+		health, _, _, _, build = spGetUnitHealth(unitID)
+		while build < 1 do
+			Sleep(200)
+			health, _, _, _, build = spGetUnitHealth(unitID)
+		end
+		reloaded = select(2, spGetUnitWeaponState(unitID,1))
+		if reloaded and health > 0 and build >= 1 then
+			local gameFrame = spGetGameFrame()
+			local reloadMult = spGetUnitRulesParam(unitID, "totalReloadSpeedChange") or 1.0
+			local reloadFrame = gameFrame + WAVE_RELOAD / reloadMult
+			spSetUnitWeaponState(unitID, 1, {reloadFrame = reloadFrame})
+			EmitSfx(base, 4096)
+		end
+	end
+end
+
+function script.QueryWeapon()
+	return base
+end
+
+function script.AimFromWeapon()
+	return base
+end
+
+function script.AimWeapon()
+	return false
+end
+
 function script.Create()
 	StartThread (GG.Script.SmokeUnit, unitID, smokePiece)
 	Spring.SetUnitNanoPieces (unitID, nanoPieces)
+	StartThread(AutoAttack)
 end
 
 function script.Activate ()

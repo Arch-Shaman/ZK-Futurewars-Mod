@@ -11,6 +11,50 @@ local base, house, pad, gate, nano = piece ('base', 'house', 'pad', 'gate', 'nan
 local nanoPieces = beams
 local smokePiece = { base }
 
+function script.QueryWeapon()
+	return base
+end
+
+function script.AimFromWeapon()
+	return base
+end
+
+function script.AimWeapon()
+	return false
+end
+
+local function AutoAttack()
+	--Signal(SIG_ACTIVATE)
+	--SetSignalMask(SIG_ACTIVATE)
+	local spGetUnitHealth = Spring.GetUnitHealth
+	local spGetUnitWeaponState = Spring.GetUnitWeaponState
+	local spGetUnitRulesParam = Spring.GetUnitRulesParam
+	local spSetUnitWeaponState = Spring.SetUnitWeaponState
+	local spGetGameFrame = Spring.GetGameFrame
+	local health, _, _, _, build = spGetUnitHealth(unitID)
+	local WAVE_RELOAD = WeaponDefNames["platehover_armorfield"].reload * 30
+	local reloaded = true
+	local powered = true
+	while true do
+		Sleep(100)
+		powered = (spGetUnitRulesParam(unitID, "nofactory") or 0) == 0
+		health, _, _, _, build = spGetUnitHealth(unitID)
+		while build < 1 or not powered do
+			Sleep(200)
+			health, _, _, _, build = spGetUnitHealth(unitID)
+			powered = (spGetUnitRulesParam(unitID, "nofactory") or 0) == 0
+		end
+		reloaded = select(2, spGetUnitWeaponState(unitID, 1))
+		if reloaded and health > 0 and build >= 1 then
+			local gameFrame = spGetGameFrame()
+			local reloadMult = spGetUnitRulesParam(unitID, "totalReloadSpeedChange") or 1.0
+			local reloadFrame = gameFrame + WAVE_RELOAD / reloadMult
+			spSetUnitWeaponState(unitID, 1, {reloadFrame = reloadFrame})
+			EmitSfx(base, 4096)
+		end
+	end
+end
+
 local function Open ()
 	Signal (1)
 	SetSignalMask (1)
@@ -43,6 +87,7 @@ end
 function script.Create()
 	StartThread (GG.Script.SmokeUnit, unitID, smokePiece)
 	Spring.SetUnitNanoPieces (unitID, nanoPieces)
+	StartThread(AutoAttack)
 end
 
 function script.Activate ()
