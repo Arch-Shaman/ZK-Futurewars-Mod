@@ -18,7 +18,7 @@ local heatraybase = piece "HeatrayBase"
 local heatray = piece "Heatray"
 local flare2 = piece "flare2"
 local flare3 = piece "flare3"
-
+local armorValue = UnitDefs[unitDefID].armoredMultiple
 local spGetUnitRulesParam 	= Spring.GetUnitRulesParam
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spSetUnitHealth = Spring.SetUnitHealth
@@ -66,7 +66,7 @@ local function Open()
 	WaitForMove(shell_1, x_axis)
 	WaitForMove(shellbase, y_axis)
 	WaitForMove(heatraybase, y_axis)
-	Spring.SetUnitArmored(unitID, false)
+	GG.SetUnitArmor(unitID, 1.0)
 	while spGetUnitRulesParam(unitID, "lowpower") == 1 do
 		Sleep(500)
 	end
@@ -162,7 +162,7 @@ function Close()
 	Signal(closeInterrupt)
 	
 	-- Set Armour
-	Spring.SetUnitArmored(unitID,true)
+	GG.SetUnitArmor(unitID, armorValue)
 	
 	while true do
 		local stunned_or_inbuild = spGetUnitIsStunned(unitID) or (spGetUnitRulesParam(unitID, "disarmed") == 1)

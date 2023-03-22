@@ -21,6 +21,7 @@ include "constants.lua"
 include "aimPosTerraform.lua"
 
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
+local armorValue = UnitDefs[unitDefID].armoredMultiple
 
 local readyToFire = false
 local RESTORE_DELAY = 3000
@@ -39,7 +40,7 @@ local smokePiece = { base, aim}
 
 local function popUp()
 	GG.Script_OffsetAimAndColVol(unitID, false, 0)
-	Spring.SetUnitArmored(unitID,false)
+	GG.SetUnitArmor(unitID, 1.0)
 	
 	Signal(SIG_CLOSE)
 	SetSignalMask(SIG_OPEN)
@@ -83,7 +84,7 @@ local function popDown()
 	Turn(door5, x_axis, math.rad(120), math.rad(110))
 	Turn(door6, x_axis, math.rad(-120), math.rad(110))
 	
-	Spring.SetUnitArmored(unitID,true)
+	GG.SetUnitArmor(unitID, armorValue)
 	GG.Script_OffsetAimAndColVol(unitID, 26, -30)
 end
 

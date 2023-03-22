@@ -44,6 +44,7 @@ local registeredGroundFire = false
 local registeredTarget = false
 local firingTime = 0
 local reloadGrace = 30
+local armorValue = UnitDefs[unitDefID].armoredMultiple
 
 --[[
 TO DO:
@@ -54,8 +55,7 @@ TO DO:
 local function Open()
 	Signal(SIG_OPEN)
 	SetSignalMask(SIG_OPEN)
-	Spring.SetUnitArmored(unitID,false)	--broken
-	Spring.SetUnitCOBValue(unitID, COB.ARMORED, 0)
+	GG.SetUnitArmor(unitID, 1)
 	Turn(door1, z_axis, 0, math.rad(80))
 	Turn(door2, z_axis, 0, math.rad(80))
 	WaitForTurn(door1, z_axis)
@@ -117,7 +117,7 @@ local function Close()
 	WaitForTurn(door1, z_axis)
 	WaitForTurn(door2, z_axis)
 	
-	Spring.SetUnitArmored(unitID,true)
+	GG.SetUnitArmor(unitID, armorValue)
 end
 
 function script.Create()

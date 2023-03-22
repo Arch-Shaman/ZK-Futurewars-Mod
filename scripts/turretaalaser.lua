@@ -9,7 +9,7 @@ local turret, launcher, firep1, firep2 = piece('turret', 'launcher', 'firep1', '
 local explodables1 = {turret, hinge1, hinge2} -- not visible on wreck so we can throw these
 local explodables2 = {door2, door1, launcher}
 local smokePiece = { body, turret }
-
+local armorValue = UnitDefs[unitDefID].armoredMultiple
 local gun = false
 local closed = true
 local stuns = {false, false, false}
@@ -57,7 +57,7 @@ local function Close ()
 	if disarmed then return	end
 
 	currentTask = 0
-	Spring.SetUnitArmored (unitID, true)
+	GG.SetUnitArmor(unitID, armorValue)
 	StartThread(ArmoredThread)
 end
 
@@ -70,7 +70,7 @@ local function Open ()
 	StartThread (RestoreAfterDelay)
 	if not closed then return end
 	currentTask = 2
-	Spring.SetUnitArmored (unitID, false)
+	GG.SetUnitArmor(unitID, 1.0)
 
 	Turn (door1, z_axis, 0, openrate)
 	Turn (door2, z_axis, 0, openrate)

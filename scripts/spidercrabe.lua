@@ -30,6 +30,7 @@ local smokePiece = {base, turret}
 local CMD_RAW_MOVE = Spring.Utilities.CMD.RAW_MOVE
 local CMD_MOVE = CMD.MOVE
 local BUNKERED_AUTOHEAL = tonumber (UnitDef.customParams.armored_regen or 20) / 2 -- applied every 0.5s
+local armorValue = UnitDefs[unitDefID].armoredMultiple
 
 --------------------------------------------------------------------------------
 -- constants
@@ -176,7 +177,7 @@ local function Curl()
 	WaitForTurn(leg3, x_axis)
 	WaitForTurn(leg4, x_axis)
 	
-	Spring.SetUnitArmored(unitID,true)
+	GG.SetUnitArmor(unitID, armorValue)
 	
 	armored = true
 end
@@ -221,7 +222,7 @@ local function Uncurl()
 
 	--Spring.Echo("disabling armor", Spring.GetGameFrame())
 	armored = false
-	Spring.SetUnitArmored(unitID,false)
+	GG.SetUnitArmor(unitID, 1)
 	
 	WaitForTurn(leg1, x_axis)
 	WaitForTurn(leg2, x_axis)
