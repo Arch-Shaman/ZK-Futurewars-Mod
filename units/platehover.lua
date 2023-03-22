@@ -95,6 +95,7 @@ return {
 					notimescaling = 1,
 					grants_armor = 0.05,
 					stats_hide_range = 1,
+					stats_hide_dps = 1,
 				},
 				edgeeffectiveness       = 0.4,
 				explosionGenerator      = "custom:armor_ring600",
