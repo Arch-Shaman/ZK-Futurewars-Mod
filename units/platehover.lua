@@ -77,7 +77,7 @@ return {
 		weaponDefs = {
 			ARMORFIELD    = {
 				name                    = "Light Nanosheath Emitter",
-				areaOfEffect            = 600,
+				areaOfEffect            = 300,
 				craterBoost             = 0,
 				craterMult              = 0,
 				cameraShake				= 0,

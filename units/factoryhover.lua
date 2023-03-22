@@ -103,7 +103,7 @@ return {
 					stats_hide_range = 1,
 				},
 				edgeeffectiveness       = 0.4,
-				explosionGenerator      = "custom:armor_ring600",
+				explosionGenerator      = "custom:armor_ring1200",
 				explosionSpeed          = 1200,
 				impulseBoost            = 0,
 				impulseFactor           = 0,
