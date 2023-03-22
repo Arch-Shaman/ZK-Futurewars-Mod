@@ -28,7 +28,7 @@ return {
 		explodeAs              = "NOWEAPON",
 		footprintX             = 3,
 		footprintZ             = 3,
-		iconType               = "tankraider",
+		iconType               = "tankriot",
 		leaveTracks            = true,
 		maxDamage              = 2100,
 		maxSlope               = 18,

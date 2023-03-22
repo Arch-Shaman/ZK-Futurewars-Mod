@@ -37,7 +37,7 @@ return {
 		footprintX          = 3,
 		footprintZ          = 3,
 		highTrajectory      = 0,
-		iconType            = "tankscout",
+		iconType            = "tankraider",
 		leaveTracks         = true,
 		maxDamage           = 1200,
 		maxSlope            = 18,

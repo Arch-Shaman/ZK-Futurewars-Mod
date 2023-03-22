@@ -27,7 +27,7 @@ return {
 		explodeAs           = "BIG_UNITEX",
 		footprintX          = 4,
 		footprintZ          = 4,
-		iconType            = "tankriot",
+		iconType            = "tankskirm",
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
