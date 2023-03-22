@@ -105,6 +105,7 @@ end
 function script.FireWeapon(num)
 	Move(drop, x_axis, math.random()*50 - 25)
 	SetUnarmedAI()
+	ammoState = 1
 	Sleep(400)
 	Move(drop, x_axis, 0)
 	Reload()
