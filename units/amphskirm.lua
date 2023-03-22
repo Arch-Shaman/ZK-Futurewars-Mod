@@ -24,7 +24,7 @@ return {
 		explodeAs              = "BIG_UNITEX",
 		footprintX             = 2,
 		footprintZ             = 2,
-		iconType               = "amphtorpraider",
+		iconType               = "amphskirm",
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,

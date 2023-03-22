@@ -21,7 +21,7 @@ return {
 		explodeAs              = "BIG_UNITEX",
 		footprintX             = 2,
 		footprintZ             = 2,
-		iconType               = "walkerraider",
+		iconType               = "amphraider",
 		leaveTracks            = true,
 		maxDamage              = 480,
 		maxSlope               = 36,
