@@ -44,11 +44,12 @@ for i = 1, #WeaponDefs do -- Iterate through every weapon def. WeaponDefs is an 
 		local needsCaching = weaponDef.customParams.needscaching ~= nil -- use this to prevent lua errors on activated abilities.
 		local noScaling = weaponDef.customParams.noscaling ~= nil -- use this to stop all scaling
 		local noTimeScaling = noScaling or weaponDef.customParams.notimescaling ~= nil
+		local noStacking = weaponDef.customParams.nostacking ~= nil
 		if weaponDef.customParams.armor_duration == nil then
 			Spring.Echo("[ArmorStates]: missing duration for " .. weaponDef.name .. " (ID " .. i .. "). Defaulting to 3s!")
 		end
 		if armorValue and armorDuration then
-			configs[i] = {value = armorValue, duration = armorDuration, alliedOnly = not impactEnemies, noScaling = noScaling, noTimeScaling = noTimeScaling} -- store the info in the metatable.
+			configs[i] = {value = 1 - armorValue, duration = armorDuration, alliedOnly = not impactEnemies, noScaling = noScaling, noTimeScaling = noTimeScaling, noStacking = noStacking} -- store the info in the metatable.
 			watchWeapons[#watchWeapons + 1] = i -- Add to watch weapon table so we can filter stuff out we don't need.
 			if needsCaching then
 				Script.SetWatchWeapon(i, true)
@@ -101,22 +102,31 @@ local function UpdateArmor(unitID, value, duration)
 	else
 		spSetUnitArmored(unitID, true, value)
 	end
-	Spring.SetUnitRulesParam(unitID, "temporaryarmor", value, INLOS)
+	Spring.SetUnitRulesParam(unitID, "temporaryarmor", 1 - value, INLOS)
 	Spring.SetUnitRulesParam(unitID, "temporaryarmorduration", duration, INLOS)
-	Spring.SetUnitRulesParam(unitID, "temporaryarmormaxduration", duration, INLOS)
 	if debugMode then Spring.Echo("Update Armor: " .. unitID .. ", " .. value) end
 end
 	
 
-local function AddUnit(unitID, value, duration)
+local function AddUnit(unitID, value, duration, noStacking)
 	local data = IterableMap.Get(handledUnits, unitID)
 	if data then
-		if value == data.armorValue then 
-			data.duration = math.max(duration, data.duration)
-			UpdateArmor(unitID, value, data.duration)
+		if noStacking then
+			if value == data.armorValue then 
+				data.duration = math.max(duration, data.duration)
+				UpdateArmor(unitID, value, data.duration)
+			else
+				local newDuration = (data.duration + duration) / 2 -- average out the duration
+				local newValue = (data.armorValue + value) / 2
+				data.armorValue = newValue
+				data.duration = newDuration
+				UpdateArmor(unitID, newValue, newDuration)
+			end
 		else
-			local newDuration = (data.duration + duration) / 2 -- average out the duration
-			local newValue = (data.armorValue + value) / 2 -- average out the value
+			data.duration = math.max(duration, data.duration)
+			newValue = data.armorValue * value
+			if newValue < MAXARMOR then newValue = MAXARMOR end
+			data.armorValue = newValue
 			UpdateArmor(unitID, newValue, newDuration)
 		end
 	else
@@ -133,7 +143,7 @@ function gadget:UnitDestroyed(unitID)
 end
 
 local function SpawnCEGForUnit(unitID)
-	local x, y, z = Spring.GetUnitPosition(unitID)
+	local _, _, _, x, y, z = Spring.GetUnitPosition(unitID, true)
 	Spring.SpawnCEG("armor_vaporspawner", x, y, z, 0, 0, 0)
 end
 
@@ -164,7 +174,9 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		if not (configs[weaponDefID].noScaling or configs[weaponDefID].noTimeScaling) then
 			duration = duration * mult
 		end
-		AddUnit(unitID, 1 - (configs[weaponDefID].value * mult), duration)
+		local armorValue = 1 - (mult * configs[weaponDefID].value)
+		Spring.Echo("Armor value: " .. armorValue.. " / " .. mult)
+		AddUnit(unitID, armorValue, duration, configs[weaponDefID].noStacking)
 		SpawnCEGForUnit(unitID)
 	end
 	if bufferProjectiles[projectileID] and not bufferProjectiles[projectileID].willBeDeleted then
