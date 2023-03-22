@@ -103,7 +103,7 @@ return {
 					stats_hide_dps = 1,
 				},
 				edgeeffectiveness       = 0,
-				explosionGenerator      = "custom:armor_ring800",
+				explosionGenerator      = "custom:armor_ring600",
 				explosionSpeed          = 800,
 				impulseBoost            = 0,
 				impulseFactor           = 0,
