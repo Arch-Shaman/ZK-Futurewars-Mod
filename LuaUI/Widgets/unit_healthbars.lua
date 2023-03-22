@@ -820,8 +820,10 @@ function DrawUnitInfos(unitID, unitDefID)
 	end
 	local tempArmor = GetUnitRulesParam(unitID, "temporaryarmor")
 	if tempArmor then
-		local tempArmorDuration = GetUnitRulesParam(unitID, "temporaryarmorduration") / GetUnitRulesParam(unitID, "temporaryarmormaxduration")
-		barDrawer.AddBar(addTitle and string.gsub(messages.temporaryarmor, "{0}", floor(tempArmor * 100) .. "%"), tempArmorDuration, "temporaryarmor", (addPercent and floor(prog*100) .. '%'))
+		--local actualArmor = 1 - tempArmor
+		local tempArmorDuration = (GetUnitRulesParam(unitID, "temporaryarmorduration") or 0) / 30
+		local percent = string.format("%.0f", tempArmor * 100)
+		barDrawer.AddBar(addTitle and string.gsub(messages.temporaryarmor, "{0}", percent) .. "%", tempArmor/0.9, "temporaryarmor", (addPercent and string.format("%.1f", tempArmorDuration) .. 's'))
 	end
 	
 	--// Planetwars teleport progress
