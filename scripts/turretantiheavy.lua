@@ -45,6 +45,7 @@ local registeredTarget = false
 local firingTime = 0
 local reloadGrace = 30
 local armorValue = UnitDefs[unitDefID].armoredMultiple
+local reloadTime = tonumber(WeaponDefNames["turretantiheavy_ata"].customParams.reload_override) * 30
 
 --[[
 TO DO:
@@ -195,7 +196,7 @@ function script.FireWeapon()
 end
 
 function script.BlockShot(num, targetID)
-	if firing then
+	--[[if firing then
 		if registeredTarget then
 			if target ~= targetID and registeredTarget then
 				--spEcho("target: " .. (target or "nil") .. " targetID : " .. (targetID or "nil"))
@@ -204,11 +205,11 @@ function script.BlockShot(num, targetID)
 		else
 			registeredTarget = true
 		end
-	end
+	end]] -- This is a no op.
 	--spEcho("Is unit is Los: " .. ((spIsUnitInLos(targetID, spGetUnitTeam(unitID)) and "true") or "false"))
 	--spEcho("Is ground fire: " .. ((targetID and "true") or "false"))
 	--spEcho("Final Verdict: " .. (((targetID and not spIsUnitInLos(targetID, spGetUnitTeam(unitID))) and "true") or "false"))
-	return targetID and not spIsUnitInLos(targetID, Spring.GetUnitAllyTeam(unitID))
+	return (targetID and not spIsUnitInLos(targetID, Spring.GetUnitAllyTeam(unitID))) or false
 end
 
 function script.TargetWeight(num, targetUnitID)
@@ -224,7 +225,11 @@ function StartReload()
 	turnrateMod = 0.5
 	local reloadmod = firingTime/reloadGrace
 	if reloadmod > 1 then reloadmod = 1 elseif reloadmod < 0.15 then reloadmod = 0.15 end
-	frame = SpGetGameFrame() + math.ceil(420 * reloadmod)
+	local slowState = Spring.GetUnitRulesParam(unitID, "slowState") or 0
+	if slowState > 0.5 then slowState = 0.5 end
+	slowState = 1 - slowState
+	local totalReloadTime = math.ceil((reloadTime * reloadmod)/slowState)
+	frame = SpGetGameFrame() + math.ceil((reloadTime * reloadmod)/slowState)
 	SpetUnitWeaponState(unitID, 1, "reloadState", frame)
 	SpetUnitWeaponState(unitID, 2, "reloadState", frame)
 	registeredGroundFire = false
