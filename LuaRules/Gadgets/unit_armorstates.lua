@@ -175,7 +175,6 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 			duration = duration * mult
 		end
 		local armorValue = 1 - (mult * configs[weaponDefID].value)
-		Spring.Echo("Armor value: " .. armorValue.. " / " .. mult)
 		AddUnit(unitID, armorValue, duration, configs[weaponDefID].noStacking)
 		SpawnCEGForUnit(unitID)
 	end
