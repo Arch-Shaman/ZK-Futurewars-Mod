@@ -31,7 +31,7 @@ return {
 		explodeAs              = "BIG_UNITEX",
 		footprintX             = 3,
 		footprintZ             = 3,
-		iconType               = "amphsupport",
+		iconType               = "ampharty",
 		leaveTracks            = true,
 		maxDamage              = 2250,
 		maxSlope               = 36,
