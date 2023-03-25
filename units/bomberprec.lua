@@ -86,7 +86,7 @@ return {
 				},
 				customParams            = {
 					light_color = "1.1 0.9 0.45",
-					light_radius = 220,
+					light_radius = 50,
 					--torp_underwater = "bomberprec_a_torpedo",
 					numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "bomberprec_bomblet",
