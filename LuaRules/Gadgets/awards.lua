@@ -70,6 +70,7 @@ local awardAbsolutes = {
 	heart       = 1*10^9, --we should not exceed 2*10^9 because math.floor-ing the value will return integer -2147483648. Reference: https://code.google.com/p/zero-k/source/detail?r=9681
 	vet         = 3,
 	shield      = 1000,
+	missile     = 2500,
 }
 
 local awardEasyFactors = {
@@ -121,6 +122,16 @@ local kamikaze = {
 	subscout=1,
 	chicken_dodo=1,
 }
+
+local missiles = {
+	[UnitDefNames["missilekinetic"].id] = 1,
+	[UnitDefNames["napalmmissile"].id] = 1,
+	[UnitDefNames["tacnuke"].id] = 1,
+	[UnitDefNames["empmissile"].id] = 1,
+	[UnitDefNames["subtacmissile"].id] = 1,
+	[UnitDefNames["seismic"].id] = 1,
+}
+	
 
 local flamerWeaponDefs = {}
 
@@ -399,7 +410,7 @@ local function ProcessAwardData()
 				elseif awardType == 'shield' then
 					message = 'Damage shielded: ' .. maxValWrite
 				elseif awardType == 'missile' then
-					message = 'Tacmissile damage dealt: ' .. maxValWrite
+					message = 'Tacmissile damage: ' .. maxValWrite
 				else
 					message = 'Damaged value: '.. maxValWrite
 				end
@@ -575,6 +586,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 	local costdamage = (damage / maxHP) * GetUnitCost(unitID, unitDefID)
 
 	if not spAreTeamsAllied(attackerTeam, unitTeam) then
+		local isMissile = missiles[attackerDefID] ~= nil
 		if paralyzer then
 			AddAwardPoints( 'emp', attackerTeam, costdamage )
 		else
@@ -586,7 +598,9 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 			if (flamerWeaponDefs[weaponID]) then
 				AddAwardPoints( 'fire', attackerTeam, costdamage )
 			end
-
+			if isMissile then
+				AddAwardPoints('missile', attackerTeam, damage)
+			end
 			-- Static Weapons
 			if (not ad.canMove) then
 
@@ -595,10 +609,10 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 					AddAwardPoints( 'nux', attackerTeam, costdamage )
 
 				-- not lrpc, tacnuke, emp missile
-				elseif not staticO_small[ad.name] then
+				elseif not staticO_small[ad.name] and not isMissile then
 					AddAwardPoints( 'shell', attackerTeam, costdamage )
 				end
-
+			
 			elseif kamikaze[ad.name] then
 				AddAwardPoints( 'kam', attackerTeam, costdamage )
 
