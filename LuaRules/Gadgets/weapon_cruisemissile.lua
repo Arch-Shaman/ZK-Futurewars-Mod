@@ -136,37 +136,56 @@ local function GetRandomizedOffsetOnCircle(weaponDefID)
 	end
 end
 
-local function GetMissileDestination(num, allyteam)
+local function GetMissileDestination(num, allyteam, unguided)
 	local missile = IterableMap.Get(missiles, num)
-	if missile.type == 'ground' then
-		return missile.target[1], missile.target[2], missile.target[3]
-	else
-		local target = missile.target
-		if spValidUnitID(target) and (spIsUnitInLos(target, allyteam) and config[missile.configid].track) then
-			local x, y, z = spGetUnitPosition(target)
-			missile.lastknownposition[1] = x
-			missile.lastknownposition[2] = y
-			missile.lastknownposition[3] = z
-			return x, y, z
+	if not unguided then
+		if missile.type == 'ground' then
+			return missile.target[1], missile.target[2], missile.target[3]
 		else
-			local x, y, z
-			if spValidUnitID(target) then
-				local ux, uy, uz = spGetUnitPosition(target)
-				x, y, z = spGetUnitPosErrorParams(target)
-				x, y, z = x + ux, y + uy, z+uz
-				if x and y and z then
-					missile.lastknownposition[1] = x
-					missile.lastknownposition[2] = y
-					missile.lastknownposition[3] = z
-				end
+			local target = missile.target
+			if spValidUnitID(target) and (spIsUnitInLos(target, allyteam) and config[missile.configid].track) then
+				local x, y, z = spGetUnitPosition(target)
+				missile.lastknownposition[1] = x
+				missile.lastknownposition[2] = y
+				missile.lastknownposition[3] = z
+				return x, y, z
 			else
-				x = missile.lastknownposition[1]
-				y = missile.lastknownposition[2]
-				z = missile.lastknownposition[3]
+				local x, y, z
+				if spValidUnitID(target) then
+					local ux, uy, uz = spGetUnitPosition(target)
+					x, y, z = spGetUnitPosErrorParams(target)
+					x, y, z = x + ux, y + uy, z+uz
+					if x and y and z then
+						missile.lastknownposition[1] = x
+						missile.lastknownposition[2] = y
+						missile.lastknownposition[3] = z
+					end
+				else
+					x = missile.lastknownposition[1]
+					y = missile.lastknownposition[2]
+					z = missile.lastknownposition[3]
+				end
+				return x, y, z
 			end
-			return x, y, z
+		end
+	else
+		local currentX, currentY, currentZ = spGetProjectilePosition(num)
+		local distance = config[spGetProjectileDefID(num)].distance + 100
+		local heading = rad(random(0, 360))
+		local fx = currentX + (distance * sin(heading))
+		local fz = currentZ + (distance * cos(heading))
+		missile.target[1], missile.target[3] = fx, fz
+		if math.random() >= 0.7 then
+			missile.unguided = false
+			local targetY = spGetGroundHeight(fx, fz)
+			missile.target[2] = targetY
+			return fx, targetY, fz
+		else
+			missile.target[2] = currentY
+			return fx, currentY, fz
 		end
 	end
+		
 end
 
 local function ProccessOffset(wep, proID) -- send the offset request to the proper area. This way we don't have to update it anywhere else its being used.
@@ -206,9 +225,21 @@ local function GetTargetPosition(id, allyteam)
 	end
 end
 
+local function SetMissileUnguided(id, unitID)
+	local data = IterableMap.Get(missiles, id)
+	if data then
+		data.type = 'ground'
+		data.target[1], data.target[2], data.target[3] = GetMissileDestination(id, spGetUnitAllyTeam(unitID), true)
+		data.unguided = true
+	end
+end
+
+
+
 GG.ForceCruiseUpdate = ForceUpdate
 GG.GetMissileCruising = IsMissileCruiseDone
 GG.GetCruiseTarget = GetTargetPosition
+GG.SetCruiseMissileUnguided = SetMissileUnguided
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	local wep = weaponDefID or spGetProjectileDefID(proID) -- needed for bursts.
@@ -241,12 +272,18 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local allyteam = spGetUnitAllyTeam(proOwnerID)
 		local _, py = spGetProjectilePosition(proID)
 		py = max(py, ty)
-		IterableMap.Add(missiles, proID, {target = target, originaltarget = originalTarget, useprediction = config[wep].useprediction, altitudestayframes = 0, type = type, cruising = config[wep].noascension, takeoff = not config[wep].noascension, lastknownposition = last, configid = wep, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0, offset = {}})
+		IterableMap.Add(missiles, proID, {unguided = false, target = target, originaltarget = originalTarget, useprediction = config[wep].useprediction, altitudestayframes = 0, type = type, cruising = config[wep].noascension, takeoff = not config[wep].noascension, lastknownposition = last, configid = wep, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0, offset = {}})
 		if config[wep].radius then
 			ProccessOffset(wep, proID)
 		end
 	end
 end
+
+local function ForceMissileToCruise(proID, proOwnerID, weaponDefID)
+	gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
+end
+
+GG.ForceMissileToCruise = ForceMissileToCruise
 
 function gadget:ProjectileDestroyed(proID)
 	local data = IterableMap.Get(missiles, proID)
@@ -265,7 +302,7 @@ function gadget:GameFrame(f)
 				Spring.Echo("[CruiseMissiles] Error: Projectile Position for " .. projectile .. " is nil. Removing.")
 				data.destroyed = true
 			else
-				local x, y, z = GetMissileDestination(projectile, data.allyteam)
+				local x, y, z = GetMissileDestination(projectile, data.allyteam, data.unguided)
 				--spEcho("Target: " .. x .. ", " .. y .. ", " .. z)
 				--spEcho("Position: " .. cx .. ", " .. cz)
 				local projectiledef = data.configid

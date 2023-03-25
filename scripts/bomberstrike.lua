@@ -28,6 +28,7 @@ local SIG_TAKEOFF = 1
 local takeoffHeight = UnitDefNames["bomberstrike"].wantedHeight
 
 local DAMAGE = 540
+local ammoState = 0
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -71,17 +72,17 @@ end
 
 function script.QueryWeapon(num)
 	if num == 1 then
-	return bFirepoint1 and bombl or bombr
+		return bFirepoint1 and bombl or bombr
 	elseif num == 2 then
-	return bFirepoint2 and flarel or flarer
+		return bFirepoint2 and flarel or flarer
 	end
 end
 
 function script.AimFromWeapon(num)
 	if num == 1 then
-	return bFirepoint1 and bombl or bombr
+		return bFirepoint1 and bombl or bombr
 	elseif num == 2 then
-	return bFirepoint2 and flarel or flarer
+		return bFirepoint2 and flarel or flarer
 	end
 end
 
@@ -102,12 +103,40 @@ function script.AimWeapon(num, heading, pitch)
 	end
 end
 
+local function DeathThread()
+	local wd = WeaponDefNames["bomberstrike_missile"]
+	local count = wd.salvoSize
+	local bombsPer = wd.projectiles
+	local weaponID = wd.id
+	local delay = math.floor(wd.salvoDelay * 1000)
+	local x, y, z = Spring.GetUnitPosition(unitID)
+	local vx, vy, vz = Spring.GetUnitVelocity(unitID)
+	local params = {
+			pos = {x, y + 5, z},
+			speed = {vx, vy, vz},
+			gravity = -1,
+			team = Spring.GetGaiaTeamID(),
+			owner = unitID,
+			ttl = wd.flightTime,
+		}
+	local p = Spring.SpawnProjectile(weaponID, params)
+	GG.PlayFogHiddenSound("weapon/missile/tacnuke_airlaunch", 7, x, y, z)
+	GG.ForceMissileToCruise(p, unitID, weaponID)
+	Sleep(33)
+	GG.SetCruiseMissileUnguided(p, unitID)
+end
+
+function OnStartingCrash()
+	if ammoState == 0 then
+		StartThread(DeathThread)
+	end
+end
 
 function script.Shot(num)
 	if num == 1 then
-	bFirepoint1 = not bFirepoint1
+		bFirepoint1 = not bFirepoint1
 	elseif num == 2 then
-	EmitSfx(turret, 1025)
+		EmitSfx(turret, 1025)
 	if bFirepoint2 then
 		EmitSfx(flarel, 1024)
 	else
@@ -119,6 +148,7 @@ end
 
 function script.FireWeapon(num)
 	if num == 1 then
+		ammoState = 1
 		Sleep(66)
 		Reload()
 	end
@@ -129,40 +159,40 @@ function script.AimFromWeapon(num)
 end
 
 function script.BlockShot(num, targetID)
-	if GG.OverkillPrevention_CheckBlockNoFire(unitID, targetID, DAMAGE, 140, 0.7, false, false) then
-                -- Remove attack command on blocked target, it's already dead so move on.
-                local cQueue = Spring.GetCommandQueue(unitID, 1)
-                if cQueue and cQueue[1] and cQueue[1].id == CMD.ATTACK and (not cQueue[1].params[2]) and cQueue[1].params[1] == targetID then
-                        Spring.GiveOrderToUnit(unitID, CMD.REMOVE, cQueue[1].tag, 0)
-                end
-                return true
-        end
+	if targetID and GG.OverkillPrevention_CheckBlockNoFire(unitID, targetID, DAMAGE, 140, 0.7, false, false) then
+		-- Remove attack command on blocked target, it's already dead so move on.
+		local cQueue = Spring.GetCommandQueue(unitID, 1)
+		if cQueue and cQueue[1] and cQueue[1].id == CMD.ATTACK and (not cQueue[1].params[2]) and cQueue[1].params[1] == targetID then
+			Spring.GiveOrderToUnit(unitID, CMD.REMOVE, cQueue[1].tag, 0)
+		end
+		return true
+	end
 	return GG.OverkillPrevention_CheckBlock(unitID, targetID, DAMAGE, 140, 0.7, false, false)
 end
 
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
 	if severity <= .5 then
-	Explode(fuselage, SFX.NONE)
-	Explode(head, SFX.NONE)
-	Explode(wingl, SFX.NONE)
-	Explode(wingr, SFX.NONE)
-	Explode(enginel, SFX.NONE)
-	Explode(enginer, SFX.NONE)
-	Explode(turret, SFX.NONE)
-	Explode(sleevel, SFX.NONE)
-	Explode(sleever, SFX.NONE)
-	return 1
+		Explode(fuselage, SFX.NONE)
+		Explode(head, SFX.NONE)
+		Explode(wingl, SFX.NONE)
+		Explode(wingr, SFX.NONE)
+		Explode(enginel, SFX.NONE)
+		Explode(enginer, SFX.NONE)
+		Explode(turret, SFX.NONE)
+		Explode(sleevel, SFX.NONE)
+		Explode(sleever, SFX.NONE)
+		return 1
 	else
-	Explode(fuselage, SFX.FALL + SFX.SMOKE)
-	Explode(head, SFX.FALL + SFX.SMOKE + SFX.FIRE)
-	Explode(wingl, SFX.FALL + SFX.SMOKE)
-	Explode(wingr, SFX.FALL + SFX.SMOKE)
-	Explode(enginel, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-	Explode(enginer, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-	Explode(turret, SFX.FALL + SFX.SMOKE + SFX.FIRE)
-	Explode(sleevel, SFX.FALL + SFX.SMOKE)
-	Explode(sleever, SFX.FALL + SFX.SMOKE)
-	return 2
+		Explode(fuselage, SFX.FALL + SFX.SMOKE)
+		Explode(head, SFX.FALL + SFX.SMOKE + SFX.FIRE)
+		Explode(wingl, SFX.FALL + SFX.SMOKE)
+		Explode(wingr, SFX.FALL + SFX.SMOKE)
+		Explode(enginel, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
+		Explode(enginer, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
+		Explode(turret, SFX.FALL + SFX.SMOKE + SFX.FIRE)
+		Explode(sleevel, SFX.FALL + SFX.SMOKE)
+		Explode(sleever, SFX.FALL + SFX.SMOKE)
+		return 2
 	end
 end
