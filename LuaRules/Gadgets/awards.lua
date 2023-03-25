@@ -433,12 +433,9 @@ function gadget:AllowUnitBuildStep(builderID, builderTeam, unitID, unitDefID, pa
 end
 
 function gadget:Initialize()
-
-	GG.Awards = GG.Awards or {}
-	GG.Awards.AddAwardPoints = AddAwardPoints
 	
 	--_G.resourceInfo = resourceInfo
-
+	GG.Awards = {AddAwardPoints = AddAwardPoints}
 	local tempTeamList = Spring.GetTeamList()
 	for i=1, #tempTeamList do
 		local team = tempTeamList[i]
