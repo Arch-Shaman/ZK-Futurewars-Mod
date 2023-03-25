@@ -121,7 +121,7 @@ return {
 					sweepfire_fastupdate = 1,
 					sweepfire_maxrangemult = 0.98,
 					overshoot = 1,
-					overshoot_override = 120,
+					overshoot_override = 70,
 				},
 				damage                  = {
 					default = 11.1*6,
