@@ -28,4 +28,7 @@ return {
 	repair  	= 'Friendly Mechanic',
 	assistant	= 'Subsidization Strategy',
 	economist	= 'Economic Powerhouse',
+	shield      = 'Shieldbearer',
+	drone       = 'Drone Director',
+	missile     = 'Missile Commander',
 }
