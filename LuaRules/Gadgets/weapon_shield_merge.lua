@@ -329,6 +329,9 @@ function gadget:ShieldPreDamaged(proID, proOwnerID, shieldEmitterWeaponNum, shie
 
 	local damage = shieldDamages[weaponDefID]
 	local projectilePasses = DrainShieldAndCheckProjectilePenetrate(shieldCarrierUnitID, damage, defaultShielDamages[weaponDefID], hackyProID or proID)
+	if not projectilePasses then
+		GG.Awards.AddAwardPoints('shield', spGetUnitTeam(shieldCarrierUnitID), damage)
+	end
 	return projectilePasses
 end
 

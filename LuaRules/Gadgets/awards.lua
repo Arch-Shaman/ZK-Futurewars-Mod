@@ -69,6 +69,7 @@ local awardAbsolutes = {
 	sweeper     = 20,
 	heart       = 1*10^9, --we should not exceed 2*10^9 because math.floor-ing the value will return integer -2147483648. Reference: https://code.google.com/p/zero-k/source/detail?r=9681
 	vet         = 3,
+	shield      = 1000,
 }
 
 local awardEasyFactors = {
@@ -393,6 +394,12 @@ local function ProcessAwardData()
 					message = maxValWrite .. 'm used for assisting allies'
 				elseif awardType == 'economist' then
 					message = maxValWrite .. 'm overdriven'
+				elseif awardType == 'drone' then
+					message = maxValWrite .. ' damage done by Drones'
+				elseif awardType == 'shield' then
+					message = 'Damage shielded: ' .. maxValWrite
+				elseif awardType == 'missile' then
+					message = 'Tacmissile damage dealt: ' .. maxValWrite
 				else
 					message = 'Damaged value: '.. maxValWrite
 				end
@@ -606,7 +613,8 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 
 			elseif comms[attackerDefID] then
 				AddAwardPoints( 'comm', attackerTeam, costdamage )
-
+			elseif ad.customParams.is_drone then
+				AddAwardPoints('drone', attackerTeam, damage)
 			end
 		end
 	end
