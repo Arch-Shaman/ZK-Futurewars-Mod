@@ -40,6 +40,7 @@ end
 local function DeathThread()
 	local wd = WeaponDefNames["bomberprec_bombsabot"]
 	local count = wd.salvoSize
+	local bombsPer = wd.projectiles
 	local weaponID = wd.id
 	local delay = math.floor(wd.salvoDelay * 1000)
 	local x, y, z = Spring.GetUnitPosition(unitID)
@@ -51,8 +52,14 @@ local function DeathThread()
 			team = Spring.GetGaiaTeamID(),
 			owner = unitID,
 		}
+	local baseX, baseZ
 	for i = 1, count do
-		Spring.SpawnProjectile(weaponID, params)
+		baseX, baseZ = params.speed[1], params.speed[3]
+		for i = 1, bombsPer do
+			Spring.SpawnProjectile(weaponID, params)
+			params.speed[1] = baseX + (math.random(-1,1) * math.random()) -- emulate spread
+			params.speed[3] = baseZ + (math.random(-1,1) * math.random())
+		end
 		Sleep(delay)
 		if Spring.ValidUnitID(unitID) then
 			params.pos[1], params.pos[2], params.pos[3] = Spring.GetUnitPosition(unitID)
