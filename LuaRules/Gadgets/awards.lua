@@ -395,7 +395,7 @@ local function ProcessAwardData()
 				elseif awardType == 'economist' then
 					message = maxValWrite .. 'm overdriven'
 				elseif awardType == 'drone' then
-					message = maxValWrite .. ' damage done by Drones'
+					message = 'Damage by drones: ' .. maxValWrite
 				elseif awardType == 'shield' then
 					message = 'Damage shielded: ' .. maxValWrite
 				elseif awardType == 'missile' then
