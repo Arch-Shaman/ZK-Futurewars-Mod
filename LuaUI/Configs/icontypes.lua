@@ -339,11 +339,11 @@ local icontypes = {
 	},
 	amphsupport = {
 		bitmap='icons/amphsupport.png',
-		size=1.8,
+		size=2.8,
 	},
 	amphassault = {
 		bitmap='icons/amphassault.png',
-		size=2.6,
+		size=1.8,
 	},
 	amphaa = {
 		bitmap='icons/amphaa.png',
@@ -363,7 +363,7 @@ local icontypes = {
 	},
 	ampharty = {
 		bitmap='icons/torparty.png',
-		size=2,
+		size=1.8,
 	},
 	amphtransport = {
 		bitmap='icons/amphtransport.png',
