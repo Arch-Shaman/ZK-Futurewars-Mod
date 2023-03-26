@@ -67,9 +67,9 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				customParams = {
-					single_hit_multi    = true,
+					--single_hit_multi    = true,
 					light_camera_height = 1200,
-					light_radius        = 180,
+					light_radius        = 90,
 				},
 				damage                  = {
 					default = 26.1,
@@ -100,7 +100,7 @@ return {
 				turret                  = true,
 				waterweapon             = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 2200,
+				weaponVelocity          = 1200,
 			},
 		},
 		featureDefs         = {
