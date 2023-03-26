@@ -59,7 +59,7 @@ return {
 		footprintZ       = 12,
 		iconType         = "fachover",
 		levelGround      = false,
-		maxDamage        = 4000 * 0.2,
+		maxDamage        = 4000 * 0.4,
 		maxSlope         = 15,
 		maxVelocity      = 0,
 		moveState        = 1,
