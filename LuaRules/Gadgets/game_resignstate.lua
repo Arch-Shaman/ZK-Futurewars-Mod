@@ -285,7 +285,7 @@ function gadget:RecvLuaMsg(msg, playerID)
 		return
 	end
 	local allyTeamID = playerMap[playerID]
-	if msg:find("forceresign") then
+	if msg:find("forceresign") or msg == "resignstate playerresigned" then
 		if allyTeamID == nil then
 			return
 		end

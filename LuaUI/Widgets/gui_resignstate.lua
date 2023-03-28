@@ -15,6 +15,7 @@ local myID = Spring.GetMyPlayerID()
 
 local Chili, bigtext, window, Screen0, resignimage, grid, bigtextwindow
 local mystate = (Spring.GetPlayerRulesParam(myID, "resign_state") or 0) == 1
+local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
 local progressbars = {}
 local exempt = {}
 local switches = 2 -- number of times a user can switch states.
@@ -253,7 +254,6 @@ function widget:PlayerChangedTeam(playerID)
 	end
 end
 
-
 local t = Spring.GetTimer()
 function widget:Update()
 	local dif = Spring.DiffTimers(Spring.GetTimer(), t)
@@ -268,5 +268,6 @@ end
 function widget:PlayerResigned(playerID)
 	if playerID == myID and resignbutton ~= nil then
 		resignbutton:Dispose()
+		spSendLuaRulesMsg("resignstate playerresigned")
 	end
 end
