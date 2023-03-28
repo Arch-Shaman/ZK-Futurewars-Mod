@@ -4,7 +4,7 @@ function gadget:GetInfo()
 		desc      = "Handles Resign state",
 		author    = "Shaman, terve886",
 		date      = "4/15/2021",
-		license   = "PD-0",
+		license   = "CC BY-NC-ND",
 		layer     = 1,
 		enabled   = true  --  loaded by default?
 	}

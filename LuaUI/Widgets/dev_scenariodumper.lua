@@ -4,7 +4,7 @@ function widget:GetInfo()
 		desc      = "Dumps all units into a file for scenario creation.",
 		author    = "Shaman",
 		date      = "10 Sept 2022",
-		license   = "CC-0",
+		license   = "CC BY-NC-ND",
 		layer     = 5,
 		enabled   = false,
 	}
