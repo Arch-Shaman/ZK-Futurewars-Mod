@@ -128,12 +128,12 @@ local function DrawActiveCommandRanges()
 	local height = spGetGroundHeight(mouseX, mouseZ)
 	
 	--handle COFC rotation
-	if GetMiniMapFlipped() then
-		glTranslate(minimapY, 0, 0)
-		glScale(-minimapX/mapX, minimapY/mapZ, 1)
-	else
-		glTranslate(0, minimapY, 0)
-		glScale(minimapX/mapX, -minimapY/mapZ, 1)
+	local cs = spGetCameraState()
+	local dx,dz = 0, 1
+	if cs.ry then
+		local rotY = cs.ry - 1.5707
+		dx = cos(rotY)
+		dz = sin(rotY)
 	end
 	
 	for i = 1, #drawRadius do
