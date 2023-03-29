@@ -8,7 +8,7 @@ function gadget:GetInfo()
 		desc      = "Loads scenarios from files for MP campaigns.",
 		author    = "Shaman",
 		date      = "10 Sept 2022",
-		license   = "CC-0",
+		license   = "CC BY-NC-ND",
 		layer     = 1005,
 		enabled   = false,
 	}

@@ -8,7 +8,7 @@ function gadget:GetInfo()
     desc      = "A Sweepfire Command.",
     author    = "Shaman based on terve886's widgets.",
     date      = "2/21/2021",
-    license   = "CC-0",
+    license   = "CC BY-NC-ND",
     layer     = 5,
     enabled   = true,
   }
