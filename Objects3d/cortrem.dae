@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 3.5.0 commit date:2023-03-29, commit time:02:56, hash:1be25cfff18b</authoring_tool>
     </contributor>
-    <created>2023-04-06T04:15:45</created>
-    <modified>2023-04-06T04:15:45</modified>
+    <created>2023-04-06T04:33:28</created>
+    <modified>2023-04-06T04:33:28</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -865,6 +865,9 @@
                     </instance_geometry>
                   </node>
                 </node>
+              </node>
+              <node id="firepoint" name="firepoint" type="NODE">
+                <matrix sid="transform">-4.37114e-8 -1 4.37114e-8 -0.00604248 0 -4.37114e-8 -1 -61.55083 1 -4.37114e-8 1.91069e-15 -4.52582e-4 0 0 0 1</matrix>
               </node>
             </node>
           </node>
