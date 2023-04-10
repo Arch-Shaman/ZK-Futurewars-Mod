@@ -32,6 +32,9 @@ for i = 1, #weaponsList do
 			if weaponData.customparams.burntime then
 				weaponData.customparams.burntime = tostring(math.ceil(tonumber(weaponData.customparams.burntime) * (1 + (0.1 * boost))))
 			end
+			for p, v in pairs(weapon.customparams) do
+				weaponData.customparams[p] = v
+			end
 			if weaponData.customparams.projectile1 then
 				local cp = weaponData.customparams
 				local p = 1
