@@ -59,6 +59,7 @@ return {
 				beamTime                = 1/30,
 				craterBoost             = 0,
 				craterMult              = 0,
+				canAttackGround         = false,
 				customParams        = {
 					isaa = "1",
 					light_camera_height = 1200,
