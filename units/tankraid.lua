@@ -84,13 +84,13 @@ return {
 		},
 		weaponDefs             = {
 			NAPALM_SPRAYER = {
-				name                    = "Napalm Sprayer",
+				name                    = "Napalm Jet Sprayer",
 				accuracy                = 1100,
-				areaOfEffect            = 128,
+				areaOfEffect            = 40,
 				avoidFeature            = false,
-				craterBoost             = 1,
-				craterMult              = 2,
-				cegTag                  = "flamer",
+				craterBoost             = 0,
+				craterMult              = 0,
+				cegTag                  = "napalmtrail_halfsize",
 				customParams              = {
 					setunitsonfire = "1",
 					sweepfire = 1,
@@ -103,7 +103,7 @@ return {
 				damage                  = {
 					default = 22.1,
 				},
-				explosionGenerator      = "custom:napalm_phoenix",
+				explosionGenerator      = "custom:napalmthrower_small",
 				firestarter             = 180,
 				impulseBoost            = 0,
 				impulseFactor           = 0,
