@@ -36,8 +36,9 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		if not isArmored then
 			return damage, 1
 		else -- EX: 500 damage, 75% AP against 80% armor should yield 375 damage.
-			local realArmor = 1 - armorValue
-			return (damage * (1/realArmor)) * config[weaponDefID], 1
+			local originalDamage = damage * (1/armorValue)
+			local effectiveArmorNegation = 1 - ((1 - armorValue) * (1 - config[weaponDefID]))
+			return originalDamage * effectiveArmorNegation, 1
 		end
 	else
 		return damage, 1
