@@ -99,6 +99,7 @@ return {
 					sweepfire_maxrangemult = 0.98,
 					stats_custom_tooltip_1 = " - Slowdown while Firing:",
 					stats_custom_tooltip_entry_1 = "-20% speed",
+					burntime = "210",
 				},
 				damage                  = {
 					default = 22.1,
@@ -284,7 +285,7 @@ return {
 				cegTag                  = "flamer",
 				customParams              = {
 					setunitsonfire = "1",
-					burntime = 60,
+					burntime = 300,
 					
 					area_damage = 1,
 					area_damage_radius = 48,
