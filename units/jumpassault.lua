@@ -90,6 +90,7 @@ return {
 					light_beam_start = 0.25,
 					combatrange = 60,
 					timeslow_damagefactor = 1/3,
+					armorpiercing = 1,
 				},
 
 				damage                  = {
