@@ -74,6 +74,7 @@ return {
 				customParams = {
 					burst = Shared.BURST_RELIABLE,
 					shield_damage = 200.4,
+					armorpiercing = 0.1,
 				},
 				damage                  = {
 					default = 90.01,
