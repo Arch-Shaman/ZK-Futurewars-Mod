@@ -892,6 +892,13 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				end
 				cells[#cells+1] = ""
 			end
+			if cp.armorpiercing then
+				local apValue = tonumber(cp.armorpiercing) or 0
+				if apValue ~= 0 then
+					cells[#cells+1] = "Ignores Armor:"
+					cells[#cells+1] = numformat(apValue * 100, 1) .. "% of armor"
+				end
+			end
 			if cp.spawns_name then
 				cells[#cells+1] = ' - Spawns: '
 				cells[#cells+1] = Spring.Utilities.GetHumanName(UnitDefNames[cp.spawns_name])
