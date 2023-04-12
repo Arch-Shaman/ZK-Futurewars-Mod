@@ -89,6 +89,7 @@ return {
 					script_reload = "15",
 					script_burst = "6",
 					reveal_unit = 20,
+					armorpiercing = 0.50,
 				},
 				damage                  = {
 					default = 400.1,
