@@ -62,6 +62,7 @@ return {
 				cegtag                  = "amphraid_trail",
 				craterBoost             = 0,
 				craterMult              = 0,
+				cylinderTargeting       = 0.5,
 				customParams = {
 					light_camera_height = 1200,
 					light_radius        = 30,
