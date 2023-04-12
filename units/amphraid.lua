@@ -68,6 +68,7 @@ return {
 					light_color = "0 0.1843 0.4235",
 					batterydrain = 8,
 					batterychecklevel = 9,
+					armorpiercing = 0.75,
 				},
 				damage                  = {
 					default = 85.1,
