@@ -70,6 +70,7 @@ return {
 					--single_hit_multi    = true,
 					light_camera_height = 1200,
 					light_radius        = 90,
+					armorpiercing       = 1/3,
 				},
 				damage                  = {
 					default = 26.1,
