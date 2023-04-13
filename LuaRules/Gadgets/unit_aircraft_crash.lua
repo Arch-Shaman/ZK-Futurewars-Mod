@@ -72,6 +72,9 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 	end
 	--Spring.Echo("Plane damaged")
 	local data = IterableMap.Get(recentDamage, unitID)
+	if data == nil then
+		return
+	end
 	local health, maxHealth = spGetUnitHealth(unitID)
 	data.damage = data.damage + damage -- store this so we don't have to recalculate it when a plane crashes.
 	if health < 0 and (data.damage / maxHealth) <= 0.5 then
