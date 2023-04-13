@@ -64,12 +64,12 @@ function OnAmmoChange(newState)
 	ammoState = newState
 	--[[if newState == 0 then
 		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
-		SetAirMoveTypeData(unitID, "maxAcc", 1)
+		spSetUnitRulesParam(unitID, "selfMaxAccelerationChange", 1)
 		GG.UpdateUnitAttributes(unitID)
 		GG.UpdateUnitAttributes(unitID)
 	elseif newState == 1 then
 		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", 1.15)
-		SetAirMoveTypeData(unitID, "maxAcc", 1.15)
+		spSetUnitRulesParam(unitID, "selfMaxAccelerationChange", 1.15)
 		GG.UpdateUnitAttributes(unitID)
 		GG.UpdateUnitAttributes(unitID)
 	end]]
