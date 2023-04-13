@@ -22,7 +22,7 @@ return {
 		corpse              = "DEAD",
 		customParams        = {
 			fireproof      = "1",
-			specialreloadtime = "850",
+			specialreloadtime = "450",
 			modelradius       = "20",
 			aimposoffset      = "0 5 0",
 			selection_scale   = 0.85,
