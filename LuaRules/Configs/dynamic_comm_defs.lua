@@ -384,7 +384,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_tankbuster",
 		humanName = "Tank Buster Cannon",
-		description = "Extremely hard hitting, low fire rate antiheavy cannon.",
+		description = "Extremely hard hitting, low fire rate antiheavy cannon. 20% Armor piercing.",
 		image = moduleImagePath .. "commweapon_assaultcannon.png",
 		limit = 2,
 		cost = 100 * COST_MULT,
