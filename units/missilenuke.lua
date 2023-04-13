@@ -64,9 +64,10 @@ return {
 					cruisedist = 800,
 					reveal_unit = 20,
 					cruise_ignoreterrain = "1",
+					armorpiercing = 0.35,
 				},
 				damage                  = {
-					default = 11000.1,
+					default = 15000.1,
 				},
 				edgeEffectiveness       = 0.3,
 				explosionGenerator      = "custom:LONDON_FLAT",      -- note, spawning of the explosion is handled by exp_nuke_effect_chooser.lua
