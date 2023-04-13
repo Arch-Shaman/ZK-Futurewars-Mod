@@ -78,6 +78,9 @@ end
 
 local function UpdateWorker(unitID, workRate, unitConfig)
 	local data = IterableMap.Get(handled, unitID)
+	if data == nil then
+		return
+	end
 	local baseSpeed = data.baseSpeed
 	local newCharge = data.charge
 	if debugMode then
