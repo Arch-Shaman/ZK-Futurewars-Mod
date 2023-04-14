@@ -678,7 +678,7 @@ end
 
 local function DynamicPylonAdd(unitID, unitDefID)
 	if unitDefID and spValidUnitID(unitID) then
-		Spring.Echo("Dynamic Add pylon: " .. unitID)
+		--Spring.Echo("Dynamic Add pylon: " .. unitID)
 		AddPylon(unitID, unitDefID, pylonDefs[unitDefID].range)
 	else
 		return
@@ -686,7 +686,7 @@ local function DynamicPylonAdd(unitID, unitDefID)
 end
 
 local function DynamicPylonRemove(unitID)
-	Spring.Echo("Dynamic Remove pylon: " .. unitID)
+	--Spring.Echo("Dynamic Remove pylon: " .. unitID)
 	RemovePylon(unitID)
 	spSetUnitRulesParam(unitID,"gridNumber",nil)
 end
