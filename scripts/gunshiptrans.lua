@@ -234,7 +234,7 @@ local function PickupAndDropFixer()
 		if unitLoaded and (getCommandId() == 81) and isNearDropPoint(unitLoaded, 80) then
 			Sleep(200)
 			if unitLoaded and (getCommandId() == 81) and isNearDropPoint(unitLoaded, 80) then
-				if isBelowSafePoint(passengerID) then
+				if isBelowSafePoint(unitLoaded) then
 					ForceDropUnit(true)
 				end
 				Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
