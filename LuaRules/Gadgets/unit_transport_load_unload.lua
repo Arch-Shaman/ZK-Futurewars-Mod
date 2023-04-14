@@ -20,14 +20,19 @@ end
 local airTransports = {}
 local lightTransport = {}
 local allowTransportCache = {}
+local transportableStructures = {}
 
-for unitDefID, ud in pairs(UnitDefs) do
+for i = 1, #UnitDefs do
+	local ud = UnitDefs[i]
 	if (ud.isTransport and ud.canFly) then
-		airTransports[unitDefID] = true
+		airTransports[i] = true
 
 		if ud.customParams.islighttransport then
-			lightTransport[unitDefID] = true
-			allowTransportCache[unitDefID] = {}
+			lightTransport[i] = true
+			allowTransportCache[i] = {}
+		end
+		if not ud.cantBeTransported and (ud.isImmobile or ud.customParams.like_structure) then
+			transportableStructures[i] = true
 		end
 	end
 end
@@ -79,6 +84,10 @@ function gadget:AllowUnitTransportUnload(transporterID, transporterUnitDefID, tr
 	end
 	local x, y, z = Spring.GetUnitPosition(transporteeID)
 	if goalY < 0 then goalY = 0 end
+	if transportableStructures[transporteeUnitDefID] then -- don't clip underground.
+		local height = (Spring.GetUnitDefDimensions(transporteeUnitDefID)["height"] or 0) * 2
+		goalY = goalY + height
+	end
 	if DistSq(x, y, z, goalX, goalY, goalZ) > 144 then
 		if DistSq(x, 0, z, goalX, 0, goalZ) <= 64 then
 			local _,_,_,speed = Spring.GetUnitVelocity(transporterID)
