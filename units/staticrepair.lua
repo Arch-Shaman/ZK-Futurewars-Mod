@@ -17,7 +17,7 @@ return {
 		canPatrol                     = true,
 		canReclaim					  = false,
 		canResurrect 				  = true,
-		cantBeTransported             = true,
+		cantBeTransported             = false,
 		category                      = "FLOAT UNARMED",
 		collisionVolumeOffsets        = "0 4 0",
 		collisionVolumeScales         = "48 56 48",
