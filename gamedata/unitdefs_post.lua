@@ -863,7 +863,7 @@ for name, ud in pairs(UnitDefs) do
 	-- Remove engine transport limits
 	if Utilities.IsCurrentVersionNewerThan(104, 600) then
 		-- set up structure transports:
-		if ud.usebuildinggrounddecal ~= nil and ud.buildcostmetal <= TRANSPORT_STRUCT_COST_MAX and not ud.customparams.child_of_factory then
+		if ud.yardmap ~= nil and ud.buildcostmetal <= TRANSPORT_STRUCT_COST_MAX and not ud.customparams.child_of_factory and not ud.customparams.ismex then
 			if ud.buildcostmetal > TRANSPORT_LIGHT_STRUCT_COST_MAX then
 				ud.customparams.requireheavytrans = 1
 			end
