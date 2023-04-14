@@ -91,6 +91,22 @@ local smokePiece = {body, engineEmit}
 include "constants.lua"
 include "transports.lua"
 
+local function GetRequiredHeight(passenger)
+	if not isValidCargo(passenger) then
+		return
+	end
+	local passengerDef = UnitDefs[Spring.GetUnitDefID(passenger)]
+	if passengerDef.isImmobile or passengerDef.customParams.like_structure then
+		return 30
+	elseif passengerDef.customParams.canjump then
+		local canJump = (Spring.GetUnitRulesParam(passenger, "jumpReload") or 1) >= 1 and (Spring.GetUnitRulesParam(passenger, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(passenger)
+		if canJump then
+			return 250
+		end
+	end
+	return 25
+end
+
 function isBelowSafePoint(passengerID)
 	local requiredHeight = GetRequiredHeight(passengerID)
 	if requiredHeight == nil then
