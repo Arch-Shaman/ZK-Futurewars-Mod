@@ -65,8 +65,12 @@ function closeDoors()
 end
 
 --Special ability: drop unit midair
-function ForceDropUnit()
+function ForceDropUnit(forceDrop)
 	if (unitLoaded ~= nil) and Spring.ValidUnitID(unitLoaded) then
+		local unitDefID = Spring.GetUnitDefID(unitLoaded)
+		if UnitDefs[unitDefID].isImmobile and not forceDrop then -- block janky ass drop.
+			return
+		end
 		local x,y,z = Spring.GetUnitPosition(unitLoaded) --cargo position
 		local _,ty = Spring.GetUnitPosition(unitID) --transport position
 		local vx,vy,vz = Spring.GetUnitVelocity(unitID) --transport speed
