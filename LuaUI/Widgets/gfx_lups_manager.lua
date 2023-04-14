@@ -305,6 +305,37 @@ function widget:GameFrame()
 	end
 end
 
+function widget:UnitUnloaded(unitID, unitDefID, unitTeam, transportID, transportTeam)
+	local effects = UnitEffects[unitDefID]
+	if (effects) then
+		for i=1,#effects do
+			local fx = effects[i]
+			if (not fx.options) then
+				Spring.Log(widget:GetInfo().name, LOG.ERROR, "LUPS DEBUG GRRR", UnitDefs[unitDefID].name, fx and fx.class)
+				return
+			end
+
+			if (fx.class=="GroundFlash") then
+				fx.options.pos = { Spring.GetUnitPosition(unitID) }
+			end
+			if (fx.options.heightFactor) then
+		local pos = fx.options.pos or {0, 0, 0}
+				fx.options.pos = { pos[1], Spring.GetUnitHeight(unitID)*fx.options.heightFactor, pos[3] }
+			end
+		if (fx.options.radiusFactor) then
+			fx.options.size = Spring.GetUnitRadius(unitID)*fx.options.radiusFactor
+		end
+			fx.options.unit = unitID
+			AddFxs( unitID,LupsAddFX(fx.class,fx.options) )
+			fx.options.unit = nil
+		end
+	end
+end
+
+function widget:UnitLoaded(unitID, unitDefID, unitTeam, transportID, transportTeam)
+	ClearFxs(unitID)
+end
+
 
 local function CheckForExistingUnits()
 	--// initialize effects for existing units
