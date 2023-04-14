@@ -64,6 +64,39 @@ function closeDoors()
 	doorOpen = false
 end
 
+function isValidCargo(soonPassenger, passenger)
+	return ((soonPassenger and Spring.ValidUnitID(soonPassenger)) or
+	(passenger and Spring.ValidUnitID(passenger)))
+end
+
+local function GetRequiredHeight(passenger)
+	if not isValidCargo(passenger) then
+		return
+	end
+	local passengerDef = UnitDefs[Spring.GetUnitDefID(passenger)]
+	if passengerDef.isImmobile or passengerDef.customParams.like_structure then
+		return 30
+	elseif passengerDef.customParams.canjump then
+		local canJump = (Spring.GetUnitRulesParam(passenger, "jumpReload") or 1) >= 1 and (Spring.GetUnitRulesParam(passenger, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(passenger)
+		if canJump then
+			return 250
+		end
+	end
+	return 25
+end
+
+function isBelowSafePoint(passengerID)
+	local requiredHeight = GetRequiredHeight(passengerID)
+	if requiredHeight == nil then
+		Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
+		Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
+		return false
+	end
+	local px, py, pz = Spring.GetUnitBasePosition(unitID)
+	local gy = Spring.GetGroundHeight(px, pz)
+	return py - gy < requiredHeight
+end
+
 --Special ability: drop unit midair
 function ForceDropUnit(forceDrop)
 	if (unitLoaded ~= nil) and Spring.ValidUnitID(unitLoaded) then
@@ -85,6 +118,17 @@ function ForceDropUnit(forceDrop)
 	end
 	unitLoaded = nil
 	StartThread(script.EndTransport) --formalize unit drop (finish animation, clear tag, ect)
+end
+
+local function CrashDropThread()
+	local hasPassenger = (unitLoaded ~= nil) and Spring.ValidUnitID(unitLoaded)
+	if not hasPassenger then return end
+	while hasPassenger do
+		Sleep(100)
+		if isBelowSafePoint(unitLoaded) then
+			ForceDropUnit(true)
+		end
+	end
 end
 
 function OnStartingCrash()
@@ -155,7 +199,7 @@ function isNearDropPoint(transportUnitId, requiredDist)
 		return false
 	end
 
-	local px, py, pz = Spring.GetUnitBasePosition(transportUnitId)
+	local px, py, pz = Spring.GetUnitBasePosition(unitID)
 	if not px then
 		return false
 	end
@@ -175,11 +219,6 @@ function isNearDropPoint(transportUnitId, requiredDist)
 	end
 end
 
-function isValidCargo(soonPassenger, passenger)
-	return ((soonPassenger and Spring.ValidUnitID(soonPassenger)) or
-	(passenger and Spring.ValidUnitID(passenger)))
-end
-
 local function PickupAndDropFixer()
 	while true do
 		local passengerId = getPassengerId()
@@ -195,6 +234,9 @@ local function PickupAndDropFixer()
 		if unitLoaded and (getCommandId() == 81) and isNearDropPoint(unitLoaded, 80) then
 			Sleep(200)
 			if unitLoaded and (getCommandId() == 81) and isNearDropPoint(unitLoaded, 80) then
+				if isBelowSafePoint(passengerID) then
+					ForceDropUnit(true)
+				end
 				Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
 				Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
 			end
