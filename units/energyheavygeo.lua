@@ -22,6 +22,7 @@ return {
 			decay_initialrate = 0.1,
 			decay_rate     = -0.01,
 			stats_show_death_explosion = true,
+			isgeo = 1,
 		},
 		energyMake                    = 400, --ik the AI doesn't build geos, but when they do, hopefully they builds lots!
 		energyUse                     = 0,

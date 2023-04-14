@@ -676,6 +676,21 @@ local function AddPylonsInQueueToGrid()
 	end
 end
 
+local function DynamicPylonAdd(unitID, unitDefID)
+	if unitDefID and spValidUnitID(unitID) then
+		Spring.Echo("Dynamic Add pylon: " .. unitID)
+		AddPylon(unitID, unitDefID, pylonDefs[unitDefID].range)
+	else
+		return
+	end
+end
+
+local function DynamicPylonRemove(unitID)
+	Spring.Echo("Dynamic Remove pylon: " .. unitID)
+	RemovePylon(unitID)
+	spSetUnitRulesParam(unitID,"gridNumber",nil)
+end
+
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 -- PAYBACK
@@ -1848,6 +1863,18 @@ function gadget:UnitGiven(unitID, unitDefID, teamID, oldTeamID)
 
 	if (generatorDefs[unitDefID]) or spGetUnitRulesParam(unitID, "wanted_energyIncome") then
 		AddResourceGenerator(unitID, unitDefID, teamID, newAllyTeamID)
+	end
+end
+
+function gadget:UnitLoaded(unitID, unitDefID, unitTeam, transportID, transportTeam)
+	if pylonDefs[unitDefID] then
+		DynamicPylonRemove(unitID)
+	end
+end
+
+function gadget:UnitUnloaded(unitID, unitDefID, unitTeam, transportID, transportTeam)
+	if pylonDefs[unitDefID] then
+		DynamicPylonAdd(unitID, unitDefID)
 	end
 end
 
