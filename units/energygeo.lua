@@ -31,6 +31,7 @@ return {
 			decay_rate     = -0.01,
 			priority_misc = 1, -- Medium
 			default_spacing = 0,
+			isgeo = 1,
 		},
 		energyMake                    = 80,
 		energyUse                     = 0,
