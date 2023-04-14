@@ -91,9 +91,25 @@ local smokePiece = {body, engineEmit}
 include "constants.lua"
 include "transports.lua"
 
+function isBelowSafePoint(passengerID)
+	local requiredHeight = GetRequiredHeight(passengerID)
+	if requiredHeight == nil then
+		Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
+		Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
+		return false
+	end
+	local px, py, pz = Spring.GetUnitBasePosition(unitID)
+	local gy = Spring.GetGroundHeight(px, pz)
+	return py - gy < requiredHeight
+end
+
 --Special ability: drop unit midair
-function ForceDropUnit()
+function ForceDropUnit(forceDrop)
 	if (unitLoaded ~= nil) and Spring.ValidUnitID(unitLoaded) then
+		local unitDefID = Spring.GetUnitDefID(unitLoaded)
+		if UnitDefs[unitDefID].isImmobile and not forceDrop then -- block janky ass drop.
+			return
+		end
 		local x,y,z = Spring.GetUnitPosition(unitLoaded) --cargo position
 		local _,ty = Spring.GetUnitPosition(unitID) --transport position
 		local vx,vy,vz = Spring.GetUnitVelocity(unitID) --transport speed
@@ -109,6 +125,18 @@ function ForceDropUnit()
 	unitLoaded = nil
 	StartThread(script.EndTransport) --formalize unit drop (finish animation, clear tag, ect)
 end
+
+local function CrashDropThread()
+	local hasPassenger = (unitLoaded ~= nil) and Spring.ValidUnitID(unitLoaded)
+	if not hasPassenger then return end
+	while hasPassenger do
+		Sleep(100)
+		if isBelowSafePoint(unitLoaded) then
+			ForceDropUnit(true)
+		end
+	end
+end
+
 
 function OnStartingCrash()
 	ForceDropUnit()
@@ -368,6 +396,9 @@ local function PickupAndDropFixer()
 		if unitLoaded and (getCommandId() == UNLOADUNIT) and isNearDropPoint(unitLoaded, 120) then
 			Sleep(200)
 			if unitLoaded and (getCommandId() == UNLOADUNIT) and isNearDropPoint(unitLoaded, 120) then
+				if isBelowSafePoint(passengerID) then
+					ForceDropUnit(true)
+				end
 				Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
 				Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
 			end
