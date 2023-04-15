@@ -42,7 +42,6 @@ return {
 		script                        = "turretaalaser.lua",
 		sightDistance                 = 660,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
 		yardMap                       = "ooooooooo",
 		weapons                       = {
 			{
