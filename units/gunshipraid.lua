@@ -127,7 +127,7 @@ return {
 				},
 
 				damage                  = {
-					default = 519.1,
+					default = 345.1,
 				},
 
 				explosionGenerator      = "custom:heavybeamgreenimpact",
