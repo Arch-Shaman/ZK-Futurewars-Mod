@@ -27,7 +27,7 @@ return {
 		idleTime               = 1800,
 		leaveTracks            = true,
 		maneuverleashlength    = "30",
-		maxDamage              = 2900,
+		maxDamage              = 3000,
 		maxSlope               = 18,
 		maxVelocity            = 3.2,
 		maxWaterDepth          = 22,
@@ -79,14 +79,14 @@ return {
 					--spreadradius1 = 3, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 250, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-4,-1,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					spawndist = 300, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					vradius1 = "-5,-1,-5,5,1,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?
 					damage_vs_shield = "200"
 				},
 				damage  = {
-					default = 80.1*5,
+					default = 60.1*5,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.25,
@@ -118,7 +118,6 @@ return {
 				customParams            = {
 					light_camera_height = 2000,
 					light_color = "1 0.2 0.2",
-					reaim_time = 8, -- COB
 					isaa = "1",
 					light_radius = 0,
 					isFlak = 1,
