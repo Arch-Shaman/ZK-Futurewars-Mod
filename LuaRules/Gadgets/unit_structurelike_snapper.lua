@@ -13,7 +13,7 @@ function gadget:GetInfo() return {
 local wantedDefs = {}
 for i = 1, #UnitDefs do
 	local ud = UnitDefs[i]
-	if ud.customParams.like_structure then
+	if ud.isImmobile then
 		wantedDefs[i] = true
 	end
 end
