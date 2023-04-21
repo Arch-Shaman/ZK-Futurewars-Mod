@@ -68,6 +68,7 @@ for i=1, #WeaponDefs do
 		config[i].distance = tonumber(customParams.cruisedist)
 		config[i].track = customParams.cruisetracking ~= nil
 		config[i].airlaunched = customParams.airlaunched ~= nil
+		config[i].droptoalt = customParams.droptoalt ~= nil
 		config[i].noascension = customParams.cruise_noascension ~= nil
 		config[i].radius = tonumber(customParams.cruiserandomradius)
 		config[i].permoffset = customParams.cruise_permoffset ~= nil
@@ -372,7 +373,7 @@ function gadget:GameFrame(f)
 						end
 						--spEcho("Taking off: " .. cy .. " / " .. wantedheight)
 					end
-					if data.takeoff and ((cy >= wantedheight - 40 and not missileconfig.airlaunched) or (cy <= wantedheight + 20 and missileconfig.airlaunched)) then -- end ascent
+					if data.takeoff and ((cy >= wantedheight - 40 and not missileconfig.airlaunched and not missileconfig.droptoalt) or (cy <= wantedheight + 20 and missileconfig.airlaunched and not missileconfig.droptoalt) or (cy > wantedheight and missileconfig.droptoalt)) then -- end ascent
 						data.takeoff = false
 						data.cruising = true
 						--spEcho("No longer taking off")
