@@ -7,7 +7,6 @@ for i = 1, #UnitDefs do
 	if ud.customParams.ammocount then
 		local name = "AMMO_SELECT_" .. string.upper(ud.name)
 		ExtraCMDs[name] = AMMO_SELECT_GENERIC + num
-		StateInfo[name] = {states = tonumber(ud.customParams.ammocount), icons = {}}
 		num = num + 1
 	end
 end
