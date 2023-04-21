@@ -354,7 +354,7 @@ local commandDisplayConfig = {
 
 for id, data in pairs(ammoCMDS) do
 	commandDisplayConfig[id] = {
-		texture = data.texture,
+		texture = imageDir .. data.texture,
 		stateTooltip = {},
 	},
 	for i = 1, #data.stateTooltip do
