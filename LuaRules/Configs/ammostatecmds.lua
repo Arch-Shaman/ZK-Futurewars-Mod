@@ -1,6 +1,5 @@
 local ExtraCMDs = {}
 local AMMO_SELECT_GENERIC = 20500
-local stateInfo = {}
 
 local num = 1
 for i = 1, #UnitDefs do
@@ -13,4 +12,4 @@ for i = 1, #UnitDefs do
 	end
 end
 
-return ExtraCMDs, stateInfo
+return ExtraCMDs
