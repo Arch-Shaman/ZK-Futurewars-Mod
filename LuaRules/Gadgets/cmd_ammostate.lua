@@ -41,6 +41,7 @@ end
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
 local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc
+local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
 local inLOS = {inlos = true}
 
 local function UpdateRulesParam(unitID, state)
