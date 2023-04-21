@@ -54,6 +54,9 @@ for i = 1, #UnitDefs do
 end
 
 local function UpdateUnitRules(unitID, data)
+	if data == nil then
+		return
+	end
 	local unitConfig = unitRulesUnits[unitRulesUnits] or config[data.unitDef]
 	local chargeMax = unitConfig.chargetotal
 	local currentCharge = data.charge / chargeMax
