@@ -1,4 +1,5 @@
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
+local extras = VFS.Include("LuaRules/Configs/ammostatecmds")
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -93,6 +94,10 @@ local cmdPosDef = {
 	[CMD_ARMORSTATE]       = {pos = 1, priority = 20},
 	[CMD_AUTO_CALL_TRANSPORT] = {pos = 1, priority = 21},
 }
+
+for _, id in pairs(extras) do
+	cmdPosDef[id] = {pos = 1, priority = 15}
+end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
