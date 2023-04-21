@@ -50,7 +50,7 @@ end
 local function CallUnitScriptFunction(unitID, state)
 	local env = Spring.UnitScript.GetScriptEnv(unitID)
 	if env then
-		Spring.UnitScript.CallAsUnit(unitID, env.OnAmmoChange, state)
+		Spring.UnitScript.CallAsUnit(unitID, env.OnAmmoTypeChange, state)
 	end
 end
 
