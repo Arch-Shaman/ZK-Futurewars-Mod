@@ -12,16 +12,8 @@ function gadget:GetInfo() return {
 
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
 
-local cmdDesc = {
-	id      = CMD_AMMO_SELECT_GENERIC,
-	type    = CMDTYPE.ICON_MODE,
-	name    = 'Toggle Ammo',
-	action  = 'ammo',
-	tooltip    = 'Toggles Ammo',
-	params     = {0, 0}
-}
-
 local config = {}
+local params = {}
 local states = {}
 local wantedCMDs = {}
 
@@ -34,6 +26,10 @@ do
 			wantedCMDs[CMD_AMMO_SELECT_GENERIC + num] = true
 			num = num + 1
 		end
+	end
+	local _, tooltips = VFS.Include("LuaRules/Configs/ammostateinfo.lua")
+	for id, data in pairs(tooltips) do
+		params[id] = data.stateTooltip
 	end
 end
 
@@ -55,22 +51,48 @@ local function CallUnitScriptFunction(unitID, state)
 	end
 end
 
-local function ChangeUnitAmmo(unitID, num)
-	if num then
-		UpdateRulesParam(unitID, num)
-		CallUnitScriptFunction(unitID, num)
+local function GetCmdDesc(cmdID)
+	local cmdDesc = {
+		id      = cmdID,
+		type    = CMDTYPE.ICON_MODE,
+		name    = 'Toggle Ammo',
+		action  = 'ammo',
+		tooltip    = 'Toggles Ammo',
+		params     = {0}
+	}
+	for i = 1, #params[cmdID] do
+		cmdDesc.params[#cmdDesc.params + 1] = params[cmdID][i]
 	end
+	return cmdDesc
 end
 
-local function ToggleCommand(unitID, cmdParams, def)
-	if config[def] then
+local function GetCmdParams(cmdID)
+	local ret = {0}
+	for i = 1, #params[cmdID] do
+		ret[#ret + 1] = params[cmdID][i]
+	end
+	return ret
+end
+
+
+local function ChangeUnitAmmo(unitID, num)
+	Spring.Echo("Changing " .. unitID .. " to state " .. num)
+	UpdateRulesParam(unitID, num)
+	CallUnitScriptFunction(unitID, num)
+end
+
+local function ToggleCommand(unitID, cmdParams, def, cmdID)
+	if config[def] == cmdID then
 		local state = cmdParams[1]
-		--Spring.Echo("New State: " .. state)
-		local cmdDescID = spFindUnitCmdDesc(unitID, config[def])
-		if (cmdDescID) then
-			cmdDesc.params[1] = state
-			cmdDesc.id = config[def]
-			spEditUnitCmdDesc(unitID, cmdDescID, { params = cmdDesc.params})
+		Spring.Echo("Got: " .. unitID .. " to state " .. state)
+		local cmdDescID = spFindUnitCmdDesc(unitID, cmdID)
+		if cmdDescID then
+			local paramsToBeChanged = GetCmdParams(cmdID)
+			paramsToBeChanged[1] = state
+			ChangeUnitAmmo(unitID, state)
+			spEditUnitCmdDesc(unitID, cmdDescID, { params = paramsToBeChanged})
+		else
+			Spring.Echo("CMD Not found")
 		end
 	end
 end
@@ -79,7 +101,7 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
 	if not config[unitDefID] then
 		return false
 	end
-	ToggleCommand(unitID, cmdParams, unitDefID)
+	ToggleCommand(unitID, cmdParams, unitDefID, cmdID)
 	return false  -- command was used
 end
 
@@ -89,9 +111,7 @@ end
 
 function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 	if config[unitDefID] then
-		cmdDesc.params[1] = 0
-		cmdDesc.id = config[unitDefID]
-		spInsertUnitCmdDesc(unitID, cmdDesc)
+		spInsertUnitCmdDesc(unitID, GetCmdDesc(config[unitDefID]))
 		UpdateRulesParam(unitID, 0)
 	end
 end

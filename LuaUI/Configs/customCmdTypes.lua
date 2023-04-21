@@ -3,6 +3,8 @@
 -- This table is used in Epicmenu for hotkey management.
 
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
+local extras = VFS.Include("LuaRules/Configs/ammostatecmds.lua")
+local _, info =  VFS.Include("LuaRules/Configs/ammostateinfo.lua")
 
 local custom_cmd_actions = {
 	-- cmdTypes are:
@@ -209,7 +211,15 @@ local usedActions = {
 	["upgradecommstop"] = true,
 	["autoeco"] = true,
 	["evacuate"] = true,
+	["ammo"] = true,
 }
+
+for name, id in pairs(extras) do
+	custom_cmd_actions[name] = {cmdType = 2, cmdID = id, name = "Ammo Selection", states = {}}
+	for i = 1, #info[id].stateDesc do
+		custom_cmd_actions[name].states[i] = info[id].stateTooltip
+	end
+end
 
 -- Clear unused actions.
 for name,_ in pairs(custom_cmd_actions) do
