@@ -119,6 +119,12 @@ local cmds = {
 	
 	TERRAFORM_INTERNAL = 39801,
 }
+
+local extras, _ = VFS.Include("LuaRules\\Configs\\ammostatecmds.lua")
+for name, id in pairs(extras) do
+	cmds[name] = id
+end
+
 -- not included here, just listed
 --[[
 PURCHASE = 32601	-- planetwars, range up to 32601 + #purchases
