@@ -1,4 +1,5 @@
 include("LuaRules/Configs/customcmds.h.lua")
+local extras = VFS.Include("LuaRules/Configs/ammostatecmds.lua")
 
 local stateCommands = {
 	[CMD.ONOFF] = true,
@@ -41,5 +42,9 @@ local stateCommands = {
 	[CMD_FIRE_AT_SHIELD] = true,
 	[CMD_FIRE_TOWARDS_ENEMY] = true,
 }
+
+for _, id in pairs(extras) do
+	stateCommands[id] = true
+end
 
 return stateCommands
