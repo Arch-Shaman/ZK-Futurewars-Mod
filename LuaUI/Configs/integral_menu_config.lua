@@ -354,11 +354,12 @@ local commandDisplayConfig = {
 
 for id, data in pairs(ammoCMDS) do
 	commandDisplayConfig[id] = {
-		texture = imageDir .. data.texture,
+		texture = {},
 		stateTooltip = {},
 	}
 	for i = 1, #data.stateTooltip do
-		tooltips.AMMOSTATE:gsub("(_STATE_)", data.stateTooltip[i]):gsub("(_DESCRIPTION_)", data.stateDesc[i])
+		commandDisplayConfig[id].stateTooltip[i] = tooltips.AMMOSTATE:gsub("(_STATE_)", data.stateTooltip[i]):gsub("(_DESCRIPTION_)", data.stateDesc[i])
+		commandDisplayConfig[id].texture[i] = imageDir .. data.texture[i]
 	end
 end
 
