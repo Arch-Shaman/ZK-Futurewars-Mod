@@ -30,11 +30,9 @@ do
 	for i = 1, #UnitDefs do
 		local ud = UnitDefs[i]
 		if ud.customParams.ammocount then
-			if count then
-				config[i] = CMD_AMMO_SELECT_GENERIC + num
-				wantedCMDs[CMD_AMMO_SELECT_GENERIC + num] = true
-				num = num + 1
-			end
+			config[i] = CMD_AMMO_SELECT_GENERIC + num
+			wantedCMDs[CMD_AMMO_SELECT_GENERIC + num] = true
+			num = num + 1
 		end
 	end
 end
