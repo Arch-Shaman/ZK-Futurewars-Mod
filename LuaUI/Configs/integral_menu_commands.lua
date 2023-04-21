@@ -1,5 +1,5 @@
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
-local extras = VFS.Include("LuaRules/Configs/ammostatecmds")
+local extras = VFS.Include("LuaRules/Configs/ammostatecmds.lua")
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
