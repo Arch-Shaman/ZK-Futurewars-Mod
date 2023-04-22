@@ -17,6 +17,7 @@ local wingtipr = piece 'wingtipr'
 local xp,zp = piece("x","z")
 
 local smokePiece = {body, jet}
+local currentAmmo = 0
 
 include "constants.lua"
 include "bombers.lua"
@@ -38,7 +39,14 @@ local function Lights()
 end
 
 local function DeathThread()
-	local wd = WeaponDefNames["bomberprec_bombsabot"]
+	local wd
+	if currentAmmo == 0 then
+		wd = WeaponDefNames["bomberprec_bombsabot"]
+	elseif currentAmmo == 1 then
+		wd = WeaponDefNames["bomberprec_torpedo"]
+	else
+		wd = WeaponDefNames["bomberprec_armorpiercing"]
+	end
 	local count = wd.salvoSize
 	local bombsPer = wd.projectiles
 	local weaponID = wd.id
@@ -79,6 +87,9 @@ end
 
 function OnAmmoChange(newState)
 	ammoState = newState
+	if newState == 1 then
+		SetUnarmedAI()
+	end
 	--[[if newState == 0 then
 		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
 		spSetUnitRulesParam(unitID, "selfMaxAccelerationChange", 1)
@@ -113,15 +124,24 @@ function script.QueryWeapon(num)
 end
 
 function script.BlockShot(num)
-	return RearmBlockShot()
+	return RearmBlockShot() or (num - 1) ~= currentAmmo
 end
 
 function script.FireWeapon(num)
-	SetUnarmedAI()
 	OnAmmoChange(1)
 	Sleep(400)
 	Reload()
 end
+
+function OnAmmoTypeChange(newAmmo)
+	if newAmmo ~= currentAmmo then
+		Spring.Echo("OnAmmoTypeChange: " .. newAmmo)
+		OnAmmoChange(1)
+		Reload()
+		currentAmmo = newAmmo
+	end
+end
+
 
 function script.Killed(recentDamage, maxHealth)
 	Signal(SIG_TAKEOFF)
