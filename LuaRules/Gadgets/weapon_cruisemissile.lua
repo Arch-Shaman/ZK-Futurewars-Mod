@@ -215,7 +215,7 @@ local function ForceUpdate(id, x, y, z)
 		data.target[2] = y
 		data.target[3] = z
 	end
-end
+end	
 
 local function GetTargetPosition(id, allyteam)
 	local data = IterableMap.Get(missiles, id)
@@ -234,13 +234,6 @@ local function SetMissileUnguided(id, unitID)
 		data.unguided = true
 	end
 end
-
-
-
-GG.ForceCruiseUpdate = ForceUpdate
-GG.GetMissileCruising = IsMissileCruiseDone
-GG.GetCruiseTarget = GetTargetPosition
-GG.SetCruiseMissileUnguided = SetMissileUnguided
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	local wep = weaponDefID or spGetProjectileDefID(proID) -- needed for bursts.
@@ -284,13 +277,20 @@ local function ForceMissileToCruise(proID, proOwnerID, weaponDefID)
 	gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 end
 
-GG.ForceMissileToCruise = ForceMissileToCruise
 
 function gadget:ProjectileDestroyed(proID)
 	local data = IterableMap.Get(missiles, proID)
 	if data then
 		data.destroyed = true
 	end
+end
+
+function gadget:Initialize()
+	GG.ForceCruiseUpdate = ForceUpdate
+	GG.GetMissileCruising = IsMissileCruiseDone
+	GG.GetCruiseTarget = GetTargetPosition
+	GG.SetCruiseMissileUnguided = SetMissileUnguided
+	GG.ForceMissileToCruise = ForceMissileToCruise
 end
 
 function gadget:GameFrame(f)
