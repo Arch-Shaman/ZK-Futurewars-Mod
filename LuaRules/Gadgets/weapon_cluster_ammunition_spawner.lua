@@ -441,7 +441,8 @@ local function SpawnSubProjectiles(id, wd)
 		spSpawnExplosion(x, y, z, 0, 0, 0, {weaponDef = wd, owner = spGetProjectileOwnerID(id), craterAreaOfEffect = WeaponDefs[wd].craterAreaOfEffect, damageAreaOfEffect = 0, edgeEffectiveness = 0, explosionSpeed = WeaponDefs[wd].explosionSpeed, impactOnly = WeaponDefs[wd].impactOnly, ignoreOwner = WeaponDefs[wd].noSelfDamage, damageGround = true})
 	end
 	--Spring.Echo("OnSplit", WeaponDefs[wd].hitSound[1].name, WeaponDefs[wd].hitSound[1].volume)
-	spPlaySoundFile(WeaponDefs[wd].hitSound[1].name, WeaponDefs[wd].hitSound[1].volume, x, y, z, 0, 0, 0, "battle")
+	local soundToPlay = WeaponDefs[wd].customParams.onsplitsound or WeaponDefs[wd].hitSound[1].name
+	spPlaySoundFile(soundToPlay, WeaponDefs[wd].hitSound[1].volume, x, y, z, 0, 0, 0, "battle")
 	local projectiledata = IterableMap.Get(projectiles, id)
 	if projectiledata.charges == 1 or projectiledata.charges == 0 then --charge below 0 never run out
 		if debugMode then
