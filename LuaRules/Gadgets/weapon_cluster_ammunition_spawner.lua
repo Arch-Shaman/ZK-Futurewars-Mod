@@ -327,7 +327,7 @@ local function SpawnSubProjectiles(id, wd)
 		else
 			projectileattributes["ttl"] = WeaponDefs[me].flightTime or WeaponDefs[me].beamTTL or 9000
 		end
-		projectileattributes["tracking"] = WeaponDefs[me].tracks or false
+		projectileattributes["tracking"] = (WeaponDefs[me].tracks and ttype == unit and target) or false
 		projectileattributes["gravity"] = -WeaponDefs[me].myGravity or -1
 		local ceg = WeaponDefs[me].cegTag
 		--spEcho(tostring(ceg))
