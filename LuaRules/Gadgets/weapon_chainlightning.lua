@@ -285,6 +285,9 @@ function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, ProjectileID)
 	if debugMode then
 		Spring.Echo("Chainlightning: Explosion: ", px, py, pz, AttackerID, ProjectileID)
 	end
+	if AttackerID == nil then
+		return
+	end
 	local num, _, target = spGetUnitWeaponTarget(AttackerID, config[weaponDefID].weaponNum)
 	if subProjectileDefs[weaponDefID] then -- we can't rely on checking target (for obvious reasons, we're not actually aiming at any of these sub targets!)
 		local potentialUnits = spGetUnitsInSphere(px, py, pz, 30) -- did we hit another unit?
