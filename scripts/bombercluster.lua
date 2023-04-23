@@ -135,7 +135,6 @@ end
 
 function OnAmmoTypeChange(newAmmo)
 	if newAmmo ~= currentAmmo then
-		Spring.Echo("OnAmmoTypeChange: " .. newAmmo)
 		OnAmmoChange(1)
 		Reload()
 		currentAmmo = newAmmo

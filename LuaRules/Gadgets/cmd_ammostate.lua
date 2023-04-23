@@ -76,7 +76,7 @@ end
 
 
 local function ChangeUnitAmmo(unitID, num)
-	Spring.Echo("Changing " .. unitID .. " to state " .. num)
+	--Spring.Echo("Changing " .. unitID .. " to state " .. num)
 	UpdateRulesParam(unitID, num)
 	CallUnitScriptFunction(unitID, num)
 end
@@ -84,7 +84,7 @@ end
 local function ToggleCommand(unitID, cmdParams, def, cmdID)
 	if config[def] == cmdID then
 		local state = cmdParams[1]
-		Spring.Echo("Got: " .. unitID .. " to state " .. state)
+		--Spring.Echo("Got: " .. unitID .. " to state " .. state)
 		local cmdDescID = spFindUnitCmdDesc(unitID, cmdID)
 		if cmdDescID then
 			local paramsToBeChanged = GetCmdParams(cmdID)
@@ -92,7 +92,7 @@ local function ToggleCommand(unitID, cmdParams, def, cmdID)
 			ChangeUnitAmmo(unitID, state)
 			spEditUnitCmdDesc(unitID, cmdDescID, { params = paramsToBeChanged})
 		else
-			Spring.Echo("CMD Not found")
+			--Spring.Echo("CMD Not found")
 		end
 	end
 end
