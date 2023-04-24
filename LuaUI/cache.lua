@@ -57,6 +57,8 @@ function Spring.GetPlayerInfo(playerID, sec)
 	local playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, wut, customkeys = GetPlayerInfo(playerID, sec)
 	if country == "??" then
 		country = "Unknown" -- filenames cannot be "??"
+	elseif country == "bv" or country == "sj" then -- kilobytes don't grow on trees Norway! WE WILL NOT BE BRIBED, KINGSTAD.(Unless you get me a fancy new mic)
+		country = "no"
 	end
 	return playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, wut, customkeys
 end
