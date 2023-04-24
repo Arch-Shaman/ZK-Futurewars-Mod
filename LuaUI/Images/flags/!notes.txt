@@ -1,0 +1,24 @@
+The following country codes have been changed here:
+- AN: Dissolved in 2010.
+- CS: Dissolved in 2006.
+- Fam: No idea what this country even is or was supposed to be. Removed.
+- GP: No longer uses the "suriname-like" flag. Uses the more common unofficial one.
+- MC: Ratio changed to 1:1 to prevent confusion with Indonesia. This is close to its intended 4:5.
+- PM: Uses unofficial one.
+- MQ: No longer uses the snake flag (Apparently that's very controversial). Uses the apparently very recently adopted flag.
+- QA: Uses its proper ratio in order to avoid confusion with bahrain.
+- RE: Uses the unofficial one.
+- TD: Saturated to differentiate from Romania.
+- VA: Flag correctly ratioed to 1:1.
+
+The following are repeats and are replaced luaside:
+- BQ -> NL
+- BV -> NO
+- MF -> FR
+- SJ -> NO
+- SH -> GB
+- UM -> US
+
+See LuaUI/cache.lua L75.
+
+This list should accurately reflect ISO 3166 (with extras from ZKLS) as of 24 April 2023.

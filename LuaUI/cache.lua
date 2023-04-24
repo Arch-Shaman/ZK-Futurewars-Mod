@@ -53,14 +53,22 @@ function Spring.SetUnitNoSelect(unitID, value)
 	return
 end
 
+local countryOverrides = {
+	["??"] = "Unknown", -- Needed because files can't be named "??"
+	["an"] = "nl", -- Does not exist anymore. Now is BQ, but this is for safety purposes.
+	["bq"] = "nl", -- The rest of these are just pointers to remade flags to save space / download
+	["bv"] = "no", -- NO saves 18kb.
+	["hm"] = "au",
+	["mf"] = "fr",
+	["sj"] = "no",
+	["sh"] = "gb",
+	["um"] = "us",
+}
+
 function Spring.GetPlayerInfo(playerID, sec)
 	local playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, wut, customkeys = GetPlayerInfo(playerID, sec)
-	if country == "??" then
-		country = "Unknown" -- filenames cannot be "??"
-	elseif country == "bv" or country == "sj" then -- kilobytes don't grow on trees Norway! WE WILL NOT BE BRIBED, KINGSTAD.(Unless you get me a fancy new mic)
-		country = "no"
-	end
-	return playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, wut, customkeys
+	local override = countryOverrides[string.lower(country)] or country
+	return playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, override, rank, wut, customkeys
 end
 
 local function buildIndex(teamID, radius, Icons)
