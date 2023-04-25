@@ -43,11 +43,12 @@ end
 local oldWindStrength, oldWindHeading
 function SpinWind()
 	SetSignalMask(SIG_SPIN)
+	local buildProgress
 	while true do
-		if select(5, Spring.GetUnitHealth(unitID)) < 1 or isTransported then
+		_, _, _, _, buildProgress = Spring.GetUnitHealth(unitID)
+		if buildProgress < 1 then
 			oldWindStrength = nil
 			StopSpin(fan, z_axis)
-			wasTransported = true
 			Sleep(BUILD_PERIOD)
 		else
 			if GG.WindStrength and ((oldWindStrength ~= GG.WindStrength) or (oldWindHeading ~= GG.WindHeading)) then
