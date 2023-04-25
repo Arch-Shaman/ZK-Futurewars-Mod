@@ -2,6 +2,7 @@ include "constants.lua"
 
 local base = piece 'nuke'
 local launched = false
+local myParent
 
 function script.AimWeapon(heading, pitch)
 	return true
@@ -52,11 +53,17 @@ function script.QueryWeapon()
 	return base
 end
 
+function script.BlockShot()
+	if myParent == nil then return false end
+	return Spring.GetUnitTransporter(myParent) ~= nil
+end
+
 function script.Create()
 	--Turn(base, x_axis, math.rad(-90)) -- fix orientation
 	--Move(base, x_axis, 20)
 	--Move(base, x_axis, 80)
 	Move(base, z_axis, 45) -- Move up a bit.
+	myParent = GG.MissileSilo.GetMissileParent(unitID)
 end
 
 function script.HitByWeapon(x, z, weaponDefID, damage)
