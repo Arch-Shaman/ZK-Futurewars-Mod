@@ -9,7 +9,7 @@ local firepoints = {piece('firepoint1', 'firepoint2')}
 local barrels = {piece('barrel1', 'barrel2')}
 local shot = 0
 local gameSpeed = Game.gameSpeed
-local RELOAD_TIME = 3.5 * gameSpeed
+local RELOAD_TIME = 4.7 * gameSpeed
 
 local gun = {
 	[0] = {firepoint = firepoints[1], loaded = true},
