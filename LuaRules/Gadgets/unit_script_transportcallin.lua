@@ -12,7 +12,7 @@ function gadget:GetInfo() return {
 
 local function CallUnitScriptFunction(unitID, transported)
 	local env = Spring.UnitScript.GetScriptEnv(unitID)
-	if env then
+	if env and env.OnTransportChanged then
 		Spring.UnitScript.CallAsUnit(unitID, env.OnTransportChanged, transported)
 	end
 end
