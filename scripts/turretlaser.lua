@@ -41,6 +41,18 @@ local function Open()
 	deployed = true
 end
 
+function OnTransportChanged(isBeingTransporting)
+	if isBeingTransporting then
+		deployed = false
+		Move(base, y_axis, 18, 9)
+		Move(turret, y_axis, -18, 9)
+		Turn(barrel, x_axis, 0.5 * math.pi/2)
+	else
+		Move(base, y_axis, 0, 9000)
+		StartThread(Open)
+	end
+end
+
 function script.Create()
 	local ud = UnitDefs[unitDefID]
 	local midTable = ud.model
