@@ -1,6 +1,7 @@
 include "constants.lua"
 include "pieceControl.lua"
 include "aimPosTerraform.lua"
+local scriptReload = include("scriptReload.lua")
 ----------------------------------------------------------------------------------------------
 -- Model Pieces
 
@@ -9,13 +10,17 @@ local flares = {piece('flare1', 'flare2', 'flare3')}
 
 local smokePiece = {basebottom, basemid, basetop}
 
+local gameSpeed = Game.gameSpeed
+local RELOAD_TIME = 4.1 * gameSpeed
+local ammoCount = 7
+
 ----------------------------------------------------------------------------------------------
 -- Local Constants
 
 local BASETOP_TURN_SPEED = math.rad(200)
 local BASEMID_TURN_SPEED = math.rad(230)
 local HOUSING_TURN_SPEED = math.rad(200)
-local SPINDLE_TURN_SPEED = math.rad(300)
+local SPINDLE_TURN_SPEED = math.rad(600)
 
 local firing = false
 local index = 2
@@ -32,6 +37,8 @@ local SIG_AIM = 2
 -- Localising Functions
 
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
+
 
 ----------------------------------------------------------------------------------------------
 -- Local Animation Functions
@@ -47,6 +54,7 @@ end
 
 function script.Create()
 	local ud = UnitDefs[unitDefID]
+	scriptReload.SetupScriptReload(ammoCount, RELOAD_TIME)
 	local midTable = ud.model
 	
 	local midpos = {midTable.midx, midTable.midy,      midTable.midz}
@@ -106,7 +114,14 @@ function script.AimWeapon(num, heading, pitch)
 	return (spGetUnitRulesParam(unitID, "lowpower") == 0)
 end
 
+local function reload()
+	ammoCount = ammoCount - 1
+	SleepAndUpdateReload(num, RELOAD_TIME)
+	ammoCount = ammoCount + 1
+end
+
 function script.Shot(num)
+	StartThread(reload)
 	index = index - 1
 	if index == 0 then
 		index = #flares
@@ -118,7 +133,8 @@ end
 
 function script.BlockShot(num, targetID)
 	-- Block for less than full damage and time because the target may dodge.
-	return (targetID and (GG.DontFireRadar_CheckBlock(unitID, targetID) or GG.OverkillPrevention_CheckBlock(unitID, targetID, 680.1, 18))) or false
+	if ammoCount == 0 then return true end
+	return (targetID and (GG.DontFireRadar_CheckBlock(unitID, targetID) or GG.OverkillPrevention_CheckBlock(unitID, targetID, 160.1, 18))) or false
 end
 
 
