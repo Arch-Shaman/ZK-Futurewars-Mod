@@ -57,13 +57,18 @@ local function SetSiloPadNum(siloID, padNum)
 	Spring.UnitScript.CallAsUnit(siloID, env.SetPadNum, padNum)
 end
 
+local function GetParent(unitID)
+	return missileParents[unitID]
+end
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 function gadget:Initialize()
 	GG.MissileSilo = {
 		GetSiloEntry = GetSiloEntry,
 		GetFirstEmptyPad = GetFirstEmptyPad,
-		DestroyMissile = DestroyMissile
+		DestroyMissile = DestroyMissile,
+		GetMissileParent = GetParent,
 	}
 	
 	-- partial /luarules reload support
@@ -141,19 +146,12 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		Spring.SetUnitBlocking(unitID, false, false) -- non-blocking, non-collide (try to prevent pad detonations)
 		Spring.SetUnitRulesParam(unitID, "missile_parentSilo", builderID)
 		Spring.SetUnitRulesParam(unitID, "missile_spawnedFrame", Spring.GetGameFrame())
-	end
-end
-
---add newly finished missile to silo data
---this doesn't check half-built missiles, but there's actually no need to
-function gadget:UnitFromFactory(unitID, unitDefID, unitTeam, facID, facDefID)
-	if siloDefs[facDefID] then
-		missileParents[unitID] = facID
+		missileParents[unitID] = builderID
 		-- get the pad the missile was built on from unit script, to make sure there's no discrepancy
-		local env = Spring.UnitScript.GetScriptEnv(facID)
+		local env = Spring.UnitScript.GetScriptEnv(builderID)
 		if env then
-			local pad = Spring.UnitScript.CallAsUnit(facID, env.GetPadNum)
-			silos[facID].slots[pad] = unitID
+			local pad = Spring.UnitScript.CallAsUnit(builderID, env.GetPadNum)
+			silos[builderID].slots[pad] = unitID
 		end
 	end
 end
