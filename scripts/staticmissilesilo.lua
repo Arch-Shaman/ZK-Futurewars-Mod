@@ -38,6 +38,19 @@ function SetPadNum(num)
 	end
 end
 
+function OnTransportChanged(isTransported)
+	local data = GG.MissileSilo.GetSiloEntry(unitID).slots
+	for padNum, missileID in pairs(data) do
+		if isTransported then
+			Spring.UnitAttach(unitID, missileID, pads[padNum])
+		else
+			Spring.UnitDetach(missileID)
+			local x, y, z = Spring.GetUnitPiecePosition(unitID, pads[padNum])
+			Spring.SetUnitPosition(missileID, x, y, z)
+		end
+	end
+end
+
 function GetPadNum(num)
 	return padnum
 end
