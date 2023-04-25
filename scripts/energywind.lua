@@ -18,6 +18,28 @@ local SIG_SPIN = 2
 local SIG_BOB = 4
 
 local rand = math.random
+
+function InitializeWind()
+	isWind, baseWind, rangeWind = GG.SetupWindmill(unitID)
+	if isWind then
+		StartThread(SpinWind)
+		Show(base)
+		Show(float)
+		Move(cradle, y_axis, 0)
+		Turn(fan, x_axis, 0)
+		Move(fan, z_axis, 0)
+		Move(fan, y_axis, 0)
+	else
+		StartThread(BobTidal)
+		Hide(base)
+		Hide(float)
+		Move(cradle, y_axis, -51)
+		Turn(fan, x_axis, hpi)
+		Move(fan, z_axis, 9)
+		Move(fan, y_axis, -5)
+	end
+end
+
 local function BobTidal()
 	-- Body movement models being somewhat free-floating upon the waves
 	local bodySpinSpeed	= 0
@@ -63,27 +85,6 @@ function SpinWind()
 			StopSpin(fan, z_axis)
 			return
 		end
-	end
-end
-
-function InitializeWind()
-	isWind, baseWind, rangeWind = GG.SetupWindmill(unitID)
-	if isWind then
-		StartThread(SpinWind)
-		Show(base)
-		Show(float)
-		Move(cradle, y_axis, 0)
-		Turn(fan, x_axis, 0)
-		Move(fan, z_axis, 0)
-		Move(fan, y_axis, 0)
-	else
-		StartThread(BobTidal)
-		Hide(base)
-		Hide(float)
-		Move(cradle, y_axis, -51)
-		Turn(fan, x_axis, hpi)
-		Move(fan, z_axis, 9)
-		Move(fan, y_axis, -5)
 	end
 end
 
