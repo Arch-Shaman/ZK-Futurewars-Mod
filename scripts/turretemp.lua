@@ -88,6 +88,37 @@ local function popDown()
 	GG.Script_OffsetAimAndColVol(unitID, 26, -30)
 end
 
+local function popDownTransported()
+	if readyToFire then
+		Signal(SIG_OPEN)
+		SetSignalMask(SIG_CLOSE)
+		
+		readyToFire = false
+		
+		Turn(turret, y_axis, tauOn6*position, math.rad(200))
+		Turn(sleeve, x_axis,0, math.rad(100))
+		
+		Move(b1, z_axis, -4.4, 5)
+		Move(barrel, z_axis, -7.4, 5)
+		Sleep(500)
+		
+		Move(turret, y_axis, -34, 22)
+		Sleep(700)
+		
+		Turn(door1, z_axis, math.rad(-120), math.rad(110))
+		Turn(door2, z_axis, math.rad(-120), math.rad(110))
+		Turn(door3, z_axis, math.rad(120), math.rad(110))
+		Turn(door4, z_axis, math.rad(120), math.rad(110))
+		Turn(door5, x_axis, math.rad(120), math.rad(110))
+		Turn(door6, x_axis, math.rad(-120), math.rad(110))
+		GG.Script_OffsetAimAndColVol(unitID, 26, -30)
+		readyToFire = false
+	else
+		GG.SetUnitArmor(unitID, 1)
+	end
+	Move(base, y_axis, 34, 190)
+end
+
 
 local function RestoreAfterDelay()
 	Signal(SIG_RESTORE)
@@ -99,6 +130,17 @@ local function RestoreAfterDelay()
 	end
 	
 	StartThread(popDown)
+end
+
+function OnTransportChanged(isTransported)
+	if isTransported then
+		StartThread(popDownTransported)
+	else
+		if not readyToFire then
+			GG.SetUnitArmor(unitID, armorValue)
+		end
+		Move(base, y_axis, 0)
+	end
 end
 
 function script.Create()
