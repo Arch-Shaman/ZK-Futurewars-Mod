@@ -15,14 +15,13 @@ local waterFanSpin = math.rad(30)
 
 local isWind, baseWind, rangeWind
 local SIG_SPIN = 2
-local SIG_BOB = 4
+local forceStop = false
 
 local rand = math.random
 
 function InitializeWind()
 	isWind, baseWind, rangeWind = GG.SetupWindmill(unitID)
 	if isWind then
-		StartThread(SpinWind)
 		Show(base)
 		Show(float)
 		Move(cradle, y_axis, 0)
@@ -30,7 +29,6 @@ function InitializeWind()
 		Move(fan, z_axis, 0)
 		Move(fan, y_axis, 0)
 	else
-		StartThread(BobTidal)
 		Hide(base)
 		Hide(float)
 		Move(cradle, y_axis, -51)
@@ -43,7 +41,8 @@ end
 local function BobTidal()
 	-- Body movement models being somewhat free-floating upon the waves
 	local bodySpinSpeed	= 0
-	SetSignalMask(SIG_BOB)
+	Signal(SIG_SPIN)
+	SetSignalMask(SIG_SPIN)
 	while true do
 		bodySpinSpeed = 0.99*bodySpinSpeed + (rand() - 0.5) * 0.016
 		Spin(cradle, y_axis, bodySpinSpeed)
@@ -64,22 +63,41 @@ end
 
 local oldWindStrength, oldWindHeading
 function SpinWind()
-	SetSignalMask(SIG_SPIN)
 	local buildProgress
+	local bodySpinSpeed	= 0
+	local spinning = false
 	while true do
 		_, _, _, _, buildProgress = Spring.GetUnitHealth(unitID)
-		if buildProgress < 1 then
+		if forceStop then
+			Sleep(200)
+		elseif buildProgress < 1 then
 			oldWindStrength = nil
-			StopSpin(fan, z_axis)
+			if spinning then
+				StopSpin(fan, z_axis)
+				StopSpin(cradle, y_axis)
+				spinning = false
+			end
 			Sleep(BUILD_PERIOD)
 		else
-			if GG.WindStrength and ((oldWindStrength ~= GG.WindStrength) or (oldWindHeading ~= GG.WindHeading)) then
-				oldWindStrength, oldWindHeading = GG.WindStrength, GG.WindHeading
-				local st = baseWind + (GG.WindStrength or 0)*rangeWind
-				Spin(fan, z_axis, -st*(0.94 + 0.08*rand()))
-				Turn(cradle, y_axis, GG.WindHeading - baseDirection + math.pi, turnSpeed)
+			if isWind then
+				if GG.WindStrength and ((oldWindStrength ~= GG.WindStrength) or (oldWindHeading ~= GG.WindHeading)) then
+					oldWindStrength, oldWindHeading = GG.WindStrength, GG.WindHeading
+					local st = baseWind + (GG.WindStrength or 0)*rangeWind
+					Spin(fan, z_axis, -st*(0.94 + 0.08*rand()))
+					Turn(cradle, y_axis, GG.WindHeading - baseDirection + math.pi, turnSpeed)
+					if not spinning then spinning = true end
+				end
+				Sleep(UPDATE_PERIOD + 200*rand())
+			else
+				if not spinning then spinning = true end
+				bodySpinSpeed = 0.99*bodySpinSpeed + (rand() - 0.5) * 0.016
+				Spin(cradle, y_axis, bodySpinSpeed)
+				Spin(fan, z_axis, waterFanSpin + bodySpinSpeed)
+				Move(cradle, x_axis, rand(-2,2), 0.3)
+				Move(cradle, y_axis, rand(-2,2) * 0.5 - 51, 0.2)
+				Move(cradle, z_axis, rand(-2,2), 0.3)
+				Sleep(1000)
 			end
-			Sleep(UPDATE_PERIOD + 200*rand())
 		end
 		if GG.Wind_SpinDisabled then
 			StopSpin(fan, z_axis)
@@ -88,10 +106,8 @@ function SpinWind()
 	end
 end
 
-function OnTransportChange(isBeingTransporting)
+function OnTransportChanged(isBeingTransporting)
 	if isBeingTransporting then
-		Signal(SIG_SPIN)
-		Signal(SIG_BOB)
 		StopSpin(fan, z_axis)
 		StopSpin(cradle, y_axis)
 		Show(base)
@@ -100,16 +116,20 @@ function OnTransportChange(isBeingTransporting)
 		Turn(fan, x_axis, 0)
 		Move(fan, z_axis, 0)
 		Move(fan, y_axis, 0)
+		forceStop = true
 	else
 		InitializeWind()
+		forceStop = false
 	end
 end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+	
 	baseDirection = math.random() * GG.Script.tau
 	Turn(base, y_axis, baseDirection)
 	baseDirection = baseDirection + hpi * Spring.GetUnitBuildFacing(unitID)
+	StartThread(SpinWind)
 	InitializeWind()
 end
 

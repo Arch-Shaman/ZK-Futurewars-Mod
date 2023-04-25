@@ -29,14 +29,11 @@ include "constants.lua"
 include "transports.lua"
 
 local function openDoors()
-
 	Signal(SIG_OPENDOORS)
 	SetSignalMask(SIG_OPENDOORS)
-	
 	Turn(lUpperCl1,z_axis, math.rad(-140),6)
 	Turn(rUpperCl1,z_axis, math.rad(140), 6)
 	Sleep(100)
-									 
 	Turn(lUpperCl2,z_axis, math.rad(-140),6)
 	Turn(rUpperCl2,z_axis, math.rad(140), 6)
 	WaitForTurn(lUpperCl1, z_axis)
