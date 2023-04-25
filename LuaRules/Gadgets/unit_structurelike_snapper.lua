@@ -33,7 +33,7 @@ function gadget:UnitCreated(unitID, unitDefID)
 end
 
 function gadget:UnitUnloaded(unitID, unitDefID, unitTeam, transportID, transportTeam)
-	if wantedDefs[unitDefID] then
+	if wantedDefs[unitDefID] and oldAngles[unitID] then
 		local rx, ry, rz = Spring.GetUnitRotation(unitID)
 		Spring.SetUnitRotation(unitID, oldAngles[unitID][4], oldAngles[unitID][5], oldAngles[unitID][6])
 		Spring.SetUnitDirection(unitID, oldAngles[unitID][1], oldAngles[unitID][2], oldAngles[unitID][3]) 
