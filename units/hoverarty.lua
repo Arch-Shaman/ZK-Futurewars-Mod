@@ -111,7 +111,6 @@ local unitDef = {
 			weaponType              = "BeamLaser",
 			weaponVelocity          = 1500,
 		},
-
 		ATA = {
 			name                    = "Tachyon Accelerator",
 			areaOfEffect            = 20,
