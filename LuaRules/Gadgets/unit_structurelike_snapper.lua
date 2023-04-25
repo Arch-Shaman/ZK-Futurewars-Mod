@@ -18,24 +18,28 @@ for i = 1, #UnitDefs do
 	end
 end
 
-local function GetUnitFixedRotation(facing)
-	local degrees = math.deg(facing)
-	--Spring.Echo("Fix degrees: " .. degrees)
-	if degrees < 0 then degrees = 360 - degrees end
-	if degrees >= 0 and degrees < 90 then
-		return math.rad(0)
-	elseif degrees >= 90 and degrees < 180 then
-		return math.rad(90)
-	elseif degrees >= 180 and degrees < 270 then
-		return math.rad(180)
-	else
-		return math.rad(270)
+local oldAngles = {}
+
+local function StoreRotation(unitID)
+	local x, y, z = Spring.GetUnitDirection(unitID)
+	local rx, ry, rz = Spring.GetUnitRotation(unitID)
+	oldAngles[unitID] = {x, y, z, rx, ry, rz}
+end
+
+function gadget:UnitCreated(unitID, unitDefID)
+	if wantedDefs[unitDefID] and UnitDefs[unitDefID].metalCost < 1500 then
+		StoreRotation(unitID)
 	end
 end
 
 function gadget:UnitUnloaded(unitID, unitDefID, unitTeam, transportID, transportTeam)
 	if wantedDefs[unitDefID] then
 		local rx, ry, rz = Spring.GetUnitRotation(unitID)
-		Spring.SetUnitRotation(unitID, rx, GetUnitFixedRotation(ry), rz)
+		Spring.SetUnitRotation(unitID, oldAngles[unitID][4], oldAngles[unitID][5], oldAngles[unitID][6])
+		Spring.SetUnitDirection(unitID, oldAngles[unitID][1], oldAngles[unitID][2], oldAngles[unitID][3]) 
 	end
+end
+
+function gadget:UnitDestroyed(unitID)
+	oldAngles[unitID] = nil
 end
