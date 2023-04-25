@@ -115,6 +115,7 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 local function reload()
+	scriptReload.GunStartReload(1)
 	ammoCount = ammoCount - 1
 	SleepAndUpdateReload(num, RELOAD_TIME)
 	ammoCount = ammoCount + 1
