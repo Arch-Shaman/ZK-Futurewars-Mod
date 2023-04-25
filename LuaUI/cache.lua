@@ -67,7 +67,12 @@ local countryOverrides = {
 
 function Spring.GetPlayerInfo(playerID, sec)
 	local playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, wut, customkeys = GetPlayerInfo(playerID, sec)
-	local override = countryOverrides[string.lower(country)] or country
+	local override
+	if country then
+		override = countryOverrides[country] or country
+	else
+		override = country
+	end
 	return playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, override, rank, wut, customkeys
 end
 
