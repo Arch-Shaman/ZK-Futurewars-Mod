@@ -76,7 +76,7 @@ return {
 				alphaDecay              = 0.12,
 				areaOfEffect            = 96,
 				avoidfeature            = false,
-				accuracy				= 250,
+				accuracy				= 650,
 				--cegTag                = "gauss_tag_l",
 				collideFriendly         = false,
 				craterBoost             = 0.3,
@@ -92,7 +92,7 @@ return {
 					--light_ground_height = 120,
 				},
 				damage                  = {
-					default = 22.1, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
+					default = 20.1, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
 				},
 				explosionGenerator      = "custom:gauss_hit_m",
 				heightBoostFactor       = 0,
@@ -110,7 +110,7 @@ return {
 				soundHitVolume          = 3,
 				soundStart              = "gausslimitedfire",
 				soundStartVolume        = 3,
-				sprayAngle              = 550,
+				sprayAngle              = 650,
 				stages                  = 32,
 				turret                  = true,
 				waterweapon				= true,
