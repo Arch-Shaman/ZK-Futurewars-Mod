@@ -49,11 +49,11 @@ local SIG_RESTORE = 2
 local ammo = 3
 local lights = 3
 local shotNum = 0
-
 local gameSpeed = Game.gameSpeed
+local RELOAD_TIME = tonumber(WeaponDefs[UnitDefs[unitDefID].weapons[1].weaponDef].customParams.script_reload) * gameSpeed
 
 function script.Create()
-	scriptReload.SetupScriptReload(3, 5.5 * gameSpeed)
+	scriptReload.SetupScriptReload(3, RELOAD_TIME)
 	StartThread(GG.Script.SmokeUnit, unitID, {turret})
 
 	Turn(bay[0].exhaust, x_axis, math.rad(170))
@@ -102,7 +102,7 @@ local function FireAndReload(num)
 	Turn(pod, x_axis, 0, math.rad(50))
 	Turn(bay[num].backDoor, x_axis, 0, math.rad(100))
 
-	SleepAndUpdateReload(num, 8.5 * gameSpeed)
+	SleepAndUpdateReload(num, 2/3 * RELOAD_TIME) -- 5.5
 
 	Move(bay[num].missile, z_axis, -2.2)
 
@@ -121,7 +121,7 @@ local function FireAndReload(num)
 		StartThread(RestoreAfterDelay)
 	end
 
-	SleepAndUpdateReload(num, 3 * gameSpeed) --8.5 + 0.5 + 0.5 + 3.0 = 12.5 sec reload time as per definition
+	SleepAndUpdateReload(num, 25/30 * gameSpeed)
 
 	Show(bay[num].greenLight)
 
