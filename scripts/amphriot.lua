@@ -1,4 +1,5 @@
 include 'constants.lua'
+local scriptReload = include("scriptReload.lua")
 
 --------------------------------------------------------------------------------
 -- pieces
@@ -14,10 +15,24 @@ local flares = {
 	[2] = piece ('flarer1'), 
 	[3] = piece ('flarel2'), 
 	[4] = piece ('flarer2'),
-	[5] = piece ('flarer2'),
+	[5] = piece ('flaremain'),
 }
 
 local smokePiece = {pelvis, torso}
+
+local gameSpeed = Game.gameSpeed
+local ammo = 0
+local RELOAD_TIME = tonumber(WeaponDefs[UnitDefs[unitDefID].weapons[1].weaponDef].customParams.script_reload) * gameSpeed
+local ammoMax = tonumber(WeaponDefs[UnitDefs[unitDefID].weapons[1].weaponDef].customParams.script_burst)
+
+local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
+
+local gun = {}
+
+for i = 0, ammoMax - 1 do
+	gun[i] = {firepoint = flares[i%5 + 1], loaded = true}
+end
+
 
 --------------------------------------------------------------------------------
 -- constants
@@ -345,6 +360,7 @@ end
 function script.Create()
 	--StartThread(Walk)
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+	scriptReload.SetupScriptReload(ammoMax, RELOAD_TIME)
 	--StartThread(WeaponRangeUpdate) -- Equal range so not required
 	--local height = select(2, Spring.GetUnitPosition(unitID))
 	--if height < -20 then
@@ -416,6 +432,9 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.BlockShot(num, targetID)
+	if num == 1 then
+		return not gun[ammo].loaded
+	end
 	if num == 2 and targetID then -- torpedoes
 		-- Lower than real damage (104) to help against Duck regen case.
 		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 92, 40)
@@ -429,19 +448,27 @@ end
 
 function script.QueryWeapon(num)
 	if num == 1 then
-		return flares[gun_1]
+		return gun[ammo].firepoint
 	else
 		return flaremain
 	end
 end
 
+local function reload(num)
+	scriptReload.GunStartReload(num)
+	gun[num].loaded = false
+	SleepAndUpdateReload(num, RELOAD_TIME)
+	gun[num].loaded = true
+	if scriptReload.GunLoaded(num) then
+		ammo = 0
+	end
+end
+
 function script.Shot(num)
 	if num == 1 then
-		gun_1 = gun_1 + 1
-		if gun_1 > 4 then
-			gun_1 = 1
-		end
-		EmitSfx(flares[gun_1], 1024)
+		StartThread(reload, ammo)
+		EmitSfx(gun[ammo].firepoint, 1024)
+		ammo = (ammo + 1)%ammoMax
 		--EmitSfx(mainturret, 1025)
 	end
 end
