@@ -25,6 +25,7 @@ local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local movectrlGetTag = Spring.MoveCtrl.GetTag
 local block = false
 local ammoState = 0
+local currentLoadout = -1
 
 ----------------------------------------------------------
 
@@ -58,6 +59,7 @@ end]]
 	--GG.UpdateUnitAttributes(unitID)
 --end
 
+
 function OnAmmoChange(newState)
 	ammoState = newState
 	if newState == 0 then
@@ -70,6 +72,29 @@ function OnAmmoChange(newState)
 		spSetUnitRulesParam(unitID, "selfMaxAccelerationChange", slow)
 		GG.UpdateUnitAttributes(unitID)
 		GG.UpdateUnitAttributes(unitID)
+		SetUnarmedAI()
+	end
+end
+
+function OnAmmoTypeChange(newAmmo, bypassReload)
+	if newAmmo ~= currentLoadout then
+		if bypassReload == nil then
+			Reload()
+		end
+		currentLoadout = newAmmo + 1
+		if newAmmo == 0 then
+			fast = 3.75
+			slow = 1.875
+		elseif newAmmo == 1 then
+			fast = 1.875
+			slow = 0.93
+		else
+			fast = 1
+			slow = 1
+		end
+		if ammoState ~= 0 and bypassReload == nil then
+			OnAmmoChange(1)
+		end
 	end
 end
 
@@ -100,6 +125,7 @@ function script.Create()
 	Move(rwing, x_axis, WING_DISTANCE)
 	Move(lwing, x_axis, -WING_DISTANCE)
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+	OnAmmoTypeChange(0, true)
 	OnAmmoChange(0)
 end
 
@@ -112,6 +138,9 @@ function script.StopMoving()
 end
 
 function script.QueryWeapon(num) 
+	if num == 2 then
+		return base
+	end
 	return flare[shotCycle]
 end
 
@@ -127,23 +156,36 @@ function script.AimWeapon(num, heading, pitch)
 	end
 end
 
-function script.FireWeapon(num)
-	EmitSfx(missile, UNIT_SFX2)
-	shotCycle = 1 - shotCycle
-	if num ~= 3 then
-		spSetUnitRulesParam(unitID, "noammo", 1)
-		OnAmmoChange(1)
+local function reloadThread(num)
+	if num == 1 then
+		Sleep(400)
+	elseif num == 3 then
+		Sleep(800)
 	end
+	spSetUnitRulesParam(unitID, "noammo", 1)
+	OnAmmoChange(1)
+	Reload()
+end
+
+function script.Shot(num)
+	EmitSfx(missile, UNIT_SFX2)
+	if num ~= 2 then
+		shotCycle = 1 - shotCycle
+	end
+	StartThread(reloadThread)
 end
 
 function script.BlockShot(num, targetID)
-	if (GetUnitValue(COB.CRASHING) == 1) or ammoState ~= 0 or movectrlGetTag(unitID) ~= nil then
+	if (GetUnitValue(COB.CRASHING) == 1) or ammoState ~= 0 or num ~= currentLoadout then
 		return true
 	end
+	if targetID == nil then
+		return false
+	end
 	if num == 1 then -- ATA overkill prevention
-		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 133, 135)
+		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 900, 50)
 	elseif num == 2 then -- ATG okp
-		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 126, 60, 0.25, 0.4) -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
+		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 905, 60, 0.25, 0.4) -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
 	end
 	return false
 end
