@@ -11,8 +11,14 @@ local flares = {piece('flare1', 'flare2', 'flare3')}
 local smokePiece = {basebottom, basemid, basetop}
 
 local gameSpeed = Game.gameSpeed
-local RELOAD_TIME = 4.1 * gameSpeed
-local ammoCount = 7
+local RELOAD_TIME = tonumber(WeaponDefs[UnitDefs[unitDefID].weapons[1].weaponDef].customParams.script_reload) * gameSpeed
+local ammoMax = tonumber(WeaponDefs[UnitDefs[unitDefID].weapons[1].weaponDef].customParams.script_burst)
+local shot = 0
+local gun = {}
+
+for i = 0, ammoMax - 1 do
+	gun[i] = {firepoint = flares[(i + 1)%3 + 1 ], loaded = true}
+end
 
 ----------------------------------------------------------------------------------------------
 -- Local Constants
@@ -54,7 +60,7 @@ end
 
 function script.Create()
 	local ud = UnitDefs[unitDefID]
-	scriptReload.SetupScriptReload(ammoCount, RELOAD_TIME)
+	scriptReload.SetupScriptReload(ammoMax, RELOAD_TIME)
 	local midTable = ud.model
 	
 	local midpos = {midTable.midx, midTable.midy,      midTable.midz}
@@ -68,7 +74,7 @@ end
 ----------------------------------------------------------------------------------------------
 -- Weapon Animations
 
-function script.QueryWeapon(num) return flares[index] end
+function script.QueryWeapon(num) return gun[shot].firepoint end
 function script.AimFromWeapon(num) return holder end
 
 local function StunThread ()
@@ -114,28 +120,28 @@ function script.AimWeapon(num, heading, pitch)
 	return (spGetUnitRulesParam(unitID, "lowpower") == 0)
 end
 
-local function reload()
-	scriptReload.GunStartReload(1)
-	ammoCount = ammoCount - 1
-	SleepAndUpdateReload(1, RELOAD_TIME)
-	ammoCount = ammoCount + 1
+local function reload(num)
+	scriptReload.GunStartReload(num)
+	gun[num].loaded = false
+	SleepAndUpdateReload(num, RELOAD_TIME)
+	gun[num].loaded = true
+	if scriptReload.GunLoaded(num) then
+		shot = 0
+	end
 end
 
 function script.Shot(num)
-	StartThread(reload)
-	index = index - 1
-	if index == 0 then
-		index = #flares
-	end
-	EmitSfx(flares[index], GG.Script.UNIT_SFX2)
+	StartThread(reload, shot)
+	EmitSfx(gun[shot].firepoint, GG.Script.UNIT_SFX2)
+	shot = (shot + 1)%ammoMax
 	local rz = select(3, Spring.UnitScript.GetPieceRotation(spindle))
-	Turn(spindle, z_axis, rz + math.rad(120),SPINDLE_TURN_SPEED)
+	Turn(spindle, z_axis, rz + math.rad(120), SPINDLE_TURN_SPEED)
 end
 
 function script.BlockShot(num, targetID)
 	-- Block for less than full damage and time because the target may dodge.
-	if ammoCount == 0 then return true end
-	return (targetID and (GG.DontFireRadar_CheckBlock(unitID, targetID) or GG.OverkillPrevention_CheckBlock(unitID, targetID, 160.1, 18))) or false
+	local ammoReady = not gun[shot].loaded
+	return ammoReady or (targetID and (GG.DontFireRadar_CheckBlock(unitID, targetID) or GG.OverkillPrevention_CheckBlock(unitID, targetID, 825.1, 18))) or false
 end
 
 
