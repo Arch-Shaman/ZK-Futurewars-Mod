@@ -38,15 +38,35 @@ function SetPadNum(num)
 	end
 end
 
+local function RestoreUnloaded(isTransported)
+	for padID, missileID in pairs(data) do
+		if isTransported then
+			Spring.UnitAttach(unitID, missileID, pads[padID])
+		else
+			Sleep(66)
+			Spring.UnitDetach(missileID)
+			local x, y, z, _ = Spring.GetUnitPiecePosDir(unitID, pads[padID])
+			--Spring.Echo("Setting position to " .. x .. ", " .. y .. ", " .. z)
+			Spring.MoveCtrl.Enable(missileID)
+			Spring.MoveCtrl.SetPosition(missileID, x, y, z)
+			Spring.MoveCtrl.Disable(missileID)
+		end
+	end
+end
+	
+
 function OnTransportChanged(isTransported)
 	local data = GG.MissileSilo.GetSiloEntry(unitID).slots
-	for padNum, missileID in pairs(data) do
+	for padID, missileID in pairs(data) do
 		if isTransported then
-			Spring.UnitAttach(unitID, missileID, pads[padNum])
+			Spring.UnitAttach(unitID, missileID, pads[padID])
 		else
 			Spring.UnitDetach(missileID)
-			local x, y, z = Spring.GetUnitPiecePosition(unitID, pads[padNum])
-			Spring.SetUnitPosition(missileID, x, y, z)
+			local x, y, z, _ = Spring.GetUnitPiecePosDir(unitID, pads[padID])
+			--Spring.Echo("Setting position to " .. x .. ", " .. y .. ", " .. z)
+			Spring.MoveCtrl.Enable(missileID)
+			Spring.MoveCtrl.SetPosition(missileID, x, y, z)
+			Spring.MoveCtrl.Disable(missileID)
 		end
 	end
 end
