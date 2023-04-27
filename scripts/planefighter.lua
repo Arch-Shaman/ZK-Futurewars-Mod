@@ -97,10 +97,10 @@ function OnAmmoTypeChange(newAmmo, bypassReload)
 	currentLoadout = newAmmo + 1
 	if newAmmo == 0 then
 		fast = 3.75
-		slow = 0.93
+		slow = 1.875
 	else
 		fast = 2.0
-		slow = 0.93
+		slow = 1.0
 	end
 	if Spring.MoveCtrl.GetTag(unitID) == nil then
 		SetDistance()
