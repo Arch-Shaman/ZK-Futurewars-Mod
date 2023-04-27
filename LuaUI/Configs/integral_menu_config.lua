@@ -45,7 +45,7 @@ local tooltips = {
 	OVERRECLAIM = "Overreclaim Prevention (_STATE_)\nBlocks constructors from reclaiming when storage is nearly full.",
 	FIRECYCLE = "Spread napalm (_STATE_)\nSets whether this unit should prioritize spreading burning status.",
 	ARMORSTATE = "Hunker (_STATE_)\n Hunker down to reduce damage but lose access to weapons.",
-	AMMOSTATE = "Selected Ammo: (_STATE_)\n(_DESCRIPTION_)",
+	AMMOSTATE = "Selected Ammo: _STATE_\n_DESCRIPTION_",
 }
 
 local tooltipsAlternate = {
@@ -358,7 +358,7 @@ for id, data in pairs(ammoCMDS) do
 		stateTooltip = {},
 	}
 	for i = 1, #data.stateTooltip do
-		commandDisplayConfig[id].stateTooltip[i] = tooltips.AMMOSTATE:gsub("(_STATE_)", data.stateTooltip[i]):gsub("(_DESCRIPTION_)", data.stateDesc[i])
+		commandDisplayConfig[id].stateTooltip[i] = tooltips.AMMOSTATE:gsub("_STATE_", data.stateTooltip[i]):gsub("_DESCRIPTION_", data.stateDesc[i])
 		commandDisplayConfig[id].texture[i] = imageDir .. data.texture[i]
 	end
 end
