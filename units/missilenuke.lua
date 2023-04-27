@@ -18,6 +18,7 @@ return {
 			aimposoffset   = "0 105 -38",
 			midposoffset   = "0 95 -38",
 			mobilebuilding = "1",
+			istacmissile = 1,
 		},
 		explodeAs                     = "CRBLMSSL",
 		footprintX                    = 1,

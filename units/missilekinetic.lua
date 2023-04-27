@@ -20,6 +20,7 @@ local unitDef = {
 		outline_x = 55,
 		outline_y = 80,
 		outline_yoff = 55,
+		istacmissile = 1,
 	},
 	explodeAs                     = "BIG_UNIT",
 	footprintX                    = 1,
