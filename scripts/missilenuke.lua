@@ -54,8 +54,7 @@ function script.QueryWeapon()
 end
 
 function script.BlockShot()
-	if myParent == nil then return false end
-	return Spring.GetUnitTransporter(myParent) ~= nil
+	return Spring.GetUnitTransporter(unitID) ~= nil
 end
 
 function script.Create()
