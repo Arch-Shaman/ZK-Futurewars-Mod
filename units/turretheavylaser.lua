@@ -64,11 +64,11 @@ return {
 				cylinderTargeting 		= 0.8,
 				customParams        = {
 					burst = Shared.BURST_UNRELIABLE,
-					script_reload = "4.1",
+					script_reload = "5.2",
 					script_burst = "7",
 				},
 				damage                  = {
-					default = 825.1,
+					default = 225.1,
 				},
 				explosionGenerator      = "custom:artillery_explosion_half",
 				impulseBoost            = 0,
