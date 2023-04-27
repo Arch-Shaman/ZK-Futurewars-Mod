@@ -26,6 +26,7 @@ local movectrlGetTag = Spring.MoveCtrl.GetTag
 local block = false
 local ammoState = 0
 local currentLoadout = -1
+local distanceSet = false
 
 ----------------------------------------------------------
 
@@ -59,6 +60,16 @@ end]]
 	--GG.UpdateUnitAttributes(unitID)
 --end
 
+local function SetDistance()
+	if currentLoadout == 1 then
+		Spring.SetUnitMaxRange(unitID, 700)
+		Spring.MoveCtrl.SetAirMoveTypeData(unitID, {attackSafetyDistance = 100})
+	else
+		Spring.SetUnitMaxRange(unitID, 180)
+		Spring.MoveCtrl.SetAirMoveTypeData(unitID, {attackSafetyDistance = 3500})
+	end
+	distanceSet = true
+end
 
 function OnAmmoChange(newState)
 	ammoState = newState
@@ -67,6 +78,9 @@ function OnAmmoChange(newState)
 		spSetUnitRulesParam(unitID, "selfMaxAccelerationChange", fast)
 		GG.UpdateUnitAttributes(unitID)
 		GG.UpdateUnitAttributes(unitID)
+		if not distanceSet then
+			SetDistance()
+		end
 	elseif newState == 1 then
 		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", slow)
 		spSetUnitRulesParam(unitID, "selfMaxAccelerationChange", slow)
@@ -77,24 +91,24 @@ function OnAmmoChange(newState)
 end
 
 function OnAmmoTypeChange(newAmmo, bypassReload)
-	if newAmmo ~= currentLoadout then
-		if bypassReload == nil then
-			Reload()
-		end
-		currentLoadout = newAmmo + 1
-		if newAmmo == 0 then
-			fast = 3.75
-			slow = 1.875
-		elseif newAmmo == 1 then
-			fast = 1.875
-			slow = 0.93
-		else
-			fast = 1
-			slow = 1
-		end
-		if ammoState ~= 0 and bypassReload == nil then
-			OnAmmoChange(1)
-		end
+	if bypassReload == nil then
+		Reload()
+	end
+	currentLoadout = newAmmo + 1
+	if newAmmo == 0 then
+		fast = 3.75
+		slow = 0.93
+	else
+		fast = 2.0
+		slow = 0.93
+	end
+	if Spring.MoveCtrl.GetTag(unitID) == nil then
+		SetDistance()
+	else
+		distanceSet = false
+	end
+	if ammoState == 0 and bypassReload == nil then
+		OnAmmoChange(1)
 	end
 end
 
@@ -158,9 +172,9 @@ end
 
 local function reloadThread(num)
 	if num == 1 then
-		Sleep(400)
+		Sleep(600)
 	elseif num == 3 then
-		Sleep(800)
+		Sleep(1100)
 	end
 	spSetUnitRulesParam(unitID, "noammo", 1)
 	OnAmmoChange(1)
@@ -172,12 +186,19 @@ function script.Shot(num)
 	if num ~= 2 then
 		shotCycle = 1 - shotCycle
 	end
-	StartThread(reloadThread)
+	StartThread(reloadThread, num)
 end
 
 function script.BlockShot(num, targetID)
-	if (GetUnitValue(COB.CRASHING) == 1) or ammoState ~= 0 or num ~= currentLoadout then
+	if (GetUnitValue(COB.CRASHING) == 1) or ammoState ~= 0 then
 		return true
+	end
+	if num ~= currentLoadout then
+		if currentLoadout == 1 and num == 3 then
+			return false
+		else
+			return true
+		end
 	end
 	if targetID == nil then
 		return false
