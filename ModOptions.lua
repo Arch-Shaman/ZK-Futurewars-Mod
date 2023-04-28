@@ -82,8 +82,18 @@ local options = {
 			{ key='invite', name = "Invite Only", desc = 'Allows players to merge only if both give consent.' },
 			{ key='none', name = "Off", desc = 'Turns commsharing off.' },
 		},
+	}, -- memorylimit
+	{
+		key    = 'memorylimit',
+		name   = 'Lua allocation limit',
+		desc   = "In MB. Controls how much memory is allocated to lua.",
+		type   = 'number',
+		section= 'a_important',
+		def=3584,
+		min=1536,
+		max=10000,
+		step=1,
 	},
-	
 	{
 		key = "noelo",
 		name = "No Elo",

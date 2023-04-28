@@ -10,13 +10,19 @@
 
 local pfForceSingleThreaded = false
 local forceSingleThreaded = false
+local luaallocation = 2560
 local modoptions = Spring.GetModOptions()
+luaallocation = tonumber(modoptions.memorylimit) or 2560
+if luaallocation < 1536 then
+	luaallocation = 1536
+end
 if (modoptions and (modoptions.mtpath == 0 or modoptions.mtpath == "0")) then
 	multithreadPathing = true
 	forceSingleThreaded = true
 end
 Spring.Echo("pfForceSingleThreaded", pfForceSingleThreaded)
 Spring.Echo("forceSingleThreaded", forceSingleThreaded)
+Spring.Echo("Memory limit: " .. luaallocation)
 
 local modrules  = {
 	
@@ -147,7 +153,7 @@ local modrules  = {
 		pfForceSingleThreaded = forceSingleThreaded,
 		allowTake = false,
 		enableSmoothMesh = false,
-		LuaAllocLimit = 2560,
+		LuaAllocLimit = luaallocation,
 	},
 }
 --------------------------------------------------------------------------------
