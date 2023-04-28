@@ -147,6 +147,7 @@ local modrules  = {
 		pfForceSingleThreaded = forceSingleThreaded,
 		allowTake = false,
 		enableSmoothMesh = false,
+		LuaAllocLimit = 2560,
 	},
 }
 --------------------------------------------------------------------------------
