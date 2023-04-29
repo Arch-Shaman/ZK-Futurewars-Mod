@@ -54,7 +54,7 @@ local weaponDef = {
 	trajectoryHeight        = 1.5,
 	turret                  = true,
 	weaponAcceleration      = 200,
-	--dance					= 100,
+	dance					= 20,
 	weaponType              = "MissileLauncher",
 	weaponVelocity          = 360,
 }
