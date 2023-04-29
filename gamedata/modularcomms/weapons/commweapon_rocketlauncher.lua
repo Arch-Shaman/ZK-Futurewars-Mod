@@ -16,11 +16,11 @@ local weaponDef = {
 		light_color = "0.95 0.65 0.30",
 		light_radius = 280,
 		reaim_time = 1,
-		cruiserandomradius = 100,
 		cruisealt = 150,
 		airlaunched = 1,
 		cruisedist = 280,
 		cruise_nolock = 1,
+		cruise_useprediction = 50,
 		reveal_unit = 14,
 	},
 
