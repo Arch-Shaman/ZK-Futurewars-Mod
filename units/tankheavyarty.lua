@@ -71,6 +71,14 @@ return {
 				avoidGround             = true,
 				craterBoost             = 10,
 				craterMult              = 1.7,
+				customParams            = {
+					seismicradius = 300,
+					seismicduration = 10,
+					seismicdistortion = 25,
+					seismicdelay = 10,
+					seismicmult = 0.8,
+					seismicpulsedelay = 5,
+				},
 				damage                  = {
 					default = 6000.01,
 				},
