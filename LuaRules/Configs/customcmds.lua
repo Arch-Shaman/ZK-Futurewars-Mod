@@ -43,7 +43,7 @@ local cmds = {
 	FORMATION_RANK = 13988,
 	SELECT_MISSILES = 14001,
 	BUILD_PLATE = 14002,
-
+	AMMO_SELECT_GENERIC = 20500, -- Probably is safe.
 	AREA_MEX = 30100,
 	AREA_TERRA_MEX = 30101,
 	STEALTH = 31100,
@@ -119,6 +119,12 @@ local cmds = {
 	
 	TERRAFORM_INTERNAL = 39801,
 }
+
+local extras, _ = VFS.Include("LuaRules/Configs/ammostatecmds.lua")
+for name, id in pairs(extras) do
+	cmds[name] = id
+end
+
 -- not included here, just listed
 --[[
 PURCHASE = 32601	-- planetwars, range up to 32601 + #purchases

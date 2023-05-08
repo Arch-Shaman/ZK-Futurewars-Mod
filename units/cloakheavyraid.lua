@@ -89,6 +89,7 @@ return {
 					light_beam_start = 0.25,
 					cloakstrike = 3.2,
 					combatrange = 50,
+					armorpiercing = 1,
 				},
 				damage                  = {
 					default = 280.1,

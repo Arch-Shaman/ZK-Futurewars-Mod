@@ -38,19 +38,22 @@ local SIG_CLOSE = 8
 
 local smokePiece = { base, aim}
 
+local closeSpeed = math.rad(110)
+
 local function popUp()
 	GG.Script_OffsetAimAndColVol(unitID, false, 0)
 	GG.SetUnitArmor(unitID, 1.0)
 	
 	Signal(SIG_CLOSE)
 	SetSignalMask(SIG_OPEN)
+	local speed = closeSpeed * 2
 	
-	Turn(door1, z_axis, math.rad(0), math.rad(210))
-	Turn(door2, z_axis, math.rad(0), math.rad(210))
-	Turn(door3, z_axis, math.rad(0), math.rad(210))
-	Turn(door4, z_axis, math.rad(0), math.rad(210))
-	Turn(door5, x_axis, 0, math.rad(210))
-	Turn(door6, x_axis, 0, math.rad(210))
+	Turn(door1, z_axis, math.rad(0), speed)
+	Turn(door2, z_axis, math.rad(0), speed)
+	Turn(door3, z_axis, math.rad(0), speed)
+	Turn(door4, z_axis, math.rad(0), speed)
+	Turn(door5, x_axis, 0, speed)
+	Turn(door6, x_axis, 0, speed)
 	
 	Sleep(100)
 	Move(turret, y_axis, 0, 150)
@@ -77,15 +80,46 @@ local function popDown()
 	Move(turret, y_axis, -34, 22)
 	Sleep(700)
 	
-	Turn(door1, z_axis, math.rad(-120), math.rad(110))
-	Turn(door2, z_axis, math.rad(-120), math.rad(110))
-	Turn(door3, z_axis, math.rad(120), math.rad(110))
-	Turn(door4, z_axis, math.rad(120), math.rad(110))
-	Turn(door5, x_axis, math.rad(120), math.rad(110))
-	Turn(door6, x_axis, math.rad(-120), math.rad(110))
+	Turn(door1, z_axis, math.rad(-120), closeSpeed)
+	Turn(door2, z_axis, math.rad(-120), closeSpeed)
+	Turn(door3, z_axis, math.rad(120), closeSpeed)
+	Turn(door4, z_axis, math.rad(120), closeSpeed)
+	Turn(door5, x_axis, math.rad(120), closeSpeed)
+	Turn(door6, x_axis, math.rad(-120), closeSpeed)
 	
 	GG.SetUnitArmor(unitID, armorValue)
 	GG.Script_OffsetAimAndColVol(unitID, 26, -30)
+end
+
+local function popDownTransported()
+	if readyToFire then
+		Signal(SIG_OPEN)
+		SetSignalMask(SIG_CLOSE)
+		
+		readyToFire = false
+		local speed = closeSpeed * 4
+		
+		Turn(turret, y_axis, tauOn6*position, speed)
+		Turn(sleeve, x_axis,0, math.rad(100))
+		
+		Move(b1, z_axis, -4.4, 20)
+		Move(barrel, z_axis, -7.4, 20)
+		Sleep(125)
+		
+		Move(turret, y_axis, -34, 88)
+		Sleep(150)
+		Turn(door1, z_axis, math.rad(-120), speed)
+		Turn(door2, z_axis, math.rad(-120), speed)
+		Turn(door3, z_axis, math.rad(120), speed)
+		Turn(door4, z_axis, math.rad(120), speed)
+		Turn(door5, x_axis, math.rad(120), speed)
+		Turn(door6, x_axis, math.rad(-120), speed)
+		GG.Script_OffsetAimAndColVol(unitID, 26, -30)
+		readyToFire = false
+	else
+		GG.SetUnitArmor(unitID, 1)
+	end
+	Move(base, y_axis, 34, 190)
 end
 
 
@@ -99,6 +133,17 @@ local function RestoreAfterDelay()
 	end
 	
 	StartThread(popDown)
+end
+
+function OnTransportChanged(isTransported)
+	if isTransported then
+		StartThread(popDownTransported)
+	else
+		if not readyToFire then
+			GG.SetUnitArmor(unitID, armorValue)
+		end
+		Move(base, y_axis, 0)
+	end
 end
 
 function script.Create()

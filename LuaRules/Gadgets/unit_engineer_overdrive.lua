@@ -54,6 +54,9 @@ for i = 1, #UnitDefs do
 end
 
 local function UpdateUnitRules(unitID, data)
+	if data == nil then
+		return
+	end
 	local unitConfig = unitRulesUnits[unitRulesUnits] or config[data.unitDef]
 	local chargeMax = unitConfig.chargetotal
 	local currentCharge = data.charge / chargeMax
@@ -78,6 +81,9 @@ end
 
 local function UpdateWorker(unitID, workRate, unitConfig)
 	local data = IterableMap.Get(handled, unitID)
+	if data == nil then
+		return
+	end
 	local baseSpeed = data.baseSpeed
 	local newCharge = data.charge
 	if debugMode then

@@ -21,6 +21,7 @@ return {
 			outline_x 			= 55,
 			outline_y 			= 80,
 			outline_yoff 		= 55,
+			istacmissile = 1,
 		},
 		explodeAs                     = "SINGULARITY_WEAPON",
 		footprintX                    = 1,

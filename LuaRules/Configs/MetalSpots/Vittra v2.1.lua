@@ -1,0 +1,37 @@
+local normal = 2.5
+
+return {
+	spots = {
+		{x = 3240, z = 5016, metal = normal},
+		{x = 1864, z = 4872, metal = normal},
+		{x = 3096, z = 4728, metal = normal},
+		{x = 4504, z = 4696, metal = normal},
+		{x = 3432, z = 4696, metal = normal},
+		{x = 1752, z = 376, metal = normal},
+		{x = 1672, z = 4648, metal = normal},
+		{x = 1064, z = 1256, metal = normal},
+		{x = 488, z = 2200, metal = normal},
+		{x = 4744, z = 3016, metal = normal},
+		{x = 1144, z = 3912, metal = normal},
+		{x = 3976, z = 1304, metal = normal},
+		{x = 2040, z = 4664, metal = normal},
+		{x = 2584, z = 3944, metal = normal},
+		{x = 3896, z = 3848, metal = normal},
+		{x = 680, z = 424, metal = normal},
+		{x = 3672, z = 3048, metal = normal},
+		{x = 3672, z = 2088, metal = normal},
+		{x = 456, z = 4696, metal = normal},
+		{x = 1624, z = 2072, metal = normal},
+		{x = 2568, z = 2552, metal = normal},
+		{x = 3032, z = 584, metal = normal},
+		{x = 1928, z = 632, metal = normal},
+		{x = 1496, z = 3032, metal = normal},
+		{x = 4808, z = 2216, metal = normal},
+		{x = 520, z = 2984, metal = normal},
+		{x = 4600, z = 472, metal = normal},
+		{x = 2568, z = 1240, metal = normal},
+		{x = 3384, z = 568, metal = normal},
+		{x = 1624, z = 712, metal = normal},
+		{x = 3208, z = 264, metal = normal},
+	}
+}

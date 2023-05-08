@@ -303,7 +303,7 @@ function script.Shot(num)
 	EmitSfx(firepoint, GG.Script.FIRE_W2)
 	Turn(firepoint, y_axis, 0)
 	--]]
-	StartThread(Recoil)
+	--StartThread(Recoil)
 end
 
 function script.BlockShot(num, targetID)

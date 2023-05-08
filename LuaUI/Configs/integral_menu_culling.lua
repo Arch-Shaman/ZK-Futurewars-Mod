@@ -1,5 +1,7 @@
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
 
+local extras, _ = VFS.Include("LuaRules/Configs/ammostatecmds.lua")
+
 local configList = {
 	{label = "Basic Commands"},
 	{cmdID = CMD_AREA_MEX              , default = true, name = "Area Mex"},
@@ -71,6 +73,7 @@ local configList = {
 	{cmdID = CMD_FIRE_AT_SHIELD        , state = true, default = false, name = "Ward Fire"},
 	{cmdID = CMD_OVERRECLAIM           , state = true, default = false, name = "Overreclaim Prevention"},
 	{cmdID = CMD_FIRECYCLE             , state = true, default = false, name = "Spread Napalm"},
+	{label = "Ammo States (Shown by default)"},
 }
 
 local defaultValues = {
@@ -116,5 +119,10 @@ local defaultValues = {
 	[CMD_SELECTION_RANK] = true,
 	[CMD_FORMATION_RANK] = true,
 }
+
+for name, id in pairs(extras) do
+	local shownName = UnitDefNames[string.lower(name):gsub("ammo_select_", "")].humanName
+	configList[#configList + 1] = {cmdID = id, state = true, default = true, name = "Ammo State (" .. shownName .. ")"}
+end
 
 return configList, defaultValues

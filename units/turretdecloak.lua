@@ -51,7 +51,7 @@ return {
 		weaponDefs = {
 			DECLOAK    = {
 				name                    = "Cloak Disruptor Pulse",
-				areaOfEffect            = 1000,
+				areaOfEffect            = 1600,
 				craterBoost             = 0,
 				craterMult              = 0,
 				damage                  = {
@@ -68,8 +68,8 @@ return {
 					lups_noshockwave = "1",
 				},
 				edgeeffectiveness       = 0.4,
-				explosionGenerator      = "custom:scanner_ping",
-				explosionSpeed          = 500,
+				explosionGenerator      = "custom:scanner_ping_1600",
+				explosionSpeed          = 800,
 				impulseBoost            = 0,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,

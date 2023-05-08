@@ -63,6 +63,9 @@ return {
 				avoidFriendly           = true,
 				colorMap				= [[0.329 0.78 0.8196 0.01 0.251 0.608 0.639 0.01  0.08 0.235 0.251 0.01]],
 				cegtag                  = "gluon_tiny",
+				customParams            = {
+					armorpiercing = 0.25,
+				},
 				damage                  = {
 					default = 300.1,
 				},

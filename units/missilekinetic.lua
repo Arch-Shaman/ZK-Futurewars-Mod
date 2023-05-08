@@ -20,6 +20,7 @@ local unitDef = {
 		outline_x = 55,
 		outline_y = 80,
 		outline_yoff = 55,
+		istacmissile = 1,
 	},
 	explodeAs                     = "BIG_UNIT",
 	footprintX                    = 1,
@@ -59,7 +60,7 @@ local unitDef = {
 			collideFriendly         = false,
 			craterAreaOfEffect      = 300,
 			craterBoost             = 500,
-			craterMult              = 4,
+			craterMult              = 6,
 			customParams            = {},
 			--model                   = "wep_b_fabby.s3o",
 			damage                  = {

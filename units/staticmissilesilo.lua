@@ -29,6 +29,7 @@ return {
 		collisionVolumeOffsets        = "0 20 0",
 		customParams                  = {
 			nongroundfac = "1",
+			missile_silo_capacity = 4,
 		},
 		energyUse                     = 0,
 		explodeAs                     = "LARGE_BUILDINGEX",

@@ -111,7 +111,6 @@ local unitDef = {
 			weaponType              = "BeamLaser",
 			weaponVelocity          = 1500,
 		},
-
 		ATA = {
 			name                    = "Tachyon Accelerator",
 			areaOfEffect            = 20,
@@ -129,6 +128,7 @@ local unitDef = {
 				reveal_unit = 10,
 				allowedpitcherror = 0.8,
 				allowedheadingerror = 0.8,
+				armorpiercing = 0.2,
 			},
 			damage                  = {
 				default = 6000.1,

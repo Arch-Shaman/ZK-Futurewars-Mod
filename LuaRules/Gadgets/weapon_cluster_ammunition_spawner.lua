@@ -327,7 +327,7 @@ local function SpawnSubProjectiles(id, wd)
 		else
 			projectileattributes["ttl"] = WeaponDefs[me].flightTime or WeaponDefs[me].beamTTL or 9000
 		end
-		projectileattributes["tracking"] = WeaponDefs[me].tracks or false
+		projectileattributes["tracking"] = (WeaponDefs[me].tracks and ttype == unit and target) or false
 		projectileattributes["gravity"] = -WeaponDefs[me].myGravity or -1
 		local ceg = WeaponDefs[me].cegTag
 		--spEcho(tostring(ceg))
@@ -441,7 +441,8 @@ local function SpawnSubProjectiles(id, wd)
 		spSpawnExplosion(x, y, z, 0, 0, 0, {weaponDef = wd, owner = spGetProjectileOwnerID(id), craterAreaOfEffect = WeaponDefs[wd].craterAreaOfEffect, damageAreaOfEffect = 0, edgeEffectiveness = 0, explosionSpeed = WeaponDefs[wd].explosionSpeed, impactOnly = WeaponDefs[wd].impactOnly, ignoreOwner = WeaponDefs[wd].noSelfDamage, damageGround = true})
 	end
 	--Spring.Echo("OnSplit", WeaponDefs[wd].hitSound[1].name, WeaponDefs[wd].hitSound[1].volume)
-	spPlaySoundFile(WeaponDefs[wd].hitSound[1].name, WeaponDefs[wd].hitSound[1].volume, x, y, z, 0, 0, 0, "battle")
+	local soundToPlay = WeaponDefs[wd].customParams.onsplitsound or WeaponDefs[wd].hitSound[1].name
+	spPlaySoundFile(soundToPlay, WeaponDefs[wd].hitSound[1].volume, x, y, z, 0, 0, 0, "battle")
 	local projectiledata = IterableMap.Get(projectiles, id)
 	if projectiledata.charges == 1 or projectiledata.charges == 0 then --charge below 0 never run out
 		if debugMode then
@@ -539,7 +540,13 @@ local function CheckProjectile(id)
 					if debugMode then
 						spEcho("Useheight check")
 					end
-					if y2 - GetFixedHeight(wd, x2,z2) <= myConfig.spawndist and vy <= myConfig.minvelocity then
+					local heightDiff
+					if myConfig.useasl then
+						heightDiff = y2
+					else
+						heightDiff = y2 - GetFixedHeight(wd, x2,z2)
+					end
+					if heightDiff <= myConfig.spawndist and vy <= myConfig.minvelocity then
 						if debugMode then
 							spEcho("Spawn by ground height")
 						end

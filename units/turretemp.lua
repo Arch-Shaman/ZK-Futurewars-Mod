@@ -30,7 +30,7 @@ return {
 		footprintZ                    = 2,
 		iconType                      = "defensespecial",
 		levelGround                   = false,
-		maxDamage                     = 2200,
+		maxDamage                     = 3000,
 		maxSlope                      = 36,
 		maxWaterDepth                 = 0,
 		noChaseCategory               = "FIXEDWING LAND SHIP SWIM GUNSHIP SUB HOVER",
@@ -43,7 +43,7 @@ return {
 				"custom:YELLOW_LIGHTNING_GROUNDFLASH",
 			},
 		},
-		sightDistance                 = 554, -- Range*1.1 + 48 for radar overshoot
+		sightDistance                 = 600, -- Range*1.1 + 48 for radar overshoot
 		useBuildingGroundDecal        = true,
 		yardMap                       = "oo oo",
 		weapons                       = {

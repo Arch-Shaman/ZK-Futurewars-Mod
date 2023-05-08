@@ -53,6 +53,7 @@ for i=1, #WeaponDefs do
 					config[i]["useheight"] = tonumber(curRef.useheight) or 0
 					config[i]["dynDamage"] = type(curRef.dyndamage) == "string"
 					config[i]["airburst"] = curRef.noairburst == nil
+					config[i]["useasl"] = curRef.useasl ~= nil
 					config[i]["onExplode"] = curRef.onexplode ~= nil
 					config[i]["usertarget"] = curRef.usertargetable ~= nil
 					config[i]["noceg"] = curRef.clusternoceg ~= nil

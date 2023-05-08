@@ -3,8 +3,8 @@ return {
 		unitname               = "gunshipraid",
 		name                   = "Whirlwind",
 		description            = "Medium Laser Raider Gunship",
-		acceleration           = 0.2,
-		brakeRate              = 0.4,
+		acceleration           = 0.4,
+		brakeRate              = 0.8,
 		buildCostMetal         = 250,
 		builder                = false,
 		buildPic               = "gunshipraid.png",
@@ -23,6 +23,7 @@ return {
 		customParams           = {
 			airstrafecontrol = "1",
 			modelradius    = "18",
+			specialreloadtime = 900,
 		},
 
 		explodeAs              = "GUNSHIPEX",
@@ -42,12 +43,13 @@ return {
 		sfxtypes               = {
 			explosiongenerators = {
 				"custom:VINDIBACK",
+				"custom:SNIPERCOOLOFF"
 			},
 		},
 		sightDistance          = 700,
 		sonarDistance		   = 700,
 		radarDistance		   = 1300,
-		turnRate               = 693,
+		turnRate               = 740,
 		weapons                = {
 			{
 				def                = "LASER",
@@ -55,12 +57,12 @@ return {
 				maxAngleDif        = 180,
 				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
 			},
-			--{
-				--def                = "LASER_OVERDRIVE",
-				--mainDir            = "0 0 1",
-				--maxAngleDif        = 180,
-				--onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
-			--},
+			{
+				def                = "LASER_OVERDRIVE",
+				mainDir            = "0 0 1",
+				maxAngleDif        = 180,
+				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
+			},
 		},
 		weaponDefs             = {
 			LASER = {
@@ -109,44 +111,40 @@ return {
 				weaponVelocity			= 730,
 			},
 			LASER_OVERDRIVE = {
-				name                    = "Pulsed Phaser",
+				name                    = "Overloaded Modulated Laser System (Ability)",
 				areaOfEffect            = 8,
 				avoidFeature            = false,
-				beamTime                = 20/30,
+				beamTime                = 4/30,
 				collideFriendly         = false,
 				coreThickness           = 1.8,
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting       = 0.7,
-
 				customparams = {
-
-					light_color = "0.8941 0.7647 0.1255",
-					light_radius = 175,
-					underwaterdamagereduction = 0.1,
+					light_color = "0.0 0.9803 0.49804",
+					light_radius = 105,
 					combatrange = 250,
 				},
 
 				damage                  = {
-					default = 280*1.25,
+					default = 345.1,
 				},
 
-				explosionGenerator      = "custom:heavybeamorangeimpactsmall",
+				explosionGenerator      = "custom:heavybeamgreenimpact",
 				--heightMod             = 0.5,
 				impactOnly              = true,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				largeBeamLaser          = true,
-				laserFlareSize          = 2.7,
+				laserFlareSize          = 1.7,
 				minIntensity            = 1,
 				noSelfDamage            = true,
-				range                   = 320,
+				range                   = 341,
 				reloadtime              = 1.4,
-				rgbColor                = "0.8941 0.7647 0.1255",
+				rgbColor                = "0.0 0.9803 0.49804",
 				soundStart              = "weapon/laser/medium_phaser_overdriven",
-				sweepfire               = false,
-				texture1                = "laser4",
+				texture1                = "ecmnoise",
 				texture2                = "flare",
 				texture3                = "flare",
 				texture4                = "smallflare",

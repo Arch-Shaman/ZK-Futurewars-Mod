@@ -68,11 +68,13 @@ for i=1, #WeaponDefs do
 		config[i].distance = tonumber(customParams.cruisedist)
 		config[i].track = customParams.cruisetracking ~= nil
 		config[i].airlaunched = customParams.airlaunched ~= nil
+		config[i].droptoalt = customParams.droptoalt ~= nil
 		config[i].noascension = customParams.cruise_noascension ~= nil
 		config[i].radius = tonumber(customParams.cruiserandomradius)
 		config[i].permoffset = customParams.cruise_permoffset ~= nil
 		config[i].finaltracking = customParams.cruise_nolock == nil
 		config[i].torpedo = wd.type == "TorpedoLauncher"
+		config[i].ascensiononly = customParams.ascentonly ~= nil
 		config[i].ascendradius = tonumber(customParams.cruise_ascendradius)
 		config[i].splittarget = customParams.cruise_torpedosplittarget ~= nil
 		config[i].ignoreterrain = customParams.cruise_ignoreterrain ~= nil
@@ -214,7 +216,7 @@ local function ForceUpdate(id, x, y, z)
 		data.target[2] = y
 		data.target[3] = z
 	end
-end
+end	
 
 local function GetTargetPosition(id, allyteam)
 	local data = IterableMap.Get(missiles, id)
@@ -233,13 +235,6 @@ local function SetMissileUnguided(id, unitID)
 		data.unguided = true
 	end
 end
-
-
-
-GG.ForceCruiseUpdate = ForceUpdate
-GG.GetMissileCruising = IsMissileCruiseDone
-GG.GetCruiseTarget = GetTargetPosition
-GG.SetCruiseMissileUnguided = SetMissileUnguided
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	local wep = weaponDefID or spGetProjectileDefID(proID) -- needed for bursts.
@@ -283,13 +278,20 @@ local function ForceMissileToCruise(proID, proOwnerID, weaponDefID)
 	gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 end
 
-GG.ForceMissileToCruise = ForceMissileToCruise
 
 function gadget:ProjectileDestroyed(proID)
 	local data = IterableMap.Get(missiles, proID)
 	if data then
 		data.destroyed = true
 	end
+end
+
+function gadget:Initialize()
+	GG.ForceCruiseUpdate = ForceUpdate
+	GG.GetMissileCruising = IsMissileCruiseDone
+	GG.GetCruiseTarget = GetTargetPosition
+	GG.SetCruiseMissileUnguided = SetMissileUnguided
+	GG.ForceMissileToCruise = ForceMissileToCruise
 end
 
 function gadget:GameFrame(f)
@@ -368,11 +370,15 @@ function gadget:GameFrame(f)
 							--Spring.Echo("Aiming for " .. targetx .. "," .. targetz)
 							spSetProjectileTarget(projectile, targetx, spGetGroundHeight(targetx, targetz) + cruiseheight, targetz)
 						else
-							spSetProjectileTarget(projectile, cx, originalgroundheight + cruiseheight, cz)
+							if not missileconfig.droptoalt then
+								spSetProjectileTarget(projectile, cx, originalgroundheight + cruiseheight, cz)
+							else
+								spSetProjectileTarget(projectile, cx, cruiseheight, cz)
+							end
 						end
 						--spEcho("Taking off: " .. cy .. " / " .. wantedheight)
 					end
-					if data.takeoff and ((cy >= wantedheight - 40 and not missileconfig.airlaunched) or (cy <= wantedheight + 20 and missileconfig.airlaunched)) then -- end ascent
+					if data.takeoff and ((cy >= wantedheight - 40 and not missileconfig.airlaunched and not missileconfig.droptoalt) or (cy <= wantedheight + 20 and missileconfig.airlaunched and not missileconfig.droptoalt) or (cy <= wantedheight and missileconfig.droptoalt)) then -- end ascent
 						data.takeoff = false
 						data.cruising = true
 						--spEcho("No longer taking off")
@@ -382,7 +388,7 @@ function gadget:GameFrame(f)
 						local v = sqrt((vx * vx) + (vz * vz))
 						if data.useprediction and not missileconfig.track then
 							data.useprediction = false
-							if data.originaltarget and spValidUnitID(data.originalTarget) then
+							if data.originaltarget and spValidUnitID(data.originaltarget) then
 								local targetx, targety, targetz = spGetUnitPosition(data.originaltarget)
 								if not targetx then
 									targetx, targety, targetz = data.target[1], data.target[2], data.target[3]
@@ -456,7 +462,7 @@ function gadget:GameFrame(f)
 								end
 							end
 						end
-						if distance <= mindist then -- end of cruise phase
+						if distance <= mindist or (missileconfig.ascensiononly and data.cruising) then -- end of cruise phase
 							data.cruising = false
 							if missileconfig.track and missileconfig.finaltracking and data.type == "unit" and spValidUnitID(data.target) then
 								spSetProjectileTarget(projectile, data.target, targettypes.unit)

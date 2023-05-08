@@ -1,6 +1,6 @@
 local name = "commweapon_grenadelauncher"
 local weaponDef = {
-	name                    = [[Grenade Launcher]],
+	name                    = "Grenade Launcher",
 	areaOfEffect            = 96,
 	bouncerebound           = 0.5,
 	bounceslip              = 0.4,
@@ -9,13 +9,13 @@ local weaponDef = {
 	craterBoost             = 0,
 	craterMult              = 1,
 	burnblow                = false,
-	cegTag                  = [[hydromissile]],
+	cegTag                  = "hydromissile",
 	customParams            = {
 		is_unit_weapon = 1,
-		muzzleEffectFire = [[custom:HEAVY_CANNON_MUZZLE]],
-		miscEffectFire = [[custom:RIOT_SHELL_H]],
+		muzzleEffectFire = "custom:HEAVY_CANNON_MUZZLE",
+		miscEffectFire = "custom:RIOT_SHELL_H",
 
-		light_color = [[1.4 0.8 0.3]],
+		light_color = "1.4 0.8 0.3",
 		reaim_time = 1,
 		reveal_unit = 8,
 		use_okp = 1,
@@ -29,7 +29,7 @@ local weaponDef = {
 	},
 
 	edgeEffectiveness       = 0.6,
-	explosionGenerator      = [[custom:MEDMISSILE_EXPLOSION]],
+	explosionGenerator      = "custom:MEDMISSILE_EXPLOSION",
 	flightTime              = 3.8,
 	groundbounce            = 1,
 	heightboostfactor       = 0,
@@ -39,17 +39,17 @@ local weaponDef = {
 	interceptedByShieldType = 1,
 	leadlimit               = 100,
 	myGravity               = 0.25,
-	model                   = [[diskball.s3o]],
+	model                   = "diskball.s3o",
 	numBounce               = 6,
-	range                   = 440,
+	range                   = 350,
 	reloadtime              = 2,
-	soundHit                = [[weapon/clusters/light_cluster_grenade_hit]],
+	soundHit                = "weapon/clusters/light_cluster_grenade_hit",
 	soundHitVolume          = 8.6,
-	soundStart              = [[weapon/cannon/light_launcher]],
+	soundStart              = "weapon/cannon/light_launcher",
 	sprayAngle				= 4420,
 	turret                  = true,
 	waterWeapon             = true,
-	weaponType              = [[Cannon]],
+	weaponType              = "Cannon",
 	weaponVelocity          = 380,
 }
 

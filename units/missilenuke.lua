@@ -18,6 +18,7 @@ return {
 			aimposoffset   = "0 105 -38",
 			midposoffset   = "0 95 -38",
 			mobilebuilding = "1",
+			istacmissile = 1,
 		},
 		explodeAs                     = "CRBLMSSL",
 		footprintX                    = 1,
@@ -64,9 +65,10 @@ return {
 					cruisedist = 800,
 					reveal_unit = 20,
 					cruise_ignoreterrain = "1",
+					armorpiercing = 0.35,
 				},
 				damage                  = {
-					default = 11000.1,
+					default = 15000.1,
 				},
 				edgeEffectiveness       = 0.3,
 				explosionGenerator      = "custom:LONDON_FLAT",      -- note, spawning of the explosion is handled by exp_nuke_effect_chooser.lua

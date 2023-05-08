@@ -26,11 +26,15 @@ local spGetUnitHealth		= Spring.GetUnitHealth
 local IterableMap           = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 
 local aircraftDefIDs = {}
+local transportDefs = {}
 
 function gadget:Initialize()
 	for i = 1, #UnitDefs do
 		if UnitDefs[i].canFly and not UnitDefs[i].customParams.is_drone then
 			aircraftDefIDs[i] = true
+			if UnitDefs[i].transportSize then
+				transportDefs[i] = true
+			end
 		end
 	end
 end
@@ -72,9 +76,12 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 	end
 	--Spring.Echo("Plane damaged")
 	local data = IterableMap.Get(recentDamage, unitID)
+	if data == nil then
+		return
+	end
 	local health, maxHealth = spGetUnitHealth(unitID)
 	data.damage = data.damage + damage -- store this so we don't have to recalculate it when a plane crashes.
-	if health < 0 and (data.damage / maxHealth) <= 0.5 then
+	if  health < 0 and (transportDefs[unitDefID] or (data.damage / maxHealth) <= 0.5) then
 		--Spring.Echo("Plane shot down")
 		CallAsUnitIfExists(unitID, "OnStartingCrash") -- tell the LUS that we're crashing (mostly for transports)
 		Spring.SetUnitCrashing(unitID, true)

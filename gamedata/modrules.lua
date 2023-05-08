@@ -10,13 +10,19 @@
 
 local pfForceSingleThreaded = false
 local forceSingleThreaded = false
+local luaallocation = 2560
 local modoptions = Spring.GetModOptions()
+luaallocation = tonumber(modoptions.memorylimit) or 2560
+if luaallocation < 1536 then
+	luaallocation = 1536
+end
 if (modoptions and (modoptions.mtpath == 0 or modoptions.mtpath == "0")) then
 	multithreadPathing = true
 	forceSingleThreaded = true
 end
 Spring.Echo("pfForceSingleThreaded", pfForceSingleThreaded)
 Spring.Echo("forceSingleThreaded", forceSingleThreaded)
+Spring.Echo("Memory limit: " .. luaallocation)
 
 local modrules  = {
 	
@@ -39,11 +45,15 @@ local modrules  = {
 		constructionDecaySpeed = 0.03;	-- defaults to 0.03
 	},
 
-
+	damage = {
+		debris = 20,
+	},
+	
 	reclaim = {
 		multiReclaim  = 1;    -- defaults to 0
 		reclaimMethod = 0;    -- defaults to 1
 		unitMethod    = 0;    -- defaults to 1
+		unitDrainHealth = false,
 
 		unitEnergyCostFactor    = 0;  -- defaults to 0
 		unitEfficiency          = 0.6;  -- defaults to 1
@@ -117,7 +127,7 @@ local modrules  = {
 		reloadScale = 0;  -- defaults to 0.4
 	},
 
-
+	
 	fireAtDead = {
 		fireAtKilled   = false;  -- defaults to false
 		fireAtCrashing = false;   -- defaults to false
@@ -143,6 +153,7 @@ local modrules  = {
 		pfForceSingleThreaded = forceSingleThreaded,
 		allowTake = false,
 		enableSmoothMesh = false,
+		LuaAllocLimit = luaallocation,
 	},
 }
 --------------------------------------------------------------------------------

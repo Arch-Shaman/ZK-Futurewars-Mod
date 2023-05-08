@@ -17,6 +17,8 @@ Spring.Echo("Loading UnitDefs_posts")
 
 VFS.Include("LuaRules/Configs/constants.lua")
 local TRANSPORT_LIGHT_COST_MAX = 1000
+local TRANSPORT_STRUCT_COST_MAX = 1300
+local TRANSPORT_LIGHT_STRUCT_COST_MAX = 300
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -860,6 +862,15 @@ for name, ud in pairs(UnitDefs) do
 	
 	-- Remove engine transport limits
 	if Utilities.IsCurrentVersionNewerThan(104, 600) then
+		-- set up structure transports:
+		if ud.yardmap ~= nil and ud.customparams.istacmissile == nil and ud.customparams.isgeo == nil and ud.buildcostmetal <= TRANSPORT_STRUCT_COST_MAX and not ud.customparams.child_of_factory and not ud.customparams.parent_of_plate and not ud.customparams.ismex then
+			if ud.buildcostmetal > TRANSPORT_LIGHT_STRUCT_COST_MAX then
+				ud.customparams.requireheavytrans = 1
+			end
+			ud.cantbetransported = false
+			ud.transportbyenemy = false
+		end
+			
 		ud.transportmass = nil
 		if ud.buildcostmetal and tonumber(ud.buildcostmetal) > TRANSPORT_LIGHT_COST_MAX then
 			ud.customparams.requireheavytrans = 1

@@ -18,7 +18,7 @@ local weaponDef = {
 		--miscEffectFire = [[custom:RIOT_SHELL_H]],
 		light_color = [[0.85 0.2 0.2]],
 		impulse = [[110]],
-		normaldamage = 1,
+		impulsedoesdamage = "1",
 		notoggleimpulse = [[1]],
 	},
 	damage                  = {

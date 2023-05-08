@@ -1,4 +1,5 @@
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
+local extraStateTypes, _ = VFS.Include("LuaRules/Configs/ammostateinfo.lua")
 
 local stateData = {
 	[CMD_WANT_ONOFF] = 2,
@@ -68,5 +69,10 @@ local gadgetReverse = {
 	[CMD_FIRECYCLE] = true,
 	[CMD_ARMORSTATE] = true,
 }
+
+for id, num in pairs(extraStateTypes) do
+	stateData[id] = num
+	gadgetReverse[id] = true
+end
 
 return stateData, gadgetReverse, specialHandling

@@ -3908,7 +3908,7 @@ end
 
 function gadget:Initialize()
 	gadgetHandler:RegisterCMDID(CMD_TERRAFORM_INTERNAL)
-	
+	GG.IsPositionTerraable = IsPositionTerraformable
 	local terraformColor = {0.7, 0.75, 0, 0.7}
 	
 	Spring.SetCustomCommandDrawData(CMD_RAMP, "Ramp", terraformColor, false)

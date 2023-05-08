@@ -34,7 +34,7 @@ local unarmedspeed = 1 + 1/3
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitMoveTypeData = Spring.GetUnitMoveTypeData
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
-local SetAirMoveTypeData = Spring.MoveCtrl.SetAirMoveTypeData
+--local SetAirMoveTypeData = Spring.MoveCtrl.SetAirMoveTypeData
 local movectrlGetTag = Spring.MoveCtrl.GetTag
 local deathexplosiontriggered = false
 local ammoState = 0
@@ -58,12 +58,12 @@ function OnAmmoChange(newState)
 	ammoState = newState
 	if newState == 0 then
 		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
-		SetAirMoveTypeData(unitID, "maxAcc", 1)
+		spSetUnitRulesParam(unitID, "selfMaxAccelerationChange", 1)
 		GG.UpdateUnitAttributes(unitID)
 		GG.UpdateUnitAttributes(unitID)
 	elseif newState == 1 then
 		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", unarmedspeed)
-		SetAirMoveTypeData(unitID, "maxAcc", unarmedspeed)
+		spSetUnitRulesParam(unitID, "selfMaxAccelerationChange", unarmedspeed)
 		GG.UpdateUnitAttributes(unitID)
 		GG.UpdateUnitAttributes(unitID)
 	end
