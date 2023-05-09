@@ -18,9 +18,9 @@ local weaponDef = {
 		blastwave_impulse = 5.2,
 		blastwave_speed = 4,
 		blastwave_life = 30,
-		blastwave_lossfactor = 0.875,
-		blastwave_damage = 300,
-		damage_vs_shield = 95*4,
+		blastwave_lossfactor = 0.9,
+		blastwave_damage = 325,
+		damage_vs_shield = 110*4,
 	},
 
 	damage                  = {
