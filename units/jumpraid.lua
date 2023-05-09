@@ -141,7 +141,7 @@ return {
 				tolerance               = 5000,
 				turret                  = true,
 				weaponType              = "LaserCannon",
-				weaponVelocity          = 600,
+				weaponVelocity          = 400,
 			},
 			SWEEPER = {
 				name                    = "Sweeping Flamethrower",
@@ -198,7 +198,7 @@ return {
 				tolerance               = 5000,
 				turret                  = true,
 				weaponType              = "LaserCannon",
-				weaponVelocity          = 600,
+				weaponVelocity          = 500,
 			},
 			COCKTAIL = {
 				name                    = "Molotov Cocktail", --CREDITS: Cliver5
@@ -234,7 +234,7 @@ return {
 					stats_shield_damage = (35*24) + 200,
 				},
 				damage                  = {
-					default = 200,
+					default = 200.01,
 				},
 				explosionGenerator      = "custom:napalm_hellfire",
 				fireStarter             = 70,
@@ -327,7 +327,7 @@ return {
 					light_radius = 500,
 				},
 				damage                  = {
-					default = 50,
+					default = 50.01,
 				},
 				explosionGenerator      = "custom:napalm_firewalker_small",
 				firestarter             = 180,
@@ -363,7 +363,7 @@ return {
 					area_damage_duration = 13.3,
 				},
 				damage                  = {
-					default = 50,
+					default = 50.01,
 				},
 				edgeeffectiveness       = 0.5,
 				explosionGenerator      = "custom:napalm_pyro",
