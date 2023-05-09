@@ -94,6 +94,7 @@ local unitDef = {
 		{
 			def                = "ROCKETS",
 			onlyTargetCategory = "LAND SINK TURRET SHIP SWIM FLOAT HOVER SINK SUB",
+			mainDir            = "0 -1 0",
 			maxAngleDif        = 80,
 		},
 	},
@@ -140,7 +141,7 @@ local unitDef = {
 			weaponVelocity          = 500,
 		},
 		ROCKETS = {
-			burst = 12,
+			burst = 8,
 			burstRate = 2/30,
 			name                    = "Hurricane Surface Attack Rockets",
 			areaOfEffect            = 96,
@@ -166,7 +167,7 @@ local unitDef = {
 			fireStarter             = 70,
 			flightTime              = 7,
 			impulseBoost            = 0,
-			impulseFactor           = 0.4,
+			impulseFactor           = 0,
 			interceptedByShieldType = 2,
 			model                   = "hobbes_nohax.s3o",
 			noSelfDamage            = true,
@@ -178,13 +179,14 @@ local unitDef = {
 			soundStart              = "weapon/missile/deserter_missile_launch",
 			startVelocity           = 100,
 			texture2                = "darksmoketrail",
-			tolerance               = 22000,
+			tolerance               = 5000,
 			tracks                  = true,
-			turnRate                = 2800,
+			turnRate                = 5800,
+			turret					= false,
 			weaponAcceleration      = 1400,
 			weaponType              = "MissileLauncher",
 			weaponVelocity          = 750,
-			wobble                  = 9000,
+			wobble                  = 15000,
 		},
 		BOMB  = {
 			name                    = "Medium Bomb",
@@ -199,7 +201,7 @@ local unitDef = {
 			cylinderTargeting          = 1,
 
 			damage                  = {
-				default = 905.1,
+				default = 1100.1,
 			},
 
 			customParams            = {
