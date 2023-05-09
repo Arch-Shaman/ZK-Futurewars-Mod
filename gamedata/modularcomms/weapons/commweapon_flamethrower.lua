@@ -1,6 +1,6 @@
 local name = "commweapon_flamethrower"
 local weaponDef = {
-	name                    = [[Flame Thrower]],
+	name                    = [[Heavy Flame Thrower]],
 	areaOfEffect            = 96,
 	avoidGround             = false,
 	avoidFeature            = false,
