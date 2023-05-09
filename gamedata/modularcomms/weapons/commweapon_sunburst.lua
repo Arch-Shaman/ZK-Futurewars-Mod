@@ -6,7 +6,7 @@ local weaponDef = {
 	commandfire             = true,
 	craterBoost             = 1,
 	craterMult              = 6,
-
+	cegTag					= "sunburst_trail",
 	customParams            = {
 		is_unit_weapon = 1,
 		slot = "3",
@@ -19,13 +19,11 @@ local weaponDef = {
 		reveal_unit = 8,
 		antibaitbypass = "ärsytät minua",
 	},
-
 	damage                  = {
-		default = 2500,
+		default = 2500.01,
 	},
-
 	explosionGenerator      = "custom:blue_explosion",
-	impactOnly              = true,
+	impactOnly              = false,
 	impulseBoost            = 0,
 	impulseFactor           = 0.2,
 	interceptedByShieldType = 1,
@@ -36,7 +34,7 @@ local weaponDef = {
 	reloadtime              = 10,
 	rgbColor                = "0.5 0.5 1",
 	separation              = 0.5,
-	size                    = 10,
+	size                    = 6,
 	sizeDecay               = 0.05,
 	soundHit                = "weapon/laser/heavy_laser6",
 	soundStart              = "weapon/laser/heavy_laser4",
