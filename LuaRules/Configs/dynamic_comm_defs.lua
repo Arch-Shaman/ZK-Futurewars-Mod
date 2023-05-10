@@ -966,7 +966,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_sunburst",
 		humanName = "Sunburst Cannon",
-		description = "Manually fired weapon that ruin's a single target's day with a high damage shot. Quick reload.",
+		description = "Manually fired weapon that ruin's a single target's day with a high damage shot. Deals additional damage to shields, allowing it to bypass shields in some cases.",
 		image = moduleImagePath .. "commweapon_sunburst.png",
 		limit = 1,
 		cost = 400 * COST_MULT,
