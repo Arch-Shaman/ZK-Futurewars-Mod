@@ -91,6 +91,7 @@ return {
 					timeslow_overslow_frames = 2*30,
 					light_color = "1.88 0.63 2.5",
 					light_radius = 320,
+					mass = 150,
 				},
 				damage                  = {
 					default = 650.1,
