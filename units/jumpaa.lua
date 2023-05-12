@@ -23,6 +23,7 @@ return {
 			outline_x = 80,
 			outline_y = 90,
 			outline_yoff = 30,
+			fireproof = 1,
 		},
 		explodeAs           = "BIG_UNITEX",
 		footprintX          = 2,

@@ -30,6 +30,7 @@ return {
 			grey_goo_range = 120,
 			selection_scale = 1, -- Maybe change later
 			select_show_eco = 1,
+			fireproof = 1,
 		},
 
 		explodeAs           = "BIG_UNITEX",

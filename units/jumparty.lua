@@ -22,6 +22,10 @@ return {
 			outline_x = 125,
 			outline_y = 125,
 			outline_yoff = 21,
+			jump_speed         = 8,
+			jump_reload        = 16,
+			canjump            = 1,
+			jump_range         = 450,
 		},
 
 		explodeAs              = "BIG_UNITEX",

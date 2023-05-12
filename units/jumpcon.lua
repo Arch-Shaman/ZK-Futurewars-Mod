@@ -24,6 +24,7 @@ return {
 			jump_speed         = 8,
 			jump_reload        = 8,
 			jump_from_midair   = 1,
+			fireproof = 1,
 		},
 
 		energyUse           = 0,
