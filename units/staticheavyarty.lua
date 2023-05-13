@@ -11,8 +11,8 @@ return {
 		buildingGroundDecalType       = "staticheavyarty_aoplane.dds",
 		buildPic                      = "staticheavyarty.png",
 		category                      = "SINK",
-		collisionVolumeOffsets        = "0 0 -7",
-		collisionVolumeScales         = "65 194 65",
+		collisionVolumeOffsets        = "0 40 -3",
+		collisionVolumeScales         = "50 50 40",
 		collisionVolumeType           = "cylY",
 		corpse                        = "DEAD",
 		customParams                  = {
@@ -40,7 +40,7 @@ return {
 		maxWaterDepth                 = 0,
 		minCloakDistance              = 150,
 		noChaseCategory               = "FIXEDWING LAND SHIP SWIM GUNSHIP SUB HOVER",
-		objectName                    = "armbrtha.s3o",
+		objectName                    = "armbrtha.dae",
 		script                        = "staticheavyarty.lua",
 		selfDestructAs                = "ATOMIC_BLAST",
 		sfxtypes                      = {
