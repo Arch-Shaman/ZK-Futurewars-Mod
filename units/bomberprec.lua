@@ -106,7 +106,7 @@ return {
 				projectiles             = 3,
 				burstrate				= 4/30,
 				damage                  = {
-					default = 250*4,
+					default = 200*4,
 				},
 				customParams            = {
 					light_color = "1.1 0.9 0.45",
@@ -166,7 +166,7 @@ return {
 					cruisedist = 120,
 				},
 				damage                  = {
-					default = 400.1,
+					default = 600.1,
 				},
 				edgeEffectiveness       = 0.6,
 				explosionGenerator      = "custom:TORPEDO_HIT",
@@ -210,11 +210,11 @@ return {
 				customParams            = {},
 				--model                   = "wep_b_fabby.s3o",
 				damage                  = {
-					default = 1650.01,
+					default = 2700.01,
 				},
 				customParams              = {
 					light_camera_height = 2500,
-					armorpiercing = 0.33,
+					armorpiercing = 0.334,
 					light_color = "0.25 0.13 0.05",
 				},
 				edgeEffectiveness       = 1,
@@ -238,7 +238,7 @@ return {
 				craterBoost             = 10,
 				craterMult              = 5,
 				damage                  = {
-					default = 250.01,
+					default = 225.01,
 				},
 				explosionGenerator      = "custom:MEDMISSILE_EXPLOSION",
 				fireStarter             = 180,
