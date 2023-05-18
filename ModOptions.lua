@@ -103,6 +103,21 @@ local options = {
 		def = false,
 	},
 	{
+		key = "isplanetwars",
+		name = "Planet Wars",
+		desc = "This setting is used to transport important information at the end of the game to FW infra.",
+		type = "bool",
+		section= 'a_important',
+		def = false,
+	},
+	{
+		key = "planetwarsdata",
+		name = "PW Data",
+		desc = "This setting is used to transport important information in game.",
+		type = "string",
+		section= 'a_important',
+		def = "",
+	{
 		key    = 'commeco',
 		name   = 'Enable Efficient Resourcing',
 		desc   = "Support commander regains Efficient Resourcing Module.",
