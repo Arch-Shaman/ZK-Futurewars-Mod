@@ -802,12 +802,6 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				cells[#cells+1] = ''
 			end
 	
-			if (wd.type == "StarburstLauncher") then
-				cells[#cells+1] = ' - Vertical rise:'
-				cells[#cells+1] = numformat(wd.uptime) .. "s"
-			end
-			]]
-	
 			if wd.tracks and wd.turnRate > 0 and (cp.cruisealt == nil or cp.cruisedist == nil) then
 				cells[#cells+1] = ' - Homing:'
 				local turnrate = wd.turnRate * 30 * 180 / math.pi
