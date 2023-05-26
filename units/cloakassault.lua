@@ -86,7 +86,7 @@ return {
 					light_camera_height = 2000,
 					light_color = "0.85 0.85 1.2",
 					light_radius = 220,
-					cloakstrike = 1.33,
+					cloakstrike = 1.25,
 				},
 				cylinderTargeting      = 0,
 				damage                  = {
@@ -113,7 +113,7 @@ return {
 				turret                  = true,
 				waterweapon             = false,
 				weaponType              = "Cannon",
-				weaponVelocity          = 540,
+				weaponVelocity          = 420,
 			},
 		},
 		featureDefs            = {
