@@ -1982,11 +1982,11 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 
 	if (ud.maxAcc) > 0 then
 		statschildren[#statschildren+1] = Label:New{ caption = 'Acceleration: ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = numformat(ud.maxAcc * gameSpeed2) .. " elmo/s^2", textColor = color.stats_fg, }
+		statschildren[#statschildren+1] = Label:New{ caption = numformat(ud.maxAcc * gameSpeed2) .. " elmo/s², textColor = color.stats_fg, }
 	end
 	if (ud.maxDec) > 0 then
 		statschildren[#statschildren+1] = Label:New{ caption = 'Brake rate: ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = numformat(ud.maxDec * gameSpeed2) .. " elmo/s^2", textColor = color.stats_fg, }
+		statschildren[#statschildren+1] = Label:New{ caption = numformat(ud.maxDec * gameSpeed2) .. " elmo/s²", textColor = color.stats_fg, }
 	end ]]
 
 	local COB_angle_to_degree = 360 / 65536
