@@ -221,6 +221,10 @@ options = {
 	},
 }
 
+local hitscan = {
+	BeamLaser = true,
+	LightningCannon = true,
+} -- there's no point in making this table repeatedly when we're going to reuse it.
 local alreadyAdded = {}
 
 local function addUnit (unitDefID, path, buildable)
@@ -639,10 +643,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			local show_range = not cp.stats_hide_range
 			local show_aoe = not cp.stats_hide_aoe
 	
-			local hitscan = {
-				BeamLaser = true,
-				LightningCannon = true,
-			}
+			
 			local show_projectile_speed = not cp.stats_hide_projectile_speed and not hitscan[wd.type]
 	
 			if ((dps + dpsw + dpss + dpsd + dpsc) < 2) then -- no damage: newtons and such
