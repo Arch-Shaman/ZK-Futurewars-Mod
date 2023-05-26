@@ -1,13 +1,13 @@
 function widget:GetInfo()
-  return {
-    name      = "Context Menu",
-    desc      = "v0.088 Chili Context Menu\nPress [Space] while clicking for a context menu.",
-    author    = "CarRepairer, Shaman",
-    date      = "2009-06-02",
-    license   = "GNU GPL, v2 or later",
-    layer     = 0,
-    enabled   = true,
-  }
+	return {
+		name	= "Context Menu",
+		desc	= "v0.088 Chili Context Menu\nPress [Space] while clicking for a context menu.",
+		author	= "CarRepairer, Shaman",
+		date	= "2009-06-02",
+		license	= "GNU GPL, v2 or later",
+		layer	= 0,
+		enabled	= true,
+	}
 end
 
 --[[
@@ -257,11 +257,11 @@ end
 
 local function AddFactoryOfUnits(defName)
 	local ud = UnitDefNames[defName]
-    local name = "Units/" .. string.gsub(ud.humanName, "/", "-")
+	local name = "Units/" .. string.gsub(ud.humanName, "/", "-")
 	addUnit(ud.id, "Buildings/Factory", true)
 	for i = 1, #ud.buildOptions do
 		addUnit(ud.buildOptions[i], name, true)
-    end
+	end
 end
 
 AddFactoryOfUnits("factoryshield")
