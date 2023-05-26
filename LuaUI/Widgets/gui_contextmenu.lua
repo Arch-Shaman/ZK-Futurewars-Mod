@@ -297,7 +297,6 @@ addUnit(UnitDefNames["energyheavygeo"].id, "Buildings/Economy", true) -- moho ge
 addUnit(UnitDefNames["athena"].id, "Units/Misc", true) -- athena
 addUnit(UnitDefNames["wolverine_mine"].id, "Units/Misc", false) -- maybe should go under LV fac, like wolverine? to consider.
 addUnit(UnitDefNames["tele_beacon"].id, "Units/Misc", false)
-addUnit(UnitDefNames["asteroid"].id, "Units/Misc", false)
 
 
 local lobbyIDs = {} -- stores peoples names by lobbyID to match commanders to owners
