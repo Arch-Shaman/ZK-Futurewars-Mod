@@ -126,7 +126,7 @@ end
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	
-	baseDirection = math.random() * GG.Script.tau
+	baseDirection = math.random() * math.tau
 	Turn(base, y_axis, baseDirection)
 	baseDirection = baseDirection + hpi * Spring.GetUnitBuildFacing(unitID)
 	StartThread(SpinWind)
@@ -137,7 +137,7 @@ local function CreateTidalWreck()
 	local x,y,z = Spring.GetUnitPosition(unitID)
 	local heading = Spring.GetUnitHeading(unitID)
 	local team = Spring.GetUnitTeam(unitID)
-	local featureID = Spring.CreateFeature("energywind_deadwater", x, y, z, heading + baseDirection*65536/GG.Script.tau, team)
+	local featureID = Spring.CreateFeature("energywind_deadwater", x, y, z, heading + baseDirection*65536/math.tau, team)
 	Spring.SetFeatureResurrect(featureID, "energywind")
 end
 
