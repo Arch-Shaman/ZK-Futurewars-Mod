@@ -31,6 +31,7 @@ local rrtoe = piece 'rrtoe'
 local lftoe = piece 'lftoe'
 local lrtoe = piece 'lrtoe'
 
+local jumpProg = 0
 local flares = {[0] = fp2, [1] = fp1}
 local barrels = {[0] = lbarrel, [1] = rbarrel}
 
@@ -49,6 +50,9 @@ local WALK_RATE = math.rad(38)
 --------------------------------------------------------------------------------
 local bAiming = false
 local gun_1 = 0
+local jumping = false
+local jumpflaming = false
+local landing = false
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -176,6 +180,99 @@ local function Stop()
 	return (0)
 end
 
+local function JetTrailThread()
+	local waitTime = 100
+	local waitMod = 1
+	local minWait = 1/3
+	while not jumpflaming do
+		EmitSfx(fp2, GG.Script.UNIT_SFX4)
+		EmitSfx(fp1, GG.Script.UNIT_SFX4)
+		Sleep(33)
+	end
+	while jumpflaming do
+		EmitSfx(fp2, GG.Script.FIRE_W2)
+		EmitSfx(fp1, GG.Script.FIRE_W2)
+		waitMod = math.max(minWait, jumpProg / 0.1)
+		Sleep(waitTime * waitMod)
+	end
+end
+
+local function PreJumpThread(goalX, goalZ, goalHeading, startHeading)
+	jumpProg = 0
+	Spring.Echo(tur)
+	local x, _, z = Spring.GetUnitPosition(unitID)
+	local heading = startHeading * GG.Script.headingToRad
+	local wanted = goalHeading * GG.Script.headingToRad
+	wanted = wanted + math.rad(180) % math.rad(360)
+	wanted = wanted - heading
+	jumping = true
+	jumpflaming = false
+	Turn(lgun, x_axis, math.rad(38), math.rad(25.4)) -- 1500ms?
+	Turn(rgun, x_axis, math.rad(38), math.rad(25.4))
+	Turn(torso, y_axis, wanted, math.rad(200))
+	Move(pelvis, y_axis, -7.522, 7.522)
+	Turn(rupleg, x_axis, math.rad(42.7), math.rad(42.7))
+	Turn(lupleg, x_axis, math.rad(42.7), math.rad(42.7))
+	Turn(lfoot, x_axis, math.rad(-45), math.rad(45))
+	Turn(rfoot, x_axis, math.rad(-45), math.rad(45))
+	WaitForTurn(torso, y_axis)
+	WaitForTurn(lgun, x_axis)
+	StartThread(JetTrailThread)
+end
+
+function preJump(turn, lineDist, flightDist, duration, goalX, goalZ, goalHeading, startHeading)
+	Signal(SIG_AIM)
+	Signal(SIG_MOVE)
+	StartThread(PreJumpThread, goalZ, goalX, goalHeading, startHeading)
+end
+
+function beginJump()
+	landing = false
+	jumpflaming = true
+	Move (pelvis, y_axis, 0, 8)
+	Turn (rupleg, x_axis, 0, math.rad(140))
+	Turn (lupleg, x_axis, 0, math.rad(140))
+	Turn (lfoot, x_axis, 0, math.rad(140))
+	Turn (rfoot, x_axis, 0, math.rad(140))
+end
+
+function halfJump()
+	jumpflaming = false
+	Turn (lgun, x_axis, 0, math.rad(70))
+	Turn (rgun, x_axis, 0, math.rad(70))
+	Turn (torso, y_axis, 0, math.rad(70))
+end
+
+function endJump()
+	jumping = false
+	Turn(torso, x_axis, 0, math.rad(90))
+	Turn(lupleg, x_axis, 0, math.rad(90))
+	Turn(rupleg, x_axis, 0, math.rad(90))
+	Turn(lloleg, x_axis, 0, math.rad(90))
+	Turn(rloleg, x_axis, 0, math.rad(90))
+	Turn(rfoot, x_axis, 0, math.rad(90))
+	Turn(lfoot, x_axis, 0, math.rad(90))
+end
+
+local function PrepareJumpLand()
+	Turn(torso, x_axis, math.rad(9.7), math.rad(30))
+	Turn(lupleg, x_axis, math.rad(20.1), math.rad(45))
+	Turn(rupleg, x_axis, math.rad(20.1), math.rad(45))
+	Turn(lloleg, x_axis, math.rad(-45), math.rad(45))
+	Turn(rloleg, x_axis, math.rad(-45), math.rad(45))
+	Turn(rfoot, x_axis, math.rad(18.9), math.rad(30))
+	Turn(lfoot, x_axis, math.rad(18.9), math.rad(30))
+end
+
+function jumping(jumpPercent)
+	jumpProg = jumpPercent
+	if jumpPercent > 95 and not landing then
+		StartThread(PrepareJumpLand)
+		landing = true
+	end
+end
+
+
 function script.Create()
 	bAiming = false
 	StartThread(GG.Script.SmokeUnit, unitID, {torso})
@@ -213,6 +310,8 @@ local function RestoreAfterDelay()
 end
 
 function script.AimWeapon(num, heading, pitch)
+	if num == 2 then return false end
+	if jumping then return false end
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
 	
