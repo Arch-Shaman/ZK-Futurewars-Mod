@@ -24,6 +24,7 @@ return {
 			popupholdfirehp = 0.4,
 			popupunholdfirehp = 0.66,
 			bait_level_default = 1,
+			armortype = 1, -- for context menu.
 		},
 		damageModifier                = 0.2,
 		explodeAs                     = "SMALL_BUILDINGEX",

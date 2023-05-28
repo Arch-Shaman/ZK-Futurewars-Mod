@@ -21,6 +21,7 @@ return {
 			modelradius    = "25",
 			armored_regen  = "10",
 			bait_level_default = 1,
+			armortype = 1, -- for context menu.
 		},
 
 		damageModifier      = 0.2,

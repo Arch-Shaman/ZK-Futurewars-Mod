@@ -21,6 +21,7 @@ return {
 			morphtime      = 20,
 			amph_regen = 10,
 			amph_submerged_at = 40,
+			armortype = 1, -- for context menu.
 		},
 		damageModifier      = 0.2,
 		explodeAs           = "BIG_UNITEX",

@@ -26,6 +26,7 @@ return {
 			modelradius    = "40",
 			bait_level_default = 3,
 			hasarmorstate = 1,
+			armortype = 1, -- for context menu.
 			--dontfireatradarcommand = '0',
 		},
 

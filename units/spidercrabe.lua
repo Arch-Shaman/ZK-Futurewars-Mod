@@ -25,6 +25,7 @@ return {
 			outline_x = 110,
 			outline_y = 110,
 			outline_yoff = 5,
+			armortype = 2, -- for context menu.
 		},
 		damageModifier         = 0.2,
 		explodeAs              = "BIG_UNIT",

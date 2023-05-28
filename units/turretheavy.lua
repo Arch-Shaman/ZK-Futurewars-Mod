@@ -35,6 +35,7 @@ return {
 			popupusearmorstate		= 1,
 			hasarmorstate 			= 1,
 			armored_regen 			 = 68,
+			armortype = 1, -- for context menu.
 		},
 		damageModifier						= 0.2,
 		explodeAs						= "ESTOR_BUILDING",
