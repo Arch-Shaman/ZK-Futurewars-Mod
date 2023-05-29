@@ -1,5 +1,5 @@
 {
-	"target_water_only" : "(water only)",
+	"target_water_only" : "(aquatic targets only)",
 	"target_manual_fire" : "(manual fire)",
 	"target_antiair" : "(anti-air only)",
 	"target_guidance" : "(guidance only)",
