@@ -858,14 +858,14 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			local maxReload = reloadtime
 			local wantsExtraReloadInfo = false
 			if cp.recycler then
-				local maxbonus = tonumber(cp.recycle_bonus) -- recycle_reductiontime, recycle_reduction, recycle_reductionframes, recycle_maxbonus, recycle_bonus
-				maxReload = math.ceil(reloadtime / maxbonus * 30) / 30
+				local maxbonus = tonumber(cp.recycle_maxbonus) -- recycle_reductiontime, recycle_reduction, recycle_reductionframes, recycle_maxbonus, recycle_bonus
+				maxReload = math.ceil((reloadtime / (1 + maxbonus)) * 30) / 30
 				cells[#cells + 1] = " - " .. localization.spooling_weapon .. ":"
 				cells[#cells + 1] = ""
-				cells[#cells + 1] = "\t- " .. localization.spooling_weapon_bonus .. ":"
+				cells[#cells + 1] = "\t\t- " .. localization.spooling_weapon_bonus .. ":"
 				local bonusReloadSpeed = tonumber(cp.recycle_bonus)
 				cells[#cells + 1] = numformat(bonusReloadSpeed * 100, 1) .. '%'
-				cells[#cells + 1] = "\t- " .. localization.spooling_max_bonus .. ":"
+				cells[#cells + 1] = "\t\t- " .. localization.spooling_max_bonus .. ":"
 				cells[#cells + 1] = numformat(maxbonus * 100, 2) .. "%" -- TODO: Reduction time
 				local currentFireRate = reloadtime
 				local currentBonus = 0
@@ -877,7 +877,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 					currentreload = math.ceil(reloadtime / (1 + currentBonus))
 				end
 				totalFrames = totalFrames / 30 -- frames -> seconds
-				cells[#cells + 1] = "\t- " .. localization.spooling_bonus_time_to_max .. ":"
+				cells[#cells + 1] = "\t\t- " .. localization.spooling_bonus_time_to_max .. ":"
 				cells[#cells + 1] = numformat(totalFrames, 2) .. localization.acronyms_second
 			end
 			if maxReload ~= reloadtime then
