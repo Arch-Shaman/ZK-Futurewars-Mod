@@ -131,7 +131,6 @@ unitDef = {
 				light_camera_height = 1000,
 				light_color = "1 0.95 0.4",
 				light_radius = 45,
-				reaim_time = 3, -- fast update needed
 				isFlak = 3,
 				flaktime = -6,
 			},
