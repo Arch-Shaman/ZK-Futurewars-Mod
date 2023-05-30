@@ -78,10 +78,6 @@ return {
 				craterMult              = 0,
 				customParams        = {
 					light_camera_height = 1500,
-					stats_custom_tooltip_1 = " - Spooling Weapon:",
-					stats_custom_tooltip_entry_1 = "-33.3% reload time per shot",
-					stats_custom_tooltip_2 = " - Maximum DPS:",
-					stats_custom_tooltip_entry_2 = "1000.0",
 					script_reload = "1.6",
 					recycler = 1,
 					recycle_reductiontime = 8/30,

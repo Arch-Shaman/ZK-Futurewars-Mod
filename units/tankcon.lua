@@ -91,10 +91,6 @@ return {
 					light_camera_height = 1200,
 					light_color = "0.8 0.76 0.38",
 					light_radius = 30,
-					stats_custom_tooltip_1 = " - Spooling Weapon:",
-					stats_custom_tooltip_entry_1 = "-15% reload time per shot",
-					stats_custom_tooltip_2 = " - Maximum DPS:",
-					stats_custom_tooltip_entry_2 = "303",
 					reaim_time = 1, -- fast update?
 					script_reload = "0.8",
 					recycler = 1,

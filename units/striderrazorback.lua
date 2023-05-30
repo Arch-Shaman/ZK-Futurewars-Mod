@@ -134,10 +134,6 @@ unitDef = {
 				reaim_time = 3, -- fast update needed
 				isFlak = 3,
 				flaktime = -6,
-				stats_custom_tooltip_1 = " - Spooling Weapon:",
-				stats_custom_tooltip_entry_1 = "-40% reload time per shot",
-				stats_custom_tooltip_2 = " - Maximum DPS:",
-				stats_custom_tooltip_entry_2 = "1,000",
 			},
 			damage                  = {
 				default = 90.01,
