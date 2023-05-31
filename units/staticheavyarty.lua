@@ -11,8 +11,8 @@ return {
 		buildingGroundDecalType       = "staticheavyarty_aoplane.dds",
 		buildPic                      = "staticheavyarty.png",
 		category                      = "SINK",
-		collisionVolumeOffsets        = "0 40 -3",
-		collisionVolumeScales         = "50 50 40",
+		collisionVolumeOffsets        = "0 0 -45",
+		collisionVolumeScales         = "90 80 90",
 		collisionVolumeType           = "cylY",
 		corpse                        = "DEAD",
 		customParams                  = {
@@ -68,7 +68,7 @@ return {
 				craterBoost             = 0,
 				craterMult              = 3.2,
 				cegtag                  = "waketrail_small",
-				--colorMap				= [[0 0.1843 0.4235  0.7294 0.04705 0.1843  0 0.125 0.3568]],
+				--colorMap				= "0 0.1843 0.4235  0.7294 0.04705 0.1843  0 0.125 0.3568",
 				customParams        = {
 					lups_noshockwave = "1",
 					light_camera_height = 1600,
