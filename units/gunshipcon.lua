@@ -54,7 +54,7 @@ return {
 		showNanoSpray       = false,
 		sightDistance       = 500,
 		turnRate            = 500,
-		workerTime          = 10,
+		workerTime          = 15,
 		featureDefs         = {
 			DEAD  = {
 				blocking         = true,
