@@ -12,7 +12,6 @@ return {
 		canMove                = true,
 		canPatrol              = true,
 		category               = "LAND TOOFAST",
-		cloakCost              = 0,
 		collisionVolumeOffsets = "0 0 0",
 		collisionVolumeScales  = "16 16 16",
 		collisionVolumeType    = "ellipsoid",
@@ -85,6 +84,9 @@ return {
 		weaponDefs = {
 			SHIELD = {
 				name                    = "Energy Shield",	
+				customParams = {
+					shield_recharge_delay   = 3,
+				},
 				damage                  = {	
 					default = 10,	
 				},	
@@ -93,7 +95,7 @@ return {
 				shieldBadColor          = "1 0.1 0.1 1",	
 				shieldGoodColor         = "0.1 0.1 1 1",	
 				shieldInterceptType     = 3,	
-				shieldPower             = 2000,	
+				shieldPower             = 3500,	
 				shieldPowerRegen        = 100,	
 				shieldPowerRegenEnergy  = 2,	
 				shieldRadius            = 60,	
