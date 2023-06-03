@@ -11,7 +11,7 @@
     },
 	"missilekinetic": {
 		"name" : "Apogee",
-		"description" : "Kinetik Öldürme Aracı"",
+		"description" : "Kinetik Öldürme Aracı",
 		"helptext" : "Apogee, bir hedefe sert bir şekilde düşmeden önce uzaya uçan ve büyük hasar veren ucuz bir kinetik saldırı silahıdır. AOE'si arzulanan çok şey bıraksa da, ucuz ve istenmeyen posta gönderilebilir, bu da ona karşı yarı iyi kalkanlar."
 	},
     "gunshipskirm": {
