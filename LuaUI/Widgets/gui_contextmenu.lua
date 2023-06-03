@@ -1399,7 +1399,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				cells[#cells+1] = ' - ' .. localization.weapon_piercing
 				cells[#cells+1] = ''
 				if not (cp.single_hit or cp.single_hit_multi) then
-					cells[#cells+1] = ' - ' .. weapon_increased_damage_vs_large
+					cells[#cells+1] = ' - ' .. localization.weapon_increased_damage_vs_large
 					cells[#cells+1] = ''
 				end
 			end
@@ -2252,7 +2252,7 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 		
 		
 
-		statschildren[#statschildren+1] = Label:New{ caption = localization.commander, textColor = color.stats_header, }
+		statschildren[#statschildren+1] = Label:New{ caption = string.upper(localizationCommon.commander), textColor = color.stats_header, }
 		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header, }
 		statschildren[#statschildren+1] = Label:New{ caption =  localization.level .. ': ', textColor = color.stats_fg, }
 		statschildren[#statschildren+1] = Label:New{ caption = level + 1, textColor = color.stats_fg, }
