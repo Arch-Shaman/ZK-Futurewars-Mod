@@ -5,7 +5,7 @@ return {
 		description            = "Cloaked EMP Bomb",
 		acceleration           = 0.75,
 		brakeRate              = 3.6,
-		buildCostMetal         = 100,
+		buildCostMetal         = 120,
 		buildPic               = "cloakbomb.png",
 		canMove                = true,
 		category               = "LAND TOOFAST",
@@ -49,11 +49,9 @@ return {
 		selfDestructAs         = "cloakbomb_DEATH",
 		selfDestructCountdown  = 0,
 		sfxtypes               = {
-
 			explosiongenerators = {
 				"custom:digdig",
 			},
-
 		},
 		sightDistance          = 240,
 		trackOffset            = 0,
