@@ -42,7 +42,7 @@
 	"platestrider" : {
 		"name" : "Yolgezer Plakası",
 		"description" : "Striders inşa eder",
-		"helptext" : "Strider Plate, Strider Hub'ın minyatür versiyonudur. Ağabeyi gibi, savaş alanında huşu ve korku uyandıran "devasa mecha" olan strider'ları dağıtır. Normal bir fabrikadan farklı olarak, plaka sadece bir projeye başlamak için gereklidir, bitirmek için değil."
+		"helptext" : "Strider Plate, Strider Hub'ın minyatür versiyonudur. Ağabeyi gibi, savaş alanında huşu ve korku uyandıran \"devasa mecha\" olan strider'ları dağıtır. Normal bir fabrikadan farklı olarak, plaka sadece bir projeye başlamak için gereklidir, bitirmek için değil."
 	},
     "staticmissilesilo": {
         "name": "Füze Silosu",
