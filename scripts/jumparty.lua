@@ -265,12 +265,13 @@ end
 
 function jumping(jumpPercent)
 	jumpProg = jumpPercent
-	if jumpPercent > 65 and jumpflaming then
+	if jumpPercent > 0.65 and jumpflaming then
 		jumpflaming = false
 	end
-	if jumpPercent > 95 and not landing then
+	if jumpPercent > 0.95 and not landing then
 		StartThread(PrepareJumpLand)
 		landing = true
+		jumping = false
 	end
 end
 
