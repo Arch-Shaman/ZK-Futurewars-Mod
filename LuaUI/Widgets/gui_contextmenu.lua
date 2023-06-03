@@ -236,6 +236,8 @@ local localizationCommon = {
 }
 
 local localization = {
+	menu_close = "close",
+	edit_behavior = "edit behavior",
 	target_water_only = "(water only)",
 	target_manual_fire = "(manual fire)",
 	target_antiair = "(anti-air only)",
@@ -679,7 +681,7 @@ end
 
 local function CloseButton(width)
 	return Button:New{
-		caption = 'Close',
+		caption = localization.menu_close,
 		OnClick = { CloseButtonFunc },
 		width=width,
 		height = B_HEIGHT,
@@ -2190,7 +2192,7 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 			right = 2,
 			y = 88*(4/5),
 			height = 30,
-			caption = "Edit Behaviour",
+			caption = localization.edit_behavior,
 			tooltip = "Edit the default behaviour of " .. Spring.Utilities.GetHumanName(ud) .. ".",
 			OnClick = {function ()
 					WG.crude.OpenPathToLabel(behaviourPath[ud.id], true, Spring.Utilities.GetHumanName(ud))
@@ -2779,7 +2781,7 @@ MakeStatsWindow = function(ud, x,y, unitID, isFeature)
 			children = printunitinfo(ud, window_width, unitID, isFeature),
 		},
 		Button:New{
-			caption = 'Close',
+			caption = localization.menu_close,
 			OnClick = { function(self) KillStatsWindow(num) end },
 			
 			x=5,
