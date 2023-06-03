@@ -277,12 +277,9 @@ local localization = {
 	stats_from_target = "elmo from target",
 	stats_tracks_target = "Tracks target",
 	stats_guided_cruise = "Guided Cruise, unguided descent",
-	stats_circular_spread = "Has circular spread (<size> radius around the target)",
-	stats_cruise_error = "Strikes within <radius> elmos of the target",
 	laser_guided = "Laser Guided",
 	needs_guidance = "(Needs external guidance)",
 	external_targeter = "Provides External Guidance",
-	needs_guidance_for_seconds = "Requires guidance for <seconds>",
 	stats_inaccuracy = "Inaccuracy",
 	stats_wobble = "Flight Instability",
 	stats_wobble_desc = "up to",
@@ -326,7 +323,6 @@ local localization = {
 	weapon_moves_structures = "Smoothes under structures",
 	weapon_high_traj = "High Trajectory",
 	weapon_toggable_traj = "Toggable Trajectory",
-	weapon_arty_reveal = "Reveals for <time> seconds while in enemy radar",
 	weapon_water_capable = "Water capable",
 	weapon_potential_friendly_fire = "Potential Friendly Fire",
 	weapon_no_ground_collide = "Passes through ground",
@@ -359,7 +355,6 @@ local localization = {
 	only_assists = "Can only assist",
 	vampirism = "Vampirism",
 	vampirism_kills_increase_hp = "Increases max with kills",
-	vampirism_kills_increase_hp_desc = "<number>% of victim's max hp",
 	armored_unit = "Hardened Armor",
 	armor_reduction = "Damage Reduction",
 	armor_type_1 = "Applies while closed",
@@ -380,7 +375,6 @@ local localization = {
 	only_idle = "Only when idle",
 	idle_cloak_free = "Free and automated",
 	cloak_regen = "Regenerates while cloaked",
-	recloaks_after_seconds = "Recloaks after <time> seconds outside area cloakers",
 	provides_intel = "Provides intel",
 	radar = "Radar Range",
 	jamming = "Radar Stealth Field",
@@ -1163,10 +1157,10 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 					cells[#cells+1] = ''
 				end
 				if wd.customParams.cruise_randomizationtype == "circle" then
-					cells[#cells+1] = '\t- ' .. string.gsub(localization.stats_circular_spread, "%size%", cp.cruiserandomradius)
+					cells[#cells+1] = '\t- ' .. WG.Translate("interface", "stats_circular_spread", {size = cp.cruiserandomradius})
 					cells[#cells+1] = ''
 				elseif wd.customParams.cruiserandomradius then
-					cells[#cells+1] = '\t- ' .. string.gsub(localization.stats_cruise_error, "%radius%", cp.cruiserandomradius)
+					cells[#cells+1] = '\t- ' .. WG.Translate("interface", "stats_cruise_error", {radius = cp.cruiserandomradius})
 					cells[#cells+1] = ''
 				end
 			end
@@ -1182,7 +1176,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				cells[#cells+1] = ''
 			end
 			if cp.needsuplink then
-				cells[#cells+1] = ' - ' .. string.gsub(localization.needs_guidance_for_seconds, "%seconds%", numformat(cp.needsuplink / 30, 2)) .. " " .. localization.acronyms_second
+				cells[#cells+1] = ' - ' ..  WG.Translate("interface", "needs_guidance_for_seconds", {seconds = numformat(cp.needsuplink / 30, 2)}) .. " " .. localization.acronyms_second
 				cells[#cells+1] = ''
 			end
 			if wd.wobble > 0 then
@@ -1360,7 +1354,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				cells[#cells+1] = ''
 			end
 			if cp["reveal_unit"] then
-				local artyrevealstring = string.gsub(localization.weapon_arty_reveal, "%time%", cp["reveal_unit"])
+				local artyrevealstring = WG.Translate("interface", "weapon_arty_reveal", {time = cp["reveal_unit"]})
 				cells[#cells+1] = ' - ' .. artyrevealstring
 				cells[#cells+1] = ""
 			end
@@ -1558,7 +1552,7 @@ local function printAbilities(ud, unitID, isFeature)
 		cells[#cells+1] = ' - ' .. localization.vampirism
 		cells[#cells+1] = ''
 		cells[#cells+1] = '\t- ' .. localization.vampirism_kills_increase_hp .. ":"
-		cells[#cells+1] = string.gsub(localization.vampirism_kills_increase_hp_desc, "%number%", numformat(cp.vampirism_kill * 100, 1))
+		cells[#cells+1] = WG.Translate("interface", "vampirism_kills_increase_hp_desc", {number = numformat(cp.vampirism_kill * 100, 1)})
 	end
 
 	if ud.armoredMultiple < 1 then
@@ -1705,7 +1699,7 @@ local function printAbilities(ud, unitID, isFeature)
 	end
 	if cp.recloaktime or commrecloaktime then
 		local recloaktime = commrecloaktime or cp.recloaktime
-		cells[#cells+1] = " - " .. string.gsub(localization.recloaks_after_seconds, "%time%", numformat(recloaktime / 30, 1))
+		cells[#cells+1] = " - " .. WG.Translate("interface", "recloaks_after_seconds", {time =  numformat(recloaktime / 30, 1)})
 		cells[#cells+1] = ""
 	end
 	cells[#cells+1] = ''
