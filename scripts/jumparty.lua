@@ -195,6 +195,8 @@ local function JetTrailThread()
 		waitMod = math.max(minWait, jumpProg / 0.1)
 		Sleep(waitTime * waitMod)
 	end
+	Turn (lgun, x_axis, 0, math.rad(70))
+	Turn (rgun, x_axis, 0, math.rad(70))
 end
 
 local function PreJumpThread(goalX, goalZ, goalHeading, startHeading)
@@ -237,10 +239,7 @@ function beginJump()
 end
 
 function halfJump()
-	jumpflaming = false
-	Turn (lgun, x_axis, 0, math.rad(70))
-	Turn (rgun, x_axis, 0, math.rad(70))
-	Turn (torso, y_axis, 0, math.rad(70))
+	--Turn (torso, y_axis, 0, math.rad(70))
 end
 
 function endJump()
@@ -266,6 +265,9 @@ end
 
 function jumping(jumpPercent)
 	jumpProg = jumpPercent
+	if jumpPercent > 65 and jumpflaming then
+		jumpflaming = false
+	end
 	if jumpPercent > 95 and not landing then
 		StartThread(PrepareJumpLand)
 		landing = true
