@@ -1163,10 +1163,10 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 					cells[#cells+1] = ''
 				end
 				if wd.customParams.cruise_randomizationtype == "circle" then
-					cells[#cells+1] = '\t- ' .. string.gsub(localization.stats_circular_spread, "<size>", cp.cruiserandomradius)
+					cells[#cells+1] = '\t- ' .. string.gsub(localization.stats_circular_spread, "%size%", cp.cruiserandomradius)
 					cells[#cells+1] = ''
 				elseif wd.customParams.cruiserandomradius then
-					cells[#cells+1] = '\t- ' .. string.gsub(localization.stats_cruise_error, "<radius>", cp.cruiserandomradius)
+					cells[#cells+1] = '\t- ' .. string.gsub(localization.stats_cruise_error, "%radius%", cp.cruiserandomradius)
 					cells[#cells+1] = ''
 				end
 			end
@@ -1182,7 +1182,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				cells[#cells+1] = ''
 			end
 			if cp.needsuplink then
-				cells[#cells+1] = ' - ' .. string.gsub(localization.needs_guidance_for_seconds, "<seconds>", numformat(cp.needsuplink / 30, 2)) .. " " .. localization.acronyms_second
+				cells[#cells+1] = ' - ' .. string.gsub(localization.needs_guidance_for_seconds, "%seconds%", numformat(cp.needsuplink / 30, 2)) .. " " .. localization.acronyms_second
 				cells[#cells+1] = ''
 			end
 			if wd.wobble > 0 then
@@ -1212,7 +1212,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 					cells[#cells+1] = " - " .. localization.stats_armor_boost_all .. ":"
 				end
 				cells[#cells+1] = ""
-				cells[#cells+1] = "\t- " .. stats_armor_boost .. ":"
+				cells[#cells+1] = "\t- " .. localization.stats_armor_boost .. ":"
 				cells[#cells+1] = numformat(1 - tonumber(cp.grants_armor) * 100, 1) .. "%"
 				cells[#cells+1] = "\t- " .. localization.duration .. ":"
 				cells[#cells+1] = numformat(duration, 1) .. localization.acronyms_second
@@ -1360,7 +1360,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				cells[#cells+1] = ''
 			end
 			if cp["reveal_unit"] then
-				local artyrevealstring = string.gsub(localization.weapon_arty_reveal, "<time>", cp["reveal_unit"])
+				local artyrevealstring = string.gsub(localization.weapon_arty_reveal, "%time%", cp["reveal_unit"])
 				cells[#cells+1] = ' - ' .. artyrevealstring
 				cells[#cells+1] = ""
 			end
@@ -1558,7 +1558,7 @@ local function printAbilities(ud, unitID, isFeature)
 		cells[#cells+1] = ' - ' .. localization.vampirism
 		cells[#cells+1] = ''
 		cells[#cells+1] = '\t- ' .. localization.vampirism_kills_increase_hp .. ":"
-		cells[#cells+1] = string.gsub(localization.vampirism_kills_increase_hp_desc, "<number>", numformat(cp.vampirism_kill * 100, 1))
+		cells[#cells+1] = string.gsub(localization.vampirism_kills_increase_hp_desc, "%number%", numformat(cp.vampirism_kill * 100, 1))
 	end
 
 	if ud.armoredMultiple < 1 then
@@ -1705,7 +1705,7 @@ local function printAbilities(ud, unitID, isFeature)
 	end
 	if cp.recloaktime or commrecloaktime then
 		local recloaktime = commrecloaktime or cp.recloaktime
-		cells[#cells+1] = " - " .. string.gsub(localization.recloaks_after_seconds, "<time>", numformat(recloaktime / 30, 1))
+		cells[#cells+1] = " - " .. string.gsub(localization.recloaks_after_seconds, "%time%", numformat(recloaktime / 30, 1))
 		cells[#cells+1] = ""
 	end
 	cells[#cells+1] = ''
