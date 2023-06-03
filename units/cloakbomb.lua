@@ -97,9 +97,9 @@ return {
 				customParams = {
 					blastwave_speed = 20,
 					blastwave_life = 10,
-					blastwave_lossfactor = 0.9,
+					blastwave_lossfactor = 0.85,
 					blastwave_damage = 10,
-					blastwave_empdmg = 2500,
+					blastwave_empdmg = 2000,
 					blastwave_emptime = 10,
 					blastwave_slowdmg = 0,
 					blastwave_size = 25,
