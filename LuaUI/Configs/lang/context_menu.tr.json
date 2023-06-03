@@ -1,4 +1,6 @@
 {
+	"edit_behavior" : "Davranışı Düzenle",
+	"menu_close" : "Kapat",
 	"target_water_only" : "(sadece su hedefleri)",
 	"target_manual_fire" : "(manuel hedefleme)",
 	"target_antiair" : "(sadece uçaksavar)",

@@ -1,4 +1,6 @@
 {
+	"edit_behavior" : "Edit Behavior",
+	"menu_close" : "Close",
 	"target_water_only" : "(aquatic targets only)",
 	"target_manual_fire" : "(manual fire)",
 	"target_antiair" : "(anti-air only)",

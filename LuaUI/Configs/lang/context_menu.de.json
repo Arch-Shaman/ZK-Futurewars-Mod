@@ -1,4 +1,6 @@
 {
+	"edit_behavior" : "Verhalten der Einheit ändern",
+	"menu_close" : "Schließen",
 	"target_water_only" : "(nur Wasser)",
 	"target_manual_fire" : "(manuelles Feuer)",
 	"target_antiair" : "(nur Luftabwehr)",

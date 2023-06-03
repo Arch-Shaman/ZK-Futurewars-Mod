@@ -1,4 +1,6 @@
 {
+	"edit_behavior" : "Modifica comportamento",
+	"menu_close" : "Uscita",
 	"target_water_only" : "(solo bersagli acquatici)",
 	"target_manual_fire" : "(obiettivo manuale)",
 	"target_antiair" : "(solo anti-aria)",

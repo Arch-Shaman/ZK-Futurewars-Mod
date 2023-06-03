@@ -1,4 +1,6 @@
 {
+	"edit_behavior" : "编辑行为",
+	"menu_close" : "出口",
 	"target_water_only" : "(仅限水生目标)",
 	"target_manual_fire" : "(手动瞄准器)",
 	"target_antiair" : "(仅限防空)",

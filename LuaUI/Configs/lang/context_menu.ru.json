@@ -1,4 +1,6 @@
 {
+	"edit_behavior" : "Изменить поведение",
+	"menu_close" : "закрыть",
 	"target_water_only" : "(только водорожденные цели)",
 	"target_manual_fire" : "(ручное нацеливание)",
 	"target_antiair" : "(только противовоздушная)",
