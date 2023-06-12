@@ -5,7 +5,7 @@ return {
 		description            = "Cloaked EMP Bomb",
 		acceleration           = 0.75,
 		brakeRate              = 3.6,
-		buildCostMetal         = 120,
+		buildCostMetal         = 150,
 		buildPic               = "cloakbomb.png",
 		canMove                = true,
 		category               = "LAND TOOFAST",
