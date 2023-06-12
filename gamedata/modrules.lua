@@ -12,7 +12,7 @@ local pfForceSingleThreaded = false
 local forceSingleThreaded = false
 local luaallocation = 2560
 local modoptions = Spring.GetModOptions()
-luaallocation = tonumber(modoptions.memorylimit) or 2560
+luaallocation = tonumber(modoptions.memorylimit) or 3584
 if luaallocation < 1536 then
 	luaallocation = 1536
 end
