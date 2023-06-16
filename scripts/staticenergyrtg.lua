@@ -1,4 +1,4 @@
-local output, minoutput, decaytime, decaymult
+--local output, minoutput, decaytime, decaymult
 local base = piece 'Base'
 local fin0 = piece 'Fin0'
 local fin1 = piece 'Fin1'
