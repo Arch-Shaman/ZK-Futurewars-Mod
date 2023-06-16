@@ -24,25 +24,36 @@ local function SizeControl()
 	local sin = math.sin
 	local spSetUnitPieceMatrix = Spring.SetUnitPieceMatrix
 	local pieceTable = {Spring.GetUnitPieceMatrix(unitID, energyball)}
+	local ballSwellFactor
+	local maxRate = tonumber(UnitDefs[unitDefID].customParams.decay_maxoutput) or 3
+	local currentRate = 1
+	local baseSize = 100 / maxRate
+	local maxSize = baseSize
+	local shown = false
 
 	while true do
+		if currentRate < maxRate then
+			currentRate = Spring.GetUnitRulesParam(unitID, "selfIncomeChange") or 1
+			maxSize = baseSize * currentRate
+		end
 		if is_stunned then
 			if ballSize > 3 then
 				ballSize = ballSize - 3
-			else
-				ballSize = 1
+			elseif shown then
+				ballSize = 0
 				Hide(energyball)
 			end
 		else
-			if ballSize == 1 then
+			if ballSize > 0 and not shown then
 				Show(energyball)
+				shown = true
 			end
-			if ballSize < 100 then
+			if ballSize < maxSize then
 				ballSize = ballSize + 1
 			end
 		end
 
-		local ballSwellFactor = 1.13^(sin(t/period)*mag) * (ballSize^2 / 11000)
+		ballSwellFactor = 1.13^(sin(t/period)*mag) * (ballSize^2 / 11000)
 		pieceTable[ 1] = ballSwellFactor
 		pieceTable[ 6] = ballSwellFactor
 		pieceTable[11] = ballSwellFactor
