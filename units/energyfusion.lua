@@ -4,7 +4,7 @@ return {
 		name                          = "Fusion Reactor",
 		description                   = "Powerplant: +28e, increases over time",
 		activateWhenBuilt             = true,
-		buildCostMetal                = 1000,
+		buildCostMetal                = 900,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 6,
