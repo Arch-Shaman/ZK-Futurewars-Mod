@@ -4,7 +4,7 @@ function widget:GetInfo()
 		desc      = "Handles Resign state",
 		author    = "Shaman",
 		date      = "4/15/2021",
-		license   = "CC BY-NC-ND",
+		license   = "PD-0",
 		layer     = 1,
 		enabled   = true,  --  loaded by default?
 		handler   = true,

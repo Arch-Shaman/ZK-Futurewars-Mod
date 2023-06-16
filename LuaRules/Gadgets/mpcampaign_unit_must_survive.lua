@@ -8,7 +8,7 @@ function gadget:GetInfo()
 		desc      = "Campaign gadget that allows for units that must survive.",
 		author    = "Shaman",
 		date      = "10 Sept 2022",
-		license   = "CC BY-NC-ND",
+		license   = "CC-0",
 		layer     = -15,
 		enabled   = true,
 	}

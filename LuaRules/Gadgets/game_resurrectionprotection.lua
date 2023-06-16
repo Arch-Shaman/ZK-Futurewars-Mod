@@ -8,7 +8,7 @@ function gadget:GetInfo()
 		desc      = "NO BULLY.",
 		author    = "Shaman",
 		date      = "11 Elokuu 2021",
-		license   = "CC BY-NC-ND",
+		license   = "CC-0",
 		layer     = 5,
 		enabled   = true,
 	}

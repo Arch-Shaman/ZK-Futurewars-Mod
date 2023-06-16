@@ -4,7 +4,7 @@ function widget:GetInfo()
 		desc      = "Points out several events to the player.",
 		author    = "Shaman",
 		date      = "2/11/2021",
-		license   = "CC BY-NC-ND",
+		license   = "CC-0",
 		layer     = 1,
 		enabled   = true  --  loaded by default?
 	}

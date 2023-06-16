@@ -5,7 +5,7 @@ function gadget:GetInfo() return {
 	desc      = "Reimplements armor state as a command for units like Desolator.",
 	author    = "Shaman",
 	date      = "31 August 2022",
-	license   = "CC BY-NC-ND",
+	license   = "CC-0",
 	layer     = 1, -- purposefully lower than popup turret ai to allow it to see the commands.
 	enabled   = true,
 } end

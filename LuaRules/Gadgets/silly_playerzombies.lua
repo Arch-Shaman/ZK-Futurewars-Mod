@@ -3,7 +3,7 @@ function gadget:GetInfo() return {
 	desc      = "Spectators become zombies",
 	author    = "Shaman",
 	date      = "22 September 2022",
-	license   = "CC BY-NC-ND",
+	license   = "CC-0",
 	layer     = 8000,
 	enabled   = true,
 } end
