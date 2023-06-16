@@ -23,7 +23,7 @@ return {
 			decay_time     = 2,
 			decay_minoutput= 0.1,
 			decay_initialrate = 1,
-			decay_rate     = 0.025,
+			decay_rate     = 0.0175,
 			modelradius    = "60",
 			modelheight    = "80",
 			aimposoffset   = "0 -40 0",
