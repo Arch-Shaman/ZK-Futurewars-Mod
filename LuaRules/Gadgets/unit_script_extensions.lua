@@ -25,9 +25,9 @@ local function CallAsUnitIfExists(unitID, funcName)
 end
 
 function gadget:UnitReverseBuilt(unitID)
-	CallAsUnitIfExists(unitID, "OnReverseBuild")
+	CallAsUnitIfExists(unitID, "UnitReverseBuilt")
 end
 
 function gadget:UnitFinished(unitID)
-	CallAsUnitIfExists(unitID, "OnUnitCompleted")
+	CallAsUnitIfExists(unitID, "UnitFinished")
 end
