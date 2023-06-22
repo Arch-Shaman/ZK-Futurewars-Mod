@@ -823,6 +823,10 @@ local icontypes = {
 		bitmap='icons/bomberriot.dds',
 		size=2.1,
 	},
+	bombersupport = {
+		bitmap='icons/bombersupport.dds',
+		size=2.1,
+	},
 	bomberassault = {
 		bitmap='icons/bomberassault.dds',
 		size=2.1,
