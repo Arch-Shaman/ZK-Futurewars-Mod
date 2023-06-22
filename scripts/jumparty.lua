@@ -313,8 +313,7 @@ local function RestoreAfterDelay()
 end
 
 function script.AimWeapon(num, heading, pitch)
-	if num == 2 then return false end
-	if jumping then return false end
+	if num == 2 or jumping then return false end
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
 	
