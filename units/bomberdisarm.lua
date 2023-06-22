@@ -29,7 +29,7 @@ return {
 		floater             = true,
 		footprintX          = 3,
 		footprintZ          = 3,
-		iconType            = "bomberriot",
+		iconType            = "bombersupport",
 		maxAcc              = 0.5,
 		maxDamage           = 1120,
 		maxFuel             = 1000000,
