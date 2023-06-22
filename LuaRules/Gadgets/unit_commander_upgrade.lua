@@ -114,6 +114,7 @@ local names = {
 	"Im not Oppressive, just uncounterable!",
 	"Mudosaka's Murder Machine",
 	"Buzzing Bees, Deadly Drones!",
+	"Explosive Enforcer",
 	-- Shamelessly stolen from Users --
 	"Ukraine BM", -- User: Ukraine
 	"ICE COLD BUT HOT", -- User: Ukraine
