@@ -482,7 +482,7 @@ function Spring.UnitScript.Show(piece)
 end
 
 -- may be useful to other gadgets
-local function Spring.UnitScript.GetScriptEnv(unitID)
+local function GetScriptEnv(unitID)
 	local unit = units[unitID]
 	if unit then
 		return unit.env
