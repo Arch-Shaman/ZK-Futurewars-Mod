@@ -40,6 +40,7 @@ return {
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP",
 		objectName          = "corwolv.s3o",
+		script              = "veharty.lua",
 		selfDestructAs      = "BIG_UNITEX",
 		sfxtypes            = {
 			explosiongenerators = {
