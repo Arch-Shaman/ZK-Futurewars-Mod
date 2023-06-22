@@ -95,7 +95,7 @@ return {
 				shieldBadColor          = "1 0.1 0.1 1",	
 				shieldGoodColor         = "0.1 0.1 1 1",	
 				shieldInterceptType     = 3,	
-				shieldPower             = 2500,	
+				shieldPower             = 2200,	
 				shieldPowerRegen        = 100,	
 				shieldPowerRegenEnergy  = 2,	
 				shieldRadius            = 60,	
@@ -123,7 +123,7 @@ return {
 					blastwave_speed = 30,
 					blastwave_life = 4,
 					blastwave_lossfactor = 0.8,
-					blastwave_damage = 1200,
+					blastwave_damage = 800,
 					numprojectiles1 = 10, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "shieldbomb_fragment_dummy",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
@@ -177,8 +177,8 @@ return {
 					blastwave_impulse = 4,
 					blastwave_speed = 30,
 					blastwave_life = 4,
-					blastwave_lossfactor = 0.75,
-					blastwave_damage = 1000,
+					blastwave_lossfactor = 0.8,
+					blastwave_damage = 800,
 					numprojectiles1 = 10, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "shieldbomb_fragment_dummy",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
@@ -234,7 +234,7 @@ return {
 					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
 					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeddeploy = 20,
-					shield_damage = 720,
+					shield_damage = 600,
 					bogus = 1
 				},
 				damage                  = {
@@ -268,7 +268,7 @@ return {
 				craterBoost             = 10,
 				craterMult              = 5,
 				damage                  = {
-					default = 720,
+					default = 600,
 				},
 				edgeEffectiveness		= 0.4,
 				explosionGenerator      = "custom:MEDMISSILE_EXPLOSION",
