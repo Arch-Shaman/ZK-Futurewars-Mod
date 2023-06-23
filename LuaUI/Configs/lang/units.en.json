@@ -865,9 +865,9 @@
 		"helptext" : "The Vulcan is a heavy combat unit that specializes in getting close and melting its target. Its wide-area flamethrower and overkill amounts of heatrays aren't extraordinary, but its incendiary rockets can be fired in a salvo of twenty that devastates a wide swath of terrain."
 	},
 	"dynassault1" : {
-		"name" : "Bombardment Commander",
-		"description" : "Heavy Ranged Commander",
-		"helptext" : "The Bombard Chassis emphasizes range and firepower at the expense of speed and support equipment. While it lacks any sort of close range weapons or armor, it has access to many nuclear weapons and artillery."
+		"name" : "Siege Commander",
+		"description" : "Artillery Commander",
+		"helptext" : "The Siege Commander, despite being slow, ponderous and weakly armored, excels at long range combat. While most of its initial weaponset is rather weak, it can eventually upgrade to deploy heavier variants of its existing arsenal and wreak havoc in the theater it is operating in."
 	},
 	"dynriot1" : {
 		"name" : "Riot Commander",
