@@ -1,7 +1,7 @@
 return { 
 	dynstrike1 = {
 		unitname               = "dynstrike1",
-		name                   = "Strike Commander",
+		name                   = "Ghost Commander",
 		description            = "Mobile Assault Commander",
 		acceleration           = 0.54,
 		activateWhenBuilt      = true,
