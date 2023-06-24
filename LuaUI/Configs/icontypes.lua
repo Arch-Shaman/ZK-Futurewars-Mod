@@ -792,7 +792,23 @@ local icontypes = {
 		bitmap='icons/mobiletachyon.dds',
 		size=2.3,
 	},
-
+	-- drones --
+	droneraid = {
+		bitmap='icons/droneraider.dds',
+		size=1.3,
+	},
+	dronecon = {
+		bitmap='icons/dronecon.dds',
+		size=1.3,
+	},
+	droneskirm = {
+		bitmap='icons/droneskirm.dds',
+		size=1.3,
+	},
+	droneassault = {
+		bitmap='icons/droneassault.dds',
+		size=1.3,
+	},
 
 	--plane icons
 	scoutplane = {

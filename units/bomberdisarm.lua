@@ -2,7 +2,7 @@ return {
 	bomberdisarm = {
 		unitname            = "bomberdisarm",
 		name                = "Thunderbird",
-		description         = "Disarming Lightning Bomber",
+		description         = "Tactical Support Bomber",
 		brakerate           = 0.4,
 		buildCostMetal      = 550,
 		buildPic            = "bomberdisarm.png",

@@ -25,7 +25,7 @@ return {
 		footprintX          = 2,
 		footprintZ          = 2,
 		hoverAttack         = true,
-		iconType            = "gunship",
+		iconType            = "dronecon",
 		idleAutoHeal        = 10,
 		idleTime            = 120,
 		maxDamage           = 350,

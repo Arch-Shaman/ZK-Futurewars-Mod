@@ -23,7 +23,7 @@ return {
 		footprintX          = 2,
 		footprintZ          = 2,
 		hoverAttack         = true,
-		iconType            = "gunship",
+		iconType            = "droneskirm",
 		idleAutoHeal        = 10,
 		idleTime            = 150,
 		maxDamage           = 480,

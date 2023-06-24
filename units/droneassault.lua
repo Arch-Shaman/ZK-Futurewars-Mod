@@ -23,7 +23,7 @@ return {
 		footprintX          = 2,
 		footprintZ          = 2,
 		hoverAttack         = true,
-		iconType            = "fighter",
+		iconType            = "droneassault",
 		idleAutoHeal        = 20,
 		idleTime            = 150,
 		maxDamage           = 1500,
