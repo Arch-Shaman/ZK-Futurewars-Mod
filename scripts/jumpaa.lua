@@ -162,7 +162,7 @@ end]]
 
 
 -- Jumping
-local turnSpeed
+--local turnSpeed
 
 --[[function preJump(turn,distance,airDistance)
 	Signal(SIG_WALK)
