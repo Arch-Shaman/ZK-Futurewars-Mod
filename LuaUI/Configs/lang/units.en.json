@@ -1130,9 +1130,9 @@
 		"helptext" : "The Spike is an upgraded Quill with an overdriven nanofabricator. While this initially gives it a large burst of build speed, it quickly falls off due to overheating. This makes the Spike useful for rapid wreakage recovery on the front line."
 	},
 	"jumpaa" : {
-		"name" : "Toad",
-		"description" : "Heavy Anti-Air Jumper",
-		"helptext" : "The Toad packs twin anti-air lasers and an autocannon for slaying enemy aircraft rapidly. It can also jump to quickly access high ground or to escape."
+		"name" : "Firestorm",
+		"description" : "Heavy AA Jumper",
+		"helptext" : "The Firestorm is the Jumpjet factory's AA unit. Its twin heatrays are capable of unleashing intense waves of heat, burning through even the toughest air unit's armor at close ranges. In addition, it is armed with fluxwave missiles, being able to disrupt enemy flight patterns and pull them closer or prevent their escape. In addition to having a devestating upclose weapon, the Firestorm can jump across the battlefield, allowing it to catch up to potential prey or escape enemy bombers. This however, means that the Firestorm costs a premium amount of metal, making it one of the most expensive mobile AA units."
 	},
 	"tankheavyraid" : {
 		"name" : "Thunderclap",
