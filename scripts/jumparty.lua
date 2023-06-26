@@ -50,7 +50,7 @@ local WALK_RATE = math.rad(38)
 --------------------------------------------------------------------------------
 local bAiming = false
 local gun_1 = 0
-local jumping = false
+local isJumping = false
 local jumpflaming = false
 local landing = false
 
@@ -207,7 +207,7 @@ local function PreJumpThread(goalX, goalZ, goalHeading, startHeading)
 	local wanted = goalHeading * GG.Script.headingToRad
 	wanted = wanted + math.rad(180) % math.rad(360)
 	wanted = wanted - heading
-	jumping = true
+	isJumping = true
 	jumpflaming = false
 	Turn(lgun, x_axis, math.rad(38), math.rad(25.4)) -- 1500ms?
 	Turn(rgun, x_axis, math.rad(38), math.rad(25.4))
@@ -243,7 +243,7 @@ function halfJump()
 end
 
 function endJump()
-	jumping = false
+	isJumping = false
 	Turn(torso, x_axis, 0, math.rad(90))
 	Turn(lupleg, x_axis, 0, math.rad(90))
 	Turn(rupleg, x_axis, 0, math.rad(90))
@@ -271,7 +271,7 @@ function jumping(jumpPercent)
 	if jumpPercent > 0.95 and not landing then
 		StartThread(PrepareJumpLand)
 		landing = true
-		jumping = false
+		isJumping = false
 	end
 end
 
@@ -313,7 +313,7 @@ local function RestoreAfterDelay()
 end
 
 function script.AimWeapon(num, heading, pitch)
-	if num == 2 or jumping then return false end
+	if num == 2 or isJumping then return false end
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
 	
