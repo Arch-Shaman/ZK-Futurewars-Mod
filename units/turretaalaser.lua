@@ -19,6 +19,7 @@ return {
 			popupholdfirehp = 0.4,
 			popupunholdfirehp = 0.66,
 			armored_regen  = 10,
+			armortype = 1, -- for context menu.
 		},
 		damageModifier                = 0.2,
 		explodeAs                     = "SMALL_BUILDINGEX",
