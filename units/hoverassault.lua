@@ -23,7 +23,6 @@ return {
 			bait_level_default = 1,
 			armortype = 1, -- for context menu.
 		},
-
 		damageModifier      = 0.2,
 		explodeAs           = "BIG_UNITEX",
 		footprintX          = 3,
@@ -41,14 +40,11 @@ return {
 		script              = "hoverassault.lua",
 		selfDestructAs      = "BIG_UNITEX",
 		sfxtypes            = {
-
 			explosiongenerators = {
 				"custom:HEAVYHOVERS_ON_GROUND",
 				"custom:beamerray_dark",
 			},
-
 		},
-
 		sightDistance       = 385,
 		sonarDistance       = 385,
 		turninplace         = 0,
@@ -61,7 +57,6 @@ return {
 				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
 			},
 		},
-
 		weaponDefs             = {
 			DEW = {
 				name                    = "X-Ray Laser",
@@ -77,11 +72,9 @@ return {
 					light_radius = 160,
 					combat_range = 200,
 				},
-
 				damage                  = {
 					default = 820.1,
 				},
-
 				duration                = 0.2,
 				explosionGenerator      = "custom:beamerray_dark",
 				fireStarter             = 50,
@@ -108,10 +101,7 @@ return {
 				weaponVelocity          = 200,
 			},
 		},
-
-
 		featureDefs         = {
-
 			DEAD  = {
 				blocking         = true,
 				featureDead      = "HEAP",
@@ -119,8 +109,6 @@ return {
 				footprintZ       = 3,
 				object           = "hoverassault_dead.s3o",
 			},
-
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,
