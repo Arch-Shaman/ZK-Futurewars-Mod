@@ -95,7 +95,7 @@ return {
 				soundStart              = "weapon/cannon/sniperturret_fire",
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 880,
+				weaponVelocity          = 1200,
 			},
 			FAKE = {
 				name                    = "Fake Cannon",
