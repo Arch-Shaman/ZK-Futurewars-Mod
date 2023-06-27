@@ -103,7 +103,7 @@ local function RechargeBattery(unitID, amount)
 	if data == nil then
 		return
 	end
-	data.battery = math.min(data.battery + amount, data.maxbattery)
+	data.battery = min(data.battery + amount, data.maxbattery)
 	spSetUnitRulesParam(unitID, "battery", data.battery, INLOS)
 	IterableMap.Set(handled, unitID, data)
 end
