@@ -25,7 +25,7 @@ local wantedUnits = {}
 
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
-local spGetUnitHealth = Spring.GetUnitHealth
+--local spGetUnitHealth = Spring.GetUnitHealth
 local spEcho = Spring.Echo
 local min = math.min
 local max = math.max
