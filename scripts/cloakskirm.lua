@@ -2,28 +2,40 @@ include "constants.lua"
 
 local hips = piece 'hips'
 local chest = piece 'chest'
+local rshoulder = piece 'rshoulder'
+local lshoulder = piece 'lshoulder'
+local rforearm = piece 'rforearm'
+local lforearm = piece 'lforearm'
 local gun = piece 'gun'
-local muzzle = piece 'muzzle'
+local rocket = piece 'rocket'
+local rocketemit = piece 'rocketemit'
 local exhaust = piece 'exhaust'
 local turner = piece 'turner'
-local aimpoint = piece 'aimpoint'
-local gunemit = piece 'gunemit'
+local laseremit = piece 'laseremit'
+local brocket1 = piece 'brocket1'
+local brocket2 = piece 'brocket2'
+local brocket3 = piece 'brocket3'
+local brocketemit1 = piece 'brocketemit1'
+local brocketemit2 = piece 'brocketemit2'
+local brocketemit3 = piece 'brocketemit3'
 
 local thigh = {piece 'lthigh', piece 'rthigh'}
 local shin = {piece 'lshin', piece 'rshin'}
 local foot = {piece 'lfoot', piece 'rfoot'}
 local knee = {piece 'lknee', piece 'rknee'}
-local heel = {piece 'lheel', piece 'rheel'}
 
-local smokePiece = {chest, exhaust, muzzle}
+local smokePiece = {chest, exhaust, rocketemit}
 local RELOAD_PENALTY = tonumber(UnitDefs[unitDefID].customParams.reload_move_penalty)
 
 local SIG_Aim = 1
 local SIG_Walk = 2
 local lastfire = 0
+local shot0 = true
+local shot1 = false
+local shot2 = false
 
 -- future-proof running animation against balance tweaks
-local runspeed = 25 * (UnitDefs[unitDefID].speed / 69)
+local runspeed = 20 * (UnitDefs[unitDefID].speed / 69)
 
 local aimBlocked = false
 
@@ -54,7 +66,6 @@ local function Walk()
 		local truespeed = runspeed * speedmod
 
 		Turn (shin[side], x_axis, math.rad(85), truespeed*0.28)
-		Turn (heel[side], x_axis, math.rad(0), truespeed*0.25)
 		Turn (foot[side], x_axis, math.rad(0), truespeed*0.25)
 		Turn (thigh[side], x_axis, math.rad(-36), truespeed*0.16)
 		Turn (thigh[3-side], x_axis, math.rad(36), truespeed*0.16)
@@ -63,7 +74,6 @@ local function Walk()
 		WaitForMove (hips, y_axis)
 
 		Turn (shin[side], x_axis, math.rad(10), truespeed*0.32)
-		Turn (heel[side], x_axis, math.rad(20), truespeed*0.35)
 		Turn (foot[side], x_axis, math.rad(-20), truespeed*0.25)
 		Move (hips, y_axis, -1, truespeed*0.35)
 		WaitForMove (hips, y_axis)
@@ -81,14 +91,13 @@ local function StopWalk()
 
 	Move (hips, y_axis, 0, runspeed*0.5)
 
-	for i = 1, 2 do
-		Turn (thigh[i], x_axis, 0, runspeed*0.2)
-		Turn (shin[i],  x_axis, 0, runspeed*0.2)
-		Turn (heel[i], x_axis, 0, runspeed*0.2)
-		Turn (foot[i], x_axis, 0, runspeed*0.2)
+    for i = 1, 2 do
+	    Turn (thigh[i], x_axis, 0, runspeed*0.2)
+	    Turn (shin[i],  x_axis, 0, runspeed*0.2)
+	    Turn (foot[i], x_axis, 0, runspeed*0.2)
 
-		Turn (thigh[i], y_axis, math.rad(60 - i*40), runspeed*0.1)
-		Turn (thigh[i], z_axis, math.rad(6*i - 9), runspeed*0.1)
+	    Turn (thigh[i], y_axis, math.rad(0), runspeed*0.1)
+	    Turn (thigh[i], z_axis, math.rad(0), runspeed*0.1)
 	end
 end
 
@@ -102,15 +111,16 @@ end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-	Turn (chest, y_axis, math.rad(-20))
-	Turn (gun, x_axis, math.rad(20), math.rad(40))
 end
 
 local function RestoreAfterDelay()
 	SetSignalMask(SIG_Aim)
 	Sleep (2000)
-	Turn (turner, y_axis, 0, math.rad(40))
-	Turn (gun, x_axis, math.rad(20), math.rad(40))
+	Turn (turner, y_axis, math.rad(0), math.rad(40))
+	Turn (rforearm, x_axis, math.rad(0),  math.rad(45))
+	Turn (lforearm, x_axis, math.rad(0), math.rad(45))
+	Turn (lforearm, y_axis, math.rad(0), math.rad(30))
+	Turn (gun, x_axis, math.rad(0), math.rad(30))
 end
 
 local function ReloadPenaltyAndAnimation()
@@ -118,7 +128,6 @@ local function ReloadPenaltyAndAnimation()
 	SetSelfSpeedMod(RELOAD_PENALTY)
 
 	Sleep(200)
-	Turn (gun, x_axis, 1, math.rad(120))
 	Turn (turner, y_axis, 0, math.rad(200))
 
 	Sleep(2300) -- 3.5 second reload so no point checking earlier.
@@ -129,7 +138,6 @@ local function ReloadPenaltyAndAnimation()
 			aimBlocked = false
 
 			Sleep(500)
-			Turn (gun, x_axis, 0, math.rad(100))
 			SetSelfSpeedMod(1)
 			RestoreAfterDelay()
 			return
@@ -143,11 +151,21 @@ function OnLoadGame()
 end
 
 function script.AimFromWeapon(num)
-	return gunemit
+	return laseremit
 end
 
 function script.QueryWeapon(num)
-	return gunemit
+    if num == 1 then
+	    return rocketemit
+	elseif num == 2 then
+	    return laseremit
+	elseif num == 3 and shot0 then
+	    return brocketemit1
+	elseif num == 3 and shot1 then
+	    return brocketemit2
+	elseif num == 3 and shot2 then
+	    return brocketemit2
+	end
 end
 
 function script.AimWeapon(num, heading, pitch)
@@ -157,14 +175,21 @@ function script.AimWeapon(num, heading, pitch)
 	if aimBlocked then
 		return false
 	end
-
+    
+	if num == 1 then
+	    Turn (lforearm, x_axis, math.rad(90), math.rad(210))
+		Turn (lforearm, y_axis, math.rad(15), math.rad(60))
+		Turn (gun, x_axis, math.rad(-30), math.rad(75))
+	end
+	
+    if num == 2 then
+	    Turn (rforearm, x_axis, math.rad(-90), math.rad(420))
+	end
+	
 	Turn (hips, x_axis, 0)
-	Turn (chest, x_axis, 0)
-	Turn (gun, x_axis, -pitch, math.rad(420))
-	Turn (turner, y_axis, heading + math.rad(5), math.rad(420))
+	Turn (turner, y_axis, heading, math.rad(420))
 
 	WaitForTurn (turner, y_axis)
-	WaitForTurn (gun, x_axis)
 
 	StartThread(RestoreAfterDelay)
 
@@ -174,9 +199,36 @@ end
 function script.FireWeapon(num)
 	if num == 1 then
 		EmitSfx (exhaust, 1024)
+		Hide (rocket)
+		Move (rocket, y_axis, 12, 100)
+		Sleep(4000)
+		Show (rocket)
+		Move (rocket, y_axis, 0, 6)
 	end
 	if num == 2 then
 		lastfire = Spring.GetGameFrame()
+	end
+	if num == 3 and shot0 then
+	    Sleep(1)
+		shot0 = false
+		shot1 = true
+		Move (brocket1, y_axis, -2, 1000)
+		Sleep(3000)
+		Move (brocket1, y_axis, 0, 2)
+	elseif num == 3 and shot1 then
+	    Sleep(1)
+		shot1 = false
+		shot2 = true
+		Move (brocket2, y_axis, -2, 1000)
+		Sleep(3000)
+		Move (brocket2, y_axis, 0, 2)
+	elseif num == 3 and shot2 then
+	    Sleep(1)
+		shot2 = false
+		shot0 = true
+		Move (brocket3, y_axis, -2, 1000)
+		Sleep(3000)
+		Move (brocket3, y_axis, 0, 2)
 	end
 	--StartThread(ReloadPenaltyAndAnimation)
 end
@@ -192,7 +244,7 @@ function script.BlockShot(num, targetID)
 	return false
 end
 
-local explodables = {hips, thigh[2], foot[1], shin[2], knee[1], heel[2]}
+local explodables = {hips, thigh[2], foot[1], shin[2], knee[1]}
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage / maxHealth
 
@@ -206,7 +258,6 @@ function script.Killed(recentDamage, maxHealth)
 		return 1
 	else
 		Explode (chest, SFX.SHATTER)
-		Explode (gun, SFX.SHATTER)
 		return 2
 	end
 end
