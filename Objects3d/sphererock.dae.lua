@@ -1,6 +1,6 @@
 return {
     tex1 = "spherebot1.dds",
     tex2 = "spherebot2.dds",
-    invertteamcolor = false
+    invertteamcolor = false,
 	midpos = {0, 20, 0},
 }
