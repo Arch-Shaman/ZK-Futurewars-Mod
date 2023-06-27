@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 3.6.0 commit date:2023-06-27, commit time:08:08, hash:c7fc78b81ecb</authoring_tool>
     </contributor>
-    <created>2023-06-28T00:02:38</created>
-    <modified>2023-06-28T00:02:38</modified>
+    <created>2023-06-28T00:06:11</created>
+    <modified>2023-06-28T00:06:11</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -1210,6 +1210,9 @@
                     </node>
                     <node id="rocketemit" name="rocketemit" type="NODE">
                       <matrix sid="transform">0.9999999 2.98023e-8 0 0 -5.10352e-9 -5.96046e-8 -1 -7.312446 -5.65667e-9 1 -2.98023e-8 4.432746 0 0 0 1</matrix>
+                    </node>
+                    <node id="exhaust" name="exhaust" type="NODE">
+                      <matrix sid="transform">0.9999999 2.98023e-8 0 0 -5.10352e-9 -5.96046e-8 -1 26.62735 -5.65667e-9 1 -2.98023e-8 4.432746 0 0 0 1</matrix>
                     </node>
                   </node>
                 </node>
