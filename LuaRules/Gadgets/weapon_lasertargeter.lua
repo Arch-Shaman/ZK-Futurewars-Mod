@@ -24,33 +24,39 @@ local SetWatchWeapon = Script.SetWatchWeapon
 local spGetValidUnitID = Spring.ValidUnitID
 local debugMode = false
 
-local missiles = {} -- id = {missiles = {projIDs},target = {x,y,z}, numMissiles = 0, fake = uid}
+local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+
+local missiles = IterableMap.New() -- {weaponDef = ID, targeterID = unitID, state}
+local targeters = {} -- holds the targeting information.
 local config = {} -- targeter or tracker
-local prolist = {} -- reverse lookup: proID = ownerID
+local wantedList = {}
 
 for wid = 1, #WeaponDefs do
 	--debugecho(wid .. ": " .. tostring(WeaponDefs[wid].type) .. "\ntracker: " .. tostring(WeaponDefs[wid].customParams.tracker))
-	if (WeaponDefs[wid].type == "MissileLauncher" or WeaponDefs[wid].type == "StarburstLauncher") and WeaponDefs[wid].customParams.tracker then
-		config[wid] = 'tracker'
+	local cp = WeaponDefs[wid].customParams
+	if (WeaponDefs[wid].type == "MissileLauncher" or WeaponDefs[wid].type == "StarburstLauncher") and cp.tracker then
+		config[wid] = {type = 'tracker', fallsWhenLost = cp.laserguidancefalls ~= nil, lostTime = tonumber(cp.laserguidance_failtime) or 15}
 		SetWatchWeapon(wid, true)
 	elseif WeaponDefs[wid].customParams.targeter then
-		config[wid] = 'targeter'
+		config[wid] = {type = 'targeter'}
 		SetWatchWeapon(wid, true)
+		wantedList[#wantedList + 1] = wid
 	end
 end
 
 local function PrintConfig()
 	spEcho("Laser targeting config: ")
-	for wid,type in pairs(config) do
-		spEcho(wid .. ': ' .. type)
+	for wid,data in pairs(config) do
+		spEcho(wid .. ': ' .. data.type)
 	end
 end
 
-local function GetMissileTracking(unitID, pid)
-	if missiles[unitID] == nil then
-		return true
+local function GetMissileTracking(pid)
+	local data = IterableMap.Get(pid)
+	if not data then
+		return false
 	else
-		return missile[unitID].state == "normal"
+		return data.state == "normal"
 	end
 end
 
@@ -60,11 +66,15 @@ if debugMode then PrintConfig() end
 
 function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, projectileID)
 	--debugecho("Explosion: " .. tostring(weaponDefID, px, py, pz, AttackerID, projectileID))
-	if config[weaponDefID] == 'targeter' then
-		--spSetUnitPosition(missiles[AttackerID].target,px,py,pz)
-		missiles[AttackerID].target[1] = px
-		missiles[AttackerID].target[2] = py
-		missiles[AttackerID].target[3] = pz
+	if config[weaponDefID].type == 'targeter' then
+		if targeters[AttackerID] == nil then
+			targeters[AttackerID] = {target = {[1] = px, [2] = py, [3] = pz}, lastFrame = spGetGameFrame(), isDead = spGetValidUnitID(AttackerID), numMissiles = 0}
+		else
+			targeters[AttackerID].target[1] = px
+			targeters[AttackerID].target[2] = py
+			targeters[AttackerID].target[3] = pz
+			targeters[AttackerID].lastFrame = spGetGameFrame()
+		end
 		if debugMode then
 			local x = missiles[AttackerID].target[1]
 			local y = missiles[AttackerID].target[2]
@@ -74,39 +84,46 @@ function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, projectileID)
 			local ux,uy,uz = spGetUnitPosition(AttackerID)
 			spEcho("UnitPosition: " .. ux .. "," .. uy .. "," .. uz)
 		end
-		missiles[AttackerID].lastframe = spGetGameFrame()
 	end
 end
 
+function gadget:Explosion_GetWantedWeaponDef()
+	return wantedList
+end
+
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID) -- proOwnerID is the unitID that fired the projectile
-	if config[weaponDefID] and not missiles[proOwnerID] then
-		missiles[proOwnerID] = {missiles = {}, target = {[1] = 0, [2] = 0, [3] = 0}, numMissiles = 0, lastframe = spGetGameFrame(), state = "normal"}
-	end
-	if config[weaponDefID] and config[weaponDefID] == 'tracker' then
+	if config[weaponDefID] and config[weaponDefID].type == 'tracker' then
+		local data = {state = "normal", owner = proOwnerID, def = weaponDefID}
 		if debugMode then
 			spEcho("Added " .. proID .. " to " .. proOwnerID)
 		end
-		spSetProjectileTarget(proID, missiles[proOwnerID].target[1], missiles[proOwnerID].target[2], missiles[proOwnerID].target[3])
+		if targeters[proOwnerID] then
+			local targetInfo = targeters[proOwnerID].target
+			spSetProjectileTarget(proID, targetInfo[1], targetInfo[2], targetInfo[3])
+			targeters[proOwnerID].numMissiles = targeters[proOwnerID].numMissiles + 1
+		end
+		IterableMap.Add(missiles, proID, data)
 		--debugecho(tostring(success))
-		missiles[proOwnerID].missiles[proID] = true
-		missiles[proOwnerID].numMissiles = missiles[proOwnerID].numMissiles + 1
-		prolist[proID] = proOwnerID
 	end
 end
 
 function gadget:ProjectileDestroyed(proID)
-	if prolist[proID] then
-		--debugecho("destroyed " .. proID)
-		missiles[prolist[proID]].missiles[proID] = nil
-		missiles[prolist[proID]].numMissiles = missiles[prolist[proID]].numMissiles - 1
-		prolist[proID] = nil
+	--debugecho("destroyed " .. proID)
+	local data = IterableMap.Get(missiles, proID)
+	if data then
+		targeters[data.owner].numMissiles = targeters[data.owner].numMissiles - 1
+		if targeters[data.owner].numMissiles == 0 and targeters[data.owner].isDead then
+			targeters[data.owner] = nil
+		end
+		IterableMap.Remove(missiles, proID)
 	end
 end
 
 function GG.GetLaserTarget(proID)
-	if prolist[proID] then
-		local target = missiles[prolist[proID]].target
-		if missiles[prolist[proID]].state == "normal" then
+	local data = IterableMap.Get(missiles, proID)
+	if data then
+		local target = targeters[data.owner].target
+		if data.state == "normal" then
 			return target[1], target[2], target[3]
 		else
 			local x, _, z = spGetProjectilePosition(proID)
@@ -117,52 +134,53 @@ function GG.GetLaserTarget(proID)
 	end
 end
 
+function gadget:UnitDestroyed(unitID)
+	if targeters[unitID] and targeters[unitID].numMissiles > 0 then
+		targeters[unitID].isDead = true
+	elseif targeters[unitID] and targeters[unitID].numMissiles == 0 then
+		targeters[unitID] = nil
+	end
+end
+
+local function SetMissileTarget(missileID, x, y, z)
+	if not GG.GetMissileCruising(missileID) then
+		spSetProjectileTarget(missileID, x, y, z)
+	else
+		GG.ForceCruiseUpdate(missileID, x, y, z)
+	end
+end
+
+local function SetMissileLost(missileID, data, targeterInfo, configuration)
+	local tx, ty, tz
+	if configuration.fallsWhenLost then
+		tx, _, tz = spGetProjectilePosition(missileID)
+		ty = spGetGroundHeight(tx, tz)
+	else
+		local targetInfo = targeterInfo.target
+		tx, ty, tz = targetInfo[1], targetInfo[2], targetInfo[3]
+	end
+	SetMissileTarget(missileID, tx, ty, tz)
+end
+
+local function UpdateMissileTarget(missileID, targeterInfo)
+	local tx, ty, tz = targeterInfo.target[1], targeterInfo.target[2], targeterInfo.target[3]
+	SetMissileTarget(missileID, tx, ty, tz)
+end
+
 function gadget:GameFrame(f)
 	if f%3 == 0 then
-		for id, data in pairs(missiles) do
-			if f - data.lastframe > 20 and data.numMissiles > 0 then
+		for missileID, data in IterableMap.Iterator(missiles) do
+			local configuration = config[data.def]
+			local targeter = targeters[data.owner]
+			local timeSinceLastTargeterExplosion = f - targeter.lastFrame
+			if timeSinceLastTargeterExplosion >= configuration.lostTime then
+				SetMissileLost(missileID, data, targeter, configuration)
 				data.state = "lost"
-				for pid,_ in pairs(data.missiles) do
-					local x,y,z = spGetProjectilePosition(pid)
-					y = spGetGroundHeight(x,z)
-					if not GG.GetMissileCruising(pid) then
-						if debugMode then
-							spEcho("Setting " .. pid .. " lost target:" .. x .. "," .. y .. "," .. z)
-						end
-						local success = spSetProjectileTarget(pid, x, y, z)
-						if debugMode then
-							spEcho("Success: " .. tostring(success))
-						end
-					else
-						GG.ForceCruiseUpdate(pid, x, y, z)
-					end
-				end
-			elseif f - data.lastframe < 20 and data.state ~= "normal" and data.numMissiles > 0 then
+			elseif data.state == "lost" and timeSinceLastTargeterExplosion < configuration.lostTime then -- restore
 				data.state = "normal"
-			end
-			if data.state == "normal" and data.numMissiles > 0 then
-				for pid,_ in pairs(data.missiles) do
-					if not GG.GetMissileCruising(pid) then
-						spSetProjectileTarget(pid, data.target[1], data.target[2], data.target[3])
-					else
-						GG.ForceCruiseUpdate(pid, data.target[1], data.target[2], data.target[3])
-					end
-				end
-			end
-			if not spGetValidUnitID(id) and data.numMissiles == 0 then
-				--debugecho("removing " .. id)
-				for pid,_ in pairs(data.missiles) do
-					local x,y,z = spGetProjectilePosition(pid)
-					y = spGetGroundHeight(x,z)
-					if debugMode then
-						spEcho("Setting " .. pid .. " lost target:" .. x .. "," .. y .. "," .. z)
-					end
-					local success = spSetProjectileTarget(pid, x, y, z)
-					if debugMode then
-						spEcho("Success: " .. tostring(success))
-					end
-				end
-				missiles[id] = nil
+				UpdateMissileTarget(missileID, targeter)
+			else
+				UpdateMissileTarget(missileID, targeter)
 			end
 		end
 	end

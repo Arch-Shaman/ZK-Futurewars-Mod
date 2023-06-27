@@ -88,6 +88,8 @@ return {
 					reload_move_mod_time = 3,
 					tracker = 1,
 					cloakstrike = 1 + 1/3,
+					laserguidance_failtime = 20,
+					laserguidancefalls = 1,
 				},
 				damage                  = {
 					default = 360.01,

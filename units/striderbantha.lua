@@ -42,9 +42,7 @@ local unitDef = {
 	objectName             = "Bantha.s3o",
 	selfDestructAs         = "ATOMIC_BLAST",
 	script                 = "striderbantha.lua",
-  
-  sfxtypes               = {
-
+	sfxtypes               = {
 		explosiongenerators = {
 			"custom:zeusmuzzle",
 			"custom:zeusgroundflash",
@@ -219,6 +217,7 @@ local unitDef = {
 				light_color = "0.65 0.65 0.18",
 				light_radius = 380,
 				useheight = 1,
+				laserguidance_failtime = 30,
 			},
 			damage                  = {
 				default        = 5*1000,

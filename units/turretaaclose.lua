@@ -72,6 +72,7 @@ return {
 					script_burst = "4",
 					light_color = "0.5 0.6 0.6",
 					tracker = 1,
+					laserguidance_failtime = 10,
 				},
 				damage                  = {
 					default = 460.1,
