@@ -142,8 +142,22 @@ end
 function gadget:UnitCreated(unitID, unitDefID)
 	if wantedUnits[unitDefID] then
 		local config = wantedUnits[unitDefID]
-		IterableMap.Add(handled, unitID, {battery = config.initialCharge, gain = config.gain, maxbattery = config.maximum, costs = config.batterycost, scales = config.scales, checks = config.checks})
+		IterableMap.Add(handled, unitID, {battery = config.initialCharge, gain = config.gain, maxbattery = config.maximum, costs = config.batterycost, scales = config.scales, checks = config.checks, reverseBuilt = false})
 		spSetUnitRulesParam(unitID, "battery", config.initialCharge, INLOS)
+	end
+end
+
+function gadget:UnitReverseBuilt(unitID, unitDefID, unitTeam)
+	if wantedUnits[unitDefID] then
+		local data = IterableMap.Get(handled, unitID)
+		data.reverseBuilt = true
+	end
+end
+
+function gadget:UnitFinished(unitID, unitDefID, unitTeam)
+	if wantedUnits[unitDefID] then
+		local data = IterableMap.Get(handled, unitID)
+		data.reverseBuilt = false
 	end
 end
 
@@ -159,8 +173,8 @@ function gadget:GameFrame(f)
 			local powered = (spGetUnitRulesParam(id, "lowpower") or 0) == 0
 			local _, _, _, _, bp = spGetUnitHealth(id)
 			local lastbattery = data.battery
-			local gain = data.gain 
-			if (not powered) or bp < 1 then
+			local gain = data.gain
+			if (not powered) or (data.reverseBuilt and bp < 1) then
 				if data.battery > 0 then
 					data.battery = max(data.battery - (gain * 2), 0)
 				end
