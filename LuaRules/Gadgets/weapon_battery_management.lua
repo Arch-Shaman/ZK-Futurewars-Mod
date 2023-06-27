@@ -171,10 +171,10 @@ function gadget:GameFrame(f)
 	if f%checkTime == 0 then
 		for id, data in IterableMap.Iterator(handled) do
 			local powered = (spGetUnitRulesParam(id, "lowpower") or 0) == 0
-			local _, _, _, _, bp = spGetUnitHealth(id)
+			--local _, _, _, _, bp = spGetUnitHealth(id)
 			local lastbattery = data.battery
 			local gain = data.gain
-			if (not powered) or (data.reverseBuilt and bp < 1) then
+			if (not powered) or data.reverseBuilt then
 				if data.battery > 0 then
 					data.battery = max(data.battery - (gain * 2), 0)
 				end
