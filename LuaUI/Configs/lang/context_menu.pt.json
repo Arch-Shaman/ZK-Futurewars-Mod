@@ -122,7 +122,7 @@
 	"only_assists" : "Apenas auxilia",
 	"vampirism" : "Vampirismo",
 	"vampirism_kills_increase_hp" : "Aumenta o máximo com mortes",
-	"vampirism_kills_increase_hp_desc" : "%{number}% da vida máxima da vítima",
+	"vampirism_kills_increase_hp_desc" : "%{number}%% da vida máxima da vítima",
 	"armored_unit" : "Armadura reforçada",
 	"armor_reduction" : "Redução de dano",
 	"armor_type_1" : "Aplica-se quando fechado",

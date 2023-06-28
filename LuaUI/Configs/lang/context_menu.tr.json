@@ -124,7 +124,7 @@
 	"only_assists" : "Sadece yardımcı olabilir",
 	"vampirism" : "Vampirizm",
 	"vampirism_kills_increase_hp" : "Öldürmelerle maksimum artar",
-	"vampirism_kills_increase_hp_desc" : "Kurbanın maksimum hp'sinin %{number}'ü",
+	"vampirism_kills_increase_hp_desc" : "Kurbanın maksimum hp'sinin %{number}%%'ü",
 	"armored_unit" : "Sertleştirilmiş Zırh",
 	"armor_reduction" : "Hasar Azaltma",
 	"armor_type_1" : "Kapalıyken geçerlidir",

@@ -124,7 +124,7 @@
 	"only_assists" : "Kann nur helfen",
 	"vampirism" : "Vampirismus",
 	"vampirism_kills_increase_hp" : "Erhöht das Maximum bei Kills",
-	"vampirism_kills_increase_hp_desc" : "%{number} % der maximalen HP des Opfers",
+	"vampirism_kills_increase_hp_desc" : "%{number} %% der maximalen HP des Opfers",
 	"armored_unit" : "Gehärtete Rüstung",
 	"armor_reduction" : "Schadensreduzierung",
 	"armor_type_1" : "Gilt im geschlossenen Zustand",

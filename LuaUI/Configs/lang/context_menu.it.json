@@ -124,7 +124,7 @@
 	"only_assists" : "Può solo aiutare",
 	"vampirism" : "Vampirismo",
 	"vampirism_kills_increase_hp" : "Aumenta il massimo con le uccisioni",
-	"vampirism_kills_increase_hp_desc" : "%{number}% della salute massima della vittima",
+	"vampirism_kills_increase_hp_desc" : "%{number}%% della salute massima della vittima",
 	"armored_unit" : "Armatura Indurita",
 	"armor_reduction" : "Riduzione del danno",
 	"armor_type_1" : "Si applica mentre è chiuso",

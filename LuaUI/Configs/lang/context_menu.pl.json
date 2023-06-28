@@ -124,7 +124,7 @@
 	"only_assists" : "Can only assist",
 	"vampirism" : "Vampirism",
 	"vampirism_kills_increase_hp" : "Increases max with kills",
-	"vampirism_kills_increase_hp_desc" : "%{number}% of victim's max hp",
+	"vampirism_kills_increase_hp_desc" : "%{number}%% of victim's max hp",
 	"armored_unit" : "Hardened Armor",
 	"armor_reduction" : "Damage Reduction",
 	"armor_type_1" : "Applies while closed",
