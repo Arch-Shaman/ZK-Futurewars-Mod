@@ -177,7 +177,7 @@ return {
 					batterydrain = 10,
 				},
 				damage                  = {
-					default        = 40.1,
+					default        = 30.1,
 				},
 				explosionGenerator      = "custom:LIGHTNINGPLOSION_NOPOST",
 				edgeeffectiveness       = 0.1,
@@ -223,7 +223,7 @@ return {
 					batterydrain = 10,
 				},
 				damage                  = {
-					default        = 40.1,
+					default        = 30.1,
 				},
 				explosionGenerator      = "custom:LIGHTNINGPLOSION_NOPOST",
 				duration                = 10,
