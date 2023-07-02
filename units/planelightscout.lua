@@ -97,7 +97,7 @@ return {
 					light_camera_height = 1800,
 					light_radius = 80,
 					light_color = "0.043 0.7 0.274",
-					batterydrain = 10,
+					batterydrain = 8,
 					mass = 110,
 				},
 
@@ -116,7 +116,7 @@ return {
 				rgbColor                = "1 0.843 0",
 				soundHit                = "weapon/laser/emerald_hit",
 				soundStart              = "weapon/laser/sparrow_laser",
-				soundStartVolume        = 0.2,
+				soundStartVolume        = 0.15,
 				soundTrigger            = true,
 				thickness               = 2.25,
 				tolerance               = 10000,
