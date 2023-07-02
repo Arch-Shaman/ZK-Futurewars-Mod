@@ -168,7 +168,7 @@ return {
 					--proxydist = 100, -- how far to check for units? Default: spawndist
 				},
 				damage                  = {
-					default = 60*4,
+					default = 300.01,
 				},
 				edgeEffectiveness		= 0.2,
 				explosionGenerator      = "custom:EMG_HIT_HE",
@@ -236,7 +236,7 @@ return {
 					--proxydist = 100, -- how far to check for units? Default: spawndist
 				},
 				damage                  = {
-					default = 280,
+					default = 300.01,
 				},
 				edgeEffectiveness		= 0.2,
 				explosionGenerator      = "custom:EMG_HIT_HE",
