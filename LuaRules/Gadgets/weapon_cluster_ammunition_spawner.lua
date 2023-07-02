@@ -91,7 +91,6 @@ local atan2 = math.atan2
 local pi = math.pi
 local halfpi = pi/2
 local doublepi = pi*2
-local abs = math.abs -- CAS GOES TO THE GYM AND HAS DOUBLE ABS
 local strfind = string.find
 local gmatch = string.gmatch
 local floor = math.floor
