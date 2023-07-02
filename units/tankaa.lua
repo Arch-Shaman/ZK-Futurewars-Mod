@@ -27,9 +27,9 @@ return {
 		idleTime               = 1800,
 		leaveTracks            = true,
 		maneuverleashlength    = "30",
-		maxDamage              = 3000,
+		maxDamage              = 4000,
 		maxSlope               = 18,
-		maxVelocity            = 3.2,
+		maxVelocity            = 2.4,
 		maxWaterDepth          = 22,
 		movementClass          = "TANK3",
 		moveState              = 0,
@@ -83,7 +83,7 @@ return {
 					vradius1 = "-5,-1,-5,5,1,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					proxy = 1, -- check for nearby units?
-					damage_vs_shield = "200"
+					damage_vs_shield = "150"
 				},
 				damage  = {
 					default = 60.1*5,
