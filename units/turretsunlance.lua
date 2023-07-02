@@ -1,4 +1,4 @@
-local aimTime = 6.5*30 -- in frames
+local aimTime = 6.9*30 -- in frames
 
 return { 
 	turretsunlance = {
@@ -90,7 +90,7 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 1970,
-				reloadtime              = 6.5,
+				reloadtime              = 0.1,
 				soundHit                = "weapon/cannon/cannonfire_004",
 				soundStart              = "weapon/cannon/sniperturret_fire",
 				turret                  = true,
