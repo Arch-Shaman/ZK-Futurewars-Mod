@@ -74,6 +74,7 @@ return {
 				coreThickness			= 0.5,
 				craterBoost				= 0,
 				craterMult				= 0,
+				canattackground         = false,
 				customParams			= {
 					light_color = "1.6 1.05 2.25",
 					light_radius = 320,
