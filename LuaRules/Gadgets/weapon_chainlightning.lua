@@ -48,6 +48,7 @@ for i = 1, #WeaponDefs do
 			weaponNum = tonumber(cp.chainlightning_num) or 1,
 			canTargetFeature = cp.chainlightning_donttargetfeature == nil,
 			canStrikeTwice = cp.chainlightning_hittwice ~= nil,
+			dontspawn = cp.chainlightning_blockexplosion ~= nil,
 		}
 		Spring.Echo("[ChainLightning] Added " .. i)
 		Script.SetWatchExplosion(i, true)
@@ -285,7 +286,7 @@ function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, ProjectileID)
 	if debugMode then
 		Spring.Echo("Chainlightning: Explosion: ", px, py, pz, AttackerID, ProjectileID)
 	end
-	if AttackerID == nil then
+	if AttackerID == nil or config[weaponDefID].dontspawn then
 		return
 	end
 	local num, _, target = spGetUnitWeaponTarget(AttackerID, config[weaponDefID].weaponNum)
