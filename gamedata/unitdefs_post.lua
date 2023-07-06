@@ -453,6 +453,7 @@ for name, ud in pairs(UnitDefs) do
 	if not ud.buildcostenergy then ud.buildcostenergy = cost end
 	if not ud.buildcostmetal then ud.buildcostmetal = cost end
 	if not ud.buildtime then ud.buildtime = cost end
+	if ud.buildtime <= 0 then ud.buildtime = 1 end
 	
 	if ud.customparams.dynamic_comm then -- Dynamic commanders have their explosion handled by unitscript. Also gives them antibait
 		ud.explodeas = "noweapon"
