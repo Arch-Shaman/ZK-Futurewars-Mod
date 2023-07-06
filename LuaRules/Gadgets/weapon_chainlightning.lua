@@ -338,7 +338,7 @@ end
 
 --[[function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 	if subProjectileDefs[weaponDefID] then
-		--Spring.Echo("ChainLightning: UnitPreDamaged")
+		--Spring.Echo("ChainLightning: UnitDamaged")
 		local x, y, z = spGetUnitPosition(unitID, true)
 		DoChainLightning(weaponDefID, x, y, z, attackerID, unitID)
 	end
