@@ -91,7 +91,7 @@ return {
 				reloadtime              = 25,
 				smokeTrail              = false,
 				soundHit                = "explosion/mini_nuke_2",
-				soundStart              = "weapon/missile/missile_fire2",
+				soundStart              = "weapon/missile/heavy_missile_launch1",
 				tolerance               = 4000,
 				turnrate                = 56500,
 				startVelocity           = 80,
