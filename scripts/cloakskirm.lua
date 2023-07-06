@@ -37,18 +37,8 @@ local shot2 = false
 -- future-proof running animation against balance tweaks
 local runspeed = 20 * (UnitDefs[unitDefID].speed / 69)
 
-local aimBlocked = false
-
 local function GetSpeedMod()
 	return (Spring.GetUnitRulesParam(unitID, "totalMoveSpeedChange") or 1)
-end
-
-local function SetSelfSpeedMod(speedmod)
-	if RELOAD_PENALTY == 1 then
-		return
-	end
-	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", speedmod)
-	GG.UpdateUnitAttributes(unitID)
 end
 
 local function Walk()
@@ -123,33 +113,6 @@ local function RestoreAfterDelay()
 	Turn (gun, x_axis, math.rad(0), math.rad(30))
 end
 
-local function ReloadPenaltyAndAnimation()
-	aimBlocked = true
-	SetSelfSpeedMod(RELOAD_PENALTY)
-
-	Sleep(200)
-	Turn (turner, y_axis, 0, math.rad(200))
-
-	Sleep(2300) -- 3.5 second reload so no point checking earlier.
-	while true do
-		local state = Spring.GetUnitWeaponState(unitID, 1, "reloadState")
-		local gameFrame = Spring.GetGameFrame()
-		if state - 32 < gameFrame then
-			aimBlocked = false
-
-			Sleep(500)
-			SetSelfSpeedMod(1)
-			RestoreAfterDelay()
-			return
-		end
-		Sleep(340)
-	end
-end
-
-function OnLoadGame()
-	SetSelfSpeedMod(1)
-end
-
 function script.AimFromWeapon(num)
 	return laseremit
 end
@@ -171,11 +134,6 @@ end
 function script.AimWeapon(num, heading, pitch)
 	Signal(SIG_Aim)
 	SetSignalMask(SIG_Aim)
-
-	if aimBlocked then
-		return false
-	end
-    
 	if num == 1 then
 	    Turn (lforearm, x_axis, math.rad(90), math.rad(210))
 		Turn (lforearm, y_axis, math.rad(15), math.rad(60))
@@ -190,9 +148,7 @@ function script.AimWeapon(num, heading, pitch)
 	Turn (turner, y_axis, heading, math.rad(420))
 
 	WaitForTurn (turner, y_axis)
-
 	StartThread(RestoreAfterDelay)
-
 	return true
 end
 

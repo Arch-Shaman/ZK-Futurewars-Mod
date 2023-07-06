@@ -11,6 +11,7 @@ return {
 		canMove                = true,
 		canPatrol              = true,
 		canCloak			   = true,
+		canManualFire          = true,
 		category               = "LAND",
 		collisionVolumeOffsets = "0 -5 0",
 		collisionVolumeScales  = "29 39 29",
@@ -64,15 +65,15 @@ return {
 		upright                = true,
 		weapons                = {
 			{
+				def                = "BOT_ROCKET",
+				onlyTargetCategory = "LOWFLYING LAND SINK TURRET SHIP SWIM FLOAT HOVER",
+			},
+			{
 				def                = "BIG_BOT_ROCKET",
 				onlyTargetCategory = "LOWFLYING LAND SINK TURRET SHIP SWIM FLOAT HOVER",
 			},
 			{
 				def                = "TRACKER",
-				onlyTargetCategory = "LOWFLYING LAND SINK TURRET SHIP SWIM FLOAT HOVER",
-			},
-			{
-				def                = "BOT_ROCKET",
 				onlyTargetCategory = "LOWFLYING LAND SINK TURRET SHIP SWIM FLOAT HOVER",
 			},
 		},
@@ -171,12 +172,13 @@ return {
 				weaponVelocity          = 1500,
 			},
 			BIG_BOT_ROCKET = {
-				name                    = "Big Laser guided Rocket",
+				name                    = "GATOR-3 Rocket",
 				areaOfEffect            = 96,
 				burnblow                = true,
 				cegTag                  = "missiletrailyellow",
 				craterBoost             = 0,
 				craterMult              = 0,
+				commandFire				= true,
 				customParams        = {
 					burst = Shared.BURST_RELIABLE,
 					light_camera_height = 1600,
@@ -186,7 +188,7 @@ return {
 					cloakstrike = 1 + 1/3,
 				},
 				damage                  = {
-					default = 720.01,
+					default = 900.01,
 				},
 				fireStarter             = 70,
 				flightTime              = 12,
@@ -202,8 +204,8 @@ return {
 				smokeTrail              = true,
 				soundHit                = "explosion/ex_med4",
 				soundStart              = "weapon/missile/med_rocket_fire",
-				startVelocity           = 200,
-				tracks                  = true,
+				startVelocity           = 100,
+				tracks                  = false,
 				turret                  = true,
 				weaponAcceleration      = 800,
 				weaponType              = "MissileLauncher",
