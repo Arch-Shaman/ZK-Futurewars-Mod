@@ -305,9 +305,9 @@
 		"helptext" : "The Singularity Reactor generates massive amount of energy using a controlled black hole - which is about as safe as it sounds. Singularity reactors naturally increase their output over time, making them attractive targets to take out early on. When the reactor is destroyed, the black hole implodes violently, dragging units inside."
 	},
 	"bomberdisarm" : {
-		"name" : "Thunderbird",
-		"description" : "Disarming Lightning Bomber",
-		"helptext" : "Fast bomber armed with a lightning generator that disarms units in a wide area under it."
+		"name" : "Menace",
+		"description" : "Tactical Support Bomber",
+		"helptext" : "The Menace is a tactical support bird which lacks direct damage for the most part, but makes up for it in crowd control capabilities."
 	},
 	"chicken_spidermonkey" : {
 		"name" : "Spidermonkey",
