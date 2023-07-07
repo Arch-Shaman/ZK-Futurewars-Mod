@@ -996,22 +996,30 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			if show_damage then
 				if cp.cloakstrike then
 					cells[#cells+1] = ' - ' .. localization.stats_damage .. ' ' .. localization.stats_duringcloakstrike .. ':'
-					if tonumber(dam_str) == nil then
-						local dmg, p
-						for word in dam_str:gmatch("%d+%s") do
-							if dmg == nil then
-								dmg = tonumber(word)
-							elseif p == nil then
-								p = tonumber(word)
-							end
-						end
-						local ndmg = (tonumber(dmg) or 0) * cp.cloakstrike
-						local np = (tonumber(p) or 0) * cp.cloakstrike
-						local newstr = dam_str:gsub(dmg, ndmg):gsub(p, np)
-						cells[#cells+1] = newstr
-					else
-						cells[#cells+1] = dam_str * cp.cloakstrike
+					--Spring.Echo(tostring(dam_str))
+					--Spring.Echo("dam: " .. dam)
+					local csMult = tonumber(cp.cloakstrike)
+					local ndmg = dam * csMult
+					--Spring.Echo("ndmg: " .. ndmg)
+					local npara = damw * csMult
+					local nslow = dams * csMult
+					local ndis = damd * csMult
+					local ncap = damc * csMult
+					local newstr = dam_str
+					newstr = newstr:gsub(numformat(dam, 2), numformat(ndmg, 2))
+					if npara then
+						newstr = newstr:gsub(numformat(damw, 2), numformat(npara, 2))
 					end
+					if nslow then
+						newstr = newstr:gsub(numformat(dams, 2), numformat(nslow, 2))
+					end
+					if ndis then
+						newstr = newstr:gsub(numformat(damd, 2), numformat(ndis, 2))
+					end
+					if ncap then
+						newstr = newstr:gsub(numformat(damc, 2), numformat(ncap, 2))
+					end
+					cells[#cells+1] = newstr
 				end
 				cells[#cells+1] = ' - ' .. localization.stats_damage .. ':'
 				cells[#cells+1] = dam_str
