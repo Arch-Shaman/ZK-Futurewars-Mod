@@ -37,6 +37,7 @@ for wid = 1, #WeaponDefs do
 	if (WeaponDefs[wid].type == "MissileLauncher" or WeaponDefs[wid].type == "StarburstLauncher") and cp.tracker then
 		config[wid] = {type = 'tracker', fallsWhenLost = cp.laserguidancefalls ~= nil, lostTime = tonumber(cp.laserguidance_failtime) or 15}
 		SetWatchWeapon(wid, true)
+		wantedList[#wantedList + 1] = wid
 	elseif WeaponDefs[wid].customParams.targeter then
 		config[wid] = {type = 'targeter'}
 		SetWatchWeapon(wid, true)
@@ -64,6 +65,17 @@ GG.GetLaserTrackingEnabled = GetMissileTracking
 
 if debugMode then PrintConfig() end
 
+local function RemoveMissile(proID)
+	local data = IterableMap.Get(missiles, proID)
+	if data then
+		targeters[data.owner].numMissiles = targeters[data.owner].numMissiles - 1
+		if targeters[data.owner].numMissiles == 0 and targeters[data.owner].isDead then
+			targeters[data.owner] = nil
+		end
+		IterableMap.Remove(missiles, proID)
+	end
+end
+
 function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, projectileID)
 	--debugecho("Explosion: " .. tostring(weaponDefID, px, py, pz, AttackerID, projectileID))
 	if config[weaponDefID].type == 'targeter' then
@@ -84,6 +96,8 @@ function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, projectileID)
 			local ux,uy,uz = spGetUnitPosition(AttackerID)
 			spEcho("UnitPosition: " .. ux .. "," .. uy .. "," .. uz)
 		end
+	else
+		RemoveMissile(projectileID)
 	end
 end
 
@@ -93,7 +107,8 @@ end
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID) -- proOwnerID is the unitID that fired the projectile
 	if config[weaponDefID] and config[weaponDefID].type == 'tracker' then
-		local data = {state = "normal", owner = proOwnerID, def = weaponDefID}
+		local owner = proOwnerID or Spring.GetProjectileOwnerID(proID)
+		local data = {state = "normal", owner = owner, def = weaponDefID}
 		if debugMode then
 			spEcho("Added " .. proID .. " to " .. proOwnerID)
 		end
@@ -101,6 +116,8 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID) -- proOwnerID 
 			local targetInfo = targeters[proOwnerID].target
 			spSetProjectileTarget(proID, targetInfo[1], targetInfo[2], targetInfo[3])
 			targeters[proOwnerID].numMissiles = targeters[proOwnerID].numMissiles + 1
+		else
+			targeters[proOwnerID] = {target = {[1] = 0, [2] = 0, [3] = 0}, lastFrame = spGetGameFrame(), isDead = spGetValidUnitID(proOwnerID), numMissiles = 1}
 		end
 		IterableMap.Add(missiles, proID, data)
 		--debugecho(tostring(success))
@@ -109,14 +126,7 @@ end
 
 function gadget:ProjectileDestroyed(proID)
 	--debugecho("destroyed " .. proID)
-	local data = IterableMap.Get(missiles, proID)
-	if data then
-		targeters[data.owner].numMissiles = targeters[data.owner].numMissiles - 1
-		if targeters[data.owner].numMissiles == 0 and targeters[data.owner].isDead then
-			targeters[data.owner] = nil
-		end
-		IterableMap.Remove(missiles, proID)
-	end
+	RemoveMissile(proID)
 end
 
 function GG.GetLaserTarget(proID)
