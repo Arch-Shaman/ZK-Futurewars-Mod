@@ -1,4 +1,5 @@
 include "constants.lua"
+local scriptReload = include("scriptReload.lua")
 
 local hips = piece 'hips'
 local chest = piece 'chest'
@@ -25,14 +26,21 @@ local foot = {piece 'lfoot', piece 'rfoot'}
 local knee = {piece 'lknee', piece 'rknee'}
 
 local smokePiece = {chest, exhaust, rocketemit}
-local RELOAD_PENALTY = tonumber(UnitDefs[unitDefID].customParams.reload_move_penalty)
+local gameSpeed = Game.gameSpeed
+local RELOAD_TIME = (tonumber(WeaponDefs[UnitDefs[unitDefID].weapons[1].weaponDef].customParams["script_reload"]) or 3) * gameSpeed
+local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
 
 local SIG_Aim = 1
 local SIG_Walk = 2
 local lastfire = 0
-local shot0 = true
-local shot1 = false
-local shot2 = false
+local brocketNum = 1
+local brocketFlares = {
+	[1] = {query = brocketemit1, loaded = true, visual = brocket1},
+	[2] = {query = brocketemit2, loaded = true, visual = brocket2},
+	[3] = {query = brocketemit3, loaded = true, visual = brocket3},
+}
+
+local aimDelay = 5
 
 -- future-proof running animation against balance tweaks
 local runspeed = 20 * (UnitDefs[unitDefID].speed / 69)
@@ -100,7 +108,11 @@ function script.StopMoving()
 end
 
 function script.Create()
+	Turn(brocketemit1, x_axis, math.rad(-90))
+	Turn(brocketemit2, x_axis, math.rad(-90))
+	Turn(brocketemit3, x_axis, math.rad(-90))
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+	scriptReload.SetupScriptReload(3, RELOAD_TIME)
 end
 
 local function RestoreAfterDelay()
@@ -114,20 +126,22 @@ local function RestoreAfterDelay()
 end
 
 function script.AimFromWeapon(num)
-	return laseremit
+	if num == 1 then
+		return brocketFlares[brocketNum].query
+	elseif num == 2 then
+		return rocketemit
+	else
+		return laseremit
+	end
 end
 
 function script.QueryWeapon(num)
     if num == 1 then
-	    return rocketemit
+		return brocketFlares[brocketNum].query
 	elseif num == 2 then
+	    return rocketemit
+	else
 	    return laseremit
-	elseif num == 3 and shot0 then
-	    return brocketemit1
-	elseif num == 3 and shot1 then
-	    return brocketemit2
-	elseif num == 3 and shot2 then
-	    return brocketemit2
 	end
 end
 
@@ -135,67 +149,64 @@ function script.AimWeapon(num, heading, pitch)
 	Signal(SIG_Aim)
 	SetSignalMask(SIG_Aim)
 	if num == 1 then
+		return true
+	end
+	Turn (hips, x_axis, 0)
+	Turn (turner, y_axis, heading, math.rad(420))
+	if num == 2 then
 	    Turn (lforearm, x_axis, math.rad(90), math.rad(210))
 		Turn (lforearm, y_axis, math.rad(15), math.rad(60))
 		Turn (gun, x_axis, math.rad(-30), math.rad(75))
-	end
-	
-    if num == 2 then
+	else
 	    Turn (rforearm, x_axis, math.rad(-90), math.rad(420))
 	end
-	
-	Turn (hips, x_axis, 0)
-	Turn (turner, y_axis, heading, math.rad(420))
-
 	WaitForTurn (turner, y_axis)
 	StartThread(RestoreAfterDelay)
+	if num == 2 then return brocketFlares[brocketNum].loaded end
 	return true
+end
+
+local function ReloadBackpackRocketThread(num)
+	scriptReload.GunStartReload(num)
+	brocketFlares[num].loaded = false
+	local piece = brocketFlares[num].visual
+	local speed = 2 / (RELOAD_TIME / 60)
+	EmitSfx(piece, 1024)
+	Hide(piece)
+	Move(piece, y_axis, -2, 1000)
+	SleepAndUpdateReload(num, RELOAD_TIME / 2)
+	Show(piece)
+	Move(piece, y_axis, 0, speed)
+	SleepAndUpdateReload(num, RELOAD_TIME / 2)
+	brocketFlares[num].loaded = true
+	if scriptReload.GunLoaded(num) then
+		brocketNum = 1
+	end
 end
 
 function script.FireWeapon(num)
 	if num == 1 then
+		StartThread(ReloadBackpackRocketThread, brocketNum)
+		brocketNum = brocketNum%3 + 1
+	elseif num == 2 then -- BIG rocket
 		EmitSfx (exhaust, 1024)
 		Hide (rocket)
 		Move (rocket, y_axis, 12, 100)
 		Sleep(4000)
 		Show (rocket)
 		Move (rocket, y_axis, 0, 6)
-	end
-	if num == 2 then
+	else
 		lastfire = Spring.GetGameFrame()
 	end
-	if num == 3 and shot0 then
-	    Sleep(1)
-		shot0 = false
-		shot1 = true
-		Move (brocket1, y_axis, -2, 1000)
-		Sleep(3000)
-		Move (brocket1, y_axis, 0, 2)
-	elseif num == 3 and shot1 then
-	    Sleep(1)
-		shot1 = false
-		shot2 = true
-		Move (brocket2, y_axis, -2, 1000)
-		Sleep(3000)
-		Move (brocket2, y_axis, 0, 2)
-	elseif num == 3 and shot2 then
-	    Sleep(1)
-		shot2 = false
-		shot0 = true
-		Move (brocket3, y_axis, -2, 1000)
-		Sleep(3000)
-		Move (brocket3, y_axis, 0, 2)
-	end
-	--StartThread(ReloadPenaltyAndAnimation)
 end
 
 function script.BlockShot(num, targetID)
-	if Spring.ValidUnitID(targetID) and num == 1 then
-		if Spring.GetGameFrame() - 10 > lastfire then -- should have fired targeting laser before.
-			return true
-		end 
-		local distMult = (Spring.GetUnitSeparation(unitID, targetID) or 0)/450
-		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 280, 75 * distMult, 0.3, 0.1)
+	if num == 1 then
+		if not brocketFlares[brocketNum].loaded or Spring.GetGameFrame() - aimDelay > lastfire then return true end
+		--[[if Spring.ValidUnitID(targetID)  then
+			local distMult = (Spring.GetUnitSeparation(unitID, targetID) or 0)/450
+			return GG.OverkillPrevention_CheckBlock(unitID, targetID, 280, 75 * distMult, 0.3, 0.1)
+		end]]
 	end
 	return false
 end
@@ -203,13 +214,11 @@ end
 local explodables = {hips, thigh[2], foot[1], shin[2], knee[1]}
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage / maxHealth
-
 	for i = 1, #explodables do
 		if math.random() < severity then
 			Explode (explodables[i], SFX.FALL + SFX.SMOKE + SFX.FIRE)
 		end
 	end
-
 	if (severity < 0.5) then
 		return 1
 	else
