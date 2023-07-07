@@ -92,7 +92,6 @@ return {
 					light_camera_height = 1600,
 					light_color = "0.90 0.65 0.30",
 					light_radius = 250,
-					reload_move_mod_time = 3,
 					tracker = 1,
 					cloakstrike = 1 + 1/3,
 					laserguidance_failtime = 20,
