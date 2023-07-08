@@ -28,6 +28,7 @@ local knee = {piece 'lknee', piece 'rknee'}
 local smokePiece = {chest, exhaust, rocketemit}
 local gameSpeed = Game.gameSpeed
 local RELOAD_TIME = (tonumber(WeaponDefs[UnitDefs[unitDefID].weapons[1].weaponDef].customParams["script_reload"]) or 3) * gameSpeed
+local BIG_ROCKET_RELOAD = WeaponDefs[UnitDefs[unitDefID].weapons[2].weaponDef].reload
 local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
 
 local SIG_Aim = 1
@@ -157,6 +158,7 @@ function script.AimWeapon(num, heading, pitch)
 	    Turn (lforearm, x_axis, math.rad(90), math.rad(210))
 		Turn (lforearm, y_axis, math.rad(15), math.rad(60))
 		Turn (gun, x_axis, math.rad(-30), math.rad(75))
+		WaitForTurn(lforearm, y_axis)
 	else
 	    Turn (rforearm, x_axis, math.rad(-90), math.rad(420))
 	end
@@ -184,17 +186,22 @@ local function ReloadBackpackRocketThread(num)
 	end
 end
 
+local function ReloadBigRocketThread()
+	Hide (rocket)
+	Move (rocket, y_axis, 12, 100)
+	Sleep((BIG_ROCKET_RELOAD - 2) * 1000)
+	Show(rocket)
+	Move(rocket, y_axis, 0, 6)
+end
+	
+
 function script.FireWeapon(num)
 	if num == 1 then
 		StartThread(ReloadBackpackRocketThread, brocketNum)
 		brocketNum = brocketNum%3 + 1
 	elseif num == 2 then -- BIG rocket
 		EmitSfx (exhaust, 1024)
-		Hide (rocket)
-		Move (rocket, y_axis, 12, 100)
-		Sleep(4000)
-		Show (rocket)
-		Move (rocket, y_axis, 0, 6)
+		StartThread(ReloadBigRocketThread)
 	else
 		lastfire = Spring.GetGameFrame()
 	end
