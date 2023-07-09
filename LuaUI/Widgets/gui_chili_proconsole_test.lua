@@ -110,7 +110,7 @@ local SOUNDS = {
 	ally = "sounds/talk.wav",
 	label = "sounds/talk.wav",
 	lobby = "sounds/beep4_decrackled.wav",
-	highlight = "LuaUI/Sounds/communism/cash-register-01.wav" -- TODO find a better sound :)
+	highlight = "sounds/mentioned.wav",
 }
 
 --------------------------------------------------------------------------------
@@ -431,7 +431,7 @@ options = {
 	highlight_sound = {
 		name = "Sound for highlighted messages",
 		type = 'bool',
-		value = false,
+		value = true,
 		noHotkey = true,
 		OnChange = onOptionsChanged,
 		advanced = true,
