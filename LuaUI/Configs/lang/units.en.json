@@ -307,7 +307,7 @@
 	"bomberdisarm" : {
 		"name" : "Menace",
 		"description" : "Tactical Support Bomber",
-		"helptext" : "The Menace is a tactical support bird which lacks direct damage for the most part, but makes up for it in crowd control capabilities."
+		"helptext" : "The Menace is a tactical support bird which lacks direct damage for the most part, but makes up for it in crowd control capabilities. It can equip one of three loadouts: a bundle of slow bombs, a gravity assisted disarm pulse, or a mine deployment system. This gives it a set of options for reactive and proactive bombing runs."
 	},
 	"chicken_spidermonkey" : {
 		"name" : "Spidermonkey",
