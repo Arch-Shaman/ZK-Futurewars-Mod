@@ -652,7 +652,7 @@
 	"cloakskirm" : {
 		"name" : "Waylayer",
 		"description" : "Ambush Skirmisher (Laser-Guided)",
-		"helptext" : "The Waylayer is equiped with a personal cloaking device that allows it to set up ambushes with its laser guided missiles. Developed as a blackops unit during the 3rd siege of Throne, it was one of the first ambushers to be designed. Be aware of its lower hp compared to its predecessor, Ronin. It is highly reliant on its speed and cloaking to get itself in favorable positions."
+		"helptext" : "Designed in the late Coalition Wars that brought havoc to the galaxy, the Waylayer is a specialized stealth skirmisher designed to hit enemy weakpoints and ambush enemy heavies with massive burst damage in large groups.\nEquipped with a backpack mounted missile launcher, they can fire over each other (though be aware: the laser cannot fire through allies!). Unfortunately the combination of vertical launch system and poor missile turn rate leaves a considerable dead zone around the waylayer, making it extremely vulnerable to fast raiders."
 	},
 	"tankcon" : {
 		"name" : "Revolver",
