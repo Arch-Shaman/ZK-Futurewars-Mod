@@ -19,8 +19,8 @@ return {
 			properties = {
 				alpha              = 0.5,
 				color              = [[0.75 0.75 0.75 0.3]],
-				expansionspeed     = 60,
-				ttl                = 10,
+				expansionspeed     = 7.5,
+				ttl                = 40,
 			},
 		},
 		electricstorm = {
@@ -32,7 +32,67 @@ return {
 			properties = {
 				delay              = [[5]],
 				explosiongenerator = [[custom:disarmplosion_smallbolts_centered_alwaysshow]],
-				pos                = GetCircle(120, 0),
+				pos                = GetCircle(37, 0),
+			},
+		},
+		electricstorm2 = {
+			air                = true,
+			class              = [[CExpGenSpawner]],
+			count              = 10,
+			ground             = true,
+			water              = true,
+			properties = {
+				delay              = [[10]],
+				explosiongenerator = [[custom:disarmplosion_smallbolts_centered_alwaysshow]],
+				pos                = GetCircle(75, 0),
+			},
+		},
+		electricstorm3 = {
+			air                = true,
+			class              = [[CExpGenSpawner]],
+			count              = 10,
+			ground             = true,
+			water              = true,
+			properties = {
+				delay              = [[15]],
+				explosiongenerator = [[custom:disarmplosion_smallbolts_centered_alwaysshow]],
+				pos                = GetCircle(112, 0),
+			},
+		},
+		electricstorm4 = {
+			air                = true,
+			class              = [[CExpGenSpawner]],
+			count              = 10,
+			ground             = true,
+			water              = true,
+			properties = {
+				delay              = [[20]],
+				explosiongenerator = [[custom:disarmplosion_smallbolts_centered_alwaysshow]],
+				pos                = GetCircle(150, 0),
+			},
+		},
+		electricstorm5 = {
+			air                = true,
+			class              = [[CExpGenSpawner]],
+			count              = 10,
+			ground             = true,
+			water              = true,
+			properties = {
+				delay              = [[25]],
+				explosiongenerator = [[custom:disarmplosion_smallbolts_centered_alwaysshow]],
+				pos                = GetCircle(187, 0),
+			},
+		},
+		electricstorm5 = {
+			air                = true,
+			class              = [[CExpGenSpawner]],
+			count              = 10,
+			ground             = true,
+			water              = true,
+			properties = {
+				delay              = [[30]],
+				explosiongenerator = [[custom:disarmplosion_smallbolts_centered_alwaysshow]],
+				pos                = GetCircle(225, 0),
 			},
 		},
 	},
@@ -40,7 +100,7 @@ return {
 		["electric thingies2"] = {
 			air                = true,
 			class              = [[CSimpleParticleSystem]],
-			count              = 30,
+			count              = 1,
 			ground             = true,
 			water              = true,
 			properties = {
