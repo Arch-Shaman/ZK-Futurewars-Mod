@@ -130,7 +130,7 @@ local function Updateblastwave(data) -- Updateblastwave(x, y, z, size, impulse, 
 					GG.dealSlowToUnit(unitID, slow * ddist, blastwaveDefs[weaponDefID].overslow, attackerTeamID)
 				end
 				if data.disarm and data.disarm > 0 then
-					GG.AddDisarmDamage(unitID, data.disarm, blastwaveDefs[weaponDefID].disarmtime, nil)
+					GG.AddDisarmDamage(unitID, data.disarm, blastwaveDefs[weaponDefID].disarmtime * 30, nil)
 				end
 				--Spring.Echo("Did " .. incoming .. " and " .. vx .. ", " .. vy .. ", " .. vz .. " to " .. unitID)
 			end

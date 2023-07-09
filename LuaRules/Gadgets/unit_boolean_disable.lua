@@ -220,7 +220,7 @@ local function AddDisarmDamage(unitID, damage, disarmTimer, osDamageMult)
 	addParalysisDamageToUnit(unitID, damage, disarmTimer, osDamageMult)
 	if GG.Awards and GG.Awards.AddAwardPoints then
 		local _, maxHP = Spring.GetUnitHealth(unitID)
-		local cost_disarm = (damage * def.damageMult / maxHP) * GetUnitCost(unitID)
+		local cost_disarm = (damage / maxHP) * GetUnitCost(unitID)
 		GG.Awards.AddAwardPoints ('disarm', attackerTeam, cost_disarm)
 	end
 end
