@@ -1200,7 +1200,7 @@ end
 local playerCanSpecchatCache = {}
 
 local function IsFWDev(name)
-	return name == "Shaman" or name == "LeojEspino" or name == "Stuff" then -- FW devs
+	return name == "Shaman" or name == "LeojEspino" or name == "Stuff" -- FW devs
 end
 
 
