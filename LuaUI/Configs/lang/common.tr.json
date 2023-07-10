@@ -75,5 +75,6 @@
 	"roster_staticmissilesilo" : "Füzeler",
 	"neutral" : "Tarafsız",
 	"whisper" : "user söylüyor",
-	"whisperto" : "user'a söyle"
+	"whisperto" : "user'a söyle",
+	"specwhisper" : "user user2'ye söyledi"
 }

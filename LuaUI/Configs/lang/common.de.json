@@ -75,5 +75,6 @@
 	"roster_staticmissilesilo" : "Raketen",
 	"neutral" : "Neutral",
 	"whisper" : "user sagt es dir",
-	"whisperto" : "Du sagst es user"
+	"whisperto" : "Du sagst es user",
+	"specwhisper" : "user hat es user2 gesagt"
 }

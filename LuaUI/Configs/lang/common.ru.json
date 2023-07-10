@@ -75,5 +75,6 @@
 	"roster_staticmissilesilo" : "Ракеты",
 	"neutral" : "Нейтрали",
 	"whisper" : "user сообщает вам",
-	"whisperto" : "вы говорите user"
+	"whisperto" : "вы говорите user",
+	"specwhisper" : "user сказал user2"
 }

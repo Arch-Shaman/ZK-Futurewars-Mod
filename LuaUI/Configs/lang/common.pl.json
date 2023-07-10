@@ -75,5 +75,6 @@
 	"roster_staticmissilesilo" : "Rakiety taktyczne",
 	"neutral" : "Neutralny",
 	"whisper" : "user mówi ci",
-	"whisperto" : "powiedz user"
+	"whisperto" : "powiedz user",
+	"specwhisper" : "user powiedział user2"
 }

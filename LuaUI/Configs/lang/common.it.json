@@ -74,5 +74,6 @@
 	"roster_staticmissilesilo" : "Missili",
 	"neutral" : "Neutrali",
 	"whisper" : "user te lo dice",
-	"whisperto" : "dillo a user"
+	"whisperto" : "dillo a user",
+	"specwhisper" : "user ha detto user2"
 }
