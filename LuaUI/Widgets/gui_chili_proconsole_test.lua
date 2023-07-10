@@ -1223,7 +1223,7 @@ local function setupColors()
 	incolors['#h']		= incolor_highlight
 	incolors['#a'] 		= color2incolor(options.color_ally.value)
 	incolors['#e'] 		= color2incolor(options.color_chat.value)
-	incolors['#w']      = color2incolor({140/255, 134/255, 14/255, 1})
+	incolors['#w']      = color2incolor({2/255, 209/255, 209/255, 1})
 	incolors['#o'] 		= color2incolor(options.color_other.value)
 	incolors['#s'] 		= color2incolor(options.color_spec.value)
 end
