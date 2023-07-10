@@ -73,5 +73,7 @@
 	"roster_factoryship" : "Embarcações",
 	"roster_striderhub" : "Striders",
 	"roster_staticmissilesilo" : "Mísseis",
-	"neutral" : "Neutro"
+	"neutral" : "Neutro",
+	"whisper" : "user diz a você",
+	"whisperto" : "Você diz a user"
 }

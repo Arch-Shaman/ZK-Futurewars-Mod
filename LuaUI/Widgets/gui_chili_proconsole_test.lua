@@ -19,6 +19,12 @@ include("Widgets/COFCTools/ExportUtilities.lua")
 
 local missionMode = Spring.GetModOptions().singleplayercampaignbattleid
 
+local devs = {
+	["Shaman"] = true,
+	["LeojEspino"] = true,
+	["Stuff"] = true,
+}
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -64,8 +70,8 @@ local MESSAGE_RULES = {
 			},
 		}
 	},
-	player_to_player_received = { format = '#p*$playername* $argument' },
-	player_to_player_sent = { format = '#p -> *$playername* $argument' }, -- NOTE: #p will be color of destination player!
+	player_to_player_received = { format = '#p$playername #e{text}: $argument' },
+	player_to_player_sent = { format = 'you -> #p$playername#e: $argument' }, -- NOTE: #p will be color of destination player!
 	player_to_specs = { format = '#p<$playername> #s$argument' },
 	player_to_everyone = { format = '#p<$playername> #e$argument' },
 
@@ -801,6 +807,7 @@ function getMessageRuleOptionName(msgtype, suboption)
   return msgtype .. "_" .. suboption
 end
 
+
 for msgtype,rule in pairs(MESSAGE_RULES) do
 	if rule.output and rule.name then -- if definition has multiple output formats, make associated config option
 		local option_name = getMessageRuleOptionName(msgtype, "output_format")
@@ -887,6 +894,29 @@ local function PlaySound(id, condition)
 	end
 end
 
+local rainbowTable
+
+local function MakeTextRainbow(text)
+	local colorIndex = math.random(1, #rainbowTable)
+	local ret
+	for i = 3, #text do
+		local c = text:sub(i, i)
+		if c ~= ' ' then
+			if ret then
+				ret = ret .. rainbowTable[colorIndex]
+			else
+				ret = rainbowTable[colorIndex]
+			end
+		end
+		colorIndex = colorIndex + 1
+		ret = ret .. c
+		if colorIndex > #rainbowTable then colorIndex = 1 end
+	end
+	ret = ret .. color2incolor({1,1,1,1})
+	return ret
+end
+	
+
 local function detectHighlight(msg)
 	-- must handle case where we are spec and message comes from player
 	
@@ -897,6 +927,26 @@ local function detectHighlight(msg)
 	if msg.msgtype == 'player_to_player_received' and options.highlight_all_private.value then
 		msg.highlight = true
 		return
+	end
+	if msg.msgtype == 'player_to_everyone' then
+		--Spring.Echo(msg.playername)
+		if msg.playername == "GhostFenix" then
+			if msg.argument:sub(1,2) == '#r' then
+				msg.argument = MakeTextRainbow(msg.argument)
+			else
+				msg.argument = color2incolor({1, 244/255, 127/255, 1}) ..msg.argument .. color2incolor({1,1,1,1})
+			end
+			return
+		elseif devs[msg.playername] then
+			if msg.argument:sub(1,2) == '#r' then
+				msg.argument = MakeTextRainbow(msg.argument)
+			elseif msg.argument:sub(1,2) == '#i' then
+				msg.argument = msg.argument:sub(3, #msg.argument)
+				msg.argument = color2incolor({255/255, 164/255, 46/255, 1}) .. msg.argument .. color2incolor({1,1,1,1})
+				msg.highlight = true
+			end
+			return
+		end
 	end
 	
 --	Spring.Echo("msg.source = " .. (msg.source or 'NiL'))
@@ -1177,6 +1227,7 @@ local function setupColors()
 	incolors['#h']		= incolor_highlight
 	incolors['#a'] 		= color2incolor(options.color_ally.value)
 	incolors['#e'] 		= color2incolor(options.color_chat.value)
+	incolors['#w']      = color2incolor({140/255, 134/255, 14/255, 1})
 	incolors['#o'] 		= color2incolor(options.color_other.value)
 	incolors['#s'] 		= color2incolor(options.color_spec.value)
 end
@@ -1558,6 +1609,8 @@ local timer = 0
 
 local initialSwapTime = 0.2
 local firstSwap = true
+local reload = false
+local reloadTimer = 0
 
 -- FIXME wtf is this obsessive function?
 function widget:Update(s)
@@ -1595,6 +1648,17 @@ function widget:Update(s)
 				control:Dispose()
 				fadeTracker[k] = nil
 			end
+		end
+	end
+	if reload then
+		reloadTimer = reloadTimer + s
+		if reloadTimer > 0.6 then
+			local buffer = widget:ProcessConsoleBuffer(nil, options.max_lines.value)
+			for i=1,#buffer do
+				widget:AddConsoleMessage(buffer[i])
+			end
+			reload = false
+			reloadTimer = 0
 		end
 	end
 	
@@ -1664,12 +1728,56 @@ local function InitializeConsole()
 	removeToMaxLines()
 end
 
+local function OnLocaleChanged()
+	local newRecieved = WG.Translate("interface", "whisper") .. ": #w$argument"
+	local newSent = WG.Translate("interface", "whisperto") .. ": #w$argument"
+	newSent = newSent:gsub("user", "#p$playername#e")
+	newRecieved = newRecieved:gsub("user", "#p$playername#e")
+	--Spring.Echo("Locale changed:\nSent: " .. newSent .. "\nRecieve: " .. newRecieved)
+	MESSAGE_RULES.player_to_player_received.format = newRecieved
+	MESSAGE_RULES.player_to_player_sent.format = newSent
+	reload = true
+	if lastMsgChat then
+		lastMsgChat:Dispose()
+	end
+	if lastMsgBackChat then
+		lastMsgBackChat:Dispose()
+	end
+	if lastMsgConsole then
+		lastMsgConsole:Dispose()
+	end
+	if stack_chat then
+		for _, c in pairs(stack_chat.children) do
+			stack_chat:RemoveChild(c) --dispose/disconnect all children (safer)
+		end
+		stack_chat:Invalidate()
+	end
+	if stack_console then
+		for _, c in pairs(stack_console.children) do
+			stack_console:RemoveChild(c)
+		end
+		stack_console:Invalidate()
+	end
+	if stack_backchat then
+		for _, c in pairs(stack_backchat.children) do
+			stack_backchat:RemoveChild(c)
+		end
+		stack_backchat:Invalidate()
+	end
+	if chatMessages and #chatMessages > 0 then
+		for i = 1, #chatMessages do
+			chatMessages[i] = nil
+		end
+	end
+	RemakeConsole()
+end
+
 function widget:Initialize()
 	if (not WG.Chili) then
 		widgetHandler:RemoveWidget()
 		return
 	end
-
+	
 	screen0 = WG.Chili.Screen0
 	color2incolor = WG.Chili.color2incolor
 	
@@ -1679,6 +1787,31 @@ function widget:Initialize()
 	
 	stack_backchat = MakeMessageStack(1)
 	
+	rainbowTable = {
+		[1] = color2incolor({219/255, 15/255, 15/255, 1}),
+		[2] = color2incolor({219/255, 15/255, 70/255, 1}),
+		[3] = color2incolor({219/255, 15/255, 124/255, 1}),
+		[4] = color2incolor({219/255, 15/255, 179/255, 1}),
+		[5] = color2incolor({206/255, 15/255, 219/255, 1}),
+		[6] = color2incolor({151/255, 15/255, 219/255, 1}),
+		[7] = color2incolor({97/255, 15/255, 219/255, 1}),
+		[8] = color2incolor({43/255, 15/255, 219/255, 1}),
+		[9] = color2incolor({15/255, 43/255, 219/255, 1}),
+		[10] = color2incolor({15/255, 97/255, 219/255, 1}),
+		[11] = color2incolor({15/255, 151/255, 219/255, 1}),
+		[12] = color2incolor({15/255, 206/255, 219/255, 1}),
+		[13] = color2incolor({15/255, 219/255, 179/255, 1}),
+		[14] = color2incolor({15/255, 219/255, 124/255, 1}),
+		[15] = color2incolor({15/255, 219/255, 70/255, 1}),
+		[16] = color2incolor({15/255, 219/255, 15/255, 1}),
+		[17] = color2incolor({70/255, 219/255, 15/255, 1}),
+		[18] = color2incolor({124/255, 219/255, 15/255, 1}),
+		[19] = color2incolor({179/255, 219/255, 15/255, 1}),
+		[20] = color2incolor({219/255, 206/255, 15/255, 1}),
+		[21] = color2incolor({219/255, 151/255, 15/255, 1}),
+		[22] = color2incolor({219/255, 97/255, 15/255, 1}),
+		[23] = color2incolor({219/255, 43/255, 15/255, 1}),
+	}
 	inputspace = WG.Chili.ScrollPanel:New{
 		x = (options.backlogArrowOnRight.value and 0) or inputsize,
 		right = ((not options.backlogArrowOnRight.value) and 0) or inputsize,
@@ -1785,16 +1918,17 @@ function widget:Initialize()
 	window_console:AddChild(scrollpanel_console)
 	
 	RemakeConsole()
-	local buffer = widget:ProcessConsoleBuffer(nil, options.max_lines.value)
-	for i=1,#buffer do
-	  widget:AddConsoleMessage(buffer[i])
-	end
+	--local buffer = widget:ProcessConsoleBuffer(nil, options.max_lines.value)
+	--for i=1,#buffer do
+	  --widget:AddConsoleMessage(buffer[i])
+	--end
 	
 	Spring.SendCommands({"console 0"})
 	
 	HideInputSpace()
  	
 	self:LocalColorRegister()
+	WG.InitializeTranslation(OnLocaleChanged, GetInfo().name)
 end
 
 function widget:GameStart()

@@ -73,5 +73,7 @@
 	"roster_factoryship" : "船舰",
 	"roster_striderhub" : "灭世神行者",
 	"roster_staticmissilesilo" : "导弹",
-	"neutral" : "中性"
+	"neutral" : "中性",
+	"whisper" : "user 告诉你",
+	"whisperto" : "你告诉user"
 }
