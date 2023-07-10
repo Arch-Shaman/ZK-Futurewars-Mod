@@ -1541,7 +1541,7 @@ function widgetHandler:AddConsoleLine(msg, priority)
 				--TODO: improve chili_chat2 spam-filter/dedupe-detection too.
 			end
 			-- IGNORE FEATURE--
-			local username = select(1, Spring.GetPlayerInfo(playerID_msg, false)
+			local username = select(1, Spring.GetPlayerInfo(playerID_msg, false))
 			if ignorelist.ignorees[username] and not IsFWDev(username) then
 				return
 			end

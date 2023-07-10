@@ -19,12 +19,6 @@ include("Widgets/COFCTools/ExportUtilities.lua")
 
 local missionMode = Spring.GetModOptions().singleplayercampaignbattleid
 
-local devs = {
-	["Shaman"] = true,
-	["LeojEspino"] = true,
-	["Stuff"] = true,
-}
-
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -168,6 +162,7 @@ local firstEnter = true --used to activate ally-chat at game start. To run once
 local recentSoundTime = false -- Limit the rate at which sounds are played.
 
 local lastMsgChat, lastMsgBackChat, lastMsgConsole
+local textPerms = {}
 
 ------------------------------------------------------------
 -- options
@@ -915,7 +910,6 @@ local function MakeTextRainbow(text)
 	ret = ret .. color2incolor({1,1,1,1})
 	return ret
 end
-	
 
 local function detectHighlight(msg)
 	-- must handle case where we are spec and message comes from player
@@ -929,23 +923,25 @@ local function detectHighlight(msg)
 		return
 	end
 	if msg.msgtype == 'player_to_everyone' then
+		local mod = msg.argument:sub(1,2)
 		--Spring.Echo(msg.playername)
-		if msg.playername == "GhostFenix" then
-			if msg.argument:sub(1,2) == '#r' then
+		if mod == '#r' then
+			if textPerms[msg.playername] then
 				msg.argument = MakeTextRainbow(msg.argument)
 			else
-				msg.argument = color2incolor({1, 244/255, 127/255, 1}) ..msg.argument .. color2incolor({1,1,1,1})
+				msg.argument = msg.argument:sub(3, #msg.argument)
 			end
-			return
-		elseif devs[msg.playername] then
-			if msg.argument:sub(1,2) == '#r' then
-				msg.argument = MakeTextRainbow(msg.argument)
-			elseif msg.argument:sub(1,2) == '#i' then
+		elseif mod == '#i' then
+			if textPerms[msg.playername] and textPerms[msg.playername] > 2 then
 				msg.argument = msg.argument:sub(3, #msg.argument)
 				msg.argument = color2incolor({255/255, 164/255, 46/255, 1}) .. msg.argument .. color2incolor({1,1,1,1})
 				msg.highlight = true
+			else
+				msg.argument = msg.argument:sub(3, #msg.argument)
 			end
 			return
+		elseif textPerms[msg.playername] and textPerms[msg.playername] == 2 then -- ghostfenix chat is purple
+			msg.argument = color2incolor({1, 244/255, 127/255, 1}) ..msg.argument .. color2incolor({1,1,1,1})
 		end
 	end
 	
@@ -1232,17 +1228,40 @@ local function setupColors()
 	incolors['#s'] 		= color2incolor(options.color_spec.value)
 end
 
+
+
 local function setupPlayers(playerID)
 	if playerID then
-		local name, active, spec, teamId, allyTeamId = Spring.GetPlayerInfo(playerID, false)
+		local name, active, spec, teamId, allyTeamId, _, _, _, _, ck = Spring.GetPlayerInfo(playerID, true)
 		--lobby: grey chat, spec: white chat, player: color chat
 		incolors[name] = (spec and incolors['#s']) or color2incolor(Spring.GetTeamColor(teamId))
+		if ck.badges then -- look for fw badges
+			if ck.badges:find("fw_dev") then
+				textPerms[name] = 3
+			elseif ck.badges:find("fw_fenix") then
+				textPerms[name] = 2
+			elseif ck.badges:find("fw_vet") and textPerms[name] == nil then -- maybe allow FW donators to color chat?
+				textPerms[name] = 1
+			end
+		end
 	else
 		local playerroster = Spring.GetPlayerList()
 		for i, id in ipairs(playerroster) do
-			local name,active, spec, teamId, allyTeamId = Spring.GetPlayerInfo(id, false)
+			local name,active, spec, teamId, allyTeamId, _, _, _, _, ck = Spring.GetPlayerInfo(id, true)
 			--lobby: grey chat, spec: white chat, player: color chat
 			incolors[name] = (spec and incolors['#s']) or color2incolor(Spring.GetTeamColor(teamId))
+			if ck.badges then -- look for fw badges
+				if ck.badges:find("fw_dev") then
+					textPerms[name] = 3
+					break
+				elseif ck.badges:find("fw_fenix") then
+					textPerms[name] = 2
+					break
+				elseif ck.badges:find("fw_vet") and textPerms[name] == nil then -- maybe allow FW donators to color chat?
+					textPerms[name] = 1
+					break
+				end
+			end
 		end
 	end
 end

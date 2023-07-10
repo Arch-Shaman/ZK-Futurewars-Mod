@@ -65,15 +65,55 @@ local countryOverrides = {
 	["um"] = "us",
 }
 
-function Spring.GetPlayerInfo(playerID, sec)
-	local playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, wut, customkeys = GetPlayerInfo(playerID, sec)
+local function InjectBadges(str, badge)
+	local b = ""
+	if type(badge):lower() == "table" then
+		for i = 1, #badge do
+			b = b .. badge[i] .. ","
+		end
+	else
+		b = badge .. ","
+	end
+	return b .. str
+end
+
+local customParamsCache = {}
+
+function Spring.GetPlayerInfo(playerID, getOpts)
+	if playerID == nil then return nil end
+	if getOpts == nil then
+		getOpts = true
+	end
+	local playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, hasSkirmishAIsInTeam, customkeys, desynced
+	if getOpts then
+		playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, customkeys, hasSkirmishAIsInTeam, desynced = GetPlayerInfo(playerID, true)
+		if customParamsCache[playerID] == nil then
+			if playerName == "Shaman" or playerName == "Stuff" or playerName == "LeojEspino" then
+				customkeys.badges = customkeys.badges or ""
+				customkeys.badges = InjectBadges(customkeys.badges, "fw_dev")
+			elseif playerName == "GhostFenix" then
+				customkeys.badges = customkeys.badges or ""
+				customkeys.badges = InjectBadges(customkeys.badges, "fw_fenix")
+			end
+			customParamsCache[playerID] = customkeys
+		else
+			customkeys = customParamsCache[playerID]
+		end
+	else
+		playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, hasSkirmishAIsInTeam, desynced = GetPlayerInfo(playerID, false)
+	end
 	local override
 	if country then
 		override = countryOverrides[country] or country
 	else
 		override = country
 	end
-	return playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, override, rank, wut, customkeys
+	-- Add dev badges --
+	if getOpts then
+		return playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, override, rank, customkeys, hasSkirmishAIsInTeam, desynced
+	else
+		return playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, override, rank, hasSkirmishAIsInTeam, desynced
+	end
 end
 
 local function buildIndex(teamID, radius, Icons)
