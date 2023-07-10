@@ -941,7 +941,7 @@ local function detectHighlight(msg)
 			end
 			return
 		elseif textPerms[msg.playername] and textPerms[msg.playername] == 2 then -- ghostfenix chat is purple
-			msg.argument = color2incolor({1, 244/255, 127/255, 1}) ..msg.argument .. color2incolor({1,1,1,1})
+			msg.argument = color2incolor({27/255, 192/255, 254/255, 1}) ..msg.argument .. color2incolor({1,1,1,1})
 		end
 	end
 	
