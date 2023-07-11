@@ -12,7 +12,7 @@ Key Features:
 Credits:
 * Tankium: Commander Production Line idea and unitdef.
 * Thorneel: Aim_Delay base, idea for tracer.
-* leojespino: Remodels for lurker, gremlin, assailiant, Colossus, Ghost Comm, Support Commander Drone points, Assault/Repair drone models, and longbow.
+* leojespino: Remodels for lurker, gremlin, waylayer, pistil, assailiant, Colossus, Ghost Comm, Support Commander Drone points, Assault/Repair drone models, and longbow.
 * sharkgamedev: Modeling work for Titan, hacksaw, tank factory, RTG model, Wake Model, caretaker deathclone.
 * rifqifajarzain: Barbarian name, Titan name.
 * stuff: commando, Gravitas, trailblazer, tacnuke sub, Toad, Arsonist, Fractal, Aurora, Moho Geo death explosion, CAS context menu improvements, CAS enhancements, subprojectile targeting, Oblivion, various minor fixes/balacnes and Twilight unit design.
@@ -20,6 +20,9 @@ Credits:
 * Fenrave: Fixes
 * pengvado: Early Commander weapon fixes.
 * skuggmodzer0: Commander growth, commander passives per level.
+* sprung: Compatibility with ZK.
+* GhostFenix: Morale support -- all those ai games together were fun!
+* keks223: German translation
 
 Please note: if I have missed you, please feel free to contact me or submit a PR to correct this.
 
