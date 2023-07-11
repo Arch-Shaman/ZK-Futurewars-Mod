@@ -1199,6 +1199,11 @@
 		"description" : "Construction Aircraft",
 		"helptext" : "The Crane flies quickly over any terrain, but is fragile to any AA. Though it has relatively poor nano power compared to other constructors, it is able to build in many hard to reach places and expand an air players territory in a nonlinear fashion. Due to its mobility, it is ideal for reclaiming wrecks and other repetetitive tasks."
 	},
+	"pistin" : {
+		"name" : "Pistin",
+		"description" : "Deployable Repair/Stun Turret",
+		"helptext" : "Manufactured by the Wasp's nanolathe from scrap material, The Pistin is a versatile turret that is used for everything from stunning lone raiders, repairing an army, or fortifying a position against enemy attack. Although not particularly powerful, being effectively free means that there's often no harm in deploying one... or a hundred"
+	},
 	"gunshipraid" : {
 		"name" : "Whirlwind",
 		"description" : "Raider Gunship",

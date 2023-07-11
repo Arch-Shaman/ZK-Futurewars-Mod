@@ -44,10 +44,10 @@ function script.AimWeapon(num, heading, pitch)
 	if not deployed then return false end
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
-	Turn(turret, y_axis, heading, turnrate)
+	Turn(turret, y_axis, -heading, turnrate)
 	Turn(barrel, z_axis, -pitch, turnrate)
-	WaitForTurn(barrel, y_axis)
 	WaitForTurn(barrel, z_axis)
+	WaitForTurn(barrel, y_axis)
 	return true
 end
 
