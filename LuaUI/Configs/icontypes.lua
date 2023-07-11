@@ -150,6 +150,12 @@ local icontypes = {
 		bitmap='icons/bomb.dds',
 		size=1.6,
 	},
+	
+	-- Deployables
+	deployablesupport = {
+		bitmap='icons/deployablesupport.dds',
+		size=1.6,
+	},
 
 	--------------------------------------------------------------------------------
 	-- CURRENT ICONS
