@@ -81,11 +81,11 @@ local function TiltBody()
 end
 
 function script.QueryWeapon(num)
-	return sting
+	return Sting
 end
 
 function script.AimFromWeapon(num)
-	return sting
+	return Sting
 end
 
 function script.AimWeapon(num)

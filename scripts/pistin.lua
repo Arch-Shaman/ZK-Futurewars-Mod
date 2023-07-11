@@ -44,7 +44,7 @@ function script.AimWeapon(num, heading, pitch)
 	if not deployed then return false end
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
-	Turn(barrel, y_axis, heading, turnrate)
+	Turn(turret, y_axis, heading, turnrate)
 	Turn(barrel, z_axis, -pitch, turnrate)
 	WaitForTurn(barrel, y_axis)
 	WaitForTurn(barrel, z_axis)
@@ -52,6 +52,7 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.Create()
+	Turn(turret, y_axis, 0)
 	SetUnitValue(COB.INBUILDSTANCE, 0)
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	Turn(barrel, x_axis, math.rad(90))
