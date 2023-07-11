@@ -50,7 +50,7 @@ return {
 		script              = "bomberdisarm.lua",
 		selfDestructAs      = "GUNSHIPEX",
 		sightDistance       = 900,
-		turnRadius          = 140,
+		turnRadius          = 540,
 		weapons             = {
 			{
 				def                = "SLOW_BOMB",
