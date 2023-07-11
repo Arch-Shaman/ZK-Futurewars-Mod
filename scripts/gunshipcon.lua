@@ -80,6 +80,18 @@ local function TiltBody()
 	end
 end
 
+function script.QueryWeapon(num)
+	return sting
+end
+
+function script.AimFromWeapon(num)
+	return sting
+end
+
+function script.AimWeapon(num)
+	return true
+end
+
 local function Build()
 	if constructing then
 		return false
