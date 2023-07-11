@@ -68,8 +68,8 @@ return {
 				craterMult              = 0,
 				customParams        = {
 					light_camera_height = 1200,
-					light_radius = 20,
-					light_color = "1 0.7843 0.1647",
+					light_radius = 60,
+					light_color = "0.078 0.5803 0.89019",
 					sweepfire = 1,
 					sweepfire_maxangle = 45,
 					sweepfire_step = 0.5,
@@ -77,7 +77,7 @@ return {
 					
 				},
 				damage                  = {
-					default = 13.3333333334,
+					default = 10.3333333334,
 				},
 				duration                = 3/30,
 				explosionGenerator      = "custom:ion_beam",
