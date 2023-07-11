@@ -1,4 +1,35 @@
 return {
+	["ion_beam"] = {
+		usedefaultexplosions = false,
+		groundflash = {
+			circlealpha        = 0,
+			circlegrowth       = 1,
+			flashalpha         = 1.0,
+			flashsize          = 26,
+			ttl                = 24,
+			color = {
+				[1]  = 0.11764,
+				[2]  = 0.4705,
+				[3]  = 0.69019,
+			},
+		},
+		pikes = {
+			air                = true,
+			class              = [[explspike]],
+			count              = 5,
+			ground             = true,
+			water              = true,
+			underwater		   = true,
+			properties = {
+				alpha              = 1,
+				alphadecay         = 0.06,
+				color              = [[0.0196,0.61176,0.98039]],
+				dir                = [[-2 r4,-2 r4,-2 r4]],
+				length             = 7,
+				width              = 7,
+			},
+		},
+	},
 	["beamerray_dark"] = {
 		usedefaultexplosions = false,
 		groundflash = {
