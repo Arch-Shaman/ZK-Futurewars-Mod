@@ -1089,6 +1089,11 @@
 		"description" : "Konstruktionsflugzeug",
 		"helptext" : "Der Crane bewegt sich flink über das Terrain, ist aber auch anfällig gegenüber AA. Obwohl er ziemlich wenig Baukraft hat, ist er in der Lage auch auf außergewöhnlichen Plätzen zu bauen. Durch seine Mobilität ist er ideal dafür geschaffen, Wracks zu absorbieren und daraus das Metall zu gewinnen."
 	},
+	"pistin" : {
+		"name" : "Pistin",
+		"description" : "Einsatzbarer Reparatur-/Betäubungsturm",
+		"helptext" : "Der Pistin wurde von der Nanodrehmaschine der Wespe aus Schrottmaterial hergestellt und ist ein vielseitiger Geschützturm, der für alles Mögliche verwendet wird: von der Betäubung einzelner Angreifer über die Reparatur einer Armee bis hin zur Befestigung einer Position gegen feindliche Angriffe. Auch wenn sie nicht besonders leistungsstark sind, bedeutet die Tatsache, dass sie praktisch kostenlos sind, dass der Einsatz von einem oder hundert davon oft keinen Schaden anrichtet."
+	},
 	"turretsunlance" : {
 		"name" : "Sunlance",
 		"description" : "Anti-Tank Turret - Requires 25 Power",

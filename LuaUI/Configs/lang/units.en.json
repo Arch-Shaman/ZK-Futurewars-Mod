@@ -1202,7 +1202,7 @@
 	"pistin" : {
 		"name" : "Pistin",
 		"description" : "Deployable Repair/Stun Turret",
-		"helptext" : "Manufactured by the Wasp's nanolathe from scrap material, The Pistin is a versatile turret that is used for everything from stunning lone raiders, repairing an army, or fortifying a position against enemy attack. Although not particularly powerful, being effectively free means that there's often no harm in deploying one... or a hundred"
+		"helptext" : "Manufactured by the Wasp's nanolathe from scrap material, The Pistin is a versatile turret that is used for everything from stunning lone raiders, repairing an army, or fortifying a position against enemy attack. Although not particularly powerful, being effectively free means that there's often no harm in deploying one... or a hundred."
 	},
 	"gunshipraid" : {
 		"name" : "Whirlwind",
