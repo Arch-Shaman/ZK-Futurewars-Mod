@@ -86,7 +86,7 @@ return {
 				laserFlareSize          = 4.33,
 				minIntensity            = 1,
 				noSelfDamage            = true,
-				range                   = 530,
+				range                   = 521,
 				reloadtime              = 10/30,
 				rgbColor                = "0.3 0 0.4",
 				soundStart              = "weapon/impacts/aoe_aurafast",
