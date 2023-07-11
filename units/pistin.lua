@@ -73,7 +73,7 @@ return {
 					
 				},
 				damage                  = {
-					default = 13.3333333334,
+					default = 20 + 1/3,
 				},
 				duration                = 3/30,
 				explosionGenerator      = "custom:ion_beam",
