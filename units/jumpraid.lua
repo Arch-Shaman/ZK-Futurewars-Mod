@@ -198,7 +198,7 @@ return {
 				tolerance               = 5000,
 				turret                  = true,
 				weaponType              = "LaserCannon",
-				weaponVelocity          = 500,
+				weaponVelocity          = 400,
 			},
 			COCKTAIL = {
 				name                    = "Molotov Cocktail", --CREDITS: Cliver5
