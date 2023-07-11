@@ -894,7 +894,7 @@ local rainbowTable
 
 local function MakeTextRainbow(text)
 	local colorIndex = math.random(1, #rainbowTable)
-	local ret
+	local ret = ""
 	for i = 3, #text do
 		local c = text:sub(i, i)
 		if c ~= ' ' then
