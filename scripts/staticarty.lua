@@ -19,7 +19,7 @@ local gun = {
 
 local gun_1 = 1
 local gameSpeed = Game.gameSpeed
-local RELOAD_TIME = 7.5 * gameSpeed
+local RELOAD_TIME = 10 * gameSpeed
 local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
 
 -- Signal definitions
