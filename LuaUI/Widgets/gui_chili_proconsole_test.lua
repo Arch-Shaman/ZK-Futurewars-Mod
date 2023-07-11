@@ -68,6 +68,7 @@ local MESSAGE_RULES = {
 	player_to_player_sent = { format = 'you -> #p$playername#e: $argument' }, -- NOTE: #p will be color of destination player!
 	player_to_specs = { format = '#p<$playername> #s$argument' },
 	player_to_everyone = { format = '#p<$playername> #e$argument' },
+	player_to_player_spec = {format = '#p$playername#e $playername2 #e$argument'},
 
 	spec_to_specs = { format = '#s[$playername] $argument' },
 	spec_to_allies = { format = '#s[$playername] $argument' }, -- TODO is there a reason to differentiate spec_to_specs and spec_to_allies??
@@ -830,17 +831,17 @@ for msgtype,rule in pairs(MESSAGE_RULES) do
 end
 
 local function getOutputFormat(msgtype)
-  local rule = MESSAGE_RULES[msgtype]
-  if not rule then
-	Spring.Echo("UNKNOWN MESSAGE TYPE: " .. msgtype or "NiL")
-	return
-  elseif rule.output then -- rule has multiple user-selectable output formats
-    local option_name = getMessageRuleOptionName(msgtype, "output_format")
-    local value = options[option_name].value
-    return rule.output[value].format
-  else -- rule has only 1 format defined
-	return rule.format
-  end
+	local rule = MESSAGE_RULES[msgtype]
+	if not rule then
+		Spring.Echo("UNKNOWN MESSAGE TYPE: " .. msgtype or "NiL")
+		return
+	elseif rule.output then -- rule has multiple user-selectable output formats
+		local option_name = getMessageRuleOptionName(msgtype, "output_format")
+		local value = options[option_name].value
+		return rule.output[value].format
+	else -- rule has only 1 format defined
+		return rule.format
+	end
 end
 
 local function getSource(spec, allyTeamId)
@@ -918,8 +919,17 @@ local function detectHighlight(msg)
 		msg.highlight = true
 		return
 	end
-	if msg.msgtype == 'player_to_player_received' and options.highlight_all_private.value then
-		msg.highlight = true
+	if msg.msgtype == 'player_to_player_received' then
+		if options.highlight_all_private.value then
+			msg.highlight = true
+		end
+		local fromName = Spring.GetPlayerInfo(msg.player.id, false)
+		--Spring.Echo("Recieved a PM! Begin formatting for LuaUIMsgSend: From: " .. fromName)
+		local packet = 'whisperto_' .. fromName .. "," .. msg.argument
+		--Spring.Echo("Send: " .. packet)
+		if not Spring.IsReplay() then
+			Spring.SendLuaUIMsg(packet, 's')
+		end
 		return
 	end
 	if msg.msgtype == 'player_to_everyone' then
@@ -959,9 +969,8 @@ local function detectHighlight(msg)
 	end
 end
 
-local function formatMessage(msg)
+local function formatMessage(msg) -- formatting done here
 	local format = getOutputFormat(msg.msgtype) or getOutputFormat("other")
-
 	-- Find and colour any usernames in the message body
 	if options.color_usernames.value then
 		-- This could be slightly faster by caching the value for each format rule,
@@ -989,6 +998,12 @@ local function formatMessage(msg)
 	local formatted, _ = format:gsub('([#%$]%w+)', function(parameter) -- FIXME pattern too broad for 1-char color specifiers
 			if parameter:sub(1,1) == '$' then
 				return msg[parameter:sub(2,parameter:len())]
+			elseif parameter == '#t' then
+				if msg.playername2 then
+					return incolors[msg.playername2]
+				else
+					return incolors['#o']
+				end
 			elseif parameter == '#p' then
 				if msg.playername and incolors[msg.playername] then
 					return incolors[msg.playername]
@@ -1549,8 +1564,18 @@ local function isChat(msg)
 	return msg.msgtype ~= 'other' or MessageIsChatInfo(msg)
 end
 
+local usernames = {}
+
 -- new callin! will remain in widget
 function widget:AddConsoleMessage(msg)
+	if msg.msgtype == 'player_to_everyone' and msg.argument:find("whispered") then
+		for i = 1, #usernames do
+			local name = usernames[i]
+			if msg.argument:find("whispered " .. name .. ":") then
+				return
+			end
+		end
+	end
 	if msg.msgtype == 'other' then
 		if options.error_opengl_source.value and (msg.argument):find('Error: OpenGL: source') then
 			return
@@ -1572,7 +1597,6 @@ function widget:AddConsoleMessage(msg)
 	local isChat = isChat(msg)
 	local isPoint = msg.msgtype == "point" or msg.msgtype == "label"
 	local messages = isChat and chatMessages or consoleMessages
-	
 	if #messages > 0
 		and messages[#messages].text == msg.text
 		and (isPoint and options.dedupe_points.value or options.dedupe_messages.value)
@@ -1751,11 +1775,15 @@ end
 local function OnLocaleChanged()
 	local newRecieved = WG.Translate("interface", "whisper") .. ": #w$argument"
 	local newSent = WG.Translate("interface", "whisperto") .. ": #w$argument"
+	local newSpec = WG.Translate("interface", "specwhisper") .. ": #w$argument"
+	newSpec = newSpec:gsub('user2', "#t$playername2#w")
+	newSpec = newSpec:gsub('user', "#p$playername#e")
 	newSent = newSent:gsub("user", "#p$playername#e")
 	newRecieved = newRecieved:gsub("user", "#p$playername#e")
 	--Spring.Echo("Locale changed:\nSent: " .. newSent .. "\nRecieve: " .. newRecieved)
 	MESSAGE_RULES.player_to_player_received.format = newRecieved
 	MESSAGE_RULES.player_to_player_sent.format = newSent
+	MESSAGE_RULES.player_to_player_spec.format = newSpec
 	reload = true
 	if lastMsgChat then
 		lastMsgChat:Dispose()
@@ -1796,6 +1824,11 @@ function widget:Initialize()
 	if (not WG.Chili) then
 		widgetHandler:RemoveWidget()
 		return
+	end
+	local pl = Spring.GetPlayerList()
+	for i = 1, #pl do
+		local n = Spring.GetPlayerInfo(pl[i])
+		usernames[#usernames + 1] = n
 	end
 	
 	screen0 = WG.Chili.Screen0
@@ -1971,6 +2004,33 @@ function widget:RecvLuaMsg(msg, playerID)
 				PlaySound('lobby')
 			end
 		end
+	elseif msg:sub(1,10) == "whisperto_" then -- 'whisperto_<player2>,<msg>'
+		msg = msg:gsub("whisperto_", "")
+		local userEndIndex = msg:find(',')
+		local senderName = msg:sub(1, userEndIndex - 1)
+		--Spring.Echo("Sender is: " .. senderName)
+		local recieverName, _, _, _, allyTeam = Spring.GetPlayerInfo(playerID, false)
+		--Spring.Echo("Reciever is: " .. recieverName)
+		local body = msg:sub(userEndIndex + 1, #msg)
+		--Spring.Echo("Body is: " .. body)
+		local m = {
+			player = {
+				id = playerID,
+				allyTeamId = allyTeam,
+				muted = false,
+				spec = false,
+				source = 'other',
+				playername = recieverName,
+				playername2 = senderName,
+			},
+			playername2 = senderName,
+			playername = recieverName,
+			argument = body,
+			priority = 35,
+			msgtype = 'player_to_player_spec',
+			text = body,
+		}
+		widget:AddConsoleMessage(m)
 	end
 end
 
