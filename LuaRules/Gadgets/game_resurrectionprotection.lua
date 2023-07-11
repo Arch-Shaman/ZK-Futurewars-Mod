@@ -28,7 +28,7 @@ function gadget:AllowFeatureBuildStep(builderID, builderTeam, featureID, feature
 			protectedFeatures[featureID] = true
 		else
 			local data = IterableMap.Get(features, featureID)
-			data.timer = 10
+			data.timer = 31
 			IterableMap.Set(features, featureID, data)
 		end
 		return true
