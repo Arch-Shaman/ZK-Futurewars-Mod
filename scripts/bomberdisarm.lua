@@ -64,7 +64,6 @@ function OnAmmoChange(newState)
 	ammoState = newState
 	if newState == 1 then
 		SetUnarmedAI()
-		Reload()
 	end
 end
 
@@ -72,6 +71,7 @@ function OnAmmoTypeChange(newAmmo)
 	if newAmmo ~= currentAmmo then
 		OnAmmoChange(1)
 		currentAmmo = newAmmo
+		Reload()
 	end
 end
 
@@ -113,6 +113,12 @@ end
 
 function script.FireWeapon(num)
 	OnAmmoChange(1)
+	if num == 1 then
+		Sleep(1600)
+	elseif num == 2 then
+		Sleep(300)
+	end
+	Reload()
 end
 
 function StartRun()
