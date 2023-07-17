@@ -64,7 +64,7 @@ return {
 		
 		weaponDefs             = {
 			NAPALM_SPRAYER = {
-				name                    = [[Napalm Sprayer]],
+				name                    = [[Thermite Sprayer]],
 				--accuracy                = 500,
 				areaOfEffect            = 128,
 				avoidFeature            = false,

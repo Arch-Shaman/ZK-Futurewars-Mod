@@ -826,8 +826,8 @@
 	},
 	"striderfunnelweb" : {
 		"name" : "Funnelweb",
-		"description" : "Shielded Support Fire Strider",
-		"helptext" : "The Funnelweb is armed with a shieldbusting prototype weapon that has high DPS against shields. This is an obvious placeholder description and needs work."
+		"description" : "Shielded Multipurpose Support Strider",
+		"helptext" : "A shieldbusting cluster-disruptor for fire support, a flock of drones to engage hostiles and repair friendlies, A nanosheath emmitor to reinforce your army's armor, and one massive area shield. That is the armament of the funnelweb. A suite of tools capable of massively amplifying the effectiveness of any army."
 	},
 	"cloakriot" : {
 		"name" : "Assailant",

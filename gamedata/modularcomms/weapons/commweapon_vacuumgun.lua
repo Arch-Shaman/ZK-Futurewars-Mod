@@ -18,15 +18,15 @@ local weaponDef = {
 		lups_explodespeed = 0.5,
 		light_radius = 80,
 		blastwave_size = 200,
-		blastwave_impulse = -4.5,
+		blastwave_impulse = -2.5,
 		blastwave_speed = -6.6,
 		blastwave_life = 30,
 		blastwave_lossfactor = 0.85,
-		blastwave_damage = 400,
+		blastwave_damage = 40,
 	},
 
 	damage                  = {
-		default = 20.1,
+		default = 1000, --make it not suck vs shields
 	},
 
 	explosionGenerator      = [[custom:energeticblackhole_112]], -- technically it's 400, but i can't be assed to rename.
@@ -38,7 +38,7 @@ local weaponDef = {
 	myGravity               = 0.1,
 	projectiles             = 1,
 	range                   = 500,
-	reloadtime              = 10,
+	reloadtime              = 30,
 	rgbColor                = [[0.05 0.05 0.05]],
 	size                    = 3,
 	soundHit                = [[weapon/impacts/impulsewave1]],

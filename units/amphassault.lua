@@ -85,6 +85,8 @@ return {
 				craterMult              = 0,
 				customParams = {
 					burst = Shared.BURST_RELIABLE,
+					shield_damage = 1350.4,
+					armorpiercing = 0.2,
 				},
 				damage                  = {
 					default = 600.1,
@@ -112,7 +114,7 @@ return {
 				turret                  = true,
 				waterweapon             = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 730,
+				weaponVelocity          = 900,
 			},
 		},
 		featureDefs         = {

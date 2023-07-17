@@ -250,7 +250,7 @@ return {
 			},
 			
 			NAPALM_FRAGMENT_DUMMY = {
-				name                    = [[Napalm Fragment]],
+				name                    = [[Thermite Fragment]],
 				accuracy                = 400,
 				areaOfEffect            = 162,
 				avoidFeature            = false,
@@ -346,7 +346,7 @@ return {
 		
 		
 			NAPALM_ROCKETS_SALVO = {
-				name                    = [[Napalm Rocket Salvo]],
+				name                    = [[Thermite Rocket Salvo]],
 				areaOfEffect            = 228,
 				avoidFeature            = false,
 				avoidFriendly           = false,

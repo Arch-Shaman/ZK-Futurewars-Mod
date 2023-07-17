@@ -257,7 +257,7 @@ return {
 				weaponVelocity          = 255,
 			},
 			NAPALM_FRAGMENT_DUMMY = {
-				name                    = "Napalm Fragment",
+				name                    = "Thermite Fragment",
 				accuracy                = 400,
 				areaOfEffect            = 162,
 				avoidFeature            = false,
@@ -305,7 +305,7 @@ return {
 				weaponVelocity          = 320,
 			},
 			NAPALM_FRAGMENT = {
-				name                    = "Napalm Fragment",
+				name                    = "Thermite Fragment",
 				accuracy                = 400,
 				areaOfEffect            = 162,
 				avoidFeature            = false,
@@ -349,7 +349,7 @@ return {
 				weaponVelocity          = 320,
 			},
 			PYRO_DEATH = {
-				name                    = "Napalm Blast",
+				name                    = "Thermite Blast",
 				areaofeffect            = 256,
 				craterboost             = 1,
 				cratermult              = 3.5,

@@ -291,7 +291,7 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 		--Spring.Echo("ID: " .. weaponDef.name, weaponDef.customparams.mass)
 	end
 	-- Modoptions --
-	if (weaponDef.damage and weaponDef.name and not string.find(weaponDef.name, "Disintegrator")) then
+	if weaponDef.damage then --and weaponDef.name and not string.find(weaponDef.name, "Disintegrator")) then
 		for damagetype, amount in pairs(weaponDef.damage) do
 			weaponDef.damage[damagetype] = amount * damagemult
 		end
