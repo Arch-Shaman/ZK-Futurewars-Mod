@@ -87,6 +87,7 @@ return {
 				},
 				damage                  = {
 					default = 1020.1,
+					armorpiercing = 0.2,
 				},
 				edgeEffectiveness = 0.4,
 				explosionGenerator      = "custom:TESS",
@@ -132,6 +133,7 @@ return {
 				},
 				damage                  = {
 					default = 1020.1*7,
+					armorpiercing = 0.2,
 				},
 				explosionGenerator      = "custom:100rlexplode",
 				groundbounce            = 1,
@@ -246,7 +248,7 @@ return {
 				--coverage = 1000,
 			},
 			TRILASER = {
-				name                    = "Gigawatt Laser",
+				name                    = "Terawatt Laser",
 				areaOfEffect            = 36,
 				beamTime                = 1,
 				beamttl                 = 3,
@@ -261,6 +263,7 @@ return {
 				},
 				damage                  = {
 					default = 16000.1,
+					armorpiercing = 0.35,
 				},
 				explosionGenerator      = "custom:beamlaser_hit_saphire",
 				fireStarter             = 90,

@@ -2,7 +2,7 @@ return {
 	striderfunnelweb = {
 		unitname               = [[striderfunnelweb]],
 		name                   = [[Funnelweb]],
-		description            = [[Shielded Fire Support Strider]],
+		description            = [[Shielded Multipurpose Support Strider]],
 		acceleration           = 0.166,
 		activateWhenBuilt      = true,
 		brakeRate              = 0.825,
@@ -80,6 +80,11 @@ return {
 			{
 				def                = [[SHIELD]],
 			},
+			{
+				def                = "ARMORFIELD",
+				mainDir            = "0 0 0",
+				onlyTargetCategory = "LAND TURRET SHIP SWIM FLOAT HOVER",
+			},
 		},
 		
 		
@@ -99,7 +104,7 @@ return {
 				shieldPower             = 32000,
 				shieldPowerRegen        = 350,
 				shieldPowerRegenEnergy  = 40,
-				shieldRadius            = 450,
+				shieldRadius            = 550,
 				shieldRepulser          = false,
 				smartShield             = true,
 				visibleShield           = false,
@@ -116,7 +121,7 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				customParams        = {
-					timeslow_damagefactor = 1.5,
+					timeslow_damagefactor = 2,
 					timeslow_overslow_frames = 5*30, --5 seconds before slow decays
 					nofriendlyfire = 1,
 					light_camera_height = 3500,
@@ -192,7 +197,7 @@ return {
 			
 			CANNON = {
 				name                    = [[SX-42 Shield Buster Cannon]],
-				areaOfEffect            = 48,
+				areaOfEffect            = 550,
 				avoidFeature            = true,
 				cegTag                  = [[beamweapon_muzzle_purple]],
 				craterBoost             = 0,
@@ -200,13 +205,13 @@ return {
 				burst					= 2,
 				burstRate				= 0.9,
 				customParams        = {
-					timeslow_damagefactor = 1.35,
+					timeslow_damagefactor = 2,
 					light_camera_height = 3500,
 					light_color = [[0.5 0.0 0.5]],
 					light_radius = 220,
 					timeslow_overslow_frames = 5*30, --5 seconds before slow decays
 					nofriendlyfire = 1,
-					numprojectiles1 = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 15, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "striderfunnelweb_fragment_fake",
 					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -225,13 +230,16 @@ return {
 				damage                  = {
 					default = 1200,
 				},
+				edgeeffectiveness       = 0.6,
+				explosionGenerator      = "custom:RIOTBALL",
+				explosionScar           = false,
 				fireStarter             = 70,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 2,
 				range                   = 1100,
 				mygravity				= 0.10,
-				reloadtime              = 6.5,
+				reloadtime              = 5.5,
 				rgbColor				= [[0.5 0 0.5]],
 				smokeTrail              = true,
 				size 					= 8,
@@ -243,6 +251,43 @@ return {
 				turret                  = true,
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 420,
+			},
+			ARMORFIELD    = {
+				name                    = "Heavy Nanosheath Emitter",
+				areaOfEffect            = 1200,
+				craterBoost             = 0,
+				craterMult              = 0,
+				cameraShake				= 0,
+				damage                  = {
+					default = 100.0,
+				},
+				customParams           = {
+					light_radius = 0,
+					--lups_explodespeed = 0.5,
+					--lups_explodelife = 2.0,
+					stats_hide_damage = 1,
+					lups_noshockwave = "1",
+					armor_duration = 6,
+					notimescaling = 1,
+					grants_armor = 0.95,
+					stats_hide_range = 1,
+					stats_hide_dps = 1,
+					norealdamage = 1,
+				},
+				edgeeffectiveness       = 0,
+				explosionGenerator      = "custom:armor_ring600",
+				explosionSpeed          = 800,
+				impulseBoost            = 0,
+				impulseFactor           = 0,
+				interceptedByShieldType = 1,
+				myGravity               = 10,
+				noSelfDamage            = true,
+				range                   = 10,
+				reloadtime              = 1.5,
+				soundHitVolume          = 1,
+				turret                  = true,
+				weaponType              = "Cannon",
+				weaponVelocity          = 230,
 			},
 		},
 

@@ -75,7 +75,7 @@ return {
 		},
 		weaponDefs             = {
 			NAPALM_FRAGMENT = {
-				name                    = "Napalm Trail",
+				name                    = "Thermite Trail",
 				accuracy                = 400,
 				areaOfEffect            = 162,
 				avoidFeature            = false,
@@ -119,7 +119,7 @@ return {
 				weaponVelocity          = 320,
 			},
 			JUMP = {
-				name                    = "Napalm (Jump)",
+				name                    = "Thermite (Jump)",
 				areaOfEffect            = 40,
 				craterBoost             = 0,
 				craterMult              = 0,

@@ -1,7 +1,7 @@
 local unitDef = {
 	unitname            = "bomberriot",
 	name                = "Firebrand",
-	description         = "Napalm Bomber",
+	description         = "Thermite Bomber",
 	brakerate           = 0.4,
 	buildCostMetal      = 300,
 	builder             = false,
@@ -66,7 +66,7 @@ local unitDef = {
 	weaponDefs          = {
 
 		NAPALM_SECONDARY = {
-			name 					= "Napalm",
+			name 					= "Thermite",
 			cegTag                  = "flamer",
 			areaOfEffect            = 216,
 			avoidFeature            = false,
@@ -105,7 +105,7 @@ local unitDef = {
 		},
 
 		NAPALM = {
-			name                    = "Napalm Bomb",
+			name                    = "Thermite Bomb",
 			areaOfEffect            = 216,
 			avoidFeature            = false,
 			avoidFriendly           = false,

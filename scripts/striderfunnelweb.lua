@@ -59,7 +59,7 @@ local legBackwardOffset = 0
 local legBackwardSpeed = legBackwardAngle/PERIOD
 local restore_delay = 3000
 
---[[function script.StartBuilding()
+function script.StartBuilding()
 	Signal(SIG_BUILD)
 	SetSignalMask(SIG_BUILD)
 	Spring.SetUnitCOBValue(unitID, COB.INBUILDSTANCE, 1);
@@ -68,7 +68,37 @@ end
 function script.StopBuilding()
 	Signal(SIG_BUILD)
 	Spring.SetUnitCOBValue(unitID, COB.INBUILDSTANCE, 0);
-end]] -- can no longer build
+end
+
+local function AutoAttack()
+	--Signal(SIG_ACTIVATE)
+	--SetSignalMask(SIG_ACTIVATE)
+	local spGetUnitHealth = Spring.GetUnitHealth
+	local spGetUnitWeaponState = Spring.GetUnitWeaponState
+	local spGetUnitRulesParam = Spring.GetUnitRulesParam
+	local spSetUnitWeaponState = Spring.SetUnitWeaponState
+	local spGetGameFrame = Spring.GetGameFrame
+	
+	local health, _, _, _, build = spGetUnitHealth(unitID)
+	local WAVE_RELOAD = WeaponDefNames["factoryhover_armorfield"].reload * 30
+	local reloaded
+	while true do
+		Sleep(100)
+		health, _, _, _, build = spGetUnitHealth(unitID)
+		while build < 1 do
+			Sleep(200)
+			health, _, _, _, build = spGetUnitHealth(unitID)
+		end
+		reloaded = select(2, spGetUnitWeaponState(unitID,3))
+		if reloaded and health > 0 and build >= 1 then
+			local gameFrame = spGetGameFrame()
+			local reloadMult = spGetUnitRulesParam(unitID, "totalReloadSpeedChange") or 1.0
+			local reloadFrame = gameFrame + WAVE_RELOAD / reloadMult
+			spSetUnitWeaponState(unitID, 3, {reloadFrame = reloadFrame})
+			EmitSfx(gaster, GG.Script.DETO_W3)
+		end
+	end
+end
 
 
 local function Walk()
@@ -105,6 +135,7 @@ function script.Create()
 	Move (aimpoint, y_axis, 2)
 	Move (aimpoint, x_axis, 0)
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+	StartThread(AutoAttack)
 	Spring.SetUnitNanoPieces(unitID, nanoPieces)
 end
 

@@ -67,7 +67,7 @@ return {
 			tritary = {
 				name                    = "High Energy Plasma",
 				alphaDecay              = 0.7,
-				areaOfEffect            = 120,
+				areaOfEffect            = 176,
 				craterBoost             = 0,
 				craterMult              = 3.2,
 				cegtag                  = "waketrail_small",
@@ -79,16 +79,17 @@ return {
 					light_radius = 110,
 				},
 				damage                  = {
-					default = 400.01,
+					default = 850.01,
 				},
 				explosionScar           = false,
 				edgeEffectiveness       = 0.5,
-				explosionGenerator      = "custom:artillery_explosion",
+				explosionGenerator      = "custom:lrpc_expl", --"custom:artillery_explosion",
 				firestarter             = 70,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				intensity               = 0.7,
 				interceptedByShieldType = 1,
+				mygravity				= 0.5,
 				noSelfDamage            = true,
 				range                   = 275,
 				reloadtime              = 0.5,
@@ -121,20 +122,22 @@ return {
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 1200, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					keepmomentum1 = true,
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 					vradius1 = "-8,-3,-8,8,3,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
 				},
 				damage                  = {
-					default = 400.01*6,
+					default = 850.01*6,
 				},
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = "custom:tremor",
 				firestarter             = 70,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 4,
 				intensity               = 0.7,
 				interceptedByShieldType = 1,
+				mygravity				= 0.5,
 				noSelfDamage            = true,
 				range                   = 275,
 				reloadtime              = 0.5,
@@ -149,7 +152,7 @@ return {
 				weaponVelocity          = 550,
 			},
 			PLASMA = {
-				name                    = "Cluster Artillery Shell",
+				name                    = "Volatile Plasma Round",
 				highTrajectory		    = 1,
 				areaOfEffect            = 0,
 				avoidFeature            = false,
@@ -165,13 +168,14 @@ return {
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					spawndist = 2200, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-6,-10,-6,6,4,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					keepmomentum1 = true,
+					vradius1 = "-6,-4,-6,6,4,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
 					light_camera_height = 1500,
 					light_radius = 120,
-					script_reload = "18", -- NB: Superweapon field in CP makes this handled by FireControl.
+					script_reload = "22", -- NB: Superweapon field in CP makes this handled by FireControl.
 					light_color = "2.4 1.5 0.6",
-					reveal_unit = 26,
+					reveal_unit = 36,
 				},
 				damage                  = {
 					default = 19200,
@@ -181,16 +185,16 @@ return {
 				impulseBoost            = 0.5,
 				impulseFactor           = 0.2,
 				interceptedByShieldType = 1,
-				mygravity				= 0.25,
+				mygravity				= 0.5,
 				sprayAngle				= 120,
 				noSelfDamage            = true,
-				range                   = 6000,
+				range                   = 7800,
 				reloadtime              = 1/30, -- force render our reload progress?
 				soundHit                = "weapon/clusters/cluster_heavy",
 				soundStart              = "weapon/cannon/large_cannon_fire",
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 1350,
+				weaponVelocity          = 1900,
 			},
 		},
 		featureDefs                   = {

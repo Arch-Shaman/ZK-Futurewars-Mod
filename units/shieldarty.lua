@@ -68,14 +68,14 @@ return {
 					disarmDamageMult = 1,
 					disarmDamageOnly = 1,
 					disarmTimer      = 6, -- seconds
-					numprojectiles1 = 20,
+					numprojectiles1 = 25,
 					projectile1 = "shieldarty_lightning",
 					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					spawndist = 300, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-6,-4,-6,6,4,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-4,-2,-4,4,2,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					reaim_time = 60, -- Fast update not required (maybe dangerous)
 					light_camera_height = 1500,
@@ -87,7 +87,7 @@ return {
 					reveal_unit = 10,
 				},
 				damage                  = {
-					default        = 3250,
+					default        = 10000,
 				},
 				edgeEffectiveness       = 0.4,
 				explosionGenerator      = "custom:WHITE_LIGHTNING_BOMB",
@@ -119,7 +119,7 @@ return {
 			LIGHTNING = {
 				name                    = "Lightning Burst",
 				accuracy                = 1000,
-				areaOfEffect            = 64,
+				--areaOfEffect            = 64,
 				corethickness           = 0.1,
 				craterBoost             = 0,
 				craterMult              = 0,
@@ -129,10 +129,10 @@ return {
 					light_radius = 20,
 					disarmDamageMult = 1,
 					disarmDamageOnly = 1,
-					disarmTimer      = 6, -- seconds
+					disarmTimer      = 12, -- seconds
 				},
 				damage                  = {
-					default = 162.5,
+					default = 400,
 				},
 				duration                = 0.1,
 				edgeEffectiveness       = 0.4,

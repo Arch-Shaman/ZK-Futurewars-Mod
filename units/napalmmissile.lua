@@ -1,7 +1,7 @@
 unitDef = {
 	unitname                      = "napalmmissile",
 	name                          = "Inferno",
-	description                   = "Napalm Missile",
+	description                   = "Thermite Missile",
 	buildCostMetal                = 1000,
 	builder                       = false,
 	buildingGroundDecalDecaySpeed = 30,
@@ -50,7 +50,7 @@ unitDef = {
 	},
 	weaponDefs                    = {
 		SECONDARY = {
-			name 			= "Napalm Fireball",
+			name 			= "Thermite Fireball",
 			cegTag                  = "flamer",
 			areaOfEffect            = 216,
 			avoidFeature            = false,
@@ -89,7 +89,7 @@ unitDef = {
 			weaponVelocity          = 320,
 		},
 		WEAPON = {
-			name                    = "Napalm Missile",
+			name                    = "Thermite Missile",
 			cegTag                  = "napalmtrail",
 			areaOfEffect            = 512,
 			craterAreaOfEffect      = 0,

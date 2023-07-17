@@ -84,7 +84,7 @@ return {
 		},
 		weaponDefs             = {
 			NAPALM_SPRAYER = {
-				name                    = "Napalm Jet Sprayer",
+				name                    = "Thermite Jet Sprayer",
 				accuracy                = 1100,
 				areaOfEffect            = 40,
 				avoidFeature            = false,
@@ -192,7 +192,7 @@ return {
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					keepmomentum1 = 0,
 					timeoutspawn = 0,
-					vradius1 = "-2.5,3,-2.5,2.5,6,2.5",
+					vradius1 = "-1.5,1.5,-1.5,1.5,3.5,1.5",
 					noairburst = "Sattuu ihan perkeleesti", -- if true, this projectile will skip all airburst checks
 					onexplode = "Sattuu ihan vitusti", -- if true, this projectile will cluster when it explodes
 					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
@@ -229,7 +229,7 @@ return {
 				weaponVelocity          = 255,
 			},
 			NAPALM_FRAGMENT_DUMMY = {
-				name                    = "Napalm Fragment",
+				name                    = "Thermite Fragment",
 				accuracy                = 400,
 				areaOfEffect            = 162,
 				avoidFeature            = false,
@@ -276,7 +276,7 @@ return {
 				weaponVelocity          = 320,
 			},
 			NAPALM_FRAGMENT = {
-				name                    = "Napalm Fragment",
+				name                    = "Thermite Fragment",
 				accuracy                = 400,
 				areaOfEffect            = 162,
 				avoidFeature            = false,

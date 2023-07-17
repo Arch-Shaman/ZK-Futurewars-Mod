@@ -46,7 +46,7 @@ return {
 		},
 		sightDistance       = 500,
 		turnRate            = 792,
-		workerTime          = 10,
+		workerTime          = 20,
 		upright             = true,
 		weapons             = {
 			{
@@ -64,12 +64,12 @@ return {
 				shieldBadColor          = "1 0.1 0.1 1",
 				shieldGoodColor         = "0.1 0.1 1 1",
 				shieldInterceptType     = 3,
-				shieldPower             = 3500,
+				shieldPower             = 2000,
 				shieldPowerRegen        = 35,
 				shieldPowerRegenEnergy  = 10,
 				shieldRadius            = 150,
 				shieldRepulser          = false,
-				shieldStartingPower     = 3500,
+				shieldStartingPower     = 2000,
 				smartShield             = true,
 				visibleShield           = false,
 				visibleShieldRepulse    = false,
