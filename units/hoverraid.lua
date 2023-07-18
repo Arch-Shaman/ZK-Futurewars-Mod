@@ -70,10 +70,10 @@ return {
 					--single_hit_multi    = true,
 					light_camera_height = 1200,
 					light_radius        = 90,
-					armorpiercing       = 1/3,
+					armorpiercing       = 1/6,
 				},
 				damage                  = {
-					default = 26.1,
+					default = 36.1,
 				},
 				explosionGenerator      = "custom:gauss_hit_l",
 				groundbounce            = 1,
