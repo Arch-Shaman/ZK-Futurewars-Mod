@@ -128,15 +128,17 @@ function script.BlockShot(num)
 end
 
 function script.FireWeapon(num)
-	OnAmmoChange(1)
 	Sleep(400)
 	Reload()
+	SetUnarmedAI()
+	OnAmmoChange(1)
 end
 
 function OnAmmoTypeChange(newAmmo)
 	if newAmmo ~= currentAmmo then
 		OnAmmoChange(1)
 		Reload()
+		SetUnarmedAI()
 		currentAmmo = newAmmo
 	end
 end

@@ -119,6 +119,7 @@ function script.FireWeapon(num)
 		Sleep(300)
 	end
 	Reload()
+	SetUnarmedAI()
 end
 
 function StartRun()
