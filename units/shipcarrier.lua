@@ -100,7 +100,7 @@ return {
 				},
 
 				damage                  = {
-					default = 35000,
+					default = 42000,
 				},
 				edgeEffectiveness       = 1,
 				explosionGenerator      = "custom:DISARMMISSILE_EXPLOSION",
