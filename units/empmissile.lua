@@ -66,7 +66,7 @@ return {
 					cruise_ignoreterrain = "1",
 				},
 				damage                  = {
-					default = 30000.1,
+					default = 42000.1,
 				},
 				edgeEffectiveness       = 1,
 				explosionGenerator      = "custom:EMPMISSILE_EXPLOSION",

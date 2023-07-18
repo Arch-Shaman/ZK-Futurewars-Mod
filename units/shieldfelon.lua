@@ -42,7 +42,7 @@ return {
 				"custom:lightningplosion_smallbolts_purple",
 			},
 		},
-		sightDistance       = 520,
+		sightDistance       = 650,
 		trackOffset         = 0,
 		trackStrength       = 8,
 		trackStretch        = 1,
