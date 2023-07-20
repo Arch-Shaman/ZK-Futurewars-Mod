@@ -25,7 +25,7 @@ return {
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 1500,
+		maxDamage                     = 1800,
 		maxSlope                      = 36,
 		noAutoFire                    = false,
 		objectName                    = "m-8.s3o",
