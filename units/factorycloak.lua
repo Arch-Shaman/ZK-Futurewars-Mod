@@ -43,7 +43,7 @@ return {
 			parent_of_plate   = "platecloak",
 			area_cloak = 1,
 			area_cloak_upkeep = 0,
-			area_cloak_radius = 600,
+			area_cloak_radius = 675,
 			area_cloak_decloak_distance = 75,
 			area_cloak_self = 0,
 			area_cloak_draw = 1,
