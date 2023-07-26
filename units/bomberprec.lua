@@ -103,16 +103,15 @@ return {
 				craterMult              = 0,
 				cylinderTargeting       = 1,
 				burst                   = 6,
-				projectiles             = 3,
 				burstrate				= 4/30,
 				damage                  = {
-					default = 200*4,
+					default = 2700,
 				},
 				customParams            = {
 					light_color = "1.1 0.9 0.45",
 					light_radius = 50,
 					--torp_underwater = "bomberprec_a_torpedo",
-					numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "bomberprec_bomblet",
 					--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -120,7 +119,7 @@ return {
 					proxy = 0, -- check for nearby units?
 					useheight = 1,
 					spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-8,-4,-8,8,-8,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					vradius1 = "-8,-8,-8,8,-4,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					keepmomentum1 = 0,
 					groundimpact = 1,
 					reaim_time = 60, -- see what the hell this does.
@@ -234,13 +233,13 @@ return {
 			BOMBLET = {
 				name                    = "High Explosive Bomblet",
 				accuracy                = 200,
-				areaOfEffect            = 128,
+				areaOfEffect            = 170,
 				craterBoost             = 10,
 				craterMult              = 5,
 				damage                  = {
-					default = 225.01,
+					default = 275.01,
 				},
-				explosionGenerator      = "custom:MEDMISSILE_EXPLOSION",
+				explosionGenerator      = "custom:BIGMISSILE_EXPLOSION",
 				fireStarter             = 180,
 				impulseBoost            = 0,
 				impulseFactor           = 0,

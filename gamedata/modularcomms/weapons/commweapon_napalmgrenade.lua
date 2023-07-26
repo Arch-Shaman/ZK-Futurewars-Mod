@@ -15,7 +15,7 @@ local weaponDef = {
 		light_color = [[0.75 0.4 0.15]],
 		light_radius = 220,
 		manualfire = 1,
-		numprojectiles1 = 24, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+		numprojectiles1 = 48, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 		projectile1 = "commweapon_napalm_fragment_dummy",
 		--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
 		clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
@@ -27,13 +27,13 @@ local weaponDef = {
 		spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
 		area_damage = 1,
 		area_damage_radius = 128,
-		area_damage_dps = 40,
+		area_damage_dps = 120,
 		area_damage_duration = 12,
 		antibaitbypass = "ärsytät minua",
 	},
 
 	damage                  = {
-		default = 1440,
+		default = 120,
 	},
 
 	explosionGenerator      = [[custom:napalm_hellfire]],

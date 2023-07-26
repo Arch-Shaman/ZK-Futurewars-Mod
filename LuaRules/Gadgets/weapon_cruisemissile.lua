@@ -61,7 +61,7 @@ for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local customParams = wd.customParams -- hold table for referencing
 	if tonumber(customParams.cruisealt) ~= nil and tonumber(customParams.cruisedist) ~= nil then -- found it!
-		Spring.Echo("[CruiseMissiles] Adding " .. i .. "(" .. tostring(wd.name) .. ")")
+		--Spring.Echo("[CruiseMissiles] Adding " .. i .. "(" .. tostring(wd.name) .. ")")
 		config[i] = {}
 		config[i].altitude = tonumber(customParams.cruisealt)
 		config[i].randomizationtype = customParams.cruise_randomizationtype or "?"

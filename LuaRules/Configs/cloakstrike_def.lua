@@ -40,7 +40,7 @@ for i = 1, #UnitDefs do
 			decloakedRulesParam = { selfMoveSpeedChange = slowdown},
 			updateAttributes = speed ~= slowdown,
 		}
-		Spring.Echo("[CloakStrike] Added " .. i .. "\nDuration: " .. duration .. "\nCloak Speed: " .. speed .. "\nnormal speed: " .. slowdown)
+		--Spring.Echo("[CloakStrike] Added " .. i .. "\nDuration: " .. duration .. "\nCloak Speed: " .. speed .. "\nnormal speed: " .. slowdown)
 	end
 end
 

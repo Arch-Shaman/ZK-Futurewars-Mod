@@ -80,15 +80,8 @@ return {
 					light_radius = 320,
 					stats_hide_damage = 1, -- continuous laser
 					stats_hide_reload = 1,
-					--poweruse_overdrive_
 					dmg_scaling = 1/30,
-					--dmg_scaling_overdrive_subtrahend = 225,
-					--dmg_scaling_overdrive_divisor = 420,
-					--dmg_scaling_overdrive_exponent = 0.5,
 					dmg_scaling_max = 10000,
-					--dmg_scaling_max_overdrive_subtrahend = 0,
-					--dmg_scaling_max_overdrive_divisor = 50,
-					--dmg_scaling_max_overdrive_exponent = 1,
 					dmg_scaling_keeptime = 4,
 					dmg_scaling_falloff = 10000,
 					reload_override = 20,	

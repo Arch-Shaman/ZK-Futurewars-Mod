@@ -76,8 +76,8 @@ for i = 1, #UnitDefs do
 			neededLink = tonumber(udef.customParams.neededlink) or false,
 			keeptooltip = udef.customParams.keeptooltip or false,
 			isSuperWeapon = udef.customParams.superweapon ~= nil,
-			swCoef = tonumber(udef.customParams.superweaponcoef) or 0.5,
-			swDenom = tonumber(udef.customParams.superweapondenom) or 20,
+			swCoef = tonumber(udef.customParams.superweaponcoef) or 0.3,
+			swDenom = tonumber(udef.customParams.superweapondenom) or 5,
 		}
 	end
 	local metalIncome = tonumber(udef.customParams.income_metal) or 0

@@ -1150,6 +1150,10 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				local turnrate = wd.turnRate * 30 * 180 / math.pi
 				cells[#cells+1] = numformat(turnrate, 1) .. " °/" .. localization.acronyms_second
 			end
+			if cp.ballistic_guidance then
+				cells[#cells+1] = ' - ' .. localization.stats_homing .. ':'
+				cells[#cells+1] = numformat(tonumber(cp.ballistic_guidance), 1) .. " elmos/" .. localization.acronyms_second .. "²"
+			end
 			if cp.cruisealt and cp.cruisedist then
 				cells[#cells+1] = ' - ' .. localization.stats_cruisemissile .. ':'
 				cells[#cells+1] = ''

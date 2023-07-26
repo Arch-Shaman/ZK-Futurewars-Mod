@@ -272,7 +272,7 @@
 	"staticheavyshield" : {
 		"name" : "Safeguard",
 		"description" : "Massive Area Shield",
-		"helptext" : "When the Aegis proved to be useless against strategic arms, the Safeguard was fabricated using an overdriven Funnelweb shield. While the Safeguard can stop even nuclear strikes without need of an anti-nuke, it is completely unable to handle substained bombardment. Use lesser artillery or tac missiles to keep it down."
+		"helptext" : "When the Aegis proved to be useless against strategic arms, the Safeguard was fabricated using an overdriven Funnelweb shield. While the Safeguard can stop even nuclear strikes without need of an anti-nuke, it is completely unable to handle substained bombardment. Use a constant bombardment of lesser artillery to keep it down."
 	},
 	"turretaaclose" : {
 		"name" : "Duster",
@@ -782,7 +782,7 @@
 	"staticheavyarty" : {
 		"name" : "Liberator",
 		"description" : "Overdrivable Strategic Artillery",
-		"helptext" : "The hulking Liberator cannon prior to the Coalition Wars saw peaceful applications as a railgun, delivering light payloads into space and to unknown frontiers. Those peaceful applications are now sunsetted into a long forgotten memory as the modern Liberator now converts grid energy into a devestating plasma barrage that it delivers at long ranges. Giving it more power increases the rate in which it can produce this plasma, increasing its overall firing rate."
+		"helptext" : "The hulking Liberator cannon prior to the Coalition Wars saw peaceful applications as a railgun, delivering light payloads into space and to unknown frontiers. Those peaceful applications are now sunsetted into a long forgotten memory as the modern Liberator taps into the grid to deliver a variety of devastating shells to the enemy. Careful utilisation of Its wide arsenal of shells will prove devastating any army or defense line. Giving it more power increases its overall firing rate."
 	},
 	"cloaksnipe" : {
 		"name" : "Phantom",
