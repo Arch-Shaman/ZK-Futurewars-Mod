@@ -14,13 +14,19 @@ include "QueryWeaponFixHax.lua"
 
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local scriptReload = include("scriptReload.lua")
 
 -- Signal definitions
 local SIG_AIM = 2
+local RELOAD_TIME = 26 * Game.gameSpeed
+
+local ammoState = 0
+local gunLoaded = true
 
 local smokePiece = {base, turret, ground}
-local turretSpeed = math.rad(4)
-local sleeveSpeed = math.rad(2)
+local turretSpeed = math.rad(10)
+local sleeveSpeed = math.rad(5)
+local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
 
 local function DisableCheck()
 	while true do
@@ -36,6 +42,13 @@ local function DisableCheck()
 	end
 end
 
+local function reload()
+	scriptReload.GunStartReload(1)
+	gunLoaded = false
+	SleepAndUpdateReload(1, RELOAD_TIME)
+	gunLoaded = true
+end
+
 function script.Create()
 	Hide(flare)
 	Hide(muzzle)
@@ -43,16 +56,18 @@ function script.Create()
 	Turn(sleeve, x_axis, -math.rad(60))
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	StartThread(DisableCheck)
+
+	scriptReload.SetupScriptReload(1, RELOAD_TIME)
 	SetupQueryWeaponFixHax(query, flare)
 end
 
 function script.AimWeapon(num, heading, pitch)
+	if (((num - 1) ~= ammoState) or (spGetUnitRulesParam(unitID, "lowpower") == 1)) then
+		return
+	end
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
 	
-	while (spGetUnitRulesParam(unitID, "lowpower") == 1) do
-		Sleep (400)
-	end
 	local speedMult = (Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0)
 	Turn(turret, y_axis, heading, turretSpeed * speedMult)
 	Turn(sleeve, x_axis, -pitch, sleeveSpeed * speedMult)
@@ -65,6 +80,7 @@ end
 function script.FireWeapon(num)
 	local speedMult = (Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0)
 	GG.FireControl.WeaponFired(unitID, num)
+	StartThread(reload)
 	EmitSfx(ground, GG.Script.UNIT_SFX1)
 	Move(barrel, z_axis, -24, 500)
 	EmitSfx(barrel_back, GG.Script.UNIT_SFX2)
@@ -73,12 +89,20 @@ function script.FireWeapon(num)
 	Move(barrel, z_axis, 0, 6 * speedMult)
 end
 
+function script.BlockShot(num, targetID)
+	return (not gunLoaded) or ((num - 1) ~= ammoState)
+end
+
 function script.QueryWeapon(num)
 	return GetQueryPiece()
 end
 
 function script.AimFromWeapon(num)
 	return query
+end
+
+function OnAmmoTypeChange(newAmmo)
+	ammoState = newAmmo
 end
 
 function script.Killed(recentDamage, maxHealth)

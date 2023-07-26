@@ -78,7 +78,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local cfg = config[weaponDefID]
 		targetType = targetypes[targetType] or "nil"
 		Spring.DeleteProjectile(proID)
-		
+
 		if targetType == "unit" then
 			targetX, targetY, targetZ = spGetUnitPosition(targetParam)
 		elseif targetType == "feature" then

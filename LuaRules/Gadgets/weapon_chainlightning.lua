@@ -50,7 +50,7 @@ for i = 1, #WeaponDefs do
 			canStrikeTwice = cp.chainlightning_hittwice ~= nil,
 			dontspawn = cp.chainlightning_blockexplosion ~= nil,
 		}
-		Spring.Echo("[ChainLightning] Added " .. i)
+		--Spring.Echo("[ChainLightning] Added " .. i)
 		Script.SetWatchExplosion(i, true)
 		if config[i].forksub then
 			subProjectileDefs[i] = true

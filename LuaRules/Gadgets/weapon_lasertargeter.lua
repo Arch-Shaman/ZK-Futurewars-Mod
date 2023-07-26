@@ -19,10 +19,16 @@ local spGetGameFrame = Spring.GetGameFrame
 local spGetProjectilePosition = Spring.GetProjectilePosition
 local spGetGroundHeight = Spring.GetGroundHeight
 local spGetUnitPosition = Spring.GetUnitPosition
+local spGetFeaturePosition = Spring.GetFeaturePosition
+local spGetProjectileTarget = Spring.GetProjectileTarget
 local spSetProjectileTarget = Spring.SetProjectileTarget
 local SetWatchWeapon = Script.SetWatchWeapon
 local spGetValidUnitID = Spring.ValidUnitID
 local debugMode = false
+
+local g_CHAR = string.byte('g')
+local u_CHAR = string.byte('u')
+local f_CHAR = string.byte('f')
 
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 
@@ -117,7 +123,19 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID) -- proOwnerID 
 			spSetProjectileTarget(proID, targetInfo[1], targetInfo[2], targetInfo[3])
 			targeters[proOwnerID].numMissiles = targeters[proOwnerID].numMissiles + 1
 		else
-			targeters[proOwnerID] = {target = {[1] = 0, [2] = 0, [3] = 0}, lastFrame = spGetGameFrame(), isDead = spGetValidUnitID(proOwnerID), numMissiles = 1}
+			local target
+			local t, tpos = spGetProjectileTarget(projectileID)
+			if t == g_CHAR then
+				target = tpos
+			elseif t == u_CHAR then
+				target = table.pack(spGetUnitPosition(tpos))
+			elseif t == f_CHAR then
+				target = table.pack(spGetFeaturePosition(tpos))
+			else -- If we really don't know what's going on, then safest to just scuttle the missile by aiming it at -1mil
+				local tx, _, ty = spGetProjectilePosition(projectileID)
+				target = {tx or 0, -1000000, tz or 0}
+			end
+			targeters[proOwnerID] = {target = target, lastFrame = spGetGameFrame(), isDead = spGetValidUnitID(proOwnerID), numMissiles = 1}
 		end
 		IterableMap.Add(missiles, proID, data)
 		--debugecho(tostring(success))

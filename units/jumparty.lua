@@ -179,10 +179,8 @@ return {
 					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
 					vradius1 = "-2,-4,-2,2,0,2", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
 					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
-					noairburst = "Friendship is Magic... and Magic throws missiles off course!",
 					clustercharges = 33,
-					clusterdelay = 3,
-					timeddeploy = 90,
+					clusterdelay = 2,
 					
 					setunitsonfire = "1",
 					burntime = 200,
@@ -197,6 +195,7 @@ return {
 					sweepfire_step = 6,
 					sweepfire_maxrangemult = 0.98,
 					reveal_unit = 3,
+					shield_damage = 300 + 33*40
 				},
 				damage                  = {
 					default = 300,

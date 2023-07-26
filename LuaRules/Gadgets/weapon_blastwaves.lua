@@ -70,7 +70,7 @@ for i = 1, #WeaponDefs do
 			wanted[#wanted + 1] = id
 			Script.SetWatchExplosion(id, true)
 		end
-		Spring.Echo("[Blastwaves] Added " .. id)
+		--Spring.Echo("[Blastwaves] Added " .. id)
 	end
 end
 
