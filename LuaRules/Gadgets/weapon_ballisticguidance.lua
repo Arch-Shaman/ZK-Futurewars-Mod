@@ -98,7 +98,7 @@ function gadget:GameFrame(f)
 		local tx, ty, tz
 		local t, tpos = spGetProjectileTarget(projID)
 		if t == g_CHAR then
-			tx, ty, tz = table.unpack(tpos)
+			tx, ty, tz = tpos[1], tpos[2], tpos[3]
 		elseif t == u_CHAR then
 			tx, ty, tz = spGetUnitPosition(tpos)
 		elseif t == f_CHAR then
