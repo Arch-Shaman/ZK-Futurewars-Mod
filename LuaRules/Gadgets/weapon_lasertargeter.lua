@@ -111,16 +111,16 @@ function gadget:Explosion_GetWantedWeaponDef()
 	return wantedList
 end
 
-function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID) -- proOwnerID is the unitID that fired the projectile
+function gadget:ProjectileCreated(projectileID, proOwnerID, weaponDefID) -- proOwnerID is the unitID that fired the projectile
 	if config[weaponDefID] and config[weaponDefID].type == 'tracker' then
-		local owner = proOwnerID or Spring.GetProjectileOwnerID(proID)
+		local owner = proOwnerID or Spring.GetProjectileOwnerID(projectileID)
 		local data = {state = "normal", owner = owner, def = weaponDefID}
 		if debugMode then
-			spEcho("Added " .. proID .. " to " .. proOwnerID)
+			spEcho("Added " .. projectileID .. " to " .. proOwnerID)
 		end
 		if targeters[proOwnerID] then
 			local targetInfo = targeters[proOwnerID].target
-			spSetProjectileTarget(proID, targetInfo[1], targetInfo[2], targetInfo[3])
+			spSetProjectileTarget(projectileID, targetInfo[1], targetInfo[2], targetInfo[3])
 			targeters[proOwnerID].numMissiles = targeters[proOwnerID].numMissiles + 1
 		else
 			local target
@@ -137,7 +137,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID) -- proOwnerID 
 			end
 			targeters[proOwnerID] = {target = target, lastFrame = spGetGameFrame(), isDead = spGetValidUnitID(proOwnerID), numMissiles = 1}
 		end
-		IterableMap.Add(missiles, proID, data)
+		IterableMap.Add(missiles, projectileID, data)
 		--debugecho(tostring(success))
 	end
 end
