@@ -97,6 +97,18 @@ local function Anim()
 	end
 end
 
+function script.AimFromWeapon()
+	return base
+end
+
+function script.QueryWeapon()
+	return base
+end
+
+function script.AimWeapon(heading, pitch)
+	return false
+end
+
 
 function script.Create()
 	Hide(energyball)
@@ -106,9 +118,19 @@ function script.Create()
 	StartThread(SizeControl)
 end
 
+local Explodables = {
+	[1] = base,
+	[2] = toroid,
+	[3] = arm1,
+	[4] = arm2,
+	[5] = arm3,
+	[6] = nexus,
+}
+
 function script.Killed(recentDamage, maxHealth)
-	Explode(base, SFX.EXPLODE)
-	Explode(toroid, SFX.EXPLODE)
+	for i = 1, #Explodables do
+		Explode(Explodables[i], SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
+	end
 
 	local severity = recentDamage / maxHealth
 

@@ -66,7 +66,41 @@ return {
 				object           = "debris4x4a.s3o",
 			},
 		},
+		weapons             = {
+			{
+				def                = "AI_HAX",
+				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SUB SHIP SWIM FLOAT GUNSHIP HOVER",
+			},
+		},
 		weaponDefs = {
+			AI_HAX = {
+				name                    = "AI HAAAAAX",
+				accuracy                = 0,
+				areaOfEffect            = 32,
+				avoidFriendly           = false,
+				avoidFeature            = false,
+				avoidGround             = true,
+				craterBoost             = 0,
+				craterMult              = 0,
+				customParams            = {
+					restrict_in_widgets = 1,
+					bogus = 1,
+				},
+				damage                  = {
+					default = 0.0,
+				},
+				fireTolerance           = 1820, -- 10 degrees
+				impulseBoost            = 0,
+				impulseFactor           = 0.2,
+				interceptedByShieldType = 1,
+				noSelfDamage            = true,
+				myGravity				= 0.03,
+				range                   = 1970,
+				reloadtime              = 0.2,
+				turret                  = true,
+				weaponType              = "Cannon",
+				weaponVelocity          = 1600,
+			},
 			SINGULARITY = {
 				areaOfEffect       = 1280,
 				craterMult         = 1,

@@ -12,7 +12,7 @@ return {
 		collisionVolumeType = "Box",
 		corpse = "DEAD",
 		objectname = "pw_mine2.dae",
-		script = "pw_mine2.lua",
+		script = "energyprosperity.lua",
 		icontype = "pw_energy",
 		customparams = {
 			pylonrange = 700,
@@ -39,6 +39,41 @@ return {
 		buildcostmetal = 35000,
 		yardMap = "ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo",
 		sightDistance = 1050,
+		weapons             = {
+			{
+				def                = "AI_HAX",
+				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SUB SHIP SWIM FLOAT GUNSHIP HOVER",
+			},
+		},
+		weaponDefs = {
+			AI_HAX = {
+				name                    = "AI HAAAAAX",
+				accuracy                = 0,
+				areaOfEffect            = 32,
+				avoidFriendly           = false,
+				avoidFeature            = false,
+				avoidGround             = true,
+				craterBoost             = 0,
+				craterMult              = 0,
+				customParams            = {
+					restrict_in_widgets = 1,
+					bogus = 1,
+				},
+				damage                  = {
+					default = 0.0,
+				},
+				fireTolerance           = 1820, -- 10 degrees
+				impulseBoost            = 0,
+				impulseFactor           = 0.2,
+				interceptedByShieldType = 1,
+				noSelfDamage            = true,
+				myGravity				= 0.03,
+				range                   = 1970,
+				reloadtime              = 0.2,
+				turret                  = true,
+				weaponType              = "Cannon",
+				weaponVelocity          = 1600,
+			},
 		featureDefs                   = {
 			DEAD  = {
 				blocking         = true,
