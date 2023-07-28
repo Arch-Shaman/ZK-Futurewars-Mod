@@ -14,11 +14,9 @@ include "QueryWeaponFixHax.lua"
 
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
-local scriptReload = include("scriptReload.lua")
 
 -- Signal definitions
 local SIG_AIM = 2
-local RELOAD_TIME = 26 * Game.gameSpeed
 
 local ammoState = 0
 local gunLoaded = true
@@ -26,7 +24,6 @@ local gunLoaded = true
 local smokePiece = {base, turret, ground}
 local turretSpeed = math.rad(10)
 local sleeveSpeed = math.rad(5)
-local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
 
 local function DisableCheck()
 	while true do
@@ -42,13 +39,6 @@ local function DisableCheck()
 	end
 end
 
-local function reload()
-	scriptReload.GunStartReload(1)
-	gunLoaded = false
-	SleepAndUpdateReload(1, RELOAD_TIME)
-	gunLoaded = true
-end
-
 function script.Create()
 	Hide(flare)
 	Hide(muzzle)
@@ -57,7 +47,6 @@ function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	StartThread(DisableCheck)
 
-	scriptReload.SetupScriptReload(1, RELOAD_TIME)
 	SetupQueryWeaponFixHax(query, flare)
 end
 
@@ -80,7 +69,6 @@ end
 function script.FireWeapon(num)
 	local speedMult = (Spring.GetUnitRulesParam(unitID,"superweapon_mult") or 0)
 	GG.FireControl.WeaponFired(unitID, num)
-	StartThread(reload)
 	EmitSfx(ground, GG.Script.UNIT_SFX1)
 	Move(barrel, z_axis, -24, 500)
 	EmitSfx(barrel_back, GG.Script.UNIT_SFX2)
@@ -103,6 +91,7 @@ end
 
 function OnAmmoTypeChange(newAmmo)
 	ammoState = newAmmo
+	GG.FireControl.WeaponFired(unitID, newAmmo)
 end
 
 function script.Killed(recentDamage, maxHealth)
