@@ -1351,7 +1351,7 @@ local sounds = {
 	energysingu = {
 		select = {
 			volume = 0.5,
-			[1] = "adv_fusion_select",
+			[1] = "energysingu_select",
 		},
 	},
 	energygeo = {
