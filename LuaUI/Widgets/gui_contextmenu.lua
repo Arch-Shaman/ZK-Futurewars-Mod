@@ -1942,7 +1942,7 @@ local function printAbilities(ud, unitID, isFeature)
 
 	if ud.transportCapacity and (ud.transportCapacity > 0) then
 		cells[#cells+1] = localization.transportation
-		cells[#ceclls+1] = ''
+		cells[#cells+1] = ''
 		cells[#cells+1] = " - " .. localization.transport_type .. ":"
 		cells[#cells+1] = ((ud.customParams.islighttransport) and localization.transport_light or localization.transport_heavy)
 		cells[#cells+1] = " - " .. localization.transport_light_speed .. ':'
