@@ -71,11 +71,11 @@ end
 
 function script.Shot(num)
 	StartThread(Recoil)
+	GG.AimDelay_ForceWeaponRestart(unitID, 1)
 end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-	StartThread(ReloadWatcher)
 end
 
 function script.Killed(recentDamage, maxHealth)
