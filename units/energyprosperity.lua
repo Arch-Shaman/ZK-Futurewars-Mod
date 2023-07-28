@@ -74,6 +74,7 @@ return {
 				weaponType              = "Cannon",
 				weaponVelocity          = 1600,
 			},
+		},
 		featureDefs                   = {
 			DEAD  = {
 				blocking         = true,
@@ -91,6 +92,6 @@ return {
 				footprintZ       = 7,
 				object           = "debris8x8a.s3o",
 			},
-		}
-	}
+		},
+	},
 }
