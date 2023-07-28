@@ -28,3 +28,4 @@ Please note: if I have missed you, please feel free to contact me or submit a PR
 
 Additional links:
 * WIP: https://github.com/Arch-Shaman/FutureWars-CircuitAIConfigs
+* <a rel="me" href="https://mastodon.social/@ShamanFW">Shaman's Mastodon</a> because maybe this can be used for something?
