@@ -1,4 +1,5 @@
 local accuracy = 500
+local velocity = 2350
 
 return { 
 	raveparty = {
@@ -131,7 +132,7 @@ return {
 				stages                  = 30,
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 2750,
+				weaponVelocity          = velocity,
 			},
 			SAPPHIRE = {
 				name                    = "Singularity Sapphire",
@@ -177,7 +178,7 @@ return {
 				stages                  = 30,
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 2750,
+				weaponVelocity          = velocity,
 			},
 			RUBY = {
 				name                    = "Ruby Roaster",
@@ -224,7 +225,7 @@ return {
 				stages                  = 30,
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 2750,
+				weaponVelocity          = velocity,
 			},
 			RUBY_SECONDARY = {
 				name                    = "Thermite Blob",
@@ -357,7 +358,7 @@ return {
 				stages                  = 30,
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 2750,
+				weaponVelocity          = velocity,
 			},
 			ORANGE_SECONDARY = {
 				name                    = "Orange Obliterator Particle",
@@ -439,7 +440,7 @@ return {
 				stages                  = 30,
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 2750,
+				weaponVelocity          = velocity,
 			},
 			GREEN_STAMPER = {
 				name                    = "Green Grazer",
@@ -483,7 +484,7 @@ return {
 				stages                  = 30,
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 2750,
+				weaponVelocity          = velocity,
 			},
 			GREEN_SECONDARY = {
 				name                    = "Perkele",
@@ -555,7 +556,7 @@ return {
 				stages                  = 30,
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 2750,
+				weaponVelocity          = velocity,
 			},
 			BLUE_FRAGMENT = {
 				name                    = "Bolter Fragment",
@@ -647,7 +648,7 @@ return {
 				stages                  = 30,
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 2750,
+				weaponVelocity          = velocity,
 			},
 			PURPLE_FRAGMENT = {
 				name                    = "Shield Buster Chaff",
@@ -850,7 +851,7 @@ return {
 				stages                  = 30,
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 2750,
+				weaponVelocity          = velocity,
 			},
 		},
 		featureDefs                   = {
