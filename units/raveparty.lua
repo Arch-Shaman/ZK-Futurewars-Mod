@@ -1,3 +1,5 @@
+local accuracy = 500
+
 return { 
 	raveparty = {
 		unitname                      = "raveparty",
@@ -97,7 +99,7 @@ return {
 		weaponDefs                    = {
 			RED_KILLER = {
 				name                    = "Radioactive Red",
-				accuracy                = 750,
+				accuracy                = accuracy,
 				avoidFeature            = false,
 				avoidGround             = false,
 				areaOfEffect            = 800,
@@ -133,7 +135,7 @@ return {
 			},
 			SAPPHIRE = {
 				name                    = "Singularity Sapphire",
-				accuracy                = 750,
+				accuracy                = accuracy,
 				avoidFeature            = false,
 				avoidGround             = false,
 				areaOfEffect            = 1280,
@@ -179,7 +181,7 @@ return {
 			},
 			RUBY = {
 				name                    = "Ruby Roaster",
-				accuracy                = 750,
+				accuracy                = accuracy,
 				avoidFeature            = false,
 				avoidGround             = false,
 				areaOfEffect            = 800,
@@ -313,7 +315,7 @@ return {
 			},
 			ORANGE_ROASTER = {
 				name                    = "Orange Obliterator",
-				accuracy                = 750,
+				accuracy                = accuracy,
 				areaOfEffect            = 640,
 				craterAreaOfEffect      = 80,
 				avoidFeature            = false,
@@ -396,7 +398,7 @@ return {
 			},
 			YELLOW_SLAMMER = {
 				name                    = "Yellow Yeeter",
-				accuracy                = 750,
+				accuracy                = accuracy,
 				areaOfEffect            = 360,
 				craterAreaOfEffect      = 96,
 				avoidFeature            = false,
@@ -441,7 +443,7 @@ return {
 			},
 			GREEN_STAMPER = {
 				name                    = "Green Grazer",
-				accuracy                = 750,
+				accuracy                = accuracy,
 				areaOfEffect            = 384,
 				avoidFeature            = false,
 				avoidGround             = false,
@@ -485,7 +487,7 @@ return {
 			},
 			GREEN_SECONDARY = {
 				name                    = "Perkele",
-				accuracy                = 750,
+				accuracy                = accuracy,
 				areaOfEffect            = 128,
 				avoidFeature            = false,
 				avoidGround             = false,
@@ -521,7 +523,7 @@ return {
 			},
 			BLUE_SHOCKER = {
 				name                    = "Blue Bolter",
-				accuracy                = 750,
+				accuracy                = accuracy,
 				areaOfEffect            = 320,
 				avoidFeature            = false,
 				avoidGround             = false,
@@ -595,7 +597,7 @@ return {
 			},
 			VIOLET_SLUGGER = {
 				name                    = "Violent Violet",
-				accuracy                = 750,
+				accuracy                = accuracy,
 				areaOfEffect            = 720,
 				craterAreaOfEffect      = 90,
 				avoidFeature            = false,
@@ -766,7 +768,7 @@ return {
 			},
 			RAINBOW = {
 				name                    = "Ruinous Rainbow",
-				accuracy                = 750,
+				accuracy                = accuracy,
 				areaOfEffect            = 720,
 				craterAreaOfEffect      = 90,
 				avoidFeature            = false,
