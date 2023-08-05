@@ -22,7 +22,7 @@ return {
 		corpse                        = "DEAD",
 		customParams                  = {
 			morphto        = "staticrepair",
-			morphtime      = 17,
+			morphtime      = 12,
 			aimposoffset     = "0 18 0",
 			midposoffset     = "0 -4 0",
 			modelradius      = "24",
