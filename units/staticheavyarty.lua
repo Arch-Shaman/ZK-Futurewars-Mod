@@ -142,16 +142,12 @@ return {
 					light_camera_height = 1600,
 					light_color = "0.8 0.76 0.38",
 					light_radius = 110,
-					numprojectiles1 = 7, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 7,
 					projectile1 = "staticheavyarty_tritary",
-					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 1200, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					keepmomentum1 = true,
-					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-8,0,-8,8,0,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
+					spawndist = 1200,
+					keepmomentum1 = true, 
+					velspread1 = "10.19, 0, 10.19",
+					useheight = 1,
 					armorpiercing = 0.4,
 				},
 				damage                  = {
@@ -189,18 +185,14 @@ return {
 				craterMult              = 0,
 				customParams            = {
 					restrict_in_widgets = 1,
-					numprojectiles1 = 10, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 10,
 					projectile1 = "staticheavyarty_secondary",
-					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 2200, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					keepmomentum1 = true,
-					vradius1 = "-6,0,-6,6,0,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
+					spawndist = 2200,
+					velspread1 = "7.64, 0, 7.64",
+					useheight = 1,
 					light_camera_height = 1500,
 					light_radius = 120,
-					script_reload = "26", -- NB: Superweapon field in CP makes this handled by FireControl.
+					script_reload = "30", -- NB: Superweapon field in CP makes this handled by FireControl.
 					light_color = "2.4 1.5 0.6",
 					reveal_unit = 36,
 					armorpiercing = 0.4,
@@ -213,16 +205,16 @@ return {
 				impulseBoost            = 0.5,
 				impulseFactor           = 0.2,
 				interceptedByShieldType = 1,
-				mygravity				= 0.75,
+				mygravity				= 0.6,
 				sprayAngle				= 120,
 				noSelfDamage            = true,
-				range                   = 7100,
+				range                   = 6600,
 				reloadtime              = 1, -- force render our reload progress?
 				soundHit                = "weapon/clusters/cluster_heavy",
 				soundStart              = "weapon/cannon/large_cannon_fire",
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 2200,
+				weaponVelocity          = 1900,
 			},
 			DISARM = {
 				name                    = [["Shadow Storm" Disarming Shell]],
@@ -239,7 +231,7 @@ return {
 					restrict_in_widgets = 1,
 					light_camera_height = 1500,
 					light_radius = 120,
-					script_reload = "26", -- NB: Superweapon field in CP makes this handled by FireControl.
+					script_reload = "30", -- NB: Superweapon field in CP makes this handled by FireControl.
 					light_color = "2.4 1.5 0.6",
 					reveal_unit = 36,
 				},
@@ -253,16 +245,16 @@ return {
 				impulseBoost            = 0,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
-				mygravity			   = 0.5,
+				mygravity			   = 0.6,
 				sprayAngle			  = 120,
 				noSelfDamage            = true,
-				range                   = 7100,
+				range                   = 6600,
 				reloadtime              = 1, -- force render our reload progress?
 				soundHit                = "weapon/clusters/cluster_heavy",
 				soundStart              = "weapon/cannon/large_cannon_fire",
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 2200,
+				weaponVelocity          = 1900,
 			},
 			BUNKERSLOW = {
 				name                    = "M142 Guided Artillery Disruptor",
@@ -280,7 +272,7 @@ return {
 					restrict_in_widgets = 1,
 					light_camera_height = 1500,
 					light_radius = 120,
-					script_reload = "26", -- NB: Superweapon field in CP makes this handled by FireControl.
+					script_reload = "30", -- NB: Superweapon field in CP makes this handled by FireControl.
 					light_color = "2.4 1.5 0.6",
 					reveal_unit = 36,
 					ballistic_guidance = 75,
@@ -294,16 +286,16 @@ return {
 				impulseBoost            = 0,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
-				mygravity				= 0.75,
+				mygravity				= 0.6,
 				sprayAngle				= 120,
 				noSelfDamage            = true,
-				range                   = 7100,
+				range                   = 6700,
 				reloadtime              = 1, -- force render our reload progress?
 				soundHit                = "weapon/clusters/cluster_heavy",
 				soundStart              = "weapon/cannon/large_cannon_fire",
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 2200,
+				weaponVelocity          = 1900,
 			}
 		},
 		featureDefs                   = {

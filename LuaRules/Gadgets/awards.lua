@@ -69,8 +69,8 @@ local awardAbsolutes = {
 	sweeper     = 20,
 	heart       = 1*10^9, --we should not exceed 2*10^9 because math.floor-ing the value will return integer -2147483648. Reference: https://code.google.com/p/zero-k/source/detail?r=9681
 	vet         = 3,
-	shield      = 1000,
-	missile     = 2500,
+	shield      = 10000,
+	missile     = 1000,
 }
 
 local awardEasyFactors = {
@@ -400,17 +400,17 @@ local function ProcessAwardData()
 					local expUnitExpRounded = floor(expUnitExp * 100)
 					message = vetName ..', '.. expUnitExpRounded .. "% cost made"
 				elseif awardType == 'repair' then
-					message = maxValWrite .. ' allied hp repaired'
+					message = maxValWrite .. ' allied value repaired'
 				elseif awardType == 'assistant' then
-					message = maxValWrite .. 'm used for assisting allies'
+					message = maxValWrite .. ' metal used for assisting allies'
 				elseif awardType == 'economist' then
-					message = maxValWrite .. 'm overdriven'
+					message = maxValWrite .. ' metal overdriven'
 				elseif awardType == 'drone' then
-					message = 'Damage by drones: ' .. maxValWrite
+					message = 'Value damaged by drones: ' .. maxValWrite
 				elseif awardType == 'shield' then
 					message = 'Damage shielded: ' .. maxValWrite
 				elseif awardType == 'missile' then
-					message = 'Tacmissile damage: ' .. maxValWrite
+					message = 'Value damage by tacmissile : ' .. maxValWrite
 				else
 					message = 'Damaged value: '.. maxValWrite
 				end
@@ -438,7 +438,7 @@ function gadget:AllowUnitBuildStep(builderID, builderTeam, unitID, unitDefID, pa
 	if bp < 1.0 then
 		AddAwardPoints('assistant', builderTeam, part * UnitDefs[unitDefID].metalCost)
 	else
-		AddAwardPoints('repair', builderTeam, part * maxhp)
+		AddAwardPoints('repair', builderTeam, part * UnitDefs[unitDefID].metalCost)
 	end
 	return true
 end
@@ -599,7 +599,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 				AddAwardPoints( 'fire', attackerTeam, costdamage )
 			end
 			if isMissile then
-				AddAwardPoints('missile', attackerTeam, damage)
+				AddAwardPoints('missile', attackerTeam, costdamage)
 			end
 			-- Static Weapons
 			if (not ad.canMove) then
@@ -625,7 +625,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 			elseif comms[attackerDefID] then
 				AddAwardPoints( 'comm', attackerTeam, costdamage )
 			elseif ad.customParams.is_drone then
-				AddAwardPoints('drone', attackerTeam, damage)
+				AddAwardPoints('drone', attackerTeam, costdamage )
 			end
 		end
 	end

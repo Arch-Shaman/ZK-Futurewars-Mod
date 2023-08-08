@@ -87,7 +87,7 @@ return {
 					burntime = 60,
 
 					area_damage = 1,
-					area_damage_radius = 60,
+					area_damage_radius = 70,
 					area_damage_dps = 40,
 					area_damage_duration = 14,
 
@@ -169,17 +169,14 @@ return {
 					light_camera_height = 2500,
 					light_color = "0.25 0.13 0.05",
 					light_radius = 460,
-					numprojectiles1 = 2, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 1,
 					projectile1 = "jumparty_napalm_fragment",
-					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					keepmomentum1 = 0,
-					spawndist = 500, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-2,-4,-2,2,0,2", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
-					clustercharges = 33,
+					spawndist = 500,
+					timeoutspawn = 1, 
+					velspread1 = "2.55, -4, 2.55, _, 0, _",
+					useheight = 1,
+					clustercharges = 40,
 					clusterdelay = 2,
 					
 					setunitsonfire = "1",

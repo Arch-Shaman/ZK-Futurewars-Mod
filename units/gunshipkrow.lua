@@ -150,16 +150,11 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				customParams			= {
-					numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 4,
 					projectile1 = "gunshipkrow_clusterbomb",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					proxy = 0, -- check for nearby units?
 					useheight = 1,
-					spawndist = 140, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-12,0,-12,12,4,12", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					groundimpact = 1,
+					spawndist = 140,
+					velspread1 = "15.28 , 0, 15.28, _, 4, _",
 				},
 				damage                  = {
 					default = 175*3,

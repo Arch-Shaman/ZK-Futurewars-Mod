@@ -5,7 +5,6 @@ local weaponDef = {
 	avoidFeature 			= false,
 	avoidGround  			= false,
 	beamTime                = 1.5,
-	commandFire             = false,
 	coreThickness           = 0.5,
 	craterBoost             = 4,
 	craterMult              = 10,

@@ -74,15 +74,11 @@ return {
 					reaim_time = 8, -- COB
 					isaa = "1",
 					light_radius = 0,
-					numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile1 = "tankaa_tritary", -- the weapondef name. we will convert this to an ID in init. REQUIRED. If defined in the unitdef, it will be unitdefname_weapondefname.
-					--spreadradius1 = 3, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 300, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-5,-1,-5,5,1,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-					proxy = 1, -- check for nearby units?
+					numprojectiles1 = 5,
+					projectile1 = "tankaa_tritary",
+					spawndist = 300,
+					velspread1 = "6.37, 1, 6.37",
+					proxy = 1, 
 					damage_vs_shield = "150"
 				},
 				damage  = {
