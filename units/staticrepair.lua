@@ -3,7 +3,7 @@ return {
 		unitname                      = "staticrepair",
 		name                          = "Rejuvenator",
 		description                   = "Repair Turret",
-		buildCostMetal                = 350,
+		buildCostMetal                = 300,
 		buildDistance                 = 700,
 		builder                       = true,
 		canassist					  = false,

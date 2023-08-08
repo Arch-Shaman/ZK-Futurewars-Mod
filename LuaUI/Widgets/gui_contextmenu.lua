@@ -1221,7 +1221,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				end
 				cells[#cells+1] = ""
 				cells[#cells+1] = "\t- " .. localization.stats_armor_boost .. ":"
-				cells[#cells+1] = numformat(1 - tonumber(cp.grants_armor) * 100, 1) .. "%"
+				cells[#cells+1] = numformat(tonumber(cp.grants_armor) * 100, 1) .. "%"
 				cells[#cells+1] = "\t- " .. localization.duration .. ":"
 				cells[#cells+1] = numformat(duration, 1) .. localization.acronyms_second
 				if not noScaling and noTimeScaling then
