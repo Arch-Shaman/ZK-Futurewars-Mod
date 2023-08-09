@@ -157,14 +157,14 @@ return {
 					--numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					--projectile1 = "nebula_ag",
 					--clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					--use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					--spawndist = 160, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					--timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					--vradius1 = "-4,0,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					--use2ddist = 0,
+					--spawndist = 160,
+					--timeoutspawn = 1, 
+					--velspread1 = "-4,0,-4,4,1,4", -- velocity that is randomly added. covers range of +-velspread. OPTIONAL. Default: 4.2
 					--spreadradius1 = 6, -- used in clusters. OPTIONAL. Default: 100.
 					--useheight = 1,
 					--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-					--proxy = 1, -- check for nearby units?
+					--proxy = 1, 
 					--proxydist = 100, -- how far to check for units? Default: spawndist
 				},
 				damage                  = {
@@ -225,14 +225,14 @@ return {
 					--numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					--projectile1 = "nebula_ag",
 					--clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					--use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					--spawndist = 160, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					--timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					--vradius1 = "-4,0,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					--use2ddist = 0,
+					--spawndist = 160,
+					--timeoutspawn = 1, 
+					--velspread1 = "-4,0,-4,4,1,4", -- velocity that is randomly added. covers range of +-velspread. OPTIONAL. Default: 4.2
 					--spreadradius1 = 6, -- used in clusters. OPTIONAL. Default: 100.
 					--useheight = 1,
 					--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-					--proxy = 1, -- check for nearby units?
+					--proxy = 1, 
 					--proxydist = 100, -- how far to check for units? Default: spawndist
 				},
 				damage                  = {
@@ -302,14 +302,11 @@ return {
 				customParams = {
 					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "nebula_fragment",
-					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 210, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-6,-3,-6,6,3,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					spawndist = 210,
+					timeoutspawn = 1, 
+					velspread1 = "7.64, -3, 7.64", -- velocity that is randomly added. covers range of +-velspread. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-					proxy = 1, -- check for nearby units?	
+					proxy = 1, 	
 				},
 				damage                  = {
 					default = 37.1 * 6,

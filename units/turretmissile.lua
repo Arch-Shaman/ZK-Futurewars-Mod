@@ -113,14 +113,11 @@ return {
 					light_radius = 250,
 					script_reload = "5.5",
 					script_burst = "3",
-					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 6,
 					projectile1 = "turretmissile_bomblet",
-					--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-4,-1,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					spawndist = 180,
+					timeoutspawn = 1, 
+					velspread1 = "5.09, 1, 5.09",
 				},
 				damage                  = {
 					default = 40.01*6,

@@ -72,12 +72,12 @@ return {
 					blastwave_speed = 1.5,
 					blastwave_life = 30,
 					blastwave_lossfactor = 0.80,
-					blastwave_damage = 250,
-					damage_vs_shield = 150,
+					blastwave_damage = 75,
+					damage_vs_shield = 400,
 				},
 
 				damage                  = {
-					default = 100.01,
+					default = 150.01,
 				},
 
 				cegTag                  = "sonicarcher",

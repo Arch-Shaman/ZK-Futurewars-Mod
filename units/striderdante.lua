@@ -207,16 +207,12 @@ return {
 					burntime = [[1000]],
 					reaim_time = 1,
 					
-					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 6,
 					projectile1 = "striderdante_napalm_fragment_dummy",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					keepmomentum1 = 0,
 					timeoutspawn = 0,
-					vradius1 = "-1.5,4,-1.5,1.5,8,1.5",
-					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
-					onexplode = "by the power of god, disco and hentai...", -- if true, this projectile will cluster when it explodes
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					velspread1 = "1.91, 4, 1.91, _, 8, _",
+					noairburst = "I belive I can fly...",
+					onexplode = "by the power of god, disco and hentai...",
 				},
 				
 				damage                  = {
@@ -259,14 +255,9 @@ return {
 				cegTag                  = [[flamer]],
 				customParams              = {
 
-					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 1,
 					projectile1 = "striderdante_napalm_fragment",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "derpderpderpderpderpderpderpderpderpderp", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					keepmomentum1 = 1,
-					timeoutspawn = 0,
-					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					noairburst = "I belive I can fly...",
 					timeddeploy = 20,
 
 					--lups_heat_fx = [[firewalker]],
@@ -366,16 +357,12 @@ return {
 					light_radius = 320,
 					reaim_time = 1,
 					
-					numprojectiles1 = 10, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 6,
 					projectile1 = "striderdante_napalm_fragment_dummy",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					keepmomentum1 = 0,
 					timeoutspawn = 0,
-					vradius1 = "-1.5,4,-1.5,1.5,6,1.5",
-					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
-					onexplode = "by the power of god, disco and hentai...", -- if true, this projectile will cluster when it explodes
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					velspread1 = "1.91, 4, 1.91, _, 8, _",
+					noairburst = "I belive I can fly...",
+					onexplode = "by the power of god, disco and hentai...",
 				},
 				
 				damage                  = {

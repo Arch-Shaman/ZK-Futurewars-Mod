@@ -72,7 +72,7 @@ return {
 				areaOfEffect            = 128,
 				craterBoost             = 0,
 				craterMult              = 1.3,
-				projectiles             = 8,
+				projectiles             = 10,
 				sprayAngle				= 1080,
 				customParams            = {
 					force_ignore_ground = "1",

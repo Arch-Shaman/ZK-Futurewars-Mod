@@ -110,13 +110,10 @@ return {
 					restrict_in_widgets = 1,
 					cruisealt = 11000,
 					cruisedist = 400,
-					numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 5,
 					projectile1 = "staticnuke_warhead",
-					spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					spawndist = 7000, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeoutspawn = 0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = 0, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					spawndist = 7000,
+					timeoutspawn = 0,
 					useheight = 1,
 					usertargetable = 1,
 					cruise_ignoreterrain = 1,

@@ -70,7 +70,7 @@ return {
 					cruise_ignoreterrain = "1",
 				},
 				damage                  = {
-					default = 7000.1,
+					default = 7500.4,
 				},
 				edgeEffectiveness       = 0.25,
 				explosionGenerator      = "custom:nukebigland",

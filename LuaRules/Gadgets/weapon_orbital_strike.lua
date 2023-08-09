@@ -4,10 +4,10 @@ end
 
 function gadget:GetInfo()
 	return {
-		name      = "Ballistic Guidance",
-		desc      = "Guidance for ballistic weapon Only works for high angle weapons",
-		author    = "StuffPhoton",
-		date      = "25/07/2023",
+		name      = "Orbital Strike Handler",
+		desc      = "Handles spawning of orbital strikes",
+		author    = "Stuffphoton",
+		date      = "30/07/2023",
 		license   = "GNU GPL, v2 or later",
 		layer     = 0,
 		enabled   = true,
@@ -47,7 +47,7 @@ local f_CHAR = string.byte('f')
 local projectiles = {}
 local config = {}
 
-local debugmode = false --THIS WILL SPAM THE LIVING HELL OUT OF THE INFOLOGS
+local debugmode = true --THIS WILL SPAM THE LIVING HELL OUT OF THE INFOLOGS
 local name = "[weapon_ballisticguidance.lua]: "
 local updateRate = 3
 

@@ -162,13 +162,8 @@ return {
 					light_camera_height = 3500,
 					light_color = [[0.5 0.0 0.5]],
 					light_radius = 220,
-					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "striderfunnelweb_fragment",
-					clustervec1 = "derpderpderpderpderpderpderpderpderpderp", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					keepmomentum1 = 1,
-					timeoutspawn = 0,
-					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					noairburst = "I belive I can fly...",
 					timeddeploy = 20,
 					shield_damage = 185,
 					bogus = 1
@@ -209,22 +204,14 @@ return {
 					light_camera_height = 3500,
 					light_color = [[0.5 0.0 0.5]],
 					light_radius = 220,
-					timeslow_overslow_frames = 5*30, --5 seconds before slow decays
+					timeslow_overslow_frames = 5*30,
 					nofriendlyfire = 1,
-					numprojectiles1 = 15, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 15,
 					projectile1 = "striderfunnelweb_fragment_fake",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					keepmomentum1 = 0,
-					timeoutspawn = 0,
-					vradius1 = "-3,2,-3,3,4,3",
-					noairburst = "EI", -- if true, this projectile will skip all airburst checks
-					onexplode = "RUOTSI", -- if true, this projectile will cluster when it explodes
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
+					velspread1 = "3.82, 2, 3.82, _, 4, _",
+					noairburst = "EI",
+					onexplode = "RUOTSI",
 					stats_damage = 1200,
-					shield_damage = 1, -- we want it to impact the shield to cause a lot of projectiles to spawn on it and damage it.
-					stats_shield_damage = (150*24) + 135 * 24,
 				},
 
 				damage                  = {
