@@ -192,7 +192,7 @@ return {
 					useheight = 1,
 					light_camera_height = 1500,
 					light_radius = 120,
-					script_reload = "30", -- NB: Superweapon field in CP makes this handled by FireControl.
+					script_reload = "26", -- NB: Superweapon field in CP makes this handled by FireControl.
 					light_color = "2.4 1.5 0.6",
 					reveal_unit = 36,
 					armorpiercing = 0.4,
@@ -205,16 +205,16 @@ return {
 				impulseBoost            = 0.5,
 				impulseFactor           = 0.2,
 				interceptedByShieldType = 1,
-				mygravity				= 0.6,
+				mygravity				= 0.75,
 				sprayAngle				= 120,
 				noSelfDamage            = true,
-				range                   = 6600,
+				range                   = 6800,
 				reloadtime              = 1, -- force render our reload progress?
 				soundHit                = "weapon/clusters/cluster_heavy",
 				soundStart              = "weapon/cannon/large_cannon_fire",
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 1900,
+				weaponVelocity          = 2200,
 			},
 			DISARM = {
 				name                    = [["Shadow Storm" Disarming Shell]],
@@ -231,7 +231,7 @@ return {
 					restrict_in_widgets = 1,
 					light_camera_height = 1500,
 					light_radius = 120,
-					script_reload = "30", -- NB: Superweapon field in CP makes this handled by FireControl.
+					script_reload = "26", -- NB: Superweapon field in CP makes this handled by FireControl.
 					light_color = "2.4 1.5 0.6",
 					reveal_unit = 36,
 				},
@@ -245,16 +245,16 @@ return {
 				impulseBoost            = 0,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
-				mygravity			   = 0.6,
+				mygravity			   = 0.75,
 				sprayAngle			  = 120,
 				noSelfDamage            = true,
-				range                   = 6600,
+				range                   = 7100,
 				reloadtime              = 1, -- force render our reload progress?
 				soundHit                = "weapon/clusters/cluster_heavy",
 				soundStart              = "weapon/cannon/large_cannon_fire",
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 1900,
+				weaponVelocity          = 2200,
 			},
 			BUNKERSLOW = {
 				name                    = "M142 Guided Artillery Disruptor",
@@ -272,7 +272,7 @@ return {
 					restrict_in_widgets = 1,
 					light_camera_height = 1500,
 					light_radius = 120,
-					script_reload = "30", -- NB: Superweapon field in CP makes this handled by FireControl.
+					script_reload = "26", -- NB: Superweapon field in CP makes this handled by FireControl.
 					light_color = "2.4 1.5 0.6",
 					reveal_unit = 36,
 					ballistic_guidance = 75,
@@ -286,16 +286,16 @@ return {
 				impulseBoost            = 0,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
-				mygravity				= 0.6,
+				mygravity				= 0.75,
 				sprayAngle				= 120,
 				noSelfDamage            = true,
-				range                   = 6700,
+				range                   = 7100,
 				reloadtime              = 1, -- force render our reload progress?
 				soundHit                = "weapon/clusters/cluster_heavy",
 				soundStart              = "weapon/cannon/large_cannon_fire",
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 1900,
+				weaponVelocity          = 2200,
 			}
 		},
 		featureDefs                   = {
