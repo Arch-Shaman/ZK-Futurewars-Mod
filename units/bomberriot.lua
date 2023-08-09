@@ -116,20 +116,13 @@ local unitDef = {
 			craterBoost             = 0,
 			craterMult              = 0,
 			customParams        	  = {
-				numprojectiles1 = 9, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+				numprojectiles1 = 9,
 				projectile1 = "bomberriot_napalm_secondary",
-				--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
-				clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-				use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-				spawndist = 220, -- at what distance should we spawn the projectile(s)? REQUIRED.
-				timeoutspawn = 0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-				vradius1 = "-8,-2,-8,8,2,8", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-				groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-				proxy = 0, -- check for nearby units?
-				proxydist = 0, -- how far to check for units? Default: spawndist
+				spawndist = 220,
+				timeoutspawn = 0, 
+				velspread1 = "10.19, -2, 10.19",
+				useheight = 1,
 				reaim_time = 60, -- Fast update not required (maybe dangerous)
-				--setunitsonfire = "1", -- the bomb itself is a physical attack.
-				--burntime = 300, -- so we commented these lines out. Basically the new cas phoenix drops a couple main bombs that split into the napalm components.
 			},
 		  
 			damage                  = {

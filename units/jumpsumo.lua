@@ -159,12 +159,11 @@ return {
 				cylinderTargeting       = 100,
 				customParams            = {
 					singularity = "UwU I'm back from the dark side of compsci~",
-					singuradius = "180",
-					singulifespan = "9",
-					singustrength = "65",
-					singuheight = "0",
-					singufinalstrength = 0,
-					singufinalceg = "black_hole_180",
+					singu_radius = 180,
+					singu_lifespan = 9,
+					singu_strength = 195,
+					singu_finalstrength = 0,
+					singu_finalceg = "black_hole_180",
 					stats_hide_damage = 1, -- continuous laser
 					stats_hide_reload = 1,
 					light_color = "0.33 0.33 1.28",
@@ -212,10 +211,9 @@ return {
 				cylinderTargeting       = 100,
 				customParams            = {
 					singularity = "Feeling horny, might come out soon~",
-					singuradius = "180",
-					singulifespan = "9",
-					singustrength = "-65",
-					singuheight = "0",
+					singuradius = 180,
+					singulifespan = 9,
+					singustrength = -195,
 					singufinalceg = "gravwell_180",
 					singufinalstrength = 0,
 					stats_hide_damage = 1, -- continuous laser
@@ -254,7 +252,7 @@ return {
 				weaponVelocity          = 2200,
 			},
 			LANDING = {
-				name                    = "Jugglenaut Landing",
+				name                    = "Gravitas Landing",
 				areaOfEffect            = 520,
 				canattackground         = false,
 				craterBoost             = 4,

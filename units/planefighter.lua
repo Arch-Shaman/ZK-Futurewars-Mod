@@ -255,7 +255,7 @@ local unitDef = {
 				light_color = "0.5 0.6 0.6",
 				reaim_time = 60, -- Fast update not required (maybe dangerous)
 				--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-				--proxy = 1, -- check for nearby units?
+				--proxy = 1, 
 				--proxydist = 100, -- how far to check for units? Default: spawndist
 				--damage_vs_shield = "475",
 			},

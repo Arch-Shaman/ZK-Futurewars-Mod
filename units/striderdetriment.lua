@@ -121,15 +121,12 @@ return {
 					smoothradius     = "120",
 					smoothmult       = "0.8",
 					muzzleEffectFire = "custom:RAIDMUZZLE",
-					numprojectiles1 = 7, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 7,
 					projectile1 = "striderdetriment_secondary",
-					--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					proxy = 1, -- check for nearby units?
-					proxydist = 200, -- how far to check for units? Default: spawndist
-					spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-6,-4,-6,2,3,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					proxy = 1, 
+					proxydist = 200,
+					spawndist = 200,
+					velspread1 = "7.64, 3.5, 7.64",
 				},
 				damage                  = {
 					default = 1020.1*7,
@@ -170,16 +167,12 @@ return {
 					reaim_time = 8, -- COB
 					isaa = "1",
 					light_radius = 0,
-					numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile1 = "striderdetriment_tritary", -- the weapondef name. we will convert this to an ID in init. REQUIRED. If defined in the unitdef, it will be unitdefname_weapondefname.
-					--spreadradius1 = 3, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-4,-3,-4,4,3,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-					proxy = 1, -- check for nearby units?
-					proxydist = 300, -- how far to check for units? Default: spawndist
+					numprojectiles1 = 5,
+					projectile1 = "striderdetriment_tritary",
+					spawndist = 200,
+					velspread1 = "5.09, 3, 5.09",
+					proxy = 1, 
+					proxydist = 300,
 					damage_vs_shield = "180"
 				},
 				damage  = {
