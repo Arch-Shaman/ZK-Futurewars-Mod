@@ -123,14 +123,14 @@ function gadget:ProjectileCreated(projectileID, proOwnerID, weaponDefID) -- proO
 			spSetProjectileTarget(projectileID, targetInfo[1], targetInfo[2], targetInfo[3])
 			targeters[proOwnerID].numMissiles = targeters[proOwnerID].numMissiles + 1
 		else
-			local target
+			local target = {}
 			local t, tpos = spGetProjectileTarget(projectileID)
 			if t == g_CHAR then
 				target = tpos
 			elseif t == u_CHAR then
-				target = table.pack(spGetUnitPosition(tpos))
+				target[1], target[2], target[3] = spGetUnitPosition(tpos)
 			elseif t == f_CHAR then
-				target = table.pack(spGetFeaturePosition(tpos))
+				target[1], target[2], target[3] = spGetFeaturePosition(tpos)
 			else -- If we really don't know what's going on, then safest to just scuttle the missile by aiming it at -1mil
 				local tx, _, ty = spGetProjectilePosition(projectileID)
 				target = {tx or 0, -1000000, tz or 0}
