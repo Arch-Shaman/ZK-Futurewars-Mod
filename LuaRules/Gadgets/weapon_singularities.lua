@@ -71,9 +71,12 @@ for i = 1, #WeaponDefs do
 	local cp = WeaponDefs[i].customParams
 	if cp and cp.singularity then
 		local singuDef = {}
-		singuDef.radius = (tonumber(cp.singu_radius) or 400)/2
-		singuDef.lifespan = tonumber(cp.singu_lifespan) or 300
-		singuDef.strength = tonumber(cp.singu_strength) or 75
+		singuDef.radius = tonumber(cp.singu_radius)/2
+		singuDef.lifespan = tonumber(cp.singu_lifespan)
+		singuDef.strength = tonumber(cp.singu_strength)
+		if not (singuDef.radius and singuDef.lifespan and singuDef.strength) then
+			Spring.Log(GetInfo().name, "fatal", "[weapon_singularities.lua] Weapondefs Error: invalid singularity defs for "..WeaponDefs[i].name)
+		end
 		singuDef.finalStrength = tonumber(cp.singu_finalstrength) or singuDef.strength * 10
 		singuDef.height = tonumber(cp.singu_height) or 0
 		singuDef.ceg = cp.singu_ceg
