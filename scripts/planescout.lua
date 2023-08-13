@@ -9,7 +9,7 @@ local base, nozzle = piece("base", "nozzle")
 local smokePiece = {base}
 
 local SIG_CLOAK = 1
-local CLOAK_TIME = 5000
+local CLOAK_TIME = 10000
 
 local SIG_TAKEOFF = 2
 local takeoffHeight = UnitDefNames["planescout"].cruiseAltitude
@@ -24,7 +24,7 @@ local function Decloak()
 end
 
 function Cloak()
-	Spring.SetUnitCloak(unitID, 2)
+	Spring.SetUnitCloak(unitID, 3)
 	StartThread(Decloak)
 end
 
