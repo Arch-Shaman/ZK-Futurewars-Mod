@@ -55,7 +55,7 @@ return {
 		weapons							= {
 			{
 				def					= "ATA",
-				onlyTargetCategory	= "SWIM LAND SHIP SINK TURRET FLOAT HOVER",
+				onlyTargetCategory	= "SWIM LAND SHIP SINK TURRET FLOAT HOVER GUNSHIP",
 			},        
 			{
 				def					= "BOGUS_PHASER",

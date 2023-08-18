@@ -19,7 +19,7 @@ return {
 			removestop = 1,
 			decay_rate = -0.04,
 			decay_time = 3,
-			decay_maxoutput = 4,
+			decay_maxoutput = 3.2,
 			decay_initialrate = 1,
 		},
 		energyMake                    = 25,

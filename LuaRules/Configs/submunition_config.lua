@@ -21,7 +21,7 @@ local function InclusiveBoolCast(string, default)
 end
 
 Spring.Echo("CAS: Discovered ()")
-			
+
 for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
