@@ -69,11 +69,11 @@ local function IsUnitOnFire(unitID)
 end
 
 function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attackerWeaponDefID, defPriority)
-	if defPriority == nil then
+	if defPriority == nil or not unitStates[attackerID] or wantedWeaponDefs[attackerWeaponDefID] == nil then
 		return true, defPriority
 	end
 	local priority = defPriority
-	if unitStates[attackerID] and wantedWeaponDefs[attackerWeaponDefID] and (IsUnitOnFire(targetID) and IsUnitInLos(targetID, attackerID)) then
+	if unitStates[attackerID] and IsUnitOnFire(targetID) then
 		priority = priority * 900
 	end
 	--Spring.Echo("Priority: " .. priority)
