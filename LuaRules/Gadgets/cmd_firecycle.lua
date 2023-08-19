@@ -4,7 +4,7 @@ end
 
 function gadget:GetInfo()
 	return {
-		name      = "Flamethrower toggle",
+		name      = "Firecycle Command",
 		desc      = "Controls flamethrower units's preferences",
 		author    = "Shaman / Hellaratsastaja212",
 		date      = "12.20.2021",
