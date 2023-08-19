@@ -4,7 +4,7 @@ return {
 		name                          = "Solar Collector",
 		description                   = "Small Powerplant (+3)",
 		activateWhenBuilt             = true,
-		buildCostMetal                = 60,
+		buildCostMetal                = 75,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 6,
