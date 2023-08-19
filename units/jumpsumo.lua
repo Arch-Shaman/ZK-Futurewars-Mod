@@ -211,11 +211,11 @@ return {
 				cylinderTargeting       = 100,
 				customParams            = {
 					singularity = "Feeling horny, might come out soon~",
-					singuradius = 180,
-					singulifespan = 9,
-					singustrength = -195,
-					singufinalceg = "gravwell_180",
-					singufinalstrength = 0,
+					singu_radius = 180,
+					singu_lifespan = 9,
+					singu_strength = -195,
+					singu_finalceg = "gravwell_180",
+					singu_finalstrength = 0,
 					stats_hide_damage = 1, -- continuous laser
 					stats_hide_reload = 1,
 					light_color = "0.85 0.2 0.2",

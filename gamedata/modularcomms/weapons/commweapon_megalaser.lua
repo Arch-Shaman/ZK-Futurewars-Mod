@@ -11,6 +11,7 @@ local weaponDef = {
 	commandFire             = true,
 	customParams            = {
 		is_unit_weapon = 1,
+		manualfire = 1,
 		slot = [[3]],
 		light_color = [[1.25 0.8 1.75]],
 		light_radius = 255,

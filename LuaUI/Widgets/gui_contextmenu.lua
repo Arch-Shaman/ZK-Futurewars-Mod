@@ -1327,16 +1327,16 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				cells[#cells+1] = ' - Creates a Singularity:'
 				cells[#cells+1] = ''
 				cells[#cells+1] = '\t- ' .. localization.duration .. ':'
-				cells[#cells+1] = numformat(cp.singulifespan/30, 1) .. localization.acronyms_second
+				cells[#cells+1] = numformat(cp.singu_lifespan/30, 1) .. localization.acronyms_second
 				cells[#cells+1] = '\t- ' .. localization.singularity_strength .. ':'
-				local singustrength = tonumber(cp.singustrength) * comm_mult
+				local singustrength = tonumber(cp.singu_strength) * comm_mult
 				if singustrength > 0 then
 					cells[#cells+1] = numformat(singustrength, 1) .. "elmo/" .. localization.acronyms_second .. localization.pull
 				else
 					cells[#cells+1] = numformat(singustrength, 1) .. "elmo/" .. localization.acronyms_second .. localization.push
 				end
 				cells[#cells+1] = '\t- ' .. localization.radius .. ':'
-				cells[#cells+1] = cp.singuradius .. " elmo"
+				cells[#cells+1] = cp.singu_radius .. " elmo"
 			end
 			if wd.trajectoryHeight > 0  and not bombletCount then
 				cells[#cells+1] = ' - ' .. localization.weapon_arcing .. ':'
