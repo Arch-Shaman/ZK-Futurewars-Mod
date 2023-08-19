@@ -201,7 +201,6 @@ end
 
 local function PreJumpThread(goalX, goalZ, goalHeading, startHeading)
 	jumpProg = 0
-	Spring.Echo(tur)
 	local x, _, z = Spring.GetUnitPosition(unitID)
 	local heading = startHeading * GG.Script.headingToRad
 	local wanted = goalHeading * GG.Script.headingToRad
