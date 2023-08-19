@@ -2,9 +2,9 @@ return {
 	energyfusion = {
 		unitname                      = "energyfusion",
 		name                          = "Fusion Reactor",
-		description                   = "Powerplant: +28e, increases over time",
+		description                   = "Powerplant: +25e, increases over time",
 		activateWhenBuilt             = true,
-		buildCostMetal                = 900,
+		buildCostMetal                = 1900,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 6,

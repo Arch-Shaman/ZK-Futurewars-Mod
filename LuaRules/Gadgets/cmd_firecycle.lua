@@ -4,7 +4,7 @@ end
 
 function gadget:GetInfo()
 	return {
-		name      = "Flamethrower toggle",
+		name      = "Firecycle Command",
 		desc      = "Controls flamethrower units's preferences",
 		author    = "Shaman / Hellaratsastaja212",
 		date      = "12.20.2021",
@@ -75,7 +75,7 @@ function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attac
 		return true, nil
 	end
 	local priority = defPriority
-	if unitStates[attackerID] and (IsUnitOnFire(targetID) and IsUnitInLos(targetID, attackerID)) then
+	if unitStates[attackerID] and IsUnitOnFire(targetID) then
 		priority = priority * 900
 	end
 	--Spring.Echo("Priority: " .. priority)

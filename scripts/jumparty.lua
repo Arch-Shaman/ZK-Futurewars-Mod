@@ -52,7 +52,6 @@ local bAiming = false
 local gun_1 = 0
 local isJumping = false
 local jumpflaming = false
-local landing = false
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -192,7 +191,7 @@ local function JetTrailThread()
 	while jumpflaming do
 		EmitSfx(fp2, GG.Script.FIRE_W2)
 		EmitSfx(fp1, GG.Script.FIRE_W2)
-		waitMod = math.max(minWait, jumpProg / 0.1)
+		waitMod = math.max(minWait, jumpProg / 10)
 		Sleep(waitTime * waitMod)
 	end
 	Turn (lgun, x_axis, 0, math.rad(70))
@@ -201,7 +200,7 @@ end
 
 local function PreJumpThread(goalX, goalZ, goalHeading, startHeading)
 	jumpProg = 0
-	Spring.Echo(tur)
+	StartThread(JetTrailThread)
 	local x, _, z = Spring.GetUnitPosition(unitID)
 	local heading = startHeading * GG.Script.headingToRad
 	local wanted = goalHeading * GG.Script.headingToRad
@@ -219,23 +218,18 @@ local function PreJumpThread(goalX, goalZ, goalHeading, startHeading)
 	Turn(rfoot, x_axis, math.rad(-45), math.rad(45))
 	WaitForTurn(torso, y_axis)
 	WaitForTurn(lgun, x_axis)
-	StartThread(JetTrailThread)
-end
-
-function preJump(turn, lineDist, flightDist, duration, goalX, goalZ, goalHeading, startHeading)
-	Signal(SIG_AIM)
-	Signal(SIG_MOVE)
-	StartThread(PreJumpThread, goalZ, goalX, goalHeading, startHeading)
-end
-
-function beginJump()
-	landing = false
 	jumpflaming = true
 	Move (pelvis, y_axis, 0, 8)
 	Turn (rupleg, x_axis, 0, math.rad(140))
 	Turn (lupleg, x_axis, 0, math.rad(140))
 	Turn (lfoot, x_axis, 0, math.rad(140))
 	Turn (rfoot, x_axis, 0, math.rad(140))
+end
+
+function preJump(turn, lineDist, flightDist, duration, goalX, goalZ, goalHeading, startHeading)
+	Signal(SIG_AIM)
+	Signal(SIG_MOVE)
+	StartThread(PreJumpThread, goalZ, goalX, goalHeading, startHeading)
 end
 
 function halfJump()
@@ -265,12 +259,9 @@ end
 
 function jumping(jumpPercent)
 	jumpProg = jumpPercent
-	if jumpPercent > 0.65 and jumpflaming then
-		jumpflaming = false
-	end
-	if jumpPercent > 0.95 and not landing then
+	if jumpPercent > 95 and isJumping then
 		StartThread(PrepareJumpLand)
-		landing = true
+		jumpflaming = false
 		isJumping = false
 	end
 end

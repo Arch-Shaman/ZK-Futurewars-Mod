@@ -79,6 +79,7 @@ return {
 				customParams              = {
 					light_radius = 0,
 					combatrange = 15,
+					armorpiercing = 1,
 				},
 				damage                  = {
 					default = 70.01,
