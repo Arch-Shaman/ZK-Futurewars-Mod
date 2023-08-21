@@ -30,7 +30,7 @@ local forcefire = false
 local lastcheck = -1
 --local turning = false
 
-local turnrate = math.rad(45)
+local turnrate = math.rad(60)
 
 local function Tilt()
 	while true do
