@@ -12,7 +12,7 @@ local flare = piece 'firepoint1'
 
 local smokePiece = {base, turret}
 
-local RESTORE_DELAY = 4000
+local RESTORE_DELAY = 3000
 
 local delay = WeaponDefs[UnitDef.weapons[1].weaponDef].customParams.aimdelay
 local beam_duration = WeaponDefs[UnitDef.weapons[1].weaponDef].beamtime * 1000
