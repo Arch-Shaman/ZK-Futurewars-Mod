@@ -38,6 +38,8 @@ function GG.LusWatchWeaponReload(unitID, weaponNum)
 	if WatchFrames[reloadFrame] then
 		local index = #WatchFrames[reloadFrame] + 1
 		WatchFrames[reloadFrame][index] = {unitID = unitID, weaponNum = weaponNum}
+	else
+		WatchFrames[reloadFrame] = {[1] = {unitID = unitID, weaponNum = weaponNum}}
 	end
 end
 
