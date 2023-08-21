@@ -68,6 +68,14 @@ local function ApplyHighFrequencyBeamKit(modules, sharedData)
 	end
 end
 
+local function ApplyDisintegratorUpgrade(modules, sharedData)
+	if sharedData.weapon1 and sharedData.weapon1 == "commweapon_light_disintegrator" then
+		sharedData.weapon1 = "commweapon_disintegrator"
+	elseif sharedData.weapon2 and sharedData.weapon2 == "commweapon_light_disintegrator" then
+		sharedData.weapon2 = "commweapon_disintegrator"
+	end
+end
+
 local function ApplyHeavyOrdinance1(modules, sharedData)
 	local upgrade = {
 		["commweapon_artillery_heavy"] = "commweapon_artillery_heavy_nuclear",
@@ -222,6 +230,27 @@ local moduleDefs = {
 				sharedData.weapon1 = "commweapon_light_flamethrower"
 			else
 				sharedData.weapon2 = "commweapon_light_flamethrower"
+			end
+		end
+	},
+	{
+		name = "commweapon_light_disintegrator",
+		humanName = "Light Disintegrator Rifle",
+		description = "A light Disintegrator that deals damage as it passes through units. Similar to the Ultimatium's Disintegrator, but cannot pass through ground.",
+		image = moduleImagePath .. "commweapon_heatray.png",
+		limit = 2,
+		cost = 250 * COST_MULT,
+		requireChassis = {"strike"},
+		requireLevel = 1,
+		slotType = "basic_weapon",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.noMoreWeapons then
+				return
+			end
+			if not sharedData.weapon1 then
+				sharedData.weapon1 = "commweapon_light_disintegrator"
+			else
+				sharedData.weapon2 = "commweapon_light_disintegrator"
 			end
 		end
 	},
@@ -760,6 +789,19 @@ local moduleDefs = {
 		applicationFunction = ApplyHeavyOrdinance1
 	},
 	{
+		name = "module_heavydgun",
+		humanName = "Disintegrator Amplifier",
+		description = "Converts a single Light Disintegrator into its heavier counterpart.",
+		image = moduleImagePath .. "weaponmod_plasma_containment.png",
+		limit = 2,
+		cost = 1250 * COST_MULT,
+		requireChassis = {"strike"},
+		requireOneOf = {"commweapon_light_disintegrator"},
+		requireLevel = 10,
+		slotType = "module",
+		applicationFunction = ApplyDisintegratorUpgrade
+	},
+	{
 		name = "module_shotgunlaser",
 		humanName = "Beam Splitter",
 		description = "Splits LEO Lasers, creating a shotgun-like effect. Increases DPS up close in exchange for high spread.",
@@ -949,7 +991,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "commweapon_disintegrator.png",
 		limit = 1,
 		cost = 750 * COST_MULT,
-		requireChassis = {"strike", "knight"},
+		requireChassis = {"knight"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
 		applicationFunction = function (modules, sharedData)
