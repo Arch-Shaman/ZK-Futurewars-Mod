@@ -26,7 +26,11 @@ local WeaponDefOverrides = {}
 
 for i = 1, #WeaponDefs do
 	if WeaponDefs[i].customParams.allowedpitcherror or WeaponDefs[i].customParams.allowedheadingerror then
-		WeaponDefOverrides[i] = {heading = tonumber(WeaponDefs[i].customParams.allowedheadingerror) or allowedHeadingError, pitch = tonumber(WeaponDefs[i].customParams.allowedpitcherror) or allowedPitchError}
+		WeaponDefOverrides[i] = {
+			heading = tonumber(WeaponDefs[i].customParams.allowedheadingerror) or allowedHeadingError, 
+			pitch = tonumber(WeaponDefs[i].customParams.allowedpitcherror) or allowedPitchError, 
+			aimReset = tonumber(WeaponDefs[i].customParams.aimdelayresettime) or 60
+		}
 	end
 end
 
@@ -51,12 +55,14 @@ local function CallInAsUnit(unitID, trackProgress)
 	CallAsUnitIfExists(unitID, "OnTrackProgress", trackProgress)
 end
 
-local function isCloseEnough(heading1, heading2, pitch1, pitch2, weaponDefID)
+local function isCloseEnough(heading1, heading2, pitch1, pitch2, weaponDefID, lastAimFrame)
 	local headingerror = allowedHeadingError
 	local pitcherror = allowedPitchError
+	local aimTimeout = 60
 	if WeaponDefOverrides[weaponDefID] then
 		headingerror = WeaponDefOverrides[weaponDefID].heading
 		pitcherror = WeaponDefOverrides[weaponDefID].pitch
+		aimTimeout = WeaponDefOverrides[weaponDefID].aimReset
 	end
 	if (heading1 == false or heading2 == false or pitch1 == false or pitch2 == false) then
 		return false
@@ -69,7 +75,7 @@ local function isCloseEnough(heading1, heading2, pitch1, pitch2, weaponDefID)
 		--Spring.Echo("Pitch error: " .. abs(heading1 - heading2))
 		return false
 	end
-	return true
+	return frame - lastAimFrame <= aimTimeout
 end
 
 function GG.AimDelay_ForceWeaponRestart(unitID, weaponNum, delay)
@@ -85,18 +91,21 @@ function GG.AimDelay_AttemptToFire(unitID, weaponNum, heading, pitch, delay)
 		pitch = false,
 		delayedUntil = 0,
 		forcereset = false,
+		lastAimFrame = frame,
 	}
-	local weaponDelay = unitDelayedArray[unitID][weaponNum]
 	local weaponDefID = UnitDefs[Spring.GetUnitDefID(unitID)].weapons[weaponNum].weaponDef or 0
-	if (not isCloseEnough(weaponDelay.heading, heading, weaponDelay.pitch, pitch, weaponDefID)) or weaponDelay.forcereset then
+	local weaponDelay = unitDelayedArray[unitID][weaponNum]
+	if (not isCloseEnough(weaponDelay.heading, heading, weaponDelay.pitch, pitch, weaponDefID, weaponDelay.lastAimFrame)) or weaponDelay.forcereset then
 		unitDelayedArray[unitID][weaponNum].delayedUntil = frame + delay
 		unitDelayedArray[unitID][weaponNum].heading = heading
 		unitDelayedArray[unitID][weaponNum].pitch = pitch
 		unitDelayedArray[unitID][weaponNum].forcereset = false
+		unitDelayedArray[unitID][weaponNum].lastAimFrame = frame
 		spSetUnitRulesParam(unitID, "aimdelay", weaponDelay.delayedUntil, LOS_ACCESS) -- Tell LUAUI this unit is currently aiming!
 		return false
 	end
-	local delayTime = unitDelayedArray[unitID][weaponNum].delayUntil - frame
+	unitDelayedArray[unitID][weaponNum].lastAimFrame = frame
+	local delayTime = unitDelayedArray[unitID][weaponNum].delayedUntil - frame
 	--Spring.Echo("AttemptToFire: " .. unitID .. ": " .. weaponNum .. " (" ..  tostring(frame >= weaponDelay.delayedUntil) .. ")")
 	CallInAsUnit(unitID, 1 - (delayTime / delay))
 	return delayTime <= 0
