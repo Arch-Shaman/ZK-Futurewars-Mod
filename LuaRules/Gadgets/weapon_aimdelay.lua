@@ -37,6 +37,19 @@ local unitDelayedArray = {}
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local frame = -1
 
+local function CallAsUnitIfExists(unitID, funcName, ...)
+	local env = Spring.UnitScript.GetScriptEnv(unitID)
+	if not env then
+		return
+	end
+	if env and env[funcName] then
+		Spring.UnitScript.CallAsUnit(unitID, env[funcName], ...)
+	end
+end
+
+local function CallInAsUnit(unitID, trackProgress)
+	CallAsUnitIfExists(unitID, "OnTrackProgress", trackProgress)
+end
 
 local function isCloseEnough(heading1, heading2, pitch1, pitch2, weaponDefID)
 	local headingerror = allowedHeadingError
@@ -83,8 +96,10 @@ function GG.AimDelay_AttemptToFire(unitID, weaponNum, heading, pitch, delay)
 		spSetUnitRulesParam(unitID, "aimdelay", weaponDelay.delayedUntil, LOS_ACCESS) -- Tell LUAUI this unit is currently aiming!
 		return false
 	end
+	local delayTime = unitDelayedArray[unitID][weaponNum].delayUntil - frame
 	--Spring.Echo("AttemptToFire: " .. unitID .. ": " .. weaponNum .. " (" ..  tostring(frame >= weaponDelay.delayedUntil) .. ")")
-	return (frame >= weaponDelay.delayedUntil)
+	CallInAsUnit(unitID, 1 - (delayTime / delay))
+	return delayTime <= 0
 end
 
 function gadget:UnitDestroyed(unitID)
