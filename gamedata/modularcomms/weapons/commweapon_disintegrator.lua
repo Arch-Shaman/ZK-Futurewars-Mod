@@ -6,8 +6,8 @@ local weaponDef = {
 	avoidFriendly           = true,
 	avoidGround             = false,
 	avoidNeutral            = false,
-	craterBoost             = 0,
-	craterMult              = 0,
+	craterBoost             = 6,
+	craterMult              = 6,
 	cegtag					= "dgun_trail",
 
 	customParams            = {
@@ -17,7 +17,6 @@ local weaponDef = {
 		reaim_time = 1,
 		antibaitbypass = "ärsytät minua",
 		mass = 600.5,
-		groundnoexplode = 1,
 	},
 
 	damage                  = {
