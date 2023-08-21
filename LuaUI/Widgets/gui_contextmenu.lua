@@ -1857,7 +1857,8 @@ local function printAbilities(ud, unitID, isFeature)
 		cells[#cells+1] = ' - ' .. localization.rearm_pads .. ':'
 		cells[#cells+1] = cp.pad_count
 		cells[#cells+1] = ' - ' .. localization.pad_bp .. ':'
-		cells[#cells+1] = tonumber(cp.pad_bp) / tonumber(cp.pad_count) -- Future Wars mechanic! Remove the dividend for base game!
+		local bp = tonumber(cp.pad_bp) or 2.5
+		cells[#cells+1] = numformat(bp / tonumber(cp.pad_count), 1) -- Future Wars mechanic! Remove the dividend for base game!
 		cells[#cells+1] = ''
 		cells[#cells+1] = ''
 	end
