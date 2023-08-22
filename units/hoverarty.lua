@@ -59,6 +59,7 @@ local unitDef = {
 		{
 			def                = "TRACKER",
 			badTargetCategory  = "FIXEDWING GUNSHIP",
+			slaveTo			   = 1,
 			onlyTargetCategory = "SWIM LAND SHIP SINK TURRET FLOAT GUNSHIP FIXEDWING HOVER",
 		},
 	},
@@ -129,6 +130,7 @@ local unitDef = {
 				allowedpitcherror = 0.8,
 				allowedheadingerror = 0.8,
 				armorpiercing = 0.2,
+				aimdelayresettime = 6,
 			},
 			damage                  = {
 				default = 6000.1,
