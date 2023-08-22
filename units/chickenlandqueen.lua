@@ -14,12 +14,15 @@ return { chickenlandqueen = {
 	cantBeTransported      = true,
 	category               = [[LAND]],
 	collisionSphereScale   = 1,
-	collisionVolumeOffsets = [[0 0 45]],
-	collisionVolumeScales  = [[138 330 360]],
-	collisionVolumeType    = [[box]],
+	collisionVolumeOffsets = [[0 160 30]],
+	collisionVolumeScales  = [[175 175 520]],
+	collisionVolumeType    = [[cylZ]],
 
 	customParams           = {
 		selection_scale       = 2,
+		
+		aimposoffset   = "0 160 30",
+		modelradius = 200,
 
 		outline_x = 400,
 		outline_y = 400,
@@ -33,11 +36,11 @@ return { chickenlandqueen = {
 	idleAutoHeal           = 200,
 	idleTime               = 300,
 	leaveTracks            = true,
-	maxDamage              = 2000000,
+	maxDamage              = 1200000,
 	maxVelocity            = 2.5,
 	metalCost              = 0,
 	energyCost             = 0,
-	buildTime              = 400000,
+	buildTime              = 240000,
 	minCloakDistance       = 250,
 	movementClass          = [[TKBOT4]],
 	noAutoFire             = false,
@@ -69,61 +72,47 @@ return { chickenlandqueen = {
 	workerTime             = 0,
 
 	weapons                = {
-
-		{
-			def                = [[MELEE]],
-			mainDir            = [[0 0 1]],
-			maxAngleDif        = 150,
-			onlyTargetCategory = [[SWIM LAND SUB SINK TURRET FLOAT SHIP HOVER]],
-		},
-
-
 		{
 			def                = [[FIREGOO]],
 			mainDir            = [[0 0 1]],
 			maxAngleDif        = 150,
 			onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 		},
-
-
 		{
 			def                = [[SPORES]],
 			onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 		},
-
-
 		{
 			def                = [[SPORES]],
 			onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 		},
-
-
 		{
 			def                = [[SPORES]],
 			onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 		},
-
-
-		{
-			def                = [[QUEENCRUSH]],
-			onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
-		},
-		
 		{
 			def                = [[DODOBOMB]],
 			onlyTargetCategory = [[NONE]],
 		},
-
-
 		{
 			def                = [[BASILISKBOMB]],
 			onlyTargetCategory = [[NONE]],
 		},
-
-
 		{
 			def                = [[TIAMATBOMB]],
 			onlyTargetCategory = [[NONE]],
+		},
+		{
+			def                = [[AEROSPORES]],
+			onlyTargetCategory = [[FIXEDWING GUNSHIP]],
+		},
+		{
+			def                = [[AEROSPORES]],
+			onlyTargetCategory = [[FIXEDWING GUNSHIP]],
+		},
+		{
+			def                = [[AEROSPORES]],
+			onlyTargetCategory = [[FIXEDWING GUNSHIP]],
 		},
 	},
 
@@ -258,13 +247,12 @@ return { chickenlandqueen = {
 			weaponType              = [[AircraftBomb]],
 			weaponVelocity          = 200,
 		},
-		
 		FIREGOO    = {
 			name                    = [[Napalm Goo]],
 			areaOfEffect            = 256,
 			burst                   = 8,
 			burstrate               = 0.033,
-			projectiles             = 13,
+			projectiles             = 8,
 			cegTag                  = [[queen_trail_fire]],
 			
 			customParams            = {
@@ -276,8 +264,8 @@ return { chickenlandqueen = {
 			craterMult              = 0,
 
 			damage                  = {
-				default = 1000,
-				planes  = 1000,
+				default = 300,
+				planes  = 300,
 			},
 
 			explosionGenerator      = [[custom:napalm_koda]],
@@ -301,105 +289,81 @@ return { chickenlandqueen = {
 			weaponType              = [[Cannon]],
 			weaponVelocity          = 720,
 		},
-
-
-		MELEE      = {
-			name                    = [[Chicken Claws]],
-			areaOfEffect            = 32,
-			craterBoost             = 1,
-			craterMult              = 0,
-			
-			customParams        = {
-				armorpiercing = 1,
-			},
-
-			damage                  = {
-				default = 100000,
-				planes  = 100000,
-			},
-
-			explosionGenerator      = [[custom:NONE]],
-			impulseBoost            = 0,
-			impulseFactor           = 1,
-			interceptedByShieldType = 0,
-			noSelfDamage            = true,
-			range                   = 240,
-			reloadtime              = 1,
-			size                    = 0,
-			soundStart              = [[chickens/bigchickenbreath]],
-			targetborder            = 1,
-			tolerance               = 5000,
-			turret                  = true,
-			waterWeapon             = true,
-			weaponType              = [[Cannon]],
-			weaponVelocity          = 600,
-		},
-
-
-		QUEENCRUSH = {
-			name                    = [[Chicken Kick]],
-			areaOfEffect            = 400,
-			collideFriendly         = false,
-			craterBoost             = 0.001,
-			craterMult              = 0.002,
-
-			customParams           = {
-				lups_noshockwave = "1",
-				armorpiercing = 1,
-			},
-			
-			
-			damage                  = {
-				default    = 200,
-				chicken    = 0.001,
-				planes     = 200,
-			},
-
-			edgeEffectiveness       = 1,
-			explosionGenerator      = [[custom:NONE]],
-			impulseBoost            = 500,
-			impulseFactor           = 1,
-			intensity               = 1,
-			interceptedByShieldType = 1,
-			noSelfDamage            = true,
-			range                   = 512,
-			reloadtime              = 1,
-			rgbColor                = [[1 1 1]],
-			thickness               = 1,
-			tolerance               = 100,
-			turret                  = true,
-			weaponType              = [[Cannon]],
-			weaponVelocity          = 0.8,
-		},
-
-
-		SPORES     = {
-			name                    = [[Spores]],
-			areaOfEffect            = 24,
+		AEROSPORES  = {
+			name                    = [[Anti-Air Spores]],
+			areaOfEffect            = 200,
 			avoidFriendly           = false,
-			burst                   = 80,
-			burstrate               = 0.1,
+			burst                   = 16,
+			burstrate               = 1/30,
+			canAttackGround         = false,
 			collideFriendly         = false,
 			craterBoost             = 0,
 			craterMult              = 0,
 			
 			customParams            = {
 				light_radius = 0,
-				armorpiercing = 0.3,
+				armorpiercing = 0.4,
 			},
-
+			
 			damage                  = {
-				default = 100,
-				planes  = 100,
+				default = 250/20,
+				planes  = 250,
 			},
 
-			dance                   = 80,
-			explosionGenerator      = [[custom:NONE]],
+			dance                   = 120,
+			explosionGenerator      = [[custom:large_green_goo]],
 			fireStarter             = 0,
+			fixedlauncher           = 1,
 			flightTime              = 5,
 			groundbounce            = 1,
 			heightmod               = 0.5,
-			impactOnly              = true,
+			impulseBoost            = 0,
+			impulseFactor           = 0.4,
+			interceptedByShieldType = 2,
+			model                   = [[chickeneggblue.s3o]],
+			noSelfDamage            = true,
+			range                   = 1400,
+			reloadtime              = 2,
+			smokeTrail              = true,
+			startVelocity           = 50,
+			texture1                = [[]],
+			texture2                = [[sporetrailblue]],
+			tolerance               = 10000,
+			tracks                  = true,
+			turnRate                = 72000,
+			turret                  = true,
+			waterweapon             = true,
+			weaponAcceleration      = 400,
+			weaponType              = [[MissileLauncher]],
+			weaponVelocity          = 2000,
+			wobble                  = 96000,
+		},
+		SPORES       = {
+			name                    = [[Spores]],
+			areaOfEffect            = 96,
+			avoidFriendly           = false,
+			burst                   = 16,
+			burstrate               = 2/30,
+			collideFriendly         = false,
+			craterBoost             = 0,
+			craterMult              = 0,
+			
+			customParams            = {
+				light_radius = 0,
+				armorpiercing = 0.4,
+			},
+
+			damage                  = {
+				default = 750,
+			},
+
+			dance                   = 90,
+			explosionGenerator      = [[custom:green_goo]],
+			fireStarter             = 0,
+			fixedlauncher           = true,
+			flightTime              = 5,
+			groundbounce            = 1,
+			heightmod               = 0.5,
 			impulseBoost            = 0,
 			impulseFactor           = 0.4,
 			interceptedByShieldType = 2,
@@ -407,9 +371,10 @@ return { chickenlandqueen = {
 			model                   = [[chickeneggpink.s3o]],
 			noSelfDamage            = true,
 			range                   = 1000,
-			reloadtime              = 4,
+			reloadtime              = 2,
 			smokeTrail              = true,
-			startVelocity           = 100,
+			sprayangle              = 4096,
+			startVelocity           = 50,
 			texture1                = [[]],
 			texture2                = [[sporetrail]],
 			tolerance               = 10000,
@@ -417,10 +382,10 @@ return { chickenlandqueen = {
 			turnRate                = 24000,
 			turret                  = true,
 			waterweapon             = true,
-			weaponAcceleration      = 100,
+			weaponAcceleration      = 200,
 			weaponType              = [[MissileLauncher]],
-			weaponVelocity          = 500,
-			wobble                  = 42000,
+			weaponVelocity          = 1000,
+			wobble                  = 48000,
 		},
 
 	},

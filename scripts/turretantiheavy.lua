@@ -180,7 +180,7 @@ function script.FireWeapon()
 	SetSignalMask(SIG_FIRING)
 	--EmitSfx(fire, 1024)
 	firing = true
-	turnrateMod = 2
+	turnrateMod = 10
 	firingTime = firingTime + 1
 	local d = (firingTime / 30 + 1) ^ 0.67
 	if d > 3 then

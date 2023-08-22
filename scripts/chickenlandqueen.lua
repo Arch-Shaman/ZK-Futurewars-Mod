@@ -62,9 +62,9 @@ local function DropDodoLoop()
 	while true do
 		local health, maxHealth = spGetUnitHealth(unitID)
 		if (health/maxHealth) < healthDodoDrop then
-			EmitSfx(tail, 2048+6)
+			EmitSfx(tail, 2048+4)
 		end
-		Sleep(600 / malus)
+		Sleep(1500 / malus)
 	end
 end
 
@@ -72,11 +72,11 @@ local function DropBasiliskLoop()
 	while true do
 		local health, maxHealth = spGetUnitHealth(unitID)
 		 if (health/maxHealth) < healthTiamatDrop then
-			EmitSfx(tail, 2048+8)
+			EmitSfx(tail, 2048+6)
 		elseif (health/maxHealth) < healthBasiliskDrop then
-			EmitSfx(tail, 2048+7)
+			EmitSfx(tail, 2048+5)
 		end
-		Sleep(800 / malus)
+		Sleep(2000 / malus)
 	end
 end
 
@@ -216,16 +216,16 @@ end
 --weapons (in order): spikes, firegoo, spores (3)
 
 function script.AimFromWeapon(weaponNum)
-	if weaponNum == 1 or weaponNum == 2 then return firepoint
-	elseif weaponNum == 3 then return spore1
-	elseif weaponNum == 4 then return spore2
-	elseif weaponNum == 5 then return spore3
+	if weaponNum == 1 then return firepoint
+	elseif weaponNum == 2 or weaponNum == 8  then return spore1
+	elseif weaponNum == 3 or weaponNum == 9  then return spore2
+	elseif weaponNum == 4 or weaponNum == 10 then return spore3
 	--elseif weaponNum == 5 then return body
 	else return body end
 end
 
 function script.AimWeapon(weaponNum, heading, pitch)
-	if weaponNum == 1 or weaponNum == 2 then
+	if weaponNum == 1 then
 		Signal(SIG_Aim[weaponNum])
 		SetSignalMask(SIG_Aim[weaponNum])
 		Turn(head, y_axis, heading, math.rad(250))
@@ -238,41 +238,44 @@ function script.AimWeapon(weaponNum, heading, pitch)
 	elseif weaponNum == 5 then
 		local health, maxHealth = spGetUnitHealth(unitID)
 		if (health/maxHealth) < healthSpore3 then return true end
-	elseif weaponNum >= 3 and weaponNum <= 5 then return true
+	elseif (weaponNum >= 2 and weaponNum <= 4) or (weaponNum >= 8 and weaponNum <= 10) then return true
 	else return false
 	end
 end
 
 function script.QueryWeapon(weaponNum)
-	if weaponNum == 1 or weaponNum == 2 then return firepoint
-	elseif weaponNum == 3 then return spore1
-	elseif weaponNum == 4 then return spore2
-	elseif weaponNum == 5 then return spore3
+	if weaponNum == 1 then return firepoint
+	elseif weaponNum == 2 or weaponNum == 8  then return spore1
+	elseif weaponNum == 3 or weaponNum == 9  then return spore2
+	elseif weaponNum == 4 or weaponNum == 10 then return spore3
 	--elseif weaponNum == 5 then
 	--	if feet then return leftFoot
 	--	else return rightFoot end
 	else return body end
 end
 
-local function JawAnim()
-	jawNum = jawNum + 1
-	if jawNum == 3 then jawNum = 1 end
-	local num = jawNum
-	local num2 = jawNum + 2
-	Turn(jaws[num].forearm, y_axis, -(jaws[num].angle), bladeExtendSpeed)
-	Turn(jaws[num].blade, y_axis, jaws[num].angle, bladeExtendSpeed)
-	Turn(jaws[num2].forearm, y_axis, -(jaws[num2].angle), bladeExtendSpeed)
-	Turn(jaws[num2].blade, y_axis, jaws[num2].angle, bladeExtendSpeed)
-	Sleep(600)
-	Turn(jaws[num2].forearm, y_axis, 0, bladeExtendSpeed)
-	Turn(jaws[num2].blade, y_axis, 0, bladeExtendSpeed)
-	Turn(jaws[num].forearm, y_axis, 0, bladeExtendSpeed)
-	Turn(jaws[num].blade, y_axis, 0, bladeExtendSpeed)
-end
-
-function script.Shot(weaponNum)
+function script.FireWeapon(weaponNum)
 	if weaponNum == 1 then
-		StartThread(JawAnim)
+		Turn(lforearmu, y_axis, -bladeAngle, bladeExtendSpeed)
+		Turn(lbladeu, y_axis, bladeAngle, bladeExtendSpeed)
+		Turn(lforearml, y_axis, -bladeAngle, bladeExtendSpeed)
+		Turn(lbladel, y_axis, bladeAngle, bladeExtendSpeed)
+		Turn(rforearmu, y_axis, bladeAngle, bladeExtendSpeed)
+		Turn(rbladeu, y_axis, -bladeAngle, bladeExtendSpeed)
+		Turn(rforearml, y_axis, bladeAngle, bladeExtendSpeed)
+		Turn(rbladel, y_axis, -bladeAngle, bladeExtendSpeed)
+		
+		Sleep(500)
+		
+		Turn(lforearmu, y_axis, 0, bladeRetractSpeed)
+		Turn(lbladeu, y_axis, 0, bladeRetractSpeed)
+		Turn(lforearml, y_axis, 0, bladeRetractSpeed)
+		Turn(lbladel, y_axis, 0, bladeRetractSpeed)
+		Turn(rforearmu, y_axis, 0, bladeRetractSpeed)
+		Turn(rbladeu, y_axis, 0, bladeRetractSpeed)
+		Turn(rforearml, y_axis, 0, bladeRetractSpeed)
+		Turn(rbladel, y_axis, 0, bladeRetractSpeed)
+		--WaitForTurn(lbladeu, y_axis)
 	end
 	return true
 end

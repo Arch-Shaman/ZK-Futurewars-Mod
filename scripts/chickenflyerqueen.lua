@@ -95,13 +95,13 @@ local function DropDodoLoop()
 			else EmitSfx(rightFoot,2048+4) end
 			feet = not feet
 		end
-		Sleep(150 / malus)
+		Sleep(500 / malus)
 		if (health/maxHealth) < healthDodo2Drop then
 			if (feet) then EmitSfx(leftFoot,2048+4)
 			else EmitSfx(rightFoot,2048+4) end
 			feet = not feet
 		end
-		Sleep(450 / malus)
+		Sleep(1000 / malus)
 	end
 end
 
@@ -113,7 +113,7 @@ local function DropBasiliskLoop()
 		elseif (health/maxHealth) < healthBasiliskDrop then
 			EmitSfx(body,2048+5)
 		end
-		Sleep(800 / malus)
+		Sleep(2000 / malus)
 	end
 end
 
@@ -165,9 +165,9 @@ end
 
 function script.AimFromWeapon(weaponNum)
 	if weaponNum == 1 then return firepoint
-	elseif weaponNum == 2 then return spore1
-	elseif weaponNum == 3 then return spore2
-	elseif weaponNum == 4 then return spore3
+	elseif weaponNum == 2 or weaponNum == 8  then return spore1
+	elseif weaponNum == 3 or weaponNum == 9  then return spore2
+	elseif weaponNum == 4 or weaponNum == 10 then return spore3
 	--elseif weaponNum == 5 then return body
 	else return body end
 end
@@ -186,16 +186,16 @@ function script.AimWeapon(weaponNum, heading, pitch)
 	elseif weaponNum == 4 then
 		local health, maxHealth = spGetUnitHealth(unitID)
 		if (health/maxHealth) < healthSpore3 then return true end
-	elseif weaponNum >= 2 and weaponNum <= 4 then return true
+	elseif (weaponNum >= 2 and weaponNum <= 4) or (weaponNum >= 8 and weaponNum <= 10) then return true
 	else return false
 	end
 end
 
 function script.QueryWeapon(weaponNum)
 	if weaponNum == 1 then return firepoint
-	elseif weaponNum == 2 then return spore1
-	elseif weaponNum == 3 then return spore2
-	elseif weaponNum == 4 then return spore3
+	elseif weaponNum == 2 or weaponNum == 8  then return spore1
+	elseif weaponNum == 3 or weaponNum == 9  then return spore2
+	elseif weaponNum == 4 or weaponNum == 10 then return spore3
 	--elseif weaponNum == 5 then
 	--	if feet then return leftFoot
 	--	else return rightFoot end

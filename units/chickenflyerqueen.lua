@@ -15,10 +15,17 @@ return { chickenflyerqueen = {
 	canSubmerge         = false,
 	category            = [[GUNSHIP]],
 	collide             = false,
-	cruiseAlt           = 150,
+	cruiseAlt           = 200,
+	collisionSphereScale   = 1,
+	collisionVolumeOffsets = [[0 160 30]],
+	collisionVolumeScales  = [[175 175 520]],
+	collisionVolumeType    = [[cylZ]],
 
 	customParams        = {
 		statsname = "chickenlandqueen",
+		
+		aimposoffset   = "0 160 30",
+		modelradius = 200,
 
 		outline_x = 1200,
 		outline_y = 1200,
@@ -35,12 +42,12 @@ return { chickenflyerqueen = {
 	idleTime            = 300,
 	leaveTracks         = true,
 	maneuverleashlength = [[64000]],
-	maxDamage           = 1500000,
+	maxDamage           = 1600000,
 	maxSlope            = 36,
 	maxVelocity         = 3,
 	metalCost           = 0,
 	energyCost          = 0,
-	buildTime           = 400000,
+	buildTime           = 240000,
 	minCloakDistance    = 250,
 	noAutoFire          = false,
 	noChaseCategory     = [[TERRAFORM FIXEDWING SATELLITE GUNSHIP STUPIDTARGET MINE]],
@@ -73,43 +80,42 @@ return { chickenflyerqueen = {
 			maxAngleDif        = 120,
 			onlyTargetCategory = [[LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 		},
-
-
 		{
 			def                = [[SPORES]],
 			onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 		},
-
-
 		{
 			def                = [[SPORES]],
 			onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 		},
-
-
 		{
 			def                = [[SPORES]],
 			onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
 		},
-
-
 		{
 			def                = [[DODOBOMB]],
 			onlyTargetCategory = [[NONE]],
 		},
-
-
 		{
 			def                = [[BASILISKBOMB]],
 			onlyTargetCategory = [[NONE]],
 		},
-
-
 		{
 			def                = [[TIAMATBOMB]],
 			onlyTargetCategory = [[NONE]],
 		},
-
+		{
+			def                = [[AEROSPORES]],
+			onlyTargetCategory = [[FIXEDWING GUNSHIP]],
+		},
+		{
+			def                = [[AEROSPORES]],
+			onlyTargetCategory = [[FIXEDWING GUNSHIP]],
+		},
+		{
+			def                = [[AEROSPORES]],
+			onlyTargetCategory = [[FIXEDWING GUNSHIP]],
+		},
 	},
 
 
@@ -156,8 +162,6 @@ return { chickenflyerqueen = {
 			weaponType              = [[AircraftBomb]],
 			weaponVelocity          = 200,
 		},
-
-
 		DODOBOMB     = {
 			name                    = [[Dodo Bomb]],
 			accuracy                = 60000,
@@ -200,26 +204,24 @@ return { chickenflyerqueen = {
 			weaponType              = [[AircraftBomb]],
 			weaponVelocity          = 200,
 		},
-
-
 		GOO          = {
 			name                    = [[Blob]],
 			areaOfEffect            = 200,
 			burst                   = 8,
 			burstrate               = 0.033,
-			projectiles             = 12,
+			projectiles             = 8,
 			cegTag                  = [[queen_trail]],
 			craterBoost             = 0,
 			craterMult              = 0,
 						
 			customParams            = {
 				light_radius = 0,
-				armorpiercing = 0.15,
+				armorpiercing = 0.2,
 			},
 						
 			damage                  = {
-				default = 1500,
-				planes  = 1500,
+				default = 750,
+				planes  = 750,
 			},
 
 			explosionGenerator      = [[custom:large_green_goo]],
@@ -229,8 +231,8 @@ return { chickenflyerqueen = {
 			interceptedByShieldType = 1,
 			noSelfDamage            = true,
 			proximityPriority       = -4,
-			range                   = 720,
-			reloadtime              = 4,
+			range                   = 1000,
+			reloadtime              = 6,
 			rgbColor                = [[0.2 0.6 0]],
 			size                    = 8,
 			sizeDecay               = 0,
@@ -240,32 +242,78 @@ return { chickenflyerqueen = {
 			turret                  = true,
 			weaponType              = [[Cannon]],
 			waterWeapon             = true,
-			weaponVelocity          = 720,
+			weaponVelocity          = 600,
 		},
-
-
-		SPORES       = {
-			name                    = [[Spores]],
-			areaOfEffect            = 96,
+		AEROSPORES  = {
+			name                    = [[Anti-Air Spores]],
+			areaOfEffect            = 200,
 			avoidFriendly           = false,
-			burst                   = 80,
-			burstrate               = 0.1,
+			burst                   = 16,
+			burstrate               = 1/30,
+			canAttackGround         = false,
 			collideFriendly         = false,
 			craterBoost             = 0,
 			craterMult              = 0,
 			
 			customParams            = {
 				light_radius = 0,
-				armorpiercing = 0.3,
+				armorpiercing = 0.4,
+			},
+			
+			damage                  = {
+				default = 250/20,
+				planes  = 250,
+			},
+
+			dance                   = 120,
+			explosionGenerator      = [[custom:large_green_goo]],
+			fireStarter             = 0,
+			fixedlauncher           = 1,
+			flightTime              = 5,
+			groundbounce            = 1,
+			heightmod               = 0.5,
+			impulseBoost            = 0,
+			impulseFactor           = 0.4,
+			interceptedByShieldType = 2,
+			model                   = [[chickeneggblue.s3o]],
+			noSelfDamage            = true,
+			range                   = 1400,
+			reloadtime              = 2,
+			smokeTrail              = true,
+			startVelocity           = 50,
+			texture1                = [[]],
+			texture2                = [[sporetrailblue]],
+			tolerance               = 10000,
+			tracks                  = true,
+			turnRate                = 72000,
+			turret                  = true,
+			waterweapon             = true,
+			weaponAcceleration      = 400,
+			weaponType              = [[MissileLauncher]],
+			weaponVelocity          = 2000,
+			wobble                  = 96000,
+		},
+		SPORES       = {
+			name                    = [[Spores]],
+			areaOfEffect            = 96,
+			avoidFriendly           = false,
+			burst                   = 16,
+			burstrate               = 2/30,
+			collideFriendly         = false,
+			craterBoost             = 0,
+			craterMult              = 0,
+			
+			customParams            = {
+				light_radius = 0,
+				armorpiercing = 0.4,
 			},
 
 			damage                  = {
 				default = 75,
-				planes  = 75,
 			},
 
-			dance                   = 80,
-			explosionGenerator      = [[custom:NONE]],
+			dance                   = 90,
+			explosionGenerator      = [[custom:green_goo]],
 			fireStarter             = 0,
 			fixedlauncher           = true,
 			flightTime              = 5,
@@ -277,11 +325,11 @@ return { chickenflyerqueen = {
 			metalpershot            = 0,
 			model                   = [[chickeneggpink.s3o]],
 			noSelfDamage            = true,
-			range                   = 1040,
-			reloadtime              = 4,
+			range                   = 1000,
+			reloadtime              = 2,
 			smokeTrail              = true,
 			sprayangle              = 4096,
-			startVelocity           = 200,
+			startVelocity           = 50,
 			texture1                = [[]],
 			texture2                = [[sporetrail]],
 			tolerance               = 10000,
@@ -289,13 +337,11 @@ return { chickenflyerqueen = {
 			turnRate                = 24000,
 			turret                  = true,
 			waterweapon             = true,
-			weaponAcceleration      = 100,
+			weaponAcceleration      = 200,
 			weaponType              = [[MissileLauncher]],
-			weaponVelocity          = 600,
-			wobble                  = 42000,
+			weaponVelocity          = 1000,
+			wobble                  = 48000,
 		},
-
-
 		TIAMATBOMB   = {
 			name                    = [[Tiamat Bomb]],
 			accuracy                = 60000,
