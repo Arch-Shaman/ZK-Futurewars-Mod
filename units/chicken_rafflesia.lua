@@ -60,6 +60,10 @@ return { chicken_rafflesia = {
 		SHIELD      = {
 			name                    = [[Shield]],
 			craterMult              = 0,
+			customParams = {
+				unlinked                = true,
+				shield_recharge_delay   = 30,
+			},
 
 			damage                  = {
 				default = 10,
@@ -75,7 +79,7 @@ return { chicken_rafflesia = {
 			shieldPower             = 50000,
 			shieldPowerRegen        = 1440,
 			shieldPowerRegenEnergy  = 0,
-			shieldRadius            = 2100,
+			shieldRadius            = 1400,
 			shieldRepulser          = false,
 			smartShield             = true,
 			visibleShield           = false,

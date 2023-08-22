@@ -15,18 +15,14 @@ function gadget:GetInfo()
 end
 
 local function CleanUpAI()
-	local allyTeam = Spring.GetAllyTeamList()
-	for i = 1, #allyTeam do
-		local ally = allyTeam[i]
-		local teamList = Spring.GetTeamList(ally)
-		for j = 1, #teamList do
-			local teamID = teamList[j]
-			local _, _, _, isAiTeam = Spring.GetTeamInfo(teamID)
-			if isAiTeam then
-				local numUnits = #Spring.GetTeamUnits(teamID)
-				if numUnits == 0 then
-					GG.ResignTeam(teamID)
-				end
+	teams = Spring.GetTeamList()
+	for _, teamID in pairs(teams) do
+		local _, teamLuaAI, _, isAiTeam = Spring.GetTeamInfo(teamID)
+		if isAiTeam and not (teamLuaAI and string.find(string.lower(teamLuaAI), "chicken")) then
+			local numUnits = #Spring.GetTeamUnits(teamID)
+			if numUnits == 0 then
+				print("Resigning Team: "..teamID)
+				GG.ResignTeam(teamID)
 			end
 		end
 	end

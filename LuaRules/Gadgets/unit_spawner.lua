@@ -131,6 +131,8 @@ do -- load config file
 	chunk()
 end
 
+echo("burrowName: "..burrowName)
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --
@@ -160,19 +162,15 @@ end
 -- Teams
 --
 
-for i, v in ipairs(modes) do -- make it bi-directional
-	modes[v] = i
-end
-
-
-local function CompareDifficulty(...)
-	level = 1
-	for _, difficulty in ipairs{...} do
-		if (modes[difficulty] > level) then
-			level = modes[difficulty]
+local function getDifficaulty(str)
+	local i
+	for i=1, #modes do
+		echo("checking", modes[i], string.find(str, modes[i]))
+		if string.find(str, modes[i]) then
+			return i
 		end
 	end
-	return modes[level]
+	return 0
 end
 
 
@@ -187,7 +185,7 @@ else
 	-- the problem is with human controlled chickens, otherwise it counts them as robot-players and difficulty increases very much
 	-- probably, ideally this needs to be taught to differentiate between human chickens and human robots...
 	for _, teamID in pairs(teams) do
-		local teamLuaAI = Spring.GetTeamLuaAI(teamID)
+		local _, teamLuaAI = Spring.GetAIInfo(teamID)
 		if teamLuaAI and string.find(string.lower(teamLuaAI), "chicken") then
 			lastChickenTeam = teamID
 			--break
@@ -195,13 +193,18 @@ else
 	end
 	local highestLevel = 0
 	for _, teamID in pairs(teams) do
-		local teamLuaAI = Spring.GetTeamLuaAI(teamID)
+		local _, teamLuaAI = Spring.GetAIInfo(teamID)
+		echo("AI:", teamLuaAI)
 		-- check only for chicken AI teams
-		if (teamLuaAI and teamLuaAI ~= "" and modes[teamLuaAI]) then
-			luaAI = teamLuaAI
-			highestLevel = CompareDifficulty(teamLuaAI, highestLevel)
-			chickenTeamID = teamID
-			computerTeams[teamID] = true
+		if (teamLuaAI and teamLuaAI ~= "" and string.find(string.lower(teamLuaAI), "chicken")) then
+			local difficulty = getDifficaulty(teamLuaAI)
+			echo("diff:", difficulty)
+			if difficulty > 0 then
+				luaAI = math.max(difficulty, (luaAI or 0))
+				chickenTeamID = teamID
+				echo("chickenTeamID", chickenTeamID)
+				computerTeams[teamID] = true
+			end
 		elseif lastChickenTeam and Spring.AreTeamsAllied(teamID,lastChickenTeam) then
 			computerTeams[teamID] = true -- count as computer
 		else --if not (chickenTeamID and Spring.AreTeamsAllied(teamID, chickenTeamID))
@@ -212,7 +215,6 @@ else
 	if chickenTeamID then
 		Spring.SetGameRulesParam("chickenTeamID", chickenTeamID)
 	end
-	luaAI = highestLevel
 end
 
 local gaiaTeamID = Spring.GetGaiaTeamID()
@@ -229,7 +231,7 @@ for i=1, #humanTeamsOrdered do
 	end
 end
 
-if (luaAI == 0) then
+if (not luaAI) or (luaAI == 0) then
 	return false	-- nothing to do here, go home
 end
 
@@ -248,7 +250,7 @@ local function SetGlobals(difficulty)
 	gadget.difficulties = nil
 end
 
-SetGlobals(luaAI or defaultDifficulty) -- set difficulty
+SetGlobals(modes[luaAI]) -- set difficulty
 
 -- adjust for player and chicken bot count
 local playerCount = SetCount(humanTeams)
@@ -261,9 +263,9 @@ defensePerWave	= defensePerWave*playerCount
 
 echo("Chicken configured for "..playerCount.." players")
 
-burrowSpawnRate = burrowSpawnRate/(malus*0.8 + 0.2)/SetCount(computerTeams)
-gracePeriod = math.max(gracePeriod - gracePenalty*(playerCount - 1), gracePeriodMin)
---humanAggroDecay = humanAggroDecay/playerCount
+--burrowSpawnRate = burrowSpawnRate/(malus*0.8 + 0.2)/SetCount(computerTeams)
+--gracePeriod = math.max(gracePeriod - gracePenalty*(playerCount - 1), gracePeriodMin)
+humanAggroDecay = humanAggroDecay/playerCount
 
 local function DisableBuildButtons(unitID, buildNames)
 	for _, unitName in ipairs(buildNames) do
@@ -294,7 +296,7 @@ local baseQueenTime = queenTime
 data.queenTime = queenTime
 
 
-local difficulty = modes[luaAI or defaultDifficulty]
+local difficulty = luaAI
 
 --if tobool(Spring.GetModOptions().burrowrespawn) or forceBurrowRespawn then respawnBurrows = true end
 
@@ -664,6 +666,7 @@ local function SpawnSupport(burrowID, support, number, force)
 end
 
 local function SpawnBurrow(number, loc, burrowLevel)
+	echo("spawnburrow pt1")
 	if (data.victory or data.endgame) then return end
 	if Spring.IsGameOver() then return end
 	
@@ -713,7 +716,9 @@ local function SpawnBurrow(number, loc, burrowLevel)
 			until (blocking == 2 or tries > maxTriesSmall)
 		end
 
-		unitID = spCreateUnit(burrowName, x, y, z, "n", chickenTeamID)
+		echo("spawnburrow pt2", UnitDefNames[burrowName].id, x, y, z, "n", chickenTeamID)
+		unitID = spCreateUnit(UnitDefNames[burrowName].id, x, y, z, "n", chickenTeamID)
+		echo("spawnburrow pt3", unitID)
 		-- handled in UnitCreated()
 		--data.burrows[unitID] = {targetID = unitID, targetDistance = 100000}
 		--UpdateBurrowTarget(unitID, nil)
@@ -1089,6 +1094,9 @@ function gadget:GameStart()
 end
 
 function gadget:GameFrame(n)
+	if n < 10 then
+		SpawnBurrow()
+	end
 	--if ((n+19 - gracePeriod*30) % (30 * chickenSpawnRate) < 0.1) and (n - gracePeriod*30 > 0) then
 	--if data.waveSchedule[n] then
 	if n > data.waveSchedule then
@@ -1112,8 +1120,10 @@ function gadget:GameFrame(n)
 
 		local timeSinceLastSpawn = t - data.timeOfLastSpawn
 		local burrowSpawnTime = burrowSpawnRate*0.25*(burrowCount+1)
-		
-		if (burrowSpawnTime < timeSinceLastSpawn and burrowCount < maxBurrows) then
+
+		echo("gameframe pt3", burrowSpawnTime, timeSinceLastSpawn, burrowCount, maxBurrows)
+		if (burrowSpawnTime < timeSinceLastSpawn) and (burrowCount < maxBurrows) then
+			echo("spawning burrow")
 			SpawnBurrow()
 			data.timeOfLastSpawn = t
 			_G.chickenEventArgs = {type="burrowSpawn"}

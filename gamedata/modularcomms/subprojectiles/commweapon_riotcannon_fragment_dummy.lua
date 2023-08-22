@@ -11,7 +11,7 @@ weaponDef = {
 	customParams              = {
 		projectile1 = "commweapon_clustergrenade_fragment",
 		noairburst = "I belive I can fly...",
-		timeddeploy = 20,
+		timeddeploy = 12,
 		commsubmunition = 1,
 		--lups_heat_fx = [[firewalker]],
 		light_camera_height = 2500,
@@ -22,8 +22,6 @@ weaponDef = {
 	damage                  = {
 		default = 0,
 	},
-	--model                   = [[diskball.s3o]],
-	explosionGenerator      = [[custom:mineboom]],
 	firestarter             = 180,
 	impulseBoost            = 0,
 	impulseFactor           = 0.4,
