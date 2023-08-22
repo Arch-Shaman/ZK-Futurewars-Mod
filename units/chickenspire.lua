@@ -74,12 +74,12 @@ return { chickenspire = {
 	weaponDefs                    = {
 		SLAMSPORE = {
 			name                    = [[Slammer Spore]],
-			areaOfEffect            = 160,
+			areaOfEffect            = 200,
 			avoidFriendly           = false,
 			collideFriendly         = false,
 			burst                   = 10,
 			burstrate               = 0.033,
-			projectiles             = 8,
+			projectiles             = 2,
 			craterBoost             = 1,
 			craterMult              = 2,
 						
@@ -97,7 +97,7 @@ return { chickenspire = {
 			},
 
 			damage                  = {
-				default = 1000,
+				default = 3000,
 			},
 
 			dance                   = 40,
