@@ -15,7 +15,7 @@ function gadget:GetInfo()
 end
 
 local function CleanUpAI()
-	teams = Spring.GetTeamList()
+	local teams = Spring.GetTeamList()
 	for _, teamID in pairs(teams) do
 		local _, teamLuaAI, _, isAiTeam = Spring.GetTeamInfo(teamID)
 		if isAiTeam and not (teamLuaAI and string.find(string.lower(teamLuaAI), "chicken")) then
