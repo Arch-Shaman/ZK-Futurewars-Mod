@@ -545,7 +545,7 @@ function gadget:GameFrame(f)
 							Spring.GiveOrderToUnit(teleportiee, CMD.WAIT, {}, 0)
 							Spring.GiveOrderToUnit(teleportiee, CMD.WAIT, {}, 0)
 							Spring.GiveOrderToUnit(teleportiee, CMD.REMOVE, {cmdTag}, 0)
-							
+								
 							local cmdID = Spring.GetUnitCurrentCommand(teleportiee)
 							if not cmdID then
 								GG.Floating_StopMoving(teleportiee)
