@@ -109,7 +109,7 @@ end
 local function GetRandomizedDestination(weaponDefID, x, z)
 	local radius = config[weaponDefID].radius
 	if radius then
-		local distance = random(0, radius)
+		local distance = (1 - random()^2) * radius
 		local heading = rad(random(0, 360))
 		local fx = x + (distance * sin(heading))
 		local fz = z + (distance * cos(heading))
@@ -120,7 +120,7 @@ end
 local function GetRandomizedOffset(weaponDefID)
 	local radius = config[weaponDefID].radius
 	if radius then
-		local distance = random(0, radius)
+		local distance = (1 - random()^2) * radius
 		local heading = rad(random(0, 360))
 		local fx = (distance * sin(heading))
 		local fz = (distance * cos(heading))

@@ -69,8 +69,10 @@ local function IsUnitOnFire(unitID)
 end
 
 function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attackerWeaponDefID, defPriority)
-	if defPriority == nil or not unitStates[attackerID] or wantedWeaponDefs[attackerWeaponDefID] == nil then
-		return true, defPriority
+	if not wantedWeaponDefs[attackerWeaponDefID] then
+	end
+	if defPriority == nil then
+		return true, nil
 	end
 	local priority = defPriority
 	if unitStates[attackerID] and IsUnitOnFire(targetID) then

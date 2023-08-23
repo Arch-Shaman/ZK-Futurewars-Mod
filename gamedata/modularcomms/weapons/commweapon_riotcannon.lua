@@ -16,7 +16,7 @@ local weaponDef = {
 		reaim_time = 1,
 		numprojectiles1 = 9,
 		projectile1 = "commweapon_riotcannon_fragment_dummy",
-		vradius1 = "-2.55 , 4, -2.55, _, 14, _",
+		velspread1 = "2.55 , 4, 2.55, _, 10, _",
 		noairburst = "by your powers combined",
 		onexplode = "how can this fail",
 	},

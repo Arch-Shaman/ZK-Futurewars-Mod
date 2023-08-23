@@ -16,7 +16,7 @@ return {
 		canMove                = true,
 		canPatrol              = true,
 		canSubmerge            = false,
-		category               = "GUNSHIP",
+		category               = "GUNSHIP LOWFLYING",
 		collide                = true,
 		collisionVolumeOffsets = "0 0 5",
 		collisionVolumeScales  = "86 22 86",

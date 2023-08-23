@@ -38,7 +38,7 @@ return { dronefighter = {
   idleTime               = 90,
   maneuverleashlength    = [[400]],
   maxAcc                 = 0.7,
-  maxDamage              = 1080,
+  maxDamage              = 1440,
   maxVelocity            = 8,
   maxElevator            = 0.02,
   maxRudder              = 0.006,
@@ -90,7 +90,7 @@ return { dronefighter = {
       cylinderTargeting      = 1,
 
       damage                  = {
-        default = 25,
+        default = 33,
       },
 
       explosionGenerator      = [[custom:BEAMWEAPON_HIT_RED]],

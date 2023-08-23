@@ -55,7 +55,7 @@ return {
 		weapons							= {
 			{
 				def					= "ATA",
-				onlyTargetCategory	= "SWIM LAND SHIP SINK TURRET FLOAT HOVER",
+				onlyTargetCategory	= "SWIM LAND SHIP SINK TURRET FLOAT HOVER LOWFLYING",
 			},        
 			{
 				def					= "BOGUS_PHASER",
@@ -82,7 +82,7 @@ return {
 					stats_hide_reload = 1,
 					dmg_scaling = 1/30,
 					dmg_scaling_max = 10000,
-					dmg_scaling_keeptime = 4,
+					dmg_scaling_keeptime = 10,
 					dmg_scaling_falloff = 10000,
 					reload_override = 20,	
 					ceg_d_override = 2,

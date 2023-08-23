@@ -39,7 +39,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		maneuverleashlength = "1280",
-		maxDamage           = 3500,
+		maxDamage           = 5250,
 		maxVelocity         = 3.0,
 		minCloakDistance    = 75,
 		noAutoFire          = false,
@@ -92,7 +92,7 @@ return {
 					--light_ground_height = 120,
 				},
 				damage                  = {
-					default = 20.1, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
+					default = 35.1, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
 				},
 				explosionGenerator      = "custom:gauss_hit_m",
 				heightBoostFactor       = 0,
@@ -158,7 +158,7 @@ return {
 				noSelfDamage            = true,
 				projectiles             = 2,
 				range                   = 850,
-				reloadtime              = 7,
+				reloadtime              = 6,
 				smokeTrail              = false,
 				soundHit                = "weapon/missile/vlaunch_hit",
 				soundStart              = "weapon/missile/aurora_missile_fire",
