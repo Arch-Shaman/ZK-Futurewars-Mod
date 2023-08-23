@@ -24,11 +24,15 @@ local allowedHeadingError = 0.000001 -- to allow for micro-variations in heading
 local allowedPitchError = 0.01 -- to allow for cratering
 local WeaponDefOverrides = {}
 
+local abs = math.abs
+
 for i = 1, #WeaponDefs do
 	if WeaponDefs[i].customParams.allowedpitcherror or WeaponDefs[i].customParams.allowedheadingerror then
+		local headingError = tonumber(WeaponDefs[i].customParams.allowedheadingerror) or allowedHeadingError
+		local pitchError = tonumber(WeaponDefs[i].customParams.allowedpitcherror) or allowedPitchError
 		WeaponDefOverrides[i] = {
-			heading = tonumber(WeaponDefs[i].customParams.allowedheadingerror) or allowedHeadingError, 
-			pitch = tonumber(WeaponDefs[i].customParams.allowedpitcherror) or allowedPitchError, 
+			heading = math.rad(headingError), 
+			pitch = math.rad(pitchError), 
 			aimReset = tonumber(WeaponDefs[i].customParams.aimdelayresettime) or 60
 		}
 	end
@@ -55,6 +59,10 @@ local function CallInAsUnit(unitID, trackProgress)
 	CallAsUnitIfExists(unitID, "OnTrackProgress", trackProgress)
 end
 
+local function CalculateAngleDifference(angle1, angle2)
+	return 180 - abs(abs(angle1 - angle2) - 180)
+end
+
 local function isCloseEnough(heading1, heading2, pitch1, pitch2, weaponDefID, lastAimFrame)
 	local headingerror = allowedHeadingError
 	local pitcherror = allowedPitchError
@@ -64,18 +72,16 @@ local function isCloseEnough(heading1, heading2, pitch1, pitch2, weaponDefID, la
 		pitcherror = WeaponDefOverrides[weaponDefID].pitch
 		aimTimeout = WeaponDefOverrides[weaponDefID].aimReset
 	end
-	if (heading1 == false or heading2 == false or pitch1 == false or pitch2 == false) then
+	if not (heading1 and heading2 and pitch1 and pitch2) then
 		return false
 	end
-	if (abs(heading1 - heading2) > headingerror) then
-		--Spring.Echo("Heading error: " .. abs(heading1 - heading2))
+	if CalculateAngleDifference(heading1, heading2) > headingerror then
 		return false
-	end
-	if (abs(pitch1 - pitch2) > pitcherror) then
-		--Spring.Echo("Pitch error: " .. abs(heading1 - heading2))
+	elseif CalculateAngleDifference(pitch1, pitch2) > pitcherror then
 		return false
+	else
+		return frame - lastAimFrame <= aimTimeout
 	end
-	return frame - lastAimFrame <= aimTimeout
 end
 
 function GG.AimDelay_ForceWeaponRestart(unitID, weaponNum, delay)
