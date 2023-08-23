@@ -35,13 +35,13 @@ return {
 		objectName             = "tarantula.s3o",
 		script                 = "spideraa.lua",
 		selfDestructAs         = "BIG_UNITEX",
-		sightDistance          = 660,
+		sightDistance          = 900,
 		trackOffset            = 0,
 		trackStrength          = 10,
 		trackStretch           = 1,
 		trackType              = "ChickenTrackPointyShort",
 		trackWidth             = 55,
-		turnRate               = 2040,
+		turnRate               = 1125,
 		weapons                = {
 			{
 				def                = "AA",
@@ -51,6 +51,7 @@ return {
 			{
 				def                = "TRACKER",
 				badTargetCategory  = "FIXEDWING",
+				slaveTo			   = 1,
 				onlyTargetCategory = "GUNSHIP FIXEDWING",
 			},
 		},
@@ -76,6 +77,7 @@ return {
 					allowedpitcherror = 15,
 					allowedheadingerror = 45,
 					isaa = "1",
+					aimdelayresettime = 20,
 				},
 				damage                  = {
 					default = 2000.1,
