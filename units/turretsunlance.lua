@@ -52,12 +52,12 @@ return {
 		weapons                       = {
 			{
 				def                = "PLASMA",
-				badTargetCategory  = "MOBILE",
+				badTargetCategory  = "TOOFAST",
 				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER",
 			},
 			{
 				def                = "FAKE",
-				badTargetCategory  = "MOBILE",
+				badTargetCategory  = "TOOFAST",
 				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER",
 				slaveTo            = 1,
 			},
@@ -77,8 +77,8 @@ return {
 					burst = Shared.BURST_RELIABLE,
 					light_color = "3 2.33 1.5",
 					light_radius = 150,
-					allowedpitcherror = 0.25,
-					allowedheadingerror = 0.2,
+					allowedpitcherror = 14,
+					allowedheadingerror = 14,
 				},
 				damage                  = {
 					default = 1500.1,

@@ -1054,9 +1054,9 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				cells[#cells+1] = ' - ' .. localization.stats_aimtime ..  ':'
 				cells[#cells+1] = numformat(aimtime, 2) .. localization.acronyms_second
 				cells[#cells+1] = '\t* ' .. localization.stats_horizontal_deviation .. ':'
-				cells[#cells+1] = '±' .. numformat(math.deg(headingerror/2), 1) .. "°"
+				cells[#cells+1] = '±' .. numformat(headingerror/2, 1) .. "°"
 				cells[#cells+1] = '\t* ' .. localization.stats_vertical_deviation .. ':'
-				cells[#cells+1] = '±' .. numformat(math.deg(pitcherror/2), 1) .. "°"
+				cells[#cells+1] = '±' .. numformat(pitcherror/2, 1) .. "°"
 			end
 			
 			if show_dps and not bombletCount then
@@ -1857,7 +1857,8 @@ local function printAbilities(ud, unitID, isFeature)
 		cells[#cells+1] = ' - ' .. localization.rearm_pads .. ':'
 		cells[#cells+1] = cp.pad_count
 		cells[#cells+1] = ' - ' .. localization.pad_bp .. ':'
-		cells[#cells+1] = tonumber(cp.pad_bp) / tonumber(cp.pad_count) -- Future Wars mechanic! Remove the dividend for base game!
+		local bp = tonumber(cp.pad_bp) or 2.5
+		cells[#cells+1] = numformat(bp / tonumber(cp.pad_count), 1) -- Future Wars mechanic! Remove the dividend for base game!
 		cells[#cells+1] = ''
 		cells[#cells+1] = ''
 	end

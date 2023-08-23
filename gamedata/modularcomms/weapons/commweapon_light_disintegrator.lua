@@ -1,14 +1,14 @@
-local name = "commweapon_disintegrator"
+local name = "commweapon_light_disintegrator"
 local weaponDef = {
-	name                    = "Heavy Disintegrator Rifle",
-	areaOfEffect            = 64,
+	name                    = "Light Disintegrator Rifle",
+	areaOfEffect            = 32,
 	avoidFeature            = false,
 	avoidFriendly           = true,
 	avoidGround             = false,
 	avoidNeutral            = false,
-	craterBoost             = 6,
-	craterMult              = 6,
-	cegtag					= "dgun_trail",
+	craterBoost             = 0,
+	craterMult              = 0,
+	cegtag					= "light_dgun_trail",
 
 	customParams            = {
 		is_unit_weapon = 1,
@@ -16,11 +16,12 @@ local weaponDef = {
 		slot = "3",
 		reaim_time = 1,
 		antibaitbypass = "ärsytät minua",
-		mass = 600.5,
+		mass = 150.5,
+		groundnoexplode = 1,
 	},
 
 	damage                  = {
-		default    = 1250,
+		default    = 175,
 	},
 
 	explosionGenerator      = "custom:DGUNTRACE",
@@ -33,10 +34,10 @@ local weaponDef = {
 	noExplode               = true,
 	noSelfDamage            = true,
 	range                   = 270,
-	reloadtime              = 3.0,
+	reloadtime              = 0.8,
 	size                    = 6,
-	soundHit                = "explosion/ex_med6",
-	soundStart              = "weapon/laser/dgun_fire",
+	soundHit                = "explosion/light_dgun_hit",
+	soundStart              = "weapon/laser/light_dgun_fire",
 	soundTrigger            = true,
 	turret                  = true,
 	targetBorder            = 1, -- aim for the close border instead of the center.

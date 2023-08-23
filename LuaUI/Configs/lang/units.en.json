@@ -301,7 +301,7 @@
 	},
 	"energysingu" : {
 		"name" : "Singularity Reactor",
-		"description" : "Powerplant: +225e, increases over time (HAZARDOUS)",
+		"description" : "Powerplant: +300e, increases over time (HAZARDOUS)",
 		"helptext" : "The Singularity Reactor generates massive amount of energy using a controlled black hole - which is about as safe as it sounds. Singularity reactors naturally increase their output over time, making them attractive targets to take out early on. When the reactor is destroyed, the black hole implodes violently, dragging units inside."
 	},
 	"bomberdisarm" : {

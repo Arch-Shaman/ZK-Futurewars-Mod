@@ -78,7 +78,8 @@ function script.FireWeapon(num)
 end
 
 function script.BlockShot(num, targetID)
-	return (not gunLoaded) or ((num - 1) ~= ammoState)
+	local cantFire = not GG.FireControl.CanFireWeapon(unitID, num)
+	return (not gunLoaded) or ((num - 1) ~= ammoState) or cantFire
 end
 
 function script.QueryWeapon(num)
