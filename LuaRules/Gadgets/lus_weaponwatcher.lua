@@ -78,13 +78,14 @@ function gadget:GameFrame(f)
 	if WatchFrames[f] then
 		for i = 1, #WatchFrames[f] do
 			local unitID = WatchFrames[f][i].unitID
-			local WeaponNum = WatchFrames[f][i].weaponNum
-			
-			local reloadFrame = Spring.GetUnitWeaponState(unitID, WeaponNum, "reloadState")
-			if reloadFrame <= f then
-				CallInAsUnit(unitID, WeaponNum)
-			else -- unit hasn't reloaded, check every frame.
-				AddUnitToWatchUnits(unitID, WeaponNum)
+			if Spring.ValidUnitID(unitID) then
+				local WeaponNum = WatchFrames[f][i].weaponNum
+				local reloadFrame = Spring.GetUnitWeaponState(unitID, WeaponNum, "reloadState")
+				if reloadFrame <= f then
+					CallInAsUnit(unitID, WeaponNum)
+				else -- unit hasn't reloaded, check every frame.
+					AddUnitToWatchUnits(unitID, WeaponNum)
+				end
 			end
 		end
 		WatchFrames[f] = nil
