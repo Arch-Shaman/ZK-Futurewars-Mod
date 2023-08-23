@@ -127,10 +127,10 @@ local unitDef = {
 				light_color = "1.25 0.8 1.75",
 				light_radius = 320,
 				reveal_unit = 10,
-				allowedpitcherror = 0.8,
-				allowedheadingerror = 0.8,
+				allowedpitcherror = 6.25,
+				allowedheadingerror = 6.25,
 				armorpiercing = 0.2,
-				aimdelayresettime = 6,
+				aimdelayresettime = 11,
 			},
 			damage                  = {
 				default = 6000.1,

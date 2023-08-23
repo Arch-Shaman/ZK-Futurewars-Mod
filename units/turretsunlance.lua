@@ -77,8 +77,8 @@ return {
 					burst = Shared.BURST_RELIABLE,
 					light_color = "3 2.33 1.5",
 					light_radius = 150,
-					allowedpitcherror = 0.25,
-					allowedheadingerror = 0.2,
+					allowedpitcherror = 14,
+					allowedheadingerror = 7,
 				},
 				damage                  = {
 					default = 1500.1,

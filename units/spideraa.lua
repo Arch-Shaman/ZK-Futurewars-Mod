@@ -73,8 +73,8 @@ return {
 					light_color = "0.203 0.631 0.196",
 					light_radius = 320,
 					reveal_unit = 8,
-					allowedpitcherror = 3,
-					allowedheadingerror = 2,
+					allowedpitcherror = 15,
+					allowedheadingerror = 45,
 					isaa = "1",
 				},
 				damage                  = {
