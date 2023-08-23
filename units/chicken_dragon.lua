@@ -160,11 +160,14 @@ return { chicken_dragon = {
 			areaOfEffect            = 32,
 			craterBoost             = 1,
 			craterMult              = 0,
-
+			
+			customParams            = {
+				armorpiercing = 1,
+			},
+			
 			damage                  = {
 				default = 12000,
 				planes  = 12000,
-				armorpiercing = 1,
 			},
 
 			explosionGenerator      = [[custom:NONE]],

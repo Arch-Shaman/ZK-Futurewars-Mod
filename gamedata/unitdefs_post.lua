@@ -183,6 +183,41 @@ VFS.Include('gamedata/modularcomms/unitdefgen.lua')
 VFS.Include('gamedata/planetwars/pw_unitdefgen.lua')
 local Utilities = VFS.Include('gamedata/utilities.lua')
 
+-- Handle obsolete keys in mods gracefully while they migrate
+for name, ud in pairs(UnitDefs) do
+	if ud.metaluse then
+		--Spring.Echo("ERROR: " .. name .. ".metalUse set, should be metalUpkeep instead!")
+		ud.metalupkeep = ud.metalupkeep or ud.metaluse
+	end
+	if ud.energyuse then
+		--Spring.Echo("ERROR: " .. name .. ".energyuse set, should be energyUpkeep instead!")
+		ud.energyupkeep = ud.energyupkeep or ud.energyuse
+	end
+	if ud.buildcostmetal then
+		--Spring.Echo("ERROR: " .. name .. ".buildCostMetal set, should be metalCost instead!")
+		ud.metalcost = ud.metalcost or ud.buildcostmetal
+	end
+	if ud.buildcostenergy then
+		--Spring.Echo("ERROR: " .. name .. ".buildCostEnergy set, should be energyCost instead!")
+		ud.energycost = ud.energycost or ud.buildcostenergy
+	end
+	if ud.maxdamage then
+		--Spring.Echo("ERROR: " .. name .. ".maxDamage set, should be health instead!")
+		ud.health = ud.health or ud.maxdamage
+	end
+	if ud.maxvelocity then
+		--Spring.Echo("ERROR: " .. name .. ".maxVelocity set, should be speed instead!")
+		ud.speed = ud.speed or (ud.maxvelocity * Game.gameSpeed)
+	end
+	if ud.maxreversevelocity then
+		--Spring.Echo("ERROR: " .. name .. ".maxReverseVelocity set, should be rSpeed instead!")
+		ud.rspeed = ud.rspeed or (ud.maxreversevelocity * Game.gameSpeed)
+	end
+	if ud.customparams.ismex then
+		--Spring.Echo("ERROR: " .. name .. ".customParams.ismex set, should be metal_extractor_mult (= 1) instead!")
+		ud.customparams.metal_extractor_mult = 1
+	end
+end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --
@@ -683,7 +718,7 @@ for name, ud in pairs(UnitDefs) do
 	ud.airsightdistance = (ud.sightdistance or 0)
 	
 	-- Set mass
-	ud.mass = (((ud.buildtime/2) + (ud.maxdamage/8))^0.6)*6.5
+	ud.mass = (((ud.buildtime/2) + (ud.health/8))^0.6)*6.5
 	if ud.customparams.massmult then
 		ud.mass = ud.mass*ud.customparams.massmult
 	end
@@ -891,4 +926,20 @@ end
 local ai_start_units = VFS.Include("LuaRules/Configs/ai_commanders.lua")
 for i = 1, #ai_start_units do
 	UnitDefs[ai_start_units[i]].customparams.ai_start_unit = true
+end
+
+if not Script or not Script.IsEngineMinVersion(105, 0, 1801) then
+	for name, ud in pairs(UnitDefs) do
+		ud.metaluse  = ud.metalupkeep
+		ud.energyuse = ud.energyupkeep
+		ud.buildcostmetal  = ud.metalcost
+		ud.buildcostenergy = ud.energycost
+		ud.maxdamage = ud.health
+		if ud.speed then
+			ud.maxvelocity = ud.speed / Game.gameSpeed
+		end
+		if ud.rspeed then
+			ud.maxreversevelocity = ud.rspeed / Game.gameSpeed
+		end
+	end
 end
