@@ -78,7 +78,7 @@ return {
 					light_color = "3 2.33 1.5",
 					light_radius = 150,
 					allowedpitcherror = 14,
-					allowedheadingerror = 7,
+					allowedheadingerror = 14,
 				},
 				damage                  = {
 					default = 1500.1,
