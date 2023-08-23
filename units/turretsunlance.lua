@@ -52,12 +52,12 @@ return {
 		weapons                       = {
 			{
 				def                = "PLASMA",
-				badTargetCategory  = "MOBILE",
+				badTargetCategory  = "TOOFAST",
 				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER",
 			},
 			{
 				def                = "FAKE",
-				badTargetCategory  = "MOBILE",
+				badTargetCategory  = "TOOFAST",
 				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER",
 				slaveTo            = 1,
 			},
