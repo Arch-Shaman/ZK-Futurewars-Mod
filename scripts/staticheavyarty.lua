@@ -63,7 +63,7 @@ function script.AimWeapon(num, heading, pitch)
 	WaitForTurn(turret, y_axis)
 	WaitForTurn(sleeve, x_axis)
 	StartThread(AimingDone) -- what?
-	return (spGetUnitRulesParam(unitID, "lowpower") == 0)
+	return (spGetUnitRulesParam(unitID, "lowpower") == 0) and GG.FireControl.CanFireWeapon(unitID, num)
 end
 
 function script.FireWeapon(num)
@@ -91,8 +91,10 @@ function script.AimFromWeapon(num)
 end
 
 function OnAmmoTypeChange(newAmmo)
+	GG.FireControl.WeaponFired(unitID, 1)
+	GG.FireControl.WeaponFired(unitID, 2)
+	GG.FireControl.WeaponFired(unitID, 3)
 	ammoState = newAmmo
-	GG.FireControl.WeaponFired(unitID, newAmmo)
 end
 
 function script.Killed(recentDamage, maxHealth)
