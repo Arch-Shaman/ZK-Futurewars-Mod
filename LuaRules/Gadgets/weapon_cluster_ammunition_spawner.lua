@@ -427,8 +427,12 @@ local function SpawnSubProjectiles(id, wd)
 		end
 	end
 	if projConfig.usertarget then
-		targettable[owner].count = targettable[owner].count - 1
-		if targettable[owner].count == 0 and targettable[owner].dead then
+		if targettable[owner] and targettable[owner].count then
+			targettable[owner].count = targettable[owner].count - 1
+			if targettable[owner].count == 0 and targettable[owner].dead then
+				targettable[owner] = nil
+			end
+		else
 			targettable[owner] = nil
 		end
 	end
