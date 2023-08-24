@@ -109,7 +109,6 @@ return {
 				weaponType              = [[Cannon]],
 				weaponVelocity          = 500,
 			},
-			
 		},
 		
 		featureDefs            = {
