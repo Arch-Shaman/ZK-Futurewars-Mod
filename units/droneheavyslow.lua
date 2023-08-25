@@ -77,7 +77,7 @@ return {
 				fireStarter             = 30,
 				impactOnly              = true,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				largeBeamLaser          = true,
 				laserFlareSize          = 4.33,
