@@ -212,9 +212,11 @@ end
 local function ForceUpdate(id, x, y, z)
 	local data = IterableMap.Get(missiles, id)
 	if data then
-		data.target[1] = x
-		data.target[2] = y
-		data.target[3] = z
+		if type(data.target) == "table" then
+			data.target[1] = x
+			data.target[2] = y
+			data.target[3] = z
+		end
 	end
 end	
 
