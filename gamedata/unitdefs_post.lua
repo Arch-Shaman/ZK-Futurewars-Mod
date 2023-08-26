@@ -348,6 +348,9 @@ for name, ud in pairs(UnitDefs) do
 	if (ud.speed and ud.speed > 0) or ud.customparams.mobilebuilding then
 		ud.customparams.ignoreplacementrestriction = "true"
 	end
+	if (ud.speed and ud.speed > 0) then
+		ud.speed = ud.speed * 30
+	end
 	
 	-- Add lowflying cat --
 	if ud.cruisealt and ud.cruisealt <= 200 then
@@ -828,8 +831,8 @@ for name, ud in pairs(UnitDefs) do
 	-- Altered unit health mod option
 	if modOptions and modOptions.hpmult and modOptions.hpmult ~= 1 then
 		local hpMulti = modOptions.hpmult
-		if ud.maxdamage and ud.unitname ~= "terraunit" then
-			ud.maxdamage = math.max(ud.maxdamage * hpMulti, 1)
+		if ud.health and ud.unitname ~= "terraunit" then
+			ud.health = math.max(ud.health * hpMulti, 1)
 		end
 	end
 	
@@ -934,7 +937,7 @@ if not Script or not Script.IsEngineMinVersion(105, 0, 1801) then
 		ud.energyuse = ud.energyupkeep
 		ud.buildcostmetal  = ud.metalcost
 		ud.buildcostenergy = ud.energycost
-		ud.maxdamage = ud.health
+		ud.health = ud.health
 		if ud.speed then
 			ud.speed = ud.speed / Game.gameSpeed
 		end
