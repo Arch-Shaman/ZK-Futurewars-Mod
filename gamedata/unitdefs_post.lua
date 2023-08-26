@@ -205,9 +205,9 @@ for name, ud in pairs(UnitDefs) do
 		--Spring.Echo("ERROR: " .. name .. ".maxDamage set, should be health instead!")
 		ud.health = ud.health or ud.maxdamage
 	end
-	if ud.speed then
+	if ud.maxvelocity then
 		--Spring.Echo("ERROR: " .. name .. ".speed set, should be speed instead!")
-		ud.speed = ud.speed or (ud.speed * Game.gameSpeed)
+		ud.speed = ud.speed or (ud.maxvelocity * Game.gameSpeed)
 	end
 	if ud.maxreversevelocity then
 		--Spring.Echo("ERROR: " .. name .. ".maxReverseVelocity set, should be rSpeed instead!")
