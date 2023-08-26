@@ -237,10 +237,10 @@ local function ProcessComm(name, config)
 		-- set costs
 		config.cost = config.cost or 0
 		-- a bit less of a hack
-		local commDefsCost = math.max(commDefs[name].buildcostmetal or 0, commDefs[name].buildcostenergy or 0, commDefs[name].buildtime or 0)  --one of these should be set in actual unitdef file
-		commDefs[name].buildcostmetal = commDefsCost + config.cost
-		commDefs[name].buildcostenergy = commDefsCost + config.cost
-		commDefs[name].buildtime = commDefsCost + config.cost
+		local commDefsCost = math.max(commDefs[name].metalcost or 0, commDefs[name].energycost or 0, commDefs[name].buildtime or 0)  --one of these should be set in actual unitdef file
+		commDefs[name].metalcost  = commDefsCost + config.cost
+		commDefs[name].energycost = commDefsCost + config.cost
+		commDefs[name].buildtime  = commDefsCost + config.cost
 		cp.cost = config.cost
 		
 		if config.power then
@@ -339,7 +339,7 @@ for name, data in pairs(commDefs) do
 	ModifyWeaponRange(data, rangeBonus, true)
 
 	if data.customparams.speedbonus then
-		commDefs[name].customparams.basespeed = commDefs[name].customparams.basespeed or commDefs[name].maxvelocity
+		commDefs[name].customparams.basespeed = commDefs[name].customparams.basespeed or commDefs[name].speed
 		commDefs[name].speed = commDefs[name].speed + (commDefs[name].customparams.basespeed*data.customparams.speedbonus)
 	end
 	
@@ -396,8 +396,8 @@ for name, data in pairs(commDefs) do
 			mult = 0.2
 		end
 		array.description = typeName .. " - " .. data.name
-		array.metal = data.buildcostmetal * mult
-		array.reclaimtime = data.buildcostmetal * mult
+		array.metal = (data.metalcost or data.buildcostmetal) * mult
+		array.reclaimtime = (data.metalcost or data.buildcostmetal) * mult
 		array.damage = data.health
 		array.customparams = {}
 		array.customparams.unit = data.unitname
