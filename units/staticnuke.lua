@@ -29,7 +29,7 @@ return {
 		iconType                      = "nuke",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = 5000,
+		health                        = 5000,
 		maxSlope                      = 18,
 		maxWaterDepth                 = 0,
 		minCloakDistance              = 150,

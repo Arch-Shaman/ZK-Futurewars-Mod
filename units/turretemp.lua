@@ -31,7 +31,7 @@ return {
 		footprintZ                    = 2,
 		iconType                      = "defensespecial",
 		levelGround                   = false,
-		maxDamage                     = 3000,
+		health                        = 3000,
 		maxSlope                      = 36,
 		maxWaterDepth                 = 0,
 		noChaseCategory               = "FIXEDWING LAND SHIP SWIM GUNSHIP SUB HOVER",

@@ -39,7 +39,7 @@ return {
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 3300,
+		health                        = 3300,
 		maxSlope                      = 18,
 		objectName                    = "staticantinuke.s3o",
 		radarDistance                 = 2500,

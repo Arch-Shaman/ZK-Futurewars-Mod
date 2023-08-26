@@ -35,7 +35,7 @@ return {
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 3500,
+		health                        = 3500,
 		maxSlope                      = 18,
 		--maxWaterDepth                 = 0, -- model-derived would be 305: 35 elmo legs + 6x45 elmo pillar segments should be enough for everyone
 		minCloakDistance              = 150,

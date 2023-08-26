@@ -26,7 +26,7 @@ return {
 		footprintX                    = 1,
 		footprintZ                    = 1,
 		iconType                      = "cruisemissilesmall",
-		maxDamage                     = 1000,
+		health                        = 1000,
 		maxSlope                      = 18,
 		minCloakDistance              = 150,
 		objectName                    = "wep_tacnuke.s3o",

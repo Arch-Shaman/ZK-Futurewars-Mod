@@ -52,7 +52,7 @@ return {
 		idleTime                      = 1800,
 		levelGround                   = false,
 		maneuverleashlength           = "380",
-		maxDamage                     = 2000,
+		health                        = 2000,
 		maxSlope                      = 15,
 		minCloakDistance              = 150,
 		movementClass                 = "KBOT4",

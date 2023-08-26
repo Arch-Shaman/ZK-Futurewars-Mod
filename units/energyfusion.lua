@@ -30,7 +30,7 @@ return {
 		iconType                      = "energyfusion",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = 2500,
+		health                        = 2500,
 		maxSlope                      = 18,
 		minCloakDistance              = 150,
 		objectName                    = "energyfusion.s3o",

@@ -33,7 +33,7 @@ return {
 		iconType                      = [[mahlazer]],
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = 12000,
+		health                        = 12000,
 		maxSlope                      = 18,
 		maxWaterDepth                 = 0,
 		noChaseCategory               = [[FIXEDWING GUNSHIP SUB STUPIDTARGET]],

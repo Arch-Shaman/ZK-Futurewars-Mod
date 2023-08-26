@@ -25,7 +25,7 @@ return {
 		footprintZ                    = 2,
 		iconType                      = "defensesupport",
 		levelGround                   = false,
-		maxDamage                     = 2600,
+		health                        = 2600,
 		maxSlope                      = 36,
 		maxWaterDepth                 = 0,
 		noAutoFire                    = false,

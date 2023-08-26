@@ -30,7 +30,7 @@ return {
 		idleTime                      = 1800,
 		levelGround                   = false,
 		losEmitHeight                 = 60,
-		maxDamage                     = 1100,
+		health                        = 1100,
 		maxSlope                      = 36,
 		noAutoFire                    = false,
 		noChaseCategory               = "FIXEDWING LAND SHIP SATELLITE SWIM GUNSHIP SUB HOVER",

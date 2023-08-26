@@ -34,7 +34,7 @@ return {
 		iconType                      = "heavysam",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = 8000,
+		health                        = 8000,
 		maxSlope                      = 18,
 		maxWaterDepth                 = 0,
 		noAutoFire                    = false,

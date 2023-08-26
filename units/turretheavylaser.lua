@@ -30,7 +30,7 @@ return {
 		idleTime                      = 1800,
 		levelGround                   = false,
 		losEmitHeight                 = 80,
-		maxDamage                     = 4400,
+		health                        = 4400,
 		maxSlope                      = 36,
 		minCloakDistance              = 150,
 		noAutoFire                    = false,

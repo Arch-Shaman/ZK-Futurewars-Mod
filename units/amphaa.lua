@@ -36,7 +36,7 @@ return {
 		leaveTracks				= true,
 		maxDamage				= 1700,
 		maxSlope				= 36,
-		maxVelocity				= 2.1,
+		speed			    	= 2.1,
 		movementClass			= "AKBOT3",
 		moveState				= 0,
 		noChaseCategory			= "TERRAFORM LAND SINK TURRET SHIP SWIM FLOAT SUB HOVER",

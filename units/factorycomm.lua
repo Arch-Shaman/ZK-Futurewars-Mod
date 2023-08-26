@@ -4,7 +4,7 @@
 
 return {
 	factorycomm = {
-		maxdamage = 10000,
+		health    = 10000,
 		unitname = "factorycomm",
 		name = "Commander Chassis Factory",
 		description = "Produces Commanders",

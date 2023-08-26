@@ -54,7 +54,7 @@ return {
 		iconType                      = "padship",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = Shared.FACTORY_PLATE_HEALTH * 2,
+		health                        = Shared.FACTORY_PLATE_HEALTH * 2,
 		maxSlope                      = 15,
 		minCloakDistance              = 150,
 		minWaterDepth                 = 15,

@@ -206,7 +206,7 @@ for name, ud in pairs(UnitDefs) do
 		ud.health = ud.health or ud.maxdamage
 	end
 	if ud.maxvelocity then
-		--Spring.Echo("ERROR: " .. name .. ".maxVelocity set, should be speed instead!")
+		--Spring.Echo("ERROR: " .. name .. ".speed set, should be speed instead!")
 		ud.speed = ud.speed or (ud.maxvelocity * Game.gameSpeed)
 	end
 	if ud.maxreversevelocity then
@@ -345,8 +345,11 @@ for name, ud in pairs(UnitDefs) do
 	end
 	-- Set units that ignore map-side gadgetted placement resitrctions
 	-- see http://springrts.com/phpbb/viewtopic.php?f=13&t=27550
-	if (ud.maxvelocity and ud.maxvelocity > 0) or ud.customparams.mobilebuilding then
+	if (ud.speed and ud.speed > 0) or ud.customparams.mobilebuilding then
 		ud.customparams.ignoreplacementrestriction = "true"
+	end
+	if (ud.speed and ud.speed > 0) then
+		ud.speed = ud.speed * 30
 	end
 	
 	-- Add lowflying cat --
@@ -401,7 +404,7 @@ for name, ud in pairs(UnitDefs) do
 		end
 		if name == "bomberheavy" then
 			ud.buildcostmetal =  1500
-			ud.maxdamage = 4000
+			ud.health = 4000
 		end
 		if name == "bomberstrike" then
 			ud.buildcostmetal = 400
@@ -472,7 +475,7 @@ for name, ud in pairs(UnitDefs) do
 				end
 			end
 		end
-		if (hasShield or (((not ud.maxvelocity) or ud.maxvelocity == 0) and not ud.cloakcost)) then
+		if (hasShield or (((not ud.speed) or ud.speed == 0) and not ud.cloakcost)) then
 			ud.customparams.cannotcloak = 1
 			ud.mincloakdistance = 0
 			ud.cloakcost = nil
@@ -601,8 +604,8 @@ for name, ud in pairs(UnitDefs) do
 	-- unitspeedmult
 	if (modOptions and modOptions.unitspeedmult and modOptions.unitspeedmult ~= 1) then
 		local unitspeedmult = modOptions.unitspeedmult
-		if (ud.maxvelocity) then
-			ud.maxvelocity = ud.maxvelocity * unitspeedmult
+		if (ud.speed) then
+			ud.speed = ud.speed * unitspeedmult
 		end
 		if (ud.acceleration) then
 			ud.acceleration = ud.acceleration * unitspeedmult
@@ -657,18 +660,18 @@ for name, ud in pairs(UnitDefs) do
 	-- Set turnInPlace speed limits, reverse velocities (but not for ships)
 	if ud.turnrate and (ud.turnrate > 600 or ud.customparams.turnatfullspeed) then
 		ud.turninplace = false
-		ud.turninplacespeedlimit = (ud.maxvelocity or 0)
+		ud.turninplacespeedlimit = (ud.speed or 0)
 	elseif ud.turninplace ~= true then
 		ud.turninplace = false	-- true
-		ud.turninplacespeedlimit = ud.turninplacespeedlimit or (ud.maxvelocity and ud.maxvelocity*0.6 or 0)
+		ud.turninplacespeedlimit = ud.turninplacespeedlimit or (ud.speed and ud.speed*0.6 or 0)
 		--ud.turninplaceanglelimit = 180
 	end
 
 
 	if ud.category and not (ud.category:find("SHIP", 1, true) or ud.category:find("SUB", 1, true)) then
-		if (ud.maxvelocity) and not ud.maxreversevelocity then
+		if (ud.speed) and not ud.maxreversevelocity then
 			if not name:find("chicken", 1, true) then
-				ud.maxreversevelocity = ud.maxvelocity * 0.33
+				ud.maxreversevelocity = ud.speed * 0.33
 			end
 		end
 	end
@@ -828,8 +831,8 @@ for name, ud in pairs(UnitDefs) do
 	-- Altered unit health mod option
 	if modOptions and modOptions.hpmult and modOptions.hpmult ~= 1 then
 		local hpMulti = modOptions.hpmult
-		if ud.maxdamage and ud.unitname ~= "terraunit" then
-			ud.maxdamage = math.max(ud.maxdamage * hpMulti, 1)
+		if ud.health and ud.unitname ~= "terraunit" then
+			ud.health = math.max(ud.health * hpMulti, 1)
 		end
 	end
 	
@@ -846,7 +849,7 @@ for name, ud in pairs(UnitDefs) do
 	end]]
 	
 	-- Category changes
-	if ((ud.maxvelocity or 0) > 0) then
+	if ((ud.speed or 0) > 0) then
 		ud.category = ud.category .. " MOBILE"
 	end
 	
@@ -934,9 +937,9 @@ if not Script or not Script.IsEngineMinVersion(105, 0, 1801) then
 		ud.energyuse = ud.energyupkeep
 		ud.buildcostmetal  = ud.metalcost
 		ud.buildcostenergy = ud.energycost
-		ud.maxdamage = ud.health
+		ud.health = ud.health
 		if ud.speed then
-			ud.maxvelocity = ud.speed / Game.gameSpeed
+			ud.speed = ud.speed / Game.gameSpeed
 		end
 		if ud.rspeed then
 			ud.maxreversevelocity = ud.rspeed / Game.gameSpeed

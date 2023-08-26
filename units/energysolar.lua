@@ -34,7 +34,7 @@ return {
 		iconType                      = "energy_med",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = 1000,
+		health                        = 1000,
 		maxSlope                      = 18,
 		maxWaterDepth                 = 0,
 		noAutoFire                    = false,

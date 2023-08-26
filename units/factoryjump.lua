@@ -57,7 +57,7 @@ return {
 		iconType                      = "facjumpjet",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = 4000,
+		health                        = 4000,
 		maxSlope                      = 15,
 		maxWaterDepth                 = 0,
 		minCloakDistance              = 150,

@@ -31,7 +31,7 @@ return {
 		idleTime                      = 1800,
 		levelGround                   = false,
 		losEmitHeight                 = 40,
-		maxDamage                     = 560,
+		health                        = 560,
 		maxSlope                      = 36,
 		noAutoFire                    = false,
 		noChaseCategory               = "FIXEDWING LAND SINK TURRET SHIP SATELLITE SWIM GUNSHIP FLOAT SUB HOVER",

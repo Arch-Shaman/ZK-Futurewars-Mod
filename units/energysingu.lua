@@ -40,7 +40,7 @@ return {
 		iconType                      = "energysingu",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = 6500,
+		health                        = 6500,
 		maxSlope                      = 18,
 		minCloakDistance              = 150,
 		noAutoFire                    = false,
