@@ -348,9 +348,6 @@ for name, ud in pairs(UnitDefs) do
 	if (ud.speed and ud.speed > 0) or ud.customparams.mobilebuilding then
 		ud.customparams.ignoreplacementrestriction = "true"
 	end
-	if (ud.speed and ud.speed > 0) then
-		ud.speed = ud.speed * 30
-	end
 	
 	-- Add lowflying cat --
 	if ud.cruisealt and ud.cruisealt <= 200 then
