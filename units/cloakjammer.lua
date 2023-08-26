@@ -29,7 +29,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 2000,
+		health                 = 2000,
 		maxSlope               = 36,
 		speed                  = 2.5,
 		minCloakDistance       = 100,

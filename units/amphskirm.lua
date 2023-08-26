@@ -28,7 +28,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 480,
+		health                 = 480,
 		maxSlope               = 36,
 		speed                  = 1.8,
 		movementClass          = "AKBOT2",

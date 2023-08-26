@@ -45,7 +45,7 @@ return {
 		footprintZ          = 2,
 		hoverAttack         = true,
 		iconType            = "builderair",
-		maxDamage           = 1900,
+		health              = 1900,
 		speed               = 2.7,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET",

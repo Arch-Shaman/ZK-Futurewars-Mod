@@ -56,7 +56,7 @@ return {
 		iconType                      = "padair",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = Shared.FACTORY_PLATE_HEALTH,
+		health                        = Shared.FACTORY_PLATE_HEALTH,
 		maxSlope                      = 15,
 		minCloakDistance              = 150,
 		noAutoFire                    = false,

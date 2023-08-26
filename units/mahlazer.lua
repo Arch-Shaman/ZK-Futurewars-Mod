@@ -30,7 +30,7 @@ return {
 		iconType                      = "mahlazer",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = 10000,
+		health                        = 10000,
 		maxSlope                      = 18,
 		maxWaterDepth                 = 0,
 		noChaseCategory               = "FIXEDWING LAND SHIP SATELLITE SWIM GUNSHIP SUB HOVER",

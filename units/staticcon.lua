@@ -40,7 +40,7 @@ return {
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 500,
+		health                        = 500,
 		maxSlope                      = 15,
 		minCloakDistance              = 150,
 		movementClass                 = "KBOT2",

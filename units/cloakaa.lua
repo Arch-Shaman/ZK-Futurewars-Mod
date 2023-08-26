@@ -33,7 +33,7 @@ return {
 		idleTime               = 1800,
 		initCloaked            = true,
 		leaveTracks            = true,
-		maxDamage              = 190,
+		health                 = 190,
 		maxSlope               = 36,
 		speed                  = 3.8,
 		maxWaterDepth          = 22,

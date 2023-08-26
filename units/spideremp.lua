@@ -28,7 +28,7 @@ return {
 		footprintZ             = 3,
 		iconType               = [[spiderriotspecial]],
 		leaveTracks            = true,
-		maxDamage              = 940,
+		health                 = 940,
 		maxSlope               = 72,
 		speed                  = 2.8,
 		maxWaterDepth          = 22,

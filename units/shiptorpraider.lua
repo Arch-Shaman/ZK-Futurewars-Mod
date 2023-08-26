@@ -30,7 +30,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		maneuverleashlength = "1280",
-		maxDamage           = 850,
+		health              = 850,
 		speed               = 2.5,
 		minWaterDepth       = 5,
 		movementClass       = "BOAT3",

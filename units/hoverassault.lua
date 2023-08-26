@@ -30,7 +30,7 @@ return {
 		iconType            = "hoverassault",
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
-		maxDamage           = 1400,
+		health              = 1400,
 		maxSlope            = 36,
 		speed               = 2.6,
 		movementClass       = "HOVER3",

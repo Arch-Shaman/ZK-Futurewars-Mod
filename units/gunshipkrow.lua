@@ -35,7 +35,7 @@ return {
 		idleAutoHeal           = 200,
 		idleTime               = 1800,
 		maneuverleashlength    = "500",
-		maxDamage              = 37500,
+		health                 = 37500,
 		speed                  = 4.1,
 		noAutoFire             = false,
 		noChaseCategory        = "TERRAFORM FIXEDWING SATELLITE SUB",

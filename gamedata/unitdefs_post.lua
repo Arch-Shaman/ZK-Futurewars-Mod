@@ -404,7 +404,7 @@ for name, ud in pairs(UnitDefs) do
 		end
 		if name == "bomberheavy" then
 			ud.buildcostmetal =  1500
-			ud.maxdamage = 4000
+			ud.health = 4000
 		end
 		if name == "bomberstrike" then
 			ud.buildcostmetal = 400

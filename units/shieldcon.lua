@@ -26,7 +26,7 @@ return {
 		footprintZ          = 2,
 		iconType            = "builder",
 		leaveTracks         = true,
-		maxDamage           = 250,
+		health              = 250,
 		maxSlope            = 36,
 		speed               = 2.0,
 		maxWaterDepth       = 22,

@@ -31,7 +31,7 @@ return {
 		iconType                      = "staticarty",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = 7500,
+		health                        = 7500,
 		maxSlope                      = 18,
 		maxWaterDepth                 = 0,
 		noAutoFire                    = false,

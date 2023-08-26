@@ -36,7 +36,7 @@ return {
 		iconType               = "gunshipaa",
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
-		maxDamage              = 3200,
+		health                 = 3200,
 		speed                  = 3.8,
 		noAutoFire             = false,
 		noChaseCategory        = "TERRAFORM LAND SINK TURRET SHIP SWIM FLOAT SUB HOVER",

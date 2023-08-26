@@ -26,7 +26,7 @@ return {
 		iconType            = "hoverskirm",
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
-		maxDamage           = 2000,
+		health              = 2000,
 		maxSlope            = 36,
 		speed               = 4.5,
 		movementClass       = "HOVER3",

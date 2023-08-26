@@ -32,7 +32,7 @@ return {
 		explodeas = "NUCLEAR_MISSILE",
 		energymake = 600,
 		metalmake = 10,
-		maxdamage = 35000,
+		health    = 35000,
 		maxSlope = 18,
 		footprintx = 7,
 		footprintz = 7,

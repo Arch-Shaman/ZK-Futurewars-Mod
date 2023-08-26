@@ -35,7 +35,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		losEmitHeight          = 25,
-		maxDamage              = 5200,
+		health                 = 5200,
 		speed                  = 2.0,
 		minCloakDistance       = 75,
 		minWaterDepth          = 5,

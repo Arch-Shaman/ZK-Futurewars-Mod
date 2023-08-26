@@ -26,7 +26,7 @@ return {
 		footprintZ             = 2,
 		iconType               = [[spiderassault]],
 		leaveTracks            = true,
-		maxDamage              = 1620,
+		health                 = 1620,
 		maxSlope               = 36,
 		speed                  = 1.5,
 		maxWaterDepth          = 22,

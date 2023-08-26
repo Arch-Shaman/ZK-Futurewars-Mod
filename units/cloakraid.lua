@@ -33,7 +33,7 @@ return {
 		footprintZ             = 2,
 		iconType               = "kbotraider",
 		leaveTracks            = true,
-		maxDamage              = 120,
+		health                 = 120,
 		maxSlope               = 36,
 		speed                  = 4.9,
 		maxWaterDepth          = 22,

@@ -31,7 +31,7 @@ return {
 		footprintZ          = 3,
 		hoverAttack         = true,
 		iconType            = "heavygunshipassault",
-		maxDamage           = 7500,
+		health              = 7500,
 		speed               = 5.3,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP SUB",

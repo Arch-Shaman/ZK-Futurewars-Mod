@@ -33,7 +33,7 @@ return {
 		footprintZ             = 4,
 		iconType               = "spidersupport",
 		leaveTracks            = true,
-		maxDamage              = 13000,
+		health                 = 13000,
 		maxSlope               = 36,
 		speed                  = 1.0,
 		maxWaterDepth          = 22,

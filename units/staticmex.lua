@@ -37,7 +37,7 @@ return {
 		footprintZ             = 3,
 		iconType               = "mex",
 		levelGround            = false,
-		maxDamage              = 900,
+		health                 = 900,
 		maxSlope               = 28,
 		speed                  = 0,
 		maxWaterDepth          = 5000,

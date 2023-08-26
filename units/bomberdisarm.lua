@@ -41,7 +41,7 @@ return {
 		footprintZ          = 3,
 		iconType            = "bombersupport",
 		maxAcc              = 0.77,
-		maxDamage           = 1700,
+		health              = 1700,
 		maxFuel             = 1000000,
 		maxRudder           = 0.012,
 		speed               = 10.2,

@@ -39,7 +39,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		maneuverleashlength = "1280",
-		maxDamage           = 5250,
+		health              = 5250,
 		speed               = 3.0,
 		minCloakDistance    = 75,
 		noAutoFire          = false,

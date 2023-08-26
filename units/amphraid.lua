@@ -25,7 +25,7 @@ return {
 		footprintZ             = 2,
 		iconType               = "amphraider",
 		leaveTracks            = true,
-		maxDamage              = 480,
+		health                 = 480,
 		maxSlope               = 36,
 		speed                  = 2.9,
 		maxWaterDepth          = 5000,

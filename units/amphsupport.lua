@@ -33,7 +33,7 @@ return {
 		footprintZ             = 3,
 		iconType               = "ampharty",
 		leaveTracks            = true,
-		maxDamage              = 2250,
+		health                 = 2250,
 		maxSlope               = 36,
 		speed                  = 1.8,
 		movementClass          = "AKBOT3",

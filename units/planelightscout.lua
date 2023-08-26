@@ -38,7 +38,7 @@ return {
 		footprintZ          = 2,
 		iconType            = "scoutplane",
 		maxAcc              = 0.5,
-		maxDamage           = 1100,
+		health              = 1100,
 		maxAileron          = 0.016,
 		maxElevator         = 0.022,
 		maxRudder           = 0.012,

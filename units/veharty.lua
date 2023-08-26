@@ -31,7 +31,7 @@ return {
 		idleTime            = 1800,
 		leaveTracks         = true,
 		maneuverleashlength = "650",
-		maxDamage           = 450,
+		health              = 450,
 		maxSlope            = 18,
 		speed               = 2.0,
 		maxWaterDepth       = 22,

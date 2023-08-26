@@ -32,7 +32,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		losEmitHeight          = 40,
-		maxDamage              = 2300,
+		health                 = 2300,
 		speed                  = 2.4,
 		minWaterDepth          = 5,
 		movementClass          = [[BOAT4]],

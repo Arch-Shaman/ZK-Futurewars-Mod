@@ -28,7 +28,7 @@ return {
 		iconType            = "dronecon",
 		idleAutoHeal        = 10,
 		idleTime            = 120,
-		maxDamage           = 350,
+		health              = 350,
 		speed               = 6.5,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE SUB",

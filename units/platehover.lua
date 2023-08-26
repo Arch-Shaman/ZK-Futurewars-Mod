@@ -53,7 +53,7 @@ return {
 		footprintZ       = 6,
 		iconType         = "padhover",
 		levelGround      = false,
-		maxDamage        = Shared.FACTORY_PLATE_HEALTH * 0.4,
+		health           = Shared.FACTORY_PLATE_HEALTH * 0.4,
 		maxSlope         = 15,
 		speed            = 0,
 		moveState        = 1,

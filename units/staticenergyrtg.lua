@@ -41,7 +41,7 @@ return {
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 1400,
+		health                        = 1400,
 		maxSlope                      = 36,
 		minCloakDistance              = 150,
 		objectName                    = "staticenergyrtg.dae",

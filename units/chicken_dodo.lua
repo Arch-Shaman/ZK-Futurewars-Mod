@@ -27,7 +27,7 @@ return {
 		kamikaze              = true,
 		kamikazeDistance      = 30,
 		leaveTracks           = true,
-		maxDamage             = 400,
+		health                = 400,
 		maxSlope              = 36,
 		speed                 = 9,
 		movementClass         = "AKBOT2",

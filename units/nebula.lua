@@ -39,7 +39,7 @@ return {
 		iconType               = "nebula",
 		idleAutoHeal           = 440,
 		idleTime               = 1800,
-		maxDamage              = 60000,
+		health                 = 60000,
 		speed                  = 1.5,
 		noAutoFire             = false,
 		noChaseCategory        = "TERRAFORM FIXEDWING SATELLITE SUB",

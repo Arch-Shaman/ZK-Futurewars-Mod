@@ -39,7 +39,7 @@ return {
 		footprintZ             = 2,
 		iconType               = "kbotskirm",
 		leaveTracks            = true,
-		maxDamage              = 500,
+		health                 = 500,
 		maxSlope               = 36,
 		speed                  = 2.4,
 		maxReverseVelocity     = 2.4,

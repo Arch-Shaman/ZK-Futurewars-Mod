@@ -36,7 +36,7 @@ return {
 		kamikazeDistance       = 40,
 		kamikazeUseLOS         = true,
 		leaveTracks            = true,
-		maxDamage              = 270,
+		health                 = 270,
 		maxSlope               = 36,
 		speed                  = 5.2,
 		maxWaterDepth          = 15,

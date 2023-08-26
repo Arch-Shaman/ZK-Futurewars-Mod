@@ -47,7 +47,7 @@ return {
 		iconType               = "ghostcom1",
 		leaveTracks            = true,
 		losEmitHeight          = 40,
-		maxDamage              = 4000,
+		health                 = 4000,
 		maxSlope               = 36,
 		speed                  = 1.5,
 		maxWaterDepth          = 5000,

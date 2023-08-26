@@ -30,7 +30,7 @@ return {
 		idleAutoHeal           = 10,
 		idleTime               = 300,
 		initCloaked            = true,
-		maxDamage              = 40,
+		health                 = 40,
 		maxSlope               = 255,
 		speed                  = 0.001,
 		movementClass          = "AKBOT2",

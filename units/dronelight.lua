@@ -26,7 +26,7 @@ return {
 		iconType            = "droneraid",
 		idleAutoHeal        = 10,
 		idleTime            = 150,
-		maxDamage           = 240,
+		health              = 240,
 		speed               = 8.0,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE SUB",

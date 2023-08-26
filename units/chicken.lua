@@ -29,7 +29,7 @@ return {
 		idleAutoHeal        = 20,
 		idleTime            = 180,
 		leaveTracks         = true,
-		maxDamage           = 400,
+		health              = 400,
 		maxSlope            = 36,
 		speed               = 5.4,
 		movementClass       = "BHOVER2",

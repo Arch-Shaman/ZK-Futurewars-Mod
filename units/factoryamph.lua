@@ -66,7 +66,7 @@ return {
 		iconType         = "facamph",
 		idleAutoHeal     = 5,
 		idleTime         = 1800,
-		maxDamage        = 4000,
+		health           = 4000,
 		maxSlope         = 15,
 		moveState        = 1,
 		noAutoFire       = false,

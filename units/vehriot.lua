@@ -29,7 +29,7 @@ return {
 		footprintZ          = 3,
 		iconType            = "vehicleriot",
 		leaveTracks         = true,
-		maxDamage           = 1200,
+		health              = 1200,
 		maxSlope            = 18,
 		speed               = 3.1,
 		maxReverseVelocity  = 3.1,

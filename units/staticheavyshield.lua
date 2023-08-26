@@ -25,7 +25,7 @@ return {
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 6000,
+		health                        = 6000,
 		maxSlope                      = 36,
 		speed                         = 0,
 		noAutoFire                    = false,

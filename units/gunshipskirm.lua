@@ -32,7 +32,7 @@ return {
 		iconType               = "gunshipskirm",
 		idleAutoHeal           = 15,
 		idleTime               = 1800,
-		maxDamage              = 3000,
+		health                 = 3000,
 		speed                  = 3.8,
 		noChaseCategory        = "TERRAFORM SUB",
 		objectName             = "rapier.dae",

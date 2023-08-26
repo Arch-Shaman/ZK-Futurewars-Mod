@@ -44,7 +44,7 @@ return {
 		iconType						= "staticassaultriot",
 		levelGround						= false,
 		losEmitHeight						= 70,
-		maxDamage						= 15000,
+		health   						= 15000,
 		maxSlope						= 18,
 		maxWaterDepth						= 0,
 		noChaseCategory						= "FIXEDWING LAND SHIP SATELLITE SWIM GUNSHIP SUB HOVER",

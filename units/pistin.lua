@@ -35,7 +35,7 @@ return {
 		idleAutoHeal           = 10,
 		idleTime               = 300,
 		iconType            = "deployablesupport",
-		maxDamage           = 800,
+		health              = 800,
 		noChaseCategory     = "FIXEDWING LAND SINK TURRET SHIP SATELLITE SWIM GUNSHIP FLOAT SUB HOVER",
 		objectName          = "pistin.dae",
 		reclaimable            = false,

@@ -38,7 +38,7 @@ return {
 		footprintX                    = 6,
 		footprintZ                    = 6,
 		iconType                      = "missilesilo",
-		maxDamage                     = 5000,
+		health                        = 5000,
 		maxSlope                      = 15,
 		maxWaterDepth                 = 0,
 		objectName                    = "missilesilo.s3o",

@@ -45,7 +45,7 @@ return {
 		footprintZ             = 3,
 		iconType               = "kbotriot",
 		leaveTracks            = true,
-		maxDamage              = 1200,
+		health                 = 1200,
 		maxSlope               = 36,
 		speed                  = 2.9,
 		maxReverseVelocity     = 2.9,

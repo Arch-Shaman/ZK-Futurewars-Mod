@@ -37,7 +37,7 @@ return {
 		iconType            = "builder",
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
-		maxDamage           = 780,
+		health              = 780,
 		maxSlope            = 36,
 		speed               = 4.2,
 		movementClass       = "HOVER2",

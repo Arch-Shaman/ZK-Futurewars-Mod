@@ -39,7 +39,7 @@ return {
 		highTrajectory      = 0,
 		iconType            = "tankraider",
 		leaveTracks         = true,
-		maxDamage           = 1200,
+		health              = 1200,
 		maxSlope            = 18,
 		speed               = 4.7,
 		maxWaterDepth       = 22,

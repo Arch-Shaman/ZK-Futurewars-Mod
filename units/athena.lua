@@ -92,7 +92,7 @@ return {
 		hoverAttack         = true,
 		iconType            = "t3builder",
 		initCloaked         = false,
-		maxDamage           = 2300,
+		health              = 2300,
 		maxSlope            = 36,
 		speed               = 7,
 		minCloakDistance    = 100,

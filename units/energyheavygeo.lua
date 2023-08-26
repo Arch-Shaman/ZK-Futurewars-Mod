@@ -32,7 +32,7 @@ return {
 		iconType                      = "energyheavygeo",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = 3750,
+		health                        = 3750,
 		maxSlope                      = 255,
 		objectName                    = "energyheavygeo.s3o",
 		script                        = "energyheavygeo.lua",

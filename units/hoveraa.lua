@@ -31,7 +31,7 @@ return {
 		iconType            = "hoveraa",
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
-		maxDamage           = 1200,
+		health              = 1200,
 		maxSlope            = 36,
 		speed               = 3.5,
 		movementClass       = "HOVER3",

@@ -36,7 +36,7 @@ return {
 		kamikazeDistance       = 40,
 		kamikazeUseLOS         = true,
 		leaveTracks            = true,
-		maxDamage              = 50,
+		health                 = 50,
 		maxSlope               = 72,
 		speed                  = 3.5,
 		minCloakDistance       = 170,

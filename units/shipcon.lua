@@ -34,7 +34,7 @@ return {
 		footprintX             = 3,
 		footprintZ             = 3,
 		iconType               = "builder",
-		maxDamage              = 1400,
+		health                 = 1400,
 		speed                  = 2.5,
 		minWaterDepth          = 5,
 		movementClass          = "BOAT3",

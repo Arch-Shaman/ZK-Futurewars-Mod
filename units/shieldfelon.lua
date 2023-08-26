@@ -26,7 +26,7 @@ return {
 		idleTime            = 1800,
 		leaveTracks         = true,
 		losEmitHeight       = 40,
-		maxDamage           = 7000,
+		health              = 7000,
 		maxSlope            = 36,
 		speed               = 1.5,
 		maxWaterDepth       = 22,

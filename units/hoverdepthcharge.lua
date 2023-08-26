@@ -28,7 +28,7 @@ return {
 		iconType            = "hoverspecial",
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
-		maxDamage           = 1300,
+		health              = 1300,
 		maxSlope            = 36,
 		speed               = 2.35,
 		movementClass       = "HOVER3",

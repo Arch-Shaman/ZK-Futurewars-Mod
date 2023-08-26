@@ -47,7 +47,7 @@ return {
 		iconType            = "commander1",
 		leaveTracks         = true,
 		losEmitHeight       = 40,
-		maxDamage           = 3250,
+		health              = 3250,
 		maxSlope            = 36,
 		speed               = 2.0,
 		maxWaterDepth       = 5000,

@@ -30,7 +30,7 @@ return {
 		footprintZ             = 3,
 		iconType               = "tankriot",
 		leaveTracks            = true,
-		maxDamage              = 2100,
+		health                 = 2100,
 		maxSlope               = 18,
 		speed                  = 2.2,
 		maxWaterDepth          = 22,

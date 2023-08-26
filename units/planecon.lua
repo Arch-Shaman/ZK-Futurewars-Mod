@@ -47,7 +47,7 @@ return {
 		iconType            = "builderair",
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
-		maxDamage           = 1200,
+		health              = 1200,
 		speed               = 4,
 		minCloakDistance    = 75,
 		noAutoFire          = false,

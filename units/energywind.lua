@@ -46,7 +46,7 @@ return {
 		idleTime                      = 1800,
 		levelGround                   = false,
 		losEmitHeight                 = 30,
-		maxDamage                     = 150, -- as wind; see customparams for tidal
+		health                        = 150, -- as wind; see customparams for tidal
 		maxSlope                      = 75,
 		objectName                    = "arm_wind_generator.s3o",
 		script                        = "energywind.lua",

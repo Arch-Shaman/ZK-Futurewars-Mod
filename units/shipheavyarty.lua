@@ -30,7 +30,7 @@ return {
 		footprintZ             = 5,
 		highTrajectory         = 2,
 		iconType               = "shipheavyarty",
-		maxDamage              = 8000,
+		health                 = 8000,
 		speed                  = 1.9,
 		minWaterDepth          = 15,
 		movementClass          = "BOAT5",

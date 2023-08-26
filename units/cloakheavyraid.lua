@@ -37,7 +37,7 @@ return {
 		iconType               = "stealth",
 		initCloaked            = true,
 		leaveTracks            = true,
-		maxDamage              = 630,
+		health                 = 630,
 		maxSlope               = 36,
 		speed                  = 3.8,
 		maxWaterDepth          = 22,

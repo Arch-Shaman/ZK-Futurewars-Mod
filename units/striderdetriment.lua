@@ -34,7 +34,7 @@ return {
 		iconType               = "krogoth",
 		leaveTracks            = true,
 		losEmitHeight          = 100,
-		maxDamage              = 250000,
+		health                 = 250000,
 		maxSlope               = 37,
 		speed                  = 1.0,
 		maxWaterDepth          = 5000,

@@ -59,7 +59,7 @@ return {
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 7000,
+		health                        = 7000,
 		maxSlope                      = 15,
 		maxWaterDepth                 = 0,
 		moveState                     = 1,

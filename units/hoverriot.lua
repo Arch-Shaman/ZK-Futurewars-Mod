@@ -29,7 +29,7 @@ return {
 		iconType            = "hoverriot",
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
-		maxDamage           = 1400,
+		health              = 1400,
 		maxSlope            = 36,
 		speed               = 2.4,
 		movementClass       = "HOVER4",

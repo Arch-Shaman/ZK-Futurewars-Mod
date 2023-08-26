@@ -29,7 +29,7 @@ return {
 		footprintZ          = 2,
 		iconType            = "builder",
 		leaveTracks         = true,
-		maxDamage           = 1100,
+		health              = 1100,
 		maxSlope            = 36,
 		speed               = 1.8,
 		movementClass       = "AKBOT2",

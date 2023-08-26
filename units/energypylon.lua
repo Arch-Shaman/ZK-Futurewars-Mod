@@ -31,7 +31,7 @@ return {
 		footprintZ                    = 3,
 		iconType                      = "pylon",
 		levelGround                   = false,
-		maxDamage                     = 1250,
+		health                        = 1250,
 		maxSlope                      = 18,
 		noAutoFire                    = false,
 		objectName                    = "armestor.s3o",

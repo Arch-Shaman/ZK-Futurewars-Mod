@@ -39,7 +39,7 @@ return {
 		footprintX             = 5,
 		footprintZ             = 5,
 		iconType               = "shipcarrier",
-		maxDamage              = 7500,
+		health                 = 7500,
 		speed                  = 2.75,
 		minWaterDepth          = 10,
 		movementClass          = "BOAT5",

@@ -25,7 +25,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
-		maxDamage           = 2000,
+		health              = 2000,
 		maxSlope            = 18,
 		speed               = 1.6,
 		movementClass       = "TANK3",

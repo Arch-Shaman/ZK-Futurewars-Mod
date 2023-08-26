@@ -28,7 +28,7 @@ return {
 		iconType            = "scoutplane",
 		idleAutoHeal        = 30,
 		idleTime            = 90,
-		maxDamage           = 450,
+		health              = 450,
 		maxSlope            = 18,
 		speed               = 14.3,
 		movestate           = 2,

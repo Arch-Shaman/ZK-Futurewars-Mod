@@ -64,7 +64,7 @@ return {
 		iconType                      = "padamph",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = Shared.FACTORY_PLATE_HEALTH,
+		health                        = Shared.FACTORY_PLATE_HEALTH,
 		maxSlope                      = 15,
 		moveState                     = 1,
 		noAutoFire                    = false,

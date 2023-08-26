@@ -27,7 +27,7 @@ return {
 		iconType            = "hoverraider",
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
-		maxDamage           = 525,
+		health              = 525,
 		maxSlope            = 36,
 		speed               = 4.4,
 		movementClass       = "HOVER2",

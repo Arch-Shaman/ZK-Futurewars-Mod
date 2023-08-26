@@ -40,7 +40,7 @@ return {
 		kamikazeDistance       = 60,
 		kamikazeUseLOS         = true,
 		maneuverleashlength    = "1240",
-		maxDamage              = 100,
+		health                 = 100,
 		maxSlope               = 36,
 		speed                  = 10.2,
 		noAutoFire             = false,

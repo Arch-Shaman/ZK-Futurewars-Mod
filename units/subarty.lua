@@ -40,7 +40,7 @@ return {
 		iconType               = [[subarty]],
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
-		maxDamage              = 1000,
+		health                 = 1000,
 		speed                  = 1.4,
 		minCloakDistance       = 75,
 		minWaterDepth          = 15,

@@ -41,7 +41,7 @@ return {
 		idleTime            = 1800,
 		maneuverleashlength = "1280",
 		maxAcc              = 0.75,
-		maxDamage           = 12000,
+		health              = 12000,
 		maxFuel             = 1000000,
 		maxRudder           = 0.008,
 		speed               = 5.5,

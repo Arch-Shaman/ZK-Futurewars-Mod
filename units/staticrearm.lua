@@ -41,7 +41,7 @@ return {
 		footprintX          = 9,
 		footprintZ          = 9,
 		iconType            = "building",
-		maxDamage           = 1860,
+		health              = 1860,
 		maxSlope            = 18,
 		speed               = 0,
 		objectName          = "staticrearm.dae",

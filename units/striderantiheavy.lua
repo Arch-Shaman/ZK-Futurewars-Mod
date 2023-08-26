@@ -38,7 +38,7 @@ return {
 		iconType               = "corcommander",
 		initCloaked            = true,
 		leaveTracks            = true,
-		maxDamage              = 12000,
+		health                 = 12000,
 		maxSlope               = 36,
 		speed                  = 2.5,
 		maxWaterDepth          = 5000,

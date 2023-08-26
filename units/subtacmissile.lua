@@ -32,7 +32,7 @@ return {
 		iconType               = "subtacnuke",
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
-		maxDamage              = 3750,
+		health                 = 3750,
 		speed                  = 2.79,
 		minWaterDepth          = 15,
 		movementClass          = "UBOAT3",

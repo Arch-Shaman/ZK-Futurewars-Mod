@@ -41,7 +41,7 @@ return {
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 200,
+		health                        = 200,
 		maxSlope                      = 36,
 		minCloakDistance              = 150,
 		noAutoFire                    = false,

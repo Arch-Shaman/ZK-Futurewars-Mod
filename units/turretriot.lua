@@ -30,7 +30,7 @@ return {
 		footprintZ                    = 3,
 		iconType                      = "defenseriot",
 		levelGround                   = false,
-		maxDamage                     = 2000,
+		health                        = 2000,
 		maxSlope                      = 18,
 		minCloakDistance              = 150,
 		noChaseCategory               = "FIXEDWING LAND SHIP SWIM GUNSHIP SUB HOVER",
