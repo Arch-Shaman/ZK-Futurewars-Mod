@@ -31,7 +31,7 @@ return {
 		leaveTracks         = true,
 		maxDamage           = 1100,
 		maxSlope            = 36,
-		maxVelocity         = 1.8,
+		speed               = 1.8,
 		movementClass       = "AKBOT2",
 		objectName          = "amphcon.s3o",
 		selfDestructAs      = "BIG_UNITEX",

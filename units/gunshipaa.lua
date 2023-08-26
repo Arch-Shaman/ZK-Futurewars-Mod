@@ -37,7 +37,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		maxDamage              = 3200,
-		maxVelocity            = 3.8,
+		speed                  = 3.8,
 		noAutoFire             = false,
 		noChaseCategory        = "TERRAFORM LAND SINK TURRET SHIP SWIM FLOAT SUB HOVER",
 		objectName             = "trifighter.s3o",

@@ -32,7 +32,7 @@ return {
 		initCloaked            = true,
 		maxDamage              = 40,
 		maxSlope               = 255,
-		maxVelocity            = 0.001,
+		speed                  = 0.001,
 		movementClass          = "AKBOT2",
 		minCloakDistance       = 50,
 		noAutoFire             = false,

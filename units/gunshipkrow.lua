@@ -36,7 +36,7 @@ return {
 		idleTime               = 1800,
 		maneuverleashlength    = "500",
 		maxDamage              = 37500,
-		maxVelocity            = 4.1,
+		speed                  = 4.1,
 		noAutoFire             = false,
 		noChaseCategory        = "TERRAFORM FIXEDWING SATELLITE SUB",
 		objectName             = "krow.s3o",

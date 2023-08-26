@@ -47,7 +47,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 1200,
 		maxSlope               = 36,
-		maxVelocity            = 2.9,
+		speed                  = 2.9,
 		maxReverseVelocity     = 2.9,
 		maxWaterDepth          = 22,
 		minCloakDistance       = 230,

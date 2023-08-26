@@ -35,7 +35,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 2250,
 		maxSlope               = 36,
-		maxVelocity            = 1.8,
+		speed                  = 1.8,
 		movementClass          = "AKBOT3",
 		moveState              = 0,
 		noAutoFire             = false,

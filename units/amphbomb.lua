@@ -37,7 +37,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 400,
 		maxSlope               = 36,
-		maxVelocity            = 4.1,
+		speed                  = 4.1,
 		movementClass          = "AKBOT2",
 		noChaseCategory        = "FIXEDWING LAND SINK TURRET SHIP SATELLITE SWIM GUNSHIP FLOAT SUB HOVER",
 		objectName             = "amphbomb.s3o",

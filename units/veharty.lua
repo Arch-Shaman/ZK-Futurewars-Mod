@@ -33,7 +33,7 @@ return {
 		maneuverleashlength = "650",
 		maxDamage           = 450,
 		maxSlope            = 18,
-		maxVelocity         = 2.0,
+		speed               = 2.0,
 		maxWaterDepth       = 22,
 		minCloakDistance    = 75,
 		movementClass       = "TANK3",

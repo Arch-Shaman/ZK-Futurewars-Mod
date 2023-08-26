@@ -30,7 +30,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 480,
 		maxSlope               = 36,
-		maxVelocity            = 1.8,
+		speed                  = 1.8,
 		movementClass          = "AKBOT2",
 		noChaseCategory        = "TERRAFORM FIXEDWING GUNSHIP",
 		objectName             = "amphraider3.s3o",

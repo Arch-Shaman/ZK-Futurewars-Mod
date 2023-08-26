@@ -39,7 +39,7 @@ return {
 		levelGround            = false,
 		maxDamage              = 900,
 		maxSlope               = 28,
-		maxVelocity            = 0,
+		speed                  = 0,
 		maxWaterDepth          = 5000,
 		noAutoFire             = false,
 		objectName             = "AMETALEXTRACTORLVL1.S3O",

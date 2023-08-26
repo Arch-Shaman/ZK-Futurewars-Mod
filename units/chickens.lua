@@ -29,7 +29,7 @@ return {
 		leaveTracks         = true,
 		maxDamage           = 780,
 		maxSlope            = 36,
-		maxVelocity         = 3.5,
+		speed               = 3.5,
 		movementClass       = "BHOVER2",
 		movestate           = 2,
 		noAutoFire          = false,

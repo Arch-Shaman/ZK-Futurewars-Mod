@@ -35,7 +35,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 1800,
 		maxSlope               = 36,
-		maxVelocity            = 2.1,
+		speed                  = 2.1,
 		maxWaterDepth          = 5000,
 		movementClass          = "AKBOT2",
 		moveState              = 0,

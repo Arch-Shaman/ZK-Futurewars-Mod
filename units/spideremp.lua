@@ -30,7 +30,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 940,
 		maxSlope               = 72,
-		maxVelocity            = 2.8,
+		speed                  = 2.8,
 		maxWaterDepth          = 22,
 		movementClass          = [[TKBOT3]],
 		noChaseCategory        = [[TERRAFORM FIXEDWING SATELLITE SUB]],

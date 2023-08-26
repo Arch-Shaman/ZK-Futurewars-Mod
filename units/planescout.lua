@@ -41,7 +41,7 @@ return {
 		maxAileron          = 0.018,
 		maxElevator         = 0.02,
 		maxRudder           = 0.018,
-		maxVelocity         = 12,
+		speed               = 12,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET",
 		objectName          = "armpnix.s3o",

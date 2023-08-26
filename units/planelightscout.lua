@@ -42,7 +42,7 @@ return {
 		maxAileron          = 0.016,
 		maxElevator         = 0.022,
 		maxRudder           = 0.012,
-		maxVelocity         = 8,
+		speed               = 8,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET",
 		objectName          = "planelightscout.s3o",

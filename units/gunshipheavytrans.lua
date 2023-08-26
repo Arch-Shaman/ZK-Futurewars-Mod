@@ -44,7 +44,7 @@ return {
 		iconType               = "heavygunshiptransport",
 		maneuverleashlength    = "1280",
 		maxDamage              = 3900,
-		maxVelocity            = 8,
+		speed                  = 8,
 		noChaseCategory        = "TERRAFORM FIXEDWING SATELLITE SUB",
 		objectName             = "largeTransport.s3o",
 		script                 = "gunshipheavytrans.lua",

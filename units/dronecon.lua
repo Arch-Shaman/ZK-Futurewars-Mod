@@ -29,7 +29,7 @@ return {
 		idleAutoHeal        = 10,
 		idleTime            = 120,
 		maxDamage           = 350,
-		maxVelocity         = 6.5,
+		speed               = 6.5,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE SUB",
 		objectName          = "condrone.dae",

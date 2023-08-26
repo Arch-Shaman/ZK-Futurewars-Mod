@@ -44,7 +44,7 @@ return {
 		maxDamage           = 1700,
 		maxFuel             = 1000000,
 		maxRudder           = 0.012,
-		maxVelocity         = 10.2,
+		speed               = 10.2,
 		noChaseCategory     = "TERRAFORM FIXEDWING LAND SHIP SWIM GUNSHIP SUB HOVER",
 		objectName          = "stiletto.s3o",
 		script              = "bomberdisarm.lua",

@@ -59,7 +59,7 @@ return {
 		iconType                      = "facair",
 		maxDamage                     = 4000,
 		maxSlope                      = 15,
-		maxVelocity                   = 0,
+		speed                         = 0,
 		minCloakDistance              = 150,
 		noAutoFire                    = false,
 		objectName                    = "CORAP.s3o",

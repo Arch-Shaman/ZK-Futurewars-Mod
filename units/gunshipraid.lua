@@ -35,7 +35,7 @@ return {
 		idleAutoHeal           = 25,
 		idleTime               = 150,
 		maxDamage              = 1100,
-		maxVelocity            = 6.5,
+		speed                  = 6.5,
 		noChaseCategory        = "TERRAFORM SUB",
 		objectName             = "banshee.s3o",
 		script                 = "gunshipraid.lua",

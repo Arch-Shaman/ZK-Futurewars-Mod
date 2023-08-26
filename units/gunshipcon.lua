@@ -46,7 +46,7 @@ return {
 		hoverAttack         = true,
 		iconType            = "builderair",
 		maxDamage           = 1900,
-		maxVelocity         = 2.7,
+		speed               = 2.7,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET",
 		objectName          = "bumblebee.dae",

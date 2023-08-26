@@ -36,7 +36,7 @@ return {
 		losEmitHeight          = 40,
 		maxDamage              = 1600,
 		maxSlope               = 72,
-		maxVelocity            = 1.6,
+		speed                  = 1.6,
 		maxWaterDepth          = 22,
 		minCloakDistance       = 75,
 		movementClass          = [[TKBOT3]],

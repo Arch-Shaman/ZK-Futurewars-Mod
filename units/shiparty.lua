@@ -35,7 +35,7 @@ return {
 		idleTime               = 1800,
 		losEmitHeight          = 25,
 		maxDamage              = 6800,
-		maxVelocity            = 1.4,
+		speed                  = 1.4,
 		minWaterDepth          = 10,
 		movementClass          = [[BOAT4]],
 		moveState              = 0,

@@ -40,7 +40,7 @@ return {
 		losEmitHeight       = 40,
 		maxDamage           = 5500,
 		maxSlope            = 36,
-		maxVelocity         = 1.1,
+		speed               = 1.1,
 		maxWaterDepth       = 5000,
 		movementClass       = "AKBOT2",
 		noChaseCategory     = "TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET",

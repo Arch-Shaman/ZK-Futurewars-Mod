@@ -48,7 +48,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		maxDamage           = 1200,
-		maxVelocity         = 4,
+		speed               = 4,
 		minCloakDistance    = 75,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET",

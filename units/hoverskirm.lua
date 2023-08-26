@@ -28,7 +28,7 @@ return {
 		idleTime            = 1800,
 		maxDamage           = 2000,
 		maxSlope            = 36,
-		maxVelocity         = 4.5,
+		speed               = 4.5,
 		movementClass       = "HOVER3",
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE SUB",

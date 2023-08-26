@@ -40,7 +40,7 @@ return {
 		idleAutoHeal           = 440,
 		idleTime               = 1800,
 		maxDamage              = 60000,
-		maxVelocity            = 1.5,
+		speed                  = 1.5,
 		noAutoFire             = false,
 		noChaseCategory        = "TERRAFORM FIXEDWING SATELLITE SUB",
 		objectName             = "nebula.s3o",

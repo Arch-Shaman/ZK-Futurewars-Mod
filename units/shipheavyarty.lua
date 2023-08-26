@@ -31,7 +31,7 @@ return {
 		highTrajectory         = 2,
 		iconType               = "shipheavyarty",
 		maxDamage              = 8000,
-		maxVelocity            = 1.9,
+		speed                  = 1.9,
 		minWaterDepth          = 15,
 		movementClass          = "BOAT5",
 		moveState              = 0,

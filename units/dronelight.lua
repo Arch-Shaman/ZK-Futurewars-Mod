@@ -27,7 +27,7 @@ return {
 		idleAutoHeal        = 10,
 		idleTime            = 150,
 		maxDamage           = 240,
-		maxVelocity         = 8.0,
+		speed               = 8.0,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE SUB",
 		objectName          = "attackdrone.s3o",

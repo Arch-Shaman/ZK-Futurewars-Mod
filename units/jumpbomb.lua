@@ -51,7 +51,7 @@ return {
 		maneuverleashlength    = "140",
 		maxDamage              = 200,
 		maxSlope               = 36,
-		maxVelocity            = 2.4,
+		speed                  = 2.4,
 		maxWaterDepth          = 15,
 		minCloakDistance       = 125,
 		movementClass          = "SKBOT2",

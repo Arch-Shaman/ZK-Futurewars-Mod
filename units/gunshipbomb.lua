@@ -42,7 +42,7 @@ return {
 		maneuverleashlength    = "1240",
 		maxDamage              = 100,
 		maxSlope               = 36,
-		maxVelocity            = 10.2,
+		speed                  = 10.2,
 		noAutoFire             = false,
 		noChaseCategory        = "TERRAFORM SATELLITE SUB",
 		objectName             = "f-1.s3o",

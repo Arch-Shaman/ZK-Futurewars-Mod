@@ -49,7 +49,7 @@ return {
 		losEmitHeight       = 40,
 		maxDamage           = 3250,
 		maxSlope            = 36,
-		maxVelocity         = 2.0,
+		speed               = 2.0,
 		maxWaterDepth       = 5000,
 		metalStorage        = 500,
 		movementClass       = "AKBOT2",

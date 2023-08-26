@@ -30,7 +30,7 @@ return {
 		idleTime            = 90,
 		maxDamage           = 450,
 		maxSlope            = 18,
-		maxVelocity         = 14.3,
+		speed               = 14.3,
 		movestate           = 2,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING GUNSHIP SATELLITE",

@@ -40,7 +40,7 @@ return {
 		idleTime            = 1800,
 		maneuverleashlength = "1280",
 		maxDamage           = 5250,
-		maxVelocity         = 3.0,
+		speed               = 3.0,
 		minCloakDistance    = 75,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE SUB",

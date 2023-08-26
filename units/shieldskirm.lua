@@ -30,7 +30,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 440,
 		maxSlope               = 36,
-		maxVelocity            = 1.6,
+		speed                  = 1.6,
 		maxWaterDepth          = 22,
 		movementClass          = "KBOT2",
 		noChaseCategory        = "TERRAFORM FIXEDWING GUNSHIP SUB",

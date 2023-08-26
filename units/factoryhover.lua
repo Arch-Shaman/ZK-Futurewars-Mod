@@ -61,7 +61,7 @@ return {
 		levelGround      = false,
 		maxDamage        = 4000 * 0.4,
 		maxSlope         = 15,
-		maxVelocity      = 0,
+		speed            = 0,
 		moveState        = 1,
 		noAutoFire       = false,
 		objectName       = "factoryhover.s3o",

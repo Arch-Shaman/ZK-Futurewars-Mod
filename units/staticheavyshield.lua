@@ -27,7 +27,7 @@ return {
 		levelGround                   = false,
 		maxDamage                     = 6000,
 		maxSlope                      = 36,
-		maxVelocity                   = 0,
+		speed                         = 0,
 		noAutoFire                    = false,
 		objectName                    = [[pw_artefact.dae]],
 		onoffable                     = true,

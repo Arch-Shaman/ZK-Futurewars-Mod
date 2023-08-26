@@ -33,7 +33,7 @@ return {
 		idleAutoHeal        = 10,
 		idleTime            = 180,
 		maxDamage           = 460,
-		maxVelocity         = 8.56,
+		speed               = 8.56,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE SUB",
 		objectName          = "carrydrone.s3o",

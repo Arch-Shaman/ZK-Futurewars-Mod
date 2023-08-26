@@ -43,7 +43,7 @@ return {
 		iconType            = "building",
 		maxDamage           = 1860,
 		maxSlope            = 18,
-		maxVelocity         = 0,
+		speed               = 0,
 		objectName          = "staticrearm.dae",
 		script              = "staticrearm.lua",
 		selfDestructAs      = "LARGE_BUILDINGEX",

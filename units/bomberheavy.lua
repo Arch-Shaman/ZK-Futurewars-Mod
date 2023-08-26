@@ -44,7 +44,7 @@ return {
 		maxDamage           = 12000,
 		maxFuel             = 1000000,
 		maxRudder           = 0.008,
-		maxVelocity         = 5.5,
+		speed               = 5.5,
 		minCloakDistance    = 75,
 		mygravity           = 1,
 		noAutoFire          = false,

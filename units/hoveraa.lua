@@ -33,7 +33,7 @@ return {
 		idleTime            = 1800,
 		maxDamage           = 1200,
 		maxSlope            = 36,
-		maxVelocity         = 3.5,
+		speed               = 3.5,
 		movementClass       = "HOVER3",
 		moveState           = 0,
 		noAutoFire          = false,

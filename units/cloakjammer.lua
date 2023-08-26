@@ -31,7 +31,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 2000,
 		maxSlope               = 36,
-		maxVelocity            = 2.5,
+		speed                  = 2.5,
 		minCloakDistance       = 100,
 		movementClass          = "AKBOT2",
 		objectName             = "spherecloaker.s3o",

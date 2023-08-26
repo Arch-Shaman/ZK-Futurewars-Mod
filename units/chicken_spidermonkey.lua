@@ -29,7 +29,7 @@ return {
 		leaveTracks         = true,
 		maxDamage           = 1500,
 		maxSlope            = 72,
-		maxVelocity         = 2.2,
+		speed               = 2.2,
 		maxWaterDepth       = 22,
 		movementClass       = "ATKBOT3",
 		noAutoFire          = false,

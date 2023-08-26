@@ -94,7 +94,7 @@ return {
 		initCloaked         = false,
 		maxDamage           = 2300,
 		maxSlope            = 36,
-		maxVelocity         = 7,
+		speed               = 7,
 		minCloakDistance    = 100,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET",

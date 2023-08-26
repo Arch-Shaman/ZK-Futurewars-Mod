@@ -27,7 +27,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 1600,
 		maxSlope               = 72,
-		maxVelocity            = 2.3,
+		speed                  = 2.3,
 		maxWaterDepth          = 22,
 		movementClass          = "TKBOT3",
 		moveState              = 0,

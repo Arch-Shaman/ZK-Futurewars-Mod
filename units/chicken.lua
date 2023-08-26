@@ -31,7 +31,7 @@ return {
 		leaveTracks         = true,
 		maxDamage           = 400,
 		maxSlope            = 36,
-		maxVelocity         = 5.4,
+		speed               = 5.4,
 		movementClass       = "BHOVER2",
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP",

@@ -32,7 +32,7 @@ return {
 		hoverAttack         = true,
 		iconType            = "heavygunshipassault",
 		maxDamage           = 7500,
-		maxVelocity         = 5.3,
+		speed               = 5.3,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP SUB",
 		objectName          = "Black_Dawn.s3o",

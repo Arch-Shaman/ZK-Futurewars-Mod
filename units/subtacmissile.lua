@@ -33,7 +33,7 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		maxDamage              = 3750,
-		maxVelocity            = 2.79,
+		speed                  = 2.79,
 		minWaterDepth          = 15,
 		movementClass          = "UBOAT3",
 		moveState              = 0,

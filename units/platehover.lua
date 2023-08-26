@@ -55,7 +55,7 @@ return {
 		levelGround      = false,
 		maxDamage        = Shared.FACTORY_PLATE_HEALTH * 0.4,
 		maxSlope         = 15,
-		maxVelocity      = 0,
+		speed            = 0,
 		moveState        = 1,
 		noAutoFire       = false,
 		objectName       = "plate_hover.s3o",

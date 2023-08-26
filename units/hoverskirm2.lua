@@ -31,7 +31,7 @@ return {
 		leaveTracks         = true,
 		maxDamage           = 680,
 		maxSlope            = 18,
-		maxVelocity         = 2.1,
+		speed               = 2.1,
 		maxWaterDepth       = 22,
 		movementClass       = "HOVER3",
 		noAutoFire          = false,

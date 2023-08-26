@@ -25,7 +25,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 750,
 		maxSlope               = 72,
-		maxVelocity            = 2.1,
+		speed                  = 2.1,
 		maxWaterDepth          = 22,
 		movementClass          = [[TKBOT3]],
 		noChaseCategory        = [[TERRAFORM FIXEDWING GUNSHIP SATELLITE SUB]],

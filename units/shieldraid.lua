@@ -30,7 +30,7 @@ return {
 		leaveTracks            = true,
 		maxDamage              = 280,
 		maxSlope               = 36,
-		maxVelocity            = 3.0,
+		speed                  = 3.0,
 		maxWaterDepth          = 22,
 		minCloakDistance       = 75,
 		movementClass          = "KBOT2",

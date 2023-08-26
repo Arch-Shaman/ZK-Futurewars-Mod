@@ -40,7 +40,7 @@ return {
 		footprintZ             = 5,
 		iconType               = "shipcarrier",
 		maxDamage              = 7500,
-		maxVelocity            = 2.75,
+		speed                  = 2.75,
 		minWaterDepth          = 10,
 		movementClass          = "BOAT5",
 		objectName             = "shipcarrier.dae",

@@ -39,7 +39,7 @@ return {
 		idleTime            = 1800,
 		maxDamage           = 780,
 		maxSlope            = 36,
-		maxVelocity         = 4.2,
+		speed               = 4.2,
 		movementClass       = "HOVER2",
 		noChaseCategory     = "TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET",
 		objectName          = "corch.s3o",
