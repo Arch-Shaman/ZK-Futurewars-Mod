@@ -343,6 +343,11 @@ for name, ud in pairs(UnitDefs) do
 			end
 		end
 	end
+	-- fix zk defs? --
+	if ud.metalcost then
+		ud.buildcostmetal = ud.metalcost
+	end
+	
 	-- Speed fixes --
 	if ud.speed and ud.speed > 0 and ud.speed < 30 then -- this should impact less units than the first time. FIXME: Remove when all base units are in the mod.
 		ud.speed = ud.speed * 30
