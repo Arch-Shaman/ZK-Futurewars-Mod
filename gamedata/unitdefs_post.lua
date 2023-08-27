@@ -343,6 +343,10 @@ for name, ud in pairs(UnitDefs) do
 			end
 		end
 	end
+	-- Speed fixes --
+	if ud.speed and ud.speed > 0 and ud.speed < 30 then -- this should impact less units than the first time. FIXME: Remove when all base units are in the mod.
+		ud.speed = ud.speed * 30
+	end
 	-- Set units that ignore map-side gadgetted placement resitrctions
 	-- see http://springrts.com/phpbb/viewtopic.php?f=13&t=27550
 	if (ud.speed and ud.speed > 0) or ud.customparams.mobilebuilding then
