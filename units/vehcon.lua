@@ -35,6 +35,7 @@ return {
 		health                 = 1200,
 		maxSlope               = 18,
 		speed                  = 2.4,
+		maxReverseVelocity     = 2.4,
 		maxWaterDepth          = 22,
 		movementClass          = [[TANK2]],
 		noAutoFire             = false,
