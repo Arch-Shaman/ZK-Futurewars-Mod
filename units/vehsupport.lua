@@ -37,6 +37,7 @@ return {
 		health                 = 750,
 		maxSlope               = 18,
 		speed                  = 2.6,
+		maxReverseVelocity     = 2.6,
 		maxWaterDepth          = 22,
 		movementClass          = "TANK3",
 		moveState              = 0,
