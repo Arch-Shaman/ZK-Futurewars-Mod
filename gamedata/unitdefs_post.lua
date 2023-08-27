@@ -209,10 +209,10 @@ for name, ud in pairs(UnitDefs) do
 		--Spring.Echo("ERROR: " .. name .. ".speed set, should be speed instead!")
 		ud.speed = ud.speed or (ud.maxvelocity * Game.gameSpeed)
 	end
-	if ud.maxreversevelocity then
+	--if ud.maxreversevelocity then
 		--Spring.Echo("ERROR: " .. name .. ".maxReverseVelocity set, should be rSpeed instead!")
-		ud.rspeed = ud.rspeed or (ud.maxreversevelocity * Game.gameSpeed)
-	end
+		--ud.rspeed = ud.rspeed or (ud.maxreversevelocity * Game.gameSpeed)
+	--end
 	if ud.customparams.ismex then
 		--Spring.Echo("ERROR: " .. name .. ".customParams.ismex set, should be metal_extractor_mult (= 1) instead!")
 		ud.customparams.metal_extractor_mult = 1
@@ -347,6 +347,7 @@ for name, ud in pairs(UnitDefs) do
 	if ud.speed and ud.speed > 0 and ud.speed < 30 then -- this should impact less units than the first time. FIXME: Remove when all base units are in the mod.
 		ud.speed = ud.speed * 30
 	end
+	ud.rspeed = (ud.maxreversevelocity and ud.maxreversevelocity * 30) or (ud.speed and ud.speed / 8) or 0 -- maybe maxreversevelocity is still frame based?
 	-- Set units that ignore map-side gadgetted placement resitrctions
 	-- see http://springrts.com/phpbb/viewtopic.php?f=13&t=27550
 	if (ud.speed and ud.speed > 0) or ud.customparams.mobilebuilding then
