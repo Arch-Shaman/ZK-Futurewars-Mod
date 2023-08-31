@@ -89,6 +89,11 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		Spring.SetUnitSensorRadius(unitID, "los", 0)
 		Spring.SetUnitSensorRadius(unitID, "airLos", 0)
 		Spring.SetUnitRulesParam(unitID, "crashing", 1, LOS_ACCESS)
+		if UnitDefs[unitDefID].hoverAttack then
+			Spring.MoveCtrl.SetGunshipMoveTypeData(unitID, "altitudeRate", 75)
+		else
+			Spring.MoveCtrl.SetAirMoveTypeData(unitID, "myGravity", 2.75) -- try to pull it faster?
+		end
 		GG.UpdateUnitAttributes(unitID)
 		if GG.AircraftCrashingDown then
 			GG.AircraftCrashingDown(unitID) --send event to unit_bomber_command.lua to cancel any airpad reservation hold by this airplane
