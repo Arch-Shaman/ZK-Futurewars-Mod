@@ -1,0 +1,38 @@
+local value = 3
+
+return {
+	spots = {
+		{x = 3608, z = 1544, metal = value},
+		{x = 3384, z = 1352, metal = value},
+		{x = 3320, z = 6824, metal = value},
+		{x = 3064, z = 4984, metal = value},
+		{x = 6312, z = 6792, metal = value},
+		{x = 5288, z = 6744, metal = value},
+		{x = 6808, z = 3704, metal = value},
+		{x = 5480, z = 2872, metal = value},
+		{x = 6712, z = 6472, metal = value},
+		{x = 1976, z = 6648, metal = value},
+		{x = 3304, z = 2856, metal = value},
+		{x = 1720, z = 2632, metal = value},
+		{x = 5048, z = 1432, metal = value},
+		{x = 6824, z = 5000, metal = value},
+		{x = 6296, z = 6440, metal = value},
+		{x = 7112, z = 2504, metal = value},
+		{x = 2456, z = 5512, metal = value},
+		{x = 2296, z = 4184, metal = value},
+		{x = 5400, z = 6328, metal = value},
+		{x = 2008, z = 1512, metal = value},
+		{x = 7272, z = 1624, metal = value},
+		{x = 1528, z = 6152, metal = value},
+		{x = 6536, z = 4792, metal = value},
+		{x = 1320, z = 2760, metal = value},
+		{x = 5992, z = 1128, metal = value},
+		{x = 1624, z = 1480, metal = value},
+		{x = 2088, z = 5800, metal = value},
+		{x = 6824, z = 1336, metal = value},
+		{x = 1144, z = 4328, metal = value},
+		{x = 1640, z = 1896, metal = value},
+		{x = 5016, z = 4936, metal = value},
+		{x = 3752, z = 5912, metal = value},
+	}
+}
