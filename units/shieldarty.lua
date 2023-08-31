@@ -74,7 +74,7 @@ return {
 					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					use2ddist = 0,
 					spawndist = 300,
-					keepmomentum1 = false,
+					keepmomentum1 = true,
 					timeoutspawn = 1, 
 					velspread1 = "-4,-28,-4,4,-24,4", -- velocity that is randomly added. covers range of +-velspread. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
