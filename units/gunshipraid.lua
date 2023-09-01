@@ -47,7 +47,6 @@ return {
 			},
 		},
 		sightDistance          = 700,
-		sonarDistance		   = 700,
 		radarDistance		   = 1300,
 		turnRate               = 740,
 		weapons                = {

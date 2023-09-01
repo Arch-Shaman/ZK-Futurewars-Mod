@@ -47,7 +47,6 @@ return {
 		},
 
 		sightDistance       = 520,
-		sonarDistance       = 520,
 		turninplace         = 0,
 		turnRate            = 400,
 		workerTime          = 0,

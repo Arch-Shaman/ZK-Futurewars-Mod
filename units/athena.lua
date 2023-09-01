@@ -105,7 +105,6 @@ return {
 		selfDestructAs      = "GUNSHIPEX",
 		showNanoSpray       = false,
 		sightDistance       = 800,
-		sonarDistance       = 800,
 		resurrectSpeed      = 15,
 		turnRate            = 148,
 		workerTime          = 30,
