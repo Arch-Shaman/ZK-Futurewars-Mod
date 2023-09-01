@@ -1736,9 +1736,10 @@ end
 
 -----------------------------------------------------------------------
 
--- function widget:PlayerAdded(playerID)
-	-- setup()
--- end
+function widget:PlayerAdded(playerID)
+	SetupPlayers(playerID)
+end
+
 function widget:PlayerChanged(playerID)
 	setupPlayers(playerID)
 end
@@ -1969,7 +1970,8 @@ function widget:Initialize()
 	
 	window_console = MakeMessageWindow("ProConsole", options.enableConsole.value, InitializeConsole)
 	window_console:AddChild(scrollpanel_console)
-	
+	self:LocalColorRegister()
+	SetupPlayers()
 	RemakeConsole()
 	--local buffer = widget:ProcessConsoleBuffer(nil, options.max_lines.value)
 	--for i=1,#buffer do
@@ -1980,7 +1982,6 @@ function widget:Initialize()
 	
 	HideInputSpace()
  	
-	self:LocalColorRegister()
 	WG.InitializeTranslation(OnLocaleChanged, GetInfo().name)
 end
 
