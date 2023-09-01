@@ -27,7 +27,7 @@
 	"factorycloak" : {
 		"name" : "Ambusher Factory",
 		"description" : "Produces Cloaked, Mobile Robots",
-		"helptext" : "Emphasizing stealth and burst damage over brute force and durability, the Ambusher Factory makes good use of stealth, mobility and EMP weapons to strike at the enemy's weak points. Comes equipped with a strong radar jammer and cloakfield. Key units:  Lurker, Waylayer, Assailant, Snare, Sparky"
+		"helptext" : "Emphasizing stealth and burst damage over brute force and durability, the Ambusher Factory makes good use of stealth, mobility and EMP weapons to strike at the enemy's weak points. Comes equipped with a strong radar jammer and cloakfield. Key units: Lurker, Waylayer, Assailant, Snare, Sparky"
 	},
 	"amphlaunch" : {
 		"name" : "Lobster",
