@@ -12,7 +12,7 @@
 	"gunshipskirm" : {
 		"name" : "Longbow",
 		"description" : "Fire Support Gunship",
-		"helptext" : "The Longbow replaced the Harpy after a paradigm shift demanded further air support. The Longbow fills a role between airborn skirmisher and artillery. Its rockets are fairly inaccurate and large groups can saturate an area, but beware: up close, it's inaccurate."
+		"helptext" : "The Longbow fills a role between skirmisher and artillery support unlike its predecessor, the Harpy. Its equipped with a rocket launcher array that fields 20 missiles, allowing for rapid saturation of enemy positions. It has decent range, enough to fill the role of an artillery gunship, but it lacks the staying power of most other gunships."
 	},
 	"striderrazorback" : {
 		"name" : "Forsaken",
