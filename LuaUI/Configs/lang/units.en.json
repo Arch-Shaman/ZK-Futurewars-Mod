@@ -1187,7 +1187,7 @@
 	"shieldassault" : {
 		"name" : "Vindicator",
 		"description" : "Shielded Skirmisher/Assault Bot",
-		"helptext" : "The steward replaced the aging Thug design after its miserable failure against the Coalition. Its deficient plasma cannons were replaced with a heavier accelerator resulting in improved range and damage. The Ward has high shield regeneration, but that comes at a premium."
+		"helptext" : "The Vindicator replaced the aging Thug design after its miserable failure against the Coalition. Its deficient plasma cannons were replaced with a heavier accelerator resulting in improved range and damage. The Vindicator has high shield regeneration, but that comes at a cost to its durability once its shields are depleted."
 	},
 	"amphriot" : {
 		"name" : "Froth",
