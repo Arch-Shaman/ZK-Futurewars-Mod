@@ -767,7 +767,7 @@
 	"gunshipassault" : {
 		"name" : "Dusk",
 		"description" : "Heavy Assault/Raider",
-		"helptext" : "The  Dusk is a heavy assault gunship that specializes at high damage concentration. Its exceptionally well armored and capable of dealing heavy amounts of damage in a short period of time with its short ranged cannons. Beware of its slight inaccuracy though: it may miss highly mobile targets."
+		"helptext" : "The Dusk is a heavy assault gunship that specializes at high damage concentration. Its exceptionally well armored and capable of dealing heavy amounts of damage in a short period of time with its short ranged cannons. Beware of its slight inaccuracy though: it may miss highly mobile targets."
 	},
 	"tankriot" : {
 		"name" : "Cobbler",
