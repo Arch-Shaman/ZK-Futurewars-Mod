@@ -1,6 +1,6 @@
 local name = "commweapon_beamlaser_heavy"
 local weaponDef = {
-	name                    = [[Heavy Beam Laser]],
+	name                    = "Heavy Beam Laser",
 	areaOfEffect            = 14,
 	beamTime                = 1.1,
 	coreThickness           = 0.5,
@@ -9,10 +9,10 @@ local weaponDef = {
 
 	customParams            = {
 		is_unit_weapon = 1,
-		slot = [[5]],
-		muzzleEffectShot = [[custom:BEAMWEAPON_MUZZLE_GREEN]],
+		slot = "5",
+		muzzleEffectShot = "custom:BEAMWEAPON_MUZZLE_GREEN",
 		
-		light_color = [[0 0.5 0]],
+		light_color = "0 0.5 0",
 		light_radius = 120,
 		reaim_time = 1,
 		use_okp = 1,
@@ -28,7 +28,7 @@ local weaponDef = {
 
 	duration                = 0.1,
 	edgeEffectiveness       = 0.05,
-	explosionGenerator      = [[custom:heavybeamgreenimpactsmall]],
+	explosionGenerator      = "custom:heavybeamgreenimpactsmall",
 	fireStarter             = 70,
 	impactOnly              = true,
 	impulseBoost            = 0,
@@ -40,18 +40,18 @@ local weaponDef = {
 	noSelfDamage            = true,
 	range                   = 650,
 	reloadtime              = 13,
-	rgbColor                = [[0 0.8 0]],
-	soundStart              = [[weapon/laser/heavybeamlaser]],
+	rgbColor                = "0 0.8 0",
+	soundStart              = "weapon/laser/heavybeamlaser",
 	soundTrigger            = true,
 	sweepFire 				= true,
-	texture1                = [[largelaser]],
-	texture2                = [[flare]],
-	texture3                = [[flare]],
-	texture4                = [[smallflare]],
+	texture1                = "largelaser",
+	texture2                = "flare",
+	texture3                = "flare",
+	texture4                = "smallflare",
 	thickness               = 16.937384685954,
 	tolerance               = 10000,
 	turret                  = true,
-	weaponType              = [[BeamLaser]],
+	weaponType              = "BeamLaser",
 	weaponVelocity          = 1000,
 }
 
