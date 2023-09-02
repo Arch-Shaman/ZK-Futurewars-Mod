@@ -85,6 +85,7 @@ return {
 				cylinderTargeting       = 1,
 				explosionGenerator      = "custom:hammer_artillery_hit",
 				edgeEffectiveness       = 0.05,
+				heightBoostFactor 		= 0,
 				paralyzeTime            = 1,
 				impactOnly              = false,
 				interceptedByShieldType = 1,
