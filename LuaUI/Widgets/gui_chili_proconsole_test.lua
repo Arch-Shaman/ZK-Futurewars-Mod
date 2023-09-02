@@ -1777,14 +1777,22 @@ local function OnLocaleChanged()
 	local newRecieved = WG.Translate("interface", "whisper") .. ": #w$argument"
 	local newSent = WG.Translate("interface", "whisperto") .. ": #w$argument"
 	local newSpec = WG.Translate("interface", "specwhisper") .. ": #w$argument"
+	local newLabel = WG.Translate("interface", "addedpoint")
+	local newMarker = WG.Translate("interface", "addedmarker")
 	newSpec = newSpec:gsub('user2', "#t$playername2#w")
 	newSpec = newSpec:gsub('user', "#p$playername#e")
 	newSent = newSent:gsub("user", "#p$playername#e")
+	newMarker = newMarker:gsub("user", "#p$playername#e")
+	newLabel = newLabel:gsub("user", "#p$playername#e")
 	newRecieved = newRecieved:gsub("user", "#p$playername#e")
 	--Spring.Echo("Locale changed:\nSent: " .. newSent .. "\nRecieve: " .. newRecieved)
+	MESSAGE_RULES.point.format = newLabel
 	MESSAGE_RULES.player_to_player_received.format = newRecieved
 	MESSAGE_RULES.player_to_player_sent.format = newSent
 	MESSAGE_RULES.player_to_player_spec.format = newSpec
+	MESSAGE_RULES.label.output[1].format = newMarker .. " $argument"
+	MESSAGE_RULES.label.output[2].format = newMarker .. " #a$argument"
+	MESSAGE_RULES.label.output[3].format = newMarker .. " #p$argument"
 	reload = true
 	if lastMsgChat then
 		lastMsgChat:Dispose()
