@@ -159,8 +159,13 @@ do
 			conf.radius = weaponDef.damageAreaOfEffect
 			conf.weaponDef = CYLINDER_HEIGHTMOD
 		else
-			conf.weaponDef = weaponDef
-			conf.radius = weaponDef.range
+			if unitName ~= "turretemp" then
+				conf.weaponDef = weaponDef
+				conf.radius = weaponDef.range
+			else
+				conf.radius = weaponDef.range
+				conf.weaponDef = CYLINDER_HEIGHTMOD
+			end
 		end
 
 		if not conf.lineWidth then
