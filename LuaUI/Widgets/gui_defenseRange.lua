@@ -81,7 +81,6 @@ do
 		},
 		turretmissile = {
 			color = {1, 0, 0},
-			color2 = {0, 1, 0},
 			class = GROUND,
 		},
 		turretlaser = {
