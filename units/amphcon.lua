@@ -38,7 +38,6 @@ return {
 		script              = "amphcon.lua",
 		showNanoSpray       = false,
 		sightDistance       = 400,
-		sonarDistance       = 400,
 		trackOffset         = 0,
 		trackStrength       = 8,
 		trackStretch        = 1,

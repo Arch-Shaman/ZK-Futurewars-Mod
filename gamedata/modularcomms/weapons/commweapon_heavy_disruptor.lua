@@ -1,6 +1,6 @@
 local name = "commweapon_heavy_disruptor"
 local weaponDef = {
-	name                    = [[Heavy Disruptor Pulse Beam]],
+	name                    = "Heavy Disruptor Pulse Beam",
 	beamdecay               = 0.9,
 	beamTime                = 4/30,
 	beamttl                 = 50,
@@ -11,10 +11,10 @@ local weaponDef = {
 
 	customParams            = {
 		is_unit_weapon = 1,
-		--timeslow_preset       = [[module_disruptorbeam]],
-		timeslow_damagefactor = [[3]],
+		--timeslow_preset       = "module_disruptorbeam",
+		timeslow_damagefactor = "3",
 		timeslow_overslow_frames = 4*30,
-		light_color = [[1.047 0.741 2.525]],
+		light_color = "1.047 0.741 2.525",
 		light_radius = 100,
 		reaim_time = 1,
 		use_okp = 1,
@@ -28,7 +28,7 @@ local weaponDef = {
 		default = 912, 
 	},
 
-	explosionGenerator      = [[custom:atapurple]],
+	explosionGenerator      = "custom:atapurple",
 	fireStarter             = 100,
 	impactOnly              = true,
 	impulseFactor           = 0,
@@ -38,13 +38,13 @@ local weaponDef = {
 	noSelfDamage            = true,
 	range                   = 550,
 	reloadtime              = 3.8,
-	rgbColor                = [[0.239 0.006 0.341]],
-	soundStart              = [[weapon/laser/hpbeamslow]],
+	rgbColor                = "0.239 0.006 0.341",
+	soundStart              = "weapon/laser/hpbeamslow",
 	soundStartVolume        = 7,
 	thickness               = 8,
 	tolerance               = 8192,
 	turret                  = true,
-	weaponType              = [[BeamLaser]],
+	weaponType              = "BeamLaser",
 }
 
 return name, weaponDef

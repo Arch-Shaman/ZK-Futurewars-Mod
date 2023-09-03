@@ -62,7 +62,6 @@ return {
 		selfDestructAs                = "ESTOR_BUILDINGEX",
 		showNanoSpray                 = false,
 		sightDistance                 = 500,
-		sonarDistance		          = 500,
 		upright                       = true,
 		useBuildingGroundDecal        = true,
 		workerTime                    = 10,

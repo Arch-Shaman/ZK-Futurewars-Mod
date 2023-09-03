@@ -61,7 +61,6 @@ return { chickenlandqueen = {
 
 	},
 	sightDistance          = 2048,
-	sonarDistance          = 2048,
 	trackOffset            = 18,
 	trackStrength          = 8,
 	trackStretch           = 1,

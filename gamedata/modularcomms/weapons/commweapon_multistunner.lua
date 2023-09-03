@@ -1,6 +1,6 @@
 local name = "commweapon_multistunner"
 local weaponDef = {
-	name                    = [[Multi-Stunner]],
+	name                    = "Multi-Stunner",
 	areaOfEffect            = 144,
 	avoidFeature            = false,
 	beamTTL                 = 12,
@@ -10,11 +10,11 @@ local weaponDef = {
 
 	customParams            = {
 		is_unit_weapon = 1,
-		muzzleEffectShot = [[custom:YELLOW_LIGHTNING_MUZZLE]],
-		slot = [[3]],
+		muzzleEffectShot = "custom:YELLOW_LIGHTNING_MUZZLE",
+		slot = "3",
 		manualfire = 1,
 
-		light_color = [[0.7 0.7 0.2]],
+		light_color = "0.7 0.7 0.2",
 		light_radius = 320,
 		reaim_time = 1,
 		antibaitbypass = "ärsytät minua",
@@ -30,7 +30,7 @@ local weaponDef = {
 
 	duration                = 8,
 	edgeEffectiveness       = 0,
-	explosionGenerator      = [[custom:YELLOW_LIGHTNINGPLOSION]],
+	explosionGenerator      = "custom:YELLOW_LIGHTNINGPLOSION",
 	fireStarter             = 0,
 	impulseBoost            = 0,
 	impulseFactor           = 0,
@@ -41,14 +41,14 @@ local weaponDef = {
 	paralyzeTime            = 10,
 	range                   = 360,
 	reloadtime              = 12,
-	rgbColor                = [[1 1 0.25]],
-	soundStart              = [[weapon/lightning_fire]],
+	rgbColor                = "1 1 0.25",
+	soundStart              = "weapon/lightning_fire",
 	soundTrigger            = false,
 	sprayAngle              = 1920,
-	texture1                = [[lightning]],
+	texture1                = "lightning",
 	thickness               = 10,
 	turret                  = true,
-	weaponType              = [[LightningCannon]],
+	weaponType              = "LightningCannon",
 	weaponVelocity          = 450,
 }
 
