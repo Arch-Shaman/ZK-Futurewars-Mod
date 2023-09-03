@@ -55,7 +55,6 @@ return {
 		side                   = [[ARM]],
 		sightDistance          = 660,
 		smoothAnim             = true, -- what does this even do?
-		sonarDistance          = 300,
 		turninplace            = 0,
 		turnRate               = 250,
 		upright                = true,

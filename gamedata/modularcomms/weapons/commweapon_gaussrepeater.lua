@@ -1,6 +1,6 @@
 local name = "commweapon_gaussrepeater"
 local weaponDef = {
-	name                    = [[Gauss Repeater]],
+	name                    = "Gauss Repeater",
 	alphaDecay              = 0.12,
 	areaOfEffect            = 16,
 	avoidfeature            = false,
@@ -8,14 +8,14 @@ local weaponDef = {
 	bounceslip              = 1,
 	burst					= 4,
 	burstrate				= 4/30,
-	cegTag                  = [[gauss_tag_l]],
+	cegTag                  = "gauss_tag_l",
 	craterBoost             = 0,
 	craterMult              = 0,
 
 	customParams            = {
 		is_unit_weapon = 1,
-		slot = [[5]],
-		muzzleEffectFire = [[custom:flashmuzzle1]],
+		slot = "5",
+		muzzleEffectFire = "custom:flashmuzzle1",
 		reaim_time = 1,
 		antibaitbypass = "ärsytät minua",
 	},
@@ -24,7 +24,7 @@ local weaponDef = {
 		default = 55.1,
 	},
 
-	explosionGenerator      = [[custom:gauss_hit_m]],
+	explosionGenerator      = "custom:gauss_hit_m",
 	groundbounce            = 1,
 	impactOnly              = true,
 	impulseBoost            = 0,
@@ -35,19 +35,19 @@ local weaponDef = {
 	numbounce               = 10,
 	range                   = 280,
 	reloadtime              = 0.5,
-	rgbColor                = [[0.5 1 1]],
+	rgbColor                = "0.5 1 1",
 	separation              = 0.5,
 	size                    = 0.8,
 	sizeDecay               = -0.25,
-	soundHit                = [[weapon/gauss_hit]],
+	soundHit                = "weapon/gauss_hit",
 	soundHitVolume          = 3,
-	soundStart              = [[weapon/cannon/gauss_rapid.wav]],
+	soundStart              = "weapon/cannon/gauss_rapid.wav",
 	soundStartVolume        = 2.5,
 	stages                  = 32,
 	turret                  = true,
 	waterbounce             = 1,
 	waterweapon				= true,
-	weaponType              = [[Cannon]],
+	weaponType              = "Cannon",
 	weaponVelocity          = 2200,
 }
 

@@ -50,7 +50,6 @@ return {
 			},
 		},
 		sightDistance                 = 664, -- Range*1.1 + 48 for radar overshoot
-		sonarDistance                 = 664,
 		useBuildingGroundDecal        = true,
 		yardmap                       = "ooooooooo",
 		weapons                       = {

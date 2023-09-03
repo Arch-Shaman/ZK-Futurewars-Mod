@@ -35,7 +35,6 @@ return {
 		maxSlope                      = 15,
 		maxDepth					  = 2500,
 		sightDistance    			  = 500,
-		sonarDistance		          = 500,
 		buildoptions                  = { 		
 			"dynsupport0",
 			"dynrecon0",

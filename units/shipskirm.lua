@@ -49,7 +49,6 @@ return {
 
 		sightDistance          = 720,
 		radarDistance		   = 1600,
-		sonarDistance          = 720,
 		turninplace            = 0,
 		turnRate               = 360,
 		waterline              = 4,
