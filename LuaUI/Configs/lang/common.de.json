@@ -76,7 +76,5 @@
 	"neutral" : "Neutral",
 	"whisper" : "user sagt es dir",
 	"whisperto" : "Du sagst es user",
-	"specwhisper" : "user hat es user2 gesagt",
-	"addedpoint" : "user auf der Karte angezeigt.",
-	"addedmarker": "user erstellte kartenmarkierung:"
+	"specwhisper" : "user hat es user2 gesagt"
 }

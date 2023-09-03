@@ -76,7 +76,5 @@
 	"neutral" : "Neutral",
 	"whisper" : "user tells you",
 	"whisperto" : "You tell user",
-	"specwhisper" : "user told user2",
-	"addedpoint" : "user added point.",
-	"addedmarker": "user added marker:"
+	"specwhisper" : "user told user2"
 }

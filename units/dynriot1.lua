@@ -57,6 +57,7 @@ return {
 		showNanoSpray       = false,
 		showPlayerName      = true,
 		sightDistance       = 500,
+		sonarDistance       = 300,
 		trackOffset         = 0,
 		trackStrength       = 8,
 		metalStorage        = 500,

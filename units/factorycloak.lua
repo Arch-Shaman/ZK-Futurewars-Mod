@@ -78,6 +78,7 @@ return {
 		},
 		showNanoSpray                 = false,
 		sightDistance                 = 500,
+		sonarDistance		          = 500,
 		useBuildingGroundDecal        = true,
 		workerTime                    = Shared.FACTORY_BUILDPOWER,
 		yardMap                       = "ooooooo ooooooo ooooooo occccco occccco occccco occccco yyyyyyy yyyyyyy yyyyyyy",

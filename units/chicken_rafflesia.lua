@@ -40,16 +40,23 @@ return { chicken_rafflesia = {
 
 	},
 	sightDistance                 = 512,
+	sonarDistance                 = 512,
 	upright                       = false,
 	useBuildingGroundDecal        = false,
 	workerTime                    = 0,
 	yardMap                       = [[ooooooooo]],
+
 	weapons                       = {
+
 		{
 			def = [[SHIELD]],
 		},
+
 	},
+
+
 	weaponDefs                    = {
+	
 		SHIELD      = {
 			name                    = [[Shield]],
 			craterMult              = 0,
@@ -57,9 +64,11 @@ return { chicken_rafflesia = {
 				unlinked                = true,
 				shield_recharge_delay   = 30,
 			},
+
 			damage                  = {
 				default = 10,
 			},
+
 			exteriorShield          = true,
 			impulseFactor           = 0,
 			interceptedByShieldType = 1,

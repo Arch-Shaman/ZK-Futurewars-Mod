@@ -12,7 +12,7 @@
 	"gunshipskirm" : {
 		"name" : "Longbow",
 		"description" : "Fire Support Gunship",
-		"helptext" : "The Longbow fills a role between skirmisher and artillery support unlike its predecessor, the Harpy. Its equipped with a rocket launcher array that fields 20 missiles, allowing for rapid saturation of enemy positions. It has decent range, enough to fill the role of an artillery gunship, but it lacks the staying power of most other gunships."
+		"helptext" : "The Longbow replaced the Harpy after a paradigm shift demanded further air support. The Longbow fills a role between airborn skirmisher and artillery. Its rockets are fairly inaccurate and large groups can saturate an area, but beware: up close, it's inaccurate."
 	},
 	"striderrazorback" : {
 		"name" : "Forsaken",
@@ -27,7 +27,7 @@
 	"factorycloak" : {
 		"name" : "Ambusher Factory",
 		"description" : "Produces Cloaked, Mobile Robots",
-		"helptext" : "Emphasizing stealth and burst damage over brute force and durability, the Ambusher Factory makes good use of stealth, mobility and EMP weapons to strike at the enemy's weak points. Comes equipped with a strong radar jammer and cloakfield. Key units: Lurker, Waylayer, Assailant, Snare, Sparky"
+		"helptext" : "Emphasizing stealth and burst damage over brute force and durability, the Ambusher Factory makes good use of stealth, mobility and EMP weapons to strike at the enemy's weak points. Comes equipped with a strong radar jammer and cloakfield. Key units:  Lurker, Waylayer, Assailant, Snare, Sparky"
 	},
 	"amphlaunch" : {
 		"name" : "Lobster",
@@ -767,7 +767,7 @@
 	"gunshipassault" : {
 		"name" : "Dusk",
 		"description" : "Heavy Assault/Raider",
-		"helptext" : "The Dusk is a heavy assault gunship that specializes at high damage concentration. Its exceptionally well armored and capable of dealing heavy amounts of damage in a short period of time with its short ranged cannons. Beware of its slight inaccuracy though: it may miss highly mobile targets."
+		"helptext" : "The  Dusk is a heavy assault gunship that specializes at high damage concentration. Its exceptionally well armored and capable of dealing heavy amounts of damage in a short period of time with its short ranged cannons. Beware of its slight inaccuracy though: it may miss highly mobile targets."
 	},
 	"tankriot" : {
 		"name" : "Cobbler",
@@ -1187,7 +1187,7 @@
 	"shieldassault" : {
 		"name" : "Vindicator",
 		"description" : "Shielded Skirmisher/Assault Bot",
-		"helptext" : "The Vindicator replaced the aging Thug design after its miserable failure against the Coalition. Its deficient plasma cannons were replaced with a heavier accelerator resulting in improved range and damage. The Vindicator has high shield regeneration, but that comes at a cost to its durability once its shields are depleted."
+		"helptext" : "The steward replaced the aging Thug design after its miserable failure against the Coalition. Its deficient plasma cannons were replaced with a heavier accelerator resulting in improved range and damage. The Ward has high shield regeneration, but that comes at a premium."
 	},
 	"amphriot" : {
 		"name" : "Froth",

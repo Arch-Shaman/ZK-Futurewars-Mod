@@ -43,6 +43,7 @@ return {
 			},
 		},
 		sightDistance       = 740,
+		sonarDistance       = 740,
 		turninplace         = 0,
 		turnRate            = 864,
 		workerTime          = 0,

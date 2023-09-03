@@ -44,6 +44,7 @@ return {
 		script                 = [[shiparty.lua]],
 		selfDestructAs         = [[BIG_UNITEX]],
 		sightDistance          = 660,
+		sonarDistance          = 660,
 		turninplace            = 0,
 		turnRate               = 370,
 		waterline              = 0,
