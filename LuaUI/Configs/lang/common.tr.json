@@ -76,7 +76,5 @@
 	"neutral" : "Tarafsız",
 	"whisper" : "user söylüyor",
 	"whisperto" : "user'a söyle",
-	"specwhisper" : "user user2'ye söyledi",
-	"addedpoint" : "user haritada bir yeri işaret ettim.",
-	"addedmarker": "user oluşturulan harita işaretçisi:"
+	"specwhisper" : "user user2'ye söyledi"
 }

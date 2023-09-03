@@ -68,6 +68,7 @@ return {
 		selfDestructAs                = "LARGE_BUILDINGEX",
 		showNanoSpray                 = false,
 		sightDistance                 = 500,
+		sonarDistance		          = 500,
 		useBuildingGroundDecal        = true,
 		workerTime                    = Shared.FACTORY_BUILDPOWER,
 		yardMap                       = "ooooooo ooooooo ooooooo ccccccc ccccccc ccccccc ccccccc",

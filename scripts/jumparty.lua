@@ -191,7 +191,7 @@ local function JetTrailThread()
 	while jumpflaming do
 		EmitSfx(fp2, GG.Script.FIRE_W2)
 		EmitSfx(fp1, GG.Script.FIRE_W2)
-		waitMod = math.max(minWait, jumpProg * 3)
+		waitMod = math.max(minWait, jumpProg / 10)
 		Sleep(waitTime * waitMod)
 	end
 	Turn (lgun, x_axis, 0, math.rad(70))

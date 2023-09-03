@@ -76,7 +76,5 @@
 	"neutral" : "Нейтрали",
 	"whisper" : "user сообщает вам",
 	"whisperto" : "вы говорите user",
-	"specwhisper" : "user сказал user2",
-	"addedpoint" : "user добавил точку на карту.",
-	"addedmarker": "user созданный маркер карты:"
+	"specwhisper" : "user сказал user2"
 }

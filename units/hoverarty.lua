@@ -47,6 +47,7 @@ local unitDef = {
 		},
 	},
 	sightDistance       = 660,
+	sonarDistance       = 660,
 	turninplace         = 0,
 	turnRate            = 320,
 	weapons             = {

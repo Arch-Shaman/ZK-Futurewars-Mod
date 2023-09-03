@@ -1,10 +1,10 @@
 local name = "commweapon_flamethrower"
 local weaponDef = {
-	name                    = "Heavy Flame Thrower",
+	name                    = [[Heavy Flame Thrower]],
 	areaOfEffect            = 96,
 	avoidGround             = false,
 	avoidFeature            = false,
-	cegTag                  = "flamer",
+	cegTag                  = [[flamer]],
 	collideFeature          = false,
 	collideGround           = false,
 	craterBoost             = 0,
@@ -12,15 +12,15 @@ local weaponDef = {
 
 	customParams            = {
 		is_unit_weapon = 1,
-		slot = "5",
-		muzzleEffectFire = "custom:RAIDMUZZLE",
-		flamethrower = "1",
+		slot = [[5]],
+		muzzleEffectFire = [[custom:RAIDMUZZLE]],
+		flamethrower = [[1]],
 		setunitsonfire = "1",
         burnchance = "1", -- Per-impact
-		burntime = "450",
+		burntime = [[450]],
 
 		light_camera_height = 2800,
-		light_color = "0.6 0.39 0.18",
+		light_color = [[0.6 0.39 0.18]],
 		light_radius = 260,
 		light_fade_time = 10,
 		light_beam_mult_frames = 5,
@@ -33,7 +33,7 @@ local weaponDef = {
 		default = 17.1,
 	},
 
-	explosionGenerator      = "custom:SMOKE",
+	explosionGenerator      = [[custom:SMOKE]],
 	fallOffRate             = 1,
 	fireStarter             = 100,
 	heightMod               = 1,
@@ -44,14 +44,14 @@ local weaponDef = {
 	noSelfDamage            = true,
 	range                   = 240,
 	reloadtime              = 1/30,
-	rgbColor                = "1 1 1",
-	soundStart              = "weapon/flamethrower",
+	rgbColor                = [[1 1 1]],
+	soundStart              = [[weapon/flamethrower]],
 	soundTrigger            = true,
-    texture1				= "flame",
+    texture1				= [[flame]],
     thickness				= 0,
 	tolerance               = 5000,
 	turret                  = true,
-	weaponType              = "LaserCannon",
+	weaponType              = [[LaserCannon]],
 	weaponVelocity          = 600,
 }
 

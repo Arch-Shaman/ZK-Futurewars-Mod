@@ -250,8 +250,6 @@ local function FactoryHack(unitID, cmdParams, unitDefID) -- Note: we need to byp
 
 		local func = Spring.UnitScript.GetScriptEnv(unitID).Create_Beacon
 		Spring.UnitScript.CallAsUnit(unitID,func,cx,cz)
-		tele[unitID].deployed = true -- ensure we're deployed.
-		tele[unitID].factoryHack  = true -- ditto.
 	end
 end
 

@@ -52,6 +52,7 @@ return {
 		radarEmitHeight               = 32,
 		selfDestructAs                = "SMALL_BUILDINGEX",
 		sightDistance                 = 600,
+		sonarDistance       		  = 600,
 		useBuildingGroundDecal        = true,
 		yardMap                       = "oooo",
 		sfxtypes               = {

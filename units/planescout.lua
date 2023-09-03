@@ -50,6 +50,7 @@ return {
 		script              = "planescout.lua",
 		selfDestructAs      = "GUNSHIPEX",
 		sightDistance       = 1700,
+		sonarDistance       = 1700,
 		turnRadius          = 60,
 		workerTime          = 0,
 

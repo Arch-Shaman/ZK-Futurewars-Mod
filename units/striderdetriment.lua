@@ -46,6 +46,7 @@ return {
 		selfDestructAs         = "NUCLEAR_MISSILE",
 		selfDestructCountdown  = 10,
 		sightDistance          = 2000,
+		sonarDistance          = 2000,
 		trackOffset            = 0,
 		trackStrength          = 8,
 		trackStretch           = 0.8,

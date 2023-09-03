@@ -50,6 +50,7 @@ return {
 		showNanoSpray       = false,
 		sightDistance       = 500,
 		radarDistance		= 1000,
+		sonarDistance		= 500,
 		useBuildingGroundDecal        = true,
 		waterline           = 8,
 		workerTime          = 20,

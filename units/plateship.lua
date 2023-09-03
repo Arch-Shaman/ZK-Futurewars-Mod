@@ -64,6 +64,7 @@ return {
 		selfDestructAs                = "FAC_PLATEEX",
 		showNanoSpray                 = false,
 		sightDistance                 = 850,
+		sonarDistance                 = 850,
 		waterline                     = 0,
 		workerTime                    = Shared.FACTORY_BUILDPOWER,
 		yardMap                       = "ooyyyy ooyyyy ooyyyy ooyyyy ooyyyy ooyyyy ooyyyy ooyyyy",

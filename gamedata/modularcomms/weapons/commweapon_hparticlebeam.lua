@@ -1,6 +1,6 @@
 local name = "commweapon_hparticlebeam"
 local weaponDef = {
-	name                    = "Heavy Particle Beam",
+	name                    = [[Heavy Particle Beam]],
 	beamDecay               = 0.9,
 	beamTime                = 4/30,
 	beamTTL                 = 50,
@@ -11,9 +11,9 @@ local weaponDef = {
 
 	customParams            = {
 		is_unit_weapon = 1,
-		slot = "5",
+		slot = [[5]],
 
-		light_color = "0.4 1.6 0.4",
+		light_color = [[0.4 1.6 0.4]],
 		light_radius = 100,
 		use_okp = 1,
 		okp_speedmult = 1,
@@ -26,7 +26,7 @@ local weaponDef = {
 		default = 1140,
 	},
 
-	explosionGenerator      = "custom:atagreen_smoll",
+	explosionGenerator      = [[custom:atagreen_smoll]],
 	fireStarter             = 100,
 	impactOnly              = true,
 	impulseFactor           = 1.2,
@@ -35,13 +35,13 @@ local weaponDef = {
 	minIntensity            = 0.8,
 	range                   = 550,
 	reloadtime              = 3.8,
-	rgbColor                = "0.203 0.631 0.196",
-	soundStart              = "weapon/laser/hpbeam",
+	rgbColor                = [[0.203 0.631 0.196]],
+	soundStart              = [[weapon/laser/hpbeam]],
 	soundStartVolume        = 5,
 	thickness               = 8,
 	tolerance               = 8192,
 	turret                  = true,
-	weaponType              = "BeamLaser",
+	weaponType              = [[BeamLaser]],
 }
 
 return name, weaponDef
