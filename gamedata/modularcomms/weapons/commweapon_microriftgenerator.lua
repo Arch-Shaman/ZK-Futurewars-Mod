@@ -21,6 +21,7 @@ local weaponDef = {
 		stats_hide_damage = 1,
 		stats_custom_tooltip_1 = " - Instantly Teleports this unit to a nearby location",
 		stats_custom_tooltip_entry_1 = "",
+		teleport_nomomentum = 1,
 	},
 	damage                  = {
 		default = 0,
