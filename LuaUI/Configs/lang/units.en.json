@@ -196,7 +196,7 @@
 	},
 	"mahlazer" : {
 		"name" : "Starlight",
-		"description" : "Planetary Energy Chisel",
+		"description" : "Planetary Energy Chisel - Globally revealed at 50%% completion",
 		"helptext" : "This large scale tool is used to shape terrain for terraforming projects. Also useful as a cleanser of obstacles such as pesky enemy units and bases."
 	},
 	"spidercrabe" : {
@@ -511,7 +511,7 @@
 	},
 	"staticnuke" : {
 		"name" : "Oblivion",
-		"description" : "Strategic MIRV Launcher, Drains 35 m/s, 2 minute stockpile",
+		"description" : "Strategic MIRV Launcher, Drains 30 m/s, 3.5 minute stockpile",
 		"helptext" : "Oblivion, the pinnacle of human engineering. The absolute wizardry that it takes to cram 3 Hawking Bombs into a missile that can still fly across interplanetary space at fractions of the speed of light in unimaginable, yet somehow, some way, it was done."
 	},
 	"missilenuke" : {
@@ -641,8 +641,8 @@
 	},
 	"raveparty" : {
 		"name" : "Disco Rave Party",
-		"description" : "Destructive Rainbow Projector",
-		"helptext" : "The Disco Rave Party throws six different party shots at your enemy for a different surprise each time. Fun for the whole family!"
+		"description" : "Destructive Rainbow Projector - Globally revealed at 65%% completion",
+		"helptext" : "Disco Rave Party. This rather benign seeming name is one that is uttered with the utmost fear and dread. This towering device is a weapon of mass destruction second only to the Starlight and the Zenith. Through technology that for all purposes might as be magic, the Disco Rave Party is able to unleash a dazzling barrage of shellings containing every form of death. If you detect one of these under construction by the enemy, throw everything you've got at it, lest the rainbow be the last thing you ever see."
 	},
 	"turretlaser" : {
 		"name" : "Parapet",
@@ -706,7 +706,7 @@
 	},
 	"striderdetriment" : {
 		"name" : "Titan",
-		"description" : "Game-ending Assault Strider",
+		"description" : "Game-ending Assault Strider - Globally revealed at 90%% completion",
 		"helptext" : "The Titan is the single heaviest strider in the field. Forged of the strongest alloys in the known universe, given barrels bigger than most units, and produced with one purpose: Destroy everything in its path, even its own path, if necessary. The Titan represents the pinnacle of mobile units, no expense has been spared. Its main armament, the Devestator Cannon can wipe entire ARMIES from the battlefield and specializes in taking down lesser striders.\nNOTHING save from another Titan can hope to take down a Titan class strider without serious losses. Desperate commanders can try to swarm it with weaker units with minor successes, but at significant cost, often more than the Titan itself."
 	},
 	"energygeo" : {
@@ -716,7 +716,7 @@
 	},
 	"energyprosperity" : {
 		"name" : "Prosperity",
-		"description" : "Economic superweapon",
+		"description" : "Economic superweapon - Globally revealed at 100%% completion",
 		"helptext" : "The Prosperity reactor creates metal and generates huges amounts of energy to overdrive your grid. If you spot one, you should snipe it as soon as possible."
 	},
 	"jumpcon" : {
@@ -891,8 +891,8 @@
 	},
 	"zenith" : {
 		"name" : "Zenith",
-		"description" : "Meteor Controller",
-		"helptext" : "The Zenith collects meteorites from the sky (up to 300), which it can send anywhere to break things or provide a small reclaimable source of metal."
+		"description" : "Meteor Controller - Globally revealed at 95%% completion",
+		"helptext" : "The Zenith is the final option in conflict escalation. The Utmost highest point of power above which no other weapon stands. This, is a weapon capable of annihilating even the most entrenched enemies, capable of breaking even the most stagnant stalemates. There exists no fortifications, no energy shield, no defence method which can hope to stop the gigatons of asteroid which the Zenith hurls down from the heavens above. If you ever find yourself at the wrong end of this weapon, may the gods have mercy upon you...\nAnd the very planet upon which you stand on."
 	},
 	"vehaa" : {
 		"name" : "Gatekeeper",

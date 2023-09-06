@@ -173,9 +173,9 @@ local function GetTerraformTooltip(unitID)
 	return WG.Translate("interface", "terraform") .. " - " .. WG.Translate("interface", "estimated_cost") .. ": " .. math.floor(spent) .. " / " .. math.floor(Spring.GetUnitRulesParam(unitID, "terraform_estimate") or 0)
 end
 
-local function GetZenithTooltip(unitID)
+local function GetZenithTooltip(transDesc, unitID)
 	local meteorsControlled = Spring.GetUnitRulesParam(unitID, "meteorsControlled") or "0"
-	return (WG.Translate("units", "zenith.description") or "Meteor Controller") .. " - " .. (WG.Translate("interface", "meteors_controlled") or "Meteors controlled") .. " " .. meteorsControlled .. "/300"
+	return transDesc .. " - " .. (WG.Translate("interface", "meteors_controlled") or "Meteors controlled") .. " " .. meteorsControlled .. "/300"
 end
 
 local function GetSuperweaponTooltip(unitID, ud)
@@ -194,8 +194,16 @@ local function GetSuperweaponTooltip(unitID, ud)
 		od = string.format("%.2f %%", math.round(od * 100, 2))
 		return base .. "\n" .. (WG.Translate("interface", "range") or "Current Range:") .. " " .. math.floor(range) .. "(" .. od .. ")" 
 	end
+	local transDesc = WG.Translate("units", ud.name .. ".description") or ud.description or ">w< seems like there's been an error"
+	if ud.customParams.reveal_losunit then -- Hackity code. Beyond cursed
+		local _, _, _, _, buildProgress = Spring.GetUnitHealth(unitID)
+		if buildProgress < 0.9999 then
+			return transDesc
+		end
+		transDesc = string.sub(transDesc, 1, -39) or ">w< seems like there's been an error"
+	end
 	if ud.name == "zenith" then
-		local base = GetZenithTooltip(unitID)
+		local base = GetZenithTooltip(transDesc, unitID)
 		base = base .. "\n"
 		if (Spring.GetUnitRulesParam(unitID, "lowpower") or 0) == 1 then
 			local grid = (Spring.GetUnitRulesParam(unitID, "OD_gridMaximum") or 0)
@@ -218,7 +226,7 @@ local function GetSuperweaponTooltip(unitID, ud)
 	if (Spring.GetUnitRulesParam(unitID, "lowpower") or 0) == 1 then
 		local grid = (Spring.GetUnitRulesParam(unitID, "OD_gridMaximum") or 0)
 		grid = string.format("%.1f", math.round(grid, 1))
-		return WG.Translate("units", ud.name .. ".description") .. " - \255\255\061\061" .. (WG.Translate("interface", "needs_grid") or "Grid Power: ") .. grid .. " / " .. ud.customParams.neededlink .. "\255\255\255\255"
+		return transDesc .. " - \255\255\061\061" .. (WG.Translate("interface", "needs_grid") or "Grid Power: ") .. grid .. " / " .. ud.customParams.neededlink .. "\255\255\255\255"
 	end
 	local superRate = (Spring.GetUnitRulesParam(unitID, "superweapon_mult") or 0) * 100
 	local fireRate = ""
@@ -228,9 +236,9 @@ local function GetSuperweaponTooltip(unitID, ud)
 		fireRate = string.format("%.2f %%", math.round(superRate, 2))
 	end
 	if ud.name == "turretaaheavy" then
-		return (WG.Translate("units", ud.name .. ".description") or "Lolcannon") .. "\n" .. "Charge Rate: " .. fireRate
+		return transDesc .. "\n" .. "Charge Rate: " .. fireRate
 	end
-	return (WG.Translate("units", ud.name .. ".description") or "Lolcannon") .. "\n" .. (WG.Translate("interface", "fire_rate") or "Fire Rate: ") .. " " .. fireRate
+	return transDesc .. "\n" .. (WG.Translate("interface", "fire_rate") or "Fire Rate: ") .. " " .. fireRate
 end
 
 local function GetAvatarTooltip(unitID)
