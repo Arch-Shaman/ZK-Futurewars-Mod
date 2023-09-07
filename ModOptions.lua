@@ -117,6 +117,7 @@ local options = {
 		type = "string",
 		section= 'a_important',
 		def = "",
+	},
 	{
 		key    = 'commeco',
 		name   = 'Enable Efficient Resourcing',
