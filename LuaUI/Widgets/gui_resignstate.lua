@@ -112,6 +112,7 @@ options = {
 local c = 0
 
 local function UpdatePlayer(playerID, state)
+	local allyTeamID = select(5, Spring.GetPlayerInfo(playerID))
 	if allyteamstrings[allyTeamID] == nil then
 		allyteamstrings[allyTeamID] = {exempt = "", voted = ""}
 	end
