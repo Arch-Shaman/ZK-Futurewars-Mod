@@ -105,7 +105,7 @@ options = {
 		name = "Start with economy overlay",
 		desc = "Game starts with Economy Overlay enabled",
 		type = 'bool',
-		value = false,
+		value = true,
 		noHotkey = true,
 		OnChange = function(self)
 			if (self.value) then
