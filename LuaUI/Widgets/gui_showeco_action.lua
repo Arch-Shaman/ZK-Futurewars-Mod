@@ -12,7 +12,7 @@ function widget:GetInfo()
   }
 end
 
-local pylon ={}
+local pylon = {}
 
 local spGetMapDrawMode = Spring.GetMapDrawMode
 local spSendCommands   = Spring.SendCommands
