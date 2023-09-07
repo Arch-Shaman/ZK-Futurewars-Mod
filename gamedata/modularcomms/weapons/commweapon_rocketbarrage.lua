@@ -9,6 +9,7 @@ local weaponDef = {
 	burst					= 6,
 	burstrate				= 0.1,
 	projectiles				= 4,
+	cameraShake				= 0,
 	customParams            = {
 		is_unit_weapon = 1,
 		slot = "5",
