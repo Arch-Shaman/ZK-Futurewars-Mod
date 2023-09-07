@@ -2408,7 +2408,7 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 			local decaytime = tonumber(ud.customParams["decay_time"]) or 1
 			local txt = ""
 			local timetoreach = 0
-			if decayrate > 0 then
+			if decayrate < 0 then
 				txt = localization.output_compounds .. ":"
 			else
 				txt = localization.output_decays ..":"
