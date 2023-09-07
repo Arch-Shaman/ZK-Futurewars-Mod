@@ -31,6 +31,7 @@ local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spSetUnitHealth = Spring.SetUnitHealth
 local spSetUnitCloak = Spring.SetUnitCloak
+local spSetUnitMass = Spring.SetUnitMass
 local spRemoveUnitCmdDesc = Spring.RemoveUnitCmdDesc
 local spSetUnitStealth = Spring.SetUnitStealth
 local spGetUnitHealth = Spring.GetUnitHealth
@@ -487,6 +488,7 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	local _, maxHealth = spGetUnitHealth(unitID)
 	local effectiveMass = (((totalCost/2) + (maxHealth/8))^0.6)*6.5
 	spSetUnitRulesParam(unitID, "massOverride", effectiveMass, INLOS)
+	spSetUnitMass(unitID, effectiveMass)
 	-- Peaceful Wind --
 	local detpack = data.detpacklv or 0
 	spSetUnitRulesParam(unitID, "comm_deathexplosion", detpacktable[detpack], INLOS)
