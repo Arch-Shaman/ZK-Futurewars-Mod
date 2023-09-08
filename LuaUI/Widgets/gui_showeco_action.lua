@@ -390,6 +390,7 @@ function widget:Initialize()
 	playerAllyTeam = Spring.GetMyAllyTeamID()
 	playerTeamID = Spring.GetMyTeamID()
 	showAllies = options.show_allies.value -- must be before AllyTeamChanged otherwise will need to be invalidated!
+	WG.showeco = options.start_with_showeco.value
 	AllyTeamChanged()
 	highlightQueue = false
 	alwaysHighlight = options.drawQueued.value
