@@ -500,10 +500,11 @@ function widget:DrawWorld()
 		local team = Spring.GetUnitTeam(unitID)
 		if showAllies or team == playerTeamID then
 			for i = 1, #data do
+				local facing = data[i].facing or 1
 				gl.PushMatrix()
 					gl.LoadIdentity()
 					gl.Translate(data[i].x, data[i].y, data[i].z)
-					gl.Rotate(90 * data[i].facing, 0, 1, 0)
+					gl.Rotate(90 * facing, 0, 1, 0)
 					gl.Texture("%"..data[i].def..":0") 
 					gl.UnitShape(data[i].def, team, false, false, false) -- gl.UnitShape(bDefID, teamID, false, false, false)
 					gl.Texture(false) 
