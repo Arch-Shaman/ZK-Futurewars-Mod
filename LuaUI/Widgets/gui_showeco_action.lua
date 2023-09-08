@@ -270,7 +270,7 @@ end
 function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 	addUnit(unitID, unitDefID, unitTeam)
 	local data = IterableMap.Get(queuedPylons, builderID)
-	if data and data[1].def == unitDefID then -- we're starting construction on the current cmd.
+	if data and data[1] and data[1].def == unitDefID then -- we're starting construction on the current cmd.
 		ShiftFromTable(data, 1)
 		UpdateAllQueuesList()
 	end
