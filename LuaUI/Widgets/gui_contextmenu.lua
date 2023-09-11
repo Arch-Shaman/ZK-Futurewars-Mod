@@ -1511,7 +1511,7 @@ local function printAbilities(ud, unitID, isFeature)
 	if ud.buildSpeed > 0 and not cp.nobuildpower then
 		local bpMult = 1
 		if isFeature then
-			bpMult = Spring.GetFeatureRulesParam(unitID, "buildpower_mult") or 1
+			bpMult = unitID and Spring.GetFeatureRulesParam(unitID, "buildpower_mult") or 1
 		elseif unitID and Spring.GetUnitRulesParam(unitID, "comm_level") then
 			bpMult = unitID and Spring.GetUnitRulesParam(unitID, "buildpower_mult") or 1
 		end
@@ -2408,7 +2408,7 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 			local decaytime = tonumber(ud.customParams["decay_time"]) or 1
 			local txt = ""
 			local timetoreach = 0
-			if decayrate > 0 then
+			if decayrate < 0 then
 				txt = localization.output_compounds .. ":"
 			else
 				txt = localization.output_decays ..":"

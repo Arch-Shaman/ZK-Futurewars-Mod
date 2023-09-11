@@ -37,7 +37,7 @@ for i = 1, #WeaponDefs do
 		local disarmtime = tonumber(cp["blastwave_diarm_time"]) or 1
 		local damagesfriendly = cp["blastwave_nofriendly"] == nil
 		local healing = tonumber(cp["blastwave_healing"]) or 0
-		local onlyallies = cp["blastwave_onlyfriendly"] ~= nil
+		local onlyallies = cp["blastwave_onlyfriendly"] == nil
 		local reductshealing = tonumber(cp["blastwave_healing_reduction"]) or 0
 		local spawnCeg = cp["blastwave_spawnceg"]
 		local cegFreq = tonumber(cp["blastwave_spawncegfreq"]) or 3
@@ -178,6 +178,7 @@ local function AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID, t
 		healing = conf.healing,
 		coef = conf.losscoef,
 		shielddmg = conf.shielddamage,
+		attackerteam = team,
 	}
 	if conf.spawnCeg then
 		tab.cegcounter = 0

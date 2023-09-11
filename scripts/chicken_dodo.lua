@@ -119,5 +119,5 @@ function script.Killed(recentDamage, maxHealth)
 		end
 	end
 	local x, y, z = Spring.GetUnitPosition(unitID)
-	GG.AddBlastwave(wantedDef, x, y, z, unitID, -1, Spring.GetUnitTeam(unitID))
+	GG.AddBlastwave(wantedDef, x, y, z, unitID, -1, Spring.GetUnitAllyTeam(unitID))
 end

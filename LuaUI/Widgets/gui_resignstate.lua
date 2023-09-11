@@ -112,13 +112,15 @@ options = {
 local c = 0
 
 local function UpdatePlayer(playerID, state)
+	local allyTeamID = select(5, Spring.GetPlayerInfo(playerID))
 	if allyteamstrings[allyTeamID] == nil then
 		allyteamstrings[allyTeamID] = {exempt = "", voted = ""}
 	end
 	local name, _, _ allyTeamID = Spring.GetPlayerInfo(playerID)
 	if state == "normal" then
-		allyteamstrings[allyTeamID].exempt = allyteamstrings[allyTeamID].exempt:gsub("\n" .. name, "")
+		allyteamstrings[allyTeamID].exempt = allyteamstrings[allyTeamID].exempt:gsub("\n" .. name, "") or ""
 	else
+		if not allyteamstrings[allyTeamID].exempt then allyteamstrings[allyTeamID].exempt = "" end
 		allyteamstrings[allyTeamID].exempt = allyteamstrings[allyTeamID].exempt .. "\n" .. name
 		allyteamstrings[allyTeamID].exempt = allyteamstrings[allyTeamID].exempt:gsub("\n\n", "\n")
 	end

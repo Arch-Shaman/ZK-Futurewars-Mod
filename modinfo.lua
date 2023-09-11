@@ -1,7 +1,7 @@
 return {
 	name='ZKFW',
 	description='Zero-K',
-	version='pull/swproposal',
+	version='v0.37.17',
 	shortname='ZKFW',
 	mutator='1',
 	game='Zero-K',

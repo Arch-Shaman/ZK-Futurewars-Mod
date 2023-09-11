@@ -72,10 +72,10 @@ return {
 				soundhit = "weapon/chickens/dodo_die",
 				explosionScar = false,
 				damage = {
-					default = 500,
-					chicken = 50,
+					default = 300,
 				},
 				customParams = {
+					nofriendlyfire = 1,
 					blastwave_size = 180,
 					blastwave_impulse = 0,
 					blastwave_speed = 0,
