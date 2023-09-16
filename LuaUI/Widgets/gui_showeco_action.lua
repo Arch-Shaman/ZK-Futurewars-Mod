@@ -44,10 +44,16 @@ local spGetUnitRulesParam  = Spring.GetUnitRulesParam
 local spGetSpectatingState = Spring.GetSpectatingState
 local spGetBuildFacing     = Spring.GetBuildFacing
 local spPos2BuildPos       = Spring.Pos2BuildPos
+local spIsSphereInView     = Spring.IsSphereInView
 
 local glCallList      = gl.CallList
 local glColor         = gl.Color
 local glCreateList    = gl.CreateList
+local glDepthMask     = gl.DepthMask
+local glDepthTest     = gl.DepthTest
+local glTexture       = gl.Texture
+local glClear         = gl.Clear
+local glDeleteList    = gl.DeleteList
 local tableInsert     = table.insert
 
 --// gl const
@@ -134,12 +140,12 @@ local function QueueList()
 		end
 	end
 	glColor(1,1,1,1)
-	gl.Clear(GL.STENCIL_BUFFER_BIT, 0)
+	glClear(GL.STENCIL_BUFFER_BIT, 0)
 end
 
 local function UpdateQueueList()
-	gl.DeleteList(drawQueueList or 0)
-	drawQueueList = gl.CreateList(QueueList)
+	glDeleteList(drawQueueList or 0)
+	drawQueueList = glCreateList(QueueList)
 end
 
 local function AllQueue()
@@ -154,12 +160,12 @@ local function AllQueue()
 		end
 	end
 	glColor(1, 1, 1, 1)
-	gl.Clear(GL.STENCIL_BUFFER_BIT, 0)
+	glClear(GL.STENCIL_BUFFER_BIT, 0)
 end
 
 local function UpdateAllQueuesList()
-	gl.DeleteList(drawAllQueuedList or 0)
-	drawAllQueuedList = gl.CreateList(AllQueue)
+	glDeleteList(drawAllQueuedList or 0)
+	drawAllQueuedList = glCreateList(AllQueue)
 	UpdateQueueList()
 end
 
@@ -221,22 +227,30 @@ options = {
 -- Unit Handling
 
 local function RemoveFromOrderedTable(tab, num)
+	tab.taglookup[tab[num]] = nil
 	local table_length = #tab
 	if num == table_length then
 		tab[num] = nil
 	else
 		local entry = tab[#tab]
+		tab.taglookup[entry.tag] = num
 		tab[num] = entry
 		tab[table_length] = nil
 	end
 end
 
 local function ShiftFromTable(tab, num)
+	if tab[num] == nil then
+		Spring.Echo("[Ecoview] Attempted to index a nonexistent queue num")
+		return
+	end
 	local table_length = #tab
+	tab.taglookup[tab[num].tag] = nil
 	if table_length == num then
 		tab[num] = nil
 	else
 		for i = num + 1, table_length do
+			tab.taglookup[tab[i - 1].tag] = i
 			tab[i - 1] = tab[i]
 		end
 		tab[table_length] = nil
@@ -266,6 +280,9 @@ local function removeUnit(unitID, unitDefID, unitTeam)
 end
 
 function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
+	if not Spring.AreTeamsAllied(unitTeam, playerTeamID) then
+		return
+	end
 	addUnit(unitID, unitDefID, unitTeam)
 	local data = IterableMap.Get(queuedPylons, builderID)
 	if data and data[1] and data[1].def == unitDefID then -- we're starting construction on the current cmd.
@@ -273,7 +290,7 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		UpdateAllQueuesList()
 	end
 	if isBuilder[unitDefID] then
-		IterableMap.Add(queuedPylons, unitID, {})
+		IterableMap.Add(queuedPylons, unitID, {taglookup = {}, clearedRecently = false})
 	end
 end
 
@@ -288,7 +305,7 @@ end
 
 function widget:UnitFinished(unitID, unitDefID, unitTeam)
 	if isBuilder[unitDefID] then
-		IterableMap.Add(queuedPylons, unitID, {})
+		IterableMap.Add(queuedPylons, unitID, {taglookup = {}, clearedRecently = false})
 	end
 end
 
@@ -310,31 +327,46 @@ function widget:UnitUnloaded(unitID, unitDefID, unitTeam)
 end
 
 function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts, cmdTag)
-	if isBuilder[unitDefID] then
+	if isBuilder[unitDefID] and Spring.AreTeamsAllied(unitTeam, playerTeamID) then
 		local data = IterableMap.Get(queuedPylons, unitID)
 		if data == nil then -- for some reason we don't have this builder on record!
-			data = {}
+			data = {taglookup = {}, clearedRecently = false}
 			IterableMap.Set(queuedPylons, unitID, data) -- should be fine?
 		end
-		if cmdID ~= 1 then
+		if cmdID == CMD.REMOVE then
+			if data and data.taglookup[cmdTag] then
+				ShiftFromTable(data, data.taglookup[cmdParams[1]])
+			elseif data == nil then
+				data = {taglookup = {}, clearedRecently = false}
+				IterableMap.Set(queuedPylons, unitID, data)
+			end
+		elseif cmdID == CMD.STOP and #data > 0 then
+			data = {taglookup = {}, clearedRecently = false}
+			--Spring.Echo("[Ecoview] Queue cleared.")
+			IterableMap.Set(queuedPylons, unitID, data)
+			UpdateAllQueuesList()
+		elseif cmdID < 0 then
+			if not (cmdOpts.shift or cmdOpts.meta) and #data > 0 then
+				data = {taglookup = {}, clearedRecently = false}
+				--Spring.Echo("[Ecoview] Queue cleared.")
+				IterableMap.Set(queuedPylons, unitID, data)
+			end
+			local buildDef = -cmdID -- turn it positive. build orders are negative.
+			if pylonDefs[buildDef] then
+				data[#data + 1] = {x = cmdParams[1], y = cmdParams[2], z = cmdParams[3], range = pylonDefs[buildDef], def = buildDef, facing = cmdParams[4], tag = cmdTag}
+				data.taglookup[cmdTag] = #data
+			end
+			UpdateAllQueuesList()
+		elseif cmdID >= 10 then
 			if (not (cmdOpts.shift or cmdOpts.meta) or cmdID == CMD.STOP) and #data > 0 then
-				data = {}
+				data = {taglookup = {}, clearedRecently = false}
 				--Spring.Echo("[Ecoview] Queue cleared.")
 				IterableMap.Set(queuedPylons, unitID, data)
 				UpdateAllQueuesList()
 			end
-			if cmdID < 0 then
-				local buildDef = -cmdID -- turn it positive. build orders are negative.
-				if pylonDefs[buildDef] then
-					data[#data + 1] = {x = cmdParams[1], y = cmdParams[2], z = cmdParams[3], range = pylonDefs[buildDef], def = buildDef, facing = cmdParams[4]}
-					--Spring.Echo("[Ecoview] Added new " .. buildDef .. " for " .. unitID)
-					--Spring.MarkerAddPoint(cmdParams[1], cmdParams[2], cmdParams[3], buildDef, true)
-					UpdateAllQueuesList()
-				end
-			end
-		elseif cmdParams[2] and cmdParams[2] < 0 then
+		elseif cmdID == CMD.INSERT and cmdParams[2] and cmdParams[2] < 0 then
 			buildDef = -cmdParams[2]
-			tableInsert(data, 1, {x = cmdParams[4], y = cmdParams[5], z = cmdParams[6], range = pylonDefs[buildDef], def = buildDef, facing = cmdParams[7]})
+			tableInsert(data, cmdParams[1], {x = cmdParams[4], y = cmdParams[5], z = cmdParams[6], range = pylonDefs[buildDef], def = buildDef, facing = cmdParams[7], tag = cmdTag})
 			--Spring.Echo("[Ecoview] Added new " .. buildDef .. " for " .. unitID .. ", Team: " .. tostring(unitTeam))
 			--Spring.MarkerAddPoint(cmdParams[4], cmdParams[5], cmdParams[6], buildDef, true)
 			UpdateAllQueuesList()
@@ -369,18 +401,30 @@ local function AllyTeamChanged()
 						local currentBuilding = Spring.GetUnitIsBuilding(unitID)
 						if currentBuilding and Spring.GetUnitDefID(currentBuilding) ~= -cmd.id then
 							--Spring.Echo("Adding ID")
-							widget:UnitCommand(unitID, unitDefID, unitTeam, commandQueue[j].id, commandQueue[j].params, commandQueue[j].options)
+							widget:UnitCommand(unitID, unitDefID, unitTeam, commandQueue[j].id, commandQueue[j].params, commandQueue[j].options, commandQueue[j].tag)
 						end
 					end
 					if cmd.id < 0 then
 						--Spring.Echo("Processing command for " .. unitID)
-						widget:UnitCommand(unitID, unitDefID, unitTeam, commandQueue[j].id, commandQueue[j].params, commandQueue[j].options)
+						widget:UnitCommand(unitID, unitDefID, unitTeam, commandQueue[j].id, commandQueue[j].params, commandQueue[j].options, commandQueue[j].tag)
 					end
 				end
 			end
 		end
 	end
 	UpdateAllQueuesList()
+end
+
+function widget:UnitCmdDone(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts, cmdTag)
+	if isBuilder[unitDefID] then
+		local data = IterableMap.Get(queuedPylons, unitID)
+		if data == nil then
+			data = {taglookup = {}, clearedRecently = false}
+			IterableMap.Add(queuedPylons, unitID, data)
+		end
+		data.clearedRecently = false
+		
+	end
 end
 
 function widget:Initialize()
@@ -397,15 +441,25 @@ function widget:Initialize()
 end
 
 function widget:Shutdown()
-	gl.DeleteList(drawList or 0)
-	gl.DeleteList(disabledDrawList or 0)
-	gl.DeleteList(drawQueueList or 0)
-	gl.DeleteList(drawAllQueuedList or 0)
+	glDeleteList(drawList or 0)
+	glDeleteList(disabledDrawList or 0)
+	glDeleteList(drawQueueList or 0)
+	glDeleteList(drawAllQueuedList or 0)
 end
 
 function widget:GameFrame(f)
 	if f%32 == 2 then
 		lastFrame = f
+		local spec = spGetSpectatingState()
+		if spec then
+			for unitID, data in IterableMap.Iterator(queuedPylons) do
+				local currentBuilding = Spring.GetUnitIsBuilding(unitID)
+				if data[1] and data[1].def == currentBuilding then
+					ShiftFromTable(data, 1)
+					data.clearedRecently = true
+				end
+			end
+		end
 	end
 end
 
@@ -433,26 +487,14 @@ local function makePylonListVolume(onlyActive, onlyDisabled)
 		end
 	end
 	-- Keep clean for everyone after us
-	gl.Clear(GL.STENCIL_BUFFER_BIT, 0)
+	glClear(GL.STENCIL_BUFFER_BIT, 0)
 end
 
 
 local function HighlightPylons()
-	if lastDrawnFrame < lastFrame then
-		lastDrawnFrame = lastFrame
-		if options.mergeCircles.value then
-			gl.DeleteList(disabledDrawList or 0)
-			disabledDrawList = gl.CreateList(makePylonListVolume, false, true)
-			gl.DeleteList(drawList or 0)
-			drawList = gl.CreateList(makePylonListVolume, true, false)
-		else
-			gl.DeleteList(drawList or 0)
-			drawList = gl.CreateList(makePylonListVolume)
-		end
-	end
-	gl.CallList(drawList)
+	glCallList(drawList)
 	if options.mergeCircles.value then
-		gl.CallList(disabledDrawList)
+		glCallList(disabledDrawList)
 	end
 end
 
@@ -491,28 +533,30 @@ end
 
 function widget:DrawWorld()
 	if Spring.IsGUIHidden() or not (playerIsPlacingPylon or alwaysHighlight) then return end
-	gl.DepthMask(true)
-	gl.DepthTest(GL.LEQUAL)
+	glDepthMask(true)
+	glDepthTest(GL.LEQUAL)
 	glColor(1.0, 1.0, 1.0, 0.20)
 	for unitID, data in IterableMap.Iterator(queuedPylons) do
 		local team = Spring.GetUnitTeam(unitID)
 		if showAllies or team == playerTeamID then
 			for i = 1, #data do
-				local facing = data[i].facing or 1
-				gl.PushMatrix()
-					gl.LoadIdentity()
-					gl.Translate(data[i].x, data[i].y, data[i].z)
-					gl.Rotate(90 * facing, 0, 1, 0)
-					gl.Texture("%"..data[i].def..":0") 
-					gl.UnitShape(data[i].def, team, false, false, false) -- gl.UnitShape(bDefID, teamID, false, false, false)
-					gl.Texture(false) 
-				gl.PopMatrix()
+				if spIsSphereInView(data[i].x, data[i].y, data[i].z, 30) then
+					local facing = data[i].facing or 1
+					gl.PushMatrix()
+						gl.LoadIdentity()
+						gl.Translate(data[i].x, data[i].y, data[i].z)
+						gl.Rotate(90 * facing, 0, 1, 0)
+						glTexture("%"..data[i].def..":0") 
+						gl.UnitShape(data[i].def, team, false, false, false) -- gl.UnitShape(bDefID, teamID, false, false, false)
+					gl.PopMatrix()
+				end
 			end
 		end
 	end
 	glColor(1,1,1,1)
-	gl.DepthTest(false)
-	gl.DepthMask(false)
+	glDepthTest(false)
+	glDepthMask(false)
+	glTexture(false) 
 end
 
 function widget:Update()
@@ -556,9 +600,9 @@ end
 function widget:DrawWorldPreUnit()
 	if Spring.IsGUIHidden() then return end
 	if highlightQueue and not (playerIsPlacingPylon or alwaysHighlight) then
-		gl.CallList(drawQueueList)
+		glCallList(drawQueueList)
 	elseif playerIsPlacingPylon or alwaysHighlight then
-		gl.CallList(drawAllQueuedList)
+		glCallList(drawAllQueuedList)
 		if currentCommand and pylonDefs[-currentCommand] then
 			HighlightPlacement(-currentCommand)
 		end
