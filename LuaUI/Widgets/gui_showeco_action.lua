@@ -1,4 +1,3 @@
-local version = "v1.003"
 function widget:GetInfo()
   return {
     name      = "Showeco and Grid Drawer",
@@ -46,7 +45,6 @@ local spGetSpectatingState = Spring.GetSpectatingState
 local spGetBuildFacing     = Spring.GetBuildFacing
 local spPos2BuildPos       = Spring.Pos2BuildPos
 
-local glVertex        = gl.Vertex
 local glCallList      = gl.CallList
 local glColor         = gl.Color
 local glCreateList    = gl.CreateList
