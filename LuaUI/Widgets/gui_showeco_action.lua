@@ -115,8 +115,8 @@ options_path = 'Settings/Interface/Economy Overlay'
 options_order = {'start_with_showeco', 'always_show_mexes', 'mergeCircles', 'drawQueued', 'show_allies'}
 
 
-local queuedColor = { 0.6,0.7,0.5, drawAlpha*0.8}
-local disabledColor = { 0.6,0.7,0.5, drawAlpha}
+local queuedColor = { 0.9,0.8,0.75, drawAlpha}
+local disabledColor = { 0.9,0.8,0.75, drawAlpha}
 local placementColor = { 0.6, 0.7, 0.5, drawAlpha} -- drawAlpha on purpose!
 
 local GetGridColor = VFS.Include("LuaUI/Headers/overdrive.lua")
