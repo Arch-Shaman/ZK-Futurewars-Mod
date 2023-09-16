@@ -1,6 +1,6 @@
 local name = "commweapon_leolaser"
 local weaponDef = {
-	name                    = "LEO Laser Cannon",
+	name                    = [[LEO Laser Cannon]],
 	areaOfEffect            = 15,
 	avoidFeature            = false,
 	coreThickness           = 0.4,
@@ -16,7 +16,7 @@ local weaponDef = {
 	customParams        = {
 		light_camera_height = 1800,
 		light_radius = 80,
-		light_color = "0.043 0.7 0.274",
+		light_color = [[0.043 0.7 0.274]],
 	},
 
 	damage                  = {
@@ -24,29 +24,29 @@ local weaponDef = {
 	},
 
 	duration                = 0.1,
-	explosionGenerator      = "custom:beamlaser_hit_emerald",
+	explosionGenerator      = [[custom:beamlaser_hit_emerald]],
 	fireStarter             = 50,
 	impulseBoost            = 0,
 	impulseFactor           = 0,
 	interceptedByShieldType = 1,
 	range                   = 280,
 	reloadtime              = 0.6,
-	rgbColor                = "0.043 0.7 0.274",
-	soundHit                = "weapon/laser/emerald_hit",
-	soundStart              = "weapon/laser/laser_chaingun_fw",
+	rgbColor                = [[0.043 0.7 0.274]],
+	soundHit                = [[weapon/laser/emerald_hit]],
+	soundStart              = [[weapon/laser/laser_chaingun_fw]],
 	soundStartVolume        = 0.7,
 	soundTrigger            = true,
 	thickness               = 2.25,
 	tolerance               = 10000,
 	turret                  = true,
 	largebeamlaser			= true,
-	texture1                = "lightlaser",
-	texture2                = "flare",
-	texture3                = "flare",
+	texture1                = [[lightlaser]],
+	texture2                = [[flare]],
+	texture3                = [[flare]],
 	beamDecay 				= 0.8,
 	beamBurst				= true,
 	beamTTL					= 13,
-	weaponType              = "BeamLaser",
+	weaponType              = [[BeamLaser]],
 	--weaponVelocity          = 880,
 }
 

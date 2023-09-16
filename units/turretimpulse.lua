@@ -35,6 +35,7 @@ return {
 		selfDestructAs                = "MEDIUM_BUILDINGEX",
 		script                        = "turretimpulse.lua",
 		sightDistance                 = 554, -- Range*1.1 + 48 for radar overshoot
+		sonarDistance				  = 554,
 		useBuildingGroundDecal        = true,
 		yardMap                       = "oooo",
 		weapons                       = {

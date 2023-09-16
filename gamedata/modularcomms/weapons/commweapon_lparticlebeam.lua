@@ -1,6 +1,6 @@
 local name = "commweapon_lparticlebeam"
 local weaponDef = {
-	name                    = "Light Particle Beam",
+	name                    = [[Light Particle Beam]],
 	beamDecay               = 0.85,
 	beamTime                = 1/30,
 	beamttl                 = 45,
@@ -10,9 +10,9 @@ local weaponDef = {
 
 	customParams            = {
 		is_unit_weapon = 1,
-		slot = "5",
+		slot = [[5]],
 
-		light_color = "0.9 0.22 0.22",
+		light_color = [[0.9 0.22 0.22]],
 		light_radius = 80,
 		reaim_time = 1,
 		antibaitbypass = "ärsytät minua",
@@ -22,7 +22,7 @@ local weaponDef = {
 		default = 90,
 	},
 
-	explosionGenerator      = "custom:flash1red",
+	explosionGenerator      = [[custom:flash1red]],
 	fireStarter             = 100,
 	impactOnly              = true,
 	impulseFactor           = 0,
@@ -31,13 +31,13 @@ local weaponDef = {
 	minIntensity            = 1,
 	range                   = 270,
 	reloadtime              = 8/30,
-	rgbColor                = "1 0 0",
-	soundStart              = "weapon/laser/mini_laser",
+	rgbColor                = [[1 0 0]],
+	soundStart              = [[weapon/laser/mini_laser]],
 	soundStartVolume        = 5,
 	thickness               = 4,
 	tolerance               = 8192,
 	turret                  = true,
-	weaponType              = "BeamLaser",
+	weaponType              = [[BeamLaser]],
 }
 
 return name, weaponDef

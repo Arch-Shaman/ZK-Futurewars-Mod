@@ -39,6 +39,7 @@ return {
 		selfDestructAs        = "SUBSCOUT_DEATH",
 		selfDestructCountdown = 0,
 		sightDistance         = 650,
+		sonarDistance         = 650,
 		turnRate              = 800,
 		upright               = true,
 		waterline             = 15,

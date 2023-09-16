@@ -76,7 +76,5 @@
 	"neutral" : "Neutralny",
 	"whisper" : "user mówi ci",
 	"whisperto" : "powiedz user",
-	"specwhisper" : "user powiedział user2",
-	"addedpoint" : "user wskazane na mapie.",
-	"addedmarker": "user utworzony znacznik mapy:"
+	"specwhisper" : "user powiedział user2"
 }

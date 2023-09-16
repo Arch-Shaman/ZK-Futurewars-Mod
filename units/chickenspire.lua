@@ -55,6 +55,7 @@ return { chickenspire = {
 
 	},
 	sightDistance                 = 512,
+	sonarDistance                 = 512,
 	upright                       = false,
 	useBuildingGroundDecal        = true,
 	yardMap                       = [[oooooooooooooooo]],

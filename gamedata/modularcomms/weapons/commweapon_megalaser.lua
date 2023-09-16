@@ -1,6 +1,6 @@
 local name = "commweapon_megalaser"
 local weaponDef = {
-	name                    = "Brillant Star Tactical Laser",
+	name                    = [[Brillant Star Tactical Laser]],
 	areaOfEffect            = 255,
 	avoidFeature 			= false,
 	avoidGround  			= false,
@@ -12,8 +12,8 @@ local weaponDef = {
 	customParams            = {
 		is_unit_weapon = 1,
 		manualfire = 1,
-		slot = "3",
-		light_color = "1.25 0.8 1.75",
+		slot = [[3]],
+		light_color = [[1.25 0.8 1.75]],
 		light_radius = 255,
 		reveal_unit = 66,
 		shield_damage = 9000*(3/4),
@@ -26,7 +26,7 @@ local weaponDef = {
 	damage                  = {
 		default = 9000.1,
 	},
-	explosionGenerator      = "custom:craterpuncher_short",
+	explosionGenerator      = [[custom:craterpuncher_short]],
 	explosionScar           = false,
 	fireTolerance           = 8192, -- 45 degrees
 	impactOnly              = false,
@@ -41,17 +41,17 @@ local weaponDef = {
 	noSelfDamage            = true,
 	range                   = 800,
 	reloadtime              = 45,
-	rgbColor                = "0.25 0.11 1",
-	soundStart              = "weapon/laser/heavy_tactical_laser_fire",
+	rgbColor                = [[0.25 0.11 1]],
+	soundStart              = [[weapon/laser/heavy_tactical_laser_fire]],
 	soundStartVolume        = 15,
 	sweepfire               = true,
-	texture1                = "largelaser",
-	texture2                = "flare",
-	texture3                = "flare",
+	texture1                = [[largelaser]],
+	texture2                = [[flare]],
+	texture3                = [[flare]],
 	thickness               = 33.8747693719086,
 	tolerance               = 10000,
 	turret                  = true,
-	weaponType              = "BeamLaser",
+	weaponType              = [[BeamLaser]],
 }
 
 return name, weaponDef

@@ -40,6 +40,7 @@ return {
 		script              = "shiptorpraider.lua",
 		selfDestructAs      = "SMALL_UNITEX",
 		sightDistance       = 650,
+		sonarDistance       = 650,
 		turnRate            = 400,
 		waterline           = 0,
 		weapons             = {

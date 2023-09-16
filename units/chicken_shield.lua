@@ -52,6 +52,7 @@ return { chicken_shield = {
 
   },
   sightDistance       = 512,
+  sonarDistance       = 512,
   trackOffset         = 7,
   trackStrength       = 9,
   trackStretch        = 1,

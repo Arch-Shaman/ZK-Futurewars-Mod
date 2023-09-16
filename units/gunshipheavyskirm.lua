@@ -55,6 +55,7 @@ return {
 			},
 		},
 		sightDistance       = 800,
+		sonarDistance		= 800,
 		turnRate            = 600,
 		workerTime          = 0,
 		weapons             = {

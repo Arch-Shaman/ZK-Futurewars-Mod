@@ -52,6 +52,7 @@ return {
 		showNanoSpray       = false,
 		script              = "hovercon.lua",
 		sightDistance       = 400,
+		sonarDistance       = 400,
 		turninplace         = 0,
 		turnRate            = 480,
 		workerTime          = 5,

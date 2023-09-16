@@ -58,6 +58,7 @@ return {
 		},
 		showNanoSpray          = false,
 		sightDistance          = 1800,
+		sonarDistance          = 1800,
 		turninplace            = 0,
 		turnRate               = 372,
 		waterline              = 20,

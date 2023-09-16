@@ -290,9 +290,6 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 		weaponDef.customparams.mass = math.max((damageformass / 100) / grav , 1)
 		--Spring.Echo("ID: " .. weaponDef.name, weaponDef.customparams.mass)
 	end
-	if weaponDef.customparams.norealdamage then
-		weaponDef.customparams["damage_vs_feature"] = "0"
-	end
 	-- Modoptions --
 	if weaponDef.damage then --and weaponDef.name and not string.find(weaponDef.name, "Disintegrator")) then
 		for damagetype, amount in pairs(weaponDef.damage) do

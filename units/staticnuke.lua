@@ -2,7 +2,7 @@ return {
 	staticnuke = {
 		unitname                      = "staticnuke",
 		name                          = "Oblivion",
-		description                   = "MIRV Launcher, Drains 30 m/s, 3 minute stockpile",
+		description                   = "MIRV Launcher, Drains 30 m/s, 3.5 minute stockpile",
 		buildCostMetal                = 12000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,

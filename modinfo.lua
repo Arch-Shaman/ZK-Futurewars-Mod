@@ -1,5 +1,5 @@
 return {
-	name='Future Wars',
+	name='ZKFW',
 	description='Zero-K',
 	version='v0.37.17',
 	shortname='ZKFW',

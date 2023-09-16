@@ -1,9 +1,9 @@
 local name = "commweapon_rocketbarrage"
 local weaponDef = {
-	name                    = "LLRM Barrage",
+	name                    = [[LLRM Barrage]],
 	areaOfEffect            = 96,
 	avoidGround             = false,
-	cegTag                  = "rocket_trail_bar_flameboosted",
+	cegTag                  = [[rocket_trail_bar_flameboosted]],
 	craterBoost             = 0,
 	craterMult              = 0,
 	burst					= 6,
@@ -12,11 +12,11 @@ local weaponDef = {
 	cameraShake				= 0,
 	customParams            = {
 		is_unit_weapon = 1,
-		slot = "5",
-		muzzleEffectShot = "custom:rocket_trail_bar_flameboosted",
+		slot = [[5]],
+		muzzleEffectShot = [[custom:rocket_trail_bar_flameboosted]],
 
 		light_camera_height = 2200,
-		light_color = "0.95 0.65 0.30",
+		light_color = [[0.95 0.65 0.30]],
 		light_radius = 280,
 		reaim_time = 1,
 		cruiserandomradius = 300,
@@ -26,7 +26,7 @@ local weaponDef = {
 		cruisetracking = 1,
 		cruise_nolock = 1,
 		reveal_unit = 10,
-		onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER",
+		onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
 	},
 
 	damage                  = {
@@ -34,19 +34,19 @@ local weaponDef = {
 	},
 
 	edgeEffectiveness       = 0.4,
-	explosionGenerator      = "custom:STARFIRE",
+	explosionGenerator      = [[custom:STARFIRE]],
 	fireStarter             = 180,
 	flightTime              = 30,
 	impulseBoost            = 0,
 	impulseFactor           = 0,
 	interceptedByShieldType = 2,
-	model                   = "wep_b_fabby.s3o",
+	model                   = [[wep_b_fabby.s3o]],
 	range                   = 800,
 	reloadtime              = 7.2,
 	smokeTrail              = false,
-	soundHit                = "weapon/missile/sabot_hit",
+	soundHit                = [[weapon/missile/sabot_hit]],
 	soundHitVolume          = 5,
-	soundStart              = "weapon/missile/rocket_fire",
+	soundStart              = [[weapon/missile/rocket_fire]],
 	soundStartVolume        = 7,
 	startVelocity           = 180,
 	tracks                  = true,
@@ -55,7 +55,7 @@ local weaponDef = {
 	turret                  = true,
 	weaponAcceleration      = 200,
 	dance					= 100,
-	weaponType              = "MissileLauncher",
+	weaponType              = [[MissileLauncher]],
 	weaponVelocity          = 950,
 }
 
