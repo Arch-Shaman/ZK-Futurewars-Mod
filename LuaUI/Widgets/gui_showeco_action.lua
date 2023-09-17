@@ -241,7 +241,7 @@ end
 
 local function ShiftFromTable(tab, num)
 	if tab[num] == nil then
-		Spring.Echo("[Ecoview] Attempted to index a nonexistent queue num")
+		Spring.Echo("[Ecoview] Attempted to index a nonexistent queue num (shift from tab). Index: " .. tostring(num))
 		return
 	end
 	local table_length = #tab
@@ -250,7 +250,7 @@ local function ShiftFromTable(tab, num)
 		tab[num] = nil
 	else
 		for i = num + 1, table_length do
-			tab.taglookup[tab[i - 1].tag] = i
+			tab.taglookup[tab[i].tag] = i - 1
 			tab[i - 1] = tab[i]
 		end
 		tab[table_length] = nil
@@ -326,6 +326,23 @@ function widget:UnitUnloaded(unitID, unitDefID, unitTeam)
 	addUnit(unitID, unitDefID, unitTeam)
 end
 
+local function BuildTableFromCommand(cmd, cmdParams, indexShift, buildDef, cmdTag)
+	local x      = cmdParams[1 + indexShift]
+	local y      = cmdParams[2 + indexShift]
+	local z      = cmdParams[3 + indexShift]
+	local facing = cmdParams[4 + indexShift] or 1
+	local range  = pylonDefs[buildDef]
+	if x and y and z and range and buildDef then
+		return {x = x, y = y, z = z, range = range, def = buildDef, facing = facing, tag = cmdTag}
+	elseif x and y and z then
+		return
+	else
+		Spring.Echo("[EcoView]: CMD ID: " .. cmd .. " Missing values:\nx = " .. tostring(x) .. "\ny: " .. tostring(y) .. "\nz: " .. tostring(z) .. "\nrange: " .. tostring(range) .. "\nfacing: " .. tostring(facing))
+		return
+	end
+end
+	
+
 function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts, cmdTag)
 	if isBuilder[unitDefID] and Spring.AreTeamsAllied(unitTeam, playerTeamID) then
 		local data = IterableMap.Get(queuedPylons, unitID)
@@ -353,8 +370,11 @@ function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 			end
 			local buildDef = -cmdID -- turn it positive. build orders are negative.
 			if pylonDefs[buildDef] then
-				data[#data + 1] = {x = cmdParams[1], y = cmdParams[2], z = cmdParams[3], range = pylonDefs[buildDef], def = buildDef, facing = cmdParams[4], tag = cmdTag}
-				data.taglookup[cmdTag] = #data
+				local d = BuildTableFromCommand(cmdID, cmdParams, 0, buildDef, cmdTag)
+				if d then
+					data[#data + 1] = d
+					data.taglookup[cmdTag] = #data
+				end
 			end
 			UpdateAllQueuesList()
 		elseif cmdID >= 10 then
@@ -366,7 +386,12 @@ function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 			end
 		elseif cmdID == CMD.INSERT and cmdParams[2] and cmdParams[2] < 0 then
 			buildDef = -cmdParams[2]
-			tableInsert(data, cmdParams[1], {x = cmdParams[4], y = cmdParams[5], z = cmdParams[6], range = pylonDefs[buildDef], def = buildDef, facing = cmdParams[7], tag = cmdTag})
+			if pylonDefs[buildDef] then
+				local d = BuildTableFromCommand(cmdID, cmdParams, 3, buildDef, cmdTag) -- CMD Insert: position, cmdID, cmdOptions, cmdParams[1] . . .
+				if d then
+					tableInsert(data, cmdParams[1], d)
+				end
+			end
 			--Spring.Echo("[Ecoview] Added new " .. buildDef .. " for " .. unitID .. ", Team: " .. tostring(unitTeam))
 			--Spring.MarkerAddPoint(cmdParams[4], cmdParams[5], cmdParams[6], buildDef, true)
 			UpdateAllQueuesList()
