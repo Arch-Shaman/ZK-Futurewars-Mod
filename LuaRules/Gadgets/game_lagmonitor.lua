@@ -479,13 +479,19 @@ function gadget:Initialize()
 	for i = 1, #teamList do
 		local teamID = teamList[i]
 		local _, playerID, _, isAI, _, allyTeamID = Spring.GetTeamInfo(teamID, false)
-		local _, _, _, _, _, _, _, _, _, cp = Spring.GetPlayerInfo(playerID)
-		local shareCount = tonumber(cp.extracomm) or 0
+		local shareCount
+		if isAI or playerID == nil or playerID < 0 then
+			shareCount = 0
+		else
+			local customKeys = select(10,  Spring.GetPlayerInfo(playerID, true))
+			shareCount = tonumber(customKeys.extracomm) or 0
+		end
 		shareCount = shareCount + 1
-		playerValue[playerID] = shareCount
+		if not isAI then
+			playerValue[playerID] = shareCount
 		teamResourceShare[teamID] = shareCount
 		allyTeamResourceShares[allyTeamID] = (allyTeamResourceShares[allyTeamID] or 0) + shareCount
-
+		
 		if isAI then
 			teamNames[teamID] = select(2, Spring.GetAIInfo(teamID))
 		else
