@@ -112,12 +112,12 @@ options = {
 local c = 0
 
 local function UpdatePlayer(playerID, state)
-	local allyTeamID = select(5, Spring.GetPlayerInfo(playerID))
+	if playerID < 0 then return end
+	local name, _, _, _, allyTeamID = Spring.GetPlayerInfo(playerID)
 	if allyTeamID == nil then return end
 	if allyteamstrings[allyTeamID] == nil then
 		allyteamstrings[allyTeamID] = {exempt = "", voted = ""}
 	end
-	local name, _, _ allyTeamID = Spring.GetPlayerInfo(playerID)
 	if allyteamstrings[allyTeamID].exempt == nil then
 		allyteamstrings[allyTeamID].exempt = ""
 	end
@@ -133,7 +133,7 @@ local function UpdateVote(playerID)
 	if allyteamstrings[allyTeamID] == nil then
 		allyteamstrings[allyTeamID] = {exempt = "", voted = ""}
 	end
-	local name, _, _ allyTeamID = Spring.GetPlayerInfo(playerID)
+	local name, _, _, _, allyTeamID = Spring.GetPlayerInfo(playerID)
 	local state = Spring.GetPlayerRulesParam(playerID, "resign_state") or false
 	if state then
 		allyteamstrings[allyTeamID].voted = allyteamstrings[allyTeamID].voted .. "\n" .. name
