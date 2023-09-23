@@ -46,6 +46,8 @@ local teamResourceShare = {}
 local allyTeamResourceShares = {}
 local unitAlreadyFinished = {}
 
+local playerValue = {}
+
 local spAddTeamResource     = Spring.AddTeamResource
 local spEcho                = Spring.Echo
 local spGetGameSeconds      = Spring.GetGameSeconds
@@ -196,7 +198,7 @@ local function UpdateTeamActivity(teamID)
 	for i = 1, #players do
 		local activeRank = GetPlayerActivity(players[i])
 		if activeRank then
-			resourceShare = resourceShare + 1
+			resourceShare = resourceShare + playerValue[players[i]]
 			if (not teamRank) or (activeRank > teamRank) then
 				teamRank = activeRank
 			end
@@ -272,7 +274,7 @@ local function GetRawTeamShare(teamID)
 		local playerID = players[i]
 		local _, active, spec = spGetPlayerInfo(playerID, false)
 		if active and not spec then
-			shares = shares + 1
+			shares = shares + playerValue[playerID]
 		end
 	end
 
@@ -480,6 +482,7 @@ function gadget:Initialize()
 		local _, _, _, _, _, _, _, _, _, cp = Spring.GetPlayerInfo(playerID)
 		local shareCount = tonumber(cp.extracomm) or 0
 		shareCount = shareCount + 1
+		playerValue[playerID] = shareCount
 		teamResourceShare[teamID] = shareCount
 		allyTeamResourceShares[allyTeamID] = (allyTeamResourceShares[allyTeamID] or 0) + shareCount
 
