@@ -73,14 +73,14 @@ return {
 				customParams            = {
 					light_color = "1 0.2 1",
 					light_radius = 50,
-					timeslow_damagefactor = 1.3676, -- 120 DPS slow
+					timeslow_damagefactor = 0.5,
 					sweepfire = 1,
 					sweepfire_maxangle = 15,
 					sweepfire_step = 1.5,
 					sweepfire_fastupdate = 1,
 				},
 				damage                  = {
-					default = 35.1,
+					default = 25.1,
 				},
 				explosionGenerator      = "custom:beamweapon_hit_purple_tiny",
 				fireStarter             = 50,
@@ -93,7 +93,7 @@ return {
 				minIntensity            = 1,
 				noSelfDamage            = true,
 				range                   = 200,
-				reloadtime              = 0.4,
+				reloadtime              = 0.2,
 				rgbColor                = "1 0.2 1",
 				soundStart              = "weapon/laser/small_laser_fire",
 				soundTrigger            = true,
