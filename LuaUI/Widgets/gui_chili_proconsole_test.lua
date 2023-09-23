@@ -174,13 +174,14 @@ local dedupe_path = options_path .. '/De-Duplication'
 local hilite_path = options_path .. '/Highlighting'
 local filter_path = options_path .. '/Filtering'
 local color_path = options_path .. '/Color Setup'
+local deathMessages = true
 
 options_order = {
 	
 	'lblGeneral',
 	
 	'enableConsole',
-	
+	'death_messages',
 	--'mousewheel',
 	'defaultAllyChat',
 	'defaultBacklogEnabled',
@@ -767,6 +768,14 @@ options = {
 		min = 10, max = 60, step = 5,
 		--OnChange = onOptionsChanged,
 	},
+	death_messages = {
+		name = "Add silly death messages on player resign",
+		type = 'bool',
+		value = true,
+		OnChange = function(self)
+			deathMessages = self.value
+		end,
+	},
 	
 }
 --------------------------------------------------------------------------------
@@ -1304,9 +1313,9 @@ local function setupMyself()
 end
 
 local function setup()
+	setupPlayers()
 	setupMyself()
 	setupColors()
-	setupPlayers()
 	SetupAITeamColor()
 end
 
@@ -1820,6 +1829,51 @@ local function OnLocaleChanged()
 	RemakeConsole()
 end
 
+function SendPlayerResignedMessage(player1, player2, messageID)
+	local playerName1, _, _, _, allyTeam = Spring.GetPlayerInfo(player1)
+	local playerName2, _ = Spring.GetPlayerInfo(player2)
+	local body
+	playerName1 = incolors[playerName1] .. playerName1 .. incolors["#e"]
+	if deathMessages then
+		body = WG.Translate("interface", "death_"..messageID, {name = playerName1})
+	else
+		body = WG.Translate("interface", "death_normal", {name = playerName1})
+	end
+	if player2 then
+		playerName2 = incolors[playerName2] .. playername2 .. incolors["#e"]
+		body = body .. " " .. WG.Translate("interface", "giving_units", {name1 = playerName1, name2 = playerName2})
+	end
+	local m = {
+			argument = body,
+			priority = 35, -- wut?
+			msgtype = 'game_priority_message',
+			text = body,
+		}
+	AddConsoleMessage(msg)
+end
+
+function SendAFKMessage(player1, player2)
+	local playerName1, _, _, _, allyTeam = Spring.GetPlayerInfo(player1)
+	local playerName2, _ = Spring.GetPlayerInfo(player2)
+	local body
+	playerName1 = incolors[playerName1] .. playerName1 .. incolors["#e"]
+	if player2 then
+		playerName2 = incolors[playerName2] .. playername2 .. incolors["#e"]
+		body = WG.Translate("interface", "afk_returned", {name1 = playerName1, name2 = playerName2})
+	else
+		body = WG.Translate("interface", "afk_given", {name1 = playerName1, name2 = playerName2})
+	end
+	
+	local m = {
+			argument = body,
+			priority = 35, -- wut?
+			msgtype = 'game_priority_message',
+			text = body,
+		}
+	AddConsoleMessage(msg)
+end
+	
+
 function widget:Initialize()
 	if (not WG.Chili) then
 		widgetHandler:RemoveWidget()
@@ -1837,9 +1891,10 @@ function widget:Initialize()
 	Spring.SendCommands("bind Any+enter  chat")
 	
 	stack_chat = MakeMessageStack(0)
-	
+	deathMessages = options["death_messages"].value
 	stack_backchat = MakeMessageStack(1)
-	
+	widgetHandler:RegisterGlobal(widget, "SendPlayerResignedMessage", SendPlayerResignedMessage)
+	widgetHandler:RegisterGlobal(widget, "SendAFKMessage", SendAFKMessage)
 	rainbowTable = {
 		[1] = color2incolor({219/255, 15/255, 15/255, 1}),
 		[2] = color2incolor({219/255, 15/255, 70/255, 1}),
