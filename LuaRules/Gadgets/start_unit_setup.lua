@@ -568,7 +568,7 @@ function gadget:GameStart()
 					local customKeys = select(10, Spring.GetPlayerInfo(playerlist[i]))
 					if customKeys and customKeys.extracomm then
 						for j = 1, tonumber(customKeys.extracomm) do
-							Spring.Echo("Spawing a commander")
+							--Spring.Echo("Spawing a commander")
 							SpawnStartUnit(team, playerlist[i], false, true)
 						end
 					end
