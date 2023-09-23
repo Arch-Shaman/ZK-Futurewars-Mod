@@ -248,7 +248,7 @@ local function UpdateTeamActivity(teamID)
 		end
 		
 		if unitsRecieved then
-			spEcho("game_message: Player " .. playerName .. " is no longer lagging or AFK; returning all their units.")
+			SendToUnsynced("SendAFKMessage", leaderID)
 		end
 	end
 	
