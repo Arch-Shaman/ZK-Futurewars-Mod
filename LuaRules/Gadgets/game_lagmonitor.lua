@@ -1,11 +1,3 @@
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-if not gadgetHandler:IsSyncedCode() then
-	return
-end
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
 function gadget:GetInfo()
   return {
     name      = "Lag Monitor",
@@ -17,6 +9,30 @@ function gadget:GetInfo()
     enabled   = true  --  loaded by default?
   }
 end
+
+if not gadgetHandler:IsSyncedCode() then
+	-- UI Transport --
+	
+	local function SendAFKMsg(_, playerID, playerID2)
+		--Spring.Echo("MakeUpdate: " .. tostring(allyTeamID))
+		if Script.LuaUI('SendAFKMessage') then
+			Script.LuaUI.SendAFKMessage(playerID, playerID2)
+		end
+	end
+	
+	local function SendPlayerResignedMessage(_, player1, player2, messageID)
+		if Script.LuaUI('SendPlayerResignedMessage') then
+			Script.LuaUI.SendPlayerResignedMessage(player1, player2, messageID)
+		end
+	end
+	
+	function gadget:Initialize()
+		gadgetHandler:AddSyncAction("SendAFKMsg", SendAFKMsg)
+		gadgetHandler:AddSyncAction("SendPlayerResignedMessage", SendPlayerResignedMessage)
+	end
+	return
+end
+
 --------------------------------------------------------------------------------
 --List of stuff in this gadget (to help us remember stuff for future debugging/improvement):
 
