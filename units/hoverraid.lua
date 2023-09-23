@@ -43,7 +43,6 @@ return {
 			},
 		},
 		sightDistance       = 740,
-		sonarDistance       = 740,
 		turninplace         = 0,
 		turnRate            = 864,
 		workerTime          = 0,
@@ -73,7 +72,7 @@ return {
 					armorpiercing       = 1/6,
 				},
 				damage                  = {
-					default = 30.1,
+					default = 36.1,
 				},
 				explosionGenerator      = "custom:gauss_hit_l",
 				groundbounce            = 1,

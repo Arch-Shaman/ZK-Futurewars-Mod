@@ -42,7 +42,6 @@ return {
 		selfDestructAs         = "BIG_UNITEX",
 		script                 = "subtacmissile.lua",
 		sightDistance          = 660,
-		sonarDistance          = 660,
 		turninplace            = 0,
 		turnRate               = 491,
 		upright                = true,

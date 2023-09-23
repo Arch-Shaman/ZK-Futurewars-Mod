@@ -94,7 +94,8 @@ return {
 				damage                  = {
 					default = 280.1,
 				},
-				explosionGenerator      = "custom:BEAMWEAPON_HIT_ORANGE",
+				explosionGenerator      = "custom:scythe_hit",
+				explosionScar			= false,
 				fireStarter             = 90,
 				hardStop                = false,
 				impactOnly              = true,

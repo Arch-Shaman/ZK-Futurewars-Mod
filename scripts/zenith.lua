@@ -55,6 +55,7 @@ local CMD_ATTACK = CMD.ATTACK
 local gaiaTeam = Spring.GetGaiaTeamID()
 
 local launchInProgress = false
+local isBlocked = true
 local currentlyEnabled = false
 local firstRun = true
 
@@ -191,6 +192,7 @@ local function UpdateEnabled(newEnabled)
 		RegainControlOfMeteors()
 	else
 		LoseControlOfMeteors()
+		isBlocked = true -- Block until a projectile is fired successfully.
 	end
 end
 
@@ -200,6 +202,7 @@ local function ForcedSleep()
 end
 
 local function SpawnProjectileThread()
+	GG.zenith_spawnBlocked = GG.zenith_spawnBlocked or {}
 	local ready = false
 	while true do
 		--local reloadMult = spGetUnitRulesParam(unitID, "totalReloadSpeedChange") or 1
@@ -226,11 +229,14 @@ local function SpawnProjectileThread()
 		end
 		EmitSfx(flare, 2049)
 
-		UpdateEnabled(true)
+		UpdateEnabled(not isBlocked)
 		if currentlyEnabled then
 			SpawnMeteor()
 			GG.FireControl.WeaponFired(unitID, 2)
 		end
+
+		isBlocked = GG.zenith_spawnBlocked[unitID]
+		GG.zenith_spawnBlocked[unitID] = false
 	end
 end
 

@@ -48,7 +48,6 @@ return {
 			},
 		},
 		sightDistance          = 660,
-		sonarDistance          = 660,
 		turninplace            = 0,
 		turnRate               = 345,
 		waterLine              = 4,

@@ -57,7 +57,6 @@ return { chicken_dragon = {
 
 	},
 	sightDistance          = 1200,
-	sonarDistance          = 1200,
 	trackOffset            = 18,
 	trackStrength          = 8,
 	trackStretch           = 1,

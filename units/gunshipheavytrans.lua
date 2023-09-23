@@ -58,7 +58,6 @@ return {
 			},
 		},
 		sightDistance          = 750,
-		sonarDistance          = 750,
 		transportCapacity      = 1,
 		transportSize          = 25,
 		turninplace            = 0,

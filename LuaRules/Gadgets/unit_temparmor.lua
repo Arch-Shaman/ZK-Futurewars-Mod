@@ -167,7 +167,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 			mult = 1
 		else
 			local wd = WeaponDefs[weaponDefID]
-			local potentialDamage = wd.damages[0] -- probably default?
+			local potentialDamage = wd.damages[1] -- probably default?
 			mult = damage / potentialDamage
 		end
 		local duration = configs[weaponDefID].duration

@@ -47,7 +47,6 @@ return {
 			explosiongenerators = {},
 		},
 		sightDistance          = 500,
-		sonarDistance          = 500,
 		trackOffset            = 0,
 		trackStrength          = 8,
 		trackStretch           = 1,

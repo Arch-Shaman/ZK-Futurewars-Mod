@@ -68,7 +68,6 @@ return {
 		showNanoSpray                 = false,
 		script                        = "factoryspider.lua",
 		sightDistance                 = 1500,
-		sonarDistance       		  = 1500,
 		radarDistance                 = 3500,
 		radarEmitHeight               = 90,
 		useBuildingGroundDecal        = true,
