@@ -419,9 +419,9 @@ for name, ud in pairs(UnitDefs) do
 		end
 	end
 	
-	if string.find(ud.name, "dyn") and commwars then
+	if (string.find(ud.name, "dyn") or ud.customparams.commtype or ud.customparams.level) and commwars then
 		Spring.Echo("[UnitDefs_Post] Comm wars applied to " .. ud.name)
-		ud.buildoptions = {}
+		ud.buildoptions = nil
 		ud.canassist = false
 		ud.repairspeed = ud.workertime * 3
 		ud.energymake = (ud.workertime * 3) + 1
