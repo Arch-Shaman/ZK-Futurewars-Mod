@@ -57,7 +57,7 @@ return {
 		iconType               = "facship",
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
-		maxDamage              = 6000,
+		maxDamage              = 7200,
 		maxSlope               = 15,
 		minCloakDistance       = 150,
 		minWaterDepth          = 15,

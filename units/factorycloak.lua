@@ -62,7 +62,7 @@ return {
 		iconType                      = "fackbot",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		health                        = 4000,
+		health                        = 5600,
 		maxSlope                      = 15,
 		maxWaterDepth                 = 0,
 		minCloakDistance              = 150,

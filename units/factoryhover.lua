@@ -59,7 +59,7 @@ return {
 		footprintZ       = 12,
 		iconType         = "fachover",
 		levelGround      = false,
-		health           = 4000 * 0.4,
+		health           = 5600 * 0.4,
 		maxSlope         = 15,
 		speed            = 0,
 		moveState        = 1,

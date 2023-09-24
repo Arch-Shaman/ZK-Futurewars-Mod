@@ -57,7 +57,7 @@ return {
 		footprintX                    = 7,
 		footprintZ                    = 7,
 		iconType                      = "facspider",
-		health                        = 4000,
+		health                        = 5600,
 		maxSlope                      = 15,
 		speed                         = 0,
 		maxWaterDepth                 = 0,

@@ -55,7 +55,7 @@ return {
 		explodeAs                     = "LARGE_BUILDINGEX",
 		footprintX                    = 8,
 		footprintZ                    = 8,
-		health                        = 4000,
+		health                        = 5200,
 		iconType                      = "facvehicle",
 		levelGround                   = false,
 		maxSlope                      = 15,

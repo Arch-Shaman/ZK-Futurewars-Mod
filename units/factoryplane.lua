@@ -57,7 +57,7 @@ return {
 		footprintX                    = 8,
 		footprintZ                    = 7,
 		iconType                      = "facair",
-		health                        = 4000,
+		health                        = 5600,
 		maxSlope                      = 15,
 		speed                         = 0,
 		minCloakDistance              = 150,
