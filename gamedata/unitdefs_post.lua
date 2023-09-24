@@ -5,6 +5,7 @@ if (Spring.GetModOptions) then
 end
 
 local nuclearwar = tonumber((modOptions["goingnuclear"]) or 0) == 1
+local commwars = tonumber((modOptions["commwars"]) or 0) == 1
 
 
 Spring.Echo("Loading UnitDefs_posts")
@@ -418,11 +419,19 @@ for name, ud in pairs(UnitDefs) do
 		end
 	end
 	
+	if string.find(ud.name, "dyn") and commwars then
+		Spring.Echo("[UnitDefs_Post] Comm wars applied to " .. ud.name)
+		ud.buildoptions = {}
+		ud.canassist = false
+		ud.repairspeed = ud.workertime * 3
+		ud.energymake = (ud.workertime * 3) + 1
+		ud.metalmake = 20
+	end
+	
 	-- 3dbuildrange for all none plane builders
 	--if (tobool(ud.builder) and not tobool(ud.canfly)) then
 	--	ud.buildrange3d = true
 	--end
-	
 	-- Calculate mincloakdistance based on unit footprint size
 	local fx = ud.customparams.decloak_footprint or (ud.footprintx and tonumber(ud.footprintx) or 1)
 	local fz = ud.customparams.decloak_footprint or (ud.footprintz and tonumber(ud.footprintz) or 1)
