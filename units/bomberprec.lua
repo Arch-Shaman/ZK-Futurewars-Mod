@@ -113,8 +113,8 @@ return {
 					numprojectiles1 = 6,
 					projectile1 = "bomberprec_bomblet",
 					useheight = 1,
-					spawndist = 200,
-					velspread1 = "10.19, -8, 10.19, _, -4, _",
+					spawndist = 250,
+					velspread1 = "-13.19, -8, -13.19, 13.19, -8, 13.19",
 					keepmomentum1 = 0,
 					groundimpact = 1,
 					reaim_time = 60, -- see what the hell this does.
