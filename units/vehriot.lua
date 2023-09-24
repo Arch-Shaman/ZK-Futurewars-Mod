@@ -79,6 +79,12 @@ return {
 					light_color = "0.8 0.76 0.38",
 					light_radius = 10,
 					isFlak = 1,
+					blastwave_size = 10,
+					blastwave_impulse = 0.45,
+					blastwave_speed = 3,
+					blastwave_life = 10,
+					blastwave_lossfactor = 0.88,
+					blastwave_damage = 0,
 				},
 				damage                  = {
 					default = 35.01,
