@@ -1,19 +1,19 @@
 return { chicken_rafflesia = {
-	name                          = [[Rafflesia]],
-	description                   = [[Massive Chicken Shield (Static)]],
+	name                          = "Rafflesia",
+	description                   = "Massive Chicken Shield (Static)",
 	activateWhenBuilt             = true,
 	builder                       = false,
-	buildPic                      = [[chicken_rafflesia.png]],
-	category                      = [[SINK]],
+	buildPic                      = "chicken_rafflesia.png",
+	category                      = "SINK",
 
 	customParams                  = {
 		shield_emit_offset = -4,
 	},
 
-	explodeAs                     = [[NOWEAPON]],
+	explodeAs                     = "NOWEAPON",
 	footprintX                    = 3,
 	footprintZ                    = 3,
-	iconType                      = [[defenseshield]],
+	iconType                      = "defenseshield",
 	idleAutoHeal                  = 50,
 	idleTime                      = 600,
 	levelGround                   = false,
@@ -23,19 +23,19 @@ return { chicken_rafflesia = {
 	maxWaterDepth                 = 20,
 	buildTime                     = 4800,
 	noAutoFire                    = false,
-	noChaseCategory               = [[FIXEDWING LAND SHIP SATELLITE SWIM GUNSHIP SUB HOVER]],
-	objectName                    = [[chicken_rafflesia.s3o]],
+	noChaseCategory               = "FIXEDWING LAND SHIP SATELLITE SWIM GUNSHIP SUB HOVER",
+	objectName                    = "chicken_rafflesia.s3o",
 	onoffable                     = true,
 	power                         = 4800,
 	reclaimable                   = false,
-	selfDestructAs                = [[NOWEAPON]],
+	selfDestructAs                = "NOWEAPON",
 
 	sfxtypes                      = {
 
 		explosiongenerators = {
-			[[custom:blood_spray]],
-			[[custom:blood_explode]],
-			[[custom:dirt]],
+			"custom:blood_spray",
+			"custom:blood_explode",
+			"custom:dirt",
 		},
 
 	},
@@ -43,15 +43,15 @@ return { chicken_rafflesia = {
 	upright                       = false,
 	useBuildingGroundDecal        = false,
 	workerTime                    = 0,
-	yardMap                       = [[ooooooooo]],
+	yardMap                       = "ooooooooo",
 	weapons                       = {
 		{
-			def = [[SHIELD]],
+			def = "SHIELD",
 		},
 	},
 	weaponDefs                    = {
 		SHIELD      = {
-			name                    = [[Shield]],
+			name                    = "Shield",
 			craterMult              = 0,
 			customParams = {
 				unlinked                = true,
@@ -64,8 +64,8 @@ return { chicken_rafflesia = {
 			impulseFactor           = 0,
 			interceptedByShieldType = 1,
 			shieldAlpha             = 0.15,
-			shieldBadColor          = [[1.0 1 0.1 1]],
-			shieldGoodColor         = [[0.1 1.0 0.1 1]],
+			shieldBadColor          = "1.0 1 0.1 1",
+			shieldGoodColor         = "0.1 1.0 0.1 1",
 			shieldInterceptType     = 3,
 			shieldPower             = 50000,
 			shieldPowerRegen        = 1440,
@@ -75,11 +75,11 @@ return { chicken_rafflesia = {
 			smartShield             = true,
 			visibleShield           = false,
 			visibleShieldRepulse    = false,
-			--texture1                = [[wakelarge]],
+			--texture1                = "wakelarge",
 			--visibleShield           = true,
 			--visibleShieldHitFrames  = 30,
 			--visibleShieldRepulse    = false,
-			weaponType              = [[Shield]],
+			weaponType              = "Shield",
 		},
 
 	},
