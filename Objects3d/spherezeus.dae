@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 3.6.3 commit date:2023-09-21, commit time:06:06, hash:d3e6b08276ba</authoring_tool>
     </contributor>
-    <created>2023-09-24T04:33:00</created>
-    <modified>2023-09-24T04:33:00</modified>
+    <created>2023-09-24T19:06:51</created>
+    <modified>2023-09-24T19:06:51</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -1192,7 +1192,7 @@
                 </bind_material>
               </instance_geometry>
               <node id="head" name="head" type="NODE">
-                <matrix sid="transform">0.6823592 0 1.21211e-15 0.372654 -1.21211e-15 -2.98269e-8 0.6823592 10.6823 0 -0.6823592 -2.98269e-8 -1.064762 0 0 0 1</matrix>
+                <matrix sid="transform">0.6823592 0 4.84845e-15 0.372654 -4.84845e-15 -2.98269e-8 0.6823592 10.6823 0 -0.6823592 -2.98269e-8 -1.064762 0 0 0 1</matrix>
                 <instance_geometry url="#Cube-mesh" name="head">
                   <bind_material>
                     <technique_common>
@@ -1254,7 +1254,7 @@
                   </bind_material>
                 </instance_geometry>
                 <node id="rforearm" name="rforearm" type="NODE">
-                  <matrix sid="transform">1.465504 -5.20652e-15 0 -3.75016 5.20652e-15 1.465504 7.10543e-15 -6.453411 0 -7.10543e-15 1.465504 0.0955317 0 0 0 1</matrix>
+                  <matrix sid="transform">1.465504 0 0 -3.75016 0 1.465504 7.10543e-15 -6.453411 0 -7.10543e-15 1.465504 0.0955317 0 0 0 1</matrix>
                   <instance_geometry url="#rforearm_004-mesh" name="rforearm">
                     <bind_material>
                       <technique_common>
@@ -1265,7 +1265,7 @@
                     </bind_material>
                   </instance_geometry>
                   <node id="shield" name="shield" type="NODE">
-                    <matrix sid="transform">-2.7002e-16 0.6823593 8.73609e-9 -3.039165 -0.6823593 2.7002e-16 -2.10908e-8 -5.044329 -2.10908e-8 -8.73609e-9 0.6823592 -1.57356e-5 0 0 0 1</matrix>
+                    <matrix sid="transform">-2.70021e-16 0.6823593 8.73609e-9 -3.039165 -0.6823593 2.7002e-16 -2.10908e-8 -5.044329 -2.10908e-8 -8.73609e-9 0.6823592 -1.57356e-5 0 0 0 1</matrix>
                     <instance_geometry url="#Cube_013-mesh" name="shield">
                       <bind_material>
                         <technique_common>
@@ -1276,7 +1276,7 @@
                       </bind_material>
                     </instance_geometry>
                     <node id="lshield1" name="lshield1" type="NODE">
-                      <matrix sid="transform">1 0 0 2.04562e-6 0 1 -8.88179e-16 0 0 0 1 -0.009998322 0 0 0 1</matrix>
+                      <matrix sid="transform">1 0 0 2.04562e-6 0 1 -8.88178e-16 0 0 0 1 -0.009998322 0 0 0 1</matrix>
                       <instance_geometry url="#Cube_020-mesh" name="lshield1">
                         <bind_material>
                           <technique_common>
@@ -1286,21 +1286,21 @@
                           </technique_common>
                         </bind_material>
                       </instance_geometry>
-                    </node>
-                    <node id="lshield2" name="lshield2" type="NODE">
-                      <matrix sid="transform">1 0 0 2.04488e-6 0 1 -8.88179e-16 0 0 0 1 0 0 0 0 1</matrix>
-                      <instance_geometry url="#Cube_022-mesh" name="lshield2">
-                        <bind_material>
-                          <technique_common>
-                            <instance_material symbol="Spring-material" target="#Spring-material">
-                              <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
-                            </instance_material>
-                          </technique_common>
-                        </bind_material>
-                      </instance_geometry>
+                      <node id="lshield2" name="lshield2" type="NODE">
+                        <matrix sid="transform">1 -7.54979e-8 -7.462e-8 3.95222e-6 7.54979e-8 1 -1.75723e-7 0 7.462e-8 1.75723e-7 1 0.009998441 0 0 0 1</matrix>
+                        <instance_geometry url="#Cube_022-mesh" name="lshield2">
+                          <bind_material>
+                            <technique_common>
+                              <instance_material symbol="Spring-material" target="#Spring-material">
+                                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+                              </instance_material>
+                            </technique_common>
+                          </bind_material>
+                        </instance_geometry>
+                      </node>
                     </node>
                     <node id="ushield1" name="ushield1" type="NODE">
-                      <matrix sid="transform">1 0 0 2.04488e-6 0 1 -8.88179e-16 0 0 0 1 0 0 0 0 1</matrix>
+                      <matrix sid="transform">1 0 0 2.04488e-6 0 1 -8.88178e-16 0 0 0 1 0 0 0 0 1</matrix>
                       <instance_geometry url="#Cube_018-mesh" name="ushield1">
                         <bind_material>
                           <technique_common>
@@ -1310,18 +1310,18 @@
                           </technique_common>
                         </bind_material>
                       </instance_geometry>
-                    </node>
-                    <node id="ushield2" name="ushield2" type="NODE">
-                      <matrix sid="transform">1 0 0 2.04488e-6 0 1 -8.88179e-16 5.72205e-6 0 0 1 0 0 0 0 1</matrix>
-                      <instance_geometry url="#Cube_021-mesh" name="ushield2">
-                        <bind_material>
-                          <technique_common>
-                            <instance_material symbol="Spring-material" target="#Spring-material">
-                              <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
-                            </instance_material>
-                          </technique_common>
-                        </bind_material>
-                      </instance_geometry>
+                      <node id="ushield2" name="ushield2" type="NODE">
+                        <matrix sid="transform">1 -7.54979e-8 -7.462e-8 3.95222e-6 7.54979e-8 1 -1.75723e-7 5.72205e-6 7.462e-8 1.75723e-7 1 1.19209e-7 0 0 0 1</matrix>
+                        <instance_geometry url="#Cube_021-mesh" name="ushield2">
+                          <bind_material>
+                            <technique_common>
+                              <instance_material symbol="Spring-material" target="#Spring-material">
+                                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+                              </instance_material>
+                            </technique_common>
+                          </bind_material>
+                        </instance_geometry>
+                      </node>
                     </node>
                   </node>
                 </node>
