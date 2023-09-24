@@ -5,7 +5,7 @@ local gun = piece 'gun'
 local ledgun = piece 'ledgun'
 local radar = piece 'radar'
 local barrel = piece 'barrel'
-local fire = piece 'fire'
+local firepiece = piece 'fire'
 local antenna = piece 'antenna'
 local door1 = piece 'door1'
 local door2 = piece 'door2'
@@ -23,6 +23,11 @@ local SpSetUnitRulesParam = Spring.SetUnitRulesParam
 local SpetUnitWeaponState = Spring.SetUnitWeaponState
 local spGetUnitTeam = Spring.GetUnitTeam
 local spIsUnitInLos = Spring.IsUnitInLos
+local spSpawnProjectile = Spring.SpawnProjectile
+local spGetUnitPiecePosition = Spring.GetUnitPiecePosition
+local spGetUnitPosition = Spring.GetUnitPosition
+local spAddUnitDamage = Spring.AddUnitDamage
+local spSpawnCEG = Spring.SpawnCEG
 local abs = math.abs
 local huge = math.huge
 
@@ -37,7 +42,7 @@ local open = true
 local firing = false
 local reloading = false
 local turnrateMod = 0.5
-local target = 1 --anything but nil is fine
+local target = nil
 local lastHeading
 local lastPitch
 local registeredGroundFire = false
@@ -46,6 +51,13 @@ local firingTime = 0
 local reloadGrace = 30
 local armorValue = UnitDefs[unitDefID].armoredMultiple
 local reloadTime = tonumber(WeaponDefNames["turretantiheavy_ata"].customParams.reload_override) * 30
+
+local weaponIDs = {}
+
+local i
+for i=0, 60 do
+	weaponIDs[i] = WeaponDefNames["turretantiheavy_ata_"..i].id
+end
 
 --[[
 TO DO:
@@ -57,24 +69,24 @@ local function Open()
 	Signal(SIG_OPEN)
 	SetSignalMask(SIG_OPEN)
 	GG.SetUnitArmor(unitID, 1)
-	Turn(door1, z_axis, 0, math.rad(80))
-	Turn(door2, z_axis, 0, math.rad(80))
+	Turn(door1, z_axis, 0, math.rad(160))
+	Turn(door2, z_axis, 0, math.rad(160))
 	WaitForTurn(door1, z_axis)
 	while spGetUnitRulesParam(unitID, "lowpower") == 1 do
 		Sleep(500)
 	end
 	
 	
-	Move(arm, y_axis, 0, 12)
-	Turn(antenna, x_axis, 0, math.rad(50))
+	Move(arm, y_axis, 0, 24)
+	Turn(antenna, x_axis, 0, math.rad(100))
 	Sleep(200)
 	while spGetUnitRulesParam(unitID, "lowpower") == 1 do
 		Sleep(500)
 	end
 	
 	
-	Move(barrel, z_axis, 0, 7)
-	Move(ledgun, z_axis, 0, 7)
+	Move(barrel, z_axis, 0, 14)
+	Move(ledgun, z_axis, 0, 14)
 	WaitForMove(barrel, z_axis)
 	WaitForMove(ledgun, z_axis)
 	while spGetUnitRulesParam(unitID, "lowpower") == 1 do
@@ -94,11 +106,11 @@ local function Close()
 		Sleep(500)
 	end
 	
-	Turn(turret, y_axis, 0, math.rad(50))
-	Turn(gun, x_axis, 0, math.rad(40))
-	Move(barrel, z_axis, -24, 7)
-	Move(ledgun, z_axis, -15, 7)
-	Turn(antenna, x_axis, math.rad(90), math.rad(50))
+	Turn(turret, y_axis, 0, math.rad(100))
+	Turn(gun, x_axis, 0, math.rad(80))
+	Move(barrel, z_axis, -24, 14)
+	Move(ledgun, z_axis, -15, 14)
+	Turn(antenna, x_axis, math.rad(90), math.rad(100))
 	WaitForTurn(turret, y_axis)
 	WaitForTurn(gun, x_axis)
 	while spGetUnitRulesParam(unitID, "lowpower") == 1 do
@@ -106,19 +118,50 @@ local function Close()
 	end
 	
 	
-	Move(arm, y_axis, -50, 12)
+	Move(arm, y_axis, -50, 24)
 	WaitForMove(arm, y_axis)
 	while spGetUnitRulesParam(unitID, "lowpower") == 1 do
 		Sleep(500)
 	end
 	
 	
-	Turn(door1, z_axis, math.rad(-(90)), math.rad(80))
-	Turn(door2, z_axis, math.rad(-(-90)), math.rad(80))
+	Turn(door1, z_axis, math.rad(-(90)), math.rad(160))
+	Turn(door2, z_axis, math.rad(-(-90)), math.rad(160))
 	WaitForTurn(door1, z_axis)
 	WaitForTurn(door2, z_axis)
 	
 	GG.SetUnitArmor(unitID, armorValue)
+end
+
+local function handleFire(targetID)
+	firing = true
+	turnrateMod = 10
+	firingTime = firingTime + 1
+	local beam = math.min(math.floor(firingTime / 3 + 0.01), 60)
+	local d = (beam / 10 + 1)
+
+	local weaponID = weaponIDs[beam]
+
+	local ux, uy, uz = spGetUnitPosition(unitID)
+	local px, py, pz = spGetUnitPiecePosition(unitID, firepiece)
+	local _, _, _, tx, ty, tz = spGetUnitPosition(targetID, false, true)
+	spSpawnProjectile(weaponID, {
+		pos = {ux+pz, uy+py, uz+px},
+		["end"] = {tx, ty, tz},
+		owner = unitID,
+		team = spGetUnitTeam(unitID),
+		ttl = 1,
+	})
+	spSpawnCEG("ataalasergrow", tx, ty, tz, 0, 1, 0, 1, math.sqrt(d))
+	spAddUnitDamage(targetID, 10 * (1 + beam / 10), 0, unitID, weaponID)
+end
+
+local function FiringTimeoutThread()
+	Signal(SIG_FIRING)
+	SetSignalMask(SIG_FIRING)
+	Sleep(100)
+	--spEcho("reload due to timeout")
+	StartReload()
 end
 
 function script.Create()
@@ -144,6 +187,10 @@ function OnArmorStateChanged(state)
 end
 
 function script.AimWeapon(weaponNum, heading, pitch)
+	if weaponNum ~= 1 then
+		return false
+	end
+	
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
 
@@ -174,42 +221,28 @@ function script.AimWeapon(weaponNum, heading, pitch)
 	return (spGetUnitRulesParam(unitID, "lowpower") == 0)	--checks for sufficient energy in grid
 end
 
-local beam_duration = WeaponDefs[UnitDef.weapons[1].weaponDef].beamtime * 1000
 function script.FireWeapon()
-	Signal(SIG_FIRING)
-	SetSignalMask(SIG_FIRING)
-	--EmitSfx(fire, 1024)
-	firing = true
-	turnrateMod = 10
-	firingTime = firingTime + 1
-	local d = (firingTime / 30 + 1) ^ 0.67
-	if d > 3 then
-		d = 3
-	end
-	SpSetUnitRulesParam(unitID, "CEGdOverride2", d, inlosTrueTable)
-	local timeout = SpGetGameFrame()
-	timeout = timeout + beam_duration * 3
-	SpSetUnitRulesParam(unitID, "CEGdTimeout2", timeout, inlosTrueTable)
-	Sleep(beam_duration * 3)
-	--spEcho("reload due to timeout")
-	StartReload()
 end
 
 function script.BlockShot(num, targetID)
-	--[[if firing then
-		if registeredTarget then
-			if target ~= targetID and registeredTarget then
-				--spEcho("target: " .. (target or "nil") .. " targetID : " .. (targetID or "nil"))
-				StartReload()
-			end
-		else
-			registeredTarget = true
-		end
-	end]] -- This is a no op.
-	--spEcho("Is unit is Los: " .. ((spIsUnitInLos(targetID, spGetUnitTeam(unitID)) and "true") or "false"))
-	--spEcho("Is ground fire: " .. ((targetID and "true") or "false"))
-	--spEcho("Final Verdict: " .. (((targetID and not spIsUnitInLos(targetID, spGetUnitTeam(unitID))) and "true") or "false"))
-	return (targetID and not spIsUnitInLos(targetID, Spring.GetUnitAllyTeam(unitID))) or false
+	if ((targetID and not spIsUnitInLos(targetID, Spring.GetUnitAllyTeam(unitID))) or false) then
+		return true
+	end
+
+	-- We block weapon 1 from firing and subsitute in our own shot
+
+	if target == nil then
+		target = targetID
+	elseif target ~= targetID then
+		StartReload()
+		return true
+	end
+
+	handleFire(targetID)
+
+	StartThread(FiringTimeoutThread)
+
+	return true
 end
 
 function script.TargetWeight(num, targetUnitID)
@@ -231,9 +264,8 @@ function StartReload()
 	local totalReloadTime = math.ceil((reloadTime * reloadmod)/slowState)
 	frame = SpGetGameFrame() + math.ceil((reloadTime * reloadmod)/slowState)
 	SpetUnitWeaponState(unitID, 1, "reloadState", frame)
-	SpetUnitWeaponState(unitID, 2, "reloadState", frame)
+	target = nil
 	registeredGroundFire = false
-	registeredTarget = false
 	firingTime = 0
 end
 
@@ -261,7 +293,7 @@ function script.AimFromWeapon(weaponNum)
 end
 
 function script.QueryWeapon(weaponNum)
-	return fire
+	return firepiece
 end
 
 function script.Killed(recentDamage, maxHealth)
@@ -274,7 +306,7 @@ function script.Killed(recentDamage, maxHealth)
 		Explode(ledgun, SFX.NONE)
 		Explode(radar, SFX.NONE)
 		Explode(barrel, SFX.NONE)
-		Explode(fire, SFX.NONE)
+		Explode(firepiece, SFX.NONE)
 		Explode(antenna, SFX.NONE)
 		Explode(door1, SFX.NONE)
 		Explode(door2, SFX.NONE)
@@ -287,7 +319,7 @@ function script.Killed(recentDamage, maxHealth)
 		Explode(ledgun, SFX.NONE)
 		Explode(radar, SFX.NONE)
 		Explode(barrel, SFX.FALL)
-		Explode(fire, SFX.NONE)
+		Explode(firepiece, SFX.NONE)
 		Explode(antenna, SFX.FALL)
 		Explode(door1, SFX.FALL)
 		Explode(door2, SFX.FALL)
@@ -300,7 +332,7 @@ function script.Killed(recentDamage, maxHealth)
 		Explode(ledgun, SFX.NONE)
 		Explode(radar, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
 		Explode(barrel, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(fire, SFX.NONE)
+		Explode(firepiece, SFX.NONE)
 		Explode(antenna, SFX.FALL)
 		Explode(door1, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
 		Explode(door2, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
@@ -313,7 +345,7 @@ function script.Killed(recentDamage, maxHealth)
 		Explode(ledgun, SFX.NONE)
 		Explode(radar, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
 		Explode(barrel, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(fire, SFX.NONE)
+		Explode(firepiece, SFX.NONE)
 		Explode(antenna, SFX.FALL)
 		Explode(door1, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
 		Explode(door2, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)

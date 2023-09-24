@@ -94,16 +94,17 @@ local shields = {}
 local unitsNeedingHax = {}
 
 for i = 1, #UnitDefs do
-	local def = UnitDefs[i]
-	local weapons = def.weapons
+	local weapons = UnitDefs[i].weapons
 	for w = 1, #weapons do
 		local wep = weapons[w].weaponDef
 		if WeaponDefs[wep].shieldPower and WeaponDefs[wep].shieldPower > 0 and shields[i] == nil then
-			shields[i] = WeaponDefs[wep].id
+			shields[i] = w
 			--Spring.Echo("Added shield retreat to " .. i .. " ( has " .. tostring(WeaponDefs[wep].shieldPower) .. ")")
 		end
 	end
 end
+
+Spring.Utilities.TableEcho(shields, "unit_morph.shields")
 
 --------------------------------------------------------------------------------
 --	COMMON
@@ -477,7 +478,9 @@ local function FinishMorph(unitID, morphData)
 	local wantCloakState = Spring.GetUnitRulesParam(unitID, "wantcloak")
 	--// copy shield power
 	local shieldNum = Spring.GetUnitRulesParam(unitID, "comm_shield_num") or shields[unitDefID] or -1
+	Spring.Echo("uwu harder daddy", shieldNum)
 	local oldShieldState, oldShieldCharge = Spring.GetUnitShieldState(unitID, shieldNum)
+	Spring.Echo(oldShieldState, oldShieldCharge)
 	--//copy experience
 	local newXp = Spring.GetUnitExperience(unitID)
 	local oldBuildTime = Spring.Utilities.GetUnitCost(unitID, unitDefID)
