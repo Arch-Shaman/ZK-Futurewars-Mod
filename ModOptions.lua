@@ -103,6 +103,14 @@ local options = {
 		def = false,
 	},
 	{
+		key = "commwars",
+		name = "Commander Wars",
+		desc = "Blocks commanders from constructing and enables balance around commwars.",
+		type = "bool",
+		section= 'a_important',
+		def = false,
+	},
+	{
 		key = "isplanetwars",
 		name = "Planet Wars",
 		desc = "This setting is used to transport important information at the end of the game to FW infra.",
