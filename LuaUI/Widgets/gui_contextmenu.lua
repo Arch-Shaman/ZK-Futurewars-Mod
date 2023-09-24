@@ -2284,7 +2284,9 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 				local module_instances = {}
 				for i = 1, modules do
 					local moduleID = Spring.GetFeatureRulesParam(unitID, "comm_module_" .. i)
-					module_instances[moduleID] = (module_instances[moduleID] or 0) + 1
+					if moduleID ~= nil then 
+						module_instances[moduleID] = (module_instances[moduleID] or 0) + 1
+					end
 				end
 				for moduleID, moduleCount in pairs(module_instances) do
 					local moduleStr = moduleDefs[moduleID].humanName
