@@ -40,7 +40,6 @@ return {
 			midposoffset       = "0 0 -30",
 			solid_factory      = "2",
 			unstick_help       = "1",
-			selectionscalemult = 1,
 			child_of_factory   = "factoryhover",
 			buggeroff_offset   = 40,
 			outline_x = 165,

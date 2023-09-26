@@ -42,7 +42,6 @@ return {
 			modelradius    = "100",
 			solid_factory = "3",
 			unstick_help   = 1,
-			selectionscalemult = 1,
 			factorytab       = 1,
 			shared_energy_gen = 1,
 			parent_of_plate   = "platejump",

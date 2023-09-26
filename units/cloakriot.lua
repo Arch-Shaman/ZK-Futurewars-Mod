@@ -16,7 +16,7 @@ return {
 		collisionVolumeScales  = "35 45 35",
 		collisionVolumeType    = "cylY",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "50 50 50",
+		selectionVolumeScales  = "68 68 68",
 		selectionVolumeType    = "ellipsoid",
 		corpse                 = "DEAD",
 		stealth = true,

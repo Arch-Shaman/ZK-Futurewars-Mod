@@ -23,7 +23,7 @@ return {
 		collisionVolumeScales  = "20 55 55",
 		collisionVolumeType    = "cylX",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "52 52 52",
+		selectionVolumeScales  = "78 78 78",
 		selectionVolumeType    = "ellipsoid",
 		collide             = true,
 		corpse              = "DEAD",

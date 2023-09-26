@@ -43,7 +43,6 @@ return {
 			priority_misc = 0,
 			default_spacing    = 4,
 			unstick_help       = 1,
-			selectionscalemult = 1,
 			cus_noflashlight   = 1,
 			child_of_factory   = "factoryshield",
 			outline_x = 165,

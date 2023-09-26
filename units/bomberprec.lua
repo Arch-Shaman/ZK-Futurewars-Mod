@@ -18,7 +18,7 @@ return {
 		collisionVolumeScales  = "80 10 30",
 		collisionVolumeType    = "box",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "95 25 60",
+		selectionVolumeScales  = "129 34 81",
 		selectionVolumeType    = "box",
 		corpse              = "DEAD",
 		cruiseAlt           = 300,

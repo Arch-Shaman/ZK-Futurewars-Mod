@@ -16,7 +16,7 @@ return {
 		collisionVolumeScales  = "28 36 28",
 		collisionVolumeType    = "cylY",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "32 32 32",
+		selectionVolumeScales  = "48 48 48",
 		selectionVolumeType    = "ellipsoid",
 		cloakCost              = 0.3,
 		cloakCostMoving        = 3.0,
