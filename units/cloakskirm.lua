@@ -110,7 +110,7 @@ return {
 				model                   = "wep_m_ajax.s3o",
 				noSelfDamage            = true,
 				tolerance               = 65536/4,
-				turnRate                = 21000,
+				turnRate                = 28000,
 				range                   = 530,
 				reloadtime              = 0.3,
 				smokeTrail              = false,
@@ -124,7 +124,7 @@ return {
 				weaponAcceleration      = 900,
 				weaponType              = "StarburstLauncher",
 				weaponVelocity          = 1100,
-				weaponTimer             = 1/30,
+				weaponTimer             = 3/30,
 			},
 			TRACKER = {
 				name                    = "Missile Target Painter",
