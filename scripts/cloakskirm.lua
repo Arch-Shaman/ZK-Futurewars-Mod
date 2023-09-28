@@ -150,7 +150,7 @@ function script.AimWeapon(num, heading, pitch)
 	Signal(SIG_Aim)
 	SetSignalMask(SIG_Aim)
 	if num == 1 then
-		return true
+		return brocketFlares[brocketNum].loaded 
 	end
 	Turn (hips, x_axis, 0)
 	Turn (turner, y_axis, heading, math.rad(420))
@@ -164,7 +164,6 @@ function script.AimWeapon(num, heading, pitch)
 	end
 	WaitForTurn (turner, y_axis)
 	StartThread(RestoreAfterDelay)
-	if num == 2 then return brocketFlares[brocketNum].loaded end
 	return true
 end
 

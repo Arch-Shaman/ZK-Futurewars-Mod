@@ -5,6 +5,7 @@ if (Spring.GetModOptions) then
 end
 
 local nuclearwar = tonumber((modOptions["goingnuclear"]) or 0) == 1
+local commwars = tonumber((modOptions["commwars"]) or 0) == 1
 
 
 Spring.Echo("Loading UnitDefs_posts")
@@ -418,11 +419,19 @@ for name, ud in pairs(UnitDefs) do
 		end
 	end
 	
+	if (string.find(ud.name, "dyn") or ud.customparams.commtype or ud.customparams.level) and commwars then
+		Spring.Echo("[UnitDefs_Post] Comm wars applied to " .. ud.name)
+		ud.buildoptions = nil
+		ud.canassist = false
+		ud.repairspeed = ud.workertime * 3
+		ud.energymake = (ud.workertime * 3) + 1
+		ud.metalmake = 20
+	end
+	
 	-- 3dbuildrange for all none plane builders
 	--if (tobool(ud.builder) and not tobool(ud.canfly)) then
 	--	ud.buildrange3d = true
 	--end
-	
 	-- Calculate mincloakdistance based on unit footprint size
 	local fx = ud.customparams.decloak_footprint or (ud.footprintx and tonumber(ud.footprintx) or 1)
 	local fz = ud.customparams.decloak_footprint or (ud.footprintz and tonumber(ud.footprintz) or 1)
@@ -786,10 +795,7 @@ for name, ud in pairs(UnitDefs) do
 	if ud.collisionvolumescales or ud.selectionvolumescales then
 		-- Do not override default colvol because it is hard to measure.
 		
-		if ud.selectionvolumescales then
-			local dim = GetDimensions(ud.selectionvolumescales)
-			ud.selectionvolumescales  = math.ceil(dim[1]*scale) .. " " .. math.ceil(dim[2]*scale) .. " " .. math.ceil(dim[3]*scale)
-		else
+		if not ud.selectionvolumescales then
 			local size = math.max(ud.footprintx or 0, ud.footprintz or 0)*15
 			if size > 0 then
 				local dimensions, largest = GetDimensions(ud.collisionvolumescales)

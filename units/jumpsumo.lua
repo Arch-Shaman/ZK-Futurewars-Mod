@@ -18,6 +18,8 @@ return {
 		collisionVolumeScales   = "64 64 64",
 		collisionVolumeType     = "ellipsoid",
 		selectionvolumeoffsets  = "0 -16 0",
+		selectionVolumeScales   = "105 105 105",
+		selectionVolumeType     = "ellipsoid",
 		corpse              = "DEAD",
 		customParams        = {
 			bait_level_default = 0,

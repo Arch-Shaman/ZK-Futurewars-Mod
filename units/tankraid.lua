@@ -17,7 +17,7 @@ return {
 		collisionVolumeScales  = "34 26 34",
 		collisionVolumeType    = "ellipsoid",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "42 42 42",
+		selectionVolumeScales  = "63 63 63",
 		selectionVolumeType    = "ellipsoid",
 		corpse              = "DEAD",
 		customParams        = {

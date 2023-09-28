@@ -313,7 +313,9 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		if controllers[attackerID].postCaptureReload then
 			local gameFrame = spGetGameFrame()
 			local captureReloadMult = (((not build) or build == 1) and 1) or (build*0.5)
-			local frame = gameFrame + math.floor(controllers[attackerID].postCaptureReload*captureReloadMult)
+			local nominalReloadFrames = controllers[attackerID].postCaptureReload*captureReloadMult
+			local realReloadFrames = math.max(math.floor(nominalReloadFrames), 1) -- frames are discrete; can't be zero because that frame already passed!
+			local frame = gameFrame + realReloadFrames
 			local weapon1 = spGetUnitRulesParam(attackerID, "comm_weapon_name_1")
 			local weapon2 = spGetUnitRulesParam(attackerID, "comm_weapon_name_2")
 			--Spring.Echo(tostring(weapon1) .. "," .. tostring(weapon2))

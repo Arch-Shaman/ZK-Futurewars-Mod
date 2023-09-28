@@ -24,7 +24,6 @@ return {
 			removestop     = 1,
 			nuke_coverage  = 2500,
 			modelradius      = "50",
-			selectionscalemult = 1,
 			neededlink  = 90,
 			pylonrange  = 450,
 			keeptooltip = "by janitor's request, please don't remove the tooltips Machine God.", -- Do we actually need this with the new tooltips?

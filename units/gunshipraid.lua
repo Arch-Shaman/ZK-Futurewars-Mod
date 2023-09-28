@@ -15,7 +15,7 @@ return {
 		canSubmerge            = false,
 		category               = "GUNSHIP",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "42 42 42",
+		selectionVolumeScales  = "63 63 63",
 		selectionVolumeType    = "ellipsoid",
 		collide                = true,
 		corpse                 = "DEAD",

@@ -99,7 +99,7 @@ function gadget:AllowUnitCreation(udefID, builderID)
 		SetSiloPadNum(builderID, firstPad)
 		return true
 	end
-	return false
+	return false, false
 end
 
 function gadget:UnitGiven(unitID, unitDefID, newTeam)
