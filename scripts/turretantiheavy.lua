@@ -153,7 +153,7 @@ local function handleFire(targetID)
 		ttl = 1,
 	})
 	spSpawnCEG("ataalasergrow", tx, ty, tz, 0, 1, 0, 1, math.sqrt(d))
-	spAddUnitDamage(targetID, 10 * (1 + beam / 10), 0, unitID, weaponID)
+	spAddUnitDamage(targetID, 20 * (1 + beam / 10), 0, unitID, weaponID)
 end
 
 local function FiringTimeoutThread()

@@ -61,6 +61,7 @@ local turretantiheavy = {
 			areaOfEffect			= 20,
 			avoidFeature			= false,
 			avoidNeutral			= false,
+			avoidground             = false,
 			beamTime				= 1/30, --llt has a rof of 10/s. domi has 30/s. 
 			beamttl					= 6,
 			coreThickness			= 0.5,
@@ -81,7 +82,7 @@ local turretantiheavy = {
 				explosion_generator = "ataalasergrow",
 			},
 			damage					= {
-				default = 10.1,
+				default = 20.1,
 			},
 			explosionGenerator		= "custom:ataalaser",
 			fireTolerance			= 8192, -- 45 degrees

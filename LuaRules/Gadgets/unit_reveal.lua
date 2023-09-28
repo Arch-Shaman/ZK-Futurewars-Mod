@@ -92,12 +92,16 @@ local function setRevealState(unitID, state)
 		for _, teamID in pairs(teams) do
 			if teamID ~= team then
 				local unitID = spCreateUnit(config.losunit, x, y, z, "n", teamID)
-				spSetUnitBlocking(unitID, false, false, false, false, false, false, false)
-				units[#units+1] = unitID
-				if debugmode then spEcho(name.."spawning a los unit for team"..teamID) end
+				if unitID then
+					spSetUnitBlocking(unitID, false, false, false, false, false, false, false)
+					units[#units+1] = unitID
+					if debugmode then spEcho(name.."spawning a los unit for team"..teamID) end
+				end
 			end
 		end
-		unitDatas[unitID].losUnits = units
+		if #units > 0 then
+			unitDatas[unitID].losUnits = units
+		end
 	else
 		local units = unitDatas[unitID].losUnits
 		if debugmode then spEcho(name.."removing units") end
