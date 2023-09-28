@@ -267,6 +267,17 @@ local function StartMorph(unitID, unitDefID, teamID, morphDef)
 			Spring.UnitScript.CallAsUnit(unitID,env.script.StopMoving, hx, hy, hz)
 		end
 	end
+	
+	if morphDef.morphSpeed then
+		Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", morphDef.morphSpeed)
+		GG.UpdateUnitAttributes(unitID)
+		if morphDef.morphSpeed < 0.01 then
+			local env = Spring.UnitScript.GetScriptEnv(unitID)
+			if env and env.script.StopMoving then
+				Spring.UnitScript.CallAsUnit(unitID,env.script.StopMoving, hx, hy, hz)
+			end
+		end
+	end
 
 	morphUnits[unitID] = {
 		def = morphDef,
@@ -275,6 +286,7 @@ local function StartMorph(unitID, unitDefID, teamID, morphDef)
 		morphID = morphID,
 		teamID = teamID,
 		combatMorph = morphDef.combatMorph,
+		morphSpeed = morphDef.morphSpeed,
 		morphRate = 0.0,
 	}
 	
@@ -310,6 +322,10 @@ local function StopMorph(unitID, morphData)
 	morphUnits[unitID] = nil
 	if not morphData.combatMorph then
 		Spring.SetUnitRulesParam(unitID, "morphDisable", 0)
+		GG.UpdateUnitAttributes(unitID)
+	end
+	if morphData.morphSpeed then
+		Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
 		GG.UpdateUnitAttributes(unitID)
 	end
 	Spring.SetUnitRulesParam(unitID, "morphing", 0)

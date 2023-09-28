@@ -150,4 +150,5 @@ function gadget:UnitDestroyed(unitID, unitDefID)
 	end
 	setRevealState(unitID, false)
 	unitDatas[unitID] = nil
+	tracked[unitID] = nil
 end
