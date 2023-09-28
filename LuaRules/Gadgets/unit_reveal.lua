@@ -26,13 +26,15 @@ local spGetUnitTeam = Spring.GetUnitTeam
 local spGetUnitPosition = Spring.GetUnitPosition
 local spCreateUnit = Spring.CreateUnit
 local spDestroyUnit = Spring.DestroyUnit
+local spSetUnitPosition = Spring.SetUnitPosition
 local spEcho = Spring.Echo
 
 local unitDatas = {}
+local tracked = {}
 local configs = {}
 local allyteamLosShare = true
 
-local debugmode = true
+local debugmode = false
 local name = "[unit_reveal.lua]: "
 
 ---------------------------------------------------------------------
@@ -52,12 +54,15 @@ for uid, udef in pairs(UnitDefs) do
 	if params.reveal_losunit then
 		local config = {}
 		configs[uid] = config
-		config.losunit = UnitDefNames[params.reveal_losunit].id
-		if not config.losunit then
-			spEcho(name.."Unitdefs Error: invalid losunit for "..udef.name)
+		if not UnitDefNames[params.reveal_losunit] then
+			spEcho(name.."Unitdefs Error: invalid losunit parameter of '"..params.reveal_losunit.."' for "..udef.name)
 		end
+		config.losunit = UnitDefNames[params.reveal_losunit].id
 		config.onprogress = tonumber(params.reveal_onprogress)
 		config.onfinish = InclusiveBoolCast(params.reveal_onfinish, true)
+		if udef.speed and config.onfinish then
+			config.tracking = true
+		end
 	end
 end
 if debugmode then Spring.Utilities.TableEcho(configs, name.."configs") end
@@ -107,8 +112,24 @@ function gadget:GameFrame(f)
 			local config = configs[spGetUnitDefID(unitID)]
 			if buildProgress > 0.9999 then
 				setRevealState(unitID, config.onfinish)
+				if config.tracking then
+					tracked[unitID] = true
+				end
 			else
+				if config.tracking then
+					tracked[unitID] = false
+				end
 				setRevealState(unitID, buildProgress >= config.onprogress)
+			end
+		end
+	end
+	if (f+1)%4 < 0.5 then
+		local losUnits, x, y, z
+		for unitID, _ in pairs(tracked) do
+			x, y, z = spGetUnitPosition(unitID)
+			losUnits = unitDatas[unitID].losUnits
+			for _, unitID in pairs(losUnits) do
+				spSetUnitPosition(unitID, x, z)
 			end
 		end
 	end
