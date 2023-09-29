@@ -123,7 +123,7 @@ return {
 					blastwave_speed = 30,
 					blastwave_life = 4,
 					blastwave_lossfactor = 0.8,
-					blastwave_damage = 800,
+					blastwave_damage = 550,
 					numprojectiles1 = 10,
 					projectile1 = "shieldbomb_fragment_dummy",
 					velspread1 = "5.09, 1.5, 5.09, _, 2.5, _",
@@ -174,7 +174,7 @@ return {
 					blastwave_speed = 30,
 					blastwave_life = 4,
 					blastwave_lossfactor = 0.8,
-					blastwave_damage = 800,
+					blastwave_damage = 550,
 					numprojectiles1 = 10,
 					projectile1 = "shieldbomb_fragment_dummy",
 					velspread1 = "3.82, 1.5, 3.82, _, 2.5, _",
@@ -222,7 +222,7 @@ return {
 					keepmomentum1 = 1,
 					noairburst = "I belive I can fly...",
 					timeddeploy = 10,
-					shield_damage = 600,
+					shield_damage = 400,
 					bogus = 1
 				},
 				damage                  = {
@@ -256,7 +256,7 @@ return {
 				craterBoost             = 10,
 				craterMult              = 5,
 				damage                  = {
-					default = 600,
+					default = 400,
 				},
 				edgeEffectiveness		= 0.4,
 				explosionGenerator      = "custom:MEDMISSILE_EXPLOSION",

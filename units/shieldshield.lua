@@ -20,6 +20,8 @@ return {
 			modelradius    = "17",
 			morphto = "staticshield",
 			morphtime = 5,
+			combatmorph = "1",
+			morphspeed = 0.001,
 			priority_misc = 1, -- Medium
 			unarmed       = true,
 			outline_x = 80,
