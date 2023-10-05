@@ -245,11 +245,6 @@
 	"speed_while_reloading" : "重装时的移动速度",
 	"drone_max_range" : "无人机最大范围",
 	"drone_target_range" : "无人机采集范围",
-	"repair_drones" : "维修无人机",
-	"assault_drones" : "攻击型无人机",
-	"companion_drones" : "伴生无人机",
-	"battle_drones" : "战斗无人机",
-	"drone_autofabs" : "无人机自动装配",
 	"drone_production_speed" : "无人机建造速度",
 	"can_be_transported" : "可运输",
 	"min_output" : "最小输出",
@@ -274,5 +269,11 @@
 	"alliance" : "团队",
 	"team" : "队伍",
 	"yes" : "是",
-	"no" : "没有"
+	"no" : "没有",
+	"drone_carrier" : "无人机制造商",
+	"drone_buildslots" : "汽车制造商数量",
+	"cooldown" : "冷却",
+	"drone_label" : "无人机补充",
+	"drones_per_cycle" : "每个周期启动的无人机",
+	"drone_build_time" : "制造时间"
 }

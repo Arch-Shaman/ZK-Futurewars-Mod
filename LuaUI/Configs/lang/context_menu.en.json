@@ -245,11 +245,6 @@
 	"speed_while_reloading" : "Movement speed while reloading",
 	"drone_max_range" : "Drone Max Range",
 	"drone_target_range" : "Drone Acquisition Range",
-	"repair_drones" : "Repair Drones",
-	"assault_drones" : "Assault Drones",
-	"companion_drones" : "Companion Drones",
-	"battle_drones" : "Battle Drones",
-	"drone_autofabs" : "Drone autofabs",
 	"drone_production_speed" : "Drone Build Speed",
 	"can_be_transported" : "Transportable",
 	"min_output" : "Minimum Output",
@@ -274,5 +269,11 @@
 	"alliance" : "Team",
 	"team" : "Squad",
 	"yes" : "Yes",
-	"no" : "No"
+	"no" : "No",
+	"drone_carrier" : "Drone Manufacturer",
+	"drone_buildslots" : "Number of Autofabricators",
+	"cooldown" : "Cooldown",
+	"drone_label" : "Drone Complement",
+	"drones_per_cycle" : "Drones started per cycle",
+	"drone_build_time" : "Manufacture time"
 }

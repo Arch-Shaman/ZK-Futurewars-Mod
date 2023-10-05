@@ -245,11 +245,6 @@
 	"speed_while_reloading" : "Yeniden doldururken hareket hızı",
 	"drone_max_range" : "Drone Maksimum Menzili",
 	"drone_target_range" : "Drone Edinim Aralığı",
-	"repair_drones" : "Onarım Dronları",
-	"assault_drones" : "Saldırı Dronları",
-	"companion_drones" : "Refakatçi Dronlar",
-	"battle_drones" : "Savaş Dronları",
-	"drone_autofabs" : "Drone imalatçıları",
 	"drone_production_speed" : "Drone İnşa Hızı",
 	"can_be_transported" : "Taşınabilir",
 	"min_output" : "Asgari Çıkış",
@@ -274,5 +269,11 @@
 	"alliance" : "Takım",
 	"team" : "Tayfa",
 	"yes" : "Evet",
-	"no" : "Hayir"
+	"no" : "Hayir",
+	"drone_carrier" : "Dron Üreticisi",
+	"drone_buildslots" : "Otofabrikatör Sayısı",
+	"cooldown" : "Sakin ol",
+	"drone_label" : "Drone Tamamlayıcı",
+	"drones_per_cycle" : "Döngü başına başlatılan dronlar",
+	"drone_build_time" : "Üretim zamanı"
 }
