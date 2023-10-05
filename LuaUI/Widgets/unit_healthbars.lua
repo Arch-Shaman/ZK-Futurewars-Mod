@@ -899,7 +899,7 @@ function DrawUnitInfos(unitID, unitDefID)
 	end
 	
 	--// RELOAD
-	if (not ci.scriptReload) and (ci.dyanmicComm or ci.reloadTime[1]) then
+	if (not ci.scriptReload) and (ci.dyanmicComm or ci.reloadTime[1]) and not ci.canReammo then
 		for loop=1, (((ci.dyanmicComm and 2) or #ci.reloadTime)) do
 			local primaryWeapon = (ci.dyanmicComm and ((loop==1 and GetUnitRulesParam(unitID, "primary_weapon_override")) or (loop==2 and GetUnitRulesParam(unitID, "secondary_weapon_override")))) or ci.primaryWeapon[loop]
 			_, reloaded, reloadFrame = GetUnitWeaponState(unitID, primaryWeapon)

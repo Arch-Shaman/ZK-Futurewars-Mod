@@ -85,7 +85,7 @@ return {
 				explosionGenerator      = "custom:NUKE_150",
 				model                   = "wep_minitacnuke.dae",
 				range                   = 1350,
-				reloadtime              = 10,
+				reloadtime              = 2,
 				smokeTrail              = false,
 				soundHit                = "explosion/mini_nuke",
 				soundHitVolume          = 8,
