@@ -217,6 +217,7 @@ function gadget:GameFrame(f)
 					if debugMode then spEcho("New firerate: " .. data.weapons[i].currentbonus) end
 				end
 			end
+			spSetUnitRulesParam(unitID, "firecontrol_mult_" .. i, data.weapons[i].currentbonus, INLOS)
 		end
 		--IterableMap.Set(units, unitID, data)
 	end
