@@ -653,11 +653,23 @@ local function CacheUnitInfo(unitDefID)
 	end
 	if ud.name == "turretheavyaa" then
 		usesSuperWeaponReload = false
-	end
-	if ud.name == "raveparty" then
+	elseif ud.name == "raveparty" then
 		customInfoUnits[unitDefID].weaponOverride = 7
+	elseif ud.name == "turretaaheavy" then
+		customInfoUnits[unitDefID].weaponOverride = 1
 	elseif ud.name == "zenith" then
 		customInfoUnits[unitDefID].weaponOverride = 2
+	elseif ud.name == "staticnuke" then
+		customInfoUnits[unitDefID].weaponOverride = 1
+	elseif ud.name == "staticheavyshield" then
+		customInfoUnits[unitDefID].needsFireControl = false
+		customInfoUnits[unitDefID].usesSuperWeaponReload = false
+	elseif ud.name == "staticarty" then
+		customInfoUnits[unitDefID].usesSuperWeaponReload = false
+		local wd = WeaponDefs[ud.weapons[1].weaponDef]
+		customInfoUnits[unitDefID].scriptReload = {[1] = 1}
+		customInfoUnits[unitDefID].scriptReloadTimes = {[1] = tonumber(wd.customParams.script_reload)}
+		customInfoUnits[unitDefID].scriptReloadBursts = {[1] = tonumber(wd.customParams.script_burst)}
 	end
 end
 
@@ -1055,7 +1067,7 @@ function DrawUnitInfos(unitID, unitDefID)
 			reload = GetUnitRulesParam(unitID, weaponID .. "_reload") or 1
 			if reload < 1 then
 				local reloadTime = ci.scriptReloadTimes[weaponID] or 10
-				local speed = GetUnitRulesParam(unitID, "firecontrol_mult_" .. weaponID) or 1
+				speed = GetUnitRulesParam(unitID, "firecontrol_mult_" .. loop) or 1
 				reloadTime = math.ceil((reloadTime * 30) / speed) / 30 -- frame math
 				--Spring.Echo("Reload time: " .. reloadTime .. "(MinReloadTime: " .. options.minReloadTime.value .. ")")
 				if reloadTime >= options.minReloadTime.value then
