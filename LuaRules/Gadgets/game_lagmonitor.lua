@@ -489,6 +489,7 @@ function gadget:Initialize()
 		shareCount = shareCount + 1
 		if not isAI then
 			playerValue[playerID] = shareCount
+		end
 		teamResourceShare[teamID] = shareCount
 		allyTeamResourceShares[allyTeamID] = (allyTeamResourceShares[allyTeamID] or 0) + shareCount
 		

@@ -23,8 +23,9 @@ local smokePiece = {turret, body}
 local SIG_AIM = 1
 local ANIM_SPEED = 50
 local RESTORE_DELAY = 2000
-local SPEEDUP_DURATION = 45
-local SPEEDUP_FACTOR = 3.8
+local SPEEDUP_DURATION = tonumber(UnitDefNames["vehraid"].customParams.boost_duration) or 1.5
+SPEEDUP_DURATION = SPEEDUP_DURATION * 30
+local SPEEDUP_FACTOR = tonumber(UnitDefNames["vehraid"].customParams.boost_speed_mult) or 3.8
 local POSTSPRINT_DURATION = 18
 local POSTSPRINT_SPEED = 2/3
 

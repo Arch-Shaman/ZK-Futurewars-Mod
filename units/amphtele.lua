@@ -42,7 +42,6 @@ return {
 		pushResistant          = 0,
 		selfDestructAs         = "BIG_UNIT",
 		sightDistance          = 300,
-		sonarDistance          = 300,
 		trackOffset            = 0,
 		trackStrength          = 8,
 		trackStretch           = 1,

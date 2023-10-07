@@ -32,4 +32,5 @@ return {
 	shield      = 'Shieldbearer',
 	drone       = 'Drone Director',
 	missile     = 'Missile Marauder',
+	commwars    = 'Commander Conquerer',
 }

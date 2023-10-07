@@ -15,6 +15,9 @@ return {
 		collisionVolumeOffsets  = "0 0 0",
 		--collisionVolumeScales = "70 70 70",
 		--collisionVolumeType   = "ellipsoid",
+		selectionVolumeOffsets = "0 0 0",
+		selectionVolumeScales  = "105 105 105",
+		selectionVolumeType    = "ellipsoid",
 		corpse              = "DEAD",
 
 		customParams        = {
@@ -52,7 +55,6 @@ return {
 		},
 
 		sightDistance       = 860,
-		sonarDistance       = 860,
 		trackOffset         = 0,
 		trackStrength       = 8,
 		trackStretch        = 1,

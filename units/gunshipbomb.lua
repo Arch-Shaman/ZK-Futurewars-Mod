@@ -20,7 +20,7 @@ return {
 		collisionVolumeScales  = "20 20 20",
 		collisionVolumeType    = "ellipsoid",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "32 32 32",
+		selectionVolumeScales  = "48 48 48",
 		selectionVolumeType    = "ellipsoid",
 		corpse                 = "DEAD",
 		cruiseAlt              = 100,

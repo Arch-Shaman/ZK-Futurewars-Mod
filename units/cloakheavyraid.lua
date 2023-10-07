@@ -16,7 +16,7 @@ return {
 		collisionVolumeScales  = "28 36 28",
 		collisionVolumeType    = "cylY",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "32 32 32",
+		selectionVolumeScales  = "48 48 48",
 		selectionVolumeType    = "ellipsoid",
 		cloakCost              = 0.3,
 		cloakCostMoving        = 3.0,
@@ -94,7 +94,8 @@ return {
 				damage                  = {
 					default = 280.1,
 				},
-				explosionGenerator      = "custom:BEAMWEAPON_HIT_ORANGE",
+				explosionGenerator      = "custom:scythe_hit",
+				explosionScar			= false,
 				fireStarter             = 90,
 				hardStop                = false,
 				impactOnly              = true,

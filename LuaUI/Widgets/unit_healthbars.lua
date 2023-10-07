@@ -602,32 +602,80 @@ function JustGetOverlayInfos(unitID, unitDefID)
 	end
 end
 
+local function CacheUnitInfo(unitDefID)
+	local ud = UnitDefs[unitDefID]
+	customInfoUnits[unitDefID] = {
+		height        = Spring.Utilities.GetUnitHeight(ud) + 14,
+		canJump       = (ud.customParams.canjump and true) or false,
+		canGoo        = (ud.customParams.grey_goo and true) or false,
+		canReammo     = (ud.customParams.requireammo and true) or false,
+		isPwStructure = (ud.customParams.planetwars_structure and true) or false,
+		usesSuperWeaponReload = (ud.customParams.superweapon and true) or false,
+		needsFireControl = (ud.customParams.needsfirecontrol and true) or false,
+		canCapture    = (ud.customParams.post_capture_reload and true) or false,
+		usesAmmoState = (ud.customParams.ammocount and true) or false,
+		maxShield     = ud.shieldPower - 10,
+		canStockpile  = ud.canStockpile,
+		gadgetStock   = ud.customParams.stockpiletime,
+		primaryWeapon = ud.primaryWeapon,
+		reloadOverride    = ud.reloadOverride,
+		dyanmicComm   = ud.customParams.dynamic_comm,
+		maxWaterTank  = ud.customParams.maxwatertank,
+		freeStockpile = (ud.customParams.freestockpile and true) or nil,
+		specialReload = ud.customParams.specialreloadtime,
+		delaytime     = ud.customParams.aimdelay,
+		batterymax    = tonumber(ud.customParams.battery),
+		bpoverdrivebonus = tonumber(ud.customParams.bp_overdrive_bonus),
+	}
+	
+	for i = 1, #ud.weapons do
+		local wd = WeaponDefs[ud.weapons[i].weaponDef]
+		if wd.customParams.targeter == nil and wd.customParams.bogus == nil then
+			if wd.customParams.script_reload and not ud.customParams.superweapon then
+				if customInfoUnits[unitDefID].scriptReload then
+					customInfoUnits[unitDefID].scriptReload[#customInfoUnits[unitDefID].scriptReload + 1] = i
+					customInfoUnits[unitDefID].scriptReloadTimes[i] = tonumber(wd.customParams.script_reload)
+					customInfoUnits[unitDefID].scriptReloadBursts[i] = tonumber(wd.customParams.script_burst)
+				else
+					customInfoUnits[unitDefID].scriptReload = {[1] = i}
+					customInfoUnits[unitDefID].scriptReloadTimes = {[i] = tonumber(wd.customParams.script_reload)}
+					customInfoUnits[unitDefID].scriptReloadBursts = {[i] = tonumber(wd.customParams.script_burst)}
+				end
+			elseif not ud.customParams.superweapon then
+				if customInfoUnits[unitDefID].reloadWatched then
+					customInfoUnits[unitDefID].reloadWatched[#customInfoUnits[unitDefID].reloadWatched + 1] = i
+				else
+					customInfoUnits[unitDefID].reloadWatched = {}
+					customInfoUnits[unitDefID].reloadWatched[1] = i
+				end
+			end
+		end
+	end
+	if ud.name == "turretheavyaa" then
+		usesSuperWeaponReload = false
+	elseif ud.name == "raveparty" then
+		customInfoUnits[unitDefID].weaponOverride = 7
+	elseif ud.name == "turretaaheavy" then
+		customInfoUnits[unitDefID].weaponOverride = 1
+	elseif ud.name == "zenith" then
+		customInfoUnits[unitDefID].weaponOverride = 2
+	elseif ud.name == "staticnuke" then
+		customInfoUnits[unitDefID].weaponOverride = 1
+	elseif ud.name == "staticheavyshield" then
+		customInfoUnits[unitDefID].needsFireControl = false
+		customInfoUnits[unitDefID].usesSuperWeaponReload = false
+	elseif ud.name == "staticarty" then
+		customInfoUnits[unitDefID].usesSuperWeaponReload = false
+		local wd = WeaponDefs[ud.weapons[1].weaponDef]
+		customInfoUnits[unitDefID].scriptReload = {[1] = 1}
+		customInfoUnits[unitDefID].scriptReloadTimes = {[1] = tonumber(wd.customParams.script_reload)}
+		customInfoUnits[unitDefID].scriptReloadBursts = {[1] = tonumber(wd.customParams.script_burst)}
+	end
+end
+
 function DrawUnitInfos(unitID, unitDefID)
 	if (not customInfoUnits[unitDefID]) then
-		local ud = UnitDefs[unitDefID]
-		customInfoUnits[unitDefID] = {
-			height        = Spring.Utilities.GetUnitHeight(ud) + 14,
-			canJump       = (ud.customParams.canjump and true) or false,
-			canGoo        = (ud.customParams.grey_goo and true) or false,
-			canReammo     = (ud.customParams.requireammo and true) or false,
-			isPwStructure = (ud.customParams.planetwars_structure and true) or false,
-			canCapture    = (ud.customParams.post_capture_reload and true) or false,
-			maxShield     = ud.shieldPower - 10,
-			canStockpile  = ud.canStockpile,
-			gadgetStock   = ud.customParams.stockpiletime,
-			scriptReload  = tonumber(ud.customParams.script_reload),
-			scriptBurst    = tonumber(ud.customParams.script_burst),
-			reloadTime    = ud.reloadTime,
-			primaryWeapon = ud.primaryWeapon,
-			reloadOverride    = ud.reloadOverride,
-			dyanmicComm   = ud.customParams.dynamic_comm,
-			maxWaterTank  = ud.customParams.maxwatertank,
-			freeStockpile = (ud.customParams.freestockpile and true) or nil,
-			specialReload = ud.customParams.specialreloadtime,
-			delaytime     = ud.customParams.aimdelay,
-			batterymax    = tonumber(ud.customParams.battery),
-			bpoverdrivebonus = tonumber(ud.customParams.bp_overdrive_bonus),
-		}
+		CacheUnitInfo(unitDefID)
 	end
 	local ci = customInfoUnits[unitDefID]
 
@@ -899,7 +947,51 @@ function DrawUnitInfos(unitID, unitDefID)
 	end
 	
 	--// RELOAD
-	if (not ci.scriptReload) and (ci.dyanmicComm or ci.reloadTime[1]) then
+	if ci.reloadWatched and not ci.canReammo and not ci.usesSuperWeaponReload and not ci.usesSuperWeaponReload then
+		if ci.dynamicComm then
+			for loop=1, (((ci.dyanmicComm and 2) or #ci.reloadTime)) do
+				local primaryWeapon = (ci.dyanmicComm and ((loop==1 and GetUnitRulesParam(unitID, "primary_weapon_override")) or (loop==2 and GetUnitRulesParam(unitID, "secondary_weapon_override")))) or ci.primaryWeapon[loop]
+				_, reloaded, reloadFrame = GetUnitWeaponState(unitID, primaryWeapon)
+				if (reloaded == false) then
+					local reloadTime
+					if ci.reloadOverride[primaryWeapon] then
+						reloadTime = ci.reloadOverride[primaryWeapon] * (GetUnitRulesParam(unitID, "comm_reloadmult") or 1)
+					else
+						reloadTime = Spring.GetUnitWeaponState(unitID, primaryWeapon, 'reloadTime')
+					end
+					--(((q==1 and GetUnitRulesParam(unitID, "primary_weapon_reload_override"))) or ((q==2 and GetUnitRulesParam(unitID, "secondary_weapon_reload_override"))))
+					if reloadTime >= options.minReloadTime.value then
+						-- When weapon is disabled the reload time is constantly set to be almost complete.
+						-- It results in a bunch of units walking around with 99% reload bars.
+						if (reloadFrame > gameFrame + 6) or ((not reloadOverride) and (GetUnitRulesParam(unitID, "reloadPaused") ~= 1)) then -- UPDATE_PERIOD in unit_attributes.luaa
+							reload = 1 - ((reloadFrame-gameFrame)/gameSpeed) / ci.reloadTime[loop];
+							if (reload >= 0) then
+								barDrawer.AddBar(addTitle and messages.reload, reload, "reload", (addPercent and floor(reload*100) .. '%'))
+							end
+						end
+					end
+				end
+			end
+		else
+			for i = 1, #ci.reloadWatched do
+				local weaponID = ci.reloadWatched[i]
+				--Spring.Echo(weaponID)
+				_, reloaded, reloadFrame = GetUnitWeaponState(unitID, weaponID)
+				if (reloaded == false) then
+					local reloadTime =  Spring.GetUnitWeaponState(unitID, weaponID, 'reloadTime')
+					if reloadTime >= options.minReloadTime.value then
+						if (reloadFrame > gameFrame + 6) or ((not reloadOverride) and (GetUnitRulesParam(unitID, "reloadPaused") ~= 1)) then -- UPDATE_PERIOD in unit_attributes.luaa
+							reload = 1 - ((reloadFrame-gameFrame)/gameSpeed) / reloadTime
+							if (reload >= 0) then
+								barDrawer.AddBar(addTitle and messages.reload, reload, "reload", (addPercent and floor(reload*100) .. '%'))
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	--[[if (ci.canReammo and not ci.usesSuperWeaponReload and not ci.needsFireControl) then
 		for loop=1, (((ci.dyanmicComm and 2) or #ci.reloadTime)) do
 			local primaryWeapon = (ci.dyanmicComm and ((loop==1 and GetUnitRulesParam(unitID, "primary_weapon_override")) or (loop==2 and GetUnitRulesParam(unitID, "secondary_weapon_override")))) or ci.primaryWeapon[loop]
 			_, reloaded, reloadFrame = GetUnitWeaponState(unitID, primaryWeapon)
@@ -920,16 +1012,88 @@ function DrawUnitInfos(unitID, unitDefID)
 				end
 			end
 		end
+	end]]
+	if ci.usesSuperWeaponReload then
+		if ci.usesAmmoState then
+			local currentAmmo = GetUnitRulesParam(unitID, "ammostate")
+			if currentAmmo then
+				currentAmmo = currentAmmo + 1
+				local reloadProgress = GetUnitRulesParam(unitID, currentAmmo .. "_reload") or 1
+				if reloadProgress < 1 then
+					local speed = GetUnitRulesParam(unitID, "superweapon_mult") or 1
+					local weaponDef = WeaponDefs[UnitDefs[unitDefID].weapons[currentAmmo].weaponDef]
+					local reloadTime = math.ceil(((tonumber(weaponDef.customParams.script_reload) or 10) * 30) / speed) / 30 -- frame math
+					if reloadTime >= options.minReloadTime.value then
+						if (reloadProgress >= 0) then
+							barDrawer.AddBar(addTitle and messages.reload, reloadProgress, "reload", (addPercent and floor(reloadProgress*100) .. '%'))
+						end
+					end
+				end
+			end
+		else
+			if ci.weaponOverride then
+				local reloadProgress = GetUnitRulesParam(unitID, ci.weaponOverride .. "_reload") or 1
+				if reloadProgress < 1 then
+					local speed = GetUnitRulesParam(unitID, "superweapon_mult") or 1
+					local weaponDef = WeaponDefs[UnitDefs[unitDefID].weapons[ci.weaponOverride].weaponDef]
+					local reloadTime = math.ceil(((tonumber(weaponDef.customParams.script_reload) or 10) * 30) / speed) / 30 -- frame math
+					if reloadTime >= options.minReloadTime.value then
+						if (reloadProgress >= 0) then
+							barDrawer.AddBar(addTitle and messages.reload, reloadProgress, "reload", (addPercent and floor(reloadProgress*100) .. '%'))
+						end
+					end
+				end
+			else
+				for loop = 1, #ci.reloadWatched do
+					local weaponID = ci.reloadWatched[loop]
+					local reloadProgress = GetUnitRulesParam(weaponID .. "_reload") or 1
+					if reloadProgress < 1 then
+						local speed = GetUnitRulesParam(unitID, "superweapon_mult") or 1
+						local weaponDef = WeaponDefs[UnitDefs[unitDefID].weapons[weaponID].weaponDef]
+						local reloadTime = math.ceil(((tonumber(weaponDef.customParams.script_reload) or 10) * 30) / speed) / 30 -- frame math
+						if reloadTime >= options.minReloadTime.value then
+							if (reloadProgress >= 0) then
+								barDrawer.AddBar(addTitle and messages.reload, reloadProgress, "reload", (addPercent and floor(reloadProgress*100) .. '%'))
+							end
+						end
+					end
+				end
+			end
+		end
 	end
-	
-	if ci.scriptReload and (ci.scriptReload >= options.minReloadTime.value) then
-		local reloadFrame = GetUnitRulesParam(unitID, "scriptReloadFrame")
-		if reloadFrame and reloadFrame > gameFrame then
-			local scriptLoaded = GetUnitRulesParam(unitID, "scriptLoaded") or ci.scriptBurst
-			local barText = string.format("%i/%i", scriptLoaded, ci.scriptBurst) -- .. ' | ' .. floor(reload*100) .. '%'
-			reload = Spring.GetUnitRulesParam(unitID, "scriptReloadPercentage") or (1 - ((reloadFrame - gameFrame)/gameSpeed) / ci.scriptReload)
-			if (reload >= 0) then
-				barDrawer.AddBar(addTitle and messages.reload, reload, "reload", (addPercent and barText))
+	if ci.needsFireControl then
+		for loop = 1, #ci.scriptReload do
+			weaponID = ci.scriptReload[loop]
+			reload = GetUnitRulesParam(unitID, weaponID .. "_reload") or 1
+			if reload < 1 then
+				local reloadTime = ci.scriptReloadTimes[weaponID] or 10
+				speed = GetUnitRulesParam(unitID, "firecontrol_mult_" .. loop) or 1
+				reloadTime = math.ceil((reloadTime * 30) / speed) / 30 -- frame math
+				--Spring.Echo("Reload time: " .. reloadTime .. "(MinReloadTime: " .. options.minReloadTime.value .. ")")
+				if reloadTime >= options.minReloadTime.value then
+					--Spring.Echo("Reload: " .. reload)
+					if (reload >= 0) then
+						barDrawer.AddBar(addTitle and messages.reload, reload, "reload", (addPercent and floor(reload*100) .. '%'))
+					end
+				end
+			end
+		end
+	end
+	if not ci.usesSuperWeaponReload and not ci.needsFireControl and ci.scriptReload then
+		for i = 1, #ci.scriptReload do
+			local weaponID = ci.scriptReload[i]
+			local reloadTime = ci.scriptReloadTimes[weaponID]
+			if reloadTime >= options.minReloadTime.value then
+				local reloadFrame = GetUnitRulesParam(unitID, "scriptReloadFrame")
+				if reloadFrame and reloadFrame > gameFrame then
+					local maxLoaded = ci.scriptReloadBursts[weaponID]
+					local scriptLoaded = GetUnitRulesParam(unitID, "scriptLoaded") or maxLoaded
+					local barText = string.format("%i/%i", scriptLoaded, maxLoaded) -- .. ' | ' .. floor(reload*100) .. '%'
+					reload = Spring.GetUnitRulesParam(unitID, "scriptReloadPercentage") or (1 - ((reloadFrame - gameFrame)/gameSpeed) / reloadTime)
+					if (reload >= 0) then
+						barDrawer.AddBar(addTitle and messages.reload, reload, "reload", (addPercent and barText))
+					end
+				end
 			end
 		end
 	end

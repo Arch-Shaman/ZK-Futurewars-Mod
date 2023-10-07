@@ -46,7 +46,6 @@ return {
 			},
 		},
 		sightDistance       = 700,
-		sonarDistance       = 700,
 		trackOffset         = 0.5,
 		trackStrength       = 9,
 		trackStretch        = 1,

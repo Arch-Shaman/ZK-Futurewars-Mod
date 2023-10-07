@@ -39,6 +39,7 @@ return {
 			removewait     = 1,
 			morphto = "shieldshield",
 			morphtime = "5",
+			combatmorph = "1",
 			priority_misc = 1, -- Medium
 			unarmed       = true,
 			addfight       = 1,

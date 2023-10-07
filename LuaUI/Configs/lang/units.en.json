@@ -27,7 +27,7 @@
 	"factorycloak" : {
 		"name" : "Ambusher Factory",
 		"description" : "Produces Cloaked, Mobile Robots",
-		"helptext" : "Emphasizing stealth and burst damage over brute force and durability, the Ambusher Factory makes good use of stealth, mobility and EMP weapons to strike at the enemy's weak points. Comes equipped with a strong radar jammer and cloakfield. Key units:  Lurker, Waylayer, Assailant, Snare, Sparky"
+		"helptext" : "Emphasizing stealth and burst damage over brute force and durability, the Ambusher Factory makes good use of stealth, mobility and EMP weapons to strike at the enemy's weak points. Comes equipped with a strong radar jammer and cloakfield. Key units: Lurker, Waylayer, Assailant, Snare, Sparky"
 	},
 	"amphlaunch" : {
 		"name" : "Lobster",
@@ -767,7 +767,7 @@
 	"gunshipassault" : {
 		"name" : "Dusk",
 		"description" : "Heavy Assault/Raider",
-		"helptext" : "The  Dusk is a heavy assault gunship that specializes at high damage concentration. Its exceptionally well armored and capable of dealing heavy amounts of damage in a short period of time with its short ranged cannons. Beware of its slight inaccuracy though: it may miss highly mobile targets."
+		"helptext" : "The Dusk is a heavy assault gunship that specializes at high damage concentration. Its exceptionally well armored and capable of dealing heavy amounts of damage in a short period of time with its short ranged cannons. Beware of its slight inaccuracy though: it may miss highly mobile targets."
 	},
 	"tankriot" : {
 		"name" : "Cobbler",

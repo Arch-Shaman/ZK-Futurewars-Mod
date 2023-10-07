@@ -1,6 +1,6 @@
 local name = "commweapon_microriftgenerator"
 local weaponDef = {
-	name                    = [[Microrift Generator]],
+	name                    = "Microrift Generator",
 	craterBoost             = 0,
 	craterMult              = 0,
 	avoidGround             = false,
@@ -15,7 +15,7 @@ local weaponDef = {
 		teleportsound = "sounds/misc/teleport_alt.wav",
 		teleportid = 2,
 		light_camera_height = 500,
-		light_color = [[0 .8 1]],
+		light_color = "0 .8 1",
 		light_radius = 120,
 		stats_hide_damage = 1,
 		stats_hide_damage = 1,
@@ -26,7 +26,7 @@ local weaponDef = {
 	damage                  = {
 		default = 0,
 	},
-	explosionGenerator      = [[custom:BEAMWEAPON_HIT_ORANGE]],
+	explosionGenerator      = "custom:BEAMWEAPON_HIT_ORANGE",
 	impulseBoost            = 0,
 	impulseFactor           = 0,
 	impactOnly              = true,
@@ -34,9 +34,9 @@ local weaponDef = {
 	myGravity               = 0.05,
 	range                   = 800,
 	reloadtime              = 12,
-	soundStart              = [[misc/teleport]],
+	soundStart              = "misc/teleport",
 	turret                  = true,
-	weaponType              = [[Cannon]],
+	weaponType              = "Cannon",
 	weaponVelocity          = 2250,
 	waterweapon				= true,
 }

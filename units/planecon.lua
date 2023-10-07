@@ -9,7 +9,7 @@ return {
 		buildCostMetal      = 250,
 		buildDistance       = 250,
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "42 42 42",
+		selectionVolumeScales  = "63 63 63",
 		selectionVolumeType    = "ellipsoid",
 		builder             = true,
 		buildoptions        = {},

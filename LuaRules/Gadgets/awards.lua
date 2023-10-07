@@ -34,6 +34,7 @@ local spGetUnitDefID        = Spring.GetUnitDefID
 local spGetUnitExperience   = Spring.GetUnitExperience
 local spGetTeamResources    = Spring.GetTeamResources
 local GetUnitCost           = Spring.Utilities.GetUnitCost
+local GetUnitValue          = Spring.Utilities.GetUnitValue
 
 local floor = math.floor
 
@@ -90,6 +91,12 @@ local expUnitTeam, expUnitDefID, expUnitExp = 0,0,0
 local awardList = {}
 
 local boats, comms = {}, {}
+local isCommwars = false
+
+do
+	local modoptions = Spring.GetModOptions() or {}
+	isCommwars = (tonumber(modoptions.commwars) or 0) == 1
+end
 
 local staticO_small = {
 	seismic = 1,
@@ -503,7 +510,7 @@ function gadget:UnitTaken(unitID, unitDefID, oldTeam, newTeam)
 	if not spAreTeamsAllied(oldTeam,newTeam) then
 		if awardData['cap'][newTeam] then --if team exist, then:
 			local ud = UnitDefs[unitDefID]
-			local mCost = GetUnitCost(unitID, unitDefID)
+			local mCost = GetUnitValue(unitID, unitDefID)
 			AddAwardPoints( 'cap', newTeam, mCost )
 			if (ud.customParams.dynamic_comm) then
 				if (not cappedComs[unitID]) then
@@ -515,7 +522,7 @@ function gadget:UnitTaken(unitID, unitDefID, oldTeam, newTeam)
 		end
 	else -- teams are allied
 		if (unitDefID ~= terraunitDefID) then
-			local mCost = GetUnitCost(unitID, unitDefID)
+			local mCost = GetUnitValue(unitID, unitDefID)
 			AddAwardPoints('share', oldTeam,  mCost)
 			AddAwardPoints('share', newTeam, -mCost)
 		end
@@ -637,7 +644,7 @@ function gadget:UnitFinished(unitID, unitDefID, teamID)
 	end
 end
 
-function gadget:GameOver()
+function gadget:GameOver(winningAllys)
 	gameOver = true
 
 	local units = spGetAllUnits()
@@ -648,6 +655,19 @@ function gadget:GameOver()
 		gadget:UnitDestroyed(unitID, unitDefID, teamID)
 	end
 
+	if isCommwars and winningAllys and #winningAllys > 0 then
+		for i = 1, #winningAllys do
+			local allyTeam = winningAllys[i]
+			local teamList = Spring.GetTeamList(allyTeam)
+			for j = 1, #teamList do
+				local teamID = teamList[j]
+				local teamUnits = #Spring.GetTeamUnits(teamID)
+				if teamUnits > 0 then
+					awardAward(teamID, "commwars", "CommWars Victory: " .. awardData["head"][teamID] .. " comms eliminated.")
+				end
+			end
+		end
+	end
 	-- read externally tracked values
 	local teams = Spring.GetTeamList()
 	for i = 1, #teams do

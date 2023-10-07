@@ -66,7 +66,7 @@ return {
 					singu_finalstrength = 30000,
 					detachmentradius = 500,
 					--singuheight = "125",
-					singu_ceg = [[black_hole_800]],
+					singu_ceg = "black_hole_800",
 					restrict_in_widgets = 1,
 					stats_hide_dps = 1, -- one use
 					stats_hide_reload = 1,

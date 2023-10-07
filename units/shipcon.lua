@@ -45,7 +45,6 @@ return {
 		selfDestructAs         = "SMALL_UNITEX",
 		showNanoSpray          = false,
 		sightDistance          = 375,
-		sonarDistance          = 375,
 		turninplace            = 0,
 		turnRate               = 813,
 		workerTime             = 7.5,

@@ -13,7 +13,7 @@ return {
 		canPatrol              = true,
 		category               = "LAND SINK",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "28 28 28",
+		selectionVolumeScales  = "42 42 42",
 		selectionVolumeType    = "ellipsoid",
 		corpse                 = "DEAD",
 		customParams           = {
@@ -40,7 +40,6 @@ return {
 			explosiongenerators = {},
 		},
 		sightDistance          = 660,
-		sonarDistance          = 660,
 		trackOffset            = 0,
 		trackStrength          = 8,
 		trackStretch           = 1,

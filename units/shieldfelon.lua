@@ -102,7 +102,7 @@ return {
 				craterMult              = 0,
 				cylinderTargeting       = 0.3,
 				customParams            = {
-					shield_drain = 200,
+					shield_drain = 100,
 					light_camera_height = 2500,
 					light_color = "0.66 0.32 0.90",
 					light_radius = 120,
@@ -112,11 +112,12 @@ return {
 					chainlightning_maxtargets = 5,
 					chainlightning_index = 2,
 					chainlightning_spawn = "shieldfelon_sublightning",
+					chainlightning_donttargetfeature = ">w<",
 					stats_custom_tooltip_1 = " - Forks to 5 different targets up to 250 elmos away at 10% efficency",
 					stats_custom_tooltip_3 = " - Forks bounce to 3 additional targets each",
 				},
 				damage                  = {
-					default        = 180.01,
+					default        = 150.01,
 				},
 				--explosionGenerator      = "custom:flash2purple",
 				fireStarter             = 50,
@@ -161,9 +162,10 @@ return {
 					chainlightning_index = 3,
 					chainlightning_sub = 1,
 					chainlightning_spawn = "shieldfelon_sublightning_end",
+					chainlightning_donttargetfeature = "^w^",
 				},
 				damage                  = {
-					default        = 18.01,
+					default        = 15.01,
 				},
 				--explosionGenerator      = "custom:flash2purple",
 				fireStarter             = 50,
@@ -202,7 +204,7 @@ return {
 					hideweapon = 1,
 				},
 				damage                  = {
-					default        = 18.01,
+					default        = 15.01,
 				},
 				--explosionGenerator      = "custom:flash2purple",
 				fireStarter             = 50,

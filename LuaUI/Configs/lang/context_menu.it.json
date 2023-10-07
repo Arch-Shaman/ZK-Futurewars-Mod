@@ -82,6 +82,7 @@
 	"grid_link" : "Raggio collegamento griglia",
 	"grid_needed" : "Energia di rete richiesta",
 	"altitude" : "Altitudine",
+	"altitude_bonus" : "Bonus altitudine",
 	"sight_range" : "Gamma di vista",
 	"singularity_strength" : "Forza",
 	"weapon_arcing" : "Spiovente",
@@ -245,11 +246,6 @@
 	"speed_while_reloading" : "Velocità di movimento durante la ricarica",
 	"drone_max_range" : "Portata massima del drone",
 	"drone_target_range" : "Gamma di acquisizione dei droni",
-	"repair_drones" : "Riparazione di droni",
-	"assault_drones" : "Droni d'assalto",
-	"companion_drones" : "Droni Companion",
-	"battle_drones" : "Droni da battaglia",
-	"drone_autofabs" : "Fonderia di droni",
 	"drone_production_speed" : "Velocità di costruzione del drone",
 	"can_be_transported" : "Trasportabile",
 	"min_output" : "Uscita minima",
@@ -274,5 +270,11 @@
 	"alliance" : "Gruppo",
 	"team" : "Squadra",
 	"yes" : "Sì",
-	"no" : "No"
+	"no" : "No",
+	"drone_carrier" : "Produttore di droni",
+	"drone_buildslots" : "Numero di autofabbricatori",
+	"cooldown" : "Raffreddare",
+	"drone_label" : "Complemento Drone",
+	"drones_per_cycle" : "I droni sono iniziati per ciclo",
+	"drone_build_time" : "Tempo di produzione"
 }

@@ -1,15 +1,15 @@
 return { chicken_shield = {
-  name                = [[Blooper]],
-  description         = [[Shield/Anti-Air]],
+  name                = "Blooper",
+  description         = "Shield/Anti-Air",
   acceleration        = 1.08,
   activateWhenBuilt   = true,
   brakeRate           = 1.23,
   builder             = false,
-  buildPic            = [[chicken_shield.png]],
+  buildPic            = "chicken_shield.png",
   canGuard            = true,
   canMove             = true,
   canPatrol           = true,
-  category            = [[LAND]],
+  category            = "LAND",
 
   customParams        = {
     shield_emit_height = 26,
@@ -20,10 +20,10 @@ return { chicken_shield = {
     outline_yoff = 27.5,
   },
 
-  explodeAs           = [[NOWEAPON]],
+  explodeAs           = "NOWEAPON",
   footprintX          = 4,
   footprintZ          = 4,
-  iconType            = [[walkershield]],
+  iconType            = "walkershield",
   idleAutoHeal        = 20,
   idleTime            = 300,
   leaveTracks         = true,
@@ -34,29 +34,28 @@ return { chicken_shield = {
   metalCost           = 0,
   energyCost          = 0,
   buildTime           = 1200,
-  movementClass       = [[AKBOT4]],
+  movementClass       = "AKBOT4",
   noAutoFire          = false,
-  noChaseCategory     = [[TERRAFORM FIXEDWING SATELLITE GUNSHIP SUB]],
-  objectName          = [[chicken_shield.s3o]],
+  noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP SUB",
+  objectName          = "chicken_shield.s3o",
   power               = 350,
   reclaimable         = false,
-  selfDestructAs      = [[NOWEAPON]],
+  selfDestructAs      = "NOWEAPON",
 
   sfxtypes            = {
 
     explosiongenerators = {
-      [[custom:blood_spray]],
-      [[custom:blood_explode]],
-      [[custom:dirt]],
+      "custom:blood_spray",
+      "custom:blood_explode",
+      "custom:dirt",
     },
 
   },
   sightDistance       = 512,
-  sonarDistance       = 512,
   trackOffset         = 7,
   trackStrength       = 9,
   trackStretch        = 1,
-  trackType           = [[ChickenTrack]],
+  trackType           = "ChickenTrack",
   trackWidth          = 34,
   turnRate            = 967,
   upright             = false,
@@ -65,19 +64,19 @@ return { chicken_shield = {
   weapons             = {
 
     {
-      def                = [[FAKE_WEAPON]],
-      onlyTargetCategory = [[SWIM LAND SINK TURRET FLOAT SHIP HOVER]],
+      def                = "FAKE_WEAPON",
+      onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER",
     },
 
 
     {
-      def = [[SHIELD]],
+      def = "SHIELD",
     },
 
 
     {
-      def                = [[AEROSPORES]],
-      onlyTargetCategory = [[FIXEDWING GUNSHIP]],
+      def                = "AEROSPORES",
+      onlyTargetCategory = "FIXEDWING GUNSHIP",
     },
 
   },
@@ -86,7 +85,7 @@ return { chicken_shield = {
   weaponDefs          = {
 
     AEROSPORES  = {
-      name                    = [[Anti-Air Spores]],
+      name                    = "Anti-Air Spores",
       areaOfEffect            = 24,
       avoidFriendly           = false,
       burst                   = 3,
@@ -106,7 +105,7 @@ return { chicken_shield = {
       },
 
       dance                   = 60,
-      explosionGenerator      = [[custom:NONE]],
+      explosionGenerator      = "custom:NONE",
       fireStarter             = 0,
       fixedlauncher           = 1,
       flightTime              = 5,
@@ -116,28 +115,28 @@ return { chicken_shield = {
       impulseBoost            = 0,
       impulseFactor           = 0.4,
       interceptedByShieldType = 2,
-      model                   = [[chickeneggblue.s3o]],
+      model                   = "chickeneggblue.s3o",
       noSelfDamage            = true,
       range                   = 700,
       reloadtime              = 2.5,
       smokeTrail              = true,
       startVelocity           = 100,
-      texture1                = [[]],
-      texture2                = [[sporetrailblue]],
+      texture1                = "",
+      texture2                = "sporetrailblue",
       tolerance               = 10000,
       tracks                  = true,
       turnRate                = 24000,
       turret                  = true,
       waterweapon             = true,
       weaponAcceleration      = 100,
-      weaponType              = [[MissileLauncher]],
+      weaponType              = "MissileLauncher",
       weaponVelocity          = 500,
       wobble                  = 32000,
     },
 
 
     FAKE_WEAPON = {
-      name                    = [[Fake]],
+      name                    = "Fake",
       areaOfEffect            = 8,
       avoidFriendly           = false,
       collideFriendly         = false,
@@ -149,7 +148,7 @@ return { chicken_shield = {
         planes  = 0.01,
       },
 
-      explosionGenerator      = [[custom:NONE]],
+      explosionGenerator      = "custom:NONE",
       impactOnly              = true,
       impulseBoost            = 0,
       impulseFactor           = 0.4,
@@ -158,19 +157,19 @@ return { chicken_shield = {
       range                   = 420,
       reloadtime              = 10,
       size                    = 0,
-      soundHit                = [[]],
-      soundStart              = [[]],
+      soundHit                = "",
+      soundStart              = "",
       targetborder            = 1,
       tolerance               = 5000,
       turret                  = true,
       waterWeapon             = false,
-      weaponType              = [[Cannon]],
+      weaponType              = "Cannon",
       weaponVelocity          = 500,
     },
 
 
     SHIELD      = {
-      name                    = [[Shield]],
+      name                    = "Shield",
       craterMult              = 0,
 
       damage                  = {
@@ -181,8 +180,8 @@ return { chicken_shield = {
       impulseFactor           = 0,
       interceptedByShieldType = 1,
       shieldAlpha             = 0.15,
-      shieldBadColor          = [[1.0 1 0.1 1]],
-      shieldGoodColor         = [[0.1 1.0 0.1 1]],
+      shieldBadColor          = "1.0 1 0.1 1",
+      shieldGoodColor         = "0.1 1.0 0.1 1",
       shieldInterceptType     = 3,
       shieldPower             = 2500,
       shieldPowerRegen        = 180,
@@ -192,11 +191,11 @@ return { chicken_shield = {
       smartShield             = true,
       visibleShield           = false,
       visibleShieldRepulse    = false,
-      --texture1                = [[wakelarge]],
+      --texture1                = "wakelarge",
       --visibleShield           = true,
       --visibleShieldHitFrames  = 30,
       --visibleShieldRepulse    = false,
-      weaponType              = [[Shield]],
+      weaponType              = "Shield",
     },
 
   },

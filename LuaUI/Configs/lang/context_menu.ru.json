@@ -82,6 +82,7 @@
 	"grid_link" : "Диапазон звеньев сетки",
 	"grid_needed" : "Необходимая энергия сети",
 	"altitude" : "Высота",
+	"altitude_bonus" : "Бонус за высоту",
 	"sight_range" : "Прицельная дальность",
 	"singularity_strength" : "Прочность",
 	"weapon_arcing" : "Стрельба из лука",
@@ -245,11 +246,6 @@
 	"speed_while_reloading" : "Скорость движения при перезарядке",
 	"drone_max_range" : "Максимальная дальность полета дрона",
 	"drone_target_range" : "Дальность захвата беспилотника",
-	"repair_drones" : "Ремонт дронов",
-	"assault_drones" : "Штурмовые дроны",
-	"companion_drones" : "Дроны-компаньоны",
-	"battle_drones" : "Боевые дроны",
-	"drone_autofabs" : "Беспилотные автофабрики",
 	"drone_production_speed" : "Скорость сборки беспилотника",
 	"can_be_transported" : "Транспортируемый",
 	"min_output" : "Минимальный выход",
@@ -274,5 +270,11 @@
 	"alliance" : "Команда",
 	"team" : "Отряд",
 	"yes" : "Да",
-	"no" : "Нет"
+	"no" : "Нет",
+	"drone_carrier" : "Производитель дронов",
+	"drone_buildslots" : "Количество автопроизводителей",
+	"cooldown" : "Остывать",
+	"drone_label" : "Дополнение к дрону",
+	"drones_per_cycle" : "Дроны запускаются за цикл",
+	"drone_build_time" : "Срок изготовления"
 }

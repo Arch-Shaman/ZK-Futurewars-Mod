@@ -16,7 +16,7 @@ return {
 		collisionVolumeScales  = "26 26 50",
 		collisionVolumeType    = "cylZ",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "40 40 50",
+		selectionVolumeScales  = "42 42 51",
 		selectionVolumeType    = "cylZ",
 		corpse              = "DEAD",
 		customParams        = {
