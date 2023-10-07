@@ -23,6 +23,8 @@ return {
 			modelradius        = "10",
 			aim_lookahead      = 160,
 			specialreloadtime = "300",
+			boost_speed_mult  = 3.8,
+			boost_duration = 1.5,
 		},
 		explodeAs              = "BIG_UNITEX",
 		footprintX             = 2,
