@@ -82,6 +82,7 @@
 	"grid_link" : "Диапазон звеньев сетки",
 	"grid_needed" : "Необходимая энергия сети",
 	"altitude" : "Высота",
+	"altitude_bonus" : "Бонус за высоту",
 	"sight_range" : "Прицельная дальность",
 	"singularity_strength" : "Прочность",
 	"weapon_arcing" : "Стрельба из лука",

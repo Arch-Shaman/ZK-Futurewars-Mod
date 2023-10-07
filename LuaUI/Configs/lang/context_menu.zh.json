@@ -82,6 +82,7 @@
 	"grid_link" : "网格链接范围",
 	"grid_needed" : "所需的电网能源",
 	"altitude" : "海拔高度",
+	"altitude_bonus" : "海拔奖励",
 	"sight_range" : "视力范围",
 	"singularity_strength" : "强度",
 	"weapon_arcing" : "弧形射击",

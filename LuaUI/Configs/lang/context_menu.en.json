@@ -82,6 +82,7 @@
 	"grid_link" : "Grid Link Range",
 	"grid_needed" : "Required Grid Energy",
 	"altitude" : "Altitude",
+	"altitude_bonus" : "Altitude bonus",
 	"sight_range" : "Sight range",
 	"singularity_strength" : "Strength",
 	"weapon_arcing" : "Arcing shot",

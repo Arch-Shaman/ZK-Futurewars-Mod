@@ -82,6 +82,7 @@
 	"grid_link" : "Raggio collegamento griglia",
 	"grid_needed" : "Energia di rete richiesta",
 	"altitude" : "Altitudine",
+	"altitude_bonus" : "Bonus altitudine",
 	"sight_range" : "Gamma di vista",
 	"singularity_strength" : "Forza",
 	"weapon_arcing" : "Spiovente",

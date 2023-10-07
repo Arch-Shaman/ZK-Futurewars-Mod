@@ -80,6 +80,7 @@
 	"grid_link" : "Alcance de Ligação de Grade",
 	"grid_needed" : "Energia necessária",
 	"altitude" : "Altitude",
+	"altitude_bonus" : "Bônus de altitude",
 	"sight_range" : "Alcance de Visão",
 	"singularity_strength" : "Força",
 	"weapon_arcing" : "Tiro com Curvatura",

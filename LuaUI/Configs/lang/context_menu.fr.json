@@ -82,6 +82,7 @@
 	"grid_link" : "Plage de liens de grille",
 	"grid_needed" : "Énergie réseau requise",
 	"altitude" : "Altitude",
+	"altitude_bonus" : "Bonus d'altitude",
 	"sight_range" : "Portée de visée",
 	"singularity_strength" : "Force",
 	"weapon_arcing" : "Tir d'arc",
