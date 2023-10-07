@@ -1251,6 +1251,7 @@ local function setupColors()
 	incolors['#w']      = color2incolor({2/255, 209/255, 209/255, 1})
 	incolors['#o'] 		= color2incolor(options.color_other.value)
 	incolors['#s'] 		= color2incolor(options.color_spec.value)
+	incolors['#p'] 		= '' -- gets replaced with a player-specific color later; here just not to crash
 end
 
 
