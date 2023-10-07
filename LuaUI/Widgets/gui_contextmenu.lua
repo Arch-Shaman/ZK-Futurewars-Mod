@@ -38,6 +38,8 @@ stats_hide_projectile_speed
 include("keysym.lua")
 VFS.Include("LuaRules/Utilities/numberfunctions.lua")
 VFS.Include("LuaRules/Utilities/versionCompare.lua")
+local carrierDefs = {}
+local commanderDroneDefs = {}
 
 local spSendLuaRulesMsg			= Spring.SendLuaRulesMsg
 local spGetCurrentTooltip		= Spring.GetCurrentTooltip
@@ -149,16 +151,28 @@ AddFactoryOfUnits("staticmissilesilo")
 local buildOpts = VFS.Include("gamedata/buildoptions.lua")
 local factory_commands, econ_commands, defense_commands, special_commands = include("Configs/integral_menu_commands_processed.lua", nil, VFS.RAW_FIRST)
 
+do
+	local droneDefs, _, commDrones = VFS.Include("LuaRules/Configs/drone_defs.lua")
+	for id, data in pairs(droneDefs) do -- For whatever reason, unitDefID is not the same.
+		carrierDefs[UnitDefs[id].name] = data
+	end
+	for id, data in pairs(commDrones) do
+		commanderDroneDefs[id] = data
+	end
+end
+
+
 for i = 1, #buildOpts do
 	local name = buildOpts[i]
 	local unitDefID = UnitDefNames[name].id
+	local isDrone = UnitDefs[unitDefID].customParams.is_drone ~= nil
 	if econ_commands[-unitDefID] then
 		behaviourPath[unitDefID] = BEHAVIOUR_PATH .. "Economy"
 	elseif defense_commands[-unitDefID] then
 		behaviourPath[unitDefID] = BEHAVIOUR_PATH .. "Defence"
 	elseif special_commands[-unitDefID] then
 		behaviourPath[unitDefID] = BEHAVIOUR_PATH .. "Special"
-	else
+	elseif not isDrone then
 		behaviourPath[-unitDefID] = BEHAVIOUR_PATH .. "Misc"
 	end
 end
@@ -250,6 +264,7 @@ local localization = {
 	vampirism_heals = "Heals self for",
 	vampirism_perhit = "health per hit",
 	wolverine_mine = "mine",
+	altitude_bonus = "Altitude bonus",
 	stats_damage = "Damage",
 	stats_duringcloakstrike = "(during cloak strike)",
 	stats_shielddamage = "Shield damage",
@@ -506,6 +521,12 @@ local localization = {
 	team = "Squad",
 	yes = "Yes",
 	no = "No",
+	drone_carrier = "Drone carrier",
+	drone_buildslots = "Number of Autofabs",
+	cooldown = "Cooldown",
+	drone_label = "Drone Complement",
+	drones_per_cycle = "Drones started per cycle",
+	drone_build_time = "Build time",
 }
 
 local function UpdateLocalization()
@@ -609,10 +630,10 @@ for i = 1, #UnitDefs do
 		local ud = UnitDefs[i]
 		if ud.name:lower():find('pw_') and (Spring.GetGameRulesParam("planetwars_structures") == 1) then
 			addUnit(i,"Misc/Planet Wars", false)
-		elseif ud.name:lower():find('chicken') and Spring.GetGameRulesParam("difficulty") then -- fixme: not all of these are actually used
+		elseif ud.name:lower():find('chicken') then -- fixme: not all of these are actually used
 			addUnit(i,"Misc/Chickens", false)
 		elseif ud.customParams.is_drone then
-			addUnit(i,"Units/Misc", false)
+			addUnit(i,"Units/Misc/Drones", false)
 		end
 	end
 end
@@ -730,10 +751,22 @@ local function GetShieldRegenDrain(wd)
 	return shieldRegen, shieldDrain
 end
 
-local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, deathExplosion, cost, isFeature)
+local function AddEntryToCells(text, layer, entry, cells)
+	if layer > 0 then
+		text =  string.rep("\t\t", layer) .. text
+	end
+	cells[#cells + 1] = text
+	if entry == nil then
+		cells[#cells + 1] = ''
+	else
+		cells[#cells + 1] = entry
+	end
+end
+
+local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, deathExplosion, cost, isFeature, layer)
 	local cells = cells
 	local startPoint = #cells+1
-	
+	if layer == nil then layer = 0 end
 	local wd
 	if bombletCount then
 		wd = WeaponDefNames[ws] --GetWeapon for some reason doesn't work
@@ -757,15 +790,12 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 	elseif ws.count > 1 then
 		name = name .. " x " .. ws.count
 	end
-
 	if wd.type == "TorpedoLauncher" then
 		name = name .. " " .. localization.target_water_only
 	end
-
 	if wd.manualFire then
 		name = name .. " " .. localization.target_manual_fire
 	end
-	
 	if not bombletCount and ws.aa_only then
 		name = name .. " " .. localization.target_antiair
 	end
@@ -773,45 +803,33 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 		name = name .. " " .. localization.target_guidance
 	end
 	if not (cp.bogus or cp.hideweapon)  then
-		cells[#cells+1] = name
-		cells[#cells+1] = ''
+		AddEntryToCells(name, layer, nil, cells)
 	end
-	
 	if wd.isShield then
 		local regen, drain = GetShieldRegenDrain(wd)
-		cells[#cells+1] = ' - ' .. localization.shield_hp .. ":"
-		cells[#cells+1] = wd.shieldPower .. " " .. localization.acronyms_hp
-		cells[#cells+1] = ' - ' .. localization.shield_percost .. ":"
-		cells[#cells+1] = numformat(wd.shieldPower / cost, 2)
-		cells[#cells+1] = ' - ' .. localization.regen .. ":"
-		cells[#cells+1] = regen .. localization.acronyms_hp .. "/" .. localization.acronyms_second
-		cells[#cells+1] = ' - ' .. localization.shield_regencost .. ':'
-		cells[#cells+1] = drain .. " " .. localizationCommon.energy .. "/" .. localization.acronyms_second
+		AddEntryToCells(localization.shield_hp .. ":", layer + 1, wd.shieldPower .. " " .. localization.acronyms_hp, cells)
+		AddEntryToCells(localization.shield_percost .. ":", layer + 1, numformat(wd.shieldPower / cost, 2), cells)
+		AddEntryToCells(localization.regen .. ":", layer + 1, regen .. localization.acronyms_hp .. "/" .. localization.acronyms_second, cells)
+		AddEntryToCells(localization.shield_regencost .. ":", layer + 1, drain .. " " .. localizationCommon.energy .. "/" .. localization.acronyms_second, cells)
 		local rechargeDelay = tonumber(wd.shieldrechargedelay or wd.customParams.shield_recharge_delay)
 		if rechargeDelay and rechargeDelay > 0 then
-			cells[#cells+1] = ' - ' .. localization.shield_delay .. ':'
-			cells[#cells+1] = rechargeDelay .. " " .. localization.acronyms_second
+			AddEntryToCells(localization.shield_delay .. ":", layer + 1, rechargeDelay .. " " .. localization.acronyms_second, cells)
 		end
-		cells[#cells+1] = ' - ' .. localization.radius .. ':'
-		cells[#cells+1] = wd.shieldRadius .. " elmo"
+		AddEntryToCells(localization.radius .. ':', layer + 1, wd.shieldRadius .. " elmo", cells)
 		if wd.customParams.unlinked then
-			cells[#cells+1] = ' - ' .. localization.shield_nolink
-			cells[#cells+1] = ''
+			AddEntryToCells(localization.shield_nolink, layer + 1, nil, cells)
 		end
 	else
-			-- calculate damages
+		-- calculate damages
 		if not (cp.bogus or cp.hideweapon) then
 			local dam  = 0
 			local damw = 0
 			local dams = 0
 			local damd = 0
 			local damc = 0
-	
 			local stun_time = 0
-			
 			local baseDamage = tonumber(cp.stats_damage) or wd.customParams.shield_damage or 0
 			local val = baseDamage * comm_mult
-	
 			if cp.disarmdamagemult then
 				damd = val * cp.disarmdamagemult
 				if (cp.disarmdamageonly == "1") then
@@ -819,24 +837,20 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				end
 				stun_time = tonumber(cp.disarmtimer)
 			end
-	
 			if cp.timeslow_damagefactor then
 				dams = val * cp.timeslow_damagefactor
 				if (cp.timeslow_onlyslow == "1") then
 					val = 0
 				end
 			end
-	
 			if cp.is_capture then
 				damc = val
 				val = 0
 			end
-	
 			if cp.extra_damage then
 				damw = tonumber(cp.extra_damage) * comm_mult
 				stun_time = tonumber(wd.customParams.extra_paratime)
 			end
-	
 			if wd.paralyzer then
 				damw = val
 				if stun_time == 0 then
@@ -846,8 +860,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				dam = val
 			end
 			if cp.vampirism then
-				cells[#cells + 1] = ' - ' .. localization.vampirism_heals
-				cells[#cells + 1] = numformat(tonumber(cp.vampirism) * dam, 1) .. ' ' .. localization.vampirism_perhit
+				AddEntryToCells(localization.vampirism_heals, layer + 1, numformat(tonumber(cp.vampirism) * dam, 1) .. ' ' .. localization.vampirism_perhit, cells)
 			end
 			-- get reloadtime and calculate dps
 			local reloadtime = tonumber(cp.script_reload) or wd.reload
@@ -856,13 +869,10 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			if cp.recycler then
 				local maxbonus = tonumber(cp.recycle_maxbonus) -- recycle_reductiontime, recycle_reduction, recycle_reductionframes, recycle_maxbonus, recycle_bonus
 				maxReload = math.ceil((reloadtime / (1 + maxbonus)) * 30) / 30
-				cells[#cells + 1] = " - " .. localization.spooling_weapon .. ":"
-				cells[#cells + 1] = ""
-				cells[#cells + 1] = "\t\t- " .. localization.spooling_weapon_bonus .. ":"
+				AddEntryToCells(localization.spooling_weapon .. ":", layer + 1, nil, cells)
 				local bonusReloadSpeed = tonumber(cp.recycle_bonus)
-				cells[#cells + 1] = numformat(bonusReloadSpeed * 100, 1) .. '%'
-				cells[#cells + 1] = "\t\t- " .. localization.spooling_max_bonus .. ":"
-				cells[#cells + 1] = numformat(maxbonus * 100, 2) .. "%" -- TODO: Reduction time
+				AddEntryToCells(localization.spooling_weapon_bonus .. ":", layer + 2, numformat(bonusReloadSpeed * 100, 1) .. '%', cells)
+				AddEntryToCells(localization.spooling_max_bonus .. ":", layer + 2, numformat(maxbonus * 100, 2) .. "%", cells)
 				local currentFireRate = reloadtime
 				local currentBonus = 0
 				local totalFrames = 0
@@ -873,25 +883,19 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 					currentreload = math.ceil(reloadtime / (1 + currentBonus))
 				end
 				totalFrames = totalFrames / 30 -- frames -> seconds
-				cells[#cells + 1] = "\t\t- " .. localization.spooling_bonus_time_to_max .. ":"
-				cells[#cells + 1] = numformat(totalFrames, 2) .. localization.acronyms_second
+				AddEntryToCells(localization.spooling_bonus_time_to_max .. ":", layer + 2, numformat(totalFrames, 2) .. localization.acronyms_second, cells)
 			end
 			if maxReload ~= reloadtime then
 				wantsExtraReloadInfo = true
 			end
 			local aimtime = (tonumber(cp.aimdelay) or 0) / 30
 			local fixedreload = reloadtime + aimtime
-			
 			local mult = tonumber(cp.statsprojectiles) or ((tonumber(cp.script_burst) or wd.salvoSize) * wd.projectiles)
-			
-			
-			
 			local dps  = dam /fixedreload
 			local dpsw = damw/fixedreload
 			local dpss = dams/fixedreload
 			local dpsd = damd/fixedreload
 			local dpsc = damc/fixedreload
-	
 			local dps_str, dam_str, shield_dam_str = '', '', ''
 			local damageTypes = 0
 			if dps > 0 then
@@ -935,7 +939,6 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				end
 				damageTypes = damageTypes + 1
 			end
-	
 			if dpsd > 0 then
 				if dps_str ~= '' then
 					dps_str = dps_str .. ' + '
@@ -950,7 +953,6 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				end
 				damageTypes = damageTypes + 1
 			end
-	
 			if dpsc > 0 then
 				if dps_str ~= '' then
 					dps_str = dps_str .. ' + '
@@ -965,7 +967,6 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				end
 				damageTypes = damageTypes + 1
 			end
-	
 			if mult > 1 then
 				dam_str = dam_str .. " x " .. mult
 				shield_dam_str = shield_dam_str .. " x " .. mult
@@ -973,29 +974,23 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			if cp.shield_mult then
 				shield_dam_str = shield_dam_str .. " x " .. math.floor(100*cp.shield_mult) .. '%'
 			end
-			
 			local show_damage = not cp.stats_hide_damage
 			local show_dps = not cp.stats_hide_dps
 			local show_reload = not cp.stats_hide_reload
 			local show_range = not cp.stats_hide_range
 			local show_aoe = not cp.stats_hide_aoe
-	
-			
 			local show_projectile_speed = not cp.stats_hide_projectile_speed and not hitscan[wd.type]
-	
 			if ((dps + dpsw + dpss + dpsd + dpsc) < 2) then -- no damage: newtons and such
 				show_damage = false
 				show_dps = false
 			end
-			
 			if cp.damage_vs_shield and cp.spawns_name then -- Badger
 				dam_str = tostring(cp.damage_vs_shield) .. " (" .. dam .. " + " .. (tonumber(cp.damage_vs_shield)-dam) .. " " .. localization.wolverine_mine .. ")"
 				dps_str = numformat(math.floor(tonumber(cp.damage_vs_shield)/reloadtime))
 			end
-	
 			if show_damage then
 				if cp.cloakstrike then
-					cells[#cells+1] = ' - ' .. localization.stats_damage .. ' ' .. localization.stats_duringcloakstrike .. ':'
+					local str1 = ' - ' .. localization.stats_damage .. ' ' .. localization.stats_duringcloakstrike .. ':'
 					--Spring.Echo(tostring(dam_str))
 					--Spring.Echo("dam: " .. dam)
 					local csMult = tonumber(cp.cloakstrike)
@@ -1019,195 +1014,145 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 					if ncap then
 						newstr = newstr:gsub(numformat(damc, 2), numformat(ncap, 2))
 					end
-					cells[#cells+1] = newstr
+					AddEntryToCells(str1, layer + 1, newstr, cells)
 				end
-				cells[#cells+1] = ' - ' .. localization.stats_damage .. ':'
-				cells[#cells+1] = dam_str
+				AddEntryToCells(localization.stats_damage .. ":", layer + 1, dam_str, cells)
 			end
-	
 			-- shield damage
 			if (wd.interceptedByShieldType ~= 0) and show_damage and not cp.stats_hide_shield_damage and not deathExplosion then
 				if cp.damage_vs_shield then
-					cells[#cells+1] = ' - ' .. localization.stats_shielddamage .. ':'
-					cells[#cells+1] = numformat(cp.stats_shield_damage)
+					AddEntryToCells(localization.stats_shielddamage .. ':', layer + 1, numformat(cp.stats_shield_damage), cells)
 				elseif tonumber(cp.stats_shield_damage) ~= baseDamage then
-					cells[#cells+1] = ' - ' .. localization.stats_shielddamage .. ':'
+					local str1 = localization.stats_shielddamage .. ':'
 					if damageTypes > 1 or mult > 1 then
-						cells[#cells+1] = numformat(math.floor(cp.stats_shield_damage * mult * comm_mult), 2) .. "(" .. shield_dam_str .. ")"
+						AddEntryToCells(str1, layer + 1, numformat(math.floor(cp.stats_shield_damage * mult * comm_mult), 2) .. "(" .. shield_dam_str .. ")", cells)
 					else
-						cells[#cells+1] = numformat(math.floor(cp.stats_shield_damage * mult * comm_mult), 2)
+						AddEntryToCells(str1, layer + 1, numformat(math.floor(cp.stats_shield_damage * mult * comm_mult), 2), cells)
 					end
 				end
 			end
-			
 			if cp.post_capture_reload then
-				cells[#cells+1] = ' - ' .. localization.stats_reload .. ':'
-				cells[#cells+1] = numformat (tonumber(cp.post_capture_reload)/30,2) .. localization.acronyms_second
+				AddEntryToCells(localization.stats_reload .. ':', layer + 1, numformat (tonumber(cp.post_capture_reload)/30,2) .. localization.acronyms_second, cells)
 			elseif show_reload and not bombletCount then
-				cells[#cells+1] = ' - ' .. localization.stats_reload .. ':'
-				cells[#cells+1] = numformat (reloadtime,2) .. localization.acronyms_second
+				AddEntryToCells(localization.stats_reload .. ':', layer + 1, numformat (reloadtime,2) .. localization.acronyms_second, cells)
 			end
-			
 			if aimtime > 0 then
 				local headingerror = tonumber(cp.allowedheadingerror) or 0.000001
 				local pitcherror = tonumber(cp.allowedpitcherror) or 0.01
-				cells[#cells+1] = ' - ' .. localization.stats_aimtime ..  ':'
-				cells[#cells+1] = numformat(aimtime, 2) .. localization.acronyms_second
-				cells[#cells+1] = '\t* ' .. localization.stats_horizontal_deviation .. ':'
-				cells[#cells+1] = '±' .. numformat(headingerror/2, 1) .. "°"
-				cells[#cells+1] = '\t* ' .. localization.stats_vertical_deviation .. ':'
-				cells[#cells+1] = '±' .. numformat(pitcherror/2, 1) .. "°"
+				AddEntryToCells(localization.stats_aimtime ..  ':', layer + 1, numformat(aimtime, 2) .. localization.acronyms_second, cells)
+				AddEntryToCells(localization.stats_horizontal_deviation .. ':', layer + 2, numformat(headingerror/2, 1) .. "°", cells)
+				AddEntryToCells(localization.stats_vertical_deviation .. ':', layer + 2, '±' .. numformat(pitcherror/2, 1) .. "°", cells)
 			end
-			
 			if show_dps and not bombletCount then
-				cells[#cells+1] = ' - ' .. localization.acronyms_dps .. ':'
-				cells[#cells+1] = dps_str
+				AddEntryToCells(localization.acronyms_dps .. ':', layer + 1, dps_str, cells)
 				if cp.dmg_scaling then
-					cells[#cells+1] = '\t- ' .. localization.stats_exponential_damage_increase .. ':'
-					cells[#cells+1] = numformat(tonumber(cp.dmg_scaling) * 100 * 30) .. "%/s"
-					cells[#cells+1] = '\t- ' .. localization.stats_exponential_damage_capsat .. ':'
+					AddEntryToCells(localization.stats_exponential_damage_increase .. ':', layer + 1, numformat(tonumber(cp.dmg_scaling) * 3000) .. "%/s", cells) -- 3000 = 100 * 30
+					local str1 = localization.stats_exponential_damage_capsat .. ':'
 					if tonumber(cp.dmg_scaling_max) < 10000 then
-						cells[#cells+1] = numformat(tonumber(cp.dmg_scaling_max) * 100) .. "%"
+						AddEntryToCells(str1, layer + 2, numformat(tonumber(cp.dmg_scaling_max) * 100) .. "%", cells)
 					else
-						cells[#cells+1] = "∞%"
+						AddEntryToCells(str1, layer + 2, "∞%", cells)
 					end
 				end
 			end
-	
 			if (wd.interceptedByShieldType == 0) then
-				cells[#cells+1] = ' - ' .. localization.stats_ignores_shield
-				cells[#cells+1] = ''
+				AddEntryToCells(localization.stats_ignores_shield, layer + 1, '', cells)
 			end
-	
 			if stun_time > 0 then
-				cells[#cells+1] = ' - ' .. localization.stats_stun_time .. ':'
-				cells[#cells+1] = color2incolor((damw > 0) and colorCyan or colorDisarm) .. numformat(stun_time,2) .. 's\008'
+				AddEntryToCells(localization.stats_stun_time .. ':', layer + 1, color2incolor((damw > 0) and colorCyan or colorDisarm) .. numformat(stun_time,2) .. 's\008', cells)
 			end
-	
 			if cp.setunitsonfire then
-				cells[#cells+1] = ' - ' .. localization.stats_burn_time .. ':'
 				local afterburn_frames = (cp.burntime or (450 * (wd.fireStarter or 0)))
-				cells[#cells+1] = color2incolor(colorFire) .. numformat(afterburn_frames/30) .. 's (15' .. localization.acronyms_dps .. ')\008'
+				AddEntryToCells(localization.stats_burn_time .. ':', layer + 1, color2incolor(colorFire) .. numformat(afterburn_frames/30) .. 's (15' .. localization.acronyms_dps .. ')\008', cells)
 			end
-
 			if show_range and not bombletCount then
 				local range = cp.truerange or wd.range
-				cells[#cells+1] = ' - ' .. localization.stats_range .. ':'
 				local rangemult
 				if isFeature then
 					rangemult = (unitID and Spring.GetFeatureRulesParam(unitID, "comm_range_mult")) or 1
 				else
 					rangemult = (unitID and Spring.GetUnitRulesParam(unitID, "comm_range_mult")) or 1
 				end
-				cells[#cells+1] = numformat(range * rangemult, 2) .. " elmo"
+				AddEntryToCells(localization.stats_range .. ':', layer + 1, numformat(range * rangemult, 2) .. " elmo", cells)
 			end
 			if wd.customParams.puredecloaktime then
-				cells[#cells+1] = ' - ' .. localization.stats_force_decloak
-				cells[#cells+1] = numformat(wd.customParams.puredecloaktime / 30, 1) .. localization.acronyms_second
+				AddEntryToCells(localization.stats_force_decloak, layer + 1, numformat(wd.customParams.puredecloaktime / 30, 1) .. localization.acronyms_second, cells)
 			end
 			local aoe = wd.impactOnly and 0 or wd.damageAreaOfEffect
 			if aoe > 15 and show_aoe then
-				cells[#cells+1] = ' - ' .. localization.stats_aoe .. ':'
-				cells[#cells+1] = numformat(aoe) .. " elmo"
+				AddEntryToCells(localization.stats_aoe .. ':', layer + 1,  numformat(aoe) .. " elmo", cells)
 			end
-	
 			if show_projectile_speed and not bombletCount then
-				cells[#cells+1] = ' - ' .. localization.stats_weapon_speed .. ':'
-				cells[#cells+1] = numformat(wd.projectilespeed*30) .. " elmo/" .. localization.acronyms_second
+				AddEntryToCells(localization.stats_weapon_speed .. ':', layer + 1, numformat(wd.projectilespeed*30) .. " elmo/" .. localization.acronyms_second, cells)
 			elseif hitscan[wd.type] then
-				cells[#cells+1] = ' - ' .. localization.weapon_instant_hit
-				cells[#cells+1] = ''
+				AddEntryToCells(localization.weapon_instant_hit, layer + 1, '', cells)
 			end
-	
 			--Unimportant stuff, maybe make togglable with some option later
 			if (wd.type == "MissileLauncher") then
 				if ((wd.startvelocity < wd.projectilespeed) and (wd.weaponAcceleration > 0)) then
-					cells[#cells+1] = ' - ' .. localization.stats_missile_launch_speed .. ':'
-					cells[#cells+1] = numformat(wd.startvelocity*30) .. " - " .. numformat(wd.projectilespeed*30) .. " elmo/" .. localization.acronyms_second
-					cells[#cells+1] = ' - ' .. localization.stats_acceleration .. ':'
-					cells[#cells+1] = numformat(wd.weaponAcceleration*900) .. " elmo/" .. localization.acronyms_second .. "²"
+					AddEntryToCells(localization.stats_missile_launch_speed .. ':', layer + 1, numformat(wd.startvelocity*30) .. " - " .. numformat(wd.projectilespeed*30) .. " elmo/" .. localization.acronyms_second, cells)
+					AddEntryToCells(localization.stats_acceleration .. ':', layer + 1, numformat(wd.weaponAcceleration*900) .. " elmo/" .. localization.acronyms_second .. "²", cells)
 				else
-					cells[#cells+1] = ' - ' .. localization.stats_missile_speed .. ':'
-					cells[#cells+1] = numformat(wd.projectilespeed*30) .. " elmo/" .. localization.acronyms_second
+					AddEntryToCells(localization.stats_missile_speed .. ':', layer + 1, numformat(wd.projectilespeed*30) .. " elmo/" .. localization.acronyms_second, cells)
 				end
-				cells[#cells+1] = ' - ' .. localization.stats_missile_fuel_time .. ':'
 				if cp.flighttime then
-					cells[#cells+1] = numformat(tonumber(cp.flighttime)) .. localization.acronyms_second
+					AddEntryToCells(localization.stats_missile_fuel_time .. ':', layer + 1, numformat(tonumber(cp.flighttime)) .. localization.acronyms_second, cells)
 				else
-					cells[#cells+1] = numformat(((wd.range / wd.projectilespeed) + (wd.selfExplode and 25 or 0))/32) .. localization.acronyms_second
+					AddEntryToCells(localization.stats_missile_fuel_time .. ':', layer + 1, numformat(((wd.range / wd.projectilespeed) + (wd.selfExplode and 25 or 0))/32) .. localization.acronyms_second, cells)
 				end
-				
 				if wd.selfExplode then
-					cells[#cells+1] = " - " .. localization.explodes_on_timeout
+					AddEntryToCells(localization.explodes_on_timeout, layer + 1, '', cells)
 				else
-					cells[#cells+1] = " - " .. localization.falls_on_timeout
+					AddEntryToCells(localization.falls_on_timeout, layer + 1, '', cells)
 				end
-				cells[#cells+1] = ''
 			end
-	
 			if wd.tracks and wd.turnRate > 0 and (cp.cruisealt == nil or cp.cruisedist == nil) then
-				cells[#cells+1] = ' - ' .. localization.stats_homing .. ':'
 				local turnrate = wd.turnRate * 30 * 180 / math.pi
-				cells[#cells+1] = numformat(turnrate, 1) .. " °/" .. localization.acronyms_second
+				AddEntryToCells(localization.stats_homing .. ':', layer + 1, numformat(turnrate, 1) .. " °/" .. localization.acronyms_second, cells)
 			end
 			if cp.ballistic_guidance then
-				cells[#cells+1] = ' - ' .. localization.stats_homing .. ':'
-				cells[#cells+1] = numformat(tonumber(cp.ballistic_guidance), 1) .. " elmos/" .. localization.acronyms_second .. "²"
+				AddEntryToCells(localization.stats_homing .. ':', layer + 1, numformat(tonumber(cp.ballistic_guidance), 1) .. " elmos/" .. localization.acronyms_second .. "²", cells)
 			end
 			if cp.cruisealt and cp.cruisedist then
-				cells[#cells+1] = ' - ' .. localization.stats_cruisemissile .. ':'
-				cells[#cells+1] = ''
-				cells[#cells+1] = '\t-' .. localization.stats_cruisealtitude .. ':'
-				cells[#cells+1] = cp.cruisealt .. ' elmo ' .. localization.acronyms_agl
-				cells[#cells+1] = '\t-' .. localization.stats_begins_descent .. ':' 
-				cells[#cells+1] = wd.customParams.cruisedist .. ' ' .. localization.stats_from_target
+				AddEntryToCells(localization.stats_cruisemissile .. ':', layer + 1, '', cells)
+				AddEntryToCells(localization.stats_cruisealtitude .. ':', layer + 2, cp.cruisealt .. ' elmo ' .. localization.acronyms_agl, cells)
+				AddEntryToCells(localization.stats_begins_descent .. ':', layer + 2, wd.customParams.cruisedist .. ' ' .. localization.stats_from_target, cells)
 				if cp.cruisetracking and cp.cruise_nolock == nil then
 					local turnrate = wd.turnRate * 30 * 180 / math.pi
-					cells[#cells+1] = '\t-' .. localization.stats_tracks_target .. ':' 
-					cells[#cells+1] =  numformat(turnrate, 1) .. '°/' .. localization.acronyms_second
+					AddEntryToCells(localization.stats_tracks_target .. ':', layer + 2, numformat(turnrate, 1) .. '°/' .. localization.acronyms_second, cells)
 				end
 				if cp.cruisetracking and cp.cruise_nolock then
-					cells[#cells+1] = '\t- ' .. localization.stats_guided_cruise
-					cells[#cells+1] = ''
+					AddEntryToCells(localization.stats_guided_cruise, layer + 2, '', cells)
 				end
 				if wd.customParams.cruise_randomizationtype == "circle" then
-					cells[#cells+1] = '\t- ' .. WG.Translate("interface", "stats_circular_spread", {size = cp.cruiserandomradius})
-					cells[#cells+1] = ''
+					AddEntryToCells(WG.Translate("interface", "stats_circular_spread", {size = cp.cruiserandomradius}), layer + 2, '', cells)
 				elseif wd.customParams.cruiserandomradius then
-					cells[#cells+1] = '\t- ' .. WG.Translate("interface", "stats_cruise_error", {radius = cp.cruiserandomradius})
-					cells[#cells+1] = ''
+					AddEntryToCells(WG.Translate("interface", "stats_cruise_error", {radius = cp.cruiserandomradius}), layer + 2, '', cells)
 				end
 			end
 			if cp.tracker and cp.externaltracker == nil then
-				cells[#cells+1] = ' - ' .. localization.laser_guided
-				cells[#cells+1] = ''
+				AddEntryToCells(localization.laser_guided, layer + 1, '', cells)
 			elseif cp.tracker then
-				cells[#cells+1] = ' - ' .. localization.laser_guided .. " " .. localization.needs_guidance
-				cells[#cells+1] = ''
+				AddEntryToCells(localization.laser_guided .. " " .. localization.needs_guidance, layer + 1, '', cells)
 			end
 			if cp.externaltargeter then
-				cells[#cells+1] = ' - ' .. localization.external_targeter
-				cells[#cells+1] = ''
+				AddEntryToCells(localization.external_targeter, layer + 1, '', cells)
 			end
 			if cp.needsuplink then
-				cells[#cells+1] = ' - ' ..  WG.Translate("interface", "needs_guidance_for_seconds", {seconds = numformat(cp.needsuplink / 30, 2)}) .. " " .. localization.acronyms_second
-				cells[#cells+1] = ''
+				AddEntryToCells(WG.Translate("interface", "needs_guidance_for_seconds", {seconds = numformat(cp.needsuplink / 30, 2)}) .. " " .. localization.acronyms_second, layer + 1, '', cells)
 			end
 			if wd.wobble > 0 then
-				cells[#cells+1] = ' - ' .. localization.stats_wobble .. ':'
 				local wobble = wd.wobble * 30 * 180 / math.pi
-				cells[#cells+1] = localization.stats_wobble_desc .. " " .. numformat(wobble, 1) .. "°/" .. localization.acronyms_second
+				AddEntryToCells(localization.stats_wobble .. ':', layer + 1, localization.stats_wobble_desc .. " " .. numformat(wobble, 1) .. "°/" .. localization.acronyms_second, cells)
 			end
 	
 			if wd.sprayAngle > 0 and not bombletCount then
-				cells[#cells+1] = ' - ' .. localization.stats_inaccuracy .. ':'
 				local accuracy = math.asin(wd.sprayAngle) * 90 / math.pi
-				cells[#cells+1] = numformat(accuracy, 1) .. "°"
+				AddEntryToCells(localization.stats_inaccuracy .. ':', layer + 1, numformat(accuracy, 1) .. "°", cells)
 			end
 	
 			if wd.type == "BeamLaser" and wd.beamtime > 0.2 then
-				cells[#cells+1] = ' - ' .. localization.stats_burst_time .. ':'
-				cells[#cells+1] = numformat(wd.beamtime) .. localization.acronyms_second
+				AddEntryToCells(localization.stats_burst_time .. ':', layer + 1, numformat(wd.beamtime) .. localization.acronyms_second, cells)
 			end
 			if cp.grants_armor then
 				local impactsEnemies = cp.affects_enemy ~= nil
@@ -1215,51 +1160,40 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				local noScaling = cp.noscaling ~= nil
 				local noTimeScaling = noScaling or cp.notimescaling ~= nil
 				if not impactsEnemies then
-					cells[#cells+1] = " - " .. localization.stats_armor_boost_friendly_only .. ":"
+					AddEntryToCells(localization.stats_armor_boost_friendly_only .. ":", layer + 1, '', cells)
 				else
-					cells[#cells+1] = " - " .. localization.stats_armor_boost_all .. ":"
+					AddEntryToCells(localization.stats_armor_boost_all .. ":", layer + 1, '', cells)
 				end
-				cells[#cells+1] = ""
-				cells[#cells+1] = "\t- " .. localization.stats_armor_boost .. ":"
-				cells[#cells+1] = numformat(tonumber(cp.grants_armor) * 100, 1) .. "%"
-				cells[#cells+1] = "\t- " .. localization.duration .. ":"
-				cells[#cells+1] = numformat(duration, 1) .. localization.acronyms_second
+				AddEntryToCells(localization.stats_armor_boost .. ":", layer + 2, numformat(tonumber(cp.grants_armor) * 100, 1) .. "%", cells)
+				AddEntryToCells(localization.duration .. ":", layer + 2, numformat(duration, 1) .. localization.acronyms_second, cells)
 				if not noScaling and noTimeScaling then
-					cells[#cells+1] = "\t- " .. localization.stats_armor_boost_doesnt_diminish_duration
+					AddEntryToCells(localization.stats_armor_boost_doesnt_diminish_duration, layer + 2, '', cells)
 				elseif noScaling then
-					cells[#cells+1] = "\t- " .. localization.stats_armor_boost_doesnt_diminish_effect
+					AddEntryToCells(localization.stats_armor_boost_doesnt_diminish_effect, layer + 2, '', cells)
 				else
-					cells[#cells+1] = "\t- " ..localization.stats_armor_boost_diminishes
+					AddEntryToCells(localization.stats_armor_boost_diminishes, layer + 2, '', cells)
 				end
-				cells[#cells+1] = ""
 			end
 			if cp.armorpiercing then
 				local apValue = tonumber(cp.armorpiercing) or 0
 				if apValue ~= 0 then
-					cells[#cells+1] = localization.stats_armor_pen .. ":"
-					cells[#cells+1] = numformat(apValue * 100, 1) .. "%"
+					AddEntryToCells(localization.stats_armor_pen .. ":", layer + 1, numformat(apValue * 100, 1) .. "%", cells)
 				end
 			end
 			if cp.spawns_name then
-				cells[#cells+1] = ' - ' .. localization.stats_spawns .. ':'
-				cells[#cells+1] = Spring.Utilities.GetHumanName(UnitDefNames[cp.spawns_name])
+				AddEntryToCells(localization.stats_spawns .. ':', layer + 1, Spring.Utilities.GetHumanName(UnitDefNames[cp.spawns_name]), cells)
 				if cp.spawns_expire then
-					cells[#cells+1] = ' - ' .. localization.stats_spawn_duration .. ':'
-					cells[#cells+1] = cp.spawns_expire .. localization.acronyms_second
+					AddEntryToCells(localization.stats_spawn_duration .. ':', layer + 1, cp.spawns_expire .. localization.acronyms_second, cells)
 				end
 			end
 			if cp.blastwave_size then
-				cells[#cells+1] = ' - ' .. localization.stats_blastwave .. ':'
-				cells[#cells+1] = ''
-				cells[#cells+1] = '\t- ' .. localization.stats_blastwave_startsize .. ':'
-				cells[#cells+1] = cp.blastwave_size
+				AddEntryToCells(localization.stats_blastwave .. ':', layer + 1, '', cells)
+				AddEntryToCells(localization.stats_blastwave_startsize .. ':', layer + 2, cp.blastwave_size, cells)
 				if blastwave_healing then
 					if cp.blastwave_healing_reduction then
-						cells[#cells+1] = '\t- ' .. localization.stats_blastwave_healing_set .. ':'
-						cells[#cells+1] = blastwave_healing .. ' ' .. localization.acronyms_hp
+						AddEntryToCells(localization.stats_blastwave_healing_set .. ':', layer + 2, blastwave_healing .. ' ' .. localization.acronyms_hp, cells)
 					else
-						cells[#cells+1] = '\t- ' .. localization.stats_blastwave_initial_healing .. ':'
-						cells[#cells+1] = blastwave_healing
+						AddEntryToCells(localization.stats_blastwave_initial_healing .. ':', layer + 2, blastwave_healing, cells)
 					end
 				end
 				local slowdmg = tonumber(cp.blastwave_slowdmg) or 0 * comm_mult
@@ -1274,108 +1208,79 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				if slowdmg > 0 then
 					damagestring = damagestring .. color2incolor(colorPurple) ..slowdmg .. "\008 "
 				end
-				cells[#cells+1] = '\t- ' .. localization.stats_blastwave_initial_damage .. ':'
-				cells[#cells+1] = damagestring
+				AddEntryToCells(localization.stats_blastwave_initial_damage .. ':', layer + 2, damagestring, cells)
 				if overslow > 0 then
-					cells[#cells+1] = "\t- " .. localization.stats_overslow_duration .. ":"
-					cells[#cells+1] = numformat(overslow / 30, 3) .. localization.acronyms_second
+					AddEntryToCells(localization.stats_overslow_duration .. ":", layer + 2, numformat(overslow / 30, 3) .. localization.acronyms_second, cells)
 				end
 				if cp.blastwave_onlyfriendly then
-					cells[#cells+1] = '\t- ' .. localization.stats_blastwave_only_allies
-					cells[#cells+1] = ''
+					AddEntryToCells(localization.stats_blastwave_only_allies, layer + 2, '', cells)
 				end
 				local speed = tonumber(cp.blastwave_speed) or 0
 				local size = tonumber(cp.blastwave_size) or 0
 				local life = tonumber(cp.blastwave_life) or 1
 				local impulse = tonumber(cp.blastwave_impulse) or 0
 				if impulse > 0 then
-					cells[#cells+1] = '\t- ' .. localization.stats_impulse .. ':'
-					cells[#cells+1] = numformat(impulse, 3)
+					AddEntryToCells(localization.stats_impulse .. ':', layer + 2, numformat(impulse, 3), cells)
 				end
-				cells[#cells+1] = '\t- ' .. localization.stats_impulse ..':'
-				cells[#cells+1] = size .. " elmos"
-				cells[#cells+1] = '\t- ' .. localization.stats_blastwave_expansion_rate .. ':'
-				cells[#cells+1] = numformat(speed * 30, 2) .. " elmo/" .. localization.acronyms_second
-				cells[#cells+1] = '\t- ' .. localization.stats_blastwave_power_loss .. ':'
-				cells[#cells+1] = numformat((1 - (tonumber(cp.blastwave_lossfactor) or 0.95)) * 100, 2) .. "%/frame"
-				cells[#cells+1] = '\t- ' .. localization.duration .. ':'
-				cells[#cells+1] = numformat(life / 30, 3) .. localization.acronyms_second
-				cells[#cells+1] = '\t- ' .. localization.stats_blastwave_final_radius .. ':'
-				cells[#cells+1] = numformat(size + (speed * life), 2) .. " elmos"
+				--AddEntryToCells(localization.stats_impulse ..':', layer + 2, size .. " elmos", cells) -- seems to be repeat info
+				AddEntryToCells(localization.stats_blastwave_expansion_rate .. ':', layer + 2, numformat(speed * 30, 2) .. " elmo/" .. localization.acronyms_second, cells)
+				AddEntryToCells(localization.stats_blastwave_power_loss .. ':', layer + 2, numformat((1 - (tonumber(cp.blastwave_lossfactor) or 0.95)) * 100, 2) .. "%/frame", cells)
+				AddEntryToCells(localization.duration .. ":", layer + 2, numformat(life / 30, 3) .. localization.acronyms_second, cells)
+				AddEntryToCells(localization.stats_blastwave_final_radius .. ':', layer + 2, numformat(size + (speed * life), 2) .. " elmos", cells)
 			end
 			
 			if cp.reload_move_mod_time  and not bombletCount then
-				cells[#cells+1] = ' - ' .. localization.stats_slows_down_after_firing .. ':'
-				cells[#cells+1] = cp.reload_move_mod_time .. localization.acronyms_second
+				AddEntryToCells(localization.stats_slows_down_after_firing .. ':', layer + 1, cp.reload_move_mod_time .. localization.acronyms_second, cells)
 			end
 			if cp.area_damage then
 				if (cp.area_damage_is_impulse == "1") then
-					cells[#cells+1] = ' - ' .. localization.weapon_creates_gravity_well .. ':'
-					cells[#cells+1] = ''
+					AddEntryToCells(localization.weapon_creates_gravity_well .. ":", layer + 1, '', cells)
 				else
-					cells[#cells+1] = ' - ' .. localization.weapon_groundfire .. ':'
-					cells[#cells+1] = ''
-					cells[#cells+1] = '\t* ' .. localization.acronyms_dps .. ':'
-					cells[#cells+1] = cp.area_damage_dps
+					AddEntryToCells(localization.weapon_groundfire .. ':', layer + 1, '', cells)
+					AddEntryToCells(localization.acronyms_dps .. ":", layer + 2, cp.area_damage_dps, cells)
 				end
-				cells[#cells+1] = '\t* ' .. localization.radius .. ':'
-				cells[#cells+1] = numformat(tonumber(cp.area_damage_radius)) .. " elmo"
-				cells[#cells+1] = '\t* ' .. localization.duration .. ':'
-				cells[#cells+1] = numformat(tonumber(cp.area_damage_duration)) .. " " .. localization.acronyms_second
+				AddEntryToCells(localization.radius .. ':', layer + 2, numformat(tonumber(cp.area_damage_radius)) .. " elmo", cells)
+				AddEntryToCells(localization.duration .. ':', layer + 2, numformat(tonumber(cp.area_damage_duration)) .. " " .. localization.acronyms_second, cells)
 			end
 			if cp.singularity then
-				cells[#cells+1] = ' - Creates a Singularity:'
-				cells[#cells+1] = ''
-				cells[#cells+1] = '\t- ' .. localization.duration .. ':'
-				cells[#cells+1] = numformat(cp.singu_lifespan/30, 1) .. localization.acronyms_second
-				cells[#cells+1] = '\t- ' .. localization.singularity_strength .. ':'
+				AddEntryToCells(localization.weapon_creates_singularity, layer + 1, '', cells)
+				AddEntryToCells(localization.duration .. ":", layer + 2, numformat(cp.singu_lifespan/30, 1) .. localization.acronyms_second, cells)
 				local singustrength = tonumber(cp.singu_strength) * comm_mult
 				if singustrength > 0 then
-					cells[#cells+1] = numformat(singustrength, 1) .. "elmo/" .. localization.acronyms_second .. localization.pull
+					AddEntryToCells(localization.singularity_strength .. ":", layer + 2, numformat(singustrength, 1) .. "elmo/" .. localization.acronyms_second .. localization.pull, cells)
 				else
-					cells[#cells+1] = numformat(singustrength, 1) .. "elmo/" .. localization.acronyms_second .. localization.push
+					AddEntryToCells(localization.singularity_strength .. ":", layer + 2, numformat(singustrength, 1) .. "elmo/" .. localization.acronyms_second .. localization.push, cells)
 				end
-				cells[#cells+1] = '\t- ' .. localization.radius .. ':'
-				cells[#cells+1] = cp.singu_radius .. " elmo"
+				AddEntryToCells(localization.radius .. ':', layer + 2, cp.singu_radius .. " elmo", cells)
 			end
 			if wd.trajectoryHeight > 0  and not bombletCount then
-				cells[#cells+1] = ' - ' .. localization.weapon_arcing .. ':'
-				cells[#cells+1] = numformat(math.atan(wd.trajectoryHeight) * 180 / math.pi) .. "°"
+				AddEntryToCells(localization.weapon_arcing .. ':', layer + 1, numformat(math.atan(wd.trajectoryHeight) * 180 / math.pi) .. "°", cells)
 			end
 	
 			if not bombletCount and wd.stockpile then
-				cells[#cells+1] = ' - ' .. localization.weapon_stockpile_time ..':'
-				cells[#cells+1] = (((tonumber(ws.stockpile_time) or 0) > 0) and tonumber(ws.stockpile_time) or wd.stockpileTime) .. localization.acronyms_second
+				AddEntryToCells(localization.weapon_stockpile_time ..':', layer + 1, (((tonumber(ws.stockpile_time) or 0) > 0) and tonumber(ws.stockpile_time) or wd.stockpileTime) .. localization.acronyms_second, cells)
 				if ((not ws.free_stockpile) and (ws.stockpile_cost or (wd.metalCost > 0))) then
-					cells[#cells+1] = ' - ' .. localization.weapon_stockpile_cost .. ':'
-					cells[#cells+1] = ws.stockpile_cost or wd.metalCost .. " " .. localizationCommon.metal
+					AddEntryToCells(localization.weapon_stockpile_cost .. ':', layer + 1, ws.stockpile_cost or wd.metalCost .. " " .. localizationCommon.metal, cells)
 				end
 			end
 	
 			if not bombletCount and ws.firing_arc and (ws.firing_arc > -1) then
-				cells[#cells+1] = ' - ' .. localization.weapon_firing_arc .. ':'
-				cells[#cells+1] = numformat(360*math.acos(ws.firing_arc)/math.pi) .. '°'
+				AddEntryToCells(localization.weapon_firing_arc .. ':', layer + 1, numformat(360*math.acos(ws.firing_arc)/math.pi) .. '°', cells)
 			end
 	
 			if cp.needs_link then
-				cells[#cells+1] = ' - ' .. localization.weapon_grid_demand .. ':'
-				cells[#cells+1] = tonumber(cp.needs_link) .. " " .. localizationCommon.energy
+				AddEntryToCells(localization.weapon_grid_demand .. ':', layer + 1, tonumber(cp.needs_link) .. " " .. localizationCommon.energy, cells)
 			end
 	
 			if cp.smoothradius then
-				cells[#cells+1] = ' - ' .. localization.weapon_smooths_ground
-				--cells[#cells+1] = cp.smoothradius .. " radius" -- overlaps
-				cells[#cells+1] = ''
+				AddEntryToCells(localization.weapon_smooths_ground, layer + 1, '', cells)
 			end
 			if cp["reveal_unit"] then
 				local artyrevealstring = WG.Translate("interface", "weapon_arty_reveal", {time = cp["reveal_unit"]})
-				cells[#cells+1] = ' - ' .. artyrevealstring
-				cells[#cells+1] = ""
+				AddEntryToCells(artyrevealstring, layer + 1, '', cells)
 			end
 			if cp.movestructures then
-				cells[#cells+1] = ' - ' .. localization.weapon_moves_structures
-				--cells[#cells+1] = cp.smoothradius .. " radius" -- overlaps
-				cells[#cells+1] = ''
+				AddEntryToCells(localization.weapon_moves_structures, layer + 1, '', cells)
 			end
 			
 			if not bombletCount then
@@ -1384,65 +1289,53 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 					highTraj = ws.highTrajectory
 				end
 				if highTraj == 1 then
-					cells[#cells+1] = ' - ' .. localization.weapon_high_traj
-					cells[#cells+1] = ''
+					AddEntryToCells(localization.weapon_high_traj, layer + 1, '', cells)
 				elseif highTraj == 2 then
-					cells[#cells+1] = ' - ' .. localization.weapon_toggable_traj
-					cells[#cells+1] = ''
+					AddEntryToCells(localization.weapon_toggable_traj, layer + 1, '', cells)
 				end
 			end
 			
 			if wd.waterWeapon and (wd.type ~= "TorpedoLauncher") then
-				cells[#cells+1] = ' - ' .. localization.weapon_water_capable
-				cells[#cells+1] = ''
+				AddEntryToCells(localization.weapon_water_capable, layer + 1, '', cells)
 			end
 	
 			if not wd.avoidFriendly and not wd.noFriendlyCollide then
-				cells[#cells+1] = ' - ' .. localization.weapon_potential_friendly_fire
-				cells[#cells+1] = ''
+				AddEntryToCells(localization.weapon_potential_friendly_fire, layer + 1, '', cells)
 			end
 	
 			if wd.noGroundCollide then
-				cells[#cells+1] = ' - ' .. localization.weapon_no_ground_collide
-				cells[#cells+1] = ''
+				AddEntryToCells(localization.weapon_no_ground_collide, layer + 1, '', cells)
 			end
 	
 			if wd.noExplode then
-				cells[#cells+1] = ' - ' .. localization.weapon_piercing
-				cells[#cells+1] = ''
+				AddEntryToCells(localization.weapon_piercing, layer + 1, '', cells)
 				if not (cp.single_hit or cp.single_hit_multi) then
-					cells[#cells+1] = ' - ' .. localization.weapon_increased_damage_vs_large
-					cells[#cells+1] = ''
+					AddEntryToCells(localization.weapon_increased_damage_vs_large, layer + 1, '', cells)
 				end
 			end
 	
 			if cp.dyndamageexp then
 				if wd.dynDamageInverted then
-					cells[#cells+1] = ' - ' .. localization.weapon_damage_closeup_falloff
+					AddEntryToCells(localization.weapon_damage_closeup_falloff, layer + 1, '', cells)
 				else
-					cells[#cells+1] = ' - ' .. localization.weapon_damage_falloff
+					AddEntryToCells(localization.weapon_damage_falloff, layer + 1, '', cells)
 				end
-				cells[#cells+1] = ''
 			end
 	
 			if cp.nofriendlyfire then
-				cells[#cells+1] = ' - ' .. localization.weapon_no_friendly_fire
-				cells[#cells+1] = ''
+				AddEntryToCells(localization.weapon_no_friendly_fire, layer + 1, '', cells)
 			end
 	
 			if not bombletCount and cp.shield_drain then
-				cells[#cells+1] = ' - ' .. localization.weapon_shield_drain .. ":"
-				cells[#cells+1] = cp.shield_drain .. " " .. localization.weapon_shield_drain_desc
+				AddEntryToCells(localization.weapon_shield_drain .. ":", layer + 1, cp.shield_drain .. " " .. localization.weapon_shield_drain_desc, cells)
 			end
 	
 			if not bombletCount and cp.aim_delay then
-				cells[#cells+1] = ' - ' .. localization.weapon_aim_delay .. ':'
-				cells[#cells+1] = numformat(tonumber(cp.aim_delay)/1000) .. localization.acronyms_second
+				AddEntryToCells(localization.weapon_aim_delay .. ':', layer + 1, numformat(tonumber(cp.aim_delay)/1000) .. localization.acronyms_second, cells)
 			end
 	
 			if not bombletCount and wd.targetMoveError > 0 then
-				cells[#cells+1] = ' - ' .. localization.weapon_inaccuracy_vs_moving
-				cells[#cells+1] = '' -- actual value doesn't say much as it's a multiplier for the target speed
+				AddEntryToCells(localization.weapon_inaccuracy_vs_moving, layer + 1, '', cells)
 			end
 			if cp.stats_custom_tooltip_1 then
 				local q = 1
@@ -1455,23 +1348,20 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 						key = string.gsub(key, "_contextmenu_", "")
 						txt = localization[key]
 					end
-					cells[#cells+1] = cp["stats_custom_tooltip_" .. q] or ""
-					cells[#cells+1] = cp["stats_custom_tooltip_entry_" .. q] or ""
+					AddEntryToCells(cp["stats_custom_tooltip_" .. q] or "", layer + 1, cp["stats_custom_tooltip_entry_" .. q] or "", cells)
 					q = q + 1
 				end
 			end
 			
 			if wd.targetable and ((wd.targetable == 1) or (wd.targetable == true)) then
-				cells[#cells+1] = ' - ' .. localization.weapon_interceptable
-				cells[#cells+1] = ''
+				AddEntryToCells(localization.weapon_interceptable, layer + 1, '', cells)
 			end
 		end
 		--cluster info
 		--RECURSION INCOMING!
 		if cp.numprojectiles1 then
 			if not (cp.bogus or cp.hideweapon) then
-				cells[#cells+1] = ' - ' .. localization.weapon_cluster_munitions .. ':'
-				cells[#cells+1] = ''
+				AddEntryToCells(localization.weapon_cluster_munitions .. ':', layer + 1, '', cells)
 			end
 			local submunitionCount = 1
 			while cp["numprojectiles" .. submunitionCount] do
@@ -1482,22 +1372,15 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 					end
 				end
 				if isRecusive then
-					cells[#cells+1] = (not (cp.bogus or cp.hideweapon) and '   ' or '') .. WeaponDefNames[cp["projectile" .. submunitionCount]].description .. ' x ' .. cp["numprojectiles" .. submunitionCount] .. ' (Previously Listed)'
-					cells[#cells+1] = ''
+					AddEntryToCells(WeaponDefNames[cp["projectile" .. submunitionCount]].description .. ' x ' .. cp["numprojectiles" .. submunitionCount] .. ' (Previously Listed)', layer + 1, '', cells)
 				else
-					cells = weapons2Table(cells, cp["projectile" .. submunitionCount], unitID, cp["numprojectiles" .. submunitionCount] * (cp.bogus and bombletCount or 1) * (cp["clustercharges"] or 1), recursedWepIds, false, cost)
+					cells = weapons2Table(cells, cp["projectile" .. submunitionCount], unitID, cp["numprojectiles" .. submunitionCount] * (cp.bogus and bombletCount or 1) * (cp["clustercharges"] or 1), recursedWepIds, false, cost, isFeature, layer + 2)
 				end
 				submunitionCount = submunitionCount + 1
 			end
 			if cp["clustercharges"] then
-				cells[#cells+1] = ' - ' .. localization.weapon_cluster_ttr .. ':'
-				cells[#cells+1] = numformat(cp["clustercharges"]/30) .. localization.acronyms_second
+				AddEntryToCells(localization.weapon_cluster_ttr .. ':', layer + 1, numformat(cp["clustercharges"]/30) .. localization.acronyms_second, cells)
 			end
-		end
-	end
-	if bombletCount and not (cp.bogus or cp.hideweapon) and not deathExplosion then
-		for i = startPoint, #cells, 2 do
-			cells[i] = '\t' .. cells[i]
 		end
 	end
 	return cells
@@ -1516,8 +1399,7 @@ local function printAbilities(ud, unitID, isFeature)
 			bpMult = unitID and Spring.GetUnitRulesParam(unitID, "buildpower_mult") or 1
 		end
 		local buildSpeed = ud.buildSpeed * bpMult
-		cells[#cells+1] = localization.construction
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.construction, 1, '', cells)
 		if ud.customParams.bp_overdrive then
 			local charge = tonumber(ud.customParams.bp_overdrive_initialcharge)
 			local maxCharge = tonumber(ud.customParams.bp_overdrive_totalcharge)
@@ -1526,67 +1408,46 @@ local function printAbilities(ud, unitID, isFeature)
 			local rechargeRate = tonumber(ud.customParams.bp_overdrive_chargerate) -- in per second.
 			local spooling = bonusBP < 0
 			if spooling then
-				cells[#cells+1] = ' - ' .. localization.starting_buildpower .. ':'
-				cells[#cells+1] = numformat((1 - bonusBP) * buildSpeed)
-				cells[#cells+1] = ' - ' .. localization.buildpower_increases_use
-				cells[#cells+1] = ''
-				cells[#cells+1] = ' - ' .. localization.max_buildpower .. ':'
-				cells[#cells+1] = numformat(buildSpeed)
-				cells[#cells+1] = ' - ' .. localization.buildpower_diminishes_with_disuse .. ':'
-				cells[#cells+1] = numformat(delay / 30, 1) .. localization.acronyms_second
-				cells[#cells+1] = ' - ' .. localization.decay_rate .. ':'
-				cells[#cells+1] = numformat((rechargeRate / maxCharge) * 100, 1) .. '%/' .. localization.acronyms_second
+				AddEntryToCells(localization.starting_buildpower .. ':', 2, numformat((1 - bonusBP) * buildSpeed), cells)
+				AddEntryToCells(localization.buildpower_increases_use, 2, '', cells)
+				AddEntryToCells(localization.max_buildpower .. ':', 2, numformat(buildSpeed), cells)
+				AddEntryToCells(localization.buildpower_diminishes_with_disuse .. ':', 2, numformat(delay / 30, 1) .. localization.acronyms_second, cells)
+				AddEntryToCells(localization.decay_rate .. ':', 2, numformat((rechargeRate / maxCharge) * 100, 1) .. '%/' .. localization.acronyms_second, cells)
 			else
-				cells[#cells+1] = ' - ' .. localization.base_buildpower .. ':'
-				cells[#cells+1] = numformat(buildSpeed)
-				cells[#cells+1] = ' - ' .. localization.starting_buildpower .. ':'
-				cells[#cells+1] = buildSpeed * (1 + bonusBP)
-				cells[#cells+1] = ' - ' .. localization.recharge_delay .. ':'
-				cells[#cells+1] = numformat(delay / 30, 1) .. localization.acronyms_second
-				cells[#cells+1] = ' - ' .. localization.buildpower_regen_rate .. ':'
-				cells[#cells+1] = numformat((rechargeRate / maxCharge) * 100, 1) .. '%/' .. localization.acronyms_second
+				AddEntryToCells(localization.base_buildpower .. ':', 2, numformat(buildSpeed), cells)
+				AddEntryToCells(localization.starting_buildpower .. ':', 2, buildSpeed * (1 + bonusBP), cells)
+				AddEntryToCells(localization.recharge_delay .. ':', 2, numformat(delay / 30, 1) .. localization.acronyms_second, cells)
+				AddEntryToCells(localization.buildpower_regen_rate .. ':', 2, numformat((rechargeRate / maxCharge) * 100, 1) .. '%/' .. localization.acronyms_second, cells)
 			end
 		else
-			cells[#cells+1] = ' - ' .. localizationCommon.buildpower .. ':'
-			cells[#cells+1] = numformat(buildSpeed)
+			AddEntryToCells(localizationCommon.buildpower .. ':', 2, numformat(buildSpeed), cells)
 		end
 		if ud.canResurrect then
-			cells[#cells+1] = ' - ' .. localization.can_resurrect
-			cells[#cells+1] = ''
+			AddEntryToCells(localization.can_resurrect, 2, '', cells)
 		end
 		if (#ud.buildOptions == 0) then
-			cells[#cells+1] = ' - ' .. localization.only_assists
-			cells[#cells+1] = ''
+			AddEntryToCells(localization.only_assists, 2, '', cells)
 		end
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
+		--AddEntryToCells('', 0, '', cells)
 	end
 	
 	if cp.vampirism_kill then
-		cells[#cells+1] = ' - ' .. localization.vampirism
-		cells[#cells+1] = ''
-		cells[#cells+1] = '\t- ' .. localization.vampirism_kills_increase_hp .. ":"
-		cells[#cells+1] = WG.Translate("interface", "vampirism_kills_increase_hp_desc", {number = numformat(cp.vampirism_kill * 100, 1)})
+		AddEntryToCells(localization.vampirism, 1, '', cells)
+		AddEntryToCells(localization.vampirism_kills_increase_hp .. ":", 2, WG.Translate("interface", "vampirism_kills_increase_hp_desc", {number = numformat(cp.vampirism_kill * 100, 1)}), cells)
 	end
 
 	if ud.armoredMultiple < 1 then
-		cells[#cells+1] = localization.armored_unit
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.armor_reduction .. ':'
-		cells[#cells+1] = numformat((1-ud.armoredMultiple)*100) .. '%'
+		AddEntryToCells(localization.armored_unit, 1, '', cells)
+		AddEntryToCells(localization.armor_reduction .. ':', 2, numformat((1-ud.armoredMultiple)*100) .. '%', cells)
 		if cp.armortype and cp.armortype == '1' then
-			cells[#cells+1] = ' - ' .. localization.armor_type_1
-			cells[#cells+1] = ''
+			AddEntryToCells(localization.armor_type_1, 2, '', cells)
 		elseif cp.armortype and cp.armortype == '2' then
-			cells[#cells+1] = ' - ' .. localization.armor_type_2
-			cells[#cells+1] = ''
+			AddEntryToCells(localization.armor_type_2, 2, '', cells)
 		end
 		if cp.force_close then
-			cells[#cells+1] = ' - ' .. localization.forced_closed .. ":"
-			cells[#cells+1] = cp.force_close .. localization.acronyms_second
+			AddEntryToCells(localization.forced_closed .. ":", 2, cp.force_close .. localization.acronyms_second, cells)
 		end
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
+		AddEntryToCells('', 0, '', cells)
 	end
 	local commHasAreaCloak
 	if unitID and isFeature then
@@ -1606,14 +1467,10 @@ local function printAbilities(ud, unitID, isFeature)
 			areaCloakUpkeep = cp.area_cloak_upkeep
 			areaCloakRadius = cp.area_cloak_radius
 		end
-		cells[#cells+1] = localization.area_cloak
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.upkeep .. ':'
-		cells[#cells+1] = areaCloakUpkeep .. " " .. localizationCommon.energy .. "/" .. localization.acronyms_second
-		cells[#cells+1] = ' - ' .. localization.radius .. ':'
-		cells[#cells+1] = areaCloakRadius .. " elmo"
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.area_cloak, 1, '', cells)
+		AddEntryToCells(localization.upkeep .. ':', 1, areaCloakUpkeep .. " " .. localizationCommon.energy .. "/" .. localization.acronyms_second, cells)
+		AddEntryToCells(localization.radius .. ':', 1, areaCloakRadius .. " elmo", cells)
+		AddEntryToCells('', 0, '', cells)
 	end
 	local hasReconPulse = unitID ~= nil
 	if hasReconPulse and isFeature then
@@ -1622,12 +1479,9 @@ local function printAbilities(ud, unitID, isFeature)
 		hasReconPulse = Spring.GetUnitRulesParam(unitID, "commander_reconpulse") ~= nil
 	end
 	if hasReconPulse then
-		cells[#cells+1] = localization.recon_pulse
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.recon_pulse_desc
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.recon_pulse_applied
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.recon_pulse, 1, '', cells)
+		AddEntryToCells(localization.recon_pulse_desc, 1, '', cells)
+		AddEntryToCells(localization.recon_pulse_applied, 1, '', cells)
 	end
 	local canCloak
 	if unitID and isFeature then
@@ -1644,47 +1498,37 @@ local function printAbilities(ud, unitID, isFeature)
 		else
 			decloakDistance = Spring.GetUnitRulesParam(unitID, "comm_decloak_distance") or ud.decloakDistance
 		end
-		cells[#cells+1] = localization.personal_cloak
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.personal_cloak, 1, '', cells)
+		local extrastring
 		if not ud.isImmobile and ud.cloakCost ~= ud.cloakCostMoving and ud.cloakCost > 0 then
-			cells[#cells+1] = ' - ' .. localization.upkeep_mobile .. ':'
-			cells[#cells+1] = numformat(ud.cloakCostMoving) .. " " .. localizationCommon.energy .. "/" .. localization.acronyms_second
-			cells[#cells+1] = ' - ' .. localization.upkeep_stationary .. ':'
+			AddEntryToCells(localization.upkeep_mobile .. ':', 2, numformat(ud.cloakCostMoving) .. " " .. localizationCommon.energy .. "/" .. localization.acronyms_second, cells)
+			extrastring = localization.upkeep_stationary .. ':'
 		else
-			cells[#cells+1] = ' - ' .. localization.upkeep .. ':'
+			extrastring = localization.upkeep .. ':'
 		end
 		if ud.cloakCost > 0 then
-			cells[#cells+1] = numformat(ud.cloakCost) .. " " .. localizationCommon.energy .. "/" .. localization.acronyms_second
+			AddEntryToCells(extrastring, 2, numformat(ud.cloakCost) .. " " .. localizationCommon.energy .. "/" .. localization.acronyms_second, cells)
 		else
-			cells[#cells+1] = localization.free
+			AddEntryToCells(extrastring, 2, localization.free, cells)
 		end
-		cells[#cells+1] = ' - ' .. localization.decloak_radius .. ':'
-		cells[#cells+1] = numformat(decloakDistance) .. " elmo"
+		AddEntryToCells(localization.decloak_radius .. ':', 2, numformat(decloakDistance) .. " elmo", cells)
 		if cp.cloakstrikeduration then
-			cells[#cells+1] = ' - ' .. localization.cloakstrike
-			cells[#cells+1] = ''
-			cells[#cells+1] = '\t-' .. localization.duration .. ':'
-			cells[#cells+1] = numformat(cp.cloakstrikeduration/30, 1) .. localization.acronyms_second
+			AddEntryToCells(localization.cloakstrike, 2, '', cells)
+			AddEntryToCells(localization.duration .. ':', 3, numformat(cp.cloakstrikeduration/30, 1) .. localization.acronyms_second, cells)
 			if ud.decloakOnFire then
-				cells[#cells+1] = '\t- ' .. localization.cloakstrike_lose_advantage
-				cells[#cells+1] = ''
+				AddEntryToCells(localization.cloakstrike_lose_advantage, 3, '', cells)
 			end
 		end
 		if not ud.decloakOnFire then
-			cells[#cells+1] = ' - ' .. localization.unit_no_decloak_on_fire
-			cells[#cells+1] = ''
+			AddEntryToCells(localization.unit_no_decloak_on_fire, 2, '', cells)
 		end
 	end
 
 	if cp.idle_cloak then
-		cells[#cells+1] = localization.personal_cloak
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.only_idle
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.idle_cloak_free
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.decloak_radius .. ':'
-		cells[#cells+1] = numformat(ud.decloakDistance) .. " elmo"
+		AddEntryToCells(localization.personal_cloak, 1, '', cells)
+		AddEntryToCells(localization.only_idle, 2, '', cells)
+		AddEntryToCells(localization.idle_cloak_free, 2, '', cells)
+		AddEntryToCells(localization.decloak_radius .. ':', 2, numformat(ud.decloakDistance) .. " elmo", cells)
 	end
 	local commcloakregen, commrecloaktime, commjammerrange, commradarrange, nanoregen, nanomax
 	if unitID then
@@ -1708,36 +1552,28 @@ local function printAbilities(ud, unitID, isFeature)
 	nanoregen = nanoregen or cp.nanoregen
 	if cp.cloakregen or commcloakregen then
 		local cloakregen = commcloakregen or cp.cloakregen
-		cells[#cells+1] = " - " .. localization.cloak_regen .. ":"
-		cells[#cells+1] = cloakregen .. localization.acronyms_hp .. "/" .. localization.acronyms_second
+		AddEntryToCells(localization.cloak_regen .. ":", 2, cloakregen .. localization.acronyms_hp .. "/" .. localization.acronyms_second, cells)
 	end
 	if cp.recloaktime or commrecloaktime then
 		local recloaktime = commrecloaktime or cp.recloaktime
-		cells[#cells+1] = " - " .. WG.Translate("interface", "recloaks_after_seconds", {time =  numformat(recloaktime / 30, 1)})
-		cells[#cells+1] = ""
+		AddEntryToCells( WG.Translate("interface", "recloaks_after_seconds", {time =  numformat(recloaktime / 30, 1)}), 2, '', cells)
 	end
-	cells[#cells+1] = ''
-	cells[#cells+1] = ''
+	AddEntryToCells('', 0, '', cells)
 	local radarRadius = commradarrange or ud.radarRadius
 	local jammerRadius = commjammerrange or ud.jammerRadius
 	
 	if (radarRadius > 0) or (jammerRadius > 0) or ud.targfac then
-		cells[#cells+1] = localization.provides_intel
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.provides_intel, 1, '', cells)
 		if (radarRadius > 0) then
-			cells[#cells+1] = ' - ' .. localization.radar .. ':'
-			cells[#cells+1] = numformat(radarRadius) .. " elmo"
+			AddEntryToCells(localization.radar .. ':', 2,numformat(radarRadius) .. " elmo", cells)
 		end
 		if (jammerRadius > 0) then
-			cells[#cells+1] = ' - ' .. localization.jamming .. ':'
-			cells[#cells+1] = numformat(jammerRadius) .. " elmo"
+			AddEntryToCells(localization.jamming .. ':', 2, numformat(jammerRadius) .. " elmo", cells)
 		end
 		if ud.targfac then
-			cells[#cells+1] = ' - ' .. localization.improves_radar
-			cells[#cells+1] = ''
+			AddEntryToCells(localization.improves_radar, 2, '', cells)
 		end
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
+		AddEntryToCells('', 0, '', cells)
 	end
 
 	if cp.canjump and (not cp.no_jump_handling) then
@@ -1753,56 +1589,44 @@ local function printAbilities(ud, unitID, isFeature)
 		end
 		rangebonus = rangebonus + 1
 		reloadbonus = 1 - reloadbonus
-		cells[#cells+1] = localization.jump
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.stats_range .. ':'
-		cells[#cells+1] = numformat(cp.jump_range * rangebonus, 0) .. " elmo"
-		cells[#cells+1] = ' - ' .. localization.stats_reload .. ':'
-		cells[#cells+1] = numformat(cp.jump_reload * reloadbonus, 1) .. localization.acronyms_second
-		cells[#cells+1] = ' - ' .. localization.speed .. ':'
-		cells[#cells+1] = numformat(30*tonumber(cp.jump_speed)) .. " elmo/" .. localization.acronyms_second
-		cells[#cells+1] = ' - ' .. localization.mid_air_jump .. ':'
-		cells[#cells+1] = (tonumber(cp.jump_from_midair) == 0) and localization.no or localization.yes
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.jump, 1, '', cells)
+		AddEntryToCells(localization.stats_range .. ':', 2, numformat(cp.jump_range * rangebonus, 0) .. " elmo", cells)
+		AddEntryToCells(localization.stats_reload .. ':', 2, numformat(cp.jump_reload * reloadbonus, 1) .. localization.acronyms_second, cells)
+		AddEntryToCells(localization.speed .. ':', 2, numformat(30*tonumber(cp.jump_speed)) .. " elmo/" .. localization.acronyms_second, cells)
+		AddEntryToCells(localization.mid_air_jump .. ':', 2, (tonumber(cp.jump_from_midair) == 0) and localization.no or localization.yes, cells)
+		AddEntryToCells('', 0, '', cells)
 	end
 
 	if cp.morphto then
-		cells[#cells+1] = localization.morphing
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.morphs_to .. ":"
-		cells[#cells+1] = Spring.Utilities.GetHumanName(UnitDefNames[cp.morphto])
-		cells[#cells+1] = ' - ' .. localization.cost .. ':'
-		cells[#cells+1] = math.max(0, (UnitDefNames[cp.morphto].buildTime - ud.buildTime)) .. " " .. localizationCommon.metal
+		AddEntryToCells(localization.morphing, 1, '', cells)
+		AddEntryToCells(localization.morphs_to .. ":", 2, Spring.Utilities.GetHumanName(UnitDefNames[cp.morphto]), cells)
+		AddEntryToCells(localization.cost .. ':', 2, math.max(0, (UnitDefNames[cp.morphto].buildTime - ud.buildTime)) .. " " .. localizationCommon.metal, cells)
 		if cp.morphrank and (tonumber(cp.morphrank) > 0) then
-			cells[#cells+1] = ' - ' .. localization.rank_required .. ':'
-			cells[#cells+1] = cp.morphrank
+			AddEntryToCells(localization.rank_required .. ':', 2, cp.morphrank, cells)
 		end
-		cells[#cells+1] = ' - ' .. localization.morph_time .. ':'
-		cells[#cells+1] = cp.morphtime .. localization.acronyms_second
+		AddEntryToCells(localization.morph_time .. ':', 2, cp.morphtime .. localization.acronyms_second, cells)
 		if cp.combatmorph == '1' then
-			cells[#cells+1] = ' - ' .. localization.not_disabled_morph
+			AddEntryToCells(localization.not_disabled_morph, 2, '', cells)
 		else
-			cells[#cells+1] = ' - ' .. localization.disabled_morph
+			AddEntryToCells(localization.disabled_morph, 2, '', cells)
 		end
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
+		AddEntryToCells('', 0, '', cells)
 	end
 	
 	if (ud.idleTime < 1800) or (cp.amph_regen) or (cp.armored_regen) or (cp.nanoregen) then
-		cells[#cells+1] = localization.improved_regen
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.improved_regen, 1, '', cells)
 		if ud.idleTime < 1800 then
 			if ud.idleTime > 0 then
-				cells[#cells+1] = ' - ' .. localization.idle_regen .. ':'
-				cells[#cells+1] = numformat(cp.idle_regen) .. " " .. localization.acronyms_hp .. "/" .. localization.acronyms_second
-				cells[#cells+1] = ' - ' .. localization.regen_time_to_enable .. ':'
-				cells[#cells+1] = numformat(ud.idleTime / 30) .. localization.acronyms_second
+				AddEntryToCells(localization.idle_regen .. ':', 2, numformat(cp.idle_regen) .. " " .. localization.acronyms_hp .. "/" .. localization.acronyms_second, cells)
+				AddEntryToCells(localization.regen_time_to_enable .. ':', 2, numformat(ud.idleTime / 30) .. localization.acronyms_second, cells)
 			else
-				cells[#cells+1] = ' - ' .. localization.constant_regen .. ':'
-				local dynamic_regen = unitID and Spring.GetUnitRulesParam(unitID, "comm_autorepair_rate") or cp.idle_regen
-				cells[#cells+1] = numformat(dynamic_regen) .. " " .. localization.acronyms_hp .. "/" .. localization.acronyms_second
+				local dynamic_regen
+				if isFeature then
+					dynamic_regen = unitID and Spring.GetFeatureRulesParam(unitID, "comm_autorepair_rate") or cp.idle_regen
+				else
+					dynamic_regen = unitID and Spring.GetUnitRulesParam(unitID, "comm_autorepair_rate") or cp.idle_regen
+				end
+				AddEntryToCells(localization.constant_regen .. ':', 2, numformat(dynamic_regen) .. " " .. localization.acronyms_hp .. "/" .. localization.acronyms_second, cells)
 			end
 		end
 		if nanoregen then
@@ -1815,157 +1639,104 @@ local function printAbilities(ud, unitID, isFeature)
 				end
 			end
 			local hp = ud.health + commHP
-			cells[#cells+1] = " - " .. localization.nano_regen .. ":"
-			cells[#cells+1] = ''
-			cells[#cells+1] = "\t- " .. localization.base_regen .. ":"
-			cells[#cells+1] = nanoregen .. " " .. localization.acronyms_hp .. "/" .. localization.acronyms_second
-			cells[#cells+1] = "\t- " .. localization.max_regen .. ":"
-			cells[#cells+1] = numformat(nanoregen * nanomax, 1) .. " " .. localization.acronyms_hp .. "/" .. localization.acronyms_second
-			cells[#cells+1] = "\t- " .. localization.max_below .. ":"
-			cells[#cells+1] = numformat(hp / nanomax) .. localization.acronyms_hp
+			AddEntryToCells(localization.nano_regen .. ":", 2, '', cells)
+			AddEntryToCells(localization.base_regen .. ":", 3, nanoregen .. " " .. localization.acronyms_hp .. "/" .. localization.acronyms_second, cells)
+			AddEntryToCells(localization.max_regen .. ":", 3, numformat(nanoregen * nanomax, 1) .. " " .. localization.acronyms_hp .. "/" .. localization.acronyms_second, cells)
+			AddEntryToCells(localization.max_below .. ":", 3, numformat(hp / nanomax) .. localization.acronyms_hp, cells)
 		end
 		if cp.amph_regen then
-			cells[#cells+1] = ' - ' .. localization.water_regen .. ':'
-			cells[#cells+1] = cp.amph_regen .. localization.acronyms_hp .. "/" .. localization.acronyms_second
-			cells[#cells+1] = ' - ' .. localization.at_depth .. ':'
-			cells[#cells+1] = cp.amph_submerged_at .. " elmo"
+			AddEntryToCells(localization.water_regen .. ':', 2, cp.amph_regen .. localization.acronyms_hp .. "/" .. localization.acronyms_second, cells)
+			AddEntryToCells(localization.at_depth .. ':', 2, cp.amph_submerged_at .. " elmo")
 		end
 		if cp.armored_regen then
-			cells[#cells+1] = ' - ' .. localization.armor_regen .. ':'
-			cells[#cells+1] = numformat(tonumber(cp.armored_regen)) .. " " .. localization.acronyms_hp .. "/" .. localization.acronyms_second
+			AddEntryToCells(localization.armor_regen .. ':', 2, numformat(tonumber(cp.armored_regen)) .. " " .. localization.acronyms_hp .. "/" .. localization.acronyms_second, cells)
 		end
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
+		AddEntryToCells('', 0, '', cells)
 	end
 
 	if cp.teleporter then
-		cells[#cells+1] = localization.teleporter
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.spawns_beacon
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.spawn_time .. ':'
-		cells[#cells+1] = numformat(tonumber(cp.teleporter_beacon_spawn_time), 1) .. localization.acronyms_second
-		cells[#cells+1] = ' - ' .. localization.teleport_throughput .. ':'
-		cells[#cells+1] = numformat(tonumber(cp.teleporter_throughput), 1) .. localization.mass .. "/" .. localization.acronyms_second
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.teleporter, 1, '', cells)
+		AddEntryToCells(localization.spawns_beacon, 2, '', cells)
+		AddEntryToCells(localization.spawn_time .. ':', 2, numformat(tonumber(cp.teleporter_beacon_spawn_time), 1) .. localization.acronyms_second, cells)
+		AddEntryToCells(localization.teleport_throughput .. ':', 2, numformat(tonumber(cp.teleporter_throughput), 1) .. localization.mass .. "/" .. localization.acronyms_second, cells)
+		AddEntryToCells('', 0, '', cells)
 	end
 
 	if cp.pad_count then
-		cells[#cells+1] = localization.rearm_repair
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.rearm_pads .. ':'
-		cells[#cells+1] = cp.pad_count
-		cells[#cells+1] = ' - ' .. localization.pad_bp .. ':'
 		local bp = tonumber(cp.pad_bp) or 2.5
-		cells[#cells+1] = numformat(bp / tonumber(cp.pad_count), 1) -- Future Wars mechanic! Remove the dividend for base game!
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.rearm_repair, 1, '', cells)
+		AddEntryToCells(localization.rearm_pads .. ':', 2, cp.pad_count, cells)
+		AddEntryToCells(localization.pad_bp .. ':', 2, numformat(bp / tonumber(cp.pad_count), 1), cells) -- Future Wars mechanic! Remove the dividend for base game!
+		AddEntryToCells('', 0, '', cells)
 	end
 
 	if cp.is_drone then
-		cells[#cells+1] = localization.drone_bound
-		cells[#cells+1] = ''
-		cells[#cells+1] = " - " .. localization.drone_cannot_direct_control
-		cells[#cells+1] = ''
-		cells[#cells+1] = " - " .. localization.drone_uses_owners_commands
-		cells[#cells+1] = ""
-		cells[#cells+1] = ' - ' .. localization.drone_bound_to_range
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.drone_dies_on_owner_death
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.drone_bound, 1, '', cells)
+		AddEntryToCells(localization.drone_cannot_direct_control, 2, '', cells)
+		AddEntryToCells(localization.drone_uses_owners_commands, 2, '', cells)
+		AddEntryToCells(localization.drone_bound_to_range, 2, '', cells)
+		AddEntryToCells(localization.drone_dies_on_owner_death, 2, '', cells)
+		AddEntryToCells('', 0, '', cells)
 	end
 
 	if cp.boost_speed_mult then
-		cells[#cells+1] = localization.speed_boost
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.speed .. ':'
-		cells[#cells+1] = 'x' .. cp.boost_speed_mult
-		cells[#cells+1] = ' - ' .. localization.duration .. ':'
-		cells[#cells+1] = numformat(tonumber(cp.boost_duration)/30, 1) .. localization.acronyms_second
-		cells[#cells+1] = ' - ' .. localization.stats_reload .. ':'
-		cells[#cells+1] = numformat(tonumber(cp.specialreloadtime)/30, 1) .. localization.acronyms_second
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.speed_boost, 1, '', cells)
+		AddEntryToCells(localization.speed .. ':', 2, 'x' .. cp.boost_speed_mult, cells)
+		AddEntryToCells(localization.duration .. ':', 2, numformat(tonumber(cp.boost_duration)/30, 1) .. localization.acronyms_second, cells)
+		AddEntryToCells(localization.stats_reload .. ':', 2, numformat(tonumber(cp.specialreloadtime)/30, 1) .. localization.acronyms_second, cells)
+		AddEntryToCells('', 0, '', cells)
 	end
 
 	if cp.windgen then
 		local wind_slope = Spring.GetGameRulesParam("WindSlope") or 0
 		local max_wind = Spring.GetGameRulesParam("WindMax") or 2.5
 		local bonus_100 = numformat(100*wind_slope*max_wind)
-
-		cells[#cells+1] = localization.wind_gen
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.wind_variable_income
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.max_generation
-		cells[#cells+1] = max_wind .. " " .. localizationCommon.energy
-		cells[#cells+1] = ' - Altitude bonus:'
-		cells[#cells+1] = bonus_100 .. " " .. localization.wind_100_height
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.wind_gen, 1, '', cells)
+		AddEntryToCells(localization.wind_variable_income, 2, '', cells)
+		AddEntryToCells(localization.max_generation, 2, max_wind .. " " .. localizationCommon.energy, cells)
+		AddEntryToCells(localization.altitude_bonus, 2, bonus_100 .. " " .. localization.wind_100_height, cells)
+		AddEntryToCells('', 0, '', cells)
 	end
 
 	if cp.grey_goo then
-		cells[#cells+1] = localization.grey_goo
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.grey_goo_consumption
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.stats_spawns .. ':'
-		cells[#cells+1] = Spring.Utilities.GetHumanName(UnitDefNames[cp.grey_goo_spawn])
-		cells[#cells+1] = ' - ' .. localization.rate .. ':'
-		cells[#cells+1] = cp.grey_goo_drain .. " " .. localizationCommon.metal .. "/" .. localization.acronyms_second
-		cells[#cells+1] = ' - ' .. localization.cost .. ':'
-		cells[#cells+1] = cp.grey_goo_cost .. " " .. localizationCommon.metal
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.grey_goo, 1, '', cells)
+		AddEntryToCells(localization.grey_goo_consumption, 2, '', cells)
+		AddEntryToCells(localization.stats_spawns .. ':', 2, Spring.Utilities.GetHumanName(UnitDefNames[cp.grey_goo_spawn]), cells)
+		AddEntryToCells(localization.rate .. ':', 2, cp.grey_goo_drain .. " " .. localizationCommon.metal .. "/" .. localization.acronyms_second, cells)
+		AddEntryToCells(localization.cost .. ':', 2, cp.grey_goo_cost .. " " .. localizationCommon.metal, cells)
+		AddEntryToCells('', 0, '', cells)
 	end
 	if cp.dangerous_reclaim then
-		cells[#cells+1] = localization.dangerous_reclaim
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.dangerous_reclaim, 1, '', cells)
 	end
 	if cp.floattoggle then
-		cells[#cells+1] = localization.floats
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.can_move_to_surface
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.cannot_move_sideways
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.floats, 1, '', cells)
+		AddEntryToCells(localization.can_move_to_surface, 2, '', cells)
+		AddEntryToCells(localization.cannot_move_sideways, 2, '', cells)
 		if (cp.sink_on_emp ~= '0') then
-			cells[#cells+1] = ' - ' .. localization.sinks_when_stun
+			AddEntryToCells(localization.sinks_when_stun, 2, '', cells)
 		else
-			cells[#cells+1] = ' - ' .. localization.float_when_stun
+			AddEntryToCells(localization.float_when_stun, 2, '', cells)
 		end
-		cells[#cells+1] = ''
 	end
 
 	if ud.transportCapacity and (ud.transportCapacity > 0) then
-		cells[#cells+1] = localization.transportation
-		cells[#cells+1] = ''
-		cells[#cells+1] = " - " .. localization.transport_type .. ":"
-		cells[#cells+1] = ((ud.customParams.islighttransport) and localization.transport_light or localization.transport_heavy)
-		cells[#cells+1] = " - " .. localization.transport_light_speed .. ':'
-		cells[#cells+1] = math.floor((tonumber(ud.customParams.transport_speed_light or "1")*100) + 0.5) .. "%"
+		AddEntryToCells(localization.transportation, 1, '', cells)
+		AddEntryToCells(localization.transport_type .. ":", 2, ((ud.customParams.islighttransport) and localization.transport_light or localization.transport_heavy), cells)
+		AddEntryToCells(localization.transport_light_speed .. ':', 2, math.floor((tonumber(ud.customParams.transport_speed_light or "1")*100) + 0.5) .. "%", cells)
 		if not ud.customParams.islighttransport then
-			cells[#cells+1] = " - " .. localization.transport_heavy_speed .. ':'
-			cells[#cells+1] = math.floor((tonumber(ud.customParams.transport_speed_heavy or "1")*100) + 0.5) .. "%"
+			AddEntryToCells(localization.transport_heavy_speed .. ':', 2, math.floor((tonumber(ud.customParams.transport_speed_heavy or "1")*100) + 0.5) .. "%", cells)
 		end
 	end
 
 	if ud.customParams.nuke_coverage then
-		cells[#cells+1] = localization.anti_interception
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.stats_range .. ":"
-		cells[#cells+1] = ud.customParams.nuke_coverage .. " elmo"
-		cells[#cells+1] = ''
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.anti_interception, 1, '', cells)
+		AddEntryToCells(localization.stats_range .. ":", 2, ud.customParams.nuke_coverage .. " elmo", cells)
+		AddEntryToCells('', 0, '', cells)
 	end
 
 	if cp.combat_slowdown then
-		cells[#cells+1] = localization.combat_slowdown .. ':'
-		cells[#cells+1] = numformat(100*tonumber(cp.combat_slowdown)) .. "%"
+		AddEntryToCells(localization.combat_slowdown .. ':', 1, numformat(100*tonumber(cp.combat_slowdown)) .. "%", cells)
 	end
 	local commJammed
 	if unitID then
@@ -1976,25 +1747,20 @@ local function printAbilities(ud, unitID, isFeature)
 		end
 	end
 	if ud.stealth or commJammed then
-		cells[#cells+1] = localization.radar_invisible
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.radar_invisible, 1, '', cells)
 	end
 
 	if ud.selfDCountdown <= 1 then
-		cells[#cells+1] = localization.instant_selfd
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.instant_selfd, 1, '', cells)
 	end
 
 	if ud.needGeo then
-		cells[#cells+1] = localization.requires_geo
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.requires_geo, 1, '', cells)
 	end
 
 	if cp.ismex then
-		cells[#cells+1] = localization.extracts_metal
-		cells[#cells+1] = ''
-		cells[#cells+1] = ' - ' .. localization.shared_to_team
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.extracts_metal, 1, '', cells)
+		AddEntryToCells(localization.shared_to_team, 2, '', cells)
 	end
 	local isFireproof
 	if not unitID then
@@ -2006,12 +1772,10 @@ local function printAbilities(ud, unitID, isFeature)
 	end
 	
 	if isFireproof then
-		cells[#cells+1] = localization.fireproof
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.fireproof, 1, '', cells)
 	end
 	if cp.singuimmune then
-		cells[#cells+1] = localization.gravitronic_regulation
-		cells[#cells+1] = ''
+		AddEntryToCells(localization.gravitronic_regulation, 1, '', cells)
 	end
 	local storageoverride = ud.metalStorage
 	if unitID then
@@ -2022,11 +1786,10 @@ local function printAbilities(ud, unitID, isFeature)
 		end
 	end
 	if storageoverride > 0 then
-		cells[#cells+1] = localization.storage .. ':'
-		cells[#cells+1] = math.max(storageoverride, ud.metalStorage)
+		AddEntryToCells(localization.storage .. ':', 1, math.max(storageoverride, ud.metalStorage), cells)
 	end
 	
-	if (#cells > 2 and cells[#cells-1] == '') then
+	if (#cells > 2 and cells[#cells-1] == '') then -- clean up last entry
 		cells[#cells] = nil
 		cells[#cells] = nil
 	end
@@ -2176,7 +1939,31 @@ local function GetWeapon(weaponName)
 	return WeaponDefNames[weaponName]
 end
 
+local function AddEmptyEntry(statschildren)
+	statschildren[#statschildren + 1] = Label:New{ caption = '', textColor = color.stats_fg, }
+	statschildren[#statschildren + 1] = Label:New{ caption = '', textColor = color.stats_fg, }
+end
+
+local function AddEntry(text, layer, entry, color, colorentry, statschildren)
+	if text == nil then
+		text = ''
+	end
+	if layer == nil then
+		layer = 0
+	end
+	if layer > 0 then
+		text = string.rep("\t\t", layer) .. text
+	end
+	statschildren[#statschildren + 1] = Label:New{ caption = text, textColor = color, }
+	if entry == nil then
+		statschildren[#statschildren + 1] = Label:New{ caption = '', textColor = color, }
+	else
+		statschildren[#statschildren + 1] = Label:New{ caption = entry, textColor = colorentry, }
+	end
+end
+
 local function printunitinfo(ud, buttonWidth, unitID, isFeature)
+	local cp = ud.customParams
 	local icons = {
 		Image:New{
 			file2 = (WG.GetBuildIconFrame)and(WG.GetBuildIconFrame(ud)),
@@ -2264,19 +2051,11 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 		speed =  numformat(ud.speed * speedMult)
 		
 		
-
-		statschildren[#statschildren+1] = Label:New{ caption = string.upper(localizationCommon.commander), textColor = color.stats_header, }
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header, }
-		statschildren[#statschildren+1] = Label:New{ caption =  localization.level .. ': ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = level + 1, textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = localization.chassis .. ': ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = chassisDefs[chassisID].humanName, textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-
-		statschildren[#statschildren+1] = Label:New{ caption = localization.modules, textColor = color.stats_header, }
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header, }
-		
+		AddEntry(string.upper(localizationCommon.commander), 0, nil, color.stats_header, nil, statschildren)
+		AddEntry(localization.level .. ': ', 1, level + 1, color.stats_fg, color.stats_fg, statschildren)
+		AddEntry(localization.chassis .. ': ', 1, chassisDefs[chassisID].humanName, color.stats_fg, color.stats_fg, statschildren)
+		AddEmptyEntry(statschildren)
+		AddEntry(localization.modules, 0, nil, color.stats_header, nil, statschildren)
 		if isFeature then
 			local modules = Spring.GetFeatureRulesParam(unitID, "comm_module_count")
 
@@ -2291,8 +2070,7 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 				for moduleID, moduleCount in pairs(module_instances) do
 					local moduleStr = moduleDefs[moduleID].humanName
 					if moduleCount > 1 then moduleStr = moduleStr .. "  x" .. moduleCount end
-					statschildren[#statschildren+1] = Label:New{ caption = moduleStr, textColor = color.stats_fg, }
-					statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
+					AddEntry(moduleStr, 1, nil, color.stats_fg, nil, statschildren)
 				end
 			end
 		else
@@ -2307,13 +2085,18 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 				for moduleID, moduleCount in pairs(module_instances) do
 					local moduleStr = moduleDefs[moduleID].humanName
 					if moduleCount > 1 then moduleStr = moduleStr .. "  x" .. moduleCount end
-					statschildren[#statschildren+1] = Label:New{ caption = moduleStr, textColor = color.stats_fg, }
-					statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
+					AddEntry(moduleStr, 1, nil, color.stats_fg, nil, statschildren)
 				end
 			end
 		end
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
+		AddEmptyEntry(statschildren)
+	end
+	if legacyModules then
+		AddEmptyEntry(statschildren)
+		AddEntry(localization.modules, 0, nil, color.stats_header, nil, statschildren)
+		for i=1, #legacyModules do
+			AddEntry(legacyModules[i], 1, nil, color.stats_fg, nil, statschildren)
+		end
 	end
 
 	local costStr = cost .. " " .. localizationCommon.metal
@@ -2321,41 +2104,27 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 		costStr = costStr .. "(" .. legacyCommCost .. " " .. localizationCommon.metal .. ")"
 	end
 	
-	statschildren[#statschildren+1] = Label:New{ caption = localization.stats, textColor = color.stats_header, }
-	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header, }
-
-	statschildren[#statschildren+1] = Label:New{ caption = localization.cost .. ': ', textColor = color.stats_fg, }
-	statschildren[#statschildren+1] = Label:New{ caption = costStr, textColor = color.stats_fg, }
-	
-	statschildren[#statschildren+1] = Label:New{ caption = localizationCommon.health .. ': ', textColor = color.stats_fg, }
-	statschildren[#statschildren+1] = Label:New{ caption = health, textColor = color.stats_fg, }
-	
-	statschildren[#statschildren+1] = Label:New{ caption = localizationCommon.health .. "/" .. localization.cost .. ': ', textColor = color.stats_fg, }
-	statschildren[#statschildren+1] = Label:New{ caption = string.format("%.2f", health / cost), textColor = color.stats_fg, }
-	
-	statschildren[#statschildren+1] = Label:New{ caption = localization.mass .. ': ', textColor = color.stats_fg, }
-	statschildren[#statschildren+1] = Label:New{ caption = mass, textColor = color.stats_fg, }
-	local cp = ud.customParams
+	AddEntry(localization.stats, 0, nil, color.stats_header, nil, statschildren)
+	AddEntry(localization.cost .. ": ", 1, costStr, color.stats_fg, color.stats_fg, statschildren) 
+	AddEntry(localizationCommon.health .. ":", 1, health, color.stats_fg, color.stats_fg, statschildren)
+	if ud.metalCost > 0 then
+		AddEntry(localizationCommon.health .. "/" .. localization.cost .. ':', 1, string.format("%.2f", health / cost), color.stats_fg, color.stats_fg, statschildren)
+	end
+	AddEntry(localization.mass .. ":", 1, mass, color.stats_fg, color.stats_fg, statschildren)
 	if not ud.isImmobile then
-		
 		if cp.cloakstrikespeed then
 			local speedup = tonumber(cp.cloakstrikespeed)
 			local slowdown = tonumber(cp.cloakstrikeslow)
-			statschildren[#statschildren+1] = Label:New{ caption = localization.cloaked_speed .. ': ', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = speed * speedup .. "elmo/s", textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = localization.decloaked_speed .. ': ', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = speed * slowdown .. "elmo/s", textColor = color.stats_fg, }
+			AddEntry(localization.cloaked_speed .. ":", 1, speed * speedup .. "elmo/" .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+			AddEntry(localization.decloaked_speed .. ":", 1, speed * slowdown .. "elmo/" .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
 		else
-			statschildren[#statschildren+1] = Label:New{ caption = localization.speed .. ': ', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = speed .. " elmo/s", textColor = color.stats_fg, }
+			AddEntry(localization.speed .. ":", 1, speed .. "elmo/" .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
 		end
 
 		local mt, slope = GetMoveType(ud)
-		statschildren[#statschildren+1] = Label:New{ caption = localization.movement .. ': ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = mt, textColor = color.stats_fg, }
+		AddEntry(localization.movement .. ":", 1, mt, color.stats_fg, color.stats_fg, statschildren)
 		if slope then
-			statschildren[#statschildren+1] = Label:New{ caption = localization.climbs .. ': ', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = slope .. "°", textColor = color.stats_fg, }
+			AddEntry(localization.climbs .. ":", 1, slope .. "°", color.stats_fg, color.stats_fg, statschildren)
 		end
 	end
 
@@ -2373,8 +2142,7 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 
 	local COB_angle_to_degree = 360 / 65536
 	if ud.turnRate > 0 then
-		statschildren[#statschildren+1] = Label:New{ caption = localization.turn_rate .. ': ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = numformat(ud.turnRate * Game.gameSpeed * COB_angle_to_degree) .. "°/" .. localization.acronyms_second, textColor = color.stats_fg, }
+		AddEntry(localization.turn_rate .. ":", 1, numformat(ud.turnRate * Game.gameSpeed * COB_angle_to_degree) .. "°/" .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
 	end
 	local metal, energy
 	if isCommander and unitID then
@@ -2391,16 +2159,14 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 	end
 
 	if metal ~= 0 then
-		statschildren[#statschildren+1] = Label:New{ caption = localization.metal_income .. ': ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = (metal > 0 and '+' or '') .. numformat(metal,2) .. " /" .. localization.acronyms_second, textColor = color.stats_fg, }
+		AddEntry(localization.metal_income .. ":", 1, (metal > 0 and '+' or '') .. numformat(metal,2) .. " /" .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
 	end
 
 	if energy ~= 0 then
 		if ud.customParams and ud.customParams["decay_rate"] then
 			energy = energy * (tonumber(ud.customParams["decay_initialrate"]) or 10)
 		end
-		statschildren[#statschildren+1] = Label:New{ caption = localization.energy_income .. ': ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = (energy > 0 and '+' or '') .. numformat(energy,2) .. " /" .. localization.acronyms_second, textColor = color.stats_fg, }
+		AddEntry(localization.energy_income .. ":", 1, (energy > 0 and '+' or '') .. numformat(energy,2) .. " /" .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
 		if ud.customParams and ud.customParams["decay_rate"] then
 			local baseoutput = ud.customParams.income_energy
 			local startperc = tonumber(ud.customParams["decay_initialrate"])
@@ -2415,9 +2181,8 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 			else
 				txt = localization.output_decays ..":"
 			end
-			statschildren[#statschildren+1] = Label:New{ caption = txt, textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = ' -  ' .. localization.rate .. ':', textColor = color.stats_fg, }
+			AddEntry(txt, 1, nil, color.stats_fg, nil, statschildren)
+			AddEntry(' - ' .. localization.rate .. ":", 2, numformat(decayrate, 1) .. "%/" .. numformat(decaytime, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
 			local endperc
 			local decays
 			if decayrate > 0 then
@@ -2445,11 +2210,8 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 			local ss = timetoreach%60
 			timetoreach = string.format("%02d:%02d", mm, ss)
 			decayrate = math.abs(decayrate)
-			statschildren[#statschildren+1] = Label:New{ caption =  numformat(decayrate, 1) .. "%/" .. numformat(decaytime, 1) .. localization.acronyms_second, textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = txt, textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = numformat(mindecay, 1), textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = ' - ' .. localization.time_to_reach .. ': ', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = timetoreach, textColor = color.stats_fg, }
+			AddEntry(txt, 2, numformat(mindecay, 1), color.stats_fg, color.stats_fg, statschildren)
+			AddEntry(' - ' .. localization.time_to_reach .. ":", 2, timetoreach, color.stats_fg, color.stats_fg, statschildren)
 		end
 	end
 	do
@@ -2473,33 +2235,28 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 		else
 			sight = ud.losRadius
 		end
-		statschildren[#statschildren+1] = Label:New{ caption = localization.sight_range .. ': ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = numformat(sight) .. " elmo", textColor = color.stats_fg, }
+		AddEntry(localization.sight_range .. ":", 1, numformat(sight) .. " elmo", color.stats_fg, color.stats_fg, statschildren)
 	end
 	
 
 	if ud.wantedHeight > 0 then
-		statschildren[#statschildren+1] = Label:New{ caption = localization.altitude .. ': ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = numformat(ud.wantedHeight) .. " elmo", textColor = color.stats_fg, }
+		AddEntry(localization.altitude .. ':', 1, numformat(ud.wantedHeight) .. " elmo", color.stats_fg, color.stats_fg, statschildren)
 	end
 
 	if ud.customParams.pylonrange then
-		statschildren[#statschildren+1] = Label:New{ caption = localization.grid_link .. ': ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = numformat(ud.customParams.pylonrange) .. " elmo", textColor = color.stats_fg, }
+		AddEntry(localization.grid_link .. ':', 1, numformat(ud.customParams.pylonrange) .. " elmo", color.stats_fg, color.stats_fg, statschildren)
 	end
 	if ud.customParams.neededlink then
-		statschildren[#statschildren+1] = Label:New{ caption = localization.grid_needed .. ': ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = numformat(ud.customParams.neededlink) .. " " .. localizationCommon.energy, textColor = color.stats_fg, }
+		AddEntry(localization.grid_needed .. ":", 1, numformat(ud.customParams.neededlink) .. " " .. localizationCommon.energy, color.stats_fg, color.stats_fg, statschildren)
 	end
 
 	-- transportability by light or heavy airtrans
 	if not (ud.canFly or ud.cantBeTransported) then
-		statschildren[#statschildren+1] = Label:New{ caption = localization.can_be_transported .. ': ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = ((ud.customParams.requireheavytrans and localization.transport_heavy) or localization.transport_light), textColor = color.stats_fg, }
+		AddEntry(localization.can_be_transported .. ":", 1, ((ud.customParams.requireheavytrans and localization.transport_heavy) or localization.transport_light), color.stats_fg, color.stats_fg, statschildren)
 	end
-
+	local name = ud.name
 	if isCommander then
-		local batDrones, compDrones, droneSlots, droneBuildSpeed, assaultDrones, repairDrones, dronerange, dronemax
+		local batDrones, compDrones, droneSlots, droneBuildSpeed, assaultDrones, repairDrones, dronerange, dronemax, reloadMult
 		if isFeature then
 			batDrones = Spring.GetFeatureRulesParam(unitID, "carrier_count_droneheavyslow")
 			compDrones = Spring.GetFeatureRulesParam(unitID, "carrier_count_drone")
@@ -2509,6 +2266,7 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 			assaultDrones = Spring.GetFeatureRulesParam(unitID, "carrier_count_droneassault")
 			dronerange = 600 * (Spring.GetFeatureRulesParam(unitID, "comm_drone_range") or 1)
 			dronemax = 1250 * (Spring.GetFeatureRulesParam(unitID, "comm_drone_range") or 1)
+			reloadMult = Spring.GetFeatureRulesParam(unitID, "comm_drone_rebuildrate") or 1
 		else
 			batDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_droneheavyslow")
 			compDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_drone")
@@ -2518,73 +2276,83 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 			assaultDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_droneassault")
 			dronerange = 600 * (Spring.GetUnitRulesParam(unitID, "comm_drone_range") or 1)
 			dronemax = 1250 * (Spring.GetUnitRulesParam(unitID, "comm_drone_range") or 1)
+			reloadMult = Spring.GetUnitRulesParam(unitID, "comm_drone_rebuildrate") or 1
 		end
 		local hasDrones = false
-		if droneBuildSpeed ~= 1 then
-			statschildren[#statschildren+1] = Label:New{ caption = localization.drone_production_speed .. ': ', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = numformat(100*droneBuildSpeed, 2) .. '%', textColor = color.stats_fg, }
-		end
-		if droneSlots > 1 then
-			statschildren[#statschildren+1] = Label:New{ caption = localization.drone_autofabs .. ': ', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = droneSlots, textColor = color.stats_fg, }
-		end
-		if batDrones and batDrones > 0 then
-			statschildren[#statschildren+1] = Label:New{ caption = localization.battle_drones .. ': ', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = batDrones, textColor = color.stats_fg, }
+		if (batDrones and batDrones > 0) or (compDrones and compDrones > 0) or (assaultDrones and assaultDrones > 0) or (repairDrones and repairDrones > 0) then
 			hasDrones = true
+			AddEmptyEntry(statschildren)
+			AddEntry(string.upper(localization.drone_carrier), 0, nil, color.stats_header, nil, statschildren)
+			AddEntry(localization.drone_buildslots .. ":", 1, droneSlots, color.stats_fg, color.stats_fg, statschildren)
+			AddEntry(localization.drone_production_speed .. ':', 1, numformat(100*droneBuildSpeed, 2) .. "%", color.stats_fg, color.stats_fg, statschildren)
+			AddEmptyEntry(statschildren)
+			AddEntry(localization.drone_label .. ":", 1, nil, color.stats_header, nil, statschildren)
+			if assaultDrones and assaultDrones > 0 then
+				AddEntry(Spring.Utilities.GetHumanName(UnitDefNames["droneassault"]) .. " x" .. assaultDrones, 2, nil, color.stats_header, nil, statschildren)
+				local tab = commanderDroneDefs["droneassault"]
+				AddEntry(localization.drone_build_time .. ":", 3, numformat(tab.buildTime / droneBuildSpeed, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.cooldown .. ":", 3, numformat(tab.reloadTime / reloadMult, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.drones_per_cycle .. ":", 3, tab.spawnSize, color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.drone_target_range .. ":", 3, numformat(dronerange, 1), color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.drone_max_range .. ":", 3, numformat(dronemax, 1), color.stats_fg, color.stats_fg, statschildren)
+			end
+			if compDrones and compDrones > 0 then
+				AddEntry(Spring.Utilities.GetHumanName(UnitDefNames["dronelight"]) .. " x" .. compDrones, 2, nil, color.stats_header, nil, statschildren)
+				local tab = commanderDroneDefs["drone"]
+				AddEntry(localization.drone_build_time .. ":", 3, numformat(tab.buildTime / droneBuildSpeed, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.cooldown .. ":", 3, numformat(tab.reloadTime / reloadMult, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.drones_per_cycle .. ":", 3, tab.spawnSize, color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.drone_target_range .. ":", 3, numformat(dronerange, 1), color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.drone_max_range .. ":", 3, numformat(dronemax, 1), color.stats_fg, color.stats_fg, statschildren)
+			end
+			if batDrones and batDrones > 0 then
+				AddEntry(Spring.Utilities.GetHumanName(UnitDefNames["droneheavyslow"]) .. " x" .. batDrones, 2, nil, color.stats_header, nil, statschildren)
+				local tab = commanderDroneDefs["droneheavyslow"]
+				AddEntry(localization.drone_build_time .. ":", 3, numformat(tab.buildTime / droneBuildSpeed, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.cooldown .. ":", 3, numformat(tab.reloadTime / reloadMult, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.drones_per_cycle .. ":", 3, tab.spawnSize, color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.drone_target_range .. ":", 3, numformat(dronerange, 1), color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.drone_max_range .. ":", 3, numformat(dronemax, 1), color.stats_fg, color.stats_fg, statschildren)
+			end
+			if repairDrones and repairDrones > 0 then
+				AddEntry(Spring.Utilities.GetHumanName(UnitDefNames["dronecon"]) .. " x" .. repairDrones, 2, nil, color.stats_header, nil, statschildren)
+				local tab = commanderDroneDefs["dronecon"]
+				AddEntry(localization.drone_build_time .. ":", 3, numformat(tab.buildTime / droneBuildSpeed, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.cooldown .. ":", 3, numformat(tab.reloadTime / reloadMult, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.drones_per_cycle .. ":", 3, tab.spawnSize, color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.drone_target_range .. ":", 3, numformat(dronerange, 1), color.stats_fg, color.stats_fg, statschildren)
+				AddEntry(localization.drone_max_range .. ":", 3, numformat(dronemax, 1), color.stats_fg, color.stats_fg, statschildren)
+			end
 		end
-		if compDrones and compDrones > 0 then
-			statschildren[#statschildren+1] = Label:New{ caption = localization.companion_drones .. ': ', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = compDrones, textColor = color.stats_fg, }
-			hasDrones = true
+	elseif carrierDefs[name] then
+		AddEmptyEntry(statschildren)
+		AddEntry(string.upper(localization.drone_carrier), 0, nil, color.stats_header, nil, statschildren)
+		local carrierDef = carrierDefs[name]
+		AddEntry(localization.drone_buildslots .. ":", 1, #carrierDef.spawnPieces, color.stats_fg, color.stats_fg, statschildren)
+		AddEmptyEntry(statschildren)
+		AddEntry(localization.drone_label .. ":", 1, nil, color.stats_header, nil, statschildren)
+		for i = 1, #carrierDef do
+			local tab = carrierDef[i]
+			local name = Spring.Utilities.GetHumanName(UnitDefs[tab.drone])
+			AddEntry(name .. " x" .. tab.maxDrones, 2, nil, color.stats_header, nil, statschildren)
+			AddEntry(localization.drone_build_time .. ":", 3, tab.buildTime .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+			AddEntry(localization.cooldown .. ":", 3, tab.reloadTime .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+			AddEntry(localization.drones_per_cycle .. ":", 3, tab.spawnSize, color.stats_fg, color.stats_fg, statschildren)
+			AddEntry(localization.drone_target_range .. ":", 3, tab.range, color.stats_fg, color.stats_fg, statschildren)
+			AddEntry(localization.drone_max_range .. ":", 3, tab.maxChaseRange, color.stats_fg, color.stats_fg, statschildren)
 		end
-		if assaultDrones and assaultDrones > 0 then
-			statschildren[#statschildren+1] = Label:New{ caption = localization.assault_drones .. ': ', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = assaultDrones, textColor = color.stats_fg, }
-			hasDrones = true
-		end
-		if repairDrones and repairDrones > 0 then
-			statschildren[#statschildren+1] = Label:New{ caption = localization.repair_drones .. ': ', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = repairDrones, textColor = color.stats_fg, }
-			hasDrones = true
-		end
-		if hasDrones then
-			statschildren[#statschildren+1] = Label:New{ caption = localization.drone_target_range .. ': ', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = numformat(dronerange, 1), textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = localization.drone_max_range .. ': ', textColor = color.stats_fg, }
-			statschildren[#statschildren+1] = Label:New{ caption = numformat(dronemax, 1), textColor = color.stats_fg, }
-		end
-	-- else
-		-- Do something for Reef and other carriers
 	end
-
 	if ud.customParams.reload_move_penalty then
-		statschildren[#statschildren+1] = Label:New{ caption = localization.speed_while_reloading .. ': ', textColor = color.stats_fg, }
-		statschildren[#statschildren+1] = Label:New{ caption = numformat(100*tonumber(ud.customParams.reload_move_penalty)) .. "%", textColor = color.stats_fg, }
-	end
-	
-	if legacyModules then
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		statschildren[#statschildren+1] = Label:New{ caption = localization.modules, textColor = color.stats_header, }
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		for i=1, #legacyModules do
-			statschildren[#statschildren+1] = Label:New{ caption = legacyModules[i], textColor = color.stats_fg,}
-			statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg,}
-		end
+		AddEntry(localization.speed_while_reloading .. ":", 1, numformat(100*tonumber(ud.customParams.reload_move_penalty)) .. "%", color.stats_fg, color.stats_fg, statschildren)
 	end
 
 	local cells = printAbilities(ud, isCommander and unitID, isFeature)
 	
-	if cells and #cells > 0 then
-
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-
-		statschildren[#statschildren+1] = Label:New{ caption = localization.abilities, textColor = color.stats_header,}
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		for i=1, #cells do
-			statschildren[#statschildren+1] = Label:New{ caption = cells[i], textColor = color.stats_fg, }
+	if cells and #cells > 2 then
+		AddEmptyEntry(statschildren)
+		AddEntry(localization.abilities, 0, nil, color.stats_header, nil, statschildren)
+		for i=2, #cells, 2 do
+			AddEntry(cells[i - 1], 1, cells[i], color.stats_fg, color.stats_fg, statschildren)
 		end
 	end
 
@@ -2592,14 +2360,10 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 	
 	
 	if cells and #cells > 0 then
-		
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		
-		statschildren[#statschildren+1] = Label:New{ caption = localization.weapons, textColor = color.stats_header,}
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		for i=1, #cells do
-			statschildren[#statschildren+1] = Label:New{ caption = cells[i], textColor = color.stats_fg, }
+		AddEmptyEntry(statschildren)
+		AddEntry(localization.weapons, 0, nil, color.stats_header, nil, statschildren)
+		for i = 2, #cells, 2 do
+			AddEntry(cells[i - 1], 1, cells[i], color.stats_fg, color.stats_fg, statschildren)
 		end
 	end
 
@@ -2607,26 +2371,20 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 	local default_buildlist = UnitDefNames["shieldcon"].buildOptions
 	local this_buildlist = ud.buildOptions
 	if ((#this_buildlist ~= #default_buildlist) and (#this_buildlist > 0)) then
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-
-		statschildren[#statschildren+1] = Label:New{ caption = localization.builds, textColor = color.stats_header,}
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
+		AddEmptyEntry(statschildren)
+		AddEntry(localization.builds, 0, nil, color.stats_header, nil, statschildren)
 		for i=1, #this_buildlist do
-			statschildren[#statschildren+1] = Label:New{ caption = Spring.Utilities.GetHumanName(UnitDefs[this_buildlist[i]]), textColor = color.stats_fg, }
+			AddEntry(Spring.Utilities.GetHumanName(UnitDefs[this_buildlist[i]]), 1, nil, color.stats_fg, nil, statschildren)
 			-- desc. would be nice, but there is horizontal cutoff
 			-- and long names can overlap (eg. Adv Radar)
 			-- statschildren[#statschildren+1] = Label:New{ caption = UnitDefs[this_buildlist[i]].tooltip, textColor = colorDisarm,}
-			statschildren[#statschildren+1] = Label:New{ caption = '', textColor = colorDisarm,}
 		end
 	end
 
 	-- death explosion
 	if ud.canKamikaze or ud.customParams.stats_show_death_explosion then
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_header,}
-		statschildren[#statschildren+1] = Label:New{ caption = localization.death_explosion, textColor = color.stats_header,}
-		statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
+		AddEmptyEntry(statschildren)
+		AddEntry(string.upper(localization.death_explosion), 0, nil, color.stats_header, color.stats_fg, statschildren)
 		
 		--[[
 		local weaponStats = GetWeapon( ud.deathExplosion:lower() )
@@ -2669,17 +2427,15 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 		local cells = weapons2Table({}, ud.deathExplosion:lower(), unitID, 1, {}, true, ud.metalCost)
 		
 		if cells and #cells > 0 then
-			for i=1, #cells do
-				statschildren[#statschildren+1] = Label:New{ caption = cells[i], textColor = color.stats_fg, }
+			for i=2, #cells, 2 do
+				AddEntry(cells[i - 1], 1, cells[i], color.stats_fg, color.stats_fg, statschildren)
 			end
 		end
 	end
 
 	--adding this because of annoying  cutoff
-	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
-	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
-	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
-	statschildren[#statschildren+1] = Label:New{ caption = '', textColor = color.stats_fg, }
+	AddEmptyEntry(statschildren)
+	AddEmptyEntry(statschildren)
 	
 	
 	local stack_icons = Chili.Control:New{
