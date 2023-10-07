@@ -990,7 +990,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			end
 			if show_damage then
 				if cp.cloakstrike then
-					local str1 = ' - ' .. localization.stats_damage .. ' ' .. localization.stats_duringcloakstrike .. ':'
+					local str1 = localization.stats_damage .. ' ' .. localization.stats_duringcloakstrike .. ':'
 					--Spring.Echo(tostring(dam_str))
 					--Spring.Echo("dam: " .. dam)
 					local csMult = tonumber(cp.cloakstrike)
