@@ -54,6 +54,11 @@ local glDepthTest     = gl.DepthTest
 local glTexture       = gl.Texture
 local glClear         = gl.Clear
 local glDeleteList    = gl.DeleteList
+local glUnitShape     = gl.UnitShape
+local glRotate        = gl.Rotate
+local glTranslate     = gl.Translate
+local glPushMatrix    = gl.PushMatrix
+local glPopMatrix     = gl.PopMatrix
 local tableInsert     = table.insert
 
 --// gl const
@@ -63,10 +68,16 @@ local pylonByID = {}
 local currentSelection = false
 local playerIsPlacingPylon = false
 local playerAllyTeam
+local worldClickStartPositionX, worldClickStartPositionZ = -1, -1
+local leftLowerBound = math.rad(45)
+local leftUpperBound = math.rad(135)
+local rightUpperBound = math.rad(225)
+local rightUpperBound = math.rad(315)
 
 local pylonDefs = {}
 local isBuilder = {}
 local floatOnWater = {}
+local fpTable = {} -- stores building FootPrints. UnitDefID = {x = num, z = num}
 
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 local queuedPylons = IterableMap.New() -- {unitID = {[1] = {x, z, def} . . .}
@@ -76,6 +87,7 @@ for i=1,#UnitDefs do
 	local range = tonumber(udef.customParams.pylonrange)
 	if (range and range > 0) then
 		pylonDefs[i] = range
+		fpTable[i] = {x = UnitDefs[i].xsize, z = UnitDefs[i].zsize} -- FootPrint units are 16 elmos. See: https://springrts.com/wiki/Gamedev:UnitsOfMeasurement#Linear
 	end
 	if udef.isBuilder then
 		isBuilder[i] = true
@@ -249,7 +261,7 @@ local function ShiftFromTable(tab, num)
 	if table_length == num then
 		tab[num] = nil
 	else
-		for i = num + 1, table_length do
+		for i = num + 1, table_length do -- shift out.
 			tab.taglookup[tab[i].tag] = i - 1
 			tab[i - 1] = tab[i]
 		end
@@ -335,65 +347,88 @@ local function BuildTableFromCommand(cmd, cmdParams, indexShift, buildDef, cmdTa
 	if x and y and z and range and buildDef then
 		return {x = x, y = y, z = z, range = range, def = buildDef, facing = facing, tag = cmdTag}
 	elseif x and y and z then
+		Spring.Echo("Missing range and buildDef!")
 		return
 	else
 		Spring.Echo("[EcoView]: CMD ID: " .. cmd .. " Missing values:\nx = " .. tostring(x) .. "\ny: " .. tostring(y) .. "\nz: " .. tostring(z) .. "\nrange: " .. tostring(range) .. "\nfacing: " .. tostring(facing))
 		return
 	end
 end
-	
 
-function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts, cmdTag)
+--function widget:CommandNotify(cmdID, cmdParams, cmdOptions)
+	--Spring.Echo("CommandNotify: " .. cmdID)
+--end
+
+local function ClearData(data)
+	data.taglookup = {}
+	data.clearedRecently = false
+	for i = 1, #data do
+		data[i] = nil
+	end
+end
+
+
+function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts, cmdTag, playerID, fromSynced, fromLua)
+	--Spring.Echo("UnitCommand: " .. cmdID)
+	--Spring.Echo(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts, cmdTag, playerID, fromSynced, fromLua)
+	--for k, v in pairs(cmdParams) do
+		--Spring.Echo(k .. ": " .. tostring(v))
+	--end
 	if isBuilder[unitDefID] and Spring.AreTeamsAllied(unitTeam, playerTeamID) then
+		local queueAltered = false
 		local data = IterableMap.Get(queuedPylons, unitID)
 		if data == nil then -- for some reason we don't have this builder on record!
 			data = {taglookup = {}, clearedRecently = false}
 			IterableMap.Set(queuedPylons, unitID, data) -- should be fine?
 		end
-		if cmdID == CMD.REMOVE then
-			if data and data.taglookup[cmdTag] then
+		if cmdID == CMD.REMOVE and cmdParams[1] then
+			if data and data.taglookup[cmdParams[1]] then
 				ShiftFromTable(data, data.taglookup[cmdParams[1]])
-			elseif data == nil then
-				data = {taglookup = {}, clearedRecently = false}
-				IterableMap.Set(queuedPylons, unitID, data)
+				UpdateAllQueuesList()
 			end
 		elseif cmdID == CMD.STOP and #data > 0 then
-			data = {taglookup = {}, clearedRecently = false}
-			--Spring.Echo("[Ecoview] Queue cleared.")
-			IterableMap.Set(queuedPylons, unitID, data)
-			UpdateAllQueuesList()
+			ClearData(data)
+			Spring.Echo("[Ecoview] Queue cleared. (CMD.STOP)")
+			queueAltered = true
 		elseif cmdID < 0 then
 			if not (cmdOpts.shift or cmdOpts.meta) and #data > 0 then
-				data = {taglookup = {}, clearedRecently = false}
-				--Spring.Echo("[Ecoview] Queue cleared.")
-				IterableMap.Set(queuedPylons, unitID, data)
+				ClearData(data)
+				Spring.Echo("[Ecoview] Queue cleared. (build order without shift)")
+				queueAltered = true
 			end
 			local buildDef = -cmdID -- turn it positive. build orders are negative.
 			if pylonDefs[buildDef] then
+				local queue = Spring.GetUnitCommands(unitID, 20000)
+				if queue == nil or #queue == 0 then Spring.Echo("Queue error!"); return end
+				cmdTag = queue[#queue].tag
 				local d = BuildTableFromCommand(cmdID, cmdParams, 0, buildDef, cmdTag)
 				if d then
 					data[#data + 1] = d
 					data.taglookup[cmdTag] = #data
 				end
+				queueAltered = true
 			end
-			UpdateAllQueuesList()
-		elseif cmdID >= 10 then
+		elseif cmdID >= 10 and not (cmdID == 80 or cmdID == 31110 or fromLua) then
 			if (not (cmdOpts.shift or cmdOpts.meta) or cmdID == CMD.STOP) and #data > 0 then
-				data = {taglookup = {}, clearedRecently = false}
+				ClearData(data)
 				--Spring.Echo("[Ecoview] Queue cleared.")
-				IterableMap.Set(queuedPylons, unitID, data)
-				UpdateAllQueuesList()
+				queueAltered = true
 			end
 		elseif cmdID == CMD.INSERT and cmdParams[2] and cmdParams[2] < 0 then
 			buildDef = -cmdParams[2]
 			if pylonDefs[buildDef] then
+				local position = cmdParams[1] + 1 -- zero indexed.
+				cmdTag = Spring.GetUnitCommands(unitID, position)[position].tag
 				local d = BuildTableFromCommand(cmdID, cmdParams, 3, buildDef, cmdTag) -- CMD Insert: position, cmdID, cmdOptions, cmdParams[1] . . .
 				if d then
-					tableInsert(data, cmdParams[1], d)
+					tableInsert(data, position, d)
 				end
+				queueAltered = true
 			end
 			--Spring.Echo("[Ecoview] Added new " .. buildDef .. " for " .. unitID .. ", Team: " .. tostring(unitTeam))
 			--Spring.MarkerAddPoint(cmdParams[4], cmdParams[5], cmdParams[6], buildDef, true)
+		end
+		if queueAltered then
 			UpdateAllQueuesList()
 		end
 	end
@@ -517,6 +552,18 @@ end
 
 
 local function HighlightPylons()
+	if lastDrawnFrame < lastFrame then
+		lastDrawnFrame = lastFrame
+		if options.mergeCircles.value then
+			glDeleteList(disabledDrawList or 0)
+			disabledDrawList = gl.CreateList(makePylonListVolume, false, true)
+			glDeleteList(drawList or 0)
+			drawList = gl.CreateList(makePylonListVolume, true, false)
+		else
+			glDeleteList(drawList or 0)
+			drawList = gl.CreateList(makePylonListVolume)
+		end
+	end
 	glCallList(drawList)
 	if options.mergeCircles.value then
 		glCallList(disabledDrawList)
@@ -567,13 +614,13 @@ function widget:DrawWorld()
 			for i = 1, #data do
 				if spIsSphereInView(data[i].x, data[i].y, data[i].z, 30) then
 					local facing = data[i].facing or 1
-					gl.PushMatrix()
+					glPushMatrix()
 						gl.LoadIdentity()
-						gl.Translate(data[i].x, data[i].y, data[i].z)
-						gl.Rotate(90 * facing, 0, 1, 0)
+						glTranslate(data[i].x, data[i].y, data[i].z)
+						glRotate(90 * facing, 0, 1, 0)
 						glTexture("%"..data[i].def..":0") 
-						gl.UnitShape(data[i].def, team, false, false, false) -- gl.UnitShape(bDefID, teamID, false, false, false)
-					gl.PopMatrix()
+						glUnitShape(data[i].def, team, false, false, false) -- gl.UnitShape(bDefID, teamID, false, false, false)
+					glPopMatrix()
 				end
 			end
 		end
