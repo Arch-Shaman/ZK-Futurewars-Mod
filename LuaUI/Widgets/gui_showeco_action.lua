@@ -388,12 +388,12 @@ function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 			end
 		elseif cmdID == CMD.STOP and #data > 0 then
 			ClearData(data)
-			Spring.Echo("[Ecoview] Queue cleared. (CMD.STOP)")
+			--Spring.Echo("[Ecoview] Queue cleared. (CMD.STOP)")
 			queueAltered = true
 		elseif cmdID < 0 then
 			if not (cmdOpts.shift or cmdOpts.meta) and #data > 0 then
 				ClearData(data)
-				Spring.Echo("[Ecoview] Queue cleared. (build order without shift)")
+				--Spring.Echo("[Ecoview] Queue cleared. (build order without shift)")
 				queueAltered = true
 			end
 			local buildDef = -cmdID -- turn it positive. build orders are negative.
