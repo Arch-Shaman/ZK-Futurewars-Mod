@@ -99,7 +99,7 @@ return {
 				noSelfDamage            = true,
 				range                   = 450,
 				reloadtime              = 3,
-				soundHit                = "explosion/ex_large9.wav",
+				soundHit                = "explosion/ex_large9",
 				--soundStart              = "weapon/cannon/rhino",
 				turret                  = true,
 				weaponType              = "Cannon",

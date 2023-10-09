@@ -152,7 +152,7 @@ return {
 				sizeDecay               = -0.25,
 				soundHit                = "weapon/gauss_hit",
 				soundHitVolume          = 3,
-				soundStart              = "weapon/cannon/gauss_rapid.wav",
+				soundStart              = "weapon/cannon/gauss_rapid",
 				soundStartVolume        = 2.5,
 				stages                  = 32,
 				turret                  = true,

@@ -110,7 +110,7 @@ return {
 				range                   = 330,
 				reloadtime              = 1/3,
 				rgbColor                = "0.4 0 0.5",
-				soundStart              = "weapon/laser/pulse_d.wav",
+				soundStart              = "weapon/laser/pulse_d",
 				soundStartVolume        = 8,
 				soundTrigger            = true,
 				sweepfire               = false,

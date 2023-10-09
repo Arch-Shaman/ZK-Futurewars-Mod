@@ -163,7 +163,7 @@ return {
 				rgbColor                = "0.3 0 0",
 				rgbColor2			    = "0.5 0 0",
 				soundStart              = "weapon/laser/tracker",
-				--soundHit		= "trackercompleted.wav"
+				--soundHit		= "trackercompleted"
 				soundStartVolume        = 15,
 				texture1                = "tracker",
 				texture2                = "null",

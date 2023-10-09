@@ -99,7 +99,7 @@ return {
 				sizeDecay               = -0.1,
 				soundHit                = "weapon/impacts/impact-light01",
 				soundHitVolume          = 6,
-				soundStart              = "weapon/cannon/gauss_rapid.wav",
+				soundStart              = "weapon/cannon/gauss_rapid",
 				soundStartVolume        = 2.5,
 				stages                  = 32,
 				turret                  = true,
