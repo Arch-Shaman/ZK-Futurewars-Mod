@@ -58,6 +58,8 @@ local steptime = 10
 local stride_top = 0
 local stride_bottom = -2
 
+local armorStateSlowDown = tonumber(UnitDefs[unitDefID].customParams["armored_slowdown"]) or 0.5
+
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local function GetSpeedMod()
 	return (spGetUnitRulesParam(unitID, "totalMoveSpeedChange") or 1)
@@ -261,7 +263,7 @@ end
 local function ShieldActivate()
     Signal(SIG_SHIELD)
 	SetSignalMask(SIG_SHIELD)
-	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 0.5)
+	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", armorStateSlowDown)
 	GG.UpdateUnitAttributes(unitID)
 	GG.SetUnitArmor(unitID, armorValue)
 	shielding = true
@@ -319,12 +321,13 @@ local function ShieldDeactivate()
     shielding = false
 end
 
-function script.Activate()
-	StartThread(ShieldActivate)
-end
-
-function script.Deactivate()
-	StartThread(ShieldDeactivate)
+function OnArmorStateChanged(state)
+	local armored = state == 1
+	if armored then
+		StartThread(ShieldActivate)
+	else
+		StartThread(ShieldDeactivate)
+	end
 end
 
 function script.AimWeapon(num, heading, pitch)

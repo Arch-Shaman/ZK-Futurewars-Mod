@@ -22,7 +22,6 @@ return {
 		initCloaked            = true,
 		cloakCostMoving        = 2.0,
 		cloakCost              = 0.2,
-		onOffable              = true,
 		damageModifier         = 0.2,
 		customParams           = {
 			modelradius    = "12",
@@ -33,6 +32,9 @@ return {
 			bait_level_default = 1,
 			cloakstrikeduration = 40,
 			cloakstrikeslow = 1.0,
+			hasarmorstate 	= 1,
+			armortype = 1, -- for context menu.
+			armored_slowdown = 0.2,
 		},
 		explodeAs              = "BIG_UNITEX",
 		footprintX             = 3,
