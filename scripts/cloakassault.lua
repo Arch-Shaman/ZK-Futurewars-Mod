@@ -47,6 +47,7 @@ local SIG_RESTORE = 2
 local SIG_AIM = 4
 local SIG_STOPMOVE = 8
 local SIG_SHIELD = 16
+local SIG_SHOT = 32
 
 local RESTORE_DELAY = 3000
 
@@ -62,7 +63,7 @@ local armorStateSlowDown = tonumber(UnitDefs[unitDefID].customParams["armored_sl
 
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local function GetSpeedMod()
-	return (spGetUnitRulesParam(unitID, "totalMoveSpeedChange") or 1)
+	return spGetUnitRulesParam(unitID, "totalMoveSpeedChange") or 1
 end
 
 local function walk()
@@ -72,9 +73,9 @@ local function walk()
 	if not shielding then
 	    Turn(rforearm, x_axis, math.rad(-15), 0.5)
 	end
-	
+	local truespeed = runspeed
 	while true do
-		local truespeed = runspeed * GetSpeedMod()
+		truespeed = runspeed * GetSpeedMod()
 		Turn(rthigh, x_axis, -0.65, truespeed*1)
 		Turn(rshin, x_axis, 0.8, truespeed*1)
 		Turn(rfoot, x_axis, 0, truespeed*0.5)
@@ -144,7 +145,7 @@ local function walk()
 		Move(hips, y_axis, stride_bottom, truespeed*1)
 
 		Sleep(hangtime)
-
+		truespeed = runspeed * GetSpeedMod()
 		Move(hips, y_axis, stride_bottom, truespeed*3)
 		Turn(lshin, x_axis, 0.0, truespeed*0.75)
 		Turn(lfoot, x_axis, -0.2, truespeed*0.5)
@@ -174,7 +175,7 @@ function script.Create()
 end
 
 function script.BlockShot(num, targetID)
-	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 450.1, 70, 0.1, 0.2) -- unitID, targetID, gameFrame, damage, timeout, fastmult, radarmult, staticonly
+	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 660.1, 70, 0.1, 0.2) -- unitID, targetID, gameFrame, damage, timeout, fastmult, radarmult, staticonly
 end
 
 function script.StartMoving()
@@ -355,23 +356,30 @@ function script.AimWeapon(num, heading, pitch)
 	end
 end
 
-function script.FireWeapon()
-    shooting = true
+local function PostShotThread()
+	Signal(SIG_SHOT)
+	SetSignalMask(SIG_SHOT)
+	WaitForTurn(lforearm, z_axis)
 	EmitSfx(emitter, GG.Script.UNIT_SFX1)
-	EmitSfx(emitter, GG.Script.UNIT_SFX1)
-	Turn(turner, y_axis, math.rad(-90), math.rad(600))
-	Turn(head, z_axis, math.rad(45), math.rad(600))
-	Turn(lforearm, z_axis, math.rad(45), math.rad(600))
 	Sleep(1000)
 	shooting = false
 end
 
-function script.HitByWeapon()
-    if shielding then
-        --EmitSfx(hitshield[random(1,5)].firepoint, GG.Script.UNIT_SFX1)
-	    EmitSfx(shield, GG.Script.UNIT_SFX1)
-	end
+function script.Shot()
+    shooting = true
+	StartThread(PostShotThread)
+	--EmitSfx(emitter, GG.Script.UNIT_SFX1)
+	Turn(turner, y_axis, math.rad(-90), math.rad(600))
+	Turn(head, z_axis, math.rad(45), math.rad(600))
+	Turn(lforearm, z_axis, math.rad(45), math.rad(600))
 end
+
+--[[function script.HitByWeapon()
+    if shielding then
+        --EmitSfx(hitshield[math.random(1,5)].firepoint, GG.Script.UNIT_SFX1)
+	    --EmitSfx(shield, GG.Script.UNIT_SFX1) -- TODO: Replace CEG. Currently this is too buggy looking.
+	end
+end]]
 
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage / maxHealth
