@@ -81,6 +81,7 @@ local fpTable = {} -- stores building FootPrints. UnitDefID = {x = num, z = num}
 
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 local queuedPylons = IterableMap.New() -- {unitID = {[1] = {x, z, def} . . .}
+local needsUpdate = IterableMap.New() -- list of unitIDs that need updating.
 
 for i=1,#UnitDefs do
 	local udef = UnitDefs[i]
@@ -367,9 +368,50 @@ local function ClearData(data)
 	end
 end
 
+local function DoUpdate()
+	local updates = 0
+	for unitID, _ in IterableMap.Iterator(needsUpdate) do
+		local data = IterableMap.Get(queuedPylons, unitID)
+		local queue = Spring.GetUnitCommands(unitID, -1)
+		local index = 1
+		if queue and #queue > 0 then
+			updates = updates + 1
+			IterableMap.Remove(needsUpdate, unitID)
+			local data = IterableMap.Get(queuedPylons, unitID)
+			ClearData(data)
+			local cmd
+			for i = 1, #queue do
+				cmd = queue[i]
+				--Spring.Echo("DoUpdate: " .. Spring.Utilities.CommandNameByID(cmd.id))
+				if cmd.id < 0 then -- this is a unit construction order
+					local unitDef = -cmd.id
+					if pylonDefs[unitDef] then
+						local d = BuildTableFromCommand(cmd.id, cmd.params, 0, unitDef, cmd.tag)
+						if d then
+							data[index] = d
+							data.taglookup[cmd.tag] = index
+							index = index + 1
+						else
+							Spring.Echo("[Ecoview] Table failed to build")
+						end
+					end
+				end
+			end
+			if #data > index then
+				for i = index, #data do
+					data[i] = nil
+				end
+			end
+		end
+	end
+	if updates > 0 then
+		UpdateAllQueuesList()
+	end
+end
+
 
 function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts, cmdTag, playerID, fromSynced, fromLua)
-	--Spring.Echo("UnitCommand: " .. cmdID)
+	--Spring.Echo("UnitCommand: " .. cmdID .. "(" .. Spring.Utilities.CommandNameByID(cmdID) .. ")")
 	--Spring.Echo(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts, cmdTag, playerID, fromSynced, fromLua)
 	--for k, v in pairs(cmdParams) do
 		--Spring.Echo(k .. ": " .. tostring(v))
@@ -398,15 +440,18 @@ function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 			end
 			local buildDef = -cmdID -- turn it positive. build orders are negative.
 			if pylonDefs[buildDef] then
-				local queue = Spring.GetUnitCommands(unitID, 20000)
-				if queue == nil or #queue == 0 then Spring.Echo("Queue error!"); return end
+				--if queue == nil or #queue == 0 then
+				--Spring.Echo("Needs to update!")
+				IterableMap.Add(needsUpdate, unitID, true)
+				return 
+				--[[end
 				cmdTag = queue[#queue].tag
 				local d = BuildTableFromCommand(cmdID, cmdParams, 0, buildDef, cmdTag)
 				if d then
 					data[#data + 1] = d
 					data.taglookup[cmdTag] = #data
 				end
-				queueAltered = true
+				queueAltered = true]]
 			end
 		elseif cmdID >= 10 and not (cmdID == 80 or cmdID == 31110 or fromLua) then
 			if (not (cmdOpts.shift or cmdOpts.meta) or cmdID == CMD.STOP) and #data > 0 then
@@ -415,15 +460,20 @@ function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 				queueAltered = true
 			end
 		elseif cmdID == CMD.INSERT and cmdParams[2] and cmdParams[2] < 0 then
-			buildDef = -cmdParams[2]
+			local buildDef = -cmdParams[2]
 			if pylonDefs[buildDef] then
-				local position = cmdParams[1] + 1 -- zero indexed.
-				cmdTag = Spring.GetUnitCommands(unitID, position)[position].tag
-				local d = BuildTableFromCommand(cmdID, cmdParams, 3, buildDef, cmdTag) -- CMD Insert: position, cmdID, cmdOptions, cmdParams[1] . . .
-				if d then
-					tableInsert(data, position, d)
-				end
-				queueAltered = true
+				--local position = cmdParams[1] + 1 -- zero indexed.
+				--local queue = Spring.GetUnitCommands(unitID, position)
+				--if queue == nil or #queue < position then
+					IterableMap.Add(needsUpdate, unitID, true)
+					return
+				--end
+				--cmdTag = queue[position]
+				--local d = BuildTableFromCommand(cmdID, cmdParams, 3, buildDef, cmdTag) -- CMD Insert: position, cmdID, cmdOptions, cmdParams[1] . . .
+				--if d then
+					--tableInsert(data, position, d)
+				--end
+				--queueAltered = true
 			end
 			--Spring.Echo("[Ecoview] Added new " .. buildDef .. " for " .. unitID .. ", Team: " .. tostring(unitTeam))
 			--Spring.MarkerAddPoint(cmdParams[4], cmdParams[5], cmdParams[6], buildDef, true)
@@ -523,6 +573,7 @@ function widget:GameFrame(f)
 	end
 end
 
+
 local function makePylonListVolume(onlyActive, onlyDisabled)
 	local i = 1
 	while i <= pylons.count do
@@ -556,12 +607,12 @@ local function HighlightPylons()
 		lastDrawnFrame = lastFrame
 		if options.mergeCircles.value then
 			glDeleteList(disabledDrawList or 0)
-			disabledDrawList = gl.CreateList(makePylonListVolume, false, true)
+			disabledDrawList = glCreateList(makePylonListVolume, false, true)
 			glDeleteList(drawList or 0)
-			drawList = gl.CreateList(makePylonListVolume, true, false)
+			drawList = glCreateList(makePylonListVolume, true, false)
 		else
 			glDeleteList(drawList or 0)
-			drawList = gl.CreateList(makePylonListVolume)
+			drawList = glCreateList(makePylonListVolume)
 		end
 	end
 	glCallList(drawList)
@@ -601,7 +652,7 @@ function widget:SelectionChanged(selectedUnits)
 	UpdateQueueList()
 end
 
-
+local spGetGroundHeight = Spring.GetGroundHeight
 
 function widget:DrawWorld()
 	if Spring.IsGUIHidden() or not (playerIsPlacingPylon or alwaysHighlight) then return end
@@ -611,12 +662,15 @@ function widget:DrawWorld()
 	for unitID, data in IterableMap.Iterator(queuedPylons) do
 		local team = Spring.GetUnitTeam(unitID)
 		if showAllies or team == playerTeamID then
+			local x, z
 			for i = 1, #data do
-				if spIsSphereInView(data[i].x, data[i].y, data[i].z, 30) then
+				x = data[i].x
+				z = data[i].z
+				if spIsSphereInView(x, data[i].y, z, 30) then
 					local facing = data[i].facing or 1
 					glPushMatrix()
 						gl.LoadIdentity()
-						glTranslate(data[i].x, data[i].y, data[i].z)
+						glTranslate(x, spGetGroundHeight(x, z), z)
 						glRotate(90 * facing, 0, 1, 0)
 						glTexture("%"..data[i].def..":0") 
 						glUnitShape(data[i].def, team, false, false, false) -- gl.UnitShape(bDefID, teamID, false, false, false)
@@ -631,7 +685,8 @@ function widget:DrawWorld()
 	glTexture(false) 
 end
 
-function widget:Update()
+function widget:Update(dt)
+	DoUpdate()
 	if playerHasBuilderSelected or alwaysHighlight then
 		local _, newCommand = spGetActiveCommand()  -- show pylons if pylon is about to be placed
 		if newCommand ~= currentCommand then
