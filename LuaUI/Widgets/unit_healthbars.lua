@@ -626,6 +626,7 @@ local function CacheUnitInfo(unitDefID)
 		delaytime     = ud.customParams.aimdelay,
 		batterymax    = tonumber(ud.customParams.battery),
 		bpoverdrivebonus = tonumber(ud.customParams.bp_overdrive_bonus),
+		dynamicComm   = ud.customParams.dynamic_comm ~= nil or ud.customParams.level ~= nil,
 	}
 	
 	for i = 1, #ud.weapons do
@@ -670,6 +671,29 @@ local function CacheUnitInfo(unitDefID)
 		customInfoUnits[unitDefID].scriptReload = {[1] = 1}
 		customInfoUnits[unitDefID].scriptReloadTimes = {[1] = tonumber(wd.customParams.script_reload)}
 		customInfoUnits[unitDefID].scriptReloadBursts = {[1] = tonumber(wd.customParams.script_burst)}
+	end
+end
+
+local function ProcessWeapon(unitID, weaponID, ci, addPercent)
+	local _, reloaded, reloadFrame = GetUnitWeaponState(unitID, weaponID)
+	if not reloaded then
+		local reloadTime, reloadOverride
+		if ci.reloadOverride[weaponID] then
+			reloadTime = ci.reloadOverride[weaponID] * (GetUnitRulesParam(unitID, "comm_reloadmult") or 1)
+			reloadOverride = ci.reloadOverride[weaponID]
+		else
+			reloadTime = GetUnitWeaponState(unitID, weaponID, 'reloadTime')
+		end
+		if reloadTime >= options.minReloadTime.value then
+			-- When weapon is disabled the reload time is constantly set to be almost complete.
+			-- It results in a bunch of units walking around with 99% reload bars.
+			if (reloadFrame > gameFrame + 6) or ((not reloadOverride) and (GetUnitRulesParam(unitID, "reloadPaused") ~= 1)) then -- UPDATE_PERIOD in unit_attributes.lua
+				reload = 1 - ((reloadFrame-gameFrame)/gameSpeed) / reloadTime
+				if (reload >= 0) then
+					barDrawer.AddBar(addTitle and messages.reload, reload, "reload", (addPercent and floor(reload*100) .. '%'))
+				end
+			end
+		end
 	end
 end
 
@@ -856,7 +880,7 @@ function DrawUnitInfos(unitID, unitDefID)
 	if TeleportEnd and TeleportCost and TeleportEnd >= 0 then
 		local prog
 		if TeleportEnd > 1 then
-			-- End frame given
+			-- end frame given
 			prog = 1 - (TeleportEnd - gameFrame)/TeleportCost
 		else
 			-- Same parameters used to display a static progress
@@ -949,28 +973,11 @@ function DrawUnitInfos(unitID, unitDefID)
 	--// RELOAD
 	if ci.reloadWatched and not ci.canReammo and not ci.usesSuperWeaponReload and not ci.usesSuperWeaponReload then
 		if ci.dynamicComm then
-			for loop=1, (((ci.dyanmicComm and 2) or #ci.reloadTime)) do
-				local primaryWeapon = (ci.dyanmicComm and ((loop==1 and GetUnitRulesParam(unitID, "primary_weapon_override")) or (loop==2 and GetUnitRulesParam(unitID, "secondary_weapon_override")))) or ci.primaryWeapon[loop]
-				_, reloaded, reloadFrame = GetUnitWeaponState(unitID, primaryWeapon)
-				if (reloaded == false) then
-					local reloadTime
-					if ci.reloadOverride[primaryWeapon] then
-						reloadTime = ci.reloadOverride[primaryWeapon] * (GetUnitRulesParam(unitID, "comm_reloadmult") or 1)
-					else
-						reloadTime = Spring.GetUnitWeaponState(unitID, primaryWeapon, 'reloadTime')
-					end
-					--(((q==1 and GetUnitRulesParam(unitID, "primary_weapon_reload_override"))) or ((q==2 and GetUnitRulesParam(unitID, "secondary_weapon_reload_override"))))
-					if reloadTime >= options.minReloadTime.value then
-						-- When weapon is disabled the reload time is constantly set to be almost complete.
-						-- It results in a bunch of units walking around with 99% reload bars.
-						if (reloadFrame > gameFrame + 6) or ((not reloadOverride) and (GetUnitRulesParam(unitID, "reloadPaused") ~= 1)) then -- UPDATE_PERIOD in unit_attributes.luaa
-							reload = 1 - ((reloadFrame-gameFrame)/gameSpeed) / ci.reloadTime[loop];
-							if (reload >= 0) then
-								barDrawer.AddBar(addTitle and messages.reload, reload, "reload", (addPercent and floor(reload*100) .. '%'))
-							end
-						end
-					end
-				end
+			local primary = GetUnitRulesParam(unitID, "primary_weapon_override") or 1
+			local secondary = GetUnitRulesParam(unitID, "secondary_weapon_override")
+			ProcessWeapon(unitID, primary, ci, addPercent)
+			if secondary then
+				ProcessWeapon(unitID, secondary, ci, addPercent)
 			end
 		else
 			for i = 1, #ci.reloadWatched do
@@ -1083,6 +1090,9 @@ function DrawUnitInfos(unitID, unitDefID)
 		for i = 1, #ci.scriptReload do
 			local weaponID = ci.scriptReload[i]
 			local reloadTime = ci.scriptReloadTimes[weaponID]
+			if reloadTime == nil then
+				Spring.Echo("Warning: nil reload time for weaponID " .. tostring(weaponID) .. " , Unitdef: " .. UnitDefs[unitDefID].name)
+			end
 			if reloadTime >= options.minReloadTime.value then
 				local reloadFrame = GetUnitRulesParam(unitID, "scriptReloadFrame")
 				if reloadFrame and reloadFrame > gameFrame then
