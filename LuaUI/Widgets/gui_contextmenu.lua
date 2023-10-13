@@ -1646,7 +1646,7 @@ local function printAbilities(ud, unitID, isFeature)
 		end
 		if cp.amph_regen then
 			AddEntryToCells(localization.water_regen .. ':', 2, cp.amph_regen .. localization.acronyms_hp .. "/" .. localization.acronyms_second, cells)
-			AddEntryToCells(localization.at_depth .. ':', 2, cp.amph_submerged_at .. " elmo")
+			AddEntryToCells(localization.at_depth .. ':', 2, cp.amph_submerged_at .. " elmo", cells)
 		end
 		if cp.armored_regen then
 			AddEntryToCells(localization.armor_regen .. ':', 2, numformat(tonumber(cp.armored_regen)) .. " " .. localization.acronyms_hp .. "/" .. localization.acronyms_second, cells)
