@@ -7,30 +7,10 @@
 -- Internal:
 -- liberation_disarmimpactspark
 
-local function CopyTable(tableToCopy, deep, appendTo)
-  local copy = appendTo or {}
-  for key, value in pairs(tableToCopy) do
-    if (deep and type(value) == "table") then
-      copy[key] = CopyTable(value, true)
-    else
-      copy[key] = value
-    end
-  end
-  return copy
-end
-local function OverwriteTableInplace(primary, secondary, deep)
-	for i, v in pairs(secondary) do
-		if primary[i] and type(primary[i]) == "table" and type(v) == "table"  then
-			OverwriteTableInplace(primary[i], v, deep)
-		else
-			if (deep and type(v) == "table") then
-				primary[i] = CopyTable(v, true)
-			else
-				primary[i] = v
-			end
-		end
-	end
-end
+VFS.Include("LuaRules/Utilities/tablefunctions.lua")
+
+local CopyTable = Spring.Utilities.CopyTable
+local OverwriteTableInplace = Spring.Utilities.OverwriteTableInplace
 
 local liberation_basetrail = {
 	usedefaultexplosions = false,

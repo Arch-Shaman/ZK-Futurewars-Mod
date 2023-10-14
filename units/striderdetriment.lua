@@ -130,6 +130,7 @@ return {
 					spawndist = 200,
 					velspread1 = "7.64, 3.5, 7.64",
 					armorpiercing = 0.2,
+					not_artillery = "hack for rafflesia",
 				},
 				damage                  = {
 					default = 1020.1*7,

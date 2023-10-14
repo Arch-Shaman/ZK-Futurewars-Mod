@@ -146,7 +146,7 @@ local function handleFire(targetID)
 	local px, py, pz = spGetUnitPiecePosition(unitID, firepiece)
 	local _, _, _, tx, ty, tz = spGetUnitPosition(targetID, false, true)
 	spSpawnProjectile(weaponID, {
-		pos = {ux+pz, uy+py, uz+px},
+		pos = {ux+px, uy+py, uz+pz},
 		["end"] = {tx, ty, tz},
 		owner = unitID,
 		team = spGetUnitTeam(unitID),

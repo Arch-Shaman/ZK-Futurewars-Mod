@@ -4,7 +4,7 @@ local body = piece("body")
 local firepoint = piece("firepoint")
 
 function script.Create()
-	GG.UnitModelRescale(unitID, 2)
+	GG.UnitModelRescale(unitID, UnitDefs[unitDefID].customParams.model_rescale_script)
 	Turn (body, y_axis, math.random() * 2 * math.pi)
 	Turn (body, z_axis, (math.random() - 0.5) * 0.8) -- up to 22 degrees
 	EmitSfx(body, 1024+2)

@@ -1,4 +1,4 @@
-return { 
+return {
 	chickena = {
 		name                = "Cockatrice",
 		description         = "Assault/Anti-Armor",
@@ -11,31 +11,37 @@ return {
 		canMove             = true,
 		canPatrol           = true,
 		category            = "LAND SINK",
+
 		customParams        = {
+			chicken = "uwu",
 			outline_x = 235,
 			outline_y = 235,
 			outline_yoff = 25,
+			model_rescale = 1.3,
+			singuimmune = 1,
 		},
+
 		explodeAs           = "NOWEAPON",
 		footprintX          = 4,
 		footprintZ          = 4,
-		health              = 2800,
+		health              = 31770,
 		iconType            = "chickena",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
 		leaveTracks         = true,
-		maxSlope            = 37,
+		maxSlope            = 84,
 		maxWaterDepth       = 5000,
 		metalCost           = 0,
 		energyCost          = 0,
-		buildTime           = 350,
-		movementClass       = "AKBOT4",
+		buildTime           = 980,
+		movementClass       = "ATKBOT4",
 		noAutoFire          = false,
 		noChaseCategory     = "SHIP SWIM FLOAT TERRAFORM FIXEDWING SATELLITE GUNSHIP MINE",
 		objectName          = "chickena.s3o",
-		power               = 420,
+		power               = 1660,
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
+
 		sfxtypes            = {
 			explosiongenerators = {
 				"custom:blood_spray",
@@ -44,7 +50,9 @@ return {
 			},
 		},
 		sightDistance       = 256,
-		speed               = 1.8,
+		sonarDistance       = 256,
+		script              = "chickena.lua",
+		speed               = 134,
 		trackOffset         = 7,
 		trackStrength       = 9,
 		trackStretch        = 1,
@@ -53,6 +61,7 @@ return {
 		turnRate            = 967,
 		upright             = false,
 		workerTime          = 0,
+
 		weapons             = {
 			{
 				def                = "WEAPON",
@@ -61,23 +70,28 @@ return {
 				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER SUB SHIP FIXEDWING GUNSHIP",
 			},
 		},
+
+
 		weaponDefs          = {
 			WEAPON     = {
 				name                    = "Claws",
 				areaOfEffect            = 8,
 				craterBoost             = 0,
 				craterMult              = 0,
+
 				damage                  = {
-					default = 1700.1,
+					default = 6200.1,
+					armorpiercing = 0.1,
 				},
+
 				explosionGenerator      = "custom:NONE",
 				impactOnly              = true,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 0,
 				noSelfDamage            = true,
-				range                   = 140,
-				reloadtime              = 7,
+				range                   = 185,
+				reloadtime              = 5,
 				size                    = 0,
 				soundHit                = "chickens/chickenbig2",
 				soundStart              = "chickens/chickenbig2",
@@ -89,5 +103,5 @@ return {
 				weaponVelocity          = 1000,
 			},
 		},
-	} 
+	}
 }

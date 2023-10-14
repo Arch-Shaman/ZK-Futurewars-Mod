@@ -50,7 +50,7 @@ return {
 		},
 		sightDistance       = 384,
 		sonarDistance       = 384,
-		speed               = 66,
+		speed               = 132,
 		stealth             = true,
 		turnRate            = 967,
 		upright             = false,
