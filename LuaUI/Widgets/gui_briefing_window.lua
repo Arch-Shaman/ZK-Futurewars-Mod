@@ -61,8 +61,6 @@ local briefingWindow
 ----------------------------------------------------------------------------------
 -- Endgame screen
 
-local gameNotStarted = true
-
 local screenx, screeny, myFont
 local screenCenterX, screenCenterY, wndX1, wndY1, wndX2, wndY2
 local victoryTextX, defeatTextX, defeatTextX, lowerTextX
