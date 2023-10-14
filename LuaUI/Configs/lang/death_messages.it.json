@@ -128,5 +128,10 @@
 	"death_123": "%{name} sarebbe dovuto andare con Cybran.",
 	"death_124": "%{name} avrebbe dovuto scegliere il Sacerdote dell'Ombra.",
 	"death_125": "%{name} ha subito un'estinzione di massa.",
-	"death_126": "%{name} non tornerà dopo questi messaggi."
+	"death_126": "%{name} non tornerà dopo questi messaggi.",
+	"death_127" : "%{name} è morto come disco",
+	"death_128" : "%{name} ha perso il controllo della situazione!",
+	"death_129" : "%{name} speedran sconfiggere qualsiasi percentuale",
+	"death_130" : "%{name} ha appena vinto così tanto da tracimare in una sconfitta!",
+	"death_131" : "A %{name} è stato detto di no."
 }

@@ -19,10 +19,10 @@
 	"death_14": "%{name} gra teraz lepiej.",
 	"death_15": "%{name} jest teraz rdzewiejącą skorupą.",
 	"death_16": "%{name} zszedł z linii produkcyjnej uszkodzony.",
-	"death_17": "%{name} uważało, że wulkany można przytulać.",
+	"death_17": "%{name} miał niefortunne spotkanie z kilkoma niezależnymi ekspertami od wyburzeń.",
 	"death_18": "%{name} uważa, że kurczaki są na tyle urocze, że można je trzymać jako zwierzęta domowe.",
-	"death_19": "Komunikator %{name} okazał się urządzeniem wybuchowym.",
-	"death_20": "Sprawa %{name} została oddalona z uprzedzeniem sądu życia.",
+	"death_19": "Dowódca %{name} okazał się być ładunkiem wybuchowym.",
+	"death_20": "%{name} doświadczył niekonsensownej renowacji bazy.",
 	"death_21": "Obecność%{name} nie jest już tutaj potrzebna.",
 	"death_22": "Wyczerpany pasek zdrowia%{name}.",
 	"death_23": "%{name} nie był bohaterem, jakiego potrzebowaliśmy.",
@@ -128,5 +128,10 @@
 	"death_123": "%{name} powinien był iść z Cybranem.",
 	"death_124": "%{name} powinien wybrać Kapłana Cienia.",
 	"death_125": "%{name} uległo masowemu wymieraniu.",
-	"death_126": "%{name} nie wróci po tych wiadomościach."
+	"death_126": "%{name} nie wróci po tych wiadomościach.",
+	"death_127" : "%{name} jest martwy jak disco.",
+	"death_128" : "%{name} stracił kontrolę nad sytuacją!",
+	"death_129" : "%{name} speedran pokonuje każdy procent.",
+	"death_130" : "%{name} wygrało tak mocno, że przegrało!",
+	"death_131" : "%{name} powiedziano nie."
 }

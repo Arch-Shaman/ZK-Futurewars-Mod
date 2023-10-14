@@ -113,7 +113,7 @@
 	"death_108" : "%{name} 已成为历史！",
 	"death_109" : "%{name} 刚刚被拥有。",
 	"death_110" : "%{name} 是由失败组成的。",
-	"death_111": "%{name} 让皇帝失望了。",
+	"death_111" : "%{name} 让皇帝失望了。",
 	"death_112" : "%{name} 刚刚输掉了比赛。",
 	"death_113" : "%{name} 在最坏的情况下超载了。",
 	"death_114" : "%{name} 已经过时了。",
@@ -127,6 +127,11 @@
 	"death_122" : "%{name} 发生了灾难性的停电。",
 	"death_123" : "%{name} 应该和 Cybran 一起走。",
 	"death_124" : "%{name} 应该选择暗影牧师。",
-	"death_125": "%{name} 经历了大规模灭绝。",
-	"death_126" : "%{name} 在收到这些消息后不会再回来。"
+	"death_125" : "%{name} 经历了大规模灭绝。",
+	"death_126" : "%{name} 在收到这些消息后不会再回来。",
+	"death_127" : "%{name} 已死于迪斯科",
+	"death_128" : "%{name} 失去了对局势的控制！",
+	"death_129" : "%{name} speedran defeat any percent.",
+	"death_130" : "%{name}刚刚赢得太猛，导致输得太惨！",
+	"death_131" : "%{name} 被告知不行。"
 }

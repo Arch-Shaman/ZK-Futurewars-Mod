@@ -19,10 +19,10 @@
 	"death_14": "%{name} artık daha iyi bir oyunda.",
 	"death_15": "%{name} artık paslanmaya yüz tutmuş bir kabuk.",
 	"death_16": "%{name} üretim hattından arızalı olarak çıktı.",
-	"death_17": "%{name}, vulkanların kucaklanabilir olduğunu düşünüyordu.",
+	"death_17": "%{name} bazı serbest yıkım uzmanlarıyla talihsiz bir karşılaşma yaşadı.",
 	"death_18": "%{name}, tavukların evcil hayvan olarak tutulabilecek kadar sevimli olduğunu düşünüyordu.",
 	"death_19": "%{name}'nin iletişiminin patlayıcı bir cihaz olduğu ortaya çıktı.",
-	"death_20": "%{name}'nin davası ağır ceza mahkemesi tarafından reddedildi.",
+	"death_20": "%{name} bir tür rıza dışı üs yenilemesi yaşamıştır.",
 	"death_21": "Burada %{name}'nin varlığına artık gerek yok.",
 	"death_22": "%{name}'nin sağlık çubuğu tükendi.",
 	"death_23": "%{name} ihtiyacımız olan kahraman değildi.",
@@ -128,5 +128,11 @@
 	"death_123": "%{name} Cybran'la gitmeliydi.",
 	"death_124": "%{name} Gölge Rahibi seçmeliydi.",
 	"death_125": "%{name} kitlesel yok oluşa uğradı.",
-	"death_126": "%{name} bu mesajlardan sonra geri dönmeyecek."
+	"death_126": "%{name} bu mesajlardan sonra geri dönmeyecek.",
+	"death_126": "%{name} bu mesajlardan sonra geri dönmeyecek.",
+	"death_127": "%{name} disko olarak öldü.",
+	"death_128": "%{name} durumun kontrolünü kaybetti!",
+	"death_129": "%{name} speedran herhangi bir yüzdeyi yenebilir.",
+	"death_130": "%{name} az önce o kadar zor kazandı ki taşarak mağlubiyete dönüştü!",
+	"death_131": "%{name}'e hayır denildi."
 }
