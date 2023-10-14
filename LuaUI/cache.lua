@@ -78,14 +78,20 @@ local function InjectBadges(str, badge)
 end
 
 local customParamsCache = {}
+local fwDevs = {
+	["Shaman"] = true,
+	["LeojEspino"] = true,
+	["Stuff"] = true,
+}
 
 function Spring.GetPlayerInfo(playerID, getOpts)
+	if getOpts == nil then getOpts = true end
 	if playerID == nil then return nil end
 	local playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, hasSkirmishAIsInTeam, customkeys, desynced
 	if getOpts then
 		playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, customkeys, hasSkirmishAIsInTeam, desynced = GetPlayerInfo(playerID, true)
 		if customParamsCache[playerID] == nil then
-			if playerName == "Shaman" or playerName == "Stuff" or playerName == "LeojEspino" then
+			if fwDevs[playerName] then
 				customkeys.badges = customkeys.badges or ""
 				customkeys.badges = InjectBadges(customkeys.badges, "fw_dev")
 			elseif playerName == "GhostFenixx" then
