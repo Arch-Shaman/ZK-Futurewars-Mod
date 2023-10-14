@@ -678,7 +678,8 @@ function gadget:GameOver(winningAllys)
 			end
 		end
 	end
-	if spGetGameRulesParam("chicken_difficulty") > 0 then
+	local chickenDifficulty = spGetGameRulesParam("chicken_difficulty") or -1
+	if chickenDifficulty > 0 then
 		-- chicken awards
 		local chickenScore = floor(spGetGameRulesParam("chicken_score"))
 		local chickenTeam = spGetGameRulesParam("chicken_chickenTeamID")
