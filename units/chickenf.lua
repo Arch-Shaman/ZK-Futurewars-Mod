@@ -1,0 +1,111 @@
+return {
+	chickenf = {
+		name                = "Talon",
+		description         = "Flying Spike Spitter",
+		acceleration        = 0.8,
+		activateWhenBuilt   = true,
+		airHoverFactor      = 0,
+		brakeRate           = 0.32,
+		builder             = false,
+		buildPic            = "chickenf.png",
+		canFly              = true,
+		canGuard            = true,
+		canLand             = true,
+		canMove             = true,
+		canPatrol           = true,
+		canSubmerge         = false,
+		category            = "FIXEDWING",
+		collide             = false,
+		cruiseAltitude      = 150,
+
+		customParams        = {
+			chicken = "uwu",
+			outline_x = 180,
+			outline_y = 180,
+			outline_yoff = 17.5,
+			model_rescale = 1.4,
+		},
+
+		explodeAs           = "NOWEAPON",
+		floater             = true,
+		footprintX          = 1,
+		footprintZ          = 1,
+		health              = 9400,
+		iconType            = "chickenf",
+		idleAutoHeal        = 20,
+		idleTime            = 300,
+		leaveTracks         = true,
+		maxSlope            = 18,
+		buildTime           = 600,
+		noAutoFire          = false,
+		noChaseCategory     = "TERRAFORM SATELLITE STUPIDTARGET MINE",
+		objectName          = "chickenf.s3o",
+		power               = 1050,
+		reclaimable         = false,
+		selfDestructAs      = "NOWEAPON",
+
+		sfxtypes            = {
+			explosiongenerators = {
+				"custom:blood_spray",
+				"custom:blood_explode",
+				"custom:dirt",
+			},
+		},
+		sightDistance       = 1200,
+		sonarDistance       = 1200,
+		script              = "chickenf.lua",
+		speed               = 588,
+		turnRate            = 6000,
+		workerTime          = 0,
+
+		weapons             = {
+			{
+				def                = "WEAPON",
+				badTargetCategory  = "FIXEDWING",
+				mainDir            = "0 0 1",
+				maxAngleDif        = 120,
+				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM SUB FLOAT GUNSHIP HOVER",
+			},
+		},
+
+		weaponDefs          = {
+			WEAPON = {
+				name                    = "Super-Spike",
+				areaOfEffect            = 100,
+				avoidFriendly           = false,
+				burnblow                = true,
+				cegTag                  = "vulcanfx",
+				collideFriendly         = false,
+				craterBoost             = 0,
+				craterMult              = 0,
+				
+				customParams            = {
+					light_radius = 0,
+					armorpiercing = 1,
+				},
+				
+				damage                  = {
+					default = 4200,
+				},
+
+				explosionGenerator      = "custom:100rlexplode",
+				flightTime              = 5,
+				impulseBoost            = 0,
+				impulseFactor           = 0.4,
+				interceptedByShieldType = 1,
+				model                   = "spike.s3o",
+				range                   = 1200,
+				reloadtime              = 30,
+				soundHit                = "chickens/spike_hit",
+				soundStart              = "chickens/chickenflyerbig1",
+				startVelocity           = 400,
+				subMissile              = 1,
+				turret                  = true,
+				waterWeapon             = true,
+				weaponAcceleration      = 100,
+				weaponType              = "MissileLauncher",
+				weaponVelocity          = 500,
+			},
+		},
+	}
+}

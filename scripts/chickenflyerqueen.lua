@@ -15,7 +15,7 @@ local turretIndex = {
 
 --constants
 local wingAngle = math.rad(40)
-local wingSpeed = math.rad(120) / 3
+local wingSpeed = math.rad(120)
 local tailAngle = math.rad(20)
 
 local bladeExtendSpeed = math.rad(600)
@@ -25,14 +25,12 @@ local bladeAngle = math.rad(140)
 --variables
 local feet = true
 
-local malus = GG.malus or 1
-
 --maximum HP for additional weapons
-local healthSpore3 = 0.65
-local healthDodoDrop = 0.75
-local healthDodo2Drop = 0.4
-local healthBasiliskDrop = 0.6
-local healthTiamatDrop = 0.3
+local healthSpore3 = 0.55
+local healthDodoDrop = 0.65
+local healthDodo2Drop = 0.3
+local healthBasiliskDrop = 0.5
+local healthTiamatDrop = 0.2
 
 --signals
 local SIG_Aim = 1
@@ -87,36 +85,6 @@ local function StopFly()
 	Move(body, y_axis, 0, 20)
 end
 
-local function DropDodoLoop()
-	while true do
-		local health, maxHealth = spGetUnitHealth(unitID)
-		if (health/maxHealth) < healthDodoDrop then
-			if (feet) then EmitSfx(leftFoot,2048+4)
-			else EmitSfx(rightFoot,2048+4) end
-			feet = not feet
-		end
-		Sleep(500 / malus)
-		if (health/maxHealth) < healthDodo2Drop then
-			if (feet) then EmitSfx(leftFoot,2048+4)
-			else EmitSfx(rightFoot,2048+4) end
-			feet = not feet
-		end
-		Sleep(1000 / malus)
-	end
-end
-
-local function DropBasiliskLoop()
-	while true do
-		local health, maxHealth = spGetUnitHealth(unitID)
-		if (health/maxHealth) < healthTiamatDrop then
-			EmitSfx(body,2048+6)
-		elseif (health/maxHealth) < healthBasiliskDrop then
-			EmitSfx(body,2048+5)
-		end
-		Sleep(2000 / malus)
-	end
-end
-
 local function Moving()
 	Signal(SIG_Fly)
 	SetSignalMask(SIG_Fly)
@@ -137,7 +105,6 @@ function script.StopMoving()
 end
 
 function script.Create()
-	GG.UnitModelRescale(unitID, 3)
 	Turn(rightWing1, x_axis, math.rad(15))
 	Turn(leftWing1, x_axis, math.rad(15))
 	Turn(rightWing1, x_axis, 0, math.rad(60))
@@ -158,16 +125,13 @@ function script.Create()
 	Turn(spore1, x_axis, math.rad(90))
 	Turn(spore2, x_axis, math.rad(90))
 	Turn(spore3, x_axis, math.rad(90))
-	
-	StartThread(DropDodoLoop)
-	StartThread(DropBasiliskLoop)
 end
 
 function script.AimFromWeapon(weaponNum)
 	if weaponNum == 1 then return firepoint
-	elseif weaponNum == 2 or weaponNum == 8  then return spore1
-	elseif weaponNum == 3 or weaponNum == 9  then return spore2
-	elseif weaponNum == 4 or weaponNum == 10 then return spore3
+	elseif weaponNum == 2 then return spore1
+	elseif weaponNum == 3 then return spore2
+	elseif weaponNum == 4 then return spore3
 	--elseif weaponNum == 5 then return body
 	else return body end
 end
@@ -186,16 +150,16 @@ function script.AimWeapon(weaponNum, heading, pitch)
 	elseif weaponNum == 4 then
 		local health, maxHealth = spGetUnitHealth(unitID)
 		if (health/maxHealth) < healthSpore3 then return true end
-	elseif (weaponNum >= 2 and weaponNum <= 4) or (weaponNum >= 8 and weaponNum <= 10) then return true
+	elseif weaponNum >= 2 and weaponNum <= 4 then return true
 	else return false
 	end
 end
 
 function script.QueryWeapon(weaponNum)
 	if weaponNum == 1 then return firepoint
-	elseif weaponNum == 2 or weaponNum == 8  then return spore1
-	elseif weaponNum == 3 or weaponNum == 9  then return spore2
-	elseif weaponNum == 4 or weaponNum == 10 then return spore3
+	elseif weaponNum == 2 then return spore1
+	elseif weaponNum == 3 then return spore2
+	elseif weaponNum == 4 then return spore3
 	--elseif weaponNum == 5 then
 	--	if feet then return leftFoot
 	--	else return rightFoot end

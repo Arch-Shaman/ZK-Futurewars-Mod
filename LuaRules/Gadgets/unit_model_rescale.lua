@@ -6,7 +6,7 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
---FIXME: I pulled this from zk bleeding edge. Once this is in stable remove this file so we can automatically get updates from upstream
+-- Stuff: I pulled this from zk git. delete this when zk updates
 
 function gadget:GetInfo()
 	return {
@@ -23,7 +23,6 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local NULL_PIECE = "[null]"
 local origPieceTable = {}
 
 VFS.Include("LuaRules/Utilities/tablefunctions.lua")
@@ -58,20 +57,11 @@ local function SetScale(unitID, base, scale)
 	Spring.SetUnitPieceMatrix(unitID, base, pieceTable)
 end
 
-local function FindBase(unitID)
-	local pieces = Spring.GetUnitPieceList(unitID)
-	for pieceNum = 1, #pieces do
-		if Spring.GetUnitPieceInfo(unitID, pieceNum).parent == NULL_PIECE then
-			return pieceNum
-		end
-	end
-end
-
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
 local function UnitModelRescale(unitID, scale)
-	local base = FindBase(unitID)
+	local base = Spring.GetUnitRootPiece(unitID)
 	if base then
 		if not origPieceTable[unitID] then
 			origPieceTable[unitID] = {Spring.GetUnitPieceMatrix(unitID, base)}
@@ -87,5 +77,21 @@ end
 
 GG.UnitModelRescale = UnitModelRescale
 
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
+local rescaleUnitDefIDs = {}
+for i = 1, #UnitDefs do
+	local scale = tonumber(UnitDefs[i].customParams.model_rescale)
+	if scale and scale ~= 1 and scale > 0 then
+		rescaleUnitDefIDs[i] = scale
+	end
+end
+
+if next(rescaleUnitDefIDs) then
+	function gadget:UnitCreated(unitID, unitDefID)
+		local scale = rescaleUnitDefIDs[unitDefID]
+		if not scale then
+			return
+		end
+
+		UnitModelRescale(unitID, scale)
+	end
+end

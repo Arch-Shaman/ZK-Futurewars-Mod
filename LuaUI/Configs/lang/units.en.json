@@ -281,7 +281,7 @@
 	},
 	"chicken_rafflesia" : {
 		"name" : "Rafflesia",
-		"description" : "Chicken Shield (Static)",
+		"description" : "Indestructible Chicken Shield (Anti-Artillery)",
 		"helptext" : "The Rafflesia protects nearby chicken units and structures with its shield."
 	},
 	"empiricaldpser" : {
@@ -835,8 +835,8 @@
 		"helptext" : "Designed as a specops riot, the Assailant is armed with a Chaingun. It's quite similiar to the older Reaver model, but cloaks and has a single heavy gun instead of two medium guns. Unfortunately, the micro plasma generator draws a lot of power, so now it can only autorepair while cloaked."
 	},
 	"chickenspire" : {
-		"name" : "Chicken Spire",
-		"description" : "Static Artillery",
+		"name" : "Greater Spire",
+		"description" : "Ultimate Artillery Chicken Menace",
 		"helptext" : "Long range static artillery."
 	},
 	"turretemp" : {
@@ -851,7 +851,7 @@
 	},
 	"chicken_dragon" : {
 		"name" : "White Dragon",
-		"description" : "Prime Assault Chicken",
+		"description" : "Ultimate Assault Chicken Menace",
 		"helptext" : "The White Dragons, senior guardians of the chicken hive, are monstrous beings second only to the queen herself. With a powerful stomp, lethal jaws, corrosive goo and a multitude of spores, they are a threat to be feared indeed."
 	},
 	"chickens" : {
@@ -875,8 +875,8 @@
 		"helptext" : "The inviolable Riot Commander makes use of the strongest armor ever put on a commander to keep it safe during combat. It's heavily armed, being able to quickly gain a second weapon. Defeat it with long range weapons or anti-heavy solutions."
 	},
 	"chickenbroodqueen" : {
-		"name" : "Chicken Brood Queen",
-		"description" : "Tends the Nest",
+		"name" : "Brood Princess",
+		"description" : "Artillery/Spawner Chicken Menace",
 		"helptext" : "The egg-laying brood queen is not quite as fearsome in combat as the other queen, but can in the long run present an even bigger threat. It produces all the different chicken breeds of the Thunderbirds."
 	},
 	"cloakaa" : {

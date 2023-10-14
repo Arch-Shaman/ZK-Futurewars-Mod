@@ -177,11 +177,12 @@ end]]
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --
--- Modular commander/PlanetWars handling
+-- Unitdef generation handling
 --
 
 VFS.Include('gamedata/modularcomms/unitdefgen.lua')
 VFS.Include('gamedata/planetwars/pw_unitdefgen.lua')
+VFS.Include('gamedata/chicken/chickendefgen.lua')
 local Utilities = VFS.Include('gamedata/utilities.lua')
 
 -- Handle obsolete keys in mods gracefully while they migrate

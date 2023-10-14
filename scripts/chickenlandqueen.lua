@@ -30,20 +30,18 @@ local tailAngle = math.rad(20)
 local bladeExtendSpeed = math.rad(600)
 local bladeRetractSpeed = math.rad(120)
 
-local PACE = 0.6/3
+local PACE = 0.6
 
 --variables
 local feet = true
 local jawNum = 1
 
-local malus = GG.malus or 1
-
 --maximum HP for additional weapons
-local healthSpore3 = 0.65
-local healthStomp = 0.8
-local healthDodoDrop = 0.7
-local healthBasiliskDrop = 0.55
-local healthTiamatDrop = 0.3
+local healthSpore3 = 0.55
+local healthStomp = 0.7
+local healthDodoDrop = 0.6
+local healthBasiliskDrop = 0.45
+local healthTiamatDrop = 0.2
 
 --signals
 local SIG_Aim = {
@@ -56,28 +54,6 @@ local SIG_Move = 16
 ----------------------------------------------------------
 local function RestoreAfterDelay()
 	Sleep(1000)
-end
-
-local function DropDodoLoop()
-	while true do
-		local health, maxHealth = spGetUnitHealth(unitID)
-		if (health/maxHealth) < healthDodoDrop then
-			EmitSfx(tail, 2048+4)
-		end
-		Sleep(1500 / malus)
-	end
-end
-
-local function DropBasiliskLoop()
-	while true do
-		local health, maxHealth = spGetUnitHealth(unitID)
-		 if (health/maxHealth) < healthTiamatDrop then
-			EmitSfx(tail, 2048+6)
-		elseif (health/maxHealth) < healthBasiliskDrop then
-			EmitSfx(tail, 2048+5)
-		end
-		Sleep(2000 / malus)
-	end
 end
 
 -- used for queen morph
@@ -188,7 +164,6 @@ function script.StopMoving()
 end
 
 function script.Create()
-	GG.UnitModelRescale(unitID, 3)
 	Turn(rightWing1, x_axis, math.rad(15), math.rad(45))
 	Turn(leftWing1, x_axis, math.rad(15), math.rad(45))
 	Turn(rightWing1, z_axis, math.rad(-40), math.rad(45))
@@ -207,25 +182,22 @@ function script.Create()
 	Turn(spore1, x_axis, math.rad(90))
 	Turn(spore2, x_axis, math.rad(90))
 	Turn(spore3, x_axis, math.rad(90))
-	
-	StartThread(DropDodoLoop)
-	StartThread(DropBasiliskLoop)
 end
 
 --weapon code
 --weapons (in order): spikes, firegoo, spores (3)
 
 function script.AimFromWeapon(weaponNum)
-	if weaponNum == 1 then return firepoint
-	elseif weaponNum == 2 or weaponNum == 8  then return spore1
-	elseif weaponNum == 3 or weaponNum == 9  then return spore2
-	elseif weaponNum == 4 or weaponNum == 10 then return spore3
+	if weaponNum == 1 or weaponNum == 2 then return firepoint
+	elseif weaponNum == 3 then return spore1
+	elseif weaponNum == 4 then return spore2
+	elseif weaponNum == 5 then return spore3
 	--elseif weaponNum == 5 then return body
 	else return body end
 end
 
 function script.AimWeapon(weaponNum, heading, pitch)
-	if weaponNum == 1 then
+	if weaponNum == 1 or weaponNum == 2 then
 		Signal(SIG_Aim[weaponNum])
 		SetSignalMask(SIG_Aim[weaponNum])
 		Turn(head, y_axis, heading, math.rad(250))
@@ -238,44 +210,41 @@ function script.AimWeapon(weaponNum, heading, pitch)
 	elseif weaponNum == 5 then
 		local health, maxHealth = spGetUnitHealth(unitID)
 		if (health/maxHealth) < healthSpore3 then return true end
-	elseif (weaponNum >= 2 and weaponNum <= 4) or (weaponNum >= 8 and weaponNum <= 10) then return true
+	elseif weaponNum >= 3 and weaponNum <= 5 then return true
 	else return false
 	end
 end
 
 function script.QueryWeapon(weaponNum)
-	if weaponNum == 1 then return firepoint
-	elseif weaponNum == 2 or weaponNum == 8  then return spore1
-	elseif weaponNum == 3 or weaponNum == 9  then return spore2
-	elseif weaponNum == 4 or weaponNum == 10 then return spore3
+	if weaponNum == 1 or weaponNum == 2 then return firepoint
+	elseif weaponNum == 3 then return spore1
+	elseif weaponNum == 4 then return spore2
+	elseif weaponNum == 5 then return spore3
 	--elseif weaponNum == 5 then
 	--	if feet then return leftFoot
 	--	else return rightFoot end
 	else return body end
 end
 
-function script.FireWeapon(weaponNum)
+local function JawAnim()
+	jawNum = jawNum + 1
+	if jawNum == 3 then jawNum = 1 end
+	local num = jawNum
+	local num2 = jawNum + 2
+	Turn(jaws[num].forearm, y_axis, -(jaws[num].angle), bladeExtendSpeed)
+	Turn(jaws[num].blade, y_axis, jaws[num].angle, bladeExtendSpeed)
+	Turn(jaws[num2].forearm, y_axis, -(jaws[num2].angle), bladeExtendSpeed)
+	Turn(jaws[num2].blade, y_axis, jaws[num2].angle, bladeExtendSpeed)
+	Sleep(600)
+	Turn(jaws[num2].forearm, y_axis, 0, bladeExtendSpeed)
+	Turn(jaws[num2].blade, y_axis, 0, bladeExtendSpeed)
+	Turn(jaws[num].forearm, y_axis, 0, bladeExtendSpeed)
+	Turn(jaws[num].blade, y_axis, 0, bladeExtendSpeed)
+end
+
+function script.Shot(weaponNum)
 	if weaponNum == 1 then
-		Turn(lforearmu, y_axis, -bladeAngle, bladeExtendSpeed)
-		Turn(lbladeu, y_axis, bladeAngle, bladeExtendSpeed)
-		Turn(lforearml, y_axis, -bladeAngle, bladeExtendSpeed)
-		Turn(lbladel, y_axis, bladeAngle, bladeExtendSpeed)
-		Turn(rforearmu, y_axis, bladeAngle, bladeExtendSpeed)
-		Turn(rbladeu, y_axis, -bladeAngle, bladeExtendSpeed)
-		Turn(rforearml, y_axis, bladeAngle, bladeExtendSpeed)
-		Turn(rbladel, y_axis, -bladeAngle, bladeExtendSpeed)
-		
-		Sleep(500)
-		
-		Turn(lforearmu, y_axis, 0, bladeRetractSpeed)
-		Turn(lbladeu, y_axis, 0, bladeRetractSpeed)
-		Turn(lforearml, y_axis, 0, bladeRetractSpeed)
-		Turn(lbladel, y_axis, 0, bladeRetractSpeed)
-		Turn(rforearmu, y_axis, 0, bladeRetractSpeed)
-		Turn(rbladeu, y_axis, 0, bladeRetractSpeed)
-		Turn(rforearml, y_axis, 0, bladeRetractSpeed)
-		Turn(rbladel, y_axis, 0, bladeRetractSpeed)
-		--WaitForTurn(lbladeu, y_axis)
+		StartThread(JawAnim)
 	end
 	return true
 end
