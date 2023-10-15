@@ -22,7 +22,7 @@
 	"death_17" : "%{name} had an unfortunate encounter with some freelance demolition experts.",
 	"death_18" : "%{name} thought chickens were cute enough to keep as pets.",
 	"death_19" : "%{name}'s comm turned out to be an explosive device.",
-	"death_20" : "%{name}'s experienced nonconsensual base renovation.",
+	"death_20" : "%{name} experienced nonconsensual base renovation.",
 	"death_21" : "%{name}'s presence is no longer needed here.",
 	"death_22" : "%{name}'s health bar depleted.",
 	"death_23" : "%{name} wasn't the hero we needed.",
@@ -131,7 +131,7 @@
 	"death_126" : "%{name} won't be back after these messages.",
 	"death_127" : "%{name} is dead as disco.",
 	"death_128" : "%{name} lost control of the situation!",
-	"death_129" : "%{name} speedran defeat any percent.",
+	"death_129" : "%{name} speedran Future Wars resign%%.",
 	"death_130" : "%{name} just won so hard it overflowed into a loss!",
 	"death_131" : "%{name} was told no."
 }
