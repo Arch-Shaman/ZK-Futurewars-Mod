@@ -1,0 +1,19 @@
+{
+	"header" : "Büyük Güncelleme: v38",
+	"entry_1" : "Bu güncelleme ile Komutan Savaşları oyun türünü kendi mod seçeneğiyle resmi olarak destekliyoruz. Etkinleştirmek için 'commwars = 1' kullanın. Buna ek olarak, tavuk oyun modunu yeniden düzenlemeye başladık. Süper silahlar da daha etkileşimli hale getirilmek üzere elden geçirildi. Enerji kaplamasının sorunları giderildi (çoğunlukla). Son olarak, deneyimi kolaylaştırmaya yardımcı olmak için bazı denge değişiklikleri ve hata düzeltmeleri yaptık.",
+	"entry_2" : "Yeni bir oyun modu eklendi: Komutan savaşları - Bu oyun modunda sadece komutanınız var. Komutanınızı Future War'un devasa komutan modülleriyle yükseltin ve düşman komutanı avlayın. Eşsiz bir kupa içerir.",
+	"entry_3" : "Tavuklar oyun modu da büyük bir revizyondan geçti. Gelecek savaşları tavukları artık çok daha zor ve çok daha dinamik. Koordineli dalgalar, güçlü tehdit tavukları, 2 yeni ödül ve bir chonky kraliçesi içeriyor.",
+	"entry_4" : "Snare de yeni bir süslü model ve baştan aşağı bir revizyon aldı. Birim artık önemli ölçüde güçlü ve pusuculara daha önce sahip olmadıkları önden saldırı gücünü vererek onları orta oyunda çok daha uygulanabilir hale getiriyor."
+	"entry_5" : "Ek olarak, yerelleştirme ile birlikte bu yeni süslü yama notlarını ekledik. Bu, büyük güncelleme başına yalnızca bir kez gösterilmelidir.",
+	"entry_6" : "Denge Değişiklikleri:",
+	"entry_7" : "Fabrikaların canı artırıldı. Froth'un dps'si biraz düşürüldü. Azimuth üzerinde yeniden çalışıldı. Hermit daha ağır bir saldırı birimi haline geldi. Divinity, hava hücumlarını aklı başında tutmaya yardımcı olmak için biraz zayıflatıldı. Striker eski geri tepmesini geri kazandı. Waylayer'ın dgun'ı düzeltildi.",
+	"entry_8" : "Ek olarak, istifa durumunun sinir bozucu hatası nihayet düzeltildi. Yeniden doldurma çubukları artık biriktirme silahları ve Liberator gibi süper silahlar için düzeltildi. Ek olarak, 2 iletişim durumunda, fazladan komutanı olan oyuncu, onlara yardımcı olmak için ek bir kaynak payı alacak. Düşmanlarınızı yenmeyi daha eğlenceli hale getirmek için ölüm mesajları da eklendi.",
+	"chicken_header" : "Oyun modu: Tavuklar",
+	"chicken_entry_1" : "Tavuklar büyük ordularla üssünüze topyekün saldırılar düzenlemek ve güçlerini yeniden toplamak için geri çekilmek arasında gidip gelecekler. Saldırılarını zayıflatmak için tavuklar dinlenirken tavuk tüneklerini yok ettiğinizden emin olun",
+	"chicken_entry_2" : "Tavuklar sonunda tehdit olarak bilinen inanılmaz güçlü tavuklar inşa etmeye başlayacaklar. Bitirmeden önce onları yok edin. Yapım aşamasındaki tehditler Raffesia'nın yok edilemez kalkanı tarafından korunur ve bu da onları topçu ateşine karşı bağışık hale getirir.",
+	"chicken_entry_3" : "Kovanın öfkesi zamanla artacak. Kovanın öfkesi %100'e ulaştığında, Tavuk Kraliçe savaş alanına gelecek (sonsuz modda değilseniz) ve tavuklar durmadan saldırmaya başlayacak. Tüm ateş gücünüzü tavuk kraliçesine odaklayın çünkü onun ölümü sürünün parçalanmasına neden olacaktır",
+	"comm_wars_header" : "Oyun modu: Komutan Savaşları",
+	"comm_wars_entry_1" : "Bu oyun modunda sadece komutanınıza erişiminiz var, başka hiçbir şeye erişiminiz yok. Komutanınız artık inşa edemez, sadece onarabilir ve geri alabilir. Komutan morph sistemi aracılığıyla daha fazla modül vererek komutanınızı yükseltin ve düşman komutanlarını yenin!",
+	"comm_wars_entry_2" : "Ek olarak, sadece komutanlara özel bir oyun modunda daha dengeli olması için birçok komutan modülünde ve silahında denge değişiklikleri yapıldı. Denge hala deneyseldir, bu nedenle geri bildirim çok takdir edilecektir",
+	"houserules" : "Ev Kuralları: "
+}

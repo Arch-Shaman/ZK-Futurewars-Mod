@@ -1,0 +1,19 @@
+{
+	"header" : "Główna aktualizacja: v38",
+	"entry_1" : "W tej aktualizacji oficjalnie wspieramy typ gry Commander Wars z własną opcją modów. Użyj 'commwars = 1', aby ją włączyć. Ponadto rozpoczęliśmy prace nad przeróbką trybu gry z kurczakami. Superbronie również zostały przerobione, aby były bardziej interaktywne. Nakładka energetyczna została naprawiona (w większości). Wreszcie, wprowadziliśmy pewne zmiany w balansie i poprawki błędów, aby pomóc wygładzić wrażenia z gry.",
+	"entry_2" : "Dodano nowy tryb gry: Wojny dowódców - W tym trybie gry masz tylko swojego dowódcę. Ulepsz swojego dowódcę za pomocą ogromnego arsenału modułów dowódczych Future War i zapoluj na dowódcę wroga. Zawiera unikalne trofeum.",
+	"entry_3" : "Tryb gry z kurczakami również doczekał się gruntownej przebudowy. Przyszłe wojny kurczaków są teraz o wiele, wiele trudniejsze i znacznie bardziej dynamiczne. Zawierają skoordynowane fale, potężne groźne kurczaki, 2 nowe nagrody i jedną chonky queen.",
+	"entry_4" : "Snare również otrzymał nowy fantazyjny model i został całkowicie przebudowany. Jednostka jest teraz znacznie silniejsza i daje zasadzkom siłę frontalnego ataku, której wcześniej brakowało, czyniąc je znacznie bardziej opłacalnymi w środkowej fazie gry",
+	"entry_5" : "Dodatkowo dodaliśmy nową, fantazyjną informację o aktualizacji, wraz z lokalizacją. Powinna ona pojawiać się tylko raz na dużą aktualizację",
+	"entry_6" : "Zmiany balansu:",
+	"entry_7" : "Zwiększono zdrowie fabryk. Nieznacznie zmniejszono obrażenia śmiertelne Froth. Azymut został przerobiony. Pustelnik stał się cięższą jednostką szturmową. Boskość została nieznacznie osłabiona, aby pomóc zachować rozsądek. Striker odzyskał dawny efekt odrzutu. Waylayer ma naprawioną broń dystansową.",
+	"entry_8" : "Ponadto naprawiono irytujący błąd stanu rezygnacji. Naprawiono paski przeładowania dla broni i superbroni, takich jak Liberator. Ponadto, w sytuacjach 2 comm, gracz z dodatkowymi dowódcami otrzyma dodatkowy udział zasobów, aby im pomóc. Dodano również komunikaty o śmierci, aby pokonywanie wrogów było przyjemniejsze",
+	"chicken_header" : "Tryb gry: Chicken",
+	"chicken_entry_1" : "Kurczaki będą na przemian przeprowadzać ataki na twoją bazę ogromnymi hordami i pozostawać w tyle, aby odzyskać siły. Upewnij się, że zniszczyłeś grzędę kurczaka, gdy kurczaki odpoczywają, aby osłabić ich ataki",
+	"chicken_entry_2" : "Kurczaki w końcu zaczną konstruować niewiarygodnie potężne kurczaki znane jako zagrożenia. Zniszcz je, zanim skończą. Budowane zagrożenia są chronione przez niezniszczalną tarczę rafezji, dzięki czemu są odporne na ostrzał artyleryjski",
+	"chicken_entry_3" : "Gniew roju będzie z czasem wzrastał. Gdy gniew ula osiągnie 100%, na polu bitwy pojawi się sama Królowa Kurczaków (chyba że jesteś w trybie nieskończonym), a kurczaki zaczną atakować bez przerwy. Skoncentruj całą swoją siłę ognia na królowej kurczaków, ponieważ jej śmierć spowoduje rozpad roju",
+	"comm_wars_header" : "Tryb gry: Wojny dowódców",
+	"comm_wars_entry_1" : "W tym trybie gry masz dostęp tylko do swojego dowódcy i niczego więcej. Dowódca nie może już budować, a jedynie naprawiać i odzyskiwać. Ulepsz swojego dowódcę, dając mu więcej modułów poprzez system morfowania dowódców i pokonaj wrogich dowódców!",
+	"comm_wars_entry_2" : "Dodatkowo wprowadzono zmiany w balansie wielu modułów i broni dowódców, aby uczynić je bardziej zrównoważonymi w trybie gry tylko dla dowódców. Balans jest jednak nadal eksperymentalny, więc opinie będą bardzo mile widziane",
+	"houserules" : "Zasady domowe: "
+}
