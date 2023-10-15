@@ -45,9 +45,12 @@ local osClock               = os.clock
 --------------------------------------------------------------------------------
 -- Variables/config
 
-local briefing = VFS.Include("LuaUI/Configs/briefing.lua")
+
+
+local briefing, writeVersion = VFS.Include("LuaUI/Configs/briefing.lua")
 
 if #briefing.entries == 0 then
+	widgetHandler:RemoveWidget(self)
 	return
 end
 
@@ -71,6 +74,8 @@ local textY, lineOffset, yCenter, xCut, mouseOver
 -- Utilities
 
 VFS.Include("LuaRules/Utilities/tablefunctions.lua")
+local configLocation = "luaui\\config\\fw_patchnotes.lua"
+
 
 local function GetUnitDefFromIconFilename(filename)
 -- 	Spring.Echo('Searching for unit in filename: ' .. filename)
@@ -88,6 +93,14 @@ end
 local function GetUnitTooltip(udef)
 	return spGetHumanName(udef) .. " - " .. spGetDescription(udef) .. "\n\255\1\255\1" .. WG.Translate("interface", "space_click_show_stats")
 end
+
+local function WriteVersionToFile()
+	local file = io.open(configLocation, "w")
+	file:write("return " .. "\"" .. writeVersion .. "\"\n")
+	file:flush()
+	file:close()
+end
+
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -219,7 +232,12 @@ local function InitializeBriefingWindow()
 		local entry = entries[i]
 		local str = ""
 		for n = 1, #entry do
-			str = str..entry[n].."\n"
+			if entry[n] ~= "" then
+				Spring.Echo("Translating '" .. entry[n] .. "'")
+				str = str .. WG.Translate("briefing", entry[n])
+			else
+				str = str..entry[n].."\n"
+			end
 		end
 		textSize = planetTextHandler.AddEntry(str, entry.fontsize or 14, entry.image)
 	end
@@ -254,8 +272,15 @@ local function InitializeBriefingWindow()
 		end
 	end
 	
+	function externalFunctions.Dispose()
+		briefingWindow:Dispose()
+	end
+	
 	function externalFunctions.Hide()
 		briefingWindow:SetVisibility(false)
+		WriteVersionToFile()
+		briefingWindow:Dispose()
+		widgetHandler:RemoveWidget(self)
 	end
 
 	return externalFunctions
@@ -264,8 +289,28 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-function widget:Initialize()
-	Chili = WG.Chili
+local function OnLocaleChanged()
+	if briefingWindow then
+		briefingWindow:Dispose()
+	end
 	briefingWindow = InitializeBriefingWindow()
 	briefingWindow.Show()
+end
+	
+
+function widget:Initialize()
+	if Spring.GetGameFrame() < 1 then
+		Chili = WG.Chili
+		WG.InitializeTranslation(OnLocaleChanged, GetInfo().name)
+	else
+		widgetHandler:RemoveWidget(self)
+	end
+end
+
+function widget:GameStart()
+	if briefingWindow then
+		briefingWindow.Dispose()
+		--WriteVersionToFile()
+		widgetHandler:RemoveWidget(self)
+	end
 end
