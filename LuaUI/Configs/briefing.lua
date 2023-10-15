@@ -36,7 +36,7 @@ end
 
 local briefing = {
 	modname = Game.gameName,
-	version = version,
+	version = Game.gameVersion,
 	entries = {}
 }
 
