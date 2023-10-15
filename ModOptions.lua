@@ -111,6 +111,14 @@ local options = {
 		def = false,
 	},
 	{
+		key = "houserules",
+		name = "House Rules",
+		desc = "Add some rules here. This will popup during pregame to remind people of rules set here.",
+		type = "string",
+		section= 'a_important',
+		def = "",
+	},
+	{
 		key = "isplanetwars",
 		name = "Planet Wars",
 		desc = "This setting is used to transport important information at the end of the game to FW infra.",
