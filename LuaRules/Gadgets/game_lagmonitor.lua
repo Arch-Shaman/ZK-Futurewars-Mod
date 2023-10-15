@@ -12,16 +12,27 @@ end
 
 if not gadgetHandler:IsSyncedCode() then
 	-- UI Transport --
+	local function GetTeamLeaderID(teamID)
+		if teamID then
+			return select(2, Spring.GetTeamInfo(teamID))
+		else
+			return
+		end
+	end
 	
-	local function SendAFKMsg(_, playerID, playerID2)
+	local function SendAFKMsg(_, teamID, teamID2)
 		--Spring.Echo("MakeUpdate: " .. tostring(allyTeamID))
 		if Script.LuaUI('SendAFKMessage') then
+			local playerID = GetTeamLeaderID(teamID)
+			local playerID2 = GetTeamLeaderID(teamID2)
 			Script.LuaUI.SendAFKMessage(playerID, playerID2)
 		end
 	end
 	
-	local function SendPlayerResignedMessage(_, player1, player2, messageID)
+	local function SendPlayerResignedMessage(_, team1, team2, messageID)
 		if Script.LuaUI('SendPlayerResignedMessage') then
+			local player1 = GetTeamLeaderID(team1)
+			local player2 = GetTeamLeaderID(team2)
 			Script.LuaUI.SendPlayerResignedMessage(player1, player2, messageID)
 		end
 	end
@@ -77,6 +88,7 @@ local FROM_AFK_THRESHOLD = 5 -- going below this marks you non-AFK
 local PING_TIMEOUT = 2000 -- ms
 
 local debugAllyTeam
+local deathMessageCount = 131
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -316,9 +328,11 @@ local function DoUnitGiveAway(allyTeamID, recieveTeamID, giveAwayTeams, doPlayer
 		
 		-- Send message
 		if giveResigned then
-			spEcho("game_message: " .. giveName .. " resigned, giving all units to " .. recieveName)
+			--spEcho("game_message: " .. giveName .. " resigned, giving all units to " .. recieveName)
+			SendToUnsynced("SendPlayerResignedMessage", giveTeamID, recieveTeamID, math.random(1, deathMessageCount))
 		elseif #units > 0 then
-			spEcho("game_message: Giving all units of ".. giveName .. " to " .. recieveName .. " due to lag/AFK")
+			SendToUnsynced("SendAFKMsg", giveTeamID, recieveTeamID)
+			--spEcho("game_message: Giving all units of ".. giveName .. " to " .. recieveName .. " due to lag/AFK")
 		end
 	end
 end
