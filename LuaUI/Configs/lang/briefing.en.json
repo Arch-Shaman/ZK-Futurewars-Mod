@@ -1,5 +1,5 @@
 {
-	"header" : "Major Update: v38",
+	"update_header" : "Major Update: v38",
 	"entry_1" : "This update sees us officially supporting the Commander Wars game type with its own modoption. Use 'commwars = 1' to enable it. Additionally, we have started on a rework to the chicken game mode. Superweapons have also been reworked to make them more interactive. The energy overlay has had its issues fixed (for the most part). Lastly, we have some balance changes and bug fixes to help smooth over the experience.",
 	"entry_2" : "A new gamemode has been added: Commander wars - In this gamemode you only have your commander. Upgrade your commander with Future War's massive arsonal of commander modules and hunt down the enemy commander. Features a unique trophy.",
 	"entry_3" : "The chickens gamemode also received a massive overhaul. Future wars chickens are now much, much harder and significantly more dynamic. Featuring coordinated waves, powerful menace chickens, 2 new awards, and one chonky queen.",

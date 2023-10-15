@@ -1,5 +1,5 @@
 {
-	"header" : "Büyük Güncelleme: v38",
+	"update_header" : "Büyük Güncelleme: v38",
 	"entry_1" : "Bu güncelleme ile Komutan Savaşları oyun türünü kendi mod seçeneğiyle resmi olarak destekliyoruz. Etkinleştirmek için 'commwars = 1' kullanın. Buna ek olarak, tavuk oyun modunu yeniden düzenlemeye başladık. Süper silahlar da daha etkileşimli hale getirilmek üzere elden geçirildi. Enerji kaplamasının sorunları giderildi (çoğunlukla). Son olarak, deneyimi kolaylaştırmaya yardımcı olmak için bazı denge değişiklikleri ve hata düzeltmeleri yaptık.",
 	"entry_2" : "Yeni bir oyun modu eklendi: Komutan savaşları - Bu oyun modunda sadece komutanınız var. Komutanınızı Future War'un devasa komutan modülleriyle yükseltin ve düşman komutanı avlayın. Eşsiz bir kupa içerir.",
 	"entry_3" : "Tavuklar oyun modu da büyük bir revizyondan geçti. Gelecek savaşları tavukları artık çok daha zor ve çok daha dinamik. Koordineli dalgalar, güçlü tehdit tavukları, 2 yeni ödül ve bir chonky kraliçesi içeriyor.",
