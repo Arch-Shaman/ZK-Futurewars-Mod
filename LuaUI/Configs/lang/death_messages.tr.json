@@ -1,4 +1,5 @@
 {
+	"team_destroyed" : "%{name} yok edildi!",
 	"afk_returned": "%{name} artık gecikmiyor veya uzaklaşmıyor. Birimleri geri dönüyor.",
 	"afk_given": "%{name} AFK veya gecikmeli. Birimleri %{name2}'e aktarılıyor.",
 	"giving_units": "%{name1}'in birimleri %{name2}'ye veriliyor.",

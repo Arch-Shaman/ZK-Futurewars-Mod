@@ -1,4 +1,5 @@
 {
+	"team_destroyed" : "%{name} has been destroyed!",
 	"afk_returned" : "%{name} is no longer lagging or away. Returning their units.",
 	"afk_given" : "%{name} is AFK or lagging. Transferring their units to %{name2}.",
 	"giving_units": "Giving %{name1}'s units to %{name2}.",

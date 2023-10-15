@@ -1,4 +1,5 @@
 {
+	"team_destroyed": "%{name} został zniszczony!",
 	"afk_returned": "%{name} już nie pozostaje w tyle ani nie oddala się. Zwraca swoje jednostki.",
 	"afk_given": "%{name} jest AFK lub ma opóźnienia. Przenoszę swoje jednostki do %{name2}.",
 	"giving_units": "Dawanie jednostek %{name1} %{name2}.",

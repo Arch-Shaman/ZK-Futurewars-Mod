@@ -1,4 +1,5 @@
 {
+	"team_destroyed" : "%{name} 已被摧毁！",
 	"afk_returned" : "%{name} 不再落后或离开。返回他们的单位。",
 	"afk_given" : "%{name} AFK 或落后。将他们的单位转移到 %{name2}。",
 	"giving_units": "将 %{name1} 的单位赋予 %{name2}。",
