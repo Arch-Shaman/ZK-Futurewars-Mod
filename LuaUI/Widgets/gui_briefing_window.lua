@@ -232,7 +232,7 @@ local function InitializeBriefingWindow()
 		local entry = entries[i]
 		local str = ""
 		for n = 1, #entry do
-			if entry[n] ~= "" then
+			if entry[n] ~= "" and not entries[i].notranslation then
 				Spring.Echo("Translating '" .. entry[n] .. "'")
 				str = str .. WG.Translate("briefing", entry[n])
 			else
@@ -251,7 +251,7 @@ local function InitializeBriefingWindow()
 		right = "38%",
 		bottom = 10,
 		height = 60,
-		caption = "Continue",
+		caption = WG.Translate("interface", "menu_close"),
 		fontsize = 26,
 		OnClick = {
 			function ()

@@ -47,8 +47,8 @@ if showBriefing then
 		{"entry_2", image = "unitpics/commstrike.png"},
 		{"entry_3", image = "unitpics/roost.png"},
 		{"entry_4", image = "unitpics/cloakassault.png"},
-		{"entry_5", fontsize = 18},
-		{"entry_6"},
+		{"entry_5"},
+		{"entry_6", fontsize = 18},
 		{"entry_7"},
 		{"entry_8"},
 	}
@@ -78,7 +78,7 @@ if (tonumber(modoptions["commwars"]) or 0) == 1 then
 	}
 	if modoptions.houserules and modoptions.houserules ~= "" then
 		newEntries[6] = {"houserules", fontsize = 24}
-		newEntries[7] = {modoptions.houserules}
+		newEntries[7] = {modoptions.houserules, notranslation = true}
 	end
 	briefing.entries = PreprendTable(briefing.entries, newEntries)
 end
