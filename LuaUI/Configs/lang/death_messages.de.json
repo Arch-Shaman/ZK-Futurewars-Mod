@@ -128,5 +128,10 @@
 	"death_123" : "%{name} hätte mit Cybran gehen sollen.",
 	"death_124" : "%{name} hätte Schattenpriester wählen sollen.",
 	"death_125" : "%{name} erlebte ein Massenaussterben.",
-	"death_126" : "%{name} wird nach diesen Nachrichten nicht zurück sein."
+	"death_126" : "%{name} wird nach diesen Nachrichten nicht zurück sein.",
+	"death_127" : "%{name} ist tot als Disco.",
+	"death_128" : "%{name} hat die Kontrolle über die Situation verloren!",
+	"death_129" : "%{name} hat versucht, den Speedrun Future Wars resign%% durchzuführen.",
+	"death_130" : "%{name} hat gerade so stark gewonnen, dass er in einen Verlust übergelaufen ist!",
+	"death_131" : "%{name} wurde 'nein' gesagt."
 }
