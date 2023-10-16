@@ -725,7 +725,8 @@ function widget:KeyRelease(key)
 end
 
 function widget:DrawWorldPreUnit()
-	if Spring.IsGUIHidden() then return end
+	local showecoMode = WG.showeco
+	if Spring.IsGUIHidden() or (not showecoMode and not playerIsPlacingPylon) then return end
 	if highlightQueue and not (playerIsPlacingPylon or alwaysHighlight) then
 		glCallList(drawQueueList)
 	elseif playerIsPlacingPylon or alwaysHighlight then
@@ -734,8 +735,7 @@ function widget:DrawWorldPreUnit()
 			HighlightPlacement(-currentCommand)
 		end
 	end
-	local showecoMode = WG.showeco
-	if showecoMode or playerHasBuilderSelected then
+	if showecoMode or playerIsPlacingPylon then
 		HighlightPylons()
 		glColor(1,1,1,1)
 		return
