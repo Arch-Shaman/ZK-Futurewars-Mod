@@ -684,7 +684,7 @@ local function ProcessWeapon(unitID, weaponID, ci, addPercent)
 		else
 			reloadTime = GetUnitWeaponState(unitID, weaponID, 'reloadTime')
 		end
-		if reloadTime >= options.minReloadTime.value then
+		if reloadTime and reloadTime >= options.minReloadTime.value then
 			-- When weapon is disabled the reload time is constantly set to be almost complete.
 			-- It results in a bunch of units walking around with 99% reload bars.
 			if (reloadFrame > gameFrame + 6) or ((not reloadOverride) and (GetUnitRulesParam(unitID, "reloadPaused") ~= 1)) then -- UPDATE_PERIOD in unit_attributes.lua
