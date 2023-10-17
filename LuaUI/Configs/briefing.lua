@@ -6,32 +6,26 @@ local function PreprendTable(prependee, prepender)
 end
 
 local showBriefing = false
-local version
-local writeVersion
-
 local configLocation = "luaui\\config\\fw_patchnotes.lua"
-
-do
-	local gameVersion = Game.gameVersion
-	gameVersion = string.gsub(gameVersion, "v", "")
-	version = gameVersion
-	local splittedVersion = {}
-	gameVersion = string.gsub(gameVersion, ".", " ")
-	for str in string.gmatch(gameVersion, "%S+") do
-		splittedVersion[#splittedVersion + 1] = str
-	end
-	local lastSeenVersion
-	if VFS.FileExists(configLocation) then
-		lastSeenVersion = VFS.Include(configLocation)
-	else
-		lastSeenVersion = ""
-	end
-	if lastSeenVersion == "" then
-		showBriefing = true
-	else
-		showBriefing = lastSeenVersion ~= splittedVersion[2]
-	end
-	writeVersion = splittedVersion[2]
+local gameVersion = Game.gameVersion
+gameVersion = string.gsub(gameVersion, "v", "")
+version = gameVersion
+local splittedVersion = {}
+gameVersion = string.gsub(gameVersion, ".", " ")
+for str in string.gmatch(gameVersion, "%S+") do
+	splittedVersion[#splittedVersion + 1] = str
+end
+local lastSeenVersion
+if VFS.FileExists(configLocation) then
+	lastSeenVersion = VFS.Include(configLocation)
+else
+	lastSeenVersion = ""
+end
+if lastSeenVersion == "" then
+	showBriefing = true
+else
+	local modoptions = Spring.GetModOptions()
+	showBriefing = lastSeenVersion ~= splittedVersion[2] and not ((modoptions.commwars and modoptions.commwars == "1") or Spring.GetGameRulesParam("chicken_difficulty") ~= nil)
 end
 
 local briefing = {

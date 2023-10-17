@@ -47,11 +47,33 @@ local osClock               = os.clock
 
 
 
-local briefing, writeVersion = VFS.Include("LuaUI/Configs/briefing.lua")
+local briefing = VFS.Include("LuaUI/Configs/briefing.lua")
+local writeVersion
+local showBriefing = false
 
-if #briefing.entries == 0 then
-	widgetHandler:RemoveWidget(self)
-	return
+do
+	local configLocation = "luaui\\config\\fw_patchnotes.lua"
+	local gameVersion = Game.gameVersion
+	local splittedVersion = {}
+	gameVersion = string.gsub(gameVersion, "v", "")
+	for str in string.gmatch(gameVersion, "%d+") do
+		--Spring.Echo("[Briefing]: " .. str)
+		splittedVersion[#splittedVersion + 1] = str
+	end
+	local lastSeenVersion
+	if VFS.FileExists(configLocation) then
+		lastSeenVersion = VFS.Include(configLocation)
+	else
+		lastSeenVersion = ""
+	end
+	if lastSeenVersion == "" then
+		showBriefing = true
+	else
+		local modoptions = Spring.GetModOptions()
+		showBriefing = lastSeenVersion ~= splittedVersion[2] or (modoptions.commwars and modoptions.commwars == "1") or Spring.GetGameRulesParam("chicken_difficulty") ~= nil
+		--Spring.Echo("showBriefing: " .. tostring(showBriefing))
+	end
+	writeVersion = splittedVersion[2]
 end
 
 local Chili
@@ -233,7 +255,7 @@ local function InitializeBriefingWindow()
 		local str = ""
 		for n = 1, #entry do
 			if entry[n] ~= "" and not entries[i].notranslation then
-				Spring.Echo("Translating '" .. entry[n] .. "'")
+				--Spring.Echo("Translating '" .. entry[n] .. "'")
 				str = str .. WG.Translate("briefing", entry[n])
 			else
 				str = str..entry[n].."\n"
@@ -299,6 +321,11 @@ end
 	
 
 function widget:Initialize()
+	if #briefing.entries == 0 or not showBriefing then
+		--Spring.Echo("No briefing required.")
+		widgetHandler:RemoveWidget(self)
+		return
+	end
 	if Spring.GetGameFrame() < 1 then
 		Chili = WG.Chili
 		WG.InitializeTranslation(OnLocaleChanged, GetInfo().name)
