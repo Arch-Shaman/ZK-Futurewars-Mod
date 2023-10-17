@@ -63,6 +63,7 @@ do
 	local lastSeenVersion
 	if VFS.FileExists(configLocation) then
 		lastSeenVersion = VFS.Include(configLocation)
+		if lastSeenVersion == nil then lastSeenVersion = "" end
 	else
 		lastSeenVersion = ""
 	end
