@@ -1,5 +1,6 @@
 {
 	"update_header" : "Großes Update: v38",
+	"shameless_plug" : "Wenn dir Future Wars gefällt und du gerne Feedback zum Projekt geben oder dich mit anderen Spielern austauschen möchtest, kannst du unserem Discord beitreten: https://discord.com/invite/GMUnRGUuSy oder #fw auf dem zk-Server.",
 	"entry_1" : "Mit diesem Update unterstützen wir offiziell den Spieltyp Commander Wars mit einer eigenen Modoption. Benutzt 'commwars = 1' um ihn zu aktivieren. Außerdem haben wir mit der Überarbeitung des Chicken-Spielmodus begonnen. Die Superwaffen wurden ebenfalls überarbeitet, um sie interaktiver zu machen. Die Probleme mit dem Energie-Overlay wurden behoben (zum größten Teil). Zu guter Letzt haben wir einige Balance-Änderungen und Fehlerbehebungen vorgenommen, um das Spielerlebnis zu verbessern.",
 	"entry_2" : "Es wurde ein neuer Spielmodus hinzugefügt: Commander wars - In diesem Spielmodus hast du nur deinen Commander. Rüste deinen Commander mit dem riesigen Arsenal an Commander-Modulen von Future War auf und mache Jagd auf den gegnerischen Commander. Enthält eine einzigartige Trophäe.",
 	"entry_3" : "Der Hühnerspielmodus wurde ebenfalls massiv überarbeitet. Die Hühner von Future Wars sind jetzt viel, viel schwieriger und wesentlich dynamischer. Mit koordinierten Wellen, mächtigen Bedrohungshühnern, 2 neuen Auszeichnungen und einer ultraschweren Königin.",

@@ -45,6 +45,9 @@ if showBriefing then
 		{"entry_6", fontsize = 18},
 		{"entry_7"},
 		{"entry_8"},
+		{""},
+		{""},
+		{"shameless_plug"},
 	}
 end
 
