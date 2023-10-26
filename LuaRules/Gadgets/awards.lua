@@ -664,20 +664,6 @@ function gadget:GameOver(winningAllys)
 		local unitDefID = spGetUnitDefID(unitID)
 		gadget:UnitDestroyed(unitID, unitDefID, teamID)
 	end
-
-	if isCommwars and winningAllys and #winningAllys > 0 then
-		for i = 1, #winningAllys do
-			local allyTeam = winningAllys[i]
-			local teamList = Spring.GetTeamList(allyTeam)
-			for j = 1, #teamList do
-				local teamID = teamList[j]
-				local teamUnits = #Spring.GetTeamUnits(teamID)
-				if teamUnits > 0 then
-					awardAward(teamID, "commwars", "CommWars Victory: " .. awardData["head"][teamID] .. " comms eliminated.")
-				end
-			end
-		end
-	end
 	local chickenDifficulty = spGetGameRulesParam("chicken_difficulty") or -1
 	if chickenDifficulty > 0 then
 		-- chicken awards
@@ -724,8 +710,21 @@ function gadget:GameOver(winningAllys)
 			AddAwardPoints('pwn', team, Spring.Utilities.GetHiddenTeamRulesParam(team, "stats_history_damage_dealt_current") or 0)
 		end
 	end
-
 	ProcessAwardData()
+	if isCommwars and winningAllys and #winningAllys > 0 then
+		for i = 1, #winningAllys do
+			local allyTeam = winningAllys[i]
+			local teamList = Spring.GetTeamList(allyTeam)
+			for j = 1, #teamList do
+				local teamID = teamList[j]
+				local teamUnits = #Spring.GetTeamUnits(teamID)
+				local killValue = awardData["head"][teamID]
+				if teamUnits > 0 then
+					awardAward(teamID, "commwars", "CommWars Victory: " .. killValue .. " comms eliminated.")
+				end
+			end
+		end
+	end
 
 	_G.awardList = awardList
 end
