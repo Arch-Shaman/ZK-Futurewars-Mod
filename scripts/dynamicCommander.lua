@@ -258,8 +258,6 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 	
 	if weapon1 then
 		if weapon2 then
-			local reload1 = Spring.GetUnitWeaponState(unitID, weapon1, 'reloadTime')
-			local reload2 = Spring.GetUnitWeaponState(unitID, weapon2, 'reloadTime')
 			Spring.SetUnitRulesParam(unitID, "primary_weapon_override",  weapon1, INLOS)
 			Spring.SetUnitRulesParam(unitID, "secondary_weapon_override",  weapon2, INLOS)
 			
