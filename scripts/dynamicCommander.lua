@@ -161,7 +161,7 @@ local function DoExtraWeaponStuff(extraInfo, weaponNum, wd, weaponID)
 	if ei.reloadBonus ~= 0 or ei.reloadOverride then
 		local reloadBonus
 		if ei.reloadBonus < 0 then
-			reloadBonus = 1 / -ei.reloadBonus
+			reloadBonus = 1 / (-ei.reloadBonus + 1)
 		else
 			reloadBonus = 1 + ei.reloadBonus
 		end
