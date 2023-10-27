@@ -155,10 +155,52 @@ local function GetCegTable(wd)
 	return cegs
 end
 
-local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, damageMult)
+local function DoExtraWeaponStuff(extraInfo, weaponNum, wd, weaponID)
+	local INLOS = {inlos = true}
+	local ei = extraInfo
+	if ei.reloadBonus ~= 1 then
+		local newReloadTime = math.ceil(((wd.reload * 30) * ei.reloadBonus)) / 30
+		Spring.SetUnitWeaponState(unitID, weaponID, "reloadTime", newReloadTime)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_basereload", newReloadTime, INLOS)
+	end
+	if ei.burstOverride then
+		Spring.SetUnitWeaponState(unitID, weaponID, "burst", ei.burstOverride)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_bursts")
+	end
+	if ei.burstRateOverride then
+		Spring.SetUnitWeaponState(unitID, weaponID, "burstRate", ei.burstRateOverride)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_baseburstrate", ei.burstRateOverride, INLOS)
+	end
+	if ei.accuracyBonus ~= 1 or ei.accuracyOverride then
+		local newAccuracy = ei.accuracyOverride or wd.accuracy
+		newAccuracy = newAccuracy - (newAccuracy * (1 - ei.accuracyBonus))
+		Spring.SetUnitWeaponState(unitID, weaponID, "accuracy", newAccuracy)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_accuracy", newAccuracy, INLOS)
+	end
+	if ei.projectileSpeedBonus ~= 1 then
+		local newSpeed = math.max(wd.projectilespeed * ei.projectileSpeedBonus, 10)
+		Spring.SetUnitWeaponState(unitID, weaponID, "projectileSpeed", newSpeed)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_speed", newSpeed, INLOS)
+	end
+	if ei.projectileBonus ~= 0 then
+		local newProjectileCount = math.max(wd.projectiles + ei.projectileBonus, 1)
+		Spring.SetUnitWeaponState(unitID, weaponID, "projectiles", newProjectileCount)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_projectiles", newProjectileCount, INLOS)
+	end
+	if ei.sprayAngleBonus then
+		local newSprayAngle = math.max(wd.sprayAngle + ei.sprayAngleBonus, 0)
+		Spring.SetUnitWeaponState(unitID, weaponID, "sprayAngle", newSprayAngle)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "sprayangle", newSprayAngle, INLOS)
+	end
+end
+
+local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, damageMult, extraInfo)
 	local weaponDef1 = weaponName1 and unitWeaponNames[weaponName1]
 	local weaponDef2 = weaponName2 and unitWeaponNames[weaponName2]
+	local baseWeaponDef1 = 
 	local shieldDef = shieldName and unitWeaponNames[shieldName]
+	local wd1 = weaponDef1 and WeaponDefs[weaponDef1.weaponDefID]
+	local wd2 = weaponDef2 and WeaponDefs[weaponDef2.weaponDefID] or nil
 	
 	weapon1 = weaponDef1 and weaponDef1.num
 	weapon2 = weaponDef2 and (weaponDef2.num2 or weaponDef2.num)
@@ -222,12 +264,14 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 		Spring.SetUnitWeaponState(unitID, weapon1, "range", range)
 		Spring.SetUnitWeaponDamages(unitID, weapon1, "dynDamageRange", range)
 		
+		
 		local damages = WeaponDefs[weaponDef1.weaponDefID].damages
 		for k, v in pairs(damages) do
 			if type(k) == "number" then
 				Spring.SetUnitWeaponDamages(unitID, weapon1, k, v * damageMult)
 			end
 		end
+		DoExtraWeaponStuff(extraInfo[1], 1, wd1, weapon1)
 	end
 	
 	if weapon2 then
@@ -254,6 +298,7 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 				Spring.SetUnitWeaponDamages(unitID, weapon2, k, v * damageMult)
 			end
 		end
+		DoExtraWeaponStuff(extraInfo[2], 2, wd2, weapon2)
 	end
 	
 	if weapon1 then
