@@ -185,6 +185,7 @@ local function DoExtraWeaponStuff(extraInfo, weaponNum, wd, weaponID)
 		Spring.SetUnitRulesParam(unitID, weaponID .. "_accuracy", newAccuracy, INLOS)
 	end
 	if ei.projectileSpeedBonus ~= 1 then
+		if ei.projectileSpeedBonus < 0.05 then ei.projectileSpeedBonus = 0.05 end
 		local newSpeed = math.max(wd.projectilespeed * ei.projectileSpeedBonus, 10)
 		Spring.SetUnitWeaponState(unitID, weaponID, "projectileSpeed", newSpeed)
 		Spring.SetUnitRulesParam(unitID, weaponID .. "_speed", newSpeed, INLOS)
