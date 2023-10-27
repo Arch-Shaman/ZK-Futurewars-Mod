@@ -205,8 +205,7 @@ end
 
 local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, damageMult, extraInfo)
 	local weaponDef1 = weaponName1 and unitWeaponNames[weaponName1]
-	local weaponDef2 = weaponName2 and unitWeaponNames[weaponName2]
-	local baseWeaponDef1 = 
+	local weaponDef2 = weaponName2 and unitWeaponNames[weaponName2] 
 	local shieldDef = shieldName and unitWeaponNames[shieldName]
 	local wd1 = weaponDef1 and WeaponDefs[weaponDef1.weaponDefID]
 	local wd2 = weaponDef2 and WeaponDefs[weaponDef2.weaponDefID] or nil
