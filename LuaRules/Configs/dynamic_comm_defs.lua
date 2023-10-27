@@ -121,6 +121,33 @@ local function ApplyHeavyOrdinance2(modules, sharedData)
 	end
 end
 
+local function ApplyHeavyBarrel(modules, sharedData, weaponNum)
+	local acceptableWeapons = {
+		["commweapon_shotgun"] = true,
+		["commweapon_heavyrifle"] = true,
+		["commweapon_shotgun_disrupt"] = true,
+		["commweapon_heavyrifle_disrupt"] = true,
+		["commweapon_sunburst"] = true,
+	}
+	local shotguns = {
+		["commweapon_shotgun"] = true,
+		["commweapon_shotgun_disrupt"] = true,
+	}
+	if weaponNum == 1 then
+		if sharedData.weapon1 and acceptableWeapons[sharedData.weapon1] then
+			if shotguns[sharedData.weapon1] then
+				sharedData.reloadOverride1 = 3.0
+				sharedData.burstOverride1 = 2
+				sharedData.burstRateOverride1 = 0.1
+				sharedData.projectileBonus1 = 5
+				sharedData.sprayAngleOverride1 = 2000
+			end
+		end
+	else
+		
+	end
+end
+
 local function ApplyShotgunModule(modules, sharedData)
 	local upgrade = {
 		["commweapon_leolaser"] = "commweapon_leolaser_shotgun",
@@ -1738,6 +1765,41 @@ local moduleDefs = {
 			-- Damage boost is applied via clone swapping
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.15
 			sharedData.healthBonus = (sharedData.healthBonus or 0) + 200*HP_MULT
+		end
+	},
+	{
+		name = "module_alphastrike",
+		humanName = "Alpha Strike",
+		description = "Provides a 100% boost in firepower. Increases reload by 50%.\nGhost Exclusive.",
+		image = moduleImagePath .. "module_alphastrike.png",
+		limit = 4,
+		cost = 100 * COST_MULT,
+		requireLevel = 4,
+		slotType = "module",
+		requireChassis = {"strike"},
+		prohibitingModules = {"module_autoloader"},
+		applicationFunction = function (modules, sharedData)
+			-- Damage boost is applied via clone swapping
+			sharedData.damageMult = (sharedData.damageMult or 1) + 1
+			sharedData.reloadBonus = (sharedData.reloadBonus or 0) - 0.5
+		end
+	},
+	{
+		name = "module_autoloader",
+		humanName = "Rapid Autoloader",
+		description = "Reduces reload time by 25%. Reduces damage by 25%. Minimum 10% damage.\nGhost Exclusive.",
+		image = moduleImagePath .. "module_reloader.png",
+		limit = 8,
+		cost = 100 * COST_MULT,
+		requireLevel = 4,
+		slotType = "module",
+		requireChassis = {"strike"},
+		prohibitingModules = {"module_alphastrike"},
+		applicationFunction = function (modules, sharedData)
+			-- Damage boost is applied via clone swapping
+			sharedData.damageMult = (sharedData.damageMult or 1) - 0.25
+			if sharedData.damageMult < 0.1 then sharedData.damageMult = 0.1 end
+			sharedData.reloadBonus = (sharedData.reloadBonus or 0) + 0.25
 		end
 	},
 	{
