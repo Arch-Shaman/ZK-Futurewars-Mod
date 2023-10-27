@@ -1770,36 +1770,35 @@ local moduleDefs = {
 	{
 		name = "module_alphastrike",
 		humanName = "Alpha Strike",
-		description = "Provides a 100% boost in firepower. Increases reload by 50%.\nGhost Exclusive.",
+		description = "Provides a 100% boost in firepower. Increases reload by 75%.\nGhost Exclusive.",
 		image = moduleImagePath .. "module_alphastrike.png",
 		limit = 4,
 		cost = 100 * COST_MULT,
-		requireLevel = 4,
+		requireLevel = 2,
 		slotType = "module",
 		requireChassis = {"strike"},
 		prohibitingModules = {"module_autoloader"},
 		applicationFunction = function (modules, sharedData)
-			-- Damage boost is applied via clone swapping
 			sharedData.damageMult = (sharedData.damageMult or 1) + 1
-			sharedData.reloadBonus = (sharedData.reloadBonus or 0) - 0.5
+			sharedData.reloadBonus = (sharedData.reloadBonus or 0) - 0.75
 		end
 	},
 	{
 		name = "module_autoloader",
 		humanName = "Rapid Autoloader",
-		description = "Reduces reload time by 25%. Reduces damage by 15%. Minimum 10% damage.\nGhost Exclusive.",
+		description = "Reduces reload time by 50%. Reduces damage by 30%. Minimum 10% damage.\nGhost Exclusive.",
 		image = moduleImagePath .. "module_reloader.png",
-		limit = 8,
+		limit = 4,
 		cost = 100 * COST_MULT,
-		requireLevel = 4,
+		requireLevel = 2,
 		slotType = "module",
 		requireChassis = {"strike"},
 		prohibitingModules = {"module_alphastrike"},
 		applicationFunction = function (modules, sharedData)
 			-- Damage boost is applied via clone swapping
-			sharedData.damageMult = (sharedData.damageMult or 1) - 0.15
+			sharedData.damageMult = (sharedData.damageMult or 1) - 0.30
 			if sharedData.damageMult < 0.1 then sharedData.damageMult = 0.1 end
-			sharedData.reloadBonus = (sharedData.reloadBonus or 0) + 0.25
+			sharedData.reloadBonus = (sharedData.reloadBonus or 0) + 0.5
 		end
 	},
 	{
