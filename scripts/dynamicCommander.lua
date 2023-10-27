@@ -158,8 +158,15 @@ end
 local function DoExtraWeaponStuff(extraInfo, weaponNum, wd, weaponID)
 	local INLOS = {inlos = true}
 	local ei = extraInfo
-	if ei.reloadBonus ~= 1 then
-		local newReloadTime = math.ceil(((wd.reload * 30) * ei.reloadBonus)) / 30
+	if ei.reloadBonus ~= 0 or ei.reloadOverride then
+		local reloadBonus
+		if ei.reloadBonus < 0 then
+			reloadBonus = 1 / -ei.reloadBonus
+		else
+			reloadBonus = 1 + ei.reloadBonus
+		end
+		local newReloadTime = ei.reloadOverride or wd.reload
+		newReloadTime = math.max(math.ceil(((newReloadTime * 30) / reloadBonus)), 1) / 30 -- multiply by 30 to do frame rounding.
 		Spring.SetUnitWeaponState(unitID, weaponID, "reloadTime", newReloadTime)
 		Spring.SetUnitRulesParam(unitID, weaponID .. "_basereload", newReloadTime, INLOS)
 	end
@@ -187,8 +194,10 @@ local function DoExtraWeaponStuff(extraInfo, weaponNum, wd, weaponID)
 		Spring.SetUnitWeaponState(unitID, weaponID, "projectiles", newProjectileCount)
 		Spring.SetUnitRulesParam(unitID, weaponID .. "_projectiles", newProjectileCount, INLOS)
 	end
-	if ei.sprayAngleBonus then
-		local newSprayAngle = math.max(wd.sprayAngle + ei.sprayAngleBonus, 0)
+	if ei.sprayAngleBonus or ei.sprayAngleOverride then
+		local baseSprayAngle = ei.sprayAngleOverride or wd.sprayAngle
+		local sprayAngleBonus = baseSprayAngle * ei.sprayAngleBonus
+		local newSprayAngle = math.max(baseSprayAngle + sprayAngleBonus, 0)
 		Spring.SetUnitWeaponState(unitID, weaponID, "sprayAngle", newSprayAngle)
 		Spring.SetUnitRulesParam(unitID, weaponID .. "sprayangle", newSprayAngle, INLOS)
 	end
