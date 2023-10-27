@@ -1787,7 +1787,7 @@ local moduleDefs = {
 	{
 		name = "module_autoloader",
 		humanName = "Rapid Autoloader",
-		description = "Reduces reload time by 25%. Reduces damage by 25%. Minimum 10% damage.\nGhost Exclusive.",
+		description = "Reduces reload time by 25%. Reduces damage by 15%. Minimum 10% damage.\nGhost Exclusive.",
 		image = moduleImagePath .. "module_reloader.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1797,7 +1797,7 @@ local moduleDefs = {
 		prohibitingModules = {"module_alphastrike"},
 		applicationFunction = function (modules, sharedData)
 			-- Damage boost is applied via clone swapping
-			sharedData.damageMult = (sharedData.damageMult or 1) - 0.25
+			sharedData.damageMult = (sharedData.damageMult or 1) - 0.15
 			if sharedData.damageMult < 0.1 then sharedData.damageMult = 0.1 end
 			sharedData.reloadBonus = (sharedData.reloadBonus or 0) + 0.25
 		end
