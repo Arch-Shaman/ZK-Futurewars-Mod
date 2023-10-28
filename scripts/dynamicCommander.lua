@@ -180,7 +180,7 @@ local function DoExtraWeaponStuff(extraInfo, weaponNum, wd, weaponID)
 	end
 	if ei.accuracyBonus ~= 1 or ei.accuracyOverride then
 		local newAccuracy = ei.accuracyOverride or wd.accuracy
-		newAccuracy = newAccuracy - (newAccuracy * (1 - ei.accuracyBonus))
+		newAccuracy = math.max(newAccuracy - (newAccuracy * (1 - ei.accuracyBonus)), 0)
 		Spring.SetUnitWeaponState(unitID, weaponID, "accuracy", newAccuracy)
 		Spring.SetUnitRulesParam(unitID, weaponID .. "_accuracy", newAccuracy, INLOS)
 	end
@@ -197,8 +197,9 @@ local function DoExtraWeaponStuff(extraInfo, weaponNum, wd, weaponID)
 	end
 	if ei.sprayAngleBonus or ei.sprayAngleOverride then
 		local baseSprayAngle = ei.sprayAngleOverride or wd.sprayAngle
-		local sprayAngleBonus = baseSprayAngle * ei.sprayAngleBonus
-		local newSprayAngle = math.max(baseSprayAngle + sprayAngleBonus, 0)
+		local bonus = ei.sprayAngleBonus + 1
+		if bonus < 0 then bonus = 0 end
+		local newSprayAngle = math.max(baseSprayAngle * bonus, 0)
 		Spring.SetUnitWeaponState(unitID, weaponID, "sprayAngle", newSprayAngle)
 		Spring.SetUnitRulesParam(unitID, weaponID .. "sprayangle", newSprayAngle, INLOS)
 	end
