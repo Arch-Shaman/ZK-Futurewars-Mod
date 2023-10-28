@@ -22,6 +22,7 @@ local COST_MULT = 1
 local HP_MULT = 1
 local allowCommEco = false
 local disabledModules = {}
+local commwars = false
 
 if (Spring.GetModOptions) then
 	local modOptions = Spring.GetModOptions()
@@ -30,6 +31,7 @@ if (Spring.GetModOptions) then
             HP_MULT = modOptions.hpmult
         end
 		allowCommEco = (modOptions.commeco or 0) == 1
+		commwars = modOptions.commwars or "0" == "1"
 		if modOptions.disabledcommmodules and modOptions.disabledcommmodules ~= "" then
 			local s = modOptions.disabledcommmodules
 			s = string.gsub(s, " ", "") -- remove whitespace
@@ -39,6 +41,9 @@ if (Spring.GetModOptions) then
 			disabledModules["econ"] = nil -- do not ban basic income!
 		end
     end
+	if commwars then
+		COST_MULT = COST_MULT * 0.5
+	end
 end
 
 local moduleImagePath = "unitpics/"
@@ -2229,11 +2234,14 @@ local function levelDefGenerator(commname, cloneModulesStringFunc, weapon2Level)
 			upgradeSlots = {},
 		}
 	}
-
+	local bpmult = 1
+	if commwars then
+		bpmult = 2
+	end
 	for i = 1, maxCommLevel do
 		--Spring.Echo("Do idx " .. i .. " for comm " .. commname .. ".")
 		res[i] = {
-			morphBuildPower = 10 + math.ceil(i/2)*5,
+			morphBuildPower = 10 + math.ceil(i/2)*5 * bpmult,
 			morphBaseCost = morphCosts[i],
 			morphUnitDefFunction = function(modulesByDefID)
 				local oneUnitDefName = commname .. math.ceil(i/2) .. "_" .. cloneModulesStringFunc(modulesByDefID)
