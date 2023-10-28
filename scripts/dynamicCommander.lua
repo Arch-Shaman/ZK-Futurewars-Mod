@@ -201,7 +201,7 @@ local function DoExtraWeaponStuff(extraInfo, weaponNum, wd, weaponID)
 		if bonus < 0 then bonus = 0 end
 		local newSprayAngle = math.max(baseSprayAngle * bonus, 0)
 		Spring.SetUnitWeaponState(unitID, weaponID, "sprayAngle", newSprayAngle)
-		Spring.SetUnitRulesParam(unitID, weaponID .. "sprayangle", newSprayAngle, INLOS)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_sprayangle", newSprayAngle, INLOS)
 	end
 end
 
@@ -562,7 +562,20 @@ local function SetUpFeatureRules(featureID)
 	TransferParamToFeature(featureID, "carrier_count_droneassault")
 	TransferParamToFeature(featureID, "carrier_count_droneheavyslow")
 	TransferParamToFeature(featureID, "carrier_count_drone")
-	
+	TransferParamToFeature(featureID, weapon1 .. "_speed")
+	TransferParamToFeature(featureID, weapon2 .. "_speed")
+	TransferParamToFeature(featureID, weapon1 .. "_projectiles")
+	TransferParamToFeature(featureID, weapon2 .. "_projectiles")
+	TransferParamToFeature(featureID, weapon1 .. "_sprayangle")
+	TransferParamToFeature(featureID, weapon2 .. "_sprayangle")
+	TransferParamToFeature(featureID, weapon1 .. "_accuracy")
+	TransferParamToFeature(featureID, weapon2 .. "_accuracy")
+	TransferParamToFeature(featureID, weapon1 .. "_baseburstrate")
+	TransferParamToFeature(featureID, weapon2 .. "_baseburstrate")
+	TransferParamToFeature(featureID, weapon1 .. "_bursts")
+	TransferParamToFeature(featureID, weapon2 .. "_bursts")
+	TransferParamToFeature(featureID, weapon1 .. "_basereload")
+	TransferParamToFeature(featureID, weapon2 .. "_basereload")
 	
 	-- Things tooltips need --
 	TransferParamToFeature(featureID, "commander_owner")
