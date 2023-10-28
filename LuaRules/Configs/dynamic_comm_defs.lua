@@ -1612,10 +1612,10 @@ local moduleDefs = {
 	{
 		name = "module_full_choke",
 		humanName = "Flechette Engineering",
-		description = "Flechette Engineering:\nImproves damage output for shotguns at the cost of higher spread.\nShotguns:\nSpread: +33%\nprojectiles +5",
+		description = "Flechette Engineering:\nImproves damage output for shotguns at the cost of higher spread.\nShotguns:\nSpread: +11%\nprojectiles +5",
 		image = moduleImagePath .. "module_full_choke.png",
 		limit = 3,
-		cost = 100 * COST_MULT,
+		cost = 75 * COST_MULT,
 		requireChassis = {"strike"},
 		requireLevel = 3,
 		slotType = "module",
@@ -1623,13 +1623,13 @@ local moduleDefs = {
 		prohibitingModules = {"module_improved_choke"},
 		applicationFunction = function (modules, sharedData)
 			if sharedData.weapon1 and (sharedData.weapon1 == "commweapon_shotgun" or sharedData.weapon1 == "commweapon_shotgun_disrupt") then
-				sharedData.sprayAngleBonus1 = (sharedData.sprayAngleBonus1 or 0) + 0.25
-				sharedData.accuracyBonus1 = (sharedData.accuracyBonus1 or 0) + 0.25
+				sharedData.sprayAngleBonus1 = (sharedData.sprayAngleBonus1 or 0) + 0.11
+				sharedData.accuracyBonus1 = (sharedData.accuracyBonus1 or 0) + 0.11
 				sharedData.projectileBonus1 = (sharedData.projectileBonus1 or 0) + 5
 			end
 			if sharedData.weapon2 and (sharedData.weapon2 == "commweapon_shotgun" or sharedData.weapon2 == "commweapon_shotgun_disrupt") then
-				sharedData.sprayAngleBonus2 = (sharedData.sprayAngleBonus2 or 0) + 0.25
-				sharedData.accuracyBonus2 = (sharedData.accuracyBonus2 or 0) + 0.25
+				sharedData.sprayAngleBonus2 = (sharedData.sprayAngleBonus2 or 0) + 0.11
+				sharedData.accuracyBonus2 = (sharedData.accuracyBonus2 or 0) + 0.11
 				sharedData.projectileBonus2 = (sharedData.projectileBonus2 or 0) + 5
 			end
 		end
@@ -1640,7 +1640,7 @@ local moduleDefs = {
 		description = "Autoflechette:\nShotguns: Increase reload speed by 33%, but fire 5 less flechettes.",
 		image = moduleImagePath .. "module_autoflechette.png",
 		limit = 1,
-		cost = 100 * COST_MULT,
+		cost = 75 * COST_MULT,
 		requireOneOf = {"commweapon_shotgun"},
 		requireChassis = {"strike"},
 		requireLevel = 2,
