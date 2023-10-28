@@ -1842,7 +1842,7 @@ local moduleDefs = {
 	{
 		name = "module_alphastrike",
 		humanName = "Alpha Strike",
-		description = "Provides a 100% boost in firepower. Increases reload by 75%.\nGhost Exclusive.",
+		description = "Provides a 100% boost in firepower. Decreases reload speed by 75%.\nGhost Exclusive.",
 		image = moduleImagePath .. "module_alphastrike.png",
 		limit = 4,
 		cost = 100 * COST_MULT,
@@ -1858,7 +1858,7 @@ local moduleDefs = {
 	{
 		name = "module_autoloader",
 		humanName = "Rapid Autoloader",
-		description = "Reduces reload time by 50%. Reduces damage by 30%. Minimum 10% damage.\nGhost Exclusive.",
+		description = "Increases reload speed by 50%. Reduces damage by 20%. Burst Weapons (such as lightning guns or medium rifles) fire faster. Minimum 10% damage.\nGhost Exclusive.",
 		image = moduleImagePath .. "module_reloader.png",
 		limit = 4,
 		cost = 100 * COST_MULT,
@@ -1868,9 +1868,25 @@ local moduleDefs = {
 		prohibitingModules = {"module_alphastrike"},
 		applicationFunction = function (modules, sharedData)
 			-- Damage boost is applied via clone swapping
-			sharedData.damageMult = (sharedData.damageMult or 1) - 0.30
+			sharedData.damageMult = (sharedData.damageMult or 1) - 0.20
 			if sharedData.damageMult < 0.1 then sharedData.damageMult = 0.1 end
 			sharedData.reloadBonus = (sharedData.reloadBonus or 0) + 0.5
+			local changedWeapons = {
+				["commweapon_lightninggun"] = 6,
+				["commweapon_lightninggun_improved"] = 15,
+				["commweapon_heavyrifle"] = 3,
+				["commweapon_heavyrifle_disrupt"] = 3,
+			}
+			if sharedData.weapon1 and changedWeapons[sharedData.weapon1] then
+				local burst = changedWeapons[sharedData.weapon1]
+				local count = math.floor(sharedData.reloadBonus / 0.5)
+				sharedData.burstRateOverride1 = math.max(burst * (1 - (count * 0.2)), 1) / 30
+			end
+			if sharedData.weapon2 and changedWeapons[sharedData.weapon2] then
+				local burst = changedWeapons[sharedData.weapon2]
+				local count = math.floor(sharedData.reloadBonus / 0.5)
+				sharedData.burstRateOverride2 = math.max(burst * (1 - (count * 0.2)), 1) / 30
+			end
 		end
 	},
 	{
