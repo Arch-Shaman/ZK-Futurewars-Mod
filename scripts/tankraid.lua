@@ -53,7 +53,7 @@ local isFiring = false
 
 local boostHealthCost = tonumber(UnitDef.customParams.boost_health_cost) or 15
 local boostSpeed = tonumber(UnitDef.customParams.boost_speed_mult) or 2
-local boostTime = tonumber(UnitDef.customParams.boost_duration) or 1.4
+local boostTime = (tonumber(UnitDef.customParams.boost_duration) or 1.4) * 10
 local boostMinHealth = tonumber(UnitDef.customParams.boost_min_health) or 100
 local normalSpeed = 1
 local firingSpeed = 0.8
