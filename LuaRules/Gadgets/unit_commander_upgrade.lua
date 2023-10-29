@@ -494,6 +494,7 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	spSetUnitRulesParam(unitID, "comm_deathexplosion", detpacktable[detpack], INLOS)
 	local extraWeaponInfo = {
 		[1] = {
+			damageBoost = data.damageBooster1 or 0,
 			burstOverride = data.burstOverride1,
 			burstRateOverride = data.burstRateOverride1,
 			accuracyOverride = data.accuracyOverride1,
@@ -508,6 +509,7 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 			rangeOverride = data.rangeoverride1,
 		},
 		[2] = {
+			damageBoost = data.damageBooster2 or 0,
 			burstOverride = data.burstOverride2,
 			burstRateOverride = data.burstRateOverride2,
 			accuracyOverride = data.accuracyOverride2,
