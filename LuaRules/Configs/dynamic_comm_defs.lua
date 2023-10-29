@@ -1995,6 +1995,7 @@ local moduleDefs = {
 				local basereload = 25
 				sharedData.burstOverride1 = (sharedData.burstOverride1 or 30) - 2
 				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) - 3
+				sharedData.projectileOverride1 = 1
 			end
 			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage" then
 				local basereload = 7.2
@@ -2012,6 +2013,7 @@ local moduleDefs = {
 				local basereload = 25
 				sharedData.burstOverride2 = (sharedData.burstOverride2 or 30) - 2
 				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) - 3
+				sharedData.projectileOverride2 = 1
 			end
 		end
 	},
