@@ -1863,9 +1863,48 @@ local moduleDefs = {
 	{
 		name = "module_heavyrocket",
 		humanName = "Heavy Rocket Motors",
-		description = "Improves rocket range at the cost of reload speed. Increases base range by 25% (range before modifications), reload speed -75%.\nArtillery Exclusive.",
+		description = "Improves rocket range at the cost of reload speed. Increases base range by 33% (range before modifications), reload speed -50%.\nArtillery Exclusive.",
 		image = moduleImagePath .. "module_alphastrike.png",
-		limit = 3,
+		limit = 4,
+		cost = 100 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		requireChassis = {"assault"},
+		requireOneOf = {"commweapon_rocketbarrage", "commweapon_rocketlauncher"},
+		applicationFunction = function (modules, sharedData)
+			local baseRange = {
+				["commweapon_rocketlauncher"] = 720,
+				["commweapon_rocketlauncher_nuclear"] = 800,
+				["commweapon_rocketbarrage_nuclear"] = 800,
+				["commweapon_rocketbarrage"] = 800,
+				["commweapon_slamrocket"] = 1000,
+			}
+			local baseReload = {
+				["commweapon_rocketlauncher"] = 12.2,
+				["commweapon_rocketlauncher_nuclear"] = 60,
+				["commweapon_rocketbarrage"] = 7.2,
+				["commweapon_rocketbarrage_nuclear"] = 25,
+			}
+			local rangeMod = 1/3
+			sharedData.rocketrangeboosts = (sharedData.rocketrangeboosts or 0) + 1
+			--sharedData.reloadBonus = (sharedData.reloadBonus or 0) - 0.75
+			if sharedData.weapon1 and baseRange[sharedData.weapon1] then
+				local reload = baseReload[sharedData.weapon1]
+				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or reload) + (reload / 2)
+				sharedData.rangeoverride1 = baseRange[sharedData.weapon1] * (1 + (rangeMod * sharedData.rocketrangeboosts))
+			end
+			if sharedData.weapon2 and baseRange[sharedData.weapon2] then
+				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or reload) + (reload / 2)
+				sharedData.rangeoverride2 = baseRange[sharedData.weapon2] * (1 + (rangeMod * sharedData.rocketrangeboosts))
+			end
+		end
+	},
+	{
+		name = "module_rocketrangereducer",
+		humanName = "Explosive Rocket Fuel",
+		description = "Reduces base range (before range boosters) by 11.5%. Base damage (before damage boosters) is increased by 25%.\nArtillery Exclusive.",
+		image = moduleImagePath .. "module_alphastrike.png",
+		limit = 4,
 		cost = 100 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
@@ -1880,12 +1919,13 @@ local moduleDefs = {
 				["commweapon_slamrocket"] = 1000,
 			}
 			sharedData.rocketrangeboosts = (sharedData.rocketrangeboosts or 0) + 1
-			sharedData.reloadBonus = (sharedData.reloadBonus or 0) - 0.75
 			if sharedData.weapon1 and baseRange[sharedData.weapon1] then
-				sharedData.rangeoverride1 = baseRange[sharedData.weapon1] * (1 + (0.25 * sharedData.rocketrangeboosts))
+				sharedData.rangeoverride1 = baseRange[sharedData.weapon1] * (1 - (0.115 * sharedData.rocketrangeboosts))
+				sharedData.damageBooster1 = (sharedData.damageBooster1 or 0) + 0.25
 			end
 			if sharedData.weapon2 and baseRange[sharedData.weapon2] then
-				sharedData.rangeoverride2 = baseRange[sharedData.weapon2] * (1 + (0.25 * sharedData.rocketrangeboosts))
+				sharedData.rangeoverride2 = baseRange[sharedData.weapon2] * (1 - (0.115 * sharedData.rocketrangeboosts))
+				sharedData.damageBooster2 = (sharedData.damageBooster2 or 0) + 0.25
 			end
 		end
 	},
@@ -1900,6 +1940,7 @@ local moduleDefs = {
 		slotType = "module",
 		requireChassis = {"assault"},
 		requireOneOf = {"commweapon_rocketbarrage"},
+		prohibitingModules = {"module_rocketconservation"},
 		applicationFunction = function (modules, sharedData)
 			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage" then
 				local basereload = 7.2
@@ -1931,6 +1972,7 @@ local moduleDefs = {
 		requireLevel = 2,
 		slotType = "module",
 		requireChassis = {"assault"},
+		prohibitingModules = {"module_expandedrocketsalvo"},
 		requireOneOf = {"commweapon_rocketbarrage"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.conservativedeployments = (sharedData.conservativedeployments or 0) + 1
