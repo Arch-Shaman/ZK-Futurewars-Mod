@@ -1967,7 +1967,7 @@ local moduleDefs = {
 	{
 		name = "module_rocketconservation",
 		humanName = "Conservative Deployment",
-		description = "Conservative Deployment:\n Reduces the number of rockets in a barrage by 2 but decreases reload by 0.5s. If you have heavy ordinance installed, decrease reload speed by 2s instead.\nArtillery exclusive. Mutually exclusive with Expanded Rocket Ammunition Storage.",
+		description = "Conservative Deployment:\n Reduces the number of rockets in a barrage by 2 but decreases reload by 0.8s. If you have heavy ordinance installed, decrease reload speed by 3s instead.\nArtillery exclusive. Mutually exclusive with Expanded Rocket Ammunition Storage.",
 		image = moduleImagePath .. "module_rocketconservation.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1989,11 +1989,11 @@ local moduleDefs = {
 					sharedData.burstRateOverride1 = 0.1
 					sharedData.projectileOverride1 = 4
 				end
-				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) - 0.5
+				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) - 0.8
 			elseif sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage_nuclear" then
 				local basereload = 25
 				sharedData.burstOverride1 = (sharedData.burstOverride1 or 30) - 2
-				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) - 2
+				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) - 3
 			end
 			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage" then
 				local basereload = 7.2
@@ -2006,11 +2006,11 @@ local moduleDefs = {
 					sharedData.burstRateOverride2 = 0.1
 					sharedData.projectileOverride2 = 4
 				end
-				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) - 0.5
+				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) - 0.8
 			elseif sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage_nuclear" then
 				local basereload = 25
 				sharedData.burstOverride2 = (sharedData.burstOverride2 or 30) - 2
-				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) - 2
+				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) - 3
 			end
 		end
 	},
