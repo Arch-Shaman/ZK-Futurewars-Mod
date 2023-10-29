@@ -264,8 +264,9 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 	local maxRange = 0
 	local otherRange = false
 	if weapon1 then
+		local baserange = extraInfo[1].rangeOverride or tonumber(WeaponDefs[weaponDef1.weaponDefID].range)
 		isManual[weapon1] = weaponDef1.manualFire
-		local range = tonumber(WeaponDefs[weaponDef1.weaponDefID].range)*rangeMult
+		local range = baserange*rangeMult
 		if weaponDef1.manualFire then
 			otherRange = range
 		else
@@ -285,8 +286,9 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 	end
 	
 	if weapon2 then
+		local baserange = extraInfo[2].rangeOverride or tonumber(WeaponDefs[weaponDef2.weaponDefID].range) -- why does this need ToNumber?
 		isManual[weapon2] = weaponDef2.manualFire
-		local range = tonumber(WeaponDefs[weaponDef2.weaponDefID].range)*rangeMult
+		local range = baserange*rangeMult
 		if maxRange then
 			if weaponDef2.manualFire then
 				otherRange = range
