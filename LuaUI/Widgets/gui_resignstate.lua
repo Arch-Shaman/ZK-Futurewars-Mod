@@ -66,7 +66,7 @@ local function ToggleState()
 		Spring.Echo("game_message:" .. localization.want_resign)
 		Spring.PlaySoundFile("sounds/reply/advisor/resign_state_on.wav", 1.0)
 	else
-		Spring.Echo("game_message:" .. no_resign)
+		Spring.Echo("game_message:" .. localization.no_resign)
 		Spring.PlaySoundFile("sounds/reply/advisor/resign_state_off.wav", 1.0)
 	end
 	--Spring.Echo("MyState: " .. tostring(mystate))
