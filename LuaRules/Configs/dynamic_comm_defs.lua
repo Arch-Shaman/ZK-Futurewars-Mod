@@ -1895,6 +1895,7 @@ local moduleDefs = {
 				sharedData.rangeoverride1 = baseRange[sharedData.weapon1] * (1 + (rangeMod * sharedData.rocketrangeboosts))
 			end
 			if sharedData.weapon2 and baseRange[sharedData.weapon2] then
+				local reload = baseReload[sharedData.weapon2]
 				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or reload) + (reload / 2)
 				sharedData.rangeoverride2 = baseRange[sharedData.weapon2] * (1 + (rangeMod * sharedData.rocketrangeboosts))
 			end
@@ -2017,7 +2018,7 @@ local moduleDefs = {
 	{
 		name = "module_autoloader",
 		humanName = "Rapid Autoloader",
-		description = "Increases reload speed by 50%. Reduces damage by 20%. Burst Weapons (such as lightning guns or medium rifles) fire faster. Minimum 10% damage.\nGhost Exclusive.",
+		description = "Increases reload speed by 50%. Reduces base damage by 12.5%. Burst Weapons (such as lightning guns or medium rifles) fire faster. Minimum 10% damage.\nGhost Exclusive.",
 		image = moduleImagePath .. "module_reloader.png",
 		limit = 4,
 		cost = 100 * COST_MULT,
@@ -2027,8 +2028,20 @@ local moduleDefs = {
 		prohibitingModules = {"module_alphastrike"},
 		applicationFunction = function (modules, sharedData)
 			-- Damage boost is applied via clone swapping
-			sharedData.damageMult = (sharedData.damageMult or 1) - 0.20
-			if sharedData.damageMult < 0.1 then sharedData.damageMult = 0.1 end
+			--sharedData.damageMult = (sharedData.damageMult or 1) - 0.20
+			--if sharedData.damageMult < 0.1 then sharedData.damageMult = 0.1 end
+			if sharedData.weapon1 then
+				sharedData.damageBooster1 = (sharedData.damageBooster1 or 0) - 0.125
+				if sharedData.damageBooster1 < -0.95 then
+					sharedData.damageBooster1 = -0.95
+				end
+			end
+			if sharedData.weapon2 then
+				sharedData.damageBooster2 = (sharedData.damageBooster2 or 0) - 0.125
+				if sharedData.damageBooster2 < -0.95 then
+					sharedData.damageBooster2 = -0.95
+				end
+			end
 			sharedData.reloadBonus = (sharedData.reloadBonus or 0) + 0.5
 			local changedWeapons = {
 				["commweapon_lightninggun"] = 6,
