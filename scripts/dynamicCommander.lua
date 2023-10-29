@@ -190,8 +190,9 @@ local function DoExtraWeaponStuff(extraInfo, weaponNum, wd, weaponID)
 		Spring.SetUnitWeaponState(unitID, weaponID, "projectileSpeed", newSpeed)
 		Spring.SetUnitRulesParam(unitID, weaponID .. "_speed", newSpeed, INLOS)
 	end
-	if ei.projectileBonus ~= 0 then
-		local newProjectileCount = math.max(wd.projectiles + ei.projectileBonus, 1)
+	if ei.projectileBonus ~= 0 or ei.projectileOverride then
+		local baseProjectiles = ei.projectileOverride or wd.projectiles
+		local newProjectileCount = math.max(baseProjectiles + ei.projectileBonus, 1)
 		Spring.SetUnitWeaponState(unitID, weaponID, "projectiles", newProjectileCount)
 		Spring.SetUnitRulesParam(unitID, weaponID .. "_projectiles", newProjectileCount, INLOS)
 	end
