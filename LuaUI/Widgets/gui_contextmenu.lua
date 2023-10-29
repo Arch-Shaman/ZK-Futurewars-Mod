@@ -763,7 +763,17 @@ local function AddEntryToCells(text, layer, entry, cells)
 	end
 end
 
-local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, deathExplosion, cost, isFeature, layer)
+local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, deathExplosion, cost, isFeature, layer, index)
+	local isCommander
+	if unitID then
+		if isFeature then
+			isCommander = Spring.GetFeatureRulesParam(unitID, "comm_weapon_num_1") ~= nil
+		else
+			isCommander = Spring.GetUnitRulesParam(unitID, "comm_weapon_num_1") ~= nil
+		end
+		Spring.Echo("IsCommander: " .. tostring(isCommander))
+	end
+	--Spring.Echo("Index: " .. tostring(index))
 	local cells = cells
 	local startPoint = #cells+1
 	if layer == nil then layer = 0 end
@@ -829,6 +839,11 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			local damc = 0
 			local stun_time = 0
 			local baseDamage = tonumber(cp.stats_damage) or wd.customParams.shield_damage or 0
+			if isFeature then
+				comm_mult = Spring.GetFeatureRulesParam(unitID, index .. "_actual_dmgboost") or comm_mult
+			else
+				comm_mult = Spring.GetUnitRulesParam(unitID, index .. "_actual_dmgboost") or comm_mult
+			end
 			local val = baseDamage * comm_mult
 			if cp.disarmdamagemult then
 				damd = val * cp.disarmdamagemult
@@ -863,7 +878,18 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				AddEntryToCells(localization.vampirism_heals, layer + 1, numformat(tonumber(cp.vampirism) * dam, 1) .. ' ' .. localization.vampirism_perhit, cells)
 			end
 			-- get reloadtime and calculate dps
-			local reloadtime = tonumber(cp.script_reload) or wd.reload
+			local reloadtime
+			if unitID and index then
+				if isFeature and Spring.GetFeatureRulesParam(unitID, "comm_weapon_num_1") ~= nil then
+					reloadtime = Spring.GetFeatureRulesParam(unitID, index .. "_basereload") or tonumber(cp.script_reload) or wd.reload
+				elseif not isFeature and Spring.GetUnitRulesParam(unitID, "comm_weapon_num_1") ~= nil then
+					reloadtime = Spring.GetUnitRulesParam(unitID, index .. "_basereload") or tonumber(cp.script_reload) or wd.reload
+				else
+					reloadtime = tonumber(cp.script_reload) or wd.reload
+				end
+			else	
+				reloadtime = tonumber(cp.script_reload) or wd.reload
+			end
 			local maxReload = reloadtime
 			local wantsExtraReloadInfo = false
 			if cp.recycler then
@@ -890,7 +916,25 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			end
 			local aimtime = (tonumber(cp.aimdelay) or 0) / 30
 			local fixedreload = reloadtime + aimtime
-			local mult = tonumber(cp.statsprojectiles) or ((tonumber(cp.script_burst) or wd.salvoSize) * wd.projectiles)
+			local projectiles
+			local bursts
+			if unitID and index and isCommander then
+				if isFeature then
+					projectiles = Spring.GetFeatureRulesParam(unitID, index .. "_projectilecount_override") or tonumber(cp.statsprojectiles) or  wd.projectiles
+					bursts = Spring.GetFeatureRulesParam(unitID, index .. "_updatedburst_count") or (tonumber(cp.script_burst) or wd.salvoSize)
+				else
+					local projectileRules = Spring.GetUnitRulesParam(unitID, index .. "_projectilecount_override")
+					local burstRules = Spring.GetUnitRulesParam(unitID, index .. "_updatedburst_count")
+					--Spring.Echo("Projectile count: " .. tostring(projectileRules))
+					--Spring.Echo("Bursts: " .. tostring(burstRules))
+					projectiles = projectileRules or tonumber(cp.statsprojectiles) or wd.projectiles
+					bursts = burstRules or (tonumber(cp.script_burst) or wd.salvoSize)
+				end
+			else
+				projectiles = tonumber(cp.statsprojectiles) or wd.projectiles
+				bursts = (tonumber(cp.script_burst) or wd.salvoSize)
+			end
+			local mult = bursts * projectiles
 			local dps  = dam /fixedreload
 			local dpsw = damw/fixedreload
 			local dpss = dams/fixedreload
@@ -1068,12 +1112,15 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			if show_range and not bombletCount then
 				local range = cp.truerange or wd.range
 				local rangemult
+				local baserange
 				if isFeature then
 					rangemult = (unitID and Spring.GetFeatureRulesParam(unitID, "comm_range_mult")) or 1
+					baserange = (unitID and Spring.GetFeatureRulesParam(unitID, index .. "_range")) or cp.truerange or wd.range
 				else
 					rangemult = (unitID and Spring.GetUnitRulesParam(unitID, "comm_range_mult")) or 1
+					baserange = (unitID and Spring.GetUnitRulesParam(unitID, index .. "_range")) or cp.truerange or wd.range
 				end
-				AddEntryToCells(localization.stats_range .. ':', layer + 1, numformat(range * rangemult, 2) .. " elmo", cells)
+				AddEntryToCells(localization.stats_range .. ':', layer + 1, numformat(baserange * rangemult, 2) .. " elmo", cells)
 			end
 			if wd.customParams.puredecloaktime then
 				AddEntryToCells(localization.stats_force_decloak, layer + 1, numformat(wd.customParams.puredecloaktime / 30, 1) .. localization.acronyms_second, cells)
@@ -1083,7 +1130,17 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				AddEntryToCells(localization.stats_aoe .. ':', layer + 1,  numformat(aoe) .. " elmo", cells)
 			end
 			if show_projectile_speed and not bombletCount then
-				AddEntryToCells(localization.stats_weapon_speed .. ':', layer + 1, numformat(wd.projectilespeed*30) .. " elmo/" .. localization.acronyms_second, cells)
+				local speed
+				if isCommander and unitID and index then
+					if isFeature then
+						speed = Spring.GetFeatureRulesParam(unitID, index .. "_speed") or wd.projectilespeed
+					else
+						speed = wd.projectilespeed
+					end
+				else
+					speed = wd.projectilespeed
+				end
+				AddEntryToCells(localization.stats_weapon_speed .. ':', layer + 1, numformat(speed*30) .. " elmo/" .. localization.acronyms_second, cells)
 			elseif hitscan[wd.type] then
 				AddEntryToCells(localization.weapon_instant_hit, layer + 1, '', cells)
 			end
@@ -1147,7 +1204,17 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			end
 	
 			if wd.sprayAngle > 0 and not bombletCount then
-				local accuracy = math.asin(wd.sprayAngle) * 90 / math.pi
+				local sprayangle
+				if unitID and isCommander then
+					if isFeature then
+						sprayangle = Spring.GetFeatureRulesParam(unitID, index .. "_sprayangle") or wd.sprayAngle
+					else
+						sprayangle = Spring.GetUnitRulesParam(unitID, index .. "_sprayangle") or wd.sprayAngle
+					end
+				else
+					sprayangle = wd.sprayAngle
+				end
+				local accuracy = math.asin(sprayangle) * 90 / math.pi
 				AddEntryToCells(localization.stats_inaccuracy .. ':', layer + 1, numformat(accuracy, 1) .. "°", cells)
 			end
 	
@@ -1374,7 +1441,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				if isRecusive then
 					AddEntryToCells(WeaponDefNames[cp["projectile" .. submunitionCount]].description .. ' x ' .. cp["numprojectiles" .. submunitionCount] .. ' (Previously Listed)', layer + 1, '', cells)
 				else
-					cells = weapons2Table(cells, cp["projectile" .. submunitionCount], unitID, cp["numprojectiles" .. submunitionCount] * (cp.bogus and bombletCount or 1) * (cp["clustercharges"] or 1), recursedWepIds, false, cost, isFeature, layer + 2)
+					cells = weapons2Table(cells, cp["projectile" .. submunitionCount], unitID, cp["numprojectiles" .. submunitionCount] * (cp.bogus and bombletCount or 1) * (cp["clustercharges"] or 1), recursedWepIds, false, cost, isFeature, layer + 2, index)
 				end
 				submunitionCount = submunitionCount + 1
 			end
@@ -1848,6 +1915,7 @@ local function printWeapons(unitDef, unitID, isFeature)
 				local wsTemp = {
 					weaponID = weaponID,
 					count = 1,
+					weaponNum = i,
 					
 					-- stuff that the weapon gets from the owner unit
 					aa_only = aa_only,
@@ -1875,7 +1943,7 @@ local function printWeapons(unitDef, unitID, isFeature)
 			cells[#cells+1] = ''
 			cells[#cells+1] = ''
 		end
-		cells = weapons2Table(cells, ws, unitID, false, {}, false, unitDef.metalCost, isFeature)
+		cells = weapons2Table(cells, ws, unitID, false, {}, false, unitDef.metalCost, isFeature, 0, ws.weaponNum)
 		--end
 	end
 	

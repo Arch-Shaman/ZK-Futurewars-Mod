@@ -22,6 +22,7 @@ local COST_MULT = 1
 local HP_MULT = 1
 local allowCommEco = false
 local disabledModules = {}
+local commwars = false
 
 if (Spring.GetModOptions) then
 	local modOptions = Spring.GetModOptions()
@@ -30,6 +31,7 @@ if (Spring.GetModOptions) then
             HP_MULT = modOptions.hpmult
         end
 		allowCommEco = (modOptions.commeco or 0) == 1
+		commwars = modOptions.commwars or "0" == "1"
 		if modOptions.disabledcommmodules and modOptions.disabledcommmodules ~= "" then
 			local s = modOptions.disabledcommmodules
 			s = string.gsub(s, " ", "") -- remove whitespace
@@ -39,6 +41,9 @@ if (Spring.GetModOptions) then
 			disabledModules["econ"] = nil -- do not ban basic income!
 		end
     end
+	if commwars then
+		COST_MULT = COST_MULT * 0.5
+	end
 end
 
 local moduleImagePath = "unitpics/"
@@ -118,6 +123,33 @@ local function ApplyHeavyOrdinance2(modules, sharedData)
 	if sharedData.weapon2 and upgrade[sharedData.weapon2] then
 		sharedData.weapon2 = upgrade[sharedData.weapon2]
 		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon2]
+	end
+end
+
+local function ApplyHeavyBarrel(modules, sharedData, weaponNum)
+	local acceptableWeapons = {
+		["commweapon_shotgun"] = true,
+		["commweapon_heavyrifle"] = true,
+		["commweapon_shotgun_disrupt"] = true,
+		["commweapon_heavyrifle_disrupt"] = true,
+		["commweapon_sunburst"] = true,
+	}
+	local shotguns = {
+		["commweapon_shotgun"] = true,
+		["commweapon_shotgun_disrupt"] = true,
+	}
+	if weaponNum == 1 then
+		if sharedData.weapon1 and acceptableWeapons[sharedData.weapon1] then
+			if shotguns[sharedData.weapon1] then
+				sharedData.reloadOverride1 = 3.0
+				sharedData.burstOverride1 = 2
+				sharedData.burstRateOverride1 = 0.1
+				sharedData.projectileBonus1 = 5
+				sharedData.sprayAngleOverride1 = 2000
+			end
+		end
+	else
+		
 	end
 end
 
@@ -1553,6 +1585,78 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "module_improved_choke",
+		humanName = "Improved Choke",
+		description = "Improved Choke:\nImproves shotgun accuracy at the cost of damage output. Better performance for long range.\nShotguns:\nSpread: -30%\nprojectiles -4",
+		image = moduleImagePath .. "module_improved_choke.png",
+		limit = 3,
+		cost = 100 * COST_MULT,
+		requireChassis = {"strike"},
+		requireLevel = 3,
+		slotType = "module",
+		prohibitingModules = {"module_full_choke"},
+		requireOneOf = {"commweapon_shotgun"},
+		applicationFunction = function (modules, sharedData)
+			if sharedData.weapon1 and (sharedData.weapon1 == "commweapon_shotgun" or sharedData.weapon1 == "commweapon_shotgun_disrupt") then
+				sharedData.sprayAngleBonus1 = (sharedData.sprayAngleBonus1 or 0) - 0.3
+				sharedData.accuracyBonus1 = (sharedData.accuracyBonus1 or 0) + 0.3
+				sharedData.projectileBonus1 = (sharedData.projectileBonus1 or 0) - 4
+			end
+			if sharedData.weapon2 and (sharedData.weapon2 == "commweapon_shotgun" or sharedData.weapon2 == "commweapon_shotgun_disrupt") then
+				sharedData.sprayAngleBonus2 = (sharedData.sprayAngleBonus2 or 0) - 0.3
+				sharedData.accuracyBonus2 = (sharedData.accuracyBonus2 or 0) + 0.3
+				sharedData.projectileBonus2 = (sharedData.projectileBonus2 or 0) - 4
+			end
+		end
+	},
+	{
+		name = "module_full_choke",
+		humanName = "Flechette Engineering",
+		description = "Flechette Engineering:\nImproves damage output for shotguns at the cost of higher spread.\nShotguns:\nSpread: +11%\nprojectiles +5",
+		image = moduleImagePath .. "module_full_choke.png",
+		limit = 3,
+		cost = 75 * COST_MULT,
+		requireChassis = {"strike"},
+		requireLevel = 3,
+		slotType = "module",
+		requireOneOf = {"commweapon_shotgun"},
+		prohibitingModules = {"module_improved_choke"},
+		applicationFunction = function (modules, sharedData)
+			if sharedData.weapon1 and (sharedData.weapon1 == "commweapon_shotgun" or sharedData.weapon1 == "commweapon_shotgun_disrupt") then
+				sharedData.sprayAngleBonus1 = (sharedData.sprayAngleBonus1 or 0) + 0.11
+				sharedData.accuracyBonus1 = (sharedData.accuracyBonus1 or 0) + 0.11
+				sharedData.projectileBonus1 = (sharedData.projectileBonus1 or 0) + 5
+			end
+			if sharedData.weapon2 and (sharedData.weapon2 == "commweapon_shotgun" or sharedData.weapon2 == "commweapon_shotgun_disrupt") then
+				sharedData.sprayAngleBonus2 = (sharedData.sprayAngleBonus2 or 0) + 0.11
+				sharedData.accuracyBonus2 = (sharedData.accuracyBonus2 or 0) + 0.11
+				sharedData.projectileBonus2 = (sharedData.projectileBonus2 or 0) + 5
+			end
+		end
+	},
+	{
+		name = "module_autoflechette",
+		humanName = "Autoflechette",
+		description = "Autoflechette:\nShotguns: Increase reload speed by 33%, but fire 5 less flechettes.",
+		image = moduleImagePath .. "module_autoflechette.png",
+		limit = 1,
+		cost = 75 * COST_MULT,
+		requireOneOf = {"commweapon_shotgun"},
+		requireChassis = {"strike"},
+		requireLevel = 2,
+		slotType = "module",
+		applicationFunction = function (modules, sharedData)
+			if sharedData.weapon1 and (sharedData.weapon1 == "commweapon_shotgun" or sharedData.weapon1 == "commweapon_shotgun_disrupt") then
+				sharedData.reloadOverride1 = 26/30
+				sharedData.projectileBonus1 = (sharedData.projectileBonus1 or 0) - 5
+			end
+			if sharedData.weapon2 and (sharedData.weapon2 == "commweapon_shotgun" or sharedData.weapon2 == "commweapon_shotgun_disrupt") then
+				sharedData.reloadOverride2 = 26/30
+				sharedData.projectileBonus2 = (sharedData.projectileBonus2 or 0) - 5
+			end
+		end
+	},
+	{
 		name = "module_repair_drone",
 		humanName = "Repair Drone",
 		description = "Adds a Repair Drone to your maximum drone control. Repair drones have a shield and can repair friendly units at 10 bp.",
@@ -1738,6 +1842,223 @@ local moduleDefs = {
 			-- Damage boost is applied via clone swapping
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.15
 			sharedData.healthBonus = (sharedData.healthBonus or 0) + 200*HP_MULT
+		end
+	},
+	{
+		name = "module_alphastrike",
+		humanName = "Alpha Strike",
+		description = "Provides a 100% boost in firepower. Decreases reload speed by 75%.\nGhost Exclusive.",
+		image = moduleImagePath .. "module_alphastrike.png",
+		limit = 4,
+		cost = 100 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		requireChassis = {"strike"},
+		prohibitingModules = {"module_autoloader"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.damageMult = (sharedData.damageMult or 1) + 1
+			sharedData.reloadBonus = (sharedData.reloadBonus or 0) - 0.75
+		end
+	},
+	{
+		name = "module_heavyrocket",
+		humanName = "Heavy Rocket Motors",
+		description = "Improves rocket range at the cost of reload speed. Increases base range by 33% (range before modifications), reload speed -50%.\nArtillery Exclusive.",
+		image = moduleImagePath .. "module_heavy_rocket.png",
+		limit = 4,
+		cost = 100 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		requireChassis = {"assault"},
+		requireOneOf = {"commweapon_rocketbarrage", "commweapon_rocketlauncher"},
+		prohibitingModules = {"module_rocketrangereducer"},
+		applicationFunction = function (modules, sharedData)
+			local baseRange = {
+				["commweapon_rocketlauncher"] = 720,
+				["commweapon_rocketlauncher_nuclear"] = 800,
+				["commweapon_rocketbarrage_nuclear"] = 800,
+				["commweapon_rocketbarrage"] = 800,
+				["commweapon_slamrocket"] = 1000,
+			}
+			local baseReload = {
+				["commweapon_rocketlauncher"] = 12.2,
+				["commweapon_rocketlauncher_nuclear"] = 60,
+				["commweapon_rocketbarrage"] = 7.2,
+				["commweapon_rocketbarrage_nuclear"] = 25,
+			}
+			local rangeMod = 1/3
+			sharedData.rocketrangeboosts = (sharedData.rocketrangeboosts or 0) + 1
+			--sharedData.reloadBonus = (sharedData.reloadBonus or 0) - 0.75
+			if sharedData.weapon1 and baseRange[sharedData.weapon1] then
+				local reload = baseReload[sharedData.weapon1]
+				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or reload) + (reload / 2)
+				sharedData.rangeoverride1 = baseRange[sharedData.weapon1] * (1 + (rangeMod * sharedData.rocketrangeboosts))
+			end
+			if sharedData.weapon2 and baseRange[sharedData.weapon2] then
+				local reload = baseReload[sharedData.weapon2]
+				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or reload) + (reload / 2)
+				sharedData.rangeoverride2 = baseRange[sharedData.weapon2] * (1 + (rangeMod * sharedData.rocketrangeboosts))
+			end
+		end
+	},
+	{
+		name = "module_rocketrangereducer",
+		humanName = "Explosive Rocket Fuel",
+		description = "Reduces base range (before range boosters) by 11.5%. Base damage (before damage boosters) is increased by 25%.\nArtillery Exclusive.",
+		image = moduleImagePath .. "module_rocketrangereduction.png",
+		limit = 4,
+		cost = 100 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		requireChassis = {"assault"},
+		requireOneOf = {"commweapon_rocketbarrage", "commweapon_rocketlauncher"},
+		prohibitingModules = {"module_heavyrocket"},
+		applicationFunction = function (modules, sharedData)
+			local baseRange = {
+				["commweapon_rocketlauncher"] = 720,
+				["commweapon_rocketlauncher_nuclear"] = 800,
+				["commweapon_rocketbarrage_nuclear"] = 800,
+				["commweapon_rocketbarrage"] = 800,
+				["commweapon_slamrocket"] = 1000,
+			}
+			sharedData.rocketrangeboosts = (sharedData.rocketrangeboosts or 0) + 1
+			if sharedData.weapon1 and baseRange[sharedData.weapon1] then
+				sharedData.rangeoverride1 = baseRange[sharedData.weapon1] * (1 - (0.115 * sharedData.rocketrangeboosts))
+				sharedData.damageBooster1 = (sharedData.damageBooster1 or 0) + 0.25
+			end
+			if sharedData.weapon2 and baseRange[sharedData.weapon2] then
+				sharedData.rangeoverride2 = baseRange[sharedData.weapon2] * (1 - (0.115 * sharedData.rocketrangeboosts))
+				sharedData.damageBooster2 = (sharedData.damageBooster2 or 0) + 0.25
+			end
+		end
+	},
+	{
+		name = "module_expandedrocketsalvo",
+		humanName = "Expanded Rocket Ammunition Storage",
+		description = "Expand your rocket reserves significantly, creating a torrent of rockets to fly at your foes. Increases Rocket Barrage size by 8 projectiles, increases reload by 0.8s. If you have heavy ordinance installed, increase projectile count by 10 instead and reload by 5.4s instead.\nArtillery Exclusive. Mutually exclusive with Conservative Rocket Deployment.",
+		image = moduleImagePath .. "module_rocketammo.png",
+		limit = 8,
+		cost = 100 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		requireChassis = {"assault"},
+		requireOneOf = {"commweapon_rocketbarrage"},
+		prohibitingModules = {"module_rocketconservation"},
+		applicationFunction = function (modules, sharedData)
+			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage" then
+				local basereload = 7.2
+				sharedData.burstOverride1 = (sharedData.burstOverride1 or 6) + 2
+				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) + 0.8
+			elseif sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage_nuclear" then
+				local basereload = 25
+				sharedData.burstOverride1 = (sharedData.burstOverride1 or 30) + 10
+				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) + 5.4
+			end
+			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage" then
+				local basereload = 7.2
+				sharedData.burstOverride2 = (sharedData.burstOverride2 or 6) + 2
+				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) + 0.8
+			elseif sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage_nuclear" then
+				local basereload = 25
+				sharedData.burstOverride2 = (sharedData.burstOverride2 or 30) + 10
+				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) + 5.4
+			end
+		end
+	},
+	{
+		name = "module_rocketconservation",
+		humanName = "Conservative Deployment",
+		description = "Hold much of your rocket ammunition in reserve, granting you faster reload time. Reduces the number of rockets in a barrage by 2 but decreases reload by 0.8s. If you have heavy ordinance installed, decrease reload speed by 3s instead.\nArtillery exclusive. Mutually exclusive with Expanded Rocket Ammunition Storage.",
+		image = moduleImagePath .. "module_rocketconservation.png",
+		limit = 8,
+		cost = 100 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		requireChassis = {"assault"},
+		prohibitingModules = {"module_expandedrocketsalvo"},
+		requireOneOf = {"commweapon_rocketbarrage"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.conservativedeployments = (sharedData.conservativedeployments or 0) + 1
+			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage" then
+				local basereload = 7.2
+				if sharedData.conservativedeployments%2 == 1 then
+					sharedData.burstOverride1 = 12 - sharedData.conservativedeployments
+					sharedData.burstRateOverride1 = 2/30
+					sharedData.projectileOverride1 = 2
+				else
+					sharedData.burstOverride1 = 6 - (sharedData.conservativedeployments / 2)
+					sharedData.burstRateOverride1 = 0.1
+					sharedData.projectileOverride1 = 4
+				end
+				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) - 0.8
+			elseif sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage_nuclear" then
+				local basereload = 25
+				sharedData.burstOverride1 = (sharedData.burstOverride1 or 30) - 2
+				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) - 3
+			end
+			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage" then
+				local basereload = 7.2
+				if sharedData.conservativedeployments%2 == 1 then
+					sharedData.burstOverride2 = 12 - sharedData.conservativedeployments
+					sharedData.burstRateOverride2 = 2/30
+					sharedData.projectileOverride2 = 2
+				else
+					sharedData.burstOverride2 = 6 - (sharedData.conservativedeployments / 2)
+					sharedData.burstRateOverride2 = 0.1
+					sharedData.projectileOverride2 = 4
+				end
+				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) - 0.8
+			elseif sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage_nuclear" then
+				local basereload = 25
+				sharedData.burstOverride2 = (sharedData.burstOverride2 or 30) - 2
+				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) - 3
+			end
+		end
+	},
+	{
+		name = "module_autoloader",
+		humanName = "Rapid Autoloader",
+		description = "Increases reload speed by 50%. Reduces base damage by 12.5%. Burst Weapons (such as lightning guns or medium rifles) fire faster. Minimum 10% damage.\nGhost Exclusive.",
+		image = moduleImagePath .. "module_reloader.png",
+		limit = 4,
+		cost = 100 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		requireChassis = {"strike"},
+		prohibitingModules = {"module_alphastrike"},
+		applicationFunction = function (modules, sharedData)
+			-- Damage boost is applied via clone swapping
+			--sharedData.damageMult = (sharedData.damageMult or 1) - 0.20
+			--if sharedData.damageMult < 0.1 then sharedData.damageMult = 0.1 end
+			if sharedData.weapon1 then
+				sharedData.damageBooster1 = (sharedData.damageBooster1 or 0) - 0.125
+				if sharedData.damageBooster1 < -0.95 then
+					sharedData.damageBooster1 = -0.95
+				end
+			end
+			if sharedData.weapon2 then
+				sharedData.damageBooster2 = (sharedData.damageBooster2 or 0) - 0.125
+				if sharedData.damageBooster2 < -0.95 then
+					sharedData.damageBooster2 = -0.95
+				end
+			end
+			sharedData.reloadBonus = (sharedData.reloadBonus or 0) + 0.5
+			local changedWeapons = {
+				["commweapon_lightninggun"] = 6,
+				["commweapon_lightninggun_improved"] = 15,
+				["commweapon_heavyrifle"] = 3,
+				["commweapon_heavyrifle_disrupt"] = 3,
+			}
+			if sharedData.weapon1 and changedWeapons[sharedData.weapon1] then
+				local burst = changedWeapons[sharedData.weapon1]
+				local count = math.floor(sharedData.reloadBonus / 0.5)
+				sharedData.burstRateOverride1 = math.max(burst * (1 - (count * 0.2)), 1) / 30
+			end
+			if sharedData.weapon2 and changedWeapons[sharedData.weapon2] then
+				local burst = changedWeapons[sharedData.weapon2]
+				local count = math.floor(sharedData.reloadBonus / 0.5)
+				sharedData.burstRateOverride2 = math.max(burst * (1 - (count * 0.2)), 1) / 30
+			end
 		end
 	},
 	{
@@ -2080,11 +2401,14 @@ local function levelDefGenerator(commname, cloneModulesStringFunc, weapon2Level)
 			upgradeSlots = {},
 		}
 	}
-
+	local bpmult = 1
+	if commwars then
+		bpmult = 2
+	end
 	for i = 1, maxCommLevel do
 		--Spring.Echo("Do idx " .. i .. " for comm " .. commname .. ".")
 		res[i] = {
-			morphBuildPower = 10 + math.ceil(i/2)*5,
+			morphBuildPower = 10 + math.ceil(i/2)*5 * bpmult,
 			morphBaseCost = morphCosts[i],
 			morphUnitDefFunction = function(modulesByDefID)
 				local oneUnitDefName = commname .. math.ceil(i/2) .. "_" .. cloneModulesStringFunc(modulesByDefID)
