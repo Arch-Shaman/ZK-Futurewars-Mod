@@ -35,6 +35,7 @@ local weaponDef = {
 
 	edgeEffectiveness       = 0.4,
 	explosionGenerator      = "custom:STARFIRE",
+	explosionScar			= false,
 	fireStarter             = 180,
 	flightTime              = 30,
 	impulseBoost            = 0,
