@@ -172,7 +172,7 @@ local function DoExtraWeaponStuff(extraInfo, weaponNum, wd, weaponID)
 	end
 	if ei.burstOverride then
 		Spring.SetUnitWeaponState(unitID, weaponID, "burst", ei.burstOverride)
-		Spring.SetUnitRulesParam(unitID, weaponID .. "_bursts")
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_updatedburst_count", ei.burstOverride, INLOS)
 	end
 	if ei.burstRateOverride then
 		Spring.SetUnitWeaponState(unitID, weaponID, "burstRate", ei.burstRateOverride)
@@ -194,7 +194,7 @@ local function DoExtraWeaponStuff(extraInfo, weaponNum, wd, weaponID)
 		local baseProjectiles = ei.projectileOverride or wd.projectiles
 		local newProjectileCount = math.max(baseProjectiles + ei.projectileBonus, 1)
 		Spring.SetUnitWeaponState(unitID, weaponID, "projectiles", newProjectileCount)
-		Spring.SetUnitRulesParam(unitID, weaponID .. "_projectiles", newProjectileCount, INLOS)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_projectilecount_override", newProjectileCount, INLOS)
 	end
 	if ei.sprayAngleBonus or ei.sprayAngleOverride then
 		local baseSprayAngle = ei.sprayAngleOverride or wd.sprayAngle
@@ -568,22 +568,24 @@ local function SetUpFeatureRules(featureID)
 	TransferParamToFeature(featureID, "carrier_count_droneassault")
 	TransferParamToFeature(featureID, "carrier_count_droneheavyslow")
 	TransferParamToFeature(featureID, "carrier_count_drone")
+	if weapon2 then
+		TransferParamToFeature(featureID, weapon2 .. "_sprayangle")
+		TransferParamToFeature(featureID, weapon2 .. "_speed")
+		TransferParamToFeature(featureID, weapon2 .. "_projectilecount_override")
+		TransferParamToFeature(featureID, weapon2 .. "_accuracy")
+		TransferParamToFeature(featureID, weapon2 .. "_updatedburst_count")
+		TransferParamToFeature(featureID, weapon2 .. "_baseburstrate")
+		TransferParamToFeature(featureID, weapon2 .. "_basereload")
+		TransferParamToFeature(featureID, weapon2 .. "_actual_dmgboost")
+	end
 	TransferParamToFeature(featureID, weapon1 .. "_speed")
-	TransferParamToFeature(featureID, weapon2 .. "_speed")
-	TransferParamToFeature(featureID, weapon1 .. "_projectiles")
-	TransferParamToFeature(featureID, weapon2 .. "_projectiles")
+	TransferParamToFeature(featureID, weapon1 .. "_projectilecount_override")
 	TransferParamToFeature(featureID, weapon1 .. "_sprayangle")
-	TransferParamToFeature(featureID, weapon2 .. "_sprayangle")
 	TransferParamToFeature(featureID, weapon1 .. "_accuracy")
-	TransferParamToFeature(featureID, weapon2 .. "_accuracy")
 	TransferParamToFeature(featureID, weapon1 .. "_baseburstrate")
-	TransferParamToFeature(featureID, weapon2 .. "_baseburstrate")
-	TransferParamToFeature(featureID, weapon1 .. "_bursts")
-	TransferParamToFeature(featureID, weapon2 .. "_bursts")
+	TransferParamToFeature(featureID, weapon1 .. "_updatedburst_count")
 	TransferParamToFeature(featureID, weapon1 .. "_basereload")
-	TransferParamToFeature(featureID, weapon2 .. "_basereload")
 	TransferParamToFeature(featureID, weapon1 .. "_actual_dmgboost")
-	TransferParamToFeature(featureID, weapon2 .. "_actual_dmgboost")
 	
 	-- Things tooltips need --
 	TransferParamToFeature(featureID, "commander_owner")

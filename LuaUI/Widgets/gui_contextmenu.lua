@@ -773,7 +773,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 		end
 		Spring.Echo("IsCommander: " .. tostring(isCommander))
 	end
-	Spring.Echo("Index: " .. tostring(index))
+	--Spring.Echo("Index: " .. tostring(index))
 	local cells = cells
 	local startPoint = #cells+1
 	if layer == nil then layer = 0 end
@@ -920,17 +920,21 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			local bursts
 			if unitID and index and isCommander then
 				if isFeature then
-					projectiles = Spring.GetFeatureRulesParam(unitID, index .. "_projectiles") or wd.projectiles
-					bursts = Spring.GetFeatureRulesParam(unitID, index .. "_bursts") or (tonumber(cp.script_burst) or wd.salvoSize)
+					projectiles = Spring.GetFeatureRulesParam(unitID, index .. "_projectilecount_override") or tonumber(cp.statsprojectiles) or  wd.projectiles
+					bursts = Spring.GetFeatureRulesParam(unitID, index .. "_updatedburst_count") or (tonumber(cp.script_burst) or wd.salvoSize)
 				else
-					projectiles = Spring.GetUnitRulesParam(unitID, index .. "_projectiles") or wd.projectiles
-					bursts = Spring.GetUnitRulesParam(unitID, index .. "_bursts") or (tonumber(cp.script_burst) or wd.salvoSize)
+					local projectileRules = Spring.GetUnitRulesParam(unitID, index .. "_projectilecount_override")
+					local burstRules = Spring.GetUnitRulesParam(unitID, index .. "_updatedburst_count")
+					--Spring.Echo("Projectile count: " .. tostring(projectileRules))
+					--Spring.Echo("Bursts: " .. tostring(burstRules))
+					projectiles = projectileRules or tonumber(cp.statsprojectiles) or wd.projectiles
+					bursts = burstRules or (tonumber(cp.script_burst) or wd.salvoSize)
 				end
 			else
-				projectiles = wd.projectiles
+				projectiles = tonumber(cp.statsprojectiles) or wd.projectiles
 				bursts = (tonumber(cp.script_burst) or wd.salvoSize)
 			end
-			local mult = tonumber(cp.statsprojectiles) or bursts * projectiles
+			local mult = bursts * projectiles
 			local dps  = dam /fixedreload
 			local dpsw = damw/fixedreload
 			local dpss = dams/fixedreload
