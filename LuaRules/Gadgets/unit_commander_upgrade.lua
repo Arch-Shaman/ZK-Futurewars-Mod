@@ -517,7 +517,7 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 			projectileSpeedBonus = data.projectileSpeedBonus2 or 1,
 			sprayAngleOverride = data.sprayAngleOverride2,
 			sprayAngleBonus = data.sprayAngleBonus2,
-			rangeOverride = data.rangeoverride1,
+			rangeOverride = data.rangeoverride2,
 		},
 	}
 	ApplyWeaponData(unitID, data.weapon1, data.weapon2, data.shield, data.rangeMult, data.damageMult, chassis, extraWeaponInfo)
