@@ -1946,7 +1946,7 @@ local moduleDefs = {
 		applicationFunction = function (modules, sharedData)
 			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage" then
 				local basereload = 7.2
-				sharedData.burstOverride1 = (sharedData.burstOverride1 or 6) -
+				sharedData.burstOverride1 = (sharedData.burstOverride1 or 6) + 2
 				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) + 0.8
 			elseif sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage_nuclear" then
 				local basereload = 25
