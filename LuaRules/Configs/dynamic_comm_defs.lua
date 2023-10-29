@@ -1861,6 +1861,116 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "module_heavyrocket",
+		humanName = "Heavy Rocket Motors",
+		description = "Improves rocket range at the cost of reload speed. Increases base range by 25% (range before modifications), reload speed -75%.\nArtillery Exclusive.",
+		image = moduleImagePath .. "module_alphastrike.png",
+		limit = 3,
+		cost = 100 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		requireChassis = {"assault"},
+		requireOneOf = {"commweapon_rocketbarrage", "commweapon_rocketlauncher"},
+		applicationFunction = function (modules, sharedData)
+			local baseRange = {
+				["commweapon_rocketlauncher"] = 720,
+				["commweapon_rocketlauncher_nuclear"] = 800,
+				["commweapon_rocketbarrage_nuclear"] = 800,
+				["commweapon_rocketbarrage"] = 800,
+				["commweapon_slamrocket"] = 1000,
+			}
+			sharedData.rocketrangeboosts = (sharedData.rocketrangeboosts or 0) + 1
+			sharedData.reloadBonus = (sharedData.reloadBonus or 0) - 0.75
+			if sharedData.weapon1 and baseRange[sharedData.weapon1] then
+				sharedData.rangeoverride1 = baseRange[sharedData.weapon1] * (1 + (0.25 * sharedData.rocketrangeboosts))
+			end
+			if sharedData.weapon2 and baseRange[sharedData.weapon2] then
+				sharedData.rangeoverride2 = baseRange[sharedData.weapon2] * (1 + (0.25 * sharedData.rocketrangeboosts))
+			end
+		end
+	},
+	{
+		name = "module_expandedrocketsalvo",
+		humanName = "Expanded Rocket Ammunition Storage",
+		description = "Increases Rocket Barrage size by 8 projectiles, increases reload by 0.8s. If you have heavy ordinance installed, increase reload by 5.4s instead.\nArtillery Exclusive. Mutually exclusive with Conservative Rocket Deployment.",
+		image = moduleImagePath .. "module_rocketammo.png",
+		limit = 8,
+		cost = 100 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		requireChassis = {"assault"},
+		requireOneOf = {"commweapon_rocketbarrage"},
+		applicationFunction = function (modules, sharedData)
+			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage" then
+				local basereload = 7.2
+				sharedData.burstOverride1 = (sharedData.burstOverride1 or 6) -
+				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) + 0.8
+			elseif sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage_nuclear" then
+				local basereload = 25
+				sharedData.burstOverride1 = (sharedData.burstOverride1 or 30) + 8
+				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) + 5.4
+			end
+			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage" then
+				local basereload = 7.2
+				sharedData.burstOverride2 = (sharedData.burstOverride2 or 6) + 2
+				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) + 0.8
+			elseif sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage_nuclear" then
+				local basereload = 25
+				sharedData.burstOverride2 = (sharedData.burstOverride2 or 30) + 8
+				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) + 5.4
+			end
+		end
+	},
+	{
+		name = "module_rocketconservation",
+		humanName = "Conservative Deployment",
+		description = "Conservative Deployment:\n Reduces the number of rockets in a barrage by 2 but decreases reload by 0.5s. If you have heavy ordinance installed, decrease reload speed by 2s instead.\nArtillery exclusive. Mutually exclusive with Expanded Rocket Ammunition Storage.",
+		image = moduleImagePath .. "module_rocketconservation.png",
+		limit = 8,
+		cost = 100 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		requireChassis = {"assault"},
+		requireOneOf = {"commweapon_rocketbarrage"},
+		applicationFunction = function (modules, sharedData)
+			sharedData.conservativedeployments = (sharedData.conservativedeployments or 0) + 1
+			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage" then
+				local basereload = 7.2
+				if sharedData.conservativedeployments%2 == 1 then
+					sharedData.burstOverride1 = 12 - sharedData.conservativedeployments
+					sharedData.burstRateOverride1 = 2/30
+					sharedData.projectileOverride1 = 2
+				else
+					sharedData.burstOverride1 = 6 - (sharedData.conservativedeployments / 2)
+					sharedData.burstRateOverride1 = 0.1
+					sharedData.projectileOverride1 = 4
+				end
+				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) - 0.5
+			elseif sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage_nuclear" then
+				local basereload = 25
+				sharedData.burstOverride1 = (sharedData.burstOverride1 or 30) - 2
+				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) - 2
+			end
+			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage" then
+				local basereload = 7.2
+				if sharedData.conservativedeployments%2 == 1 then
+					sharedData.burstOverride2 = 12 - sharedData.conservativedeployments
+					sharedData.burstRateOverride2 = 2/30
+					sharedData.projectileOverride2 = 2
+				else
+					sharedData.burstOverride2 = 6 - (sharedData.conservativedeployments / 2)
+					sharedData.burstRateOverride2 = 0.1
+					sharedData.projectileOverride2 = 4
+				end
+				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) - 0.5
+			elseif sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage_nuclear" then
+				local basereload = 25
+				sharedData.burstOverride2 = (sharedData.burstOverride2 or 30) - 2
+				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) - 2
+			end
+		end
+	},
+	{
 		name = "module_autoloader",
 		humanName = "Rapid Autoloader",
 		description = "Increases reload speed by 50%. Reduces damage by 20%. Burst Weapons (such as lightning guns or medium rifles) fire faster. Minimum 10% damage.\nGhost Exclusive.",
