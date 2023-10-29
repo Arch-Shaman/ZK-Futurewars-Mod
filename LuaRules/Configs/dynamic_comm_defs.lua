@@ -1934,7 +1934,7 @@ local moduleDefs = {
 	{
 		name = "module_expandedrocketsalvo",
 		humanName = "Expanded Rocket Ammunition Storage",
-		description = "Increases Rocket Barrage size by 8 projectiles, increases reload by 0.8s. If you have heavy ordinance installed, increase reload by 5.4s instead.\nArtillery Exclusive. Mutually exclusive with Conservative Rocket Deployment.",
+		description = "Expand your rocket reserves significantly, creating a torrent of rockets to fly at your foes. Increases Rocket Barrage size by 8 projectiles, increases reload by 0.8s. If you have heavy ordinance installed, increase projectile count by 10 instead and reload by 5.4s instead.\nArtillery Exclusive. Mutually exclusive with Conservative Rocket Deployment.",
 		image = moduleImagePath .. "module_rocketammo.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
@@ -1950,7 +1950,7 @@ local moduleDefs = {
 				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) + 0.8
 			elseif sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage_nuclear" then
 				local basereload = 25
-				sharedData.burstOverride1 = (sharedData.burstOverride1 or 30) + 8
+				sharedData.burstOverride1 = (sharedData.burstOverride1 or 30) + 10
 				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) + 5.4
 			end
 			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage" then
@@ -1959,7 +1959,7 @@ local moduleDefs = {
 				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) + 0.8
 			elseif sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage_nuclear" then
 				local basereload = 25
-				sharedData.burstOverride2 = (sharedData.burstOverride2 or 30) + 8
+				sharedData.burstOverride2 = (sharedData.burstOverride2 or 30) + 10
 				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) + 5.4
 			end
 		end
@@ -1967,7 +1967,7 @@ local moduleDefs = {
 	{
 		name = "module_rocketconservation",
 		humanName = "Conservative Deployment",
-		description = "Conservative Deployment:\n Reduces the number of rockets in a barrage by 2 but decreases reload by 0.8s. If you have heavy ordinance installed, decrease reload speed by 3s instead.\nArtillery exclusive. Mutually exclusive with Expanded Rocket Ammunition Storage.",
+		description = "Hold much of your rocket ammunition in reserve, granting you faster reload time. Reduces the number of rockets in a barrage by 2 but decreases reload by 0.8s. If you have heavy ordinance installed, decrease reload speed by 3s instead.\nArtillery exclusive. Mutually exclusive with Expanded Rocket Ammunition Storage.",
 		image = moduleImagePath .. "module_rocketconservation.png",
 		limit = 8,
 		cost = 100 * COST_MULT,
