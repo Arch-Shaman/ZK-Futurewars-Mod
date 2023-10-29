@@ -839,10 +839,12 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			local damc = 0
 			local stun_time = 0
 			local baseDamage = tonumber(cp.stats_damage) or wd.customParams.shield_damage or 0
-			if isFeature then
-				comm_mult = Spring.GetFeatureRulesParam(unitID, index .. "_actual_dmgboost") or comm_mult
-			else
-				comm_mult = Spring.GetUnitRulesParam(unitID, index .. "_actual_dmgboost") or comm_mult
+			if unitID then
+				if isFeature then
+					comm_mult = Spring.GetFeatureRulesParam(unitID, index .. "_actual_dmgboost") or comm_mult
+				else
+					comm_mult = Spring.GetUnitRulesParam(unitID, index .. "_actual_dmgboost") or comm_mult
+				end
 			end
 			local val = baseDamage * comm_mult
 			if cp.disarmdamagemult then
