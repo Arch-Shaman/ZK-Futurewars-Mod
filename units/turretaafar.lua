@@ -69,6 +69,7 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting       = 1,
+				cameraShake				= 0,
 				customParams              = {
 					isaa = "1",
 					light_color = "0.6 0.7 0.7",

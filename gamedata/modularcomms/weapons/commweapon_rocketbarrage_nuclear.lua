@@ -8,6 +8,7 @@ local weaponDef = {
 	craterMult              = 0,
 	burst					= 30,
 	burstrate				= 2/30,
+	cameraShake             = 0,
 	customParams            = {
 		is_unit_weapon = 1,
 		slot = "5",

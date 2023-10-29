@@ -68,6 +68,7 @@ return {
 				cegTag                  = "rocket_trail_bar",
 				craterBoost             = 0,
 				craterMult              = 0,
+				cameraShake				= 0,
 				customParams        = {
 					burst = Shared.BURST_RELIABLE,
 					light_camera_height = 1600,
