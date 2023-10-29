@@ -1103,12 +1103,15 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			if show_range and not bombletCount then
 				local range = cp.truerange or wd.range
 				local rangemult
+				local baserange
 				if isFeature then
 					rangemult = (unitID and Spring.GetFeatureRulesParam(unitID, "comm_range_mult")) or 1
+					baserange = (unitID and Spring.GetFeatureRulesParam(unitID, index .. "_range")) or cp.truerange or wd.range
 				else
 					rangemult = (unitID and Spring.GetUnitRulesParam(unitID, "comm_range_mult")) or 1
+					baserange = (unitID and Spring.GetUnitRulesParam(unitID, index .. "_range")) or cp.truerange or wd.range
 				end
-				AddEntryToCells(localization.stats_range .. ':', layer + 1, numformat(range * rangemult, 2) .. " elmo", cells)
+				AddEntryToCells(localization.stats_range .. ':', layer + 1, numformat(baserange * rangemult, 2) .. " elmo", cells)
 			end
 			if wd.customParams.puredecloaktime then
 				AddEntryToCells(localization.stats_force_decloak, layer + 1, numformat(wd.customParams.puredecloaktime / 30, 1) .. localization.acronyms_second, cells)
