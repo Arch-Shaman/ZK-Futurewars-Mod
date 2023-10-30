@@ -1751,7 +1751,7 @@ local function printAbilities(ud, unitID, isFeature)
 	if cp.boost_speed_mult then
 		AddEntryToCells(localization.speed_boost, 1, '', cells)
 		AddEntryToCells(localization.speed .. ':', 2, 'x' .. cp.boost_speed_mult, cells)
-		AddEntryToCells(localization.duration .. ':', 2, numformat(tonumber(cp.boost_duration)/30, 1) .. localization.acronyms_second, cells)
+		AddEntryToCells(localization.duration .. ':', 2, numformat(tonumber(cp.boost_duration), 1) .. localization.acronyms_second, cells)
 		AddEntryToCells(localization.stats_reload .. ':', 2, numformat(tonumber(cp.specialreloadtime)/30, 1) .. localization.acronyms_second, cells)
 		AddEntryToCells('', 0, '', cells)
 	end
