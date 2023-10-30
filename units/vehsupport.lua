@@ -133,6 +133,7 @@ return {
 					light_radius = 80,
 					damage_vs_shield = 84 * 0.25,
 					bogus = 1,
+					armorpiercing = 1/3,
 				},
 				damage                  = {
 					default = 80.01,
