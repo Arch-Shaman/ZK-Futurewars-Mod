@@ -88,6 +88,7 @@ return {
 					sweepfire_maxangle = 30,
 					sweepfire_step = 1.5,
 					sweepfire_fastupdate = 1,
+					armorpiercing = 0.50,
 				},
 				damage                  = {
 					default = 65.1,
