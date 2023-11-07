@@ -4,8 +4,8 @@ local velocity = 2350
 return { 
 	raveparty = {
 		unitname                      = "raveparty",
-		name                          = "Disco Rave Party - Globally Revealed at 65%% completion",
-		description                   = "Destructive Rainbow Projector",
+		name                          = "Disco Rave Party",
+		description                   = "Destructive Rainbow Projector - Globally Revealed at 65%% completion",
 		buildCostMetal                = 48000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,

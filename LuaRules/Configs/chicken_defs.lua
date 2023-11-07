@@ -72,7 +72,7 @@ waveDespawn = true
 
 chicken_turret = "chickend"
 chicken_shield = "chicken_rafflesia"
-defenseMult = 1.5	--multuplier on the number of defenses
+defenseMult = 1	--multuplier on the number of defenses
 defenseEvoMult = 1	--multiplier on defense evo
 
 queenMorphTime = {60*30, 120*30}	--lower and upper bounds for delay between morphs, gameframes

@@ -1,8 +1,8 @@
 return { 
 	mahlazer = {
 		unitname                      = "mahlazer",
-		name                          = "Starlight - Globally Revealed at 50%% completion",
-		description                   = "Planetary Energy Chisel",
+		name                          = "Starlight",
+		description                   = "Planetary Energy Chisel - Globally Revealed at 50%% completion",
 		activateWhenBuilt             = true,
 		buildCostMetal                = 54000,
 		builder                       = false,
