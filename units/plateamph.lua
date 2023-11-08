@@ -50,6 +50,10 @@ return {
 			cus_noflashlight   = 1,
 			amph_regen = 30,
 			amph_submerged_at = 40,
+			teleporter = 1,
+			teleporter_throughput = 220, -- mass per second
+			teleporter_beacon_spawn_time = 10,
+			teleporter_offset = 180,
 			outline_x = 165,
 			outline_y = 165,
 			outline_yoff = 27.5,
