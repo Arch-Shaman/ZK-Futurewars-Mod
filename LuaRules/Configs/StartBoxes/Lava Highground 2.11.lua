@@ -399,7 +399,7 @@ local box4 = {
 
 local sputGametype = Spring.Utilities.Gametype
 
-if sputGametype.isCompStomp() or sputGametype.isBigTeams() then -- coop & big teams both use aggressive boxes.
+if sputGametype.isCoop() or sputGametype.isBigTeams() then -- coop & big teams both use aggressive boxes.
 	box1 = box1_aggressive
 	box2 = box2_aggressive
 	box3 = box3_aggressive
@@ -419,7 +419,7 @@ end
 boxes[0] = {startpoints = {}, boxes = {}, nameLong = "Magma Maniacs", nameShort = "Magma"}
 boxes[1] = {startpoints = {}, boxes = {}, nameLong = "Lava Lovers", nameShort = "Lava"}
 
-if (sputGametype.isBigTeams() or sputGametype.isCompStomp()) then -- pick two. team vs team.
+if (sputGametype.isBigTeams() or sputGametype.isCoop()) then -- pick two. team vs team.
 	local r = math.random(1, 6)
 	Spring.Echo("Big config: " .. r)
 	if r == 1 then
