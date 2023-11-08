@@ -51,8 +51,8 @@ return {
 			amph_regen = 60,
 			amph_submerged_at = 40,
 			teleporter = 1,
-			teleporter_throughput = 550, -- mass per second
-			teleporter_beacon_spawn_time = 10,
+			teleporter_throughput = 500, -- mass per second
+			teleporter_beacon_spawn_time = 3,
 			teleporter_offset = 180,
 			outline_x = 250,
 			outline_y = 250,
