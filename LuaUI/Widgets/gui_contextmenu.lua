@@ -1599,6 +1599,9 @@ local function printAbilities(ud, unitID, isFeature)
 		AddEntryToCells(localization.idle_cloak_free, 2, '', cells)
 		AddEntryToCells(localization.decloak_radius .. ':', 2, numformat(ud.decloakDistance) .. " elmo", cells)
 	end
+	if cp.reveal_onprogress then
+		AddEntryToCells(localization.revealpercent, 1, numformat(tonumber(cp.reveal_onprogress) * 100, 1) .. "%", cells)
+	end
 	local commcloakregen, commrecloaktime, commjammerrange, commradarrange, nanoregen, nanomax
 	if unitID then
 		if isFeature then

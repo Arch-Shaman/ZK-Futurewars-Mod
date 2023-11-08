@@ -36,6 +36,7 @@
 	"explodes_on_timeout" : "缺少燃料时发生爆炸",
 	"falls_on_timeout" : "缺少燃料时倒下",
 	"stats_homing" : "指导率",
+	"revealpercent" : "在完成 %{percent}%% 时向敌人显现",
 	"stats_cruisemissile" : "巡航导弹",
 	"stats_cruisealtitude" : "海拔高度",
 	"stats_begins_descent" : "开始下降",

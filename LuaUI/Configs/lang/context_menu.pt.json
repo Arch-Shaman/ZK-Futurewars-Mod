@@ -37,6 +37,7 @@
 	"stats_cruisemissile" : "Míssil de cruzeiro",
 	"stats_cruisealtitude" : "Altitude",
 	"stats_begins_descent" : "Começa a descer",
+	"revealpercent" : "Aparece para os inimigos ao atingir %{percent}%% de conclusão",
 	"stats_from_target" : "elmo do alvo",
 	"stats_tracks_target" : "Rastreia o alvo",
 	"stats_guided_cruise" : "Míssil de cruzeiro guiado, descida não guiada",

@@ -83,6 +83,7 @@
 	"grid_needed" : "Required Grid Energy",
 	"altitude" : "Altitude",
 	"altitude_bonus" : "Altitude bonus",
+	"revealpercent" : "Appears to enemies upon reaching %{percent}%% completion",
 	"sight_range" : "Sight range",
 	"singularity_strength" : "Strength",
 	"weapon_arcing" : "Arcing shot",

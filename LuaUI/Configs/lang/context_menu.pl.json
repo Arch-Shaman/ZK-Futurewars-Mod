@@ -50,6 +50,7 @@
 	"needs_guidance_for_seconds" : "Requires guidance for %{seconds}",
 	"stats_inaccuracy" : "Inaccuracy",
 	"stats_wobble" : "Flight Instability",
+	"revealpercent" : "Appears to enemies upon reaching %{percent}%% completion",
 	"stats_wobble_desc" : "up to",
 	"stats_blastwave_only_allies" : "Only affects allies",
 	"stats_burst_time" : "Burst time",

@@ -42,6 +42,7 @@
 	"stats_from_target" : "elmo de la cible",
 	"stats_tracks_target" : "Tracks cible",
 	"stats_guided_cruise" : "Croisière guidée, descente libre",
+	"revealpercent" : "Apparaît aux ennemis après avoir atteint %{percent}%% d'achèvement",
 	"stats_circular_spread" : "A une propagation circulaire (%{size} rayon autour de la cible)",
 	"stats_cruise_error" : "Frappes à moins de %{radius} elmos de la cible",
 	"laser_guided" : "Guidé par laser",

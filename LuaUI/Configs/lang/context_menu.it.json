@@ -41,6 +41,7 @@
 	"stats_begins_descent" : "Inizia la discesa",
 	"stats_from_target" : "elmo dal bersaglio",
 	"stats_tracks_target" : "Segue il bersaglio",
+	"revealpercent" : "Appare ai nemici dopo aver raggiunto il %{percent}%% di completamento",
 	"stats_guided_cruise" : "Crociera guidata, discesa non guidata",
 	"stats_circular_spread" : "Ha una diffusione circolare (%{size} raggio attorno al bersaglio)",
 	"stats_cruise_error" : "Colpisce entro %{radius} elmos dal bersaglio",

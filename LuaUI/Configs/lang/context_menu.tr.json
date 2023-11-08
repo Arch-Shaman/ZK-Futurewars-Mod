@@ -36,6 +36,7 @@
 	"explodes_on_timeout" : "Yakıt bittiğinde patlar",
 	"falls_on_timeout" : "Yakıt bittiğinde düşer",
 	"stats_homing" : "Rehberlik Oranı",
+	"revealpercent": "%{percent}%% tamamlamaya ulaşıldığında düşmanlara görünür",
 	"stats_cruisemissile" : "Seyir Füzesi",
 	"stats_cruisealtitude" : "Yükseklik",
 	"stats_begins_descent" : "İniş başlıyor",

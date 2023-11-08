@@ -35,6 +35,7 @@
 	"stats_acceleration" : "Ускорение",
 	"explodes_on_timeout" : "Взрывается при отсутствии топлива",
 	"falls_on_timeout" : "Падения при отсутствии топлива",
+	"revealpercent" : "Появляется врагам после завершения %{percent}%%",
 	"stats_homing" : "Ориентировочная ставка",
 	"stats_cruisemissile" : "Крылатая ракета",
 	"stats_cruisealtitude" : "Высота",
