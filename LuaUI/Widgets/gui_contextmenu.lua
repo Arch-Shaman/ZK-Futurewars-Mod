@@ -1600,7 +1600,7 @@ local function printAbilities(ud, unitID, isFeature)
 		AddEntryToCells(localization.decloak_radius .. ':', 2, numformat(ud.decloakDistance) .. " elmo", cells)
 	end
 	if cp.reveal_onprogress then
-		AddEntryToCells(localization.revealpercent, 1, numformat(tonumber(cp.reveal_onprogress) * 100, 1) .. "%", cells)
+		AddEntryToCells(WG.Translate("interface", "revealpercent", {percent = numformat(tonumber(cp.reveal_onprogress) * 100, 1)}), '', cells)
 	end
 	local commcloakregen, commrecloaktime, commjammerrange, commradarrange, nanoregen, nanomax
 	if unitID then
