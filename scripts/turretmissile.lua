@@ -71,6 +71,7 @@ function script.Create()
 	Hide(base2)
 	Move(l_poddoor, x_axis, 4, 5)
 	Move(r_poddoor, x_axis, -4, 5)
+	Turn(pod, x_axis, -math.rad(90))
 end
 
 local function RestoreAfterDelay()
@@ -78,7 +79,7 @@ local function RestoreAfterDelay()
 	SetSignalMask(SIG_RESTORE)
 	Sleep(5000)
 	Turn(turret, y_axis, 0, math.rad(150))
-	Turn(pod, x_axis, 0, math.rad(150))
+	--Turn(pod, x_axis, 0, math.rad(150))
 end
 
 local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
@@ -90,7 +91,7 @@ local function FireAndReload(num)
 	EmitSfx(bay[num].exhaust, GG.Script.UNIT_SFX2)
 	Turn(bay[num].backDoor, x_axis, math.rad(100), math.rad(1000))
 	Turn(lever, x_axis, math.rad(-5), math.rad(80))
-	Turn(pod, x_axis, math.rad(7), math.rad(70))
+	--Turn(pod, x_axis, math.rad(7), math.rad(70))
 
 	Sleep(40)
 
@@ -99,7 +100,7 @@ local function FireAndReload(num)
 	scriptReload.GunStartReload(num)
 
 	Turn(lever, x_axis, 0, math.rad(50))
-	Turn(pod, x_axis, 0, math.rad(50))
+	--Turn(pod, x_axis, 0, math.rad(50))
 	Turn(bay[num].backDoor, x_axis, 0, math.rad(100))
 
 	SleepAndUpdateReload(num, 2/3 * RELOAD_TIME) -- 5.5
@@ -146,9 +147,9 @@ function script.AimWeapon(num, heading, pitch)
 		Signal(SIG_AIM)
 		SetSignalMask(SIG_AIM)
 		Turn(turret, y_axis, heading, math.rad(450)) -- left-right
-		Turn(pod, x_axis, -pitch, math.rad(450)) --up-down
+		--Turn(pod, x_axis, -pitch, math.rad(450)) --up-down
 		WaitForTurn(turret, y_axis)
-		WaitForTurn(pod, x_axis)
+		--WaitForTurn(pod, x_axis)
 		return true
 	end
 end
