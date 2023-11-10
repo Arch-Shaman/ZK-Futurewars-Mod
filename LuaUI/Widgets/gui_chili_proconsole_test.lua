@@ -1273,7 +1273,7 @@ local function setupPlayers(playerID)
 	else
 		local playerroster = Spring.GetPlayerList()
 		for i, id in ipairs(playerroster) do
-			local name,active, spec, teamId, allyTeamId, _, _, _, _, ck = Spring.GetPlayerInfo(id, true)
+			local name, active, spec, teamId, allyTeamId, _, _, _, _, ck = Spring.GetPlayerInfo(id, true)
 			--lobby: grey chat, spec: white chat, player: color chat
 			incolors[name] = (spec and incolors['#s']) or color2incolor(Spring.GetTeamColor(teamId))
 			if ck.badges then -- look for fw badges
