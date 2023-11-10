@@ -1144,12 +1144,12 @@ local function getSpotColor(id)
 		if teamID == gaiaTeamID then
 			return Spring.GetTeamColor(gaiaTeamID)
 		end
-		local isEnemy = not Spring.AreTeamsAllied(teamID, Spring.GetMyTeamID())
+		local allyTeam = select(6, Spring.GetTeamInfo(teamID, false))
+		local isEnemy = allyTeam ~= myAllyTeam
 		if isEnemy then
 			if colorization == 2 then
 				return 255/255, 065/255, 065/255
 			else -- use first team color per allyteam!
-				local allyTeam = select(6, Spring.GetTeamInfo(teamID))
 				local teamList = Spring.GetTeamList(allyTeam)
 				return Spring.GetTeamColor(teamList[1])
 			end
