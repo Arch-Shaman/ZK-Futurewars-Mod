@@ -1882,7 +1882,8 @@ function SendAFKMessage(player1, player2)
 		}
 	AddConsoleMessage(msg)
 end
-	
+
+local checkFrame = 0
 
 function widget:Initialize()
 	if (not WG.Chili) then
@@ -2045,12 +2046,15 @@ function widget:Initialize()
 	Spring.SendCommands({"console 0"})
 	
 	HideInputSpace()
- 	
+ 	checkFrame = Spring.GetGameFrame() + 1
 	WG.InitializeTranslation(OnLocaleChanged, GetInfo().name)
 end
 
-function widget:GameStart()
-	setupPlayers() --re-check teamColor at gameStart for Singleplayer (special case. widget Initialized before player join).
+function widget:GameFrame(f)
+	if f > checkFrame then
+		setupPlayers() --re-check teamColor at gameStart for Singleplayer (special case. widget Initialized before player join).
+		widgetHandler:RemoveCallIn("GameFrame", self)
+	end
 end
 
 function widget:RecvLuaMsg(msg, playerID)
