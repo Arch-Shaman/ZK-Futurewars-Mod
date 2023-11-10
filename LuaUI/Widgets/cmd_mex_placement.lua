@@ -125,6 +125,7 @@ local metalmultInv = metalmult > 0 and (1/metalmult) or 1
 local myPlayerID = Spring.GetMyPlayerID()
 local myOctant = 1
 local pregame = true
+local colorization = 1
 
 local placedMexSinceShiftPressed = false
 
@@ -137,9 +138,20 @@ local TEXT_CORRECT_Y = 1.25
 
 local PRESS_DRAG_THRESHOLD_SQR = 25^2
 local MINIMAP_DRAW_SIZE = math.max(mapX,mapZ) * 0.0145
+local colorizationtable = {
+	['simple'] = 1,
+	['greenred'] = 2,
+	['vanilla'] = 3,
+}
+
+
+local function UpdateColorization(value)
+	colorization = colorizationtable[value] or 1
+	wantDrawListUpdate = true
+end
 
 options_path = 'Settings/Interface/Map/Metal Spots'
-options_order = { 'drawicons', 'size', 'rounding', 'catlabel', 'area_point_command', 'catlabel_terra', 'wall_low', 'wall_high', 'burry_shallow', 'burry_deep'}
+options_order = { 'drawicons', 'size', 'rounding', 'colorization', 'catlabel', 'area_point_command', 'catlabel_terra', 'wall_low', 'wall_high', 'burry_shallow', 'burry_deep'}
 options = {
 	drawicons = {
 		name = 'Show Income as Icon',
@@ -172,6 +184,23 @@ options = {
 		advanced = true,
 		tooltip_format = "%.0f", -- show 1 instead of 1.0 (confusion)
 		OnChange = function() updateMexDrawList() end
+	},
+	colorization = {
+		name = "Mex Circle Colorization",
+		desc = "How mex circles should be colorized",
+		type  = "radioButton",
+		items = {
+			{name = 'Adaptive Simple Team Colors',key = 'simple',description = "Green/Teal self, red enemy, FFA uses first team color."},
+			{name = 'Green/Teal vs Red', key = 'greenred',description = "Green/Teal vs Red"},
+			{name = 'Use Team Colors', key = 'vanilla', description = "Use team colors."},
+		},
+		value = 'simple',
+		update_on_the_fly = true,
+		OnChange = function(self)
+			UpdateColorization(self.value)
+		end, 
+		noHotkey = true,
+		desc = "Colorizes mex circles based on this value."
 	},
 	catlabel = {
 		name = 'Area Mex',
@@ -973,6 +1002,7 @@ function widget:Initialize()
 	if metalSpotsNil and WG.metalSpots ~= nil then
 		Initialize()
 		UpdateOctant()
+		UpdateColorization(options.colorization.value)
 		metalSpotsNil = false
 	end
 end
@@ -1104,10 +1134,29 @@ end
 
 local circleOnlyMexDrawList = 0
 local minimapDrawList = 0
+local gaiaTeamID = Spring.GetGaiaTeamID()
 
 local function getSpotColor(id)
-	local teamID = spotData[id] and spotData[id].team or Spring.GetGaiaTeamID()
-	return Spring.GetTeamColor(teamID)
+	local teamID = (spotData[id] and spotData[id].team) or gaiaTeamID
+	if colorization == 3 then
+		return Spring.GetTeamColor(teamID)
+	else
+		if teamID == gaiaTeamID then
+			return Spring.GetTeamColor(gaiaTeamID)
+		end
+		local isEnemy = not Spring.AreTeamsAllied(teamID, Spring.GetMyTeamID())
+		if isEnemy then
+			if colorization == 2 then
+				return 255/255, 065/255, 065/255
+			else -- use first team color per allyteam!
+				local allyTeam = select(6, Spring.GetTeamInfo(teamID))
+				local teamList = Spring.GetTeamList(allyTeam)
+				return Spring.GetTeamColor(teamList[1])
+			end
+		else
+			return Spring.GetTeamColor(Spring.GetMyTeamID())
+		end
+	end
 end
 
 local function calcMainMexDrawList()
