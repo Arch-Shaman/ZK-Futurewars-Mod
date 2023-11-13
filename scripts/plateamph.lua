@@ -5,6 +5,7 @@ local base, turret, arm_1, arm_2, arm_3, nanobase, nanoemit, pad, nozzle, cylind
 
 local nanoPieces = { nanoemit }
 local smokePiece = { base, body }
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 
 local function Open ()
 	Signal (1)
