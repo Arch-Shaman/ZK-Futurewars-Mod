@@ -263,6 +263,31 @@ local options = {
 		max = 20,
 	},
 	{
+		key    = "equalcom",
+		name   = "Equalize team commanders",
+		desc   = "Give extra commanders to players on teams with fewer players, so that each team has the same number of commanders. Automatically enabled in 'Team' type rooms.",
+		type   = "list",
+		section= 'startconds',
+		def    = "auto",
+		items  = {
+			{
+				key  = "off",
+				name = "Disabled",
+				desc = "No extra commanders are spawned for smaller teams.",
+			},
+			{
+				key  = "auto",
+				name = "Autodetect",
+				desc = "Spawn extra commanders for some players on the smaller team in the room type 'Team'.",
+			},
+			{
+				key  = "enable",
+				name = "Enabled",
+				desc = "Spawn extra commanders for some players on smaller teams to make up the difference in team size.",
+			},
+		},
+	},
+	{
 		key		= "disabledunits",
 		name	= "Disable units",
 		desc	= "Prevents specified units from being built ingame. Specify multiple units by using + ",
