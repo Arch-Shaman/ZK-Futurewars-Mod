@@ -52,6 +52,72 @@ function script.QueryBuildInfo ()
 	return pad
 end
 
+local function Create_Beacon_Thread(x,z)
+	--Spring.Echo("Create_Beacon")
+	local y = Spring.GetGroundHeight(x,z) or 0
+	
+	Signal(SIG_BEACON)
+	SetSignalMask(SIG_BEACON)
+	
+	beaconCreateX, beaconCreateZ = x, z
+	Spring.SetUnitRulesParam(unitID, "tele_creating_beacon_x", x, PRIVATE)
+	Spring.SetUnitRulesParam(unitID, "tele_creating_beacon_z", z, PRIVATE)
+	GG.PlayFogHiddenSound("sounds/misc/teleport_loop.wav", 3, x, y, z)
+	for i = 1, 90 do
+		local speedMult = (spGetUnitRulesParam(unitID,"baseSpeedMult") or 1) * BEACON_SPAWN_SPEED
+		Sleep(100/speedMult)
+		if i == 1 then
+			GG.WaitWaitMoveUnit(unitID)
+		end
+		local stunnedOrInbuild = Spring.GetUnitIsStunned(unitID)
+		local disarm = spGetUnitRulesParam(unitID,"disarmed") == 1
+		while stunnedOrInbuild or disarm do
+			Sleep(100)
+			stunnedOrInbuild = Spring.GetUnitIsStunned(unitID)
+			disarm = spGetUnitRulesParam(unitID,"disarmed") == 1
+		end
+		Spring.SpawnCEG("teleport_progress", x, y + 14, z, 0, 0, 0, 0)
+		if i == 30 or i == 60 then
+			GG.PlayFogHiddenSound("sounds/misc/teleport_loop.wav", 3, x, y, z)
+		end
+	end
+
+	GG.tele_createBeacon(unitID,x,z)
+	
+	Spring.SetUnitRulesParam(unitID, "tele_creating_beacon_x", nil, PRIVATE)
+	Spring.SetUnitRulesParam(unitID, "tele_creating_beacon_z", nil, PRIVATE)
+	beaconCreateX, beaconCreateZ = nil, nil
+	
+	Spring.SpawnCEG("teleport_in", x, y, z, 0, 0, 0, 1)
+	Spring.SetUnitRulesParam(unitID, "teleActive", 1, INLOS)
+	GG.tele_deployTeleport(unitID)
+end
+
+function StopCreateBeacon(resetAnimation)
+	Signal(SIG_BEACON)
+	if beaconCreateX then
+		Spring.SetUnitRulesParam(unitID, "tele_creating_beacon_x", nil, PRIVATE)
+		Spring.SetUnitRulesParam(unitID, "tele_creating_beacon_z", nil, PRIVATE)
+		beaconCreateX, beaconCreateZ = nil, nil
+	end
+end
+
+function Create_Beacon(x,z)
+	--Spring.Echo("Create_Beacon")
+	if x == beaconCreateX and z == beaconCreateZ then
+		return
+	end
+	StartThread(Create_Beacon_Thread,x,z)
+end
+
+function UndeployTeleport()
+	--deployed = false
+end
+
+function activity_mode(n) -- needed otherwise bad things happen.
+	
+end
+
 local explodables = {nozzle, cylinder, arm_1, arm_2, arm_3}
 function script.Killed (recentDamage, maxHealth)
 	local severity = recentDamage / maxHealth
