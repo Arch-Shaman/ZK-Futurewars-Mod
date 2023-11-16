@@ -1,6 +1,7 @@
 include "constants.lua"
 
 local scriptReload = include("scriptReload.lua")
+local reloadTime = 10
 
 --pieces
 local base, middle, heading,
@@ -157,7 +158,7 @@ function script.Deactivate()
 end
 
 function script.Create()
-	scriptReload.SetupScriptReload(6, 10 * gameSpeed)
+	scriptReload.SetupScriptReload(6, reloadTime * gameSpeed)
 
 	Move(mhull, y_axis, -5)
 	Move(rhull, y_axis, -5)
@@ -207,12 +208,12 @@ local function reload(num)
 	scriptReload.GunStartReload(num)
 	gun[num].loaded = false
 
-	SleepAndUpdateReload(num, 5 * gameSpeed)
+	SleepAndUpdateReload(num, reloadTime/2 * gameSpeed)
 
 	Show(gun[num].missile)
 	Move(gun[num].rack, y_axis, -4, 2)
 
-	SleepAndUpdateReload(num, 5 * gameSpeed)
+	SleepAndUpdateReload(num, reloadTime/2 * gameSpeed)
 
 	if scriptReload.GunLoaded(num) then
 		shot = 0
