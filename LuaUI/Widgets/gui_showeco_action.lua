@@ -494,6 +494,8 @@ local function AllyTeamChanged()
 	for unitID, _ in IterableMap.Iterator(queuedPylons) do
 		IterableMap.Remove(queuedPylons, unitID)
 	end
+	playerAllyTeam = Spring.GetMyAllyTeamID()
+	playerTeamID = Spring.GetMyTeamID()
 	local teamList = Spring.GetTeamList(playerAllyTeam)
 	for i = 1, #teamList do
 		local units = Spring.GetTeamUnits(teamList[i])
@@ -548,6 +550,12 @@ function widget:Initialize()
 	alwaysHighlight = options.drawQueued.value
 	widget:SelectionChanged(Spring.GetSelectedUnits())
 	--highlightQueue = options.drawQueued.value
+end
+
+function widget:PlayerChanged(playerID)
+	if playerID == Spring.GetMyPlayerID() and Spring.GetMyAllyTeamID() ~= playerAllyTeam then
+		AllyTeamChanged()
+	end
 end
 
 function widget:Shutdown()
@@ -699,15 +707,6 @@ function widget:Update(dt)
 			playerIsPlacingPylon = true
 		else
 			playerIsPlacingPylon = false
-		end
-	end
-end
-
-function widget:PlayerChangedTeam(playerID, oldTeam, newTeam)
-	if playerID == Spring.GetMyPlayerID() then -- we're switching teams.
-		local newAllyTeam = select(6, Spring.GetTeamInfo(newTeam))
-		if newAllyTeam ~= playerAllyTeam then
-			AllyTeamChanged()
 		end
 	end
 end
