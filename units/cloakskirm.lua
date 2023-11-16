@@ -189,7 +189,6 @@ return {
 					light_color = "0.90 0.65 0.30",
 					light_radius = 250,
 					reload_move_mod_time = 3,
-					cloakstrike = 1 + 1/3,
 				},
 				damage                  = {
 					default = 900.01,
