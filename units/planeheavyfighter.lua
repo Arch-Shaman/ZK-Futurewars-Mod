@@ -46,7 +46,7 @@ local unitDef = {
 	maxAcc                 = 0.5,
 	maxRudder              = 0.006,
 	speed                  = 8,
-	health                 = 3000,
+	health                 = 4250,
 	mygravity              = 0.8,
 	noChaseCategory        = "TERRAFORM",
 	objectName             = "fighter2.s3o",
@@ -138,7 +138,7 @@ local unitDef = {
 				script_burst = "4",
 			},
 			damage                  = {
-				default = 300.1,
+				default = 350.1,
 			},
 			explosionGenerator      = "custom:sonic",
 			fireStarter             = 70,
