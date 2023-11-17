@@ -313,6 +313,7 @@ function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	end
 	if isBuilder[unitDefID] then
 		IterableMap.Remove(queuedPylons, unitID)
+		UpdateAllQueuesList()
 	end
 end
 
@@ -535,7 +536,7 @@ function widget:UnitCmdDone(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 			IterableMap.Add(queuedPylons, unitID, data)
 		end
 		data.clearedRecently = false
-		
+		UpdateAllQueuesList()
 	end
 end
 
