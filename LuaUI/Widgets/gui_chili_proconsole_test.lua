@@ -812,6 +812,10 @@ function getMessageRuleOptionName(msgtype, suboption)
   return msgtype .. "_" .. suboption
 end
 
+local function GetPlayerColor(name)
+	return incolors[name] or incolors['#s']
+end
+
 
 for msgtype,rule in pairs(MESSAGE_RULES) do
 	if rule.output and rule.name then -- if definition has multiple output formats, make associated config option
@@ -1009,13 +1013,13 @@ local function formatMessage(msg) -- formatting done here
 				return msg[parameter:sub(2,parameter:len())]
 			elseif parameter == '#t' then
 				if msg.playername2 then
-					return incolors[msg.playername2]
+					return GetPlayerColor(msg.playername2)
 				else
 					return incolors['#o']
 				end
 			elseif parameter == '#p' then
 				if msg.playername and incolors[msg.playername] then
-					return incolors[msg.playername]
+					return GetPlayerColor(msg.playername)
 				else
 					return incolors['#o'] -- player still at lobby, use grey text
 				end
@@ -1271,21 +1275,31 @@ local function setupPlayers(playerID)
 			end
 		end
 	else
-		local playerroster = Spring.GetPlayerList()
-		for i, id in ipairs(playerroster) do
-			local name, active, spec, teamId, allyTeamId, _, _, _, _, ck = Spring.GetPlayerInfo(id, true)
-			--lobby: grey chat, spec: white chat, player: color chat
-			incolors[name] = (spec and incolors['#s']) or color2incolor(Spring.GetTeamColor(teamId))
-			if ck.badges then -- look for fw badges
-				if ck.badges:find("fw_dev") then
-					textPerms[name] = 3
-					break
-				elseif ck.badges:find("fw_fenix") then
-					textPerms[name] = 2
-					break
-				elseif ck.badges:find("fw_vet") and textPerms[name] == nil then -- maybe allow FW donators to color chat?
-					textPerms[name] = 1
-					break
+		local allyList = Spring.GetAllyTeamList()
+		for j = 1, #allyList do
+			local allyTeam = allyList[j]
+			local teamList = Spring.GetTeamList(allyTeam)
+			for k = 1, #teamList do
+				local teamID = teamList[k]
+				local playerroster = Spring.GetPlayerList(teamID)
+				for i = 1, #playerroster do
+					local id = playerroster[i]
+					local name, active, spec, teamId, allyTeamId, _, _, _, _, ck = Spring.GetPlayerInfo(id, true)
+					--lobby: grey chat, spec: white chat, player: color chat
+					--Spring.Echo(name .. ": " .. tostring(spec))
+					incolors[name] = (spec and incolors['#s']) or color2incolor(Spring.GetTeamColor(teamId))
+					if ck.badges then -- look for fw badges
+						if ck.badges:find("fw_dev") then
+							textPerms[name] = 3
+							break
+						elseif ck.badges:find("fw_fenix") then
+							textPerms[name] = 2
+							break
+						elseif ck.badges:find("fw_vet") and textPerms[name] == nil then -- maybe allow FW donators to color chat?
+							textPerms[name] = 1
+							break
+						end
+					end
 				end
 			end
 		end
@@ -1840,17 +1854,18 @@ local function OnLocaleChanged()
 end
 
 function SendPlayerResignedMessage(player1, player2, messageID)
+	Spring.Echo("SendPlayerResignedMessage: " .. tostring(messageID))
 	local playerName1, _, _, _, allyTeam = Spring.GetPlayerInfo(player1)
 	local playerName2, _ = Spring.GetPlayerInfo(player2)
 	local body
-	playerName1 = incolors[playerName1] .. playerName1 .. incolors["#e"]
+	playerName1 = GetPlayerColor(playerName1) .. playerName1 .. incolors["#e"]
 	if deathMessages then
 		body = WG.Translate("interface", "death_"..messageID, {name = playerName1})
 	else
 		body = WG.Translate("interface", "death_normal", {name = playerName1})
 	end
 	if player2 then
-		playerName2 = incolors[playerName2] .. playername2 .. incolors["#e"]
+		playerName2 = GetPlayerColor(playerName2) .. playername2 .. incolors["#e"]
 		body = body .. " " .. WG.Translate("interface", "giving_units", {name1 = playerName1, name2 = playerName2})
 	end
 	local m = {
@@ -1866,9 +1881,9 @@ function SendAFKMessage(player1, player2)
 	local playerName1, _, _, _, allyTeam = Spring.GetPlayerInfo(player1)
 	local playerName2, _ = Spring.GetPlayerInfo(player2)
 	local body
-	playerName1 = incolors[playerName1] .. playerName1 .. incolors["#e"]
+	playerName1 = GetPlayerColor(playerName1) .. playerName1 .. incolors["#e"]
 	if player2 then
-		playerName2 = incolors[playerName2] .. playername2 .. incolors["#e"]
+		playerName2 = GetPlayerColor(playerName2) .. playername2 .. incolors["#e"]
 		body = WG.Translate("interface", "afk_returned", {name1 = playerName1, name2 = playerName2})
 	else
 		body = WG.Translate("interface", "afk_given", {name1 = playerName1, name2 = playerName2})
