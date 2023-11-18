@@ -1855,7 +1855,7 @@ end
 
 function SendPlayerResignedMessage(player1, player2, messageID)
 	Spring.Echo("SendPlayerResignedMessage: " .. tostring(messageID))
-	local playerName1, _, _, _, allyTeam = Spring.GetPlayerInfo(player1)
+	local playerName1, _ = Spring.GetPlayerInfo(player1)
 	local playerName2, _ = Spring.GetPlayerInfo(player2)
 	local body
 	playerName1 = GetPlayerColor(playerName1) .. playerName1 .. incolors["#e"]
@@ -1864,8 +1864,8 @@ function SendPlayerResignedMessage(player1, player2, messageID)
 	else
 		body = WG.Translate("interface", "death_normal", {name = playerName1})
 	end
-	if player2 then
-		playerName2 = GetPlayerColor(playerName2) .. playername2 .. incolors["#e"]
+	if playerName2 then
+		playerName2 = GetPlayerColor(playerName2) .. playerName2 .. incolors["#e"]
 		body = body .. " " .. WG.Translate("interface", "giving_units", {name1 = playerName1, name2 = playerName2})
 	end
 	local m = {
@@ -1873,20 +1873,22 @@ function SendPlayerResignedMessage(player1, player2, messageID)
 			priority = 35, -- wut?
 			msgtype = 'game_priority_message',
 			text = body,
+			argument = body,
 		}
-	AddConsoleMessage(msg)
+	widget:AddConsoleMessage(m)
 end
 
 function SendAFKMessage(player1, player2)
-	local playerName1, _, _, _, allyTeam = Spring.GetPlayerInfo(player1)
+	local playerName1, _ = Spring.GetPlayerInfo(player1)
 	local playerName2, _ = Spring.GetPlayerInfo(player2)
 	local body
 	playerName1 = GetPlayerColor(playerName1) .. playerName1 .. incolors["#e"]
+	--Spring.Echo(playerName1)
 	if player2 then
-		playerName2 = GetPlayerColor(playerName2) .. playername2 .. incolors["#e"]
-		body = WG.Translate("interface", "afk_returned", {name1 = playerName1, name2 = playerName2})
+		playerName2 = GetPlayerColor(playerName2) .. playerName2 .. incolors["#e"]
+		body = WG.Translate("interface", "afk_given", {name = playerName1, name2 = playerName2})
 	else
-		body = WG.Translate("interface", "afk_given", {name1 = playerName1, name2 = playerName2})
+		body = WG.Translate("interface", "afk_returned", {name = playerName1, name2 = playerName2})
 	end
 	
 	local m = {
@@ -1894,8 +1896,9 @@ function SendAFKMessage(player1, player2)
 			priority = 35, -- wut?
 			msgtype = 'game_priority_message',
 			text = body,
+			argument = body,
 		}
-	AddConsoleMessage(msg)
+	widget:AddConsoleMessage(m)
 end
 
 local checkFrame = 0
@@ -2069,6 +2072,15 @@ function widget:GameFrame(f)
 	if f > checkFrame then
 		setupPlayers() --re-check teamColor at gameStart for Singleplayer (special case. widget Initialized before player join).
 		widgetHandler:RemoveCallIn("GameFrame", self)
+	end
+end
+
+function widget:TextCommand(msg)
+	if msg == "testresign" then
+		SendPlayerResignedMessage(Spring.GetMyPlayerID(), Spring.GetMyPlayerID(), 10)
+	elseif msg == "testafk" then
+		SendAFKMessage(Spring.GetMyPlayerID(), Spring.GetMyPlayerID())
+		SendAFKMessage(Spring.GetMyPlayerID(), nil)
 	end
 end
 
