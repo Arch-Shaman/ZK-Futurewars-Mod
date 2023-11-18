@@ -54,6 +54,7 @@ function Spring.SetUnitNoSelect(unitID, value)
 end
 
 local countryOverrides = {
+	["xx"] = "Unknown", -- Future proofing against ZK Infra.
 	["??"] = "Unknown", -- Needed because files can't be named "??"
 	["an"] = "nl", -- Does not exist anymore. Now is BQ, but this is for safety purposes.
 	["bq"] = "nl", -- The rest of these are just pointers to remade flags to save space / download
