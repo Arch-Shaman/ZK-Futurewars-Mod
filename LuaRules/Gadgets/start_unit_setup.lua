@@ -326,6 +326,7 @@ local function SpawnStartUnit(teamID, playerID, isAI, bonusSpawn, notAtTheStartO
 		if not unitID then
 			return
 		end
+		allyTeamCommanderCount[allyTeamID] = (allyTeamCommanderCount[allyTeamID] or 0) + 1
 		
 		if GG.GalaxyCampaignHandler then
 			GG.GalaxyCampaignHandler.DeployRetinue(unitID, x, z, facing, teamID)
