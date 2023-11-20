@@ -313,7 +313,7 @@ local function UpdateTeamActivity(teamID)
 		end
 		
 		if unitsRecieved then
-			SendToUnsynced("SendAFKMessage", teamID)
+			SendToUnsynced("SendAFKMsg", teamID)
 		end
 	end
 	
