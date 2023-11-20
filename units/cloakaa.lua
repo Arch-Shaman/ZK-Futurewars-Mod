@@ -85,7 +85,7 @@ return {
 					light_radius = 120,
 				},
 				damage                  = {
-					default = 98.01,
+					default = 44.01,
 				},
 				duration                = 0.075,
 				beamDecay 				= 0.38,
@@ -101,7 +101,7 @@ return {
 				laserFlareSize          = 3.25,
 				minIntensity            = 1,
 				range                   = 600,
-				reloadtime              = 2.1,
+				reloadtime              = 1.2,
 				rgbColor                = "0.6 0.2 0.2",
 				rgbColor2				= "0.0 0.8 0.8",
 				soundHit                = "weapon/impacts/impact-light01",
