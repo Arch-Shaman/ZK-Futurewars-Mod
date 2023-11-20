@@ -82,6 +82,7 @@ include("LuaRules/Configs/constants.lua")
 local TO_AFK_THRESHOLD = 30 -- going above this marks you AFK
 local FROM_AFK_THRESHOLD = 5 -- going below this marks you non-AFK
 local PING_TIMEOUT = 2000 -- ms
+local deathMessageCount = 131
 
 local CMD_WAIT = CMD.WAIT
 
