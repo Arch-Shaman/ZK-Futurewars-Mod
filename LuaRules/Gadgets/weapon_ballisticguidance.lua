@@ -47,7 +47,7 @@ local f_CHAR = string.byte('f')
 local projectiles = {}
 local config = {}
 
-local debugmode = false
+local debugModeEnabled = false
 local name = "[weapon_ballisticguidance.lua]: "
 local updateRate = 3
 
@@ -55,25 +55,25 @@ local updateRate = 3
 ---------------------------------------------------------------------
 
 
-if debugmode then spEcho(name.."Scanning weapondefs") end
+if debugModeEnabled then spEcho(name.."Scanning weapondefs") end
 local wid
 for wid = 1, #WeaponDefs do
 	local wdef = WeaponDefs[wid]
 	local params = wdef.customParams
 	if params and params.ballistic_guidance then
-		if debugmode then spEcho(name.."Parsing Weapon. ID:" .. wid .. " Name:".. wdef.name) end
+		if debugModeEnabled then spEcho(name.."Parsing Weapon. ID:" .. wid .. " Name:".. wdef.name) end
 		config[wid] = {}
 		config[wid].guidance = tonumber(params.ballistic_guidance) / 900 * updateRate
 		config[wid].grav = wdef.myGravity
 		SetWatchWeapon(wid, true)
 	end
 end
-if debugmode then spEcho(name.."Finished scanning weapondefs") end
+if debugModeEnabled then spEcho(name.."Finished scanning weapondefs") end
 
 
 function gadget:ProjectileCreated(proID, proOwnerID, wDefId)
 	if config[wDefId] then
-		if debugmode then spEcho(name.."Added Projectile. ID:" .. proID) end
+		if debugModeEnabled then spEcho(name.."Added Projectile. ID:" .. proID) end
 		projectiles[proID] = {wDef = wDefId}
 	end
 end
@@ -92,7 +92,7 @@ function gadget:GameFrame(f)
 	end
 
 	for projID, proj in pairs(projectiles) do
-		if debugmode then spEcho(name.."Processing Projectile. ID:" .. projID) end
+		if debugModeEnabled then spEcho(name.."Processing Projectile. ID:" .. projID) end
 		local projConfig = config[proj.wDef]
 		local hastarget = true
 		local tx, ty, tz
