@@ -60,24 +60,26 @@ local unitAlreadyFinished = {}
 
 local playerValue = {}
 
-local spAddTeamResource     = Spring.AddTeamResource
-local spEcho                = Spring.Echo
-local spGetGameSeconds      = Spring.GetGameSeconds
-local spGetPlayerInfo       = Spring.GetPlayerInfo
-local spGetTeamInfo         = Spring.GetTeamInfo
-local spGetTeamList         = Spring.GetTeamList
-local spGetTeamResources    = Spring.GetTeamResources
-local spGetTeamUnits        = Spring.GetTeamUnits
-local spGetUnitAllyTeam     = Spring.GetUnitAllyTeam
-local spGetUnitDefID        = Spring.GetUnitDefID
-local spGetUnitTeam         = Spring.GetUnitTeam
-local spGetPlayerList       = Spring.GetPlayerList
-local spTransferUnit        = Spring.TransferUnit
-local spUseTeamResource     = Spring.UseTeamResource
-local spGetUnitIsBuilding   = Spring.GetUnitIsBuilding
-local spGetUnitHealth       = Spring.GetUnitHealth
-local spSetUnitHealth       = Spring.SetUnitHealth
-local spSetPlayerRulesParam = Spring.SetPlayerRulesParam
+local spAddTeamResource       = Spring.AddTeamResource
+local spEcho                  = Spring.Echo
+local spGetGameSeconds        = Spring.GetGameSeconds
+local spGetPlayerInfo         = Spring.GetPlayerInfo
+local spGetTeamInfo           = Spring.GetTeamInfo
+local spGetTeamList           = Spring.GetTeamList
+local spGetTeamResources      = Spring.GetTeamResources
+local spGetTeamUnits          = Spring.GetTeamUnits
+local spGetUnitAllyTeam       = Spring.GetUnitAllyTeam
+local spGetUnitDefID          = Spring.GetUnitDefID
+local spGetUnitTeam           = Spring.GetUnitTeam
+local spGetPlayerList         = Spring.GetPlayerList
+local spTransferUnit          = Spring.TransferUnit
+local spUseTeamResource       = Spring.UseTeamResource
+local spGetUnitIsBuilding     = Spring.GetUnitIsBuilding
+local spGetUnitHealth         = Spring.GetUnitHealth
+local spSetUnitHealth         = Spring.SetUnitHealth
+local spSetPlayerRulesParam   = Spring.SetPlayerRulesParam
+local spGiveOrderToUnitArray  = Spring.GiveOrderToUnitArray
+local spGetUnitCurrentCommand = Spring.GetUnitCurrentCommand
 
 local useAfkDetection = (Spring.GetModOptions().enablelagmonitor ~= "0")
 
@@ -170,7 +172,6 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	end
 
 	unitAlreadyFinished[unitID] = true
-	playerLineageUnits[unitID] = {}
 end
 
 local mouseActivityTime = {}
@@ -287,23 +288,34 @@ local function UpdateTeamActivity(teamID)
 		local playerName = Spring.GetPlayerInfo(leaderID, false)
 		local unitsRecieved = false
 		
-		for unitID, playerList in pairs(playerLineageUnits) do --Return unit to the oldest inheritor (or to original owner if possible)
-			local delete = false
-			local unitAllyTeamID = spGetUnitAllyTeam(unitID)
-			if unitAllyTeamID == allyTeamID then
-				for i = 1, #playerList do
-					local otherPlayerID = playerList[i]
-					local otherTeamID = PlayerIDToTeamID(otherPlayerID)
-					if (otherTeamID == teamID) then
-						TransferUnit(unitID, teamID)
-						unitsRecieved = true
-						delete = true
-					end
-					-- remove all teams after the previous owner (inclusive)
-					if delete then
-						playerLineageUnits[unitID][i] = nil
+		if playerLineageUnits then
+			local waitUnits = {}
+			for unitID, playerList in pairs(playerLineageUnits) do --Return unit to the oldest inheritor (or to original owner if possible)
+				local delete = false
+				local unitAllyTeamID = spGetUnitAllyTeam(unitID)
+				if unitAllyTeamID == allyTeamID then
+					for i = 1, #playerList do
+						local otherPlayerID = playerList[i]
+						local otherTeamID = PlayerIDToTeamID(otherPlayerID)
+						if (otherTeamID == teamID) then
+							TransferUnit(unitID, teamID)
+							unitsRecieved = true
+							delete = true
+							local bpHaver, hasWait = GetBpHaverAndWait(unitID)
+							if bpHaver and hasWait then
+								waitUnits[#waitUnits + 1] = unitID
+							end
+						end
+						-- remove all teams after the previous owner (inclusive)
+						if delete then
+							playerLineageUnits[unitID][i] = nil
+						end
 					end
 				end
+			end
+			
+			if #waitUnits > 0 then
+				spGiveOrderToUnitArray(waitUnits, CMD_WAIT, 0, 0)
 			end
 		end
 		
@@ -389,7 +401,6 @@ local function DoUnitGiveAway(allyTeamID, recieveTeamID, giveAwayTeams, doPlayer
 		elseif #units > 0 then
 			Spring.Echo("Sending afk message")
 			SendToUnsynced("SendAFKMsg", giveTeamID, recieveTeamID)
-			--spEcho("game_message: Giving all units of ".. giveName .. " to " .. recieveName .. " due to lag/AFK")
 		end
 	end
 end
@@ -604,4 +615,5 @@ function gadget:Initialize()
 	end
 
 	gadgetHandler:AddChatAction("debuglag", LagmonitorDebugToggle, "Toggles Lagmonitor debug.")
+	gadgetHandler:AddChatAction("debuglagplayer", LagmonitorDebugPlayerToggle, "Toggles Lagmonitor debug.")
 end
