@@ -12,9 +12,12 @@ end
 
 if not gadgetHandler:IsSyncedCode() then
 	-- UI Transport --
+	local teamLeaders = {}
+	
 	local function GetTeamLeaderID(teamID)
 		if teamID then
-			return select(2, Spring.GetTeamInfo(teamID))
+			local _, playerID = Spring.GetTeamInfo(teamID)
+			return playerID
 		else
 			return
 		end
@@ -31,8 +34,10 @@ if not gadgetHandler:IsSyncedCode() then
 	
 	local function SendPlayerResignedMessage(_, team1, team2, messageID)
 		if Script.LuaUI('SendPlayerResignedMessage') then
-			local player1 = GetTeamLeaderID(team1)
-			local player2 = GetTeamLeaderID(team2)
+			Spring.Echo('Transmitting to LuaUI:SendPlayerResignedMessage: ' .. tostring(team1) .. ", " .. tostring(team2))
+			local player1 = teamLeaders[team1]
+			local player2 = teamLeaders[team2]
+			Spring.Echo("Send ID: " .. tostring(player1) .. ", " .. tostring(player2))
 			Script.LuaUI.SendPlayerResignedMessage(player1, player2, messageID)
 		end
 	end
@@ -40,6 +45,16 @@ if not gadgetHandler:IsSyncedCode() then
 	function gadget:Initialize()
 		gadgetHandler:AddSyncAction("SendAFKMsg", SendAFKMsg)
 		gadgetHandler:AddSyncAction("SendPlayerResignedMessage", SendPlayerResignedMessage)
+		
+		local allyteams = Spring.GetAllyTeamList()
+		for j = 1, #allyteams do
+			local allyTeamID = allyteams[j]
+			local teamList = Spring.GetTeamList(allyTeamID)
+			for i = 1, #teamList do
+				local teamID = teamList[i]
+				teamLeaders[teamID] = GetTeamLeaderID(teamID)
+			end
+		end
 	end
 	return
 end
@@ -345,6 +360,12 @@ local function GetRawTeamShare(teamID)
 	return shares
 end
 
+local function IsTeamActuallyDead(teamID)
+	local isDead = select(3, Spring.GetTeamInfo(teamID, false))
+	local playerList = Spring.GetPlayerList(teamID, true)
+	return isDead or #playerList == 0
+end
+
 local function DoUnitGiveAway(allyTeamID, recieveTeamID, giveAwayTeams, doPlayerLineage)
 	for i = 1, #giveAwayTeams do
 		local giveTeamID = giveAwayTeams[i]
@@ -385,7 +406,7 @@ local function DoUnitGiveAway(allyTeamID, recieveTeamID, giveAwayTeams, doPlayer
 		
 		local recieveName = GetTeamName(recieveTeamID)
 		local giveName = GetTeamName(giveTeamID)
-		local giveResigned = select(3, Spring.GetTeamInfo(giveTeamID, false))
+		local giveResigned = IsTeamActuallyDead(giveTeamID)
 		
 		-- Send message
 		if giveResigned then
