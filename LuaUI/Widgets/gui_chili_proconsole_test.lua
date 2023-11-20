@@ -1922,8 +1922,8 @@ function widget:Initialize()
 	stack_chat = MakeMessageStack(0)
 	deathMessages = options["death_messages"].value
 	stack_backchat = MakeMessageStack(1)
-	widgetHandler:RegisterGlobal(widget, "SendPlayerResignedMessage", SendPlayerResignedMessage)
-	widgetHandler:RegisterGlobal(widget, "SendAFKMessage", SendAFKMessage)
+	widgetHandler:RegisterGlobal("SendPlayerResignedMessage", SendPlayerResignedMessage)
+	widgetHandler:RegisterGlobal("SendAFKMessage", SendAFKMessage)
 	rainbowTable = {
 		[1] = color2incolor({219/255, 15/255, 15/255, 1}),
 		[2] = color2incolor({219/255, 15/255, 70/255, 1}),
