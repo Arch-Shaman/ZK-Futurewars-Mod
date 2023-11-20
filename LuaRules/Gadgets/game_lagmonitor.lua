@@ -411,10 +411,8 @@ local function DoUnitGiveAway(allyTeamID, recieveTeamID, giveAwayTeams, doPlayer
 		-- Send message
 		if giveResigned then
 			--spEcho("game_message: " .. giveName .. " resigned, giving all units to " .. recieveName)
-			Spring.Echo("Sending resign message")
 			SendToUnsynced("SendPlayerResignedMessage", giveTeamID, recieveTeamID, math.random(1, deathMessageCount))
 		elseif #units > 0 then
-			Spring.Echo("Sending afk message")
 			SendToUnsynced("SendAFKMsg", giveTeamID, recieveTeamID)
 		end
 	end
