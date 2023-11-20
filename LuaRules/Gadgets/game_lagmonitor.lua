@@ -369,8 +369,8 @@ end
 local function DoUnitGiveAway(allyTeamID, recieveTeamID, giveAwayTeams, doPlayerLineage)
 	for i = 1, #giveAwayTeams do
 		local giveTeamID = giveAwayTeams[i]
-		local givePlayerID = doPlayerLineage and TeamIDToPlayerID(giveTeamID)
-		
+		local giveResigned = IsTeamActuallyDead(giveTeamID)
+		local givePlayerID = (doPlayerLineage and not giveResigned) and TeamIDToPlayerID(giveTeamID) -- They're never coming back so don't bother.
 		-- Energy share is not set because the storage needs to be full for full overdrive.
 		-- Also energy income is mostly private and a large energy influx to the rest of the
 		-- team is likely to be wasted or overdriven inefficently.
@@ -406,7 +406,6 @@ local function DoUnitGiveAway(allyTeamID, recieveTeamID, giveAwayTeams, doPlayer
 		
 		local recieveName = GetTeamName(recieveTeamID)
 		local giveName = GetTeamName(giveTeamID)
-		local giveResigned = IsTeamActuallyDead(giveTeamID)
 		
 		-- Send message
 		if giveResigned then
