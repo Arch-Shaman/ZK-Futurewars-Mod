@@ -21,6 +21,8 @@ local spGetPlayerInfo       = Spring.GetPlayerInfo
 local spGetPlayerList       = Spring.GetPlayerList
 
 local modOptions = Spring.GetModOptions()
+local ALLOW_EXTRA_COM = (modOptions.equalcom ~= "off")
+local FORCE_EXTRA_COM = (modOptions.equalcom == "enable")
 
 local DELAYED_AFK_SPAWN = false
 local COOP_MODE = false
@@ -121,7 +123,7 @@ local teamSides = {} -- sides selected ingame from widgets - per teams
 
 local playerIDsByName = {}
 local commChoice = {}
-
+local allyTeamCommanderCount = {}
 --local prespawnedCommIDs = {}	-- [teamID] = unitID
 
 GG.startUnits = {}	-- WARNING: this is liable to break with new dyncomms (entries will likely not be an actual unitDefID)
@@ -457,25 +459,54 @@ end
 	return storage
 end]]
 
-function gadget:GameStart()
-	if Spring.Utilities.tobool(Spring.GetGameRulesParam("loadedGame")) then
+local function SpawnCustomKeyExtraCommanders(teamID)
+	if not ALLOW_EXTRA_COM then
 		return
 	end
+	local playerlist = Spring.GetPlayerList(teamID, true)
+	playerlist = workAroundSpecsInTeamZero(playerlist, teamID)
+	if playerlist then
+		for i = 1, #playerlist do
+			local customKeys = select(10, Spring.GetPlayerInfo(playerlist[i]))
+			if customKeys and customKeys.extracomm then
+				for j = 1, tonumber(customKeys.extracomm) do
+					Spring.Echo("Spawing a commander")
+					SpawnStartUnit(teamID, playerlist[i], false, true)
+				end
+			end
+		end
+	end
+end
+
+local function SpawnAllyTeamExtraCommanders(allyTeamID, wanted)
+	local teams = Spring.GetTeamList(allyTeamID)
+	Spring.Utilities.PermuteList(teams)
+	local tries = 50
+	while wanted > 0 and tries > 0 do
+		for i = 1, #teams do
+			local teamID = teams[i]
+			local _, playerID, _, isAI = spGetTeamInfo(teamID, false)
+			SpawnStartUnit(teamID, playerID, isAI, true)
+			wanted = wanted - 1
+			if wanted <= 0 then
+				break
+			end
+		end
+		tries = tries - 1
+	end
+end
+
+
+function gadget:GameStart()
 	gamestart = true
 
 	-- spawn units
-	Spring.PlaySoundFile("Teleport2", 10) -- no longer perf loss
-	for teamNum,team in ipairs(Spring.GetTeamList()) do
+	local teamList = Spring.GetTeamList()
+	for i = 1, #teamList do
+		local team = teamList[i]
 		
 		-- clear resources
 		-- actual resources are set depending on spawned unit and setup
-		--[[if not loadGame then
-			local pregameUnitStorage = (campaignBattleID and GetPregameUnitStorage(team)) or 0
-			Spring.SetTeamResource(team, "es", pregameUnitStorage + HIDDEN_STORAGE)
-			Spring.SetTeamResource(team, "ms", pregameUnitStorage + HIDDEN_STORAGE)
-			Spring.SetTeamResource(team, "energy", 0)
-			Spring.SetTeamResource(team, "metal", 0)
-		end]]
 
 		--check if player resigned before game started
 		local _,playerID,_,isAI = spGetTeamInfo(team, false)
@@ -517,18 +548,18 @@ function gadget:GameStart()
 			end
 
 			-- extra comms
-			local playerlist = Spring.GetPlayerList(team, true)
-			playerlist = workAroundSpecsInTeamZero(playerlist, team)
-			if playerlist then
-				for i = 1, #playerlist do
-					local customKeys = select(10, Spring.GetPlayerInfo(playerlist[i]))
-					if customKeys and customKeys.extracomm then
-						for j = 1, tonumber(customKeys.extracomm) do
-							--Spring.Echo("Spawing a commander")
-							SpawnStartUnit(team, playerlist[i], false, true)
-						end
-					end
-				end
+			SpawnCustomKeyExtraCommanders(team)
+		end
+	end
+	
+	if FORCE_EXTRA_COM then
+		local maxComms = 0
+		for allyTeamID, count in pairs(allyTeamCommanderCount) do
+			maxComms = math.max(maxComms, count)
+		end
+		for allyTeamID, count in pairs(allyTeamCommanderCount) do
+			if count < maxComms then
+				SpawnAllyTeamExtraCommanders(allyTeamID, maxComms - count)
 			end
 		end
 	end
@@ -627,21 +658,18 @@ end
 -- unsynced code
 --------------------------------------------------------------------
 else
-
-function gadget:Initialize()
-  gadgetHandler:AddSyncAction('CommSelection',CommSelection) --Associate "CommSelected" event to "WrapToLuaUI". Reference: http://springrts.com/phpbb/viewtopic.php?f=23&t=24781 "Gadget and Widget Cross Communication"
-
-end
-  
-function CommSelection(_,playerID, startUnit)
-	if (Script.LuaUI('CommSelection')) then --if there is widgets subscribing to "CommSelection" function then:
-		local isSpec = Spring.GetSpectatingState() --receiver player is spectator?
-		local myAllyID = Spring.GetMyAllyTeamID() --receiver player's alliance?
-		local _,_,_,_, eventAllyID = Spring.GetPlayerInfo(playerID, false) --source alliance?
-		if isSpec or myAllyID == eventAllyID then
-			Script.LuaUI.CommSelection(playerID, startUnit) --send to widgets as event
+	function gadget:Initialize()
+		gadgetHandler:AddSyncAction('CommSelection',CommSelection) --Associate "CommSelected" event to "WrapToLuaUI". Reference: http://springrts.com/phpbb/viewtopic.php?f=23&t=24781 "Gadget and Widget Cross Communication"
+	end
+	  
+	function CommSelection(_,playerID, startUnit)
+		if (Script.LuaUI('CommSelection')) then --if there is widgets subscribing to "CommSelection" function then:
+			local isSpec = Spring.GetSpectatingState() --receiver player is spectator?
+			local myAllyID = Spring.GetMyAllyTeamID() --receiver player's alliance?
+			local _,_,_,_, eventAllyID = Spring.GetPlayerInfo(playerID, false) --source alliance?
+			if isSpec or myAllyID == eventAllyID then
+				Script.LuaUI.CommSelection(playerID, startUnit) --send to widgets as event
+			end
 		end
 	end
-end
-
 end
