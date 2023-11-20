@@ -1879,6 +1879,10 @@ function SendPlayerResignedMessage(player1, player2, messageID)
 end
 
 function SendAFKMessage(player1, player2)
+	if player1 == nil then
+		Spring.Echo("Something has happened in SendAFKMessage! No playerID provided!")
+		return
+	end
 	local playerName1, _ = Spring.GetPlayerInfo(player1)
 	local playerName2, _ = Spring.GetPlayerInfo(player2)
 	local body
