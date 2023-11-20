@@ -60,23 +60,16 @@ local unitAlreadyFinished = {}
 
 local playerValue = {}
 
-local spAddTeamResource       = Spring.AddTeamResource
 local spEcho                  = Spring.Echo
 local spGetGameSeconds        = Spring.GetGameSeconds
 local spGetPlayerInfo         = Spring.GetPlayerInfo
 local spGetTeamInfo           = Spring.GetTeamInfo
 local spGetTeamList           = Spring.GetTeamList
-local spGetTeamResources      = Spring.GetTeamResources
 local spGetTeamUnits          = Spring.GetTeamUnits
 local spGetUnitAllyTeam       = Spring.GetUnitAllyTeam
 local spGetUnitDefID          = Spring.GetUnitDefID
-local spGetUnitTeam           = Spring.GetUnitTeam
 local spGetPlayerList         = Spring.GetPlayerList
 local spTransferUnit          = Spring.TransferUnit
-local spUseTeamResource       = Spring.UseTeamResource
-local spGetUnitIsBuilding     = Spring.GetUnitIsBuilding
-local spGetUnitHealth         = Spring.GetUnitHealth
-local spSetUnitHealth         = Spring.SetUnitHealth
 local spSetPlayerRulesParam   = Spring.SetPlayerRulesParam
 local spGiveOrderToUnitArray  = Spring.GiveOrderToUnitArray
 local spGetUnitCurrentCommand = Spring.GetUnitCurrentCommand
