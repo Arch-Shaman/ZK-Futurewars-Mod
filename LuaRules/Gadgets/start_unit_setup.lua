@@ -18,7 +18,6 @@ include("LuaRules/Configs/constants.lua")
 --------------------------------------------------------------------------------
 local spGetTeamInfo         = Spring.GetTeamInfo
 local spGetPlayerInfo       = Spring.GetPlayerInfo
-local spGetSpectatingState  = Spring.GetSpectatingState
 local spGetPlayerList       = Spring.GetPlayerList
 
 local modOptions = Spring.GetModOptions()
@@ -32,13 +31,8 @@ local setAiStartPos = (modOptions.setaispawns == "1")
 local CAMPAIGN_SPAWN_DEBUG = (Spring.GetModOptions().campaign_spawn_debug == "1")
 
 local gaiateam = Spring.GetGaiaTeamID()
-local gaiaally = select(6, spGetTeamInfo(gaiateam, false))
 local allyTeamAFKers = {}
-
-local SAVE_FILE = "Gadgets/start_unit_setup.lua"
-
 local fixedStartPos = (modOptions.fixedstartpos == "1")
-local ordersToRemove
 
 local storageUnits = {
 	{
@@ -56,27 +50,11 @@ if (gadgetHandler:IsSyncedCode()) then
 --------------------------------------------------------------------------------
 -- Functions shared between missions and non-missions
 
---[[local function CheckOrderRemoval() -- FIXME: maybe we can remove polling every frame and just remove the orders directly
-	if not ordersToRemove then
-		return
-	end
-	for unitID, factoryDefID in pairs(ordersToRemove) do
-		local cmdID, _, cmdTag = Spring.GetUnitCurrentCommand(unitID)
-		if cmdID == -factoryDefID then
-			Spring.GiveOrderToUnit(unitID, CMD.REMOVE, cmdTag, CMD.OPT_ALT)
-		end
-	end
-	ordersToRemove = nil
-end]]
-
 --[[local function CheckFacplopUse(unitID, unitDefID, teamID, builderID)
 	if ploppableDefs[unitDefID] and (select(5, Spring.GetUnitHealth(unitID)) < 0.1) and (builderID and Spring.GetUnitRulesParam(builderID, "facplop") == 1) then
 		-- (select(5, Spring.GetUnitHealth(unitID)) < 0.1) to prevent ressurect from spending facplop.
 		Spring.SetUnitRulesParam(builderID,"facplop",0, {inlos = true})
 		Spring.SetUnitRulesParam(unitID,"ploppee",1, {private = true})
-		
-		ordersToRemove = ordersToRemove or {}
-		ordersToRemove[builderID] = unitDefID
 		
 		-- Instantly complete factory
 		local maxHealth = select(2,Spring.GetUnitHealth(unitID))
@@ -119,10 +97,6 @@ end]]
 
 	function GG.SetStartLocation()
 	end
-
-	function gadget:GameFrame(n)
-		CheckOrderRemoval()
-	end
 	
 	function GG.GiveFacplop(unitID) -- deprecated, use rulesparam directly
 		Spring.SetUnitRulesParam(unitID, "facplop", 1, {inlos = true})
@@ -160,25 +134,10 @@ GG.waitingForComm = waitingForComm
 local commSpawnedTeam = {}
 local commSpawnedPlayer = {}
 
--- allow gadget:Save (unsynced) to reach them
-local function UpdateSaveReferences()
-	_G.waitingForComm = waitingForComm
-	_G.scheduledSpawn = scheduledSpawn
-	_G.playerSides = playerSides
-	_G.teamSides = teamSides
-	_G.commSpawnedTeam = commSpawnedTeam
-	_G.commSpawnedPlayer = commSpawnedPlayer
-end
-UpdateSaveReferences()
-
 local loadGame = false	-- was this loaded from a savegame?
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-
---[[function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
-	CheckFacplopUse(unitID, unitDefID, teamID, builderID)
-end]]
 
 function gadget:Initialize()
 	-- needed if you reload luarules
@@ -259,9 +218,8 @@ local function GetRecommendedStartPosition(teamID, n) -- N is the number of time
 	if boxID then
 		local startposList = GG.startBoxConfig[boxID] and GG.startBoxConfig[boxID].startpoints
 		if startposList then
-			local startpos = startposList[1] -- todo: distribute afkers over them all instead of always using the 1st
 			local maxpoints = #startposList
-			local startpos = startposList[(n%maxpoints) + 1] -- this cycles the AFKers and unplaced bots to different positions
+			local startpos = startposList[(n%maxpoints) + 1] -- recycle if you run out of points.
 			x = startpos[1]
 			z = startpos[2]
 		end
@@ -286,7 +244,6 @@ local function GetStartPos(teamID, teamInfo, isAI)
 		end
 		return x, y, z
 	end
-	
 	local allyTeamID = select(6, Spring.GetTeamInfo(teamID))
 	if not (Spring.GetTeamRulesParam(teamID, "valid_startpos") or isAI) then
 		local index = allyTeamAFKers[allyTeamID] or 0
@@ -343,7 +300,6 @@ local function SpawnStartUnit(teamID, playerID, isAI, bonusSpawn, notAtTheStartO
 	end
 
 	if startUnit then
-	
 		-- replace with shuffled position
 		local x,y,z = GetStartPos(teamID, teamInfo, isAI)
 		
@@ -595,13 +551,6 @@ end
 GG.SetStartLocation = SetStartLocation
 
 function gadget:RecvLuaMsg(msg, playerID)
-	--[[if msg:find("faction:",1,true) then -- useless code. nothing interacts with this.
-		local side = msg:sub(9)
-		playerSides[playerID] = side
-		commChoice[playerID] = nil	-- unselect existing custom comm, if any
-		StartUnitPicked(playerID, side)
-	else]]
-	
 	if msg:find("customcomm:",1,true) then
 		local name = msg:sub(12)
 		commChoice[playerID] = name
@@ -642,7 +591,6 @@ function gadget:RecvLuaMsg(msg, playerID)
 end
 
 function gadget:GameFrame(n)
-	--CheckOrderRemoval()
 	if n == (COMM_SELECT_TIMEOUT) then
 		for team in pairs(waitingForComm) do
 			local _,playerID = spGetTeamInfo(team, false)
@@ -675,36 +623,10 @@ function gadget:Shutdown()
 	--Spring.Echo("<Start Unit Setup> Going to sleep...")
 end
 
-function gadget:Load(zip)
-	if not (GG.SaveLoad and GG.SaveLoad.ReadFile) then
-		Spring.Log(gadget:GetInfo().name, LOG.ERROR, "Start Unit Setup failed to access save/load API")
-		return
-	end
-	loadGame = true
-	local data = GG.SaveLoad.ReadFile(zip, "Start Unit Setup", SAVE_FILE) or {}
-
-	-- load data wholesale
-	waitingForComm = data.waitingForComm or {}
-	scheduledSpawn = data.scheduledSpawn or {}
-	playerSides = data.playerSides or {}
-	teamSides = data.teamSides or {}
-	commSpawnedPlayer = data.commSpawnedPlayer or {}
-	commSpawnedTeam = data.commSpawnedTeam or {}
-	
-	UpdateSaveReferences()
-end
-
 --------------------------------------------------------------------
 -- unsynced code
 --------------------------------------------------------------------
 else
-
-local teamID 			= Spring.GetLocalTeamID()
-local spGetUnitDefID 	= Spring.GetUnitDefID
-local spValidUnitID 	= Spring.ValidUnitID
-local spAreTeamsAllied 	= Spring.AreTeamsAllied
-local spGetUnitTeam 	= Spring.GetUnitTeam
-
 
 function gadget:Initialize()
   gadgetHandler:AddSyncAction('CommSelection',CommSelection) --Associate "CommSelected" event to "WrapToLuaUI". Reference: http://springrts.com/phpbb/viewtopic.php?f=23&t=24781 "Gadget and Widget Cross Communication"
@@ -720,27 +642,6 @@ function CommSelection(_,playerID, startUnit)
 			Script.LuaUI.CommSelection(playerID, startUnit) --send to widgets as event
 		end
 	end
-end
-
-local MakeRealTable = Spring.Utilities.MakeRealTable
-
-function gadget:Save(zip)
-	if VFS.FileExists("mission.lua") then -- nothing to do
-		return
-	end
-	if not GG.SaveLoad then
-		Spring.Log(gadget:GetInfo().name, LOG.ERROR, "Start Unit Setup failed to access save/load API")
-		return
-	end
-	local toSave = {
-		waitingForComm = MakeRealTable(SYNCED.waitingForComm, "Start setup (waitingForComm)"),
-		scheduledSpawn = MakeRealTable(SYNCED.scheduledSpawn, "Start setup (scheduledSpawn)"),
-		playerSides = MakeRealTable(SYNCED.playerSides, "Start setup (playerSides)"),
-		teamSides = MakeRealTable(SYNCED.teamSides, "Start setup (teamSides)"),
-		commSpawnedPlayer = MakeRealTable(SYNCED.commSpawnedPlayer, "Start setup (commSpawnedPlayer)"),
-		commSpawnedTeam = MakeRealTable(SYNCED.commSpawnedTeam, "Start setup (commSpawnedTeam)"),
-	}
-	GG.SaveLoad.WriteSaveData(zip, SAVE_FILE, toSave)
 end
 
 end
