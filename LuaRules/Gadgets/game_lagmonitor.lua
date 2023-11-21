@@ -151,6 +151,7 @@ local function GetBpHaverAndWait(unitID)
 	return true, false
 end
 
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- Factory and Lineage
@@ -318,6 +319,7 @@ local function UpdateTeamActivity(teamID)
 						-- remove all teams after the previous owner (inclusive)
 						if delete then
 							playerLineageUnits[unitID][i] = nil
+							Spring.SetUnitRulesParam(unitID, "lagmonitor_facplop_givenaway", nil)
 						end
 					end
 				end
@@ -385,6 +387,9 @@ local function DoUnitGiveAway(allyTeamID, recieveTeamID, giveAwayTeams, doPlayer
 					if givePlayerID then
 						-- add this team to the playerLineageUnits list, then send the unit away
 						if not playerLineageUnits[unitID] then
+							if (Spring.GetUnitRulesParam(unitID, "facplop") or 0) == 1 then
+								Spring.SetUnitRulesParam(unitID, "lagmonitor_facplop_givenaway", givePlayerID)
+							end
 							playerLineageUnits[unitID] = {givePlayerID}
 						else
 							-- this unit belonged to someone else before me, add me to the end of the list
@@ -593,6 +598,13 @@ end
 local externalFunctions = {}
 function externalFunctions.GetResourceShares()
 	return allyTeamResourceShares, teamResourceShare
+end
+
+function externalFunctions.RegisterFacPlop(unitID, builderID)
+	local playerID = Spring.GetUnitRulesParam(builderID, "lagmonitor_facplop_givenaway")
+	if playerID then
+		playerLineageUnits[unitID][1] = playerID
+	end
 end
 
 function gadget:Initialize()
