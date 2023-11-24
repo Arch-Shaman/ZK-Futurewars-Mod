@@ -37,7 +37,7 @@ if not gadgetHandler:IsSyncedCode() then
 			Spring.Echo('Transmitting to LuaUI:SendPlayerResignedMessage: ' .. tostring(team1) .. ", " .. tostring(team2))
 			local player1 = teamLeaders[team1]
 			local player2 = teamLeaders[team2]
-			Spring.Echo("Send ID: " .. tostring(player1) .. ", " .. tostring(player2))
+			--Spring.Echo("Send ID: " .. tostring(player1) .. ", " .. tostring(player2))
 			Script.LuaUI.SendPlayerResignedMessage(player1, player2, messageID)
 		end
 	end
