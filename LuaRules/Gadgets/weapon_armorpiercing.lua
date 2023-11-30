@@ -33,7 +33,7 @@ end
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam, projectileID)
 	if config[weaponDefID] then
 		local isArmored, armorValue = spGetUnitArmored(unitID)
-		if not isArmored then
+		if not isArmored or armorValue >= 1 then
 			return damage, 1
 		else -- EX: 500 damage, 75% AP against 80% armor should yield 375 damage.
 			local originalDamage = damage * (1/armorValue)
