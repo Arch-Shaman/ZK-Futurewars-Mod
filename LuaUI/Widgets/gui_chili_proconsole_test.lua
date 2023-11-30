@@ -1859,7 +1859,7 @@ function SendPlayerResignedMessage(player1, player2, messageID)
 	local playerName2, _ = Spring.GetPlayerInfo(player2)
 	local body
 	local oldTeamID = select(4, Spring.GetPlayerInfo(player1))
-	playerName1 = color2incolor(Spring.GetTeamColor(oldTeamID) .. playerName1 .. incolors["#e"]
+	playerName1 = color2incolor(Spring.GetTeamColor(oldTeamID)) .. playerName1 .. incolors["#e"]
 	if deathMessages then
 		body = WG.Translate("interface", "death_"..messageID, {name = playerName1})
 	else
