@@ -55,9 +55,24 @@ do
 	end
 end
 
-if not wantstate then
-	spEcho("[AI Notice] No bots detected. Removing.")
-	widgetHandler:RemoveWidget()
+local reasons = {
+	["disconnected"] = "disconnected",
+	["left_prematurely"] = "left prematurely",
+}
+
+local function OnLocaleChanged()
+	for str, _ in pairs(reasons) do
+		reasons[str] = WG.Translate("interface", "ai_warning_" .. str)
+	end
+end
+
+function widget:Initialize()
+	if not wantstate then
+		spEcho("[AI Notice] No bots detected. Removing.")
+		widgetHandler:RemoveWidget()
+		return
+	end
+	WG.InitializeTranslation(OnLocaleChanged, GetInfo().name)
 end
 
 local function GetLeaver(str)
@@ -78,7 +93,12 @@ local function ReportLeaver(aihost, reason)
 	for i = 1, #botowners[aihost] do
 		str = str .. "\n" .. botowners[aihost][i]
 	end
-	Echo("WARNING: AI Host " .. aihost .. " " .. reason .. "! The following AIs will remain idle until they return:" .. str)
+	local translatedReason = reasons[reason]
+	
+	Echo(WG.Translate("interface", "ai_warning", {
+		name = aihost,
+		reason = translatedReason,
+	}) .. str)
 end
 
 function widget:AddConsoleLine(msg, priority)
@@ -120,7 +140,7 @@ function widget:GameStart()
 			local ping = select(6, Spring.GetPlayerInfo(nametoid[ownername]))
 			spEcho("Ping time: " .. tostring(ping))
 			if not loaded[ownername] then
-				ReportLeaver(ownername, " has not loaded yet or left prematurely")
+				ReportLeaver(ownername, "left_prematurely")
 				ignoreowners[ownername] = true
 			end
 		end

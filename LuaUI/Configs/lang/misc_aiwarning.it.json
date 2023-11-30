@@ -1,0 +1,5 @@
+{
+	"ai_warning" : "ATTENZIONE: Il controller dell'IA, %{name}, %{reason}! Le seguenti IA rimarranno inattive fino al loro ritorno:",
+	"ai_warning_disconnected" : "ha disconnesso",
+	"ai_warning_left_prematurely" : "non è stato caricato o è uscito prima dell'inizio del gioco"
+}
