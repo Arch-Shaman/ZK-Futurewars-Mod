@@ -81,7 +81,7 @@ return {
 					light_radius = 380,
 				},
 				damage                  = {
-					default = 150.1,
+					default = 135.1,
 				},
 				explosionGenerator      = "custom:disarmaa_explosion_140",
 				fireStarter             = 70,
@@ -117,7 +117,7 @@ return {
 				shieldGoodColor         = "0.1 0.1 1 1",	
 				shieldInterceptType     = 3,	
 				shieldPower             = 3000,	
-				shieldPowerRegen        = 15,	
+				shieldPowerRegen        = 25,	
 				shieldPowerRegenEnergy  = 0.2,	
 				shieldRadius            = 80,	
 				shieldRepulser          = false,	
