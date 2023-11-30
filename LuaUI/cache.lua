@@ -115,17 +115,19 @@ function Spring.GetPlayerInfo(playerID, getOpts)
 	if getOpts then
 		playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, customkeys, hasSkirmishAIsInTeam, desynced = GetPlayerInfo(playerID, true)
 		if customParamsCache[playerID] == nil then
-			local isDev
-			if fwDevs[playerName] then
-				customkeys.badges = customkeys.badges or ""
-				customkeys.badges = InjectBadges(customkeys.badges, "fw_dev")
-				isDev = true
-			elseif playerName == "GhostFenixx" then
-				customkeys.badges = customkeys.badges or ""
-				customkeys.badges = InjectBadges(customkeys.badges, "fw_fenix")
+			if customkeys then
+				local isDev
+				if fwDevs[playerName] then
+					customkeys.badges = customkeys.badges or ""
+					customkeys.badges = InjectBadges(customkeys.badges, "fw_dev")
+					isDev = true
+				elseif playerName == "GhostFenixx" then
+					customkeys.badges = customkeys.badges or ""
+					customkeys.badges = InjectBadges(customkeys.badges, "fw_fenix")
+				end
+				customkeys.icon = GetPlayerRankColor(tonumber(customkeys.elo), customkeys.icon, isDev)
+				customParamsCache[playerID] = customkeys
 			end
-			customkeys.icon = GetPlayerRankColor(tonumber(customkeys.elo), customkeys.icon, isDev)
-			customParamsCache[playerID] = customkeys
 		else
 			customkeys = customParamsCache[playerID]
 		end
