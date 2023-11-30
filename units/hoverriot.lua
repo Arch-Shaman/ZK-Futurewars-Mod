@@ -68,9 +68,6 @@ return {
 				accuracy				= 1100,
 				burnblow				= true,
 				customParams            = {
-					is_unit_weapon = 1,
-					slot = "5",
-					muzzleEffectFire = "custom:flashmuzzle1",
 					reaim_time = 1,
 					sweepfire = 1,
 					sweepfire_maxangle = 15,
