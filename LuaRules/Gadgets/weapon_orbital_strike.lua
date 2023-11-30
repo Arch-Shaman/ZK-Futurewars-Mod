@@ -48,7 +48,7 @@ local projectiles = {}
 local config = {}
 
 local debugmode = false --THIS WILL SPAM THE LIVING HELL OUT OF THE INFOLOGS
-local name = "[weapon_ballisticguidance.lua]: "
+local name = "[weapon_orbital_strike.lua]: "
 local updateRate = 3
 
 ---------------------------------------------------------------------
