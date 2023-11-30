@@ -47,7 +47,7 @@ local f_CHAR = string.byte('f')
 local projectiles = {}
 local config = {}
 
-local debugmode = true --THIS WILL SPAM THE LIVING HELL OUT OF THE INFOLOGS
+local debugmode = false --THIS WILL SPAM THE LIVING HELL OUT OF THE INFOLOGS
 local name = "[weapon_ballisticguidance.lua]: "
 local updateRate = 3
 
