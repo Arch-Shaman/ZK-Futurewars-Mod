@@ -502,7 +502,8 @@ local function UpdateAllyTeamActivity(allyTeamID)
 			local giveTeamID = giveAwayTeams[i]
 			local giveResigned = select(3, Spring.GetTeamInfo(giveTeamID, false))
 			if giveResigned then
-				spEcho("game_message: " .. GetTeamName(giveTeamID) .. " resigned")
+				SendToUnsynced("SendPlayerResignedMessage", giveTeamID, nil, math.random(1, deathMessageCount))
+				--spEcho("game_message: " .. GetTeamName(giveTeamID) .. " resigned")
 			end
 		end
 	end
