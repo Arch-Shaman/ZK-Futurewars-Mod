@@ -86,7 +86,7 @@ local fwDevs = {
 }
 
 local function GetPlayerRankColor(elo, original, isDev)
-	--if isDev then return "dev" end
+	if isDev then return "dev" end
 	local originalExp = string.sub(original, 1, 1) .. "_"
 	if elo >= 2900 then
 		return originalExp .. "7" -- purple, this is roughly top 22.
