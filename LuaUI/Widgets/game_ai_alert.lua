@@ -25,11 +25,17 @@ local wantstate = false
 local checkplayers = {}
 local loaded = {}
 local find = string.find
+
+local function IsAIBlackListed(teamID)
+	local luaAI = Spring.GetTeamLuaAI(teamID)
+	return luaAI ~= nil
+end
+
 do
 	local teamlist = Spring.GetTeamList()
 	for t = 1, #teamlist do
 		local team = teamlist[t]
-		if select(4, Spring.GetTeamInfo(team)) then
+		if select(4, Spring.GetTeamInfo(team)) and not IsAIBlackListed(team) then
 			wantstate = true
 			local _, name, host = Spring.GetAIInfo(team)
 			local hostname = Spring.GetPlayerInfo(host)
