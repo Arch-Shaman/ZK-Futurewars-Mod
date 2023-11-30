@@ -38,7 +38,7 @@ local ALLIED = {allied = true}
 local states = {} -- allyTeamID = {count = num, playerStates = {}}
 local playerMap = {} -- playerID = allyTeamID
 local resigntimer = 180 -- timer starts at 3 minutes and loses a second every 3rd second (down to 60s) over the first 6 minutes.
-local mintime = 30
+local mintime = 60
 local resignteams = {}
 local exemptplayers = {} -- players who are exempt.
 local afkplayers = {}
