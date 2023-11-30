@@ -265,7 +265,9 @@ function gadget:GameFrame(f)
 				states[allyTeamID].timer = states[allyTeamID].timer - 1
 				UpdateResignTimer(allyTeamID)
 				if states[allyTeamID].timer == 0 then
-					Spring.Echo("game_message: Team " .. allyTeamID .. " Destroyed due to morale.")
+					if GetAllyTeamPlayerCount(allyTeamID) > 1 then
+						Spring.Echo("game_message: Team " .. allyTeamID .. " Destroyed due to morale.")
+					end
 					DestroyAlliance(allyTeamID)
 					RemoveResignTeam(allyTeamID)
 					Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_total", 0, PUBLIC)
