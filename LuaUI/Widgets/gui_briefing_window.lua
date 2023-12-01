@@ -47,7 +47,7 @@ local osClock               = os.clock
 
 
 
-local briefing = VFS.Include("LuaUI/Configs/briefing.lua")
+local briefing, lastWrittenVersion = VFS.Include("LuaUI/Configs/briefing.lua")
 local writeVersion
 local showBriefing = false
 
@@ -62,19 +62,23 @@ do
 	end
 	local lastSeenVersion
 	if VFS.FileExists(configLocation) then
-		lastSeenVersion = VFS.Include(configLocation)
-		if lastSeenVersion == nil then lastSeenVersion = "" end
+		lastSeenVersion = tonumber(VFS.Include(configLocation))
+		if lastSeenVersion == nil then lastSeenVersion = "0" end
 	else
 		lastSeenVersion = ""
 	end
-	if lastSeenVersion == "" then
-		showBriefing = true
-	else
-		local modoptions = Spring.GetModOptions()
-		showBriefing = lastSeenVersion ~= splittedVersion[2] or (modoptions.commwars and modoptions.commwars == "1") or Spring.GetGameRulesParam("chicken_difficulty") ~= nil
-		--Spring.Echo("showBriefing: " .. tostring(showBriefing))
+	lastSeenVersion = tonumber(lastSeenversion) or 0
+	if splittedVersion[1] and splittedVersion[2] and splittedVersion[3] then
+		local thisVersion = tonumber(splittedVersion[1] .. splittedVersion[2] .. "." .. splittedVersion[3])
+		if lastSeenVersion == 0 then
+			showBriefing = true
+		else
+			local modoptions = Spring.GetModOptions()
+			showBriefing = lastSeenVersion < lastWrittenVersion or (modoptions.commwars and modoptions.commwars == "1") or Spring.GetGameRulesParam("chicken_difficulty") ~= nil
+			--Spring.Echo("showBriefing: " .. tostring(showBriefing))
+		end
+		writeVersion = thisVersion
 	end
-	writeVersion = splittedVersion[2]
 end
 
 local Chili

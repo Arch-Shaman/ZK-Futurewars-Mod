@@ -5,6 +5,7 @@ local function PreprendTable(prependee, prepender)
 	return prepender
 end
 
+local lastWrittenVersion = 38
 local showBriefing = false
 local configLocation = "luaui\\config\\fw_patchnotes.lua"
 local gameVersion = Game.gameVersion
@@ -17,7 +18,8 @@ for str in string.gmatch(gameVersion, "%S+") do
 end
 local lastSeenVersion
 if VFS.FileExists(configLocation) then
-	lastSeenVersion = VFS.Include(configLocation)
+	lastSeenVersion = VFS.Include(configLocation) or "0"
+	lastSeenVersion = tonumber(lastSeenVersion)
 else
 	lastSeenVersion = ""
 end
@@ -25,7 +27,7 @@ if lastSeenVersion == "" then
 	showBriefing = true
 else
 	local modoptions = Spring.GetModOptions()
-	showBriefing = lastSeenVersion ~= splittedVersion[2] and not ((modoptions.commwars and modoptions.commwars == "1") or Spring.GetGameRulesParam("chicken_difficulty") ~= nil)
+	showBriefing = lastSeenVersion < lastWrittenVersion and not ((modoptions.commwars and modoptions.commwars == "1") or Spring.GetGameRulesParam("chicken_difficulty") ~= nil)
 end
 
 local briefing = {
@@ -80,4 +82,4 @@ if (tonumber(modoptions["commwars"]) or 0) == 1 then
 	briefing.entries = PreprendTable(briefing.entries, newEntries)
 end
 
-return briefing, writeVersion
+return briefing, lastWrittenVersion
