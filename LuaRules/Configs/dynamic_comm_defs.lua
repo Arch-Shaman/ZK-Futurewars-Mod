@@ -2020,7 +2020,7 @@ local moduleDefs = {
 	{
 		name = "module_autoloader",
 		humanName = "Rapid Autoloader",
-		description = "Increases reload speed by 33%. Reduces base damage by 12.5%. Burst Weapons (such as lightning guns or medium rifles) fire faster. Minimum 10% damage.\nGhost Exclusive.",
+		description = "Increases reload speed by 33%. Reduces base damage by 12.5%. Burst Weapons (such as lightning guns or medium rifles) fire faster. Minimum 5% damage.\nGhost Exclusive.",
 		image = moduleImagePath .. "module_reloader.png",
 		limit = 4,
 		cost = 800 * COST_MULT,
