@@ -1847,7 +1847,7 @@ local moduleDefs = {
 	{
 		name = "module_alphastrike",
 		humanName = "Alpha Strike",
-		description = "Provides a 100% boost in firepower. Decreases reload speed by 75%.\nGhost Exclusive.",
+		description = "Provides a 70% boost in firepower. Decreases reload speed by 50%.\nGhost Exclusive.",
 		image = moduleImagePath .. "module_alphastrike.png",
 		limit = 4,
 		cost = 100 * COST_MULT,
@@ -1856,8 +1856,8 @@ local moduleDefs = {
 		requireChassis = {"strike"},
 		prohibitingModules = {"module_autoloader"},
 		applicationFunction = function (modules, sharedData)
-			sharedData.damageMult = (sharedData.damageMult or 1) + 1
-			sharedData.reloadBonus = (sharedData.reloadBonus or 0) - 0.75
+			sharedData.damageMult = (sharedData.damageMult or 1) + 0.70
+			sharedData.reloadBonus = (sharedData.reloadBonus or 0) - 0.50
 		end
 	},
 	{
