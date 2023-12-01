@@ -34,8 +34,8 @@ return {
 		iconType               = "gunshipraider",
 		idleAutoHeal           = 25,
 		idleTime               = 150,
-		health                 = 1100,
-		speed                  = 6.5,
+		health                 = 1250,
+		speed                  = 6.8,
 		noChaseCategory        = "TERRAFORM SUB",
 		objectName             = "banshee.s3o",
 		script                 = "gunshipraid.lua",
@@ -47,7 +47,7 @@ return {
 			},
 		},
 		sightDistance          = 700,
-		radarDistance		   = 1300,
+		radarDistance		   = 1700,
 		turnRate               = 740,
 		weapons                = {
 			{
@@ -83,7 +83,7 @@ return {
 					combatrange = 250,
 				},
 				damage                  = {
-					default = 37.1,
+					default = 37.5,
 				},
 				explosionGenerator      = "custom:heavybeamorangeimpactsmall",
 				--heightMod             = 0.5,
@@ -96,7 +96,7 @@ return {
 				minIntensity            = 1,
 				noSelfDamage            = true,
 				range                   = 341,
-				reloadtime              = 2.3,
+				reloadtime              = 2.0,
 				rgbColor                = "0.8941 0.7647 0.1255",
 				soundStart              = "weapon/laser/medium_phaser",
 				soundHit				= "weapon/impacts/impact-light01",
