@@ -34,7 +34,7 @@ return {
 			cloakstrikeslow = 1.0,
 			hasarmorstate 	= 1,
 			armortype = 1, -- for context menu.
-			armored_slowdown = 0.2,
+			armored_slowdown = 0.33,
 		},
 		explodeAs              = "BIG_UNITEX",
 		footprintX             = 3,
