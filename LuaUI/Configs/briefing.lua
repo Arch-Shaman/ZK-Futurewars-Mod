@@ -5,7 +5,7 @@ local function PreprendTable(prependee, prepender)
 	return prepender
 end
 
-local lastWrittenVersion = 38
+local lastWrittenVersion = 38.11
 local showBriefing = false
 local configLocation = "luaui\\config\\fw_patchnotes.lua"
 local gameVersion = Game.gameVersion
@@ -40,13 +40,13 @@ if showBriefing then
 	briefing["entries"] = {
 		{"update_header", fontsize = 24},
 		{"entry_1"},
-		{"entry_2", image = "unitpics/commstrike.png"},
-		{"entry_3", image = "unitpics/roost.png"},
-		{"entry_4", image = "unitpics/cloakassault.png"},
+		{"entry_2"},
+		{"entry_3"},
+		{"entry_4"},
 		{"entry_5"},
-		{"entry_6", fontsize = 18},
-		{"entry_7"},
-		{"entry_8"},
+		{"entry_6", image = "unitpics/commstrike.png"},
+		{"entry_7", image = "unitpics/shieldaa.png"},
+		{"entry_8", image = "unitpics/cloakaa.png"},
 		{""},
 		{""},
 		{"shameless_plug"},
