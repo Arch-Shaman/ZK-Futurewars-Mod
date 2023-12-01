@@ -23,10 +23,10 @@ return {
 			modelradius    = "25",
 			selection_scale = 1.2,
 			bp_overdrive = "MAXIMUM OVERDRIVE!",
-			bp_overdrive_initialcharge = 350,
+			bp_overdrive_initialcharge = 300,
 			bp_overdrive_chargedelay = 90, -- in frames.
 			bp_overdrive_bonus = 4,
-			bp_overdrive_totalcharge = 350,
+			bp_overdrive_totalcharge = 300,
 			bp_overdrive_chargerate = 10,
 		},
 		energyUse           = 0,
