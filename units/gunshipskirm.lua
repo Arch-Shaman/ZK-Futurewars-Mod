@@ -33,7 +33,7 @@ return {
 		idleAutoHeal           = 15,
 		idleTime               = 1800,
 		health                 = 3000,
-		speed                  = 3.8,
+		speed                  = 4.6,
 		noChaseCategory        = "TERRAFORM SUB",
 		objectName             = "rapier.dae",
 		script                 = "gunshipskirm.lua",
