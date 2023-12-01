@@ -2082,7 +2082,7 @@ local moduleDefs = {
 	{
 		name = "module_striderpower",
 		humanName = "Massive Weapons Relays",
-		description = "Increases damage by 25%. Blocks access to Autorepair and grants access to strong powered modules. Commanders undertaking this should be considered strider level units.",
+		description = "Increases damage by 33%. Blocks access to Autorepair and grants access to strong powered modules. Commanders undertaking this should be considered strider level units.",
 		image = moduleImagePath .. "module_energy_cell.png",
 		limit = 1,
 		cost = 100 * COST_MULT,
@@ -2092,7 +2092,7 @@ local moduleDefs = {
 		prohibitingModules = {"module_autorepair"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.speedMalus = (sharedData.speedMalus or 0) + 1.1
-			sharedData.damageMult = (sharedData.damageMult or 1) + 0.25
+			sharedData.damageMult = (sharedData.damageMult or 1) + 0.33
 		end
 	},
 	{
