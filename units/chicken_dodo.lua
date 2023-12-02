@@ -82,7 +82,7 @@ return {
 					blastwave_speed = 0,
 					blastwave_life = 140,
 					blastwave_lossfactor = 0.85,
-					blastwave_damage = 100,
+					blastwave_damage = 50,
 					blastwave_spawnceg = "dodo_goo_splashes",
 					blastwave_spawncegfreq = 25,
 					blastwave_healing = 200,
