@@ -133,9 +133,6 @@ return {
 				weaponType              = "LaserCannon",
 				weaponVelocity          = 800,
 			},
-		
-		
-			
 			HEATRAY = {
 				name                    = "Rotary Heatray Array",
 				areaOfEffect            = 20,
@@ -191,7 +188,6 @@ return {
 				weaponType              = "BeamLaser",
 				weaponVelocity          = 500,
 			},
-		
 			NAPALM_ROCKETS       = {
 				name                    = "Hellfire Rockets",
 				areaOfEffect            = 228,
@@ -244,7 +240,6 @@ return {
 				weaponVelocity          = 800,
 				wobble                  = 10000,
 			},
-			
 			NAPALM_FRAGMENT_DUMMY = {
 				name                    = "Thermite Fragment",
 				accuracy                = 400,
@@ -270,7 +265,6 @@ return {
 				damage                  = {
 					default = 0,
 				},
-
 				explosionGenerator      = "custom:NONE",
 				firestarter             = 180,
 				impulseBoost            = 0,
@@ -291,7 +285,6 @@ return {
 				weaponType              = "Cannon",
 				weaponVelocity          = 320,
 			},
-
 			NAPALM_FRAGMENT = {
 				name                    = "Hellfire Fireball",
 				accuracy                = 400,
@@ -314,7 +307,6 @@ return {
 				damage                  = {
 					default = 200.1,
 				},
-
 				explosionGenerator      = "custom:napalm_phoenix",
 				firestarter             = 180,
 				impulseBoost            = 0,
@@ -334,8 +326,6 @@ return {
 				weaponType              = "Cannon",
 				weaponVelocity          = 320,
 			},
-		
-		
 			NAPALM_ROCKETS_SALVO = {
 				name                    = "Thermite Rocket Salvo",
 				areaOfEffect            = 228,
@@ -368,7 +358,6 @@ return {
 				damage                  = {
 					default = 140.1,
 				},
-			
 				dance                   = 15,
 				edgeEffectiveness       = 0.75,
 				explosionGenerator      = "custom:napalm_phoenix",
@@ -397,7 +386,6 @@ return {
 				weaponVelocity          = 800,
 				wobble                  = 8000,
 			},
-		
 		},
 		featureDefs         = {
 			DEAD  = {
