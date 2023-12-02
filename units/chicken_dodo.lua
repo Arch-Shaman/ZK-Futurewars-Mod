@@ -85,7 +85,7 @@ return {
 					blastwave_damage = 50,
 					blastwave_spawnceg = "dodo_goo_splashes",
 					blastwave_spawncegfreq = 25,
-					blastwave_healing = 200,
+					blastwave_healing = 350,
 					blastwave_onlyfriendly = 1,
 					blastwave_nofriendly = 1,
 					blastwave_luaspawnonly = 1,
