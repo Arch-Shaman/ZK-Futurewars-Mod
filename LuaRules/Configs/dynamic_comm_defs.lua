@@ -1847,7 +1847,7 @@ local moduleDefs = {
 	{
 		name = "module_alphastrike",
 		humanName = "Alpha Strike",
-		description = "Provides a 70% boost in firepower. Decreases reload speed by 50%.\nGhost Exclusive.",
+		description = "Provides a 70% boost in firepower. Decreases reload speed by 50%.\nGhost Exclusive. Note: Reload bonuses do not affect microrift.",
 		image = moduleImagePath .. "module_alphastrike.png",
 		limit = 4,
 		cost = 100 * COST_MULT,
@@ -1856,8 +1856,13 @@ local moduleDefs = {
 		requireChassis = {"strike"},
 		prohibitingModules = {"module_autoloader"},
 		applicationFunction = function (modules, sharedData)
+			if sharedData.weapon1 and sharedData.weapon1 ~= "commweapon_microriftgenerator" then
+				sharedData.reloadBonus1 = (sharedData.reloadBonus1 or 0) - 0.5
+			end
+			if sharedData.weapon2 and sharedData.weapon2 ~= "commweapon_microriftgenerator" then
+				sharedData.reloadBonus2 = (sharedData.reloadBonus2 or 0) - 0.5
+			end
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.70
-			sharedData.reloadBonus = (sharedData.reloadBonus or 0) - 0.50
 		end
 	},
 	{
@@ -2032,13 +2037,14 @@ local moduleDefs = {
 			-- Damage boost is applied via clone swapping
 			--sharedData.damageMult = (sharedData.damageMult or 1) - 0.20
 			--if sharedData.damageMult < 0.1 then sharedData.damageMult = 0.1 end
-			if sharedData.weapon1 then
+			
+			if sharedData.weapon1 and sharedData.weapon1 ~= "commweapon_microriftgenerator" then
 				sharedData.damageBooster1 = (sharedData.damageBooster1 or 0) - 0.125
 				if sharedData.damageBooster1 < -0.95 then
 					sharedData.damageBooster1 = -0.95
 				end
 			end
-			if sharedData.weapon2 then
+			if sharedData.weapon2 and sharedData.weapon2 ~= "commweapon_microriftgenerator" then
 				sharedData.damageBooster2 = (sharedData.damageBooster2 or 0) - 0.125
 				if sharedData.damageBooster2 < -0.95 then
 					sharedData.damageBooster2 = -0.95
