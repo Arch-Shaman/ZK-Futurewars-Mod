@@ -219,7 +219,6 @@ return {
 				impulseBoost            = 0,
 				impulseFactor           = 1.5,
 				interceptedByShieldType = 1,
-				myGravity               = 0.85,
 				range					= 300,
 				soundHit                = "explosion/mini_nuke_2",
 				soundHitVolume          = 10,
