@@ -143,6 +143,7 @@ return {
 				areaOfEffect            = 1280,
 				craterBoost             = 4,
 				craterMult              = 10,
+				cameraShake				= 0,
 				customParams = {
 					script_reload = 6,
 					singularity = "1",
@@ -191,6 +192,7 @@ return {
 				craterBoost             = 4,
 				craterMult              = 10,
 				cegTag                  = "flamer_koda",
+				cameraShake				= 0,
 				customParams = {
 					script_reload = "6",
 					light_color = "0.8784 0.0667 0.3725",
@@ -233,6 +235,7 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
+				cameraShake				= 0,
 				customParams        	  = {
 					numprojectiles1 = 15,
 					projectile1 = "raveparty_ruby_tritary",
@@ -277,6 +280,7 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
+				cameraShake				= 0,
 				--model                   = "wep_b_fabby.s3o",
 				damage                  = {
 					default = 25,
@@ -316,6 +320,7 @@ return {
 				avoidGround             = false,
 				craterBoost             = 0.25,
 				craterMult              = 0.5,
+				cameraShake				= 0,
 				customParams              = {
 					script_reload = "6",
 					numprojectiles1 = 30,
@@ -357,6 +362,7 @@ return {
 				burnblow                = true,
 				craterBoost             = 1,
 				craterMult              = 2,
+				cameraShake				= 0,
 				customParams        = {
 					light_camera_height = 1500,
 					light_color = "0.9 0.3 0",
@@ -395,6 +401,7 @@ return {
 				avoidGround             = false,
 				craterBoost             = 0.5,
 				craterMult              = 1,
+				cameraShake				= 0,
 				customParams = {
 					script_reload = "6",
 					lups_explodelife = 1.0,
@@ -439,6 +446,7 @@ return {
 				avoidGround             = false,
 				craterBoost             = 0,
 				craterMult              = 0,
+				cameraShake				= 0,
 				customParams            = {
 					script_reload = "6",
 					numprojectiles1 = 40,
@@ -479,6 +487,7 @@ return {
 				avoidGround             = false,
 				craterBoost             = 80,
 				craterMult              = 70,
+				cameraShake				= 0,
 				customParams            = {
 					script_reload = "6",
 					light_camera_height = 1500,
@@ -516,6 +525,7 @@ return {
 				craterBoost             = 0.25,
 				craterMult              = 0.5,
 				cegTag                  = "drp_blue_trail",
+				cameraShake				= 0,
 				customParams = {
 					script_reload = "6",
 				},
@@ -552,6 +562,7 @@ return {
 				avoidGround             = false,
 				craterBoost             = 0.25,
 				craterMult              = 0.5,
+				cameraShake				= 0,
 				customparams = {
 					timeslow_damagefactor = 10,
 					nofriendlyfire = "needs hax",
@@ -598,6 +609,7 @@ return {
 				commandFire             = true,
 				craterBoost             = 0,
 				craterMult              = 0,
+				cameraShake				= 0,
 				customParams        = {
 					timeslow_damagefactor = 1.5,
 					timeslow_overslow_frames = 5*30, --5 seconds before slow decays
@@ -636,6 +648,7 @@ return {
 				commandFire             = true,
 				craterBoost             = 0,
 				craterMult              = 0,
+				cameraShake				= 0,
 				customParams        = {
 					light_camera_height = 3500,
 					light_color = "0.5 0.0 0.5",
@@ -714,6 +727,7 @@ return {
 				craterBoost             = 0.25,
 				craterMult              = 0.5,
 				cegtag					= "rainbowshot",
+				cameraShake				= 0,
 				customparams = {
 					script_reload = "6",
 					nofriendlyfire = 1,
