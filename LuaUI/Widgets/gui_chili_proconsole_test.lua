@@ -1854,7 +1854,7 @@ local function OnLocaleChanged()
 end
 
 function SendPlayerResignedMessage(player1, player2, messageID)
-	Spring.Echo("SendPlayerResignedMessage: " .. tostring(messageID))
+	--Spring.Echo("SendPlayerResignedMessage: " .. tostring(messageID))
 	local playerName1, _ = Spring.GetPlayerInfo(player1)
 	local playerName2, _ = Spring.GetPlayerInfo(player2)
 	local body
