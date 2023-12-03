@@ -137,8 +137,11 @@ end
 function OnAmmoTypeChange(newAmmo)
 	if newAmmo ~= currentAmmo then
 		OnAmmoChange(1)
-		Reload()
-		SetUnarmedAI()
+		local _, _, inBuild = Spring.GetUnitIsStunned(unitID)
+		if not inBuild then
+			Reload()
+			SetUnarmedAI()
+		end
 		currentAmmo = newAmmo
 	end
 end
