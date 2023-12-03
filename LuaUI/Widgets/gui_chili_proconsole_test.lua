@@ -1872,7 +1872,7 @@ function SendPlayerResignedMessage(player1, player2, messageID)
 	local m = {
 			argument = body,
 			priority = 35, -- wut?
-			msgtype = 'game_priority_message',
+			msgtype = 'game_message',
 			text = body,
 			argument = body,
 		}
