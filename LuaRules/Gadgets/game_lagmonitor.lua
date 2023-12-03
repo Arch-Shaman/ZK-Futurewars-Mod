@@ -362,10 +362,18 @@ local function GetRawTeamShare(teamID)
 	return shares
 end
 
+local function IsPlayerDead(playerID)
+	return select(3, Spring.GetPlayerInfo(playerID)
+end
+
 local function IsTeamActuallyDead(teamID)
 	local isDead = select(3, Spring.GetTeamInfo(teamID, false))
-	local playerList = Spring.GetPlayerList(teamID, true)
-	return isDead or #playerList == 0
+	local playerList = Spring.GetPlayerList(teamID)
+	if isDead then return true end
+	for i = 1, #playerList do
+		if not IsPlayerDead(playerList[i]) then return false end
+	end
+	return true
 end
 
 local function DoUnitGiveAway(allyTeamID, recieveTeamID, giveAwayTeams, doPlayerLineage)
