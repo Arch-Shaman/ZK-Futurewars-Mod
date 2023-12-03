@@ -125,7 +125,9 @@ function Spring.GetPlayerInfo(playerID, getOpts)
 					customkeys.badges = customkeys.badges or ""
 					customkeys.badges = InjectBadges(customkeys.badges, "fw_fenix")
 				end
-				customkeys.icon = GetPlayerRankColor(tonumber(customkeys.elo), customkeys.icon, isDev)
+				if customkeys.icon then
+					customkeys.icon = GetPlayerRankColor(tonumber(customkeys.elo), customkeys.icon, isDev)
+				end
 				customParamsCache[playerID] = customkeys
 			end
 		else
