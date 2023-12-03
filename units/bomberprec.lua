@@ -212,6 +212,7 @@ return {
 					light_color = "0.25 0.13 0.05",
 				},
 				edgeEffectiveness       = 1,
+				flighttime				= 6,
 				explosionGenerator      = "custom:100rlexplode",
 				fireStarter             = 250,
 				model                   = "wep_kinetic_driver.dae",
@@ -222,8 +223,11 @@ return {
 				soundHit                = "explosion/mini_nuke_2",
 				soundHitVolume          = 10,
 				soundStart              = "weapon/bomb_drop",
-				weaponType              = "AircraftBomb",
-				weaponVelocity          = 1220,
+				startVelocity           = 100,
+				turnrate			    = 65536/4, -- 90 degrees
+				weaponAcceleration      = 400,
+				weaponType              = "MissileLauncher",
+				weaponVelocity          = 1300,
 			},
 			BOMBLET = {
 				name                    = "High Explosive Bomblet",
