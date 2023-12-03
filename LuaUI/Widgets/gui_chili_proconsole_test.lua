@@ -1895,7 +1895,8 @@ function SendAFKMessage(player1, player2)
 	else
 		body = WG.Translate("interface", "afk_returned", {name = playerName1, name2 = playerName2})
 	end
-	
+	local allyTeam = select(5, Spring.GetPlayerInfo(player1))
+	local allied = allyTeam == myAllyTeamId
 	local m = {
 			argument = body,
 			priority = 35, -- wut?
@@ -1903,6 +1904,7 @@ function SendAFKMessage(player1, player2)
 			text = body,
 			argument = body,
 		}
+	if not allied then m.msgtype = 'game_message' end
 	widget:AddConsoleMessage(m)
 end
 
