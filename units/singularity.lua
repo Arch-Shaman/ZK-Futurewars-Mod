@@ -63,7 +63,7 @@ return {
 					singu_lifespan = 600,
 					singu_height = 200,
 					singu_strength = 500,
-					singu_finalstrength = 30000,
+					singu_finalstrength = 2000,
 					detachmentradius = 500,
 					--singuheight = "125",
 					singu_ceg = "black_hole_800",

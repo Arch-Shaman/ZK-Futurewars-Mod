@@ -95,6 +95,7 @@ return {
 					singu_lifespan = 250,
 					singu_strength = 150,
 					singu_height = 150,
+					singu_finalstrength = 300,
 					singu_ceg	= "black_hole_300",
 					light_color = "1 1 1",
 					light_radius = 500,

@@ -150,6 +150,7 @@ return {
 					singu_radius = 1280,
 					singu_lifespan = 600,
 					singu_strength = 900,
+					singu_finalstrength = 4000,
 					singu_height = 300,
 					singu_ceg = "black_hole_1280",
 					singu_nodamageimmunity = "uwu~",
