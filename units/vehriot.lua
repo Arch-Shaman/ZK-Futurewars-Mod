@@ -87,7 +87,7 @@ return {
 					blastwave_damage = 0,
 				},
 				damage                  = {
-					default = 35.01,
+					default = 45.01,
 				},
 				edgeEffectiveness       = 0.75,
 				explosionGenerator      = "custom:impulsepop_40",
@@ -131,7 +131,7 @@ return {
 					light_radius = 40,
 				},
 				damage                  = {
-					default = 35*10,
+					default = 45*10,
 				},
 				edgeEffectiveness       = 0.75,
 				explosionGenerator      = "custom:FLASH64",
