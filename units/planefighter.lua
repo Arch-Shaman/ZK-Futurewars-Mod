@@ -201,7 +201,7 @@ local unitDef = {
 			cylinderTargeting          = 1,
 
 			damage                  = {
-				default = 1200.1,
+				default = 1000.1,
 			},
 
 			customParams            = {
