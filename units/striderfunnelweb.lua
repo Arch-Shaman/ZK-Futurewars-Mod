@@ -259,6 +259,7 @@ return {
 					stats_hide_range = 1,
 					stats_hide_dps = 1,
 					norealdamage = 1,
+					armor_doesnt_affect_similar_defs = 1,
 				},
 				edgeeffectiveness       = 0,
 				explosionGenerator      = "custom:armor_ring600",

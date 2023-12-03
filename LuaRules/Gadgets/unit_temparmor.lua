@@ -45,11 +45,12 @@ for i = 1, #WeaponDefs do -- Iterate through every weapon def. WeaponDefs is an 
 		local noScaling = weaponDef.customParams.noscaling ~= nil -- use this to stop all scaling
 		local noTimeScaling = noScaling or weaponDef.customParams.notimescaling ~= nil
 		local noStacking = weaponDef.customParams.nostacking ~= nil
+		local canAffectOwnDef = weaponDef.customParams.armor_doesnt_affect_similar_defs ~= nil
 		if weaponDef.customParams.armor_duration == nil then
 			Spring.Echo("[ArmorStates]: missing duration for " .. weaponDef.name .. " (ID " .. i .. "). Defaulting to 3s!")
 		end
 		if armorValue and armorDuration then
-			configs[i] = {value = 1 - armorValue, duration = armorDuration, alliedOnly = not impactEnemies, noScaling = noScaling, noTimeScaling = noTimeScaling, noStacking = noStacking} -- store the info in the metatable.
+			configs[i] = {value = 1 - armorValue, duration = armorDuration, alliedOnly = not impactEnemies, noScaling = noScaling, noTimeScaling = noTimeScaling, noStacking = noStacking, canAffectOwnDef = canAffectOwnDef} -- store the info in the metatable.
 			watchWeapons[#watchWeapons + 1] = i -- Add to watch weapon table so we can filter stuff out we don't need.
 			if needsCaching then
 				Script.SetWatchWeapon(i, true)
@@ -161,7 +162,8 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	if debugMode then
 		Spring.Echo("UnitPreDamaged: Teams are allied: " .. tostring(allyCheck)) 
 	end
-	if allyCheck then
+	local selfDefCheck = not configs[weaponDefID].canAffectOwnDef or attackerDefID ~= unitDefID
+	if allyCheck and selfDefCheck then
 		local mult
 		if configs[weaponDefID].noScaling then
 			mult = 1
