@@ -363,7 +363,7 @@ local function GetRawTeamShare(teamID)
 end
 
 local function IsPlayerDead(playerID)
-	return select(3, Spring.GetPlayerInfo(playerID)
+	return select(3, Spring.GetPlayerInfo(playerID))
 end
 
 local function IsTeamActuallyDead(teamID)
