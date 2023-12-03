@@ -604,7 +604,11 @@ end
 function externalFunctions.RegisterFacPlop(unitID, builderID)
 	local playerID = Spring.GetUnitRulesParam(builderID, "lagmonitor_facplop_givenaway")
 	if playerID then
-		playerLineageUnits[unitID][1] = playerID
+		if playerLineageUnits[unitID] then
+			playerLineageUnits[unitID][1] = playerID
+		else
+			playerLineageUnits[unitID] = {[1] = playerID}
+		end
 	end
 end
 
