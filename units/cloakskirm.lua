@@ -110,7 +110,7 @@ return {
 				model                   = "wep_m_ajax.s3o",
 				noSelfDamage            = true,
 				tolerance               = 65536/4,
-				turnRate                = 28000,
+				turnRate                = 24000,
 				range                   = 530,
 				reloadtime              = 0.3,
 				smokeTrail              = false,
@@ -191,7 +191,7 @@ return {
 					reload_move_mod_time = 3,
 				},
 				damage                  = {
-					default = 900.01,
+					default = 700.01,
 				},
 				fireStarter             = 70,
 				flightTime              = 12,
