@@ -10,7 +10,7 @@ return {
 		buildCostMetal      = 0,
 		builder             = false,
 		buildPic            = "chickens.png",
-		buildTime           = 220,
+		buildTime           = 260,
 		canGuard            = true,
 		canMove             = true,
 		canPatrol           = true,
@@ -25,7 +25,7 @@ return {
 		explodeAs           = "NOWEAPON",
 		footprintX          = 2,
 		footprintZ          = 2,
-		health              = 2260,
+		health              = 2050,
 		iconType            = "chickens",
 		idleAutoHeal        = 30,
 		idleTime            = 120,
@@ -37,7 +37,6 @@ return {
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM GUNSHIP FIXEDWING SATELLITE SUB",
 		objectName          = "chickens.s3o",
-		power               = 260,
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
 		sfxtypes            = {
@@ -102,7 +101,7 @@ return {
 					--blastwave_spawncegfreq = 5,
 				},
 				damage                  = {
-					default = 150.01,
+					default = 136.01,
 				},
 				explosionGenerator      = "custom:EMG_HIT",
 				highTrajectory			= 1,
@@ -147,7 +146,7 @@ return {
 					--blastwave_spawncegfreq = 5,
 				},
 				damage                  = {
-					default = 75.01,
+					default = 68.01,
 				},
 				explosionGenerator      = "custom:EMG_HIT",
 				highTrajectory			= 1,

@@ -41,7 +41,6 @@ return {
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP STUPIDTARGET MINE",
 		objectName          = "chickenbroodqueen.s3o",
-		power               = 8960,
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
 

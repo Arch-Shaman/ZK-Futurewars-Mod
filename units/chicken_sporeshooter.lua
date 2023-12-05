@@ -25,19 +25,18 @@ return {
 		explodeAs           = "NOWEAPON",
 		footprintX          = 3,
 		footprintZ          = 3,
-		health              = 20000,
+		health              = 17500,
 		iconType            = "spiderskirm",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
 		leaveTracks         = true,
 		maxSlope            = 84,
 		waterline           = 22,
-		buildTime           = 1600,
+		buildTime           = 2250,
 		movementClass       = "ATKBOT4",
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM LAND SINK TURRET SHIP SATELLITE SWIM FLOAT SUB HOVER STUPIDTARGET",
 		objectName          = "chicken_sporeshooter.s3o",
-		power               = 3150,
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
 
@@ -86,7 +85,7 @@ return {
 				},
 
 				damage                  = {
-					default = 1000,
+					default = 700,
 				},
 
 				dance                   = 90,

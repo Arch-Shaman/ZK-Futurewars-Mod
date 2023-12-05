@@ -66,8 +66,8 @@ minBurrows = 10	-- Amount of burrows to have at 0:00
 maxBurrows = 50	-- Amount of burrows to have at queenTime
 
 waveSizeMult = 1	-- multiplier on wave size
-waveSizePerValue = 0.5	-- wave size per human value
-waveSizePerPlayer = 100	-- waev size per human team
+waveSizePerValue = 0.3	-- wave size per human value
+waveSizePerPlayer = 70	-- waev size per human team
 waveDespawn = true
 
 chicken_turret = "chickend"

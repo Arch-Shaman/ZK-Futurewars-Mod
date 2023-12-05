@@ -33,12 +33,11 @@ return {
 		maxWaterDepth       = 5000,
 		metalCost           = 0,
 		energyCost          = 0,
-		buildTime           = 525,
+		buildTime           = 625,
 		movementClass       = "ATKBOT3",
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP SUB MOBILE STUPIDTARGET MINE",
 		objectName          = "chickenr.s3o",
-		power               = 750,
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
 
@@ -88,7 +87,7 @@ return {
 				},
 							
 				damage                  = {
-					default = 1000,
+					default = 850,
 				},
 
 				explosionGenerator      = "custom:goo_v2_green",
@@ -96,7 +95,7 @@ return {
 				impulseFactor           = 0.4,
 				intensity               = 0.7,
 				interceptedByShieldType = 1,
-				mygravity               = 0.2,
+				mygravity               = 0.3,
 				noSelfDamage            = true,
 				range                   = 1150,
 				reloadtime              = 5,
@@ -109,7 +108,7 @@ return {
 				tolerance               = 5000,
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 600,
+				weaponVelocity          = 900,
 				waterWeapon             = true,
 			},
 		},

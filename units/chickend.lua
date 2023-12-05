@@ -25,7 +25,7 @@ return {
 		floater                       = true,
 		footprintX                    = 3,
 		footprintZ                    = 3,
-		health                        = 3100,
+		health                        = 2400,
 		iconType                      = "defense",
 		idleAutoHeal                  = 20,
 		idleTime                      = 300,

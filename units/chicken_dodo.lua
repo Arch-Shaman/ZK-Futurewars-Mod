@@ -37,7 +37,6 @@ return {
 		noChaseCategory       = "SHIP FIXEDWING SATELLITE GUNSHIP",
 		objectName            = "chicken_dodo.s3o",
 		onoffable             = true,
-		power                 = 270,
 		reclaimable           = false,
 		selfDestructAs        = "DODO_DEATH",
 		script                = "chicken_dodo.lua",
@@ -72,7 +71,7 @@ return {
 				soundhit = "weapon/chickens/dodo_die",
 				explosionScar = false,
 				damage = {
-					default = 2000,
+					default = 1600,
 					chicken = 50,
 				},
 				customParams = {

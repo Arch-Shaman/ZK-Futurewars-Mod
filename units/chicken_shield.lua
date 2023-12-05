@@ -34,12 +34,11 @@ return {
 		leaveTracks         = true,
 		maxSlope            = 84,
 		maxWaterDepth       = 5000,
-		buildTime           = 1600,
+		buildTime           = 2750,
 		movementClass       = "ATKBOT4",
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP SUB",
 		objectName          = "chicken_shield.s3o",
-		power               = 3150,
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
 		sfxtypes            = {
@@ -98,7 +97,7 @@ return {
 				},
 				
 				damage                  = {
-					default  = 900,
+					default  = 600,
 				},
 
 				dance                   = 120,
@@ -181,12 +180,12 @@ return {
 				shieldBadColor          = "1.0 1 0.1 1",
 				shieldGoodColor         = "0.1 1.0 0.1 1",
 				shieldInterceptType     = 3,
-				shieldPower             = 55760,
+				shieldPower             = 42380,
 				shieldPowerRegen        = 360,
 				shieldPowerRegenEnergy  = 0,
 				shieldRadius            = 550,
 				shieldRepulser          = false,	
-				shieldStartingPower     = 55760,
+				shieldStartingPower     = 42380,
 				smartShield             = true,
 				visibleShield           = false,
 				visibleShieldRepulse    = false,

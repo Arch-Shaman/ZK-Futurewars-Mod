@@ -28,12 +28,11 @@ return {
 		leaveTracks         = true,
 		maxSlope            = 84,
 		maxWaterDepth       = 5000,
-		buildTime           = 2400,
+		buildTime           = 3600,
 		movementClass       = "ATKBOT3",
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP SUB MOBILE STUPIDTARGET MINE",
 		objectName          = "chickenblobber.s3o",
-		power               = 5400,
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
 		
@@ -86,8 +85,8 @@ return {
 				},
 
 				damage                  = {
-					default = 1200,
-					planes  = 1200,
+					default = 800,
+					planes  = 800,
 				},
 
 				explosionGenerator      = "custom:goo_v2_green_large",

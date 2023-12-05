@@ -211,7 +211,7 @@ local function updateHyperevo()
 	spSetGameRulesParam("chicken_hyperevo", hyperevo)
 
 	baseHyperevo = max(techmult/hyperevoFactor, 1)
-	defenseHyperevo = 2^min(data.waveNumber * defenseEvoMult, 5) * baseHyperevo / max(0.5, data.strength)
+	defenseHyperevo = 2^min(data.waveNumber * defenseEvoMult * 0.7, 5) * baseHyperevo / max(0.5, data.strength)
 	menaceHyperevo = eular^((min(data.waveNumber - menaceStartWave, 5) * menaceScalingMult + menaceEvoMod)/ 2) * baseHyperevo
 	--spEcho("hyperuwu", hyperevo, defenseHyperevo, menaceHyperevo, queenHyperevo)
 end
@@ -630,6 +630,9 @@ local function SpawnBurrow(number)
 		local tries = 0
 		local minDist = minBaseDistance
 		local maxDist = maxBaseDistance
+		local humanUnitsInVicinity = false
+		local humanUnitsInProximity = false
+		local propagate = false
 		repeat
 			x = random(spawnSquare, Game.mapSizeX - spawnSquare)
 			z = random(spawnSquare, Game.mapSizeZ - spawnSquare)
@@ -642,9 +645,9 @@ local function SpawnBurrow(number)
 				end
 				local proximity = spGetUnitsInCylinder(x, z, minDist)
 				local vicinity = spGetUnitsInCylinder(x, z, maxDist)
-				local humanUnitsInVicinity = false
-				local humanUnitsInProximity = false
-				local propagate = false
+				humanUnitsInVicinity = false
+				humanUnitsInProximity = false
+				propagate = false
 				for j=1, #vicinity, 1 do
 					if (spGetUnitTeam(vicinity[j]) ~= chickenTeamID) then
 						humanUnitsInVicinity = true
@@ -675,6 +678,8 @@ local function SpawnBurrow(number)
 				minDist = minDist * 0.999
 			end
 		until (blocking == 2 or tries > maxTries)
+
+		spEcho("[chicken_handler.lua] Spawning roost at ("..x..", "..y..", "..z..") after "..tries.." tries. humanUnitsInProximity: "..tostring(humanUnitsInProximity)..", humanUnitsInVicinity: "..tostring(humanUnitsInVicinity)..", propagate: "..tostring(propagate)..", minDist: "..tostring(minDist))
 
 		unitID = spCreateUnit(applyHyperevo(burrowName, defenseHyperevo, 0, 15), x, y, z, "n", chickenTeamID)
 		data.burrows[unitID] = {targetID = unitID, targetDistance = 100000, defenses = 0, defenseDelta = min(random(), 0.9), spawnedMenace = false}
@@ -911,14 +916,15 @@ local function Wave(waveMult)
 
 	local chickens = ChooseChicken(nil)
 	local burrowCount = SetCount(data.burrows)
-	local waveCost = (0.005*sqrt(time))*chickenMult*(0.5+#chickens/2) * 0.01
+	local waveCost = (0.003*sqrt(time))*chickenMult*(0.5+#chickens/2) * 0.01
 		+ min(totalhumanValue, 1000000)*waveSizePerValue * 0.01
 		+ waveSizePerPlayer*#humanTeams
 	waveCost = waveCost * waveMult * sqrt(waveSizeMult)
 	
 	local totalPower = 0
 	for _, entry in pairs(chickens) do
-		totalPower = totalPower +  UnitDefNames[entry[1]].power * entry[2]
+		--totalPower = totalPower +  UnitDefNames[entry[1]].power * entry[2]
+		totalPower = totalPower +  UnitDefNames[entry[1]].buildTime * entry[2]
 	end
 	local totalSpawns = (waveCost/totalPower + 0.01/#chickens)
 	

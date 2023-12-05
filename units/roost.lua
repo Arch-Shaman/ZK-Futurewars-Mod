@@ -17,7 +17,7 @@ return {
 		explodeAs         = "NOWEAPON",
 		footprintX        = 3,
 		footprintZ        = 3,
-		health            = 5200,
+		health            = 4200,
 		iconType          = "special",
 		idleAutoHeal      = 20,
 		idleTime          = 300,

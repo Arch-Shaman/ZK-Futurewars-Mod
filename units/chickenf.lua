@@ -30,17 +30,16 @@ return {
 		floater             = true,
 		footprintX          = 1,
 		footprintZ          = 1,
-		health              = 9400,
+		health              = 7400,
 		iconType            = "chickenf",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
 		leaveTracks         = true,
 		maxSlope            = 18,
-		buildTime           = 600,
+		buildTime           = 750,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE STUPIDTARGET MINE",
 		objectName          = "chickenf.s3o",
-		power               = 1050,
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
 
@@ -85,7 +84,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 4200,
+					default = 3000,
 				},
 
 				explosionGenerator      = "custom:100rlexplode",

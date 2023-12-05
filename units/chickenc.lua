@@ -23,19 +23,18 @@ return {
 		explodeAs           = "NOWEAPON",
 		footprintX          = 3,
 		footprintZ          = 3,
-		health              = 9400,
+		health              = 7800,
 		iconType            = "chickenc",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
 		leaveTracks         = true,
 		maxSlope            = 84,
 		waterline           = 22,
-		buildTime           = 525,
+		buildTime           = 625,
 		movementClass       = "ATKBOT3",
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP STUPIDTARGET",
 		objectName          = "chickenc.s3o",
-		power               = 750,
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
 
@@ -79,7 +78,7 @@ return {
 				craterMult              = 0,
 
 				damage                  = {
-					default = 650,
+					default = 540,
 				},
 
 				explosionGenerator      = "custom:goo_v2_green",

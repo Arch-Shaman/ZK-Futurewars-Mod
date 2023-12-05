@@ -24,7 +24,7 @@ return {
 		explodeAs           = "NOWEAPON",
 		footprintX          = 4,
 		footprintZ          = 4,
-		health              = 31770,
+		health              = 24430,
 		iconType            = "chickena",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
@@ -33,12 +33,11 @@ return {
 		maxWaterDepth       = 5000,
 		metalCost           = 0,
 		energyCost          = 0,
-		buildTime           = 980,
+		buildTime           = 1270,
 		movementClass       = "ATKBOT4",
 		noAutoFire          = false,
 		noChaseCategory     = "SHIP SWIM FLOAT TERRAFORM FIXEDWING SATELLITE GUNSHIP MINE",
 		objectName          = "chickena.s3o",
-		power               = 1660,
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
 
@@ -79,9 +78,12 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 
+				customParams = {
+					armorpiercing = 0.15,
+				},
+
 				damage                  = {
-					default = 6200.1,
-					armorpiercing = 0.1,
+					default = 4700.1,
 				},
 
 				explosionGenerator      = "custom:NONE",
