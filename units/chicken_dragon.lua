@@ -38,18 +38,18 @@ return {
 		idleAutoHeal           = 100,
 		idleTime               = 300,
 		leaveTracks            = true,
-		health                 = 234000,
+		health                 = 144000,
 		maxSlope               = 36,
 		speed                  = 93,
 		metalCost              = 0,
 		energyCost             = 0,
-		buildTime              = 15500,
+		buildTime              = 10500,
 		minCloakDistance       = 225,
 		movementClass          = "ATKBOT4",
 		noAutoFire             = false,
 		noChaseCategory        = "TERRAFORM SATELLITE FIXEDWING GUNSHIP STUPIDTARGET MINE",
 		objectName             = "chicken_dragon.s3o",
-		power                  = 15500,
+		power                  = 10500,
 		reclaimable            = false,
 		script                 = "chicken_dragon.cob",
 		selfDestructAs         = "SMALL_UNITEX",
@@ -136,7 +136,7 @@ return {
 				},
 
 				damage                  = {
-					default = 500,
+					default = 300,
 				},
 
 				explosionGenerator      = "custom:goo_v2_green_large",
@@ -239,8 +239,8 @@ return {
 				},
 				
 				damage                  = {
-					default = 150,
-					planes  = 150,
+					default = 100,
+					planes  = 100,
 				},
 
 				dance                   = 90,
@@ -287,8 +287,8 @@ return {
 				},
 				
 				damage                  = {
-					default = 150,
-					planes  = 150,
+					default = 100,
+					planes  = 100,
 				},
 
 				dance                   = 90,
@@ -337,7 +337,7 @@ return {
 				},
 				
 				damage                  = {
-					default  = 900,
+					default  = 500,
 				},
 
 				dance                   = 120,

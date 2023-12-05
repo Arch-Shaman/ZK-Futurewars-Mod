@@ -26,7 +26,7 @@ local function genChix(name, step, chix)
 		params.model_rescale = (params.model_rescale or 1) * (1 + step/10)
 	end
 	chix.health = chix.health * hpMult
-	chix.power = chix.power * mult
+	chix.power = (chix.power or chix.buildtime) * mult
 	chix.buildtime = chix.buildtime * mult
 	if chix.speed then
 		chix.speed = chix.speed * rangeMult

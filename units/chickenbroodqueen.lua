@@ -55,7 +55,7 @@ return {
 		explodeAs           = "SMALL_UNITEX",
 		footprintX          = 4,
 		footprintZ          = 4,
-		health              = 84000,
+		health              = 32800,
 		iconType            = "chickenminiq",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
@@ -64,12 +64,12 @@ return {
 		maxWaterDepth       = 22,
 		metalCost           = 0,
 		energyCost          = 0,
-		buildTime           = 15500,
+		buildTime           = 10500,
 		movementClass       = "ATKBOT4",
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP STUPIDTARGET MINE",
 		objectName          = "chickenbroodqueen.s3o",
-		power               = 15500,
+		power               = 10500,
 		reclaimable         = false,
 		selfDestructAs      = "SMALL_UNITEX",
 
@@ -158,7 +158,7 @@ return {
 				model                   = "chickenegggreen_big.s3o",
 				noSelfDamage            = true,
 				range                   = 1750,
-				reloadtime              = 0.5,
+				reloadtime              = 0.833,
 				smokeTrail              = true,
 				soundHit                = "weapon/missile/rapid_rocket_hit",
 				soundHitVolume          = 5,
@@ -190,8 +190,8 @@ return {
 				},
 				
 				damage                  = {
-					default = 150,
-					planes  = 150,
+					default = 100,
+					planes  = 100,
 				},
 
 				dance                   = 90,
@@ -240,8 +240,8 @@ return {
 				shieldBadColor          = "1.0 1 0.1 1",
 				shieldGoodColor         = "0.1 1.0 0.1 1",
 				shieldInterceptType     = 3,
-				shieldPower             = 35000,
-				shieldPowerRegen        = 1800,
+				shieldPower             = 84000,
+				shieldPowerRegen        = 180,
 				shieldPowerRegenEnergy  = 0,
 				shieldRadius            = 550,
 				shieldRepulser          = false,	
@@ -270,7 +270,7 @@ return {
 				},
 				
 				damage                  = {
-					default  = 900,
+					default  = 500,
 				},
 
 				dance                   = 120,
