@@ -2255,16 +2255,17 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 				txt = localization.output_decays ..":"
 			end
 			AddEntry(txt, 1, nil, color.stats_fg, nil, statschildren)
-			AddEntry(' - ' .. localization.rate .. ":", 2, numformat(math.abs(decayrate), 1) .. "%/" .. numformat(decaytime, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
 			local endperc
 			local decays
 			if decayrate > 0 then
-				txt = " - " .. localization.min_output .. ":"
+				AddEntry(localization.rate .. ":", 2, numformat(decayrate, 1) .. "%/" .. numformat(decaytime, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+				txt = localization.min_output .. ":"
 				endperc = mindecay
 				mindecay = mindecay * baseoutput
 				decays = true
 			else
-				txt = " - " .. localization.max_output .. ":"
+				AddEntry(localization.rate .. ":", 2, numformat(-decayrate, 1) .. "%/" .. numformat(decaytime, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+				txt = localization.max_output .. ":"
 				mindecay = tonumber(ud.customParams["decay_maxoutput"]) or 0
 				endperc = mindecay
 				mindecay = mindecay * baseoutput
@@ -2284,7 +2285,7 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 			timetoreach = string.format("%02d:%02d", mm, ss)
 			decayrate = math.abs(decayrate)
 			AddEntry(txt, 2, numformat(mindecay, 1), color.stats_fg, color.stats_fg, statschildren)
-			AddEntry(' - ' .. localization.time_to_reach .. ":", 2, timetoreach, color.stats_fg, color.stats_fg, statschildren)
+			AddEntry(localization.time_to_reach .. ":", 2, timetoreach, color.stats_fg, color.stats_fg, statschildren)
 		end
 	end
 	do
