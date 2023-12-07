@@ -298,7 +298,7 @@ local function GetAdjustedDropPosition(unitDefID, facing, x, z)
 		nx = x + (offsetGrid[index][1] * radius * mag)
 		nz = z + (offsetGrid[index][2] * radius * mag)
 		ny = Spring.GetGroundHeight(nx, nz)
-		canDropHere = CanUnitDropHere(unitDefID, x, y, z, facing, false)
+		canDropHere = CanUnitDropHere(unitDefID, nx, ny, nz, facing, false)
 		if not canDropHere then 
 			index = index + 1
 			if index == 9 then
