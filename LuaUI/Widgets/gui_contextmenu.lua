@@ -2255,7 +2255,7 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 				txt = localization.output_decays ..":"
 			end
 			AddEntry(txt, 1, nil, color.stats_fg, nil, statschildren)
-			AddEntry(' - ' .. localization.rate .. ":", 2, numformat(decayrate, 1) .. "%/" .. numformat(decaytime, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+			AddEntry(' - ' .. localization.rate .. ":", 2, numformat(math.abs(decayrate), 1) .. "%/" .. numformat(decaytime, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
 			local endperc
 			local decays
 			if decayrate > 0 then
