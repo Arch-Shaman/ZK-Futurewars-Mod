@@ -280,10 +280,9 @@ local offsetGrid = {
 local function CanUnitDropHere(unitDefID, x, y, z, facing, checkFeature)
 	local blocking, feature = Spring.TestBuildOrder(unitDefID, x, y, z, facing)
 	if checkFeature then
-		if blocking ~= 2 then return false end
-		return feature == nil
+		return blocking == 3 -- Recoil engine now has 3 for "free", 2 for "blocked by feature"
 	else
-		return blocking == 2
+		return blocking > 1
 	end
 end
 
