@@ -277,11 +277,21 @@ local offsetGrid = {
 	[8] = {-1, 1},
 }
 
+local function CanUnitDropHere(unitDefID, x, y, z, facing, checkFeature)
+	local blocking, feature = Spring.TestBuildOrder(unitDefID, x, y, z, facing)
+	if checkFeature then
+		if blocking ~= 2 then return false end
+		return feature == nil
+	else
+		return blocking == 2
+	end
+end
+
 local function GetAdjustedDropPosition(unitDefID, facing, x, z)
 	local radius = 16
 	local y = Spring.GetGroundHeight(x, z)
-	local result = Spring.TestBuildOrder(unitDefID, x, y, z, facing)
-	if result == 0 then return x, y, z end
+	local canDropHere = CanUnitDropHere(unitDefID, x, y, z, facing, false)
+	if canDropHere then return x, y, z end
 	local mag = 1
 	local index = 1
 	local nx, ny, nz
@@ -289,15 +299,15 @@ local function GetAdjustedDropPosition(unitDefID, facing, x, z)
 		nx = x + (offsetGrid[index][1] * radius * mag)
 		nz = z + (offsetGrid[index][2] * radius * mag)
 		ny = Spring.GetGroundHeight(nx, nz)
-		result = Spring.TestBuildOrder(unitDefID, nx, ny, nz, facing)
-		if result > 0 then 
+		canDropHere = CanUnitDropHere(unitDefID, x, y, z, facing, false)
+		if not canDropHere then 
 			index = index + 1
 			if index == 9 then
 				index = 1
 				mag = mag + 1
 			end
 		end
-	until result == 0
+	until canDropHere
 	return nx, ny, nz
 end
 
