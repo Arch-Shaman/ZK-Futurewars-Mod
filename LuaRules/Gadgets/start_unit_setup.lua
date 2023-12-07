@@ -266,44 +266,55 @@ local function GetStartPos(teamID, teamInfo, isAI)
 	return x, y, z
 end
 
-local offsetGrid = {
-	[1] = {-1, 0},
-	[2] = {-1, -1},
-	[3] = {0, -1},
-	[4] = {1, -1},
-	[5] = {1, 0},
-	[6] = {1, 1},
-	[7] = {0, 1},
-	[8] = {-1, 1},
-}
-
-local function CanUnitDropHere(unitDefID, x, y, z, facing, checkFeature)
+local function CanUnitDropHere(startBoxID, unitDefID, x, y, z, facing, checkForFeature, checkForStartBox)
+	if checkForStartBox then
+		local inBox = GG.CheckStartbox(startBoxID, x, z)
+		if not inBox then return false end
+	end
 	local blocking, feature = Spring.TestBuildOrder(unitDefID, x, y, z, facing)
-	if checkFeature then
+	if checkForFeature then
 		return blocking == 3 -- Recoil engine now has 3 for "free", 2 for "blocked by feature"
 	else
 		return blocking > 1
 	end
 end
 
-local function GetAdjustedDropPosition(unitDefID, facing, x, z)
+local function GetClosestValidSpawnSpot(teamID, unitDefID, facing, x, z)
+	local startBoxID = Spring.GetTeamRulesParam(teamID, "start_box_id")
 	local radius = 16
-	local y = Spring.GetGroundHeight(x, z)
-	local canDropHere = CanUnitDropHere(unitDefID, x, y, z, facing, false)
-	if canDropHere then return x, y, z end
+	local canDropHere = false
 	local mag = 1
-	local index = 1
+	local spiralChangeNumber = 1
+	local movesLeft = 1
+	local dir = 1 -- 1: right, 2: up, 3: left, 4 down
 	local nx, ny, nz
-	repeat
-		nx = x + (offsetGrid[index][1] * radius * mag)
-		nz = z + (offsetGrid[index][2] * radius * mag)
+	local offsetX, offsetZ = 0, 0
+	repeat -- 1 right, 1 up, 2 left, 2 down, 3 right, 3 up
+		nx = x + offsetX
+		nz = z + offsetZ
 		ny = Spring.GetGroundHeight(nx, nz)
-		canDropHere = CanUnitDropHere(unitDefID, nx, ny, nz, facing, false)
+		canDropHere = CanUnitDropHere(startBoxID, unitDefID, nx, ny, nz, facing, false, true)
 		if not canDropHere then 
-			index = index + 1
-			if index == 9 then
-				index = 1
-				mag = mag + 1
+			if movesLeft == 0 and not (mag == 8 and movesLeft == 0 and dir == 4) then 
+				spiralChangeNumber = spiralChangeNumber + 1
+				if spiralChangeNumber%3 == 0 then 
+					mag = mag + 1
+				end
+				movesLeft = mag
+				dir = dir%4 + 1
+			elseif mag == 8 and movesLeft == 0 and dir == 4 then -- abort
+				canDropHere = true 
+			else -- move to the next offset
+				if dir == 1 then
+					offsetX = offsetX + radius
+				elseif dir == 2 then
+					offsetZ = offsetZ + radius
+				elseif dir == 3 then
+					offsetX = offsetX - radius
+				elseif dir == 4 then
+					offsetZ = offsetZ - radius
+				end
+				movesLeft = movesLeft - 1
 			end
 		end
 	until canDropHere
@@ -351,7 +362,7 @@ local function SpawnStartUnit(teamID, playerID, isAI, bonusSpawn, notAtTheStartO
 		
 		-- get facing direction
 		local facing = GetFacingDirection(x, z, teamID)
-		x, y, z = GetAdjustedDropPosition(startUnit, facing, x, z) -- adjust for new location.
+		x, y, z = GetClosestValidSpawnSpot(teamID, startUnit, facing, x, z) -- adjust for new location.
 
 		if CAMPAIGN_SPAWN_DEBUG then
 			local _, aiName = Spring.GetAIInfo(teamID)
