@@ -60,14 +60,14 @@ local function ToggleState()
 	mystate = not mystate
 	if mystate and not firstVote then
 		Spring.Echo("game_message:" .. localization.want_resign_first)
-		Spring.PlaySoundFile("sounds/reply/advisor/resign_state_on.wav", 1.0)
+		Spring.PlaySoundFile("sounds/reply/advisor/resign_state_on.wav", 1.0, "userinterface")
 		firstVote = true
 	elseif mystate and firstVote then
 		Spring.Echo("game_message:" .. localization.want_resign)
-		Spring.PlaySoundFile("sounds/reply/advisor/resign_state_on.wav", 1.0)
+		Spring.PlaySoundFile("sounds/reply/advisor/resign_state_on.wav", 1.0, "userinterface")
 	else
 		Spring.Echo("game_message:" .. localization.no_resign)
-		Spring.PlaySoundFile("sounds/reply/advisor/resign_state_off.wav", 1.0)
+		Spring.PlaySoundFile("sounds/reply/advisor/resign_state_off.wav", 1.0, "userinterface")
 	end
 	--Spring.Echo("MyState: " .. tostring(mystate))
 	local n = (mystate and 1) or 0
