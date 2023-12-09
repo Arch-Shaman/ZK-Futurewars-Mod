@@ -146,7 +146,7 @@ return {
 				name                    = "Aerial Clusterbomb",
 				areaOfEffect            = 128,
 				craterBoost             = 0,
-				craterMult              = 1.3,
+				craterMult              = 0,
 				projectiles             = 8,
 				sprayAngle				= 1080,
 				explosionScar           = false,
@@ -232,6 +232,8 @@ return {
 				name                    = "Flechette",
 				areaOfEffect            = 216,
 				explosionScar           = false,
+				craterBoost             = 0,
+				craterMult              = 0,
 				customParams            = {
 					force_ignore_ground = "1",
 					light_color = "1.5 1.13 0.6",
