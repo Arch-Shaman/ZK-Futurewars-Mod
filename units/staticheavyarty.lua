@@ -92,7 +92,7 @@ return {
 				alphaDecay              = 0.7,
 				areaOfEffect            = 360,
 				craterBoost             = 0,
-				craterMult              = 3.2,
+				craterMult              = 0,
 				cegtag                  = "waketrail_small",
 				--colorMap				= "0 0.1843 0.4235  0.7294 0.04705 0.1843  0 0.125 0.3568",
 				customParams        = {
@@ -134,8 +134,8 @@ return {
 				alphaDecay              = 0.7,
 				areaOfEffect            = 0,
 				burnblow                = true,
-				craterBoost             = 0.15,
-				craterMult              = 0.3,
+				craterBoost             = 0.0,
+				craterMult              = 0.0,
 				cegtag                  = "waketrail_smallmixed",
 				customParams        = {
 					lups_noshockwave = "1",
