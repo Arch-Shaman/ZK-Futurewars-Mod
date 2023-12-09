@@ -55,6 +55,9 @@ return {
 			COR_SHIELD_SMALL = {
 				name                    = "Energy Shield",
 				craterMult              = 0,
+				customParams = {
+					shield_power_gfx_override = 3500,
+				},
 				damage                  = {
 					default = 10,
 				},

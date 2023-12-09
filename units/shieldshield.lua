@@ -62,6 +62,9 @@ return {
 		weaponDefs             = {
 			COR_SHIELD_SMALL = {
 				name                    = "Energy Shield",
+				customParams = {
+					shield_power_gfx_override = 3500,
+				},
 				damage                  = {
 					default = 10,
 				},
