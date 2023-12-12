@@ -120,11 +120,15 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+stockChickens = {
+	[4] = "chickenc",
+	[8] = "chickena",
+}
+
 chickenTechTree = {
-	{max = 1, "chicken"},
 	{max = 2, "chicken_pigeon", "chickens"}, --todo: rework chicken_drone as a jumper chicken
-	{max = 4, "chickenc", "chicken_spidermonkey", "chicken_dodo", "chickenr"},--todo: add chicken_listener as a mini-shield
-	{max = 3, "chickenwurm", "chicken_roc", "chickena",},
+	{max = 3, "chicken_spidermonkey", "chicken_dodo", "chickenr"},--todo: add chicken_listener as a mini-shield
+	{max = 2, "chickenwurm", "chicken_roc"},
 	{max = 3, "chicken_sporeshooter", "chicken_shield", "chickenf"},--todo: add chicken_leaper as an orbital strike chicken
 	{max = 2, "chickenblobber", "chicken_blimpy"},
 	{max = 1, "chicken_tiamat"},

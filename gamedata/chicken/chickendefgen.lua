@@ -78,7 +78,6 @@ for name, udef in pairs(UnitDefs) do
 		elseif params.chicken_structure then
 			maxStep = 15
 		end
-		Spring.Echo("Generating internal unitDefs for "..name)
 		local step
 		for i=minStep, maxStep do
 			local chix = CopyTable(udef, true)

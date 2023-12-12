@@ -119,18 +119,21 @@ local data = {
 	burrowsQuadfield = Spring.Utilities.QuadField(250),
 	chickens = {},
 	menaces = {},
+	
 	waveSchedule = math.huge,	-- wave spawns when this gameframe is reached
 	graceSchedule = math.huge,
 	waveActive = false,
 	waveNumber = 0,
+	waveChickens = {},
 	
 	eggDecay = {},	-- indexed by featureID, value = game second
 	targets = {},	--indexed by unitID, value = teamID
 	menacePool = {},
 
-	unlockedChickens = {{chicken = true}},
+	stockChicken = "chicken",
+	unlockedChickens = {},
 	unlockedChickensUnion = {chicken = true},
-	unlockedCount = 1,
+	unlockedCount = 0,
 	nextUnlockTime = 0,
 
 	cookery = 0,
@@ -540,8 +543,8 @@ local function Choose1Chicken(techs, tier, inter, diff)
 end
 
 local function ChooseChicken(units)
-	local chix = {}
-	local picked = {}
+	local chix = {{data.stockChicken, 1}}
+	local picked = {data.stockChicken}
 	local techs = data.unlockedChickens
 	local techNum = #techs
 	chix[#chix+1] = Choose1Chicken(techs, techNum,   units, picked, cost)
@@ -876,12 +879,13 @@ local function UpdateTech()
 	end
 	data.nextUnlockTime = data.nextUnlockTime + queenTime / chicken_totaltech * techCostMult
 	data.unlockedCount = data.unlockedCount + 1
+	if stockChickens[data.unlockedCount] then
+		data.stockChicken = stockChickens[data.unlockedCount]
+		return
+	end		
 	local techs = data.unlockedChickens
 	local tier = #techs
-	if not chickenTechTree[tier] then
-		return
-	end
-	if SetCount(techs[tier]) >= chickenTechTree[tier].max then
+	if tier == 0 or SetCount(techs[tier]) >= chickenTechTree[tier].max then
 		tier = tier + 1
 		techs[tier] = {}
 	end
@@ -912,9 +916,7 @@ local function Wave(waveMult)
 		return
 	end
 
-	UpdateTech()
-
-	local chickens = ChooseChicken(nil)
+	local chickens = data.waveChickens
 	local burrowCount = SetCount(data.burrows)
 	local waveCost = (0.003*sqrt(time))*chickenMult*(0.5+#chickens/2) * 0.01
 		+ min(totalhumanValue, 1000000)*waveSizePerValue * 0.01
@@ -1037,8 +1039,13 @@ local function waveStart()
 	spSetGameRulesParam("chicken_graceSchedule", data.graceSchedule)
 	spSetGameRulesParam("chicken_waveNumber", data.waveNumber)
 	spSetGameRulesParam("chicken_waveActive", 1)
+
 	
-	_G.chickenEventArgs = {type="waveStart", waveNumber = data.waveNumber}
+	UpdateTech()
+	data.waveChickens = ChooseChicken(nil)
+	
+	--_G.chickenEventArgs = {type="waveStart", waveNumber = data.waveNumber}
+	_G.chickenEventArgs = {type="wave", waveNumber = data.waveNumber, wave = data.waveChickens}
 	SendToUnsynced("ChickenEvent")
 	_G.chickenEventArgs = nil
 end
@@ -1128,7 +1135,7 @@ function gadget:GameStart()
 	--data.waveSchedule[gracePeriod*30] = true	-- schedule first wave
 	data.waveSchedule = gracePeriod * 30 + 42
 	spSetGameRulesParam("chicken_waveSchedule", data.waveSchedule)
-	data.nextUnlockTime = data.waveSchedule + queenTime / chicken_totaltech * techCostMult -- Yes, this is hardcoded
+	data.nextUnlockTime = data.waveSchedule + 1 -- First wave will always be just chickens
 end
 
 function gadget:GameFrame(n)

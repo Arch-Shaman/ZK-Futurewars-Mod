@@ -140,7 +140,7 @@ return {
 				soundStart              = "flamethrowerfire",
 				soundStart              = "weapon/flamethrower",
 				soundTrigger            = true,
-				sprayangle              = 2600,
+				sprayangle              = 1000,
 				texture1                = "flame",
 				thickness               = 0,
 				tolerance               = 5000,

@@ -98,7 +98,7 @@ return {
 				range                   = 3350,
 				reloadtime              = 6,
 				rgbColor                = "0.2 0.6 0.0",
-				size                    = 8,
+				size                    = 20,
 				sizeDecay               = 0,
 				soundHit                = "chickens/acid_hit",
 				soundStart              = "chickens/acid_fire",

@@ -255,12 +255,13 @@ local function WaveRow(n)
 end
 
 local function MakeLine(chicken, n)
-	if (n <= 0) then
-		return
-	end
 	local humanName = Spring.Utilities.GetHumanName(UnitDefNames[chicken])
 	local color = chickenColorSet[chicken] or ""
-	return color..humanName.." x"..n
+	if (n <= 0) then
+		return color..humanName
+	else
+		return color..humanName.." x"..n
+	end
 end
 
 function ChickenEvent(chickenEventArgs)
@@ -278,11 +279,11 @@ function ChickenEvent(chickenEventArgs)
 		end
 
 		waveMessage    = {}
-		waveCount      = waveCount + 1
-		waveMessage[1] = "Wave "..waveCount
+		waveMessage[1] = "Wave "..chickenEventArgs.waveNumber.." Incoming!"
 		
-		for i, entry in pairs(chickenEventArgs[1]) do
-			waveMessage[i+1] = MakeLine(entry[1], entry[2]) -- TODO: Localise
+		for i, entry in pairs(chickenEventArgs.wave) do
+			--waveMessage[i+1] = MakeLine(entry[1], entry[2])
+			waveMessage[i+1] = MakeLine(entry[1], 0) -- TODO: Localise
 		end
 		
 		waveTime = Spring.GetTimer()

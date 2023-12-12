@@ -52,6 +52,7 @@ local weaponDef = {
 	tolerance               = 10000,
 	turret                  = true,
 	weaponType              = "BeamLaser",
+	waterweapon             = true,
 }
 
 return name, weaponDef

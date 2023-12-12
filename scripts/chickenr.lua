@@ -157,12 +157,15 @@ function script.QueryWeapon(num)
 	return head
 end
 
-function script.AimWeapon(num, heading, pitch)	
+function script.AimWeapon(num, heading, pitch)
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
-	Turn(head, y_axis, pi+((heading-pi)/2), rad(250))
+	if heading > pi then
+		heading = heading - 2*pi
+	end
+	Turn(head, y_axis, heading/2, rad(250))
 	Turn(head, x_axis, -pitch/2, rad(200))
-	Turn(body, y_axis, pi+((heading-pi)/2), rad(250))
+	Turn(body, y_axis, heading/2, rad(250))
 	Turn(body, x_axis, -pitch/2, rad(200))
 	WaitForTurn(head, y_axis)
 	StartThread(RestoreAfterDelay)

@@ -24,6 +24,7 @@ local firepoint = piece 'firepoint'
 --linear constant 163840
 
 local rad = math.rad
+local pi = math.pi
 local bMoving, gun_1
 
 -- Signal definitions
@@ -209,10 +210,13 @@ end
 function script.AimWeapon(num, heading, pitch)
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
+	if heading > pi then
+		heading = heading - 2*pi
+	end
 	Turn(head, y_axis, heading/2, rad(250))
 	Turn(head, x_axis, -pitch/2, rad(200))
-	Turn(neck, y_axis, heading/2, rad(250))
-	Turn(neck, x_axis, -pitch/2, rad(200))
+	Turn(body, y_axis, heading/2, rad(250))
+	Turn(body, x_axis, -pitch/2, rad(200))
 	WaitForTurn(head, y_axis)
 	
 	return true
