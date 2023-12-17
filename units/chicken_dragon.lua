@@ -109,7 +109,7 @@ return {
 		weaponDefs             = {
 			GOO        = {
 				name                    = "Blob",
-				areaOfEffect            = 280,
+				areaOfEffect            = 200,
 				avoidFeature            = false,
 				avoidGround             = false,
 				burst                   = 10,
@@ -136,7 +136,7 @@ return {
 				},
 
 				damage                  = {
-					default = 300,
+					default = 250,
 				},
 
 				explosionGenerator      = "custom:goo_v2_green_large",

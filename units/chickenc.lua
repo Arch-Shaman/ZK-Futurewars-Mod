@@ -78,7 +78,7 @@ return {
 				craterMult              = 0,
 
 				damage                  = {
-					default = 540,
+					default = 420,
 				},
 
 				explosionGenerator      = "custom:goo_v2_green",

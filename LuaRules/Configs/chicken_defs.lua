@@ -81,12 +81,12 @@ burrowQueenTime = 25	-- how much killing a burrow shaves off the queen timer, se
 
 menaceEvoMod = 0
 menaceStartWave = 2
-menaceStartNum = 2
+menaceStartNum = 1
 menaceMaxNum = 2
 menaceScalingMult = 1
 
 strengthPerBurrow = 0.92	-- multiply strength by this when a burrow dies
-strengthPerSecond = 0.003	-- how much strength increases per second
+strengthPerSecond = 0.0025	-- how much strength increases per second
 
 wrathPerBurrow = 0.09	-- how much wrath increases per wave
 wrathPerSecond = 0.003	-- how much wrath increases per second
@@ -210,7 +210,7 @@ difficulties = {
 		defenseEvoMult   = 0.6,
 		maxBurrows       = 20,
 		cookeryPerSecond = 0,
-		techMult         = 1.4,
+		techCostMult     = 1.4,
 		scoreMult        = 0.2,
 	},
 	
@@ -227,15 +227,14 @@ difficulties = {
 		defenseMult      = 0.5,
 		defenseEvoMult   = 0.8,
 		specialPowers	 = {},
-		techMult          = 1.2,
+		techCostMult     = 1.2,
 		scoreMult		 = 0.35,
 	},
 
 	['Easy'] = {
 		waveSizeMult	 = 0.7,
 		defenseEvoMult   = 0.9,
-		techMult         = 1.1,
-		strengthPerSecond = 0.0025,
+		techCostMult     = 1.1,
 		menaceEvoMod     = -1,
 		defenseMult      = 0.7,
 		scoreMult		= 0.6,
@@ -246,23 +245,26 @@ difficulties = {
 
 	['Hard'] = {
 		waveSizeMult	 = 1.5,
-		techMult         = 0.9,
+		techCostMult     = 0.9,
+		strengthPerSecond = 0.003,
 		menaceEvoMod     = 1,
-		defenseMult      = 1.5,
+		defenseMult      = 1.25,
 		scoreMult   	 = 1.75,
 	},
 	
 	['Suicidal'] = {
-		waveSizeMult	 = 2,
+		waveSizeMult	 = 2.5,
 		waveDespawn      = false,
 		menaceEvoMod     = 2,
-		techMult         = 0.7,
-		defenseMult      = 2,
-		scoreMult   	 = 3,
+		techCostMult     = 0.7,
+		strengthPerSecond = 0.003,
+		defenseMult      = 1.5,
+		scoreMult   	 = 5,
 	},
 
 	['Custom'] = {
 		chickenSpawnRate = modoptions.chickenspawnrate or 350,
+		techCostMult     = (modoptions.techtimemult or 1),
 		waveSizeMult    = modoptions.wavesizemult or 1,
 		queenTime		= (modoptions.queentime or 35)*60,
 		gracePeriod		= (modoptions.graceperiod and modoptions.graceperiod * 60) or 210,

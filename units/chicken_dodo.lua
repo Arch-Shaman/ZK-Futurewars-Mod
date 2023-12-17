@@ -22,7 +22,7 @@ return {
 		explodeAs             = "DODO_DEATH",
 		footprintX            = 2,
 		footprintZ            = 2,
-		health                = 3200,
+		health                = 2000,
 		iconType              = "chickendodo",
 		idleAutoHeal          = 20,
 		idleTime              = 300,

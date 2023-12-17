@@ -77,7 +77,7 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				customParams        = {
-					timeslow_damagefactor = 2,
+					timeslow_damagefactor = 4,
 					light_camera_height = 3500,
 					light_color = "0.5 0.0 0.5",
 					light_radius = 220,
@@ -86,7 +86,7 @@ return {
 				},
 
 				damage                  = {
-					default = 500,
+					default = 300,
 				},
 				edgeeffectiveness       = 0.6,
 				explosionGenerator      = "custom:goo_v2_purple_large",
@@ -126,11 +126,11 @@ return {
 					light_radius = 0,
 					armorpiercing = 0.2,
 					isaa = ">w<",
-					combatrange = 500,
+					combatrange = 750,
 				},
 				
 				damage                  = {
-					default  = 400,
+					default  = 200,
 				},
 
 				dance                   = 120,

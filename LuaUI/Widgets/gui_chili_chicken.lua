@@ -111,7 +111,7 @@ local Font
 -- elements
 local window, labelStack, background
 local global_command_button
-local label_anger, label_next, label_strength, label_hyperevo, label_score, label_mode
+local label_anger, label_next, label_contents, label_strength, label_hyperevo, label_score
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -172,6 +172,13 @@ local function GetColorAggression(value)
 	return string.char(255,r,g,b)
 end
 
+
+local function GetColouredName(chicken)
+	local humanName = Spring.Utilities.GetHumanName(UnitDefNames[chicken])
+	local color = chickenColorSet[chicken] or ""
+	return color..humanName
+end
+
 -- gets the synced config setting for current difficulty
 local function GetDifficultyValue(value)
 	return difficulty[value] or widget[value]
@@ -185,6 +192,10 @@ local function WriteTooltipsOnce()
 		"Hive strength increases by "..("%.1f"):format(GetDifficultyValue('strengthPerSecond')*60*100).."% per minute"
 	label_anger.tooltip = "At 100% anger, the Chicken Queen will spawn and chickens will start attacking nonstop with no breaks"
 	label_score.tooltip = "Score multiplier from difficaulty: "..("%.1f"):format(GetDifficultyValue('scoreMult')*100).."%"
+
+	label_contents:SetCaption("Wave contents: " .. GetColouredName("chicken")) -- first wave is hardcoded to be chickens
+	-- Code to spawn in the longest chicken names
+	-- label_contents:SetCaption("Wave contents: " .. GetColouredName("chickena") .. ", " .. GetColouredName("chicken_sporeshooter") .. ", " .. GetColouredName("chicken_spidermonkey") .. ", " .. GetColouredName("chickenc") .. ", " .. GetColouredName("chicken_tiamat"))
 end
 
 -- done every second
@@ -211,8 +222,16 @@ local function UpdateAnger()
 		label_next:SetCaption("Wave "..(gameInfo["waveNumber"]+1).." Starts in : "..GetColor(1-timeUntil/GetDifficultyValue("gracePeriod"))..FormatTime(timeUntil))
 	end
 
+	local substr = ''
+	if eggs and speed then
+		substr = " Spd Eggs"
+	elseif eggs then
+		substr = " Eggs"
+	elseif speed then
+		substr = " Speed"
+	end
 	
-	label_score:SetCaption("Score : "..("%.1f"):format(gameInfo["score"]))
+	label_score:SetCaption("Score : " .. ("%.1f"):format(gameInfo["score"]) .. " (" .. configs.difficulties[gameInfo.difficulty] .. substr .. ")")
 end
 
 -- done every 2 seconds
@@ -236,15 +255,6 @@ local function UpdateRules()
 		end
 	end
 	
-	local substr = ''
-	if eggs and speed then
-		substr = " (Spd Eggs)"
-	elseif eggs then
-		substr = " (Eggs)"
-	elseif speed then
-		substr = " (Speed)"
-	end
-	label_mode:SetCaption("Mode: " .. configs.difficulties[gameInfo.difficulty] .. substr)
 end
 
 --------------------------------------------------------------------------------
@@ -252,16 +262,6 @@ end
 --------------------------------------------------------------------------------
 local function WaveRow(n)
 	return n*(waveFontSize+waveSpacingY)
-end
-
-local function MakeLine(chicken, n)
-	local humanName = Spring.Utilities.GetHumanName(UnitDefNames[chicken])
-	local color = chickenColorSet[chicken] or ""
-	if (n <= 0) then
-		return color..humanName
-	else
-		return color..humanName.." x"..n
-	end
 end
 
 function ChickenEvent(chickenEventArgs)
@@ -273,6 +273,16 @@ function ChickenEvent(chickenEventArgs)
 		waveMessage    = {}
 		waveMessage[1] = "Wave "..chickenEventArgs.waveNumber.." Survived..."
 		waveTime = Spring.GetTimer()
+
+		local contentsString = ""
+		for i, entry in pairs(chickenEventArgs.wave) do
+			contentsString = contentsString .. GetColouredName(entry[1])
+			if i < #chickenEventArgs.wave then
+				contentsString = contentsString .. ", "
+			end
+		end
+		
+		label_contents:SetCaption("Wave contents: " .. contentsString)
 	elseif (chickenEventArgs.type == "wave") then
 		if noWaveMessages then
 			return
@@ -282,8 +292,7 @@ function ChickenEvent(chickenEventArgs)
 		waveMessage[1] = "Wave "..chickenEventArgs.waveNumber.." Incoming!"
 		
 		for i, entry in pairs(chickenEventArgs.wave) do
-			--waveMessage[i+1] = MakeLine(entry[1], entry[2])
-			waveMessage[i+1] = MakeLine(entry[1], 0) -- TODO: Localise
+			waveMessage[i+1] = GetColouredName(entry[1]) -- TODO: Localise
 		end
 		
 		waveTime = Spring.GetTimer()
@@ -345,8 +354,8 @@ function widget:Initialize()
 	screen0 = Chili.Screen0
 	
 	--create main Chili elements
-	local labelHeight = 22
-	local fontSize = 16
+	local labelHeight = 20
+	local fontSize = 15
 	
 	window = Window:New{
 		parent = screen0,
@@ -372,7 +381,7 @@ function widget:Initialize()
 		resizeItems = false;
 		orientation   = "vertical";
 		height = 175;
-		width =  260;
+		width =  220;
 		x = 20,
 		y = 10,
 		padding = {0, 0, 0, 0},
@@ -410,6 +419,16 @@ function widget:Initialize()
 		width = "100%";
 		font = {font = panelFont, size = fontSize, shadow = true, outline = true,},
 	}
+	label_contents = Label:New{
+		parent = labelStack,
+		autosize=false;
+		align="left";
+		valign="top";
+		caption = '',
+		height = fontSize*3,
+		width = "100%";
+		font = {font = panelFont, size = fontSize, shadow = true, outline = true,},
+	}
 	label_strength = Label:New{
 		parent = labelStack,
 		autosize=false;
@@ -423,7 +442,7 @@ function widget:Initialize()
 	label_hyperevo = Label:New{
 		parent = labelStack,
 		autosize=false;
-		align="left";
+		align="right";
 		valign="center";
 		caption = '';
 		height = labelHeight,
@@ -433,20 +452,10 @@ function widget:Initialize()
 	label_score = Label:New{
 		parent = labelStack,
 		autosize=false;
-		align="left";
+		align="right";
 		valign="center";
 		caption = '';
-		height = labelHeight,
-		width = "100%";
-		font = {font = panelFont, size = fontSize, shadow = true, outline = true,},
-	}
-	label_mode = Label:New{
-		parent = labelStack,
-		autosize=false;
-		align="center";
-		valign="center";
-		caption = '',
-		height = labelHeight*2,
+		height = labelHeight*1.5,
 		width = "100%";
 		font = {font = panelFont, size = fontSize, shadow = true, outline = true,},
 	}

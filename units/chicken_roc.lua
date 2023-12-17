@@ -143,7 +143,7 @@ return {
 				},
 				
 				damage                  = {
-					default  = 500,
+					default  = 400,
 				},
 
 				dance                   = 120,

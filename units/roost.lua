@@ -71,7 +71,7 @@ return {
 				},
 				
 				damage                  = {
-					default  = 500,
+					default  = 200,
 				},
 
 				explosionGenerator      = "custom:goo_v2_blue",

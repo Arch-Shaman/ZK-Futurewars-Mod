@@ -124,7 +124,7 @@ local data = {
 	graceSchedule = math.huge,
 	waveActive = false,
 	waveNumber = 0,
-	waveChickens = {},
+	waveChickens = {{"chicken", 1}},
 	
 	eggDecay = {},	-- indexed by featureID, value = game second
 	targets = {},	--indexed by unitID, value = teamID
@@ -549,15 +549,18 @@ local function ChooseChicken(units)
 	local techNum = #techs
 	chix[#chix+1] = Choose1Chicken(techs, techNum,   units, picked, cost)
 	chix[#chix+1] = Choose1Chicken(techs, techNum-1, units, picked, cost)
-	local maxNum, maxIndex, i = 0, 1
-	for i=0, 2 do
-		if SetCount(techs[techNum - i] or {}) > maxNum then
-			maxNum = SetCount(techs[techNum - i])
-			maxIndex = techNum - i
-		end
-	end
-	chix[#chix+1] = Choose1Chicken(techs, maxIndex,  units, picked, cost)
 	chix[#chix+1] = Choose1Chicken(techs, techNum-2, units, picked, cost)
+	spEcho("Testing chicken Count: "..#chix)
+	if #chix > 2 then
+		local maxNum, maxIndex, i = 0, 1
+		for i=0, 2 do
+			if SetCount(techs[techNum - i] or {}) > maxNum then
+				maxNum = SetCount(techs[techNum - i])
+				maxIndex = techNum - i
+			end
+		end
+		chix[#chix+1] = Choose1Chicken(techs, maxIndex,  units, picked, cost)
+	end
 
 	return chix
 end
@@ -667,7 +670,7 @@ local function SpawnBurrow(number)
 
 				if tries > propagateTries then
 					data.burrowsQuadfield:Insert(-1, x, z, 1)
-					if #(data.burrowsQuadfield:GetNeighbors(-1)) > 0 then
+					if (data.burrowsQuadfield:GetNeighbors(-1)[1]) > 1 then
 						propagate = true
 					end
 					data.burrowsQuadfield:Remove(-1)
@@ -918,7 +921,7 @@ local function Wave(waveMult)
 
 	local chickens = data.waveChickens
 	local burrowCount = SetCount(data.burrows)
-	local waveCost = (0.003*sqrt(time))*chickenMult*(0.5+#chickens/2) * 0.01
+	local waveCost = (0.00328*sqrt(time))*chickenMult*(0.5+#chickens/2) * 0.01
 		+ min(totalhumanValue, 1000000)*waveSizePerValue * 0.01
 		+ waveSizePerPlayer*#humanTeams
 	waveCost = waveCost * waveMult * sqrt(waveSizeMult)
@@ -928,7 +931,7 @@ local function Wave(waveMult)
 		--totalPower = totalPower +  UnitDefNames[entry[1]].power * entry[2]
 		totalPower = totalPower +  UnitDefNames[entry[1]].buildTime * entry[2]
 	end
-	local totalSpawns = (waveCost/totalPower + 0.01/#chickens)
+	local totalSpawns = min(waveCost/totalPower + 0.01/#chickens, burrowCount * waveSizeMult * 5)
 	
 	local spawned = {}
 	for i, entry in pairs(chickens) do
@@ -939,7 +942,7 @@ local function Wave(waveMult)
 		if not menaceData.building and menaceData.def.spawns then
 			local spawnMult = menaceData.def.spawns
 			for i, entry in pairs(chickens) do
-				local chixCount = floor(totalSpawns*entry[2]*(1-spawnDeviation+2*spawnDeviation*random())*spawnMult + random())
+				local chixCount = floor(totalSpawns*entry[2]*(1-spawnDeviation+2*spawnDeviation*random())*spawnMult + random() + 1)
 				if chixCount > 0.1 then
 					SpawnChicken(menaceID, chixCount, applyHyperevo(entry[1], hyperevo, 0, 10))
 					spawned[i][2] = spawned[i][2] + chixCount
@@ -955,7 +958,7 @@ local function Wave(waveMult)
 		local actualChixCount = 0
 		local spawns = burrowSpawns * entry[2] * (1 - spawnDeviation + 2 *spawnDeviation*random())
 		for burrowID in pairs(data.burrows) do
-			local chixCount = floor(spawns + random())
+			local chixCount = floor(spawns + random() + 0.05)
 			if chixCount > 0.1 then
 				SpawnChicken(burrowID, chixCount, chix)
 				actualChixCount = actualChixCount + chixCount
@@ -1039,10 +1042,6 @@ local function waveStart()
 	spSetGameRulesParam("chicken_graceSchedule", data.graceSchedule)
 	spSetGameRulesParam("chicken_waveNumber", data.waveNumber)
 	spSetGameRulesParam("chicken_waveActive", 1)
-
-	
-	UpdateTech()
-	data.waveChickens = ChooseChicken(nil)
 	
 	--_G.chickenEventArgs = {type="waveStart", waveNumber = data.waveNumber}
 	_G.chickenEventArgs = {type="wave", waveNumber = data.waveNumber, wave = data.waveChickens}
@@ -1075,7 +1074,7 @@ local function waveEnd()
 		SpawnBurrow(burrowDiff)
 	end
 	if data.waveNumber >= menaceStartWave then
-		local wantedMenaces = min(menaceStartNum + math.floor(data.waveNumber / menaceStartWave - 0.9), menaceMaxNum)
+		local wantedMenaces = min(menaceStartNum + math.floor(data.waveNumber / menaceStartWave - 0.4), menaceMaxNum)
 		local i
 		for i=1, wantedMenaces do
 			SpawnMenace()
@@ -1084,9 +1083,12 @@ local function waveEnd()
 	if data.endgame then
 		return
 	end
+	
+	UpdateTech()
+	data.waveChickens = ChooseChicken(nil)
 	spSetGameRulesParam("chicken_waveActive", 0)
 	
-	_G.chickenEventArgs = {type="waveEnd", waveNumber = data.waveNumber}
+	_G.chickenEventArgs = {type="waveEnd", waveNumber = data.waveNumber, wave = data.waveChickens}
 	SendToUnsynced("ChickenEvent")
 	_G.chickenEventArgs = nil
 	
@@ -1135,7 +1137,6 @@ function gadget:GameStart()
 	--data.waveSchedule[gracePeriod*30] = true	-- schedule first wave
 	data.waveSchedule = gracePeriod * 30 + 42
 	spSetGameRulesParam("chicken_waveSchedule", data.waveSchedule)
-	data.nextUnlockTime = data.waveSchedule + 1 -- First wave will always be just chickens
 end
 
 function gadget:GameFrame(n)
@@ -1181,7 +1182,7 @@ function gadget:GameFrame(n)
 		end
 		incomeTechMod = incomeTechMod + #humanTeams * techPerPlayer
 		data.techTime = data.techTime + max(incomeTechMod, 0)
-		
+		UpdateTech()
 		updateHyperevo()
 
 		spSetTeamResource(chickenTeamID, "m", 10000)
