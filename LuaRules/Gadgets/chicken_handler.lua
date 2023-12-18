@@ -921,7 +921,7 @@ local function Wave(waveMult)
 
 	local chickens = data.waveChickens
 	local burrowCount = SetCount(data.burrows)
-	local waveCost = (0.00328*sqrt(time))*chickenMult*(0.5+#chickens/2) * 0.01
+	local waveCost = (0.003*sqrt(time))*chickenMult*(0.5+#chickens/2) * 0.01
 		+ min(totalhumanValue, 1000000)*waveSizePerValue * 0.01
 		+ waveSizePerPlayer*#humanTeams
 	waveCost = waveCost * waveMult * sqrt(waveSizeMult)
