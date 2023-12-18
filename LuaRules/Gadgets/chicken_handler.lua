@@ -942,7 +942,7 @@ local function Wave(waveMult)
 		if not menaceData.building and menaceData.def.spawns then
 			local spawnMult = menaceData.def.spawns
 			for i, entry in pairs(chickens) do
-				local chixCount = floor(totalSpawns*entry[2]*(1-spawnDeviation+2*spawnDeviation*random())*spawnMult + random() + 1)
+				local chixCount = floor(totalSpawns*entry[2]*(1-spawnDeviation+2*spawnDeviation*random())*spawnMult + random())
 				if chixCount > 0.1 then
 					SpawnChicken(menaceID, chixCount, applyHyperevo(entry[1], hyperevo, 0, 10))
 					spawned[i][2] = spawned[i][2] + chixCount
@@ -958,7 +958,7 @@ local function Wave(waveMult)
 		local actualChixCount = 0
 		local spawns = burrowSpawns * entry[2] * (1 - spawnDeviation + 2 *spawnDeviation*random())
 		for burrowID in pairs(data.burrows) do
-			local chixCount = floor(spawns + random() + 0.05)
+			local chixCount = floor(spawns + random())
 			if chixCount > 0.1 then
 				SpawnChicken(burrowID, chixCount, chix)
 				actualChixCount = actualChixCount + chixCount

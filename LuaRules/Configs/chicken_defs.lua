@@ -92,8 +92,8 @@ wrathPerBurrow = 0.09	-- how much wrath increases per wave
 wrathPerSecond = 0.003	-- how much wrath increases per second
 
 techCostMult = 1	-- modifies the tech cost for unlocking new chickens
-techPerIncome = 60
-techPerPlayer = -500
+techPerIncome = 30
+techPerPlayer = -300
 
 scoreMult = 1
 scoreQueenTime = 2500
