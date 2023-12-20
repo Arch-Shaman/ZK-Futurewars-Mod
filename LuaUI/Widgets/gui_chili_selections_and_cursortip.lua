@@ -17,6 +17,7 @@ end
 include("keysym.lua")
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
 include("Widgets/COFCTools/ExportUtilities.lua")
+local _, _, ammoStateInfo = VFS.Include("LuaRules/Configs/ammostateinfo.lua")
 
 local spGetMouseState = Spring.GetMouseState
 local spTraceScreenRay = Spring.TraceScreenRay
@@ -48,7 +49,6 @@ local yellow = '\255\255\255\1'
 
 local selectionTooltip
 local singleSelectionTooltip
-
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -90,6 +90,8 @@ local IMAGE = {
 	WIND_SPEED = 'LuaUI/images/windspeed.png',
 	METAL_RECLAIM = 'LuaUI/images/ibeamReclaim.png',
 	ENERGY_RECLAIM = 'LuaUI/images/energyReclaim.png',
+	NO_AMMO =  'LuaUI/images/noammo.png',
+	COMMAND_BASE = 'LuaUI/Images/Commands/',
 }
 
 local CURSOR_ERASE = 'eraser'
@@ -231,6 +233,7 @@ end
 local manualFireTimeDefs = {}
 local specialReloadDefs = {}
 local jumpReloadDefs = {}
+local ammoRequiringDefs = {}
 for unitDefID = 1, #UnitDefs do
 	local ud = UnitDefs[unitDefID]
 	local unitWeapon = (ud and ud.weapons)
@@ -244,6 +247,15 @@ for unitDefID = 1, #UnitDefs do
 	end
 	if ud.customParams.canjump then
 		jumpReloadDefs[unitDefID] = -1 --Signifies that reload time is not stored
+	end
+	if ud.customParams.reammoseconds then
+		ammoRequiringDefs[unitDefID] = true
+	end
+end
+
+for _, entry in pairs(ammoStateInfo) do
+	for key, pic in pairs(entry.texture) do
+		entry.texture[key] = IMAGE.COMMAND_BASE .. pic
 	end
 end
 
@@ -352,7 +364,7 @@ options = {
 	tooltip_opacity = {
 		name = "Opacity",
 		type = "number",
-		value = 0.8, min = 0, max = 1, step = 0.01,
+		value = 0.92, min = 0, max = 1, step = 0.01,
 		update_on_the_fly = true,
 		OnChange = function(self)
 			if not tooltipWindow then
@@ -731,11 +743,18 @@ local function GetUnitShieldRegenString(unitID, ud)
 
 	-- FIXME: take energy stall into account
 	local wd = WeaponDefs[ud.shieldWeaponDef]
-	local regen = mult * (wd.customParams.shield_rate or wd.shieldPowerRegen)
-	if math.abs(math.ceil(regen) - regen) < 0.05 then
-		return " (+" .. math.ceil(regen - 0.2) .. ")"
+	local wdc = wd.customParams
+	local regen = (wdc.shield_rate_charge and Spring.GetUnitRulesParam(unitID, "shield_rate_override") and
+			math.floor(Spring.GetUnitRulesParam(unitID, "shield_rate_override")*15 + 0.5)) or
+			tonumber(wdc.shield_rate or wd.shieldPowerRegen)
+	if not wd.customParams.slow_immune then
+		regen = mult * regen
 	end
-	return " (+" .. strFormat("%+.1f", regen) .. ")"
+	local sign = (regen >= 0) and "+" or ""
+	if math.abs(math.ceil(regen) - regen) < 0.05 then
+		return " (" .. sign .. math.ceil(regen - 0.2) .. ")"
+	end
+	return " (" .. sign .. strFormat("%+.1f", regen) .. ")"
 end
 
 local function IsUnitInLos(unitID)
@@ -748,6 +767,21 @@ local function IsUnitInLos(unitID)
 	end
 	local state = Spring.GetUnitLosState(unitID)
 	return state and state.los
+end
+
+local function GetUnitNeedRearm(unitID, unitDefID)
+	if not ammoRequiringDefs[unitDefID] then
+		return false
+	end
+	local reammoState = (spGetUnitRulesParam(unitID, "noammo") or 0)
+	return reammoState == 1 or reammoState == 2
+end
+
+local function GetUnitAmmoPic(unitID, unitDefID)
+	if not ammoStateInfo[unitDefID] then
+		return
+	end
+	return ammoStateInfo[unitDefID].texture[spGetUnitRulesParam(unitID, "ammostate")+1]
 end
 
 local function GetManualFireReload(unitID, unitDefID)
@@ -830,7 +864,7 @@ local function GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mou
 			local finalBaseIncome = WG.mouseoverMexIncome * mult * econDef.mex
 			local extraText = ", ".. WG.Translate("interface", "income") .. " +" .. math.round(finalBaseIncome, 2)
 			if WG.mouseoverMexIncome > 0 then
-				return extraText .. "\n" .. WG.Translate("interface", "base_payback") .. ": " .. SecondsToMinutesSeconds(econDef.cost / (WG.mouseoverMexIncome * mult))
+				return extraText .. "\n" .. WG.Translate("interface", "base_payback") .. ": " .. SecondsToMinutesSeconds(econDef.cost / finalBaseIncome)
 			else
 				return extraText .. "\n" .. WG.Translate("interface", "base_payback") .. ": " .. WG.Translate("interface", "never")
 			end
@@ -985,13 +1019,18 @@ local function SelectionsIconClick(button, unitID, unitList, unitDefID)
 	local newSelectedUnits
 	
 	if (button == 3) then
-		if shift then
-			--// deselect a whole unitdef block
+		if alt or shift then
+			--// deselect whole block, or half if alt is held
+			local toDeselect = #unitList
+			if alt then
+				toDeselect = math.floor(toDeselect / 2)
+			end
 			newSelectedUnits = {}
 			local j = 1
 			for i = 1, #selectedUnitsList do
-				if unitList[j] and selectedUnitsList[i] == unitList[j] then
+				if toDeselect > 0 and unitList[j] and selectedUnitsList[i] == unitList[j] then
 					j = j + 1
+					toDeselect = toDeselect - 1
 				else
 					newSelectedUnits[#newSelectedUnits + 1] = selectedUnitsList[i]
 				end
@@ -1011,15 +1050,26 @@ local function SelectionsIconClick(button, unitID, unitList, unitDefID)
 	elseif button == 1 then
 		if ctrl then
 			ctrlFilterUnits = ctrlFilterUnits or {}
-			if shift then
-				for i = 1, #unitList do
+			if shift or alt then
+				local toSelect = #unitList
+				if alt then
+					toSelect = math.ceil(toSelect / 2)
+				end
+				for i = 1, toSelect do
 					ctrlFilterUnits[#ctrlFilterUnits + 1] = unitList[i]
 				end
 			else
 				ctrlFilterUnits[#ctrlFilterUnits + 1] = unitID
 			end
 		else
-			if shift then
+			if alt then
+				local toSelect = math.ceil(#unitList / 2)
+				newSelectedUnits = {}
+				for i = 1, toSelect do
+					newSelectedUnits[#newSelectedUnits + 1] = unitList[i]
+				end
+				spSelectUnitArray(newSelectedUnits)
+			elseif shift then
 				spSelectUnitArray(unitList) -- select all
 			else
 				spSelectUnitArray({unitID})  -- only 1
@@ -1046,9 +1096,8 @@ local function GetFeatureDisplayAttributes(featureDefID)
 		return cacheFeatureTooltip[featureDefID], cacheFeatureUnitDefID[featureDefID]
 	end
 	local fd = FeatureDefs[featureDefID]
-
 	
-	local featureName = (fd and fd.name)
+	local featureName = fd and fd.name
 	local unitName
 	if fd and fd.customParams and fd.customParams.unit then
 		unitName = fd.customParams.unit
@@ -1136,6 +1185,40 @@ local function GetBarWithImage(parentControl, name, initY, imageFile, color, col
 	end
 	
 	return UpdateBar
+end
+
+local function GetImage(parentControl, name, initY, imageFile, iconSize, xOffset)
+	iconSize = iconSize or ICON_SIZE
+	xOffset = xOffset or 0
+	
+	local image = Chili.Image:New{
+		name = name .. "_image",
+		x = xOffset,
+		y = initY,
+		width = iconSize,
+		height = iconSize,
+		file = imageFile,
+		parent = parentControl,
+	}
+	image:SetVisibility(false)
+	
+	local function Update(visible, newImage, yPos)
+		image:SetVisibility(visible)
+		if not visible then
+			return
+		end
+		if yPos then
+			image:SetPos(nil, yPos, nil, nil, nil, true)
+			label:SetPos(nil, yPos + textOffset, nil, nil, nil, true)
+		end
+		if newImage ~= imageFile then
+			imageFile = newImage
+			image.file = imageFile
+			image:Invalidate()
+		end
+	end
+	
+	return Update
 end
 
 local function GetImageWithText(parentControl, name, initY, imageFile, caption, fontSize, iconSize, textOffset, xOffset)
@@ -1320,6 +1403,7 @@ local function GetUnitGroupIconButton(parentControl)
 	local unitID
 	local unitList
 	local unitCount
+	local unitpicBadge1Update, unitpicBadge2Update
 	
 	local size = options.uniticon_size.value
 	
@@ -1390,6 +1474,20 @@ local function GetUnitGroupIconButton(parentControl)
 			elseif jumpBar then
 				jumpBar:SetVisibility(false)
 			end
+			local needRearm = GetUnitNeedRearm(unitID, unitDefID)
+			if needRearm and (not unitpicBadge1Update) then
+				unitpicBadge1Update = GetImage(unitImage, "costInfoUpdate", 4, IMAGE.NO_AMMO, ICON_SIZE, 4)
+			end
+			local ammoPic = GetUnitAmmoPic(unitID, unitDefID)
+			if ammoPic and (not unitpicBadge2Update) then
+				unitpicBadge2Update = GetImage(unitImage, "ammoPicInfoUpdate", size*0.8 - 4 - ICON_SIZE*1.3, ammoPic, ICON_SIZE*1.3, size - ICON_SIZE*1.3 - 4	)
+			end
+			if unitpicBadge1Update then
+				unitpicBadge1Update(needRearm, IMAGE.NO_AMMO)
+			end
+			if unitpicBadge2Update then
+				unitpicBadge2Update(true, ammoPic)
+			end
 			return
 		end
 		
@@ -1398,6 +1496,12 @@ local function GetUnitGroupIconButton(parentControl)
 		end
 		if jumpBar then
 			jumpBar:SetVisibility(false)
+		end
+		if unitpicBadge1Update then
+			unitpicBadge1Update(false)
+		end
+		if unitpicBadge2Update then
+			unitpicBadge2Update(false)
 		end
 		
 		local totalHealth, totalMax = 0, 0
@@ -1794,7 +1898,6 @@ local function GetMultiUnitInfoPanel(parentControl)
 			local unitDefID = spGetUnitDefID(unitID) or 0
 			local byDefID = displayUnitsByDefID[unitDefID] or {}
 			byDefID[#byDefID + 1] = unitID
-			displayUnitsByDefID[unitDefID] = byDefID
 			if not unitDefAdded[unitDefID] then
 				selectionSortOrder[#selectionSortOrder + 1] = unitDefID
 				unitDefAdded[unitDefID] = true
@@ -1904,8 +2007,10 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 	local energyInfoUpdate = GetImageWithText(leftPanel, "energyInfoUpdate", PIC_HEIGHT + 2*LEFT_SPACE + 4, IMAGE.ENERGY, nil, nil, ICON_SIZE, 4)
 	local maxHealthLabel = GetImageWithText(rightPanel, "maxHealthLabel", PIC_HEIGHT + 4, IMAGE.HEALTH, nil, NAME_FONT, ICON_SIZE, 2, 2)
 	
-	local minWindLabel = GetImageWithText(leftPanel, "minWindLabel", PIC_HEIGHT + LEFT_SPACE + 4, IMAGE.WIND_SPEED, nil, nil, ICON_SIZE, 4)	
+	local minWindLabel = GetImageWithText(leftPanel, "minWindLabel", PIC_HEIGHT + LEFT_SPACE + 4, IMAGE.WIND_SPEED, nil, nil, ICON_SIZE, 4)
 	local healthBarUpdate = GetBarWithImage(rightPanel, "healthBarUpdate", PIC_HEIGHT + 4, IMAGE.HEALTH, {0, 1, 0, 1}, GetHealthColor)
+	local unitpicBadge1Update = GetImage(unitImage, "costInfoUpdate", 4, IMAGE.NO_AMMO, ICON_SIZE, 4)
+	local unitpicBadge2Update = GetImage(unitImage, "ammoPicInfoUpdate", PIC_HEIGHT - 4 - ICON_SIZE*1.3, IMAGE.NO_AMMO, ICON_SIZE*1.3, LEFT_WIDTH - ICON_SIZE*1.3 - 4)
 	
 	local metalInfo
 	local energyInfo
@@ -2003,6 +2108,10 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		if dynamicTooltipDefs[unitDefID] then
 			unitDesc:SetText(GetDescription(ud, unitID))
 		end
+		
+		unitpicBadge1Update(GetUnitNeedRearm(unitID, unitDefID), IMAGE.NO_AMMO)
+		local ammoPic = GetUnitAmmoPic(unitID, unitDefID)
+		unitpicBadge2Update(ammoPic, ammoPic)
 		
 		UpdateReloadTime(unitID, unitDefID)
 		
@@ -2775,12 +2884,24 @@ function widget:Initialize()
 		singleSelectionTooltip = "\n" ..
 			green .. WG.Translate("interface", "lmb") .. ": " .. "Center view" .. "\n" ..
 			green .. WG.Translate("interface", "space_click_show_stats")
+		--selectionTooltip = "\n" ..
+		--	green .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "select") .. "\n" ..
+		--	green .. WG.Translate("interface", "rmb") .. ": " .. WG.Translate("interface", "deselect") .. "\n" ..
+		--	green .. WG.Translate("interface", "shift") .. "+" .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "select_type") .. "\n" ..
+		--	green .. WG.Translate("interface", "shift") .. "+" .. WG.Translate("interface", "rmb") .. ": " .. WG.Translate("interface", "deselect_type") .. "\n" ..
+		--	green .. WG.Translate("interface", "alt") .. "+" .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "select_type_half") .. "\n" ..
+		--	green .. WG.Translate("interface", "alt") .. "+" .. WG.Translate("interface", "rmb") .. ": " .. WG.Translate("interface", "deselect_type_half") .. "\n" ..
+		--	green .. WG.Translate("interface", "ctrl") .. "+" .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "defer_selection") .. "\n" ..
+		--	green .. WG.Translate("interface", "mmb") .. ": " .. WG.Translate("interface", "go_to") .. "\n" ..
+		--	green .. WG.Translate("interface", "space_click_show_stats")
+
 		selectionTooltip = "\n" ..
-			green .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "select") .. "\n" ..
-			green .. WG.Translate("interface", "rmb") .. ": " .. WG.Translate("interface", "deselect") .. "\n" ..
-			green .. WG.Translate("interface", "shift") .. "+" .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "select_type") .. "\n" ..
-			green .. WG.Translate("interface", "shift") .. "+" .. WG.Translate("interface", "rmb") .. ": " .. WG.Translate("interface", "deselect_type") .. "\n" ..
-			green .. WG.Translate("interface", "mmb") .. ": " .. WG.Translate("interface", "go_to") .. "\n" ..
+			green .. WG.Translate("interface", "lmb")   .. ": " .. WG.Translate("interface", "select") .. "\n" ..
+			green .. WG.Translate("interface", "rmb")   .. ": " .. WG.Translate("interface", "deselect") .. "\n" ..
+			green .. "+ " .. WG.Translate("interface", "shift") .. ": " .. WG.Translate("interface", "select_type") .. "\n" ..
+			green .. "+ " .. WG.Translate("interface", "alt")   .. ": " .. WG.Translate("interface", "select_type_half") .. "\n" ..
+			green .. "+ " .. WG.Translate("interface", "ctrl")  .. ": " .. WG.Translate("interface", "defer_selection") .. "\n" ..
+			green .. WG.Translate("interface", "mmb")   .. ": " .. WG.Translate("interface", "go_to") .. "\n" ..
 			green .. WG.Translate("interface", "space_click_show_stats")
 
 		unitSelectionTooltipCache = {}
