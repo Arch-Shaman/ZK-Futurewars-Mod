@@ -49,8 +49,9 @@ local osClock               = os.clock
 
 local briefing, lastWrittenVersion = VFS.Include("LuaUI/Configs/briefing.lua")
 local writeVersion
-local showBriefing = false
+local showBriefing = true
 
+--[[
 do
 	local configLocation = "luaui\\config\\fw_patchnotes.lua"
 	local gameVersion = Game.gameVersion
@@ -80,12 +81,13 @@ do
 		writeVersion = thisVersion
 	end
 end
+]]--
 
 local Chili
 
 local myAllyTeamID = Spring.GetMyAllyTeamID()
 
-local briefingWindow
+local briefingWindow, supportButton, discordButton
 
 ----------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------
@@ -122,10 +124,10 @@ local function GetUnitTooltip(udef)
 end
 
 local function WriteVersionToFile()
-	local file = io.open(configLocation, "w")
-	file:write("return " .. "\"" .. writeVersion .. "\"\n")
-	file:flush()
-	file:close()
+--	local file = io.open(configLocation, "w")
+--	file:write("return " .. "\"" .. writeVersion .. "\"\n")
+--	file:flush()
+--	file:close()
 end
 
 
@@ -203,8 +205,6 @@ local function GetNewTextHandler(parentControl, paragraphSpacing, imageSize)
 end
 
 local function InitializeBriefingWindow()
-	local planetInformation = Spring.Utilities.CustomKeyToUsefulTable(Spring.GetModOptions().planetmissioninformationtext) or {}
-	
 	local BRIEF_WIDTH = 720
 	local BRIEF_HEIGHT = 680
 	
@@ -274,8 +274,8 @@ local function InitializeBriefingWindow()
 	--briefingWindow:SetPos(nil, finalPosition, nil, totalSize)
 	
 	Chili.Button:New{
-		x = "38%",
-		right = "38%",
+		x = "20%",
+		right = "55%",
 		bottom = 10,
 		height = 60,
 		caption = WG.Translate("interface", "menu_close"),
@@ -283,6 +283,37 @@ local function InitializeBriefingWindow()
 		OnClick = {
 			function ()
 				externalFunctions.Hide()
+			end
+		},
+		parent = briefingWindow
+	}
+	
+	supportButton = Chili.Button:New{
+		x = "45%",
+		right = "20%",
+		bottom = 10,
+		height = 30,
+		caption = WG.Translate("briefing", "support_fw"),
+		fontsize = 20,
+		OnClick = {
+			function ()
+				Spring.SetClipboard ("")
+				supportButton:SetCaption(WG.Translate("briefing", "link_copied"))
+			end
+		},
+		parent = briefingWindow
+	}
+	discordButton = Chili.Button:New{
+		x = "45%",
+		right = "20%",
+		bottom = 40,
+		height = 30,
+		caption = WG.Translate("briefing", "join_discord"),
+		fontsize = 20,
+		OnClick = {
+			function ()
+				Spring.SetClipboard("https://discord.com/invite/GMUnRGUuSy")
+				discordButton:SetCaption(WG.Translate("briefing", "link_copied"))
 			end
 		},
 		parent = briefingWindow
@@ -341,8 +372,8 @@ end
 
 function widget:GameStart()
 	if briefingWindow then
-		briefingWindow.Dispose()
+		--briefingWindow.Dispose()
 		--WriteVersionToFile()
-		widgetHandler:RemoveWidget(self)
+		--widgetHandler:RemoveWidget(self)
 	end
 end

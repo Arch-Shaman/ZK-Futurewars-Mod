@@ -1,5 +1,8 @@
 {
 	"update_header" : "Minor update 0.38.11: Tech Debt Writeoff",
+	"support_fw" : "Support Future Wars!",
+	"join_discord" : "Join our Discord",
+	"link_copied" : "Link copied to clipboard",
 	"shameless_plug" : "If you enjoy Future Wars and want to contribute your feedback to the project or have a chat with fellow players, consider joining our discord: https://discord.com/invite/GMUnRGUuSy or join #fw in the zk server. We are currently looking for ideas, graphical artists, and translators to contribute to the project, giving us a fresh coat of paint.",
 	"entry_1" : "Happy third birthday, Future Wars! In this belated birthday gift to you, we have paid some of our technical debt off. What this means is backend things got updated (Zero-K Had a lot of progress on some things we have not been able to keep up with). Some balance feedback has also been addressed.",
 	"entry_2" : "You may notice your display rank in-game has changed. Future Wars has adopted a new rank display system that separates players into 300 WHR 'leagues' starting at 1100 WHR. Developers now have rainbow stars, to help differentiate them from normal players.",
