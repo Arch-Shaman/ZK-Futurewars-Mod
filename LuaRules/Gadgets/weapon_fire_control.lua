@@ -142,6 +142,16 @@ local function GetBonusFirerate(unitID, weaponNum)
 	end
 end
 
+local function ClearBonusFirerate(unitID)
+	local data = IterableMap.Get(units, unitID)
+	if not data then
+		return
+	end
+	for _, weapon in pairs(data.weapons) do
+		weapon.currentbonus = 0
+	end
+end
+
 local function ForceAddUnit(unitID, weaponNum, origReload, bonus, reductionframes, reduction, framesuntilreduction, maxbonus, currentbonus)
 	if debugMode then
 		spEcho("ForceAddUnit: " .. unitID .. ", " .. weaponNum)
@@ -174,7 +184,7 @@ local function ForceAddUnit(unitID, weaponNum, origReload, bonus, reductionframe
 	forcerecycle[unitID] = true
 end
 
-GG.FireControl = {WeaponFired = WeaponFired, CanFireWeapon = CanFireWeapon, GetBonusFirerate = GetBonusFirerate, ForceAddUnit = ForceAddUnit}
+GG.FireControl = {WeaponFired = WeaponFired, CanFireWeapon = CanFireWeapon, GetBonusFirerate = GetBonusFirerate, ClearBonusFirerate = ClearBonusFirerate, ForceAddUnit = ForceAddUnit}
 
 function gadget:GameFrame(f)
 	for unitID, data in IterableMap.Iterator(units) do

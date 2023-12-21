@@ -117,6 +117,8 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 			if cfg.resetMomentum then
 				spSetUnitVelocity(proOwnerID, 0, 0, 0)
 			end
+
+			GG.FireControl.ClearBonusFirerate(proOwnerID)
 			GG.PlayFogHiddenSound(cfg.sound, 10, x, y, z)
 		else
 			local weaponNum = overrides[proOwnerID] or cfg.weaponID

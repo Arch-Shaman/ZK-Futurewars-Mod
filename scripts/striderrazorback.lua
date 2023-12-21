@@ -284,13 +284,13 @@ function script.QueryWeapon(num)
 		return flareb
 	elseif num == 3 then
 		return emit
-	else -- shield
+	else -- shield or microrift
 		return body
 	end
 end
 
 function script.AimWeapon(num, heading, pitch)
-	if num == 4 then -- shield
+	if num == 4 or num == 5 then -- shield or microrift
 		return true
 	elseif num == 3 then -- secondary laser thingy
 		Signal(SIG_AIM2)
