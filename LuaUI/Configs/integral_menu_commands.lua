@@ -36,6 +36,7 @@ local cmdPosDef = {
 	[CMD_NEWTON_FIREZONE]      = {pos = 7, priority = -3},
 	
 	[CMD.MANUALFIRE]      = {pos = 7, priority = 0.1},
+	[CMD_AIR_MANUALFIRE]  = {pos = 7, priority = 0.12},
 	[CMD_PLACE_BEACON]    = {pos = 7, priority = 0.2},
 	[CMD_ONECLICK_WEAPON] = {pos = 7, priority = 0.24},
 	[CMD.STOCKPILE]       = {pos = 7, priority = 0.25},
@@ -129,7 +130,7 @@ local factoryUnitPosDef = {
 		dynsupport0 = unitTypes.CONSTRUCTOR,
 		dynrecon0 = unitTypes.RAIDER,
 		dynassault0 = unitTypes.SKIRMISHER,
-		dynstrike0 = unitTypes.ASSAULT, -- move to ASSAULT when riot comm is added.
+		dynstrike0 = unitTypes.ASSAULT,
 		dynriot0 = unitTypes.RIOT,
 	},
 	factorycloak = {
@@ -365,9 +366,9 @@ local special_commands = {
 	staticarty        = {order = 2, row = 2, col = 1},
 	staticheavyarty   = {order = 3, row = 2, col = 2},
 	staticnuke        = {order = 4, row = 2, col = 3},
-	zenith            = {order = 5, row = 2, col = 4},
-	raveparty         = {order = 6, row = 2, col = 5},
-	mahlazer          = {order = 7, row = 2, col = 6},
+	raveparty         = {order = 5, row = 2, col = 4},
+	mahlazer          = {order = 6, row = 2, col = 5},
+	zenith            = {order = 7, row = 2, col = 6},
 	[CMD_RAMP]        = {order = 16, row = 3, col = 1},
 	[CMD_LEVEL]       = {order = 17, row = 3, col = 2},
 	[CMD_RAISE]       = {order = 18, row = 3, col = 3},

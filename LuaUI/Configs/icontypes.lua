@@ -150,6 +150,12 @@ local icontypes = {
 		bitmap='icons/bomb.dds',
 		size=1.6,
 	},
+	
+	-- Deployables
+	deployablesupport = {
+		bitmap='icons/deployablesupport.dds',
+		size=1.6,
+	},
 
 	--------------------------------------------------------------------------------
 	-- CURRENT ICONS
@@ -792,7 +798,23 @@ local icontypes = {
 		bitmap='icons/mobiletachyon.dds',
 		size=2.3,
 	},
-
+	-- drones --
+	droneraid = {
+		bitmap='icons/droneraider.dds',
+		size=1.3,
+	},
+	dronecon = {
+		bitmap='icons/dronecon.dds',
+		size=1.3,
+	},
+	droneskirm = {
+		bitmap='icons/droneskirm.dds',
+		size=1.3,
+	},
+	droneassault = {
+		bitmap='icons/droneassault.dds',
+		size=1.3,
+	},
 
 	--plane icons
 	scoutplane = {
@@ -821,6 +843,10 @@ local icontypes = {
 	},
 	bomberriot = {
 		bitmap='icons/bomberriot.dds',
+		size=2.1,
+	},
+	bombersupport = {
+		bitmap='icons/bombersupport.dds',
 		size=2.1,
 	},
 	bomberassault = {

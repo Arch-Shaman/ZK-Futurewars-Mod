@@ -309,7 +309,7 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 			GG.PlayFogHiddenSound("Jump", UnitDefs[unitDefID].mass/10, start[1], start[2], start[3])
 		end
 	else
-		CallAsUnitIfExists(unitID,env.preJump,turn,lineDist,flightDist,duration)
+		CallAsUnitIfExists(unitID,env.preJump,turn,lineDist,flightDist,duration, goal[1], goal[3], goalHeading, startHeading)
 	end
 	spSetUnitRulesParam(unitID,"jumpReload",0)
 

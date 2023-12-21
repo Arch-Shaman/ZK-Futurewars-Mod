@@ -14,7 +14,7 @@ return {
 		canPatrol           = true,
 		category            = "LAND",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "42 42 42",
+		selectionVolumeScales  = "63 63 63",
 		selectionVolumeType    = "ellipsoid",
 		corpse              = "DEAD",
 		customParams        = {
@@ -29,9 +29,9 @@ return {
 		footprintZ          = 3,
 		iconType            = "vehicleriot",
 		leaveTracks         = true,
-		maxDamage           = 1200,
+		health              = 1200,
 		maxSlope            = 18,
-		maxVelocity         = 3.1,
+		speed               = 3.1,
 		maxReverseVelocity  = 3.1,
 		maxWaterDepth       = 22,
 		movementClass       = "TANK3",
@@ -80,14 +80,14 @@ return {
 					light_radius = 10,
 					isFlak = 1,
 					blastwave_size = 10,
-					blastwave_impulse = 0.9,
+					blastwave_impulse = 0.45,
 					blastwave_speed = 3,
 					blastwave_life = 10,
 					blastwave_lossfactor = 0.88,
-					blastwave_damage = 5.25,
+					blastwave_damage = 0,
 				},
 				damage                  = {
-					default = 55.01,
+					default = 45.01,
 				},
 				edgeEffectiveness       = 0.75,
 				explosionGenerator      = "custom:impulsepop_40",
@@ -121,24 +121,17 @@ return {
 					smoothradius = "60",
 					smoothmult   = "0.08",
 					force_ignore_ground = "1",
-					numprojectiles1 = 14, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 10,
 					projectile1 = "vehriot_secondary",
-					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-6,-1,-6,6,1,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-					proxy = 0, -- check for nearby units?
-					proxydist = 100, -- how far to check for units? Default: spawndist
+					spawndist = 175,
+					velspread1 = "8.91, 1, 8.91",
 					reaim_time = 10,
 					light_camera_height = 1500,
 					light_color = "0.8 0.76 0.38",
 					light_radius = 40,
 				},
 				damage                  = {
-					default = 55*14,
+					default = 45*10,
 				},
 				edgeEffectiveness       = 0.75,
 				explosionGenerator      = "custom:FLASH64",
@@ -146,7 +139,7 @@ return {
 				impulseFactor           = 0.6,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 320,
+				range                   = 280,
 				reloadtime              = 1.6,
 				soundHit                = "weapon/clusters/cluster_light",
 				soundStart              = "weapon/cannon/cannonfire_005",

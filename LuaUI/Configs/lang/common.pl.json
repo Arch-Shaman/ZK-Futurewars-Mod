@@ -73,5 +73,10 @@
 	"roster_factoryship" : "Statki",
 	"roster_striderhub" : "Mechy",
 	"roster_staticmissilesilo" : "Rakiety taktyczne",
-	"neutral" : "Neutralny"
+	"neutral" : "Neutralny",
+	"whisper" : "user mówi ci",
+	"whisperto" : "powiedz user",
+	"specwhisper" : "user powiedział user2",
+	"addedpoint" : "user wskazane na mapie.",
+	"addedmarker": "user utworzony znacznik mapy:"
 }

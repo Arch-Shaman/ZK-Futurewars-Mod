@@ -44,6 +44,8 @@
 	"clear" : "Clear",
 	"button" : "Button",
 	"shift" : "Shift",
+	"ctrl" : "Ctrl",
+	"alt" : "Alt",
 	"health" : "Health",
 	"shields" : "Shields",
 	"value" : "Value",
@@ -52,8 +54,11 @@
 	"reloading" : "Reloading",
 	"select" : "Select",
 	"deselect" : "Deselect",
-	"select_type" : "Select type",
+	"select_type" : "Select/deselect by type",
 	"deselect_type" : "Deselect type",
+	"select_type_half" : "Select/deselect half of type",
+	"deselect_type_half" : "Deselect half",
+	"defer_selection" : "Do selection on key release",
 	"select_all" : "Select all",
 	"select_and_go_to" : "Select and go to",
 	"go_to" : "Go to",
@@ -73,5 +78,10 @@
 	"roster_factoryship" : "Ships",
 	"roster_striderhub" : "Striders",
 	"roster_staticmissilesilo" : "Missiles",
-	"neutral" : "Neutral"
+	"neutral" : "Neutral",
+	"whisper" : "user tells you",
+	"whisperto" : "You tell user",
+	"specwhisper" : "user told user2",
+	"addedpoint" : "user added point.",
+	"addedmarker": "user added marker:"
 }

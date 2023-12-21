@@ -1,0 +1,20 @@
+{
+	"update_header": "Küçük güncelleme 0.38.11: Teknik Borç Silinmesi",
+	"shameless_plug" : "Future Wars'tan hoşlanıyorsanız ve geri bildirimlerinizle projeye katkıda bulunmak veya diğer oyuncularla sohbet etmek istiyorsanız discordumuza katılmayı düşünün: https://discord.com/invite/GMUnRGUuSy veya zk'de #fw'ye katılın. Sunucu. Şu anda projeye katkıda bulunacak ve bize yeni bir kat katacak fikirler, grafik sanatçıları ve çevirmenler arıyoruz.",
+	"entry_1" : "Üçüncü yaş gününüz kutlu olsun, Gelecek Savaşları! Size bu gecikmiş doğum günü hediyesiyle, teknik borcumuzun bir kısmını ödedik. Bu, arka uç işlerinin güncellendiği anlamına geliyor (Zero-K bazı konularda çok ilerleme kaydetti) yetişemedik). Bazı denge geri bildirimleri de ele alındı.",
+	"entry_2" : "Oyun içindeki gösterim sıralamanızın değiştiğini fark edebilirsiniz. Future Wars, oyuncuları 1100 WHR'den başlayarak 300 WHR 'liglere' ayıran yeni bir sıralama görüntüleme sistemini benimsedi. Geliştiricilerin artık onları ayırt etmeye yardımcı olmak için gökkuşağı yıldızları var. normal oyunculardan.",
+	"entry_3" : "Gecikme/AFK bildirimlerinin bu yama ile düzeltildiğini umuyoruz. LuaAI'ler, ana bilgisayarın ayrılmasından etkilenmedikleri için artık AI gecikme tespit sistemine dahil edilmiyor. Ayrıca, AI gecikme tespiti yerelleştirildi. Ölüm mesajlar nihayet düzeltildi! 2016 ZK'daki kötü mizahın tadını bir kez daha tamamen yerelleştirilmiş iyilikle çıkarın.",
+	"entry_4" : "Zırh delici aygıtı optimize ettik; artık her merminin hasarını hesaplamadığı için performansı biraz artıracak. Mesaj renklendirmeyle diğer bazı küçük hatalar da düzeltildi. Oyuncular artık komutan dengeleme modu seçeneğinin doğru şekilde ayarlanması (Test için Jill_2550'ye teşekkürler!).",
+	"entry_5": "PenguinOh, FW'yi Tayland dilinde yerelleştirmeye başladı; sıkı çalışmaları için onlara teşekkür etmeyi unutmayın!",
+	"entry_6": "Ghost Commander, topluluğun yeni modüller hakkındaki geri bildirimleri nedeniyle yakın zamanda bazı zayıflatmalar aldı.",
+	"entry_7": "Sentinel, onu daha rekabetçi hale getirmek için bazı güçlendirmeler aldı. Artık etki alanı ve silahsızlanma hasarı arttı.",
+	"entry_8": "Gremlin küçük bir rol değişikliğinin yanı sıra küçük bir zayıflatma da gördü; artık daha uzun süreli DPS'yi tercih ediyor.",
+	"chicken_header" : "Oyun modu: Tavuklar",
+	"chicken_entry_1" : "Tavuklar büyük ordularla üssünüze topyekün saldırılar düzenlemek ve güçlerini yeniden toplamak için geri çekilmek arasında gidip gelecekler. Saldırılarını zayıflatmak için tavuklar dinlenirken tavuk tüneklerini yok ettiğinizden emin olun",
+	"chicken_entry_2" : "Tavuklar sonunda tehdit olarak bilinen inanılmaz güçlü tavuklar inşa etmeye başlayacaklar. Bitirmeden önce onları yok edin. Yapım aşamasındaki tehditler Raffesia'nın yok edilemez kalkanı tarafından korunur ve bu da onları topçu ateşine karşı bağışık hale getirir.",
+	"chicken_entry_3" : "Kovanın öfkesi zamanla artacak. Kovanın öfkesi %100'e ulaştığında, Tavuk Kraliçe savaş alanına gelecek (sonsuz modda değilseniz) ve tavuklar durmadan saldırmaya başlayacak. Tüm ateş gücünüzü tavuk kraliçesine odaklayın çünkü onun ölümü sürünün parçalanmasına neden olacaktır",
+	"comm_wars_header" : "Oyun modu: Komutan Savaşları",
+	"comm_wars_entry_1" : "Bu oyun modunda sadece komutanınıza erişiminiz var, başka hiçbir şeye erişiminiz yok. Komutanınız artık inşa edemez, sadece onarabilir ve geri alabilir. Komutan morph sistemi aracılığıyla daha fazla modül vererek komutanınızı yükseltin ve düşman komutanlarını yenin!",
+	"comm_wars_entry_2" : "Ek olarak, sadece komutanlara özel bir oyun modunda daha dengeli olması için birçok komutan modülünde ve silahında denge değişiklikleri yapıldı. Denge hala deneyseldir, bu nedenle geri bildirim çok takdir edilecektir",
+	"houserules" : "Ev Kuralları: "
+}

@@ -4,7 +4,7 @@
 
 return {
 	factorycomm = {
-		maxdamage = 10000,
+		health    = 10000,
 		unitname = "factorycomm",
 		name = "Commander Chassis Factory",
 		description = "Produces Commanders",
@@ -34,6 +34,7 @@ return {
 		workertime                    = 10,
 		maxSlope                      = 15,
 		maxDepth					  = 2500,
+		sightDistance    			  = 500,
 		buildoptions                  = { 		
 			"dynsupport0",
 			"dynrecon0",

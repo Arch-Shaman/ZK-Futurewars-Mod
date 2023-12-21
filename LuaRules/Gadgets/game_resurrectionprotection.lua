@@ -8,7 +8,7 @@ function gadget:GetInfo()
 		desc      = "NO BULLY.",
 		author    = "Shaman",
 		date      = "11 Elokuu 2021",
-		license   = "CC BY-NC-ND",
+		license   = "CC-0",
 		layer     = 5,
 		enabled   = true,
 	}
@@ -28,7 +28,7 @@ function gadget:AllowFeatureBuildStep(builderID, builderTeam, featureID, feature
 			protectedFeatures[featureID] = true
 		else
 			local data = IterableMap.Get(features, featureID)
-			data.timer = 10
+			data.timer = 31
 			IterableMap.Set(features, featureID, data)
 		end
 		return true

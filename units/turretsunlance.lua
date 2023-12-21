@@ -1,4 +1,4 @@
-local aimTime = 6.5*30 -- in frames
+local aimTime = 6.9*30 -- in frames
 
 return { 
 	turretsunlance = {
@@ -52,13 +52,13 @@ return {
 		weapons                       = {
 			{
 				def                = "PLASMA",
-				badTargetCategory  = "GUNSHIP FIXEDWING",
-				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP FIXEDWING",
+				badTargetCategory  = "TOOFAST",
+				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER",
 			},
 			{
 				def                = "FAKE",
-				badTargetCategory  = "GUNSHIP FIXEDWING",
-				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER GUNSHIP FIXEDWING",
+				badTargetCategory  = "TOOFAST",
+				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER",
 				slaveTo            = 1,
 			},
 		},
@@ -77,8 +77,8 @@ return {
 					burst = Shared.BURST_RELIABLE,
 					light_color = "3 2.33 1.5",
 					light_radius = 150,
-					allowedpitcherror = 0.25,
-					allowedheadingerror = 0.2,
+					allowedpitcherror = 14,
+					allowedheadingerror = 14,
 				},
 				damage                  = {
 					default = 1500.1,
@@ -86,16 +86,17 @@ return {
 				explosionGenerator      = "custom:DOT_Pillager_Explo",
 				fireTolerance           = 1820, -- 10 degrees
 				impulseBoost            = 0,
-				impulseFactor           = 0.2,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
+				myGravity				= 0.03,
 				range                   = 1970,
-				reloadtime              = 6.5,
+				reloadtime              = 0.2,
 				soundHit                = "weapon/cannon/cannonfire_004",
 				soundStart              = "weapon/cannon/sniperturret_fire",
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 880,
+				weaponVelocity          = 1600,
 			},
 			FAKE = {
 				name                    = "Fake Cannon",
@@ -118,11 +119,12 @@ return {
 				impulseFactor           = 0.2,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
+				myGravity				= 0.03,
 				range                   = 1970,
-				reloadtime              = 6.5,
+				reloadtime              = 0.2,
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 880,
+				weaponVelocity          = 1600,
 			},
 		},
 		featureDefs                   = {

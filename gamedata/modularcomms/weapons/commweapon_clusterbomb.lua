@@ -1,6 +1,6 @@
 local name = "commweapon_clusterbomb"
 local weaponDef = {
-	name                    = [[Cluster Bomb Launcher]],
+	name                    = "Cluster Bomb Launcher",
 	avoidFeature            = false,
 	avoidNeutral            = false,
 	areaOfEffect            = 160,
@@ -12,18 +12,15 @@ local weaponDef = {
 
 	customParams            = {
 		is_unit_weapon = 1,
-		miscEffectFire = [[custom:RIOT_SHELL_H]],
-		projectile1 = "commweapon_clusterbomb_secondary",
+		miscEffectFire = "custom:RIOT_SHELL_H",
 		numprojectiles1 = 8,
+		projectile1 = "commweapon_clusterbomb_secondary",
 		manualfire = 1,
-		clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-		use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-		spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
-		timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-		vradius1 = "-3,-2,-3,3,1,3", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+		spawndist = 180,
+		velspread1 = "3.82, -2, 3.82, _, 1, _",
 		dyndamage = "Never gonna give you up...",
 		light_camera_height = 2500,
-		light_color = [[0.22 0.19 0.05]],
+		light_color = "0.22 0.19 0.05",
 		light_radius = 380,
 		reaim_time = 1,
 		antibaitbypass = "ärsytät minua",
@@ -33,22 +30,22 @@ local weaponDef = {
 		default = 500*8,
 	},
 
-	explosionGenerator      = [[custom:WEAPEXP_PUFF]],
+	explosionGenerator      = "custom:WEAPEXP_PUFF",
 	fireStarter             = 180,
 	impulseBoost            = 0,
 	impulseFactor           = 0.2,
 	interceptedByShieldType = 2,
-	model                   = [[hovermissile.s3o]],
+	model                   = "hovermissile.s3o",
 	mygravity				= 0.06,
 	range                   = 400,
 	reloadtime              = 12,
 	smokeTrail              = true,
-	soundHit                = [[weapon/cannon/cannonfire_001]],
-	SoundStart				= [[weapon/cannon/medium_launcher]],
+	soundHit                = "weapon/cannon/cannonfire_001",
+	SoundStart				= "weapon/cannon/medium_launcher",
 	soundHitVolume          = 8,
 	soundStartVolume		= 75,
 	turret                  = true,
-	weaponType              = [[Cannon]],
+	weaponType              = "Cannon",
 	weaponVelocity          = 400,
 }
 

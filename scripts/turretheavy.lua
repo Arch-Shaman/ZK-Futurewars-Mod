@@ -43,8 +43,8 @@ local shellSpeed = 1.2
 
 local position = 0
 
-local tauOn16 = GG.Script.tau/16
-local tauOn8 = GG.Script.tau/8
+local tauOn16 = math.tau/16
+local tauOn8 = math.tau/8
 
 local spGetUnitHealth = Spring.GetUnitHealth
 

@@ -31,6 +31,7 @@ local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spSetUnitHealth = Spring.SetUnitHealth
 local spSetUnitCloak = Spring.SetUnitCloak
+local spSetUnitMass = Spring.SetUnitMass
 local spRemoveUnitCmdDesc = Spring.RemoveUnitCmdDesc
 local spSetUnitStealth = Spring.SetUnitStealth
 local spGetUnitHealth = Spring.GetUnitHealth
@@ -114,6 +115,7 @@ local names = {
 	"Im not Oppressive, just uncounterable!",
 	"Mudosaka's Murder Machine",
 	"Buzzing Bees, Deadly Drones!",
+	"Explosive Enforcer",
 	-- Shamelessly stolen from Users --
 	"Ukraine BM", -- User: Ukraine
 	"ICE COLD BUT HOT", -- User: Ukraine
@@ -301,7 +303,7 @@ local function SetUnitRulesModuleCounts(unitID, counts)
 	SetModuleCounts(unitID)
 end
 
-local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, damageMult, chassis)
+local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, damageMult, chassis, extraWeaponInfo)
 	if (not weapon2) and weapon1 then
 		local unitDefID = spGetUnitDefID(unitID)
 		local weaponName = "0_" .. weapon1
@@ -327,7 +329,7 @@ local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, dama
 	spSetUnitRulesParam(unitID, "comm_damage_mult", damageMult,  INLOS)
 	
 	local env = Spring.UnitScript.GetScriptEnv(unitID) or {}
-	CallAsUnitIfExists(unitID, env.dyncomm.UpdateWeapons, weapon1, weapon2, shield, rangeMult, damageMult)
+	CallAsUnitIfExists(unitID, env.dyncomm.UpdateWeapons, weapon1, weapon2, shield, rangeMult, damageMult, extraWeaponInfo)
 end
 
 local function StartReconPulse(unitID)
@@ -486,11 +488,43 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	local _, maxHealth = spGetUnitHealth(unitID)
 	local effectiveMass = (((totalCost/2) + (maxHealth/8))^0.6)*6.5
 	spSetUnitRulesParam(unitID, "massOverride", effectiveMass, INLOS)
+	spSetUnitMass(unitID, effectiveMass)
 	-- Peaceful Wind --
 	local detpack = data.detpacklv or 0
 	spSetUnitRulesParam(unitID, "comm_deathexplosion", detpacktable[detpack], INLOS)
-	
-	ApplyWeaponData(unitID, data.weapon1, data.weapon2, data.shield, data.rangeMult, data.damageMult, chassis)
+	local extraWeaponInfo = {
+		[1] = {
+			damageBoost = data.damageBooster1 or 0,
+			burstOverride = data.burstOverride1,
+			burstRateOverride = data.burstRateOverride1,
+			accuracyOverride = data.accuracyOverride1,
+			accuracyBonus = (data.accuracyMult or 1) + (data.accuracyBonus1 or 0),
+			reloadBonus = (data.reloadBonus or 0) + (data.reloadBonus1 or 0),
+			reloadOverride = data.reloadOverride1,
+			projectileOverride = data.projectileOverride1,
+			projectileBonus = data.projectileBonus1 or 0,
+			projectileSpeedBonus = data.projectileSpeedBonus1 or 1,
+			sprayAngleOverride = data.sprayAngleOverride1,
+			sprayAngleBonus = data.sprayAngleBonus1,
+			rangeOverride = data.rangeoverride1,
+		},
+		[2] = {
+			damageBoost = data.damageBooster2 or 0,
+			burstOverride = data.burstOverride2,
+			burstRateOverride = data.burstRateOverride2,
+			accuracyOverride = data.accuracyOverride2,
+			accuracyBonus = (data.accuracyMult or 1) + (data.accuracyBonus2 or 0),
+			reloadBonus = (data.reloadBonus or 0) + (data.reloadBonus2 or 0),
+			reloadOverride = data.reloadOverride2,
+			projectileOverride = data.projectileOverride2,
+			projectileBonus = data.projectileBonus2 or 0,
+			projectileSpeedBonus = data.projectileSpeedBonus2 or 1,
+			sprayAngleOverride = data.sprayAngleOverride2,
+			sprayAngleBonus = data.sprayAngleBonus2,
+			rangeOverride = data.rangeoverride2,
+		},
+	}
+	ApplyWeaponData(unitID, data.weapon1, data.weapon2, data.shield, data.rangeMult, data.damageMult, chassis, extraWeaponInfo)
 	
 	-- Do this all the time as it will be needed almost always.
 	GG.UpdateUnitAttributes(unitID)

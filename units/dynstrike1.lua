@@ -1,7 +1,7 @@
 return { 
 	dynstrike1 = {
 		unitname               = "dynstrike1",
-		name                   = "Strike Commander",
+		name                   = "Ghost Commander",
 		description            = "Mobile Assault Commander",
 		acceleration           = 0.54,
 		activateWhenBuilt      = true,
@@ -47,9 +47,9 @@ return {
 		iconType               = "ghostcom1",
 		leaveTracks            = true,
 		losEmitHeight          = 40,
-		maxDamage              = 4000,
+		health                 = 4000,
 		maxSlope               = 36,
-		maxVelocity            = 1.45,
+		speed                  = 1.5,
 		maxWaterDepth          = 5000,
 		metalStorage           = 500,
 		movementClass          = "AKBOT2",
@@ -65,7 +65,6 @@ return {
 		},
 		showNanoSpray          = false,
 		sightDistance          = 500,
-		sonarDistance          = 500,
 		trackOffset            = 0,
 		trackStrength          = 8,
 		trackStretch           = 1,

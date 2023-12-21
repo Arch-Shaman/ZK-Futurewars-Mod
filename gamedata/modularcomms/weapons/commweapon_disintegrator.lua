@@ -1,46 +1,48 @@
 local name = "commweapon_disintegrator"
 local weaponDef = {
-	name                    = "Disintegrator",
-	areaOfEffect            = 48,
+	name                    = "Heavy Disintegrator Rifle",
+	areaOfEffect            = 64,
 	avoidFeature            = false,
 	avoidFriendly           = true,
 	avoidGround             = false,
 	avoidNeutral            = false,
-	commandfire             = true,
-	craterBoost             = 1,
+	craterBoost             = 6,
 	craterMult              = 6,
+	cegtag					= "dgun_trail",
 
 	customParams            = {
 		is_unit_weapon = 1,
 		muzzleEffectShot = "custom:ataalaser",
 		slot = "3",
-		manualfire = 1,
 		reaim_time = 1,
 		antibaitbypass = "ärsytät minua",
-		mass = 450.5,
+		mass = 600.5,
 	},
 
 	damage                  = {
-		default    = 3000,
+		default    = 1250,
 	},
 
 	explosionGenerator      = "custom:DGUNTRACE",
+	explosionScar			= false,
 	impulseBoost            = 0,
 	impulseFactor           = 0,
 	interceptedByShieldType = 0,
-	leadLimit               = 80,
+	intensity				= 0, -- hide the projectile from user, use CEG trail instead! FIXME: check graphics to set to 0.2?
+	myGravity				= 0.03,
 	noExplode               = true,
 	noSelfDamage            = true,
 	range                   = 270,
-	reloadtime              = 14,
+	reloadtime              = 5.0,
 	size                    = 6,
 	soundHit                = "explosion/ex_med6",
-	soundStart              = "weapon/laser/heavy_laser4",
+	soundStart              = "weapon/laser/dgun_fire",
 	soundTrigger            = true,
 	turret                  = true,
+	targetBorder            = 1, -- aim for the close border instead of the center.
 	waterWeapon             = true,
-	weaponType              = "DGun",
-	weaponVelocity          = 300,
+	weaponType              = "Cannon",
+	weaponVelocity          = 400,
 }
 
 return name, weaponDef

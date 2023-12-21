@@ -761,6 +761,14 @@ local function UpdateWeaponsThread()
 	end
 	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") or "heavyrifle"
 	local weaponname2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2") or ""
+	if weaponname1 == "commweapon_light_disintegrator" then
+		weaponname1 = "commweapon_lightninggun"
+	elseif weaponname1 == "commweapon_disintegrator" then
+		weaponname1 = "commweapon_lightninggun"
+	end
+	if weaponname2 == "commweapon_light_disintegrator" then
+		weaponname2 = "commweapon_lightninggun"
+	end
 	weaponname1 = trimstring(weaponname1)
 	if weaponname2 ~= "" then
 		weaponname2 = trimstring(weaponname2)

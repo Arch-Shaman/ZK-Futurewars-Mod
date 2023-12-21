@@ -1,0 +1,20 @@
+{
+	"update_header": "Drobna aktualizacja 0.38.11: Umorzenie długu technologicznego",
+	"shameless_plug": "Jeśli podoba Ci się Future Wars i chcesz podzielić się swoją opinią z projektem lub porozmawiać z innymi graczami, rozważ dołączenie do naszego discorda: https://discord.com/invite/GMUnRGUuSy lub dołącz do #fw w zk serwer. Obecnie poszukujemy pomysłów, grafików i tłumaczy, którzy włączą się w projekt i dadzą nam świeżą warstwę farby.",
+	"entry_1": "Wszystkiego najlepszego z okazji trzecich urodzin, Future Wars! W tym spóźnionym prezencie urodzinowym spłaciliśmy część naszego długu technicznego. Oznacza to, że elementy backendu zostały zaktualizowane (Zero-K miał duży postęp w niektórych sprawach nie byliśmy w stanie dotrzymać kroku). Rozwiązano także niektóre uwagi dotyczące salda.",
+	"entry_2": "Możesz zauważyć zmianę wyświetlanej rangi w grze. W Future Wars przyjęto nowy system wyświetlania rang, który dzieli graczy na 300 „lig” WHR, zaczynając od 1100 WHR. Programiści mają teraz tęczowe gwiazdki, aby pomóc im się rozróżnić od zwykłych graczy.",
+	"entry_3": "Mamy nadzieję, że w tej łatce naprawiono powiadomienia o lagach/AFK. LuaAI nie są już wliczane do systemu wykrywania lagów AI, ponieważ opuszczenie hosta nie ma na nie wpływu. Ponadto zlokalizowano wykrywanie lagów AI. Śmierć wiadomości zostały wreszcie naprawione! Ciesz się złym humorem z 2016 ZK jeszcze raz w pełni zlokalizowanej dobroci.",
+	"entry_4": "Zoptymalizowaliśmy gadżet do przebijania pancerza, co powinno nieco poprawić wydajność, ponieważ nie oblicza już obrażeń dla każdego pocisku. Naprawiono także inne drobne błędy związane z kolorowaniem wiadomości. Gracze mogą teraz także korzystać z modyfikacja wyrównania dowódcy poprawna (Dzięki Jill_2550 za testowanie!).",
+	"entry_5": "PenguinOh rozpoczął lokalizowanie oprogramowania sprzętowego na język tajski, pamiętaj, aby podziękować im za ich ciężką pracę!",
+	"entry_6": "Ghost Commander otrzymał ostatnio pewne osłabienia w związku z opiniami społeczności na temat nowych modułów.",
+	"entry_7": "Sentinel otrzymał pewne wzmocnienia, dzięki którym jest bardziej konkurencyjny. Teraz ma zwiększone obrażenia obszarowe i rozbrojenia.",
+	"entry_8": "Gremlin zaobserwował niewielką zmianę roli, a także mniejsze osłabienie, teraz faworyzując bardziej trwałe obrażenia na sekundę.",
+	"chicken_header" : "Tryb gry: Chicken",
+	"chicken_entry_1" : "Kurczaki będą na przemian przeprowadzać ataki na twoją bazę ogromnymi hordami i pozostawać w tyle, aby odzyskać siły. Upewnij się, że zniszczyłeś grzędę kurczaka, gdy kurczaki odpoczywają, aby osłabić ich ataki",
+	"chicken_entry_2" : "Kurczaki w końcu zaczną konstruować niewiarygodnie potężne kurczaki znane jako zagrożenia. Zniszcz je, zanim skończą. Budowane zagrożenia są chronione przez niezniszczalną tarczę rafezji, dzięki czemu są odporne na ostrzał artyleryjski",
+	"chicken_entry_3" : "Gniew roju będzie z czasem wzrastał. Gdy gniew ula osiągnie 100%, na polu bitwy pojawi się sama Królowa Kurczaków (chyba że jesteś w trybie nieskończonym), a kurczaki zaczną atakować bez przerwy. Skoncentruj całą swoją siłę ognia na królowej kurczaków, ponieważ jej śmierć spowoduje rozpad roju",
+	"comm_wars_header" : "Tryb gry: Wojny dowódców",
+	"comm_wars_entry_1" : "W tym trybie gry masz dostęp tylko do swojego dowódcy i niczego więcej. Dowódca nie może już budować, a jedynie naprawiać i odzyskiwać. Ulepsz swojego dowódcę, dając mu więcej modułów poprzez system morfowania dowódców i pokonaj wrogich dowódców!",
+	"comm_wars_entry_2" : "Dodatkowo wprowadzono zmiany w balansie wielu modułów i broni dowódców, aby uczynić je bardziej zrównoważonymi w trybie gry tylko dla dowódców. Balans jest jednak nadal eksperymentalny, więc opinie będą bardzo mile widziane",
+	"houserules" : "Zasady domowe: "
+}

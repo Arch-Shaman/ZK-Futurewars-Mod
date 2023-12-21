@@ -114,13 +114,29 @@ local moveDefs = {
 		depthmodparams = common_depthmodparams,
 	},
 
+	ATKBOT2 = { --amphib + allterrain
+		footprintx = 2,
+		footprintz = 2,
+		maxwaterdepth = 5000,
+		maxslope = 80,
+		depthmod = 0,
+		crushstrength = 5,
+	},
 	ATKBOT3 = { --amphib + allterrain
 		footprintx = 3,
 		footprintz = 3,
 		maxwaterdepth = 5000,
-		maxslope = 70,
+		maxslope = 80,
 		depthmod = 0,
 		crushstrength = 150,
+	},
+	ATKBOT4 = { --amphib + allterrain
+		footprintx = 4,
+		footprintz = 4,
+		maxwaterdepth = 5000,
+		maxslope = 80,
+		depthmod = 0,
+		crushstrength = 500,
 	},
 	
 	TANK2 = {

@@ -13,7 +13,7 @@ return {
 		canPatrol              = true,
 		category               = "LAND SINK",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "30 30 30",
+		selectionVolumeScales  = "45 45 45",
 		selectionVolumeType    = "ellipsoid",
 		corpse                 = "DEAD",
 		customParams           = {
@@ -29,9 +29,9 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 1410,
+		health                 = 1410,
 		maxSlope               = 36,
-		maxVelocity            = 1.6,
+		speed                  = 1.6,
 		minCloakDistance       = 75,
 		movementClass          = "AKBOT3",
 		noChaseCategory        = "TERRAFORM FIXEDWING GUNSHIP HOVER",
@@ -45,7 +45,6 @@ return {
 			},
 		},
 		sightDistance          = 480,
-		sonarDistance          = 480,
 		trackOffset            = 0,
 		trackStrength          = 8,
 		trackStretch           = 1,
@@ -115,7 +114,7 @@ return {
 			FLECHETTE = {
 				name                    = "Quad Grenade Launcher",
 				areaOfEffect            = 96,
-				accuracy                = 2210,
+				accuracy                = 2610,
 				bouncerebound           = 0.5,
 				bounceslip              = 0.4,
 				craterBoost             = 0,
@@ -124,7 +123,7 @@ return {
 				cegTag                  = "hydromissile",
 				customParams            = {
 					script_burst        = 8,
-					script_reload       = 1.4,
+					script_reload       = 2.8,
 				},
 				damage                  = {
 					default = 140.01,

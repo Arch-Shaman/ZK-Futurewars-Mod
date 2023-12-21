@@ -33,9 +33,11 @@ for i = 1, #WeaponDefs do
 		local paratime = tonumber(cp["blastwave_emptime"]) or 1
 		local slowdmg = tonumber(cp["blastwave_slowdmg"]) or 0
 		local overslow = tonumber(cp["blastwave_overslow"]) or 0
+		local disarm = tonumber(cp["blastwave_disarm"]) or 0
+		local disarmtime = tonumber(cp["blastwave_diarm_time"]) or 1
 		local damagesfriendly = cp["blastwave_nofriendly"] == nil
 		local healing = tonumber(cp["blastwave_healing"]) or 0
-		local onlyallies = cp["blastwave_onlyfriendly"] ~= nil
+		local onlyallies = cp["blastwave_onlyfriendly"] == nil
 		local reductshealing = tonumber(cp["blastwave_healing_reduction"]) or 0
 		local spawnCeg = cp["blastwave_spawnceg"]
 		local cegFreq = tonumber(cp["blastwave_spawncegfreq"]) or 3
@@ -52,6 +54,8 @@ for i = 1, #WeaponDefs do
 			damage = damage,
 			paradmg = paradamage,
 			paratime = paratime,
+			disarmdmg = disarm,
+			disarmtime = disarmtime,
 			slowdmg = slowdmg,
 			damagesfriendly = damagesfriendly,
 			healshostiles = onlyallies,
@@ -66,7 +70,7 @@ for i = 1, #WeaponDefs do
 			wanted[#wanted + 1] = id
 			Script.SetWatchExplosion(id, true)
 		end
-		Spring.Echo("[Blastwaves] Added " .. id)
+		--Spring.Echo("[Blastwaves] Added " .. id)
 	end
 end
 
@@ -125,6 +129,9 @@ local function Updateblastwave(data) -- Updateblastwave(x, y, z, size, impulse, 
 				if slow and slow > 0 then
 					GG.dealSlowToUnit(unitID, slow * ddist, blastwaveDefs[weaponDefID].overslow, attackerTeamID)
 				end
+				if data.disarm and data.disarm > 0 then
+					GG.AddDisarmDamage(unitID, data.disarm, blastwaveDefs[weaponDefID].disarmtime * 30, nil)
+				end
 				--Spring.Echo("Did " .. incoming .. " and " .. vx .. ", " .. vy .. ", " .. vz .. " to " .. unitID)
 			end
 			if healing > 0 and friendlyCheck then -- deals healing.
@@ -167,9 +174,11 @@ local function AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID, t
 		attacker = attackerID,
 		slowdmg = conf.slowdmg,
 		paradmg = conf.paradmg,
+		disarm = conf.disarmdmg,
 		healing = conf.healing,
 		coef = conf.losscoef,
 		shielddmg = conf.shielddamage,
+		attackerteam = team,
 	}
 	if conf.spawnCeg then
 		tab.cegcounter = 0
@@ -185,6 +194,7 @@ local function AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID, t
 		tab.damage = tab.damage * damagebonus
 		tab.slowdmg = tab.slowdmg * damagebonus
 		tab.paradmg = tab.paradmg * damagebonus
+		tab.disarm = tab.disarm * damagebonus
 		local bonuscoef = spGetUnitRulesParam(attackerID, "comm_blastwave_coefbonus") or 0
 		tab.coef = tab.coef + bonuscoef
 	end
@@ -241,6 +251,7 @@ function gadget:GameFrame(f)
 			data.size = data.size + config.speed
 			data.impulse = data.impulse * losscoef
 			data.damage = data.damage * losscoef
+			data.disarm = data.disarm * losscoef
 			data.lifespan = data.lifespan - 1
 			data.slowdmg = data.slowdmg * losscoef
 			data.paradmg = data.paradmg * losscoef

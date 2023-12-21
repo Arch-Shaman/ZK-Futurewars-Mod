@@ -17,6 +17,7 @@ end
 include("keysym.lua")
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
 include("Widgets/COFCTools/ExportUtilities.lua")
+local _, _, ammoStateInfo = VFS.Include("LuaRules/Configs/ammostateinfo.lua")
 
 local spGetMouseState = Spring.GetMouseState
 local spTraceScreenRay = Spring.TraceScreenRay
@@ -46,14 +47,8 @@ local cyan = '\255\1\255\255'
 local white = '\255\255\255\255'
 local yellow = '\255\255\255\1'
 
-local selectionTooltip = "\n" .. green .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "select") .. "\n" ..
-	green .. WG.Translate("interface", "rmb") .. ": " .. WG.Translate("interface", "deselect") .. "\n" ..
-	green .. WG.Translate("interface", "shift") .. "+" .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "select_type") .. "\n" ..
-	green .. WG.Translate("interface", "shift") .. "+" .. WG.Translate("interface", "rmb") .. ": " .. WG.Translate("interface", "deselect_type") .. "\n" ..
-	green .. WG.Translate("interface", "mmb") .. ": " .. WG.Translate("interface", "go_to") .. "\n" ..
-	green .. WG.Translate("interface", "space_click_show_stats")
-
-local singleSelectionTooltip = "\n" .. green .. WG.Translate("interface", "lmb") .. ": " .. "Center view" .. "\n" .. green .. WG.Translate("interface", "space_click_show_stats")
+local selectionTooltip
+local singleSelectionTooltip
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -92,8 +87,11 @@ local IMAGE = {
 	TIME = 'LuaUI/images/clock.png',
 	METAL = 'LuaUI/images/metalplus.png',
 	ENERGY = 'LuaUI/images/energyplus.png',
+	WIND_SPEED = 'LuaUI/images/windspeed.png',
 	METAL_RECLAIM = 'LuaUI/images/ibeamReclaim.png',
 	ENERGY_RECLAIM = 'LuaUI/images/energyReclaim.png',
+	NO_AMMO =  'LuaUI/images/noammo.png',
+	COMMAND_BASE = 'LuaUI/Images/Commands/',
 }
 
 local CURSOR_ERASE = 'eraser'
@@ -152,8 +150,8 @@ local terraCmdTip = {
 		green.. 'Ctrl'..white..': Draw straight line segment. \n'..
 		'\n'..
 		yellow..'[After Terraform Draw]\n'..
-		green.. 'Alt'..white..': Snap to steps of 15 height. \n'..
-		green.. 'Ctrl'..white..': Snap to 0 height.',
+		green.. 'Alt'..white..': Snap to steps of 6 height.\n(6 blocks vehicles, 18 blocks bots)\n'..
+		green.. 'Ctrl'..white..': Reset to 0 height.',
 	[CMD_SMOOTH] = terraformGeneralTip ..
 		yellow..'[During Terraform Draw]\n'..
 		green.. 'Ctrl'..white..': Draw straight line segment.',
@@ -168,17 +166,28 @@ local DRAWING_TOOLTIP =
 	green.. 'Middle click'..white..': Place marker. \n' ..
 	green.. 'Double click'..white..': Place marker with label.'
 
+local SPECIAL_WEAPON_RELOAD_PARAM = "specialReloadRemaining"
+local JUMP_RELOAD_PARAM = "jumpReload"
 
 local reloadBarColor = {013, 245, 243, 1}
 local fullHealthBarColor = {0, 255, 0, 1}
 
-local econStructureDefs = {
-	[UnitDefNames.staticmex.id] = {cost = UnitDefNames.staticmex.metalCost, mex = true},
-}
-for _, defName in pairs({"energywind", "energysolar", "energygeo", "energyheavygeo", "energyfusion", "energysingu", "energyprosperity"}) do
-	local def = UnitDefNames[defName]
-	econStructureDefs[def.id] = { cost = def.metalCost, income = def.customParams.income_energy }
+local econStructureDefs = {}
+for i = 1, #UnitDefs do
+	local ud = UnitDefs[i]
+	local cp = ud.customParams
+
+	local energyIncome = tonumber(cp.income_energy) or 0
+	if energyIncome > 0 then
+		econStructureDefs[i] = {cost = ud.metalCost, income = energyIncome}
+	end
+
+	local mexMult = tonumber(cp.metal_extractor_mult) or 0
+	if mexMult > 0 then
+		econStructureDefs[i] = {cost = ud.metalCost, mex = mexMult}
+	end
 end
+
 econStructureDefs[UnitDefNames.energywind.id].isWind = true
 
 local TIDAL_HEALTH = UnitDefNames.energywind.customParams.tidal_health
@@ -222,6 +231,9 @@ for i = 1, #UnitDefs do
 end
 
 local manualFireTimeDefs = {}
+local specialReloadDefs = {}
+local jumpReloadDefs = {}
+local ammoRequiringDefs = {}
 for unitDefID = 1, #UnitDefs do
 	local ud = UnitDefs[unitDefID]
 	local unitWeapon = (ud and ud.weapons)
@@ -229,6 +241,21 @@ for unitDefID = 1, #UnitDefs do
 	--Note: weapon no.3 is by ZK convention is usually used for user controlled weapon
 	if (unitWeapon ~= nil) and WeaponDefs[unitWeapon.weaponDef].manualFire then
 		manualFireTimeDefs[unitDefID] = WeaponDefs[unitWeapon.weaponDef].reload
+	end
+	if ud.customParams.specialreloadtime then
+		specialReloadDefs[unitDefID] = tonumber(ud.customParams.specialreloadtime)
+	end
+	if ud.customParams.canjump then
+		jumpReloadDefs[unitDefID] = -1 --Signifies that reload time is not stored
+	end
+	if ud.customParams.reammoseconds then
+		ammoRequiringDefs[unitDefID] = true
+	end
+end
+
+for _, entry in pairs(ammoStateInfo) do
+	for key, pic in pairs(entry.texture) do
+		entry.texture[key] = IMAGE.COMMAND_BASE .. pic
 	end
 end
 
@@ -264,11 +291,13 @@ options_order = {
 	'showDrawTools', 'tooltip_opacity',
 	
 	--selected units
-	'selection_opacity', 'allowclickthrough', 'groupbehaviour', 'showgroupinfo', 'ctrlFilter', 'uniticon_size', 'manualWeaponReloadBar',
+	'selection_opacity', 'allowclickthrough', 'tooltipThroughPanels', 'groupbehaviour', 'showgroupinfo', 'ctrlFilter',
+	'uniticon_size', 'manualWeaponReloadBar', 'jumpReloadBar',
 	'fancySkinning', 'leftPadding',
 }
 
 local showManualFire = true
+local showJumpReload = true
 
 options = {
 	tooltip_delay = {
@@ -328,10 +357,14 @@ options = {
 		noHotkey = true,
 		desc = 'Show pencil or eraser when drawing or erasing.'
 	},
+	tooltipThroughPanels = {
+		name='Allow hovering through', type='bool', value=false,
+		desc = 'Show tooltips for units behind empty interface panels.',
+	},
 	tooltip_opacity = {
 		name = "Opacity",
 		type = "number",
-		value = 0.8, min = 0, max = 1, step = 0.01,
+		value = 0.92, min = 0, max = 1, step = 0.01,
 		update_on_the_fly = true,
 		OnChange = function(self)
 			if not tooltipWindow then
@@ -354,7 +387,8 @@ options = {
 		path = selPath,
 	},
 	allowclickthrough = {
-		name='Allow clicking through', type='bool', value=true,
+		name = 'Allow clicking through', type='bool', value=false,
+		desc = 'Mouse clicks through empty parts of the panel act on whatever is underneath.',
 		path = selPath,
 		OnChange = function(self)
 			if selectionWindow then
@@ -418,6 +452,17 @@ options = {
 			showManualFire = self.value
 		end,
 	},
+	jumpReloadBar = {
+		name="Show Unit's Jump Status",
+		type='bool',
+		value= true,
+		noHotkey = true,
+		desc = "Show reload progress for jumpjets (only for ungrouped unit selection)",
+		path = selPath,
+		OnChange = function(self)
+			showJumpReload = self.value
+		end,
+	},
 	fancySkinning = {
 		name = 'Fancy Skinning',
 		type = 'radioButton',
@@ -468,8 +513,11 @@ local function Format(amount, displaySign)
 	if type(amount) == "number" then
 		if (amount ==0) then formatted = "0" else
 			if (amount < 20 and (amount * 10)%10 ~=0) then
-				if displaySign then formatted = strFormat("%+.1f", amount)
-				else formatted = strFormat("%.1f", amount) end
+				if displaySign then
+					formatted = strFormat("%+.1f", amount)
+				else
+					formatted = strFormat("%.1f", amount)
+				end
 			else
 				if displaySign then
 					formatted = strFormat("%+d", amount)
@@ -610,6 +658,21 @@ local function GetWeaponReloadStatus(unitID, weapNum, reloadTime)
 	return nil --Note: this mean unit doesn't have weapon number 'weapNum'
 end
 
+local function GetRulesParamReloadStatus(unitID, rulesParam, reloadTime)
+	local specialReloadState = spGetUnitRulesParam(unitID, rulesParam)
+	if specialReloadState then
+		if reloadTime > 0 then
+			--local currentFrame, _ = Spring.GetGameFrame()
+			--local remainingTime = (specialReloadState - currentFrame)
+			--local reloadFraction = 1 - remainingTime/reloadTime
+			--return reloadFraction
+			return 1 - specialReloadState
+		end
+		return specialReloadState
+	end
+	return false
+end
+
 local function GetUnitResources(unitID)
 	local mm, mu, em, eu = Spring.GetUnitResources(unitID)
 	
@@ -633,6 +696,10 @@ local function GetUnitRegenString(unitID, ud)
 			else
 				local totalregen = 0
 				local regenMult = (1 - (spGetUnitRulesParam(unitID, "slowState") or 0)) * (1 - (spGetUnitRulesParam(unitID,"disarmed") or 0))
+				if regenMult == 0 then
+					return
+				end
+
 				local regen = 0
 				
 				if (regen_timer <= 0) then
@@ -649,12 +716,10 @@ local function GetUnitRegenString(unitID, ud)
 				end
 				
 				if ud.customParams.armored_regen and Spring.GetUnitArmored(unitID) then
-					totalregen = totalregen + ud.customParams.armored_regen
+					regen = regen + ud.customParams.armored_regen
 				end
-				regen = regen * regenMult
-				totalregen = totalregen + regen
-				if (totalregen > 0) then
-					return "  (+" .. math.ceil(totalregen) .. ")"
+				if (regen > 0) then
+					return "  (+" .. math.ceil(regenMult*regen) .. ")"
 				end
 			end
 		end
@@ -662,11 +727,13 @@ local function GetUnitRegenString(unitID, ud)
 end
 
 local function GetUnitShieldRegenString(unitID, ud)
-	if ud.customParams.shield_recharge_delay or true then
-		local shieldRegen = spGetUnitRulesParam(unitID, "shieldRegenTimer")
-		if shieldRegen and shieldRegen > 0 then
-			return "  (" .. math.ceil(shieldRegen / 30) .. "s)"
-		end
+	if spGetUnitRulesParam(unitID, "att_shieldDisabled") == 1 then
+		return ""
+	end
+	
+	local shieldRegen = spGetUnitRulesParam(unitID, "shieldRegenTimer")
+	if shieldRegen and shieldRegen > 0 then
+		return "  (" .. math.ceil(shieldRegen / 30) .. "s)"
 	end
 	
 	local mult = spGetUnitRulesParam(unitID,"totalReloadSpeedChange") or 1 * (1 - (spGetUnitRulesParam(unitID, "shieldChargeDisabled") or 0))
@@ -676,7 +743,18 @@ local function GetUnitShieldRegenString(unitID, ud)
 
 	-- FIXME: take energy stall into account
 	local wd = WeaponDefs[ud.shieldWeaponDef]
-	return " (+" .. math.ceil(mult * (wd.customParams.shield_rate or wd.shieldPowerRegen)) .. ")"
+	local wdc = wd.customParams
+	local regen = (wdc.shield_rate_charge and Spring.GetUnitRulesParam(unitID, "shield_rate_override") and
+			math.floor(Spring.GetUnitRulesParam(unitID, "shield_rate_override")*15 + 0.5)) or
+			tonumber(wdc.shield_rate or wd.shieldPowerRegen)
+	if not wd.customParams.slow_immune then
+		regen = mult * regen
+	end
+	local sign = (regen >= 0) and "+" or ""
+	if math.abs(math.ceil(regen) - regen) < 0.05 then
+		return " (" .. sign .. math.ceil(regen - 0.2) .. ")"
+	end
+	return " (" .. sign .. strFormat("%+.1f", regen) .. ")"
 end
 
 local function IsUnitInLos(unitID)
@@ -689,6 +767,21 @@ local function IsUnitInLos(unitID)
 	end
 	local state = Spring.GetUnitLosState(unitID)
 	return state and state.los
+end
+
+local function GetUnitNeedRearm(unitID, unitDefID)
+	if not ammoRequiringDefs[unitDefID] then
+		return false
+	end
+	local reammoState = (spGetUnitRulesParam(unitID, "noammo") or 0)
+	return reammoState == 1 or reammoState == 2
+end
+
+local function GetUnitAmmoPic(unitID, unitDefID)
+	if not ammoStateInfo[unitDefID] then
+		return
+	end
+	return ammoStateInfo[unitDefID].texture[spGetUnitRulesParam(unitID, "ammostate")+1]
 end
 
 local function GetManualFireReload(unitID, unitDefID)
@@ -710,6 +803,9 @@ local function GetManualFireReload(unitID, unitDefID)
 	
 	if manualFireTimeDefs[unitDefID] then
 		return manualFireTimeDefs[unitDefID], 3
+	end
+	if specialReloadDefs[unitDefID] then
+		return specialReloadDefs[unitDefID], false, SPECIAL_WEAPON_RELOAD_PARAM
 	end
 	if not (unitID and isCommander[unitDefID]) then
 		return false
@@ -739,6 +835,20 @@ local function GetManualFireReload(unitID, unitDefID)
 	return false
 end
 
+local function GetJumpReload(unitID, unitDefID)
+	if not (unitDefID and showJumpReload) then
+		return false
+	end
+	unitDefID = unitDefID or Spring.GetUnitDefID(unitID)
+	if not unitDefID then
+		return false
+	end
+	if jumpReloadDefs[unitDefID] then
+		return jumpReloadDefs[unitDefID]
+	end
+	return false
+end
+
 local function GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mousePlaceY)
 	local econDef = econStructureDefs[unitDefID]
 	if not econDef then
@@ -751,9 +861,10 @@ local function GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mou
 	
 	if econDef.mex then
 		if mousePlaceX and WG.mouseoverMexIncome then
-			local extraText = ", ".. WG.Translate("interface", "income") .. " +" .. math.round(WG.mouseoverMexIncome * mult, 2)
+			local finalBaseIncome = WG.mouseoverMexIncome * mult * econDef.mex
+			local extraText = ", ".. WG.Translate("interface", "income") .. " +" .. math.round(finalBaseIncome, 2)
 			if WG.mouseoverMexIncome > 0 then
-				return extraText .. "\n" .. WG.Translate("interface", "base_payback") .. ": " .. SecondsToMinutesSeconds(econDef.cost / (WG.mouseoverMexIncome * mult))
+				return extraText .. "\n" .. WG.Translate("interface", "base_payback") .. ": " .. SecondsToMinutesSeconds(econDef.cost / finalBaseIncome)
 			else
 				return extraText .. "\n" .. WG.Translate("interface", "base_payback") .. ": " .. WG.Translate("interface", "never")
 			end
@@ -765,6 +876,7 @@ local function GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mou
 	local cost = econDef.cost
 	local extraText = ""
 	local healthOverride = false
+	local minWind = 0
 	if econDef.isWind then
 		if mousePlaceX and mousePlaceY then
 			local _, pos = spTraceScreenRay(mousePlaceX, mousePlaceY, true)
@@ -776,10 +888,12 @@ local function GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mou
 					if y <= tidalHeight then
 						extraText = ", " .. WG.Translate("interface", "tidal_income") .. " +" .. math.round(income, 1)
 						healthOverride = TIDAL_HEALTH
+						minWind = income
 					else
 						local minWindIncome = (windMin + (windMax - windMin)*math.max(0, math.min(windMinBound, windGroundSlope*(y - windGroundMin))))
 						extraText = ", " .. WG.Translate("interface", "wind_range") .. " " .. math.round(minWindIncome * mult, 1) .. " - " .. math.round(windMax * mult, 1)
 						income = mult * (minWindIncome + windMax)/2
+						minWind = minWindIncome
 					end
 				end
 			end
@@ -835,9 +949,9 @@ local function GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mou
 		--.. "\n extraMetal: " .. extraMetalza
 		--.. "\n unitformCasePayback: " .. unitformCasePayback
 		--.. "\n worstCasePayback: " .. worstCasePayback
-		return extraText .. "\n" .. WG.Translate("interface", "od_payback") .. ": " .. SecondsToMinutesSeconds(worstCasePayback), healthOverride
+		return extraText .. "\n" .. WG.Translate("interface", "od_payback") .. ": " .. SecondsToMinutesSeconds(worstCasePayback), healthOverride, minWind
 	end
-	return extraText .. "\n" .. WG.Translate("interface", "od_payback") .. ": " ..  WG.Translate("interface", "unknown"), healthOverride
+	return extraText .. "\n" .. WG.Translate("interface", "od_payback") .. ": " ..  WG.Translate("interface", "unknown"), healthOverride, minWind
 end
 
 local function GetPlayerCaption(teamID)
@@ -905,13 +1019,18 @@ local function SelectionsIconClick(button, unitID, unitList, unitDefID)
 	local newSelectedUnits
 	
 	if (button == 3) then
-		if shift then
-			--// deselect a whole unitdef block
+		if alt or shift then
+			--// deselect whole block, or half if alt is held
+			local toDeselect = #unitList
+			if alt then
+				toDeselect = math.floor(toDeselect / 2)
+			end
 			newSelectedUnits = {}
 			local j = 1
 			for i = 1, #selectedUnitsList do
-				if unitList[j] and selectedUnitsList[i] == unitList[j] then
+				if toDeselect > 0 and unitList[j] and selectedUnitsList[i] == unitList[j] then
 					j = j + 1
+					toDeselect = toDeselect - 1
 				else
 					newSelectedUnits[#newSelectedUnits + 1] = selectedUnitsList[i]
 				end
@@ -931,15 +1050,26 @@ local function SelectionsIconClick(button, unitID, unitList, unitDefID)
 	elseif button == 1 then
 		if ctrl then
 			ctrlFilterUnits = ctrlFilterUnits or {}
-			if shift then
-				for i = 1, #unitList do
+			if shift or alt then
+				local toSelect = #unitList
+				if alt then
+					toSelect = math.ceil(toSelect / 2)
+				end
+				for i = 1, toSelect do
 					ctrlFilterUnits[#ctrlFilterUnits + 1] = unitList[i]
 				end
 			else
 				ctrlFilterUnits[#ctrlFilterUnits + 1] = unitID
 			end
 		else
-			if shift then
+			if alt then
+				local toSelect = math.ceil(#unitList / 2)
+				newSelectedUnits = {}
+				for i = 1, toSelect do
+					newSelectedUnits[#newSelectedUnits + 1] = unitList[i]
+				end
+				spSelectUnitArray(newSelectedUnits)
+			elseif shift then
 				spSelectUnitArray(unitList) -- select all
 			else
 				spSelectUnitArray({unitID})  -- only 1
@@ -961,16 +1091,13 @@ end
 
 local cacheFeatureTooltip = {}
 local cacheFeatureUnitDefID = {}
-local function GetFeatureDisplayAttributes(featureDefID, featureID)
-	local specialName = Spring.GetFeatureRulesParam(featureID, "comm_name")
-	--Spring.Echo("Special name: " .. tostring(specialName))
-	if not specialName and (cacheFeatureTooltip[featureDefID] or cacheFeatureUnitDefID[featureDefID]) then
+local function GetFeatureDisplayAttributes(featureDefID)
+	if cacheFeatureTooltip[featureDefID] or cacheFeatureUnitDefID[featureDefID] then
 		return cacheFeatureTooltip[featureDefID], cacheFeatureUnitDefID[featureDefID]
 	end
 	local fd = FeatureDefs[featureDefID]
-
 	
-	local featureName = (fd and fd.name)
+	local featureName = fd and fd.name
 	local unitName
 	if fd and fd.customParams and fd.customParams.unit then
 		unitName = fd.customParams.unit
@@ -1058,6 +1185,40 @@ local function GetBarWithImage(parentControl, name, initY, imageFile, color, col
 	end
 	
 	return UpdateBar
+end
+
+local function GetImage(parentControl, name, initY, imageFile, iconSize, xOffset)
+	iconSize = iconSize or ICON_SIZE
+	xOffset = xOffset or 0
+	
+	local image = Chili.Image:New{
+		name = name .. "_image",
+		x = xOffset,
+		y = initY,
+		width = iconSize,
+		height = iconSize,
+		file = imageFile,
+		parent = parentControl,
+	}
+	image:SetVisibility(false)
+	
+	local function Update(visible, newImage, yPos)
+		image:SetVisibility(visible)
+		if not visible then
+			return
+		end
+		if yPos then
+			image:SetPos(nil, yPos, nil, nil, nil, true)
+			label:SetPos(nil, yPos + textOffset, nil, nil, nil, true)
+		end
+		if newImage ~= imageFile then
+			imageFile = newImage
+			image.file = imageFile
+			image:Invalidate()
+		end
+	end
+	
+	return Update
 end
 
 local function GetImageWithText(parentControl, name, initY, imageFile, caption, fontSize, iconSize, textOffset, xOffset)
@@ -1198,12 +1359,12 @@ local function GetCostInfoPanel(parentControl, yPos)
 	return Update
 end
 
-local function UpdateManualFireReload(reloadBar, parentImage, unitID, weaponNum, reloadTime)
+local function UpdateManualFireReload(reloadBar, parentImage, unitID, weaponNum, rulesParam, reloadTime, onLeft)
 	if not reloadBar then
 		reloadBar = Chili.Progressbar:New {
-			x = "82%",
+			x = (onLeft and 5) or "82%",
 			y = 5,
-			right = 5,
+			right = ((not onLeft) and 5) or "82%",
 			bottom = 5,
 			minWidth = 4,
 			max = 1,
@@ -1216,7 +1377,12 @@ local function UpdateManualFireReload(reloadBar, parentImage, unitID, weaponNum,
 			parent = parentImage,
 		}
 	end
-	local reloadFraction, remainingTime = GetWeaponReloadStatus(unitID, weaponNum, reloadTime)
+	local reloadFraction
+	if weaponNum then
+		reloadFraction = GetWeaponReloadStatus(unitID, weaponNum, reloadTime)
+	elseif rulesParam then
+		reloadFraction = GetRulesParamReloadStatus(unitID, rulesParam, reloadTime)
+	end
 	
 	if reloadFraction and reloadFraction < 1 then
 		reloadBar:SetValue(reloadFraction)
@@ -1237,6 +1403,7 @@ local function GetUnitGroupIconButton(parentControl)
 	local unitID
 	local unitList
 	local unitCount
+	local unitpicBadge1Update, unitpicBadge2Update
 	
 	local size = options.uniticon_size.value
 	
@@ -1249,7 +1416,7 @@ local function GetUnitGroupIconButton(parentControl)
 		parent = parentControl,
 	}
 	
-	local reloadBar
+	local reloadBar, jumpBar
 	local healthBar = Chili.Progressbar:New {
 		x = 0,
 		y = "80%",
@@ -1295,17 +1462,46 @@ local function GetUnitGroupIconButton(parentControl)
 				healthBar.color = GetHealthColor(health/maxhealth)
 				healthBar:SetValue(health/maxhealth)
 			end
-			local reloadTime, weaponNum = GetManualFireReload(unitID, unitDefID)
+			local reloadTime, weaponNum, rulesParam = GetManualFireReload(unitID, unitDefID)
 			if reloadTime then
-				reloadBar = UpdateManualFireReload(reloadBar, unitImage, unitID, weaponNum, reloadTime)
+				reloadBar = UpdateManualFireReload(reloadBar, unitImage, unitID, weaponNum, rulesParam, reloadTime)
 			elseif reloadBar then
 				reloadBar:SetVisibility(false)
+			end
+			local jumpReloadTime = GetJumpReload(unitID, unitDefID)
+			if jumpReloadTime then
+				jumpBar = UpdateManualFireReload(jumpBar, unitImage, unitID, false, JUMP_RELOAD_PARAM, jumpReloadTime, true)
+			elseif jumpBar then
+				jumpBar:SetVisibility(false)
+			end
+			local needRearm = GetUnitNeedRearm(unitID, unitDefID)
+			if needRearm and (not unitpicBadge1Update) then
+				unitpicBadge1Update = GetImage(unitImage, "costInfoUpdate", 4, IMAGE.NO_AMMO, ICON_SIZE, 4)
+			end
+			local ammoPic = GetUnitAmmoPic(unitID, unitDefID)
+			if ammoPic and (not unitpicBadge2Update) then
+				unitpicBadge2Update = GetImage(unitImage, "ammoPicInfoUpdate", size*0.8 - 4 - ICON_SIZE*1.3, ammoPic, ICON_SIZE*1.3, size - ICON_SIZE*1.3 - 4	)
+			end
+			if unitpicBadge1Update then
+				unitpicBadge1Update(needRearm, IMAGE.NO_AMMO)
+			end
+			if unitpicBadge2Update then
+				unitpicBadge2Update(true, ammoPic)
 			end
 			return
 		end
 		
 		if reloadBar then
 			reloadBar:SetVisibility(false)
+		end
+		if jumpBar then
+			jumpBar:SetVisibility(false)
+		end
+		if unitpicBadge1Update then
+			unitpicBadge1Update(false)
+		end
+		if unitpicBadge2Update then
+			unitpicBadge2Update(false)
 		end
 		
 		local totalHealth, totalMax = 0, 0
@@ -1382,6 +1578,16 @@ local function GetUnitGroupIconButton(parentControl)
 		UpdateUnitInfo()
 	end
 	
+	function externalStuff.LanguageChange()
+		if not unitDefID then
+			return
+		end
+
+		local ud = UnitDefs[unitDefID]
+		unitImage.tooltip = GetUnitSelectionTooltip(ud, unitDefID, unitID)
+		unitImage:Invalidate()
+	end
+
 	return externalStuff
 end
 
@@ -1477,7 +1683,7 @@ local function GetSelectionStatsDisplay(parentControl)
 			WG.Translate("interface", "health") .. ": " .. Format(total_hp) .. " / " ..  Format(total_maxhp) .. "\n"
 		
 		if total_maxShield ~= 0 then
-			unitInfoString = unitInfoString .. "Shield" .. ": " .. Format(total_shield) .. " / " ..  Format(total_maxShield) .. "\n"
+			unitInfoString = unitInfoString .. WG.Translate("interface", "shields") .. ": " .. Format(total_shield) .. " / " ..  Format(total_maxShield) .. "\n"
 		end
 		if total_totalbp ~= 0 then
 			unitInfoString = unitInfoString ..
@@ -1717,7 +1923,13 @@ local function GetMultiUnitInfoPanel(parentControl)
 		iconSize = newIconSize
 		Resize(holder)
 	end
-	
+
+	function externalFunctions.LanguageChange()
+		for i = 1, #displayButtons do
+			displayButtons[i].LanguageChange()
+		end
+	end
+
 	return externalFunctions
 end
 
@@ -1749,7 +1961,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		parent = parentControl,
 	}
 	
-	local reloadBar
+	local reloadBar, jumpBar
 	local unitImage = Chili.Image:New{
 		name = "unitImage",
 		x = 0,
@@ -1796,7 +2008,10 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 	local energyInfoUpdate = GetImageWithText(leftPanel, "energyInfoUpdate", PIC_HEIGHT + 2*LEFT_SPACE + 4, IMAGE.ENERGY, nil, nil, ICON_SIZE, 4)
 	local maxHealthLabel = GetImageWithText(rightPanel, "maxHealthLabel", PIC_HEIGHT + 4, IMAGE.HEALTH, nil, NAME_FONT, ICON_SIZE, 2, 2)
 	
+	local minWindLabel = GetImageWithText(leftPanel, "minWindLabel", PIC_HEIGHT + LEFT_SPACE + 4, IMAGE.WIND_SPEED, nil, nil, ICON_SIZE, 4)
 	local healthBarUpdate = GetBarWithImage(rightPanel, "healthBarUpdate", PIC_HEIGHT + 4, IMAGE.HEALTH, {0, 1, 0, 1}, GetHealthColor)
+	local unitpicBadge1Update = GetImage(unitImage, "costInfoUpdate", 4, IMAGE.NO_AMMO, ICON_SIZE, 4)
+	local unitpicBadge2Update = GetImage(unitImage, "ammoPicInfoUpdate", PIC_HEIGHT - 4 - ICON_SIZE*1.3, IMAGE.NO_AMMO, ICON_SIZE*1.3, LEFT_WIDTH - ICON_SIZE*1.3 - 4)
 	
 	local metalInfo
 	local energyInfo
@@ -1832,11 +2047,17 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 	local externalFunctions = {}
 		
 	local function UpdateReloadTime(unitID, unitDefID)
-		local reloadTime, weaponNum = GetManualFireReload(unitID, unitDefID)
+		local reloadTime, weaponNum, rulesParam = GetManualFireReload(unitID, unitDefID)
 		if reloadTime then
-			reloadBar = UpdateManualFireReload(reloadBar, unitImage, unitID, weaponNum, reloadTime)
+			reloadBar = UpdateManualFireReload(reloadBar, unitImage, unitID, weaponNum, rulesParam, reloadTime)
 		elseif reloadBar then
 			reloadBar:SetVisibility(false)
+		end
+		local jumpReloadTime = GetJumpReload(unitID, unitDefID)
+		if jumpReloadTime then
+			jumpBar = UpdateManualFireReload(jumpBar, unitImage, unitID, false, JUMP_RELOAD_PARAM, jumpReloadTime, true)
+		elseif jumpBar then
+			jumpBar:SetVisibility(false)
 		end
 	end
 
@@ -1851,12 +2072,12 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			metalInfoUpdate(false)
 			energyInfoUpdate(false)
 		end
+		minWindLabel(false)
 		
 		local healthPos
 		if shieldBarUpdate then
-			local shieldHP = maxShield[unitDefID] or 0
-			if ud and (shieldHP > 0 or ud.level) then
-				local shieldPower = spGetUnitRulesParam(unitID, "comm_shield_max") or shieldHP
+			if ud and (ud.shieldPower > 0 or ud.level) then
+				local shieldPower = spGetUnitRulesParam(unitID, "comm_shield_max") or ud.shieldPower
 				local _, shieldCurrentPower = spGetUnitShieldState(unitID, -1)
 				if shieldCurrentPower and shieldPower then
 					shieldBarUpdate(true, nil, shieldCurrentPower, shieldPower, (shieldCurrentPower < shieldPower) and GetUnitShieldRegenString(unitID, ud))
@@ -1885,9 +2106,13 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			end
 		end
 		
-		if unitDefID and ud and (dynamicTooltipDefs[unitDefID] or UnitDefs[unitDefID].customParams.superweapon or UnitDefs[unitDefID].customParams.neededlink) then
+		if dynamicTooltipDefs[unitDefID] then
 			unitDesc:SetText(GetDescription(ud, unitID))
 		end
+		
+		unitpicBadge1Update(GetUnitNeedRearm(unitID, unitDefID), IMAGE.NO_AMMO)
+		local ammoPic = GetUnitAmmoPic(unitID, unitDefID)
+		unitpicBadge2Update(ammoPic, ammoPic)
 		
 		UpdateReloadTime(unitID, unitDefID)
 		
@@ -1908,7 +2133,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		local ud = UnitDefs[unitDefID]
 		local extraTooltip, healthOverride
 		if not (unitID or featureID) then
-			extraTooltip, healthOverride = GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mousePlaceY)
+			extraTooltip, healthOverride, minWind = GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mousePlaceY)
 		end
 		if extraTooltip then
 			unitDesc:SetText(GetDescription(ud, unitID) .. extraTooltip)
@@ -1919,6 +2144,13 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		
 		if econStructureDefs[unitDefID].isWind then
 			maxHealthLabel(true, healthOverride or ud.health, IMAGE.HEALTH)
+			if mousePlaceX then
+				minWindLabel(true, FormatPlusMinus(minWind), IMAGE.WIND_SPEED)
+			else
+				minWindLabel(false)
+			end
+		else
+			minWindLabel(false)
 		end
 	end
 	
@@ -1962,15 +2194,19 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 					end
 					if econStructureDefs[unitDefID] then
 						UpdateDynamicEconInfo(unitDefID, mousePlaceX, mousePlaceY)
+					else
+						minWindLabel(false)
 					end
 				end
 			end
 			return
 		end
+		
 		if featureID then
 			teamID = Spring.GetFeatureTeam(featureID)
-			local featureTooltip, featureUnitDefID = GetFeatureDisplayAttributes(featureDefID, featureID)
+			local featureTooltip, featureUnitDefID = GetFeatureDisplayAttributes(featureDefID)
 			healthBarUpdate(false)
+			minWindLabel(false)
 			if featureUnitDefID then
 				unitDefID = featureUnitDefID
 				featureTooltip = featureTooltip or GetHumanName(UnitDefs[unitDefID], nil)
@@ -2002,6 +2238,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			unitImage.file = "#" .. unitDefID
 			unitImage.file2 = GetUnitBorder(unitDefID)
 			unitImage:Invalidate()
+
 			local unitCost = math.floor(GetUnitCost(unitID, unitDefID) or 0)
 			if featureID and UnitDefs[unitDefID].customParams.dynamic_comm then
 				unitCost = Spring.GetFeatureRulesParam(featureID, "comm_cost") or 0
@@ -2012,24 +2249,23 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			end
 			costInfoUpdate(true, cyan .. smallCostDisplay, IMAGE.COST, PIC_HEIGHT + 4)
 			
-			local extraTooltip, healthOverride
+			local extraTooltip, healthOverride, minWind
 			if not (unitID or featureID) then
-				extraTooltip, healthOverride = GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mousePlaceY)
+				extraTooltip, healthOverride, minWind = GetExtraBuildTooltipAndHealthOverride(unitDefID, mousePlaceX, mousePlaceY)
 			end
 			if extraTooltip then
 				unitDesc:SetText(GetDescription(ud, unitID) .. extraTooltip)
 			else
-				if featureID then
-					unitDesc:SetText(Spring.Utilities.GetFeatureDescription(ud, featureID))
-				else
-					unitDesc:SetText(GetDescription(ud, unitID))
-				end
+				unitDesc:SetText(GetDescription(ud, unitID))
 			end
 			unitDesc:Invalidate()
 			if not featureID then
 				local unitName = GetHumanName(ud, unitID)
 				unitNameUpdate(true, unitName, GetUnitIcon(unitDefID))
 			end
+			
+			local unitName = GetHumanName(ud, unitID)
+			unitNameUpdate(true, unitName, GetUnitIcon(unitDefID))
 			
 			if unitID then
 				if playerNameLabel then
@@ -2073,6 +2309,9 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			if reloadBar then
 				reloadBar:SetVisibility(false)
 			end
+			if jumpBar then
+				jumpBar:SetVisibility(false)
+			end
 		end
 		
 		if not metalInfoShown then
@@ -2107,7 +2346,32 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		prevVisible = visible
 		prevMorphTime, prevMorphCost, prevMousePlace = morphTime, morphCost, ((mousePlaceX and true) or false)
 	end
-	
+
+	function externalFunctions.LanguageChange()
+		if prevUnitDefID then
+			local ud = UnitDefs[prevUnitDefID]
+			unitDesc:SetText(GetDescription(ud, prevUnitID))
+			unitDesc:Invalidate()
+
+			local unitName = GetHumanName(ud, prevUnitID)
+			unitNameUpdate(true, unitName, GetUnitIcon(prevUnitDefID))
+
+			if not isTooltipVersion then
+				unitImage.tooltip = GetSingleUnitSelectionTooltip(ud, prevUnitDefID)
+				unitImage:Invalidate()
+			elseif prevUnitID then
+				local teamID = Spring.GetUnitTeam(prevUnitID)
+				local playerName = teamID and GetPlayerCaption(teamID)
+				if playerName then
+					playerNameLabel:SetCaption(playerName)
+				end
+			end
+		end
+		if isTooltipVersion then
+			spaceClickLabel:SetCaption(green .. WG.Translate("interface", "space_click_show_stats"))
+		end
+	end
+
 	function externalFunctions.SetVisible(newVisible)
 		leftPanel:SetVisibility(newVisible)
 		rightPanel:SetVisibility(newVisible)
@@ -2154,6 +2418,10 @@ local function GetTooltipWindow()
 	
 	local externalFunctions = {}
 	
+	function externalFunctions.LanguageChange()
+		unitDisplay.LanguageChange()
+	end
+
 	function externalFunctions.SetVisible(newVisible)
 		window:SetVisibility(newVisible)
 	end
@@ -2323,6 +2591,10 @@ local function UpdateTooltipContent(mx, my, dt, requiredOnly)
 		return true
 	end
 	
+	if (not options.tooltipThroughPanels.value) and screen0.hoveredControl then
+		return false
+	end
+	
 	-- Unit or feature tooltip
 	local thingType, thingID = spTraceScreenRay(mx,my)
 	local thingIsUnit = (thingType == "unit")
@@ -2433,7 +2705,7 @@ local function GetSelectionWindow()
 				return true --skip button function, else clicking on build pic will also select the unit.
 			end
 		},
-		noClickThrough = false,
+		noClickThrough = not options.allowclickthrough.value,
 		parent = holderWindow
 	}
 	mainPanel.padding[1] = mainPanel.padding[1] + options.leftPadding.value
@@ -2446,6 +2718,11 @@ local function GetSelectionWindow()
 	
 	local externalFunctions = {}
 	
+	function externalFunctions.LanguageChange()
+		singleUnitDisplay.LanguageChange()
+		multiUnitDisplay.LanguageChange()
+	end
+
 	function externalFunctions.ShowSingleUnit(unitID)
 		singleUnitID, singleUnitDefID = unitID, spGetUnitDefID(unitID)
 		singleUnitDisplay.SetDisplay(unitID, spGetUnitDefID(unitID))
@@ -2603,6 +2880,42 @@ function widget:Initialize()
 	selectionWindow = GetSelectionWindow()
 	tooltipWindow = (WG.Modding_TooltipOverride and WG.Modding_TooltipOverride()) or GetTooltipWindow()
 	InitializeWindParameters()
+
+	local function LanguageUpdate()
+		singleSelectionTooltip = "\n" ..
+			green .. WG.Translate("interface", "lmb") .. ": " .. "Center view" .. "\n" ..
+			green .. WG.Translate("interface", "space_click_show_stats")
+		--selectionTooltip = "\n" ..
+		--	green .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "select") .. "\n" ..
+		--	green .. WG.Translate("interface", "rmb") .. ": " .. WG.Translate("interface", "deselect") .. "\n" ..
+		--	green .. WG.Translate("interface", "shift") .. "+" .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "select_type") .. "\n" ..
+		--	green .. WG.Translate("interface", "shift") .. "+" .. WG.Translate("interface", "rmb") .. ": " .. WG.Translate("interface", "deselect_type") .. "\n" ..
+		--	green .. WG.Translate("interface", "alt") .. "+" .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "select_type_half") .. "\n" ..
+		--	green .. WG.Translate("interface", "alt") .. "+" .. WG.Translate("interface", "rmb") .. ": " .. WG.Translate("interface", "deselect_type_half") .. "\n" ..
+		--	green .. WG.Translate("interface", "ctrl") .. "+" .. WG.Translate("interface", "lmb") .. ": " .. WG.Translate("interface", "defer_selection") .. "\n" ..
+		--	green .. WG.Translate("interface", "mmb") .. ": " .. WG.Translate("interface", "go_to") .. "\n" ..
+		--	green .. WG.Translate("interface", "space_click_show_stats")
+
+		selectionTooltip = "\n" ..
+			green .. WG.Translate("interface", "lmb")   .. ": " .. WG.Translate("interface", "select") .. "\n" ..
+			green .. WG.Translate("interface", "rmb")   .. ": " .. WG.Translate("interface", "deselect") .. "\n" ..
+			green .. "+ " .. WG.Translate("interface", "shift") .. ": " .. WG.Translate("interface", "select_type") .. "\n" ..
+			green .. "+ " .. WG.Translate("interface", "alt")   .. ": " .. WG.Translate("interface", "select_type_half") .. "\n" ..
+			green .. "+ " .. WG.Translate("interface", "ctrl")  .. ": " .. WG.Translate("interface", "defer_selection") .. "\n" ..
+			green .. WG.Translate("interface", "mmb")   .. ": " .. WG.Translate("interface", "go_to") .. "\n" ..
+			green .. WG.Translate("interface", "space_click_show_stats")
+
+		unitSelectionTooltipCache = {}
+		unitSingleSelectionTooltipCache = {}
+
+		if tooltipWindow.LanguageChange then
+			tooltipWindow.LanguageChange()
+		end
+		selectionWindow.LanguageChange()
+	end
+
+	LanguageUpdate()
+	WG.InitializeTranslation(LanguageUpdate, "gui_chili_selections_and_cursortip.lua")
 end
 
 function widget:UnitDestroyed(unitID)
@@ -2612,6 +2925,7 @@ function widget:UnitDestroyed(unitID)
 end
 
 function widget:Shutdown()
+	WG.ShutdownTranslation("gui_chili_selections_and_cursortip.lua")
 	Spring.SendCommands({"tooltip 1"})
 	Spring.SetDrawSelectionInfo(true)
 	Spring.SetDrawSelectionInfo(true)

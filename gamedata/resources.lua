@@ -81,6 +81,7 @@ local resources = {
 			AAsmoketrail= "AAsmoketrail.tga",
 			bigexplo= "cc/bigexplo.tga",
 			bloodblast= "pd/bloodblast.png",
+			bloodblastjustwhite= "pd/bloodblastjustwhite.png",
 			bloodblastwhite= "pd/bloodblastwhite.tga",
 			blooddrop= "pd/blooddrop.png",
 			blooddropwhite= "pd/blooddropwhite.tga",

@@ -2,8 +2,8 @@ return {
 	staticnuke = {
 		unitname                      = "staticnuke",
 		name                          = "Oblivion",
-		description                   = "MIRV Launcher, Drains 35 m/s, 2 minute stockpile",
-		buildCostMetal                = 8000,
+		description                   = "MIRV Launcher, Drains 30 m/s, 3 minute stockpile",
+		buildCostMetal                = 12000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 10,
@@ -16,8 +16,8 @@ return {
 		collisionVolumeType           = "box",
 		corpse                        = "DEAD",
 		customParams                  = {
-			stockpiletime  = "120",
-			stockpilecost  = "4200",
+			stockpiletime  = "210",
+			stockpilecost  = "6300",
 			priority_misc  = 1, -- Medium
 			outline_x = 195,
 			outline_y = 195,
@@ -29,7 +29,7 @@ return {
 		iconType                      = "nuke",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = 5000,
+		health                        = 5000,
 		maxSlope                      = 18,
 		maxWaterDepth                 = 0,
 		minCloakDistance              = 150,
@@ -110,13 +110,10 @@ return {
 					restrict_in_widgets = 1,
 					cruisealt = 11000,
 					cruisedist = 400,
-					numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 5,
 					projectile1 = "staticnuke_warhead",
-					spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					spawndist = 7000, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeoutspawn = 0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = 0, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					spawndist = 7000,
+					timeoutspawn = 0,
 					useheight = 1,
 					usertargetable = 1,
 					cruise_ignoreterrain = 1,

@@ -32,8 +32,8 @@ return {
 		iconType               = "subtacnuke",
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
-		maxDamage              = 3750,
-		maxVelocity            = 2.79,
+		health                 = 3750,
+		speed                  = 2.79,
 		minWaterDepth          = 15,
 		movementClass          = "UBOAT3",
 		moveState              = 0,
@@ -42,7 +42,6 @@ return {
 		selfDestructAs         = "BIG_UNITEX",
 		script                 = "subtacmissile.lua",
 		sightDistance          = 660,
-		sonarDistance          = 660,
 		turninplace            = 0,
 		turnRate               = 491,
 		upright                = true,
@@ -68,13 +67,10 @@ return {
 				craterMult              = 3.5,
 
 				customParams = {
-					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 3,
 					projectile1 = "subtacmissile_warhead",
-					spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					spawndist = 900, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeoutspawn = 0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = 0, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					spawndist = 900,
+					timeoutspawn = 0, 
 					usertargetable = 1,
 					reaim_time = 60, -- Fast update not required (maybe dangerous)
 					
@@ -82,7 +78,7 @@ return {
 					stats_custom_tooltip_1 = " - Carries MIRV Warheads",
 					stats_custom_tooltip_entry_1 = "",
 					stats_custom_tooltip_2 = "    - Warhead Count:",
-					stats_custom_tooltip_entry_2 = "6",
+					stats_custom_tooltip_entry_2 = "3",
 					stats_custom_tooltip_3 = "    - Warhead Range:",
 					stats_custom_tooltip_entry_3 = "500 elmos",
 					reveal_unit = 5,
@@ -128,7 +124,7 @@ return {
 				},
 
 				damage                  = {
-					default = 1801.2,
+					default = 4201.2,
 				},
 
 				edgeEffectiveness       = 0.7,

@@ -39,8 +39,8 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		maneuverleashlength = "1280",
-		maxDamage           = 3500,
-		maxVelocity         = 3.0,
+		health              = 7250,
+		speed               = 3.0,
 		minCloakDistance    = 75,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE SUB",
@@ -55,7 +55,6 @@ return {
 			},
 		},
 		sightDistance       = 800,
-		sonarDistance		= 800,
 		turnRate            = 600,
 		workerTime          = 0,
 		weapons             = {
@@ -92,7 +91,7 @@ return {
 					--light_ground_height = 120,
 				},
 				damage                  = {
-					default = 20.1, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
+					default = 38.1, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
 				},
 				explosionGenerator      = "custom:gauss_hit_m",
 				heightBoostFactor       = 0,
@@ -101,7 +100,7 @@ return {
 				impactOnly              = true,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 770,
+				range                   = 900,
 				reloadtime              = 6/30,
 				rgbColor                = "0.5 1 1",
 				separation              = 0.5,
@@ -137,7 +136,7 @@ return {
 				},
 			
 				damage         = {
-					default = 80.1,
+					default = 65.1,
 				},
 			
 				--texture1="null", --flare, reference: http://springrts.com/wiki/Weapon_Variables#Texture_Tags
@@ -157,8 +156,8 @@ return {
 				model                   = "wep_merl.s3o",
 				noSelfDamage            = true,
 				projectiles             = 2,
-				range                   = 850,
-				reloadtime              = 7,
+				range                   = 950,
+				reloadtime              = 6,
 				smokeTrail              = false,
 				soundHit                = "weapon/missile/vlaunch_hit",
 				soundStart              = "weapon/missile/aurora_missile_fire",

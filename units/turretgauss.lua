@@ -24,6 +24,7 @@ return {
 			popupholdfirehp = 0.4,
 			popupunholdfirehp = 0.66,
 			bait_level_default = 1,
+			armortype = 1, -- for context menu.
 		},
 		damageModifier                = 0.2,
 		explodeAs                     = "SMALL_BUILDINGEX",
@@ -34,7 +35,7 @@ return {
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 3500,
+		health                        = 3500,
 		maxSlope                      = 18,
 		--maxWaterDepth                 = 0, -- model-derived would be 305: 35 elmo legs + 6x45 elmo pillar segments should be enough for everyone
 		minCloakDistance              = 150,
@@ -49,7 +50,6 @@ return {
 			},
 		},
 		sightDistance                 = 664, -- Range*1.1 + 48 for radar overshoot
-		sonarDistance                 = 664,
 		useBuildingGroundDecal        = true,
 		yardmap                       = "ooooooooo",
 		weapons                       = {

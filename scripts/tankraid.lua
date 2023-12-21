@@ -51,8 +51,10 @@ local spAddUnitDamage = Spring.AddUnitDamage
 local flaming = false
 local isFiring = false
 
-local boostSpeed = 2
-local boostTime = 4*10
+local boostHealthCost = tonumber(UnitDef.customParams.boost_health_cost) or 15
+local boostSpeed = tonumber(UnitDef.customParams.boost_speed_mult) or 2
+local boostTime = (tonumber(UnitDef.customParams.boost_duration) or 1.4) * 10
+local boostMinHealth = tonumber(UnitDef.customParams.boost_min_health) or 100
 local normalSpeed = 1
 local firingSpeed = 0.8
 
@@ -126,9 +128,9 @@ function FlameTrailThread()
 		end
 		if moving then
 			EmitSfx(firepoint, GG.Script.FIRE_W2)
-			spSetUnitHealth(unitID, health-15)
+			spSetUnitHealth(unitID, health - boostHealthCost)
 		end
-		if health < 100 then
+		if health < boostMinHealth then
 			n = 10000
 		end
 		Sleep(100)

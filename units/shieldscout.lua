@@ -15,7 +15,7 @@ return {
 		collisionVolumeScales  = "34 45 27",
 		collisionVolumeType    = "box",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "34 45 34",
+		selectionVolumeScales  = "51 68 51",
 		selectionVolumeType    = "cylY",
 		corpse                 = "DEAD",
 		customParams           = {
@@ -33,9 +33,9 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 360,
+		health                 = 360,
 		maxSlope               = 36,
-		maxVelocity            = 2.8,
+		speed                  = 2.8,
 		maxWaterDepth          = 22,
 		minCloakDistance       = 75,
 		movementClass          = "KBOT2",
@@ -79,6 +79,7 @@ return {
 				customParams              = {
 					light_radius = 0,
 					combatrange = 15,
+					armorpiercing = 1,
 				},
 				damage                  = {
 					default = 70.01,

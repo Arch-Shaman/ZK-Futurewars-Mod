@@ -4,7 +4,7 @@ function gadget:GetInfo()
 		desc      = "Handles Resign state",
 		author    = "Shaman, terve886",
 		date      = "4/15/2021",
-		license   = "CC BY-NC-ND",
+		license   = "PD-0",
 		layer     = 1,
 		enabled   = true  --  loaded by default?
 	}
@@ -38,7 +38,7 @@ local ALLIED = {allied = true}
 local states = {} -- allyTeamID = {count = num, playerStates = {}}
 local playerMap = {} -- playerID = allyTeamID
 local resigntimer = 180 -- timer starts at 3 minutes and loses a second every 3rd second (down to 60s) over the first 6 minutes.
-local mintime = 30
+local mintime = 60
 local resignteams = {}
 local exemptplayers = {} -- players who are exempt.
 local afkplayers = {}
@@ -265,7 +265,9 @@ function gadget:GameFrame(f)
 				states[allyTeamID].timer = states[allyTeamID].timer - 1
 				UpdateResignTimer(allyTeamID)
 				if states[allyTeamID].timer == 0 then
-					Spring.Echo("game_message: Team " .. allyTeamID .. " Destroyed due to morale.")
+					if GetAllyTeamPlayerCount(allyTeamID) > 1 then
+						Spring.Echo("game_message: Team " .. allyTeamID .. " Destroyed due to morale.")
+					end
 					DestroyAlliance(allyTeamID)
 					RemoveResignTeam(allyTeamID)
 					Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_total", 0, PUBLIC)

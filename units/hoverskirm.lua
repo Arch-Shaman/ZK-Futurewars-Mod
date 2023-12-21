@@ -26,9 +26,9 @@ return {
 		iconType            = "hoverskirm",
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
-		maxDamage           = 2000,
+		health              = 2000,
 		maxSlope            = 36,
-		maxVelocity         = 4.5,
+		speed               = 4.5,
 		movementClass       = "HOVER3",
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE SUB",
@@ -43,7 +43,6 @@ return {
 			},
 		},
 		sightDistance       = 450,
-		sonarDistance       = 450,
 		turninplace         = 0,
 		turnRate            = 200,
 		weapons             = {
@@ -72,12 +71,12 @@ return {
 					blastwave_speed = 1.5,
 					blastwave_life = 30,
 					blastwave_lossfactor = 0.80,
-					blastwave_damage = 250,
-					damage_vs_shield = 150,
+					blastwave_damage = 75,
+					damage_vs_shield = 400,
 				},
 
 				damage                  = {
-					default = 100.01,
+					default = 150.01,
 				},
 
 				cegTag                  = "sonicarcher",

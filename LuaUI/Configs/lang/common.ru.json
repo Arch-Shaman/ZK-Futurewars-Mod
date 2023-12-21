@@ -73,5 +73,10 @@
 	"roster_factoryship" : "Корабли",
 	"roster_striderhub" : "Страйдеры",
 	"roster_staticmissilesilo" : "Ракеты",
-	"neutral" : "Нейтрали"
+	"neutral" : "Нейтрали",
+	"whisper" : "user сообщает вам",
+	"whisperto" : "вы говорите user",
+	"specwhisper" : "user сказал user2",
+	"addedpoint" : "user добавил точку на карту.",
+	"addedmarker": "user созданный маркер карты:"
 }

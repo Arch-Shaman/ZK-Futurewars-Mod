@@ -25,7 +25,7 @@ local wantedUnits = {}
 
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
-local spGetUnitHealth = Spring.GetUnitHealth
+--local spGetUnitHealth = Spring.GetUnitHealth
 local spEcho = Spring.Echo
 local min = math.min
 local max = math.max
@@ -103,7 +103,7 @@ local function RechargeBattery(unitID, amount)
 	if data == nil then
 		return
 	end
-	data.battery = math.min(data.battery + amount, data.maxbattery)
+	data.battery = min(data.battery + amount, data.maxbattery)
 	spSetUnitRulesParam(unitID, "battery", data.battery, INLOS)
 	IterableMap.Set(handled, unitID, data)
 end
@@ -142,8 +142,22 @@ end
 function gadget:UnitCreated(unitID, unitDefID)
 	if wantedUnits[unitDefID] then
 		local config = wantedUnits[unitDefID]
-		IterableMap.Add(handled, unitID, {battery = config.initialCharge, gain = config.gain, maxbattery = config.maximum, costs = config.batterycost, scales = config.scales, checks = config.checks})
+		IterableMap.Add(handled, unitID, {battery = config.initialCharge, gain = config.gain, maxbattery = config.maximum, costs = config.batterycost, scales = config.scales, checks = config.checks, reverseBuilt = false})
 		spSetUnitRulesParam(unitID, "battery", config.initialCharge, INLOS)
+	end
+end
+
+function gadget:UnitReverseBuilt(unitID, unitDefID, unitTeam)
+	if wantedUnits[unitDefID] then
+		local data = IterableMap.Get(handled, unitID)
+		data.reverseBuilt = true
+	end
+end
+
+function gadget:UnitFinished(unitID, unitDefID, unitTeam)
+	if wantedUnits[unitDefID] then
+		local data = IterableMap.Get(handled, unitID)
+		data.reverseBuilt = false
 	end
 end
 
@@ -157,10 +171,10 @@ function gadget:GameFrame(f)
 	if f%checkTime == 0 then
 		for id, data in IterableMap.Iterator(handled) do
 			local powered = (spGetUnitRulesParam(id, "lowpower") or 0) == 0
-			local _, _, _, _, bp = spGetUnitHealth(id)
+			--local _, _, _, _, bp = spGetUnitHealth(id)
 			local lastbattery = data.battery
-			local gain = data.gain 
-			if (not powered) or bp < 1 then
+			local gain = data.gain
+			if (not powered) or data.reverseBuilt then
 				if data.battery > 0 then
 					data.battery = max(data.battery - (gain * 2), 0)
 				end

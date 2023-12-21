@@ -41,7 +41,7 @@ return {
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 200,
+		health                        = 200,
 		maxSlope                      = 36,
 		minCloakDistance              = 150,
 		noAutoFire                    = false,
@@ -52,7 +52,6 @@ return {
 		radarEmitHeight               = 32,
 		selfDestructAs                = "SMALL_BUILDINGEX",
 		sightDistance                 = 600,
-		sonarDistance       		  = 600,
 		useBuildingGroundDecal        = true,
 		yardMap                       = "oooo",
 		sfxtypes               = {

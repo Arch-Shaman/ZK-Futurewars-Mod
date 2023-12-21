@@ -31,7 +31,7 @@ return {
 		collisionVolumeScales         = "60 34 34",
 		collisionVolumeType           = "box",
 		selectionVolumeOffsets        = "0 0 16",
-		selectionVolumeScales         = "64 30 70",
+		selectionVolumeScales         = "87 41 95",
 		selectionVolumeType           = "box",
 		corpse                        = "DEAD",
 		customParams                  = {
@@ -56,7 +56,7 @@ return {
 		iconType                      = "padair",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = Shared.FACTORY_PLATE_HEALTH,
+		health                        = Shared.FACTORY_PLATE_HEALTH,
 		maxSlope                      = 15,
 		minCloakDistance              = 150,
 		noAutoFire                    = false,

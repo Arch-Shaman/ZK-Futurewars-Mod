@@ -114,7 +114,7 @@ function script.AimWeapon(num, heading, pitch)
 	--Spring.Echo(headDiff*180/math.pi)
 
 	if math.abs(headDiff) > hpi then
-		heading = (heading+math.pi)%GG.Script.tau
+		heading = (heading+math.pi)%math.tau
 		pitch = -pitch+math.pi
 	end
 	spindlePitch = -pitch

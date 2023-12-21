@@ -15,6 +15,9 @@ return {
 		collisionVolumeOffsets  = "0 0 0",
 		--collisionVolumeScales = "70 70 70",
 		--collisionVolumeType   = "ellipsoid",
+		selectionVolumeOffsets = "0 0 0",
+		selectionVolumeScales  = "105 105 105",
+		selectionVolumeType    = "ellipsoid",
 		corpse              = "DEAD",
 
 		customParams        = {
@@ -36,7 +39,7 @@ return {
 		leaveTracks         = true,
 		maxDamage           = 27000,
 		maxSlope            = 36,
-		maxVelocity         = 1.1,
+		speed               = 1.1,
 		maxReverseVelocity  = 0,
 		minCloakDistance    = 75,
 		movementClass       = "AKBOT4",
@@ -52,7 +55,6 @@ return {
 		},
 
 		sightDistance       = 860,
-		sonarDistance       = 860,
 		trackOffset         = 0,
 		trackStrength       = 8,
 		trackStretch        = 1,
@@ -85,6 +87,8 @@ return {
 				craterMult              = 0,
 				customParams = {
 					burst = Shared.BURST_RELIABLE,
+					shield_damage = 1350.4,
+					armorpiercing = 0.2,
 				},
 				damage                  = {
 					default = 600.1,
@@ -112,7 +116,7 @@ return {
 				turret                  = true,
 				waterweapon             = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 730,
+				weaponVelocity          = 900,
 			},
 		},
 		featureDefs         = {

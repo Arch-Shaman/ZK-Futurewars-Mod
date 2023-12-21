@@ -17,7 +17,7 @@ return {
 		collisionVolumeScales  = "34 26 34",
 		collisionVolumeType    = "ellipsoid",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "42 42 42",
+		selectionVolumeScales  = "63 63 63",
 		selectionVolumeType    = "ellipsoid",
 		corpse              = "DEAD",
 		customParams        = {
@@ -32,6 +32,10 @@ return {
 			outline_x = 80,
 			outline_y = 80,
 			outline_yoff = 12.5,
+			boost_speed_mult = 2,
+			boost_duration = 1.4,
+			boost_health_cost = 15,
+			boost_min_health = 100,
 		},
 		explodeAs           = "DEATHEXPLO",
 		footprintX          = 3,
@@ -39,9 +43,9 @@ return {
 		highTrajectory      = 0,
 		iconType            = "tankraider",
 		leaveTracks         = true,
-		maxDamage           = 1200,
+		health              = 1200,
 		maxSlope            = 18,
-		maxVelocity         = 4.7,
+		speed               = 4.7,
 		maxWaterDepth       = 22,
 		minCloakDistance    = 75,
 		movementClass       = "TANK3",
@@ -84,7 +88,7 @@ return {
 		},
 		weaponDefs             = {
 			NAPALM_SPRAYER = {
-				name                    = "Napalm Jet Sprayer",
+				name                    = "Thermite Jet Sprayer",
 				accuracy                = 1100,
 				areaOfEffect            = 40,
 				avoidFeature            = false,
@@ -186,16 +190,12 @@ return {
 					light_color = "0.75 0.4 0.15",
 					light_radius = 220,
 					manualfire = 1,
-					numprojectiles1 = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 12,
 					projectile1 = "tankraid_napalm_fragment_dummy",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					keepmomentum1 = 0,
-					timeoutspawn = 0,
-					vradius1 = "-2.5,3,-2.5,2.5,6,2.5",
-					noairburst = "Sattuu ihan perkeleesti", -- if true, this projectile will skip all airburst checks
-					onexplode = "Sattuu ihan vitusti", -- if true, this projectile will cluster when it explodes
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					velspread1 = "1.91, 4, 1.91, _, 6, _",
+					noairburst = "Sattuu ihan perkeleesti",
+					onexplode = "Sattuu ihan vitusti",
+					timeddeploy = -1,
 					area_damage = 1,
 					area_damage_radius = 108,
 					area_damage_dps = 20,
@@ -229,7 +229,7 @@ return {
 				weaponVelocity          = 255,
 			},
 			NAPALM_FRAGMENT_DUMMY = {
-				name                    = "Napalm Fragment",
+				name                    = "Thermite Fragment",
 				accuracy                = 400,
 				areaOfEffect            = 162,
 				avoidFeature            = false,
@@ -237,16 +237,9 @@ return {
 				craterMult              = 2,
 				cegTag                  = "flamer",
 				customParams              = {
-					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "tankraid_napalm_fragment",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "derpderpderpderpderpderpderpderpderpderp", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					keepmomentum1 = 1,
-					timeoutspawn = 0,
-					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeddeploy = 20,
-					--lups_heat_fx = "firewalker",
+					noairburst = "I belive I can fly...",
+					timeddeploy = 40,
 					light_camera_height = 2500,
 					light_color = "0.25 0.13 0.05",
 					light_radius = 500,
@@ -276,7 +269,7 @@ return {
 				weaponVelocity          = 320,
 			},
 			NAPALM_FRAGMENT = {
-				name                    = "Napalm Fragment",
+				name                    = "Thermite Fragment",
 				accuracy                = 400,
 				areaOfEffect            = 162,
 				avoidFeature            = false,

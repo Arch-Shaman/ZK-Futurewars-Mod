@@ -5,6 +5,7 @@ if (Spring.GetModOptions) then
 end
 
 local nuclearwar = tonumber((modOptions["goingnuclear"]) or 0) == 1
+local commwars = tonumber((modOptions["commwars"]) or 0) == 1
 
 
 Spring.Echo("Loading UnitDefs_posts")
@@ -176,13 +177,49 @@ end]]
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --
--- Modular commander/PlanetWars handling
+-- Unitdef generation handling
 --
 
 VFS.Include('gamedata/modularcomms/unitdefgen.lua')
 VFS.Include('gamedata/planetwars/pw_unitdefgen.lua')
+VFS.Include('gamedata/chicken/chickendefgen.lua')
 local Utilities = VFS.Include('gamedata/utilities.lua')
 
+-- Handle obsolete keys in mods gracefully while they migrate
+for name, ud in pairs(UnitDefs) do
+	if ud.metaluse then
+		--Spring.Echo("ERROR: " .. name .. ".metalUse set, should be metalUpkeep instead!")
+		ud.metalupkeep = ud.metalupkeep or ud.metaluse
+	end
+	if ud.energyuse then
+		--Spring.Echo("ERROR: " .. name .. ".energyuse set, should be energyUpkeep instead!")
+		ud.energyupkeep = ud.energyupkeep or ud.energyuse
+	end
+	if ud.buildcostmetal then
+		--Spring.Echo("ERROR: " .. name .. ".buildCostMetal set, should be metalCost instead!")
+		ud.metalcost = ud.metalcost or ud.buildcostmetal
+	end
+	if ud.buildcostenergy then
+		--Spring.Echo("ERROR: " .. name .. ".buildCostEnergy set, should be energyCost instead!")
+		ud.energycost = ud.energycost or ud.buildcostenergy
+	end
+	if ud.maxdamage then
+		--Spring.Echo("ERROR: " .. name .. ".maxDamage set, should be health instead!")
+		ud.health = ud.health or ud.maxdamage
+	end
+	if ud.maxvelocity then
+		--Spring.Echo("ERROR: " .. name .. ".speed set, should be speed instead!")
+		ud.speed = ud.speed or (ud.maxvelocity * Game.gameSpeed)
+	end
+	--if ud.maxreversevelocity then
+		--Spring.Echo("ERROR: " .. name .. ".maxReverseVelocity set, should be rSpeed instead!")
+		--ud.rspeed = ud.rspeed or (ud.maxreversevelocity * Game.gameSpeed)
+	--end
+	if ud.customparams.ismex then
+		--Spring.Echo("ERROR: " .. name .. ".customParams.ismex set, should be metal_extractor_mult (= 1) instead!")
+		ud.customparams.metal_extractor_mult = 1
+	end
+end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --
@@ -254,8 +291,8 @@ local BP2RES = 0
 local BP2RES_FACTORY = 0
 local BP2TERRASPEED = 1000 --used to be 60 in most of the cases
 local factorybonus = 500
-local platebonus = 150
-local conbonus = 10
+local platebonus = 250
+local conbonus = 15
 local TURNRATE_MULT_BOT = 1
 local TURNRATE_MULT_VEH = 1
 local ACCEL_MULT_BOT = 1
@@ -308,9 +345,19 @@ for name, ud in pairs(UnitDefs) do
 			end
 		end
 	end
+	-- fix zk defs? --
+	if ud.metalcost then
+		ud.buildcostmetal = ud.metalcost
+	end
+	
+	-- Speed fixes --
+	if ud.speed and ud.speed > 0 and ud.speed < 30 then -- this should impact less units than the first time. FIXME: Remove when all base units are in the mod.
+		ud.speed = ud.speed * 30
+	end
+	ud.rspeed = (ud.maxreversevelocity and ud.maxreversevelocity * 30) or (ud.speed and ud.speed / 8) or 0 -- maybe maxreversevelocity is still frame based?
 	-- Set units that ignore map-side gadgetted placement resitrctions
 	-- see http://springrts.com/phpbb/viewtopic.php?f=13&t=27550
-	if (ud.maxvelocity and ud.maxvelocity > 0) or ud.customparams.mobilebuilding then
+	if (ud.speed and ud.speed > 0) or ud.customparams.mobilebuilding then
 		ud.customparams.ignoreplacementrestriction = "true"
 	end
 	
@@ -366,18 +413,26 @@ for name, ud in pairs(UnitDefs) do
 		end
 		if name == "bomberheavy" then
 			ud.buildcostmetal =  1500
-			ud.maxdamage = 4000
+			ud.health = 4000
 		end
 		if name == "bomberstrike" then
 			ud.buildcostmetal = 400
 		end
 	end
 	
+	if (string.find(ud.name, "dyn") or ud.customparams.commtype or ud.customparams.level) and commwars then
+		Spring.Echo("[UnitDefs_Post] Comm wars applied to " .. ud.name)
+		ud.buildoptions = nil
+		ud.canassist = false
+		ud.repairspeed = ud.workertime * 3
+		ud.energymake = (ud.workertime * 3) + 1
+		ud.metalmake = 20
+	end
+	
 	-- 3dbuildrange for all none plane builders
 	--if (tobool(ud.builder) and not tobool(ud.canfly)) then
 	--	ud.buildrange3d = true
 	--end
-	
 	-- Calculate mincloakdistance based on unit footprint size
 	local fx = ud.customparams.decloak_footprint or (ud.footprintx and tonumber(ud.footprintx) or 1)
 	local fz = ud.customparams.decloak_footprint or (ud.footprintz and tonumber(ud.footprintz) or 1)
@@ -437,7 +492,7 @@ for name, ud in pairs(UnitDefs) do
 				end
 			end
 		end
-		if (hasShield or (((not ud.maxvelocity) or ud.maxvelocity == 0) and not ud.cloakcost)) then
+		if (hasShield or (((not ud.speed) or ud.speed == 0) and not ud.cloakcost)) then
 			ud.customparams.cannotcloak = 1
 			ud.mincloakdistance = 0
 			ud.cloakcost = nil
@@ -453,6 +508,10 @@ for name, ud in pairs(UnitDefs) do
 	if not ud.buildcostenergy then ud.buildcostenergy = cost end
 	if not ud.buildcostmetal then ud.buildcostmetal = cost end
 	if not ud.buildtime then ud.buildtime = cost end
+	if ud.buildtime <= 0 then ud.buildtime = 1 end
+	if ud.sightdistance then 
+		ud.sonardistance = ud.sightdistance
+	end
 	
 	if ud.customparams.dynamic_comm then -- Dynamic commanders have their explosion handled by unitscript. Also gives them antibait
 		ud.explodeas = "noweapon"
@@ -565,8 +624,8 @@ for name, ud in pairs(UnitDefs) do
 	-- unitspeedmult
 	if (modOptions and modOptions.unitspeedmult and modOptions.unitspeedmult ~= 1) then
 		local unitspeedmult = modOptions.unitspeedmult
-		if (ud.maxvelocity) then
-			ud.maxvelocity = ud.maxvelocity * unitspeedmult
+		if (ud.speed) then
+			ud.speed = ud.speed * unitspeedmult
 		end
 		if (ud.acceleration) then
 			ud.acceleration = ud.acceleration * unitspeedmult
@@ -621,18 +680,18 @@ for name, ud in pairs(UnitDefs) do
 	-- Set turnInPlace speed limits, reverse velocities (but not for ships)
 	if ud.turnrate and (ud.turnrate > 600 or ud.customparams.turnatfullspeed) then
 		ud.turninplace = false
-		ud.turninplacespeedlimit = (ud.maxvelocity or 0)
+		ud.turninplacespeedlimit = (ud.speed or 0)
 	elseif ud.turninplace ~= true then
 		ud.turninplace = false	-- true
-		ud.turninplacespeedlimit = ud.turninplacespeedlimit or (ud.maxvelocity and ud.maxvelocity*0.6 or 0)
+		ud.turninplacespeedlimit = ud.turninplacespeedlimit or (ud.speed and ud.speed*0.6 or 0)
 		--ud.turninplaceanglelimit = 180
 	end
 
 
 	if ud.category and not (ud.category:find("SHIP", 1, true) or ud.category:find("SUB", 1, true)) then
-		if (ud.maxvelocity) and not ud.maxreversevelocity then
+		if (ud.speed) and not ud.maxreversevelocity then
 			if not name:find("chicken", 1, true) then
-				ud.maxreversevelocity = ud.maxvelocity * 0.33
+				ud.maxreversevelocity = ud.speed * 0.33
 			end
 		end
 	end
@@ -682,7 +741,7 @@ for name, ud in pairs(UnitDefs) do
 	ud.airsightdistance = (ud.sightdistance or 0)
 	
 	-- Set mass
-	ud.mass = (((ud.buildtime/2) + (ud.maxdamage/8))^0.6)*6.5
+	ud.mass = (((ud.buildtime/2) + (ud.health/8))^0.6)*6.5
 	if ud.customparams.massmult then
 		ud.mass = ud.mass*ud.customparams.massmult
 	end
@@ -737,10 +796,7 @@ for name, ud in pairs(UnitDefs) do
 	if ud.collisionvolumescales or ud.selectionvolumescales then
 		-- Do not override default colvol because it is hard to measure.
 		
-		if ud.selectionvolumescales then
-			local dim = GetDimensions(ud.selectionvolumescales)
-			ud.selectionvolumescales  = math.ceil(dim[1]*scale) .. " " .. math.ceil(dim[2]*scale) .. " " .. math.ceil(dim[3]*scale)
-		else
+		if not ud.selectionvolumescales then
 			local size = math.max(ud.footprintx or 0, ud.footprintz or 0)*15
 			if size > 0 then
 				local dimensions, largest = GetDimensions(ud.collisionvolumescales)
@@ -792,8 +848,8 @@ for name, ud in pairs(UnitDefs) do
 	-- Altered unit health mod option
 	if modOptions and modOptions.hpmult and modOptions.hpmult ~= 1 then
 		local hpMulti = modOptions.hpmult
-		if ud.maxdamage and ud.unitname ~= "terraunit" then
-			ud.maxdamage = math.max(ud.maxdamage * hpMulti, 1)
+		if ud.health and ud.unitname ~= "terraunit" then
+			ud.health = math.max(ud.health * hpMulti, 1)
 		end
 	end
 	
@@ -810,7 +866,7 @@ for name, ud in pairs(UnitDefs) do
 	end]]
 	
 	-- Category changes
-	if ((ud.maxvelocity or 0) > 0) then
+	if ((ud.speed or 0) > 0) then
 		ud.category = ud.category .. " MOBILE"
 	end
 	
@@ -890,4 +946,20 @@ end
 local ai_start_units = VFS.Include("LuaRules/Configs/ai_commanders.lua")
 for i = 1, #ai_start_units do
 	UnitDefs[ai_start_units[i]].customparams.ai_start_unit = true
+end
+
+if not Script or not Script.IsEngineMinVersion(105, 0, 1801) then
+	for name, ud in pairs(UnitDefs) do
+		ud.metaluse  = ud.metalupkeep
+		ud.energyuse = ud.energyupkeep
+		ud.buildcostmetal  = ud.metalcost
+		ud.buildcostenergy = ud.energycost
+		ud.health = ud.health
+		if ud.speed then
+			ud.speed = ud.speed / Game.gameSpeed
+		end
+		if ud.rspeed then
+			ud.maxreversevelocity = ud.rspeed / Game.gameSpeed
+		end
+	end
 end

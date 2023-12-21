@@ -4,7 +4,7 @@ function widget:GetInfo()
 		desc      = "Dump all database",
 		author    = "Shaman",
 		date      = "January 22, 2019",
-		license   = "CC BY-NC-ND",
+		license   = "CC-0",
 		layer     = 5,
 		enabled   = false,
 	}

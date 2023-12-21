@@ -221,30 +221,26 @@ function script.Create()
 	--StartThread(ShieldControlThread)
 end
 
-local function DeathAnim(num)
+local function DeathAnim()
 	local _, _, _, _, bp = Spring.GetUnitHealth(unitID)
 	if bp < 1.0 then
 		return
 	end
 	local px, py, pz = Spring.GetUnitPosition(unitID)
-	for i = 1, num do
-		px, py, pz = Spring.GetUnitPosition(unitID)
-		Spring.SpawnProjectile(WeaponDefNames["shieldbomb_death"].id, {
-			pos = {px, py, pz},
-			["end"] = {px, py, pz},
-			speed = {0, 0, 0},
-			ttl = 10,
-			gravity = 1,
-			team = Spring.GetGaiaTeamID(),
-			owner = unitID,
-		})
-		Sleep(100)
-	end
+	Spring.SpawnProjectile(WeaponDefNames["shieldbomb_death"].id, {
+		pos = {px, py, pz},
+		["end"] = {px, py, pz},
+		speed = {0, 0, 0},
+		ttl = 10,
+		gravity = 0,
+		team = Spring.GetGaiaTeamID(),
+		owner = unitID,
+	})
 end
 
 function script.Killed(recentDamage, maxHealth)
 	--Spring.Echo("I am ded")
-	DeathAnim(2)
+	DeathAnim()
 	Explode(lf_leg, SFX.EXPLODE)
 	Explode(lb_leg, SFX.EXPLODE)
 	Explode(rf_leg, SFX.EXPLODE)

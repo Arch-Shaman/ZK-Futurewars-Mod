@@ -28,9 +28,9 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 440,
+		health                 = 440,
 		maxSlope               = 36,
-		maxVelocity            = 1.6,
+		speed                  = 1.6,
 		maxWaterDepth          = 22,
 		movementClass          = "KBOT2",
 		noChaseCategory        = "TERRAFORM FIXEDWING GUNSHIP SUB",
@@ -68,6 +68,7 @@ return {
 				cegTag                  = "rocket_trail_bar",
 				craterBoost             = 0,
 				craterMult              = 0,
+				cameraShake				= 0,
 				customParams        = {
 					burst = Shared.BURST_RELIABLE,
 					light_camera_height = 1600,
@@ -113,12 +114,8 @@ return {
 					light_camera_height = 1800,
 					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "shieldskirm_fragment",
-					--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 130, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-9,-4,-9,9,4,9", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					spawndist = 130, 
+					velspread1 = "11.46 ,-4, 11.46",
 					reveal_unit = 3,
 					cruisealt = 300,
 					cruisedist = 110,

@@ -22,9 +22,12 @@ return {
 	mexkill		= 'Loot & Pillage',
 	rage		= 'Rage Inducer',
 	head		= 'Head Hunter',
-	dragon		= 'Dragon Slayer',
+	-- Chicken Awards
+	menace		= 'Menace Slayer',
 	heart		= 'Queen Heart Breaker',
 	sweeper		= 'Land Sweeper',
+	chicken      = 'Chicken Contender',
+	chickenWin  = 'Chicken Eradicator',
 	-- Future Wars awards --
 	repair  	= 'Friendly Mechanic',
 	assistant	= 'Subsidization Strategy',
@@ -32,4 +35,5 @@ return {
 	shield      = 'Shieldbearer',
 	drone       = 'Drone Director',
 	missile     = 'Missile Marauder',
+	commwars    = 'Commander Conquerer',
 }

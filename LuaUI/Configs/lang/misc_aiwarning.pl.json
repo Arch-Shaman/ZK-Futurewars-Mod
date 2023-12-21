@@ -1,0 +1,5 @@
+{
+	"ai_warning" : "OSTRZEŻENIE: Kontroler AI, %{name} %{reason}! Następujące AI pozostaną bezczynne do czasu ich powrotu:",
+	"ai_warning_disconnected" : "Został rozłączony",
+	"ai_warning_left_prematurely" : "nie załadował się lub wyszedł przed rozpoczęciem gry"
+}

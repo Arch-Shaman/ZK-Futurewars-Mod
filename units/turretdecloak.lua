@@ -30,7 +30,7 @@ return {
 		idleAutoHeal                  = 10,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 2100,
+		health                        = 2100,
 		maxSlope                      = 36,
 		noAutoFire                    = false,
 		objectName                    = "turretdecloak.s3o",

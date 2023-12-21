@@ -54,6 +54,7 @@ function Spring.SetUnitNoSelect(unitID, value)
 end
 
 local countryOverrides = {
+	["xx"] = "Unknown", -- Future proofing against ZK Infra.
 	["??"] = "Unknown", -- Needed because files can't be named "??"
 	["an"] = "nl", -- Does not exist anymore. Now is BQ, but this is for safety purposes.
 	["bq"] = "nl", -- The rest of these are just pointers to remade flags to save space / download
@@ -65,15 +66,88 @@ local countryOverrides = {
 	["um"] = "us",
 }
 
-function Spring.GetPlayerInfo(playerID, sec)
-	local playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, wut, customkeys = GetPlayerInfo(playerID, sec)
+local function InjectBadges(str, badge)
+	local b = ""
+	if type(badge):lower() == "table" then
+		for i = 1, #badge do
+			b = b .. badge[i] .. ","
+		end
+	else
+		b = badge .. ","
+	end
+	return b .. str
+end
+
+local customParamsCache = {}
+local fwDevs = {
+	["Shaman"] = true,
+	["LeojEspino"] = true,
+	["Stuff"] = true,
+}
+
+local function GetPlayerRankColor(elo, original, isDev)
+	if isDev then return "dev" end
+	local originalExp = string.sub(original, 1, 1) .. "_"
+	if elo >= 2900 then
+		return originalExp .. "7" -- purple, this is roughly top 22.
+	elseif elo >= 2600 and elo < 2900 then
+		return originalExp .. "6" -- blue, this is roughly top 50
+	elseif elo >= 2300 and elo < 2600 then
+		return originalExp .. "5" -- lt. blue, this is roughly top 115.
+	elseif elo >= 2000 and elo < 2300 then
+		return originalExp .. "4" -- gold, this is roughly top 225.
+	elseif elo >= 1700 and elo < 2000 then
+		return originalExp .. "3" -- bronze, this is roughly top 500.
+	elseif elo >= 1400 and elo < 1700 then
+		return originalExp .. "2" -- orange, this is roughly top 959
+	elseif elo >= 1100 and elo < 1400 then
+		return originalExp .. "1" -- red, this is top 1842
+	else
+		return originalExp .. "0" -- grey
+	end
+end
+	
+
+function Spring.GetPlayerInfo(playerID, getOpts)
+	if getOpts == nil then getOpts = true end
+	if playerID == nil then return nil end
+	local playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, hasSkirmishAIsInTeam, customkeys, desynced
+	if getOpts then
+		playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, customkeys, hasSkirmishAIsInTeam, desynced = GetPlayerInfo(playerID, true)
+		if customParamsCache[playerID] == nil then
+			if customkeys then
+				local isDev
+				if fwDevs[playerName] then
+					customkeys.badges = customkeys.badges or ""
+					customkeys.badges = InjectBadges(customkeys.badges, "fw_dev")
+					isDev = true
+				elseif playerName == "GhostFenixx" then
+					customkeys.badges = customkeys.badges or ""
+					customkeys.badges = InjectBadges(customkeys.badges, "fw_fenix")
+				end
+				if customkeys.icon then
+					customkeys.icon = GetPlayerRankColor(tonumber(customkeys.elo), customkeys.icon, isDev)
+				end
+				customParamsCache[playerID] = customkeys
+			end
+		else
+			customkeys = customParamsCache[playerID]
+		end
+	else
+		playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, hasSkirmishAIsInTeam, desynced = GetPlayerInfo(playerID, false)
+	end
 	local override
 	if country then
 		override = countryOverrides[country] or country
 	else
 		override = country
 	end
-	return playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, override, rank, wut, customkeys
+	-- Add dev badges --
+	if getOpts then
+		return playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, override, rank, customkeys, hasSkirmishAIsInTeam, desynced
+	else
+		return playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, override, rank, hasSkirmishAIsInTeam, desynced
+	end
 end
 
 local function buildIndex(teamID, radius, Icons)

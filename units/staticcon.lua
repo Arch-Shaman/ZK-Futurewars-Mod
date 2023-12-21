@@ -22,7 +22,7 @@ return {
 		corpse                        = "DEAD",
 		customParams                  = {
 			morphto        = "staticrepair",
-			morphtime      = 17,
+			morphtime      = 12,
 			aimposoffset     = "0 18 0",
 			midposoffset     = "0 -4 0",
 			modelradius      = "24",
@@ -40,7 +40,7 @@ return {
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 500,
+		health                        = 500,
 		maxSlope                      = 15,
 		minCloakDistance              = 150,
 		movementClass                 = "KBOT2",

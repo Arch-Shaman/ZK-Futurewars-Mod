@@ -35,6 +35,7 @@ return {
 			popupusearmorstate		= 1,
 			hasarmorstate 			= 1,
 			armored_regen 			 = 68,
+			armortype = 1, -- for context menu.
 		},
 		damageModifier						= 0.2,
 		explodeAs						= "ESTOR_BUILDING",
@@ -43,7 +44,7 @@ return {
 		iconType						= "staticassaultriot",
 		levelGround						= false,
 		losEmitHeight						= 70,
-		maxDamage						= 15000,
+		health   						= 15000,
 		maxSlope						= 18,
 		maxWaterDepth						= 0,
 		noChaseCategory						= "FIXEDWING LAND SHIP SATELLITE SWIM GUNSHIP SUB HOVER",
@@ -140,16 +141,11 @@ return {
 					light_camera_height = 3500,
 					light_color = "0.75 0.4 0.15",
 					light_radius = 220,
-					numprojectiles1 = 12, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 12,
 					projectile1 = "turretheavy_fragment_dummy",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					keepmomentum1 = 0,
-					timeoutspawn = 0,
-					vradius1 = "-2.5,3,-2.5,2.5,6,2.5",
-					noairburst = "March of progress", -- if true, this projectile will skip all airburst checks
-					onexplode = "The unity prevails", -- if true, this projectile will cluster when it explodes
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					velspread1 = "3.18, 3, 3.18, _, 6, _",
+					noairburst = "March of progress",
+					onexplode = "The unity prevails",
 					shield_damage = (300*12) + 3200,
 				},
 
@@ -181,20 +177,12 @@ return {
 				avoidFeature            = false,
 				craterBoost             = 1,
 				craterMult              = 2,
-				--cegTag                = "flamer",
 				customParams              = {
 
-					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 1,
 					projectile1 = "turretheavy_final",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "derpderpderpderpderpderpderpderpderpderp", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					keepmomentum1 = 1,
-					timeoutspawn = 0,
-					noairburst = "Burning time", -- if true, this projectile will skip all airburst checks
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeddeploy = 3,
-
-					--lups_heat_fx = "firewalker",
+					noairburst = "Burning time",
+					timeddeploy = 9,
 					light_camera_height = 2500,
 					light_color = "0.25 0.13 0.05",
 					light_radius = 500,
@@ -205,7 +193,6 @@ return {
 					default = 0,
 				},
 
-				--explosionGenerator    = "custom:napalm_firewalker_small",
 				firestarter             = 180,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
@@ -237,17 +224,14 @@ return {
 				customParams            = {
 					light_camera_height = 2000,
 					light_color = "1 0.2 0.2",
-					reaim_time = 8, -- COB
 					isaa = "1",
 					light_radius = 0,
 				},
 
 				damage = {
-					default = 300.01,
+					default = 450.01,
 				},
-				--interceptor = 2,
 				edgeEffectiveness       = 0.8,
-				--duration              = 0.02,
 				explosionGenerator      = "custom:bigbulletimpact",
 				fireStarter             = 50,
 				flighttime		= 7,
@@ -260,7 +244,6 @@ return {
 				rgbColor                = "1 0.95 0.4",
 				soundHit                = "explosion/ex_med6",
 				soundHitVolume	        = 0.4,
-				--soundTrigger            = true,
 				sprayangle              = 1500,
 				size 			= 6,
 				thickness               = 6,

@@ -1099,6 +1099,11 @@
 		"description" : "Statek powietrzny konstruktor",
 		"helptext" : "Crane to latający konstruktor, który mimo niskiej mocy budowy jest w stanie szybko przelecieć w dowolne miejsce, co czyni go idealnym do zajmowania kopalń, zbierania złomu i innych podobnych zadań."
 	},
+	"pistin" : {
+		"name" : "Pistin",
+		"description" : "Rozstawiana wieżyczka naprawcza/ogłuszająca",
+		"helptext" : "Wyprodukowany przez nanolathe Wasp ze złomu, Pistin to wszechstronna wieżyczka, która jest używana do wszystkiego, od ogłuszania samotnych najeźdźców, naprawy armii lub wzmacniania pozycji przed atakiem wroga. Chociaż nie jest to szczególnie potężne, bycie faktycznie wolnym oznacza, że często nie ma nic złego w rozmieszczeniu jednego… lub stu."
+	},
 	"gunshipraid" : {
 		"name" : "Locust",
 		"description" : "Lekki statek powietrzny",

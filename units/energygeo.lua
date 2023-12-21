@@ -41,7 +41,7 @@ return {
 		iconType                      = "energygeo",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = 1750,
+		health                        = 1750,
 		maxSlope                      = 18,
 		noAutoFire                    = false,
 		objectName                    = "geo.dae",

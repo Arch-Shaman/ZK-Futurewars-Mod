@@ -1,5 +1,6 @@
 local cmds = VFS.Include("LuaRules/Configs/ammostatecmds.lua")
 local stateInfo = {}
+local stateInfoByDefID = {}
 local stateTypes = {}
 
 for name, id in pairs(cmds) do
@@ -13,6 +14,7 @@ for name, id in pairs(cmds) do
 		stateInfo[id].stateTooltip[i] = customParams["ammoname_" .. i]
 		stateInfo[id].stateDesc[i] = customParams["ammodesc_" .. i]
 	end
+	stateInfoByDefID[UnitDefNames[unitName].id] = stateInfo[id]
 end
 
-return stateTypes, stateInfo
+return stateTypes, stateInfo, stateInfoByDefID

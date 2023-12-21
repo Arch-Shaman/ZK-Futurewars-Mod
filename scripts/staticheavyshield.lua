@@ -16,8 +16,9 @@ local stunned = false
 local wantedState = false
 
 local spGetUnitRulesParam 	= Spring.GetUnitRulesParam
+local spSetUnitRulesParam 	= Spring.SetUnitRulesParam
 
-local function CheckPowerStateThread()
+local function UpdateShieldThread()
 	local regenstate = true
 	local stunned = false
 	local shieldammount = 9999
@@ -27,26 +28,29 @@ local function CheckPowerStateThread()
 		Sleep(300) -- every 10th frame (3hz)
 		powered = spGetUnitRulesParam(unitID, "lowpower") == 1
 		stunned = Spring.GetUnitIsStunned(unitID)
-		wantedState = (not powered) and active and not stunned
+		local overdrive = spGetUnitRulesParam(unitID,"superweapon_mult") or 0
+		spSetUnitRulesParam(unitID, "selfReloadSpeedChange", overdrive)
+		GG.UpdateUnitAttributes(unitID)
+		wantedState = (not powered) and active and (not stunned)
 		if last ~= shieldammount then
 			local spinrate = shieldammount / maxshield
-			Spin(wheel, y_axis, 9 * spinrate , 0.1)
-			Spin(turret, y_axis, -3 * spinrate, 0.01)
+			Spin(wheel, y_axis, 9 * overdrive * spinrate , 0.1)
+			Spin(turret, y_axis, -3 * overdrive * spinrate, 0.01)
 		end
 		last = shieldammount
 		_, shieldammount = Spring.GetUnitShieldState(unitID, 1)
 		--Spring.Echo("Wanted state: " .. tostring(wantedState) .. "{ " .. tostring(active) .. ", " .. tostring(stunned) .. ", " .. tostring(powered) .. "}")
 		if wantedState and not regenstate then
-			Spring.SetUnitRulesParam(unitID, "shieldChargeDisabled", 0, ALLY_ACCESS)
+			spSetUnitRulesParam(unitID, "shieldChargeDisabled", 0, ALLY_ACCESS)
 			regenstate = true
 		elseif not wantedState and regenstate then
-			Spring.SetUnitRulesParam(unitID, "shieldChargeDisabled", 1, ALLY_ACCESS)
+			spSetUnitRulesParam(unitID, "shieldChargeDisabled", 1, ALLY_ACCESS)
 			GG.PieceControl.StopTurn(wheel, y_axis)
 			GG.PieceControl.StopTurn(turret, y_axis)
 			regenstate = false
 		end
 		if not regenstate and shieldammount > 0 then
-			shieldammount = shieldammount - 500
+			shieldammount = shieldammount - 1000
 			Spring.SetUnitShieldState(unitID, 1, math.max(shieldammount, 0))
 		end
 	end
@@ -103,7 +107,7 @@ end
 
 function script.Create()
 	Spring.SetUnitRulesParam(unitID, "lowpower", 1, ALLY_ACCESS)
-	StartThread(CheckPowerStateThread)
+	StartThread(UpdateShieldThread)
 	Turn(pump2, y_axis, -0.523598776)
 	Turn(pump3, y_axis, 0.523598776)
 	Spring.SetUnitRulesParam(unitID, "unitActiveOverride", 1)

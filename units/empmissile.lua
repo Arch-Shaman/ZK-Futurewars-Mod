@@ -23,7 +23,7 @@ return {
 		iconType               = "cruisemissileemp",
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
-		maxDamage              = 1000,
+		health                 = 1000,
 		maxSlope               = 18,
 		minCloakDistance       = 150,
 		objectName             = "wep_empmissile.s3o",
@@ -66,7 +66,7 @@ return {
 					cruise_ignoreterrain = "1",
 				},
 				damage                  = {
-					default = 30000.1,
+					default = 42000.1,
 				},
 				edgeEffectiveness       = 1,
 				explosionGenerator      = "custom:EMPMISSILE_EXPLOSION",

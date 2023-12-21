@@ -6,18 +6,17 @@ return {
 		acceleration           = 2.4,
 		activateWhenBuilt      = true,
 		brakeRate              = 4.8,
-		buildCostMetal         = 140,
+		buildCostMetal         = 170,
 		buildPic               = "shieldbomb.png",
 		canGuard               = true,
 		canMove                = true,
 		canPatrol              = true,
 		category               = "LAND TOOFAST",
-		cloakCost              = 0,
 		collisionVolumeOffsets = "0 0 0",
 		collisionVolumeScales  = "16 16 16",
 		collisionVolumeType    = "ellipsoid",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "28 28 28",
+		selectionVolumeScales  = "42 42 42",
 		selectionVolumeType    = "ellipsoid",
 		corpse                 = "DEAD",
 
@@ -37,9 +36,9 @@ return {
 		kamikazeDistance       = 40,
 		kamikazeUseLOS         = true,
 		leaveTracks            = true,
-		maxDamage              = 270,
+		health                 = 200,
 		maxSlope               = 36,
-		maxVelocity            = 5.2,
+		speed                  = 5.1,
 		maxWaterDepth          = 15,
 		movementClass          = "SKBOT2",
 		noChaseCategory        = "FIXEDWING LAND SINK TURRET SHIP SWIM GUNSHIP FLOAT SUB HOVER",
@@ -85,6 +84,9 @@ return {
 		weaponDefs = {
 			SHIELD = {
 				name                    = "Energy Shield",	
+				customParams = {
+					shield_recharge_delay   = 3,
+				},
 				damage                  = {	
 					default = 10,	
 				},	
@@ -94,7 +96,7 @@ return {
 				shieldGoodColor         = "0.1 0.1 1 1",	
 				shieldInterceptType     = 3,	
 				shieldPower             = 2000,	
-				shieldPowerRegen        = 100,	
+				shieldPowerRegen        = 50,	
 				shieldPowerRegenEnergy  = 2,	
 				shieldRadius            = 60,	
 				shieldRepulser          = false,	
@@ -121,17 +123,13 @@ return {
 					blastwave_speed = 30,
 					blastwave_life = 4,
 					blastwave_lossfactor = 0.8,
-					blastwave_damage = 1200,
-					numprojectiles1 = 10, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					blastwave_damage = 550,
+					numprojectiles1 = 10,
 					projectile1 = "shieldbomb_fragment_dummy",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					keepmomentum1 = 0,
-					timeoutspawn = 0,
-					vradius1 = "-4,1,-4,4,4,4",
-					noairburst = "Merkityksetön räjähdys", -- if true, this projectile will skip all airburst checks
-					onexplode = "Sattuu ihan vitusti", -- if true, this projectile will cluster when it explodes
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					velspread1 = "5.09, 1.5, 5.09, _, 2.5, _",
+					noairburst = "Merkityksetön räjähdys",
+					onexplode = "Sattuu ihan vitusti",
+					timeddeploy = -1,
 				},
 
 				damage                  = {
@@ -175,18 +173,14 @@ return {
 					blastwave_impulse = 4,
 					blastwave_speed = 30,
 					blastwave_life = 4,
-					blastwave_lossfactor = 0.75,
-					blastwave_damage = 1000,
-					numprojectiles1 = 10, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					blastwave_lossfactor = 0.8,
+					blastwave_damage = 550,
+					numprojectiles1 = 10,
 					projectile1 = "shieldbomb_fragment_dummy",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					keepmomentum1 = 0,
-					timeoutspawn = 0,
-					vradius1 = "-3,1,-3,3,3,3",
-					noairburst = "Merkityksetön räjähdys", -- if true, this projectile will skip all airburst checks
-					onexplode = "Sattuu ihan vitusti", -- if true, this projectile will cluster when it explodes
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
+					velspread1 = "3.82, 1.5, 3.82, _, 2.5, _",
+					noairburst = "Merkityksetön räjähdys",
+					onexplode = "Sattuu ihan vitusti",
+					timeddeploy = -1,
 				},
 
 				damage                  = {
@@ -223,16 +217,12 @@ return {
 				craterMult              = 2,
 				cegTag                  = "flamer",
 				customParams              = {
-					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 1,
 					projectile1 = "shieldbomb_cluster_fragment",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "derpderpderpderpderpderpderpderpderpderp", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					keepmomentum1 = 1,
-					timeoutspawn = 0,
-					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeddeploy = 20,
-					shield_damage = 720,
+					noairburst = "I belive I can fly...",
+					timeddeploy = 10,
+					shield_damage = 400,
 					bogus = 1
 				},
 				damage                  = {
@@ -266,7 +256,7 @@ return {
 				craterBoost             = 10,
 				craterMult              = 5,
 				damage                  = {
-					default = 720,
+					default = 400,
 				},
 				edgeEffectiveness		= 0.4,
 				explosionGenerator      = "custom:MEDMISSILE_EXPLOSION",

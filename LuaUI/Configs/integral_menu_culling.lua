@@ -9,6 +9,7 @@ local configList = {
 	{cmdID = CMD_BUILD_PLATE           , default = true, name = "Build Plate"},
 	{cmdID = CMD_EMBARK                , default = true, name = "Embark"},
 	{cmdID = CMD.MANUALFIRE            , default = true, name = "Fire Special Weapon"},
+	{cmdID = CMD_AIR_MANUALFIRE        , default = true, name = "Fire Special Weapon (Aircraft)"},
 	{cmdID = CMD.ATTACK                , default = true, name = "Force Fire"},
 	{cmdID = CMD_JUMP                  , default = true, name = "Jump"},
 	{cmdID = CMD.LOAD_UNITS            , default = true, name = "Load"},
@@ -59,6 +60,7 @@ local configList = {
 	{cmdID = CMD.TRAJECTORY            , state = true, default = true, name = "Trajectory"},
 	{cmdID = CMD_AUTOJUMP              , state = true, default = true, name = "Autojump"},
 	{cmdID = CMD_ARMORSTATE            , state = true, default = true, name = "Hunker Down"},
+	{cmdID = CMD_OVERRECLAIM           , state = true, default = true, name = "Overreclaim Prevention"},
 
 	{label = "Advanced States (hidden by default)"},
 	{cmdID = CMD_DISABLE_ATTACK        , state = true, default = false, name = "Allow Attack Commands"},
@@ -71,7 +73,6 @@ local configList = {
 	{cmdID = CMD_FORMATION_RANK        , state = true, default = false, name = "Formation Rank"},
 	{cmdID = CMD_UNIT_AI               , state = true, default = false, name = "Unit AI"},
 	{cmdID = CMD_FIRE_AT_SHIELD        , state = true, default = false, name = "Ward Fire"},
-	{cmdID = CMD_OVERRECLAIM           , state = true, default = false, name = "Overreclaim Prevention"},
 	{cmdID = CMD_FIRECYCLE             , state = true, default = false, name = "Spread Napalm"},
 	{label = "Ammo States (Shown by default)"},
 }

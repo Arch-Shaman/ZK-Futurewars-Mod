@@ -12,21 +12,19 @@ local flare = piece 'firepoint1'
 
 local smokePiece = {base, turret}
 
-local RESTORE_DELAY = 4000
+local RESTORE_DELAY = 3000
 
 local delay = WeaponDefs[UnitDef.weapons[1].weaponDef].customParams.aimdelay
-local beam_duration = WeaponDefs[UnitDef.weapons[1].weaponDef].beamtime * 1000
 
 -- Signal definitions
 local SIG_AIM = 2
 local SIG_MOVE = 4
+local SIG_AIM2 = 8
 
 local curTerrainType = 4
 local wobble = false
 local reloading = false
-local trackerlastframe = 0
-local aimedrecently = false
-local forcefire = false
+local sounded = false
 local lastcheck = -1
 --local turning = false
 
@@ -44,12 +42,12 @@ local function Tilt()
 end
 
 local function WobbleUnit()
-	StartThread(Tilt)
+	--StartThread(Tilt)
 	while true do
 		if wobble == true then
-			Move(base, y_axis, 2, 3)
+			Move(base, y_axis, 2, 0.5)
 		else
-			Move(base, y_axis, -2, 3)
+			Move(base, y_axis, -2, 0.3)
 		end
 		wobble = not wobble
 		Sleep(1500)
@@ -91,7 +89,7 @@ end
 	end
 end]]
 
-function TrackThread()
+--[[function TrackThread()
 	local currentframe, trackingcompletedframe, diff, reloadFrame = 0, 999999999, 0, 0
 	local sounded = false
 	while true do
@@ -117,13 +115,22 @@ function TrackThread()
 		end
 		Sleep(33)
 	end
+end]]
+
+function OnTrackProgress(trackProgress)
+	if trackProgress < 0.3 and sounded then sounded = false end
+	if trackProgress >= 0.65 and not sounded then
+		local x, y, z = Spring.GetUnitPosition(unitID)
+		GG.PlayFogHiddenSound("Sounds/weapon/laser/trackercompleted_full.wav", 20.0, x, y, z, 1, 1, 1, 1)
+		sounded = true
+	end
 end
 
 function script.Create()
 	Hide(flare)
 	StartThread(WobbleUnit)
 	--StartThread(TurnThread)
-	StartThread(TrackThread)
+	--StartThread(TrackThread)
 	--for i = 1, 4 do
 		--Hide(wheels[i])
 	--end
@@ -135,34 +142,26 @@ local function RestoreAfterDelay()
 	Sleep(RESTORE_DELAY)
 	Turn(turret, y_axis, 0, turnrate)
 	Turn(gun, x_axis, 0, turnrate / 2)
-	GG.AimDelay_ForceWeaponRestart(unitID, 1)
+	--GG.AimDelay_ForceWeaponRestart(unitID, 1) -- No longer needed because AimDelay takes care of this for us.
 end
 
 function script.AimWeapon(num, heading, pitch)
-	if num == 1 and not reloading then
-		if forcefire then
-			return true
-		else
-			GG.AimDelay_AttemptToFire(unitID, 1, heading, pitch, delay)
-			aimedrecently = true
-			sounded = false
-			lastcheck = Spring.GetGameFrame()
-		end
-	end
-	Signal(SIG_AIM)
-	SetSignalMask(SIG_AIM)
-	GG.DontFireRadar_CheckAim(unitID)
-	Turn(turret, y_axis, heading, turnrate)
-	Turn(gun, x_axis, -pitch, turnrate)
-	WaitForTurn(turret, y_axis)
-	WaitForTurn(gun, x_axis)
-	StartThread(RestoreAfterDelay)
-	if num == 1 and not reloading then
-		lastcheck = Spring.GetGameFrame()
-		aimedrecently = true
-		return GG.AimDelay_AttemptToFire(unitID, 1, heading, pitch, delay)
-	elseif num == 1 and reloading then
-		return false
+	if num == 2 then
+		Signal(SIG_AIM2)
+		SetSignalMask(SIG_AIM2)
+		WaitForTurn(turret, y_axis)
+		WaitForTurn(gun, x_axis)
+		return not reloading
+	elseif num == 1 then
+		Signal(SIG_AIM)
+		SetSignalMask(SIG_AIM)
+		GG.DontFireRadar_CheckAim(unitID)
+		Turn(turret, y_axis, heading, turnrate)
+		Turn(gun, x_axis, -pitch, turnrate)
+		WaitForTurn(turret, y_axis)
+		WaitForTurn(gun, x_axis)
+		StartThread(RestoreAfterDelay)
+		return not reloading and GG.AimDelay_AttemptToFire(unitID, 1, heading, pitch, delay)
 	end
 	return true
 end
@@ -185,13 +184,16 @@ function script.QueryWeapon(num)
 	return flare
 end
 
+function OnWeaponReload(weaponID)
+	reloading = false
+	sounded = false
+	GG.AimDelay_ForceWeaponRestart(unitID, 1)
+end
+
 function script.FireWeapon(id)
 	if id == 1 then
-		forcefire = false
-		GG.AimDelay_ForceWeaponRestart(unitID, 1) -- restart progress.
-		aimedrecently = false
-	elseif id == 2 then
-		trackerlastframe = Spring.GetGameFrame()
+		reloading = true
+		GG.LusWatchWeaponReload(unitID, 1)
 	end
 end
 

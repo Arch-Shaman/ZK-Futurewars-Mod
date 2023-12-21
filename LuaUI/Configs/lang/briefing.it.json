@@ -1,0 +1,20 @@
+{
+	"update_header": "Aggiornamento minore 0.38.11: cancellazione del debito tecnico",
+	"shameless_plug": "Se ti piace Future Wars e vuoi contribuire con il tuo feedback al progetto o fare una chiacchierata con gli altri giocatori, considera di unirti al nostro Discord: https://discord.com/invite/GMUnRGUuSy o unisciti a #fw nella zk server. Stiamo attualmente cercando idee, artisti grafici e traduttori per contribuire al progetto, dandoci una nuova mano di vernice.",
+	"entry_1": "Buon terzo compleanno, Future Wars! Con questo tardivo regalo di compleanno per te, abbiamo saldato parte del nostro debito tecnico. Ciò significa che le cose del backend sono state aggiornate (Zero-K ha fatto molti progressi su alcune cose (non siamo riusciti a tenere il passo). Sono stati affrontati anche alcuni feedback sul bilanciamento.",
+	"entry_2": "Potresti notare che il tuo grado visualizzato nel gioco è cambiato. Future Wars ha adottato un nuovo sistema di visualizzazione del grado che separa i giocatori in 'leghe' da 300 WHR a partire da 1100 WHR. Gli sviluppatori ora hanno stelle arcobaleno, per aiutarli a differenziarli da giocatori normali.",
+	"entry_3" : "Si spera che le notifiche di ritardo/AFK siano state corrette con questa patch. I LuaAI non vengono più conteggiati nel sistema di rilevamento del ritardo dell'IA poiché non sono influenzati dall'abbandono dell'host. Inoltre, il rilevamento del ritardo dell'IA è stato localizzato. Morte i messaggi sono stati finalmente risolti! Godetevi ancora una volta il cattivo umore di ZK 2016 con bontà completamente localizzata.",
+	"entry_4": "Abbiamo ottimizzato il gadget perforante, che dovrebbe migliorare leggermente le prestazioni poiché non calcola più il danno su ogni proiettile. Sono stati risolti anche altri bug minori con la colorazione dei messaggi. I giocatori ora possono anche utilizzare il opzione modalità equalizzazione comandante corretta (grazie Jill_2550 per il test!).",
+	"entry_5": "PenguinOh ha iniziato a localizzare FW in tailandese, assicurati di ringraziarli per il loro duro lavoro!",
+	"entry_6": "Ghost Commander ha ricevuto alcuni nerf recentemente a causa del feedback della community sui nuovi moduli.",
+	"entry_7": "Sentinel ha ricevuto alcuni potenziamenti per renderlo più competitivo. Ora ha aumentato l'AOE e il danno da disarmamento.",
+	"entry_8": "Gremlin ha visto un piccolo cambio di ruolo e un lieve nerf, ora favorendo dps più sostenuti.",
+	"chicken_header" : "Modalità di gioco: Polli",
+	"chicken_entry_1" : "I Polli alterneranno la loro strategia tra il lancio di assalti a oltranza con orde enormi contro la vostra base e la ritirata per recuperare le forze. Assicuratevi di distruggere i Pollai mentre i Polli riposano per indebolire i loro attacchi.",
+	"chicken_entry_2" : "Se lasciati indisturbati, i Polli inizieranno a costruire unità incredibilmente potenti, noti come Polli del Terrore. Distruggeteli prima che siano completati. I Polli del Terrore in costruzione sono protetti dallo scudo indistruttibile della Raffesia, che li rende immuni all'artiglieria.",
+	"chicken_entry_3" : "La Rabbia dello Sciame aumenterà nel tempo. Una volta che la Rabbia dello Sciame raggiunge il 100%, la Regina dei Polli in persona arriverà sul campo di battaglia (a meno che non siate in modalità Infinita) e i Polli inizieranno ad attaccare senza sosta. Concentrate tutta la vostra potenza di fuoco sulla Regina dei Polli, perché la sua morte farà crollare l'intero sciame",
+	"comm_wars_header" : "Modalità di gioco: Commander Wars",
+	"comm_wars_entry_1" : "In questa modalità di gioco hai accesso solo al tuo comandante e nient'altro. Il tuo comandante non può più costruire, ma solo riparare e riassorbire relitti. Potenzia il tuo comandante dandogli più moduli attraverso il sistema di upgrade e sconfiggi i comandanti nemici!",
+	"comm_wars_entry_2" : "Inoltre, sono state apportate modifiche al bilanciamento di molti moduli e armi del comandante per renderli più equilibrati in questa modalità di gioco esclusiva. Il bilanciamento, tuttavia, è ancora sperimentale, quindi ogni feedback sarebbe molto apprezzato.",
+	"houserules" : "Regole della casa: "
+}

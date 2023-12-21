@@ -20,7 +20,7 @@ return {
 		collisionVolumeScales  = "20 20 20",
 		collisionVolumeType    = "ellipsoid",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "32 32 32",
+		selectionVolumeScales  = "48 48 48",
 		selectionVolumeType    = "ellipsoid",
 		corpse                 = "DEAD",
 		cruiseAlt              = 100,
@@ -40,9 +40,9 @@ return {
 		kamikazeDistance       = 60,
 		kamikazeUseLOS         = true,
 		maneuverleashlength    = "1240",
-		maxDamage              = 200,
+		health                 = 90,
 		maxSlope               = 36,
-		maxVelocity            = 10.2,
+		speed                  = 10,
 		noAutoFire             = false,
 		noChaseCategory        = "TERRAFORM SATELLITE SUB",
 		objectName             = "f-1.s3o",
@@ -97,7 +97,7 @@ return {
 				},
 
 				damage                  = {
-					default = 65.1,
+					default = 50.1,
 				},
 				
 				edgeEffectiveness       = 0.33,
@@ -133,18 +133,13 @@ return {
 				collideFriendly         = false,
 				cegTag                  = "VINDIBACK",
 				customParams              = {
-					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 1,
 					projectile1 = "gunshipbomb_boom",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "derpderpderpderpderpderpderpderpderpderp", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					keepmomentum1 = 1,
-					timeoutspawn = 0,
-					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
+					noairburst = "I belive I can fly...",
 					onexplode = "whoops",
-					spawndist = 300, -- at what distance should we spawn the projectile(s)? REQUIRED.
 					timeddeploy = 8,
 
-					--lups_heat_fx = "firewalker",
 					light_camera_height = 1500,
 					light_color = "0.8 0.76 0.38",
 					light_radius = 40,
@@ -185,17 +180,11 @@ return {
 				craterMult              = 0.5,
 				collideFriendly         = false,
 				customParams            = {
-					numprojectiles1 = 20, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 20,
 					projectile1 = "gunshipbomb_secondary",
-					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 180, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-3,-1,-3,3,1,3", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					spawndist = 180,
+					velspread1 = "3.82, 1, 3.82, _, 1, _",
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-					proxy = 0, -- check for nearby units?
-					proxydist = 80, -- how far to check for units? Default: spawndist
 					reaim_time = 60, -- Fast update not required (maybe dangerous)
 					light_camera_height = 1500,
 					light_color = "0.8 0.76 0.38",
@@ -206,7 +195,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 20*65.1,
+					default = 20*50.1,
 				},
 				mygravity               = 0.07,
 				cegTag                  = "VINDIBACK",

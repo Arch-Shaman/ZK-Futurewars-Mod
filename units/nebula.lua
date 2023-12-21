@@ -39,8 +39,8 @@ return {
 		iconType               = "nebula",
 		idleAutoHeal           = 440,
 		idleTime               = 1800,
-		maxDamage              = 45000,
-		maxVelocity            = 1.5,
+		health                 = 60000,
+		speed                  = 1.5,
 		noAutoFire             = false,
 		noChaseCategory        = "TERRAFORM FIXEDWING SATELLITE SUB",
 		objectName             = "nebula.s3o",
@@ -89,42 +89,6 @@ return {
 			},
 		},
 		weaponDefs             = {
-			AG = {
-				name                    = "Destructo-Pods",
-				accuracy                = 60,
-				areaOfEffect            = 96,
-				avoidFeature            = false,
-				avoidGround             = false,
-				craterBoost             = 1,
-				craterMult              = 2,
-				customParams            = {
-					burst = Shared.BURST_RELIABLE,
-					reaim_time = 8, -- COB
-					light_color = "1.4 0.8 0.3",
-					isFlak = 3,
-					flaktime = 1/30,
-				},
-				damage                  = {
-					default = 60,
-				},
-				groundbounce = false,
-				--bounceslip = 0.25,
-				--bouncerebound = 0.1,
-				--numbounce = 10,
-				edgeEffectiveness       = 0.5,
-				explosionGenerator      = "custom:EMG_HIT_HE",
-				impulseBoost            = 0,
-				impulseFactor           = 0,
-				interceptedByShieldType = 1,
-				myGravity               = 0.1,
-				noSelfDamage            = true,
-				--range                   = 1180,
-				reloadtime              = 7,
-				soundHit                = "weapon/cannon/plasma_hit",
-				turret                  = true,
-				weaponType              = "Cannon",
-				weaponVelocity          = 330,
-			},
 			MISSILETOP = {
 				name                    = "Typhoon Missile Barrage",
 				areaOfEffect            = 60,
@@ -153,22 +117,9 @@ return {
 					cruise_nolock = 1,
 					cruisetracking = 1,
 					cruise_ignoreterrain = 1,
-					--CAS--
-					--numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					--projectile1 = "nebula_ag",
-					--clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					--use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					--spawndist = 160, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					--timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					--vradius1 = "-4,0,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					--spreadradius1 = 6, -- used in clusters. OPTIONAL. Default: 100.
-					--useheight = 1,
-					--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-					--proxy = 1, -- check for nearby units?
-					--proxydist = 100, -- how far to check for units? Default: spawndist
 				},
 				damage                  = {
-					default = 60*4,
+					default = 400.01,
 				},
 				edgeEffectiveness		= 0.2,
 				explosionGenerator      = "custom:EMG_HIT_HE",
@@ -221,22 +172,9 @@ return {
 					cruise_randomizationtype = "circular",
 					cruise_nolock = 1,
 					cruisetracking = 1,
-					--CAS--
-					--numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					--projectile1 = "nebula_ag",
-					--clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					--use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					--spawndist = 160, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					--timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					--vradius1 = "-4,0,-4,4,1,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					--spreadradius1 = 6, -- used in clusters. OPTIONAL. Default: 100.
-					--useheight = 1,
-					--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-					--proxy = 1, -- check for nearby units?
-					--proxydist = 100, -- how far to check for units? Default: spawndist
 				},
 				damage                  = {
-					default = 280,
+					default = 400.01,
 				},
 				edgeEffectiveness		= 0.2,
 				explosionGenerator      = "custom:EMG_HIT_HE",
@@ -277,7 +215,7 @@ return {
 					light_camera_height = 1500,
 				},
 				damage                  = {
-					default = 37.1,
+					default = 50.1,
 				},
 				edgeEffectiveness       = 0.75,
 				explosionGenerator      = "custom:FLASH64",
@@ -302,17 +240,14 @@ return {
 				customParams = {
 					numprojectiles1 = 6, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "nebula_fragment",
-					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 210, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-6,-3,-6,6,3,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					spawndist = 210,
+					timeoutspawn = 1, 
+					velspread1 = "7.64, -3, 7.64", -- velocity that is randomly added. covers range of +-velspread. OPTIONAL. Default: 4.2
 					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-					proxy = 1, -- check for nearby units?	
+					proxy = 1, 	
 				},
 				damage                  = {
-					default = 37.1 * 6,
+					default = 50.1 * 6,
 				},
 				explosionGenerator      = "custom:plasma_hit_32",
 				impulseBoost            = 0,
@@ -350,9 +285,9 @@ return {
 				shieldBadColor          = "1 0.1 0.1 1",
 				shieldGoodColor         = "0.1 0.1 1 1",
 				shieldInterceptType     = 3,
-				shieldPower             = 45000,
-				shieldPowerRegen        = 200,
-				shieldPowerRegenEnergy  = 45,
+				shieldPower             = 60000,
+				shieldPowerRegen        = 600,
+				shieldPowerRegenEnergy  = 135,
 				shieldRadius            = 400,
 				shieldRepulser          = false,
 				smartShield             = true,

@@ -33,7 +33,9 @@ local spGetUnitTeam         = Spring.GetUnitTeam
 local spGetUnitDefID        = Spring.GetUnitDefID
 local spGetUnitExperience   = Spring.GetUnitExperience
 local spGetTeamResources    = Spring.GetTeamResources
+local spGetGameRulesParam   = Spring.GetGameRulesParam
 local GetUnitCost           = Spring.Utilities.GetUnitCost
+local GetUnitValue          = Spring.Utilities.GetUnitValue
 
 local floor = math.floor
 
@@ -65,12 +67,12 @@ local awardAbsolutes = {
 	mex         = 15,
 	mexkill     = 15,
 	head        = 3,
-	dragon      = 3,
+	menace      = 5000,
 	sweeper     = 20,
-	heart       = 1*10^9, --we should not exceed 2*10^9 because math.floor-ing the value will return integer -2147483648. Reference: https://code.google.com/p/zero-k/source/detail?r=9681
+	heart       = 5000,
 	vet         = 3,
-	shield      = 1000,
-	missile     = 2500,
+	shield      = 10000,
+	missile     = 1000,
 }
 
 local awardEasyFactors = {
@@ -90,6 +92,12 @@ local expUnitTeam, expUnitDefID, expUnitExp = 0,0,0
 local awardList = {}
 
 local boats, comms = {}, {}
+local isCommwars = false
+
+do
+	local modoptions = Spring.GetModOptions() or {}
+	isCommwars = (tonumber(modoptions.commwars) or 0) == 1
+end
 
 local staticO_small = {
 	seismic = 1,
@@ -387,30 +395,28 @@ local function ProcessAwardData()
 					message = 'Mexes destroyed: '.. maxVal
 				elseif awardType == 'head' then
 					message = maxVal .. ' Commanders eliminated'
-				elseif awardType == 'dragon' then
-					message = maxVal .. ' White Dragons annihilated'
+				elseif awardType == 'menace' then
+					message = maxVal .. ' Damage to menaces'
 				elseif awardType == 'heart' then
-					local maxQueenKillDamage = maxVal - absolute --remove the queen kill signature: +1000000000 from the total damage
-					message = 'Damage: '.. comma_value(maxQueenKillDamage)
+					message = 'Damage: '.. comma_value(maxVal)
 				elseif awardType == 'sweeper' then
 					message = maxVal .. ' Nests wiped out'
-
 				elseif awardType == 'vet' then
 					local vetName = UnitDefs[expUnitDefID] and UnitDefs[expUnitDefID].humanName
 					local expUnitExpRounded = floor(expUnitExp * 100)
 					message = vetName ..', '.. expUnitExpRounded .. "% cost made"
 				elseif awardType == 'repair' then
-					message = maxValWrite .. ' allied hp repaired'
+					message = maxValWrite .. ' allied value repaired'
 				elseif awardType == 'assistant' then
-					message = maxValWrite .. 'm used for assisting allies'
+					message = maxValWrite .. ' metal used for assisting allies'
 				elseif awardType == 'economist' then
-					message = maxValWrite .. 'm overdriven'
+					message = maxValWrite .. ' metal overdriven'
 				elseif awardType == 'drone' then
-					message = 'Damage by drones: ' .. maxValWrite
+					message = 'Damaged Value : ' .. maxValWrite
 				elseif awardType == 'shield' then
 					message = 'Damage shielded: ' .. maxValWrite
 				elseif awardType == 'missile' then
-					message = 'Tacmissile damage: ' .. maxValWrite
+					message = 'Damaged Value : ' .. maxValWrite
 				else
 					message = 'Damaged value: '.. maxValWrite
 				end
@@ -438,7 +444,7 @@ function gadget:AllowUnitBuildStep(builderID, builderTeam, unitID, unitDefID, pa
 	if bp < 1.0 then
 		AddAwardPoints('assistant', builderTeam, part * UnitDefs[unitDefID].metalCost)
 	else
-		AddAwardPoints('repair', builderTeam, part * maxhp)
+		AddAwardPoints('repair', builderTeam, part * UnitDefs[unitDefID].metalCost)
 	end
 	return true
 end
@@ -503,7 +509,7 @@ function gadget:UnitTaken(unitID, unitDefID, oldTeam, newTeam)
 	if not spAreTeamsAllied(oldTeam,newTeam) then
 		if awardData['cap'][newTeam] then --if team exist, then:
 			local ud = UnitDefs[unitDefID]
-			local mCost = GetUnitCost(unitID, unitDefID)
+			local mCost = GetUnitValue(unitID, unitDefID)
 			AddAwardPoints( 'cap', newTeam, mCost )
 			if (ud.customParams.dynamic_comm) then
 				if (not cappedComs[unitID]) then
@@ -515,7 +521,7 @@ function gadget:UnitTaken(unitID, unitDefID, oldTeam, newTeam)
 		end
 	else -- teams are allied
 		if (unitDefID ~= terraunitDefID) then
-			local mCost = GetUnitCost(unitID, unitDefID)
+			local mCost = GetUnitValue(unitID, unitDefID)
 			AddAwardPoints('share', oldTeam,  mCost)
 			AddAwardPoints('share', newTeam, -mCost)
 		end
@@ -523,10 +529,25 @@ function gadget:UnitTaken(unitID, unitDefID, oldTeam, newTeam)
 end
 
 -- wtf, why does each shitty chicken get to have its own award?
-local    chicken_dragonDefID = UnitDefNames.chicken_dragon   .id
-local chickenflyerqueenDefID = UnitDefNames.chickenflyerqueen.id
-local  chickenlandqueenDefID = UnitDefNames.chickenlandqueen .id
-local             roostDefID = UnitDefNames.roost            .id
+-- uwu
+
+chickenMenaces = {}
+chickenQueen = {}
+chickenRoost = {}
+
+for uid, uDef in pairs(UnitDefs) do
+	local params = uDef.customParams
+	if params.chicken then
+		if params.chicken_menace then
+			chickenMenaces[uid] = true
+		elseif params.chicken_queen then
+			chickenQueen[uid] = true
+		end
+		if params.chicken_roost then
+			chickenRoost[uid] = true
+		end
+	end
+end
 
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, killerTeam)
 	local experience = spGetUnitExperience(unitID)
@@ -553,13 +574,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, killerTeam)
 	else
 		if (comms[unitDefID] and (not spAreTeamsAllied(killerTeam, unitTeam))) then
 			AddAwardPoints( 'head', killerTeam, 1 )
-		elseif unitDefID == chicken_dragonDefID then
-			AddAwardPoints( 'dragon', killerTeam, 1 )
-		elseif unitDefID == chickenflyerqueenDefID or unitDefID == chickenlandqueenDefID then
-			for killerFrienz, _ in pairs(awardData['heart']) do --give +1000000000 points for all frienz that kill queen and won
-				AddAwardPoints( 'heart', killerFrienz, awardAbsolutes['heart']) --the extra points is for id purpose. Will deduct later
-			end
-		elseif unitDefID == roostDefID then
+		elseif chickenRoost[unitDefID] then
 			AddAwardPoints( 'sweeper', killerTeam, 1 )
 		end
 	end
@@ -590,8 +605,10 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		if paralyzer then
 			AddAwardPoints( 'emp', attackerTeam, costdamage )
 		else
-			if unitDefID == chickenflyerqueenDefID or unitDefID == chickenlandqueenDefID then
-				AddAwardPoints( 'heart', attackerTeam, damage )
+			if chickenMenaces[unitDefID] then
+				AddAwardPoints( 'menace', attackerTeam, damage)
+			elseif chickenQueen[unitDefID] then
+				AddAwardPoints( 'heart', attackerTeam, damage)
 			end
 			local ad = UnitDefs[attackerDefID]
 
@@ -599,7 +616,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 				AddAwardPoints( 'fire', attackerTeam, costdamage )
 			end
 			if isMissile then
-				AddAwardPoints('missile', attackerTeam, damage)
+				AddAwardPoints('missile', attackerTeam, costdamage)
 			end
 			-- Static Weapons
 			if (not ad.canMove) then
@@ -625,7 +642,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 			elseif comms[attackerDefID] then
 				AddAwardPoints( 'comm', attackerTeam, costdamage )
 			elseif ad.customParams.is_drone then
-				AddAwardPoints('drone', attackerTeam, damage)
+				AddAwardPoints('drone', attackerTeam, costdamage )
 			end
 		end
 	end
@@ -637,7 +654,7 @@ function gadget:UnitFinished(unitID, unitDefID, teamID)
 	end
 end
 
-function gadget:GameOver()
+function gadget:GameOver(winningAllys)
 	gameOver = true
 
 	local units = spGetAllUnits()
@@ -647,7 +664,43 @@ function gadget:GameOver()
 		local unitDefID = spGetUnitDefID(unitID)
 		gadget:UnitDestroyed(unitID, unitDefID, teamID)
 	end
-
+	local chickenDifficulty = spGetGameRulesParam("chicken_difficulty") or -1
+	if chickenDifficulty > 0 then
+		-- chicken awards
+		local chickenScore = floor(spGetGameRulesParam("chicken_score"))
+		local chickenTeam = spGetGameRulesParam("chicken_chickenTeamID")
+		Spring.Echo("cteam", chickenTeam)
+		if spGetGameRulesParam("chicken_award") then
+			for i = 1, #winningAllys do
+				local allyTeam = winningAllys[i]
+				local teamList = Spring.GetTeamList(allyTeam)
+				for j = 1, #teamList do
+					local teamID = teamList[j]
+					local teamUnits = #Spring.GetTeamUnits(teamID)
+					if teamUnits > 0 then
+						awardAward(teamID, "chickenWin", "Score: " .. chickenScore)
+					end
+				end
+			end
+		elseif spGetGameRulesParam("chicken_award_endless") then
+			local teamList = Spring.GetTeamList()
+			for j = 1, #teamList do
+				local teamID = teamList[j]
+				if not spAreTeamsAllied(teamID, chickenTeam) then
+					awardAward(teamID, "chickenWin", "Score: " .. chickenScore)
+				end
+			end
+		elseif spGetGameRulesParam("chicken_waveNumber") > 2 then
+			local teamList = Spring.GetTeamList()
+			for j = 1, #teamList do
+				local teamID = teamList[j]
+				Spring.Echo("teamID", teamID)
+				if not spAreTeamsAllied(teamID, chickenTeam) then
+					awardAward(teamID, "chicken", "Score: " .. chickenScore)
+				end
+			end
+		end
+	end
 	-- read externally tracked values
 	local teams = Spring.GetTeamList()
 	for i = 1, #teams do
@@ -657,8 +710,21 @@ function gadget:GameOver()
 			AddAwardPoints('pwn', team, Spring.Utilities.GetHiddenTeamRulesParam(team, "stats_history_damage_dealt_current") or 0)
 		end
 	end
-
 	ProcessAwardData()
+	if isCommwars and winningAllys and #winningAllys > 0 then
+		for i = 1, #winningAllys do
+			local allyTeam = winningAllys[i]
+			local teamList = Spring.GetTeamList(allyTeam)
+			for j = 1, #teamList do
+				local teamID = teamList[j]
+				local teamUnits = #Spring.GetTeamUnits(teamID)
+				local killValue = awardData["head"][teamID]
+				if teamUnits > 0 then
+					awardAward(teamID, "commwars", "CommWars Victory: " .. killValue .. " comms eliminated.")
+				end
+			end
+		end
+	end
 
 	_G.awardList = awardList
 end
@@ -699,7 +765,7 @@ end
 local function ConvertToRegularTable(stable)
 	local ret = {}
 	local stableLocal = stable
-	for k,v in spairs(stableLocal) do
+	for k,v in pairs(stableLocal) do
 		if type(v) == 'table' then
 			v = ConvertToRegularTable(v)
 		end

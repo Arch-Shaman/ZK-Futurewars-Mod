@@ -128,15 +128,20 @@ function script.BlockShot(num)
 end
 
 function script.FireWeapon(num)
-	OnAmmoChange(1)
 	Sleep(400)
 	Reload()
+	SetUnarmedAI()
+	OnAmmoChange(1)
 end
 
 function OnAmmoTypeChange(newAmmo)
 	if newAmmo ~= currentAmmo then
 		OnAmmoChange(1)
-		Reload()
+		local _, _, inBuild = Spring.GetUnitIsStunned(unitID)
+		if not inBuild then
+			Reload()
+			SetUnarmedAI()
+		end
 		currentAmmo = newAmmo
 	end
 end

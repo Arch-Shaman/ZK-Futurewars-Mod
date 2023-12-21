@@ -13,7 +13,7 @@ return {
 		canPatrol           = true,
 		category            = "LAND",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "42 42 42",
+		selectionVolumeScales  = "63 63 63",
 		selectionVolumeType    = "ellipsoid",
 		corpse              = "DEAD",
 		customParams        = {
@@ -31,15 +31,16 @@ return {
 		idleTime            = 1800,
 		leaveTracks         = true,
 		maneuverleashlength = "650",
-		maxDamage           = 450,
+		health              = 450,
 		maxSlope            = 18,
-		maxVelocity         = 2.0,
+		speed               = 2.0,
 		maxWaterDepth       = 22,
 		minCloakDistance    = 75,
 		movementClass       = "TANK3",
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP",
 		objectName          = "corwolv.s3o",
+		script              = "veharty.lua",
 		selfDestructAs      = "BIG_UNITEX",
 		sfxtypes            = {
 			explosiongenerators = {

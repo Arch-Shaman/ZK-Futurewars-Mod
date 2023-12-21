@@ -11,7 +11,7 @@
     },
 	"missilekinetic": {
 		"name" : "Apogee",
-		"description" : "Kinetik Öldürme Aracı"",
+		"description" : "Kinetik Öldürme Aracı",
 		"helptext" : "Apogee, bir hedefe sert bir şekilde düşmeden önce uzaya uçan ve büyük hasar veren ucuz bir kinetik saldırı silahıdır. AOE'si arzulanan çok şey bıraksa da, ucuz ve istenmeyen posta gönderilebilir, bu da ona karşı yarı iyi kalkanlar."
 	},
     "gunshipskirm": {
@@ -42,7 +42,7 @@
 	"platestrider" : {
 		"name" : "Yolgezer Plakası",
 		"description" : "Striders inşa eder",
-		"helptext" : "Strider Plate, Strider Hub'ın minyatür versiyonudur. Ağabeyi gibi, savaş alanında huşu ve korku uyandıran "devasa mecha" olan strider'ları dağıtır. Normal bir fabrikadan farklı olarak, plaka sadece bir projeye başlamak için gereklidir, bitirmek için değil."
+		"helptext" : "Strider Plate, Strider Hub'ın minyatür versiyonudur. Ağabeyi gibi, savaş alanında huşu ve korku uyandıran \"devasa mecha\" olan strider'ları dağıtır. Normal bir fabrikadan farklı olarak, plaka sadece bir projeye başlamak için gereklidir, bitirmek için değil."
 	},
     "staticmissilesilo": {
         "name": "Füze Silosu",
@@ -1104,6 +1104,11 @@
         "description": "Mühendis Uçak",
         "helptext": "Vinç herhangi bir arazide hızla uçuyor, ancak herhangi bir AH için kırılgan. Diğer inşaatçılar ile karşılaştırıldığında nispeten zayıf bir nano güce sahip olmasına rağmen, ulaşılması zor birçok yerde inşa edebilir ve bir hava oyuncuları bölgesini doğrusal olmayan bir şekilde genişletebilir. Hareket kabiliyetinden dolayı, enkazları ve diğer tekrarlayan görevleri geri almak için idealdir."
     },
+	"pistin" : {
+		"name" : "Pistin",
+		"description" : "Konuşlandırılabilir Onarım/Şok Taret",
+		"helptext" : "Wasp'ın nano tornası tarafından hurda malzemeden üretilen The Pistin, yalnız akıncıları sersemletmekten bir orduyu onarmaya veya düşman saldırısına karşı bir mevzii güçlendirmeye kadar her şey için kullanılan çok yönlü bir kuledir. Özellikle güçlü olmasa da, etkili bir şekilde özgür olmak, bir ya da yüz konuşlandırmanın çoğu zaman zararı olmadığı anlamına gelir."
+	},
     "gunshipraid": {
         "name": "Çekirge",
         "description": "Akıncı Kopter",

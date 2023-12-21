@@ -9,7 +9,7 @@ function gadget:GetInfo()
 		desc      = "Units will consume all wreckage in an area",
 		author    = "Shaman",
 		date      = "April 1st, 2021",
-		license   = "CC BY-NC-ND",
+		license   = "CC-0",
 		layer     = 5,
 		enabled   = true,
 	}

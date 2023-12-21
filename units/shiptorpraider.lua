@@ -30,8 +30,8 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		maneuverleashlength = "1280",
-		maxDamage           = 850,
-		maxVelocity         = 2.5,
+		health              = 850,
+		speed               = 2.5,
 		minWaterDepth       = 5,
 		movementClass       = "BOAT3",
 		noAutoFire          = false,
@@ -40,7 +40,6 @@ return {
 		script              = "shiptorpraider.lua",
 		selfDestructAs      = "SMALL_UNITEX",
 		sightDistance       = 650,
-		sonarDistance       = 650,
 		turnRate            = 400,
 		waterline           = 0,
 		weapons             = {

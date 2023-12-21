@@ -16,21 +16,6 @@ end
 
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 
-local singularities = IterableMap.New() -- {position = {x,y,z}, lifespan = frames, def = weapondefID}
-local ignoreexplosion = {}
-
-local singularitydefs = {}
-
---local singuexplosion = {weapondef = WeaponDefNames["energysingu_singularity"].id}
-
-for i = 1, #WeaponDefs do
-	local cp = WeaponDefs[i].customParams
-	if cp and cp.singularity then
-		singularitydefs[i] = {radius = (tonumber(cp.singuradius) or 400)/2, lifespan = math.max(tonumber(cp.singulifespan) or 300, 10), strength = tonumber(cp.singustrength) or 20, height = tonumber(cp.singuheight) or 0, ceg = cp.singuceg or 'black_hole_singu', finalceg = cp.singufinalceg or 'riotballgrav'}
-		singularitydefs[i].push = singularitydefs[i].strength < 0
-	end
-end
-
 local sqrt = math.sqrt
 local max = math.max
 local min = math.min
@@ -62,7 +47,47 @@ local spPlaySoundFile = Spring.PlaySoundFile
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetFeatureDefID = Spring.GetFeatureDefID
 
-local projectiles = {}
+local singularities = IterableMap.New() -- {position = {x,y,z}, lifespan = frames, def = weapondefID}
+local ignoreexplosion = {}
+
+local singularitydefs = {}
+local projectileMasses = {}
+
+--local singuexplosion = {weapondef = WeaponDefNames["energysingu_singularity"].id}
+
+local function getProjMass(weapondef)
+	local cp = weapondef.customParams
+	if cp.bogus and cp.projectile1 then
+		return getProjMass(WeaponDefNames[cp.projectile1])
+	end
+	if cp.mass then
+		return tonumber(cp.mass)
+	end
+	local baseDamage = tonumber(cp.stats_damage) or cp.shield_damage or 0
+	return max(baseDamage^0.4, ((weapondef.areaOfEffect or 0)^2)/20000, weapondef.range/100, 1)
+end
+
+for i = 1, #WeaponDefs do
+	local cp = WeaponDefs[i].customParams
+	if cp and cp.singularity then
+		local singuDef = {}
+		singuDef.radius = tonumber(cp.singu_radius)/2
+		singuDef.lifespan = tonumber(cp.singu_lifespan)
+		singuDef.strength = tonumber(cp.singu_strength)
+		if not (singuDef.radius and singuDef.lifespan and singuDef.strength) then
+			Spring.Log(GetInfo().name, "fatal", "[weapon_singularities.lua] Weapondefs Error: invalid singularity defs for "..WeaponDefs[i].name)
+		end
+		singuDef.finalStrength = tonumber(cp.singu_finalstrength) or singuDef.strength * 10
+		singuDef.height = tonumber(cp.singu_height) or 0
+		singuDef.ceg = cp.singu_ceg
+		singuDef.finalceg = cp.singu_finalceg
+		singuDef.edgeEffect = tonumber(cp.singu_edgeeffect) or 0
+		singuDef.baseEffect = tonumber(cp.singu_baseeffect) or 0.25
+		singuDef.nodamageimmunity = cp.singu_nodamageimmunity and true or false
+		singularitydefs[i] = singuDef
+	end
+	projectileMasses[i] = getProjMass(WeaponDefs[i])
+end
 
 local illegalFeatureDefs = {
 	["Metal Vein"] = true,
@@ -82,154 +107,66 @@ local function GetIsBeamWeapon(projectileID)
 	return weapondef.type == "BeamLaser" or weapondef.customParams.singuimmune ~= nil
 end
 
-local function GetEffectStrength(radius, strength, distance, mass)
-	local mass = mass or 1
-	local strength = strength
-	if mass <= 1 then
-		strength = strength/30 -- convert from elmo/sec
+local function GetEffect(px, py, pz, mass, data)
+	mass = max(mass or 1, 0.01)
+	local pos = data.position
+	local dx, dy, dz = px - pos[1], py - pos[2], pz - pos[3]
+	local dist = sqrt(dx*dx + dy*dy + dz*dz)
+	local strength
+	if data.lifespan == 1 then
+		strength = data.finalStrength
+	else
+		strength = -data.strength
 	end
-	mass = max(mass, 0.01) -- prevent divbyzero
-	local distance = max(distance, 0.01) -- gate to prevent divbyzero
-	return min(((radius/distance) * strength)^(0.95), 2 * strength) / mass
+	local power = ((dist/data.radius)^data.edgeEffect + data.baseEffect) * strength / mass
+	local mult = power / dist
+	return dx*mult, dy*mult, dz*mult
 end
 
-local function GetFinalEffectStrength(radius, strength, distance, mass)
-	local strength = strength
-	if mass <= 1 then
-		strength = 10 -- affect projectiles weakly.
-	end
-	local distance = max(distance, 0.01)
-	return max(- ((radius/distance) * strength)^(0.95), -2 * strength) / mass
-end
-
-local function ProcessProjectiles(sx, sy, sz, radius, strength, list, rev)
+local function ProcessProjectiles(data, list)
 	local frame = spGetGameFrame() + 1
 	for i = 1, #list do
 		local projectileID = list[i]
 		local px, py, pz = spGetProjectilePosition(projectileID)
-		local distance = Distance3d(sx, sy, sz, px, py, pz)
-		--local radiussqr = radius * radius -- no idea why this was sqr.
-		--spEcho("Distance: " .. distance .. "\nBeamWeapon: " .. tostring(GetIsBeamWeapon(projectileID)))
-		if distance <= radius and not GetIsBeamWeapon(projectileID) then -- this is affected.
+		if (px*px + py*py + pz*pz) <= data.radius^2 and not GetIsBeamWeapon(projectileID) then -- this is affected.
 			local projectileDefID = spGetProjectileDefID(projectileID)
 			if projectileDefID then
-				local cp = WeaponDefs[projectileDefID].customParams
-				if cp.bogus and cp.projectile1 then -- fake projectiles need their real projectile mass.
-					cp = WeaponDefNames[cp.projectile1]
-				end
-				local mass = tonumber(cp.mass) or 1
-				--spSetProjectileMoveControl(projectileID, true)
+				local mass = projectileMasses[projectileDefID]
 				local vx, vy, vz = spGetProjectileVelocity(projectileID)
-				--spEcho("projectileID: " .. projectileID .. "\nVelocity: " .. vx .. "," .. vy .. "," .. vz)
-				local ex, ey, ez = 0, 0, 0 -- effect's velocity change
-				if rev then
-					ex = GetFinalEffectStrength(radius, strength, abs(sx - px), mass)
-					ey = GetFinalEffectStrength(radius, strength, abs(sy - py), mass)
-					ez = GetFinalEffectStrength(radius, strength, abs(sz - pz), mass)
-				else
-					ex = GetEffectStrength(radius, strength, abs(sx - px), mass)
-					ey = GetEffectStrength(radius, strength, abs(sy - py), mass)
-					ez = GetEffectStrength(radius, strength, abs(sz - pz), mass)
-				end
-				if sx - px < 0 then
-					ex = - ex
-				elseif sx - px == 0 and not rev then
-					ex = 0
-					vx = 0
-				end
-				if sy - py < 0 then
-					ey = - ey
-				elseif sy - py == 0 and not rev then
-					ey = 0
-					vy = 0
-				end
-				if sz - pz < 0 then
-					ez = -ez
-				elseif sz - pz == 0 and not rev then
-					ez = 0
-					vz = 0
-				end
+				local ex, ey, ez = GetEffect(px, py, pz, mass, data)
 				spSetProjectileVelocity(projectileID, ex + vx, ey + vy, ez + vz)
-				--spSetProjectileGravity(projectileID, -ey)
-				--projectiles[projectileID] = frame
 			end
 		end
 	end
 end
 
-local function ProcessUnits(sx, sy, sz, radius, strength, list, rev)
+local function ProcessUnits(data, list)
 	for i = 1, #list do
 		local unitID = list[i]
-		local vx, vy, vz = spGetUnitVelocity(unitID)
-		local px, py, pz = spGetUnitPosition(unitID)
-		local ex, ey, ez = 0, 0, 0 -- effect's velocity change
-		local gy = Spring.GetGroundHeight(px, pz)
-		local mass = spGetUnitMass(unitID)
 		local unitdefID = spGetUnitDefID(unitID)
 		if not (UnitDefs[unitdefID].isBuilding or UnitDefs[unitdefID].isImmobile or UnitDefs[unitdefID].customParams.singuimmune) then
-			if rev then
-				ex = GetFinalEffectStrength(radius, strength, abs(sx - px), mass)
-				ey = GetFinalEffectStrength(radius, strength, abs(sy - py), mass)
-				ez = GetFinalEffectStrength(radius, strength, abs(sz - pz), mass)
-			else
-				ex = GetEffectStrength(radius, strength, abs(sx - px), mass)
-				ey = GetEffectStrength(radius, strength, abs(sy - py), mass)
-				ez = GetEffectStrength(radius, strength, abs(sz - pz), mass)
-			end
-			if sx - px < 0 then
-				ex = - ex
-			end
-			if sy - py < 0 then
-				ey = - ey
-			end
-			if sz - pz < 0 then
-				ez = -ez
-			end
-			--spEcho("Wanted velocity: " .. ex .. "," .. ey .. "," .. ez)
+			local vx, vy, vz = spGetUnitVelocity(unitID)
+			local px, py, pz = spGetUnitPosition(unitID)
+			local mass = spGetUnitMass(unitID)
+			local ex, ey, ez = GetEffect(px, py, pz, mass, data)
 			GG.DetatchFromGround(unitID, 0.5, 0.1, 1)
 			spSetUnitVelocity(unitID, ex + vx, ey + vy, ez + vz)
-			GG.SetUnitFallDamageImmunity(unitID, spGetGameFrame() + 2)
-			--spSetUnitVelocity(unitID, vx, vy, vz)
+			if not data.nodamageimmunity then
+				GG.SetUnitFallDamageImmunity(unitID, spGetGameFrame() + 2)
+			end
 		end
 	end
 end
 
-local function ProcessFeatures(sx, sy, sz, radius, strength, list, rev, sid)
+local function ProcessFeatures(data, list)
 	local frame = spGetGameFrame() + 1
 	for i = 1, #list do
 		local featureID = list[i]
 		if illegalFeatureDefs[FeatureDefs[spGetFeatureDefID(featureID)].tooltip] == nil then
 			local vx, vy, vz = spGetFeatureVelocity(featureID)
 			local px, py, pz = spGetFeaturePosition(featureID)
-			local ex, ey, ez = 0, 0, 0
 			local mass = spGetFeatureMass(featureID) or 1
-			if rev then
-				ex = GetFinalEffectStrength(radius, strength, abs(sx - px), mass)
-				ey = GetFinalEffectStrength(radius, strength, abs(sy - py), mass)
-				ez = GetFinalEffectStrength(radius, strength, abs(sz - pz), mass)
-			else
-				ex = GetEffectStrength(radius, strength, abs(sx - px), mass)
-				ey = GetEffectStrength(radius, strength, abs(sy - py), mass)
-				ez = GetEffectStrength(radius, strength, abs(sz - pz), mass)
-			end
-			if sx - px < 0 then
-				ex = - ex
-			elseif sx - px == 0 and not rev then
-				ex = 0
-				vx = 0
-			end
-			if sy - py < 0 then
-				ey = - ey
-			elseif sy - py == 0 and not rev then
-				ey = 0
-				vy = 0
-			end
-			if sz - pz < 0 then
-				ez = -ez
-			elseif sz - pz == 0 and not rev then
-				ez = 0
-				vz = 0
-			end
+			local ex, ey, ez = GetEffect(px, py, pz, mass, data)
 			spSetFeatureMoveControl(featureID,false,1,1,1,1,1,1,1,1,1)
 			spSetFeatureVelocity(featureID, ex + vx, ey + vy, ez + vz)
 		end
@@ -243,33 +180,25 @@ local function ProcessSingularity(singu, data)
 	local sz = data.position[3]
 	local lifespan = data.lifespan
 	local radius = data.radius
-	local strength = data.strength
-	local ceg = data.ceg
-	local finalceg = data.finalceg
-	local push = strength < 0
-	local finale = lifespan == 0
-	if strength < 0 then
-		strength = -strength
-	end
 	if lifespan == 1 then
 		--spSpawnCEG("opticblast_charge", sx, sy, sz, 0, 0, 0 , radius, 3000) -- note: radius doesn't seem to do anything here.
-	elseif lifespan%15 == 0 and lifespan > 20 then
-		spSpawnCEG(ceg, sx, sy, sz, 0, 0, 0 , radius, 0) -- hence why we need to make separate cegs :(
+	elseif lifespan%15 == 0 and lifespan > 20 and data.ceg then
+		spSpawnCEG(data.ceg, sx, sy, sz, 0, 0, 0 , radius, 0) -- hence why we need to make separate cegs :(
 	end
-	if lifespan < 20 and lifespan%4 == 0 then
-		spSpawnCEG(finalceg, sx, sy, sz, 0, 0, 0, radius, 0)
+	if lifespan < 20 and lifespan%4 == 0 and data.finalceg then
+		spSpawnCEG(data.finalceg, sx, sy, sz, 0, 0, 0, radius, 0)
 	end
 	local units = spGetUnitsInSphere(sx, sy, sz, radius)
 	if #units > 0 then
-		ProcessUnits(sx, sy, sz, radius, strength, units, finale or push)
+		ProcessUnits(data, units)
 	end
 	local projectiles = spGetProjectilesInRectangle(sx - radius, sz - radius, sx + radius, sz + radius, false, false)
 	if #projectiles > 0 then
-		ProcessProjectiles(sx, sy, sz, radius, strength, projectiles, finale or push)
+		ProcessProjectiles(data, projectiles)
 	end
 	local features = spGetFeaturesInSphere(sx, sy, sz, radius)
 	if #features > 0 then
-		ProcessFeatures(sx, sy, sz, radius, strength, features, finale or push)
+		ProcessFeatures(data, features)
 	end
 	--if lifespan%30 == 0 then
 		--Spring.Echo("Projectiles: " .. #projectiles .. ", " .. #features) 
@@ -302,14 +231,14 @@ function gadget:GameFrame(f)
 	--end
 end
 
-local function AddSingularity(x, y, z, strength, radius, lifespan, ceg, finalceg)
+local function AddSingularity(x, y, z, defID, defOverride)
 	local n = 0
-	ceg = ceg or 'black_hole_singu'
-	finalceg = finalceg or 'riotballgrav'
+	local def = Spring.Utilities.MergeTable(singularitydefs[defID], defOverride, true)
+	def.position = {[1] = x, [2] = y + def.height, [3] = z}
 	repeat
 		n = -math.random(1, 336559)
 	until IterableMap.InMap(singularities, n) == false
-	IterableMap.Add(singularities, n, {position = {[1] = x, [2] = y, [3] = z}, lifespan = lifespan, strength = strength, radius = radius, ceg = ceg, finalceg = finalceg})
+	IterableMap.Add(singularities, n, def)
 end
 
 GG.AddSingularity = AddSingularity
@@ -318,6 +247,6 @@ function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, ProjectileID)
 	if singularitydefs[weaponDefID] and ProjectileID then
 		local def = singularitydefs[weaponDefID]
 		local bonus = (AttackerID and Spring.ValidUnitID(AttackerID) and spGetUnitRulesParam(AttackerID, "comm_damage_mult")) or 1
-		IterableMap.Add(singularities, ProjectileID, {position = {[1] = px, [2] = py + def.height, [3] = pz}, lifespan = def.lifespan, strength = def.strength * bonus, radius = def.radius, ceg = def.ceg, finalceg = def.finalceg})
+		AddSingularity(px, py, pz, weaponDefID, {strength = def.strength * bonus})
 	end
 end

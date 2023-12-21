@@ -13,7 +13,7 @@ return {
 		canPatrol              = true,
 		category               = "LAND",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "55 55 55",
+		selectionVolumeScales  = "83 83 83",
 		selectionVolumeType    = "ellipsoid",
 		corpse                 = "DEAD",
 		customParams           = {
@@ -22,6 +22,11 @@ return {
 			outline_x = 125,
 			outline_y = 125,
 			outline_yoff = 21,
+			jump_delay         = 60,
+			jump_speed         = 8,
+			jump_reload        = 16,
+			canjump            = 1,
+			jump_range         = 650,
 		},
 
 		explodeAs              = "BIG_UNITEX",
@@ -31,9 +36,9 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 1250,
+		health                 = 1250,
 		maxSlope               = 36,
-		maxVelocity            = 1.4,
+		speed                  = 1.4,
 		maxWaterDepth          = 22,
 		movementClass          = "KBOT4",
 		noAutoFire             = false,
@@ -47,6 +52,7 @@ return {
 				"custom:shellshockflash",
 				"custom:SHELLSHOCKSHELLS",
 				"custom:SHELLSHOCKGOUND",
+				"custom:flamer",
 			},
 		},
 		sightDistance          = 660,
@@ -59,15 +65,17 @@ return {
 		upright                = true,
 		workerTime             = 0,
 		weapons                = {
-
 			{
 				def                = "NAPALM_SPRAYER",
 				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER",
 			},
+			{
+				def                = "JUMP",
+			},
 		},
 		weaponDefs             = {
 			NAPALM_FRAGMENT = {
-				name                    = "Napalm Trail",
+				name                    = "Thermite Trail",
 				accuracy                = 400,
 				areaOfEffect            = 162,
 				avoidFeature            = false,
@@ -79,7 +87,7 @@ return {
 					burntime = 60,
 
 					area_damage = 1,
-					area_damage_radius = 60,
+					area_damage_radius = 70,
 					area_damage_dps = 40,
 					area_damage_duration = 14,
 
@@ -110,6 +118,45 @@ return {
 				weaponType              = "Cannon",
 				weaponVelocity          = 320,
 			},
+			JUMP = {
+				name                    = "Thermite (Jump)",
+				areaOfEffect            = 40,
+				craterBoost             = 0,
+				craterMult              = 0,
+				cegTag                  = "flamer",
+				customParams            = {
+					light_camera_height = 2000,
+					light_color = "1 0.5 0.2",
+					light_radius = 120,
+					setunitsonfire = "1",
+					stats_custom_tooltip_1 = " - Falls from jumpjets",
+					groundnoexplode = 1,
+				},
+				damage                  = {
+					default = 30.1,
+				},
+				explosionGenerator      = "custom:napalmthrower_small",
+				fireStarter             = 100,
+				flighttime              = 10,
+				noExplode               = true,
+				impulseBoost            = 0,
+				impulseFactor           = 0,
+				interceptedByShieldType = 1,
+				noSelfDamage            = true,
+				range                   = 880,
+				reloadtime              = 1/3,
+				mygravity               = 1.5,
+				rgbColor                = "1 0.5 0.2",
+				soundHit				= "flamethrowerhit",
+				soundHitVolume          = 2.2,
+				soundStart              = "flamethrowerfire",
+				soundStartVolume        = 3.5,
+				stages                  = 10,
+				separation              = 1.5,
+				size					= 4.5,
+				weaponType              = "Cannon",
+				weaponVelocity          = 400,
+			},
 			NAPALM_SPRAYER = {
 				name                    = "Incendiary Mortar",
 				areaOfEffect            = 128,
@@ -122,20 +169,15 @@ return {
 					light_camera_height = 2500,
 					light_color = "0.25 0.13 0.05",
 					light_radius = 460,
-					numprojectiles1 = 2, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 1,
 					projectile1 = "jumparty_napalm_fragment",
-					--spreadradius1 = 4, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
 					keepmomentum1 = 0,
-					spawndist = 500, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeoutspawn = 1, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-					vradius1 = "-2,-4,-2,2,0,2", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					useheight = 1, -- check the distance between ground and projectile? OPTIONAL.
-					noairburst = "Friendship is Magic... and Magic throws missiles off course!",
-					clustercharges = 33,
-					clusterdelay = 3,
-					timeddeploy = 90,
+					spawndist = 500,
+					timeoutspawn = 1, 
+					velspread1 = "2.55, -4, 2.55, _, 0, _",
+					useheight = 1,
+					clustercharges = 40,
+					clusterdelay = 2,
 					
 					setunitsonfire = "1",
 					burntime = 200,
@@ -150,6 +192,7 @@ return {
 					sweepfire_step = 6,
 					sweepfire_maxrangemult = 0.98,
 					reveal_unit = 3,
+					shield_damage = 300 + 33*40
 				},
 				damage                  = {
 					default = 300,

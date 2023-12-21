@@ -61,7 +61,7 @@ for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local customParams = wd.customParams -- hold table for referencing
 	if tonumber(customParams.cruisealt) ~= nil and tonumber(customParams.cruisedist) ~= nil then -- found it!
-		Spring.Echo("[CruiseMissiles] Adding " .. i .. "(" .. tostring(wd.name) .. ")")
+		--Spring.Echo("[CruiseMissiles] Adding " .. i .. "(" .. tostring(wd.name) .. ")")
 		config[i] = {}
 		config[i].altitude = tonumber(customParams.cruisealt)
 		config[i].randomizationtype = customParams.cruise_randomizationtype or "?"
@@ -109,7 +109,7 @@ end
 local function GetRandomizedDestination(weaponDefID, x, z)
 	local radius = config[weaponDefID].radius
 	if radius then
-		local distance = random(0, radius)
+		local distance = (1 - random()^2) * radius
 		local heading = rad(random(0, 360))
 		local fx = x + (distance * sin(heading))
 		local fz = z + (distance * cos(heading))
@@ -120,7 +120,7 @@ end
 local function GetRandomizedOffset(weaponDefID)
 	local radius = config[weaponDefID].radius
 	if radius then
-		local distance = random(0, radius)
+		local distance = (1 - random()^2) * radius
 		local heading = rad(random(0, 360))
 		local fx = (distance * sin(heading))
 		local fz = (distance * cos(heading))
@@ -212,9 +212,11 @@ end
 local function ForceUpdate(id, x, y, z)
 	local data = IterableMap.Get(missiles, id)
 	if data then
-		data.target[1] = x
-		data.target[2] = y
-		data.target[3] = z
+		if type(data.target) == "table" then
+			data.target[1] = x
+			data.target[2] = y
+			data.target[3] = z
+		end
 	end
 end	
 

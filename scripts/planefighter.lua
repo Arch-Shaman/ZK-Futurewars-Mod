@@ -91,7 +91,8 @@ function OnAmmoChange(newState)
 end
 
 function OnAmmoTypeChange(newAmmo, bypassReload)
-	if bypassReload == nil then
+	local _, _, inBuild = Spring.GetUnitIsStunned(unitID)
+	if bypassReload == nil or not inBuild then
 		Reload()
 	end
 	currentLoadout = newAmmo + 1
@@ -107,7 +108,7 @@ function OnAmmoTypeChange(newAmmo, bypassReload)
 	else
 		distanceSet = false
 	end
-	if ammoState == 0 and bypassReload == nil then
+	if ammoState == 0 and bypassReload == nil and not inBuild then
 		OnAmmoChange(1)
 	end
 end

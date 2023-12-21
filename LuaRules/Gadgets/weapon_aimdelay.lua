@@ -24,9 +24,17 @@ local allowedHeadingError = 0.000001 -- to allow for micro-variations in heading
 local allowedPitchError = 0.01 -- to allow for cratering
 local WeaponDefOverrides = {}
 
+local abs = math.abs
+
 for i = 1, #WeaponDefs do
 	if WeaponDefs[i].customParams.allowedpitcherror or WeaponDefs[i].customParams.allowedheadingerror then
-		WeaponDefOverrides[i] = {heading = tonumber(WeaponDefs[i].customParams.allowedheadingerror) or allowedHeadingError, pitch = tonumber(WeaponDefs[i].customParams.allowedpitcherror) or allowedPitchError}
+		local headingError = tonumber(WeaponDefs[i].customParams.allowedheadingerror) or allowedHeadingError
+		local pitchError = tonumber(WeaponDefs[i].customParams.allowedpitcherror) or allowedPitchError
+		WeaponDefOverrides[i] = {
+			heading = math.rad(headingError), 
+			pitch = math.rad(pitchError), 
+			aimReset = tonumber(WeaponDefs[i].customParams.aimdelayresettime) or 60
+		}
 	end
 end
 
@@ -37,26 +45,43 @@ local unitDelayedArray = {}
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local frame = -1
 
+local function CallAsUnitIfExists(unitID, funcName, ...)
+	local env = Spring.UnitScript.GetScriptEnv(unitID)
+	if not env then
+		return
+	end
+	if env and env[funcName] then
+		Spring.UnitScript.CallAsUnit(unitID, env[funcName], ...)
+	end
+end
 
-local function isCloseEnough(heading1, heading2, pitch1, pitch2, weaponDefID)
+local function CallInAsUnit(unitID, trackProgress)
+	CallAsUnitIfExists(unitID, "OnTrackProgress", trackProgress)
+end
+
+local function CalculateAngleDifference(angle1, angle2)
+	return 180 - abs(abs(angle1 - angle2) - 180)
+end
+
+local function isCloseEnough(heading1, heading2, pitch1, pitch2, weaponDefID, lastAimFrame)
 	local headingerror = allowedHeadingError
 	local pitcherror = allowedPitchError
+	local aimTimeout = 60
 	if WeaponDefOverrides[weaponDefID] then
 		headingerror = WeaponDefOverrides[weaponDefID].heading
 		pitcherror = WeaponDefOverrides[weaponDefID].pitch
+		aimTimeout = WeaponDefOverrides[weaponDefID].aimReset
 	end
-	if (heading1 == false or heading2 == false or pitch1 == false or pitch2 == false) then
+	if not (heading1 and heading2 and pitch1 and pitch2) then
 		return false
 	end
-	if (abs(heading1 - heading2) > headingerror) then
-		--Spring.Echo("Heading error: " .. abs(heading1 - heading2))
+	if CalculateAngleDifference(heading1, heading2) > headingerror then
 		return false
-	end
-	if (abs(pitch1 - pitch2) > pitcherror) then
-		--Spring.Echo("Pitch error: " .. abs(heading1 - heading2))
+	elseif CalculateAngleDifference(pitch1, pitch2) > pitcherror then
 		return false
+	else
+		return frame - lastAimFrame <= aimTimeout
 	end
-	return true
 end
 
 function GG.AimDelay_ForceWeaponRestart(unitID, weaponNum, delay)
@@ -72,19 +97,24 @@ function GG.AimDelay_AttemptToFire(unitID, weaponNum, heading, pitch, delay)
 		pitch = false,
 		delayedUntil = 0,
 		forcereset = false,
+		lastAimFrame = frame,
 	}
-	local weaponDelay = unitDelayedArray[unitID][weaponNum]
 	local weaponDefID = UnitDefs[Spring.GetUnitDefID(unitID)].weapons[weaponNum].weaponDef or 0
-	if (not isCloseEnough(weaponDelay.heading, heading, weaponDelay.pitch, pitch, weaponDefID)) or weaponDelay.forcereset then
+	local weaponDelay = unitDelayedArray[unitID][weaponNum]
+	if (not isCloseEnough(weaponDelay.heading, heading, weaponDelay.pitch, pitch, weaponDefID, weaponDelay.lastAimFrame)) or weaponDelay.forcereset then
 		unitDelayedArray[unitID][weaponNum].delayedUntil = frame + delay
 		unitDelayedArray[unitID][weaponNum].heading = heading
 		unitDelayedArray[unitID][weaponNum].pitch = pitch
 		unitDelayedArray[unitID][weaponNum].forcereset = false
+		unitDelayedArray[unitID][weaponNum].lastAimFrame = frame
 		spSetUnitRulesParam(unitID, "aimdelay", weaponDelay.delayedUntil, LOS_ACCESS) -- Tell LUAUI this unit is currently aiming!
 		return false
 	end
+	unitDelayedArray[unitID][weaponNum].lastAimFrame = frame
+	local delayTime = unitDelayedArray[unitID][weaponNum].delayedUntil - frame
 	--Spring.Echo("AttemptToFire: " .. unitID .. ": " .. weaponNum .. " (" ..  tostring(frame >= weaponDelay.delayedUntil) .. ")")
-	return (frame >= weaponDelay.delayedUntil)
+	CallInAsUnit(unitID, 1 - (delayTime / delay))
+	return delayTime <= 0
 end
 
 function gadget:UnitDestroyed(unitID)

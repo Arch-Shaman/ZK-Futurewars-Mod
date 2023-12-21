@@ -73,5 +73,10 @@
 	"roster_factoryship" : "Gemiler",
 	"roster_striderhub" : "Striderlar",
 	"roster_staticmissilesilo" : "Füzeler",
-	"neutral" : "Tarafsız"
+	"neutral" : "Tarafsız",
+	"whisper" : "user söylüyor",
+	"whisperto" : "user'a söyle",
+	"specwhisper" : "user user2'ye söyledi",
+	"addedpoint" : "user haritada bir yeri işaret ettim.",
+	"addedmarker": "user oluşturulan harita işaretçisi:"
 }

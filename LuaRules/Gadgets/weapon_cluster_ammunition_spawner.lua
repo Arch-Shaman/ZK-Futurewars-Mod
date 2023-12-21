@@ -14,36 +14,6 @@ function gadget:GetInfo()
 	}
 end
 
---[[
-	Expected customParams:
-	{
-		# - replace with subprojectile number.
-		numprojectiles# = int, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-		projectile# = string, -- the weapondef name. we will convert this to an ID in init. REQUIRED. If defined in the unitdef, it will be unitdefname_weapondefname.
-		keepmomentum# = 1/0, -- should the projectile we spawn keep momentum of the mother projectile? OPTIONAL. Default: True
-		spreadradius# = num, -- used in clusters. OPTIONAL. Default: 100.
-		clusterposition# = string,
-		clustervelocity# = string,
-		vradius# = num, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Enter as "min,max" to define custom radius.
-
-		use2ddist = 1/0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-		spawndist = num, -- at what distance should we spawn the projectile(s)? REQUIRED.
-		soundspawn = file, -- file to play when we spawn the projectiles. OPTIONAL. Default: None.
-		timeoutspawn = 1/0, -- Can this missile spawn its subprojectiles when it times out? OPTIONAL. Default: 1.
-		vradius = num, -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Enter as "min,max" to define custom radius.
-		groundimpact = 2/1/0 -- check the distance between ground and projectile? OPTIONAL.
-		proxy = 1/0 -- check for nearby units?
-		proxydist = num, -- how far to check for units? Default: spawndist
-		timedcharge = num, -- how long after reaching the spawndistance should it spawn projectiles? (in frames) -- NOTE: this disables the default behavior!
-		clustercharges = num -- how many times to spawn the cluster projectiles
-		clusterdelay = num -- number of frames between each spawn.
-		clusterdelaytype = 0/-1 -- { 0 - after being triggered, keep clustering until clustercharge runs out.
-									-1 - only cluster if trigger conditions met AND delay has run out.
-		dyndamage = string / nil -- if any non-nil value, this weapon will have commander dynamic damage
-		noairburst = value / nil -- if true, this projectile will skip all airburst checks except ttl
-		onexplode = value / nil -- if true, this projectile will cluster when it explodes
-	}
-]]
 
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 include("LuaRules/Configs/customcmds.h.lua")
@@ -91,13 +61,13 @@ local atan2 = math.atan2
 local pi = math.pi
 local halfpi = pi/2
 local doublepi = pi*2
-local abs = math.abs -- CAS GOES TO THE GYM AND HAS DOUBLE ABS
 local strfind = string.find
 local gmatch = string.gmatch
 local floor = math.floor
 local rad = math.rad
 local sin = math.sin
 local cos = math.cos
+local acos = math.acos
 
 local CommandOrder = 123456
 local ground = byte("g")
@@ -165,12 +135,7 @@ local function unittest(tab, self, teamID)
 end
 
 if debugMode then 
-	for name, data in pairs(config) do
-		spEcho(name .. " : ON")
-		for k,v in pairs(data) do
-			spEcho(k .. " = " .. tostring(v))
-		end
-	end 
+	Spring.Utilities.TableEcho(config)
 end
 
 local function distance2d(x1,y1,x2,y2)
@@ -190,19 +155,34 @@ local function RegisterForceUpdate(id, x, y, z)
 	end
 end
 
-local function RegisterSubProjectiles(p, me)
-	if config[me] then
-		local damagemult = spGetUnitRulesParam(spGetProjectileOwnerID(p), "comm_damage_mult")
-		IterableMap.Add(projectiles, p, {def = me, intercepted = false, ttl = ((config[me].timer and (frame + config[me].timer)) or nil), delay = 0, charges = config[me].clustercharges, commdamagemult = damagemult}) --frame is set to current frame in gameframe
-		if config[me]["alwaysvisible"] then
+local function RegisterProjectile(proID, proOwnerID, proOwnerDefID, teamID, weaponDefID)
+	if config[weaponDefID] then
+		if debugMode then
+			spEcho("Registered projectile " .. proID)
+		end
+		local damagemult = spGetUnitRulesParam(proOwnerID, "comm_damage_mult")
+		local projConfig = config[weaponDefID]
+		IterableMap.Add(projectiles, proID, {
+			def = weaponDefID,
+			intercepted = false,
+			owner = proOwnerID,
+			teamID = teamID,
+			ttl = frame + projConfig.timer,
+			delay = 1,
+			charges = projConfig.clustercharges,
+			proOwnerDefID = proOwnerDefID,
+			commdamagemult = damagemult,
+			clusterdelaytype = projConfig.clusterdelaytype,
+			cluster}) --frame is set to current frame in gameframe
+		if config[weaponDefID]["alwaysvisible"] then
 			spSetProjectileAlwaysVisible(p, true)
 		end
 	end
 end
 
 local function GetRandomAttackPoint(x, z, radius)
-	local distance = sqrt(random(0, radius*radius))
-	local heading = rad(random(0, 360))
+	local distance = (1-sqrt(random())) * radius
+	local heading = random() * doublepi
 	local target = {}
 	target[1] = x + (distance * sin(heading))
 	target[3] = z + (distance * cos(heading))
@@ -276,136 +256,124 @@ local function GetFixedHeight(wd, x, z)
 	end
 end
 
+local function circleRand()
+	local theta, mag = random()*doublepi, 1-sqrt(random())
+	return cos(theta)*mag, sin(theta)*mag
+end
+
+local function getSpread(spreadArr, spreadMode)
+	if spreadMode == 1 then -- none
+		return {0, 0, 0}
+	elseif spreadMode == 2 then --cylY
+		local x, z = circleRand()
+		return {spreadArr[1] + x*spreadArr[4], spreadArr[2] + 2*(random()-0.5)*spreadArr[5], spreadArr[3] + z*spreadArr[6]}
+	elseif spreadMode == 3 then --cylX
+		local y, z = circleRand()
+		return {spreadArr[1] + 2*(random()-0.5)*spreadArr[4], spreadArr[2] + y*spreadArr[5], spreadArr[3] + z*spreadArr[6]}
+	elseif spreadMode == 4 then --cylZ
+		local x, y = circleRand()
+		return {spreadArr[1] + x*spreadArr[4], spreadArr[2] + z*spreadArr[5], spreadArr[3] + 2*(random()-0.5)*spreadArr[6]}
+	elseif spreadMode == 5 then --box
+		return {spreadArr[1] + 2*(random()-0.5)*spreadArr[4], spreadArr[2] + 2*(random()-0.5)*spreadArr[5], spreadArr[3] + 2*(random()-0.5)*spreadArr[6]}
+	elseif spreadMode == 6 then --sphere
+		-- Credits to Karthik Karanth for alg
+		local theta, phi, mag = random() * doublepi, acos(2*random() - 1), 1 - random()^(1/3)
+		local magsinphi = sin(phi)*mag
+		return {spreadArr[1] + magsinphi*sin(theta)*spreadArr[4], spreadArr[2] + magsinphi*cos(theta)*spreadArr[5], spreadArr[3] + mag*cos(phi)*spreadArr[6]}
+	else
+		Spring.Log(GetInfo().name, "error", "[weapon_cluster_ammunition_spawner.lua] Error: Unknown Spreadmode: ".. spreadMode)
+	end
+end
+
 local function SpawnSubProjectiles(id, wd)
 	if id == nil then
 		return
 	end
 	--spawn all the subprojectiles
 	local projectiledata = IterableMap.Get(projectiles, id)
-	local projectileattributes = {pos = {0,0,0}, speed = {0,0,0}, owner = 0, team = 0, ttl= 0,gravity = 0,tracking = false,}
+	local projAttributes = {pos = {0,0,0}, speed = {0,0,0}, owner = 0, team = 0, ttl= 0,gravity = 0,tracking = false,}
 	if debugMode then
 		spEcho("Fire the submunitions!")
 	end
+	local projConfig = config[wd]
 	local x, y, z = spGetProjectilePosition(id)
 	local vx, vy, vz = spGetProjectileVelocity(id)
 	local ttype, target = spGetProjectileTarget(id)
 	local targetX, targetY, targetZ = ConvertProjectileTargetToPos(ttype, target, x, y, z)
 	-- update projectile attributes --
 	local owner = spGetProjectileOwnerID(id)
-	projectileattributes["owner"] = owner
-	projectileattributes["team"] = spGetProjectileTeamID(id)
-	projectileattributes["pos"][1] = x
-	projectileattributes["pos"][2] = y
-	projectileattributes["pos"][3] = z
-	projectileattributes["speed"][1] = vx
-	projectileattributes["speed"][2] = vy
-	projectileattributes["speed"][3] = vz
-	local projectileConfig = config[wd].frags
+	projAttributes["owner"] = owner
+	local team = spGetProjectileTeamID(id)
+	projAttributes["team"] = team
 	local targetoverride
 	local forceupdate = false
 	local ownerDefID = spGetUnitDefID(owner) or projectiledata.proOwnerDefID
-	if config[wd].usertarget then
+	if projConfig.usertarget then
 		targetoverride = projectiletargets[id] or {}
 		forceupdate = true
 	end
 	local step = {0,0,0}
 	-- Create the projectiles --
-	for j = 1, config[wd].fragcount do
-		local me = projectileConfig[j]["projectile"]
-		local mr = projectileConfig[j]["spreadmin"]
-		local dr = projectileConfig[j]["spreadmax"] - mr
-		local vr = projectileConfig[j]["veldata"]
-		local projectilecount = projectileConfig[j]["numprojectiles"]
-		for i = 1, 3 do
-			step[i] = (vr.diff[i]) / projectilecount
-		end
-		if debugMode then
-			spEcho("Velocity: " ..tostring(projectileConfig[j].clusterpos),tostring(projectileConfig[j].clustervec) .. "\nstep: " .. tostring(step))
-		end
+	for j = 1, projConfig.fragcount do
+		local fragConfig = projConfig.frags[j]
+		local me = fragConfig.projectile
+		local projCount = fragConfig["numprojectiles"]
 		if WeaponDefs[me].type == "Cannon" and WeaponDefs[me].flightTime == 0 then
-			projectileattributes["ttl"] = 1500 -- Needed to appease the unspeakable evil: https://github.com/beyond-all-reason/spring/issues/704
+			projAttributes["ttl"] = 1500 -- Needed to appease the unspeakable evil: https://github.com/beyond-all-reason/spring/issues/704
 		else
-			projectileattributes["ttl"] = WeaponDefs[me].flightTime or WeaponDefs[me].beamTTL or 9000
+			projAttributes["ttl"] = WeaponDefs[me].flightTime or WeaponDefs[me].beamTTL or 9000
 		end
-		projectileattributes["tracking"] = (WeaponDefs[me].tracks and ttype == unit and target) or false
-		projectileattributes["gravity"] = -WeaponDefs[me].myGravity or -1
+		projAttributes["tracking"] = (WeaponDefs[me].tracks and ttype == unit and target) or false
+		projAttributes["gravity"] = -WeaponDefs[me].myGravity or -1
 		local ceg = WeaponDefs[me].cegTag
 		--spEcho(tostring(ceg))
-		projectileattributes["cegTag"] = ceg
-		local positioning = projectileConfig[j].clusterpos or "none"
-		local vectoring = projectileConfig[j].clustervec or "none"
-		local keepmomentum = projectileConfig[j].keepmomentum
-		if config[wd].dynDamage then
+		projAttributes["cegTag"] = ceg
+		local keepmomentum = fragConfig.keepmomentum
+		if projConfig.dynDamage then
 			local spawnMult = projectiledata.commdamagemult or 1
 			if debugMode then
 				spEcho("SpawnMult: " .. spawnMult)
 			end
 			if spawnMult > 1 then
-				projectilecount = floor(spawnMult * projectilecount + random())
+				projCount = floor(spawnMult * projCount + random())
 			end
 		end
 		local untargetedCount
-		for i = 1, projectilecount do
-			if config[wd].usertarget then
+		for i = 1, projCount do
+			if projConfig.usertarget then
 				if targetoverride[i] then
 					target = targetoverride[i]
 				else
-					untargetedCount = untargetedCount or (projectilecount - i + 1) --the +1 is there since THIS projectile is also not targeted
+					untargetedCount = untargetedCount or (projCount - i + 1) --the +1 is there since THIS projectile is also not targeted
 					if untargetedCount >= 3 then
-						local angle = (i + untargetedCount - projectilecount) * (doublepi / untargetedCount)
+						local angle = (i + untargetedCount - projCount) * (doublepi / untargetedCount)
 						target = GetRingAttackPoint(targetX, targetZ, wanteddefs[ownerDefID]["noTargetRange"], angle)
-						
 					else
 						target = GetRandomAttackPoint(targetX, targetZ, wanteddefs[ownerDefID]["noTargetRange"])
 					end
 				end
 				ttype = ground
 			end
-			local p
-			if strfind(positioning,"random") then
-				if strfind(positioning,"x") then
-					projectileattributes["pos"][1] = x+mr+(2*dr*random())
-				end
-				if strfind(positioning,"y") then
-					projectileattributes["pos"][2] = y+mr+(2*dr*random())
-				end
-				if strfind(positioning,"z") then
-					projectileattributes["pos"][3] = z+mr+(2*dr*random())
-				end
+			projAttributes["pos"] = getSpread(fragConfig.posSpread, fragConfig.posSpreadMode)
+			local projPos = projAttributes["pos"]
+			projPos[1] = projPos[1] + x
+			projPos[2] = projPos[2] + y
+			projPos[3] = projPos[3] + z
+			projAttributes["speed"] = getSpread(fragConfig.velSpread, fragConfig.velSpreadMode)
+			if keepmomentum then
+				local projVel = projAttributes["speed"]
+				projVel[1] = projVel[1] + vx*keepmomentum[1]
+				projVel[2] = projVel[2] + vy*keepmomentum[2]
+				projVel[3] = projVel[3] + vz*keepmomentum[3]
 			end
-			local vxf, vyf, vzf = (vx * keepmomentum[1]), (vy * keepmomentum[2]), (vz * keepmomentum[3])
-			if strfind(vectoring,"random") then
-				if strfind(vectoring,"x") then
-					projectileattributes["speed"][1] = vxf+vr.min[1]+(vr.diff[1]*random())
-				end
-				if strfind(vectoring,"y") then
-					projectileattributes["speed"][2] = vyf+vr.min[2]+(vr.diff[2]*random())
-				end
-				if strfind(vectoring,"z") then
-					projectileattributes["speed"][3] = vzf+vr.min[3]+(vr.diff[3]*random())
-				end
-			elseif strfind(vectoring,"even") then
-				if strfind(vectoring,"x") then
-					projectileattributes["speed"][1] = vxf+(vr.min[1]+(step[1]*(i-1)))
-				end
-				if strfind(vectoring,"y") then
-					projectileattributes["speed"][2] = vyf+(vr.min[2]+(step[2]*(i-1)))
-				end
-				if strfind(vectoring,"z") then
-					projectileattributes["speed"][3] = vzf+(vr.min[3]+(step[3]*(i-1)))
-				end
-			end
-			--projectileattributes["end"][1] = projectileattributes.speed[1] + projectileattributes.pos[1]
-			--projectileattributes["end"][2] = projectileattributes.speed[2] + projectileattributes.pos[2]
-			--projectileattributes["end"][3] = projectileattributes.speed[3] + projectileattributes.pos[3]
 			if debugMode then
-				spEcho("Projectile Speed: " .. projectileattributes["speed"][1],projectileattributes["speed"][2],projectileattributes["speed"][3])
+				spEcho("Projectile Speed: " .. projAttributes["speed"][1],projAttributes["speed"][2],projAttributes["speed"][3])
 			end
-			if projectileConfig[j].spawnsfx then
+			if fragConfig.spawnsfx then
 				--How does this work? I have no idea!
-				local dx = projectileattributes["speed"][1]
-				local dy = projectileattributes["speed"][2] - 1 --hackity hax
-				local dz = projectileattributes["speed"][3]
+				local dx = projAttributes["speed"][1]
+				local dy = projAttributes["speed"][2] - 1 --hackity hax
+				local dz = projAttributes["speed"][3]
 				--do not question the arctangent
 				local dx2 = dx * dx	
 				local dy2 = dy * dy
@@ -413,10 +381,11 @@ local function SpawnSubProjectiles(id, wd)
 				local dirX = atan2(dx, sqrt(dy2 + dz2))
 				local dirY = atan2(dy, sqrt(dx2 + dz2))
 				local dirZ = atan2(dz, sqrt(dx2 + dy2))
-				spSpawnSFX(projectileattributes["owner"], projectileConfig[j].spawnsfx, projectileattributes["pos"][1], projectileattributes["pos"][2], projectileattributes["pos"][3], dirX, dirY, dirZ, true)
-			else
-				p = spSpawnProjectile(me, projectileattributes)
-				--if projectileattributes["tracking"] then
+				spSpawnSFX(projAttributes["owner"], fragConfig.spawnsfx, projAttributes["pos"][1], projAttributes["pos"][2], projAttributes["pos"][3], dirX, dirY, dirZ, true)
+			end
+			if fragConfig.projectile then
+				p = spSpawnProjectile(me, projAttributes)
+				--if projAttributes["tracking"] then
 				if ttype ~= ground then
 					if debugMode then
 						spEcho("setting target for " .. p .. " = " .. tostring(target)) -- safety
@@ -429,15 +398,12 @@ local function SpawnSubProjectiles(id, wd)
 					RegisterForceUpdate(p, target[1], target[2], target[3])
 				end
 				--end
+				RegisterProjectile(p, owner, ownerDefID, team, me)
 			end
-			RegisterSubProjectiles(p, me)
-			--if ceg and ceg ~= "" then
-				--spSetProjectileCEG(p, [[custom:]] .. ceg)
-			--end
 		end
 	end
 	-- create the explosion --
-	if config[wd].noceg then
+	if not projConfig.noceg then
 		spSpawnExplosion(x, y, z, 0, 0, 0, {weaponDef = wd, owner = spGetProjectileOwnerID(id), craterAreaOfEffect = WeaponDefs[wd].craterAreaOfEffect, damageAreaOfEffect = 0, edgeEffectiveness = 0, explosionSpeed = WeaponDefs[wd].explosionSpeed, impactOnly = WeaponDefs[wd].impactOnly, ignoreOwner = WeaponDefs[wd].noSelfDamage, damageGround = true})
 	end
 	--Spring.Echo("OnSplit", WeaponDefs[wd].hitSound[1].name, WeaponDefs[wd].hitSound[1].volume)
@@ -455,15 +421,18 @@ local function SpawnSubProjectiles(id, wd)
 		if debugMode then
 			spEcho("Lost 1 charge")
 		end
-		projectiledata.delay = frame + config[wd].clusterdelay
-		local delaytype = projectileConfig.clusterdelaytype
-		if delaytype == 0 then
-			projectileConfig.clusterdelaytype = 1
+		projectiledata.delay = frame + projConfig.clusterdelay
+		if projectiledata.clusterdelaytype == 0 then
+			projectiledata.clusterdelaytype = -1
 		end
 	end
-	if config[wd].usertargetable then
-		targettable[owner].count = targettable[owner].count - 1
-		if targettable[owner].count == 0 and targettable[owner].dead then
+	if projConfig.usertarget then
+		if targettable[owner] and targettable[owner].count then
+			targettable[owner].count = targettable[owner].count - 1
+			if targettable[owner].count == 0 and targettable[owner].dead then
+				targettable[owner] = nil
+			end
+		else
 			targettable[owner] = nil
 		end
 	end
@@ -482,119 +451,108 @@ local function CheckProjectile(id)
 		return
 	end
 	local wd = projectile.def or spGetProjectileDefID(id)
-	if debugMode then spEcho("isCheckedDuringCruise: " .. tostring(config[wd]["block_check_during_cruise"])) end
-	if config[wd]["block_check_during_cruise"] and GG.GetMissileCruising(id) then -- some weapons don't want CAS to check during cruise.
+	local projConfig = config[wd]
+	if debugMode then spEcho("isCheckedDuringCruise: " .. tostring(projConfig["block_check_during_cruise"])) end
+	if projConfig["block_check_during_cruise"] and GG.GetMissileCruising(id) then -- some weapons don't want CAS to check during cruise.
 		if debugMode then spEcho(id .. " got blocked due to Cruising") end
 		return
 	end
 	if projectile.delay <= frame then
-		if config[wd].clusterdelaytype == 1 then
+		if projectile.clusterdelaytype == -1 then
 			if debugMode then
 				spEcho("Locked in spawning")
 			end
 			SpawnSubProjectiles(id,wd)
 			return
 		else
-			if projectile.ttl then -- timed weapons don't need anything fancy.
-				if projectile.ttl <= frame then
+			if projectile.ttl <= frame then
+				if debugMode then
+					spEcho("Spawn by ttl")
+				end
+				SpawnSubProjectiles(id, wd)
+				return
+			end
+			if not projConfig.airburst then
+				if debugMode then
+					spEcho("noairburst short circuit")
+				end
+				return
+			end
+			
+			--spEcho("wd: " .. tostring(wd))
+			projectile.intercepted = spGetProjectileIsIntercepted(id)
+			local isMissile = false -- check for missile status. When the missile times out, the subprojectiles will be spawned if allowed.
+			if WeaponDefs[wd]["flightTime"] ~= nil and WeaponDefs[wd].type == "Missile" then
+				isMissile = true
+			end
+			local myConfig = projConfig
+			local vx,vy,vz = spGetProjectileVelocity(id)
+			if myConfig.launcher and vy > -0.000001 then
+				return
+			end
+			--spEcho("CheckProjectile: " .. id .. ", " .. wd)
+			local ttl = spGetProjectileTimeToLive(id)
+			if isMissile and debugMode then spEcho("ttl: " .. tostring(ttl)) end
+			if isMissile and myConfig.timeoutspawn and ttl == 0 then
+				if debugMode then
+					spEcho("Spawn by timeoutspawn")
+				end
+				SpawnSubProjectiles(id,wd)
+				return
+			end
+			local distance
+			local x2,y2,z2 = spGetProjectilePosition(id)
+			local x1,y1,z1 = ConvertProjectileTargetToPos(targettype, targetID, x2, y2, z2)
+			if debugMode then 
+				spEcho("Attack type: " .. targettype .. "\nTarget: " .. tostring(targetID))
+			end
+			--debugEcho("Key: 'g' = " .. byte("g") .. "\n'u' = " .. byte("u") .. "\n'f' = " .. byte("f") .. "\n'p' = " .. byte("p"))
+			if myConfig.useheight then -- this spawns at the selected height when vy < 0
+				if debugMode then
+					spEcho("Useheight check")
+				end
+				local heightDiff
+				if myConfig.useasl then
+					heightDiff = y2
+				else
+					heightDiff = y2 - GetFixedHeight(wd, x2,z2)
+				end
+				if heightDiff <= myConfig.spawndist and vy <= myConfig.maxvelocity then
 					if debugMode then
-						spEcho("Spawn by ttl")
+						spEcho("Spawn by ground height")
+					end
+					SpawnSubProjectiles(id,wd)
+				end
+				return
+			end
+			if myConfig.use2ddist then
+				distance = distance2d(x2,z2,x1,z1)
+			else
+				distance = distance3d(x2,y2,z2,x1,y1,z1)
+			end
+			local height = y2 - GetFixedHeight(wd, x2,z2)
+			if debugMode then
+				spEcho("d: " .. distance .. "\nisBomb: " .. tostring(myConfig["isBomb"]) .. "\nVelocity: (" .. vx,vy,vz .. ")" .. "\nH: " .. height .. "\nexplosion dist: " .. height - myConfig.spawndist)
+			end
+			if distance < myConfig.spawndist and not myConfig["isBomb"] then
+				SpawnSubProjectiles(id,wd)
+				if debugMode then
+					spEcho("distance")
+				end
+				return
+			elseif myConfig["proxy"] then
+				local units
+				if myConfig.use2ddist then
+					units = spGetUnitsInCylinder(x2,z2, myConfig["proxydist"])
+				else 
+					units = spGetUnitsInSphere(x2,y2,z2, myConfig["proxydist"])
+				end
+				if unittest(units, projectile.owner, projectile.teamID) then
+					if debugMode then
+						spEcho("Unit passed unittest. Passed to SpawnSubProjectiles")
 					end
 					SpawnSubProjectiles(id, wd)
 					return
-				else
-					return
-				end
-			end
-			if config[wd].airburst then
-				--spEcho("wd: " .. tostring(wd))
-				projectile.intercepted = spGetProjectileIsIntercepted(id)
-				local isMissile = false -- check for missile status. When the missile times out, the subprojectiles will be spawned if allowed.
-				if WeaponDefs[wd]["flightTime"] ~= nil and WeaponDefs[wd].type == "Missile" then
-					isMissile = true
-				end
-				local myConfig = config[wd]
-				local vx,vy,vz = spGetProjectileVelocity(id)
-				if myConfig.launcher and vy > -0.000001 then
-					return
-				end
-				--spEcho("CheckProjectile: " .. id .. ", " .. wd)
-				local ttl = spGetProjectileTimeToLive(id)
-				if isMissile and debugMode then spEcho("ttl: " .. tostring(ttl)) end
-				if isMissile and myConfig.timeoutspawn and ttl == 0 then
-					if debugMode then
-						spEcho("Spawn by timeoutspawn")
-					end
-					SpawnSubProjectiles(id,wd)
-					return
-				end
-				local use3d = (myConfig.use2ddist == 0)
-				local distance
-				local x2,y2,z2 = spGetProjectilePosition(id)
-				local x1,y1,z1 = ConvertProjectileTargetToPos(targettype, targetID, x2, y2, z2)
-				if debugMode then 
-					spEcho("Attack type: " .. targettype .. "\nTarget: " .. tostring(targetID))
-				end
-				--debugEcho("Key: 'g' = " .. byte("g") .. "\n'u' = " .. byte("u") .. "\n'f' = " .. byte("f") .. "\n'p' = " .. byte("p"))
-				if myConfig.useheight and myConfig.useheight ~= 0 then -- this spawns at the selected height when vy < 0
-					if debugMode then
-						spEcho("Useheight check")
-					end
-					local heightDiff
-					if myConfig.useasl then
-						heightDiff = y2
-					else
-						heightDiff = y2 - GetFixedHeight(wd, x2,z2)
-					end
-					if heightDiff <= myConfig.spawndist and vy <= myConfig.minvelocity then
-						if debugMode then
-							spEcho("Spawn by ground height")
-						end
-						SpawnSubProjectiles(id,wd)
-					end
-					return
-				end
-				if use3d then
-					distance = distance3d(x2,y2,z2,x1,y1,z1)
-				else
-					distance = distance2d(x2,z2,x1,z1)
-				end
-				local height = y2 - GetFixedHeight(wd, x2,z2)
-				if debugMode then
-					spEcho("d: " .. distance .. "\nisBomb: " .. tostring(myConfig["isBomb"]) .. "\nVelocity: (" .. vx,vy,vz .. ")" .. "\nH: " .. height .. "\nexplosion dist: " .. height - myConfig.spawndist)
-				end
-				if distance < myConfig.spawndist and not myConfig["isBomb"] then -- bombs ignore distance and explode based on height. This is due to bomb ground attacks being absolutely fucked in current spring build.
-					SpawnSubProjectiles(id,wd)
-					if debugMode then
-						spEcho("distance")
-					end
-					return
-				elseif myConfig["isBomb"] and height <= myConfig.spawndist then
-					SpawnSubProjectiles(id,wd)
-					if debugMode then
-						spEcho("bomb engage")
-					end
-					return
-				elseif myConfig.groundimpact == 1 and vy < -1 or myConfig.groundimpact == 2 and height <= myConfig.spawndist then
-					if debugMode then
-						spEcho("ground impact")
-					end
-					SpawnSubProjectiles(id,wd)
-					return
-				elseif myConfig["proxy"] == 1 then
-					local units
-					if use3d then
-						units = spGetUnitsInSphere(x2,y2,z2, myConfig["proxydist"])
-					else 
-						units = spGetUnitsInCylinder(x2,z2, myConfig["proxydist"])
-					end
-					if unittest(units, projectile.owner, projectile.teamID) then
-						if debugMode then
-							spEcho("Unit passed unittest. Passed to SpawnSubProjectiles")
-						end
-						SpawnSubProjectiles(id, wd)
-						return
-					end
 				end
 			end
 		end
@@ -720,13 +678,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	end
 	local projectiledata = IterableMap.Get(projectiles, proID)
 	if config[weaponDefID] and not projectiledata then
-		if debugMode then
-			spEcho("Registered projectile " .. proID)
-		end
-		IterableMap.Add(projectiles, proID, {def = weaponDefID, intercepted = false, owner = proOwnerID, teamID = spGetProjectileTeamID(proID), ttl = ((config[weaponDefID].timer and (frame + config[weaponDefID].timer)) or nil), delay = 1, charges = config[weaponDefID].clustercharges, proOwnerDefID = proOwnerDefID}) --frame is set to the current frame in gameframe
-		if config[weaponDefID]["alwaysvisible"] then
-			spSetProjectileAlwaysVisible(proID,true)
-		end
+		RegisterProjectile(proID, proOwnerID, proOwnerDefID, spGetProjectileTeamID(proID), weaponDefID)
 	end
 end
 

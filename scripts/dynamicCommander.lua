@@ -155,10 +155,63 @@ local function GetCegTable(wd)
 	return cegs
 end
 
-local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, damageMult)
+local function DoExtraWeaponStuff(extraInfo, weaponNum, wd, weaponID)
+	local INLOS = {inlos = true}
+	local ei = extraInfo
+	if ei.reloadBonus ~= 0 or ei.reloadOverride then
+		local reloadBonus
+		if ei.reloadBonus < 0 then
+			reloadBonus = 1 / (-ei.reloadBonus + 1)
+		else
+			reloadBonus = 1 + ei.reloadBonus
+		end
+		local newReloadTime = ei.reloadOverride or wd.reload
+		newReloadTime = math.max(math.ceil(((newReloadTime * 30) / reloadBonus)), 1) / 30 -- multiply by 30 to do frame rounding.
+		Spring.SetUnitWeaponState(unitID, weaponID, "reloadTime", newReloadTime)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_basereload", newReloadTime, INLOS)
+	end
+	if ei.burstOverride then
+		Spring.SetUnitWeaponState(unitID, weaponID, "burst", ei.burstOverride)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_updatedburst_count", ei.burstOverride, INLOS)
+	end
+	if ei.burstRateOverride then
+		Spring.SetUnitWeaponState(unitID, weaponID, "burstRate", ei.burstRateOverride)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_baseburstrate", ei.burstRateOverride, INLOS)
+	end
+	if ei.accuracyBonus ~= 1 or ei.accuracyOverride then
+		local newAccuracy = ei.accuracyOverride or wd.accuracy
+		newAccuracy = math.max(newAccuracy - (newAccuracy * (1 - ei.accuracyBonus)), 0)
+		Spring.SetUnitWeaponState(unitID, weaponID, "accuracy", newAccuracy)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_accuracy", newAccuracy, INLOS)
+	end
+	if ei.projectileSpeedBonus ~= 1 then
+		if ei.projectileSpeedBonus < 0.05 then ei.projectileSpeedBonus = 0.05 end
+		local newSpeed = math.max(wd.projectilespeed * ei.projectileSpeedBonus, 10)
+		Spring.SetUnitWeaponState(unitID, weaponID, "projectileSpeed", newSpeed)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_speed", newSpeed, INLOS)
+	end
+	if ei.projectileBonus ~= 0 or ei.projectileOverride then
+		local baseProjectiles = ei.projectileOverride or wd.projectiles
+		local newProjectileCount = math.max(baseProjectiles + ei.projectileBonus, 1)
+		Spring.SetUnitWeaponState(unitID, weaponID, "projectiles", newProjectileCount)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_projectilecount_override", newProjectileCount, INLOS)
+	end
+	if ei.sprayAngleBonus or ei.sprayAngleOverride then
+		local baseSprayAngle = ei.sprayAngleOverride or wd.sprayAngle
+		local bonus = ei.sprayAngleBonus + 1
+		if bonus < 0 then bonus = 0 end
+		local newSprayAngle = math.max(baseSprayAngle * bonus, 0)
+		Spring.SetUnitWeaponState(unitID, weaponID, "sprayAngle", newSprayAngle)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_sprayangle", newSprayAngle, INLOS)
+	end
+end
+
+local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, damageMult, extraInfo)
 	local weaponDef1 = weaponName1 and unitWeaponNames[weaponName1]
-	local weaponDef2 = weaponName2 and unitWeaponNames[weaponName2]
+	local weaponDef2 = weaponName2 and unitWeaponNames[weaponName2] 
 	local shieldDef = shieldName and unitWeaponNames[shieldName]
+	local wd1 = weaponDef1 and WeaponDefs[weaponDef1.weaponDefID]
+	local wd2 = weaponDef2 and WeaponDefs[weaponDef2.weaponDefID] or nil
 	
 	weapon1 = weaponDef1 and weaponDef1.num
 	weapon2 = weaponDef2 and (weaponDef2.num2 or weaponDef2.num)
@@ -212,8 +265,10 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 	local maxRange = 0
 	local otherRange = false
 	if weapon1 then
+		local baserange = extraInfo[1].rangeOverride or tonumber(WeaponDefs[weaponDef1.weaponDefID].range)
 		isManual[weapon1] = weaponDef1.manualFire
-		local range = tonumber(WeaponDefs[weaponDef1.weaponDefID].range)*rangeMult
+		local damageBooster = math.max(1 + extraInfo[2].damageBoost, 0.01)
+		local range = baserange*rangeMult
 		if weaponDef1.manualFire then
 			otherRange = range
 		else
@@ -222,17 +277,21 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 		Spring.SetUnitWeaponState(unitID, weapon1, "range", range)
 		Spring.SetUnitWeaponDamages(unitID, weapon1, "dynDamageRange", range)
 		
+		
 		local damages = WeaponDefs[weaponDef1.weaponDefID].damages
 		for k, v in pairs(damages) do
 			if type(k) == "number" then
-				Spring.SetUnitWeaponDamages(unitID, weapon1, k, v * damageMult)
+				Spring.SetUnitWeaponDamages(unitID, weapon1, k, (v * damageBooster) * damageMult)
 			end
 		end
+		Spring.SetUnitRulesParam(unitID, weapon1 .. "_actual_dmgboost", damageBooster * damageMult)
+		DoExtraWeaponStuff(extraInfo[1], 1, wd1, weapon1)
 	end
 	
 	if weapon2 then
+		local baserange = extraInfo[2].rangeOverride or tonumber(WeaponDefs[weaponDef2.weaponDefID].range) -- why does this need ToNumber?
 		isManual[weapon2] = weaponDef2.manualFire
-		local range = tonumber(WeaponDefs[weaponDef2.weaponDefID].range)*rangeMult
+		local range = baserange*rangeMult
 		if maxRange then
 			if weaponDef2.manualFire then
 				otherRange = range
@@ -247,19 +306,19 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 		end
 		Spring.SetUnitWeaponState(unitID, weapon2, "range", range)
 		Spring.SetUnitWeaponDamages(unitID, weapon2, "dynDamageRange", range)
-		
+		local damageBooster = math.max(1 + extraInfo[2].damageBoost, 0.01)
 		local damages = WeaponDefs[weaponDef2.weaponDefID].damages
 		for k, v in pairs(damages) do
 			if type(k) == "number" then
-				Spring.SetUnitWeaponDamages(unitID, weapon2, k, v * damageMult)
+				Spring.SetUnitWeaponDamages(unitID, weapon2, k, (v * damageBooster) * damageMult)
 			end
 		end
+		Spring.SetUnitRulesParam(unitID, weapon2 .. "_actual_dmgboost", damageBooster * damageMult)
+		DoExtraWeaponStuff(extraInfo[2], 2, wd2, weapon2)
 	end
 	
 	if weapon1 then
 		if weapon2 then
-			local reload1 = Spring.GetUnitWeaponState(unitID, weapon1, 'reloadTime')
-			local reload2 = Spring.GetUnitWeaponState(unitID, weapon2, 'reloadTime')
 			Spring.SetUnitRulesParam(unitID, "primary_weapon_override",  weapon1, INLOS)
 			Spring.SetUnitRulesParam(unitID, "secondary_weapon_override",  weapon2, INLOS)
 			
@@ -509,7 +568,24 @@ local function SetUpFeatureRules(featureID)
 	TransferParamToFeature(featureID, "carrier_count_droneassault")
 	TransferParamToFeature(featureID, "carrier_count_droneheavyslow")
 	TransferParamToFeature(featureID, "carrier_count_drone")
-	
+	if weapon2 then
+		TransferParamToFeature(featureID, weapon2 .. "_sprayangle")
+		TransferParamToFeature(featureID, weapon2 .. "_speed")
+		TransferParamToFeature(featureID, weapon2 .. "_projectilecount_override")
+		TransferParamToFeature(featureID, weapon2 .. "_accuracy")
+		TransferParamToFeature(featureID, weapon2 .. "_updatedburst_count")
+		TransferParamToFeature(featureID, weapon2 .. "_baseburstrate")
+		TransferParamToFeature(featureID, weapon2 .. "_basereload")
+		TransferParamToFeature(featureID, weapon2 .. "_actual_dmgboost")
+	end
+	TransferParamToFeature(featureID, weapon1 .. "_speed")
+	TransferParamToFeature(featureID, weapon1 .. "_projectilecount_override")
+	TransferParamToFeature(featureID, weapon1 .. "_sprayangle")
+	TransferParamToFeature(featureID, weapon1 .. "_accuracy")
+	TransferParamToFeature(featureID, weapon1 .. "_baseburstrate")
+	TransferParamToFeature(featureID, weapon1 .. "_updatedburst_count")
+	TransferParamToFeature(featureID, weapon1 .. "_basereload")
+	TransferParamToFeature(featureID, weapon1 .. "_actual_dmgboost")
 	
 	-- Things tooltips need --
 	TransferParamToFeature(featureID, "commander_owner")

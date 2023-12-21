@@ -19,6 +19,7 @@ local config = {}
 
 local spGetUnitArmored = Spring.GetUnitArmored
 local debugMode = true
+local watchWeapons = {}
 
 for i = 1, #WeaponDefs do
 	local wd = WeaponDefs[i]
@@ -26,6 +27,7 @@ for i = 1, #WeaponDefs do
 		local percent = tonumber(wd.customParams.armorpiercing)
 		if percent then
 			config[i] = percent
+			watchWeapons[#watchWeapons + 1] = i
 		end
 	end
 end
@@ -33,7 +35,7 @@ end
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam, projectileID)
 	if config[weaponDefID] then
 		local isArmored, armorValue = spGetUnitArmored(unitID)
-		if not isArmored then
+		if not isArmored or armorValue >= 1 then
 			return damage, 1
 		else -- EX: 500 damage, 75% AP against 80% armor should yield 375 damage.
 			local originalDamage = damage * (1/armorValue)
@@ -43,4 +45,8 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	else
 		return damage, 1
 	end
+end
+
+function gadget:UnitPreDamaged_GetWantedWeaponDef() -- only do certain weapons.
+	return watchWeapons
 end

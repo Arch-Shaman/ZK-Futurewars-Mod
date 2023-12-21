@@ -17,7 +17,7 @@ return {
 		collisionVolumeScales  = "20 20 20",
 		collisionVolumeType    = "ellipsoid",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "28 28 28",
+		selectionVolumeScales  = "42 42 42",
 		selectionVolumeType    = "ellipsoid",
 
 		customParams           = {
@@ -47,9 +47,9 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 70,
+		health                 = 70,
 		maxSlope               = 36,
-		maxVelocity            = 3.5,
+		speed                  = 3.5,
 		maxWaterDepth          = 15,
 		movementClass          = "SKBOT2",
 		noAutoFire             = false,

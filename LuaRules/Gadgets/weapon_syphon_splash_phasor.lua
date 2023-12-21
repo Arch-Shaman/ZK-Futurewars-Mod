@@ -10,7 +10,7 @@ function gadget:GetInfo()
 		date      = "14/01/2021",
 		license   = "GNU GPL, v2 or later",
 		layer     = 0,
-		enabled   = true,
+		enabled   = false, -- Azi is now handled in LUS
 	}
 end
 
@@ -58,7 +58,7 @@ local debugmode = false --THIS WILL SPAM THE LIVING HELL OUT OF THE INFOLOGS
 spEcho("Syphon/Phaser Handler: Scanning weapondefs")
 --spEcho("Math.Huge is" .. math.huge)
 
-for q=1, #WeaponDefs do
+for q = 1, #WeaponDefs do
 	local Wdef = WeaponDefs[q]
 	local params = Wdef.customParams
 	if params and params.dmg_scaling then

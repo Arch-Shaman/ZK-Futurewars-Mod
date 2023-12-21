@@ -189,21 +189,21 @@ end
 
 -- used by morph unit
 local function GetUnitPara(unitID)
-  if (partialUnitID[unitID]) then
-    return 1,partialUnitID[unitID].frameID
-  elseif (paraUnitID[unitID]) then
-    return 2,paraUnitID[unitID].frameID
-  end
-  return nil
+	if (partialUnitID[unitID]) then
+		return 1,partialUnitID[unitID].frameID
+	elseif (paraUnitID[unitID]) then
+		return 2,paraUnitID[unitID].frameID
+	end
+	return nil
 end
 
 local function SetUnitPara(unitID, what, when)
-  if (what == 1) then
-    addUnitID(unitID, partialUnits, partialUnitID, when, 0)
-  else
-    addUnitID(unitID, paraUnits, paraUnitID, when, DECAY_FRAMES)
-    applyEffect(unitID)
-  end
+	if (what == 1) then
+		addUnitID(unitID, partialUnits, partialUnitID, when, 0)
+	else
+		addUnitID(unitID, paraUnits, paraUnitID, when, DECAY_FRAMES)
+		applyEffect(unitID)
+	end
 end
   
 -- used by morph unit
@@ -216,19 +216,23 @@ function gadget:UnitPreDamaged_GetWantedWeaponDef()
 	return wantedWeaponList
 end
 
+local function AddDisarmDamage(unitID, damage, disarmTimer, osDamageMult)
+	addParalysisDamageToUnit(unitID, damage, disarmTimer, osDamageMult)
+	if GG.Awards and GG.Awards.AddAwardPoints then
+		local _, maxHP = Spring.GetUnitHealth(unitID)
+		local cost_disarm = (damage / maxHP) * GetUnitCost(unitID)
+		GG.Awards.AddAwardPoints ('disarm', attackerTeam, cost_disarm)
+	end
+end
+
+GG.AddDisarmDamage = AddDisarmDamage
+
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer,
                             weaponDefID, attackerID, attackerDefID, attackerTeam)
 	
 	if disarmWeapons[weaponDefID] then
 		local def = disarmWeapons[weaponDefID]
-		addParalysisDamageToUnit(unitID, damage*def.damageMult, def.disarmTimer, overstunDamageMult[weaponDefID])
-		
-		if GG.Awards and GG.Awards.AddAwardPoints then
-			local _, maxHP = Spring.GetUnitHealth(unitID)
-			local cost_disarm = (damage * def.damageMult / maxHP) * GetUnitCost(unitID)
-			GG.Awards.AddAwardPoints ('disarm', attackerTeam, cost_disarm)
-		end
-		
+		AddDisarmDamage(unitID, damage*def.damageMult, def.disarmTimer, overstunDamageMult[weaponDefID])
 		return damage*def.normalDamage
 	end
 

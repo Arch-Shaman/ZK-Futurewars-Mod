@@ -118,10 +118,6 @@ local function isFinished(UnitID)
 	return (buildProgress == nil) or (buildProgress >= 1)
 end
 
-local function HeadingToFacing(heading)
-	return math.floor((heading + 8192) / 16384) % 4
-end
-
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -271,6 +267,17 @@ local function StartMorph(unitID, unitDefID, teamID, morphDef)
 			Spring.UnitScript.CallAsUnit(unitID,env.script.StopMoving, hx, hy, hz)
 		end
 	end
+	
+	if morphDef.morphSpeed then
+		Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", morphDef.morphSpeed)
+		GG.UpdateUnitAttributes(unitID)
+		if morphDef.morphSpeed < 0.01 then
+			local env = Spring.UnitScript.GetScriptEnv(unitID)
+			if env and env.script.StopMoving then
+				Spring.UnitScript.CallAsUnit(unitID,env.script.StopMoving, hx, hy, hz)
+			end
+		end
+	end
 
 	morphUnits[unitID] = {
 		def = morphDef,
@@ -279,6 +286,7 @@ local function StartMorph(unitID, unitDefID, teamID, morphDef)
 		morphID = morphID,
 		teamID = teamID,
 		combatMorph = morphDef.combatMorph,
+		morphSpeed = morphDef.morphSpeed,
 		morphRate = 0.0,
 	}
 	
@@ -314,6 +322,10 @@ local function StopMorph(unitID, morphData)
 	morphUnits[unitID] = nil
 	if not morphData.combatMorph then
 		Spring.SetUnitRulesParam(unitID, "morphDisable", 0)
+		GG.UpdateUnitAttributes(unitID)
+	end
+	if morphData.morphSpeed then
+		Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
 		GG.UpdateUnitAttributes(unitID)
 	end
 	Spring.SetUnitRulesParam(unitID, "morphing", 0)
@@ -406,7 +418,7 @@ local function FinishMorph(unitID, morphData)
 		local x = math.floor(px/16)*16
 		local y = py
 		local z = math.floor(pz/16)*16
-		local face = HeadingToFacing(h)
+		local face = Spring.GetFacingFromHeading(h)
 		local xsize = udDst.xsize
 		local zsize =(udDst.zsize or udDst.ysize)
 		if ((face == 1) or(face == 3)) then
@@ -428,7 +440,7 @@ local function FinishMorph(unitID, morphData)
 		Spring.SetUnitPosition(newUnit, x, y, z)
 	else
 		Spring.SetTeamRulesParam(unitTeam, "morphUnitCreating", 1, PRIVATE)
-		newUnit = CreateMorphedToUnit(defName, px, py, pz, HeadingToFacing(h), unitTeam, isBeingBuilt, morphData.def.upgradeDef)
+		newUnit = CreateMorphedToUnit(defName, px, py, pz, Spring.GetFacingFromHeading(h), unitTeam, isBeingBuilt, morphData.def.upgradeDef)
 		Spring.SetTeamRulesParam(unitTeam, "morphUnitCreating", 0, PRIVATE)
 		if not newUnit then
 			StopMorph(unitID, morphData)
@@ -1230,7 +1242,7 @@ local function DrawMorphUnit(unitID, morphData, localTeamID)
 	local alpha = 2.0 * math.abs(0.5 - frac)
 	local angle
 	if morphData.def.facing then
-		angle = -HeadingToFacing(h) * 90 + 180
+		angle = -Spring.GetFacingFromHeading(h) * 90 + 180
 	else
 		angle = h * headingToDegree
 	end

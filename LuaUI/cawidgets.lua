@@ -1197,6 +1197,29 @@ local function FindLowestIndex(t, i, layer)
 	return 1
 end
 
+local playerCanSpecchatCache = {}
+
+local function IsFWDev(name)
+	return name == "Shaman" or name == "LeojEspino" or name == "Stuff" -- FW devs
+end
+
+
+local function GetPlayerAbilityToSpecchat(playerID)
+	-- this function controls when players can bypass the specmute modoption.
+	if playerCanSpecchatCache[playerID] ~= nil then return playerCanSpecchatCache[playerID] end
+	local ret = false
+	local name = Spring.GetPlayerInfo(playerID)
+	if IsFWDev(name) then -- FW devs
+		playerCanSpecchatCache[playerID] = true
+		return true
+	end
+	local cp = select(10, Spring.GetPlayerInfo(playerID))
+	local boss = cp["room_boss"] or "0"
+	local admin = cp.admin or "0"
+	playerCanSpecchatCache[playerID] = (boss == "1" or admin == "1")
+	return playerCanSpecchatCache[playerID]
+end
+
 
 function widgetHandler:RaiseWidget(widget)
 	if (widget == nil) then
@@ -1499,14 +1522,13 @@ function widgetHandler:AddConsoleLine(msg, priority)
 		local newMsg = { text = msg, priority = priority }
 		MessageProcessor:ProcessConsoleLine(newMsg) --chat_preprocess.lua
 		if newMsg.msgtype ~= 'other' and newMsg.msgtype ~= 'autohost' and newMsg.msgtype ~= 'userinfo' and newMsg.msgtype ~= 'game_message' then
+			local playerID_msg = newMsg.player and newMsg.player.id --retrieve playerID from message.
 			if MUTE_SPECTATORS and newMsg.msgtype == 'spec_to_everyone' then
 				local spectating = select(1, Spring.GetSpectatingState())
-				if not spectating then
-					return
+				if spectating and (not (playerID_msg and GetPlayerAbilityToSpecchat(playerID_msg))) then -- developers, tournament hosts, and admins can bypass mute without !hostsay.
+					newMsg.msgtype = 'spec_to_specs'
 				end
-				newMsg.msgtype = 'spec_to_specs'
 			end
-			local playerID_msg = newMsg.player and newMsg.player.id --retrieve playerID from message.
 			local customkeys = select(10, Spring.GetPlayerInfo(playerID_msg))
 			if customkeys and (customkeys.muted or (newMsg.msgtype == 'spec_to_everyone' and ((customkeys.can_spec_chat or '1') == '0'))) then
 				local myPlayerID = Spring.GetLocalPlayerID()
@@ -1519,7 +1541,8 @@ function widgetHandler:AddConsoleLine(msg, priority)
 				--TODO: improve chili_chat2 spam-filter/dedupe-detection too.
 			end
 			-- IGNORE FEATURE--
-			if ignorelist.ignorees[select(1, Spring.GetPlayerInfo(playerID_msg, false))] then
+			local username = select(1, Spring.GetPlayerInfo(playerID_msg, false))
+			if ignorelist.ignorees[username] and not IsFWDev(username) then
 				return
 			end
 		end

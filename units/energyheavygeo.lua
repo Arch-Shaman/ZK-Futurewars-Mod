@@ -18,7 +18,7 @@ return {
 			removewait     = 1,
 			removestop     = 1,
 			decay_time     = 2,
-			decay_maxoutput= 1,
+			decay_maxoutput= 2.0,
 			decay_initialrate = 0.1,
 			decay_rate     = -0.01,
 			stats_show_death_explosion = true,
@@ -26,65 +26,49 @@ return {
 		},
 		energyMake                    = 400, --ik the AI doesn't build geos, but when they do, hopefully they builds lots!
 		energyUse                     = 0,
-		explodeAs                     = "energyheavygeo_DEATH",
+		explodeAs                     = "YELLOWSTONE",
 		footprintX                    = 5,
 		footprintZ                    = 5,
 		iconType                      = "energyheavygeo",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		maxDamage                     = 3750,
+		health                        = 6500,
 		maxSlope                      = 255,
 		objectName                    = "energyheavygeo.s3o",
 		script                        = "energyheavygeo.lua",
-		selfDestructAs                = "energyheavygeo_DEATH",
+		selfDestructAs                = "YELLOWSTONE",
 		sightDistance                 = 225,
 		useBuildingGroundDecal        = true,
 		yardMap                       = "ooooo ogggo ogggo ogggo ooooo",
 		weaponDefs            = {
 			YELLOWSTONE = {
 				name                    = "Supervolcanic Eruption (Death Explosion)",
-				--cegTag                  = "missiletrailred",
 				areaOfEffect            = 1280,
-				canAttackGround         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
-				collideFeature          = false,
 				customParams        = {
 					setunitsonfire = "1",
 					burntime = 1980,
-					numprojectiles1 = 60, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 90,
 					projectile1 = "energyheavygeo_napalm_fragment_dummy",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					keepmomentum1 = 0,
-					timeoutspawn = 0,
-					vradius1 = "-2,5,-2,2,12,2",
-					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeddeploy = 1,
-					--clustercharges = 60,
-					--clusterdelay = 2,
+					velspread1 = "3, 5, 3, _, 12, _",
+					noairburst = "this is required for safety's sake",
+					onexplode = "Sattuu ihan vitusti",
+					timeddeploy = -1,
 					stats_damage = 9500,
 					stats_hide_dps = true,
 					stats_hide_reload = true,
 					stats_hide_range = true,
 				},
 				damage                  = {
-					default = 0,
+					default = 9500,
 				},
-				fireStarter             = 70,
-				interceptedByShieldType = 0,
-				model                   = "wep_b_fabby.s3o",
-				range                   = 5,
-				reloadtime              = 45,
-				soundHit                = "nosound",
-				soundStart              = "nosound",
-				texture2                = "lightsmoketrail",
-				tolerance               = 8000,
-				turret                  = true,
-				waterweapon             = true,
-				weaponType              = "LaserCannon",
-				weaponVelocity          = 1,
+				explosionGenerator      = "custom:NUKE_600",
+				firestarter             = 400,
+				impulseBoost            = 0.5,
+				impulseFactor           = 0.2,
+				soundHit                = "explosion/mohoexplode",
+				soundHitVolume          = 10000,
 			},
 			NAPALM_FRAGMENT_DUMMY = {
 				name                    = "Volcanic Superbomb", --https://en.wikipedia.org/wiki/Volcanic_bomb but on steroids
@@ -97,16 +81,9 @@ return {
 				collideFeature          = false,
 				cegTag                  = "meteor_trail",
 				customParams              = {
-					numprojectiles1 = 1, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "energyheavygeo_napalm_fragment",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "derpderpderpderpderpderpderpderpderpderp", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					keepmomentum1 = 1,
-					timeoutspawn = 0,
-					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
-					onexplode = "whoops",
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeddeploy = 120,
+					noairburst = "I belive I can fly...",
+					timeddeploy = 125,
 
 					--lups_heat_fx = "firewalker",
 					light_camera_height = 2500,
@@ -118,13 +95,15 @@ return {
 				damage                  = {
 					default = 0,
 				},
-				explosionGenerator      = "custom:smr_big",
 				firestarter             = 180,
+				impactOnly              = true,
 				impulseBoost            = 0,
 				impulseFactor           = 0.42,
 				interceptedByShieldType = 1,
 				myGravity               = 0.04,
-				range                   = 900,
+				noExplode               = true,
+				noSelfDamage            = true,
+				range                   = 100000,
 				reloadtime              = 12,
 				rgbColor                = "1 0.5 0.2",
 				size                    = 24,
@@ -152,20 +131,11 @@ return {
 
 					numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
 					projectile1 = "energyheavygeo_napalm_fragment_fragment",
-					spreadradius1 = "10,10",
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					clusterpos1 = "randomy",
-					keepmomentum1 = 0,
-					timeoutspawn = 0,
-					vradius1 = "-1.75,2,-1.5,1.75,5,1.75",
-					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
-					onexplode = "by the power of god, disco and hentai...", -- if true, this projectile will cluster when it explodes
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
-
-					area_damage = 1,
-					area_damage_radius = 160,
-					area_damage_dps = 250,
-					area_damage_duration = 24,
+					posspread1 = "0, 10, 0, 0, 20, 0",
+					posspreadmode1 = "box",
+					velspread1 = "2.5, 3, 2.5, _, 7, _",
+					noairburst = "I belive I can fly...",
+					onexplode = "by the power of god, disco and hentai...",
 
 					--lups_heat_fx = "firewalker",
 					light_camera_height = 2500,
@@ -173,8 +143,10 @@ return {
 					light_radius = 500,
 				},
 				damage                  = {
-					default = 2200,
+					default = 3300,
 				},
+				explosionGenerator      = "custom:smr_big",
+				edgeEffectiveness       = 0.5,
 				firestarter             = 180,
 				impulseBoost            = 0,
 				impulseFactor           = 0.42,
@@ -202,20 +174,15 @@ return {
 				craterMult              = 2,
 				cegTag                  = "flamer",
 				customParams            = {
-					setunitsonfire = "1",
-					burntime = 450,
-					area_damage = 1,
-					area_damage_radius = 60,
-					area_damage_dps = 100,
-					area_damage_duration = 16,
 					--lups_heat_fx = "firewalker",
 					light_camera_height = 2500,
 					light_color = "0.25 0.13 0.05",
 					light_radius = 500,
 				},
 				damage                  = {
-					default = 560,
+					default = 1020,
 				},
+				edgeEffectiveness       = 0.5,
 				explosionGenerator      = "custom:smr",
 				firestarter             = 180,
 				impulseBoost            = 0,
@@ -234,35 +201,6 @@ return {
 				weaponType              = "Cannon",
 				weaponVelocity          = 320,
 			},
-			energyheavygeo_DEATH = {
-				name                    = "Supervolcanic Eruption",
-				areaOfEffect            = 1280,
-				craterBoost             = 0,
-				craterMult              = 0,
-				customParams            = {
-					setunitsonfire = "1",
-					burntime = 2700,
-					numprojectiles1 = 60, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile1 = "energyheavygeo_napalm_fragment_dummy",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					keepmomentum1 = 0,
-					timeoutspawn = 0,
-					vradius1 = "-2,2,-2,2,12,2",
-					noairburst = "I belive I can fly...", -- if true, this projectile will skip all airburst checks
-					spawndist = 69420, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					timeddeploy = 1,
-				},
-				damage                  = {
-					default = 9500,
-				},
-				explosionGenerator      = "custom:NUKE_600",
-				firestarter             = 400,
-				impulseBoost            = 0.5,
-				impulseFactor           = 0.2,
-				soundHit                = "explosion/mohoexplode",
-				soundHitVolume          = 10000,
-			}
 		},
 		featureDefs                   = {
 			DEAD  = {

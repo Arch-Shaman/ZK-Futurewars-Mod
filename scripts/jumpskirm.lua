@@ -25,6 +25,9 @@ local SIG_MOVE = 1
 local SIG_AIM = 2
 local SIG_RESTORE = 4
 
+-- turn rates --
+local HEADING_CHANGE = math.rad(120)
+
 function beginJump()
 	Signal(SIG_MOVE)
 	--Turn(base, y_axis, 0, turnSpeed)
@@ -227,8 +230,11 @@ local function RestoreAfterDelay()
 	Signal(SIG_RESTORE)
 	SetSignalMask(SIG_RESTORE)
 	Sleep(RESTORE_DELAY)
-	Turn(torso, y_axis, 0, math.rad(160))
-	Turn(head, x_axis, 0, math.rad(45))
+	Turn(torso, y_axis, 0, HEADING_CHANGE)
+	Turn(head, x_axis, 0, HEADING_CHANGE/3)
+	Turn(support, x_axis, 0, HEADING_CHANGE/2)
+	Turn(barrel, x_axis, 0, HEADING_CHANGE)
+	Turn(shoulder_left, x_axis, 0, HEADING_CHANGE)
 	aiming = false
 end
 
@@ -242,22 +248,25 @@ function script.AimWeapon(num, heading, pitch)
 	-- it very rarely shoots at radar dots.
 	--GG.DontFireRadar_CheckAim(unitID)
 	
-	Turn(torso, y_axis, heading, math.rad(300))
-	Turn(head, x_axis, -pitch, math.rad(150))
+	Turn(torso, y_axis, heading, HEADING_CHANGE)
+	Turn(support, x_axis, -pitch, HEADING_CHANGE/2)
+	Turn(shoulder_left, x_axis, -pitch, HEADING_CHANGE/2)
+	--Turn(barrel, x_axis, -pitch, HEADING_CHANGE)
+	
+	
+	
 	WaitForTurn(torso, y_axis)
-	WaitForTurn(head, x_axis)
+	WaitForTurn(support, x_axis)
 	return true
 end
 
 
 function script.Shot()
-	Move(barrel, z_axis, -5)
 	EmitSfx(flare,  1024)
-	Move(barrel, z_axis, 0, 6)
 end
 
 function script.EndBurst()
-	Move(barrel, z_axis, -5)
+	Move(barrel, z_axis, -5, -20)
 	Sleep(150)
 	--Turn(torso, x_axis, 0, math.rad(20.000000))
 	Move(barrel, z_axis, 0, 6)
@@ -268,7 +277,7 @@ function script.QueryWeapon()
 end
 
 function script.AimFromWeapon()
-	return support
+	return barrel
 end
 
 function script.BlockShot(num, targetID)

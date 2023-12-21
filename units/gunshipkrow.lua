@@ -16,7 +16,7 @@ return {
 		canMove                = true,
 		canPatrol              = true,
 		canSubmerge            = false,
-		category               = "GUNSHIP",
+		category               = "GUNSHIP LOWFLYING",
 		collide                = true,
 		collisionVolumeOffsets = "0 0 5",
 		collisionVolumeScales  = "86 22 86",
@@ -35,8 +35,8 @@ return {
 		idleAutoHeal           = 200,
 		idleTime               = 1800,
 		maneuverleashlength    = "500",
-		maxDamage              = 37500,
-		maxVelocity            = 4.1,
+		health                 = 47000,
+		speed                  = 4.1,
 		noAutoFire             = false,
 		noChaseCategory        = "TERRAFORM FIXEDWING SATELLITE SUB",
 		objectName             = "krow.s3o",
@@ -50,7 +50,6 @@ return {
 
 		},
 		sightDistance          = 700,
-		sonarDistance          = 700,
 		turnRate               = 250,
 		upright                = true,
 		workerTime             = 0,
@@ -111,7 +110,7 @@ return {
 				},
 
 				damage                  = {
-					default = 100.1,
+					default = 70.1,
 				},
 
 				duration                = 0.1,
@@ -140,81 +139,6 @@ return {
 				weaponType              = "BeamLaser",
 				--weaponVelocity          = 880,
 			},
-			CLUSTERBOMBER = {
-				name                    = "Heavy Cluster Bomb",
-				accuracy                = 200,
-				areaOfEffect            = 128,
-				burst                   = 45,
-				burstRate               = 0.066, -- real value in script; here for widgets
-				commandFire             = true,
-				craterBoost             = 0,
-				craterMult              = 0,
-				customParams			= {
-					numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile1 = "gunshipkrow_clusterbomb",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					proxy = 0, -- check for nearby units?
-					useheight = 1,
-					spawndist = 140, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-12,0,-12,12,4,12", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					groundimpact = 1,
-				},
-				damage                  = {
-					default = 175*3,
-				},
-
-				explosionGenerator      = "custom:WEAPEXP_PUFF",
-				fireStarter             = 180,
-				impulseBoost            = 0,
-				impulseFactor           = 0.2,
-				interceptedByShieldType = 2,
-				model                   = "hovermissile.s3o",
-				range                   = 200,
-				reloadtime              = 30, -- if you change this redo the value in oneclick_weapon_defs EMPIRICALLY
-				smokeTrail              = true,
-				soundHit                = "weapon/cannon/cannonfire_001",
-				soundHitVolume          = 8,
-				soundStart              = "weapon/cannon/mini_cannon",
-				soundStartVolume        = 2,
-				sprayangle              = 1800,
-				turret                  = true,
-				weaponType              = "Cannon",
-				weaponVelocity          = 200,
-			},
-			CLUSTERBOMB = {
-				name                    = "Cluster Bomb",
-				accuracy                = 200,
-				areaOfEffect            = 128,
-				burst                   = 75,
-				burstRate               = 0.066, -- real value in script; here for widgets
-				commandFire             = true,
-				craterBoost             = 10,
-				craterMult              = 3,
-
-				damage                  = {
-					default = 175,
-				},
-
-				explosionGenerator      = "custom:MEDMISSILE_EXPLOSION",
-				fireStarter             = 180,
-				impulseBoost            = 0,
-				impulseFactor           = 0.2,
-				interceptedByShieldType = 2,
-				model                   = "wep_b_fabby.s3o",
-				range                   = 200,
-				reloadtime              = 30, -- if you change this redo the value in oneclick_weapon_defs EMPIRICALLY
-				smokeTrail              = true,
-				soundHit                = "explosion/ex_med6",
-				soundHitVolume          = 8,
-				soundStart              = "weapon/cannon/mini_cannon",
-				soundStartVolume        = 2,
-				sprayangle              = 14400,
-				turret                  = true,
-				weaponType              = "Cannon",
-				weaponVelocity          = 400,
-			},
 			ATA = {
 				name                    = "Annihilator Beam",
 				areaOfEffect            = 255,
@@ -230,7 +154,7 @@ return {
 					lups_noshockwave = "1",
 				},
 				damage                  = {
-					default = 40100,
+					default = 27000,
 				},
 				cameraShake				= 500,
 				explosionGenerator      = "custom:craterpuncher_short",

@@ -19,7 +19,7 @@ return {
 		collisionVolumeScales  = "32 12 40",
 		collisionVolumeType    = "box",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "65 25 65",
+		selectionVolumeScales  = "88 34 88",
 		selectionVolumeType    = "cylY",
 		corpse              = "DEAD",
 		crashDrag           = 0.02,
@@ -41,10 +41,10 @@ return {
 		idleTime            = 1800,
 		maneuverleashlength = "1280",
 		maxAcc              = 0.75,
-		maxDamage           = 12000,
+		health              = 21000,
 		maxFuel             = 1000000,
 		maxRudder           = 0.008,
-		maxVelocity         = 5.5,
+		speed               = 8.25,
 		minCloakDistance    = 75,
 		mygravity           = 1,
 		noAutoFire          = false,
@@ -86,7 +86,7 @@ return {
 				},
 
 				damage                  = {
-					default = 9500.1,
+					default = 4200.1,
 				},
 
 				edgeEffectiveness       = 0.25,
@@ -130,7 +130,7 @@ return {
 				},
 
 				damage                  = {
-					default = 10000.1,
+					default = 4200.1,
 				},
 
 				edgeEffectiveness       = 0.25,

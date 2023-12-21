@@ -482,13 +482,15 @@ function Spring.UnitScript.Show(piece)
 end
 
 -- may be useful to other gadgets
-function Spring.UnitScript.GetScriptEnv(unitID)
+local function GetScriptEnv(unitID)
 	local unit = units[unitID]
 	if unit then
 		return unit.env
 	end
 	return nil
 end
+
+Spring.UnitScript.GetScriptEnv = GetScriptEnv
 
 function Spring.UnitScript.GetLongestReloadTime(unitID)
 	local longest = 0
@@ -629,15 +631,15 @@ local function Wrap_AimWeapon(unitID, callins)
 	local AimWeapon = callins["AimWeapon"]
 	if (not AimWeapon) then return end
 
-	-- SetUnitShieldState wants true or false, while
-	-- SetUnitWeaponState wants 1.0 or 0.0, niiice =)
-	local function AimWeaponThread(weaponNum, heading, pitch)
-		local bAimReady = AimWeapon(weaponNum, heading, pitch) or false
-		local fAimReady = (bAimReady and 1.0) or 0.0
-		return sp_SetUnitWeaponState(unitID, weaponNum, "aimReady", fAimReady)
-	end
+		-- SetUnitShieldState wants true or false, while
+		-- SetUnitWeaponState wants 1.0 or 0.0, niiice =)
+		local function AimWeaponThread(weaponNum, heading, pitch)
+			local bAimReady = AimWeapon(weaponNum, heading, pitch) or false
+			local fAimReady = (bAimReady and 1.0) or 0.0
+			return sp_SetUnitWeaponState(unitID, weaponNum, "aimReady", fAimReady)
+		end
 
-	callins["AimWeapon"] = function(weaponNum, heading, pitch)
+		callins["AimWeapon"] = function(weaponNum, heading, pitch)
 		return StartThread(AimWeaponThread, weaponNum, heading, pitch)
 	end
 end
@@ -645,7 +647,7 @@ end
 local function Wrap_EndBurst(unitID, unitDefID, callins)
 	local EndBurst = callins.EndBurst
 
-	callins.EndBurst = function(weaponNum)
+		callins.EndBurst = function(weaponNum)
 		scriptCallins:ScriptEndBurst(unitID, unitDefID, weaponNum)
 		if EndBurst then
 			return StartThread(EndBurst, weaponNum)
@@ -668,14 +670,14 @@ local function Wrap_AimShield(unitID, callins)
 	local AimShield = callins["AimShield"]
 	if (not AimShield) then return end
 
-	-- SetUnitShieldState wants true or false, while
-	-- SetUnitWeaponState wants 1 or 0, niiice =)
-	local function AimShieldThread(weaponNum)
-		local enabled = AimShield(weaponNum) and true or false
-		return sp_SetUnitShieldState(unitID, weaponNum, enabled)
-	end
+		-- SetUnitShieldState wants true or false, while
+		-- SetUnitWeaponState wants 1 or 0, niiice =)
+		local function AimShieldThread(weaponNum)
+			local enabled = AimShield(weaponNum) and true or false
+			return sp_SetUnitShieldState(unitID, weaponNum, enabled)
+		end
 
-	callins["AimShield"] = function(weaponNum)
+		callins["AimShield"] = function(weaponNum)
 		return StartThread(AimShieldThread, weaponNum)
 	end
 end
@@ -685,14 +687,14 @@ local function Wrap_Killed(unitID, callins)
 	local Killed = callins["Killed"]
 	if (not Killed) then return end
 
-	local function KilledThread(recentDamage, maxHealth)
-		-- It is *very* important the sp_SetDeathScriptFinished is executed, even on error.
-		SetOnError(sp_SetDeathScriptFinished)
-		local wreckLevel = Killed(recentDamage, maxHealth)
-		sp_SetDeathScriptFinished(wreckLevel)
-	end
+		local function KilledThread(recentDamage, maxHealth)
+			-- It is *very* important the sp_SetDeathScriptFinished is executed, even on error.
+			SetOnError(sp_SetDeathScriptFinished)
+			local wreckLevel = Killed(recentDamage, maxHealth)
+			sp_SetDeathScriptFinished(wreckLevel)
+		end
 
-	callins["Killed"] = function(recentDamage, maxHealth)
+		callins["Killed"] = function(recentDamage, maxHealth)
 		StartThread(KilledThread, recentDamage, maxHealth)
 		return -- no return value signals Spring to wait for SetDeathScriptFinished call.
 	end
@@ -703,7 +705,7 @@ local function Wrap(callins, name)
 	local fun = callins[name]
 	if (not fun) then return end
 
-	callins[name] = function(...)
+		callins[name] = function(...)
 		return StartThread(fun, ...)
 	end
 end
@@ -739,6 +741,44 @@ local function MemoizedInclude(filename, env)
 end
 
 --------------------------------------------------------------------------------
+
+function gadget:UnitFinished(unitID)
+	local env = GetScriptEnv(unitID)
+	if not env then
+		return
+	end
+
+	local script = env.script
+	if not script then
+		return
+	end
+
+	local func = script.Finish
+	if not func then
+		return
+	end
+
+	CallAsUnitNoReturn(unitID, func)
+end
+
+function gadget:UnitReverseBuilt(unitID)
+	local env = GetScriptEnv(unitID)
+	if not env then
+		return
+	end
+
+	local script = env.script
+	if not script then
+		return
+	end
+
+	local func = script.ReverseBuild
+	if not func then
+		return
+	end
+
+	CallAsUnitNoReturn(unitID, func)
+end
 
 function gadget:UnitCreated(unitID, unitDefID)
 	local ud = UnitDefs[unitDefID]

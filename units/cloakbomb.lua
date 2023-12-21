@@ -5,7 +5,7 @@ return {
 		description            = "Cloaked EMP Bomb",
 		acceleration           = 0.75,
 		brakeRate              = 3.6,
-		buildCostMetal         = 100,
+		buildCostMetal         = 150,
 		buildPic               = "cloakbomb.png",
 		canMove                = true,
 		category               = "LAND TOOFAST",
@@ -36,10 +36,10 @@ return {
 		kamikazeDistance       = 40,
 		kamikazeUseLOS         = true,
 		leaveTracks            = true,
-		maxDamage              = 50,
+		health                 = 50,
 		maxSlope               = 72,
-		maxVelocity            = 3.5,
-		minCloakDistance       = 150,
+		speed                  = 3.5,
+		minCloakDistance       = 170,
 		movementClass          = "TKBOT2",
 		noChaseCategory        = "FIXEDWING LAND SINK TURRET SHIP SWIM GUNSHIP FLOAT SUB HOVER",
 		objectName             = "armtick.s3o",
@@ -49,11 +49,9 @@ return {
 		selfDestructAs         = "cloakbomb_DEATH",
 		selfDestructCountdown  = 0,
 		sfxtypes               = {
-
 			explosiongenerators = {
 				"custom:digdig",
 			},
-
 		},
 		sightDistance          = 240,
 		trackOffset            = 0,
@@ -97,7 +95,7 @@ return {
 				customParams = {
 					blastwave_speed = 20,
 					blastwave_life = 10,
-					blastwave_lossfactor = 0.9,
+					blastwave_lossfactor = 0.85,
 					blastwave_damage = 10,
 					blastwave_empdmg = 2500,
 					blastwave_emptime = 10,

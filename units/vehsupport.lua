@@ -16,7 +16,7 @@ return {
 		collisionVolumeScales  = "26 30 36",
 		collisionVolumeType    = "box",
 		selectionVolumeOffsets = "0 0 0",
-		selectionVolumeScales  = "45 45 45",
+		selectionVolumeScales  = "68 68 68",
 		selectionVolumeType    = "ellipsoid",
 		corpse                 = "DEAD",
 		customParams           = {
@@ -34,9 +34,10 @@ return {
 		idleAutoHeal           = 5,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		maxDamage              = 750,
+		health                 = 750,
 		maxSlope               = 18,
-		maxVelocity            = 2.6,
+		speed                  = 2.6,
+		maxReverseVelocity     = 2.6,
 		maxWaterDepth          = 22,
 		movementClass          = "TANK3",
 		moveState              = 0,
@@ -81,17 +82,12 @@ return {
 				customParams        = {
 					light_camera_height = 2000,
 					light_radius = 200,
-					numprojectiles1 = 8, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 8,
 					projectile1 = "vehsupport_particlebeam",
-					--spreadradius = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
 					keepmomentum1 = 20,
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					proxy = 1, -- check for nearby units?
-					useheight = 0,
+					proxy = 1, 
 					timeoutspawn = 0,
-					spawndist = 90, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "0,0,0,0,0,0", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					spawndist = 90,
 					groundimpact = 0,
 					spawnsfx1 = 2049,
 					stats_custom_tooltip_1 = " - Damage decreases vs smaller targets",
@@ -137,6 +133,7 @@ return {
 					light_radius = 80,
 					damage_vs_shield = 84 * 0.25,
 					bogus = 1,
+					armorpiercing = 1/3,
 				},
 				damage                  = {
 					default = 80.01,

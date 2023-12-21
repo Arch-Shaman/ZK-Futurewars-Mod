@@ -1,186 +1,146 @@
 local config = {}
 
+local i, m, j
+local debugMode = false
+local spreadModes = {"none", "cylY", "cylX", "cylZ", "box", "sphere"}
+local spreadModesCount = #spreadModes
+for i=1, spreadModesCount do
+	spreadModes[spreadModes[i]] = i
+end
+
+local function throw(str)
+	Spring.Log(GetInfo().name, "fatal", "[submunition_config.lua] Weapondefs Error: "..str)
+end
+
+local function InclusiveBoolCast(string, default)
+	if string == nil then
+		return default
+	else
+		return (string and string ~= "false" and string ~= "0")
+	end
+end
+
+Spring.Echo("CAS: Discovered ()")
+
 for i=1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	local curRef = wd.customParams -- hold table for referencing
-	if curRef and curRef.projectile1 then -- found it!
+	if curRef and (curRef.projectile1 or curRef.spawnsfx) then -- found it!
 		if debugMode then
 			Spring.Echo("CAS: Discovered " .. i .. "(" .. wd.name .. ")")
 		end
-		if type(curRef.projectile1) == "string" then -- reason we use it like this is to provide an error if something doesn't seem right.
-			if WeaponDefNames[curRef.projectile1] then
-				if type(curRef.spawndist) == "string" then -- all ok
-					Script.SetWatchWeapon(i, true)
-					if debugMode then
-						Spring.Echo("[CAS] Enabled watch for " .. i)
+		if not ((type(curRef.spawndist) == "string") or curRef.noairburst) then
+			throw(wd.name.." has neither spawndist nor noairburst!")
+		end
+		Script.SetWatchWeapon(i, true)
+		if debugMode then
+			Spring.Echo("[CAS] Enabled watch for " .. i)
+		end
+		--parent projectile Defs
+		config[i] = {}
+		local projConfig = config[i]
+		projConfig["spawndist"] = tonumber(curRef.spawndist)
+		projConfig.timer = tonumber(curRef.timeddeploy) or math.huge
+		projConfig["use2ddist"] = InclusiveBoolCast(curRef.use2ddist)
+		projConfig["isBomb"] = wd.type == "AircraftBomb"
+		projConfig["launcher"] = wd.type == "StarburstLauncher"
+		projConfig["timeoutspawn"] = InclusiveBoolCast(curRef.timeoutspawn, true) 
+		projConfig["proxy"] = InclusiveBoolCast(curRef.proxy)
+		projConfig["proxydist"] = tonumber(curRef.proxydist) or projConfig["spawndist"] or 0
+		projConfig["alwaysvisible"] = InclusiveBoolCast(curRef.alwaysvisible) -- FIXME: read and use spring's native alwaysvisible flag
+		projConfig["clustercharges"] = tonumber(curRef.clustercharges) or 1
+		projConfig["clusterdelay"] = tonumber(curRef.clusterdelay) or 5
+		projConfig["clusterdelaytype"] = tonumber(curRef.clusterdelaytype) or 0
+		projConfig["useheight"] = projConfig["isBomb"] or InclusiveBoolCast(curRef.useheight) -- bombs ignore distance and explode based on height. This is due to bomb ground attacks being absolutely fucked in current spring build.
+		projConfig["dynDamage"] = InclusiveBoolCast(curRef.dyndamage)
+		projConfig["airburst"] = not InclusiveBoolCast(curRef.noairburst)
+		projConfig["useasl"] = InclusiveBoolCast(curRef.useasl)
+		projConfig["onExplode"] = InclusiveBoolCast(curRef.onexplode)
+		projConfig["usertarget"] = InclusiveBoolCast(curRef.usertargetable)
+		projConfig["noceg"] = InclusiveBoolCast(curRef.clusternoceg)
+		projConfig["block_check_during_cruise"] = InclusiveBoolCast(cas_nocruisecheck)
+		if projConfig.useheight then
+			projConfig.maxvelocity = tonumber(curRef.maxvelocity) or (projConfig["isBomb"] and math.huge or 0)
+		end
+		-- child projectile defs
+		-- the basic idea is this. instead of pulling let say curRef.projectile we pull curRef.projectile1 or curRef.projectile2 for the different
+		-- projectiles that the bullet splits into
+		projConfig["frags"] = {}
+		local fragnum = 1
+		while (curRef["projectile" .. fragnum] or tonumber(curRef["spawnsfx" .. fragnum])) do
+			projConfig["frags"][fragnum] = {}
+			local fragConfig = projConfig["frags"][fragnum]
+			local projectile = curRef["projectile" .. fragnum]
+			if not WeaponDefNames[projectile] then
+				throw("frag #"..fragnum.." of "..wd.name.." has an invalid projectile param")
+			end
+			fragConfig["projectile"] = WeaponDefNames[projectile].id -- transform into an id
+			fragConfig["spawnsfx"] = tonumber(curRef["spawnsfx" .. fragnum])
+			fragConfig["numprojectiles"] = tonumber(curRef["numprojectiles" .. fragnum]) or 1
+			if curRef["posspread"..fragnum] then
+				posdata = Spring.Utilities.ExplodeString(",", curRef["posspread"..fragnum])
+				for j=1, 3 do
+					local a = tonumber(posdata[j])
+					if not a then
+						throw("frag #"..fragnum.." of "..wd.name.." has an invalid posspread param. The first 3 values must all be non-nil")
 					end
-					--Mommy projectile Defs
-					config[i] = {}
-					config[i]["spawndist"] = tonumber(curRef.spawndist)
-					if curRef.timeddeploy then
-						config[i].timer = tonumber(curRef.timeddeploy) or 5
-					end
-					if type(curRef.use2ddist) ~= "string" then
-						config[i]["use2ddist"] = 0
-						if debugMode then
-							Spring.Echo("[CAS] Set 2ddist to false for " .. wd.name)
-						end
-					else
-						config[i]["use2ddist"] = tonumber(curRef.use2ddist)
-					end
-					if curRef.timedcharge and curRef.timedcharge > 0 then
-						config[i]["type"] = "timedcharge"
-					else
-						config[i]["type"] = "normal"
-					end
-					if type(curRef.vlist) == "string" then
-						config[i]["vlist"] = {}
-						local x,y,z
-						for w in string.gmatch(curRef.vlist,"%S+") do -- string should be "x,y,z/x,y,z/x,y,z,/x,y,z/etc
-							x,y,z = w:match("([^,]+),([^,]+),([^,]+)")
-							config[i]["vlist"][#config[i]["vlist"]+1] = {tonumber(x),tonumber(y),tonumber(z)}
-						end
-					end
-					config[i]["isBomb"] = wd.type == "AircraftBomb"
-					config[i]["launcher"] = wd.type == "StarburstLauncher"
-					config[i]["timeoutspawn"] = tonumber(curRef.timeoutspawn) or 1
-					config[i]["proxy"] = tonumber(curRef.proxy) or 0
-					config[i]["proxydist"] = tonumber(curRef.proxydist) or config[i]["spawndist"] or 0
-					config[i]["alwaysvisible"] = curRef.alwaysvisible ~= nil
-					config[i]["clustercharges"] = tonumber(curRef.clustercharges) or 1
-					config[i]["clusterdelay"] = tonumber(curRef.clusterdelay) or 5
-					config[i]["clusterdelaytype"] = tonumber(curRef.clusterdelaytype) or 0
-					config[i]["useheight"] = tonumber(curRef.useheight) or 0
-					config[i]["dynDamage"] = type(curRef.dyndamage) == "string"
-					config[i]["airburst"] = curRef.noairburst == nil
-					config[i]["useasl"] = curRef.useasl ~= nil
-					config[i]["onExplode"] = curRef.onexplode ~= nil
-					config[i]["usertarget"] = curRef.usertargetable ~= nil
-					config[i]["noceg"] = curRef.clusternoceg ~= nil
-					config[i]["block_check_during_cruise"] = curRef["cas_nocruisecheck"] ~= nil
-					if config[i].useheight then
-						config[i].minvelocity = tonumber(curRef.minvelocity) or 0
-					end
-					
-					--sonny projectile defs
-					
-					--the basic idea is this. instead of pulling let say curRef.projectile we pull curRef.projectile1 or curRef.projectile2 for the different
-					--projectiles that the bullet splits into
-					
-					config[i]["frags"] = {}
-					
-					local fragnum = 1
-					while (curRef["projectile" .. fragnum]) do
-						config[i]["frags"][fragnum] = {}
-						local projectile = curRef["projectile" .. fragnum]
-						config[i]["frags"][fragnum]["projectile"] = WeaponDefNames[projectile].id -- transform into an id
-						local clusterpos = curRef["clusterpos" .. fragnum]
-						if type(clusterpos) ~= "string" then
-							config[i]["frags"][fragnum]["clusterpos"] = "no"
-						else
-							config[i]["frags"][fragnum]["clusterpos"] = clusterpos
-						end
-						local clustervec = curRef["clustervec" .. fragnum]
-						if type(clustervec) ~= "string" then
-							config[i]["frags"][fragnum]["clustervec"] = "no"
-						else
-							config[i]["frags"][fragnum]["clustervec"] = clustervec
-						end
-						local numprojectiles = curRef["numprojectiles" .. fragnum]
-						if type(numprojectiles) ~= "string" then
-							config[i]["frags"][fragnum]["numprojectiles"] = 1
-						else
-							config[i]["frags"][fragnum]["numprojectiles"] = tonumber(numprojectiles)
-						end
-						local spreadradius = curRef["spreadradius" .. fragnum]
-						if type(spreadradius) ~= "string" then
-							config[i]["frags"][fragnum]["spreadmin"] = -100
-							config[i]["frags"][fragnum]["spreadmax"] = 100
-						else
-							if string.find(spreadradius,",") then -- projectile offsetting.
-								config[i]["frags"][fragnum]["spreadmin"], config[i]["frags"][fragnum]["spreadmax"] = spreadradius:match("([^,]+),([^,]+)")
-								config[i]["frags"][fragnum]["spreadmin"] = tonumber(config[i]["frags"][fragnum]["spreadmin"])
-								config[i]["frags"][fragnum]["spreadmax"] = tonumber(config[i]["frags"][fragnum]["spreadmax"])
-								if config[i]["frags"][fragnum]["spreadmax"] == "" or config[i]["frags"][fragnum]["spreadmax"] == nil then
-									config[i]["frags"][fragnum]["spreadmax"] = config[i]["frags"][fragnum]["spreadmin"] * -1
-								end
-								if config[i]["frags"][fragnum]["spreadmin"] > config[i]["frags"][fragnum]["spreadmax"] then
-									local mi = config[i]["frags"][fragnum]["spreadmax"]
-									local ma = config[i]["frags"][fragnum]["spreadmin"]
-									config[i]["frags"][fragnum]["spreadmin"] = mi
-									config[i]["frags"][fragnum]["spreadmax"] = ma
-									Spring.Echo("[CAS] WARNING: Illegal min,max value for spread on projectile ID " .. i .. " (" .. wd.name .. ").\n These values have been automatically switched, but you should fix your config!\nValues got:" .. config[i]["frags"][fragnum]["spreadmax"],config[i]["frags"][fragnum]["spreadmin"])
-								end
-							else
-								config[i]["frags"][fragnum]["spreadmin"] = -math.abs(tonumber(spreadradius))
-								config[i]["frags"][fragnum]["spreadmax"] = math.abs(tonumber(spreadradius))
-							end
-						end
-						local vradius = curRef["vradius" .. fragnum]
-						if type(vradius) ~= "string" then
-							config[i]["frags"][fragnum]["veldata"] = {min = {-4.2,-4.2,-4.2}, max = {4.2,4.2,4.2}}
-						else
-							if string.find(vradius,",") then -- projectile velocity offsets
-								config[i]["frags"][fragnum]["veldata"] = {min = {}, max = {}}
-								config[i]["frags"][fragnum]["veldata"].min[1],config[i]["frags"][fragnum]["veldata"].min[2], config[i]["frags"][fragnum]["veldata"].min[3],config[i]["frags"][fragnum]["veldata"].max[1],config[i]["frags"][fragnum]["veldata"].max[2],config[i]["frags"][fragnum]["veldata"].max[3]  = vradius:match("([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)")
-								for j=1, 3 do
-									config[i]["frags"][fragnum]["veldata"].min[j] = tonumber(config[i]["frags"][fragnum]["veldata"].min[j])
-									config[i]["frags"][fragnum]["veldata"].max[j] = tonumber(config[i]["frags"][fragnum]["veldata"].max[j])
-									if config[i]["frags"][fragnum].veldata.min[j] > config[i]["frags"][fragnum].veldata.max[j] then
-										local mi = config[i]["frags"][fragnum]["veldata"].min[j]
-										local ma = config[i]["frags"][fragnum]["veldata"].max[j]
-										config[i]["frags"][fragnum]["veldata"].min[j] = mi
-										config[i]["frags"][fragnum]["veldata"].max[j] = ma
-										Spring.Echo("[CAS] WARNING: Illegal min,max value for velocity on projectile ID " .. i .. " (" .. wd.name .. ").\n These values have been automatically switched, but you should fix your config!\nValues got:" .. config[i]["frags"][fragnum]["veldata"].min[j],config[i]["frags"][fragnum]["veldata"].max[j])
-									end
-								end
-							else
-								config[i]["frags"][fragnum].veldata = {min = {}, max = {}}
-								for j=1,3 do
-									config[i]["frags"][fragnum]["veldata"].min[j] = -math.abs(tonumber(vradius))
-									config[i]["frags"][fragnum]["veldata"].max[j] = math.abs(tonumber(vradius))
-								end
-							end
-						end
-						config[i]["frags"][fragnum]["veldata"].diff = {}
-						for j=1,3 do
-							config[i]["frags"][fragnum]["veldata"].diff[j] = config[i]["frags"][fragnum]["veldata"].max[j] - config[i]["frags"][fragnum]["veldata"].min[j]
-						end
-						local keepmomentum = curRef["keepmomentum" .. fragnum]
-						if type(keepmomentum) ~= "string" then
-							config[i]["frags"][fragnum]["keepmomentum"] = {1,1,1}
-						else
-							if string.find(keepmomentum,",") then -- projectile velocity offsets
-								config[i]["frags"][fragnum]["keepmomentum"] = {}
-								config[i]["frags"][fragnum]["keepmomentum"][1],config[i]["frags"][fragnum]["keepmomentum"][2], config[i]["frags"][fragnum]["keepmomentum"][3] = keepmomentum:match("([^,]+),([^,]+),([^,]+)")
-								for j=1, 3 do
-									config[i]["frags"][fragnum]["keepmomentum"][j] = tonumber(config[i]["frags"][fragnum]["keepmomentum"][j])
-								end
-							else
-								config[i]["frags"][fragnum].keepmomentum = {}
-								for j=1,3 do
-									config[i]["frags"][fragnum]["keepmomentum"][j] = tonumber(keepmomentum)
-								end
-							end
-						end
-						local spawnsfx = curRef["spawnsfx" .. fragnum]
-						if spawnsfx then
-							config[i]["frags"][fragnum]["spawnsfx"] = tonumber(spawnsfx)
-						end
-						fragnum = fragnum + 1
-					end
-					config[i].fragcount =  fragnum - 1
-					if debugMode then
-						Spring.Echo("[CAS] Frag count: " .. fragnum - 1)
-					end
+					local b = tonumber(posdata[j+3]) or -a
+					posdata[j], posdata[j+3] = (a+b)/2, (a-b)/2
+				end
+				fragConfig["posSpread"] = posdata
+				spreadMode = curRef["posspreadmode"..fragnum] or "cylY"
+				if spreadModes[spreadMode] then
+					fragConfig["posSpreadMode"] = spreadModes[spreadMode]
 				else
-					Spring.Echo("[CAS] Error: " .. i .. "(" .. WeaponDefs[i].name .. "): spawndist is not present.")
+					throw("frag #"..fragnum.." of "..wd.name.." has an invalid posspreadmode param")
 				end
 			else
-				Spring.Echo("[CAS] Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile " .. curRef.projectile1 ..  " is not a valid weapondef name.")
+				fragConfig["posSpreadMode"] = spreadModes["none"]
 			end
-		else
-			Spring.Echo("[CAS] Error: " .. i .. "( " .. WeaponDefs[i].name .. "): subprojectile is not a string.")
+			if curRef["velspread"..fragnum] then
+				veldata = Spring.Utilities.ExplodeString(",", curRef["velspread"..fragnum], ",")
+				for j=1, 3 do
+					local a = tonumber(veldata[j])
+					if not a then
+						throw("frag #"..fragnum.." of "..wd.name.." has an invalid velspread param. The first 3 values must all be non-nil")
+					end
+					local b = tonumber(veldata[j+3]) or -a
+					veldata[j], veldata[j+3] = (a+b)/2, (a-b)/2
+				end
+				fragConfig["velSpread"] = veldata
+				spreadMode = curRef["velspreadmode"..fragnum] or "cylY"
+				if spreadModes[spreadMode] then
+					fragConfig["velSpreadMode"] = spreadModes[spreadMode]
+				else
+					throw("frag #"..fragnum.." of "..wd.name.." has an invalid posspreadmode param")
+				end
+			else
+				fragConfig["velSpreadMode"] = spreadModes["none"]
+			end
+			local keepmomentum = curRef["keepmomentum" .. fragnum]
+			if type(keepmomentum) ~= "string" then
+				if not projConfig["onExplode"] then
+					fragConfig["keepmomentum"] = {1,1,1}
+				end
+			else
+				if string.find(keepmomentum,",") then -- projectile velocity offsets
+					fragConfig["keepmomentum"] = {}
+					fragConfig["keepmomentum"] = table.pack(keepmomentum:match("([^,]+),([^,]+),([^,]+)"))
+					for j=1, 3 do
+						fragConfig["keepmomentum"][j] = tonumber(fragConfig["keepmomentum"][j])
+					end
+				else
+					fragConfig.keepmomentum = {}
+					for j=1,3 do
+						fragConfig["keepmomentum"][j] = tonumber(keepmomentum)
+					end
+				end
+			end
+			fragnum = fragnum + 1
+		end
+		projConfig.fragcount =  fragnum - 1
+		if debugMode then
+			Spring.Echo("[CAS] Frag count: " .. fragnum - 1)
 		end
 	end
 	wd = nil

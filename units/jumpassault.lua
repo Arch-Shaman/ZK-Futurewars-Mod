@@ -30,6 +30,7 @@ return {
 			grey_goo_range = 120,
 			selection_scale = 1, -- Maybe change later
 			select_show_eco = 1,
+			fireproof = 1,
 		},
 
 		explodeAs           = "BIG_UNITEX",
@@ -39,9 +40,9 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
-		maxDamage           = 6900,
+		health              = 6900,
 		maxSlope            = 36,
-		maxVelocity         = 2.3,
+		speed               = 2.3,
 		maxWaterDepth       = 22,
 		movementClass       = "KBOT2",
 		noAutoFire          = false,

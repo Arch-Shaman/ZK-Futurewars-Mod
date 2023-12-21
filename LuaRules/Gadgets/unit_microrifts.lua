@@ -24,6 +24,7 @@ targetypes[string.byte('p')] = "projectile"
 local spTestMoveOrder = Spring.TestMoveOrder
 local spTestBuildOrder = Spring.TestBuildOrder
 local spGetUnitPosition = Spring.GetUnitPosition
+local spSetUnitVelocity = Spring.SetUnitVelocity
 
 
 local config = {}
@@ -32,7 +33,7 @@ local overrides = {}
 for i = 1, #WeaponDefs do
 	local wd = WeaponDefs[i]
 	if wd.customParams and wd.customParams.teleportation then
-		config[i] = {sound = wd.customParams.teleportsound, weaponID = tonumber(wd.customParams.teleportid)}
+		config[i] = {sound = wd.customParams.teleportsound, weaponID = tonumber(wd.customParams.teleportid), resetMomentum = wd.customParams.teleport_nomomentum ~= nil}
 		Script.SetWatchWeapon(i, true)
 	end
 end
@@ -78,7 +79,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local cfg = config[weaponDefID]
 		targetType = targetypes[targetType] or "nil"
 		Spring.DeleteProjectile(proID)
-		
+
 		if targetType == "unit" then
 			targetX, targetY, targetZ = spGetUnitPosition(targetParam)
 		elseif targetType == "feature" then
@@ -113,6 +114,11 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 			Spring.MoveCtrl.SetHeading(proOwnerID, 1)
 			Spring.MoveCtrl.SetRotation(proOwnerID, 0, rotation, 0)
 			Spring.MoveCtrl.Disable(proOwnerID)
+			if cfg.resetMomentum then
+				spSetUnitVelocity(proOwnerID, 0, 0, 0)
+			end
+
+			GG.FireControl.ClearBonusFirerate(proOwnerID)
 			GG.PlayFogHiddenSound(cfg.sound, 10, x, y, z)
 		else
 			local weaponNum = overrides[proOwnerID] or cfg.weaponID

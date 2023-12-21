@@ -27,6 +27,9 @@ return {
 			outline_y = 230,
 			outline_yoff = 70,
 			singuimmune = 1,
+			reveal_losunit = "los_superwep",
+			reveal_onprogress = 0.9,
+			reveal_onfinish = false,
 		},
 		explodeAs              = "NUCLEAR_MISSILE",
 		footprintX             = 6,
@@ -34,9 +37,9 @@ return {
 		iconType               = "krogoth",
 		leaveTracks            = true,
 		losEmitHeight          = 100,
-		maxDamage              = 250000,
+		health                 = 250000,
 		maxSlope               = 37,
-		maxVelocity            = 1.0,
+		speed                  = 42,
 		maxWaterDepth          = 5000,
 		movementClass          = "AKBOT4",
 		noAutoFire             = false,
@@ -46,7 +49,6 @@ return {
 		selfDestructAs         = "NUCLEAR_MISSILE",
 		selfDestructCountdown  = 10,
 		sightDistance          = 2000,
-		sonarDistance          = 2000,
 		trackOffset            = 0,
 		trackStrength          = 8,
 		trackStretch           = 0.8,
@@ -74,11 +76,16 @@ return {
 			SECONDARY = {
 				name                    = "Antimatter Pellet",
 				areaOfEffect            = 108,
-				craterBoost             = 20,
+				craterBoost             = 5,
 				craterMult              = 4,
 				burnblow				= true,
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
+					gatherradius     = "240",
+					smoothradius     = "120",
+					smoothmult       = "0.2",
+					smoothexponent = "0.75",
+					movestructures   = "1",
 					force_ignore_ground = "1",
 					light_color = "3 2.33 1.5",
 					light_radius = 150,
@@ -87,6 +94,7 @@ return {
 				},
 				damage                  = {
 					default = 1020.1,
+					armorpiercing = 0.2,
 				},
 				edgeEffectiveness = 0.4,
 				explosionGenerator      = "custom:TESS",
@@ -96,7 +104,7 @@ return {
 				noSelfDamage            = true,
 				range                   = 450,
 				reloadtime              = 3,
-				soundHit                = "explosion/ex_large9.wav",
+				soundHit                = "explosion/ex_large9",
 				--soundStart              = "weapon/cannon/rhino",
 				turret                  = true,
 				weaponType              = "Cannon",
@@ -106,29 +114,30 @@ return {
 			GAUSS         = {
 				name                    = "Decimator Cannon Barrage",
 				alphaDecay              = 0.12,
-				areaOfEffect            = 1,
+				areaOfEffect            = 216,
 				avoidfeature            = false,
-				bouncerebound           = 0.15,
-				bounceslip              = 1,
 				burst                   = 6,
-				burstrate               = 1.2,
+				burstrate               = 1,
 				cegTag                  = "vulcanfx",
-				craterBoost             = 0,
-				craterMult              = 0,
+				craterBoost             = 5,
+				craterMult              = 4,
 				customParams = {
-					reaim_time = 1,	
-					smoothradius     = "120",
+					reaim_time = 1,
+					gatherradius     = "300",
+					smoothradius     = "150",
 					smoothmult       = "0.8",
+					smoothexponent = "0.75",
+					movestructures   = "1",
+					force_ignore_ground = "1",
 					muzzleEffectFire = "custom:RAIDMUZZLE",
-					numprojectiles1 = 7, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
+					numprojectiles1 = 7,
 					projectile1 = "striderdetriment_secondary",
-					--spreadradius1 = 8, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					proxy = 1, -- check for nearby units?
-					proxydist = 200, -- how far to check for units? Default: spawndist
-					spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-6,-4,-6,2,3,6", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
+					proxy = 1, 
+					proxydist = 200,
+					spawndist = 200,
+					velspread1 = "7.64, 3.5, 7.64",
+					armorpiercing = 0.2,
+					not_artillery = "hack for rafflesia",
 				},
 				damage                  = {
 					default = 1020.1*7,
@@ -137,11 +146,11 @@ return {
 				groundbounce            = 1,
 				impactOnly              = true,
 				impulseBoost            = 0,
-				impulseFactor           = 20,
-				interceptedByShieldType = 0,
+				impulseFactor           = 5,
+				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 1600,
-				reloadtime              = 7,
+				reloadtime              = 5.833,
 				separation              = 0.5,
 				size                    = 0.8,
 				sizeDecay               = -0.1,
@@ -168,16 +177,12 @@ return {
 					reaim_time = 8, -- COB
 					isaa = "1",
 					light_radius = 0,
-					numprojectiles1 = 5, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile1 = "striderdetriment_tritary", -- the weapondef name. we will convert this to an ID in init. REQUIRED. If defined in the unitdef, it will be unitdefname_weapondefname.
-					--spreadradius1 = 3, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 200, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-4,-3,-4,4,3,4", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-					proxy = 1, -- check for nearby units?
-					proxydist = 300, -- how far to check for units? Default: spawndist
+					numprojectiles1 = 5,
+					projectile1 = "striderdetriment_tritary",
+					spawndist = 200,
+					velspread1 = "5.09, 3, 5.09",
+					proxy = 1, 
+					proxydist = 300,
 					damage_vs_shield = "180"
 				},
 				damage  = {
@@ -246,7 +251,7 @@ return {
 				--coverage = 1000,
 			},
 			TRILASER = {
-				name                    = "Gigawatt Laser",
+				name                    = "Terawatt Laser",
 				areaOfEffect            = 36,
 				beamTime                = 1,
 				beamttl                 = 3,
@@ -261,6 +266,7 @@ return {
 				},
 				damage                  = {
 					default = 16000.1,
+					armorpiercing = 0.35,
 				},
 				explosionGenerator      = "custom:beamlaser_hit_saphire",
 				fireStarter             = 90,
