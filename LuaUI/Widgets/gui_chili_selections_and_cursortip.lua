@@ -1898,6 +1898,7 @@ local function GetMultiUnitInfoPanel(parentControl)
 			local unitDefID = spGetUnitDefID(unitID) or 0
 			local byDefID = displayUnitsByDefID[unitDefID] or {}
 			byDefID[#byDefID + 1] = unitID
+			displayUnitsByDefID[unitDefID] = byDefID
 			if not unitDefAdded[unitDefID] then
 				selectionSortOrder[#selectionSortOrder + 1] = unitDefID
 				unitDefAdded[unitDefID] = true
