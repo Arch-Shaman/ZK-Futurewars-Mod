@@ -39,7 +39,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		maneuverleashlength = "1280",
-		health              = 5800,
+		health              = 7250,
 		speed               = 3.0,
 		minCloakDistance    = 75,
 		noAutoFire          = false,
@@ -91,7 +91,7 @@ return {
 					--light_ground_height = 120,
 				},
 				damage                  = {
-					default = 35.1, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
+					default = 38.1, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
 				},
 				explosionGenerator      = "custom:gauss_hit_m",
 				heightBoostFactor       = 0,
@@ -136,7 +136,7 @@ return {
 				},
 			
 				damage         = {
-					default = 80.1,
+					default = 65.1,
 				},
 			
 				--texture1="null", --flare, reference: http://springrts.com/wiki/Weapon_Variables#Texture_Tags

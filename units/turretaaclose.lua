@@ -87,7 +87,7 @@ return {
 				leadLimit               = 0,
 				model                   = "wep_m_phoenix.s3o",
 				noSelfDamage            = true,
-				range                   = 1300,
+				range                   = 950,
 				reloadtime              = 3/30,
 				smokeTrail              = true,
 				soundHit                = "explosion/ex_med11",

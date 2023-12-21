@@ -84,7 +84,7 @@ return {
 				interceptedByShieldType = 1,
 				laserflaresize			= 5,
 				noSelfDamage            = true,
-				range                   = 4500,
+				range                   = 2880,
 				reloadtime              = 1/30,
 				rgbColor                = "0.1255 0.69804 0.66667",
 				soundStart              = "weapon/laser/maser_fire",

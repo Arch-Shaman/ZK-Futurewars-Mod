@@ -32,7 +32,7 @@ return {
 		iconType               = "gunshipskirm",
 		idleAutoHeal           = 15,
 		idleTime               = 1800,
-		health                 = 3000,
+		health                 = 3750,
 		speed                  = 4.6,
 		noChaseCategory        = "TERRAFORM SUB",
 		objectName             = "rapier.dae",
@@ -133,7 +133,7 @@ return {
         			light_radius = 250,
 					reveal_unit = 18,
 					script_reload = "12",
-					script_burst = "20",
+					script_burst = "14",
 				},
 				damage                  = {
 					default = 175.1,

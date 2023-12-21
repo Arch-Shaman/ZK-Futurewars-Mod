@@ -37,7 +37,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		maxAcc              = 0.5,
-		health              = 1400,
+		health              = 1750,
 		maxAileron          = 0.018,
 		maxElevator         = 0.02,
 		maxRudder           = 0.018,

@@ -93,7 +93,7 @@ return {
 				impulseFactor           = 0.7,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 1040,
+				range                   = 840,
 				proximityPriority       = 20,
 				reloadtime              = 1/30,
 				rgbColor                = "0.0588 0.3215 0.7294",

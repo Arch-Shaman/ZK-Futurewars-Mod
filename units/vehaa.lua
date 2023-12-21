@@ -94,7 +94,7 @@ return {
 				interceptedByShieldType = 2,
 				model                   = "wep_m_phoenix.s3o",
 				noSelfDamage            = true,
-				range                   = 850,
+				range                   = 680,
 				reloadtime              = 2.5,
 				smokeTrail              = true,
 				soundHit                = "weapon/missile/sabot_hit",

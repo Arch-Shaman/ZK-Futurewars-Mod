@@ -85,7 +85,7 @@ return {
 				interceptedByShieldType = 2,
 				model                   = "hovermissile.s3o",
 				noSelfDamage            = true,
-				range                   = 1300,
+				range                   = 1040,
 				reloadtime              = 14.0,
 				smokeTrail              = true,
 				soundHit                = "weapon/missile/vlaunch_hit",

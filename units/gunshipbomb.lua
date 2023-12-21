@@ -40,7 +40,7 @@ return {
 		kamikazeDistance       = 60,
 		kamikazeUseLOS         = true,
 		maneuverleashlength    = "1240",
-		health                 = 60,
+		health                 = 90,
 		maxSlope               = 36,
 		speed                  = 10,
 		noAutoFire             = false,
@@ -97,7 +97,7 @@ return {
 				},
 
 				damage                  = {
-					default = 65.1,
+					default = 50.1,
 				},
 				
 				edgeEffectiveness       = 0.33,
@@ -195,7 +195,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 20*65.1,
+					default = 20*50.1,
 				},
 				mygravity               = 0.07,
 				cegTag                  = "VINDIBACK",

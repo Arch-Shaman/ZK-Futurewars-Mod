@@ -35,7 +35,7 @@ return {
 		idleAutoHeal           = 200,
 		idleTime               = 1800,
 		maneuverleashlength    = "500",
-		health                 = 37500,
+		health                 = 47000,
 		speed                  = 4.1,
 		noAutoFire             = false,
 		noChaseCategory        = "TERRAFORM FIXEDWING SATELLITE SUB",
@@ -110,7 +110,7 @@ return {
 				},
 
 				damage                  = {
-					default = 100.1,
+					default = 70.1,
 				},
 
 				duration                = 0.1,
@@ -139,76 +139,6 @@ return {
 				weaponType              = "BeamLaser",
 				--weaponVelocity          = 880,
 			},
-			CLUSTERBOMBER = {
-				name                    = "Heavy Cluster Bomb",
-				accuracy                = 200,
-				areaOfEffect            = 128,
-				burst                   = 45,
-				burstRate               = 0.066, -- real value in script; here for widgets
-				commandFire             = true,
-				craterBoost             = 0,
-				craterMult              = 0,
-				customParams			= {
-					numprojectiles1 = 4,
-					projectile1 = "gunshipkrow_clusterbomb",
-					useheight = 1,
-					spawndist = 140,
-					velspread1 = "15.28 , 0, 15.28, _, 4, _",
-				},
-				damage                  = {
-					default = 175*3,
-				},
-
-				explosionGenerator      = "custom:WEAPEXP_PUFF",
-				fireStarter             = 180,
-				impulseBoost            = 0,
-				impulseFactor           = 0.2,
-				interceptedByShieldType = 2,
-				model                   = "hovermissile.s3o",
-				range                   = 200,
-				reloadtime              = 30, -- if you change this redo the value in oneclick_weapon_defs EMPIRICALLY
-				smokeTrail              = true,
-				soundHit                = "weapon/cannon/cannonfire_001",
-				soundHitVolume          = 8,
-				soundStart              = "weapon/cannon/mini_cannon",
-				soundStartVolume        = 2,
-				sprayangle              = 1800,
-				turret                  = true,
-				weaponType              = "Cannon",
-				weaponVelocity          = 200,
-			},
-			CLUSTERBOMB = {
-				name                    = "Cluster Bomb",
-				accuracy                = 200,
-				areaOfEffect            = 128,
-				burst                   = 75,
-				burstRate               = 0.066, -- real value in script; here for widgets
-				commandFire             = true,
-				craterBoost             = 10,
-				craterMult              = 3,
-
-				damage                  = {
-					default = 175,
-				},
-
-				explosionGenerator      = "custom:MEDMISSILE_EXPLOSION",
-				fireStarter             = 180,
-				impulseBoost            = 0,
-				impulseFactor           = 0.2,
-				interceptedByShieldType = 2,
-				model                   = "wep_b_fabby.s3o",
-				range                   = 200,
-				reloadtime              = 30, -- if you change this redo the value in oneclick_weapon_defs EMPIRICALLY
-				smokeTrail              = true,
-				soundHit                = "explosion/ex_med6",
-				soundHitVolume          = 8,
-				soundStart              = "weapon/cannon/mini_cannon",
-				soundStartVolume        = 2,
-				sprayangle              = 14400,
-				turret                  = true,
-				weaponType              = "Cannon",
-				weaponVelocity          = 400,
-			},
 			ATA = {
 				name                    = "Annihilator Beam",
 				areaOfEffect            = 255,
@@ -224,7 +154,7 @@ return {
 					lups_noshockwave = "1",
 				},
 				damage                  = {
-					default = 40100,
+					default = 27000,
 				},
 				cameraShake				= 500,
 				explosionGenerator      = "custom:craterpuncher_short",

@@ -47,8 +47,8 @@ return {
 		iconType            = "builderair",
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
-		health              = 1200,
-		speed               = 4,
+		health              = 1500,
+		speed               = 6,
 		minCloakDistance    = 75,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET",
@@ -58,7 +58,7 @@ return {
 		showNanoSpray       = false,
 		sightDistance       = 375,
 		turnRate            = 500,
-		workerTime          = 7.5,
+		workerTime          = 5,
 		sfxtypes               = {
 			explosiongenerators = {
 				"custom:MUZZLE_ORANGE",

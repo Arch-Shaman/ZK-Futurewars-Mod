@@ -25,7 +25,7 @@ return {
 		customParams        = {
 			modelradius    = "15",
 			refuelturnradius = "220",
-			reammoseconds    = "7",
+			reammoseconds    = "21",
 			requireammo    = "1",
 			reallyabomber    = "1",
 			outline_x = 130,
@@ -54,11 +54,11 @@ return {
 		maneuverleashlength = "1380",
 		maxAcc              = 0.5,
 		maxBank             = 0.6,
-		maxDamage           = 2500,
+		maxDamage           = 3125,
 		maxElevator         = 0.02,
 		maxRudder           = 0.013,
 		maxFuel             = 1000000,
-		speed               = 6.1,
+		speed               = 9.15,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP",
 		objectName          = "corshad.s3o",
@@ -105,7 +105,7 @@ return {
 				burst                   = 6,
 				burstrate				= 4/30,
 				damage                  = {
-					default = 2700,
+					default = 1800,
 				},
 				customParams            = {
 					light_color = "1.1 0.9 0.45",
@@ -156,7 +156,7 @@ return {
 				customParams = {
 				},
 				damage                  = {
-					default = 600.1,
+					default = 400.1,
 				},
 				edgeEffectiveness       = 0.6,
 				explosionGenerator      = "custom:TORPEDO_HIT",
@@ -228,7 +228,7 @@ return {
 				craterBoost             = 10,
 				craterMult              = 5,
 				damage                  = {
-					default = 275.01,
+					default = 185,
 				},
 				explosionGenerator      = "custom:BIGMISSILE_EXPLOSION",
 				fireStarter             = 180,

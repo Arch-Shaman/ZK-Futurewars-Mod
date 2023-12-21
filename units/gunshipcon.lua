@@ -45,7 +45,7 @@ return {
 		footprintZ          = 2,
 		hoverAttack         = true,
 		iconType            = "builderair",
-		health              = 1900,
+		health              = 2375,
 		speed               = 2.7,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET",
@@ -55,7 +55,7 @@ return {
 		showNanoSpray       = false,
 		sightDistance       = 500,
 		turnRate            = 500,
-		workerTime          = 15,
+		workerTime          = 10,
 		weapons             = {
 			{
 				def                = "deployturret",

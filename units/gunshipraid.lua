@@ -34,7 +34,7 @@ return {
 		iconType               = "gunshipraider",
 		idleAutoHeal           = 25,
 		idleTime               = 150,
-		health                 = 1250,
+		health                 = 1600,
 		speed                  = 6.8,
 		noChaseCategory        = "TERRAFORM SUB",
 		objectName             = "banshee.s3o",
@@ -83,7 +83,7 @@ return {
 					combatrange = 250,
 				},
 				damage                  = {
-					default = 37.5,
+					default = 30,
 				},
 				explosionGenerator      = "custom:heavybeamorangeimpactsmall",
 				--heightMod             = 0.5,

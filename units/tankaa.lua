@@ -91,7 +91,7 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 1200,
+				range                   = 960,
 				reloadtime              = 1/3,
 				myGravity				= 0.03,
 				size                    = 8,
