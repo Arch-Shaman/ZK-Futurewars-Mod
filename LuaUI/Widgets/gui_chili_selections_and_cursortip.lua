@@ -2112,7 +2112,11 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		
 		unitpicBadge1Update(GetUnitNeedRearm(unitID, unitDefID), IMAGE.NO_AMMO)
 		local ammoPic = GetUnitAmmoPic(unitID, unitDefID)
-		unitpicBadge2Update(ammoPic, ammoPic)
+		if ammoPic then
+			unitpicBadge2Update(true, ammoPic)
+		else
+			unitpicBadge2Update(false)
+		end
 		
 		UpdateReloadTime(unitID, unitDefID)
 		
