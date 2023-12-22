@@ -453,17 +453,21 @@ end
 
 function script.BlockShot(num, targetID)
 	if num == 2 then
-		if not targetID or spValidUnitID(targetID) then --try and fix a bug I caught in testing
-			return false
-		else
-			return true
-		end
+		StartThread(DoSomeHax) -- Try harder to fix the bug
 	else
 		if num ~= 1 then
 			return false
 		end
 		local reloadState = Spring.GetUnitWeaponState(unitID, 3, 'reloadState')
 		return not (reloadState and (reloadState < 0 or reloadState < Spring.GetGameFrame()))
+	end
+end
+
+local function DoSomeHax()
+	Sleep(33)
+	local commands = Spring.GetCommandQueue(unitID, 0)
+	if commands == 0 then
+		Spring.GiveOrderToUnit(unitID, CMD.STOP, 0, 0)
 	end
 end
 
