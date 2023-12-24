@@ -60,11 +60,9 @@ function OnAmmoChange(newState)
 		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
 		spSetUnitRulesParam(unitID, "selfMaxAccelerationChange", 1)
 		GG.UpdateUnitAttributes(unitID)
-		GG.UpdateUnitAttributes(unitID)
 	elseif newState == 1 then
 		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", unarmedspeed)
 		spSetUnitRulesParam(unitID, "selfMaxAccelerationChange", unarmedspeed)
-		GG.UpdateUnitAttributes(unitID)
 		GG.UpdateUnitAttributes(unitID)
 	end
 end
