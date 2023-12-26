@@ -39,7 +39,6 @@ include("keysym.lua")
 VFS.Include("LuaRules/Utilities/numberfunctions.lua")
 VFS.Include("LuaRules/Utilities/versionCompare.lua")
 local carrierDefs = {}
-local commanderDroneDefs = {}
 
 local spSendLuaRulesMsg			= Spring.SendLuaRulesMsg
 local spGetCurrentTooltip		= Spring.GetCurrentTooltip
@@ -152,12 +151,9 @@ local buildOpts = VFS.Include("gamedata/buildoptions.lua")
 local factory_commands, econ_commands, defense_commands, special_commands = include("Configs/integral_menu_commands_processed.lua", nil, VFS.RAW_FIRST)
 
 do
-	local droneDefs, _, commDrones = VFS.Include("LuaRules/Configs/drone_defs.lua")
+	local droneDefs, _, commanderDroneDefs = VFS.Include("LuaRules/Configs/drone_defs.lua")
 	for id, data in pairs(droneDefs) do -- For whatever reason, unitDefID is not the same.
 		carrierDefs[UnitDefs[id].name] = data
-	end
-	for id, data in pairs(commDrones) do
-		commanderDroneDefs[id] = data
 	end
 end
 
@@ -491,6 +487,8 @@ local localization = {
 	speed_while_reloading = "Movement speed while reloading",
 	drone_max_range = "Drone Max Range",
 	drone_target_range = "Drone Acqusition Range",
+	drone_controllable = "Controllable",
+	drone_verybigrange = "Infinite max range",
 	repair_drones = "Repair Drones",
 	assault_drones = "Assault Drones",
 	companion_drones = "Companion Drones",
@@ -1744,9 +1742,11 @@ local function printAbilities(ud, unitID, isFeature)
 
 	if cp.is_drone then
 		AddEntryToCells(localization.drone_bound, 1, '', cells)
-		AddEntryToCells(localization.drone_cannot_direct_control, 2, '', cells)
-		AddEntryToCells(localization.drone_uses_owners_commands, 2, '', cells)
-		AddEntryToCells(localization.drone_bound_to_range, 2, '', cells)
+		if not cp.is_controllable_drone then
+			AddEntryToCells(localization.drone_cannot_direct_control, 2, '', cells)
+			AddEntryToCells(localization.drone_uses_owners_commands, 2, '', cells)
+			AddEntryToCells(localization.drone_bound_to_range, 2, '', cells)
+		end
 		AddEntryToCells(localization.drone_dies_on_owner_death, 2, '', cells)
 		AddEntryToCells('', 0, '', cells)
 	end
@@ -2329,6 +2329,25 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 		AddEntry(localization.can_be_transported .. ":", 1, ((ud.customParams.requireheavytrans and localization.transport_heavy) or localization.transport_light), color.stats_fg, color.stats_fg, statschildren)
 	end
 	local name = ud.name
+
+	local function fillOutDroneData(tab, maxDrones, droneBuildSpeed, reloadMult, dronerange)
+		local name = Spring.Utilities.GetHumanName(UnitDefs[tab.drone])
+		AddEntry(name .. " x" .. (maxDrones or tab.maxDrones), 2, nil, color.stats_header, nil, statschildren)
+		AddEntry(localization.drone_build_time .. ":", 3, numformat(tab.buildTime / droneBuildSpeed, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+		AddEntry(localization.cooldown .. ":", 3, numformat(tab.reloadTime / reloadMult, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
+		AddEntry(localization.drones_per_cycle .. ":", 3, tab.spawnSize, color.stats_fg, color.stats_fg, statschildren)
+		local range, maxRange = tab.range*dronerange, tab.maxChaseRange*dronerange
+		if range >= 100000 then
+			AddEntry(localization.drone_verybigrange, 3, 10, color.stats_fg, color.stats_fg, statschildren)
+		else
+			AddEntry(localization.drone_target_range .. ":", 3,  numformat(range, 0), color.stats_fg, color.stats_fg, statschildren)
+			AddEntry(localization.drone_max_range .. ":", 3, numformat(maxRange, 0), color.stats_fg, color.stats_fg, statschildren)
+		end
+		if tab.controllable then
+			AddEntry(localization.drone_controllable, 3, 10, color.stats_fg, color.stats_fg, statschildren)
+		end
+	end
+	
 	if isCommander then
 		local batDrones, compDrones, droneSlots, droneBuildSpeed, assaultDrones, repairDrones, dronerange, dronemax, reloadMult
 		if isFeature then
@@ -2344,12 +2363,12 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 		else
 			batDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_droneheavyslow")
 			compDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_drone")
-			droneBuildSpeed = Spring.GetUnitRulesParam(unitID, "comm_drone_buildrate") or 1
 			droneSlots = Spring.GetUnitRulesParam(unitID, "comm_extra_drones") or 1
 			repairDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_dronecon")
 			assaultDrones = Spring.GetUnitRulesParam(unitID, "carrier_count_droneassault")
-			dronerange = 600 * (Spring.GetUnitRulesParam(unitID, "comm_drone_range") or 1)
 			dronemax = 1250 * (Spring.GetUnitRulesParam(unitID, "comm_drone_range") or 1)
+			dronerange = 600 * (Spring.GetUnitRulesParam(unitID, "comm_drone_range") or 1)
+			droneBuildSpeed = Spring.GetUnitRulesParam(unitID, "comm_drone_buildrate") or 1
 			reloadMult = Spring.GetUnitRulesParam(unitID, "comm_drone_rebuildrate") or 1
 		end
 		local hasDrones = false
@@ -2362,40 +2381,16 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 			AddEmptyEntry(statschildren)
 			AddEntry(localization.drone_label .. ":", 1, nil, color.stats_header, nil, statschildren)
 			if assaultDrones and assaultDrones > 0 then
-				AddEntry(Spring.Utilities.GetHumanName(UnitDefNames["droneassault"]) .. " x" .. assaultDrones, 2, nil, color.stats_header, nil, statschildren)
-				local tab = commanderDroneDefs["droneassault"]
-				AddEntry(localization.drone_build_time .. ":", 3, numformat(tab.buildTime / droneBuildSpeed, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.cooldown .. ":", 3, numformat(tab.reloadTime / reloadMult, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.drones_per_cycle .. ":", 3, tab.spawnSize, color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.drone_target_range .. ":", 3, numformat(dronerange, 1), color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.drone_max_range .. ":", 3, numformat(dronemax, 1), color.stats_fg, color.stats_fg, statschildren)
+				fillOutDroneData(commanderDroneDefs["droneassault"], assaultDrones, droneBuildSpeed, reloadMult, dronerange)
 			end
 			if compDrones and compDrones > 0 then
-				AddEntry(Spring.Utilities.GetHumanName(UnitDefNames["dronelight"]) .. " x" .. compDrones, 2, nil, color.stats_header, nil, statschildren)
-				local tab = commanderDroneDefs["drone"]
-				AddEntry(localization.drone_build_time .. ":", 3, numformat(tab.buildTime / droneBuildSpeed, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.cooldown .. ":", 3, numformat(tab.reloadTime / reloadMult, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.drones_per_cycle .. ":", 3, tab.spawnSize, color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.drone_target_range .. ":", 3, numformat(dronerange, 1), color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.drone_max_range .. ":", 3, numformat(dronemax, 1), color.stats_fg, color.stats_fg, statschildren)
+				fillOutDroneData(commanderDroneDefs["drone"], compDrones, droneBuildSpeed, reloadMult, dronerange)
 			end
 			if batDrones and batDrones > 0 then
-				AddEntry(Spring.Utilities.GetHumanName(UnitDefNames["droneheavyslow"]) .. " x" .. batDrones, 2, nil, color.stats_header, nil, statschildren)
-				local tab = commanderDroneDefs["droneheavyslow"]
-				AddEntry(localization.drone_build_time .. ":", 3, numformat(tab.buildTime / droneBuildSpeed, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.cooldown .. ":", 3, numformat(tab.reloadTime / reloadMult, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.drones_per_cycle .. ":", 3, tab.spawnSize, color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.drone_target_range .. ":", 3, numformat(dronerange, 1), color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.drone_max_range .. ":", 3, numformat(dronemax, 1), color.stats_fg, color.stats_fg, statschildren)
+				fillOutDroneData(commanderDroneDefs["droneheavyslow"], batDrones, droneBuildSpeed, reloadMult, dronerange)
 			end
 			if repairDrones and repairDrones > 0 then
-				AddEntry(Spring.Utilities.GetHumanName(UnitDefNames["dronecon"]) .. " x" .. repairDrones, 2, nil, color.stats_header, nil, statschildren)
-				local tab = commanderDroneDefs["dronecon"]
-				AddEntry(localization.drone_build_time .. ":", 3, numformat(tab.buildTime / droneBuildSpeed, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.cooldown .. ":", 3, numformat(tab.reloadTime / reloadMult, 1) .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.drones_per_cycle .. ":", 3, tab.spawnSize, color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.drone_target_range .. ":", 3, numformat(dronerange, 1), color.stats_fg, color.stats_fg, statschildren)
-				AddEntry(localization.drone_max_range .. ":", 3, numformat(dronemax, 1), color.stats_fg, color.stats_fg, statschildren)
+				fillOutDroneData(commanderDroneDefs["dronecon"], repairDrones, droneBuildSpeed, reloadMult, dronerange)
 			end
 		end
 	elseif carrierDefs[name] then
@@ -2407,13 +2402,7 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 		AddEntry(localization.drone_label .. ":", 1, nil, color.stats_header, nil, statschildren)
 		for i = 1, #carrierDef do
 			local tab = carrierDef[i]
-			local name = Spring.Utilities.GetHumanName(UnitDefs[tab.drone])
-			AddEntry(name .. " x" .. tab.maxDrones, 2, nil, color.stats_header, nil, statschildren)
-			AddEntry(localization.drone_build_time .. ":", 3, tab.buildTime .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
-			AddEntry(localization.cooldown .. ":", 3, tab.reloadTime .. localization.acronyms_second, color.stats_fg, color.stats_fg, statschildren)
-			AddEntry(localization.drones_per_cycle .. ":", 3, tab.spawnSize, color.stats_fg, color.stats_fg, statschildren)
-			AddEntry(localization.drone_target_range .. ":", 3, tab.range, color.stats_fg, color.stats_fg, statschildren)
-			AddEntry(localization.drone_max_range .. ":", 3, tab.maxChaseRange, color.stats_fg, color.stats_fg, statschildren)
+			fillOutDroneData(tab, nil, 1, 1, 1)
 		end
 	end
 	if ud.customParams.reload_move_penalty then

@@ -18,6 +18,7 @@ local configList = {
 	{cmdID = CMD_STOP_PRODUCTION       , default = true, name = "Stop Production"},
 	{cmdID = CMD.PATROL                , default = true, name = "Patrol"},
 	{cmdID = CMD_RECALL_DRONES         , default = true, name = "Recall Drones"},
+	{cmdID = CMD_DRONE_SET_TARGET      , default = true, name = "Set Drone Target"},
 	{cmdID = CMD.RECLAIM               , default = true, name = "Reclaim"},
 	{cmdID = CMD_GREYGOO               , default = true, name = "Reclaim (Grey Goo)"},
 	{cmdID = CMD.REPAIR                , default = true, name = "Repair"},

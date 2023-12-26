@@ -486,6 +486,9 @@ function gadget:Initialize()
 			end
 		end
 	end
+	-- Gull and Heron are only avalible to naval units
+	boats[UnitDefNames["dronecarry"].id] = true
+	boats[UnitDefNames["dronecarrybomber"].id] = true
 
 	for i=1,#WeaponDefs do
 		local wcp = WeaponDefs[i].customParams or {}

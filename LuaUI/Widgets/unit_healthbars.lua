@@ -25,6 +25,8 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+local carrierDefs, _, _ = include "LuaRules/Configs/drone_defs.lua"
+
 local barHeight = 3
 local barWidth  = 14  --// (barWidth)x2 total width!!!
 local barAlpha  = 0.9
@@ -97,6 +99,7 @@ local messages = {
 	battery = "battery",
 	engioverdrive = "Fab Overdrive",
 	temporaryarmor = "Temp Armor",
+	drones = "Drones",
 }
 
 local function languageChanged ()
@@ -366,6 +369,7 @@ local barColors = {
 	tele_pw        = { 0.00, 0.60, 0.60, barAlpha },
 	aim            = { 0.30, 0.50, 0.40, barAlpha },
 	battery        = { 0.76, 0.75, 0.31, barAlpha },
+	drones         = { 0.00, 0.80, 1.00, barAlpha },
 
 	-- Features
 	resurrect = { 1.00, 0.50, 0.00, featureBarAlpha },
@@ -627,6 +631,7 @@ local function CacheUnitInfo(unitDefID)
 		batterymax    = tonumber(ud.customParams.battery),
 		bpoverdrivebonus = tonumber(ud.customParams.bp_overdrive_bonus),
 		dynamicComm   = ud.customParams.dynamic_comm ~= nil or ud.customParams.level ~= nil,
+		hasDrones     = ud.customParams.dynamic_comm ~= nil or ud.customParams.level ~= nil or carrierDefs[unitDefID],
 	}
 	
 	for i = 1, #ud.weapons do
@@ -1137,6 +1142,15 @@ function DrawUnitInfos(unitID, unitDefID)
 		local jumpReload = GetUnitRulesParam(unitID, "jumpReload")
 		if (jumpReload and (jumpReload > 0) and (jumpReload < 1)) then
 			barDrawer.AddBar(addTitle and messages.jump, jumpReload, "jump", (addPercent and floor(jumpReload*100) .. '%'))
+		end
+	end
+
+	--// DRONES
+	if ci.hasDrones then
+		local drones = GetUnitRulesParam(unitID, "dronesControlled")
+		local maxDrones = GetUnitRulesParam(unitID, "dronesControlledMax")
+		if (drones and maxDrones) then
+			barDrawer.AddBar(addTitle and messages.drones, drones/maxDrones, "drones", (addPercent and drones.."/"..maxDrones))
 		end
 	end
 	

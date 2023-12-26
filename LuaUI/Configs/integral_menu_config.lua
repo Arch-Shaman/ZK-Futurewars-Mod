@@ -113,6 +113,7 @@ local commandDisplayConfig = {
 	[CMD_GBCANCEL] = { texture = imageDir .. 'Bold/stopbuild.png'},
 
 	[CMD_RECALL_DRONES] = {texture = imageDir .. 'Bold/recall_drones.png'},
+	[CMD_DRONE_SET_TARGET] = { texture = imageDir .. 'Bold/dronesettarget.png'},
 
 	-- states
 	[CMD_WANT_ONOFF] = {

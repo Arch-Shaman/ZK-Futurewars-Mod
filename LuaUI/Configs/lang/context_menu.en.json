@@ -247,6 +247,8 @@
 	"speed_while_reloading" : "Movement speed while reloading",
 	"drone_max_range" : "Drone Max Range",
 	"drone_target_range" : "Drone Acquisition Range",
+	"drone_controllable" : "Controllable",
+	"drone_verybigrange" : "Infinite max range",
 	"drone_production_speed" : "Drone Build Speed",
 	"can_be_transported" : "Transportable",
 	"min_output" : "Minimum Output",

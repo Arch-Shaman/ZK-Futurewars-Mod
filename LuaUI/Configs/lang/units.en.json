@@ -1096,8 +1096,8 @@
 	},
 	"shipcarrier" : {
 		"name" : "Reef",
-		"description" : "Aircraft Carrier (Bombardment), stockpiles disarm missiles at 5 m/s",
-		"helptext" : "The most versatile ship on the high seas, the carrier serves several functions. It is equipped with a manual-fire disarming missile launcher for disabling enemy capital ships at range and serves as a mobile repair base for friendly aircraft. Perhaps most notably, the carrier provides its own complement of surface attack drones to engage targets."
+		"description" : "Naval Supercarrier, stockpiles disarm missiles at 5 m/s",
+		"helptext" : "A carrier is more than just a floating airpad, and a supercarrier, so much more so. Beneath the Reef's relatively thin hull are machinery which makes this ship the beating heart of a naval task force. Equipped with an advanced radar, a nuke interception system, a disarm missile silo, and a compliment of drones to repair allies and bomb the enemy into submission, the Reef is one of the most valuable ships in any fleet. Be warned however, as all those advanced machinery comes at the cost to the reef's survability, so make sure to cover it with escorts at all times."
 	},
 	"turretaaflak" : {
 		"name" : "Crucible",
@@ -1230,9 +1230,14 @@
 		"helptext" : "Designed shortly after the advent of cluster munitions, the Deserter Mk4 has replaced the aging swift design. Built for scouting and early response, it can quickly reach a scene and fire off its payload of cluster missiles. It is incredibly fast, however, this speed dimminishes greatly after deploying its payload."
 	},
 	"dronecarry" : {
-		"name" : "Gull",
-		"description" : "Carrier Drone",
-		"helptext" : "The Gull is a small, aggressive drone armed with an energy MG."
+		"name" : "Quetzalcoatl",
+		"description" : "Carrier-Based Drone",
+		"helptext" : "Gull is currently unfinished and subject to furthur change"
+	},
+	"dronecarrybomber" : {
+		"name" : "Heron",
+		"description" : "Carrier-Based Bomber",
+		"helptext" : "The Heron is the primary component to the Reef's air wing. A relatively small bomber specifically designed for carrier-based operations. And by sacrificng speed, command and control, and just about everything that isn't strictly neccecary, the Heron is able to punch well above it's weight with a mixed payload bomb that is able to both damage and disarm targets."
 	},
 	"turretheavylaser" : {
 		"name" : "Rampart",

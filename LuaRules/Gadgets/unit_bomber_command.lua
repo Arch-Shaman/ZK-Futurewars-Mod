@@ -316,9 +316,16 @@ local function FindNearestAirpad(unitID, team)
 	local teamID = Spring.GetUnitTeam(unitID)
 	local freePads = {}
 	local freePadCount = 0
+	local parentID = spGetUnitRulesParam(unitID, "parent_unit_id")
 	if not airpadsPerAllyteam[allyTeam] then
 		return
 	end
+
+	-- Drones may only land on their carrier, so just short circuit here
+	if parentID and airpadsData[parentID] then
+		return parentID
+	end
+	
 	-- first go through all the pads to see which ones are unbooked
 	for airpadID,airpadDefID in pairs(airpadsPerAllyteam[allyTeam]) do
 		if spGetUnitIsDead(airpadID) or (not airpadsData[airpadID]) then --rare case. Can happen if airpad is built & die in same frame
@@ -328,7 +335,7 @@ local function FindNearestAirpad(unitID, team)
 			airpadsPerAllyteam[allyTeam][airpadID] = nil
 		else
 		-- Need to ensure that excludedairpad[teamid][padID] is not nil before running!
-			if (airpadsData[airpadID].reservations.count < airpadsData[airpadID].cap) and not excludedPads[teamID][airpadID] then
+			if (airpadsData[airpadID].reservations.count < airpadsData[airpadID].cap) and not excludedPads[teamID][airpadID] and (not airpadsData[airpadID].dronesOnly) then
 				freePads[airpadID] = true
 				freePadCount = freePadCount + 1
 			end
@@ -342,18 +349,20 @@ local function FindNearestAirpad(unitID, team)
 	local minDist = 999999
 	local closestPad
 	for airpadID in pairs(freePads) do
-		local excessReservation = math.modf(airpadsData[airpadID].reservations.count/airpadsData[airpadID].cap) --output: return "0" if airpad NOT full, return "1" if airpad is full, return "2" if twice as full, return "3" if thrice as full.
-		excessReservation = math.min(10,excessReservation) --clamp to avoid crazy value
-		local dist = Spring.GetUnitSeparation(unitID, airpadID, true)
-		dist = dist + (50*excessReservation)^2
-		dist = math.min(999998, dist) --clamp to avoid crazy value
-		if (dist < minDist) then
-			minDist = dist
-			closestPad = airpadID
+		if not airpadsData[airpadID].dronesOnly then
+			local excessReservation = math.modf(airpadsData[airpadID].reservations.count/airpadsData[airpadID].cap) --output: return "0" if airpad NOT full, return "1" if airpad is full, return "2" if twice as full, return "3" if thrice as full.
+			excessReservation = math.min(10,excessReservation) --clamp to avoid crazy value
+			local dist = Spring.GetUnitSeparation(unitID, airpadID, true)
+			dist = dist + (50*excessReservation)^2
+			dist = math.min(999998, dist) --clamp to avoid crazy value
+			if (dist < minDist) then
+				minDist = dist
+				closestPad = airpadID
+			end
 		end
 	end
 
-	if excludedPads[teamID][closestPad] then --Check if it contains the airpad and then return nil - this will only happen when their are no other free airpads.
+	if (not closestPad) or excludedPads[teamID][closestPad] then --Check if the airpad is valid, this will only happen if there are no other valid pads
 		return
 	end
 
@@ -734,6 +743,10 @@ function gadget:CommandFallback(unitID, unitDefID, unitTeam, cmdID, cmdParams, c
 		local targetAirpad = cmdParams[1]
 		if not airpadsData[targetAirpad] then
 			return true, true -- trying to land on an unregistered (probably under construction) pad, abort
+		end
+		local parentID = spGetUnitRulesParam(unitID, "parent_unit_id")
+		if (airpadsData[targetAirpad].dronesOnly or airpadsData[parentID]) and parentID ~= targetAirpad then
+			return true, true -- landing on drones only carriers is forbidden, and landing drones on non parents is also forbidden
 		end
 		ReserveAirpad(unitID,targetAirpad) --Reserve the airpad specified in RE-ARM params (if not yet reserved)
 		local x, y, z = Spring.GetUnitPosition(targetAirpad)

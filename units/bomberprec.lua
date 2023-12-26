@@ -58,7 +58,7 @@ return {
 		maxElevator         = 0.02,
 		maxRudder           = 0.013,
 		maxFuel             = 1000000,
-		speed               = 9.15,
+		speed               = 274.5,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP",
 		objectName          = "corshad.s3o",

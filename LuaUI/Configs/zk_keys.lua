@@ -98,6 +98,7 @@ return {
 		{	"oneclickwep",	"d",},
 		{	"placebeacon",	"d",},
 		{	"selectmissiles",	"Any+d"},
+		{	"selectdrones",	"Any+d"},
 		{	"reclaim",	"e",},
 		{	"fight",	"a",},
 		{	"forcestart",	"Alt+f",},
