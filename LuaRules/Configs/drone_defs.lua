@@ -34,7 +34,7 @@ local carrierDefNames = {
 		{
 			drone = UnitDefNames.dronecarrybomber.id,
 			reloadTime = 10,
-			maxDrones = 15,
+			maxDrones = 16,
 			spawnSize = 2,
 			range = 200000,
 			maxChaseRange = 200000,
