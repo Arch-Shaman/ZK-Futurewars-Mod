@@ -297,7 +297,7 @@ local function InitializeBriefingWindow()
 		fontsize = 20,
 		OnClick = {
 			function ()
-				Spring.SetClipboard ("")
+				Spring.SetClipboard ("https://ko-fi.com/fwshaman")
 				supportButton:SetCaption(WG.Translate("briefing", "link_copied"))
 			end
 		},
