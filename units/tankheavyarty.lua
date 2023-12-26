@@ -20,6 +20,8 @@ return {
 			modelradius       = "17",
 			cus_noflashlight  = 1,
 			selection_scale   = 0.92,
+			bait_level_default = 1,
+			dontfireatradarcommand = '0',
 		},
 		explodeAs              = "BIG_UNIT",
 		footprintX             = 5,

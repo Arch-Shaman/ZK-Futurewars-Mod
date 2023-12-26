@@ -34,6 +34,7 @@ local dronecarrybomber = {
 	},
 
 	explodeAs           = "GUNSHIPEX",
+	fireState              = 0,
 	floater             = true,
 	footprintX          = 3,
 	footprintZ          = 3,
