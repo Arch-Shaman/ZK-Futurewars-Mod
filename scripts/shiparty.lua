@@ -23,13 +23,13 @@ local smokePiece = {body, sonar, propeller, turret}
 local SIG_AIM = 4
 local SIG_MOVE = 1
 
--- local DEPTHCHARGE_Y = 0.9
--- local DEPTHCHARGE_Z = 3.95
--- local DEPTHCHARGE_ROLL = <-115>
--- local DEPTHCHARGE_LIFT = 16
--- local DEPTHCHARGE_LOAD_Y = 3.6
--- local DEPTHCHARGE_LOAD_Z = 15.8
--- local DEPTHCHARGE_LOAD_ROLL = -460
+local DEPTHCHARGE_Y = 0.9
+local DEPTHCHARGE_Z = 3.95
+local DEPTHCHARGE_ROLL = -115
+local DEPTHCHARGE_LIFT = 16
+local DEPTHCHARGE_LOAD_Y = 3.6
+local DEPTHCHARGE_LOAD_Z = 15.8
+local DEPTHCHARGE_LOAD_ROLL = -460
 
 --rockz
 include "rockPiece.lua"
@@ -87,12 +87,6 @@ local function Wake()
 end
 
 function script.Create()
-	Hide( radardish)
-	Hide( depthcharge1)
-	Hide( depthcharge2)
-	Hide( depthcharge3)
-	Hide( depthcharge4)
-	Hide( depthcharge5)
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	Spin( sonar , y_axis, math.rad(60) )
 	Spin( radarpole , y_axis, math.rad(-90) )
@@ -134,89 +128,15 @@ function script.StopMoving()
 	Spin( propeller , z_axis, math.rad(0.01) ) -- should stop
 end
 
--- function script.AimWeapon2(heading, pitch)
-	-- return (1)
--- end
-
--- FireWeapon2()
-	-- return (0)
--- end
-
--- function script.Shot2()
-	-- Move( depthcharge1 , y_axis, DEPTHCHARGE_Y  )
-	-- Move( depthcharge2 , y_axis, DEPTHCHARGE_Y  )
-	-- Move( depthcharge3 , y_axis, DEPTHCHARGE_Y  )
-	-- Move( depthcharge4 , y_axis, DEPTHCHARGE_Y  )
-
-	-- Move( depthcharge1 , z_axis, DEPTHCHARGE_Z  )
-	-- Move( depthcharge2 , z_axis, DEPTHCHARGE_Z  )
-	-- Move( depthcharge3 , z_axis, DEPTHCHARGE_Z  )
-	-- Move( depthcharge4 , z_axis, DEPTHCHARGE_Z  )
-
-	-- Move( depthcharge5 , y_axis, -12  )
-	-- Move( depthcharge5 , z_axis, 4.5  )
-
-	-- Spin( depthcharge1 , x_axis, DEPTHCHARGE_ROLL
- -- )
-	-- Spin( depthcharge2 , x_axis, DEPTHCHARGE_ROLL
- -- )
-	-- Spin( depthcharge3 , x_axis, DEPTHCHARGE_ROLL
- -- )
-	-- Spin( depthcharge4 , x_axis, DEPTHCHARGE_ROLL
- -- )
-
-	-- Move( depthcharge1 , y_axis, 0 , DEPTHCHARGE_Y )
-	-- Move( depthcharge2 , y_axis, 0 , DEPTHCHARGE_Y )
-	-- Move( depthcharge3 , y_axis, 0 , DEPTHCHARGE_Y )
-	-- Move( depthcharge4 , y_axis, 0 , DEPTHCHARGE_Y )
-
-	-- Move( depthcharge1 , z_axis, 0 , DEPTHCHARGE_Z )
-	-- Move( depthcharge2 , z_axis, 0 , DEPTHCHARGE_Z )
-	-- Move( depthcharge3 , z_axis, 0 , DEPTHCHARGE_Z )
-	-- Move( depthcharge4 , z_axis, 0 , DEPTHCHARGE_Z )
-
-	-- Move( depthcharge5 , y_axis, DEPTHCHARGE_Y , DEPTHCHARGE_LIFT )
-	-- WaitForMove(depthcharge5, y_axis)
-	-- Move( depthcharge5 , z_axis, DEPTHCHARGE_Z , DEPTHCHARGE_LIFT )
-	-- WaitForMove(depthcharge5, z_axis)
-	-- Move( depthcharge5 , y_axis, 0 , DEPTHCHARGE_LOAD_Y )
-	-- Move( depthcharge5 , z_axis, 0 , DEPTHCHARGE_LOAD_Z )
-	-- Spin( depthcharge5 , x_axis, DEPTHCHARGE_LOAD_ROLL
- -- )
-
-	-- WaitForMove(depthcharge1, z_axis)
-	-- WaitForMove(depthcharge2, z_axis)
-	-- WaitForMove(depthcharge3, z_axis)
-	-- WaitForMove(depthcharge4, z_axis)
-	-- WaitForMove(depthcharge5, z_axis)
-
-	-- stop-spin depthcharge1 around x-axis
-	-- stop-spin depthcharge2 around x-axis
-	-- stop-spin depthcharge3 around x-axis
-	-- stop-spin depthcharge4 around x-axis
-	-- stop-spin depthcharge5 around x-axis
--- end
-
--- function script.AimFromWeapon2(piecenum)
-
-	-- piecenum = depthchargefire
--- end
-
--- function script.QueryWeapon2(piecenum)
-
-	-- piecenum = depthchargefire
--- end
-
 function script.AimWeapon(num, heading, pitch)
 	if dead then return false end
-
-	local states = Spring.GetUnitStates(unitID)
+	if num == 2 then return true end
 
 	Signal( SIG_AIM)
 	SetSignalMask( SIG_AIM)
-	Turn( turret , y_axis, heading, math.rad(50.000000) )
-	Turn( sleeve1 , x_axis, -pitch, math.rad(40.000000) )
-	Turn( sleeve2 , x_axis, -pitch, math.rad(40.000000) )
+	Turn( turret , y_axis, heading, math.rad(50) )
+	Turn( sleeve1 , x_axis, -pitch, math.rad(40) )
+	Turn( sleeve2 , x_axis, -pitch, math.rad(40) )
 	WaitForTurn(turret, y_axis)
 	WaitForTurn(sleeve1, x_axis)
 	WaitForTurn(sleeve2, x_axis)
@@ -226,29 +146,87 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.FireWeapon(num)
-	StartThread(GG.ScriptRock.Rock, dynamicRockData[z_axis], gun_1_yaw, ROCK_FORCE)
+	if num == 1 then
+		StartThread(GG.ScriptRock.Rock, dynamicRockData[z_axis], gun_1_yaw, ROCK_FORCE)
+	end
 end
 
 function script.Shot()
-	gun_1 = 1 - gun_1
-	if  gun_1 == 0 then
-		Show( fire1)
-		Hide( fire1)
-		Move( barrel1 , z_axis, -8  )
-		Move( barrel1 , z_axis, 0 , 8.000000 )
-	else
-		Show( fire2)
-		Hide( fire2)
-		Move( barrel2 , z_axis, -8  )
-		Move( barrel2 , z_axis, 0 , 8.000000 )
+	if num == 1 then
+		gun_1 = 1 - gun_1
+		if  gun_1 == 0 then
+			Show( fire1)
+			Hide( fire1)
+			Move( barrel1 , z_axis, -8  )
+			Move( barrel1 , z_axis, 0 , 8.000000 )
+		else
+			Show( fire2)
+			Hide( fire2)
+			Move( barrel2 , z_axis, -8  )
+			Move( barrel2 , z_axis, 0 , 8.000000 )
+		end
+	elseif num == 2 then
+		Move( depthcharge2 , y_axis, DEPTHCHARGE_Y  )
+		Move( depthcharge3 , y_axis, DEPTHCHARGE_Y  )
+		Move( depthcharge1 , y_axis, DEPTHCHARGE_Y  )
+		Move( depthcharge1 , z_axis, DEPTHCHARGE_Z  )
+		Move( depthcharge4 , y_axis, DEPTHCHARGE_Y  )
+	
+		Move( depthcharge4 , z_axis, DEPTHCHARGE_Z  )
+		Move( depthcharge2 , z_axis, DEPTHCHARGE_Z  )
+	
+		Move( depthcharge3 , z_axis, DEPTHCHARGE_Z  )
+	
+		Move( depthcharge5 , z_axis, 4.5  )
+		Move( depthcharge5 , y_axis, -12  )
+		Spin( depthcharge1 , x_axis, DEPTHCHARGE_ROLL)
+		Spin( depthcharge3 , x_axis, DEPTHCHARGE_ROLL)
+		Spin( depthcharge4 , x_axis, DEPTHCHARGE_ROLL)
+		Spin( depthcharge2 , x_axis, DEPTHCHARGE_ROLL)
+	
+		Move( depthcharge2 , y_axis, 0 , DEPTHCHARGE_Y )
+		Move( depthcharge3 , y_axis, 0 , DEPTHCHARGE_Y )
+		Move( depthcharge1 , y_axis, 0 , DEPTHCHARGE_Y )
+		Move( depthcharge4 , y_axis, 0 , DEPTHCHARGE_Y )
+		Move( depthcharge1 , z_axis, 0 , DEPTHCHARGE_Z )
+		Move( depthcharge2 , z_axis, 0 , DEPTHCHARGE_Z )
+	
+		Move( depthcharge3 , z_axis, 0 , DEPTHCHARGE_Z )
+	
+		Move( depthcharge5 , y_axis, DEPTHCHARGE_Y , DEPTHCHARGE_LIFT )
+		Move( depthcharge4 , z_axis, 0 , DEPTHCHARGE_Z )
+		WaitForMove(depthcharge5, y_axis)
+		WaitForMove(depthcharge5, z_axis)
+		Move( depthcharge5 , y_axis, 0 , DEPTHCHARGE_LOAD_Y )
+		Move( depthcharge5 , z_axis, DEPTHCHARGE_Z , DEPTHCHARGE_LIFT )
+		Move( depthcharge5 , z_axis, 0 , DEPTHCHARGE_LOAD_Z )
+	
+		WaitForMove(depthcharge1, z_axis)
+		Spin( depthcharge5 , x_axis, DEPTHCHARGE_LOAD_ROLL)
+		WaitForMove(depthcharge2, z_axis)
+		WaitForMove(depthcharge4, z_axis)
+		WaitForMove(depthcharge5, z_axis)
+		WaitForMove(depthcharge3, z_axis)
+	
+		StopSpin(depthcharge1, x_axis)
+		StopSpin(depthcharge2, x_axis)
+		StopSpin(depthcharge3, x_axis)
+		StopSpin(depthcharge4, x_axis)
+		StopSpin(depthcharge5, x_axis)
 	end
 end
 
 function script.AimFromWeapon(num)
+	if num == 2 then
+		return depthchargefire
+	end
 	return turret
 end
 
 function script.QueryWeapon(num)
+	if num == 2 then
+		return depthchargefire
+	end
 	if gun_1 == 1 then
 		return fire2
 	else
@@ -257,8 +235,14 @@ function script.QueryWeapon(num)
 end
 
 function script.BlockShot(num, targetID)
-	if GG.OverkillPrevention_CheckBlock(unitID, targetID, 600.1, 95, false, false, true) then
-		return true
+	if num == 1 then
+		if GG.OverkillPrevention_CheckBlock(unitID, targetID, 500.1, 95, false, false, true) then
+			return true
+		end
+	elseif num == 2 then
+		if GG.OverkillPrevention_CheckBlock(unitID, targetID, 300.1, 95, false, false, true) then
+			return true
+		end
 	end
 	return false
 end
