@@ -24,7 +24,7 @@ return {
 		explodeAs           = "NOWEAPON",
 		footprintX          = 4,
 		footprintZ          = 4,
-		health              = 24430,
+		health              = 27430,
 		iconType            = "chickena",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
@@ -79,11 +79,11 @@ return {
 				craterMult              = 0,
 
 				customParams = {
-					armorpiercing = 0.15,
+					armorpiercing = 1,
 				},
 
 				damage                  = {
-					default = 4700.1,
+					default = 2700.1,
 				},
 
 				explosionGenerator      = "custom:NONE",
