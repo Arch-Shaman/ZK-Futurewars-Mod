@@ -148,7 +148,7 @@ return {
 				weaponType              = "BeamLaser",
 			},
 			RELAYCUTTER    = {
-				name                    = "Cutter",
+				name                    = "Groovecutter",
 				alwaysVisible           = 18,
 				areaOfEffect            = 140,
 				avoidFeature            = false,
@@ -166,7 +166,7 @@ return {
 					armorpiercing = 1,
 				},
 				damage                  = {
-					default = 420,
+					default = 700,
 				},
 				explosionGenerator      = "custom:FLASHLAZER",
 				impulseBoost            = 0,

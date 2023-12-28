@@ -211,6 +211,37 @@ local section = 'unit_script.lua'
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+local function CheckForDesiredThread()
+	if Spring.GetGameFrame() < 330*30 then
+		return
+	end
+	for unitID, data in pairs(units) do
+		if Spring.GetUnitDefID(unitID) == UnitDefNames["amphsupport"].id then
+			for thread, threadData in pairs(data.threads) do
+				if threadData.signal_mask == 128 then
+					--Spring.Utilities.UnitEcho(unitID, 'f')
+				end
+			end
+		end
+	end
+	for frame, zzz in pairs(sleepers) do
+		for i = 1, #zzz do
+			local threadData = zzz[i]
+			local unitID = threadData.unitID
+			if Spring.GetUnitDefID(unitID) == UnitDefNames["amphsupport"].id then
+				if threadData.signal_mask == 128 then
+					--Spring.Utilities.UnitEcho(unitID, 'f')
+					--Spring.Echo("frame", frame, "curFrame", Spring.GetGameFrame())
+				end
+			end
+		end
+	end
+end
+
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+
 -- Helper for Destroy and Signal.
 -- NOTE:
 --   Must not change the relative order of all other elements!
@@ -257,13 +288,14 @@ local function WakeUp(thread, ...)
 	thread.container = nil
 	local co = thread.thread
 	if debugMode and not co then
-		Spring.Echo("Error in WakeUp", thread.unitID)
+		Spring.Echo("Error in WakeUp (nil coroutine)", thread.unitID)
 		Spring.Utilities.UnitEcho(thread.unitID, UnitDefs[Spring.GetUnitDefID(thread.unitID)].name)
 	end
 	local good, err = co_resume(co, ...)
 	if (not good) then
 		Spring.Log(section, LOG.ERROR, err)
-		Spring.Log(section, LOG.ERROR, debug.traceback(co))
+		Spring.Echo("Error in WakeUp (co_resume failure)", thread.unitID)
+		Spring.Utilities.UnitEcho(thread.unitID, UnitDefs[Spring.GetUnitDefID(thread.unitID)].name .. " script error")
 		RunOnError(thread)
 	end
 end
@@ -345,7 +377,7 @@ function Spring.UnitScript.WaitForMove(piece, axis)
 end
 
 -- overwrites engine's WaitForTurn
-local tau = 2 * math.pi
+local tau = math.tau
 function Spring.UnitScript.WaitForTurn(piece, axis)
 	local activeUnit = GetActiveUnit()
 	local speed = activeUnit.pieceRotSpeeds[piece][axis]
@@ -541,6 +573,14 @@ local function Basename(filename)
 	return filename:match("[^\\/:]*$") or filename
 end
 
+local function preprocess_math_rad(expression)
+	local number = tonumber(expression)
+	if number then
+		return tostring(math.rad(number))
+	else
+		return "math.rad(" .. expression .. ")"
+	end
+end
 
 local function LoadChunk(filename)
 	local text = VFS.LoadFile(filename, VFSMODE)
@@ -548,6 +588,16 @@ local function LoadChunk(filename)
 		Spring.Log(section, LOG.ERROR, "Failed to load: " .. filename)
 		return nil
 	end
+
+	-- pre-process constants (for example "math.rad(180)" -> "3.1415")
+	-- to avoid tons of needless global dereferences, function calls etc
+	text = text:gsub("math%.pi", math.pi)
+	text = text:gsub("math%.tau", math.tau)
+	text = text:gsub("([xyz])_axis", { x = 1, y = 2, z = 3 })
+	text = text:gsub("SFX%.([_%u]+)", SFX)
+	text = text:gsub("COB%.([_%u]+)", COB)
+	text = text:gsub("math%.rad%(([^%)]*)%)", preprocess_math_rad)
+
 	local chunk, err = loadstring(scriptHeader .. text, filename)
 	if (chunk == nil) then
 		Spring.Log(section, LOG.ERROR, "Failed to load: " .. Basename(filename) .. "  (" .. err .. ")")
@@ -575,6 +625,9 @@ end
 function gadget:Initialize()
 	Spring.Log(section, LOG.INFO, string.format("Loading gadget: %-18s  <%s>", ghInfo.name, ghInfo.basename))
 	gadgetHandler:AddChatAction("scriptdebug", ToggleScriptDebug, "Toggles script debug output.")
+
+	-- Useful script libraries
+	LoadChunk("scripts/aimPosTerraform.lua")()
 
 	-- This initialization code has following properties:
 	--  * all used scripts are loaded => early syntax error detection
@@ -631,15 +684,15 @@ local function Wrap_AimWeapon(unitID, callins)
 	local AimWeapon = callins["AimWeapon"]
 	if (not AimWeapon) then return end
 
-		-- SetUnitShieldState wants true or false, while
-		-- SetUnitWeaponState wants 1.0 or 0.0, niiice =)
-		local function AimWeaponThread(weaponNum, heading, pitch)
-			local bAimReady = AimWeapon(weaponNum, heading, pitch) or false
-			local fAimReady = (bAimReady and 1.0) or 0.0
-			return sp_SetUnitWeaponState(unitID, weaponNum, "aimReady", fAimReady)
-		end
+	-- SetUnitShieldState wants true or false, while
+	-- SetUnitWeaponState wants 1.0 or 0.0, niiice =)
+	local function AimWeaponThread(weaponNum, heading, pitch)
+		local bAimReady = AimWeapon(weaponNum, heading, pitch) or false
+		local fAimReady = (bAimReady and 1.0) or 0.0
+		return sp_SetUnitWeaponState(unitID, weaponNum, "aimReady", fAimReady)
+	end
 
-		callins["AimWeapon"] = function(weaponNum, heading, pitch)
+	callins["AimWeapon"] = function(weaponNum, heading, pitch)
 		return StartThread(AimWeaponThread, weaponNum, heading, pitch)
 	end
 end
@@ -647,7 +700,7 @@ end
 local function Wrap_EndBurst(unitID, unitDefID, callins)
 	local EndBurst = callins.EndBurst
 
-		callins.EndBurst = function(weaponNum)
+	callins.EndBurst = function(weaponNum)
 		scriptCallins:ScriptEndBurst(unitID, unitDefID, weaponNum)
 		if EndBurst then
 			return StartThread(EndBurst, weaponNum)
@@ -670,14 +723,14 @@ local function Wrap_AimShield(unitID, callins)
 	local AimShield = callins["AimShield"]
 	if (not AimShield) then return end
 
-		-- SetUnitShieldState wants true or false, while
-		-- SetUnitWeaponState wants 1 or 0, niiice =)
-		local function AimShieldThread(weaponNum)
-			local enabled = AimShield(weaponNum) and true or false
-			return sp_SetUnitShieldState(unitID, weaponNum, enabled)
-		end
+	-- SetUnitShieldState wants true or false, while
+	-- SetUnitWeaponState wants 1 or 0, niiice =)
+	local function AimShieldThread(weaponNum)
+		local enabled = AimShield(weaponNum) and true or false
+		return sp_SetUnitShieldState(unitID, weaponNum, enabled)
+	end
 
-		callins["AimShield"] = function(weaponNum)
+	callins["AimShield"] = function(weaponNum)
 		return StartThread(AimShieldThread, weaponNum)
 	end
 end
@@ -687,14 +740,14 @@ local function Wrap_Killed(unitID, callins)
 	local Killed = callins["Killed"]
 	if (not Killed) then return end
 
-		local function KilledThread(recentDamage, maxHealth)
-			-- It is *very* important the sp_SetDeathScriptFinished is executed, even on error.
-			SetOnError(sp_SetDeathScriptFinished)
-			local wreckLevel = Killed(recentDamage, maxHealth)
-			sp_SetDeathScriptFinished(wreckLevel)
-		end
+	local function KilledThread(recentDamage, maxHealth)
+		-- It is *very* important the sp_SetDeathScriptFinished is executed, even on error.
+		SetOnError(sp_SetDeathScriptFinished)
+		local wreckLevel = Killed(recentDamage, maxHealth)
+		sp_SetDeathScriptFinished(wreckLevel)
+	end
 
-		callins["Killed"] = function(recentDamage, maxHealth)
+	callins["Killed"] = function(recentDamage, maxHealth)
 		StartThread(KilledThread, recentDamage, maxHealth)
 		return -- no return value signals Spring to wait for SetDeathScriptFinished call.
 	end
@@ -705,7 +758,7 @@ local function Wrap(callins, name)
 	local fun = callins[name]
 	if (not fun) then return end
 
-		callins[name] = function(...)
+	callins[name] = function(...)
 		return StartThread(fun, ...)
 	end
 end
@@ -940,6 +993,7 @@ function gadget:GameFrame()
 			PopActiveUnitID()
 		end
 	end
+	--CheckForDesiredThread()
 end
 
 --------------------------------------------------------------------------------
