@@ -130,9 +130,9 @@ return {
 					gatherradius = "208",
 					smoothradius = "160",
 					detachmentradius = "240",
-					smoothmult   = "1",
+					smoothmult   = "0.5",
 					smoothexponent = "0.75",
-					movestructures = "1",
+					movestructures = "0.25",
 				},
 
 				damage                  = {

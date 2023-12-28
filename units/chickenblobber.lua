@@ -82,6 +82,12 @@ return {
 				customParams            = {
 					light_radius = 0,
 					armorpiercing = 0.25,
+					gatherradius = "260",
+					smoothradius = "200",
+					detachmentradius = "200",
+					smoothmult   = "0.5",
+					smoothexponent = "0.75",
+					movestructures = "0.25",
 				},
 
 				damage                  = {
