@@ -10,7 +10,7 @@ local function genChix(name, step, chix)
 	local hpMult, dmgMult, rangeMult
 	if chix.chicken_structure then
 		hpMult = mult^1.1
-		dmgMult = mult^0.3
+		dmgMult = mult^0.2
 		rangeMult = (1 + step/5)^0.5
 	else
 		hpMult = mult^1.5

@@ -13,7 +13,7 @@ return {
 			chicken_roost = ">w<",
 		},
 		
-		energyMake        = 0,
+		energyMake        = 12,
 		explodeAs         = "NOWEAPON",
 		footprintX        = 3,
 		footprintZ        = 3,

@@ -20,7 +20,7 @@ return {
 		},
 		
 		--damageModifier                = 0.4,
-		energyMake                    = 10,
+		energyMake                    = 8,
 		explodeAs                     = "NOWEAPON",
 		floater                       = true,
 		footprintX                    = 3,
