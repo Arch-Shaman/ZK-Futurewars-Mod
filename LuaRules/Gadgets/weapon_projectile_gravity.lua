@@ -10,7 +10,7 @@ function gadget:GetInfo()
     date      = "17 Jan 2022",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
-    enabled   = true,
+    enabled   = false,
   }
 end
 
@@ -36,10 +36,10 @@ local dist3D = Spring.Utilities.Vector.Dist3D
 
 -- In elmos/frame
 local projectileDefs = {
-	[WeaponDefNames["dronecarrybomber_wancewot_bowb"].id] = {
-		anchor = 4.5,
-		pull = 0.62,
-	},
+	--[WeaponDefNames["dronecarrybomber_wancewot_bowb"].id] = {
+	--	anchor = 4.5,
+	--	pull = 0.62,
+	--},
 	--[WeaponDefNames["planefighter_bomb"].id] = {
 	--	anchor = 4.5,
 	--	pull = 0.62,
