@@ -110,13 +110,13 @@ local function Walk()
 
 		if not aiming then
 			Turn(head, y_axis, 0, 2.0)
-			Turn(lshoulder, x_axis, math.rad(-90)-math.rad(-45)*sway, truespeed*0.5)
-			Turn(lforearm, x_axis, math.rad(-90)+math.rad(-45)*sway, truespeed*0.5)
-			Turn(rshoulder, x_axis, math.rad(75)+math.rad(-75)*sway, truespeed*0.5)
-			Turn(rshoulder, z_axis, math.rad(0)+math.rad(0)*sway, truespeed*0.5)
-			Turn(rforearm, x_axis, math.rad(-60)-math.rad(0)*sway, truespeed*0.5)
-			Turn(rforearm, z_axis, math.rad(0)-math.rad(0)*sway, truespeed*0.5)
-			Turn(gun, y_axis, math.rad(0)-math.rad(0)*sway, truespeed*90)
+			Turn(lshoulder, x_axis, math.rad(-90) - math.rad(-45) * sway, truespeed*0.5)
+			Turn(lforearm, x_axis, math.rad(-90) + math.rad(-45) * sway, truespeed*0.5)
+			Turn(rshoulder, x_axis, math.rad(75) + math.rad(-75) * sway, truespeed*0.5)
+			Turn(rshoulder, z_axis, math.rad(0) + math.rad(0) * sway, truespeed*0.5)
+			Turn(rforearm, x_axis, math.rad(-60) - math.rad(0) * sway, truespeed*0.5)
+			Turn(rforearm, z_axis, math.rad(0) - math.rad(0) * sway, truespeed*0.5)
+			Turn(gun, y_axis, math.rad(0) - math.rad(0) * sway, truespeed*90)
 		end
 
 		Turn(thigh[side], x_axis, math.rad(-85), truespeed*1)
