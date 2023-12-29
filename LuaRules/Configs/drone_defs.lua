@@ -7,7 +7,6 @@ local carrierDefs = {}
 local carrierDefNames = {
 
 	shipcarrier = {
-		hasDroneAreaAttack = true,
 		spawnPieces = {"DroneAft", "DroneFore", "DroneLower", "DroneUpper", "DroneInner"},
 		{
 			drone = UnitDefNames.dronecarry.id,
@@ -18,7 +17,7 @@ local carrierDefNames = {
 			maxChaseRange = 700,
 			buildTime = 10,
 			maxBuild = 5,
-			offsets = {0, 0, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			launchVel = {0, 2, 0},
 		},
 		{
 			drone = UnitDefNames.dronecon.id,
@@ -29,7 +28,7 @@ local carrierDefNames = {
 			maxChaseRange = 700,
 			buildTime = 13,
 			maxBuild = 5,
-			offsets = {0, 0, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			launchVel = {0, 2, 0},
 		},
 		{
 			drone = UnitDefNames.dronecarrybomber.id,
@@ -41,7 +40,26 @@ local carrierDefNames = {
 			controllable = true,
 			buildTime = 30,
 			maxBuild = 5,
-			offsets = {0, 0, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			launchVel = {0, 2, 0},
+		},
+	},
+	shiplightcarrier = {
+		noDroneSetTarget = true,
+		spawnPieces = {"Drone1", "Drone2", "Drone3", "Drone4", "Drone5", "Drone6"},
+		{
+			drone = UnitDefNames.dronecarry.id,
+			reloadTime = 9,
+			maxDrones = 6,
+			spawnSize = 1,
+			range = 200000,
+			maxChaseRange = 200000,
+			buildTime = 10,
+			sitsOnPad = true,
+			untargetableOnPad = true,
+			canLaunch = true,
+			launchedLife = 21,
+			maxBuild = 1,
+			launchVel = {0, 4, 0},
 		},
 	},
 	--gunshipkrow = { {drone = UnitDefNames.dronelight.id, reloadTime = 15, maxDrones = 6, spawnSize = 2, range = 900, buildTime=3,
@@ -57,7 +75,7 @@ local carrierDefNames = {
 			maxChaseRange = 1200,
 			buildTime = 5, 
 			maxBuild = 2,
-			offsets = {0, 15, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 15, 0},
 		},
 		{
 			drone = UnitDefNames.dronecon.id,
@@ -68,7 +86,7 @@ local carrierDefNames = {
 			maxChaseRange = 800,
 			buildTime = 10,
 			maxBuild = 2,
-			offsets = {0, 15, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 15, 0},
 		},
 		{
 			drone = UnitDefNames.droneheavyslow.id,
@@ -79,7 +97,7 @@ local carrierDefNames = {
 			maxChaseRange = 1200,
 			buildTime = 8, 
 			maxBuild = 2,
-			offsets = {0, 15, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 15, 0},
 		},
 	},
 	nebula = {
@@ -185,7 +203,7 @@ local carrierDefNames = {
 			maxChaseRange = 1500,
 			buildTime = 2,
 			maxBuild = 1,
-			offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 3, 0},
 		},
 		{
 			drone = UnitDefNames.droneheavyslow.id,
@@ -196,7 +214,7 @@ local carrierDefNames = {
 			maxChaseRange = 1500,
 			buildTime = 5,
 			maxBuild = 1,
-			offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 3, 0},
 		},
 		{
 			drone = UnitDefNames.droneassault.id,
@@ -207,7 +225,7 @@ local carrierDefNames = {
 			maxChaseRange = 1500,
 			buildTime = 5,
 			maxBuild = 1,
-			offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 3, 0},
 		},
 	},
 	pw_grid = {
@@ -221,7 +239,7 @@ local carrierDefNames = {
 			maxChaseRange = 1200,
 			buildTime = 2,
 			maxBuild = 1,
-			offsets = {0, 5, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 5, 0},
 		},
 		{
 			drone = UnitDefNames.dronecon.id,
@@ -232,7 +250,7 @@ local carrierDefNames = {
 			maxChaseRange = 1200,
 			buildTime = 5,
 			maxBuild = 1,
-			offsets = {0, 5, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 5, 0},
 		},
 	},
 	pw_hq_attacker = {
@@ -246,7 +264,7 @@ local carrierDefNames = {
 			maxChaseRange = 1500,
 			buildTime = 1,
 			maxBuild = 1,
-			offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 3, 0},
 		},
 		{
 			drone = UnitDefNames.droneheavyslow.id,
@@ -257,7 +275,7 @@ local carrierDefNames = {
 			maxChaseRange = 1500,
 			buildTime = 3,
 			maxBuild = 1,
-			offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 3, 0},
 		},
 		{
 			drone = UnitDefNames.droneassault.id,
@@ -268,7 +286,7 @@ local carrierDefNames = {
 			maxChaseRange = 1500,
 			buildTime = 3,
 			maxBuild = 1,
-			offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 3, 0},
 		},
 		{
 			drone = UnitDefNames.dronecon.id,
@@ -279,7 +297,7 @@ local carrierDefNames = {
 			maxChaseRange = 750,
 			buildTime = 3,
 			maxBuild = 1,
-			offsets = {0, 5, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 5, 0},
 		},
 	},
 	pw_hq_defender = {
@@ -293,7 +311,7 @@ local carrierDefNames = {
 			maxChaseRange = 1500,
 			buildTime = 1,
 			maxBuild = 1,
-			offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 3, 0},
 		},
 		{
 			drone = UnitDefNames.droneheavyslow.id,
@@ -304,7 +322,7 @@ local carrierDefNames = {
 			maxChaseRange = 1500,
 			buildTime = 3,
 			maxBuild = 1,
-			offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 3, 0},
 		},
 		{
 			drone = UnitDefNames.droneassault.id,
@@ -315,7 +333,7 @@ local carrierDefNames = {
 			maxChaseRange = 1500,
 			buildTime = 3,
 			maxBuild = 1,
-			offsets = {0, 3, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 3, 0},
 		},
 		{
 			drone = UnitDefNames.dronecon.id,
@@ -326,7 +344,7 @@ local carrierDefNames = {
 			maxChaseRange = 700,
 			buildTime = 3,
 			maxBuild = 1,
-			offsets = {0, 5, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0},
+			offsets = {0, 5, 0},
 		},
 	},
 }
@@ -341,7 +359,7 @@ local presets = {
 		maxChaseRange = 850,
 		buildTime = 2,
 		maxBuild = 1,
-		offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+		offsets = {0, 35, 0}
 	},
 	module_battle_drone = {
 		drone = UnitDefNames.droneheavyslow.id,
@@ -352,7 +370,7 @@ local presets = {
 		maxChaseRange = 850,
 		buildTime = 4,
 		maxBuild = 1,
-		offsets = {0, 35, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+		offsets = {0, 35, 0}
 	},
 }
 
@@ -366,7 +384,7 @@ local unitRulesCarrierDefs = {
 		maxChaseRange = 800,
 		buildTime = 20,
 		maxBuild = 6,
-		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+		offsets = {0, 50, 0}
 	},
 	droneheavyslow = {
 		drone = UnitDefNames.droneheavyslow.id,
@@ -377,7 +395,7 @@ local unitRulesCarrierDefs = {
 		maxChaseRange = 800,
 		buildTime = 20,
 		maxBuild = 6,
-		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+		offsets = {0, 50, 0}
 	},
 	dronecon = {
 		drone = UnitDefNames.dronecon.id,
@@ -388,7 +406,7 @@ local unitRulesCarrierDefs = {
 		maxChaseRange = 800,
 		buildTime = 20,
 		maxBuild = 6,
-		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+		offsets = {0, 50, 0}
 	},
 	droneassault = {
 		drone = UnitDefNames.droneassault.id,
@@ -399,7 +417,7 @@ local unitRulesCarrierDefs = {
 		maxChaseRange = 800,
 		buildTime = 20,
 		maxBuild = 6,
-		offsets = {0, 50, 0, colvolMidX = 0, colvolMidY = 0, colvolMidZ = 0, aimX = 0, aimY = 0, aimZ = 0}
+		offsets = {0, 50, 0}
 	},
 }
 
@@ -422,6 +440,31 @@ for id, ud in pairs(UnitDefs) do
 end
 
 for name, data in pairs(carrierDefNames) do
+	-- Don't repeat yourself
+	for i=1, #data do
+		local droneSet = data[i]
+		droneSet.offsets = droneSet.offsets or {}
+		local offsets = droneSet.offsets
+		offsets[1] = offsets[1] or 0
+		offsets[2] = offsets[2] or 0
+		offsets[3] = offsets[3] or 0
+		offsets["colvolMidX"] = offsets["colvolMidX"] or 0
+		offsets["colvolMidY"] = offsets["colvolMidY"] or 0
+		offsets["colvolMidZ"] = offsets["colvolMidZ"] or 0
+		offsets["aimX"] = offsets["aimX"] or 0
+		offsets["aimY"] = offsets["aimY"] or 0
+		offsets["aimZ"] = offsets["aimZ"] or 0
+		droneSet.launchVel = droneSet.launchVel or {}
+		local launchVel = droneSet.launchVel
+		launchVel[1] = launchVel[1] or 0
+		launchVel[2] = launchVel[2] or 0
+		launchVel[3] = launchVel[3] or 0
+
+		if droneSet.launchedLife then
+			droneSet.launchedLife = droneSet.launchedLife * Game.gameSpeed
+		end
+	end
+	
 	if UnitDefNames[name] then
 		carrierDefs[UnitDefNames[name].id] = data
 	end
@@ -465,4 +508,15 @@ for name, carrierData in pairs(unitRulesCarrierDefs) do
 	carrierData = ProcessCarrierDef(carrierData)
 end
 
-return carrierDefs, thingsWhichAreDrones, unitRulesCarrierDefs
+local droneLaunchDefs = {}
+
+for i = 1, #WeaponDefs do
+	local wd = WeaponDefs[i]
+	if wd.customParams and wd.customParams.drone_launch then
+		droneLaunchDefs[i] = {
+			launch_rate = tonumber(wd.customParams.drone_launch_rate) or 0,
+		}
+	end
+end
+
+return carrierDefs, thingsWhichAreDrones, unitRulesCarrierDefs, droneLaunchDefs

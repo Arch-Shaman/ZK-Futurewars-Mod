@@ -815,6 +815,10 @@ local icontypes = {
 		bitmap='icons/droneassault.dds',
 		size=1.3,
 	},
+	dronecarrybomber = {
+		bitmap='icons/dronecarrybomber.png',
+		size=1.7,
+	},
 
 	--plane icons
 	scoutplane = {
@@ -1049,7 +1053,11 @@ local icontypes = {
 	},
 	shiparty = {
 		bitmap='icons/shiparty.dds',
-		size=3.0,
+		size=4.0,
+	},
+	shiplightcarrier = {
+		bitmap='icons/shiplightcarrier.png',
+		size=3,
 	},
 	shiparty_alt = {
 		bitmap='icons/shiparty_alt.png',
@@ -1372,12 +1380,12 @@ local icontypes = {
 	--chicken mini queen
 	chickenminiq = {
 		bitmap='icons/chickenq.dds',
-		size=3.5,
+		size=7,
 	},
 	--chicken queen
 	chickenq = {
 		bitmap='icons/chickenq.dds',
-		size=5.0,
+		size=15.0,
 	},
 	
 	--planetwars

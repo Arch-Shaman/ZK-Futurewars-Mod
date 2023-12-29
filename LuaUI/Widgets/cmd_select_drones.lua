@@ -30,26 +30,23 @@ local CMD_OPT_SHIFT = CMD.OPT_SHIFT
 local CMD_OPT_CTRL = CMD.OPT_CTRL
 
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spGetTeamUnitsByDefs = Spring.GetTeamUnitsByDefs
+local spGetMyTeamID = Spring.GetMyTeamID
 
 local carriers = {}
-local carrierDefIDs = {
-	[UnitDefNames["shipcarrier"].id] = true,
+local carrierDefNames = {
+	shipcarrier = {"dronecarrybomber"},
+	shiplightcarrier = {"dronecarry"},
 }
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
-local function GetDrones(unitID)
-	local drones = {}
-	local count = 0
-
-	local count = spGetUnitRulesParam(unitID, "dronesControlled")
-	
-	for i=1,count do
-		drones[i] = spGetUnitRulesParam(unitID, "droneList_"..i)
+local carrierDefs = {}
+for name, def in pairs(carrierDefNames) do
+	local newDef = {}
+	for _, drone in pairs(def) do
+		local id = UnitDefNames[drone].id
+		newDef[#newDef+1] = id
 	end
-	
-	return drones
+	local id = UnitDefNames[name].id
+	carrierDefs[id] = newDef
 end
 
 --------------------------------------------------------------------------------
@@ -61,16 +58,30 @@ function widget:CommandNotify(cmdID, params, options)
 	end
 	
 	local selectedUnits = Spring.GetSelectedUnits()
+	local wantedDefIDs = {}
+	local wantedCarriers = {}
+	local toSelect = {}
 	
 	local toSelect = toSelect or {}
 	for _, unitID in pairs(selectedUnits) do
-		if carrierDefIDs[Spring.GetUnitDefID(unitID)] then
-			local drones = GetDrones(unitID)
-			for i=1,#drones do
-				toSelect[#toSelect + 1] = drones[i]
+		local defID = Spring.GetUnitDefID(unitID)
+		if carrierDefs[defID] then
+			wantedCarriers[unitID] = true
+			for i=1,#carrierDefs[defID] do
+				wantedDefIDs[arrierDefs[defID][i]] = true
 			end
 		end
 	end
+
+	for defID in pairs(wantedDefIDs) do
+		local units = spGetTeamUnitsByDefs(spGetMyTeamID(), defID)
+		for i=1, #units do
+			if wantedCarriers[spGetUnitRulesParam(unitID, "parent_unit_id")] then
+				toSelect[#toSelect+1] = unitID
+			end
+		end
+	end
+		
 	
 	if #toSelect > 0 then
 		local alt, ctrl, meta, shift = Spring.GetModKeyState()
@@ -80,13 +91,11 @@ function widget:CommandNotify(cmdID, params, options)
 	return true
 end
 
--- add missile selection command
 function widget:CommandsChanged()
 	local selectedUnits = Spring.GetSelectedUnits()
 	local selectedCarrier = false
 	for _, unitID in pairs(selectedUnits) do
-		Spring.Echo("[CSD]: Checking...")
-		if carrierDefIDs[Spring.GetUnitDefID(unitID)] then
+		if carrierDefs[Spring.GetUnitDefID(unitID)] then
 			selectedCarrier = true
 			break
 		end
@@ -94,25 +103,6 @@ function widget:CommandsChanged()
 	if selectedCarrier then
 		local customCommands = widgetHandler.customCommands
 		table.insert(customCommands, selectDronesCmdDesc)
-		Spring.Echo("[CSD]: Adding Command!")
-	end
-end
-
-function widget:UnitCreated(unitID, unitDefID, unitTeam)
-	if unitTeam == Spring.GetMyTeamID() and (carrierDefIDs[unitDefID]) then
-		carriers[unitID] = true	--0
-	end
-end
-
-function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
-	carriers[unitID] = nil
-end
-
-function widget:Initialize()
-	for i,unitID in ipairs(Spring.GetAllUnits()) do
-		local unitDefID = Spring.GetUnitDefID(unitID)
-		local unitTeam = Spring.GetUnitTeam(unitID)
-		widget:UnitCreated(unitID, unitDefID, unitTeam)
 	end
 end
 

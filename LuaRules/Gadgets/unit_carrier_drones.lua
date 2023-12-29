@@ -50,6 +50,8 @@ local spIsUnitInLos       = Spring.IsUnitInLos
 local spIsUnitInRadar     = Spring.IsUnitInRadar
 local spGetUnitAllyTeam   = Spring.GetUnitAllyTeam
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spValidUnitID       = Spring.ValidUnitID
+local spDestroyUnit       = Spring.DestroyUnit
 local spEcho              = Spring.Echo
 local random              = math.random
 local CMD_ATTACK          = CMD.ATTACK
@@ -59,7 +61,7 @@ local ALLIED_ACCESS = {allied = true}
 local INLOS_ACCESS = {inlos = true}
 
 -- thingsWhichAreDrones is an optimisation for AllowCommand, no longer used but it'll stay here for now
-local carrierDefs, thingsWhichAreDrones, unitRulesCarrierDefs = include "LuaRules/Configs/drone_defs.lua"
+local carrierDefs, thingsWhichAreDrones, unitRulesCarrierDefs, droneLaunchDefs = include "LuaRules/Configs/drone_defs.lua"
 
 local DEFAULT_UPDATE_ORDER_FREQUENCY = 40 -- gameframes
 local IDLE_DISTANCE = 120
@@ -67,12 +69,18 @@ local ACTIVE_DISTANCE = 180
 local DRONE_HEIGHT = 120
 local RECALL_TIMEOUT = 300
 
+local TARGET_GROUND     = string.byte('g')
+local TARGET_UNIT       = string.byte('u')
+local TARGET_FEATURE    = string.byte('f')
+local TARGET_PROJECTILE = string.byte('p')
+
 local generateDrones = {}
 local carrierList = {}
 local droneList = {}
 local drones_to_move = {}
 local killList = {}
 local recall_frame_start = {}
+local droneLaunchesQueued = {}
 
 local GiveClampedOrderToUnit = Spring.Utilities.GiveClampedOrderToUnit
 
@@ -115,6 +123,10 @@ local droneSetTargetCmdDesc = {
 }
 local toggleParams = {params = {1, 'Disabled','Enabled'}}
 
+for weaponID, _ in pairs(droneLaunchDefs) do
+	Script.SetWatchWeapon(weaponID, true)
+end
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 local function RandomPointInUnitCircle()
@@ -128,27 +140,9 @@ local function ChangeDroneRulesParam(unitID, diff)
 	local count = spGetUnitRulesParam(unitID, "dronesControlled") or 0
 	count = count + diff
 	spSetUnitRulesParam(unitID, "dronesControlled", count, INLOS_ACCESS)
-	return count
-end
-
-local function AddDroneRulesParam(unitID, droneID)
-	local count = ChangeDroneRulesParam(unitID, 1)
-	spSetUnitRulesParam(unitID, "droneList_"..count, droneID, ALLIED_ACCESS)
-	carrierList[unitID].droneListRulesParam[droneID] = count
-end
-local function RemoveDroneRulesParam(unitID, droneID)
-	local carrierData = carrierList[unitID]
-	local total = ChangeDroneRulesParam(unitID, -1) + 1
-	local droneIndex = carrierData.droneListRulesParam[droneID]
-	local toMove = spGetUnitRulesParam(unitID, "droneList_"..total)
-	spSetUnitRulesParam(unitID, "droneList_"..total, nil, ALLIED_ACCESS)
-	carrierData.droneListRulesParam[toMove] = droneIndex
-	carrierData.droneListRulesParam[toMove] = nil
-	spSetUnitRulesParam(unitID, "droneList_"..droneIndex, droneID, ALLIED_ACCESS)
 end
 
 local function UpdatePrioTargetRulesParam(unitID)
-	spEcho("[UCD]: Updating prio target rules param for "..unitID)
 	local priorityTarget = carrierList[unitID].priorityTarget
 	if not priorityTarget then
 		spSetUnitRulesParam(unitID, "drone_target_type", 0, ALLIED_ACCESS)
@@ -270,7 +264,7 @@ local function NewDrone(unitID, droneName, setNum, droneBuiltExternally, control
 		spSetUnitRulesParam(droneID, "drone_set_index", setNum)
 		local droneSet = carrierEntry.droneSets[setNum]
 		droneSet.droneCount = droneSet.droneCount + 1
-		AddDroneRulesParam(unitID, droneID)
+		ChangeDroneRulesParam(unitID, 1)
 		droneSet.drones[droneID] = true
 		
 		--SetUnitPosition(droneID, xS, zS, true)
@@ -310,12 +304,16 @@ function AddUnitToEmptyPad(carrierID, droneType)
 			local controllable = carrierData.droneSets[droneType].config.controllable or false
 			unitIDAdded = NewDrone(carrierID, droneDefID, droneType, true, controllable)
 			if unitIDAdded then
-				local offsets = carrierData.droneSets[droneType].config.offsets
-				SitOnPad(unitIDAdded, carrierID, pieceNum, offsets)
+				local config = carrierData.droneSets[droneType].config
+				local offsets = config.offsets
+				SitOnPad(unitIDAdded, carrierID, pieceNum, config)
 				carrierData.occupiedPieces[pieceNum] = true
-				if carrierData.droneSets[droneType].config.colvolTweaked then --can be used to move collision volume away from carrier to avoid collision
+				if config.colvolTweaked then --can be used to move collision volume away from carrier to avoid collision
 					Spring.SetUnitMidAndAimPos(unitIDAdded, offsets.colvolMidX, offsets.colvolMidY, offsets.colvolMidZ, offsets.aimX, offsets.aimY, offsets.aimZ, true)
 					--offset whole colvol & aim point (red dot) above the carrier (use /debugcolvol to check)
+				end
+				if config.untargetableOnPad then
+					spSetUnitRulesParam(unitIDAdded, 'untargetable', 1)
 				end
 				return true
 			end
@@ -440,9 +438,10 @@ local function GetBuildRate(unitID)
 	return spGetUnitRulesParam(unitID, "totalReloadSpeedChange") or 1
 end
 
-function SitOnPad(unitID, carrierID, padPieceID, offsets)
+function SitOnPad(unitID, carrierID, padPieceID, config)
 	-- From unit_refuel_pad_handler.lua (author: GoogleFrog)
 	-- South is 0 radians and increases counter-clockwise
+	local offsets = config.offsets
 	
 	spSetUnitHealth(unitID, {build = 0})
 	
@@ -514,18 +513,9 @@ function SitOnPad(unitID, carrierID, padPieceID, offsets)
 				e = buildStepCost,
 			}
 		end
-		
-		while true do
-			if (not droneList[unitID]) then
-				--droneList[unitID] became NIL when drone or carrier is destroyed (in UnitDestroyed()). Is NIL at beginning of frame and this piece of code run at end of frame
-				if carrierList[carrierID] then
-					droneInfo.buildCount = droneInfo.buildCount - 1
-					carrierList[carrierID].occupiedPieces[padPieceID] = false
-					AddNextDroneFromQueue(carrierID) --add next drone in this vacant position
-					GG.StopMiscPriorityResourcing(carrierID, miscPriorityKey)
-				end
-				return --nothing else to do
-			elseif (not carrierList[carrierID]) then --carrierList[carrierID] is NIL because it was MORPHED.
+
+		local function Sit()
+			if (droneList[unitID] and (not carrierList[carrierID])) then --carrierList[carrierID] is NIL because it was MORPHED.
 				carrierID = droneList[unitID].carrier
 				padPieceID = (carrierList[carrierID].spawnPieces and carrierList[carrierID].spawnPieces[1]) or 0
 				carrierList[carrierID].occupiedPieces[padPieceID] = true --block pad
@@ -544,6 +534,22 @@ function SitOnPad(unitID, carrierID, padPieceID, offsets)
 			mcSetVelocity(unitID, vx, vy, vz)
 			mcSetPosition(unitID, px + vx + offx, py + vy + offy, pz + vz + offz)
 			mcSetRotation(unitID, pitch, -yaw, roll) --Spring conveniently rotate Y-axis first, X-axis 2nd, and Z-axis 3rd which allow Yaw, Pitch & Roll control.
+		end
+		
+		while true do
+			if (not droneList[unitID]) then
+				--droneList[unitID] became NIL when drone or carrier is destroyed (in UnitDestroyed()). Is NIL at beginning of frame and this piece of code run at end of frame
+				if carrierList[carrierID] then
+					droneInfo.buildCount = droneInfo.buildCount - 1
+					carrierList[carrierID].occupiedPieces[padPieceID] = false
+					AddNextDroneFromQueue(carrierID) --add next drone in this vacant position
+					GG.StopMiscPriorityResourcing(carrierID, miscPriorityKey)
+				end
+				return true
+			end
+			
+			Sit()
+			if DroneGone then return end
 			
 			local buildRate = GetBuildRate(carrierID)
 			local buildratemod = spGetUnitRulesParam(carrierID, "comm_drone_buildrate") or 1
@@ -572,11 +578,41 @@ function SitOnPad(unitID, carrierID, padPieceID, offsets)
 		GG.StopMiscPriorityResourcing(carrierID, miscPriorityKey)
 		
 		droneInfo.buildCount = droneInfo.buildCount - 1
+
+		if config.sitsOnPad then
+			while true do
+				if (not droneList[unitID]) then
+					--droneList[unitID] became NIL when drone or carrier is destroyed (in UnitDestroyed()). Is NIL at beginning of frame and t his piece of code run at end of frame
+					if spValidUnitID(unitID) then -- drone was launched
+						-- spEcho("Drone has been launched!!!")
+						callScript(carrierID, "Carrier_droneLaunched", padPieceID)
+						break
+					elseif carrierList[carrierID] then
+						-- spEcho("Drone died on pad :(")
+						carrierList[carrierID].occupiedPieces[padPieceID] = false
+						AddNextDroneFromQueue(carrierID) --add next drone in this vacant position
+						GG.StopMiscPriorityResourcing(carrierID, miscPriorityKey)
+					end
+					return true
+				end
+				
+				Sit()
+			
+				Sleep()
+			end
+		end
+		-- spEcho("Drone finished building")
+
+		-- note that droneList[unitID] is not garenteed to exsit at this point!
 		carrierList[carrierID].occupiedPieces[padPieceID] = false
 		Spring.SetUnitLeaveTracks(unitID, true)
-		Spring.SetUnitVelocity(unitID, 0, 0, 0)
+		local launchVel = config.launchVel
+		Spring.SetUnitVelocity(unitID, launchVel[1], launchVel[2], launchVel[3])
 		Spring.SetUnitBlocking(unitID, false, true, true, true, false, true, false)
 		mcDisable(unitID)
+		if config.untargetableOnPad then
+			spSetUnitRulesParam(unitID, 'untargetable', nil)
+		end
 		GG.UpdateUnitAttributes(unitID) --update pending attribute changes in unit_attributes.lua if available
 		
 		if droneInfo.config.colvolTweaked then
@@ -776,6 +812,36 @@ local function UpdateCarrierTarget(carrierID, frame)
 	end
 end
 
+local function launchDrone(unitID, px, py, pz)
+	-- spEcho("UCD: beginning drone launch!", unitID, px, py, pz)
+	if not droneList[unitID] then -- Drone has died since launch order was queued
+		return false
+	end
+	local carrierID = droneList[unitID].carrier
+	local setID = droneList[unitID].set
+	local droneSet = carrierList[carrierID].droneSets[setID]
+	droneSet.droneCount = (droneSet.droneCount - 1)
+	ChangeDroneRulesParam(carrierID, -1)
+	droneSet.drones[unitID] = nil
+	droneList[unitID] = nil
+	-- spEcho("UCD: launch flag 1!")
+	
+	GiveOrderToUnit(unitID, CMD.FIRE_STATE, { 2 }, 0)
+	rx, rz = RandomPointInUnitCircle()
+	GiveClampedOrderToUnit(unitID, CMD.FIGHT, {px + rx*ACTIVE_DISTANCE, py+DRONE_HEIGHT, pz + rz*ACTIVE_DISTANCE}, 0, false, true)
+	-- spEcho("UCD: launch flag 2!")
+
+	SetUnitNoSelect(unitID, false)
+
+	local lifetime = droneSet.config.launchedLife
+	if lifetime then
+		spSetUnitRulesParam(unitID, "lifetime_total", lifetime, ALLIED_ACCESS)
+		spSetUnitRulesParam(unitID, "lifetime_expiry", spGetGameFrame() + lifetime, ALLIED_ACCESS)
+		GG.UnitCallLater(unitID, droneSet.config.launchedLife, spDestroyUnit, true)
+	end
+	return true
+end
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -841,8 +907,6 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
 		local recallControllable = carrierList[unitID].priorityTarget and true or false
 		recall_frame_start[unitID] = {frame = frame, recallControllable = recallControllable}
 
-		spEcho("[UCD]: recalling Drones for "..unitID)
-
 		carrierList[unitID].priorityTarget = nil
 		UpdatePrioTargetRulesParam(unitID)
 		
@@ -850,7 +914,6 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
 	end
 	
 	if (cmdID == CMD_DRONE_SET_TARGET) then
-		spEcho("[UCD]: setting target for "..unitID)
 		local priorityTarget = {}
 		if #cmdParams == 1 then
 			priorityTarget.unitID = cmdParams[1]
@@ -889,9 +952,10 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 						newSetID = j
 					end
 				end
+				
+				ChangeDroneRulesParam(newUnitID, droneCount)
 
 				for droneID in pairs(set.drones) do
-					AddDroneRulesParam(newUnitID, droneID)
 					droneList[droneID].carrier = newUnitID
 					droneList[droneID].set = newSetID
 					GiveOrderToUnit(droneID, CMD.GUARD, {newUnitID} , CMD.OPT_SHIFT)
@@ -915,7 +979,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 		if setID > -1 then --is -1 when carrier morphed and drone is incompatible with the carrier
 			local droneSet = carrierList[carrierID].droneSets[setID]
 			droneSet.droneCount = (droneSet.droneCount - 1)
-			RemoveDroneRulesParam(carrierID, unitID)
+			ChangeDroneRulesParam(carrierID, -1)
 			droneSet.drones[unitID] = nil
 		end
 		droneList[unitID] = nil
@@ -956,6 +1020,63 @@ function gadget:UnitGiven(unitID, unitDefID, newTeam)
 		end
 	end
 end
+
+
+function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
+	if droneLaunchDefs[weaponDefID] then
+		local targetType, targetParam = Spring.GetProjectileTarget(proID)
+		local targetX, targetY, targetZ
+		local config = droneLaunchDefs[weaponDefID]
+		local carrier = carrierList[proOwnerID]
+		Spring.DeleteProjectile(proID)
+
+		if not carrier then return end
+
+		if targetType == TARGET_UNIT then
+			targetX, targetY, targetZ = spGetUnitPosition(targetParam)
+		elseif targetType == TARGET_FEATURE then
+			targetX, targetY, targetZ = Spring.GetFeaturePosition(targetParam)
+		elseif targetType == TARGET_GROUND then
+			targetX = targetParam[1]
+			targetY = targetParam[2]
+			targetZ = targetParam[3]
+		else
+			Spring.Echo("[unit_carrier_drones.lua]: Bad target type. Got: " .. tostring(targetType))
+		end
+		if not targetX then return end
+
+		local launchData = {
+			config = config,
+			cooldown = spGetGameFrame(),
+			x = targetX,
+			y = targetY,
+			z = targetZ,
+			drones = {},
+		}
+		local toLaunch = launchData.drones
+		-- spEcho("UCD: Launching drones!")
+		for i = 1, #carrier.droneSets do
+			local set = carrier.droneSets[i]
+			if set.config.canLaunch then
+			-- spEcho("UCD: found Set!")
+				for droneID in pairs(set.drones) do
+					-- spEcho("UCD: found drone!")
+					health, _, _, _, buildProgress = spGetUnitHealth(droneID)
+					if buildProgress >= 1 then
+						-- spEcho("UCD: queueing for launch!")
+						toLaunch[#toLaunch+1] = droneID
+					end
+				end
+			end
+		end
+
+		if #toLaunch > 1 then
+			-- spEcho("UCD: all good!")
+			droneLaunchesQueued[proOwnerID] = launchData
+		end
+	end
+end
+
 
 function gadget:GameFrame(f)
 	if (((f+1) % 30) == 0) then
@@ -999,13 +1120,28 @@ function gadget:GameFrame(f)
 			drones_to_move[droneID] = nil
 		end
 		for unitID in pairs(killList) do
-			Spring.DestroyUnit(unitID, true)
+			spDestroyUnit(unitID, true)
 			killList[unitID] = nil
 		end
 	end
 	if ((f % DEFAULT_UPDATE_ORDER_FREQUENCY) == 0) then
 		for i, _ in pairs(carrierList) do
 			UpdateCarrierTarget(i, f)
+		end
+	end
+	for carrierID, launch in pairs(droneLaunchesQueued) do
+		local drones = launch.drones
+		-- spEcho("UCD: checking set!")
+		while f > launch.cooldown do
+			local sucess = launchDrone(drones[#drones], launch.x, launch.y, launch.z)
+			drones[#drones] = nil
+			if sucess then
+				launch.cooldown = launch.cooldown + launch.config.launch_rate + 1
+			end
+			if #drones <= 0 then
+				droneLaunchesQueued[carrierID] = nil
+				break
+			end
 		end
 	end
 	UpdateCoroutines() --maintain nanoframe position relative to carrier
