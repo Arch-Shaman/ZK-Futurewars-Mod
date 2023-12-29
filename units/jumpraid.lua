@@ -101,7 +101,7 @@ return {
 				coreThickness           = 0,
 				craterBoost             = 0,
 				craterMult              = 0,
-				cegTag                  = "flamer",
+				cegTag                  = "napalmtrail_halfsize",
 				customParams            = {
 					flamethrower = "1",
 					setunitsonfire = "1",
@@ -155,7 +155,7 @@ return {
 				coreThickness           = 0,
 				craterBoost             = 0,
 				craterMult              = 0,
-				cegTag                  = "flamer",
+				cegTag                  = "napalmtrail_halfsize",
 				customParams            = {
 					flamethrower = "1",
 					setunitsonfire = "1",
@@ -258,7 +258,7 @@ return {
 				avoidFeature            = false,
 				craterBoost             = 1,
 				craterMult              = 2,
-				cegTag                  = "flamer",
+				cegTag                  = "napalmtrail_halfsize",
 				customParams              = {
 					numprojectiles1 = 1,
 					projectile1 = "jumpraid_napalm_fragment",

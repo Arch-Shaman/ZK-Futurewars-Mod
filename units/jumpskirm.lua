@@ -6,7 +6,7 @@ return {
 		acceleration        = 0.6,
 		activateWhenBuilt   = true,
 		brakeRate           = 3.6,
-		buildCostMetal      = 240,
+		buildCostMetal      = 250,
 		builder             = false,
 		buildPic            = "jumpskirm.png",
 		canGuard            = true,

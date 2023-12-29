@@ -145,6 +145,11 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 	if not (weaponDef.customparams.reaim_time or string.find(defname, "chicken")) then
 		weaponDef.customparams.reaim_time = 5
 	end
+
+	-- Hack for flamer
+	if weaponDef.cegTag == "flamer" then
+		weaponDef.cegTag = "napalmtrail_halfsize"
+	end
 	
 	if weaponDef.customparams["isaa"] then
 		--for name, damage in pairs(weaponDef.damage) do
