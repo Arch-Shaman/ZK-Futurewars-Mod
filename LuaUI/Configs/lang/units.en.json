@@ -1020,9 +1020,9 @@
 		"helptext" : "The Tactical Nuke Missile Sub provides a standoff precision strike weapon in the form of tactical SLBMs. It has no defense against direct attacks and should avoid contact with the enemy."
 	},
 	"shipriot" : {
-		"name" : "Corsair",
-		"description" : "Corvette (Raider/Riot)",
-		"helptext" : "This Corvette comes equipped with two shotguns which are effective against anything which gets close. It has no weapons effective against underwater targets."
+		"name" : "Kingstad",
+		"description" : "Destroyer (Raider/Riot)",
+		"helptext" : "FIXME: Add a description"
 	},
 	"shipassault" : {
 		"name" : "Siren",
@@ -1094,10 +1094,15 @@
 		"description" : "Heavy Laser Guided Missile Platform",
 		"helptext" : "Developed as a platform to deploy heavy canister barrages at ludicrious distances, the Mogul is the single heaviest mobile artillery piece currently availible in the galaxy. Its cluster missile barrage can devastate an area. However, don't expect it do much against nearby enemies. It only is armed modestly for direct fire engagements."
 	},
+	"shiplightcarrier" : {
+		"name" : "Dominion",
+		"description" : "Naval Carrier (Helicopter), stockpiles and launches drones",
+		"helptext" : "A Philosopher once said 'Life is cold and hard, Boobs are warm and soft'."
+	},
 	"shipcarrier" : {
-		"name" : "Reef",
-		"description" : "Naval Supercarrier, stockpiles disarm missiles at 5 m/s",
-		"helptext" : "A carrier is more than just a floating airpad, and a supercarrier, so much more so. Beneath the Reef's relatively thin hull are machinery which makes this ship the beating heart of a naval task force. Equipped with an advanced radar, a nuke interception system, a disarm missile silo, and a compliment of drones to repair allies and bomb the enemy into submission, the Reef is one of the most valuable ships in any fleet. Be warned however, as all those advanced machinery comes at the cost to the reef's survability, so make sure to cover it with escorts at all times."
+		"name" : "Empíreas",
+		"description" : "Naval Supercarrier (Fixedwing), produces controllable bombers, stockpiles disarm missiles at 5 m/s",
+		"helptext" : "A carrier is more than just a floating airpad, and a supercarrier, so much more so. Beneath Empíreas' relatively thin hull are machinery which makes this ship the beating heart of a naval task force. Equipped with an advanced radar, a nuke interception system, a disarm missile silo, and a compliment of drones to repair allies and bomb the enemy into submission, Empíreas is one of the most valuable ships in any fleet. Be warned however, as all those advanced machinery comes at the cost to the Empíreas' survability, so make sure to cover it with escorts at all times."
 	},
 	"turretaaflak" : {
 		"name" : "Crucible",
@@ -1165,9 +1170,9 @@
 		"helptext" : "Armed with the best chemistry has to offer, and designed with the sole goal of burning down all in it's path. The Arsonist is a fearsome foe. It's primary flamethrower melts through metal like butter while it's sweeping flamethrowers set all alight with indiscrimination. And when you think it cannot get worse, teh Arsonist shall show the ace up it's sleeve - A molotov cocktain weapon, a weapon that got it's name not because of it's design or shape, but because of it's sheer brutal effectiveness."
 	},
 	"tankheavyarty" : {
-		"name" : "Tremor",
+		"name" : "Orion",
 		"description" : "Heavy Saturation Artillery Tank",
-		"helptext" : "The principle behind the Tremor is simple: flood an area with enough shots, and you'll hit something at least once. Slow, clumsy, vulnerable and extremely frightening, the Tremor works best against high-density target areas, where its saturation shots are most likely to do damage. It pulverizes shields in seconds and its shells smooth terrain."
+		"helptext" : "The principle behind the Orion is simple: flood an area with enough shots, and you'll hit something at least once. Slow, clumsy, vulnerable and extremely frightening, the Orion works best against high-density target areas, where its saturation shots are most likely to do damage. It pulverizes shields in seconds and its shells smooth terrain."
 	},
 	"tankraid" : {
 		"name" : "Trailblazer",
@@ -1237,7 +1242,7 @@
 	"dronecarrybomber" : {
 		"name" : "Heron",
 		"description" : "Carrier-Based Bomber",
-		"helptext" : "The Heron is the primary component to the Reef's air wing. A relatively small bomber specifically designed for carrier-based operations. And by sacrificng speed, command and control, and just about everything that isn't strictly neccecary, the Heron is able to punch well above it's weight with a mixed payload bomb that is able to both damage and disarm targets."
+		"helptext" : "The Heron is the primary component to Empíreas' air wing. A relatively small bomber specifically designed for carrier-based operations. And by sacrificng speed, command and control, and just about everything that isn't strictly neccecary, the Heron is able to punch well above it's weight with a mixed payload bomb that is able to both damage and disarm targets."
 	},
 	"turretheavylaser" : {
 		"name" : "Rampart",
