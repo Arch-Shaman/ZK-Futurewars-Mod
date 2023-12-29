@@ -134,7 +134,7 @@ chickenTechTree = {
 	{max = 1, "chicken_tiamat"},
 }
 
-chicken_totaltech = 10 -- This number of techs would be researched by queenTime
+chicken_totaltech = 8 -- This number of techs would be researched by queenTime
 
 chickenUnion = {}
 chickenTypes = {}
