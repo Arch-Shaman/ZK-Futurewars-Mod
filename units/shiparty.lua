@@ -63,6 +63,7 @@ return {
 		weaponDefs             = {
 			PLASMA = {
 				name                    = "Naval Artillery",
+				collideFriendly         = false, -- This may be dangerous
 				accuracy                = 480,
 				alphadecay			  = 1.5,
 				areaOfEffect            = 140,
