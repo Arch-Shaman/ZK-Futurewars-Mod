@@ -183,6 +183,24 @@ echo("burrowName: "..burrowName)
 -- Utility
 --
 
+local margins = 10
+local mapx = Game.mapSizeX - margins
+local mapz = Game.mapSizeZ - margins
+
+local function clampPos(x, y, z)
+	if x > mapx then -- clamp inside the map
+		x = mapx
+	elseif x < margins then
+		x = margins
+	end
+	if z > mapz then -- ditto
+		z = mapz
+	elseif z < margins then
+		z = margins
+	end
+	return x, y, z
+end
+
 local function SetToList(set)
 	local list = {}
 	for k in pairs(set) do
@@ -576,7 +594,7 @@ local function SpawnAround(unitName, bx, by, bz, spawnNumber, target, registar)
 			s = s + spawnSquareIncrement
 			tries = tries + 1
 		until (not spGetGroundBlocked(x, z) or tries > spawnNumber + maxTriesSmall)
-		local unitID = spCreateUnit(unitName, x, by, z, "n", chickenTeamID)
+		local unitID = spCreateUnit(unitName, clampPos(x, by, z), "n", chickenTeamID)
 		if unitID then
 			spGiveOrderToUnit(unitID, CMD.MOVE_STATE, CMD_MOVESTATE_ROAM, 0)
 			if tloc then spGiveOrderToUnit(unitID, CMD_FIGHT, tloc, 0) end
@@ -687,7 +705,7 @@ local function SpawnBurrow(number)
 
 		spEcho("[chicken_handler.lua] Spawning roost at ("..x..", "..y..", "..z..") after "..tries.." tries. humanUnitsInProximity: "..tostring(humanUnitsInProximity)..", humanUnitsInVicinity: "..tostring(humanUnitsInVicinity)..", propagate: "..tostring(propagate)..", minDist: "..tostring(minDist))
 
-		unitID = spCreateUnit(applyHyperevo(burrowName, defenseHyperevo, 0, 15), x, y, z, "n", chickenTeamID)
+		unitID = spCreateUnit(applyHyperevo(burrowName, defenseHyperevo, 0, 15), clampPos(x, y, z), "n", chickenTeamID)
 		data.burrows[unitID] = {targetID = unitID, targetDistance = 100000, defenses = 0, defenseDelta = min(random(), 0.9), spawnedMenace = false}
 		data.burrowsQuadfield:Insert(unitID, x, z, propagateDist)
 		UpdateBurrowTarget(unitID, nil)
@@ -745,7 +763,7 @@ local function SpawnUnit(unitName, number, minDist, maxDist, target)
 	until (not spGetGroundBlocked(x, z) or (not block) or (tries > number + maxTries*2))
 	
 	for i=1, (number or 1) do
-		local unitID = spCreateUnit(unitName, x + random(-spawnSquare, spawnSquare), y, z + random(-spawnSquare, spawnSquare), "n", chickenTeamID)
+		local unitID = spCreateUnit(unitName, clampPos(x + random(-spawnSquare, spawnSquare), y, z + random(-spawnSquare, spawnSquare)), "n", chickenTeamID)
 		if unitID then
 			spGiveOrderToUnit(unitID, CMD.MOVE_STATE, CMD_MOVESTATE_ROAM, 0)
 		end
@@ -788,7 +806,7 @@ local function SpawnQueen()
 		queenName = queenName.."_"..menaceEvoMod
 		queenMorphName = queenMorphName.."_"..menaceEvoMod
 	end
-	local unitID = spCreateUnit(queenName, x, y, z, "n", chickenTeamID)
+	local unitID = spCreateUnit(queenName, clampPos(x, y, z), "n", chickenTeamID)
 	
 	if queenMorphName ~= '' then SetMorphFrame() end
 	return unitID
@@ -854,7 +872,7 @@ local function SpawnMenace()
 			end
 		end
 	until (blocking == 2 or tries > maxTries)
-	local unitID = spCreateUnit(applyHyperevo(menaceDef.name, menaceHyperevo, -3, 17, true), x, y, z, "n", chickenTeamID, true)
+	local unitID = spCreateUnit(applyHyperevo(menaceDef.name, menaceHyperevo, -3, 17, true), clampPos(x, y, z), "n", chickenTeamID, true)
 	
 	if unitID then
 		spSetUnitHealth(unitID, math.huge)
@@ -994,9 +1012,9 @@ local function MorphQueen()
 	data.queenID = nil
 	spDestroyUnit(tempID, false, true, tempID, true)
 	if data.morphed == true then
-		data.queenID = spCreateUnit(queenName, x, y, z, "n", queenOwner)
+		data.queenID = spCreateUnit(queenName, clampPos(x, y, z), "n", queenOwner)
 	else
-		data.queenID = spCreateUnit(queenMorphName, x, y, z, "n", queenOwner)
+		data.queenID = spCreateUnit(queenMorphName, clampPos(x, y, z), "n", queenOwner)
 	end
 
 	if not data.queenID then
