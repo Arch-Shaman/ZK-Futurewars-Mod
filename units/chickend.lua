@@ -69,7 +69,7 @@ return {
 		weaponDefs                    = {
 			HIGHSPORES = {
 				name                    = "Explosive Spores",
-				areaOfEffect            = 96,
+				areaOfEffect            = 24,
 				avoidFriendly           = false,
 				burst                   = 4,
 				burstrate               = 0.2,
@@ -88,12 +88,13 @@ return {
 
 				dance                   = 60,
 				explosionGenerator      = "custom:goo_v2_red",
+				impactOnly              = false,
 				fireStarter             = 0,
 				flightTime              = 5,
 				groundbounce            = 1,
 				heightmod               = 0.5,
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 2,
 				model                   = "chickeneggyellow.s3o",
 				range                   = 680,
