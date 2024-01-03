@@ -101,7 +101,7 @@ return {
 				coreThickness           = 0,
 				craterBoost             = 0,
 				craterMult              = 0,
-				cegTag                  = "napalmtrail_halfsize",
+				cegTag                  = "flamer",
 				customParams            = {
 					flamethrower = "1",
 					setunitsonfire = "1",
@@ -155,7 +155,7 @@ return {
 				coreThickness           = 0,
 				craterBoost             = 0,
 				craterMult              = 0,
-				cegTag                  = "napalmtrail_halfsize",
+				cegTag                  = "flamer",
 				customParams            = {
 					flamethrower = "1",
 					setunitsonfire = "1",
