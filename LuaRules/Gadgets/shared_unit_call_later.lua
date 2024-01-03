@@ -6,7 +6,7 @@ function gadget:GetInfo()
 	return {
 		name      = "Call timer",
 		desc      = "Shared gadget for calling something later",
-		author    = "StuffPhoton",
+		author    = "Stuffphoton",
 		date      = "29/12/2023",
 		license   = "GNU GPL, v2 or later",
 		layer     = 10000,
