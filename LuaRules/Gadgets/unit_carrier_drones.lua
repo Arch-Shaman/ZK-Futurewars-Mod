@@ -68,12 +68,6 @@ local IDLE_DISTANCE = 120
 local ACTIVE_DISTANCE = 180
 local DRONE_HEIGHT = 120
 local RECALL_TIMEOUT = 300
-
-local TARGET_GROUND     = string.byte('g')
-local TARGET_UNIT       = string.byte('u')
-local TARGET_FEATURE    = string.byte('f')
-local TARGET_PROJECTILE = string.byte('p')
-
 local generateDrones = {}
 local carrierList = {}
 local droneList = {}
@@ -1024,25 +1018,12 @@ end
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	if droneLaunchDefs[weaponDefID] then
-		local targetType, targetParam = Spring.GetProjectileTarget(proID)
-		local targetX, targetY, targetZ
+		local targetX, targetY, targetZ = Spring.Utilities.GetTargetPos(Spring.GetProjectileTarget(proID))
 		local config = droneLaunchDefs[weaponDefID]
 		local carrier = carrierList[proOwnerID]
 		Spring.DeleteProjectile(proID)
 
 		if not carrier then return end
-
-		if targetType == TARGET_UNIT then
-			targetX, targetY, targetZ = spGetUnitPosition(targetParam)
-		elseif targetType == TARGET_FEATURE then
-			targetX, targetY, targetZ = Spring.GetFeaturePosition(targetParam)
-		elseif targetType == TARGET_GROUND then
-			targetX = targetParam[1]
-			targetY = targetParam[2]
-			targetZ = targetParam[3]
-		else
-			Spring.Echo("[unit_carrier_drones.lua]: Bad target type. Got: " .. tostring(targetType))
-		end
 		if not targetX then return end
 
 		local launchData = {

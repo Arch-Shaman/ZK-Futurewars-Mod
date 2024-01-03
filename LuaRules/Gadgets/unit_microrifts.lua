@@ -16,10 +16,6 @@ end
 
 
 local targetypes = {}
-targetypes[string.byte('g')] = "ground"
-targetypes[string.byte('u')] = "unit"
-targetypes[string.byte('f')] = "feature"
-targetypes[string.byte('p')] = "projectile"
 
 local spTestMoveOrder = Spring.TestMoveOrder
 local spTestBuildOrder = Spring.TestBuildOrder
@@ -72,25 +68,14 @@ end
 
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	if config[weaponDefID] then
-		local targetType, targetParam = Spring.GetProjectileTarget(proID)
-		local targetX, targetY, targetZ, teleportX, teleportY, teleportZ
+		local targetX, targetY, targetZ = Spring.Utilities.GetTargetPos(Spring.GetProjectileTarget(proID))
+		local teleportX, teleportY, teleportZ
 		local ownerDefID = Spring.GetUnitDefID(proOwnerID)
 		local teleported = false
 		local cfg = config[weaponDefID]
 		targetType = targetypes[targetType] or "nil"
 		Spring.DeleteProjectile(proID)
-
-		if targetType == "unit" then
-			targetX, targetY, targetZ = spGetUnitPosition(targetParam)
-		elseif targetType == "feature" then
-			targetX, targetY, targetZ = Spring.GetFeaturePosition(targetParam)
-		elseif targetType == "ground" then
-			targetX = targetParam[1]
-			targetY = targetParam[2]
-			targetZ = targetParam[3]
-		else
-			Spring.Echo("[unit_microrifts.lua]: Bad target type. Got: " .. tostring(targetType))
-		end
+		
 		if targetX and targetZ then
 			teleportX, teleportZ = GetTeleTargetPos(ownerDefID, targetX, targetZ)
 			if teleportX and teleportZ then
