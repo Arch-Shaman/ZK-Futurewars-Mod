@@ -68,7 +68,7 @@ function widget:CommandNotify(cmdID, params, options)
 		if carrierDefs[defID] then
 			wantedCarriers[unitID] = true
 			for i=1,#carrierDefs[defID] do
-				wantedDefIDs[arrierDefs[defID][i]] = true
+				wantedDefIDs[carrierDefs[defID][i]] = true
 			end
 		end
 	end
