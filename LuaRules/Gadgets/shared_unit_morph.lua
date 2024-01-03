@@ -401,6 +401,8 @@ function GG.MorphUnit(unitID, morphInto, morphParams)
 			unitsNeedingHax[newUnit] = {[1] = cmds[1].params[1], [2] = cmds[1].params[2], [3] = cmds[1].params[3], [4] = buildHaxDist or 16}
 		end
 	end
+
+	return newUnit
 end
 
 
