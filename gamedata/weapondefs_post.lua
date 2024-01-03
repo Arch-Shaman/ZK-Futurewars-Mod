@@ -147,8 +147,8 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 	end
 
 	-- Hack for flamer
-	if weaponDef.cegTag == "flamer" then
-		weaponDef.cegTag = "napalmtrail_halfsize"
+	if weaponDef.cegtag == "flamer" then
+		weaponDef.cegtag = "napalmtrail_halfsize"
 	end
 	
 	if weaponDef.customparams["isaa"] then
