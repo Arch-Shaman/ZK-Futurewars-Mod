@@ -150,11 +150,9 @@ AddFactoryOfUnits("staticmissilesilo")
 local buildOpts = VFS.Include("gamedata/buildoptions.lua")
 local factory_commands, econ_commands, defense_commands, special_commands = include("Configs/integral_menu_commands_processed.lua", nil, VFS.RAW_FIRST)
 
-do
-	local droneDefs, _, commanderDroneDefs = VFS.Include("LuaRules/Configs/drone_defs.lua")
-	for id, data in pairs(droneDefs) do -- For whatever reason, unitDefID is not the same.
-		carrierDefs[UnitDefs[id].name] = data
-	end
+local droneDefs, _, commanderDroneDefs = VFS.Include("LuaRules/Configs/drone_defs.lua")
+for id, data in pairs(droneDefs) do -- For whatever reason, unitDefID is not the same.
+	carrierDefs[UnitDefs[id].name] = data
 end
 
 
