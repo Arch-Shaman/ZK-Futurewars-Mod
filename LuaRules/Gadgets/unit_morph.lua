@@ -301,11 +301,11 @@ local function StopMorph(unitID, morphData)
 end
 
 local function FinishMorph(unitID, morphData)
+	morphUnits[unitID] = nil
 	local newUnit = GG.MorphUnit(unitID, morphData.def.into, {
 		upgradeDef = morphData.def.upgradeDef, 
 		facing = morphData.def.facing,
 	})
-	morphUnits[unitID] = nil
 	if not newUnit then
 		StopMorph(unitID, morphData)
 	end
