@@ -1150,7 +1150,7 @@ function DrawUnitInfos(unitID, unitDefID)
 		local drones = GetUnitRulesParam(unitID, "dronesControlled")
 		local maxDrones = GetUnitRulesParam(unitID, "dronesControlledMax")
 		if (drones and maxDrones) then
-			barDrawer.AddBar(addTitle and messages.drones, drones/maxDrones, "drones", (addPercent and drones.."/"..maxDrones))
+			barDrawer.AddBar(addTitle and string.gsub(messages.drones, "{0}", drones.."/"..maxDrones), drones/maxDrones, "drones", (addPercent and drones.."/"..maxDrones))
 		end
 	end
 	
