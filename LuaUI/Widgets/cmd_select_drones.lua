@@ -76,8 +76,8 @@ function widget:CommandNotify(cmdID, params, options)
 	for defID in pairs(wantedDefIDs) do
 		local units = spGetTeamUnitsByDefs(spGetMyTeamID(), defID)
 		for i=1, #units do
-			if wantedCarriers[spGetUnitRulesParam(unitID, "parent_unit_id")] then
-				toSelect[#toSelect+1] = unitID
+			if wantedCarriers[spGetUnitRulesParam(units[i], "parent_unit_id")] then
+				toSelect[#toSelect+1] = units[i]
 			end
 		end
 	end
