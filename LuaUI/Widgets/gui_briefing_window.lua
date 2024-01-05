@@ -51,7 +51,7 @@ local briefing, lastWrittenVersion = VFS.Include("LuaUI/Configs/briefing.lua")
 local writeVersion
 local showBriefing = true
 
---[[
+
 do
 	local configLocation = "luaui\\config\\fw_patchnotes.lua"
 	local gameVersion = Game.gameVersion
@@ -81,7 +81,7 @@ do
 		writeVersion = thisVersion
 	end
 end
-]]--
+
 
 local Chili
 
@@ -124,10 +124,10 @@ local function GetUnitTooltip(udef)
 end
 
 local function WriteVersionToFile()
---	local file = io.open(configLocation, "w")
---	file:write("return " .. "\"" .. writeVersion .. "\"\n")
---	file:flush()
---	file:close()
+	local file = io.open(configLocation, "w")
+	file:write("return " .. "\"" .. writeVersion .. "\"\n")
+	file:flush()
+	file:close()
 end
 
 
@@ -358,7 +358,7 @@ end
 
 function widget:Initialize()
 	if #briefing.entries == 0 or not showBriefing then
-		--Spring.Echo("No briefing required.")
+		Spring.Echo("No briefing required.")
 		widgetHandler:RemoveWidget(self)
 		return
 	end

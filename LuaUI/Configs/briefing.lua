@@ -4,7 +4,7 @@ local function PreprendTable(prependee, prepender)
 	end
 	return prepender
 end
---[[
+
 local lastWrittenVersion = 38.11
 local showBriefing = false
 local configLocation = "luaui\\config\\fw_patchnotes.lua"
@@ -29,7 +29,7 @@ else
 	local modoptions = Spring.GetModOptions()
 	showBriefing = lastSeenVersion < lastWrittenVersion and not ((modoptions.commwars and modoptions.commwars == "1") or Spring.GetGameRulesParam("chicken_difficulty") ~= nil)
 end
-]]--
+
 local briefing = {
 	modname = Game.gameName,
 	version = Game.gameVersion,
