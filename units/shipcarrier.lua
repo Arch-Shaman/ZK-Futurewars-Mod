@@ -41,7 +41,7 @@ return {
 		footprintZ             = 5,
 		iconType               = "shipcarrier",
 		health                 = 11000,
-		speed                  = 2.75,
+		speed                  = 42,
 		minWaterDepth          = 10,
 		movementClass          = "BOAT5",
 		noAutoFire             = false,
