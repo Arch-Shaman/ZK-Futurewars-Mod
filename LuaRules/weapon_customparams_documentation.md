@@ -120,3 +120,22 @@ boolean **singu_nodamageimmunity** = `false`
 	If true, units affected by the singularity will not have collision damage immunity applied for the duration of the effect.
 	Note that this makes singularities do terrifying amounts of damage.
 
+== Carrier Drones customParams ==
+boolean **drone_launch**
+	Is this weapon a dummy for a drone launch?
+intege **drone_launch_rate**
+	How many frames between launching each drone?
+
+== Siege Zones customParams ==
+(Note that a unit cannot have multiple siege targeters or they will override one another)
+string **sieges_for**
+	Which weaponDefName is this siege targeter sieging for?
+	REQUIRED for siege targeters if **sieges_for_all** is not true
+boolean **sieges_for_all**
+	This siege targeter sieges for all the weapons on a unit
+	REQUIRED for siege targeters if **sieges_for_all** is not true
+posNumber **sieges_radius**
+	How large is the siege circle?
+number **sieges_time**
+	How long, in frames, does the siege take?
+
