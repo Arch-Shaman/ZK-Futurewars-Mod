@@ -1380,7 +1380,7 @@ local icontypes = {
 	--chicken mini queen
 	chickenminiq = {
 		bitmap='icons/chickenq.dds',
-		size=7,
+		size=5,
 	},
 	--chicken queen
 	chickenq = {
