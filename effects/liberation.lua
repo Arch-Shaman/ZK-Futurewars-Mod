@@ -29,8 +29,8 @@ local liberation_basetrail = {
 			emitvector         = "0, 1, 0",
 			gravity            = "0, 0, 0",
 			numparticles       = 5,
-			particlelife       = 7,
-			particlelifespread = 5,
+			particlelife       = 15,
+			particlelifespread = 10,
 			particlesize       = 16,
 			particlesizespread = 3,
 			particlespeed      = 3,
@@ -56,8 +56,8 @@ local liberation_basetrail = {
 			emitvector         = "0, 1, 0",
 			gravity            = "0, 0, 0",
 			numparticles       = 5,
-			particlelife       = 7,
-			particlelifespread = 5,
+			particlelife       = 15,
+			particlelifespread = 10,
 			particlesize       = 16,
 			particlesizespread = 3,
 			particlespeed      = 3,
@@ -106,8 +106,8 @@ cegs.liberation_disarmimpactspark = {
 			emitvector         = "0, 1, 0",
 			gravity            = "0, 0, 0",
 			numparticles       = 5,
-			particlelife       = 15,
-			particlelifespread = 10,
+			particlelife       = 25,
+			particlelifespread = 15,
 			particlesize       = 40,
 			particlesizespread = 40,
 			particlespeed      = 1,
@@ -125,7 +125,7 @@ cegs.liberation_plasmatrail = CopyTable(liberation_basetrail, true)
 OverwriteTableInplace(cegs.liberation_plasmatrail, {
 	exhale = {
 		properties = {
-			airdrag            = 1.2,
+			airdrag            = 1.1,
 			emitrot            = 0,
 			emitrotspread      = 180,
 			particlespeed      = 5,
@@ -136,7 +136,7 @@ OverwriteTableInplace(cegs.liberation_plasmatrail, {
 	},
 	exhale2 = {
 		properties = {
-			airdrag            = 1.2,
+			airdrag            = 1.1,
 			emitrot            = 0,
 			emitrotspread      = 180,
 			particlespeed      = 5,
@@ -193,6 +193,38 @@ OverwriteTableInplace(cegs.liberation_slowtrail, {
 			color = "1.0, 0.0, 1.0",
 			length = 10,
 			width = 100,
+		},
+	}
+}, false)
+
+
+cegs.liberation_cannontrail = CopyTable(liberation_basetrail, true)
+OverwriteTableInplace(cegs.liberation_cannontrail, {
+	exhale = {
+		properties = {
+			colormap = "1.0 0.0 0.0 0.2    0.615 0.224 0.206 0.6    0.0 0.0 0.0 0.01",
+			numparticles       = 5,
+			particlesize       = 32,
+			particlesizespread = 8,
+			airdrag            = 0,
+			emitrotspread      = 180,
+			particlespeed      = 20,
+		},
+	},
+	exhale2 = {
+		properties = {
+			colormap = "1.0 0.5 0.0 0.2    0.615 0.447 0.412 0.6    0.0 0.0 0.0 0.01",
+			numparticles       = 5,
+			particlesize       = 32,
+			particlesizespread = 8,
+			airdrag            = 0,
+			emitrotspread      = 180,
+			particlespeed      = 20,
+		},
+	},
+	spikes = {
+		properties = {
+			color = "1.0, 0.0, 0.0",
 		},
 	}
 }, false)
