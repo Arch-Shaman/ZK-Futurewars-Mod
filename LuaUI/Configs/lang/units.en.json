@@ -1025,14 +1025,14 @@
 		"helptext" : "FIXME: Add a description"
 	},
 	"shipassault" : {
-		"name" : "Siren",
-		"description" : "Destroyer (Riot/Assault)",
-		"helptext" : "This Destroyer is a general-purpose combat vessel, combining a strong area-of-effect sonic cannon, a medium-range vertical launch missile, and strong armor. Use its sonic gun against smaller opponents above and below the water, and its missile against static targets."
+		"name" : "Tsunami",
+		"description" : "Assault Battlecruiser",
+		"helptext" : "This Cruiser packs two powerful, medium-range plasma anti-surface cannons, useful for taking on lesser ships. It's slow and ponderous, so keep an eye out for would-be predators like raider vessels and submarines."
 	},
 	"shiparty" : {
-		"name" : "Tsunami",
-		"description" : "Naval Supremacy Vessel",
-		"helptext" : "This Cruiser packs two powerful, medium-range plasma anti-surface cannons, useful for taking on lesser ships. It's slow and ponderous, so keep an eye out for would-be predators like raider vessels and submarines."
+		"name" : "Dominion",
+		"description" : "Artillery Battlecruiser, Must stop to fire",
+		"helptext" : "A Philosopher once said 'Life is cold and hard, Boobs are warm and soft'."
 	},
 	"shipaa" : {
 		"name" : "Undercurrent",
@@ -1095,9 +1095,9 @@
 		"helptext" : "Developed as a platform to deploy heavy canister barrages at ludicrious distances, the Mogul is the single heaviest mobile artillery piece currently availible in the galaxy. Its cluster missile barrage can devastate an area. However, don't expect it do much against nearby enemies. It only is armed modestly for direct fire engagements."
 	},
 	"shiplightcarrier" : {
-		"name" : "Dominion",
-		"description" : "Naval Carrier (Helicopter), stockpiles and launches drones",
-		"helptext" : "A Philosopher once said 'Life is cold and hard, Boobs are warm and soft'."
+		"name" : "Siren",
+		"description" : "Riot Carrier-Cruiser",
+		"helptext" : "TBA"
 	},
 	"shipcarrier" : {
 		"name" : "Empíreas",

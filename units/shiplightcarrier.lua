@@ -1,62 +1,134 @@
-shiplightcarrier = {
+local shiplightcarrier = {
 	unitname               = "shiplightcarrier",
-	name                   = "Dominion Destroyer",
-	description            = "Boob Supremecy Vessel",
-	acceleration           = 0.25,
+	name                   = "Siren",
+	description            = "Destroyer (Riot/Assault)",
+	acceleration           = 0.384,
 	activateWhenBuilt      = true,
-	brakeRate              = 1.7,
-	buildCostMetal         = 1200,
+	brakeRate              = 0.5,
+	buildCostMetal         = 800,
 	builder                = false,
 	buildPic               = "shiplightcarrier.png",
+	canGuard               = true,
 	canMove                = true,
+	canPatrol              = true,
+	canManualFire          = true,
 	category               = "SHIP",
-	collisionVolumeOffsets = "0 1 3",
-	collisionVolumeScales  = "151 47 67",
+	collisionVolumeOffsets = "0 6 0",
+	collisionVolumeScales  = "55 55 110",
 	collisionVolumeType    = "ellipsoid",
 	corpse                 = "DEAD",
-
+	--Core_color.dds Core_other.dds
 	customParams           = {
-		extradrawrange = 200,
-		modelradius    = 75,
+		modelradius    = "55",
 		turnatfullspeed = "1",
+		extradrawrange = 800,
 		outline_x = 160,
 		outline_y = 160,
 		outline_yoff = 25,
 	},
 
 	explodeAs              = "BIG_UNITEX",
-	fireState              = 0,
 	floater                = true,
 	footprintX             = 4,
 	footprintZ             = 4,
-	iconType               = "shiplightcarrier",
+	iconType               = "shipassault",
 	idleAutoHeal           = 5,
 	idleTime               = 1800,
 	losEmitHeight          = 25,
 	health                 = 6800,
-	speed                  = 1.4,
-	minWaterDepth          = 10,
+	speed                  = 60,
+	minCloakDistance       = 75,
+	minWaterDepth          = 5,
 	movementClass          = "BOAT4",
-	moveState              = 0,
-	noChaseCategory        = "TERRAFORM FIXEDWING GUNSHIP TOOFAST",
-	objectName             = "boat-hardpoint.dae",
+	noAutoFire             = false,
+	noChaseCategory        = "TERRAFORM FIXEDWING SATELLITE SUB SINK TURRET",
+	objectName             = "shipassault.s3o",
 	script                 = "shiplightcarrier.lua",
 	selfDestructAs         = "BIG_UNITEX",
-	sightDistance          = 660,
+
+	sfxtypes               = {
+		explosiongenerators = {
+			"custom:sonicfire_80",
+			"custom:emg_shells_l",
+		},
+	},
+
+	sightDistance          = 440,
 	turninplace            = 0,
-	turnRate               = 370,
-	waterline              = 0,
+	turnRate               = 240,
+	workerTime             = 0,
 
 	weapons                = {
 		{
-			def                = "BOOBS",
+			def                = "BISCUIT_GUN",
+			badTargetCategory  = "FIXEDWING",
+			onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
+			mainDir            = "0 -1 0",
+			maxAngleDif        = 240,
+		},
+
+		{
+			def                = "CANDY",
 			badTargetCategory  = "GUNSHIP",
 			onlyTargetCategory = "SWIM LAND SHIP SINK TURRET FLOAT GUNSHIP HOVER",
 		},
 	},
 
+
 	weaponDefs             = {
-		BOOBS      = {
+		BISCUIT_GUN  = {
+			name                    = "High Intensity Scattergun",
+			areaOfEffect            = 30,
+			avoidFeature            = false,
+			canattackground         = true,
+			collideFriendly         = false,
+			coreThickness           = 0.8,
+			craterBoost             = 0,
+			craterMult              = 0,
+			projectiles				= 8,
+			burst					= 2,
+			burstRate				= 10/30,
+			sprayangle				= 1390,
+			edgeeffectiveness		= 0.4,
+			minIntensity            = 0.5,
+			customParams        = {
+				light_camera_height = 1800,
+				light_radius = 160,
+				combatrange	= 300,
+			},
+
+			damage                  = {
+				default = 70.1,
+			},
+
+			duration                = 0.1,
+			explosionGenerator      = "custom:beamlaser_hit_emerald",
+			fireStarter             = 50,
+			impulseBoost            = 0,
+			impulseFactor           = 0,
+			interceptedByShieldType = 1,
+			range                   = 520,
+			reloadtime              = 3,
+			rgbColor                = "0.043 0.7 0.274",
+			soundHit                = "weapon/laser/emerald_hit",
+			soundStart              = "weapon/laser/emerald_fire",
+			soundStartVolume        = 0.7,
+			soundTrigger            = false,
+			thickness               = 4.25,
+			tolerance               = 10000,
+			turret                  = true,
+			largebeamlaser          = true,
+			texture1                = "lightlaser",
+			texture2                = "flare",
+			texture3                = "flare",
+			beamDecay               = 0.8,
+			beamBurst               = true,
+			beamTTL                 = 13,
+			weaponType              = "BeamLaser",
+			waterweapon             = true
+			--weaponVelocity          = 880,
+		},
+		CANDY      = {
 			name                    = "Launch Drones",
 			craterBoost             = 0,
 			craterMult              = 0,
@@ -75,7 +147,7 @@ shiplightcarrier = {
 				stats_custom_tooltip_1 = " - Launches all stockpiled drones at the target",
 				stats_custom_tooltip_entry_1 = "",
 				drone_launch = "boobs are soft and warm",
-				drone_launch_rate = 10,
+				drone_launch_rate = 20,
 			},
 			damage                  = {
 				default = 0,
@@ -96,23 +168,19 @@ shiplightcarrier = {
 		},
 	},
 	featureDefs            = {
-
-		DEAD  = {
+		DEAD = {
 			blocking         = false,
 			featureDead      = "HEAP",
 			footprintX       = 4,
 			footprintZ       = 4,
-			object           = "shiplightcarrier_dead.s3o",
+			object           = "shipassault_dead.s3o",
 		},
-
-		HEAP  = {
+		HEAP = {
 			blocking         = false,
 			footprintX       = 4,
 			footprintZ       = 4,
-			object           = "debris4x4b.s3o",
+			object           = "debris4x4a.s3o",
 		},
-
 	},
-}
-
-return { shiplightcarrier = shiplightcarrier }
+} 
+return {shiplightcarrier = shiplightcarrier}

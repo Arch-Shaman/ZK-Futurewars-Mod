@@ -33,7 +33,7 @@ local carrierDefNames = {
 		{
 			drone = UnitDefNames.dronecarrybomber.id,
 			reloadTime = 10,
-			maxDrones = 16,
+			maxDrones = 20,
 			spawnSize = 2,
 			range = 200000,
 			maxChaseRange = 200000,
@@ -45,15 +45,15 @@ local carrierDefNames = {
 	},
 	shiplightcarrier = {
 		noDroneSetTarget = true,
-		spawnPieces = {"Drone1", "Drone2", "Drone3", "Drone4", "Drone5", "Drone6"},
+		spawnPieces = {"drone1", "drone2"},
 		{
 			drone = UnitDefNames.dronecarry.id,
-			reloadTime = 9,
-			maxDrones = 6,
+			reloadTime = 15,
+			maxDrones = 2,
 			spawnSize = 1,
 			range = 200000,
 			maxChaseRange = 200000,
-			buildTime = 10,
+			buildTime = 20,
 			sitsOnPad = true,
 			untargetableOnPad = true,
 			canLaunch = true,
@@ -443,22 +443,6 @@ for name, data in pairs(carrierDefNames) do
 	-- Don't repeat yourself
 	for i=1, #data do
 		local droneSet = data[i]
-		droneSet.offsets = droneSet.offsets or {}
-		local offsets = droneSet.offsets
-		offsets[1] = offsets[1] or 0
-		offsets[2] = offsets[2] or 0
-		offsets[3] = offsets[3] or 0
-		offsets["colvolMidX"] = offsets["colvolMidX"] or 0
-		offsets["colvolMidY"] = offsets["colvolMidY"] or 0
-		offsets["colvolMidZ"] = offsets["colvolMidZ"] or 0
-		offsets["aimX"] = offsets["aimX"] or 0
-		offsets["aimY"] = offsets["aimY"] or 0
-		offsets["aimZ"] = offsets["aimZ"] or 0
-		droneSet.launchVel = droneSet.launchVel or {}
-		local launchVel = droneSet.launchVel
-		launchVel[1] = launchVel[1] or 0
-		launchVel[2] = launchVel[2] or 0
-		launchVel[3] = launchVel[3] or 0
 
 		if droneSet.launchedLife then
 			droneSet.launchedLife = droneSet.launchedLife * Game.gameSpeed
@@ -477,6 +461,7 @@ local thingsWhichAreDrones = {
 	[UnitDefNames.dronefighter.id] = true,
 	[UnitDefNames.dronecon.id] = true,
 	[UnitDefNames.droneassault.id] = true,
+	[UnitDefNames.dronecarry.id] = true,
 }
 
 local function ProcessCarrierDef(carrierData)
@@ -491,6 +476,23 @@ local function ProcessCarrierDef(carrierData)
 		carrierData.buildStepCost = buildUpProgress*carrierData.buildCost
 		carrierData.perSecondCost = carrierData.buildCost/carrierData.buildTime
 	end
+
+	carrierData.offsets = carrierData.offsets or {}
+	local offsets = carrierData.offsets
+	offsets[1] = offsets[1] or 0
+	offsets[2] = offsets[2] or 0
+	offsets[3] = offsets[3] or 0
+	offsets["colvolMidX"] = offsets["colvolMidX"] or 0
+	offsets["colvolMidY"] = offsets["colvolMidY"] or 0
+	offsets["colvolMidZ"] = offsets["colvolMidZ"] or 0
+	offsets["aimX"] = offsets["aimX"] or 0
+	offsets["aimY"] = offsets["aimY"] or 0
+	offsets["aimZ"] = offsets["aimZ"] or 0
+	carrierData.launchVel = carrierData.launchVel or {}
+	local launchVel = carrierData.launchVel
+	launchVel[1] = launchVel[1] or 0
+	launchVel[2] = launchVel[2] or 0
+	launchVel[3] = launchVel[3] or 0
 	
 	carrierData.colvolTweaked = carrierData.offsets.colvolMidX ~= 0 or carrierData.offsets.colvolMidY ~= 0
 									or carrierData.offsets.colvolMidZ ~= 0 or carrierData.offsets.aimX ~= 0
