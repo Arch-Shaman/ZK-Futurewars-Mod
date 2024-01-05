@@ -29,7 +29,7 @@ local shipriot = {
 	floater                = true,
 	footprintX             = 4,
 	footprintZ             = 4,
-	health                 = 3950,
+	health                 = 3000,
 	iconType               = "shipriot",
 	idleAutoHeal           = 75,
 	idleTime               = 300,
@@ -52,7 +52,7 @@ local shipriot = {
 	},
 	
 	sonarDistance          = 500,
-	speed                  = 90,
+	speed                  = 100,
 	turninplace            = 0,
 	turnRate               = 800,
 	waterline              = 0,
@@ -92,7 +92,7 @@ local shipriot = {
 			},
 			
 			damage                  = {
-				default = 138,
+				default = 100,
 			},
 
 			explosionGenerator      = "custom:artillery_explosion_half",
