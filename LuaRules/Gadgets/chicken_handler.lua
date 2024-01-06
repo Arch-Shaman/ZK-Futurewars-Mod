@@ -224,7 +224,7 @@ local function QTimeLerp(lmin, lmax)
 	return lmin + (lmax - lmin) * min(time / queenTime, 1)
 end
 
-local hyperevoFactor = 250000
+local hyperevoFactor = 350000
 local function updateHyperevo()
 	local techmult = data.techTime--min(tt^1.34, 34*tt+420)
 	chickenMult = techmult * (1 + data.wrath/2) * max(0.5, data.strength) * sqrt(waveSizeMult)
@@ -1319,7 +1319,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 			end
 			data.burrowsQuadfield:Remove(unitID)
 
-			data.wrath = data.wrath + wrathPerBurrow
+			--data.wrath = data.wrath + wrathPerBurrow
 			data.strength = data.strength * strengthPerBurrow
 			data.bonusScore = data.bonusScore + scorePerBurrow
 		
