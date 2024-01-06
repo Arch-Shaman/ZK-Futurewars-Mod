@@ -80,9 +80,9 @@ return {
 		weaponDefs          = {
 			AEROSPORES  = {
 				name                    = "Anti-Air Spores",
-				areaOfEffect            = 200,
+				areaOfEffect            = 96,
 				avoidFriendly           = false,
-				burst                   = 8,
+				burst                   = 7,
 				burstrate               = 0.2,
 				canAttackGround         = false,
 				collideFriendly         = false,
@@ -108,6 +108,7 @@ return {
 				flightTime              = 3,
 				groundbounce            = 1,
 				heightmod               = 0.5,
+				impactOnly              = true,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,

@@ -217,7 +217,7 @@ return {
 			},
 			AEROSPORES  = {
 				name                    = "Anti-Air Spores",
-				areaOfEffect            = 200,
+				areaOfEffect            = 96,
 				avoidFriendly           = false,
 				burst                   = 8,
 				burstrate               = 0.2,
@@ -243,6 +243,7 @@ return {
 				flightTime              = 5,
 				groundbounce            = 1,
 				heightmod               = 0.5,
+				impactOnly              = true,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
