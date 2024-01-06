@@ -777,6 +777,23 @@ for name, ud in pairs(UnitDefs) do
 			end
 		end
 	end
+
+	-- Make statics unable to pen rafflesia
+	-- We check if speed is lower than 1 since starlight_satellite has a speed of 0.03
+	if ((ud.speed or 0) < 1) then
+		if (type(ud.weapondefs) == "table") then
+			for wname, weaponDef in pairs(ud.weapondefs) do
+				--if weaponDef.interceptedbyshieldtype and weaponDef.range and weaponDef.range > 1500 and
+				--	not weaponDef.customparams.not_artillery then
+				if weaponDef.interceptedbyshieldtype then
+					local mod = weaponDef.interceptedbyshieldtype % 16
+					if mod < 8 then
+						weaponDef.interceptedbyshieldtype = weaponDef.interceptedbyshieldtype + 8
+					end
+				end
+			end
+		end
+	end
 	
 	-- Remove initCloaked because cloak state is no longer used
 	if tobool(ud.initcloaked) then
