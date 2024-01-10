@@ -89,7 +89,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		Spring.SetUnitSensorRadius(unitID, "los", 0)
 		Spring.SetUnitSensorRadius(unitID, "airLos", 0)
 		Spring.SetUnitRulesParam(unitID, "crashing", 1, LOS_ACCESS)
-		if (Spring.GetUnitRulesParam(unitID, "noammo") < 2) then
+		if (Spring.GetUnitRulesParam(unitID, "noammo") or 0) < 2 then
 			if UnitDefs[unitDefID].hoverAttack then
 				Spring.MoveCtrl.SetGunshipMoveTypeData(unitID, "altitudeRate", 75)
 			else
