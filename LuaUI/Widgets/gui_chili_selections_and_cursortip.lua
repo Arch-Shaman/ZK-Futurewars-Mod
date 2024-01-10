@@ -778,10 +778,11 @@ local function GetUnitNeedRearm(unitID, unitDefID)
 end
 
 local function GetUnitAmmoPic(unitID, unitDefID)
-	if not ammoStateInfo[unitDefID] then
+	if not (ammoStateInfo[unitDefID] and unitID and Spring.ValidUnitID(unitID)) then
 		return
 	end
-	return ammoStateInfo[unitDefID].texture[spGetUnitRulesParam(unitID, "ammostate")+1]
+	local ammoState = spGetUnitRulesParam(unitID, "ammostate") or 0
+	return ammoStateInfo[unitDefID].texture[ammoState + 1]
 end
 
 local function GetManualFireReload(unitID, unitDefID)
