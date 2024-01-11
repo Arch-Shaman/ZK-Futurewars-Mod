@@ -1,3 +1,4 @@
 \sound_production
 \.git
 \.github
+\autopatchnotes
