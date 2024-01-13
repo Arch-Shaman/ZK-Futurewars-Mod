@@ -65,7 +65,7 @@ return {
 		sightDistance                 = 380,
 		upright                       = false,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 5,
+		workerTime                    = 10,
 		featureDefs                   = {
 			DEAD = {
 				blocking         = false,
