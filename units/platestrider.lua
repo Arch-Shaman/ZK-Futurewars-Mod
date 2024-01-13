@@ -26,6 +26,7 @@ return {
 		canGuard                      = true,
 		canMove                       = false,
 		canPatrol                     = true,
+		canAttack					  = true,
 		cantBeTransported             = true,
 		category                      = "FLOAT UNARMED",
 		collisionVolumeOffsets        = "0 0 0",
@@ -48,6 +49,7 @@ return {
 		floater                       = true,
 		footprintX                    = 2,
 		footprintZ                    = 2,
+		fireState 					  = 2,
 		iconType                      = "t3hub",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
@@ -57,6 +59,7 @@ return {
 		maxSlope                      = 15,
 		minCloakDistance              = 150,
 		movementClass                 = "KBOT4",
+		moveState					  = 1,
 		noAutoFire                    = false,
 		objectName                    = "striderplate.dae",
 		script                        = "striderplate.lua",
@@ -66,6 +69,43 @@ return {
 		upright                       = false,
 		useBuildingGroundDecal        = true,
 		workerTime                    = 10,
+		weapons             = {
+			{
+				def                = "AI_HAX",
+				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SUB SHIP SWIM FLOAT GUNSHIP HOVER",
+			},
+		},
+		weaponDefs = {
+			AI_HAX = {
+				name                    = "Hackzy hax, you now can attack!",
+				accuracy                = 0,
+				areaOfEffect            = 0,
+				avoidFriendly           = false,
+				avoidFeature            = false,
+				avoidGround             = true,
+				craterBoost             = 0,
+				craterMult              = 0,
+				customParams            = {
+					restrict_in_widgets = 1,
+					bogus = 1,
+				},
+				damage                  = {
+					default = 0.0,
+				},
+				fireTolerance           = 1820, -- 10 degrees
+				impulseBoost            = 0,
+				impulseFactor           = 0.2,
+				impactOnly				= true,
+				interceptedByShieldType = 1,
+				noSelfDamage            = true,
+				myGravity				= 0.03,
+				range                   = 1,
+				reloadtime              = 0.2,
+				turret                  = true,
+				weaponType              = "Cannon",
+				weaponVelocity          = 1600,
+			},
+		},
 		featureDefs                   = {
 			DEAD = {
 				blocking         = false,
