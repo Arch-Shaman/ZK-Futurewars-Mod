@@ -42,6 +42,7 @@ return {
 			shared_energy_gen = 1,
 			like_structure    = 1,
 			parent_of_plate   = "platestrider",
+			factory_land_state = 1,
 		},
 		explodeAs                     = "ESTOR_BUILDINGEX",
 		floater                       = true,
