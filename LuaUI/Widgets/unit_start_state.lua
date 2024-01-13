@@ -1342,10 +1342,10 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 
 	local name = ud.name
 	if unitAlreadyAdded[name] then
-		local builderDefID = builderID and Spring.GetUnitDefID(builderID) -- DO. NOT. CALL. THIS. FOR. EVERY. STATE! CPU cycles do not grow on trees!
+		local builderDefID = builderID and Spring.GetUnitDefID(builderID)
 		local isAFactory = false 
 		if builderDefID then
-			isAFactory = not notAFactory[builderDefID] -- this simplifies the check a bit, probably. note this hits athena only!
+			isAFactory = not notAFactory[builderDefID] and not UnitDefs[builderDefID].isMobileBuilder -- this simplifies the check a bit, probably. note this hits athena only!
 		end
 		local value = GetStateValue(name, "firestate0")
 		if value ~= nil then
