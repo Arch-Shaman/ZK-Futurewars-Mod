@@ -759,7 +759,7 @@ local function addUnit(defName, path)
 			name = "  Fly/Land State",
 			desc = "Values: inherit from factory, fly, land",
 			type = 'number',
-			value = (ud.customParams and ud.customParams.landflystate and ((ud.customParams.landflystate == "1" and 1) or 0)) or -1,
+			value = (ud.customParams and ud.customParams.landflystate and ud.customParams.landflystate == "1" and 1) or -1,
 			min = -1,
 			max = 1,
 			step = 1,
