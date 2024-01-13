@@ -1179,7 +1179,7 @@ AddFactoryOfUnits("factoryspider",  "platespider")
 AddFactoryOfUnits("factoryjump",    "platejump")
 AddFactoryOfUnits("factorytank",    "platetank")
 AddFactoryOfUnits("factoryship",    "plateship")
-AddFactoryOfUnits("striderhub")
+AddFactoryOfUnits("striderhub", "platestrider")
 AddFactoryOfUnits("staticmissilesilo")
 
 local buildOpts = VFS.Include("gamedata/buildoptions.lua")
