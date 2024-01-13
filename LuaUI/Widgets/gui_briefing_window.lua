@@ -66,10 +66,13 @@ do
 		lastSeenVersion = tonumber(VFS.Include(configLocation))
 		if lastSeenVersion == nil then lastSeenVersion = "0" end
 	else
-		lastSeenVersion = ""
+		lastSeenVersion = "0"
 	end
 	lastSeenVersion = tonumber(lastSeenversion) or 0
 	if splittedVersion[1] and splittedVersion[2] and splittedVersion[3] then
+		if splittedVersion[3] and tonumber(splittedVersion[3]) < 10 then
+			splittedVersion[3] = "0" .. splittedVersion[3]
+		end
 		local thisVersion = tonumber(splittedVersion[1] .. splittedVersion[2] .. "." .. splittedVersion[3])
 		if lastSeenVersion == 0 then
 			showBriefing = true
