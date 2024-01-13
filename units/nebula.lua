@@ -30,6 +30,7 @@ return {
 			outline_x = 420,
 			outline_y = 420,
 			outline_yoff = 40,
+			landflystate = 1,
 		},
 		explodeAs              = "LARGE_BUILDINGEX",
 		floater                = true,
