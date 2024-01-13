@@ -5,7 +5,7 @@ local function PreprendTable(prependee, prepender)
 	return prepender
 end
 
-local lastWrittenVersion = 38.11
+local lastWrittenVersion = 39.0
 local showBriefing = false
 local configLocation = "luaui\\config\\fw_patchnotes.lua"
 local gameVersion = Game.gameVersion
