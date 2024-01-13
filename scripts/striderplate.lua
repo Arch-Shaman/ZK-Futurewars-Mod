@@ -13,8 +13,25 @@ local nanoPieces = { piece "aim" }
 
 local nanoTurnSpeedHori = 0.5 * math.pi
 local nanoTurnSpeedVert = 0.3 * math.pi
+local enabled = false
+
+local function CheckStateThread()
+	local noParent
+	while true do
+		noParent = (Spring.GetUnitRulesParam(unitID, "nofactory") or 0) == 1
+		if enabled and noParent then
+			SetUnitValue(COB.INBUILDSTANCE, 0)
+			enabled = false
+		elseif not enabled and not noParent then
+			SetUnitValue(COB.INBUILDSTANCE, 1)
+			enabled = true
+		end
+		Sleep(100)
+	end
+end
 
 function script.Create()
+	StartThread(CheckStateThread)
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	StartThread(GG.NanoAim.UpdateNanoDirection, unitID, nanoPieces, 1000, nanoTurnSpeedHori, nanoTurnSpeedVert)
 	Spring.SetUnitNanoPieces(unitID, {emitnano})

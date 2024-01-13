@@ -10,7 +10,7 @@ function gadget:GetInfo()
 		date      = "15 August, 2022",
 		license   = "CC-0",
 		layer     = 0, -- low enough to catch any geo creation.
-		enabled   = true,
+		enabled   = false,
 	}
 end
 
