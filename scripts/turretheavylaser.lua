@@ -1,6 +1,6 @@
 include "constants.lua"
 include "pieceControl.lua"
-include "aimPosTerraform.lua"
+
 local scriptReload = include("scriptReload.lua")
 ----------------------------------------------------------------------------------------------
 -- Model Pieces
