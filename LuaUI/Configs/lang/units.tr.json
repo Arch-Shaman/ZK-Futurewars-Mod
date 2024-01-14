@@ -1,4 +1,9 @@
 {
+	"factoryfake" : {
+		"name" : "Bana dikkat etmeyin!",
+		"description" : "Ben sadece birimleri toplamak için varım.",
+		"helptext" : "Merhaba Machan. Şimdi veri madenciliğine mi giriyorsunuz?"
+	},
     "starlight_satellite": {
         "name": "Parıltı",
         "description": "Yıldızışığı ışın uydusu",

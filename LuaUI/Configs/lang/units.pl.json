@@ -1,4 +1,9 @@
 {
+	"factoryfake" : {
+		"name" : "Hack interfejsu użytkownika",
+		"description" : "Nic tu nie widzieć, oficer.",
+		"helptext" : "Etana, etana, mitä sä täällä teet? Olet niin kaunis, niin lihava, että sinusta tulee kaalisäkki."
+	},
 	"starlight_satellite" : {
 		"name" : "Glint",
 		"description" : "Satelita",

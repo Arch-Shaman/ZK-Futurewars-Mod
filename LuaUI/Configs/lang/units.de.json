@@ -1,4 +1,9 @@
 {
+	"factoryfake" : {
+		"name" : "UI HAX",
+		"description" : "You are hacking",
+		"helptext" : "YOU ARE IN VIOLATION OF EDF LAWS AND REGULATIONS!"
+	},
 	"tankaa" : {
 		"name" : "Ettin",
 		"description" : "Flakpanzer",

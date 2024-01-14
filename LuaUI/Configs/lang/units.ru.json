@@ -1,4 +1,9 @@
 {
+	"factoryfake" : {
+		"name" : "Секретный блок режима бога",
+		"description" : "Это совершенно секретно.",
+		"helptext" : "Bạn có thể kiểm tra nếu người Việt Nam là có thể! Đó là những gì bạn nhận được khi đột nhập vào hang ổ bí mật của chúng tôi."
+	},
 	"starlight_satellite" : {
 		"name" : "Отблеск",
 		"description" : "Спутник-ретранслятор Звёздного света",

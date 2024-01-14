@@ -1,4 +1,9 @@
 {
+	"factoryfake" : {
+		"name" : "偽の工場ユニット",
+		"description" : "トップシークレット!! 見ない！",
+		"helptext" : "なぜゲームをハッキングしているのですか？"
+	},
 	"starlight_satellite" : {
 		"name" : "闪烁",
 		"description" : "星光中继卫星",
