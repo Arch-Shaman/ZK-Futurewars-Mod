@@ -71,6 +71,7 @@ local cmds = {
 	MISC_PRIORITY = 34221,
 	RETREAT = 34223,
 	RETREATSHIELD = 34224,
+	QUEUE_MODE = 34225,
 	UNIT_BOMBER_DIVE_STATE = 34281, -- bomber dive
 	AP_FLY_STATE = 34569, -- unit_air_plants
 	AP_AUTOREPAIRLEVEL = 34570, -- unit_air_plants
