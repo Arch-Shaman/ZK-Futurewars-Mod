@@ -66,7 +66,6 @@ return {
 		collisionVolumeType    = "ellipsoid",
 		cruiseAlt           = 110,
 		customParams        = {
-			airstrafecontrol = "1",
 			modelradius    = "15",
 			isfakefactory = 1,
 			notreallyafactory = 1,
