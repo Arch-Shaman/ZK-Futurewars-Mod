@@ -46,6 +46,7 @@ local tooltips = {
 	FIRECYCLE = "Spread napalm (_STATE_)\nSets whether this unit should prioritize spreading burning status.",
 	ARMORSTATE = "Hunker (_STATE_)\n Hunker down to reduce damage but lose access to weapons.",
 	AMMOSTATE = "Selected Ammo: _STATE_\n_DESCRIPTION_",
+	QUEUEMODE = "Rally Point Edit Mode: _STATE_\nThis controls whether or not the commands will be used for rally point or for unit control."
 }
 
 local tooltipsAlternate = {
@@ -351,6 +352,13 @@ local commandDisplayConfig = {
 			tooltips.TOGGLE_DRONES:gsub("_STATE_", "Disabled"),
 			tooltips.TOGGLE_DRONES:gsub("_STATE_", "Enabled"),
 		}
+	},
+	[CMD_QUEUE_MODE] = {
+		texture = {imageDir .. 'states/queueoff.png', imageDir .. 'states/queueon.png'},
+		stateTooltip = {
+			tooltips.QUEUEMODE:gsub("_STATE_", "Unit Command"),
+			tooltips.QUEUEMODE:gsub("_STATE_", "Rally point"),
+		},
 	},
 }
 

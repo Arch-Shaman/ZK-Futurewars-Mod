@@ -76,6 +76,8 @@ local cmdPosDef = {
 	[CMD_FACTORY_GUARD]    = {pos = 6, posSimple = 5, priority = 3},
 	[CMD_FIRECYCLE]        = {pos = 6, priority = 5},
 	[CMD_AUTOJUMP]         = {pos = 1, priority = 5},
+	[CMD_QUEUE_MODE]       = {pos = 1, priority = 5},
+	[CMD_AIR_STRAFE]       = {pos = 1, priority = 99},
 	
 	[CMD_SELECTION_RANK]   = {pos = 6, posSimple = 1, priority = 1.5},
 	

@@ -37,6 +37,7 @@ local stateData = {
 	[CMD_OVERRECLAIM] = 2,
 	[CMD_FIRECYCLE] = 2,
 	[CMD_ARMORSTATE] = 2,
+	[CMD_QUEUE_MODE] = 2,
 }
 
 local specialHandling = {
@@ -68,6 +69,7 @@ local gadgetReverse = {
 	[CMD_OVERRECLAIM] = true,
 	[CMD_FIRECYCLE] = true,
 	[CMD_ARMORSTATE] = true,
+	[CMD_QUEUE_MODE] = true,
 }
 
 for id, num in pairs(extraStateTypes) do

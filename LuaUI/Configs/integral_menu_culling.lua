@@ -63,6 +63,7 @@ local configList = {
 	{cmdID = CMD_AUTOJUMP              , state = true, default = true, name = "Autojump"},
 	{cmdID = CMD_ARMORSTATE            , state = true, default = true, name = "Hunker Down"},
 	{cmdID = CMD_OVERRECLAIM           , state = true, default = true, name = "Overreclaim Prevention"},
+	{cmdID = CMD_QUEUE_MODE            , state = true, default = true, name = "Rally Point Edit Mode"},
 
 	{label = "Advanced States (hidden by default)"},
 	{cmdID = CMD_DISABLE_ATTACK        , state = true, default = false, name = "Allow Attack Commands"},
