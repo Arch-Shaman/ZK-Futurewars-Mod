@@ -24,7 +24,7 @@ return {
 		},
 		buildPic                      = "striderhub.png",
 		canGuard                      = true,
-		canMove                       = false,
+		canMove                       = true,
 		canAttack					  = true,
 		canPatrol                     = true,
 		cantBeTransported             = true,
@@ -44,6 +44,9 @@ return {
 			like_structure    = 1,
 			parent_of_plate   = "platestrider",
 			factory_land_state = 1,
+			ismobilefac = 1,
+			wantsqueuemode = 1, -- default place into "queue mode"
+			cantreallyattack = 1, -- block attack from non-queue.
 		},
 		explodeAs                     = "ESTOR_BUILDINGEX",
 		floater                       = true,
