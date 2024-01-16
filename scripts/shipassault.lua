@@ -151,7 +151,7 @@ function script.FireWeapon(num)
 	end
 end
 
-function script.Shot()
+function script.Shot(num)
 	if num == 1 then
 		gun_1 = 1 - gun_1
 		if  gun_1 == 0 then

@@ -26,6 +26,36 @@ local CurrentBank = 0
 local elevationSpeed = math.rad(6)
 local azimuthSpeed = math.rad(25)
 
+local gun_yaw = 0
+
+--rockz
+include "rockPiece.lua"
+local dynamicRockData
+
+local ROCK_FORCE_X = -0.125
+local ROCK_FORCE_Y = -0.25
+
+local rockData = {
+	[x_axis] = {
+		piece = base,
+		speed = 5,
+		decay = -1/2,
+		minPos = math.rad(2.5),
+		maxPos = math.rad(10),
+		signal = 32,
+		axis = x_axis,
+	},
+	[y_axis] = {
+		piece = base,
+		speed = 5,
+		decay = -1/2,
+		minPos = math.rad(5),
+		maxPos = math.rad(20),
+		signal = 64,
+		axis = y_axis,
+	},
+}
+
 local function Wake()
 	Signal(SIG_MOVE)
 	SetSignalMask(SIG_MOVE)
@@ -59,8 +89,9 @@ local function SetAbleToMove(newMove)
 end
 
 local function Erect()
-	Signal(SIG_AIM)
-	SetSignalMask(SIG_AIM)
+	-- Don't set signals because this is called from aimweapon and spring complains if we set signals
+	--Signal(SIG_AIM)
+	--SetSignalMask(SIG_AIM)
 	SetAbleToMove(false)
 	Move(beamCannonTurret, z_axis, 0, 5)
 	Move(beamCannonGun,    y_axis, 0, 11)
@@ -118,6 +149,7 @@ function script.Create()
 --	StartThread(Bank)
 	Move(beamCannonGun, y_axis, 43.151)
 	Move(beamCannonTurret, z_axis, -10)
+	dynamicRockData = GG.ScriptRock.InitializeRock(rockData)
 end
 
 function script.QueryWeapon()
@@ -144,10 +176,25 @@ function script.AimWeapon(num, heading, pitch)
 	Turn(beamCannonTurret, x_axis, -pitch, elevationSpeed)
 	WaitForTurn(azimuthHack, z_axis)
 	WaitForTurn(beamCannonTurret, x_axis)
+	gun_yaw = heading
 	return true
 end
 
-function script.Killed()
+function script.FireWeapon(num)
+	if num == 1 then
+		StartThread(GG.ScriptRock.Rock, dynamicRockData[x_axis], math.pi/2-gun_yaw, ROCK_FORCE_X)
+		StartThread(GG.ScriptRock.Rock, dynamicRockData[y_axis], gun_yaw, ROCK_FORCE_Y)
+	end
+end
+
+function script.Shot(num)
+	if num == 1 then
+		Move(beamCannonGun, y_axis, 15)
+		Move(beamCannonGun, y_axis, 0, 15)
+	end
+end
+
+function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
 	Explode( body, SFX.SHATTER)
 	if  severity <= 0.25  then
