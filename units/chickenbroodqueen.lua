@@ -178,7 +178,7 @@ return {
 				name                    = "Explosive Spores",
 				areaOfEffect            = 96,
 				avoidFriendly           = false,
-				burst                   = 12,
+				burst                   = 10,
 				burstrate               = 2/30,
 				collideFriendly         = false,
 				craterBoost             = 0,
