@@ -45,6 +45,7 @@ local spGetSpectatingState = Spring.GetSpectatingState
 local spGetBuildFacing     = Spring.GetBuildFacing
 local spPos2BuildPos       = Spring.Pos2BuildPos
 local spIsSphereInView     = Spring.IsSphereInView
+local spGetGroundHeight    = Spring.GetGroundHeight
 
 local glCallList      = gl.CallList
 local glColor         = gl.Color
@@ -78,6 +79,8 @@ local pylonDefs = {}
 local isBuilder = {}
 local floatOnWater = {}
 local fpTable = {} -- stores building FootPrints. UnitDefID = {x = num, z = num}
+
+local allPylons = {length = 0, data = {}} -- [1] = {x, z, radius}
 
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 local queuedPylons = IterableMap.New() -- {unitID = {[1] = {x, z, def} . . .}
@@ -157,20 +160,52 @@ local function QueueList()
 end
 
 local function UpdateQueueList()
+	if alwaysHighlight then return end
 	glDeleteList(drawQueueList or 0)
 	drawQueueList = glCreateList(QueueList)
 end
 
-local function AllQueue()
-	glColor(queuedColor)
-	for unitID, data in IterableMap.Iterator(queuedPylons) do
-		if showAllies or Spring.GetUnitTeam(unitID) == playerTeamID then
-			--Spring.Echo("Make list volume: " .. unitID .. "data: " .. tostring(data))
-			for i = 1, #data do
-				--Spring.Echo(i .. ":" .. tostring(data[i].x) .. ", " .. tostring(data[i].z) .. ", " .. tostring(data[i].range) .. ", " .. tostring(data[i].team))
-				drawGroundCircle(data[i].x, data[i].z, data[i].range)
+local function AddEntryToList(x, z, def, range, team, facing) -- prevent repeats!
+	if allPylons.length > 0 then
+		for i = 1, allPylons.length do
+			local entry = allPylons.data[i]
+			if entry.x == x and entry.z == z and entry.def == def then
+				return
 			end
 		end
+	end
+	allPylons.length = allPylons.length + 1
+	if allPylons.data[allPylons.length] then
+		local entry = allPylons.data[allPylons.length]
+		entry.x = x
+		entry.y = spGetGroundHeight(x, z)
+		entry.z = z
+		entry.def = def
+		entry.range = range
+		entry.team = team
+	else
+		allPylons.data[allPylons.length] = {x = x, y = spGetGroundHeight(x, z), z = z, range = range, def = def, team = team, facing = facing}
+	end
+end
+
+local function AllQueue()
+	glColor(queuedColor)
+	allPylons.length = 0 -- reset the list.
+	for unitID, data in IterableMap.Iterator(queuedPylons) do
+		if showAllies or Spring.GetUnitTeam(unitID) == playerTeamID then
+			
+			--Spring.Echo("Make list volume: " .. unitID .. "data: " .. tostring(data))
+			for i = 1, #data do
+				--              x, z, def, range, team, facing
+				AddEntryToList(data[i].x, data[i].z, data[i].def, data[i].range, Spring.GetUnitTeam(unitID), data[i].facing)
+				--Spring.Echo(i .. ":" .. tostring(data[i].x) .. ", " .. tostring(data[i].z) .. ", " .. tostring(data[i].range) .. ", " .. tostring(data[i].team))
+				--drawGroundCircle(data[i].x, data[i].z, data[i].range)
+			end
+		end
+	end
+	for i = 1, allPylons.length do
+		local entry = allPylons.data[i]
+		drawGroundCircle(entry.x, entry.z, entry.range)
 	end
 	glColor(1, 1, 1, 1)
 	glClear(GL.STENCIL_BUFFER_BIT, 0)
@@ -661,31 +696,23 @@ function widget:SelectionChanged(selectedUnits)
 	UpdateQueueList()
 end
 
-local spGetGroundHeight = Spring.GetGroundHeight
-
 function widget:DrawWorld()
 	if Spring.IsGUIHidden() or not (playerIsPlacingPylon or alwaysHighlight) then return end
 	glDepthMask(true)
 	glDepthTest(GL.LEQUAL)
 	glColor(1.0, 1.0, 1.0, 0.20)
-	for unitID, data in IterableMap.Iterator(queuedPylons) do
-		local team = Spring.GetUnitTeam(unitID)
-		if showAllies or team == playerTeamID then
-			local x, z
-			for i = 1, #data do
-				x = data[i].x
-				z = data[i].z
-				if spIsSphereInView(x, data[i].y, z, 30) then
-					local facing = data[i].facing or 1
-					glPushMatrix()
-						gl.LoadIdentity()
-						glTranslate(x, spGetGroundHeight(x, z), z)
-						glRotate(90 * facing, 0, 1, 0)
-						glTexture("%"..data[i].def..":0") 
-						glUnitShape(data[i].def, team, false, false, false) -- gl.UnitShape(bDefID, teamID, false, false, false)
-					glPopMatrix()
-				end
-			end
+	for i = 1, allPylons.length do
+		local entry = allPylons.data[i]
+		local x, y, z = entry.x, entry.y, entry.z
+		if spIsSphereInView(x, y, z, 30) then
+			local facing = entry.facing or 1
+			glPushMatrix()
+				gl.LoadIdentity()
+				glTranslate(x, spGetGroundHeight(x, z), z)
+				glRotate(90 * facing, 0, 1, 0)
+				glTexture("%"..entry.def..":0") 
+				glUnitShape(entry.def, entry.team, false, false, false) -- gl.UnitShape(bDefID, teamID, false, false, false)
+			glPopMatrix()
 		end
 	end
 	glColor(1,1,1,1)
