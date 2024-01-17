@@ -60,8 +60,9 @@ queenTime = 35*60 -- hive anger counts up to queenTime through angerTime
                   -- an average game of chicken should last 40-50mins
 
 gracePeriod = 210
-
 chickenSpawnRate = 350
+rampUpTime = 500
+
 minBurrows = 10	-- Amount of burrows to have at 0:00
 maxBurrows = 50	-- Amount of burrows to have at queenTime
 
@@ -86,7 +87,7 @@ menaceMaxNum = 2
 menaceScalingMult = 1
 
 strengthPerBurrow = 0.92	-- multiply strength by this when a burrow dies
-strengthPerSecond = 0.0025	-- how much strength increases per second
+strengthPerSecond = 0.003	-- how much strength increases per second
 
 wrathPerBurrow = 0.09	-- how much wrath increases per wave
 wrathPerSecond = 0.003	-- how much wrath increases per second
@@ -96,9 +97,9 @@ techPerIncome = 30
 techPerPlayer = -300
 
 scoreMult = 1
-scoreQueenTime = 2500
+scoreQueenTime = 2000
 scorePerBurrow = 25
-scorePerQueen = 1500
+scorePerQueen = 1000
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -140,6 +141,7 @@ chickenUnion = {}
 chickenTypes = {}
 chickenStructures = {}
 chickenMenaces = {}
+chickensThatNeedBogusDefs = {}
 
 chickenUncapturable = {}
 
@@ -163,18 +165,33 @@ for uid, uDef in pairs(UnitDefs) do
 		if not params.chicken_roost then
 			chickenUnion[uid] = data
 		end
+		if params.chicken_needs_bogus_defs then
+			chickensThatNeedBogusDefs[uDef.name] = true
+		end
 	end
 end
 
+cocoonMode = true
+
 menaceNames = {
-	chicken_dragon = {},
-	chickenbroodqueen = {spawns = 0.25},
-	chickenspire = {immobile = true}
+	chicken_dragon = {
+		cocoon = "chicken_dragon_cocoon",
+	},
+	chickenbroodqueen = {
+		cocoon = "chickenbroodqueen_cocoon",
+		spawns = 0.25,
+	},
+	chickenspire = {
+		cocoon = "chickenspire_cocoon",
+		immobile = true,
+	},
 }
 menaceDefs = {}
 
 for k, v in pairs(menaceNames) do
 	v.name = k
+	v.cocoonID = UnitDefNames[v.cocoon].id
+	
 	menaceDefs[UnitDefNames[k].id] = v
 end
 
@@ -196,79 +213,106 @@ end
 	
 difficulties = {
 	['Beginner'] = {
-		queenTime	    = 45*60,
-		gracePeriod      = 270,
-		chickenSpawnRate = 450,
+		queenTime	    = 50*60,
+		gracePeriod      = 330,
+		chickenSpawnRate = 500,
 		rampUpTime       = 1200,
-		waveSizeMult     = 0.3,
+		waveSizeMult     = 0.2,
 		strengthPerSecond = 0.0015,
 		menaceStartWave  = 3,
 		menaceStartNum   = 1,
 		menaceMaxNum     = 1,
 		menaceEvoMod     = -3,
+		defenseMult      = 0.2,
+		defenseEvoMult   = 0.5,
+		maxBurrows       = 15,
+		cookeryPerSecond = 0,
+		techCostMult     = 1.6,
+		scoreMult        = 0.2,
+	},
+	
+	['Very Easy'] = {
+		queenTime	    = 45*60,
+		gracePeriod      = 290,
+		chickenSpawnRate = 450,
+		rampUpTime       = 1200,
+		waveSizeMult     = 0.3,
+		strengthPerSecond = 0.002,
+		menaceStartWave  = 3,
+		menaceStartNum   = 1,
+		menaceMaxNum     = 1,
+		menaceEvoMod     = -2,
 		defenseMult      = 0.3,
 		defenseEvoMult   = 0.6,
 		maxBurrows       = 20,
 		cookeryPerSecond = 0,
 		techCostMult     = 1.4,
-		scoreMult        = 0.2,
+		scoreMult        = 0.35,
 	},
 	
-	['Very Easy'] = {
+	['Easy'] = {
 		queenTime	    = 40*60,
-		gracePeriod	  = 240,
+		gracePeriod	  = 250,
 		chickenSpawnRate = 400,
 		rampUpTime	   = 900,
 		waveSizeMult	 = 0.5,
-		strengthPerSecond = 0.002,
+		strengthPerSecond = 0.0025,
 		menaceStartNum   = 1,
 		menaceMaxNum     = 2,
 		menaceEvoMod     = -2,
 		defenseMult      = 0.5,
 		defenseEvoMult   = 0.8,
-		specialPowers	 = {},
 		techCostMult     = 1.2,
-		scoreMult		 = 0.35,
+		scoreMult		 = 0.6,
 	},
 
-	['Easy'] = {
+	['Normal'] = {
 		waveSizeMult	 = 0.7,
 		defenseEvoMult   = 0.9,
 		techCostMult     = 1.1,
 		menaceEvoMod     = -1,
 		defenseMult      = 0.7,
-		scoreMult		= 0.6,
-	},
-
-	['Normal'] = {
+		scoreMult		= 1,
 	},
 
 	['Hard'] = {
 		waveSizeMult	 = 1.5,
-		techCostMult     = 0.9,
-		strengthPerSecond = 0.003,
-		menaceEvoMod     = 1,
-		defenseMult      = 1.25,
-		scoreMult   	 = 1.75,
-	},
-	
-	['Suicidal'] = {
-		waveSizeMult	 = 2.5,
-		waveDespawn      = false,
-		menaceEvoMod     = 2,
-		techCostMult     = 0.7,
-		strengthPerSecond = 0.003,
-		defenseMult      = 1.5,
-		scoreMult   	 = 5,
+		scoreMult   	 = 2.5,
 	},
 
+	['Suicidal'] = {
+		waveSizeMult	 = 2.5,
+		techCostMult     = 0.85,
+		rampUpTime       = 350,
+		menaceEvoMod     = 1,
+		defenseEvoMult   = 1.2,
+		scoreMult   	 = 6.9,
+	},
+	
+	--['Suicidal'] = {
+	--	waveSizeMult	 = 2.5,
+	--	waveDespawn      = false,
+	--	rampUpTime       = 350,
+	--	menaceEvoMod     = 2,
+	--	techCostMult     = 0.7,
+	--	defenseMult      = 1.5,
+	--	scoreMult   	 = 5,
+	--},
+
 	['Custom'] = {
-		chickenSpawnRate = modoptions.chickenspawnrate or 350,
-		techCostMult     = (modoptions.techtimemult or 1),
-		waveSizeMult    = modoptions.wavesizemult or 1,
-		queenTime		= (modoptions.queentime or 35)*60,
-		gracePeriod		= (modoptions.graceperiod and modoptions.graceperiod * 60) or 210,
-		scoreMult		= 0,
+		queenTime	    = modoptions.queentime and modoptions.queentime*60 or queenTime,
+		gracePeriod	  = modoptions.gracePeriod or gracePeriod,
+		chickenSpawnRate = modoptions.chickenspawnrate or chickenSpawnRate,
+		rampUpTime	   = modoptions.ramppptime or rampUpTime,
+		waveSizeMult	 = modoptions.wavesizemult or waveSizeMult,
+		strengthPerSecond = modoptions.strengthpersecond and modoptions.strengthpersecond/100 or strengthPerSecond,
+		menaceStartWave  = modoptions.menacestartwave or menaceStartWave,
+		menaceStartNum   = modoptions.menacestartnum or menaceStartNum,
+		menaceMaxNum     = modoptions.menacemaxnum or menaceMaxNum,
+		menaceEvoMod     = modoptions.menaceevomod or menaceMaxNum,
+		defenseMult      = modoptions.chickendefensemult or defenseMult,
+		defenseEvoMult   = modoptions.chickendefenseevomult or defenseEvoMult,
+		techCostMult     = modoptions.chickentechcostmult or techCostMult,
 	},
 }
 
@@ -288,21 +332,19 @@ for _, d in pairs(difficulties) do
 	d.timeSpawnBonus = (d.timeSpawnBonus or 0)/60
 
 	if modoptions.speedchicken == "1" then
-		d.timeModifier = (d.timeModifier or 1)*0.5
-		d.waveSizeMult = (d.waveSizeMult or waveSizeMult)*0.85
-		d.gracePeriod = (d.gracePeriod or gracePeriod)*0.5
-		d.gracePenalty = (d.gracePenalty or gracePenalty)*0.5
-		d.gracePeriodMin = (d.gracePeriodMin or gracePeriodMin)*0.5
-		d.timeSpawnBonus = (d.timeSpawnBonus or 1)*1.5
 		d.queenTime = (d.queenTime or queenTime)*0.5
-		d.queenHealthMod = (d.queenHealthMod or 1)*0.4
-		d.miniQueenTime = {}
-		d.endMiniQueenWaves = (d.endMiniQueenWaves or endMiniQueenWaves) - 1
-		d.burrowQueenTime = (d.burrowQueenTime or burrowQueenTime)*0.5
-		d.techAccelPerPlayer = (d.techAccelPerPlayer or techAccelPerPlayer)*0.5
-		d.humanAggroTechTimeProgress = (d.humanAggroTechTimeProgress or humanAggroTechTimeProgress)*0.5
-		d.burrowRegressTime = (d.burrowRegressTime or burrowRegressTime)*0.5
-		d.queenSpawnMult = (d.queenSpawnMult or queenSpawnMult)*0.4
+		d.gracePeriod = (d.gracePeriod or gracePeriod)*0.75
+		d.chickenSpawnRate = (d.chickenSpawnRate or chickenSpawnRate)*0.75
+		d.rampUpTime = (d.rampUpTime or rampUpTime)*0.5
+		d.waveSizeMult = (d.waveSizeMult or waveSizeMult)*0.85
+		-- nothing for d.strengthPerSecond
+		-- nothing for d.menaceStartNum
+		-- nothing for d.menaceMaxNum
+		d.menaceEvoMod = (d.menaceEvoMod or menaceEvoMod)-1
+		d.defenseMult = (d.defenseMult or defenseMult)*0.85
+		-- nothing for d.defenseEvoMult
+		-- nothing for d.defenseEvoMult
+		d.techCostMult = (d.techCostMult or techCostMult)*0.75
 	end
 end
 
