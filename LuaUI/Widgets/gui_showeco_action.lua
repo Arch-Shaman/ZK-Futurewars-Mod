@@ -352,6 +352,12 @@ function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	end
 end
 
+function widget:UnitIdle(unitID, unitDefID, unitTeam)
+	if isBuilder[unitDefID] then
+		widget:UnitCommand(unitID, unitDefID, unitTeam, CMD.STOP)
+	end
+end
+
 function widget:UnitFinished(unitID, unitDefID, unitTeam)
 	if isBuilder[unitDefID] then
 		IterableMap.Add(queuedPylons, unitID, {taglookup = {}, clearedRecently = false})
@@ -492,7 +498,7 @@ function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 		elseif cmdID >= 10 and not (cmdID == 80 or cmdID == 31110 or fromLua) then
 			if (not (cmdOpts.shift or cmdOpts.meta) or cmdID == CMD.STOP) and #data > 0 then
 				ClearData(data)
-				--Spring.Echo("[Ecoview] Queue cleared.")
+				IterableMap.Add(needsUpdate, unitID, true)
 				queueAltered = true
 			end
 		elseif cmdID == CMD.INSERT and cmdParams[2] and cmdParams[2] < 0 then
@@ -565,13 +571,7 @@ end
 
 function widget:UnitCmdDone(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts, cmdTag)
 	if isBuilder[unitDefID] then
-		local data = IterableMap.Get(queuedPylons, unitID)
-		if data == nil then
-			data = {taglookup = {}, clearedRecently = false}
-			IterableMap.Add(queuedPylons, unitID, data)
-		end
-		data.clearedRecently = false
-		UpdateAllQueuesList()
+		IterableMap.Add(needsUpdate, unitID, true)
 	end
 end
 
@@ -604,14 +604,12 @@ end
 function widget:GameFrame(f)
 	if f%32 == 2 then
 		lastFrame = f
-		local spec = spGetSpectatingState()
-		if spec then
-			for unitID, data in IterableMap.Iterator(queuedPylons) do
-				local currentBuilding = Spring.GetUnitIsBuilding(unitID)
-				if data[1] and data[1].def == currentBuilding then
-					ShiftFromTable(data, 1)
-					data.clearedRecently = true
-				end
+		for unitID, data in IterableMap.Iterator(queuedPylons) do
+			local currentBuilding = Spring.GetUnitIsBuilding(unitID)
+			if data[1] and data[1].def == currentBuilding then
+				ShiftFromTable(data, 1)
+				data.clearedRecently = true
+				UpdateAllQueuesList()
 			end
 		end
 	end
