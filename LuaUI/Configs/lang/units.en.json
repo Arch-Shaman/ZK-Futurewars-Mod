@@ -289,6 +289,21 @@
 		"description" : "Indestructible Chicken Shield (Anti-Artillery)",
 		"helptext" : "The Rafflesia protects nearby chicken units and structures with its shield."
 	},
+	"chicken_dragon_cocoon" : {
+		"name" : "White Dragon Cocoon",
+		"description" : "Will hatch into a white dragon if not destroyed",
+		"helptext" : "This cocoon contains a young white dragon. If it is allowed to mature and hatch, then you will soon find yourself on the receiving end of deadly acid blasts and terrifying jaws. However, this cocoon is generating a specialiseed shield around itself, rendering it invulerable to long range artillery. Mobilising your forces to destroy this cocoon is critical if you want to survive."
+	},
+	"chickenspire_cocoon" : {
+		"name" : "Greater Spire Cocoon",
+		"description" : "Will hatch into a greater spire if not destroyed",
+		"helptext" : "This cocoon contains a partial greater spire. If it is allowed to mature and complete, then you will soon find yourself on the receiving end of very long range spore bombardment. However, this cocoon is generating a specialiseed shield around itself, rendering it invulerable to long range artillery. Mobilising your forces to destroy this cocoon is critical if you want to survive."
+	},
+	"chickenbroodqueen_cocoon" : {
+		"name" : "Brood Princess Cocoon",
+		"description" : "Will hatch into a brood princess if not destroyed",
+		"helptext" : "This cocoon contains a young brood princess. If it is allowed to mature and hatch, then you will soon find yourself on the receiving end of long range spores and an even more numerous swarm. However, this cocoon is generating a specialiseed shield around itself, rendering it invulerable to long range artillery. Mobilising your forces to destroy this cocoon is critical if you want to survive."
+	},
 	"empiricaldpser" : {
 		"name" : "Empirical DPS thing",
 		"description" : "Shoot at it for science.",
@@ -842,7 +857,7 @@
 	"chickenspire" : {
 		"name" : "Greater Spire",
 		"description" : "Ultimate Artillery Chicken Menace",
-		"helptext" : "Long range static artillery."
+		"helptext" : "The greater spire is the chicken hive's ultimate answer to long range bombardment. This massive biological artillery piece is capable of spewing impossible amounts of deadly explosive spores at any who has the unfortunate fate of facing off against the hive. Beware, for underestimating a chicken menace suck as the greater spire is something you'll only do once."
 	},
 	"turretemp" : {
 		"name" : "Pulse",
@@ -857,7 +872,7 @@
 	"chicken_dragon" : {
 		"name" : "White Dragon",
 		"description" : "Ultimate Assault Chicken Menace",
-		"helptext" : "The White Dragons, senior guardians of the chicken hive, are monstrous beings second only to the queen herself. With a powerful stomp, lethal jaws, corrosive goo and a multitude of spores, they are a threat to be feared indeed."
+		"helptext" : "The white dragon is the chicken hive's ultimate answer to direct ground assault. Towering above anything short of a superstrider, It's impossibly strong carapace and untold auxillary organs means it's capable of withstanding the firepower of even a superweapon. Beware, for underestimating a chicken menace suck as the white dragon is something you'll only do once."
 	},
 	"chickens" : {
 		"name" : "Spiker",
@@ -882,7 +897,7 @@
 	"chickenbroodqueen" : {
 		"name" : "Brood Princess",
 		"description" : "Artillery/Spawner Chicken Menace",
-		"helptext" : "The egg-laying brood queen is not quite as fearsome in combat as the other queen, but can in the long run present an even bigger threat. It produces all the different chicken breeds of the Thunderbirds."
+		"helptext" : "The brood princess is the chicken hive's ultimate tool for supporting it's hordes in combat. With long range bombardment spores, one immensely powerful area shield, and the ability to birth new chickens on the move, the brood princess is able to act as a force amplifier to the hive's already massive swarm. Beware, for underestimating a chicken menace suck as the brood princess is something you'll only do once."
 	},
 	"cloakaa" : {
 		"name" : "Gremlin",
@@ -1176,8 +1191,8 @@
 	},
 	"tankheavyarty" : {
 		"name" : "Orion",
-		"description" : "Heavy Saturation Artillery Tank",
-		"helptext" : "The principle behind the Orion is simple: flood an area with enough shots, and you'll hit something at least once. Slow, clumsy, vulnerable and extremely frightening, the Orion works best against high-density target areas, where its saturation shots are most likely to do damage. It pulverizes shields in seconds and its shells smooth terrain."
+		"description" : "Ultraheavy artillery tank",
+		"helptext" : "The principle behind the Orion is simple: the bigger the gun, the bigger the devasation. And now, witness that principle take to it's logical extreme: A tank carring the single biggest gun any mobile unit could possibly field. The orion's desolation cannon is capable of erasing enemies from existance from across the continent. Finally, we might just have enough gun."
 	},
 	"tankraid" : {
 		"name" : "Trailblazer",
