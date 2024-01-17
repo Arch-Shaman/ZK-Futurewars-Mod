@@ -16,6 +16,7 @@ return {
 		customParams        = {
 			chicken = "uwu",	
 			chicken_shield = ">w<",
+			chicken_needs_bogus_defs = "something normal for once",
 			fireproof          = 1,
 			shield_emit_height = 32,
 			shield_emit_offset = -4,

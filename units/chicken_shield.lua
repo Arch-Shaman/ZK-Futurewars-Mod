@@ -15,6 +15,7 @@ return {
 		customParams        = {
 			chicken = "uwu",
 			chicken_shield = "uwu",
+			chicken_needs_bogus_defs = "something normal for once",
 			shield_emit_height = 26,
 			shield_emit_offset = 0,
 			model_rescale = 1.4,

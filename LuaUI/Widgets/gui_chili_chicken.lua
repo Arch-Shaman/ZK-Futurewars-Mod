@@ -297,6 +297,16 @@ function ChickenEvent(chickenEventArgs)
 		
 		waveTime = Spring.GetTimer()
 		
+		local contentsString = ""
+		for i, entry in pairs(chickenEventArgs.wave) do
+			contentsString = contentsString .. GetColouredName(entry[1])
+			if i < #chickenEventArgs.wave then
+				contentsString = contentsString .. ", "
+			end
+		end
+		
+		label_contents:SetCaption("Wave contents: " .. contentsString)
+		
 	-- table.foreachi(waveMessage, print)
 	-- local t = Spring.GetGameSeconds()
 	-- print(string.format("time %d:%d", t/60, t%60))

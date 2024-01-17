@@ -7,16 +7,9 @@ local function genChix(name, step, chix)
 	local params = chix.customparams
 
 	local mult = 2.718281828 ^ (step/2)
-	local hpMult, dmgMult, rangeMult
-	if chix.chicken_structure then
-		hpMult = mult^1.1
-		dmgMult = mult^0.2
-		rangeMult = (1 + step/5)^0.5
-	else
-		hpMult = mult^1.5
-		dmgMult = mult
-		rangeMult = 1 + step/10
-	end
+	hpMult = mult^1.5
+	dmgMult = mult
+	rangeMult = 1 + step/10
 	
 	params.statsname = name
 	params.original_chicken = name
@@ -28,9 +21,9 @@ local function genChix(name, step, chix)
 	chix.health = chix.health * hpMult
 	chix.power = (chix.power or chix.buildtime) * mult
 	chix.buildtime = chix.buildtime * mult
-	if chix.speed then
-		chix.speed = chix.speed * rangeMult
-	end
+	--if chix.speed then
+	--	chix.speed = chix.speed * rangeMult
+	--end
 	for name, wdef in pairs(chix.weapondefs or {}) do
 		wdef.customparams = wdef.customparams or {}
 		local params = wdef.customparams
@@ -69,15 +62,16 @@ local chickenDefs = {}
 
 for name, udef in pairs(UnitDefs) do
 	local params = udef.customparams
-	if params.chicken then
-		minStep = 1
-		maxStep = 10
-		if params.chicken_menace then
-			minStep = -2
-			maxStep = 17
-		elseif params.chicken_structure then
-			maxStep = 15
-		end
+	if params.chicken and ((params.chicken_shield and not params.chicken_shield_invul) or params.chicken_menace or params.chicken_needs_bogus_defs) then
+		params.chicken_needs_bogus_defs = true
+		minStep = -2
+		maxStep = 20
+		--if params.chicken_menace then
+		--	minStep = -2
+		--	maxStep = 17
+		--elseif params.chicken_structure then
+		--	maxStep = 15
+		--end
 		local step
 		for i=minStep, maxStep do
 			local chix = CopyTable(udef, true)

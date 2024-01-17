@@ -62,8 +62,6 @@ return {
 		leaveTracks         = true,
 		maxSlope            = 72,
 		maxWaterDepth       = 22,
-		metalCost           = 0,
-		energyCost          = 0,
 		buildTime           = 10500,
 		movementClass       = "ATKBOT4",
 		noAutoFire          = false,

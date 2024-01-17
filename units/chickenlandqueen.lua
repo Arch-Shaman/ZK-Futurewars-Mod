@@ -22,6 +22,7 @@ return { chickenlandqueen = {
 			chicken = "uwu",
 			chicken_menace = "^w^",
 			chicken_queen = "~w~",
+			chicken_needs_bogus_defs = "something normal for once",
 			selection_scale       = 2,
 			
 			aimposoffset   = "0 160 30",

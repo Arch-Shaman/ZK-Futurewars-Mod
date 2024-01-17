@@ -26,6 +26,7 @@ return {
 			chicken = "uwu",
 			chicken_menace = "^w^",
 			chicken_queen = "~w~",
+			chicken_needs_bogus_defs = "something normal for once",
 			statsname = "chickenlandqueen",
 			
 			aimposoffset   = "0 160 30",

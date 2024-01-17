@@ -60,7 +60,7 @@ function script.Create()
 	
 	Turn(tentacles, y_axis, random(0, math.pi*2))
 
-	Turn(body, x_axis, random(0, math.pi*2))
+	Turn(body, x_axis, random(rad(-10), rad(10)))
 	
 	Move(glow01, x_axis, random(45, 85))
 

@@ -108,7 +108,7 @@ return {
 				},
 
 				damage                  = {
-					default = 1000,
+					default = 550,
 				},
 
 				dance                   = 40,
@@ -121,9 +121,9 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
 				model                   = "chickenegggreen_big.s3o",
-				projectiles             = 2,
+				projectiles             = 8,
 				range                   = 1000000,
-				reloadtime              = 3,
+				reloadtime              = 6,
 				smokeTrail              = true,
 				startVelocity           = 0,
 				texture1                = "none",

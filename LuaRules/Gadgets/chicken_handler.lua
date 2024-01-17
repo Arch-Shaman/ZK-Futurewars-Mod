@@ -56,6 +56,7 @@ local spGetUnitDefID		= Spring.GetUnitDefID
 local spGetUnitSeparation	= Spring.GetUnitSeparation
 local spGetGameFrame		= Spring.GetGameFrame
 local spSetUnitHealth		= Spring.SetUnitHealth
+local spSetUnitMaxHealth		= Spring.SetUnitMaxHealth
 local spGetUnitsInCylinder	= Spring.GetUnitsInCylinder
 local spValidUnitID			= Spring.ValidUnitID
 local spGetTeamResources			= Spring.GetTeamResources
@@ -65,6 +66,9 @@ local spGetUnitCommands             = Spring.GetUnitCommands
 local spSetGameRulesParam      = Spring.SetGameRulesParam
 local spDestroyUnit       = Spring.DestroyUnit
 local GetUnitCost  = Spring.Utilities.GetUnitCost
+local spSetUnitCosts = Spring.SetUnitCosts
+local spSetUnitWeaponDamages = Spring.SetUnitWeaponDamages
+local spSetUnitWeaponState = Spring.SetUnitWeaponState
 
 local echo = Spring.Echo
 
@@ -82,6 +86,7 @@ end
  
 local debugMode = false    -- prints debug info to the console
 local tachyonCandy = false -- every 60 seconds, half an hour passes
+local section = 'chicken_handler.lua'
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -233,7 +238,7 @@ local function updateHyperevo()
 	spSetGameRulesParam("chicken_hyperevo", hyperevo)
 
 	baseHyperevo = max(techmult/hyperevoFactor, 1)
-	defenseHyperevo = 2^min(data.waveNumber * defenseEvoMult * 0.7, 5) * baseHyperevo / max(0.5, data.strength)
+	defenseHyperevo = 2^min(data.waveNumber * defenseEvoMult * 0.6, 5) * baseHyperevo / max(0.5, data.strength)
 	menaceHyperevo = eular^((min(data.waveNumber - menaceStartWave, 5) * menaceScalingMult + menaceEvoMod)/ 2) * baseHyperevo
 	--spEcho("hyperuwu", hyperevo, defenseHyperevo, menaceHyperevo, queenHyperevo)
 end
@@ -331,7 +336,8 @@ difficulty = modes[luaAI]
 SetGlobals(modes[luaAI]) -- set difficulty
 
 queenTime = queenTime * 30
-strengthPerSecond = strengthPerSecond * 32/30
+strengthPerSecond = strengthPerSecond
+chickenSpawnRate = max(chickenSpawnRate, gracePeriod + 60)
 
 echo("Chicken configured for "..tostring(difficulty).." ("..luaAI..")v difficaulty")
 
@@ -541,6 +547,63 @@ local function applyHyperevo(unitName, evo, minTier, maxTier, round)
 	end
 end
 
+local notActuallyDamage = {
+	impulseFactor = true,
+	impulseBoost = true,
+	craterMult = true,
+	craterBoost = true,
+	craterBoost = true,
+	dynDamageExp = true,
+	dynDamageExp = true,
+	dynDamageMin = true,
+	dynDamageRange = true,
+	craterAreaOfEffect = true,
+	damageAreaOfEffect = true,
+	edgeEffectiveness = true,
+	explosionSpeed = true,
+}
+
+local function createWithHyperevo(unitName, evo, ...)
+	local defwise = false
+	if chickensThatNeedBogusDefs[unitName] then
+		unitName = applyHyperevo(unitName, evo, -2, 20, false)
+		defwise = true
+	end
+	local unitDef = UnitDefNames[unitName]
+	local unitID = spCreateUnit(unitName, ...)
+	if not unitID then
+		Spring.Log(section, LOG.ERROR, "createWithHyperevo: Failed to create unit " .. unitName .. " with evo " .. evo)
+		return unitID
+	end
+	if not defwise then
+		local tier = math.log(evo, 2.718281828) * 2
+		hpMult = evo^1.5
+		dmgMult = evo
+		rangeMult = 1 + tier/10
+		spSetUnitMaxHealth(unitID, unitDef.health * hpMult)
+		spSetUnitHealth(unitID, math.huge)
+		local cost = unitDef.metalCost * evo
+		spSetUnitCosts(unitID, {buildTime = cost, metalCost = cost, energyCost = cost})
+		GG.UnitModelRescale(unitID, rangeMult)
+		for num, data in pairs(unitDef.weapons) do
+			local weaponDef = WeaponDefs[data.weaponDef]
+			spSetUnitWeaponState(unitID, num, {
+				range = weaponDef.range * rangeMult,
+				projectileSpeed = weaponDef.projectilespeed * rangeMult,
+			})
+			local newDamages = {}
+			for key, value in pairs(weaponDef.damages) do
+				if not notActuallyDamage[key] then
+					newDamages[key] = value * dmgMult
+				end
+			end
+			spSetUnitWeaponDamages(unitID, num, newDamages)
+		end
+	end
+
+	return unitID
+end
+
 local function Choose1Chicken(techs, tier, inter, diff)
 	local techEntry = techs[tier]
 	if not techEntry then
@@ -584,7 +647,7 @@ local function ChooseChicken(units)
 	return chix
 end
 
-local function SpawnAround(unitName, bx, by, bz, spawnNumber, target, registar)
+local function SpawnAround(unitName, evo, bx, by, bz, spawnNumber, target, registar)
 	local x, z
 	local s = spawnSquare
 	local tries = 0
@@ -596,7 +659,7 @@ local function SpawnAround(unitName, bx, by, bz, spawnNumber, target, registar)
 			tries = tries + 1
 		until (not spGetGroundBlocked(x, z) or tries > spawnNumber + maxTriesSmall)
 		x, z = clampPos(x, z)
-		local unitID = spCreateUnit(unitName, x, by, z, "n", chickenTeamID)
+		local unitID = createWithHyperevo(unitName, evo, x, by, z, "n", chickenTeamID)
 		if unitID then
 			spGiveOrderToUnit(unitID, CMD.MOVE_STATE, CMD_MOVESTATE_ROAM, 0)
 			if tloc then spGiveOrderToUnit(unitID, CMD_FIGHT, tloc, 0) end
@@ -605,7 +668,7 @@ local function SpawnAround(unitName, bx, by, bz, spawnNumber, target, registar)
 	end
 end
 
-local function SpawnChicken(burrowID, spawnNumber, chickenName, isTurret)
+local function SpawnChicken(burrowID, spawnNumber, chickenName, chickenEvo)
 	if Spring.IsGameOver() then return end
 	
 	local bx, by, bz = spGetUnitPosition(burrowID)
@@ -622,7 +685,7 @@ local function SpawnChicken(burrowID, spawnNumber, chickenName, isTurret)
 		tloc = {tx, ty, tz}
 	end
 
-	SpawnAround(chickenName, bx, by, bz, spawnNumber, tloc, data.chickens)
+	SpawnAround(chickenName, chickenEvo, bx, by, bz, spawnNumber, tloc, data.chickens)
 end
 
 local function SpawnTurrets(burrowID)
@@ -638,7 +701,7 @@ local function SpawnTurrets(burrowID)
 		local i 
 		local bx, by, bz = spGetUnitPosition(burrowID)
 		for i=burrowData.defenses, wantedTurrets-1 do
-			SpawnAround(applyHyperevo(chicken_turret, defenseHyperevo, 0, 15), bx, by, bz, 1)
+			SpawnAround(chicken_turret, defenseHyperevo, bx, by, bz, 1)
 		end
 		burrowData.defenses = wantedTurrets
 	end
@@ -708,7 +771,7 @@ local function SpawnBurrow(number)
 		spEcho("[chicken_handler.lua] Spawning roost at ("..x..", "..y..", "..z..") after "..tries.." tries. humanUnitsInProximity: "..tostring(humanUnitsInProximity)..", humanUnitsInVicinity: "..tostring(humanUnitsInVicinity)..", propagate: "..tostring(propagate)..", minDist: "..tostring(minDist))
 
 		x, z = clampPos(x, z)
-		unitID = spCreateUnit(applyHyperevo(burrowName, defenseHyperevo, 0, 15), x, y, z, "n", chickenTeamID)
+		unitID = createWithHyperevo(burrowName, defenseHyperevo, x, y, z, "n", chickenTeamID)
 		data.burrows[unitID] = {targetID = unitID, targetDistance = 100000, defenses = 0, defenseDelta = min(random(), 0.9), spawnedMenace = false}
 		data.burrowsQuadfield:Insert(unitID, x, z, propagateDist)
 		UpdateBurrowTarget(unitID, nil)
@@ -720,6 +783,7 @@ GG.Chicken.SpawnBurrow = SpawnBurrow
 
 -- spawns arbitrary unit(s) obeying min and max distance from human units
 -- supports spawning in batches
+
 local function SpawnUnit(unitName, number, minDist, maxDist, target)
 	if data.victory then return end
 	minDist = minDist or minBaseDistance
@@ -823,14 +887,24 @@ local function updateMenace(menaceID)
 
 	if menaceData.building then
 		local progress = min((time - menaceData.startTime) * menaceBuildSpeed, 1)
-		spSetUnitHealth(menaceID, {build = progress})
+		if not cocoonMode then
+			spSetUnitHealth(menaceID, {build = progress})
+		end
 		if progress == 1 then
 			menaceData.building = false
 			for id, _ in pairs(menaceData.shield) do
 				spDestroyUnit(id)
 			end
+			if cocoonMode then
+				data.menaces[menaceID] = nil
+				menaceID = GG.MorphUnit(menaceID, menaceData.finishedName, {})
+				data.menaces[menaceID] = menaceData
+			end
+			return true
 		end
 	end
+
+	return false
 end
 
 local function SpawnMenace()
@@ -878,7 +952,13 @@ local function SpawnMenace()
 		end
 	until (blocking == 2 or tries > maxTries)
 	x, z = clampPos(x, z)
-	local unitID = spCreateUnit(applyHyperevo(menaceDef.name, menaceHyperevo, -3, 17, true), x, y, z, "n", chickenTeamID, true)
+	local unitID
+	local finishedName = applyHyperevo(menaceDef.name, menaceHyperevo, -2, 20, true)
+	if cocoonMode then
+		unitID = createWithHyperevo(menaceDef.cocoon, menaceHyperevo, x, y, z, "n", chickenTeamID)
+	else
+		unitID = spCreateUnit(finishedName, x, y, z, "n", chickenTeamID, true)
+	end
 	
 	if unitID then
 		spSetUnitHealth(unitID, math.huge)
@@ -887,14 +967,16 @@ local function SpawnMenace()
 			startTime = time,
 			building = true,
 			def = menaceDef,
+			finishedName = finishedName,
 			shield = {}
 		}
 		
 		spGiveOrderToUnit(unitID, CMD.MOVE_STATE, CMD_MOVESTATE_ROAM, 0)
 
-		SpawnAround(applyHyperevo(chicken_turret, max(menaceHyperevo*(2^1.5), defenseHyperevo), 0, 15), x, y, z, 3)
-		SpawnAround(applyHyperevo(chicken_shield, menaceHyperevo, 0, 15), x, y, z, 1, nil, data.menaces[unitID].shield)
-
+		SpawnAround(chicken_turret, max(menaceHyperevo*4, defenseHyperevo), x, y, z, 3)
+		if not cocoonMode then
+			SpawnAround(chicken_shield, menaceHyperevo, x, y, z, 1, nil, data.menaces[unitID].shield)
+		end
 		updateMenace(unitID)
 	end
 end
@@ -912,7 +994,7 @@ local function UpdateTech()
 	end		
 	local techs = data.unlockedChickens
 	local tier = #techs
-	if tier == 0 or SetCount(techs[tier]) >= chickenTechTree[tier].max then
+	if tier == 0 or (chickenTechTree[tier] and (SetCount(techs[tier]) >= chickenTechTree[tier].max)) then
 		tier = tier + 1
 		techs[tier] = {}
 	end
@@ -968,7 +1050,7 @@ local function Wave(waveMult)
 			for i, entry in pairs(chickens) do
 				local chixCount = floor(totalSpawns*entry[2]*(1-spawnDeviation+2*spawnDeviation*random())*spawnMult + random())
 				if chixCount > 0.1 then
-					SpawnChicken(menaceID, chixCount, applyHyperevo(entry[1], hyperevo, 0, 10))
+					SpawnChicken(menaceID, chixCount, entry[1], hyperevo)
 					spawned[i][2] = spawned[i][2] + chixCount
 				end
 			end
@@ -978,13 +1060,12 @@ local function Wave(waveMult)
 	local burrowSpawns = totalSpawns / burrowCount
  
 	for i, entry in pairs(chickens) do
-		local chix = applyHyperevo(entry[1], hyperevo, 0, 10)
 		local actualChixCount = 0
 		local spawns = burrowSpawns * entry[2] * (1 - spawnDeviation + 2 *spawnDeviation*random())
 		for burrowID in pairs(data.burrows) do
 			local chixCount = floor(spawns + random())
 			if chixCount > 0.1 then
-				SpawnChicken(burrowID, chixCount, chix)
+				SpawnChicken(burrowID, chixCount, entry[1], hyperevo)
 				actualChixCount = actualChixCount + chixCount
 			end
 		end
@@ -992,69 +1073,6 @@ local function Wave(waveMult)
 	end
 	
 	return spawned
-end
-
-local function MorphQueen()
-	-- store values to be copied
-	local tempID = data.queenID
-	local x, y, z = spGetUnitPosition(tempID)
-	if not (x and y and z) then	-- invalid position somehow, try again in a bit
-		data.morphFrame = data.morphFrame + 60
-		return
-	end
-	
-	local oldHealth,oldMaxHealth,paralyzeDamage,captureProgress,buildProgress = Spring.GetUnitHealth(tempID)
-	local xp = Spring.GetUnitExperience(tempID)
-	local heading = Spring.GetUnitHeading(tempID)
-	local cmdQueue = spGetCommandQueue(tempID, -1)
-	local queenOwner = spGetUnitTeam(tempID)
-	
-	if Spring.GetUnitIsStunned(tempID) or (Spring.GetUnitRulesParam(tempID, "disarmed") == 1) then	-- postpone morph
-		data.morphFrame = data.morphFrame + 60
-		return
-	end
-	
-	-- perform switcheroo
-	data.queenID = nil
-	spDestroyUnit(tempID, false, true, tempID, true)
-	x, z = clampPos(x, z)
-	if data.morphed == true then
-		data.queenID = spCreateUnit(queenName, x, y, z, "n", queenOwner)
-	else
-		data.queenID = spCreateUnit(queenMorphName, x, y, z, "n", queenOwner)
-	end
-
-	if not data.queenID then
-		Spring.Echo("LUA_ERRRUN chicken queen was not recreated correctly, chicken team unit count / total unit count / maxunits ", Spring.GetTeamUnitCount(queenOwner), #Spring.GetAllUnits(), Spring.GetModOptions().maxunits or 10000)
-		return
-	end
-
-	data.morphed = not data.morphed
-	SetMorphFrame()
-	
-	-- copy values
-	-- position
-	Spring.MoveCtrl.Enable(data.queenID)
-	--Spring.MoveCtrl.SetPosition(data.queenID, x, y, z)	--needed to reset y-axis position
-	--Spring.SpawnCEG("dirt", x, y, z)	--helps mask the transition
-	Spring.MoveCtrl.SetHeading(data.queenID, heading)
-	Spring.MoveCtrl.Disable(data.queenID)
-	local env = Spring.UnitScript.GetScriptEnv(data.queenID)
-	Spring.UnitScript.CallAsUnit(data.queenID, env.MorphFunc)
-	--health handling
-	local _,newMaxHealth				 = Spring.GetUnitHealth(data.queenID)
-	newMaxHealth = newMaxHealth * queenHealthMod
-	local newHealth = (oldHealth / oldMaxHealth) * newMaxHealth
-	-- if newHealth >= 1 then newHealth = 1 end
-	Spring.SetUnitMaxHealth(data.queenID, newMaxHealth)
-	spSetUnitHealth(data.queenID, {health = newHealth, capture = captureProgress, paralyze = paralyzeDamage, build = buildProgress, })
-	-- orders, XP
-	Spring.SetUnitExperience(data.queenID, xp)
-	if (cmdQueue and cmdQueue[1]) then		--copy order queue
-		for i=1,#cmdQueue do
-			spGiveOrderToUnit(data.queenID, cmdQueue[i].id, cmdQueue[i].params, cmdQueue[i].options.coded)
-		end
-	end
 end
 
 
@@ -1067,7 +1085,14 @@ local function waveStart()
 	spSetGameRulesParam("chicken_graceSchedule", data.graceSchedule)
 	spSetGameRulesParam("chicken_waveNumber", data.waveNumber)
 	spSetGameRulesParam("chicken_waveActive", 1)
+
 	
+	if data.endgame then
+		UpdateTech()
+		data.waveChickens = ChooseChicken(nil)
+		spSetGameRulesParam("chicken_waveActive", 0)
+	end
+
 	--_G.chickenEventArgs = {type="waveStart", waveNumber = data.waveNumber}
 	_G.chickenEventArgs = {type="wave", waveNumber = data.waveNumber, wave = data.waveChickens}
 	SendToUnsynced("ChickenEvent")
@@ -1123,7 +1148,7 @@ local function waveEnd()
 	data.chickens = {}
 end
 
---------------------------------------------------------------------------------
+----------------------------------------------------g----------------------------
 --------------------------------------------------------------------------------
 --
 -- Call-ins
@@ -1186,7 +1211,9 @@ function gadget:GameFrame(n)
 
 	-- Run this every frame to ensure smooth build animations
 	for meanceID, _ in pairs(data.menaces) do
-		updateMenace(meanceID)
+		if updateMenace(meanceID) then -- This is horrible but it works
+			break
+		end
 	end
 
 	if ((n+17) % 30 < 0.1) then
@@ -1281,7 +1308,20 @@ function gadget:GameFrame(n)
 	--morphs queen
 	if n == data.morphFrame then
 		--Spring.Echo("Morphing queen")
-		MorphQueen()
+		local targetName = ""
+		if data.morphed == true then
+			targetName = queenName
+		else
+			targetName = queenMorphName
+		end
+		data.queenID = GG.MorphUnit(data.queenID, targetName, {})
+		if not data.queenID then
+			Spring.Echo("LUA_ERRRUN chicken queen was not recreated correctly, chicken team unit count / total unit count / maxunits ", Spring.GetTeamUnitCount(queenOwner), #Spring.GetAllUnits(), Spring.GetModOptions().maxunits or 10000)
+			return
+		end
+	
+		data.morphed = not data.morphed
+		SetMorphFrame()
 	end
 end
 
@@ -1299,6 +1339,9 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 		end
 	end
 	if (unitTeam == chickenTeamID) then
+		if GG.wasMorphedTo[unitID] then -- Short circuit in case the unit just got morphed
+			return
+		end
 		if (unitID == data.queenID) then
 			data.bonusScore = data.bonusScore + scorePerQueen
 			KillAllComputerUnits()
@@ -1333,10 +1376,14 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 		if chickenUnion[unitDefID] then
 			local x, y, z = spGetUnitPosition(unitID)
 			if alwaysEggs then
-			local eggID = Spring.CreateFeature(chickenUnion[unitDefID].eggName, x, y, z, random(-32000, 32000))
-			if eggDecayTime > 0 and not eggs then data.eggDecay[eggID] = spGetGameSeconds() + eggDecayTime end
-		end
-		if eggs then Spring.CreateFeature(chickenUnion[unitDefID].eggName, x, y, z, random(-32000, 32000)) end
+				local eggID = Spring.CreateFeature(chickenUnion[unitDefID].eggName, x, y, z, random(-32000, 32000))
+				if eggDecayTime > 0 and not eggs then
+					data.eggDecay[eggID] = spGetGameSeconds() + eggDecayTime
+				end
+			end
+			if eggs then
+				Spring.CreateFeature(chickenUnion[unitDefID].eggName, x, y, z, random(-32000, 32000))
+			end
 		end
 	else
 		local wrathReduction = (GetUnitCost(unitID, unitDefID) / totalhumanValue) * 10

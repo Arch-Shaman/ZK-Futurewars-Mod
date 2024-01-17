@@ -163,7 +163,11 @@ function GG.MorphUnit(unitID, morphInto, morphParams)
 	local facing = morphParams.facing
 	local cheap = morphParams.cheap
 	
-	local udDst = UnitDefs[morphInto]
+	local udDst = UnitDefs[morphInto] or UnitDefNames[morphInto]
+	if not udDst then
+		Spring.Log(gadget:GetInfo().name, LOG.ERROR, "Unknown 2nd param to GG.MorphUnit, expected valid unitDefID or unitDefName, got "..tostring(morphInto))
+	end
+	morphInto = udDst.id
 	local unitDefID = spGetUnitDefID(unitID)
 	local ud = UnitDefs[unitDefID]
 	local defName = udDst.name
@@ -345,9 +349,8 @@ function GG.MorphUnit(unitID, morphInto, morphParams)
 	newXp = newXp * (oldBuildTime / Spring.Utilities.GetUnitCost(newUnit, morphInto))
 	spSetUnitExperience(newUnit, newXp)
 	--// transfer shield power
-	if oldShieldState then
-		local newDef = spGetUnitDefID(newUnit)
-		local maxcharge = WeaponDefs[shields[newDef]].shieldPower
+	if oldShieldState and shields[morphInto] then
+		local maxcharge = WeaponDefs[shields[morphInto]].shieldPower
 		
 		spSetUnitShieldState(newUnit, shieldNum, math.min(oldShieldCharge, maxcharge))
 	end
