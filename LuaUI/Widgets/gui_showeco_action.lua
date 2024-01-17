@@ -570,7 +570,7 @@ local function AllyTeamChanged()
 end
 
 function widget:UnitCmdDone(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts, cmdTag)
-	if isBuilder[unitDefID] then
+	if isBuilder[unitDefID] and cmdID < 0 then
 		IterableMap.Add(needsUpdate, unitID, true)
 	end
 end
