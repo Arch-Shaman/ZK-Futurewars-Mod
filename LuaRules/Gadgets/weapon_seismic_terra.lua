@@ -7,7 +7,7 @@ function gadget:GetInfo() return {
 	date      = "20 April 2023",
 	license   = "CC BY-NC-ND",
 	layer     = 1,
-	enabled   = true,
+	enabled   = false,
 } end
 
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
