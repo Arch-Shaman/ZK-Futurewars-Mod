@@ -87,7 +87,7 @@ return {
 				soundStart              = "weapon/cannon/med_rifle_fire",
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 800,
+				weaponVelocity          = 720,
 			},
 		},
 		featureDefs            = {
