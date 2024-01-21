@@ -683,8 +683,6 @@ local function checkWidget(widget)
 	end
 end
 
-VFS.Include("LuaUI/Utilities/json.lua");
-
 local function SetLang(self)
 	echo('Setting language: "' .. self.lang .. '" ')
 
