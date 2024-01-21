@@ -6,7 +6,6 @@ return {
 		acceleration        = 1.3,
 		activateWhenBuilt   = true,
 		brakeRate           = 1.5,
-		buildCostEnergy     = 0,
 		buildCostMetal      = 0,
 		builder             = false,
 		buildPic            = "chickens.png",

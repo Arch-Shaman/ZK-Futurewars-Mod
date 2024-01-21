@@ -7,6 +7,7 @@ return {
 		brakeRate           = 1.23,
 		builder             = false,
 		buildPic            = "chickenc.png",
+		buildCostMetal      = 1,
 		canGuard            = true,
 		canMove             = true,
 		canPatrol           = true,

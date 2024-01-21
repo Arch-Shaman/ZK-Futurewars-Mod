@@ -1,12 +1,12 @@
 return { 
 	wolverine_mine = {
 		unitname               = "wolverine_mine",
-		name                   = "Claw",
+		name                   = "Disbander",
 		description            = "Badger Mine",
 		acceleration           = 0.00001,
 		activateWhenBuilt      = true,
 		brakeRate              = 1.5,
-		buildCostMetal         = 0,
+		buildCostMetal         = 1,
 		builder                = false,
 		buildPic               = "wolverine_mine.png",
 		canGuard               = false,

@@ -8,6 +8,7 @@ return {
 		brakeRate           = 0.8,
 		builder             = false,
 		buildPic            = "chicken_roc.png",
+		buildCostMetal      = 1,
 		canFly              = true,
 		canGuard            = true,
 		canLand             = true,

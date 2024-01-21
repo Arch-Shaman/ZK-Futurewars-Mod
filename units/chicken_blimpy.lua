@@ -7,6 +7,7 @@ return {
 		brakerate           = 0.4,
 		builder             = false,
 		buildPic            = "chicken_blimpy.png",
+		buildCostMetal      = 1,
 		canFly              = true,
 		canGuard            = true,
 		canLand             = true,

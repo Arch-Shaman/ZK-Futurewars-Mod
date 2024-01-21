@@ -6,6 +6,7 @@ return {
 		activateWhenBuilt   = true,
 		brakeRate           = 1.23,
 		builder             = false,
+		buildCostMetal      = 1,
 		buildPic            = "chicken_digger.png",
 		canGuard            = true,
 		canMove             = true,
