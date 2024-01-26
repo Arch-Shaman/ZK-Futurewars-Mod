@@ -358,11 +358,14 @@ function widget:UnitIdle(unitID, unitDefID, unitTeam)
 	end
 end
 
-function widget:UnitFinished(unitID, unitDefID, unitTeam)
+--[[function widget:UnitFinished(unitID, unitDefID, unitTeam)
+	if not Spring.AreTeamsAllied(unitTeam, playerTeamID) then
+		return
+	end
 	if isBuilder[unitDefID] then
 		IterableMap.Add(queuedPylons, unitID, {taglookup = {}, clearedRecently = false})
 	end
-end
+end]]
 
 function widget:UnitGiven(unitID, unitDefID, unitTeam, oldTeam)
 	addUnit(unitID, unitDefID, unitTeam)
@@ -403,6 +406,7 @@ end
 --end
 
 local function ClearData(data)
+	if data == nil then return end
 	data.taglookup = {}
 	data.clearedRecently = false
 	for i = 1, #data do
