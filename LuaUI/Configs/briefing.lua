@@ -37,7 +37,7 @@ local briefing = {
 	entries = {}
 }
 
-if true then
+if showBriefing then
 	briefing["entries"] = {
 		{"update_header", fontsize = 24},
 		{"entry_1"},
