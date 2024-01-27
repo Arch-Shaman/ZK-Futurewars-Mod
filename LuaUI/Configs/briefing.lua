@@ -5,7 +5,7 @@ local function PreprendTable(prependee, prepender)
 	return prepender
 end
 
-local lastWrittenVersion = 39.07
+local lastWrittenVersion = 39.14
 local showBriefing = false
 local configLocation = "luaui\\config\\fw_patchnotes.lua"
 local gameVersion = Game.gameVersion
@@ -23,6 +23,7 @@ if VFS.FileExists(configLocation) then
 else
 	lastSeenVersion = ""
 end
+
 if lastSeenVersion == "" then
 	showBriefing = true
 else
@@ -41,15 +42,10 @@ if true then
 		{"update_header", fontsize = 24},
 		{"entry_1"},
 		{"entry_2"},
-		{"entry_3"},
-		{"entry_4", image = "unitpics/tankheavyarty.png"},
-		{"entry_5", image = "unitpics/shiplightcarrier.png"},
-		{"entry_6", image = "unitpics/shipcarrier.png"},
-		{"entry_7", image = "unitpics/shipriot.png"},
-		{"entry_8"},
+		{"entry_3", image = "unitpics/athena.png"},
+		{"entry_4"},
 		{""},
 		{""},
-		{"shameless_plug"},
 	}
 end
 
