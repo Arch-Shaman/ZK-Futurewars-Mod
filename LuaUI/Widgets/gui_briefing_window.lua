@@ -58,7 +58,6 @@ do
 	local splittedVersion = {}
 	gameVersion = string.gsub(gameVersion, "v", "")
 	for str in string.gmatch(gameVersion, "%d+") do
-		--Spring.Echo("[Briefing]: " .. str)
 		splittedVersion[#splittedVersion + 1] = str
 	end
 	local lastSeenVersion
@@ -78,6 +77,7 @@ do
 			showBriefing = true
 		else
 			local modoptions = Spring.GetModOptions()
+			Spring.Echo("[gui_briefing_window]: lastSeenVersion: " .. tostring(lastSeenVersion) .. " < " .. tostring(lastWrittenVersion))
 			showBriefing = lastSeenVersion < lastWrittenVersion or (modoptions.commwars and modoptions.commwars == "1") or Spring.GetGameRulesParam("chicken_difficulty") ~= nil
 			--Spring.Echo("showBriefing: " .. tostring(showBriefing))
 		end
@@ -263,7 +263,6 @@ local function InitializeBriefingWindow()
 		local str = ""
 		for n = 1, #entry do
 			if entry[n] ~= "" and not entries[i].notranslation then
-				--Spring.Echo("Translating '" .. entry[n] .. "'")
 				str = str .. WG.Translate("briefing", entry[n])
 			else
 				str = str..entry[n].."\n"
