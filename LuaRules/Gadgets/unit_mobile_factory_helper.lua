@@ -138,7 +138,7 @@ function gadget:UnitDestroyed(unitID)
 	end
 end
 
-function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
+function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	local factoryUnit = mobileFactories[unitID]
 	if factoryUnit then
 		local rallyUnit = fakeUnits[factoryUnit]
