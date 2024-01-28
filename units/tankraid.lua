@@ -33,7 +33,7 @@ return {
 			outline_y = 80,
 			outline_yoff = 12.5,
 			boost_speed_mult = 2,
-			boost_duration = 1.4,
+			boost_duration = 3.0,
 			boost_health_cost = 15,
 			boost_min_health = 100,
 		},
