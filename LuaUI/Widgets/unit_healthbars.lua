@@ -681,7 +681,8 @@ end
 
 local function ProcessWeapon(unitID, weaponID, ci, addPercent)
 	local _, reloaded, reloadFrame = GetUnitWeaponState(unitID, weaponID)
-	if not reloaded and reloadFrame ~= nil then
+	local captureReloadState = ci.canCapture and GetUnitRulesParam(unitID, "captureRechargeFrame") or 0
+	if not reloaded and reloadFrame ~= nil and captureReloadState == 0 then
 		local reloadTime, reloadOverride
 		if ci.reloadOverride[weaponID] then
 			reloadTime = ci.reloadOverride[weaponID] * (GetUnitRulesParam(unitID, "comm_reloadmult") or 1)
