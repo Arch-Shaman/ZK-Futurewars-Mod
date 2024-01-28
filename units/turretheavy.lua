@@ -100,7 +100,7 @@ return {
 					light_beam_mult			= 8,
 				},
 				damage                  = {
-					default = 95.1,
+					default = 100.1,
 				},
 				duration		= 0.3,
 				dynDamageExp		= 1,
@@ -116,7 +116,7 @@ return {
 				lodDistance             = 10000,
 				noSelfDamage            = true,
 				proximityPriority       = 10,
-				range                   = 450,
+				range                   = 520,
 				reloadtime              = 0.1,
 				rgbColor                = "1 0.54 0",
 				rgbColor2               = "1 1 0.25",
@@ -146,11 +146,11 @@ return {
 					velspread1 = "3.18, 3, 3.18, _, 6, _",
 					noairburst = "March of progress",
 					onexplode = "The unity prevails",
-					shield_damage = (300*12) + 3200,
+					shield_damage = (800*12) + 4600,
 				},
 
 				damage                  = {
-					default = 3200.01,
+					default = 4600.01,
 				},
 				
 				explosionGenerator      = "custom:nce_128",
@@ -186,7 +186,7 @@ return {
 					light_camera_height = 2500,
 					light_color = "0.25 0.13 0.05",
 					light_radius = 500,
-					shield_damage = 300,
+					shield_damage = 800,
 					bogus = 1,
 				},
 				damage                  = {
@@ -229,7 +229,7 @@ return {
 				},
 
 				damage = {
-					default = 450.01,
+					default = 800.01,
 				},
 				edgeEffectiveness       = 0.8,
 				explosionGenerator      = "custom:bigbulletimpact",
@@ -267,7 +267,7 @@ return {
 				shieldGoodColor         = "0.1 0.1 1 1",
 				shieldInterceptType     = 3,
 				shieldPower             = 8500,
-				shieldPowerRegen        = 65,
+				shieldPowerRegen        = 85,
 				shieldPowerRegenEnergy  = 20,
 				shieldRadius            = 250,
 				shieldRepulser          = false,
