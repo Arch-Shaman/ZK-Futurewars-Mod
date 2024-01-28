@@ -34,7 +34,7 @@ return {
 		iconType               = "gunshipraider",
 		idleAutoHeal           = 25,
 		idleTime               = 150,
-		health                 = 1600,
+		health                 = 1500,
 		speed                  = 6.8,
 		noChaseCategory        = "TERRAFORM SUB",
 		objectName             = "banshee.s3o",
