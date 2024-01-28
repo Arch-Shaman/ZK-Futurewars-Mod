@@ -38,7 +38,7 @@ local ROCK_FORCE_Y = -0.25
 local rockData = {
 	[x_axis] = {
 		piece = base,
-		speed = 5,
+		speed = 2,
 		decay = -1/2,
 		minPos = math.rad(2.5),
 		maxPos = math.rad(10),
@@ -189,8 +189,8 @@ end
 
 function script.Shot(num)
 	if num == 1 then
-		Move(beamCannonGun, y_axis, 15)
-		Move(beamCannonGun, y_axis, 0, 15)
+		Move(beamCannonGun, y_axis, 10)
+		Move(beamCannonGun, y_axis, 0, 30)
 	end
 end
 
