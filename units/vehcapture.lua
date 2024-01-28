@@ -5,7 +5,7 @@ return {
 		description         = "Capture Rover",
 		acceleration        = 0.222,
 		brakeRate           = 0.385,
-		buildCostMetal      = 450,
+		buildCostMetal      = 500,
 		builder             = false,
 		buildPic            = "vehcapture.png",
 		canGuard            = true,
@@ -32,7 +32,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
-		health              = 1650,
+		health              = 2250,
 		maxSlope            = 18,
 		speed               = 2,
 		maxWaterDepth       = 22,
@@ -73,7 +73,7 @@ return {
 					disarmDamageMult = 5/3,
 					disarmDamageOnly = 0,
 					disarmTimer      = 7, -- seconds
-					post_capture_reload = 360,
+					post_capture_reload = 300,
 					stats_hide_damage = 1, -- continuous laser
 					stats_hide_reload = 1,
 					light_radius = 120,
