@@ -97,7 +97,7 @@ return {
 				coreThickness           = 0.8,
 				craterBoost             = 0,
 				craterMult              = 0,
-				projectiles				= 7,
+				projectiles				= 10,
 				burst					= 2,
 				burstRate				= 10/30,
 				sprayangle				= 1390,
@@ -106,11 +106,11 @@ return {
 				customParams        = {
 					light_camera_height = 1800,
 					light_radius = 160,
-					combatrange	= 300,
+					combatrange	= 250,
 				},
 
 				damage                  = {
-					default = 70.1,
+					default = 90.1,
 				},
 
 				duration                = 0.1,
@@ -169,7 +169,7 @@ return {
 				leadLimit               = 18,
 				minIntensity            = 1,
 				noSelfDamage            = true,
-				range                   = 1000,
+				range                   = 2500,
 				reloadtime              = 30,
 				rgbColor                = "0.25 0 1",
 				soundStart              = "weapon/laser/heavy_laser6",
@@ -187,7 +187,6 @@ return {
 			},
 		},
 		featureDefs            = {
-
 			DEAD  = {
 				blocking         = true,
 				collisionVolumeOffsets = "0 0 0",
