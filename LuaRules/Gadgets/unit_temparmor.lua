@@ -144,6 +144,9 @@ function gadget:UnitDestroyed(unitID)
 end
 
 local function SpawnCEGForUnit(unitID)
+	if Spring.GetUnitIsCloaked(unitID) then
+		return
+	end
 	local _, _, _, x, y, z = Spring.GetUnitPosition(unitID, true)
 	Spring.SpawnCEG("armor_vaporspawner", x, y, z, 0, 0, 0)
 end
