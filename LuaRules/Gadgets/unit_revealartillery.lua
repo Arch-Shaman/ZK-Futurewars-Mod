@@ -147,9 +147,9 @@ function gadget:UnitDecloaked(unitID)
 end
 
 function gadget:GameFrame(f)
-	if f%30 == 0 then -- 2hz
+	if f%15 == 0 then -- 2hz
 		for unitID, timer in IterableMap.Iterator(units) do
-			timer = timer - 1
+			timer = timer - 0.5
 			IterableMap.Set(units, unitID, timer)
 			--Spring.Echo("[RevealArty] " .. unitID .. ": " .. timer)
 			if timer == 0 then
