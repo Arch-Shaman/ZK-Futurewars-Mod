@@ -30,6 +30,7 @@ local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitIsCloaked = Spring.GetUnitIsCloaked
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetPositionLosState = Spring.GetPositionLosState
+local spGetUnitLosState = Spring.GetUnitLosState
 
 -- CONFIG --
 local wantedDefs = {}
@@ -59,8 +60,11 @@ local function Reveal(unitID)
 			--Spring.Echo(allyTeamID .. ": In radar: " .. tostring(inRadar))
 			if inRadar then
 				--Spring.Echo("Setting LOS Mask")
-				spSetUnitLosMask(unitID, allyTeamID, 15) -- see: https://github.com/ZeroK-RTS/Zero-K/blob/master/LuaRules/Gadgets/unit_show_shooter.lua
-				spSetUnitLosState(unitID, allyTeamID, 15)
+				local unitLosState = spGetUnitLosState(unitID, allyTeamID, true)
+				if unitLosState == nil or unitLosState ~= 15 then
+					spSetUnitLosMask(unitID, allyTeamID, 15) -- see: https://github.com/ZeroK-RTS/Zero-K/blob/master/LuaRules/Gadgets/unit_show_shooter.lua
+					spSetUnitLosState(unitID, allyTeamID, 15)
+				end
 			else
 				spSetUnitLosMask(unitID, allyTeamID, 0)
 				spSetUnitLosState(unitID, allyTeamID, 0)
