@@ -20,9 +20,11 @@ ALL DECLOAK DAMAGE MUST BE 1 FOR THIS TO WORK.
 ]]
 
 local config = {}
+local watchWeapons = {}
 for i = 1, #WeaponDefs do
 	if WeaponDefs[i].customParams and WeaponDefs[i].customParams.puredecloaktime then
 		config[i] = tonumber(WeaponDefs[i].customParams.puredecloaktime)
+		wantedList[i] = true
 	end
 end
 
@@ -31,4 +33,8 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		GG.BlockCloakForUnit(unitID, config[weaponDefID] * damage)
 		return damage, 1
 	end
+end
+
+function gadget:UnitPreDamaged_GetWantedWeaponDef() -- only do certain weapons.
+	return watchWeapons
 end
