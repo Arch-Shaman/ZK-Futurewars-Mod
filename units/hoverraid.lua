@@ -27,7 +27,7 @@ return {
 		iconType            = "hoverraider",
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
-		health              = 525,
+		health              = 340,
 		maxSlope            = 36,
 		speed               = 4.4,
 		movementClass       = "HOVER2",
@@ -45,7 +45,6 @@ return {
 		sightDistance       = 740,
 		turninplace         = 0,
 		turnRate            = 864,
-		workerTime          = 0,
 		weapons             = {
 			{
 				def                = "GAUSS",
