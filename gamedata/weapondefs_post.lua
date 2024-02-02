@@ -159,6 +159,7 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 		local damage = weaponDef.damage["default"]
 		weaponDef.damage["default"] = damage * aaDamageToGroundMult
 		weaponDef.damage["planes"] = damage
+		weaponDef.cameraShake = 0 -- remove cameraShake.
 	end
 	
 	-- Set shield starting power to 100%
@@ -303,5 +304,8 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 		for damagetype, amount in pairs(weaponDef.damage) do
 			weaponDef.damage[damagetype] = amount * damagemult
 		end
+	end
+	if weaponDef.cameraShake < 300 then
+		weaponDef.cameraShake = 0
 	end
 end
