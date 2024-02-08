@@ -210,7 +210,8 @@ end
 
 function gadget:Explosion(weaponDefID, px, py, pz, attackerID, projectileID)
 	if blastwaveDefs[weaponDefID] then
-		AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID)
+		local attackerTeam = Spring.ValidUnitID(attackerID) and Spring.GetUnitAllyTeam(attackerID)
+		AddBlastwave(weaponDefID, px, py, pz, attackerID, projectileID, attackerTeam)
 	end
 	return false
 end
