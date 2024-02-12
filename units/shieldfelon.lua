@@ -95,7 +95,7 @@ return {
 				weaponType              = "Shield",
 			},
 			SHIELDGUN = {
-				name                    = "Heavy Keksian Pulse",
+				name                    = "Heavy Keksian Discharge",
 				areaOfEffect            = 8,
 				avoidFeature            = false,
 				craterBoost             = 0,
@@ -117,7 +117,7 @@ return {
 					stats_custom_tooltip_3 = " - Forks bounce to 3 additional targets each",
 				},
 				damage                  = {
-					default        = 150.01,
+					default        = 150,
 				},
 				--explosionGenerator      = "custom:flash2purple",
 				fireStarter             = 50,
@@ -158,14 +158,14 @@ return {
 					chainlightning_num = 2,
 					chainlightning_searchdist = 250,
 					chainlightning_ff = 0,
-					chainlightning_maxtargets = 3,
+					chainlightning_maxtargets = 5,
 					chainlightning_index = 3,
 					chainlightning_sub = 1,
 					chainlightning_spawn = "shieldfelon_sublightning_end",
 					chainlightning_donttargetfeature = "^w^",
 				},
 				damage                  = {
-					default        = 15.01,
+					default        = 37.5,
 				},
 				--explosionGenerator      = "custom:flash2purple",
 				fireStarter             = 50,
@@ -204,7 +204,7 @@ return {
 					hideweapon = 1,
 				},
 				damage                  = {
-					default        = 15.01,
+					default        = 9.375,
 				},
 				--explosionGenerator      = "custom:flash2purple",
 				fireStarter             = 50,
