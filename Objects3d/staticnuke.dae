@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 4.0.2 commit date:2023-12-05, commit time:07:41, hash:9be62e85b727</authoring_tool>
     </contributor>
-    <created>2024-02-13T19:02:38</created>
-    <modified>2024-02-13T19:02:38</modified>
+    <created>2024-02-13T21:30:16</created>
+    <modified>2024-02-13T21:30:16</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -601,9 +601,9 @@
   </library_geometries>
   <library_visual_scenes>
     <visual_scene id="Scene" name="Scene">
-      <node id="Base" name="Base" type="NODE">
+      <node id="base" name="base" type="NODE">
         <matrix sid="transform">-1 8.74228e-8 -6.60024e-15 0 -8.74228e-8 -1 7.54979e-8 0 0 7.54979e-8 1 6.5377e-8 0 0 0 1</matrix>
-        <instance_geometry url="#Cube_020-mesh" name="Base">
+        <instance_geometry url="#Cube_020-mesh" name="base">
           <bind_material>
             <technique_common>
               <instance_material symbol="Texture_004-material" target="#Texture_004-material">
@@ -735,8 +735,17 @@
             </instance_geometry>
           </node>
         </node>
+        <node id="flare" name="flare" type="NODE">
+          <matrix sid="transform">1.85322 0 0 -1.86265e-8 0 2.79828e-7 -1.357762 2.48162e-6 0 1.85322 2.05016e-7 32.87 0 0 0 1</matrix>
+        </node>
+        <node id="emit1" name="emit1" type="NODE">
+          <matrix sid="transform">1.606192 -0.9244315 -1.48304e-7 -9.10476e-7 -7.06251e-8 2.83087e-7 -1.357763 -7.687439 0.9244315 1.606192 1.53947e-7 2.7659e-7 0 0 0 1</matrix>
+        </node>
+        <node id="emit2" name="emit2" type="NODE">
+          <matrix sid="transform">0.9447888 -1.594302 -1.69757e-7 6.04003e-7 3.77704e-8 2.91715e-7 -1.357763 9.636189 1.594302 0.9447888 1.32765e-7 -1.50815e-6 0 0 0 1</matrix>
+        </node>
         <node id="Hatch" name="Hatch" type="NODE">
-          <matrix sid="transform">1 0 0 -0.2333924 0 1 0 0.8219204 0 0 1 32.87458 0 0 0 1</matrix>
+          <matrix sid="transform">1 0 0 -0.2333924 0 1 0 0.8219204 0 0 1 31.50458 0 0 0 1</matrix>
           <instance_geometry url="#Cylinder_026-mesh" name="Hatch">
             <bind_material>
               <technique_common>
@@ -762,7 +771,7 @@
             </bind_material>
           </instance_geometry>
           <node id="Door_R" name="Door.R" type="NODE">
-            <matrix sid="transform">-1 8.74228e-8 -1.77636e-15 -0.09499674 -8.74228e-8 -1 0 0.3975353 -1.77636e-15 0 0.9999999 0.09506217 0 0 0 1</matrix>
+            <matrix sid="transform">-1 8.74228e-8 -1.77636e-15 -0.09499674 -8.74228e-8 -1 0 0.3975353 -1.77636e-15 0 0.9999999 0.09506026 0 0 0 1</matrix>
             <instance_geometry url="#Cylinder_025-mesh" name="Door.R">
               <bind_material>
                 <technique_common>
@@ -843,7 +852,7 @@
             </instance_geometry>
           </node>
           <node id="Door_B" name="Door.B" type="NODE">
-            <matrix sid="transform">-1 8.74228e-8 -1.77636e-15 -0.08217715 -8.74228e-8 -1 0 0.3975353 -1.77636e-15 0 0.9999999 0.09506217 0 0 0 1</matrix>
+            <matrix sid="transform">-1 8.74228e-8 -1.77636e-15 -0.08217715 -8.74228e-8 -1 0 0.3975353 -1.77636e-15 0 0.9999999 0.09506026 0 0 0 1</matrix>
             <instance_geometry url="#Cylinder_022-mesh" name="Door.B">
               <bind_material>
                 <technique_common>
@@ -897,15 +906,6 @@
             </bind_material>
           </instance_geometry>
         </node>
-      </node>
-      <node id="emit2" name="emit2" type="NODE">
-        <matrix sid="transform">-0.9447888 1.594302 5.10578e-8 2.38419e-7 0 -8.10068e-8 1.357763 -9.636189 1.594302 0.9447888 3.0257e-8 -7.15256e-7 0 0 0 1</matrix>
-      </node>
-      <node id="emit1" name="emit1" type="NODE">
-        <matrix sid="transform">-1.606192 0.9244315 2.96051e-8 2.38419e-7 0 -8.10068e-8 1.357763 7.687439 0.9244315 1.606192 5.14386e-8 -2.38419e-7 0 0 0 1</matrix>
-      </node>
-      <node id="flare" name="flare" type="NODE">
-        <matrix sid="transform">-1.85322 1.22317e-14 -1.18699e-7 1.86265e-8 -1.62014e-7 -1.39914e-7 1.357762 0 0 1.85322 1.02508e-7 32.87 0 0 0 1</matrix>
       </node>
     </visual_scene>
   </library_visual_scenes>
