@@ -56,7 +56,7 @@ return {
 		},
 		weaponDefs             = {
 			TACNUKE        = {
-				name                    = "Tactical MIRV SLBM",
+				name                    = "Seafury SLBM MIRV",
 					--Tactical
 					--Multiple Independently-retargetable Reentry Vehicle
 					--Submarine Launched Ballistic Missile
@@ -67,13 +67,13 @@ return {
 				craterMult              = 3.5,
 
 				customParams = {
-					numprojectiles1 = 3,
+					numprojectiles1 = 5,
 					projectile1 = "subtacmissile_warhead",
 					spawndist = 900,
 					timeoutspawn = 0, 
 					usertargetable = 1,
 					reaim_time = 60, -- Fast update not required (maybe dangerous)
-					
+					mirvrange = 750,
 					
 					stats_custom_tooltip_1 = " - Carries MIRV Warheads",
 					stats_custom_tooltip_entry_1 = "",
@@ -113,7 +113,7 @@ return {
 				weaponVelocity          = 1200,
 			},
 			WARHEAD        = {
-				name                    = "Ultraheavy High Explosive Warhead",
+				name                    = "20kT Atomic Warhead",
 				areaOfEffect            = 196,
 				collideFriendly         = false,
 				commandfire             = true,
