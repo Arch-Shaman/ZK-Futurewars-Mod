@@ -188,8 +188,7 @@ local function AddEntryToList(x, z, def, range, team, facing) -- prevent repeats
 	end
 end
 
-local function AllQueue()
-	glColor(queuedColor)
+local function UpdateQueuedList()
 	allPylons.length = 0 -- reset the list.
 	for unitID, data in IterableMap.Iterator(queuedPylons) do
 		if showAllies or Spring.GetUnitTeam(unitID) == playerTeamID then
@@ -203,6 +202,10 @@ local function AllQueue()
 			end
 		end
 	end
+end
+
+local function AllQueue()
+	glColor(queuedColor)
 	for i = 1, allPylons.length do
 		local entry = allPylons.data[i]
 		drawGroundCircle(entry.x, entry.z, entry.range)
@@ -213,6 +216,7 @@ end
 
 local function UpdateAllQueuesList()
 	glDeleteList(drawAllQueuedList or 0)
+	UpdateQueuedList()
 	drawAllQueuedList = glCreateList(AllQueue)
 	UpdateQueueList()
 end
@@ -418,13 +422,12 @@ end
 local function DoUpdate()
 	local updates = 0
 	for unitID, _ in IterableMap.Iterator(needsUpdate) do
-		local data = IterableMap.Get(queuedPylons, unitID)
 		local queue = Spring.GetUnitCommands(unitID, -1)
 		local index = 1
+		local data = IterableMap.Get(queuedPylons, unitID)
 		if queue and #queue > 0 then
 			updates = updates + 1
 			IterableMap.Remove(needsUpdate, unitID)
-			local data = IterableMap.Get(queuedPylons, unitID)
 			ClearData(data)
 			local cmd
 			for i = 1, #queue do
@@ -444,11 +447,8 @@ local function DoUpdate()
 					end
 				end
 			end
-			if #data > index then
-				for i = index, #data do
-					data[i] = nil
-				end
-			end
+		elseif queue and #queue == 0 then
+			ClearData(data)
 		end
 	end
 	if updates > 0 then
