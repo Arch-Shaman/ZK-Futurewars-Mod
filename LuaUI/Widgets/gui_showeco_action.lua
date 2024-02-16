@@ -342,12 +342,13 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 	end
 end
 
-function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
+function widget:RenderUnitDestroyed(unitID, unitDefID, unitTeam)
 	if pylonByID[unitID] then
 		removeUnit(unitID, unitDefID, unitTeam)
 	end
 	if isBuilder[unitDefID] then
 		IterableMap.Remove(queuedPylons, unitID)
+		IterableMap.Remove(needsUpdate, unitID)
 		UpdateAllQueuesList()
 	end
 end
