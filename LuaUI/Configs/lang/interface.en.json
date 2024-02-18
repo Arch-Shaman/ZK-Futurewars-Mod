@@ -6,6 +6,8 @@
 		"other" : "You have %{count} idle constructors."
 	},
 	"aim" : "Aiming",
+	"sensorsteal" : "Sensors Hacked",
+	"sensortag" : "Unit Tracked",
 	"temporaryarmor" : "Boosted Armor: {0}",
 	"engioverdrive" : "Fabricator Overclock",
 	"battery" : "Battery Charge",

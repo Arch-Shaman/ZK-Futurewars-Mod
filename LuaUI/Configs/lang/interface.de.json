@@ -4,6 +4,8 @@
 		"other" : "%{count} Konstruktionseinheiten sind unbeschäftigt."
 	},
 	"aim" : "Zielen",
+	"sensorsteal" : "Sensoren gehackt",
+	"sensortag" : "Einheit verfolgt",
 	"temporaryarmor" : "Verstärkte Rüstung: {0}",
 	"engioverdrive" : "Hersteller übertakten",
 	"battery" : "Batterieladung",

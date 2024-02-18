@@ -6,6 +6,8 @@
 		"other" : "%{count} wolnego konstruktora"
 	},
 	"aim" : "Pozyskiwanie celu",
+	"sensorsteal": "Zhakowanie czujników",
+	"sensortag": "Jednostka śledzona",
 	"temporaryarmor" : "Wzmocniony Pancerz: {0}",
 	"engioverdrive" : "Przetaktowanie producenta",
 	"battery" : "Ładowanie baterii",

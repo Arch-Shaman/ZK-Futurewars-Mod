@@ -6,6 +6,8 @@
 	
 	"aim" : "nişan alma",
 	"battery" : "Pil şarjı",
+	"sensorsteal" : "Sensörler Hacklendi",
+	"sensortag" : "Birim Takip Edildi",
 	"engioverdrive" : "Fabrikatör hız aşırtma",
 	"temporaryarmor" : "Güçlendirilmiş Zırh: {0}",
 	"quick_rallypoint_mode" : "Hızlı noktalama modu",
