@@ -18,8 +18,8 @@ Spring.Echo("Loading UnitDefs_posts")
 
 VFS.Include("LuaRules/Configs/constants.lua")
 local TRANSPORT_LIGHT_COST_MAX = 1000
-local TRANSPORT_STRUCT_COST_MAX = 1300
-local TRANSPORT_LIGHT_STRUCT_COST_MAX = 300
+local TRANSPORT_STRUCT_COST_MAX = 2000
+local TRANSPORT_LIGHT_STRUCT_COST_MAX = 600
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
