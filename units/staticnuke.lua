@@ -2,7 +2,7 @@ return {
 	staticnuke = {
 		unitname                      = "staticnuke",
 		name                          = "Oblivion",
-		description                   = "MIRV Launcher, Drains 30 m/s, 3 minute stockpile",
+		description                   = "MIRV Launcher, Drains 25m/s, 3 minute stockpile",
 		buildCostMetal                = 12000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
@@ -16,8 +16,8 @@ return {
 		collisionVolumeType           = "box",
 		corpse                        = "DEAD",
 		customParams                  = {
-			stockpiletime  = "210",
-			stockpilecost  = "6300",
+			stockpiletime  = "180",
+			stockpilecost  = "4500",
 			priority_misc  = 1, -- Medium
 			outline_x = 195,
 			outline_y = 195,
@@ -29,7 +29,7 @@ return {
 		iconType                      = "nuke",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
-		health                        = 5000,
+		health                        = 8000,
 		maxSlope                      = 18,
 		maxWaterDepth                 = 0,
 		minCloakDistance              = 150,
@@ -50,14 +50,14 @@ return {
 		},
 		weaponDefs                    = {
 			warhead = {
-				name                    = "Nuclear Warhead",
+				name                    = "3.5MT Yield Pure Fusion Warhead",
 				areaOfEffect            = 1920,
 				cegTag                  = "nucleartrail",
 				collideFriendly         = false,
 				collideFeature          = false,
 				commandfire             = true,
-				craterBoost             = 6,
-				craterMult              = 6,
+				craterBoost             = 9,
+				craterMult              = 9,
 				customParams              = {
 					restrict_in_widgets = 1,
 					alwaysvisible = 1,
@@ -69,14 +69,14 @@ return {
 					armorpiercing = 0.35,
 				},
 				damage                  = {
-					default = 15000.1,
+					default = 17500.1,
 				},
 				edgeEffectiveness       = 0.3,
 				explosionGenerator      = "custom:LONDON_FLAT",      -- note, spawning of the explosion is handled by exp_nuke_effect_chooser.lua
 				fireStarter             = 0,
 				flightTime              = 180,
-				impulseBoost            = 0.5,
-				impulseFactor           = 0.2,
+				impulseBoost            = 1.5,
+				impulseFactor           = 1.2,
 				interceptedByShieldType = 65,
 				model                   = "staticnuke_projectile.s3o",
 				noSelfDamage            = false,
