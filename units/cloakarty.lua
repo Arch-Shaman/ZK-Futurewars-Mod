@@ -36,9 +36,9 @@ return {
 		idleAutoHeal           = 0,
 		idleTime               = 1800,
 		leaveTracks            = true,
-		health                 = 220,
+		health                 = 170,
 		maxSlope               = 36,
-		speed                  = 2.1,
+		speed                  = 1.9,
 		maxWaterDepth          = 22,
 		minCloakDistance       = 300,
 		movementClass          = "KBOT3",
@@ -47,13 +47,11 @@ return {
 		script                 = "cloakarty.lua",
 		selfDestructAs         = "BIG_UNITEX",
 		sfxtypes               = {
-
 			explosiongenerators = {
 				"custom:zeusmuzzle",
 				"custom:sonicfire_80",
 				"custom:sonicfire_80",
 			},
-
 		},
 		sightDistance          = 660,
 		trackOffset            = 0,
@@ -73,8 +71,8 @@ return {
 		weaponDefs             = {
 			HAMMER_WEAPON = {
 				name                    = "Light EMP Shockcannon",
-				accuracy                = 80,
-				movingAccuracy			= 400,
+				accuracy                = 100,
+				movingAccuracy			= 800,
 				areaOfEffect            = 120,
 				cegtag					= "artillery_spark_small",
 				craterBoost             = 0,
@@ -100,7 +98,7 @@ return {
 				interceptedByShieldType = 1,
 				myGravity               = 0.07,
 				noSelfDamage            = true,
-				range                   = 800,
+				range                   = 700,
 				reloadtime              = 4.0,
 				size					= 0.01,
 				soundHit                = "weapon/cannon/emp_arty_hit",
