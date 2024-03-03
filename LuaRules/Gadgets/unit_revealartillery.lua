@@ -86,6 +86,11 @@ local function Unreveal(unitID)
 	end
 end
 
+local function GG.IsUnitRevealedArtillery(unitID)
+	local data = IterableMap.Get(units, unitID)
+	return data ~= nil
+end
+
 local function CheckReveal(unitID)
 	local x, y, z = spGetUnitPosition(unitID)
 	local myAllyTeam = spGetUnitAllyTeam(unitID)
