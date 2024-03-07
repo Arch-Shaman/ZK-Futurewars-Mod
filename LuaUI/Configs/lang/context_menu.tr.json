@@ -277,5 +277,9 @@
 	"cooldown" : "Sakin ol",
 	"drone_label" : "Drone Tamamlayıcı",
 	"drones_per_cycle" : "Döngü başına başlatılan dronlar",
-	"drone_build_time" : "Üretim zamanı"
+	"drone_build_time" : "Üretim zamanı",
+	"chainlightning" : "Saldırı yakındaki birimlere yayılır:",
+	"chainlightning_jumps": "Bölme sayısı",
+	"chainlightning_extrajumps": "Ekstra bölümler",
+	"chainlightning_efficency": "Verimlilik"
 }

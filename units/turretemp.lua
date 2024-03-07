@@ -76,8 +76,7 @@ return {
 					chainlightning_maxtargets = 5,
 					chainlightning_index = 2,
 					chainlightning_spawn = "turretemp_sublightning_end",
-					stats_custom_tooltip_1 = " - Forks to 5 different targets up to 250 elmos away on impact",
-					stats_custom_tooltip_2 = " - Forking Efficiency: 50%",
+					chainlightning_efficency = 0.5,
 				},
 				damage                  = {
 					default = 140.1,

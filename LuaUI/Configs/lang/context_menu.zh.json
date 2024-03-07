@@ -277,5 +277,9 @@
 	"cooldown" : "冷却",
 	"drone_label" : "无人机补充",
 	"drones_per_cycle" : "每个周期启动的无人机",
-	"drone_build_time" : "制造时间"
+	"drone_build_time" : "制造时间",
+	"chainlightning" : "攻击分散到附近的单位：",
+	"chainlightning_jumps": "分割次数",
+	"chainlightning_extrajumps" : "额外的师",
+	"chainlightning_efficency" : "效率"
 }

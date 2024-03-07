@@ -523,6 +523,11 @@ local localization = {
 	drone_label = "Drone Complement",
 	drones_per_cycle = "Drones started per cycle",
 	drone_build_time = "Build time",
+	chainlightning = "Forks to nearby units:",
+	chainlightning_jumps = "Jumps to",
+	chainlightning_efficency = "Effiency:",
+	chainlightning_extrajumps = "Forks jump to nearby units",
+	
 }
 
 local function UpdateLocalization()
@@ -1059,6 +1064,15 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 					AddEntryToCells(str1, layer + 1, newstr, cells)
 				end
 				AddEntryToCells(localization.stats_damage .. ":", layer + 1, dam_str, cells)
+				if cp.chainlightning_searchdist then
+					local efficency = numformat((tonumber(cp.chainlightning_efficiency) or 0) * 100, 2) .. "%"
+					AddEntryToCells(localization.chainlightning, layer + 1, nil, cells)
+					AddEntryToCells(localization.chainlightning_efficency, layer + 2, efficency, cells)
+					AddEntryToCells(localization.stats_range, layer + 2, cp.chainlightning_searchdist, cells)
+					if cp.chainlightning_extrabounces then
+						AddEntryToCells(localization.chainlightning_extrajumps, layer + 2, cp.chainlightning_extrabounces, cells)
+					end
+				end
 			end
 			-- shield damage
 			if (wd.interceptedByShieldType ~= 0) and show_damage and not cp.stats_hide_shield_damage and not deathExplosion then

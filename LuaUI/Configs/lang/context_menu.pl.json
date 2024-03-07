@@ -277,5 +277,9 @@
 	"cooldown" : "Cooldown",
 	"drone_label" : "Drone Complement",
 	"drones_per_cycle" : "Drones started per cycle",
-	"drone_build_time" : "Manufacture time"
+	"drone_build_time" : "Manufacture time",
+	"chainlightning": "Atak rozdziela się na pobliskie jednostki:",
+	"chainlightning_jumps": "Liczba podziałów",
+	"chainlightning_extrajumps": "Dodatkowe dywizje",
+	"chainlightning_efficiency": "Wydajność"
 }

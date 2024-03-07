@@ -279,5 +279,9 @@
 	"cooldown" : "Cooldown",
 	"drone_label" : "Drone Complement",
 	"drones_per_cycle" : "Drones started per cycle",
-	"drone_build_time" : "Manufacture time"
+	"drone_build_time" : "Manufacture time",
+	"chainlightning" : "Attack forks to nearby units:",
+	"chainlightning_jumps" : "Number of forks",
+	"chainlightning_extrajumps" : "Number of subforks",
+	"chainlightning_efficency" : "Efficiency"
 }

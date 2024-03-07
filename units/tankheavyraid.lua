@@ -152,6 +152,8 @@ return {
 					chainlightning_ff = 0,
 					chainlightning_maxtargets = 3,
 					chainlightning_index = 2,
+					chainlightning_efficiency = 0.33,
+					chainlightning_extrabounces = 1,
 				},
 				cylinderTargeting      = 0,
 				damage                  = {

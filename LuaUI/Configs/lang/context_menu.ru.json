@@ -277,5 +277,9 @@
 	"cooldown" : "Остывать",
 	"drone_label" : "Дополнение к дрону",
 	"drones_per_cycle" : "Дроны запускаются за цикл",
-	"drone_build_time" : "Срок изготовления"
+	"drone_build_time" : "Срок изготовления",
+	"chainlightning" : "Атака распределяется на ближайшие юниты:",
+	"chainlightning_jumps": "Количество разделений",
+	"chainlightning_extrajumps": "Дополнительные подразделения",
+	"chainlightning_efficency": "Эффективность"
 }

@@ -277,5 +277,9 @@
 	"cooldown" : "Cooldown",
 	"drone_label" : "Drone Complement",
 	"drones_per_cycle" : "Drones started per cycle",
-	"drone_build_time" : "Manufacture time"
+	"drone_build_time" : "Manufacture time",
+	"chainlightning" : "การโจมตีแยกไปยังยูนิตใกล้เคียง:",
+	"chainlightning_jumps": "จำนวนการแยก",
+	"chainlightning_extrajumps" : "ดิวิชั่นพิเศษ",
+	"chainlightning_efficency" : "ประสิทธิภาพ"
 }

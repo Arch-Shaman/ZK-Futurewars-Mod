@@ -277,5 +277,9 @@
 	"cooldown" : "Abkühlen",
 	"drone_label" : "Drohnen-Ergänzung",
 	"drones_per_cycle" : "Pro Zyklus wurden Drohnen gestartet",
-	"drone_build_time" : "Herstellungszeit"
+	"drone_build_time" : "Herstellungszeit",
+	"chainlightning" : "Angriff wird auf Einheiten in der Nähe aufgeteilt:",
+	"chainlightning_jumps" : "Anzahl der Teilungen",
+	"chainlightning_extrajumps" : "Zusätzliche Teilungen",
+	"chainlightning_efficency": "Effizienz"
 }
