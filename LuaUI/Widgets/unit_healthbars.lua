@@ -837,7 +837,6 @@ function DrawUnitInfos(unitID, unitDefID)
 		local empcolor_index = (stunned and ((blink and "emp_b") or "emp_p")) or ("emp")
 		barDrawer.AddBar(addTitle and messages.paralyze, emp, empcolor_index, infotext)
 	end
-	
 	 --// DISARM
 	local disarmFrame = GetUnitRulesParam(unitID, "disarmframe")
 	if disarmFrame and disarmFrame ~= -1 and disarmFrame > gameFrame then
