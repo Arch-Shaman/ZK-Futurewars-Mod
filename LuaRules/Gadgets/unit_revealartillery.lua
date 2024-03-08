@@ -80,8 +80,10 @@ local function Unreveal(unitID)
 	for i = 1, #allyTeams do
 		local allyTeamID = allyTeams[i]
 		if myAllyTeam ~= allyTeamID then
-			spSetUnitLosMask(unitID, allyTeamID, 0)
-			spSetUnitLosState(unitID, allyTeamID, 0)
+			if not GG.IsUnitBeingRevealedBySensorTag(unitID, allyTeamID) then
+				spSetUnitLosMask(unitID, allyTeamID, 0)
+				spSetUnitLosState(unitID, allyTeamID, 0)
+			end
 		end
 	end
 end

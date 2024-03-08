@@ -100,6 +100,8 @@ local messages = {
 	engioverdrive = "Fab Overdrive",
 	temporaryarmor = "Temp Armor",
 	drones = "Drones",
+	sensorsteal = "Sensors hacked",
+	sensortag = "Unit Tracked",
 	acronyms_second = "sec",
 }
 
@@ -372,6 +374,8 @@ local barColors = {
 	aim            = { 0.30, 0.50, 0.40, barAlpha },
 	battery        = { 0.76, 0.75, 0.31, barAlpha },
 	drones         = { 0.00, 0.80, 1.00, barAlpha },
+	sensorhacked   = { 0.00, 0.60, 0.00, barAlpha },
+	sensortagged   = { 0.30, 0.25, 0.40, barAlpha },
 	temporaryarmor = { 0.678, 0.847, 0.902, barAlpha },
 
 	-- Features
@@ -836,6 +840,21 @@ function DrawUnitInfos(unitID, unitDefID)
 		end
 		local empcolor_index = (stunned and ((blink and "emp_b") or "emp_p")) or ("emp")
 		barDrawer.AddBar(addTitle and messages.paralyze, emp, empcolor_index, infotext)
+	end
+	local sensorStealDuration = 0
+	local sensorTag = 0
+	if Spring.GetUnitAllyTeam(unitID) == myAllyTeam then
+		sensorStealDuration = GetUnitRulesParam(unitID, "sensorsteal") or 0
+		sensorTag = GetUnitRulesParam(unitID, "sensortag") or 0
+	else
+		sensorStealDuration = GetUnitRulesParam(unitID, "sensorsteal_" .. myAllyTeam) or 0
+		sensorTagDuration = GetUnitRulesParam(unitID, "sensortag_" .. myAllyTeam) or 0
+	end
+	if sensorStealDuration > 0 then
+		barDrawer.AddBar(addTitle and messages.sensorsteal, 1, "sensorsteal", string.format("%.1f", sensorStealDuration) .. messages.acronyms_second)
+	end
+	if sensorTagDuration > 0 then
+		barDrawer.AddBar(addTitle and messages.sensortag, 1, "sensortag", string.format("%.1f", sensorTagDuration) .. messages.acronyms_second)
 	end
 	 --// DISARM
 	local disarmFrame = GetUnitRulesParam(unitID, "disarmframe")
