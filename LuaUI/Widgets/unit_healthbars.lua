@@ -1523,6 +1523,12 @@ function widget:GameFrame(f)
 	gameFrame = f
 end
 
+function widget:PlayerChanged(playerID)
+	if playerID == Spring.GetMyPlayerID() then
+		myAllyTeam = Spring.GetMyAllyTeamID()
+	end
+end
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
