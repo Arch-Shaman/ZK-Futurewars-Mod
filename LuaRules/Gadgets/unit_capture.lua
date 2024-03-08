@@ -16,7 +16,7 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local RETAKING_DEGRADE_TIMER = 15
+local RETAKING_DEGRADE_TIMER = 15 -- unused
 local GENERAL_DEGRADE_TIMER  = 5
 local DEGRADE_FACTOR         = 0.04
 local CAPTURE_LINGER         = 0.95
