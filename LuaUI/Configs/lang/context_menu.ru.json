@@ -281,5 +281,7 @@
 	"chainlightning" : "Атака распределяется на ближайшие юниты:",
 	"chainlightning_jumps": "Количество разделений",
 	"chainlightning_extrajumps": "Дополнительные подразделения",
-	"chainlightning_efficency": "Эффективность"
+	"chainlightning_efficency": "Эффективность",
+	"sensor_steal": "Взламывает датчики на %{seconds}сек",
+	"sensor_tag": "Показывает атакованные юниты в течение %{seconds}сек"
 }

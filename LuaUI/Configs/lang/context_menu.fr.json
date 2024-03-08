@@ -281,5 +281,7 @@
 	"chainlightning" : "L'attaque se divise sur les unités proches :",
 	"chainlightning_jumps" : "Nombre de splits",
 	"chainlightning_extrajumps" : "Divisions supplémentaires",
-	"chainlightning_efficency" : "Efficacité"
+	"chainlightning_efficency" : "Efficacité",
+	"sensor_steal" : "Piratage des capteurs pendant %{seconds} secondes",
+	"sensor_tag" : "Révèle les unités attaquées pendant %{seconds} secondes"
 }

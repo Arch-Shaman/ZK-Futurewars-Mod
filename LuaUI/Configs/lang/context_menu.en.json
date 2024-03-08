@@ -283,5 +283,7 @@
 	"chainlightning" : "Attack forks to nearby units:",
 	"chainlightning_jumps" : "Number of forks",
 	"chainlightning_extrajumps" : "Number of subforks",
-	"chainlightning_efficency" : "Efficiency"
+	"chainlightning_efficency" : "Efficiency",
+	"sensor_steal" : "Hacks sensors for %{seconds}sec",
+	"sensor_tag" : "Reveals attacked units for %{seconds}sec"
 }

@@ -281,5 +281,7 @@
 	"chainlightning" : "Saldırı yakındaki birimlere yayılır:",
 	"chainlightning_jumps": "Bölme sayısı",
 	"chainlightning_extrajumps": "Ekstra bölümler",
-	"chainlightning_efficency": "Verimlilik"
+	"chainlightning_efficency": "Verimlilik",
+	"sensor_steal": "Sensörleri %{seconds}sn boyunca hackler",
+	"sensor_tag": "%{seconds}sn boyunca saldırıya uğrayan birimleri ortaya çıkarır"
 }

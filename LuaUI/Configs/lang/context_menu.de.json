@@ -281,5 +281,7 @@
 	"chainlightning" : "Angriff wird auf Einheiten in der Nähe aufgeteilt:",
 	"chainlightning_jumps" : "Anzahl der Teilungen",
 	"chainlightning_extrajumps" : "Zusätzliche Teilungen",
-	"chainlightning_efficency": "Effizienz"
+	"chainlightning_efficency": "Effizienz",
+	"sensor_steal" : "Hackt Sensoren für %{seconds} Sekunden",
+	"sensor_tag": "Zeigt angegriffene Einheiten für %{seconds} Sekunden"
 }
