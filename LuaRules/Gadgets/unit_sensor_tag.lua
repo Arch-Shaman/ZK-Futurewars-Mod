@@ -42,7 +42,7 @@ local function AddUnit(unitID, allyTeam, timer)
 	spSetUnitLosState(unitID, allyTeamID, 15)
 	local data = IterableMap.Get(handled, unitID)
 	if data then
-		data[allyTeam] = timer * hz
+		data[allyTeam] = timer
 	else
 		data = {[allyTeam] = timer}
 		IterableMap.Add(handled, unitID, data)
