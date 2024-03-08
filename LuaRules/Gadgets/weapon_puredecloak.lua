@@ -24,7 +24,7 @@ local watchWeapons = {}
 for i = 1, #WeaponDefs do
 	if WeaponDefs[i].customParams and WeaponDefs[i].customParams.puredecloaktime then
 		config[i] = tonumber(WeaponDefs[i].customParams.puredecloaktime)
-		wantedList[#wantedList + 1] = i
+		watchWeapons[#watchWeapons + 1] = i
 	end
 end
 
