@@ -1076,6 +1076,18 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 					end
 				end
 			end
+			if cp.sensortag then
+				local secs = tonumber(cp.sensortag) or 0
+				if secs > 0 then
+					AddEntryToCells(WG.Translate("interface", "sensor_tag", {seconds = numformat(secs, 1)}), layer + 2, '', cells)
+				end
+			end
+			if cp.sensorsteal then
+				local secs = tonumber(cp.sensorsteal) or 0
+				if secs > 0 then
+					AddEntryToCells(WG.Translate("interface", "sensor_steal", {seconds = numformat(secs, 1)}), layer + 2, '', cells)
+				end
+			end
 			-- shield damage
 			if (wd.interceptedByShieldType ~= 0) and show_damage and not cp.stats_hide_shield_damage and not deathExplosion then
 				if cp.damage_vs_shield then
@@ -1216,7 +1228,7 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 				local wobble = wd.wobble * 30 * 180 / math.pi
 				AddEntryToCells(localization.stats_wobble .. ':', layer + 1, localization.stats_wobble_desc .. " " .. numformat(wobble, 1) .. "°/" .. localization.acronyms_second, cells)
 			end
-	
+			
 			if wd.sprayAngle > 0 and not bombletCount then
 				local sprayangle
 				if unitID and isCommander then
