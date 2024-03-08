@@ -298,6 +298,7 @@ local GetUnitStockpile       = Spring.GetUnitStockpile
 local GetUnitRulesParam      = Spring.GetUnitRulesParam
 local GetFeatureHealth       = Spring.GetFeatureHealth
 local GetFeatureResources    = Spring.GetFeatureResources
+local myAllyTeam = Spring.GetMyAllyTeamID()
 
 
 local function lowerkeys(t)
@@ -370,11 +371,11 @@ local barColors = {
 	aim            = { 0.30, 0.50, 0.40, barAlpha },
 	battery        = { 0.76, 0.75, 0.31, barAlpha },
 	drones         = { 0.00, 0.80, 1.00, barAlpha },
+	temporaryarmor = { 0.678, 0.847, 0.902, barAlpha },
 
 	-- Features
 	resurrect = { 1.00, 0.50, 0.00, featureBarAlpha },
 	reclaim   = { 0.75, 0.75, 0.75, featureBarAlpha },
-	temporaryarmor = {0.678, 0.847, 0.902, featureBarAlpha},
 }
 
 --------------------------------------------------------------------------------
