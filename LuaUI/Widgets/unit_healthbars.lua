@@ -100,6 +100,7 @@ local messages = {
 	engioverdrive = "Fab Overdrive",
 	temporaryarmor = "Temp Armor",
 	drones = "Drones",
+	acronyms_second = "sec",
 }
 
 local function languageChanged ()
@@ -822,7 +823,7 @@ function DrawUnitInfos(unitID, unitDefID)
 			paraTime = (paralyzeDamage-empHP)/(maxHealth*empDecline)
 			paraUnits[#paraUnits+1] = unitID
 			if (addPercent) then
-				infotext = floor(paraTime) .. 's'
+				infotext = floor(paraTime) .. messages.acronyms_second
 			end
 			emp = 1
 		else
@@ -848,7 +849,7 @@ function DrawUnitInfos(unitID, unitDefID)
 		else
 			local disarmTime = (disarmFrame - gameFrame - 1200)/gameSpeed
 			if (not paraTime) or disarmTime > paraTime + 0.5 then
-				barDrawer.AddBar(addTitle and messages.disarm, 1, ((blink and "disarm_b") or "disarm_p") or ("disarm"), floor(disarmTime) .. 's')
+				barDrawer.AddBar(addTitle and messages.disarm, 1, ((blink and "disarm_b") or "disarm_p") or ("disarm"), floor(disarmTime) .. messages.acronyms_second)
 				if not stunned then
 					disarmUnits[#disarmUnits+1] = unitID
 				end
@@ -902,7 +903,7 @@ function DrawUnitInfos(unitID, unitDefID)
 		--local actualArmor = 1 - tempArmor
 		local tempArmorDuration = (GetUnitRulesParam(unitID, "temporaryarmorduration") or 0) / 30
 		local percent = string.format("%.0f", tempArmor * 100)
-		barDrawer.AddBar(addTitle and string.gsub(messages.temporaryarmor, "{0}", percent) .. "%", tempArmor/0.9, "temporaryarmor", (addPercent and string.format("%.1f", tempArmorDuration) .. 's'))
+		barDrawer.AddBar(addTitle and string.gsub(messages.temporaryarmor, "{0}", percent) .. "%", tempArmor/0.9, "temporaryarmor", (addPercent and string.format("%.1f", tempArmorDuration) .. messages.acronyms_second))
 	end
 	
 	--// Planetwars teleport progress
@@ -1125,7 +1126,7 @@ function DrawUnitInfos(unitID, unitDefID)
 	local slowState = GetUnitRulesParam(unitID, "slowState")
 	if (slowState and (slowState > 0)) then
 		if slowState > 0.5 then
-			barDrawer.AddBar(addTitle and messages.slow, 1, "slow", (addPercent and floor((slowState - 0.5)*25) .. 's'))
+			barDrawer.AddBar(addTitle and messages.slow, 1, "slow", (addPercent and floor((slowState - 0.5)*25) .. messages.acronyms_second))
 		else
 			barDrawer.AddBar(addTitle and messages.slow, slowState*2, "slow", (addPercent and floor(slowState*100) .. '%'))
 		end

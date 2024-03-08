@@ -137,5 +137,7 @@
 		"few" : "%{count} units in queue",
 		"many" : "%{count} units in queue",
 		"other" : "%{count} units in queue"
-	}
+	},
+	"sensorsteal" : "Sensors hacked",
+	"sensortag" : "Unit tracked"
 }

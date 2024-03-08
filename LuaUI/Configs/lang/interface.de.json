@@ -99,4 +99,6 @@
 		"one" : "%{count} Einheit in Warteschlange",
 		"other" : "%{count} Einheiten in Warteschlange"
 	}
+	"sensorsteal" : "Sensoren gehackt",
+	"sensortag" : "Einheit verfolgt"
 }
