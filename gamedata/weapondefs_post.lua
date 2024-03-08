@@ -305,7 +305,8 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 			weaponDef.damage[damagetype] = amount * damagemult
 		end
 	end
-	if weaponDef.cameraShake < 300 then
+	local cameraShake = weaponDef.cameraShake or 0
+	if cameraShake < 300 then
 		weaponDef.cameraShake = 0
 	end
 end
