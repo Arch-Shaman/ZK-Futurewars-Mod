@@ -842,7 +842,7 @@ function DrawUnitInfos(unitID, unitDefID)
 		barDrawer.AddBar(addTitle and messages.paralyze, emp, empcolor_index, infotext)
 	end
 	local sensorStealDuration = 0
-	local sensorTag = 0
+	local sensorTagDuration = 0
 	if Spring.GetUnitAllyTeam(unitID) == myAllyTeam then
 		sensorStealDuration = GetUnitRulesParam(unitID, "sensorsteal") or 0
 		sensorTag = GetUnitRulesParam(unitID, "sensortag") or 0
