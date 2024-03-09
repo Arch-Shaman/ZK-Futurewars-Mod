@@ -854,8 +854,7 @@ function DrawUnitInfos(unitID, unitDefID)
 	end
 	if sensorStealDuration > 0 then
 		barDrawer.AddBar(addTitle and messages.sensorsteal, 1, "sensorsteal", string.format("%.1f", sensorStealDuration) .. messages.acronyms_second)
-	end
-	if sensorTagDuration > 0 and not sensorStealDuration > 0 then
+	elseif sensorTagDuration > 0 then
 		barDrawer.AddBar(addTitle and messages.sensortag, 1, "sensortag", string.format("%.1f", sensorTagDuration) .. messages.acronyms_second)
 	end
 	 --// DISARM
