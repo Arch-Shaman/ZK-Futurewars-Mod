@@ -172,7 +172,7 @@ return {
 				model                   = "w_mirv_stage1.dae",
 				noSelfDamage            = false,
 				range                   = 140000,
-				reloadtime              = 30,
+				reloadtime              = 15,
 				smokeTrail              = false,
 				soundHit                = "weapon/missile/nuclear_reentry",
 				startVelocity           = 100,
