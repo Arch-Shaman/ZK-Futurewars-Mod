@@ -88,7 +88,7 @@ local function Unreveal(unitID)
 	end
 end
 
-local function GG.IsUnitRevealedArtillery(unitID)
+local function IsUnitRevealedArtillery(unitID)
 	local data = IterableMap.Get(units, unitID)
 	return data ~= nil
 end
@@ -151,6 +151,10 @@ function gadget:UnitDecloaked(unitID)
 	if IterableMap.InMap(units, unitID) then
 		CheckReveal(unitID) -- ditto.
 	end
+end
+
+function gadget:Initialize()
+	GG.IsUnitRevealedArtillery = IsUnitRevealedArtillery
 end
 
 function gadget:GameFrame(f)
