@@ -50,7 +50,7 @@ local function AddUnit(unitID, allyTeamID, timer)
 end
 
 local function IsUnitHandled(unitID, allyTeam)
-	local data = IterableMap.Get(unitID)
+	local data = IterableMap.Get(handled, unitID)
 	if data then
 		return data[allyTeam] ~= nil
 	else
@@ -125,4 +125,8 @@ end
 
 function gadget:UnitPreDamaged_GetWantedWeaponDef() -- only do certain weapons.
 	return wantedDefs
+end
+
+function gadget:UnitDestroyed(unitID)
+	IterableMap.Remove(handled, unitID)
 end
