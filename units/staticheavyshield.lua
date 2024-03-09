@@ -10,7 +10,7 @@ return {
 		buildingGroundDecalSizeX      = 4,
 		buildingGroundDecalSizeY      = 4,
 		buildingGroundDecalType       = "staticshield_aoplane.dds",
-		buildPic                      = "pw_artefact.png",
+		buildPic                      = "staticheavyshield.png",
 		canMove                       = false,
 		category                      = "SINK UNARMED",
 		collisionVolumeOffsets        = "0 0 0",
