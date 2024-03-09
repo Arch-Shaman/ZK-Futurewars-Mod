@@ -375,8 +375,10 @@ local barColors = {
 	battery        = { 0.76, 0.75, 0.31, barAlpha },
 	drones         = { 0.00, 0.80, 1.00, barAlpha },
 	sensorhacked   = { 0.00, 0.60, 0.00, barAlpha },
-	sensortagged   = { 0.30, 0.25, 0.40, barAlpha },
+	sensortag      = { 0.30, 0.25, 0.40, barAlpha },
 	temporaryarmor = { 0.678, 0.847, 0.902, barAlpha },
+	sensorsteal    = {0.30, 0.25, 0.40, barAlpha}, -- TODO: change later on.
+	
 
 	-- Features
 	resurrect = { 1.00, 0.50, 0.00, featureBarAlpha },
@@ -853,7 +855,7 @@ function DrawUnitInfos(unitID, unitDefID)
 	if sensorStealDuration > 0 then
 		barDrawer.AddBar(addTitle and messages.sensorsteal, 1, "sensorsteal", string.format("%.1f", sensorStealDuration) .. messages.acronyms_second)
 	end
-	if sensorTagDuration > 0 then
+	if sensorTagDuration > 0 and not sensorStealDuration > 0 then
 		barDrawer.AddBar(addTitle and messages.sensortag, 1, "sensortag", string.format("%.1f", sensorTagDuration) .. messages.acronyms_second)
 	end
 	 --// DISARM
