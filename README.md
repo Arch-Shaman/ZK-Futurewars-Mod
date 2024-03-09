@@ -23,6 +23,7 @@ Credits:
 * sprung: Compatibility with ZK.
 * GhostFenix: Morale support -- all those ai games together were fun!
 * keks223: German translation
+* DanWarrior: Oblivion Remodel
 
 Please note: if I have missed you, please feel free to contact me or submit a PR to correct this.
 
