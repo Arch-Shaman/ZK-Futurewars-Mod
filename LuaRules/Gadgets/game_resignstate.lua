@@ -26,6 +26,7 @@ if not gadgetHandler:IsSyncedCode() then
 	
 	function gadget:Initialize()
 		gadgetHandler:AddSyncAction("MakeUpdate", MakeUpdate)
+		gadgetHandler:AddSyncAction("MakePlayerUpdate", MakePlayerUpdate)
 	end
 	return
 end
@@ -37,7 +38,7 @@ local ALLIED = {allied = true}
 local states = {} -- allyTeamID = {count = num, playerStates = {}}
 local playerMap = {} -- playerID = allyTeamID
 local resigntimer = 180 -- timer starts at 3 minutes and loses a second every 3rd second (down to 60s) over the first 6 minutes.
-local mintime = 30
+local mintime = 60
 local resignteams = {}
 local exemptplayers = {} -- players who are exempt.
 local afkplayers = {}
@@ -47,20 +48,20 @@ local afkplayers = {}
 local thresholds = {
 	[1] = 1,
 	[2] = 2,
-	[3] = 3,
+	[3] = 2,
 	[4] = 3,
-	[5] = 4,
+	[5] = 3,
 	[6] = 4,
-	[7] = 5,
+	[7] = 4,
 	[8] = 5,
-	[9] = 6,
-	[10] = 6,
-	[11] = 7,
-	[12] = 7,
-	[13] = 8,
-	[14] = 8,
-	[15] = 9,
-	[16] = 9,
+	[9] = 5,
+	[10] = 5,
+	[11] = 6,
+	[12] = 6,
+	[13] = 7,
+	[14] = 7,
+	[15] = 8,
+	[16] = 8,
 }
 
 local function GetAllyTeamPlayerCount(allyTeamID)
@@ -171,6 +172,9 @@ local function UpdateAllyTeam(allyTeamID)
 end
 
 local function AFKUpdate(playerID)
+	if not playerMap[playerID] then
+		return
+	end
 	local state = Spring.GetPlayerRulesParam(playerID, "lagmonitor_lagging") or 0
 	local allyTeamID = playerMap[playerID]
 	if state == 1 and not afkplayers[playerID] then
@@ -261,7 +265,9 @@ function gadget:GameFrame(f)
 				states[allyTeamID].timer = states[allyTeamID].timer - 1
 				UpdateResignTimer(allyTeamID)
 				if states[allyTeamID].timer == 0 then
-					Spring.Echo("game_message: Team " .. allyTeamID .. " Destroyed due to morale.")
+					if GetAllyTeamPlayerCount(allyTeamID) > 1 then
+						Spring.Echo("game_message: Team " .. allyTeamID .. " Destroyed due to morale.")
+					end
 					DestroyAlliance(allyTeamID)
 					RemoveResignTeam(allyTeamID)
 					Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_total", 0, PUBLIC)
@@ -281,7 +287,7 @@ function gadget:RecvLuaMsg(msg, playerID)
 		return
 	end
 	local allyTeamID = playerMap[playerID]
-	if msg:find("forceresign") then
+	if msg:find("forceresign") or msg == "resignstate playerresigned" then
 		if allyTeamID == nil then
 			return
 		end

@@ -1,3 +1,7 @@
+if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "CEG d overrider",
@@ -6,7 +10,7 @@ function gadget:GetInfo()
 		date      = "14/01/2021",
 		license   = "GNU GPL, v2 or later",
 		layer     = 0,
-		enabled   = true,
+		enabled   = false,
 	}
 end
 
@@ -39,19 +43,18 @@ local handledExplosions = {}
 local debugmode = false
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
-if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
-	return
-end
----------------------------------------------------------------------
----------------------------------------------------------------------
 
-spEcho("CEG d Overrider: Scanning weapondefs")
+if debugmode then 
+	spEcho("CEG d Overrider: Scanning weapondefs")
+end
 
 for q=1, #WeaponDefs do
 	local Wdef = WeaponDefs[q]
 	local params = Wdef.customParams
 	if params and params.explosion_generator then
-		spEcho("CDO: Pharsing Weapon. ID:" .. q .. " Name:".. Wdef.name)
+		if debugmode then 
+			spEcho("CDO: Pharsing Weapon. ID:" .. q .. " Name:".. Wdef.name)
+		end
 		handledExplosions[q] = {}
 		handledExplosions[q].Overrides = tonumber(params.ceg_d_override) or 1
 		handledExplosions[q].ExpGen = params.explosion_generator
@@ -60,7 +63,9 @@ for q=1, #WeaponDefs do
 	end
 end
 
-spEcho("CEG d Overrider: Finished scanning weapondefs")
+if debugmode then 
+	spEcho("CEG d Overrider: Finished scanning weapondefs")
+end
 
 function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, ProjectileID)
 	if handledExplosions[weaponDefID] then

@@ -43,6 +43,16 @@ local sounds = {
 			[1] = "bot_select",
 		},
 	},
+	striderrazorback = {
+		ok = {
+			volume = 0.58,
+			[1] = "heavy_bot_move",
+		},
+		select = {
+			volume = 0.5,
+			[1] = "medium_bot_select",
+		},
+	},
 	armcom = {
 		build = { "builder_start" },
 		ok = {
@@ -52,6 +62,16 @@ local sounds = {
 		select = {
 			volume = 0.5,
 			[1] = "bot_select",
+		},
+	},
+	chicken = {
+		select = {
+			volume = 0.5,
+			[1] = "chicken_select",
+		},
+		ok = {
+			volume = 0.58,
+			[1] = "chicken_move",
 		},
 	},
 	commsupport = {
@@ -514,6 +534,16 @@ local sounds = {
 			volume = 0.6,
 		},
 	},
+	amphskirm = {
+		ok = {
+			[1] = "amph_move",
+			volume = 0.8,
+		},
+		select = {
+			[1] = "amph_select",
+			volume = 0.6,
+		},
+	},
 	amphfloater = {
 		ok = {
 			[1] = "amph_move",
@@ -536,21 +566,21 @@ local sounds = {
 	},
 	amphriot = {
 		ok = {
-			[1] = "amph_move",
+			[1] = "amph_heavy_move",
 			volume = 0.8,
 		},
 		select = {
-			[1] = "amph_select",
+			[1] = "amph_heavy_select",
 			volume = 0.6,
 		},
 	},
 	amphassault = {
 		ok = {
-			[1] = "amph_move",
+			[1] = "amph_heavy_move",
 			volume = 0.8,
 		},
 		select = {
-			[1] = "amph_select",
+			[1] = "amph_heavy_select",
 			volume = 0.6,
 		},
 	},
@@ -974,16 +1004,6 @@ local sounds = {
 			[1] = "bomber_select",
 		},
 	},
-	bombercluster = {
-		ok = {
-			volume = 0.72,
-			[1] = "bomber_move",
-		},
-		select = {
-			volume = 1.1,
-			[1] = "bomber_select",
-		},
-	},
 	bomberstrike = {
 		ok = {
 			volume = 0.72,
@@ -1331,7 +1351,7 @@ local sounds = {
 	energysingu = {
 		select = {
 			volume = 0.5,
-			[1] = "adv_fusion_select",
+			[1] = "energysingu_select",
 		},
 	},
 	energygeo = {
@@ -1364,8 +1384,21 @@ local sounds = {
 			[1] = "building_select1",
 		},
 	},
+	platestrider = {
+		build = { "builder_start" },
+		select = {
+			[1] = "building_select1",
+		},
+	},
 	
 	-- Factory
+	factorycomm  = {
+		build = { "builder_start" },
+		select = {
+			volume = 0.8,
+			[1] = "cpl_select",
+		},
+	},
 	factorycloak = {
 		build = { "builder_start" },
 		select = {
@@ -1815,6 +1848,26 @@ local sounds = {
 		},
 	},
 	tacnuke = {
+		ok = {
+			volume = 0.36,
+			[1] = "turret_select",
+		},
+		select = {
+			volume = 0.78,
+			[1] = "silo_select",
+		},
+	},
+	missilekinetic = {
+		ok = {
+			volume = 0.36,
+			[1] = "turret_select",
+		},
+		select = {
+			volume = 0.78,
+			[1] = "silo_select",
+		},
+	},
+	missilenuke = {
 		ok = {
 			volume = 0.36,
 			[1] = "turret_select",

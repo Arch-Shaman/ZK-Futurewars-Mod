@@ -110,7 +110,7 @@ local function Open()
 		StopSpin(spinners[i], x_axis)
 	end
 	
-	SetUnitValue(COB.BUGGER_OFF, 1)
+	--SetUnitValue(COB.BUGGER_OFF, 1)
 	SetUnitValue(COB.INBUILDSTANCE, 1)
 	SetUnitValue(COB.YARD_OPEN, 1)
 	GG.Script.UnstickFactory(unitID)
@@ -124,7 +124,7 @@ local function Close()
 	SetSignalMask(SIG_ANIM)
 	open = false
 
-	SetUnitValue(COB.BUGGER_OFF, 0)
+	--SetUnitValue(COB.BUGGER_OFF, 0)
 	SetUnitValue(COB.INBUILDSTANCE, 0)
 	SetUnitValue(COB.YARD_OPEN, 0)
 	
@@ -211,9 +211,9 @@ function script.FireWeapon(num)
 	Move(barrel, x_axis, 0, 1)
 end 
 
---[[function script.BlockShot(num, targetID)
-	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 600, 50, 1, 0, false)
-end]] -- OKP, if needed.
+function script.BlockShot(num, targetID)
+	return num == 1 and GG.OverkillPrevention_CheckBlock(unitID, targetID, 600, 50, 1, 0, false) -- 2 should be MGs which dont need OKP.
+end
 
 local firstDeactivate = true
 function script.Deactivate()

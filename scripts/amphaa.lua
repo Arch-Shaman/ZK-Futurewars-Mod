@@ -8,6 +8,7 @@ local base, pelvis, torso, vent = piece('base', 'pelvis', 'torso', 'vent')
 local rthigh, rcalf, rfoot, lthigh, lcalf, lfoot = piece('rthigh', 'rcalf', 'rfoot', 'lthigh', 'lcalf', 'lfoot')
 local lgun, lbarrel1, lbarrel2, rgun, rbarrel1, rbarrel2 = piece('lgun', 'lbarrel1', 'lbarrel2', 'rgun', 'rbarrel1', 'rbarrel2')
 
+local reloadSpeed = tonumber(WeaponDefs[UnitDefs[Spring.GetUnitDefID(unitID)].weapons[1].weaponDef].customParams.script_reload)
 
 local shot = 0
 local gun = {
@@ -19,6 +20,18 @@ local gun = {
 	[5] = {firepoint = lbarrel1, loaded = true, readyToAim = true},
 	[6] = {firepoint = rbarrel2, loaded = true, readyToAim = true},
 	[7] = {firepoint = lbarrel2, loaded = true, readyToAim = true},
+	[8] = {firepoint = rbarrel1, loaded = true, readyToAim = true},
+	[9] = {firepoint = lbarrel1, loaded = true, readyToAim = true},
+	[10] = {firepoint = rbarrel2, loaded = true, readyToAim = true},
+	[11] = {firepoint = lbarrel2, loaded = true, readyToAim = true},
+	[12] = {firepoint = rbarrel1, loaded = true, readyToAim = true},
+	[13] = {firepoint = lbarrel1, loaded = true, readyToAim = true},
+	[14] = {firepoint = rbarrel2, loaded = true, readyToAim = true},
+	[15] = {firepoint = lbarrel2, loaded = true, readyToAim = true},
+	[16] = {firepoint = rbarrel1, loaded = true, readyToAim = true},
+	[17] = {firepoint = lbarrel1, loaded = true, readyToAim = true},
+	[18] = {firepoint = rbarrel2, loaded = true, readyToAim = true},
+	[19] = {firepoint = lbarrel2, loaded = true, readyToAim = true},
 }
 
 local smokePiece = {torso}
@@ -310,7 +323,7 @@ function script.StopMoving()
 end
 
 function script.Create()
-	scriptReload.SetupScriptReload(8, 10 * gameSpeed)
+	scriptReload.SetupScriptReload(20, reloadSpeed * gameSpeed)
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 end
 
@@ -357,12 +370,9 @@ local function reload(num)
 	gun[num].loaded = false
 	gun[num].readyToAim = false
 
-	SleepAndUpdateReload(num, 9 * gameSpeed)
+	SleepAndUpdateReload(num, reloadSpeed * gameSpeed)
 
 	gun[num].readyToAim = true
-
-	SleepAndUpdateReload(num, 3 * gameSpeed)
-
 	if scriptReload.GunLoaded(num) then
 		shot = 0
 	end
@@ -373,12 +383,12 @@ function script.Shot(num)
 	EmitSfx(gun[shot].firepoint, 1024)
 	GG.Floating_AimWeapon(unitID)
 	StartThread(reload,shot)
-	shot = (shot + 1)%8
+	shot = (shot + 1)%20
 end
 
 function script.BlockShot(num, targetID)
 	if gun[shot].loaded then
-		return GG.Script.OverkillPreventionCheck(unitID, targetID, 200.1, 820, 32, 0.2)
+		return GG.Script.OverkillPreventionCheck(unitID, targetID, 100.1, 820, 32, 0.2)
 	end
 	return true
 end

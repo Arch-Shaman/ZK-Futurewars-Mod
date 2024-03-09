@@ -202,13 +202,24 @@ function gadget:UnitCreated(unitID, unitDefID, teamID)
 	end
 end
 
-local function AddUnitRadarTargeting(unitID)
+local function AddUnitRadarTargeting(unitID, wantedState)
 	spInsertUnitCmdDesc(unitID, dontFireAtRadarCmdDesc)
+	local v = wantedState or 0
 	canHandleUnit[unitID] = true
-	DontFireAtRadarToggleCommand(unitID, {1})
+	DontFireAtRadarToggleCommand(unitID, {v})
+end
+
+local function GetUnitState(unitID)
+	return (canHandleUnit[unitID] and (units[unitID] and 1) or 0) or nil
+end
+
+local function SetUnitState(unitID, state)
+	DontFireAtRadarToggleCommand(unitID, {state})
 end
 
 GG.AddUnitRadarTargeting = AddUnitRadarTargeting
+GG.GetUnitRadarTargeting = GetUnitState
+GG.SetUnitRadarTargeting = SetUnitState
 
 function gadget:UnitDestroyed(unitID)
 	if canHandleUnit[unitID] then

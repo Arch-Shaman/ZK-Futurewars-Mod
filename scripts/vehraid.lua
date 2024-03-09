@@ -23,6 +23,11 @@ local smokePiece = {turret, body}
 local SIG_AIM = 1
 local ANIM_SPEED = 50
 local RESTORE_DELAY = 2000
+local SPEEDUP_DURATION = tonumber(UnitDefNames["vehraid"].customParams.boost_duration) or 1.5
+SPEEDUP_DURATION = SPEEDUP_DURATION * 30
+local SPEEDUP_FACTOR = tonumber(UnitDefNames["vehraid"].customParams.boost_speed_mult) or 3.8
+local POSTSPRINT_DURATION = 18
+local POSTSPRINT_SPEED = 2/3
 
 local TURRET_TURN_SPEED = 335
 local SLEEVE_TURN_SPEED = 90
@@ -35,7 +40,43 @@ local spGetGroundHeight = Spring.GetGroundHeight
 local spGetPiecePosition = Spring.GetUnitPiecePosition
 local spGetUnitVelocity = Spring.GetUnitVelocity
 local spGetUnitPosition = Spring.GetUnitPosition
+local spSetUnitRulesParam = Spring.GetUnitRulesParam
 
+local function IsStunnedOrDisarmed()
+	local disarmed = (Spring.GetUnitRulesParam(unitID, "disarmed") or 0) == 1
+	return Spring.GetUnitIsStunned(unitID) or disarmed
+end
+
+function SprintThread()
+	local disarmed = false
+	local f = 0
+	GG.UpdateUnitAttributes(unitID)
+	GG.Sprint.Start(unitID, SPEEDUP_FACTOR)
+	while f < SPEEDUP_DURATION do
+		disarmed = IsStunnedOrDisarmed()
+		while disarmed do
+			Sleep(33)
+			disarmed = IsStunnedOrDisarmed()
+		end
+		EmitSfx(rwheel2, 1025)
+		EmitSfx(lwheel2, 1025)
+		Sleep(33)
+		f = f + 1
+	end
+	GG.Sprint.End(unitID)
+	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", POSTSPRINT_SPEED)
+	GG.UpdateUnitAttributes(unitID)
+	Sleep(POSTSPRINT_DURATION * 33)
+	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
+	GG.UpdateUnitAttributes(unitID)
+	-- Spring.MoveCtrl.SetAirMoveTypeData(unitID, "maxAcc", 0.5)
+	GG.UpdateUnitAttributes(unitID)
+end
+
+function Sprint()
+	StartThread(SprintThread)
+	-- Spring.MoveCtrl.SetAirMoveTypeData(unitID, "maxAcc", 3)
+end
 
 local function GetWheelHeight(piece)
 	local x,y,z = Spring.GetUnitPiecePosDir(unitID, piece)

@@ -17,7 +17,7 @@ local RUN_SPEED_FAST = 5
 
 local smokePiece = {torso}
 
-local gun_1 = 0
+--local gun_1 = 0
 --------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
 
@@ -146,8 +146,9 @@ end
 
 function script.QueryWeapon(num)
 	if num == 1 then
-		gun_1 = 1 - gun_1
-		return gun_1 == 0 and rflare or lflare
+		return rflare
+	elseif num == 2 then
+		return lflare
 	else
 		return cflare
 	end
@@ -157,34 +158,34 @@ end
 	if num == 1 then
 		gun_1 = 1 - gun_1
 	end
-end]]--
+end]]
 
 
 -- Jumping
-local turnSpeed
+--local turnSpeed
 
---function preJump(turn,distance,airDistance)
---	Signal(SIG_WALK)
---	local radians = turn*2*math.pi/2^16
---	turnSpeed = math.abs(turn*2*math.pi/2^16)
---	Turn(base, y_axis, radians, turnSpeed*1.5)
---	turnSpeed = turnSpeed*airDistance/1300
---	Move(base, y_axis, -12, 18)
---	--Turn(torso, x_axis, math.rad(10), math.rad(80))
---
---	Turn(rshoulder, x_axis, math.rad(55), math.rad(200))
---	Turn(rlarm, x_axis, math.rad(-110), math.rad(200))
---	Turn(lshoulder, x_axis, math.rad(55), math.rad(200))
---	Turn(llarm, x_axis, math.rad(-110), math.rad(200))
---
---	Turn(lthigh, x_axis, math.rad(50),math.rad(300))
---	Turn(lshin, x_axis, math.rad(-35), math.rad(150))
---	Turn(lfoot, x_axis, math.rad(-10), math.rad(80))
---
---	Turn(rthigh, x_axis, math.rad(50),math.rad(300))
---	Turn(rshin, x_axis, math.rad(-35), math.rad(150))
---	Turn(rfoot, x_axis, math.rad(-10), math.rad(80))
---end
+--[[function preJump(turn,distance,airDistance)
+	Signal(SIG_WALK)
+	local radians = turn*2*math.pi/2^16
+	turnSpeed = math.abs(turn*2*math.pi/2^16)
+	Turn(base, y_axis, radians, turnSpeed*1.5)
+	turnSpeed = turnSpeed*airDistance/1300
+	Move(base, y_axis, -12, 18)
+	--Turn(torso, x_axis, math.rad(10), math.rad(80))
+
+	Turn(rshoulder, x_axis, math.rad(55), math.rad(200))
+	Turn(rlarm, x_axis, math.rad(-110), math.rad(200))
+	Turn(lshoulder, x_axis, math.rad(55), math.rad(200))
+	Turn(llarm, x_axis, math.rad(-110), math.rad(200))
+
+	Turn(lthigh, x_axis, math.rad(50),math.rad(300))
+	Turn(lshin, x_axis, math.rad(-35), math.rad(150))
+	Turn(lfoot, x_axis, math.rad(-10), math.rad(80))
+
+	Turn(rthigh, x_axis, math.rad(50),math.rad(300))
+	Turn(rshin, x_axis, math.rad(-35), math.rad(150))
+	Turn(rfoot, x_axis, math.rad(-10), math.rad(80))
+end]]
 
 function beginJump()
 	Signal(SIG_WALK)

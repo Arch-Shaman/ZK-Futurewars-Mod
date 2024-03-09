@@ -1,0 +1,19 @@
+{
+	"update_header" : "Minor Update 0.39.14: Waypoint to the Future",
+	"support_fw" : "Support Future Wars!",
+	"join_discord" : "Join our Discord",
+	"link_copied" : "Link copied to clipboard",
+	"shameless_plug" : "If you enjoy Future Wars and want to contribute your feedback to the project or have a chat with fellow players, consider joining our discord: https://discord.com/invite/GMUnRGUuSy or join #fw in the zk server. We are currently looking for ideas, graphical artists, and translators to contribute to the project, giving us a fresh coat of paint.",
+	"entry_1" : "This update addresses several fixes to problems lately. I have returned to active development and have been taking care of several issues in the background. First, major optimizations in the grid overlay have been done. You should no longer have issues with ordering lots of constructors to build energy sources.",
+	"entry_2" : "Second on the list of advances, Future Wars AI has had a patch, so if you have it installed, please update from the Github. It addresses a critical bug that causes game crashes when a factory dies. Thank you for your reports!",
+	"entry_3" : "Last bit on the advances and perhaps the biggest is the introduction of command queues for Athenas and Strider Hubs. By clicking on the flag icon with athenas selected, you can edit the waypoints for them. Please give this a try and report any feedback on our discord or in #modding.",
+	"entry_4" : "Now for some backend news: we have a new automated patch generator with some cool new features. Join #modding or #fw to check it out. It will automatically generate patch notes from our commit list. This process isn't perfect, but it is a step up from manually generating patch notes.",
+	"chicken_header" : "Game mode: Chickens",
+	"chicken_entry_1" : "Chickens will alternate between launching all out assaults on your base with huge hordes and staying back in order to regain their forces. Ensure you destroy the chicken's roosts while the chickens are resting to weaken their attacks",
+	"chicken_entry_2" : "Chickens will eventually start to construct incredibly powerful chickens known as menaces. Destroy them before they are finished. Menaces under construction are protected by the Raffesia's indestructible shield, rendering them immune to artillery.",
+	"chicken_entry_3" : "The Hive's anger will increase over time. Once the hive anger reaches 100%, the Chicken Queen herself will arrive on the battlefield (unless you are in endless mode) and the chickens will start attacking nonstop. Focus all your firepower upon the chicken queen as her death will cause the swarm to crumble",
+	"comm_wars_header" : "Game mode: Commander Wars",
+	"comm_wars_entry_1" : "In this gamemode you have access to only your commander and nothing else. Your commander can no longer build, only repair and reclaim. Upgrade your commander by giving it more modules through the commander morph system and defeat the enemy commanders!",
+	"comm_wars_entry_2" : "Additionally, balance changes have been made to many commander modules and weapons in order to make them more balanced in a commander-only gamemode. The balance is still experimental however so feedback would be greatly appreciated.",
+	"houserules" : "House Rules: "
+}

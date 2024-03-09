@@ -1,0 +1,3 @@
+return {
+	metalValueOverride = 4,
+}

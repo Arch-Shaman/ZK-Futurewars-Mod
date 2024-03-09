@@ -1,4 +1,5 @@
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
+local extraStateTypes, _ = VFS.Include("LuaRules/Configs/ammostateinfo.lua")
 
 local stateData = {
 	[CMD_WANT_ONOFF] = 2,
@@ -20,6 +21,7 @@ local stateData = {
 	[CMD.REPEAT] = 2,
 	[CMD_RETREAT] = 4,
 	[CMD_RETREATSHIELD] = 4,
+	[CMD_AUTOJUMP] = 2,
 	[CMD.TRAJECTORY] = 2,
 	[CMD_DISABLE_ATTACK] = 2,
 	[CMD_UNIT_BOMBER_DIVE_STATE] = 4,
@@ -28,9 +30,14 @@ local stateData = {
 	[CMD_UNIT_KILL_SUBORDINATES] = 2,
 	[CMD_PREVENT_OVERKILL] = 2,
 	[CMD_PREVENT_BAIT] = 5,
-	[CMD_WARD_FIRE] = 2,
+	[CMD_FIRE_AT_SHIELD] = 2,
+	[CMD_FIRE_TOWARDS_ENEMY] = 2,
 	--[CMD_SELECTION_RANK] = 2, -- Handled entirely in luaUI so not included here.
 	[CMD_UNIT_AI] = 2,
+	[CMD_OVERRECLAIM] = 2,
+	[CMD_FIRECYCLE] = 2,
+	[CMD_ARMORSTATE] = 2,
+	[CMD_QUEUE_MODE] = 2,
 }
 
 local specialHandling = {
@@ -59,6 +66,15 @@ local gadgetReverse = {
 	[CMD_UNIT_BOMBER_DIVE_STATE] = true,
 	[CMD_PREVENT_BAIT] = true,
 	[CMD_GOO_GATHER] = true,
+	[CMD_OVERRECLAIM] = true,
+	[CMD_FIRECYCLE] = true,
+	[CMD_ARMORSTATE] = true,
+	[CMD_QUEUE_MODE] = true,
 }
+
+for id, num in pairs(extraStateTypes) do
+	stateData[id] = num
+	gadgetReverse[id] = true
+end
 
 return stateData, gadgetReverse, specialHandling

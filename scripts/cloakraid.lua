@@ -37,6 +37,7 @@ local foot = {lfoot, rfoot}
 
 local smokePiece = {head, hips, chest}
 
+
 --constants
 local runspeed = 8.5 * (UnitDefs[unitDefID].speed / 115)  -- run animation rate, future-proofed
 local steptime = 40  -- how long legs stay extended during stride
@@ -47,6 +48,7 @@ local stride_bottom = -1.0  -- how low hips go during stride
 -- variables
 local moving = false
 local aiming = false
+local recoil = false
 
 --signals
 local SIG_Idle = 1
@@ -64,11 +66,13 @@ function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	Spring.SetUnitStealth(unitID, true) 
 	Turn(flare, x_axis, 1.6, 5)
-	Turn(lshoulder, x_axis, math.rad(-10))
-	Turn(lforearm, x_axis, math.rad(-30))
-	Turn(lforearm, z_axis, math.rad(-12))
+	Turn(lshoulder, x_axis, math.rad(-90))
+	Turn(lforearm, x_axis, math.rad(-90))
 	Turn(rshoulder, x_axis, math.rad(0))
+	Turn(rshoulder, y_axis, math.rad(0))
 	Turn(rforearm, x_axis, math.rad(-15))
+	Turn(rforearm, y_axis, math.rad(0))
+	Turn(gun, y_axis, math.rad(0))
 end
 
 local function Cloak()
@@ -106,10 +110,13 @@ local function Walk()
 
 		if not aiming then
 			Turn(head, y_axis, 0, 2.0)
-			Turn(lshoulder, x_axis, math.rad(-15)-math.rad(45)*sway, truespeed*0.5)
-			Turn(lforearm, x_axis, math.rad(-45)+math.rad(45)*sway, truespeed*0.5)
-			Turn(rshoulder, x_axis, math.rad(0)+math.rad(45)*sway, truespeed*0.5)
-			Turn(rforearm, x_axis, math.rad(-80)-math.rad(40)*sway, truespeed*0.5)
+			Turn(lshoulder, x_axis, math.rad(-90) - math.rad(-45) * sway, truespeed*0.5)
+			Turn(lforearm, x_axis, math.rad(-90) + math.rad(-45) * sway, truespeed*0.5)
+			Turn(rshoulder, x_axis, math.rad(75) + math.rad(-75) * sway, truespeed*0.5)
+			Turn(rshoulder, z_axis, math.rad(0) + math.rad(0) * sway, truespeed*0.5)
+			Turn(rforearm, x_axis, math.rad(-60) - math.rad(0) * sway, truespeed*0.5)
+			Turn(rforearm, z_axis, math.rad(0) - math.rad(0) * sway, truespeed*0.5)
+			Turn(gun, y_axis, math.rad(0) - math.rad(0) * sway, truespeed*90)
 		end
 
 		Turn(thigh[side], x_axis, math.rad(-85), truespeed*1)
@@ -153,8 +160,14 @@ local function Idle()
 	while true do
 		Sleep(3000 * rand)
 
-		Turn(lshoulder, x_axis, math.rad(-10), 0.5)
-		Turn(lforearm, x_axis, math.rad(-30), 0.5)
+		Turn(lshoulder, x_axis, math.rad(-30), 0.5)
+		Turn(lshoulder, z_axis, math.rad(-15), 0.5)
+		Turn(lforearm, x_axis, math.rad(-5), 0.5)
+		Turn(rshoulder, x_axis, math.rad(-15), 0.25)
+		Turn(rshoulder, z_axis, math.rad(15), 0.25)
+		Turn(rforearm, x_axis, math.rad(-30), 0.25)
+		Turn(rforearm, z_axis, math.rad(25), 0.25)
+		Turn(gun, y_axis, math.rad(95), 1)
 
 		Turn(head, y_axis, math.rad(30)*dir, 0.5)
 		dir = dir * -1
@@ -172,8 +185,8 @@ local function StopWalk()
 	Turn(hips, z_axis, 0, 0.5)
 
 	if not aiming then
-		Turn(lshoulder, x_axis, math.rad(-45), runspeed*0.3)
-		Turn(lforearm, x_axis, math.rad(-12), runspeed*0.3)
+		Turn(lshoulder, x_axis, math.rad(-90), runspeed*0.3)
+		Turn(lforearm, x_axis, math.rad(-90), runspeed*0.3)
 	end
 
 	Turn(rshoulder, x_axis, math.rad(0), runspeed*0.3)
@@ -210,7 +223,10 @@ local function RestoreAfterDelay()
 	Turn(lshoulder, z_axis, 0, 3)
 	Turn(lforearm, z_axis, math.rad(-12), 5)
 	Turn(rshoulder, x_axis, math.rad(0), runspeed*0.3)
+	Turn(rshoulder, z_axis, math.rad(0), runspeed*0.3)
 	Turn(rforearm, x_axis, math.rad(-15), runspeed*0.3)
+	Turn(rforearm, z_axis, math.rad(0), runspeed*0.3)
+	Turn(gun, y_axis, math.rad(0), 1)
 	Spin(magazine, y_axis, 0)
 
 	StartThread(Idle)
@@ -224,19 +240,26 @@ function script.AimFromWeapon(num)
 	return head
 end
 
+
+
 function script.AimWeapon(num, heading, pitch)
 	Signal(SIG_Aim)
 	Signal(SIG_Idle)
 	SetSignalMask(SIG_Aim)
 	aiming = true
-
+	if recoil then
+		return false
+	end
 	Turn(head, y_axis, 0, 4.0)
 	Turn(chest, y_axis, heading, 12)
 	Turn(lforearm, z_axis, 0, 6)
 	Turn(lforearm, x_axis, 0, 6)
 	Turn(lshoulder, x_axis, -pitch - math.rad(80), 12)
 	Turn(rshoulder, x_axis, math.rad(0), math.rad(90))
+	Turn(rshoulder, x_axis, math.rad(0), math.rad(0))
 	Turn(rforearm, x_axis, math.rad(-45), math.rad(90))
+	Turn(rforearm, z_axis, math.rad(0), math.rad(0))
+	Turn(gun, y_axis, math.rad(0), 90)
 
 	WaitForTurn(chest, y_axis)
 	WaitForTurn(lshoulder, x_axis)
@@ -244,10 +267,20 @@ function script.AimWeapon(num, heading, pitch)
 	return true
 end
 
-function script.FireWeapon(num)
+local function RecoilThread()
+	recoil = true
+	Sleep(5)	
+	Turn(lshoulder, x_axis, math.rad(-105), math.rad(-280))
+    Turn(lforearm, x_axis, math.rad(-45), math.rad(-280))
+	WaitForTurn(lshoulder, x_axis)
+	recoil = false
+end
+
+function script.FireWeapon()
 	Spin(magazine, y_axis, 2)
 	EmitSfx(ejector, 1024)
 	EmitSfx(flare, 1025)
+	StartThread(RecoilThread)
 	-- Generic attributes testing.
 	--GG.Attributes.RemoveEffect(unitID, math.floor(math.random()*10))
 	--GG.Attributes.AddEffect(unitID, math.floor(math.random()*10), {

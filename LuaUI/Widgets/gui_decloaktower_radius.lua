@@ -28,6 +28,15 @@ drawRadius[1] = {
 	textSize = 180,
 }
 
+drawRadius[2] = {
+	range = WeaponDefs[UnitDefNames["factoryspider"].weapons[1].weaponDef].damageAreaOfEffect,
+	color = {0.8, 0.8, 0.2,1},
+	text = "",
+	width = 1,
+	miniWidth = 1,
+	textSize = 180,
+}
+
 local circleDivs = 64
 
 --------------------------------------------------------------------------------
@@ -45,6 +54,7 @@ local spGetCameraState   = Spring.GetCameraState
 
 local wantedIDs = {
 	[-UnitDefNames["turretdecloak"].id] = true,
+	[-UnitDefNames["factoryspider"].id] = true,
 }
 
 local floor = math.floor
@@ -143,6 +153,7 @@ local function DrawActiveCommandRangesMinimap(minimapX, minimapY)
 	
 	glTranslate(0,minimapY,0)
 	glScale(minimapX/mapX, -minimapY/mapZ, 1)
+	
 	
 	for i = 1, 1 do
 		local radius = drawRadius[i]

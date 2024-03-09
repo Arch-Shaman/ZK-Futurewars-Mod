@@ -1,7 +1,7 @@
 function widget:GetInfo()
 	return {
 		name      = "Defense Range Zero-K",
-		desc      = "[v6.2.6] Displays range of defenses (enemy and ally)",
+		desc      = "Displays range of defenses (enemy and ally)",
 		author    = "very_bad_soldier / versus666",
 		date      = "October 21, 2007 / September 08, 2010",
 		license   = "GNU GPL v2",
@@ -35,6 +35,7 @@ do
 			class = ANTI,
 			color = { 1, 1, 1 },
 			colorInBuild = { 0, 0.6, 0.8 },
+			lineWidth = 2.75,
 		},
 		turretemp = {
 			color = {1, 0.56, 0},
@@ -50,7 +51,12 @@ do
 		},
 		turretdecloak = {
 			color = {0.8, 0.8, 0.2},
-			lineWidth = 2,
+			lineWidth = 3.5,
+			class = CLOAK,
+		},
+		factoryspider = {
+			color = {0.8, 0.8, 0.2},
+			lineWidth = 3.5,
 			class = CLOAK,
 		},
 		mahlazer = {
@@ -75,8 +81,7 @@ do
 		},
 		turretmissile = {
 			color = {1, 0, 0},
-			color2 = {0, 1, 0},
-			class = MIXED,
+			class = GROUND,
 		},
 		turretlaser = {
 			color = {1, 0, 0},
@@ -154,12 +159,17 @@ do
 			conf.radius = weaponDef.damageAreaOfEffect
 			conf.weaponDef = CYLINDER_HEIGHTMOD
 		else
-			conf.weaponDef = weaponDef
-			conf.radius = weaponDef.range
+			if unitName ~= "turretemp" then
+				conf.weaponDef = weaponDef
+				conf.radius = weaponDef.range
+			else
+				conf.radius = weaponDef.range
+				conf.weaponDef = CYLINDER_HEIGHTMOD
+			end
 		end
 
 		if not conf.lineWidth then
-			conf.lineWidth = 1.0
+			conf.lineWidth = 1.8
 		end
 
 		conf.color[4] = alphaValue
@@ -180,7 +190,7 @@ local unitDefIDRemap = {
 }
 
 -- speedups
-
+local gl = gl
 local GL_LINE_STRIP         = GL.LINE_STRIP
 local glBeginEnd            = gl.BeginEnd
 local glCallList            = gl.CallList
@@ -215,8 +225,7 @@ local global_command_button
 
 -- EPIC options
 
-local Chili
-options_path = 'Settings/Interface/Defense and Cloak Ranges'
+options_path = 'Settings/Interface/Defence and Cloak Ranges'
 
 local function OnOptChange(self)
 	local cb = checkboxes[self.key]
@@ -229,7 +238,7 @@ local function OnOptChange(self)
 end
 
 options = {
-	label = { type = 'label', name = 'Defense Ranges' },
+	label = { type = 'label', name = 'Defence Ranges' },
 	allyground = {
 		name = 'Show Ally Ground Defence',
 		type = 'bool',
@@ -335,7 +344,7 @@ local function BuildVertexList(verts)
 	glVertex(verts[1])
 end
 
-local function CreateDrawList(isAlly, configData, inBuild, x, y, z)
+local function CreateDrawList(configData, inBuild, x, y, z)
 	local color = inBuild and configData.colorInBuild or configData.color
 
 	glLineWidth(configData.lineWidth)
@@ -392,7 +401,7 @@ local function UnitDetected(unitID, unitDefID, isAlly, alwaysUpdate)
 
 	local x, y, z = spGetUnitPosition(unitID)
 	defences[unitID] = {
-		drawList = glCreateList(CreateDrawList, isAlly, configData, inBuild, x, y, z),
+		drawList = glCreateList(CreateDrawList, configData, inBuild, x, y, z),
 		x = x, y = y, z = z,
 		inBuild = inBuild,
 		isAlly = isAlly,
@@ -405,7 +414,7 @@ local function UnitDetected(unitID, unitDefID, isAlly, alwaysUpdate)
 end
 
 RedoUnitList = function()
-
+	local options = options
 	for _, def in pairs(unitConfig) do
 		if def.class == GROUND then
 			def.wantedAlly = options.allyground.value
@@ -566,7 +575,8 @@ function widget:PlayerChanged(playerID)
 			-- we don't know everything anymore, and callins for leaving radar/los won't trigger in this transition.
 		end
 		-- callins for units entering radar/los won't trigger during team/spectator change
-		-- so we could miss incomplete or completed units suddenly appearing in los, or fail to mark units suddenly leaving los/radar for loschecks.
+		-- so we could miss incomplete or completed units suddenly appearing in los,
+		-- or fail to mark units suddenly leaving los/radar for loschecks.
 		DoFullUnitReload()
 		fullView = newFullView
 	end
@@ -593,8 +603,9 @@ local function SetupChiliStuff()
 	local Chili = WG.Chili
 	local Window = Chili.Window
 	local Image = Chili.Image
+	local Checkbox = Chili.Checkbox
 
-	local mainWindow = WG.Chili.Window:New{
+	local mainWindow = Window:New{
 		classname = "main_window_small_tall",
 		name      = 'DefenseRangesWindow',
 		x         =  50,
@@ -610,16 +621,16 @@ local function SetupChiliStuff()
 		parent = WG.Chili.Screen0,
 	}
 
-	pics.ground = WG.Chili.Image:New { x = 0, y = 24*1, file = 'LuaUI/Images/defense_ranges/ground.png' }
-	pics.air    = WG.Chili.Image:New { x = 0, y = 24*2, file = 'LuaUI/Images/defense_ranges/air.png'    }
-	pics.nuke   = WG.Chili.Image:New { x = 0, y = 24*3, file = 'LuaUI/Images/defense_ranges/nuke.png'   }
-	pics.shield = WG.Chili.Image:New { x = 0, y = 24*4, file = 'LuaUI/Images/defense_ranges/shield.png' }
-	pics.radar  = WG.Chili.Image:New { x = 0, y = 24*5, file = 'LuaUI/Images/defense_ranges/radar.png'  }
-	pics.cloak  = WG.Chili.Image:New { x = 0, y = 24*6, file = 'LuaUI/Images/defense_ranges/cloak.png'  }
+	pics.ground = Image:New { x = 0, y = 24*1, file = 'LuaUI/Images/defense_ranges/ground.png' }
+	pics.air    = Image:New { x = 0, y = 24*2, file = 'LuaUI/Images/defense_ranges/air.png'    }
+	pics.nuke   = Image:New { x = 0, y = 24*3, file = 'LuaUI/Images/defense_ranges/nuke.png'   }
+	pics.shield = Image:New { x = 0, y = 24*4, file = 'LuaUI/Images/defense_ranges/shield.png' }
+	pics.radar  = Image:New { x = 0, y = 24*5, file = 'LuaUI/Images/defense_ranges/radar.png'  }
+	pics.cloak  = Image:New { x = 0, y = 24*6, file = 'LuaUI/Images/defense_ranges/cloak.png'  }
 
-	pics.ally  = WG.Chili.Image:New { x = 24*1, y = 0, file = 'LuaUI/Images/defense_ranges/defense_ally.png'  }
-	pics.enemy = WG.Chili.Image:New { x = 24*2, y = 0, file = 'LuaUI/Images/defense_ranges/defense_enemy.png' }
-	pics.spec  = WG.Chili.Image:New { x = 24*3, y = 0, file = 'LuaUI/Images/dynamic_comm_menu/eye.png'        }
+	pics.ally  = Image:New { x = 24*1, y = 0, file = 'LuaUI/Images/defense_ranges/defense_ally.png'  }
+	pics.enemy = Image:New { x = 24*2, y = 0, file = 'LuaUI/Images/defense_ranges/defense_enemy.png' }
+	pics.spec  = Image:New { x = 24*3, y = 0, file = 'LuaUI/Images/dynamic_comm_menu/eye.png'        }
 
 	for key, pic in pairs(pics) do
 		pic.width = 24
@@ -627,23 +638,23 @@ local function SetupChiliStuff()
 		mainWindow:AddChild(pic)
 	end
 
-	checkboxes.allyground  = WG.Chili.Checkbox:New { x = 26, y = 28, }
-	checkboxes.enemyground = WG.Chili.Checkbox:New { x = 50, y = 28, }
-	checkboxes.specground  = WG.Chili.Checkbox:New { x = 74, y = 28, }
-	checkboxes.allyair     = WG.Chili.Checkbox:New { x = 26, y = 52, }
-	checkboxes.enemyair    = WG.Chili.Checkbox:New { x = 50, y = 52, }
-	checkboxes.specair     = WG.Chili.Checkbox:New { x = 74, y = 52, }
-	checkboxes.allynuke    = WG.Chili.Checkbox:New { x = 26, y = 76, }
-	checkboxes.enemynuke   = WG.Chili.Checkbox:New { x = 50, y = 76, }
-	checkboxes.specnuke    = WG.Chili.Checkbox:New { x = 74, y = 76, }
-	checkboxes.allycloak   = WG.Chili.Checkbox:New { x = 26, y = 100,}
-	checkboxes.enemycloak  = WG.Chili.Checkbox:New { x = 50, y = 100,}
-	checkboxes.speccloak   = WG.Chili.Checkbox:New { x = 74, y = 100,}
+	checkboxes.allyground  = Checkbox:New { x = 26, y = 28,  noFont = true}
+	checkboxes.enemyground = Checkbox:New { x = 50, y = 28,  noFont = true}
+	checkboxes.specground  = Checkbox:New { x = 74, y = 28,  noFont = true}
+	checkboxes.allyair     = Checkbox:New { x = 26, y = 52,  noFont = true}
+	checkboxes.enemyair    = Checkbox:New { x = 50, y = 52,  noFont = true}
+	checkboxes.specair     = Checkbox:New { x = 74, y = 52,  noFont = true}
+	checkboxes.allynuke    = Checkbox:New { x = 26, y = 76,  noFont = true}
+	checkboxes.enemynuke   = Checkbox:New { x = 50, y = 76,  noFont = true}
+	checkboxes.specnuke    = Checkbox:New { x = 74, y = 76,  noFont = true}
+	checkboxes.allycloak   = Checkbox:New { x = 26, y = 100, noFont = true}
+	checkboxes.enemycloak  = Checkbox:New { x = 50, y = 100, noFont = true}
+	checkboxes.speccloak   = Checkbox:New { x = 74, y = 100, noFont = true}
 	-- no allyshield
-	checkboxes.enemyshield = WG.Chili.Checkbox:New { x = 50, y = 124, }
+	checkboxes.enemyshield = Checkbox:New { x = 50, y = 124, noFont = true}
 	-- no specshield
 	-- no allyradar
-	checkboxes.enemyradar  = WG.Chili.Checkbox:New { x = 50, y = 148, }
+	checkboxes.enemyradar  = Checkbox:New { x = 50, y = 148, noFont = true}
 	-- no specradar
 
 	local function OnCheckboxChangeFunc(self)
@@ -674,13 +685,15 @@ local function SetupChiliStuff()
 	end
 
 	mainWindow:SetVisibility(false)
-	if WG.GlobalCommandBar then
+	
+	local GCB = WG.GlobalCommandBar
+	if GCB then
 		local function ToggleWindow()
 			if mainWindow then
 				mainWindow:SetVisibility(not mainWindow.visible)
 			end
 		end
-		global_command_button = WG.GlobalCommandBar.AddCommand("LuaUI/Images/defense_ranges/defense_colors.png", "Defense Ranges", ToggleWindow)
+		global_command_button = GCB.AddCommand("LuaUI/Images/defense_ranges/defense_colors.png", "Defence Ranges", ToggleWindow)
 	end
 end
 

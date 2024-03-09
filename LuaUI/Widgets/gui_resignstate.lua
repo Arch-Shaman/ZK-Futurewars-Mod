@@ -15,6 +15,7 @@ local myID = Spring.GetMyPlayerID()
 
 local Chili, bigtext, window, Screen0, resignimage, grid, bigtextwindow
 local mystate = (Spring.GetPlayerRulesParam(myID, "resign_state") or 0) == 1
+local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
 local progressbars = {}
 local exempt = {}
 local switches = 2 -- number of times a user can switch states.
@@ -28,6 +29,14 @@ local strings = {
 	exemption = "The following players do NOT currently count towards the total player count nor are their votes contributing to resign:\n",
 	voted = "The following players want to resign:\n",
 	enemyvote = "You are unaware of which players vote for resign!",
+}
+
+local firstVote = false
+
+local localization = {
+	want_resign_first = "\nYou've voted to surrender! Please wait until your allies agree to the surrender.\nIf enough players on your team wish to surrender, a timer will begin shortly.",
+	want_resign = "\nYou've voted to surrender! Please wait until your allies agree to the surrender.",
+	no_resign = "\nYou've rescinded your vote to surrender!",
 }
 
 local images = {
@@ -49,6 +58,17 @@ local function ToggleState()
 		return
 	end
 	mystate = not mystate
+	if mystate and not firstVote then
+		Spring.Echo("game_message:" .. localization.want_resign_first)
+		Spring.PlaySoundFile("sounds/reply/advisor/resign_state_on.wav", 1.0, "userinterface")
+		firstVote = true
+	elseif mystate and firstVote then
+		Spring.Echo("game_message:" .. localization.want_resign)
+		Spring.PlaySoundFile("sounds/reply/advisor/resign_state_on.wav", 1.0, "userinterface")
+	else
+		Spring.Echo("game_message:" .. localization.no_resign)
+		Spring.PlaySoundFile("sounds/reply/advisor/resign_state_off.wav", 1.0, "userinterface")
+	end
 	--Spring.Echo("MyState: " .. tostring(mystate))
 	local n = (mystate and 1) or 0
 	Spring.SendLuaRulesMsg("resignstate " .. n)
@@ -64,6 +84,8 @@ local function ToggleState()
 	resignbutton.tooltip = text
 	switches = switches - 1
 end
+
+WG.ToggleResignState = ToggleState
 
 options_path = 'Settings/Interface/Resign State/'
 options = {
@@ -90,12 +112,17 @@ options = {
 local c = 0
 
 local function UpdatePlayer(playerID, state)
+	if playerID < 0 then return end
+	local name, _, _, _, allyTeamID = Spring.GetPlayerInfo(playerID)
+	if allyTeamID == nil then return end
 	if allyteamstrings[allyTeamID] == nil then
 		allyteamstrings[allyTeamID] = {exempt = "", voted = ""}
 	end
-	local name, _, _ allyTeamID = Spring.GetPlayerInfo(playerID)
+	if allyteamstrings[allyTeamID].exempt == nil then
+		allyteamstrings[allyTeamID].exempt = ""
+	end
 	if state == "normal" then
-		allyteamstrings[allyTeamID].exempt = allyteamstrings[allyTeamID].exempt:gsub("\n" .. name, "")
+		allyteamstrings[allyTeamID].exempt = allyteamstrings[allyTeamID].exempt:gsub("\n" .. name, "") or ""
 	else
 		allyteamstrings[allyTeamID].exempt = allyteamstrings[allyTeamID].exempt .. "\n" .. name
 		allyteamstrings[allyTeamID].exempt = allyteamstrings[allyTeamID].exempt:gsub("\n\n", "\n")
@@ -106,7 +133,7 @@ local function UpdateVote(playerID)
 	if allyteamstrings[allyTeamID] == nil then
 		allyteamstrings[allyTeamID] = {exempt = "", voted = ""}
 	end
-	local name, _, _ allyTeamID = Spring.GetPlayerInfo(playerID)
+	local name, _, _, _, allyTeamID = Spring.GetPlayerInfo(playerID)
 	local state = Spring.GetPlayerRulesParam(playerID, "resign_state") or false
 	if state then
 		allyteamstrings[allyTeamID].voted = allyteamstrings[allyTeamID].voted .. "\n" .. name
@@ -251,7 +278,6 @@ function widget:PlayerChangedTeam(playerID)
 	end
 end
 
-
 local t = Spring.GetTimer()
 function widget:Update()
 	local dif = Spring.DiffTimers(Spring.GetTimer(), t)
@@ -266,5 +292,6 @@ end
 function widget:PlayerResigned(playerID)
 	if playerID == myID and resignbutton ~= nil then
 		resignbutton:Dispose()
+		spSendLuaRulesMsg("resignstate playerresigned")
 	end
 end

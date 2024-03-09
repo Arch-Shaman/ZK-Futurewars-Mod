@@ -1,3 +1,7 @@
+if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Syphon/Phaser Handler",
@@ -6,12 +10,8 @@ function gadget:GetInfo()
 		date      = "14/01/2021",
 		license   = "GNU GPL, v2 or later",
 		layer     = 0,
-		enabled   = true,
+		enabled   = false, -- Azi is now handled in LUS
 	}
-end
-
-if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
-	return
 end
 
 --[[
@@ -58,7 +58,7 @@ local debugmode = false --THIS WILL SPAM THE LIVING HELL OUT OF THE INFOLOGS
 spEcho("Syphon/Phaser Handler: Scanning weapondefs")
 --spEcho("Math.Huge is" .. math.huge)
 
-for q=1, #WeaponDefs do
+for q = 1, #WeaponDefs do
 	local Wdef = WeaponDefs[q]
 	local params = Wdef.customParams
 	if params and params.dmg_scaling then
@@ -73,7 +73,7 @@ for q=1, #WeaponDefs do
 	end
 end
 
-function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam, projectileID)
 	if debugmode then
 		spEcho("something got hurt. It still has " .. SpGetUnitHealth(unitID).. " hp remaining.")
 	end

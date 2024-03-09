@@ -19,7 +19,6 @@ local gundefs = {
 }
 
 --variables
-local gun = false
 local hasfired = false
 local landed = false
 local lastfire = 0
@@ -92,11 +91,9 @@ end
 
 function script.QueryWeapon(num)
 	if num == 1 then
-		if gun then
-			return missR
-		else
-			return missL
-		end
+		return missR
+	elseif num == 2 then
+		return missL
 	else
 		return gundefs[shot].firepoint
 	end
@@ -111,15 +108,14 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.FireWeapon(num)
-	if num == 1 then
-		gun = not gun
+	if num == 1 or num == 2 then
 		lastfire = Spring.GetGameFrame()
 		hasfired = true
 	end
 end
 
 function script.Shot(num)
-	if num == 2 then
+	if num == 3 then
 		StartThread(reload, shot)
 		shot = (shot + 1)%4
 	end
@@ -145,8 +141,6 @@ local function RestoreAfterDelay()
 	-- Don't ask me why this must be called twice for planes, Spring is crazy
 	GG.UpdateUnitAttributes(unitID)
 	GG.UpdateUnitAttributes(unitID)
-	
-	
 	if getState() then
 		script.StartMoving()
 	else
@@ -160,12 +154,12 @@ function script.BlockShot(num, targetID)
 	else
 		if Spring.GetUnitRulesParam(unitID, "selfMoveSpeedChange") ~= FIRE_SLOWDOWN then
 			Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", FIRE_SLOWDOWN)
-			Spring.SetUnitRulesParam(unitID, "selfTurnSpeedChange", 1/FIRE_SLOWDOWN)
+			--Spring.SetUnitRulesParam(unitID, "selfTurnSpeedChange", 1/FIRE_SLOWDOWN)
 			GG.UpdateUnitAttributes(unitID)
 		end
 		StartThread(RestoreAfterDelay)
 	end
-	if num == 2 and targetID then
+	if num == 3 and targetID then
 		return not gundefs[shot].loaded or GG.Script.OverkillPreventionCheck(unitID, targetID, 260.1, 220, 32, 0.2)
 	end
 	return false -- anything unhandled gets passed through.

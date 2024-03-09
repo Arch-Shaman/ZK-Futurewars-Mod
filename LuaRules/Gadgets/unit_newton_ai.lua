@@ -36,27 +36,27 @@ alwayspush[UnitDefNames["cloakbomb"].id] = true
 alwayspush[UnitDefNames["shieldbomb"].id] = true
 alwayspush[UnitDefNames["jumpbomb"].id] = true
 alwayspush[UnitDefNames["chicken_dodo"].id] = true
-alwayspush[UnitDefNames["gunshipkrow"].id] = true -- scary clusterbombs
+alwayspush[UnitDefNames["gunshipkrow"].id] = true -- scary laser
 alwayspush[UnitDefNames["dronelight"].id] = true -- annoying flies
 alwayspush[UnitDefNames["droneheavyslow"].id] = true
 alwayspush[UnitDefNames["dronefighter"].id] = true
 alwayspush[UnitDefNames["dronecarry"].id] = true
 alwayspush[UnitDefNames["gunshipemp"].id] = true -- don't stun me
 alwayspush[UnitDefNames["gunshipbomb"].id] = true -- explosives not allowed.
+alwayspush[UnitDefNames["gunshipheavytrans"].id] = true
+alwayspush[UnitDefNames["bomberdisarm"].id] = true
 
 local holdatrange = {} -- which targets we want to hold at range
 holdatrange[UnitDefNames["gunshiptrans"].id] = true
-holdatrange[UnitDefNames["gunshipheavytrans"].id] = true
 holdatrange[UnitDefNames["gunshipskirm"].id] = true
 holdatrange[UnitDefNames["gunshipraid"].id] = true
 holdatrange[UnitDefNames["gunshipheavyskirm"].id] = true
-holdatrange[UnitDefNames["bomberdisarm"].id] = true
-holdatrange[UnitDefNames["bombercluster"].id] = true
+holdatrange[UnitDefNames["bomberprec"].id] = true
 holdatrange[UnitDefNames["bomberriot"].id] = true
 
 -- important config --
 local handleallies = false
-local debug = false
+local debugMode = false
 
 local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc
 local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
@@ -76,9 +76,14 @@ local spGetUnitPosition = Spring.GetUnitPosition
 local spGetGroundHeight = Spring.GetGroundHeight
 local spEcho = Spring.Echo
 local spValidUnitID = Spring.ValidUnitID
+local spGetUnitDefDimensions = Spring.GetUnitDefDimensions
+local sqrt = math.sqrt
 
 local pushparam = {1}
 local pullparam = {0}
+
+local newtonRange = 550
+local simframes = 11
 
 local unitAICmdDesc = {
 	id      = CMD_UNIT_AI,
@@ -88,6 +93,31 @@ local unitAICmdDesc = {
 	tooltip    = 'Toggles smart unit AI for the unit',
 	params     = {1, 'AI Off','AI On'}
 }
+
+local maxRanges = {}
+
+for i = 1, #UnitDefs do
+	local def = UnitDefs[i]
+	if def.isMobile and not (alwayspush[i] or alwayspull[i]) then
+		if def.weapons and #def.weapons > 0 then -- armed
+			local maxrange = 0
+			for i = 1, #def.weapons do
+				local wd = WeaponDefs[def.weapons[i].weaponDef]
+				local range = (wd.customParams.isaa and 200) or wd.range
+				if range > maxrange then
+					maxrange = range
+				end
+			end
+			if maxrange > newtonRange then
+				maxrange = 400
+			end
+			maxRanges[i] = math.min(maxrange, 300)
+		else
+			maxRanges[i] = 200
+		end
+	end
+end
+		
 
 local function GetUnitIsActive(unitID)
 	if spValidUnitID(unitID) then
@@ -106,13 +136,11 @@ local function SetState(unitID, state, wanted)
 		spGiveOrderToUnit(unitID, CMD_PUSH_PULL, pushparam, 0)
 	elseif state and not wanted then
 		spGiveOrderToUnit(unitID, CMD_PUSH_PULL, pullparam, 0)
-	elseif not state and not wanted then
-		return
 	end
 end
 
 local function AddUnit(unitID)
-	if debug then
+	if debugMode then
 		spEcho("[NewtonAI]: Add Unit " .. unitID)
 	end
 	local state = GetUnitIsActive(unitID)
@@ -121,7 +149,7 @@ local function AddUnit(unitID)
 end
 
 local function RemoveUnit(unitID)
-	if debug then
+	if debugMode then
 		spEcho("[NewtonAI] Removing Unit " .. unitID)
 	end
 	IterableMap.Remove(newtons, unitID)
@@ -144,6 +172,43 @@ local function AIToggleCommand(unitID, cmdParams, cmdOptions)
 	end
 end
 
+local function Distance(x1, y1, x2, y2)
+	return sqrt(((y2 - y1) * (y2 - y1)) + ((x2 - x1)* (x2 - x1)))
+end
+
+local function WillUnitHitMe(unitID, targetID, checktime)
+	local basex, basey, basez, midx, midy, midz = spGetUnitPosition(unitID, true)
+	local targetdef = spGetUnitDefID(targetID)
+	local minheight = midy - 40
+	local maxheight = midy + 40
+	local radius = 75 -- newton's colvol is 50 wide, but we want a safety net.
+	local tx, ty, tz = spGetUnitPosition(targetID)
+	local groundheight = spGetGroundHeight(tx, tz)
+	local vx, vy, vz = spGetUnitVelocity(targetID)
+	local d = Distance(tx, tz, basex, basez)
+	local unitHeight = ty - groundheight
+	local pulling = not GetUnitIsActive(unitID)
+	local unitIsLowerThanMe = ty < basey
+	local unitIsHigherThanMe = ty >= maxheight
+	if (vy > 1 and unitIsHigherThanMe) or (unitHeight > 25 and unitIsLowerThanMe) or (vy < 0 and unitIsLowerThanMe) or d < 120 then
+		return true
+	end
+	local sx, sy, sz = tx, ty, tz
+	local inHeightCylinder
+	for i = 1, checktime do
+		sx = tx + (vx * i)
+		sy = ty + (vy * i)
+		sz = tz + (vz * i)
+		d = Distance(sx, sz, midx, midz)
+		inHeightCylinder = sy >= minheight and sy <= maxheight
+		--Spring.Echo("Sim frame " .. i, sx, sy, sz, tostring(inHeightCylinder))
+		if inHeightCylinder and d <= radius then
+			return true
+		end
+	end
+	return false
+end
+
 local function CheckUnit(unitID, data, currenttarget)
 	local mystate = data.state
 	local targetdef = spGetUnitDefID(currenttarget)
@@ -153,73 +218,27 @@ local function CheckUnit(unitID, data, currenttarget)
 	local hpratio = hp/maxhp
 	local lasttarget = data.lasttarget
 	data.lasttarget = currenttarget
-	if inlos and alwayspush[targetdef] then
-		if mystate ~= true then
-			SetState(unitID, mystate, true)
-		end
+	if not inlos then
 		return
 	end
-	if inlos and alwayspull[targetdef] then
+	if alwayspull[targetdef] then
 		-- ensure our current state is proper
-		if mystate ~= false then
-			SetState(unitID, mystate, false)
-		end
-		return
-	elseif (inlos and alwayspush[targetdef]) or (hpratio <= 0.25 and not (inlos and (alwayspull[targetdef] or holdatrange[targetdef]))) then
-		if mystate ~= true then
-			SetState(unitID, mystate, true) -- push
-		end
+		SetState(unitID, mystate, false)
 		return
 	end
-	if inlos then
-		local distance = spGetUnitSeparation(unitID, currenttarget)
-		local der = distance - data.distance
-		local x, y, z = spGetUnitPosition(currenttarget)
-		local x2, y2, z2 = spGetUnitPosition(unitID)
-		local heightFromGround = y - spGetGroundHeight(x, z)
-		local heightdifference = y - y2
-		data.distance = distance
-		if lasttarget ~= currenttarget then
-			der = 0
-		end
-		local vx, vy, vz = spGetUnitVelocity(currenttarget)
-		if debug and Spring.GetGameFrame()%4 == 0 then
-			spEcho("Target: " .. currenttarget .. "\nVy: " .. vy .. "\ndist: " .. distance .. "\nder: " .. der .. "\nheight info: " .. heightFromGround .. " ( " .. heightdifference .. " )")
-		end
-		-- we use heightdifference here to tell when a target is above or at level with the newton. This is a cheap means of figuring out when we can launch them.
-		-- distance is used to tell when the unit is careening towards us (BAD, we don't want to take collision damage!)
-		-- VY is to tell when a unit is sent upwards (meaning: going to space)
-		-- Most of the time this will result in units either being smashed repeatedly into terrain (lol) or going into space. Both are beneficial to us anyways.
-		if not holdatrange[targetdef] then
-			if (distance < 200 and der < -5) or (heightdifference >= 0 and heightFromGround >= 10) or der < -15 then
-				if mystate ~= true then
-					SetState(unitID, mystate, true) -- push
-				end
-				return
-			elseif distance > 250 and vy < 0.5 and not (heightdifference > 0 and heightFromGround > 10) then
-				if mystate then
-					SetState(unitID, mystate, false) -- pull
-				end
-				return
-			end
-		else
-			-- now this on the other hand, since Seperation is 3d distance (eww) we're kinda fucked when things go over our heads.
-			-- 2d distance leads to a totally ineffectual response so this is here to stay, unfortunately.
-			if distance > 370 and mystate then
-				SetState(unitID, mystate, false)
-			elseif distance < 370 and not mystate then
-				SetState(unitID, mystate, true)
-			end
-		end
+	if alwayspush[targetdef] or hpratio <= 0.25  then
+		SetState(unitID, mystate, true)
+		return
 	end
+	SetState(unitID, mystate, WillUnitHitMe(unitID, currenttarget, simframes))
 end
 
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions, cmdTag, synced) -- we get unitAI cmd from tactical ai. this just plugs it into this script.
-	if (cmdID ~= CMD_UNIT_AI) then
-		return true  -- command was not used
+	if (cmdID == CMD_UNIT_AI) and wanteddefs[unitDefID] then
+		AIToggleCommand(unitID, cmdParams, cmdOptions)
+		return false  -- command was used
 	end
-	AIToggleCommand(unitID, cmdParams, cmdOptions)
-	return false  -- command was used
+	return true  -- command wasnt used
 end
 
 function gadget:UnitDestroyed(unitID)
@@ -231,7 +250,7 @@ end
 function gadget:GameFrame(f)
 	for unitID, data in IterableMap.Iterator(newtons) do
 		if not spValidUnitID(unitID) then
-			if debug then
+			if debugMode then
 				spEcho("[NewtonAI] Invalid unit detected.")
 			end
 			RemoveUnit(unitID)

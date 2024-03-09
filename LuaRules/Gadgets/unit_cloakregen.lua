@@ -1,3 +1,7 @@
+if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Cloak Regen",
@@ -8,10 +12,6 @@ function gadget:GetInfo()
 		layer     = 1,
 		enabled   = true,
 	}
-end
-
-if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
-	return
 end
 
 local units = {}
@@ -62,14 +62,14 @@ function gadget:GameFrame(f)
 			local actualregen = (regen * (1 - (spGetUnitRulesParam(id, "slowState") or 0))) * (30 / updaterate)
 			spSetUnitRulesParam(id, "cloakregen", actualregen, INLOS)
 			local hp, maxhp = spGetUnitHealth(id)
-			if hp < maxhp then
+			if hp == nil then
+				units[id] = nil
+			else
 				hp = min(hp + actualregen, maxhp)
 				spSetUnitHealth(id, hp)
 				if hp == maxhp then
 					units[id] = nil
 				end
-			else
-				units[id] = nil
 			end
 		end
 	end

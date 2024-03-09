@@ -37,6 +37,9 @@ end
 
 if (gadgetHandler:IsSyncedCode()) then
 
+-- So units can detect when they are being or have just been teleported.
+GG.teleport_lastUnitFrame = {}
+
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 -- SYNCED
@@ -152,7 +155,7 @@ local function interruptTeleport(unitID, doNotChangeSpeed)
 end
 
 function tele_ableToDeploy(unitID)
-	return tele[unitID] and tele[unitID].link and not tele[unitID].deployed
+	return tele[unitID] and tele[unitID].link and ((not tele[unitID].deployed) or tele[unitID].factoryHack)
 end
 
 function tele_deployTeleport(unitID)
@@ -164,6 +167,9 @@ function tele_deployTeleport(unitID)
 end
 
 function tele_undeployTeleport(unitID)
+	if tele[unitID].factoryHack then
+		return
+	end
 	if tele[unitID].deployed then
 		interruptTeleport(unitID)
 	end
@@ -197,7 +203,7 @@ function tele_createBeacon(unitID, x, z, beaconID)
 end
 
 local function undeployTeleport(unitID)
-	if tele[unitID].deployed then
+	if tele[unitID].deployed and not tele[unitID].factoryHack then
 		local func = Spring.UnitScript.GetScriptEnv(unitID).UndeployTeleport
 		Spring.UnitScript.CallAsUnit(unitID,func)
 		tele_undeployTeleport(unitID)
@@ -227,7 +233,7 @@ end
 local function FactoryHack(unitID, cmdParams, unitDefID) -- Note: we need to bypass the normal CommandFallback because factories don't work with it. It treats it as "give child units this command" instead of "do this command"
 	local f = Spring.GetGameFrame()
 	tele[unitID].lastSetMove = f
-	
+	tele[unitID].factoryHack  = true -- ditto.
 	local tx, ty, tz = Spring.GetUnitPosition(unitID)
 	
 	local ux,_,uz = Spring.GetUnitPosition(unitID)
@@ -244,11 +250,12 @@ local function FactoryHack(unitID, cmdParams, unitDefID) -- Note: we need to byp
 
 		local func = Spring.UnitScript.GetScriptEnv(unitID).Create_Beacon
 		Spring.UnitScript.CallAsUnit(unitID,func,cx,cz)
+		tele[unitID].deployed = true -- ensure we're deployed.
 	end
 end
 
 function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
-	if UnitDefs[unitDefID].name == "factoryamph" and cmdID == CMD_PLACE_BEACON then
+	if (UnitDefs[unitDefID].name == "factoryamph" or UnitDefs[unitDefID].name == "plateamph") and cmdID == CMD_PLACE_BEACON then
 		FactoryHack(unitID, cmdParams, unitDefID)
 		return false -- eat the command (it's a factory!)
 	end
@@ -488,7 +495,7 @@ function gadget:GameFrame(f)
 			local tid = teleID.data[i]
 			local bid = tele[tid].link
 			
-			if bid and tele[tid].deployed then
+			if bid and (tele[tid].deployed or tele[tid].factoryHack) then
 				
 				local teleFinished = tele[tid].teleFrame and f >= tele[tid].teleFrame
 				
@@ -539,6 +546,11 @@ function gadget:GameFrame(f)
 							Spring.GiveOrderToUnit(teleportiee, CMD.WAIT, {}, 0)
 							Spring.GiveOrderToUnit(teleportiee, CMD.WAIT, {}, 0)
 							Spring.GiveOrderToUnit(teleportiee, CMD.REMOVE, {cmdTag}, 0)
+								
+							local cmdID = Spring.GetUnitCurrentCommand(teleportiee)
+							if not cmdID then
+								GG.Floating_StopMoving(teleportiee)
+							end
 						end
 					end
 					
@@ -554,7 +566,7 @@ function gadget:GameFrame(f)
 					
 					local teleportiee = false
 					local bestPriority = false
-					local teleTargetX, teleTargetZ = false
+					local teleTargetX, teleTargetZ = nil, nil
 					local offset = tele[tid].offset
 					local teleporterdef = UnitDefs[Spring.GetUnitDefID(tid)]
 					for j = 1, #units do
@@ -644,6 +656,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 			offset = tonumber(UnitDefs[unitDefID].customParams.teleporter_offset) or 40,
 			stunned = isUnitDisabled(unitID),
 			throughput = tonumber(UnitDefs[unitDefID].customParams.teleporter_throughput) / Game.gameSpeed,
+			factoryHack = UnitDefs[unitDefID].isFactory,
 		}
 	end
 	if canTeleport[unitDefID] then

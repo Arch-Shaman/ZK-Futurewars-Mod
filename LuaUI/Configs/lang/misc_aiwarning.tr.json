@@ -1,0 +1,5 @@
+{
+	"ai_warning" : "UYARI: Yapay zeka denetleyicisi, %{name}, %{reason}! Aşağıdaki yapay zekalar geri dönene kadar boşta kalacak:",
+	"ai_warning_disconnected" : "bağlantı kesildi",
+	"ai_warning_left_prematurely" : "oyun başlamadan önce yüklenmedi veya ayrılmadı"
+}

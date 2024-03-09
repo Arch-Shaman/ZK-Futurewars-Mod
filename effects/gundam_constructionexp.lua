@@ -49,7 +49,6 @@ return {
 		groundflash = {
 			air                = true,
 			alwaysvisible      = true,
-			water              = true,
 			underwater		   = true,
 			circlealpha        = 0.5,
 			circlegrowth       = 8,

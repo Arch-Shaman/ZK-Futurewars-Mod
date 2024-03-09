@@ -36,6 +36,7 @@ local SIG_AIM = 4
 
 local sweeping = false
 local sweepdir = 1
+local dgunning = false
 
 local SPRAY_SPEED = math.rad(60)
 local SPRAY_ANGLE = math.rad(40)
@@ -186,6 +187,11 @@ end
 
 -- MOVING
 
+local function DgunRestoreThread()
+	Sleep(3000)
+	dgunning = false
+end
+
 local function walk()
 
 	Signal(SIG_MOVE)
@@ -334,18 +340,25 @@ local function RestoreAfterDelay()
 	Turn(low_head, y_axis, 0, math.rad(200))
 	Turn(low_head, x_axis, 0, math.rad(45))
 	Move(up_head, y_axis, 0, LINEAR_SPEED/3)
+	Move(low_head, y_axis, 0, LINEAR_SPEED/3)
 	firing = false
 end
 
 function script.AimWeapon(num, heading, pitch)
-
+	if num ~= 3 and dgunning then -- prioritize dgun target first.
+		return false
+	elseif num == 3 and not dgunning then
+		dgunning = true
+		StartThread(DgunRestoreThread)
+	end
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
 	firing = true
 	--turn head, open mouth/limbs
 	Turn(low_head, y_axis, heading, math.rad(650)) -- left-right
 	Turn(low_head, x_axis, -pitch, math.rad(200)) --up-down
-	Move(up_head, y_axis, 1, LINEAR_SPEED/2)
+	Move(up_head, y_axis, 2.1895, LINEAR_SPEED/2)
+	Move(low_head, y_axis, -2, LINEAR_SPEED/2)
 	WaitForTurn(low_head, y_axis)
 	WaitForTurn(low_head, x_axis)
 	StartThread(RestoreAfterDelay)
@@ -375,6 +388,9 @@ function script.FireWeapon(num)
 		EmitSfx(fireptr, 2051)
 	else
 		EmitSfx(firept, 1027)
+		if num == 3 then
+			dgunning = false
+		end
 	end
 end
 

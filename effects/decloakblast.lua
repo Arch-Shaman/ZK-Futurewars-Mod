@@ -10,8 +10,8 @@ return {
 			underwater 		 = true,
 			properties = {
 				alpha              = 0.5,
-				color              = [[0.49,0.44,0.36]],
-				expansionspeed     = 10,
+				color              = [[0.1 0.15 0.4 0.1]],
+				expansionspeed     = 20,
 				ttl                = 25,
 			},
 		},

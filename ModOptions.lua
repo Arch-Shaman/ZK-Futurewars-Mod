@@ -69,7 +69,7 @@ local options = {
 		def    = false,
 		section= 'a_important',
 	},
-
+	
 	{
 		key     = 'sharemode',
 		name    = 'Commshare',
@@ -82,8 +82,18 @@ local options = {
 			{ key='invite', name = "Invite Only", desc = 'Allows players to merge only if both give consent.' },
 			{ key='none', name = "Off", desc = 'Turns commsharing off.' },
 		},
+	}, -- memorylimit
+	{
+		key    = 'memorylimit',
+		name   = 'Lua allocation limit',
+		desc   = "In MB. Controls how much memory is allocated to lua.",
+		type   = 'number',
+		section= 'a_important',
+		def=3584,
+		min=1536,
+		max=10000,
+		step=1,
 	},
-	
 	{
 		key = "noelo",
 		name = "No Elo",
@@ -91,6 +101,46 @@ local options = {
 		type = "bool",
 		section= 'a_important',
 		def = false,
+	},
+	{
+		key = "commwars",
+		name = "Commander Wars",
+		desc = "Blocks commanders from constructing and enables balance around commwars.",
+		type = "bool",
+		section= 'a_important',
+		def = false,
+	},
+	{
+		key = "houserules",
+		name = "House Rules",
+		desc = "Add some rules here. This will popup during pregame to remind people of rules set here.",
+		type = "string",
+		section= 'a_important',
+		def = "",
+	},
+	{
+		key = "isplanetwars",
+		name = "Planet Wars",
+		desc = "This setting is used to transport important information at the end of the game to FW infra.",
+		type = "bool",
+		section= 'a_important',
+		def = false,
+	},
+	{
+		key = "planetwarsdata",
+		name = "PW Data",
+		desc = "This setting is used to transport important information in game.",
+		type = "string",
+		section= 'a_important',
+		def = "",
+	},
+	{
+		key    = 'commeco',
+		name   = 'Enable Efficient Resourcing',
+		desc   = "Support commander regains Efficient Resourcing Module.",
+		type   = 'bool',
+		section= 'a_important',
+		def    = false,
 	},
 	{
 		key     = 'mutespec',
@@ -137,12 +187,20 @@ local options = {
 		step = 0.1,
 	},
 	{
+		key    = 'playable_zombies',
+		name   = 'Spectators Become Zombies',
+		desc   = "Spectators are allowed to control zombies.",
+		type   = 'bool',
+		section= 'silly',
+		def    = false, --commeco
+	},
+	{
 		key    = 'zombies',
 		name   = 'Enable zombies',
 		desc   = "All features self-resurrect.",
 		type   = 'bool',
 		section= 'silly',
-		def    = false,
+		def    = false, --commeco
 	},
 	{
 		key    = 'zombies_delay',
@@ -186,6 +244,14 @@ local options = {
 		def = false,
 	},
 	{
+		key    = 'goingnuclear',
+		name   = 'Nuclear Death Mode',
+		desc   = "All units explode like nukes.",
+		type   = 'bool',
+		section= 'silly',
+		def = false,
+	},
+	{
 		key = "max_com_level",
 		name = "Commander level limit",
 		desc = "Choose the commander level limit. 0 for unlimited.",
@@ -197,12 +263,53 @@ local options = {
 		max = 20,
 	},
 	{
+		key    = "equalcom",
+		name   = "Equalize team commanders",
+		desc   = "Give extra commanders to players on teams with fewer players, so that each team has the same number of commanders. Automatically enabled in 'Team' type rooms.",
+		type   = "list",
+		section= 'startconds',
+		def    = "auto",
+		items  = {
+			{
+				key  = "off",
+				name = "Disabled",
+				desc = "No extra commanders are spawned for smaller teams.",
+			},
+			{
+				key  = "auto",
+				name = "Autodetect",
+				desc = "Spawn extra commanders for some players on the smaller team in the room type 'Team'.",
+			},
+			{
+				key  = "enable",
+				name = "Enabled",
+				desc = "Spawn extra commanders for some players on smaller teams to make up the difference in team size.",
+			},
+		},
+	},
+	{
 		key		= "disabledunits",
 		name	= "Disable units",
 		desc	= "Prevents specified units from being built ingame. Specify multiple units by using + ",
 		section	= 'startconds',
 		type	= "string",
 		def		= "",
+	},
+	{
+		key		= "disabledcommmodules",
+		name	= "Disable Modules",
+		desc	= "Prevents commanders from having access to certain weapons or modules. Specify multiple by using + ",
+		section	= 'startconds',
+		type	= "string",
+		def		= "",
+	},
+	{
+		key		= "metaladjustment",
+		name	= "Adjust Metal Values",
+		desc	= "Adjusts metal values if playercount is above 5.",
+		section	= 'startconds',
+		type	= "bool",
+		def		= true,
 	},
 	{
 		key = 'globallos',
@@ -254,6 +361,14 @@ local options = {
 		def         = false,
 	},
 	{
+		key         = "groundunitygravity",
+		name        = "Ground Unit Gravity",
+		desc        = "I have no idea what this does, but it sounds funny.",
+		type        = "bool",
+		section     = "silly",
+		def         = false,
+	},
+	{
 		key    = "shuffle",
 		name   = "Start Boxes",
 		desc   = "Start box settings.",
@@ -300,6 +415,14 @@ local options = {
 		key='disable_ai_team_resign',
 		name='Disable AI Resignation',
 		desc='Prevents AIs from resigning when they run out of constructors and factories.',
+		type='bool',
+		section= 'a_important',
+		def=false,
+	},
+	{
+		key='disable_forcestart',
+		name='Disable Autostart',
+		desc='Disables the force start while waiting for players.',
 		type='bool',
 		section= 'a_important',
 		def=false,
@@ -416,6 +539,14 @@ local options = {
 		},
 	},
 	{
+		key    = 'mtpath',
+		name   = 'Multithread Pathfinding',
+		desc   = 'Use multiple cores for pathfinding calculations.',
+		type   = 'bool',
+		section= 'experimental',
+		def    = true,
+	},
+	{
 		key    = 'terracostmult',
 		name   = 'Terraform Cost Multiplier',
 		desc   = 'Multiplies the cost of terraform.',
@@ -433,6 +564,14 @@ local options = {
 		type   = 'bool',
 		section= 'experimental',
 		def    = false,
+	},
+	{
+		key    = 'explodeondefeat',
+		name   = 'Enemies explode on victory',
+		desc   = 'Causes units and structures of defeated teams to explode when the game ends.',
+		type   = 'bool',
+		def    = false,
+		section= 'experimental',
 	},
 	{
 		key    = 'enemyterra',
@@ -534,6 +673,14 @@ local options = {
 		min     = 0.1,
 		max     = 2.0,
 		step    = 0.1,
+	},
+	{
+		key    = 'allowfpsmode',
+		name   = 'Enable first person control',
+		desc   = "Allow players to take direct control of units without cheats enabled. Select a unit and press Alt+P to toggle.",
+		type   = 'bool',
+		section= 'silly',
+		def    = false,
 	},
 	{
 		key     = 'maxspeed',

@@ -38,6 +38,17 @@ local smokePiece = {torso}
 local nanoPieces = {nanospray}
 local okpconfig
 
+local priorityAim = false
+local priorityAimNum = 0
+
+-- Drone spots --
+local drone1 = piece 'drone1'
+local drone2 = piece 'drone2'
+local drone3 = piece 'drone3'
+local drone4 = piece 'drone4'
+local drone5 = piece 'drone5'
+local drone6 = piece 'drone6'
+
 --------------------------------------------------------------------------------
 -- constants
 --------------------------------------------------------------------------------
@@ -90,6 +101,13 @@ local function BuildDecloakThread()
 		GG.PokeDecloakUnit(unitID, unitDefID)
 		Sleep(1000)
 	end
+end
+
+local function StartPriorityAim(num)
+	priorityAim = true
+	priorityAimNum = num
+	Sleep(5000)
+	priorityAim = false
 end
 
 local function BuildPose(heading, pitch)
@@ -493,6 +511,20 @@ function script.AimWeapon(num, heading, pitch)
 	local weaponNum = dyncomm.GetWeapon(num)
 	inBuildAnim = false
 	GG.DontFireRadar_CheckAim(unitID)
+	if weaponNum == 3 then
+		return true
+	end
+	if priorityAim and weaponNum ~= priorityAimNum then
+		return false
+	end
+	if weaponNum and dyncomm.IsManualFire(num) and not priorityAim and dyncomm.PriorityAimCheck(num) then
+		StartThread(StartPriorityAim, weaponNum)
+		if weaponNum == 1 then
+			Signal(SIG_DGUN)
+		else
+			Signal(SIG_LASER)
+		end
+	end
 	if weaponNum == 1 then
 		Signal(SIG_AIM)
 		SetSignalMask(SIG_AIM)
@@ -504,8 +536,6 @@ function script.AimWeapon(num, heading, pitch)
 		SetSignalMask(SIG_AIM_2)
 		bAiming = true
 		return AimRifle(heading, pitch, canDgun)
-	elseif weaponNum == 3 then
-		return true
 	end
 	return false
 end
@@ -524,6 +554,9 @@ end
 
 function script.Shot(num)
 	dyncomm.EmitWeaponShotSfx(flare, num)
+	if dyncomm.IsManualFire(num) then
+		priorityAim = false
+	end
 end
 
 function script.QueryNanoPiece()
@@ -563,38 +596,28 @@ end
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
 	dead = 1
+	local x, y, z = Spring.GetUnitPosition(unitID)
 	--Turn(turret, y_axis, 0, math.rad(500))
 	if severity <= 0.5 then
-		dyncomm.SpawnModuleWrecks(1)
-		
 		Turn(base, x_axis, math.rad(79), math.rad(80))
 		Turn(rloleg, x_axis, math.rad(25), math.rad(250))
 		Turn(lupleg, x_axis, math.rad(7), math.rad(250))
 		Turn(lupleg, y_axis, math.rad(34), math.rad(250))
 		Turn(lupleg, z_axis, math.rad(-(-9)), math.rad(250))
-		
 		GG.Script.InitializeDeathAnimation(unitID)
 		Sleep(200) --give time to fall
 		Turn(luparm, y_axis, math.rad(18), math.rad(350))
 		Turn(luparm, z_axis, math.rad(-(-45)), math.rad(350))
 		Sleep(650)
-		--EmitSfx(turret, 1026) --impact
-
-		Sleep(100)
---[[
-		Explode(gun)
-		Explode(head)
-		Explode(pelvis)
-		Explode(lloarm)
-		Explode(luparm)
-		Explode(lloleg)
-		Explode(lupleg)
-		Explode(rloarm)
-		Explode(rloleg)
-		Explode(ruparm)
-		Explode(rupleg)
-		Explode(torso)
-]]--
+	end
+	local assetDenialSystemActivated = dyncomm.Explode(x, y, z)
+	local explodables = {gun, head, pelvis, lloarm, luparm, lloleg, lupleg, rloarm, rloleg, ruparm, rupleg}
+	local flag = SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE
+	if assetDenialSystemActivated then
+		for i = 1, #explodables do
+			Explode(explodables[i], flag)
+		end
+	elseif severity <= 0.5 then
 		dyncomm.SpawnWreck(1)
 	else
 		Explode(gun, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
@@ -609,7 +632,6 @@ function script.Killed(recentDamage, maxHealth)
 		Explode(ruparm, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
 		Explode(rupleg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
 		Explode(torso, SFX.SHATTER + SFX.EXPLODE)
-		dyncomm.SpawnModuleWrecks(2)
 		dyncomm.SpawnWreck(2)
 	end
 end

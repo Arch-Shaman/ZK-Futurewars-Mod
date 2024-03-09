@@ -1,0 +1,5 @@
+{
+	"ai_warning" : "警告：AI 控制器，%{name} %{reason}！ 以下 AI 将保持空闲状态直至返回：",
+	"ai_warning_disconnected" : "断开连接",
+	"ai_warning_left_prematurely" : "游戏开始前未加载或离开"
+}

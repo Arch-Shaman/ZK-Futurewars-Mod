@@ -13,11 +13,11 @@ end
 function script.Killed(recentDamage, maxHealth)
 	local px, py, pz = Spring.GetUnitPosition(unitID)
 	Spring.SpawnProjectile(WeaponDefNames["energyheavygeo_yellowstone"].id, {
-		pos = {px, py, pz},
+		pos = {px, py + 5, pz},
 		["end"] = {px, py, pz},
 		speed = {0, 0, 0},
 		ttl = 10,
-		gravity = 0,
+		gravity = 1,
 		team = Spring.GetGaiaTeamID(),
 		owner = unitID,
 	})

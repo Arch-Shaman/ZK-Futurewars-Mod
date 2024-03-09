@@ -1,6 +1,6 @@
 local name = "commweapon_impulsecannon_secondary"
 local weaponDef = {
-	name                    = [[Heavy Pulse MG]],
+	name                    = [[Heavy Canister Shot]],
 	accuracy                = 350,
 	alphaDecay              = 0.7,
 	areaOfEffect            = 96,
@@ -18,10 +18,16 @@ local weaponDef = {
 		light_color = [[0.8 0.76 0.38]],
 		light_radius = 40,
 		isFlak = 2,
+		blastwave_size = 10,
+		blastwave_impulse = 0.9,
+		blastwave_speed = 3,
+		blastwave_life = 10,
+		blastwave_lossfactor = 0.88,
+		blastwave_damage = 1.25,
 	},
 	
 	damage                  = {
-		default = 70,
+		default = 90.01,
 	},
 
 	edgeEffectiveness       = 0.5,

@@ -1,22 +1,64 @@
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-if not gadgetHandler:IsSyncedCode() then
-	return
-end
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
 function gadget:GetInfo()
   return {
     name      = "Lag Monitor",
     desc      = "Gives away units of people who are lagging",
-    author    = "KingRaptor, GoogleFrog rewrite",
+    author    = "KingRaptor, GoogleFrog rewrite, Shaman localization",
     date      = "11/5/2012", --6/11/2013
     license   = "Public domain",
     layer     = 0,
     enabled   = true  --  loaded by default?
   }
 end
+
+if not gadgetHandler:IsSyncedCode() then
+	-- UI Transport --
+	local teamLeaders = {}
+	
+	local function GetTeamLeaderID(teamID)
+		if teamID then
+			local _, playerID = Spring.GetTeamInfo(teamID)
+			return playerID
+		else
+			return
+		end
+	end
+	
+	local function SendAFKMsg(_, teamID, teamID2)
+		--Spring.Echo("MakeUpdate: " .. tostring(allyTeamID))
+		if Script.LuaUI('SendAFKMessage') then
+			local playerID = GetTeamLeaderID(teamID)
+			local playerID2 = GetTeamLeaderID(teamID2)
+			Script.LuaUI.SendAFKMessage(playerID, playerID2)
+		end
+	end
+	
+	local function SendPlayerResignedMessage(_, team1, team2, messageID)
+		if Script.LuaUI('SendPlayerResignedMessage') then
+			--Spring.Echo('Transmitting to LuaUI:SendPlayerResignedMessage: ' .. tostring(team1) .. ", " .. tostring(team2))
+			local player1 = teamLeaders[team1]
+			local player2 = teamLeaders[team2]
+			--Spring.Echo("Send ID: " .. tostring(player1) .. ", " .. tostring(player2))
+			Script.LuaUI.SendPlayerResignedMessage(player1, player2, messageID)
+		end
+	end
+	
+	function gadget:Initialize()
+		gadgetHandler:AddSyncAction("SendAFKMsg", SendAFKMsg)
+		gadgetHandler:AddSyncAction("SendPlayerResignedMessage", SendPlayerResignedMessage)
+		
+		local allyteams = Spring.GetAllyTeamList()
+		for j = 1, #allyteams do
+			local allyTeamID = allyteams[j]
+			local teamList = Spring.GetTeamList(allyTeamID)
+			for i = 1, #teamList do
+				local teamID = teamList[i]
+				teamLeaders[teamID] = GetTeamLeaderID(teamID)
+			end
+		end
+	end
+	return
+end
+
 --------------------------------------------------------------------------------
 --List of stuff in this gadget (to help us remember stuff for future debugging/improvement):
 
@@ -26,28 +68,26 @@ end
 
 --Everything else: anti-bug, syntax, methods, ect
 local playerLineageUnits = {} --keep track of unit ownership: Is populated when gadget give away units, and when units is created. Depopulated when units is destroyed, or is finished construction, or when gadget return units to owner.
+local unitPriorityState = {} -- Keep track of initial unit priority state.
 local teamResourceShare = {}
 local allyTeamResourceShares = {}
 local unitAlreadyFinished = {}
 
-local spAddTeamResource     = Spring.AddTeamResource
-local spEcho                = Spring.Echo
-local spGetGameSeconds      = Spring.GetGameSeconds
-local spGetPlayerInfo       = Spring.GetPlayerInfo
-local spGetTeamInfo         = Spring.GetTeamInfo
-local spGetTeamList         = Spring.GetTeamList
-local spGetTeamResources    = Spring.GetTeamResources
-local spGetTeamUnits        = Spring.GetTeamUnits
-local spGetUnitAllyTeam     = Spring.GetUnitAllyTeam
-local spGetUnitDefID        = Spring.GetUnitDefID
-local spGetUnitTeam         = Spring.GetUnitTeam
-local spGetPlayerList       = Spring.GetPlayerList
-local spTransferUnit        = Spring.TransferUnit
-local spUseTeamResource     = Spring.UseTeamResource
-local spGetUnitIsBuilding   = Spring.GetUnitIsBuilding
-local spGetUnitHealth       = Spring.GetUnitHealth
-local spSetUnitHealth       = Spring.SetUnitHealth
-local spSetPlayerRulesParam = Spring.SetPlayerRulesParam
+local playerValue = {}
+
+local spEcho                  = Spring.Echo
+local spGetGameSeconds        = Spring.GetGameSeconds
+local spGetPlayerInfo         = Spring.GetPlayerInfo
+local spGetTeamInfo           = Spring.GetTeamInfo
+local spGetTeamList           = Spring.GetTeamList
+local spGetTeamUnits          = Spring.GetTeamUnits
+local spGetUnitAllyTeam       = Spring.GetUnitAllyTeam
+local spGetUnitDefID          = Spring.GetUnitDefID
+local spGetPlayerList         = Spring.GetPlayerList
+local spTransferUnit          = Spring.TransferUnit
+local spSetPlayerRulesParam   = Spring.SetPlayerRulesParam
+local spGiveOrderToUnitArray  = Spring.GiveOrderToUnitArray
+local spGetUnitCurrentCommand = Spring.GetUnitCurrentCommand
 
 local useAfkDetection = (Spring.GetModOptions().enablelagmonitor ~= "0")
 
@@ -57,8 +97,24 @@ include("LuaRules/Configs/constants.lua")
 local TO_AFK_THRESHOLD = 30 -- going above this marks you AFK
 local FROM_AFK_THRESHOLD = 5 -- going below this marks you non-AFK
 local PING_TIMEOUT = 2000 -- ms
+local deathMessageCount = 131
 
-local debugAllyTeam
+local CMD_WAIT = CMD.WAIT
+
+local debugAllyTeam, debugPlayerLag, debugPlayerLagAll
+
+local isRealFactoryDef = {}
+local isBpHaverDef = {}
+
+for unitDefID = 1, #UnitDefs do
+	local ud = UnitDefs[unitDefID]
+	if ud.buildSpeed > 0 and not ud.customParams.nobuildpower then
+		isBpHaverDef[unitDefID] = true
+		if ud.isFactory then
+			isRealFactoryDef[unitDefID] = true
+		end
+	end
+end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -81,6 +137,21 @@ local function TeamIDToPlayerID(teamID)
 	return select(2, spGetTeamInfo(teamID, false))
 end
 
+local function GetBpHaverAndWait(unitID)
+	local unitDefID = spGetUnitDefID(unitID)
+	if not isBpHaverDef[unitDefID] then
+		return false
+	end
+	if not isRealFactoryDef[unitDefID] then
+		local cmdID = spGetUnitCurrentCommand(unitID)
+		return true, (cmdID == CMD_WAIT)
+	end
+	--local cQueue = Spring.GetFactoryCommands(unitID, 1)
+	-- Return false because factories lose wait when transfered, so should not be treated as having it set.
+	return true, false
+end
+
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- Factory and Lineage
@@ -89,7 +160,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	if GG.wasMorphedTo and GG.wasMorphedTo[unitID] then --copy playerLineageUnits for unit Morph
 		local newUnitID = GG.wasMorphedTo[unitID]
 		local originalPlayerIDs = playerLineageUnits[unitID]
-		if originalPlayerIDs ~= nil and #originalPlayerIDs > 0 then
+		if originalPlayerIDs and (#originalPlayerIDs > 0) then
 			-- playerLineageUnits of the morphed unit will be the same as its pre-morph
 			playerLineageUnits[newUnitID] = {unpack(originalPlayerIDs)} --NOTE!: this copy value to new table instead of copying table-reference (to avoid bug)
 		end
@@ -98,6 +169,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 
 	playerLineageUnits[unitID] = nil --to delete any units that do not need returning.
 	unitAlreadyFinished[unitID] = nil
+	unitPriorityState[unitID] = nil
 end
 
 function gadget:UnitFinished(unitID, unitDefID, unitTeam)
@@ -110,7 +182,6 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	end
 
 	unitAlreadyFinished[unitID] = true
-	playerLineageUnits[unitID] = {}
 end
 
 local mouseActivityTime = {}
@@ -118,6 +189,9 @@ local mouseActivityTime = {}
 function gadget:RecvLuaMsg(msg, playerID)
 	if msg:find("AFK",1,true) then
 		mouseActivityTime[playerID] = tonumber(msg:sub(4))
+		if (debugPlayerLag and debugPlayerLag[playerID]) or debugPlayerLagAll then
+			Spring.Echo("Lagmonitor activity playerID", playerID, select(1, Spring.GetPlayerInfo(playerID)), mouseActivityTime[playerID])
+		end
 	end
 end
 
@@ -141,6 +215,11 @@ local function GetPlayerActivity(playerID, onlyActive)
 		return false
 	end
 	local name, active, spec, team, allyTeam, ping, _, _, _, customKeys = spGetPlayerInfo(playerID)
+	local doDebug = (debugPlayerLag and debugPlayerLag[playerID]) or debugPlayerLagAll
+	if doDebug then
+		Spring.Echo(" ======= Lagmonitor Debug Player " .. playerID .. " ======= ")
+		Spring.Echo("onlyActive", onlyActive, "active", active, "ping", ping, "passTest", active and ping <= PING_TIMEOUT)
+	end
 	
 	if onlyActive then
 		if (active and ping <= PING_TIMEOUT) then
@@ -149,11 +228,19 @@ local function GetPlayerActivity(playerID, onlyActive)
 		return false
 	end
 	
+	if doDebug then
+		Spring.Echo("spec", spec, "passTest", spec or not (active and ping <= PING_TIMEOUT))
+	end
+	
 	if spec or not (active and ping <= PING_TIMEOUT) then
 		return false
 	end
 	
 	local lastActionTime = spGetGameSeconds() - (mouseActivityTime[playerID] or 0)
+	if doDebug then
+		Spring.Echo("lastActionTime", lastActionTime, "useAfkDetection", useAfkDetection, "modopt", Spring.GetModOptions().enablelagmonitor, "passTest",
+			useAfkDetection and (lastActionTime >= TO_AFK_THRESHOLD or lastActionTime >= FROM_AFK_THRESHOLD and playerIsAfk[playerID]))
+	end
 	
 	if useAfkDetection and (lastActionTime >= TO_AFK_THRESHOLD or lastActionTime >= FROM_AFK_THRESHOLD and playerIsAfk[playerID]) then
 		playerIsAfk[playerID] = true
@@ -180,7 +267,7 @@ local function UpdateTeamActivity(teamID)
 	for i = 1, #players do
 		local activeRank = GetPlayerActivity(players[i])
 		if activeRank then
-			resourceShare = resourceShare + 1
+			resourceShare = resourceShare + playerValue[players[i]]
 			if (not teamRank) or (activeRank > teamRank) then
 				teamRank = activeRank
 			end
@@ -211,28 +298,40 @@ local function UpdateTeamActivity(teamID)
 		local playerName = Spring.GetPlayerInfo(leaderID, false)
 		local unitsRecieved = false
 		
-		for unitID, playerList in pairs(playerLineageUnits) do --Return unit to the oldest inheritor (or to original owner if possible)
-			local delete = false
-			local unitAllyTeamID = spGetUnitAllyTeam(unitID)
-			if unitAllyTeamID == allyTeamID then
-				for i = 1, #playerList do
-					local otherPlayerID = playerList[i]
-					local otherTeamID = PlayerIDToTeamID(otherPlayerID)
-					if (otherTeamID == teamID) then
-						TransferUnit(unitID, teamID)
-						unitsRecieved = true
-						delete = true
-					end
-					-- remove all teams after the previous owner (inclusive)
-					if delete then
-						playerLineageUnits[unitID][i] = nil
+		if playerLineageUnits then
+			local waitUnits = {}
+			for unitID, playerList in pairs(playerLineageUnits) do --Return unit to the oldest inheritor (or to original owner if possible)
+				local delete = false
+				local unitAllyTeamID = spGetUnitAllyTeam(unitID)
+				if unitAllyTeamID == allyTeamID then
+					for i = 1, #playerList do
+						local otherPlayerID = playerList[i]
+						local otherTeamID = PlayerIDToTeamID(otherPlayerID)
+						if (otherTeamID == teamID) then
+							TransferUnit(unitID, teamID)
+							unitsRecieved = true
+							delete = true
+							local bpHaver, hasWait = GetBpHaverAndWait(unitID)
+							if bpHaver and hasWait then
+								waitUnits[#waitUnits + 1] = unitID
+							end
+						end
+						-- remove all teams after the previous owner (inclusive)
+						if delete then
+							playerLineageUnits[unitID][i] = nil
+							Spring.SetUnitRulesParam(unitID, "lagmonitor_facplop_givenaway", nil)
+						end
 					end
 				end
+			end
+			
+			if #waitUnits > 0 then
+				spGiveOrderToUnitArray(waitUnits, CMD_WAIT, 0, 0)
 			end
 		end
 		
 		if unitsRecieved then
-			spEcho("game_message: Player " .. playerName .. " is no longer lagging or AFK; returning all their units.")
+			SendToUnsynced("SendAFKMsg", teamID)
 		end
 	end
 	
@@ -256,31 +355,49 @@ local function GetRawTeamShare(teamID)
 		local playerID = players[i]
 		local _, active, spec = spGetPlayerInfo(playerID, false)
 		if active and not spec then
-			shares = shares + 1
+			shares = shares + playerValue[playerID]
 		end
 	end
 
 	return shares
 end
 
+local function IsPlayerDead(playerID)
+	return select(3, Spring.GetPlayerInfo(playerID))
+end
+
+local function IsTeamActuallyDead(teamID)
+	local isDead = select(3, Spring.GetTeamInfo(teamID, false))
+	local playerList = Spring.GetPlayerList(teamID)
+	if isDead then return true end
+	for i = 1, #playerList do
+		if not IsPlayerDead(playerList[i]) then return false end
+	end
+	return true
+end
+
 local function DoUnitGiveAway(allyTeamID, recieveTeamID, giveAwayTeams, doPlayerLineage)
 	for i = 1, #giveAwayTeams do
 		local giveTeamID = giveAwayTeams[i]
-		local givePlayerID = doPlayerLineage and TeamIDToPlayerID(giveTeamID)
-		
+		local giveResigned = IsTeamActuallyDead(giveTeamID)
+		local givePlayerID = (doPlayerLineage and not giveResigned) and TeamIDToPlayerID(giveTeamID) -- They're never coming back so don't bother.
 		-- Energy share is not set because the storage needs to be full for full overdrive.
 		-- Also energy income is mostly private and a large energy influx to the rest of the
 		-- team is likely to be wasted or overdriven inefficently.
 		
 		local units = spGetTeamUnits(giveTeamID) or {}
 		if #units > 0 then -- transfer units when number of units in AFK team is > 0
+			local waitUnits = {}
 			-- Transfer Units
 			for j = 1, #units do
 				local unitID = units[j]
 				if allyTeamID == spGetUnitAllyTeam(unitID) then
 					if givePlayerID then
 						-- add this team to the playerLineageUnits list, then send the unit away
-						if playerLineageUnits[unitID] == nil then
+						if not playerLineageUnits[unitID] then
+							if (Spring.GetUnitRulesParam(unitID, "facplop") or 0) == 1 then
+								Spring.SetUnitRulesParam(unitID, "lagmonitor_facplop_givenaway", givePlayerID)
+							end
 							playerLineageUnits[unitID] = {givePlayerID}
 						else
 							-- this unit belonged to someone else before me, add me to the end of the list
@@ -288,25 +405,33 @@ local function DoUnitGiveAway(allyTeamID, recieveTeamID, giveAwayTeams, doPlayer
 						end
 					end
 					TransferUnit(unitID, recieveTeamID)
+					local bpHaver, hasWait = GetBpHaverAndWait(unitID)
+					if bpHaver and not hasWait then
+						waitUnits[#waitUnits + 1] = unitID
+					end
 				end
+			end
+			
+			if #waitUnits > 0 then
+				spGiveOrderToUnitArray(waitUnits, CMD_WAIT, 0, 0)
 			end
 		end
 		
 		local recieveName = GetTeamName(recieveTeamID)
 		local giveName = GetTeamName(giveTeamID)
-		local giveResigned = select(3, Spring.GetTeamInfo(giveTeamID, false))
 		
 		-- Send message
 		if giveResigned then
-			spEcho("game_message: " .. giveName .. " resigned, giving all units to " .. recieveName)
+			--spEcho("game_message: " .. giveName .. " resigned, giving all units to " .. recieveName)
+			SendToUnsynced("SendPlayerResignedMessage", giveTeamID, recieveTeamID, math.random(1, deathMessageCount))
 		elseif #units > 0 then
-			spEcho("game_message: Giving all units of ".. giveName .. " to " .. recieveName .. " due to lag/AFK")
+			SendToUnsynced("SendAFKMsg", giveTeamID, recieveTeamID)
 		end
 	end
 end
 
 local function UpdateAllyTeamActivity(allyTeamID)
-	local teamList = Spring.GetTeamList(allyTeamID)
+	local teamList = spGetTeamList(allyTeamID)
 	
 	local totalResourceShares = 0
 	local giveAwayTeams = {}
@@ -325,7 +450,9 @@ local function UpdateAllyTeamActivity(allyTeamID)
 		local resourceShare, teamRank, isHostedAiTeam, isBackupAi = UpdateTeamActivity(teamID)
 		totalResourceShares = totalResourceShares + resourceShare
 		if debugAllyTeam and debugAllyTeam[allyTeamID] then
-			Spring.Echo("teamID", teamID, "share", resourceShare, "rank", teamRank, "isHostedAi", isHostedAiTeam, "isBackup", isBackupAi)
+			local _, leader = Spring.GetTeamInfo(teamID)
+			local name = leader and Spring.GetPlayerInfo(leader)
+			Spring.Echo("playerID", leader or "none", "name", name or "none", "teamID", teamID, "share", resourceShare, "rank", teamRank, "isHostedAi", isHostedAiTeam, "isBackup", isBackupAi)
 		end
 		
 		if not isBackupAi then
@@ -383,7 +510,8 @@ local function UpdateAllyTeamActivity(allyTeamID)
 			local giveTeamID = giveAwayTeams[i]
 			local giveResigned = select(3, Spring.GetTeamInfo(giveTeamID, false))
 			if giveResigned then
-				spEcho("game_message: " .. GetTeamName(giveTeamID) .. " resigned")
+				SendToUnsynced("SendPlayerResignedMessage", giveTeamID, nil, math.random(1, deathMessageCount))
+				--spEcho("game_message: " .. GetTeamName(giveTeamID) .. " resigned")
 			end
 		end
 	end
@@ -392,7 +520,7 @@ local function UpdateAllyTeamActivity(allyTeamID)
 end
 
 local function InitializeAiTeamRulesParams()
-	local teamList = Spring.GetTeamList()
+	local teamList = spGetTeamList()
 	for i = 1, #teamList do
 		local teamID = teamList[i]
 		local _, leaderID, _, isAiTeam, _, _, customKeys = spGetTeamInfo(teamID)
@@ -448,6 +576,31 @@ local function LagmonitorDebugToggle(cmd, line, words, player)
 	end
 end
 
+local function LagmonitorDebugPlayerToggle(cmd, line, words, player)
+	if not Spring.IsCheatingEnabled() then
+		return
+	end
+	local playerID = tonumber(words[1])
+	Spring.Echo("Debug Lagmonitor for playerID " .. (playerID or "nil"))
+	if playerID then
+		if not debugPlayerLag then
+			debugPlayerLag = {}
+		end
+		if debugPlayerLag[playerID] then
+			debugPlayerLag[playerID] = nil
+			if #debugPlayerLag == 0 then
+				debugPlayerLag = {}
+			end
+			Spring.Echo("Disabled")
+		else
+			debugPlayerLag[playerID] = true
+			Spring.Echo("Enabled")
+		end
+	else
+		debugPlayerLagAll = not debugPlayerLagAll
+	end
+end
+
 ----------------------------------------------------------------------------------------
 -- External Functions
 ----------------------------------------------------------------------------------------
@@ -456,14 +609,36 @@ function externalFunctions.GetResourceShares()
 	return allyTeamResourceShares, teamResourceShare
 end
 
+function externalFunctions.RegisterFacPlop(unitID, builderID)
+	local playerID = Spring.GetUnitRulesParam(builderID, "lagmonitor_facplop_givenaway")
+	if playerID then
+		if playerLineageUnits[unitID] then
+			playerLineageUnits[unitID][1] = playerID
+		else
+			playerLineageUnits[unitID] = {[1] = playerID}
+		end
+	end
+end
+
 function gadget:Initialize()
-	local teamList = Spring.GetTeamList()
+	local teamList = spGetTeamList()
 	for i = 1, #teamList do
 		local teamID = teamList[i]
 		local _, playerID, _, isAI, _, allyTeamID = Spring.GetTeamInfo(teamID, false)
-		teamResourceShare[teamID] = 1
-		allyTeamResourceShares[allyTeamID] = (allyTeamResourceShares[allyTeamID] or 0) + 1
-
+		local shareCount
+		if isAI or playerID == nil or playerID < 0 then
+			shareCount = 0
+		else
+			local customKeys = select(10,  Spring.GetPlayerInfo(playerID, true))
+			shareCount = tonumber(customKeys.extracomm) or 0
+		end
+		shareCount = shareCount + 1
+		if not isAI then
+			playerValue[playerID] = shareCount
+		end
+		teamResourceShare[teamID] = shareCount
+		allyTeamResourceShares[allyTeamID] = (allyTeamResourceShares[allyTeamID] or 0) + shareCount
+		
 		if isAI then
 			teamNames[teamID] = select(2, Spring.GetAIInfo(teamID))
 		else
@@ -472,6 +647,10 @@ function gadget:Initialize()
 	end
 
 	GG.Lagmonitor = externalFunctions
-	
+	if useAfkDetection then
+		Spring.SetGameRulesParam("lagmonitor_seconds", TO_AFK_THRESHOLD)
+	end
+
 	gadgetHandler:AddChatAction("debuglag", LagmonitorDebugToggle, "Toggles Lagmonitor debug.")
+	gadgetHandler:AddChatAction("debuglagplayer", LagmonitorDebugPlayerToggle, "Toggles Lagmonitor debug.")
 end

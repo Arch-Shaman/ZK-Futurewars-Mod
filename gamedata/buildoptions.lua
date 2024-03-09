@@ -1,4 +1,5 @@
 local buildOpts = {
+	[[energyprosperity]],
 	[[staticmex]],
 	[[energysolar]],
 	[[energyfusion]],
@@ -20,6 +21,7 @@ local buildOpts = {
 	[[factoryjump]],
 	[[factorytank]],
 	[[factoryship]],
+	[[factorycomm]],
 	[[plateshield]],
 	[[platecloak]],
 	[[plateveh]],
@@ -32,6 +34,7 @@ local buildOpts = {
 	[[platetank]],
 	[[plateship]],
 	[[striderhub]],
+	[[platestrider]],
 	[[staticradar]],
 	[[staticshield]],
 	[[staticjammer]],
@@ -42,6 +45,7 @@ local buildOpts = {
 	[[turretemp]],
 	[[turretriot]],
 	[[turretheavylaser]],
+	[[turretsunlance]],
 	[[turretgauss]],
 	[[turretantiheavy]],
 	[[turretheavy]],
@@ -61,6 +65,9 @@ local buildOpts = {
 	[[zenith]],
 	[[gunshiptrans]],
 	[[gunshipheavytrans]],
+	[[athena]],
+	[[staticheavyshield]],
+	[[wolverine_mine_buildable]],
 }
 
 return buildOpts

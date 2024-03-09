@@ -1,7 +1,12 @@
 aiCommanders = {}
+ploppableDefs = {}
 for unitDefID, unitDef in pairs(UnitDefs) do
-	if unitDef.customParams.ai_start_unit then
+	local cp = unitDef.customParams
+	if cp.ai_start_unit then
 		aiCommanders[unitDefID] = true
+	end
+	if cp.ploppable then
+		ploppableDefs[unitDefID] = true
 	end
 end
 
@@ -39,4 +44,4 @@ START_STORAGE = 0
 COMM_SELECT_TIMEOUT = 30 * 15 -- 15 seconds
 
 DEFAULT_UNIT = UnitDefNames["dyntrainer_strike_base"].id
-DEFAULT_UNIT_NAME = "Strike Trainer"
+DEFAULT_UNIT_NAME = "Ambush Trainer"

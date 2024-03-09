@@ -15,6 +15,7 @@ local doorsAreOpen = false
 local closingDoors = false
 local missileLoaded = true
 local primingQueued = false
+local mystock = 0
 
 -- Signal definitions
 local SIG_AIM = 1
@@ -84,10 +85,10 @@ local function CloseDoors()
 end
 
 function StockpileChanged(newStock)
+	mystock = newStock
 	if newStock <= 0 then
 		return
 	end
-	
 	if not missileLoaded then
 		primingQueued = true
 	elseif not doorsAreOpen and not openingDoors and not closingDoors then
@@ -130,13 +131,12 @@ function script.FireWeapon()
 	Hide(nuke)
 	missileLoaded = false
 	doorsAreOpen = false
-
 	if GG.GameRules_NukeLaunched then
 		GG.GameRules_NukeLaunched(unitID)
 	end
 	
 	-- Intentionally non-positional
-	Spring.PlaySoundFile("sounds/weapon/missile/heavymissile_launch.wav", 15)
+	Spring.PlaySoundFile("sounds/weapon/missile/heavymissile_launch.wav", 15, "battle")
 end
 
 function script.QueryWeapon()
@@ -145,6 +145,19 @@ end
 
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage / maxHealth
+	if mystock > 0 then
+		local x, y, z = Spring.GetUnitPosition(unitID)
+		local deathproj = WeaponDefNames["staticnuke_death"].id
+		local params = {pos = {x, y + 5, z}, team = Spring.GetGaiaTeamID(), ttl = 50*30, gravity = -0.1}
+		local pid
+		for i = 1, mystock * 3 do
+			pid = Spring.SpawnProjectile(deathproj, params) -- first always hits the silo.
+			if i ~= 1 then
+				params.pos[2] = y + 300 + (math.random() * 100)
+				Spring.SetProjectileVelocity(pid, 4 - math.random() * 8, math.random() * 15, 4 - math.random() * 8)
+			end
+		end
+	end
 	if (severity <= .25) then
 		Explode(base, SFX.NONE)
 		Explode(tube, SFX.NONE)

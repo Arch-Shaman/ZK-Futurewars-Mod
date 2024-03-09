@@ -6,7 +6,7 @@ local dish2 = piece 'dish2'
 local dish3 = piece 'dish3'
 local dish4 = piece 'dish4'
 local fakes = {piece 'fakebase', piece 'fakedish1', piece 'fakedish2', piece 'fakedish3', piece 'fakedish4'}
-
+local armorValue = UnitDefs[unitDefID].armoredMultiple
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetUnitHealth = Spring.GetUnitHealth
 
@@ -22,7 +22,7 @@ local function Open()
 	Signal(SIG_Activate)
 	SetSignalMask(SIG_Activate)
 	
-	Spring.SetUnitArmored(unitID, false)
+	GG.SetUnitArmor(unitID, 1.0)
 	
 	Turn(dish1, x_axis, math.rad(-75), math.rad(60))
 	Turn(dish2, x_axis, math.rad(75), math.rad(60))
@@ -55,7 +55,7 @@ local function Close()
 	WaitForTurn(dish3, z_axis)
 	WaitForTurn(dish4, z_axis)
 	
-	Spring.SetUnitArmored(unitID, true)
+	GG.SetUnitArmor(unitID, armorValue)
 end
 
 function script.Activate()

@@ -2,16 +2,16 @@
 --------------------------------------------------------------------------------
 
 function widget:GetInfo()
-  return {
-    name      = "Unit Start State",
-    desc      = "Configurable starting unit states for units",
-    author    = "GoogleFrog",
-    date      = "13 April 2011", --last update: 29 January 2014
-    license   = "GNU GPL, v2 or later",
-	handler   = false,
-    layer     = 1,
-    enabled   = true,  --  loaded by default?
-  }
+	return {
+		name      = "Unit Start State",
+		desc      = "Configurable starting unit states for units",
+		author    = "GoogleFrog",
+		date      = "13 April 2011", --last update: 29 January 2014
+		license   = "GNU GPL, v2 or later",
+		handler   = false,
+		layer     = 1,
+		enabled   = true,  --  loaded by default?
+	}
 end
 
 --------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ local alwaysHoldPos, holdPosException, dontFireAtRadarUnits, factoryDefs = VFS.I
 local defaultSelectionRank = VFS.Include(LUAUI_DIRNAME .. "Configs/selection_rank.lua")
 local spectatingState = select(1, Spring.GetSpectatingState())
 
-local unitsToFactory = {}	-- [unitDefName] = factoryDefName
+local unitsToFactory = {} -- [unitDefName] = factoryDefName
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -61,6 +61,10 @@ local tooltips = {
 		[2] = "Retreat at 65% health",
 		[3] = "Retreat at 99% health",
 	},
+	autojump = {
+		[0] = "Require manual approval to use Jumpjets",
+		[1] = "Allow Tactical use of Jumpjets",
+	},
 	retreatshield = {
 		[-1] = "Inherit from factory",
 		[0] = "Never Retreat",
@@ -95,6 +99,17 @@ local tooltips = {
 		[2] = "2",
 		[3] = "3",
 	},
+	commander_formation_rank = {
+		name = "  Formation Rank",
+		desc = "Selection Rank: when selecting multiple units only those of highest rank are selected. Hold shift to ignore rank.",
+		type = 'number',
+		value = 2,
+		min = 0,
+		max = 3,
+		step = 1,
+		path = "Settings/Unit Behaviour/Default States/Misc",
+		tooltipFunction = tooltipFunc.formationrank,
+	},
 	prevent_bait = {
 		[0] = "Disable target avoidance.",
 		[1] = "Avoid shooting at light drones, Wind, Solar, Claw, Dirtbag, low value nanoframes and armoured targets (excluding Crab)." .. preventBaitTip,
@@ -102,9 +117,21 @@ local tooltips = {
 		[3] = "Avoid shooting at units costing less than 240 (excluding Stardust) as well as, Raptor, unknown radar dots, low value nanoframes and armoured targets (excluding Crab). Disables Ward Fire." .. preventBaitTip,
 		[4] = "Avoid shooting at  units costing less than 420, unknown radar dots, low value nanoframes and armoured targets (excluding Crab). Disables Ward Fire." .. preventBaitTip,
 	},
-	ward_fire = {
+	fire_at_shield = {
 		[0] = "Disabled.",
 		[1] = "Shoot at the shields of Thugs, Felons and Convicts when nothing else is in range.",
+	},
+	fire_towards_enemy = {
+		[0] = "Disabled.",
+		[1] = "Shoot towards the closest enemy when nothing else is in range.",
+	},
+	firecycle = {
+		[0] = "Disabled.",
+		[1] = "Prioritize spreading burning status.",
+	},
+	armor = {
+		[0] = "Unhunkered",
+		[1] = "Hunkered",
 	},
 }
 
@@ -137,8 +164,17 @@ for i = 1, #UnitDefs do
 	end
 end
 
+local disableORP = false
+local spreadNapalm = false
+
+local notAFactory = {
+	[UnitDefNames["athena"]] = true, -- use stupid hax to avoid striderhub from being oopsed.
+}
+
 options_path = 'Settings/Unit Behaviour/Default States'
 options_order = {
+	'okpdisabledbydefault',
+	'spreadnapalmbydefault',
 	'inheritcontrol', 'presetlabel',
 	'resetMoveStates', 'holdPosition',
 	'skirmHoldPosition', 'artyHoldPosition', 'aaHoldPosition',
@@ -157,6 +193,7 @@ options_order = {
 	'commander_retreat',
 	'commander_auto_call_transport_2',
 	'commander_selection_rank',
+	'commander_formation_rank',
 }
 
 options = {
@@ -184,6 +221,24 @@ options = {
 					options[opt].value = -1
 				end
 			end
+		end,
+	},
+	okpdisabledbydefault = {
+		name = "Disable Overreclaim Prevention",
+		desc = "Sets ORP to off by default if enabled.",
+		type = 'bool',
+		value = false,
+		OnChange = function(self)
+			disableORP = self.value
+		end,
+	},
+	spreadnapalmbydefault = {
+		name = "Napalm units try to spread napalm",
+		desc = "Napalm units will switch targets once it's caught on fire.",
+		type = 'bool',
+		value = false,
+		OnChange = function(self)
+			spreadNapalm = self.value
 		end,
 	},
 
@@ -603,10 +658,22 @@ options = {
 		path = "Settings/Unit Behaviour/Default States/Misc",
 		tooltipFunction = tooltipFunc.selectionrank,
 	},
+	commander_formation_rank = {
+		name = "  Formation Rank",
+		desc = "Selection Rank: when selecting multiple units only those of highest rank are selected. Hold shift to ignore rank.",
+		type = 'number',
+		value = 2,
+		min = 0,
+		max = 3,
+		step = 1,
+		path = "Settings/Unit Behaviour/Default States/Misc",
+		tooltipFunction = tooltipFunc.formationrank,
+	},
 }
 
 local tacticalAIUnits = {}
 local wardFireUnits = {}
+local wardFireCmdID = {}
 do
 	local tacticalAIDefs, behaviourDefaults = VFS.Include("LuaRules/Configs/tactical_ai_defs.lua", nil, VFS.ZIP)
 	for unitDefID, behaviourData in pairs(tacticalAIDefs) do
@@ -616,8 +683,9 @@ do
 			if unitDefName then
 				tacticalAIUnits[unitDefName] = {value = (behaviourData.defaultAIState or behaviourDefaults.defaultState) == 1}
 			end
-			if behaviourData.wardFireTargets then
+			if behaviourData.hasWardFire then
 				wardFireUnits[unitDefName] = (behaviourData.wardFireDefault and 1) or 0
+				wardFireCmdID[unitDefName] = behaviourData.wardFireCmdID
 			end
 		end
 	end
@@ -695,7 +763,7 @@ local function addUnit(defName, path)
 			name = "  Fly/Land State",
 			desc = "Values: inherit from factory, fly, land",
 			type = 'number',
-			value = (ud.customParams and ud.customParams.landflystate and ((ud.customParams.landflystate == "1" and 1) or 0)) or -1,
+			value = (ud.customParams and ud.customParams.landflystate and ud.customParams.landflystate == "1" and 1) or -1,
 			min = -1,
 			max = 1,
 			step = 1,
@@ -765,7 +833,20 @@ local function addUnit(defName, path)
 		}
 		options_order[#options_order+1] = defName .. "_floattoggle"
 	end
-
+	if ud.customParams and ud.customParams.can_jump then
+		options[defName .. "_autojump"] = {
+						name = "  Puppy Goo",
+			desc = "Values: Disable, Allow Tactical use",
+			type = 'number',
+			value = (ud.customParams and ud.customParams.grey_goo) or 1,
+			min = 0,
+			max = 1,
+			step = 1,
+			path = path,
+			tooltipFunction = tooltipFunc.autojump,
+		}
+		options_order[#options_order+1] = defName .. "_autojump"
+	end
 	if ud.customParams and ud.customParams.grey_goo then
 		options[defName .. "_goostate"] = {
 			name = "  Puppy Goo",
@@ -904,6 +985,21 @@ local function addUnit(defName, path)
 	}
 	options_order[#options_order+1] = defName .. "_selection_rank"
 	
+	if ud.canMove and not ud.isFactory and not (ud.springCategories.fixedwing) then
+		options[defName .. "_formation_rank"] = {
+			name = "  Formation Rank",
+			desc = "Formation Rank: set rank in formation",
+			type = 'number',
+			value = 2,
+			min = 0,
+			max = 3,
+			step = 1,
+			path = path,
+			tooltipFunction = tooltipFunc.formationrank,
+		}
+		options_order[#options_order+1] = defName .. "_formation_rank"
+	end
+	
 	if tacticalAIUnits[defName] then
 		options[defName .. "_tactical_ai_2"] = {
 			name = "  Smart AI",
@@ -949,15 +1045,30 @@ local function addUnit(defName, path)
 	end
 
 	if wardFireUnits[defName] then
-		options[defName .. "_ward_fire"] = {
-			name = "  Shoot Shields (Ward Fire)",
-			desc = "Shoot at the shields of Thugs, Felons and Convicts when nothing else is in range.",
-			type = 'bool',
-			value = (wardFireUnits[defName] == 1),
-			path = path,
-			tooltipFunction = tooltipFunc.prevent_bait,
-		}
-		options_order[#options_order+1] = defName .. "_ward_fire"
+		local def = wardFireUnits[defName]
+		local wardCmd = wardFireCmdID[defName]
+		
+		if wardCmd == CMD_FIRE_AT_SHIELD then
+			options[defName .. "_fire_at_shield"] = {
+				name = "  Fire at Shields",
+				desc = "Shoot at the shields of Thugs, Felons and Convicts when nothing else is in range.",
+				type = 'bool',
+				value = (wardFireUnits[defName] == 1),
+				path = path,
+				tooltipFunction = tooltipFunc.prevent_bait,
+			}
+			options_order[#options_order+1] = defName .. "_fire_at_shield"
+		elseif wardCmd == CMD_FIRE_TOWARDS_ENEMY then
+			options[defName .. "_fire_towards_enemy"] = {
+				name = "  Fire Towards Enemies",
+				desc = "Shoot towards the closest enemy when nothing else is in range.",
+				type = 'bool',
+				value = (wardFireUnits[defName] == 1),
+				path = path,
+				tooltipFunction = tooltipFunc.prevent_bait,
+			}
+			options_order[#options_order+1] = defName .. "_fire_towards_enemy"
+		end
 	end
 
 	if baitPreventionDefault[unitDefID] then
@@ -1006,6 +1117,17 @@ local function addUnit(defName, path)
 			}
 			options_order[#options_order+1] = defName .. "_activateWhenBuilt"
 		end
+	end
+	
+	if ud.customParams.hasarmorstate then
+		options[defName .. "_armored"] = {
+			name = "  Hunkered State",
+			desc = "Check box to set the unit to hunkered when built.",
+			type = 'bool',
+			value = false,
+			path = path,
+		}
+		options_order[#options_order+1] = defName .. "_armored"
 	end
 	
 	if ud.customParams.attack_toggle then
@@ -1061,7 +1183,7 @@ AddFactoryOfUnits("factoryspider",  "platespider")
 AddFactoryOfUnits("factoryjump",    "platejump")
 AddFactoryOfUnits("factorytank",    "platetank")
 AddFactoryOfUnits("factoryship",    "plateship")
-AddFactoryOfUnits("striderhub")
+AddFactoryOfUnits("striderhub", "platestrider")
 AddFactoryOfUnits("staticmissilesilo")
 
 local buildOpts = VFS.Include("gamedata/buildoptions.lua")
@@ -1220,21 +1342,20 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 
 	local name = ud.name
 	if unitAlreadyAdded[name] then
+		local builderDefID = builderID and Spring.GetUnitDefID(builderID)
+		local isAFactory = false 
+		if builderDefID then
+			isAFactory = not notAFactory[builderDefID] and not UnitDefs[builderDefID].isMobileBuilder -- this simplifies the check a bit, probably. note this hits athena only!
+		end
 		local value = GetStateValue(name, "firestate0")
 		if value ~= nil then
 			if value == -1 then
-				local trueBuilder = false
-				if builderID then
-					local bdid = Spring.GetUnitDefID(builderID)
-					if UnitDefs[bdid] and UnitDefs[bdid].isFactory then
-						local firestate = Spring.Utilities.GetUnitFireState(builderID)
-						if firestate then
-							orderArray[#orderArray + 1] = {CMD.FIRE_STATE, {firestate}, CMD.OPT_SHIFT}
-							trueBuilder = true
-						end
+				if isAFactory then
+					local firestate = Spring.Utilities.GetUnitFireState(builderID)
+					if firestate then
+						orderArray[#orderArray + 1] = {CMD.FIRE_STATE, {firestate}, CMD.OPT_SHIFT}
 					end
-				end
-				if not trueBuilder then	-- inherit from factory def's start state, not the current state of any specific factory unit
+				else	-- inherit from factory def's start state, not the current state of any specific factory unit
 					local firestate = GetFactoryDefState(name, "firestate0")
 					if firestate ~= nil then
 						orderArray[#orderArray + 1] = {CMD.FIRE_STATE, {firestate}, CMD.OPT_SHIFT}
@@ -1248,18 +1369,12 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		value = GetStateValue(name, "movestate1")
 		if value ~= nil then
 			if value == -1 then
-				local trueBuilder = false
-				if builderID then
-					local bdid = Spring.GetUnitDefID(builderID)
-					if UnitDefs[bdid] and UnitDefs[bdid].isFactory then
-						local movestate = Spring.Utilities.GetUnitMoveState(builderID)
-						if movestate then
-							orderArray[#orderArray + 1] = {CMD.MOVE_STATE, {movestate}, CMD.OPT_SHIFT}
-							trueBuilder = true
-						end
+				if isAFactory then
+					local movestate = Spring.Utilities.GetUnitMoveState(builderID)
+					if movestate then
+						orderArray[#orderArray + 1] = {CMD.MOVE_STATE, {movestate}, CMD.OPT_SHIFT}
 					end
-				end
-				if not trueBuilder then	-- inherit from factory def's start state, not the current state of any specific factory unit
+				else
 					local movestate = GetFactoryDefState(name, "movestate1")
 					if movestate ~= nil then
 						orderArray[#orderArray + 1] = {CMD.MOVE_STATE, {movestate}, CMD.OPT_SHIFT}
@@ -1271,16 +1386,8 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		end
 		
 		value = GetStateValue(name, "flylandstate_1")
-		if value == -1 then
-			local trueBuilder = false
-			if builderID then
-				local bdid = Spring.GetUnitDefID(builderID)
-				if UnitDefs[bdid] and UnitDefs[bdid].isFactory then
-					trueBuilder = true
-					-- inheritance handled in unit_air_plants gadget
-				end
-			end
-			if not trueBuilder then	-- inherit from factory def's start state, not the current state of any specific factory unit
+		if value == -1 then -- inheritance handled in unit_air_plants gadget
+			if not isAFactory then	-- inherit from factory def's start state, not the current state of any specific factory unit
 				value = GetFactoryDefState(name, "flylandstate_1_factory")
 				if value ~= nil then
 					orderArray[#orderArray + 1] = {CMD.IDLEMODE, {value}, CMD.OPT_SHIFT}
@@ -1297,8 +1404,18 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		QueueState(name, "floattoggle", CMD_UNIT_FLOAT_STATE, orderArray)
 		QueueState(name, "goostate", CMD_GOO_GATHER, orderArray)
 		
+		local armored = GetStateValue(name, "armored")
 		local retreat = GetStateValue(name, "retreatpercent")
 		local retreatshield = GetStateValue(name, "retreatpercent_shield")
+		local autojump = GetStateValue(name, "autojump")
+		if autojump then
+			if autojump == 0 then
+				orderArray[#orderArray + 1] = {CMD_AUTOJUMP, {0}, CMD.OPT_SHIFT + CMD.OPT_RIGHT}
+			end
+		end
+		if armored then
+			orderArray[#orderArray + 1] = {CMD_ARMORSTATE, {1}, CMD.OPT_SHIFT + CMD.OPT_RIGHT}
+		end
 		if retreat == -1 then --if inherit
 			if builderID then
 				retreat = Spring.GetUnitRulesParam(builderID,"retreatState")
@@ -1308,7 +1425,7 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		end
 		if retreatshield == -1 then --if inherit
 			if builderID then
-				retreatshield = Spring.GetUnitRulesParam(builderID,"retreatshieldState")
+				retreatshield = Spring.GetUnitRulesParam(builderID, "retreatshieldState")
 			else
 				retreatshield = GetFactoryDefState(name, "retreatpercent_shield")
 			end
@@ -1381,14 +1498,23 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 			orderArray[#orderArray + 1] = {CMD_PREVENT_BAIT, {value}, CMD.OPT_SHIFT}
 		end
 		
-		value = GetStateValue(name, "ward_fire")
+		value = GetStateValue(name, "fire_at_shield")
 		if value then
-			orderArray[#orderArray + 1] = {CMD_WARD_FIRE, {(value and 1) or 0}, CMD.OPT_SHIFT}
+			orderArray[#orderArray + 1] = {CMD_FIRE_AT_SHIELD, {(value and 1) or 0}, CMD.OPT_SHIFT}
+		end
+		
+		value = GetStateValue(name, "fire_towards_enemy")
+		if value then
+			orderArray[#orderArray + 1] = {CMD_FIRE_TOWARDS_ENEMY, {(value and 1) or 0}, CMD.OPT_SHIFT}
 		end
 		
 		value = GetStateValue(name, "disableattack")
 		if value then -- false is the default
 			orderArray[#orderArray + 1] = {CMD_DISABLE_ATTACK, {1}, CMD.OPT_SHIFT}
+		end
+		value = GetStateValue(name, "formation_rank")
+		if value and WG.SetFormationRank then
+			WG.SetFormationRank(unitID, value)
 		end
 		
 		QueueState(name, "tactical_ai_2", CMD_UNIT_AI, orderArray)
@@ -1408,6 +1534,12 @@ function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		QueueState(name, "personal_cloak_0", CMD_WANT_CLOAK, orderArray)
 		QueueState(name, "impulseMode", CMD_PUSH_PULL, orderArray)
 		QueueState(name, "activateWhenBuilt", CMD_WANT_ONOFF, orderArray)
+	end
+	if UnitDefs[unitDefID].isBuilder and disableORP then
+		orderArray[#orderArray + 1] = {CMD_OVERRECLAIM, {1}, CMD.OPT_SHIFT}
+	end
+	if UnitDefs[unitDefID].customParams.firecycle and spreadNapalm then
+		orderArray[#orderArray + 1] = {CMD_FIRECYCLE, {1}, CMD.OPT_SHIFT}
 	end
 
 	if #orderArray > 0 then
@@ -1490,6 +1622,11 @@ local function ApplyUnitStates()
 			widget:UnitFinished(units[i], Spring.GetUnitDefID(units[i]), teamID or Spring.GetUnitTeam(units[i]))
 		end
 	end
+end
+
+function widget:Initialize()
+	disableORP = options.okpdisabledbydefault.value
+	spreadNapalm = options.spreadnapalmbydefault.value
 end
 
 function widget:PlayerChanged()

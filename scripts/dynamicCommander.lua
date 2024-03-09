@@ -155,10 +155,63 @@ local function GetCegTable(wd)
 	return cegs
 end
 
-local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, damageMult)
+local function DoExtraWeaponStuff(extraInfo, weaponNum, wd, weaponID)
+	local INLOS = {inlos = true}
+	local ei = extraInfo
+	if ei.reloadBonus ~= 0 or ei.reloadOverride then
+		local reloadBonus
+		if ei.reloadBonus < 0 then
+			reloadBonus = 1 / (-ei.reloadBonus + 1)
+		else
+			reloadBonus = 1 + ei.reloadBonus
+		end
+		local newReloadTime = ei.reloadOverride or wd.reload
+		newReloadTime = math.max(math.ceil(((newReloadTime * 30) / reloadBonus)), 1) / 30 -- multiply by 30 to do frame rounding.
+		Spring.SetUnitWeaponState(unitID, weaponID, "reloadTime", newReloadTime)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_basereload", newReloadTime, INLOS)
+	end
+	if ei.burstOverride then
+		Spring.SetUnitWeaponState(unitID, weaponID, "burst", ei.burstOverride)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_updatedburst_count", ei.burstOverride, INLOS)
+	end
+	if ei.burstRateOverride then
+		Spring.SetUnitWeaponState(unitID, weaponID, "burstRate", ei.burstRateOverride)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_baseburstrate", ei.burstRateOverride, INLOS)
+	end
+	if ei.accuracyBonus ~= 1 or ei.accuracyOverride then
+		local newAccuracy = ei.accuracyOverride or wd.accuracy
+		newAccuracy = math.max(newAccuracy - (newAccuracy * (1 - ei.accuracyBonus)), 0)
+		Spring.SetUnitWeaponState(unitID, weaponID, "accuracy", newAccuracy)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_accuracy", newAccuracy, INLOS)
+	end
+	if ei.projectileSpeedBonus ~= 1 then
+		if ei.projectileSpeedBonus < 0.05 then ei.projectileSpeedBonus = 0.05 end
+		local newSpeed = math.max(wd.projectilespeed * ei.projectileSpeedBonus, 10)
+		Spring.SetUnitWeaponState(unitID, weaponID, "projectileSpeed", newSpeed)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_speed", newSpeed, INLOS)
+	end
+	if ei.projectileBonus ~= 0 or ei.projectileOverride then
+		local baseProjectiles = ei.projectileOverride or wd.projectiles
+		local newProjectileCount = math.max(baseProjectiles + ei.projectileBonus, 1)
+		Spring.SetUnitWeaponState(unitID, weaponID, "projectiles", newProjectileCount)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_projectilecount_override", newProjectileCount, INLOS)
+	end
+	if ei.sprayAngleBonus or ei.sprayAngleOverride then
+		local baseSprayAngle = ei.sprayAngleOverride or wd.sprayAngle
+		local bonus = ei.sprayAngleBonus + 1
+		if bonus < 0 then bonus = 0 end
+		local newSprayAngle = math.max(baseSprayAngle * bonus, 0)
+		Spring.SetUnitWeaponState(unitID, weaponID, "sprayAngle", newSprayAngle)
+		Spring.SetUnitRulesParam(unitID, weaponID .. "_sprayangle", newSprayAngle, INLOS)
+	end
+end
+
+local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, damageMult, extraInfo)
 	local weaponDef1 = weaponName1 and unitWeaponNames[weaponName1]
-	local weaponDef2 = weaponName2 and unitWeaponNames[weaponName2]
+	local weaponDef2 = weaponName2 and unitWeaponNames[weaponName2] 
 	local shieldDef = shieldName and unitWeaponNames[shieldName]
+	local wd1 = weaponDef1 and WeaponDefs[weaponDef1.weaponDefID]
+	local wd2 = weaponDef2 and WeaponDefs[weaponDef2.weaponDefID] or nil
 	
 	weapon1 = weaponDef1 and weaponDef1.num
 	weapon2 = weaponDef2 and (weaponDef2.num2 or weaponDef2.num)
@@ -212,8 +265,10 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 	local maxRange = 0
 	local otherRange = false
 	if weapon1 then
+		local baserange = extraInfo[1].rangeOverride or tonumber(WeaponDefs[weaponDef1.weaponDefID].range)
 		isManual[weapon1] = weaponDef1.manualFire
-		local range = tonumber(WeaponDefs[weaponDef1.weaponDefID].range)*rangeMult
+		local damageBooster = math.max(1 + extraInfo[2].damageBoost, 0.01)
+		local range = baserange*rangeMult
 		if weaponDef1.manualFire then
 			otherRange = range
 		else
@@ -222,17 +277,21 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 		Spring.SetUnitWeaponState(unitID, weapon1, "range", range)
 		Spring.SetUnitWeaponDamages(unitID, weapon1, "dynDamageRange", range)
 		
+		
 		local damages = WeaponDefs[weaponDef1.weaponDefID].damages
 		for k, v in pairs(damages) do
 			if type(k) == "number" then
-				Spring.SetUnitWeaponDamages(unitID, weapon1, k, v * damageMult)
+				Spring.SetUnitWeaponDamages(unitID, weapon1, k, (v * damageBooster) * damageMult)
 			end
 		end
+		Spring.SetUnitRulesParam(unitID, weapon1 .. "_actual_dmgboost", damageBooster * damageMult)
+		DoExtraWeaponStuff(extraInfo[1], 1, wd1, weapon1)
 	end
 	
 	if weapon2 then
+		local baserange = extraInfo[2].rangeOverride or tonumber(WeaponDefs[weaponDef2.weaponDefID].range) -- why does this need ToNumber?
 		isManual[weapon2] = weaponDef2.manualFire
-		local range = tonumber(WeaponDefs[weaponDef2.weaponDefID].range)*rangeMult
+		local range = baserange*rangeMult
 		if maxRange then
 			if weaponDef2.manualFire then
 				otherRange = range
@@ -247,19 +306,19 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 		end
 		Spring.SetUnitWeaponState(unitID, weapon2, "range", range)
 		Spring.SetUnitWeaponDamages(unitID, weapon2, "dynDamageRange", range)
-		
+		local damageBooster = math.max(1 + extraInfo[2].damageBoost, 0.01)
 		local damages = WeaponDefs[weaponDef2.weaponDefID].damages
 		for k, v in pairs(damages) do
 			if type(k) == "number" then
-				Spring.SetUnitWeaponDamages(unitID, weapon2, k, v * damageMult)
+				Spring.SetUnitWeaponDamages(unitID, weapon2, k, (v * damageBooster) * damageMult)
 			end
 		end
+		Spring.SetUnitRulesParam(unitID, weapon2 .. "_actual_dmgboost", damageBooster * damageMult)
+		DoExtraWeaponStuff(extraInfo[2], 2, wd2, weapon2)
 	end
 	
 	if weapon1 then
 		if weapon2 then
-			local reload1 = Spring.GetUnitWeaponState(unitID, weapon1, 'reloadTime')
-			local reload2 = Spring.GetUnitWeaponState(unitID, weapon2, 'reloadTime')
 			Spring.SetUnitRulesParam(unitID, "primary_weapon_override",  weapon1, INLOS)
 			Spring.SetUnitRulesParam(unitID, "secondary_weapon_override",  weapon2, INLOS)
 			
@@ -304,6 +363,62 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 	end
 	
 	weaponsInitialized = true
+end
+
+local function SetupSpooling()
+	local spool1 = false
+	local spool2 = false
+	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
+	local weaponname2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2")
+	if weaponname1 then 
+		local cp1 = WeaponDefs[unitWeaponNames[weaponname1].weaponDefID].customParams
+		if cp1.recycler then
+			--Spring.Echo("Weapon 1 is recycler!")
+			GG.FireControl.ForceAddUnit(unitID, 1, tonumber(cp1["script_reload"]) * 30, tonumber(cp1["recycle_bonus"]), tonumber(cp1["recycle_reductionframes"]) * 30, tonumber(cp1["recycle_reduction"]), tonumber(cp1["recycle_reductiontime"]) * 30, tonumber(cp1["recycle_maxbonus"]), 0)
+			spool1 = true
+		end
+	end
+	if weaponname2 then
+		local cp2 = WeaponDefs[unitWeaponNames[weaponname2].weaponDefID].customParams
+		if cp2.recycler then
+			--Spring.Echo("Weapon 2 is recycler!")
+			GG.FireControl.ForceAddUnit(unitID, 2, tonumber(cp2["script_reload"]) * 30, tonumber(cp2["recycle_bonus"]), tonumber(cp2["recycle_reductionframes"]) * 30, tonumber(cp2["recycle_reduction"]), tonumber(cp2["recycle_reductiontime"]) * 30, tonumber(cp2["recycle_maxbonus"]), 0)
+			spool2 = true
+		end
+	end
+	return spool1, spool2
+end
+
+local function SetupAiming()
+	local aimconfig = {[1] = {}, [2] = {}}
+	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
+	local weaponname2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2")
+	if weaponname1 then
+		local cp1 = WeaponDefs[unitWeaponNames[weaponname1].weaponDefID].customParams
+		if cp1.aimdelay then
+			aimconfig[1].allowedpitch = cp1.allowedpitcherror
+			aimconfig[1].allowedheadingerror = cp1.allowedheadingerror
+			aimconfig[1].aimtime = cp1.aimdelay
+		end
+	end
+	if weaponname2 then
+		local cp2 = WeaponDefs[unitWeaponNames[weaponname2].weaponDefID].customParams
+		if cp2.aimdelay then
+			aimconfig[1].allowedpitch = cp2.allowedpitcherror
+			aimconfig[1].allowedheadingerror = cp2.allowedheadingerror
+			aimconfig[1].aimtime = cp2.aimdelay
+		end
+	end
+	local aimbonus
+	if aimconfig[1].aimtime or aimconfig[2].aimtime then
+		
+	end
+	if aimconfig[1].aimtime and aimconfig[2].aimtime then
+		Spring.SetUnitRulesParam(unitID, "comm_aimtime", math.max(aimconfig[1].aimtime, aimconfig[2].aimtime) * (Spring.GetUnitRulesParam(unitID, "comm_aimbonus") or 1), INLOS)
+	elseif aimconfig[1].aimtime or aimconfig[2].aimtime then
+		Spring.SetUnitRulesParam(unitID, "comm_aimtime", (aimconfig[1].aimtime or aimconfig[2].aimtime) * (Spring.GetUnitRulesParam(unitID, "comm_aimbonus") or 1), INLOS)
+	end
+	return aimconfig
 end
 
 local function GetOKP()
@@ -353,6 +468,31 @@ local function Create()
 	end
 end
 
+local function DoDeathExplosion(x, y, z)
+	local explosion = Spring.GetUnitRulesParam(unitID, "comm_deathexplosion")
+	local alt = "commexplosion_default"
+	if Spring.GetUnitIsStunned(unitID) or (Spring.GetUnitRulesParam(unitID, "disarmed") == 1) then
+		explosion = alt
+	end
+	--Spring.Echo("Spawning " .. tostring(explosion))
+	Spring.SpawnProjectile(WeaponDefNames[explosion].id, {
+			pos = {x, y, z},
+			["end"] = {x, y, z},
+			speed = {0, 0, 0},
+			ttl = 1,
+			gravity = 0,
+			team = Spring.GetGaiaTeamID(),
+			owner = unitID,
+		})
+	return explosion ~= alt
+end
+
+local function PriorityAimCheck(weaponNum)
+	--local num = unitWeaponNames[Spring.GetUnitRulesParam(unitID, "comm_weapon_name_" .. weaponNum].num
+	local reloadFrame = Spring.GetUnitWeaponState(unitID, weaponNum, "reloadState")
+	if reloadFrame == nil then return true end
+	return reloadFrame <= Spring.GetGameFrame()
+end
 
 local function SpawnModuleWreck(moduleDefID, wreckLevel, totalCount, teamID, x, y, z, vx, vy, vz)
 	local featureDefID = FeatureDefNames[moduleWreckNamePrefix[wreckLevel] .. moduleDefID]
@@ -376,6 +516,7 @@ local function SpawnModuleWrecks(wreckLevel)
 	local x, y, z, mx, my, mz = Spring.GetUnitPosition(unitID, true)
 	local vx, vy, vz = Spring.GetUnitVelocity(unitID)
 	local teamID	= Spring.GetUnitTeam(unitID)
+	local wreckLevel = wreckLevel or 2
 	
 	local moduleCount = Spring.GetUnitRulesParam(unitID, "comm_module_count") or 0;
 	for i = 1, moduleCount do
@@ -383,10 +524,101 @@ local function SpawnModuleWrecks(wreckLevel)
 	end
 end
 
+local function TransferParamToFeature(featureID, paramName)
+	Spring.SetFeatureRulesParam(featureID, paramName, Spring.GetUnitRulesParam(unitID, paramName), INLOS)
+end
+
+local function SetUpFeatureRules(featureID)
+	local moduleCount = Spring.GetUnitRulesParam(unitID, "comm_module_count") or 0;
+	local mass = Spring.GetUnitRulesParam(unitID, "massOverride")
+	local _, maxHealth = Spring.GetUnitHealth(unitID)
+	local cost = Spring.GetUnitRulesParam(unitID, "comm_cost")
+	-- For context menu purposes --
+	
+	TransferParamToFeature(featureID, "upgradesSpeedMult")
+	TransferParamToFeature(featureID, "carrier_count_drone")
+	TransferParamToFeature(featureID, "comm_weapon_num_1")
+	TransferParamToFeature(featureID, "comm_weapon_num_2")
+	TransferParamToFeature(featureID, "comm_shield_num")
+	TransferParamToFeature(featureID, "comm_damage_mult")
+	TransferParamToFeature(featureID, "comm_range_mult")
+	TransferParamToFeature(featureID, "buildpower_mult")
+	TransferParamToFeature(featureID, "comm_area_cloak")
+	TransferParamToFeature(featureID, "comm_area_cloak_upkeep")
+	TransferParamToFeature(featureID, "comm_area_cloak_radius")
+	TransferParamToFeature(featureID, "commander_reconpulse")
+	TransferParamToFeature(featureID, "comm_personal_cloak")
+	TransferParamToFeature(featureID, "comm_decloak_distance")
+	TransferParamToFeature(featureID, "commcloakregen")
+	TransferParamToFeature(featureID, "commrecloaktime")
+	TransferParamToFeature(featureID, "radarRangeOverride")
+	TransferParamToFeature(featureID, "jammingRangeOverride")
+	TransferParamToFeature(featureID, "comm_jumprange_bonus")
+	TransferParamToFeature(featureID, "comm_jumpreload_bonus")
+	TransferParamToFeature(featureID, "comm_autorepair_rate")
+	TransferParamToFeature(featureID, "commander_healthbonus")
+	TransferParamToFeature(featureID, "comm_jammed")
+	TransferParamToFeature(featureID, "commander_storage_override")
+	TransferParamToFeature(featureID, "wanted_metalIncome")
+	TransferParamToFeature(featureID, "wanted_energyIncome")
+	TransferParamToFeature(featureID, "sightRangeOverride")
+	TransferParamToFeature(featureID, "fireproof")
+	TransferParamToFeature(featureID, "comm_drone_range")
+	TransferParamToFeature(featureID, "carrier_count_dronecon")
+	TransferParamToFeature(featureID, "carrier_count_droneassault")
+	TransferParamToFeature(featureID, "carrier_count_droneheavyslow")
+	TransferParamToFeature(featureID, "carrier_count_drone")
+	if weapon2 then
+		TransferParamToFeature(featureID, weapon2 .. "_sprayangle")
+		TransferParamToFeature(featureID, weapon2 .. "_speed")
+		TransferParamToFeature(featureID, weapon2 .. "_projectilecount_override")
+		TransferParamToFeature(featureID, weapon2 .. "_accuracy")
+		TransferParamToFeature(featureID, weapon2 .. "_updatedburst_count")
+		TransferParamToFeature(featureID, weapon2 .. "_baseburstrate")
+		TransferParamToFeature(featureID, weapon2 .. "_basereload")
+		TransferParamToFeature(featureID, weapon2 .. "_actual_dmgboost")
+	end
+	TransferParamToFeature(featureID, weapon1 .. "_speed")
+	TransferParamToFeature(featureID, weapon1 .. "_projectilecount_override")
+	TransferParamToFeature(featureID, weapon1 .. "_sprayangle")
+	TransferParamToFeature(featureID, weapon1 .. "_accuracy")
+	TransferParamToFeature(featureID, weapon1 .. "_baseburstrate")
+	TransferParamToFeature(featureID, weapon1 .. "_updatedburst_count")
+	TransferParamToFeature(featureID, weapon1 .. "_basereload")
+	TransferParamToFeature(featureID, weapon1 .. "_actual_dmgboost")
+	
+	-- Things tooltips need --
+	TransferParamToFeature(featureID, "commander_owner")
+	
+	-- Set health --
+	Spring.SetFeatureMaxHealth(featureID, maxHealth)
+	Spring.SetFeatureHealth(featureID, maxHealth)
+	-- Things we actually need --
+	TransferParamToFeature(featureID, "comm_extra_drones")
+	TransferParamToFeature(featureID, "comm_drone_buildrate")
+	TransferParamToFeature(featureID, "comm_banner_overhead")
+	TransferParamToFeature(featureID, "comm_texture")
+	TransferParamToFeature(featureID, "comm_profileID")
+	TransferParamToFeature(featureID, "comm_chassis")
+	TransferParamToFeature(featureID, "comm_baseWreckID")
+	TransferParamToFeature(featureID, "comm_baseHeapID")
+	TransferParamToFeature(featureID, "comm_baseUnitDefID")
+	TransferParamToFeature(featureID, "comm_module_count")
+	TransferParamToFeature(featureID, "comm_name")
+	TransferParamToFeature(featureID, "comm_level")
+	TransferParamToFeature(featureID, "comm_cost")
+	TransferParamToFeature(featureID, "massOverride") -- may not be necessary!
+	Spring.SetFeatureMass(featureID, mass)
+	Spring.SetFeatureResources(featureID, cost * 0.4, 0, cost * 0.4, 1.0, cost, cost)
+	for i = 1, moduleCount do
+		local commanderModule = Spring.GetUnitRulesParam(unitID, "comm_module_" .. i)
+		Spring.SetFeatureRulesParam(featureID, "comm_module_" .. i, commanderModule)
+	end
+end
+
 local function SpawnWreck(wreckLevel)
 	local makeRezzable = (wreckLevel == 1)
 	local wreckDef = FeatureDefs[Spring.GetUnitRulesParam(unitID, commWreckUnitRulesParam[wreckLevel])]
-	
 	local x, y, z = Spring.GetUnitPosition(unitID)
 	
 	local vx, vy, vz = Spring.GetUnitVelocity(unitID)
@@ -397,8 +629,11 @@ local function SpawnWreck(wreckLevel)
 		local featureID = Spring.CreateFeature(wreckDef.id, x, y, z, heading, teamID)
 		Spring.SetFeatureVelocity(featureID, vx, vy, vz)
 		if makeRezzable then
-			local baseUnitDefID = Spring.GetUnitRulesParam(unitID, "comm_baseUnitDefID") or unitDefID
-			Spring.SetFeatureResurrect(featureID, UnitDefs[baseUnitDefID].name)
+			--local baseUnitDefID = Spring.GetUnitRulesParam(unitID, "comm_baseUnitDefID") or unitDefID
+			Spring.SetFeatureResurrect(featureID, UnitDefs[Spring.GetUnitDefID(unitID)].name)
+			SetUpFeatureRules(featureID)
+		else
+			SpawnModuleWrecks(2)
 		end
 	end
 end
@@ -415,4 +650,7 @@ return {
 	SpawnModuleWrecks = SpawnModuleWrecks,
 	SpawnWreck        = SpawnWreck,
 	GetOKPConfig      = GetOKP,
+	Explode			  = DoDeathExplosion,
+	SetupSpooling     = SetupSpooling,
+	PriorityAimCheck  = PriorityAimCheck,
 }

@@ -106,10 +106,15 @@ effectUnitDefs = {
 	},
 	
 	striderfunnelweb = {
-		{class='Bursts', options=MergeTable(staticshieldBurstsBig, {piece="emitl", pos={2,14.3,0}, shieldRechargeDelay = tonumber(WeaponDefNames["striderfunnelweb_shield"].customParams.shield_recharge_delay), colormap = { {0.3, 0.3, 1, 0.8} }})},
-		{class='Bursts', options=MergeTable(staticshieldBurstsBig, {piece="emitr", pos={-2,14.3,0}, shieldRechargeDelay = tonumber(WeaponDefNames["striderfunnelweb_shield"].customParams.shield_recharge_delay), colormap = { {0.3, 0.3, 1, 0.8} }})},
-		{class='ShieldSphere', options={piece="emitl", life=math.huge, size=14.5, pos={2,14.3,0}, colormap1 = {{0.1, 0.85, 0.95, 0.9}}, colormap2 = {{0.5, 0.3, 0.95, 0.2}}, rechargingColor1 = {0.95, 0.4, 0.4, 1.0}, rechargingColor2 = {0.95, 0.1, 0.4, 0.2}, shieldRechargeDelay = 30*tonumber(WeaponDefNames["striderfunnelweb_shield"].customParams.shield_recharge_delay), shieldRechargeSize = 7, repeatEffect=true}},
-		{class='ShieldSphere', options={piece="emitr", life=math.huge, size=14.5, pos={-2,14.3,0}, colormap1 = {{0.1, 0.85, 0.95, 0.9}}, colormap2 = {{0.5, 0.3, 0.95, 0.2}}, rechargingColor1 = {0.95, 0.4, 0.4, 1.0}, rechargingColor2 = {0.95, 0.1, 0.4, 0.2}, shieldRechargeDelay = 30*tonumber(WeaponDefNames["striderfunnelweb_shield"].customParams.shield_recharge_delay), shieldRechargeSize = 7, repeatEffect=false}},
+		{class='Bursts', options=MergeTable(staticshieldBurstsBig, {piece="emitl", pos={2,14.3,0}}), colormap = { {0.3, 0.3, 1, 0.8} }},
+		{class='Bursts', options=MergeTable(staticshieldBurstsBig, {piece="emitr", pos={-2,14.3,0}}), colormap = { {0.3, 0.3, 1, 0.8} }},
+		{class='ShieldSphere', options={piece="emitl", life=math.huge, size=14.5, pos={2,14.3,0}, colormap1 = {{0.1, 0.85, 0.95, 0.9}}, colormap2 = {{0.5, 0.3, 0.95, 0.2}}, rechargingColor1 = {0.95, 0.4, 0.4, 1.0}, rechargingColor2 = {0.95, 0.1, 0.4, 0.2}, shieldRechargeSize = 7, repeatEffect=true}},
+		{class='ShieldSphere', options={piece="emitr", life=math.huge, size=14.5, pos={-2,14.3,0}, colormap1 = {{0.1, 0.85, 0.95, 0.9}}, colormap2 = {{0.5, 0.3, 0.95, 0.2}}, rechargingColor1 = {0.95, 0.4, 0.4, 1.0}, rechargingColor2 = {0.95, 0.1, 0.4, 0.2}, shieldRechargeSize = 7, repeatEffect=false}},
+	},
+	
+	staticheavyshield	= {
+		{class='Bursts', options=MergeTable(staticshieldBurstsBig, {piece="wheel", pos={0,95.3,0}}), colormap = { {0.3, 0.3, 1, 0.8} }},
+		{class='ShieldSphere', options={piece="wheel", life=math.huge, size=30.5, pos={0,95.3,0}, colormap1 = {{0.1, 0.85, 0.95, 0.9}}, colormap2 = {{0.5, 0.3, 0.95, 0.2}}, rechargingColor1 = {0.95, 0.4, 0.4, 1.0}, rechargingColor2 = {0.95, 0.1, 0.4, 0.2}, shieldRechargeSize = 15, repeatEffect=false}},
 	},
 
 	--// ENERGY STORAGE //--------------------
@@ -212,11 +217,11 @@ effectUnitDefs = {
 	},
 	
 	striderbantha = {
-	{class='StaticParticles', options=MergeTable(blinkyLightBlue, {piece="light", delay = 20, size = 25}) },
+		{class='StaticParticles', options=MergeTable(blinkyLightBlue, {piece="light", delay = 20, size = 25}) },
 	},
 	
 	striderdetriment = {
-	{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="light", delay = 20, size = 30}) },
+		{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="light", delay = 20, size = 30}) },
 	},
 
 	-- length tag does nothing
@@ -295,16 +300,8 @@ effectUnitDefs = {
 		{class='AirJet', options={color={0.2,0.4,0.8}, width=4, length=30, piece="thrustl", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true, noIconDraw = true}},
 		{class='Ribbon', options={width=1, piece="wingtipl", noIconDraw = true}},
 		{class='Ribbon', options={width=1, piece="wingtipr", noIconDraw = true}},
-	{class='StaticParticles', options=MergeTable(blinkyLightRed, {piece="wingtipl"}) },
-	{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="wingtipr"}) },
-	},
-	bombercluster = {
-		{class='AirJet', options={color={0.2,0.4,0.8}, width=4, length=30, piece="thrustr", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true, noIconDraw = true}},
-		{class='AirJet', options={color={0.2,0.4,0.8}, width=4, length=30, piece="thrustl", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true, noIconDraw = true}},
-		{class='Ribbon', options={width=1, piece="wingtipl", noIconDraw = true}},
-		{class='Ribbon', options={width=1, piece="wingtipr", noIconDraw = true}},
-	{class='StaticParticles', options=MergeTable(blinkyLightRed, {piece="wingtipl"}) },
-	{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="wingtipr"}) },
+		{class='StaticParticles', options=MergeTable(blinkyLightRed, {piece="wingtipl"}) },
+		{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="wingtipr"}) },
 	},
 	planefighter = {
 		{class='AirJet', options={color={0.6,0.1,0.0}, width=3.5, length=55, piece="nozzle1", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true, noIconDraw = true}},
@@ -322,8 +319,8 @@ effectUnitDefs = {
 		{class='AirJet', options={color={0.7,0.3,0.1}, width=5, length=40, piece="exhaust", onActive=true, noIconDraw = true}},
 		{class='Ribbon', options={width=1, piece="wingtipl", noIconDraw = true}},
 		{class='Ribbon', options={width=1, piece="wingtipr", noIconDraw = true}},
-	{class='StaticParticles', options=MergeTable(blinkyLightRed, {piece="wingtipr"}) },
-	{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="wingtipl"}) },
+		{class='StaticParticles', options=MergeTable(blinkyLightRed, {piece="wingtipr"}) },
+		{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="wingtipl"}) },
 	},
 	planeheavyfighter = {
 		-- jets done in gadget
@@ -390,6 +387,16 @@ effectUnitDefs = {
 		--{class='AirJet', options={color={0.6,0.1,0.0}, width=3, length=40, piece="DroneMain", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true}},
 		{class='Ribbon', options={width=1, size=24, piece="DroneMain"}},
 	},
+	droneassault = {
+		{class='AirJet', options={color={0.8,0.1,0.0}, width=5, length=20, jitterWidthScale=2, distortion=0.01, piece="Lwingengine", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true, noIconDraw = true}},
+		{class='AirJet', options={color={0.8,0.1,0.0}, width=5, length=20, jitterWidthScale=2, distortion=0.01, piece="Rwingengine", texture2=":c:bitmaps/gpl/lups/jet2.bmp", onActive=true, noIconDraw = true}},
+	},
+	dronecon = {
+		{class='AirJet', options={color={0.1,0.4,0.6}, width=4, length=25, piece="exhaust1", onActive=true, emitVector = {0, 0, -1}, noIconDraw = true}},
+		{class='AirJet', options={color={0.1,0.4,0.6}, width=4, length=25, piece="exhaust2", onActive=true, emitVector = {0, 0, -1}, noIconDraw = true}},
+		{class='AirJet', options={color={0.1,0.4,0.6}, width=4, length=25, piece="exhaust3", onActive=true, emitVector = {0, 0, -1}, noIconDraw = true}},
+		{class='AirJet', options={color={0.1,0.4,0.6}, width=4, length=25, piece="exhaust4", onActive=true, emitVector = {0, 0, -1}, noIconDraw = true}},
+	 },
  }
 
 effectUnitDefsXmas = {}

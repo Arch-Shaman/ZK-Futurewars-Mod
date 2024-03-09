@@ -2,17 +2,17 @@ local name = "commweapon_napalmgrenade_fragment"
 weaponDef = {
 	name                    = [[Napalm Fragment]],
 	accuracy                = 400,
-	areaOfEffect            = 162,
+	areaOfEffect            = 128,
 	avoidFeature            = false,
-	craterBoost             = 1,
-	craterMult              = 2,
+	craterBoost             = 0,
+	craterMult              = 0,
 	cegTag                  = [[flamer]],
 	customParams              = {
 		setunitsonfire = "1",
 		burntime = 60,
 		area_damage = 1,
-		area_damage_radius = 48,
-		area_damage_dps = 15,
+		area_damage_radius = 64,
+		area_damage_dps = 30,
 		area_damage_duration = 10,
 		--lups_heat_fx = [[firewalker]],
 		light_camera_height = 2500,
@@ -20,7 +20,7 @@ weaponDef = {
 		light_radius = 500,
 	},
 	damage                  = {
-		default = 60,
+		default = 80,
 	},
 
 	explosionGenerator      = [[custom:napalm_firewalker_small]],

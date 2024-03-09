@@ -3,6 +3,8 @@
 -- This table is used in Epicmenu for hotkey management.
 
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
+local extras = VFS.Include("LuaRules/Configs/ammostatecmds.lua")
+local _, info =  VFS.Include("LuaRules/Configs/ammostateinfo.lua")
 
 local custom_cmd_actions = {
 	-- cmdTypes are:
@@ -27,6 +29,7 @@ local custom_cmd_actions = {
 	reclaim = {cmdType = 1, name = "Reclaim"},
 	resurrect = {cmdType = 1, name = "Resurrect"},
 	manualfire = {cmdType = 1, name = "Fire Special Weapon"},
+	airmanualfire = {cmdType = 1, name = "Fire Special Weapon"},
 	loadunits = {cmdType = 1, name = "Load Units"},
 	unloadunits = {cmdType = 1, name = "Unload Units"},
 	areaattack = {cmdType = 1, name = "Area Attack"},
@@ -49,6 +52,7 @@ local custom_cmd_actions = {
 	excludeairpad = {cmdType = 1, name = "Exclude an Airpad"},
 	--build = {cmdType = 1, name = "--build"},
 	areamex = {cmdType = 1, name = "Area Mex"},
+	areaterramex = {cmdType = 1, name = "Area Terra Mex"},
 	mine = {cmdType = 1, name = "Mine"},
 	build = {cmdType = 1, name = "Build"},
 	jump = {cmdType = 1, name = "Jump"},
@@ -91,9 +95,12 @@ local custom_cmd_actions = {
 
 	--states
 --	stealth = {cmdType = 2, name = "stealth"}, --no longer applicable
+	firecycle =         {cmdType = 2, cmdID = CMD_FIRECYCLE, name = "Firecycle", states = {'Off', 'On'}},
 	cloak_shield =      {cmdType = 2, cmdID = CMD_CLOAK_SHIELD, name = "Area Cloaker", states = {'Off', 'On'}},
 	retreat =           {cmdType = 2, cmdID = CMD_RETREAT, name = "Retreat Threshold", states = {'Off', '30%', '65%', '99%'}, actionOverride = {'cancelretreat'}},
 	retreatshield =     {cmdType = 2, cmdID = CMD_RETREATSHIELD, name = "Retreat Shield Threshold", states = {'Off', '30%', '50%', '80%'}, actionOverride = {'cancelretreat'}},
+	autojump =          {cmdType = 2, cmdID = CMD_AUTOJUMP, name = "Autojump", states = {'off', 'on'}},
+	overreclaim =       {cmdType = 2, cmdID = CMD_OVERRECLAIM, name = "Overreclaim Prevention", states = {'On', 'Off'}},
 	['luaui noretreat'] = {cmdType = 2, name = "luaui noretreat"},
 	priority =          {cmdType = 2, cmdID = CMD_PRIORITY, name = "Construction Priority", states = {'Low', 'Normal', 'High'}},
 	miscpriority =      {cmdType = 2, cmdID = CMD_MISC_PRIORITY, name = "Misc. Priority", states = {'Low', 'Normal', 'High'}},
@@ -104,6 +111,7 @@ local custom_cmd_actions = {
 	antinukezone =      {cmdType = 2, name = "Ceasefire Antinuke Zone", states = {'Off', 'On'}},
 	unitai =            {cmdType = 2, cmdID = CMD_UNIT_AI, name = "Unit AI", states = {'Off', 'On'}},
 	selection_rank =    {cmdType = 2, name = "Selection Rank", states = {'0', '1', '2', '3'}},
+	formation_rank =    {cmdType = 2, name = "Formation Rank", states = {'0', '1', '2', '3'}},
 	autocalltransport = {cmdType = 2, name = "Auto Call Transport", states = {'Off', 'On'}},
 	unit_kill_subordinates = {cmdType = 2, cmdID = CMD_UNIT_KILL_SUBORDINATES, name = "Dominatrix Kill", states = {'Off', 'On'}},
 	goostate =     {cmdType = 2, cmdID = CMD_GOO_GATHER, name = "Goo State", states = {'Off', 'When uncloaked', 'On'}},
@@ -149,6 +157,7 @@ local usedActions = {
 	["wantonoff"] = true,
 	["miscpriority"] = true,
 	["manualfire"] = true,
+	["airmanualfire"] = true,
 	["repair"] = true,
 	["reclaim"] = true,
 	["areamex"] = true,
@@ -193,16 +202,26 @@ local usedActions = {
 	["setfirezone"] = true,
 	["cancelfirezone"] = true,
 	["selection_rank"] = true,
+	["formation_rank"] = true,
 	["pushpull"] = true,
 	["unit_kill_subordinates"] = true,
 	["goostate"] = true,
+	["firecycle"] = true,
 
 	-- These actions are used, just not by selecting everything with default UI
 	["globalbuild"] = true,
 	["upgradecommstop"] = true,
 	["autoeco"] = true,
 	["evacuate"] = true,
+	["ammo"] = true,
 }
+
+for name, id in pairs(extras) do
+	custom_cmd_actions[name] = {cmdType = 2, cmdID = id, name = "Ammo Selection", states = {}}
+	for i = 1, #info[id].stateDesc do
+		custom_cmd_actions[name].states[i] = info[id].stateTooltip
+	end
+end
 
 -- Clear unused actions.
 for name,_ in pairs(custom_cmd_actions) do

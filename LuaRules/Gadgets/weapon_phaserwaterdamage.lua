@@ -1,3 +1,6 @@
+if not (gadgetHandler:IsSyncedCode()) then
+	return false
+end
 
 function gadget:GetInfo()
   return {
@@ -26,7 +29,7 @@ local sqrt = math.sqrt
 local min = math.min
 local abs = math.abs
 
-function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam, projectileID)
 	if config[weaponDefID] then
 		local _, depth = spGetUnitPosition(unitID)
 		if depth >= -10 then

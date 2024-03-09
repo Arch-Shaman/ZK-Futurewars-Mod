@@ -6,29 +6,57 @@ local base, turret, breech, barrel2, flare = piece("base", "turret", "breech", "
 -- unused piece: barrel1
 local smokePiece = {base, turret}
 
+local turnrate = math.rad(33.2)
+
 local delay = {}
 for i=1, #UnitDef.weapons do
-  delay[i] = WeaponDefs[UnitDef.weapons[i].weaponDef].customParams.aimdelay
+	delay[i] = WeaponDefs[UnitDef.weapons[i].weaponDef].customParams.aimdelay
 end
+
+local reloading = false
 
 -- Signal definitions
 local SIG_AIM = 1
 
+function ReloadWatcher()
+	local reloadFrame, frame
+	while true do
+		Sleep(33)
+		frame = Spring.GetGameFrame()
+		_, _, reloadFrame = Spring.GetUnitWeaponState(unitID, 1)
+		if reloadFrame and reloadFrame > frame then
+			reloading = true
+			GG.AimDelay_ForceWeaponRestart(unitID, 1)
+		else
+			reloading = false
+		end
+	end
+end
+
 function script.AimWeapon(num, heading, pitch)
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
-	Turn(turret, y_axis, heading, math.rad(80))
-	Turn(breech, x_axis, 0 - pitch, math.rad(60))
+	if (spGetUnitRulesParam(unitID, "lowpower") ~= 0) then --checks for sufficient energy in grid
+		return false
+	end
+	Turn(turret, y_axis, heading, turnrate)
+	Turn(breech, x_axis, 0 - pitch, turnrate)
 	WaitForTurn(breech, x_axis)
 	WaitForTurn(turret, y_axis)
-	if (spGetUnitRulesParam(unitID, "lowpower") ~= 0) then --checks for sufficient energy in grid
-    return false
-  end
-
-  return GG.AimDelay_AttemptToFire(unitID, num, heading, pitch, delay[num])
+	if num == 2 then return false end
+	if reloading then
+		return false
+	else
+		return GG.AimDelay_AttemptToFire(unitID, num, heading, pitch, delay[num])
+	end
 end
 
 function script.AimFromWeapon(num) return breech end
+
+function script.BlockShot(num, targetID)
+	if num == 2 then return true end
+	return (targetID and GG.DontFireRadar_CheckBlock(unitID, targetID)) or false
+end
 
 function script.QueryWeapon(num)
 	return flare
@@ -38,11 +66,12 @@ local function Recoil()
 	EmitSfx(flare, 1024)
 	Move(barrel2, z_axis, -6)
 	Sleep(300)
-	Move(barrel2, z_axis, 0, 4)
+	Move(barrel2, z_axis, 0, 1.5)
 end
 
 function script.Shot(num)
 	StartThread(Recoil)
+	GG.AimDelay_ForceWeaponRestart(unitID, 1)
 end
 
 function script.Create()

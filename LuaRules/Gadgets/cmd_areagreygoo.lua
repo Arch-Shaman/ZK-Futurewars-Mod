@@ -1,3 +1,8 @@
+if (not gadgetHandler:IsSyncedCode()) then
+	return
+end
+
+
 function gadget:GetInfo()
 	return {
 		name      = "Area Grey Goo Handler",
@@ -8,10 +13,6 @@ function gadget:GetInfo()
 		layer     = 5,
 		enabled   = true,
 	}
-end
-
-if (not gadgetHandler:IsSyncedCode()) then
-	return
 end
 
 include("LuaRules/Configs/customcmds.h.lua")

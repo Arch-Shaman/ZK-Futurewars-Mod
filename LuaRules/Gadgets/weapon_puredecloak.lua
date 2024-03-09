@@ -1,3 +1,7 @@
+if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Pure Decloak",
@@ -15,20 +19,22 @@ end
 ALL DECLOAK DAMAGE MUST BE 1 FOR THIS TO WORK.
 ]]
 
-if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
-	return
-end
-
 local config = {}
+local watchWeapons = {}
 for i = 1, #WeaponDefs do
 	if WeaponDefs[i].customParams and WeaponDefs[i].customParams.puredecloaktime then
 		config[i] = tonumber(WeaponDefs[i].customParams.puredecloaktime)
+		watchWeapons[#watchWeapons + 1] = i
 	end
 end
 
-function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam, projectileID)
 	if config[weaponDefID] and damage > 0 then
 		GG.BlockCloakForUnit(unitID, config[weaponDefID] * damage)
-		return 0, 0
+		return damage, 1
 	end
+end
+
+function gadget:UnitPreDamaged_GetWantedWeaponDef() -- only do certain weapons.
+	return watchWeapons
 end

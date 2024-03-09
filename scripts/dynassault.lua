@@ -76,6 +76,8 @@ local TORSO_SPEED_MOTION = math.rad(7)*PACE
 
 local RESTORE_DELAY = 2500
 local okpconfig
+local priorityAim = false
+local priorityAimNum = 0
 
 --------------------------------------------------------------------------------
 -- vars
@@ -103,6 +105,13 @@ local function GetOKP()
 	if okpconfig[1].useokp or okpconfig[2].useokp then
 		GG.OverkillPrevention_ForceAdd(unitID)
 	end
+end
+
+local function StartPriorityAim(num)
+	priorityAim = true
+	priorityAimNum = num
+	Sleep(5000)
+	priorityAim = false
 end
 
 
@@ -274,14 +283,33 @@ end
 
 function script.AimWeapon(num, heading, pitch)
 	local weaponNum = dyncomm.GetWeapon(num)
+	if weaponNum == 3 then
+		return true
+	end
 	GG.DontFireRadar_CheckAim(unitID)
+	if priorityAim and weaponNum ~= priorityAimNum then
+		return false
+	end
+	if weaponNum and dyncomm.IsManualFire(num) and not priorityAim and dyncomm.PriorityAimCheck(num) then
+		StartThread(StartPriorityAim, weaponNum)
+		if weaponNum == 1 then
+			Signal(SIG_DGUN)
+		else
+			Signal(SIG_LASER)
+		end
+	end
 	if weaponNum == 1 then
 		Signal(SIG_LASER)
 		SetSignalMask(SIG_LASER)
 		isLasering = true
-		Turn(rarm, x_axis, math.rad(0) -pitch, ARM_SPEED_PITCH)
+		if pitch > math.rad(-45) then
+			Turn(rarm, x_axis, -pitch, ARM_SPEED_PITCH)
+			Turn(rhand, x_axis, math.rad(0), ARM_SPEED_PITCH)
+		else
+			Turn(rarm, x_axis, -math.rad(18), ARM_SPEED_PITCH)
+			Turn(rhand, x_axis, math.rad(18) -pitch, ARM_SPEED_PITCH)
+		end
 		Turn(torso, y_axis, heading, TORSO_SPEED_YAW)
-		Turn(rhand, x_axis, math.rad(0), ARM_SPEED_PITCH)
 		WaitForTurn(torso, y_axis)
 		WaitForTurn(rarm, x_axis)
 		StartThread(RestoreLaser)
@@ -293,14 +321,19 @@ function script.AimWeapon(num, heading, pitch)
 		Signal(SIG_DGUN)
 		SetSignalMask(SIG_DGUN)
 		isDgunning = true
-		Turn(larm, x_axis, math.rad(0) -pitch, ARM_SPEED_PITCH)
+		if pitch > math.rad(-45) then
+			Turn(larm, x_axis, -pitch, ARM_SPEED_PITCH)
+			Turn(lnanohand, x_axis, math.rad(0), ARM_SPEED_PITCH)
+		else
+			Turn(larm, x_axis, -math.rad(18), ARM_SPEED_PITCH)
+			Turn(lnanohand, x_axis, math.rad(18) -pitch, ARM_SPEED_PITCH)
+		end
+		--Turn(larm, x_axis, math.min(math.rad(-18), -pitch), ARM_SPEED_PITCH)
+		--Turn(lnanohand, x_axis, math.max(0, math.rad(18) -pitch), ARM_SPEED_PITCH)
 		Turn(torso, y_axis, heading, TORSO_SPEED_YAW)
-		Turn(lnanohand, x_axis, math.rad(0), ARM_SPEED_PITCH)
 		WaitForTurn(torso, y_axis)
-		WaitForTurn(rarm, x_axis)
+		WaitForTurn(lnanohand, x_axis)
 		StartThread(RestoreDGun)
-		return true
-	elseif weaponNum == 3 then
 		return true
 	end
 	return false
@@ -312,6 +345,9 @@ function script.FireWeapon(num)
 		dyncomm.EmitWeaponFireSfx(rcannon_flare, num)
 	elseif weaponNum == 2 then
 		dyncomm.EmitWeaponFireSfx(lcannon_flare, num)
+	end
+	if dyncomm.IsManualFire(num) then
+		priorityAim = false
 	end
 end
 
@@ -377,31 +413,21 @@ end
 
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
-	if severity < 0.5 then
-		Explode(torso, SFX.NONE)
-		Explode(larm, SFX.NONE)
-		Explode(rarm, SFX.NONE)
-		Explode(pelvis, SFX.NONE)
-		Explode(lupleg, SFX.NONE)
-		Explode(rupleg, SFX.NONE)
-		Explode(lnanoflare, SFX.NONE)
-		Explode(rhand, SFX.NONE)
-		Explode(lleg, SFX.NONE)
-		Explode(rleg, SFX.NONE)
-		dyncomm.SpawnModuleWrecks(1)
+	local x, y, z = Spring.GetUnitPosition(unitID)
+	local assetDenialSystemActivated = dyncomm.Explode(x, y, z)
+	local explodables = {[1] = torso, [2] = larm, [3] = rarm, [4] = pelvis, [5] = lupleg, [6] = rupleg, [7] = lnanoflare, [8] = rhand, [9] = lleg, [10] = rleg}
+	local flags = SFX.SMOKE + SFX.FIRE + SFX.EXPLODE
+	if assetDenialSystemActivated then
+		for i = 1, #explodables do
+			Explode(explodables[i], flags)
+		end
+	elseif severity < 0.5 then
 		dyncomm.SpawnWreck(1)
 	else
 		Explode(torso, SFX.SHATTER)
-		Explode(larm, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(rarm, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(pelvis, SFX.SHATTER)
-		Explode(lupleg, SFX.SHATTER)
-		Explode(rupleg, SFX.SHATTER)
-		Explode(lnanoflare, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(rhand, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(lleg, SFX.SHATTER)
-		Explode(rleg, SFX.SHATTER)
-		dyncomm.SpawnModuleWrecks(2)
+		for i = 2, #explodables do
+			Explode(explodables[i], flags)
+		end
 		dyncomm.SpawnWreck(2)
 	end
 end

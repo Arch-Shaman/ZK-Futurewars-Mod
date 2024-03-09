@@ -1,3 +1,7 @@
+if (not gadgetHandler:IsSyncedCode()) then
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Commander Upgrade",
@@ -8,14 +12,6 @@ function gadget:GetInfo()
 		layer     = 1,
 		enabled   = true  --  loaded by default?
 	}
-end
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
---SYNCED
-if (not gadgetHandler:IsSyncedCode()) then
-	return
 end
 
 include("LuaRules/Configs/constants.lua")
@@ -35,10 +31,21 @@ local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spSetUnitHealth = Spring.SetUnitHealth
 local spSetUnitCloak = Spring.SetUnitCloak
+local spSetUnitMass = Spring.SetUnitMass
 local spRemoveUnitCmdDesc = Spring.RemoveUnitCmdDesc
 local spSetUnitStealth = Spring.SetUnitStealth
 local spGetUnitHealth = Spring.GetUnitHealth
 local zombies = false
+
+local defaultProfiles = {
+	[1] = "dyntrainer_strike",
+	[2] = "dyntrainer_recon",
+	[3] = "dyntrainer_support",
+	[4] = "dyntrainer_assault",
+	[5] = "dyntrainer_riot",
+	[6] = "dyntrainer_support", -- Probably bad!
+	[7] = "dyntrainer_riot",
+}
 
 do
 	local modoptions = Spring.GetModOptions()
@@ -54,25 +61,75 @@ include("LuaRules/Configs/customcmds.h.lua")
 -- Various module configs
 
 local names = {
-	"Moi Maailma",
-	"FFC Doesn't Like Me",
-	"FRIENDLIES OVER HERE",
+	-- Original Series --
+	"Moi Maailma", -- "Hello world" in Finnish?
+	"FRIENDLIES OVER HERE", -- XCOM meme
 	"I Use Hacks",
-	"SHIELD NOOB",
+	"SHIELD NOOB", -- ZK reference
 	"Dgun Me Harder",
-	"Van Doorn",
-	"GODMODE USER",
-	"ONE NEAT TRICK TO KILL ALL COMMS",
-	"I AM ERROR",
+	"Van Doorn", -- XCOM meme
+	"ONE WEIRD TRICK TO KILL ALL COMMS", -- Clickbait reference
+	"I AM ERROR", -- Legend of Zelda
 	"Debug THIS",
 	"Self-Ds when lost",
 	"NOT SUSPICIOUS AT ALL",
-	"WTB Dgun",
-	"Dgun Not Included",
-	"I have range hacks",
-	"Query Failed: Couldn't Load Name",
+	"WTB Dgun", -- ZK
+	"Dgun Not Included", -- ZK
+	"Query Failed: Couldn't Load Name", -- Programming humor
 	"Ol' Reliable (Not Reliable)",
 	"Explosive Contents",
+	"Lappi Gaming", -- Ehal45 reference
+	"Moikka Mikael",
+	-- Civilization memes (suggested by someone I forgot, sorri) --
+	"No More Mr Nice Guy",
+	"God Told Me To Do It", 
+	"What Are the Civilian Applications?", 
+	"Attitude Adjuster", 
+	"Appeal To Reason", 
+	"Lapsed Pacifist", 
+	"Reformed Nice Guy",
+	-- Other --
+	"Loot Loot Inside", -- terve meme. :P
+	"Strength of Sea Sweden", -- Shaman meme
+	"Probably a Riot Commander",
+	"Volatile Storage",
+	"Ghost of Kyiv", -- Ukraine conflict
+	"Unreliable Enemy Explosion Generator",
+	"That's Future Wars!",
+	"Zero Point",
+	"Scourge of Pootis",
+	"Conviction Tester",
+	"Born Again in Fire",
+	"Cursed with the Curse of being Cursed",
+	"Missing key 'CommName' in 'CommTable'", -- Unity Localization reference
+	"Earth's Resolution",
+	"Buy me for only 4928 credits!", -- Poking fun at space capitalism.
+	"Hazy_uhyR's Plight", -- Just because I want to.
+	"Emperor's Guard",
+	-- other, volume 2 --
+	"Legendary GhostFenixx", -- GhostFenixx collected all the versions!
+	"I didn't die, it was selfd!",
+	"Traitor Coffee", -- Shaman Meme
+	"Surprise Base Trader",
+	"Bomb disguised as a Comm",
+	"Im not Oppressive, just uncounterable!",
+	"Mudosaka's Murder Machine",
+	"Buzzing Bees, Deadly Drones!",
+	"Explosive Enforcer",
+	-- Shamelessly stolen from Users --
+	"Ukraine BM", -- User: Ukraine
+	"ICE COLD BUT HOT", -- User: Ukraine
+	"StrikeFreedom", -- User: vesves
+	"Yeye", -- User: Yeye77
+	"TEDIOUS SCROLLING", -- User: Kapy
+	"THE INEVITABLE END", -- User: Kapy
+	"Borek the Builder", -- User: Silent_AI
+	"I dont like me", -- User: Kingstad
+	"Kingstad hates him", -- User: Pootis
+	"Important Commander", -- User: Hazy_uhyR
+	"Condola", -- User: terve886
+	"DLR", -- User: terve886
+	
 }
 
 local zombienames = {
@@ -116,9 +173,17 @@ local defaultweapon = {
 	[1] = "commweapon_heavyrifle", -- strike
 	[2] = "commweapon_heatray", -- recon
 	[3] = "commweapon_beamlaser", -- support
-	[4] = "commweapon_canistercannon", -- bombard
-	[5] = "commweapon_beamlaser", -- knight
-	[6] = "commweapon_canistercannon", -- presumably battle comm at some point
+	[4] = "commweapon_rocketbarrage", -- bombard
+	[5] = "commweapon_heavymachinegun", -- riot
+	[6] = "commweapon_beamlaser", -- knight (presumably?)
+	[7] = "commweapon_heavymachinegun", -- riot?
+}
+
+local detpacktable = {
+	[0] = "commexplosion_default",
+	[1] = "commexplosion_boom",
+	[2] = "commexplosion_biggaboom",
+	[3] = "commexplosion_nuclear",
 }
 
 local defaultaddons = {
@@ -146,10 +211,14 @@ local defaultaddons = {
 	-- riot? --
 	[6] = {
 		"module_radarnet",
-	},	
+	},
+	[7] = {
+		"module_radarnet",
+	},
 }
 
 local function GetCommanderChassisDefaultWeapon(type)
+	--Spring.Echo(type)
 	return defaultweapon[type]
 end
 
@@ -197,19 +266,44 @@ local moduleSlotTypeMap = {
 	adv_weapon = "module",
 }
 
+local spUnitScript = Spring.UnitScript -- CallAsUnit can't be localized directly because a later-layered gadget modifies it
+local function CallAsUnitIfExists(unitID, func, ...)
+	if func then
+		spUnitScript.CallAsUnit(unitID, func, ...)
+	end
+end
+
+
 local function SetUnitRulesModule(unitID, counts, moduleDefID)
 	local slotType = moduleSlotTypeMap[moduleDefs[moduleDefID].slotType]
 	counts[slotType] = counts[slotType] + 1
 	spSetUnitRulesParam(unitID, "comm_" .. slotType .. "_" .. counts[slotType], moduleDefID, INLOS)
 end
 
+local function SetModuleCounts(unitID) -- used by some dynamic comm LUS.
+	local modules = {}
+	local count = spGetUnitRulesParam(unitID, "comm_module_count")
+	if count > 0 then
+		for i = 1, count do
+			local moduleID = Spring.GetUnitRulesParam(unitID, "comm_module_" .. i)
+			modules[moduleID] = (modules[moduleID] or 0) + 1
+		end
+		for moduleID, moduleCount in pairs(modules) do
+			local name = moduleDefs[moduleID].name
+			spSetUnitRulesParam(unitID, name .. "_count", moduleCount, INLOS)
+		end
+	end
+end
+	
+
 local function SetUnitRulesModuleCounts(unitID, counts)
 	for name, value in pairs(counts) do
 		spSetUnitRulesParam(unitID, "comm_" .. name .. "_count", value, INLOS)
 	end
+	SetModuleCounts(unitID)
 end
 
-local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, damageMult, chassis)
+local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, damageMult, chassis, extraWeaponInfo)
 	if (not weapon2) and weapon1 then
 		local unitDefID = spGetUnitDefID(unitID)
 		local weaponName = "0_" .. weapon1
@@ -234,17 +328,31 @@ local function ApplyWeaponData(unitID, weapon1, weapon2, shield, rangeMult, dama
 	damageMult = damageMult or spGetUnitRulesParam(unitID, "comm_damage_mult") or 1
 	spSetUnitRulesParam(unitID, "comm_damage_mult", damageMult,  INLOS)
 	
+	local env = Spring.UnitScript.GetScriptEnv(unitID) or {}
+	CallAsUnitIfExists(unitID, env.dyncomm.UpdateWeapons, weapon1, weapon2, shield, rangeMult, damageMult, extraWeaponInfo)
+end
+
+local function StartReconPulse(unitID)
 	local env = Spring.UnitScript.GetScriptEnv(unitID)
-	Spring.UnitScript.CallAsUnit(unitID, env.dyncomm.UpdateWeapons, weapon1, weapon2, shield, rangeMult, damageMult)
+	if env then
+		Spring.UnitScript.CallAsUnit(unitID, env.StartReconPulse)
+	end
 end
 
 local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	local ud = UnitDefs[spGetUnitDefID(unitID)]
 	spSetUnitRulesParam(unitID, "resurrectableCommander", 1, INLOS)
 	-- Update ApplyModuleEffectsFromUnitRulesParams if any non-unitRulesParams changes are made.
-	if data.speedMod then
-		local speedMult = (data.speedMod + ud.speed)/ud.speed
+	if data.speedMod or data.speedMalus then
+		local speedMalus = ((data.speedMalus or 0) * (data.malusMult or 1))
+		local speedBonus = data.speedMod or 0
+		local finalSpeed = speedBonus + ud.speed - speedMalus
+		local speedMult = finalSpeed/ud.speed
 		spSetUnitRulesParam(unitID, "upgradesSpeedMult", speedMult, INLOS)
+	end
+	if data.reconPulse then
+		spSetUnitRulesParam(unitID, "commander_reconpulse", 1, INLOS)
+		StartReconPulse(unitID)
 	end
 	if data.cloakregen then
 		GG.AddCloakRegenOverride(unitID, data.cloakregen)
@@ -272,6 +380,10 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 			spRemoveUnitCmdDesc(unitID, onOffCmd)
 		end
 	end
+	if data.fireproof then
+		spSetUnitRulesParam(unitID, "fireproof", 1, INLOS)
+		GG.MakeUnitFireproof(unitID)
+	end
 	if data.sightrangebonus then
 		spSetUnitRulesParam(unitID, "sightBonus", data.sightrangebonus, INLOS)
 	end
@@ -291,6 +403,22 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 		spSetUnitRulesParam(unitID, "comm_area_cloak", 1, INLOS)
 		spSetUnitRulesParam(unitID, "comm_area_cloak_upkeep", data.cloakFieldUpkeep, INLOS)
 		spSetUnitRulesParam(unitID, "comm_area_cloak_radius", data.cloakFieldRange, INLOS)
+	end
+	if data.extradroneslots then
+		spSetUnitRulesParam(unitID, "comm_extra_drones", data.extradroneslots, INLOS)
+	end
+	if data.dronebuildmod then
+		spSetUnitRulesParam(unitID, "comm_drone_buildrate", data.dronebuildmod, INLOS)
+	end
+	if data.dronereloadtime then
+		spSetUnitRulesParam(unitID, "comm_drone_rebuildrate", data.dronereloadtime, INLOS)
+	end
+	if data.dronerange then
+		spSetUnitRulesParam(unitID, "comm_drone_range", data.dronerange, INLOS)
+	end
+	
+	if data.nanoregen and data.nanomax then
+		GG.NanoRegen.AddUnit(unitID, data.nanoregen, data.nanomax)
 	end
 	
 	local buildPowerMult = ((data.bonusBuildPower or 0) + ud.buildSpeed)/ud.buildSpeed
@@ -318,9 +446,10 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	if data.healthBonus then
 		local health, maxHealth = spGetUnitHealth(unitID)
 		local newHealth = math.max(health + data.healthBonus, 1)
-		local newMaxHealth = math.max(maxHealth + data.healthBonus, 1)
+		local newMaxHealth = math.max(maxHealth + data.healthBonus, 100)
 		spSetUnitHealth(unitID, newHealth)
 		Spring.SetUnitMaxHealth(unitID, newMaxHealth)
+		Spring.SetUnitRulesParam(unitID, "commander_healthbonus", healthBonus, INLOS)
 	end
 	
 	if data.skinOverride then
@@ -331,12 +460,18 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 		spSetUnitRulesParam(unitID, "comm_banner_overhead", images.overhead or "fakeunit", INLOS)
 	end
 	
-	if data.drones or data.droneheavyslows then
+	if data.drones or data.droneheavyslows or data.dronecon or data.droneassault then
 		if data.drones then
 			spSetUnitRulesParam(unitID, "carrier_count_drone", data.drones, INLOS)
 		end
 		if data.droneheavyslows then
 			spSetUnitRulesParam(unitID, "carrier_count_droneheavyslow", data.droneheavyslows, INLOS)
+		end
+		if data.dronecon then
+			spSetUnitRulesParam(unitID, "carrier_count_dronecon", data.dronecon, INLOS)
+		end
+		if data.droneassault then
+			spSetUnitRulesParam(unitID, "carrier_count_droneassault", data.droneassault, INLOS)
 		end
 		if GG.Drones_InitializeDynamicCarrier then
 			GG.Drones_InitializeDynamicCarrier(unitID)
@@ -353,11 +488,48 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	local _, maxHealth = spGetUnitHealth(unitID)
 	local effectiveMass = (((totalCost/2) + (maxHealth/8))^0.6)*6.5
 	spSetUnitRulesParam(unitID, "massOverride", effectiveMass, INLOS)
-	
-	ApplyWeaponData(unitID, data.weapon1, data.weapon2, data.shield, data.rangeMult, data.damageMult, chassis)
+	spSetUnitMass(unitID, effectiveMass)
+	-- Peaceful Wind --
+	local detpack = data.detpacklv or 0
+	spSetUnitRulesParam(unitID, "comm_deathexplosion", detpacktable[detpack], INLOS)
+	local extraWeaponInfo = {
+		[1] = {
+			damageBoost = data.damageBooster1 or 0,
+			burstOverride = data.burstOverride1,
+			burstRateOverride = data.burstRateOverride1,
+			accuracyOverride = data.accuracyOverride1,
+			accuracyBonus = (data.accuracyMult or 1) + (data.accuracyBonus1 or 0),
+			reloadBonus = (data.reloadBonus or 0) + (data.reloadBonus1 or 0),
+			reloadOverride = data.reloadOverride1,
+			projectileOverride = data.projectileOverride1,
+			projectileBonus = data.projectileBonus1 or 0,
+			projectileSpeedBonus = data.projectileSpeedBonus1 or 1,
+			sprayAngleOverride = data.sprayAngleOverride1,
+			sprayAngleBonus = data.sprayAngleBonus1,
+			rangeOverride = data.rangeoverride1,
+		},
+		[2] = {
+			damageBoost = data.damageBooster2 or 0,
+			burstOverride = data.burstOverride2,
+			burstRateOverride = data.burstRateOverride2,
+			accuracyOverride = data.accuracyOverride2,
+			accuracyBonus = (data.accuracyMult or 1) + (data.accuracyBonus2 or 0),
+			reloadBonus = (data.reloadBonus or 0) + (data.reloadBonus2 or 0),
+			reloadOverride = data.reloadOverride2,
+			projectileOverride = data.projectileOverride2,
+			projectileBonus = data.projectileBonus2 or 0,
+			projectileSpeedBonus = data.projectileSpeedBonus2 or 1,
+			sprayAngleOverride = data.sprayAngleOverride2,
+			sprayAngleBonus = data.sprayAngleBonus2,
+			rangeOverride = data.rangeoverride2,
+		},
+	}
+	ApplyWeaponData(unitID, data.weapon1, data.weapon2, data.shield, data.rangeMult, data.damageMult, chassis, extraWeaponInfo)
 	
 	-- Do this all the time as it will be needed almost always.
 	GG.UpdateUnitAttributes(unitID)
+	local env = Spring.UnitScript.GetScriptEnv(unitID) or {}
+	CallAsUnitIfExists(unitID, env.OnMorphComplete) -- tell LUS we've upgraded apparently.
 end
 
 local function ApplyModuleEffectsFromUnitRulesParams(unitID)
@@ -409,19 +581,40 @@ local function GetModuleEffectsData(moduleList, level, chassis)
 		end
 	end
 	
-	local levelFunction = chassisDefs[chassis or 1].levelDefs[math.min(chassisDefs[chassis or 1].maxNormalLevel, level or 1)].chassisApplicationFunction
-	if levelFunction then
-		levelFunction(moduleByDefID, moduleEffectData)
+	-- Apply the magical free benefits of level-up
+	-- Note that level is here 1 less than the value that is shown to the player
+	if chassis ~= nil and level ~= nil then    -- paranoid variable checking, similar to the original code
+		local levelFunction = chassisDefs[chassis].chassisApplicationFunction
+		if levelFunction then
+			levelFunction(level, moduleByDefID, moduleEffectData)
+		end
 	end
 	
 	return moduleEffectData
+end
+
+local function IsModuleUnique(moduleList, moduleName)
+	local id = moduleDefNames[moduleName]
+	local ret = true
+	if #moduleList == 0 then
+		return true
+	end
+	for i = 1, #moduleList do
+		if moduleList[i] == id then
+			ret = false
+			break
+		end
+	end
+	return ret
 end
 
 local function AddAddons(moduleList, chassis)
 	moduleList = moduleList or {}
 	local addons = defaultaddons[chassis]
 	for _, v in pairs(addons) do
-		moduleList[#moduleList + 1] = moduleDefNames[v]
+		if IsModuleUnique(moduleList, v) then
+			moduleList[#moduleList + 1] = moduleDefNames[v]
+		end
 	end
 	return moduleList
 end
@@ -430,12 +623,10 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 	-- This function sets the UnitRulesParams and updates the unit attributes after
 	-- a commander has been created. This can either happen internally due to a request
 	-- to spawn a commander or with rezz/construction/spawning.
-	if level == 0 or staticLevel then
+	if (level == 0 or staticLevel) then
 		moduleList = AddAddons(moduleList, chassis)
 	end
-	if not moduleEffectData then
-		moduleEffectData = GetModuleEffectsData(moduleList, level, chassis)
-	end
+	moduleEffectData = GetModuleEffectsData(moduleList, level, chassis)
 	if level == 1 and not moduleEffectData.weapon1 then
 		local default = GetCommanderChassisDefaultWeapon(chassis)
 		moduleList[#moduleList + 1] = moduleDefNames[default]
@@ -457,6 +648,9 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 	spSetUnitRulesParam(unitID, "comm_baseHeapID",    baseHeapID, INLOS)
 	spSetUnitRulesParam(unitID, "commander_storage_override", 500, INLOS)
 	if profileID then
+		spSetUnitRulesParam(unitID, "comm_profileID",     profileID, INLOS)
+	else -- we need the default profileIDs.
+		profileID = defaultProfiles[chassis]
 		spSetUnitRulesParam(unitID, "comm_profileID",     profileID, INLOS)
 	end
 	
@@ -531,6 +725,12 @@ local function Upgrades_CreateUpgradedUnit(defName, x, y, z, face, unitTeam, isB
 	internalCreationModuleEffectData = moduleEffectData
 	
 	local unitID = Spring.CreateUnit(defName, x, y, z, face, unitTeam, isBeingBuilt)
+	if not unitID then
+		Spring.Echo("game_message: [unit_commander_upgrade] Warning: Upgraded unit NOT created successfully.\nTHIS MAY RESULT IN BUGS.\nDefname, teamID ", defName, unitTeam)
+		Spring.MarkerAddPoint(x, y, z, "This unit did not morph correctly!", true)
+		return false
+	end
+	
 	if moduleEffectData.wantsfireatradar then
 		GG.AddUnitRadarTargeting(unitID)
 	end
@@ -547,10 +747,6 @@ local function Upgrades_CreateUpgradedUnit(defName, x, y, z, face, unitTeam, isB
 	unitCreatedJammingRange = nil
 	unitCreatedCloakShield = nil
 	unitCreatedWeaponNums = nil
-	
-	if not unitID then
-		return false
-	end
 	
 	return unitID
 end
@@ -614,9 +810,9 @@ local function Upgrades_CreateStarterDyncomm(dyncommID, x, y, z, facing, teamID,
 	
 	local moduleList = {moduleDefNames.econ}
 	local addons = defaultaddons[chassisDefID]
-	for _, v in pairs(addons) do
-		moduleList[#moduleList + 1] = moduleDefNames[v]
-	end
+	--for _, v in pairs(addons) do
+		--moduleList[#moduleList + 1] = moduleDefNames[v]
+	--end
 	local moduleCost = 0
 	for i = 1, #moduleList do
 		moduleCost = moduleCost + moduleDefs[moduleList[i]].cost
@@ -665,9 +861,95 @@ local function GetRandomZombieName()
 	end
 end
 
-function gadget:UnitCreated(unitID, unitDefID, unitTeam)
+local function TransferParamFromFeature(featureID, unitID, param)
+	spSetUnitRulesParam(unitID, param, Spring.GetFeatureRulesParam(featureID, param), INLOS)
+end
+
+local function GetCommanderInfoFromWreck(featureID, unitID)
+	local modules = {}
+	local count = Spring.GetFeatureRulesParam(featureID, "comm_module_count")
+	local name = Spring.GetFeatureRulesParam(featureID, "comm_name")
+	local totalCost = Spring.GetFeatureRulesParam(featureID, "comm_cost")
+	local level = Spring.GetFeatureRulesParam(featureID, "comm_level")
+	local profileID = Spring.GetFeatureRulesParam(featureID, "comm_profileID")
+	local baseWreckID = Spring.GetFeatureRulesParam(featureID, "comm_baseWreckID")
+	local baseHeapID = Spring.GetFeatureRulesParam(featureID, "comm_baseHeapID")
+	local chassisID = Spring.GetFeatureRulesParam(featureID, "comm_chassis")
+	--Spring.Echo("Module count: " .. tostring(count))
+	for i = 1, count do
+		modules[i] = Spring.GetFeatureRulesParam(featureID, "comm_module_" .. i)
+	end
+	-- do some transfer --
+	TransferParamFromFeature(featureID, unitID, "commander_owner")
+	TransferParamFromFeature(featureID, unitID, "comm_personal_cloak")
+	TransferParamFromFeature(featureID, unitID, "comm_jammed")
+	TransferParamFromFeature(featureID, unitID, "comm_shield_num")
+	TransferParamFromFeature(featureID, unitID, "comm_banner_overhead")
+	TransferParamFromFeature(featureID, unitID, "comm_texture")
+	--
+	--Spring.Echo("Got:" .. totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID)
+	return modules, totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID
+end
+
+function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
+	local isCommander = UnitDefs[unitDefID].customParams.commtype or UnitDefs[unitDefID].customParams.level or UnitDefs[unitDefID].customParams.dynamic_comm
+	if not isCommander then -- filter out the normal units
+		return
+	end
 	if spGetUnitRulesParam(unitID, "comm_level") then
 		return
+	end
+	
+	if builderID then
+		local cmd = Spring.GetUnitCommands(builderID, 1) or {}
+		if cmd[1] then
+			cmd = cmd[1]
+			local cmdID = cmd.id
+			if cmdID == CMD.RESURRECT then
+				--Spring.Echo("Unit was resurrected!")
+				--for k, v in pairs(cmd.params) do
+					--Spring.Echo(k .. ": " .. tostring(v))
+				--end
+				local featureID = cmd.params[1] - Game.maxUnits
+				--Spring.Echo("FeatureID", featureID)
+				local modules, totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID = GetCommanderInfoFromWreck(featureID, unitID)
+				local profileID = profileID or GG.ModularCommAPI.GetProfileIDByBaseDefID(unitDefID)
+				local commProfileInfo = GG.ModularCommAPI.GetCommProfileInfo(profileID)
+				if commProfileInfo then
+					InitializeDynamicCommander(
+						unitID,
+						level,
+						chassisID,
+						totalCost,
+						name,
+						unitDefID,
+						baseWreckID,
+						baseHeapID,
+						modules,
+						false,
+						commProfileInfo.images,
+						profileID
+					)
+				else
+					InitializeDynamicCommander(
+						unitID,
+						level,
+						chassisID,
+						totalCost,
+						name,
+						unitDefID,
+						baseWreckID,
+						baseHeapID,
+						modules,
+						false,
+						{},
+						profileID
+					)
+				end
+				GG.ReinitCloak(unitID, unitDefID)
+				return
+			end
+		end
 	end
 	
 	if interallyCreatedUnit then
@@ -692,7 +974,6 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 	local profileID = GG.ModularCommAPI.GetProfileIDByBaseDefID(unitDefID)
 	if profileID then
 		local commProfileInfo = GG.ModularCommAPI.GetCommProfileInfo(profileID)
-		
 		-- Add decorations
 		local moduleList = {}
 		if commProfileInfo.decorations then
@@ -739,7 +1020,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 			chassisData.baseWreckID,
 			chassisData.baseHeapID,
 			{},
-			{}
+			GG.ModularCommAPI.GetProfileIDByBaseDefID(unitDefID) or {}
 		)
 		return
 	end
@@ -774,6 +1055,8 @@ local function Upgrades_GetValidAndMorphAttributes(unitID, params)
 		return false
 	end
 	
+	-- Increase level, and bound it by the available config
+	-- Note that level is 1 less than the player-visible value
 	local newLevel = level + 1
 	local newLevelBounded = math.min(chassisDefs[chassis].maxNormalLevel, level + 1)
 	

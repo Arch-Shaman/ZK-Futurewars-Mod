@@ -1,4 +1,3 @@
-
 if not gadgetHandler:IsSyncedCode() then
 	return
 end
@@ -290,8 +289,12 @@ function gadget:GameFrame(n)
 		mIncome[teamID] = mIncome[teamID] + GetMetalIncome  (teamID)
 		eIncome[teamID] = eIncome[teamID] + GetEnergyIncome (teamID)
 		mIncomeBase     [teamID] = mIncomeBase     [teamID] + (spGetTeamRulesParam(teamID, "OD_metalBase"     ) or 0)
-		mIncomeOverdrive[teamID] = mIncomeOverdrive[teamID] + (spGetTeamRulesParam(teamID, "OD_metalOverdrive") or 0)
-		mTotalOverdrive[teamID] = mTotalOverdrive[teamID] + (spGetTeamRulesParam(teamID, "OD_metalOverdrive") or 0)
+		local overdrive = (spGetTeamRulesParam(teamID, "OD_metalOverdrive") or 0)
+		if overdrive > 0 then
+			GG.Awards.AddAwardPoints('economist', teamID, overdrive)
+		end
+		mIncomeOverdrive[teamID] = mIncomeOverdrive[teamID] + overdrive
+		mTotalOverdrive[teamID] = mTotalOverdrive[teamID] + overdrive
 
 		SetHiddenTeamRulesParam(teamID, "stats_history_damage_dealt_current", damageDealtByTeamHax[teamID])
 		SetHiddenTeamRulesParam(teamID, "stats_history_unit_value_killed_current", unitValueKilledByTeamHax[teamID])

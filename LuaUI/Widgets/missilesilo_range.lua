@@ -53,6 +53,14 @@ drawRadius[4] = {
 	textSize = 260,
 	--stipple = {4,4095},
 }
+drawRadius[5] = {
+	range = 9000,
+	color = {1, 0.4, 0.4, 1},
+	text = "Silencer MkIII",
+	width = 2,
+	miniWidth = 1,
+	textSize = 300,
+}
 
 
 local circleDivs = 64
@@ -62,6 +70,7 @@ local circleDivs = 64
 -- Speedup
 
 VFS.Include("LuaRules/Utilities/glVolumes.lua")
+local GetMiniMapFlipped = Spring.Utilities.IsMinimapFlipped
 
 local spGetActiveCommand = Spring.GetActiveCommand
 local spTraceScreenRay   = Spring.TraceScreenRay
@@ -201,6 +210,7 @@ local function languageChanged ()
 	drawRadius[2].text = WG.Translate("interface", "seismic")
 	drawRadius[3].text = WG.Translate("interface", "emp_aoe")
 	drawRadius[4].text = WG.Translate("interface", "singularity")
+	drawRadius[5].text = WG.Translate("interface", "nuke_range") or "nuke"
 end
 
 function widget:Initialize()

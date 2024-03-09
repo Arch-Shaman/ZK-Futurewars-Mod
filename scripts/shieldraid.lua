@@ -111,11 +111,9 @@ end
 
 function script.QueryWeapon(num)
 	if num == 1 then
-		if gun_1 then
-			return r_gun_barr
-		else
-			return l_gun_barr
-		end
+		return r_gun_barr
+	elseif num == 2 then
+		return l_gun_barr
 	else -- shield
 		return base
 	end
@@ -135,7 +133,7 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.FireWeapon(num)
-	if gun_1 then
+	if num == 1 then
 		EmitSfx(r_gun_barr, GG.Script.UNIT_SFX1)
 		Spin(r_gun_barr, z_axis, math.rad(1000), math.rad(50))
 	else
@@ -143,10 +141,6 @@ function script.FireWeapon(num)
 		Spin(l_gun_barr, z_axis, math.rad(1000), math.rad(50))
 	end
 	StartThread(RestoreAfterDelay)
-end
-
-function script.EndBurst(num)
-	gun_1 = not gun_1
 end
 
 function script.Killed(recentDamage, maxHealth)

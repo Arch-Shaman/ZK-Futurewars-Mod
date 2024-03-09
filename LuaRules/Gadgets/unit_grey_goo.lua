@@ -1,3 +1,7 @@
+if (not gadgetHandler:IsSyncedCode()) then
+	return false
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Grey Goo",
@@ -14,9 +18,6 @@ end
 --------------------------------------------------------------------------------
 
 --SYNCED
-if (not gadgetHandler:IsSyncedCode()) then
-	return false
-end
 
 local REVERSE_COMPAT = not Spring.Utilities.IsCurrentVersionNewerThan(104, 1120)
 

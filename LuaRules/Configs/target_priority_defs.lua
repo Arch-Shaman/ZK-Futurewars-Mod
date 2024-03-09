@@ -1,5 +1,8 @@
--- Assuming max HP/Cost is 50.
--- Max useful HP/Cost is 11, Only Dirtbag and Claw are higher at 32.5 and 40 respectively.
+-- Assuming max HP/Cost is 50 (for setting crappy targets above this threshold).
+--   Max useful HP/Cost is 11 (open Razor).
+--   Some chaff (Gull and Viper drones; Djinn's Lamps) are 12-15.
+--   Dirtbag is the highest among regular units at 20.
+--   Planet Wars buildings reach up to 40 (basic Wormhole).
 
 local DISARM_BASE = 0.3
 local DISARM_ADD = 0.2
@@ -168,9 +171,8 @@ local velocityPenaltyDefs = {
 	[WeaponDefNames["vehaa_missile"].id]                  = {14.0},
 	[WeaponDefNames["gunshipheavyskirm_emg"].id]          = {3.0},
 	[WeaponDefNames["gunshipaa_aa_missile"].id]           = {14.0},
-	[WeaponDefNames["hoverskirm_missile"].id]             = {4.5},
 	[WeaponDefNames["hoverassault_dew"].id]               = {2.5},
-	[WeaponDefNames["amphraid_torpmissile"].id]           = {4.5},
+	[WeaponDefNames["amphskirm_torpmissile"].id]           = {4.5},
 	[WeaponDefNames["amphfloater_cannon"].id]             = {2.5},
 	[WeaponDefNames["amphaa_missile"].id]                 = {14.0},
 	[WeaponDefNames["spiderassault_thud_weapon"].id]      = {2.5},
@@ -188,8 +190,8 @@ local velocityPenaltyDefs = {
 	[WeaponDefNames["shipheavyarty_plasma"].id]           = {2.5},
 	[WeaponDefNames["shipskirm_rocket"].id]               = {2.8},
 	[WeaponDefNames["shiparty_plasma"].id]                = {2.0},
-	[WeaponDefNames["turretmissile_armrl_missile"].id]    = {14.0},
-	[WeaponDefNames["turretriot_turretriot_weapon"].id]   = {5.0},
+	[WeaponDefNames["turretmissile_missile"].id]          = {14.0},
+	[WeaponDefNames["turretriot_weapon"].id]  			  = {5.0},
 	[WeaponDefNames["turretaalaser_aagun"].id]            = {7.0, 0, 3},
 	[WeaponDefNames["turretaaclose_missile"].id]          = {16.0},
 	[WeaponDefNames["turretaafar_missile"].id]            = {14.0},
@@ -296,11 +298,17 @@ end
 
 --Time("Reduce WeaponDefs access")
 
--- Generate full target table
+-- Cache for dynamic table generation
 local targetTable = {}
 
-local priority, damage
-for uid = 1, udCount do
+local function GetPriority(uid, wid)
+	if not targetTable[uid] then
+		targetTable[uid] = {}
+	end
+	if targetTable[uid][wid] then
+		return targetTable[uid][wid]
+	end
+	
 	local ud = UnitDefs[uid]
 	local unitHealth = ud.health
 	local inverseUnitCost = 1 / ud.buildTime
@@ -321,7 +329,10 @@ for uid = 1, udCount do
 			targetTable[uid][wid] = priority + 35
 		elseif unitIsClaw[uid] then
 			targetTable[uid][wid] = priority + 1000
-		elseif (weaponBadCats_fixedwing[wid] and unitIsFixedwing[uid]) or (weaponBadCats_gunship[wid] and unitIsGunship[uid]) or (weaponBadCats_ground[wid] and unitIsGround[uid]) then
+		elseif (
+				weaponBadCats_fixedwing[wid] and unitIsFixedwing[uid]) or 
+				(weaponBadCats_gunship[wid] and unitIsGunship[uid]) or 
+				(weaponBadCats_ground[wid] and unitIsGround[uid]) then
 			targetTable[uid][wid] = priority + 15
 		elseif (unitIsFighterOrDrone[uid]) then
 			targetTable[uid][wid] = priority + 10
@@ -331,7 +342,18 @@ for uid = 1, udCount do
 			targetTable[uid][wid] = priority
 		end
 	end
+	if not targetTable[uid][wid] then
+		targetTable[uid][wid] = 5
+	end
+	return targetTable[uid][wid]
 end
+
+-- Fill the cache, but this costs 20MB so maybe better not.
+--for uid = 1, udCount do
+--	for wid = 1, wdCount do
+--		GetPriority(uid, wid)
+--	end
+--end
 
 --Time("Generate full target table")
 
@@ -370,4 +392,4 @@ end
 
 --Time("highAlphaWeaponDamages")
 
-return targetTable, disarmWeaponTimeDefs, disarmPenaltyDefs, captureWeaponDefs, gravityWeaponDefs, proximityWeaponDefs, velocityPenaltyDefs, radarWobblePenalty, radarDotPenalty, transportMult, highAlphaWeaponDamages, DISARM_BASE, DISARM_ADD, DISARM_ADD_TIME
+return GetPriority, disarmWeaponTimeDefs, disarmPenaltyDefs, captureWeaponDefs, gravityWeaponDefs, proximityWeaponDefs, velocityPenaltyDefs, radarWobblePenalty, radarDotPenalty, transportMult, highAlphaWeaponDamages, DISARM_BASE, DISARM_ADD, DISARM_ADD_TIME

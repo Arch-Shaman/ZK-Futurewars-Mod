@@ -3,11 +3,29 @@ include 'constants.lua'
 local head = piece 'head'
 local hips = piece 'hips'
 local lshoulder = piece 'lshoulder'
-local lbcover = piece 'lbcover'
 local ltcover = piece 'ltcover'
+local lrcover = piece 'lrcover'
+local lbcover = piece 'lbcover'
+local llcover = piece 'llcover'
+local lshouldercover = piece 'lshouldercover'
+local lpiston = piece 'lpiston'
+local lring = piece 'lring'
+local lringt = piece 'lringt'
+local lringr = piece 'lringr'
+local lringb = piece 'lringb'
+local lringl = piece 'lringl'
 local rshoulder = piece 'rshoulder'
-local rbcover = piece 'rbcover'
 local rtcover = piece 'rtcover'
+local rrcover = piece 'rrcover'
+local rbcover = piece 'rbcover'
+local rlcover = piece 'rlcover'
+local rshouldercover = piece 'rshouldercover'
+local rpiston = piece 'rpiston'
+local rring = piece 'rring'
+local rringt = piece 'rringt'
+local rringr = piece 'rringr'
+local rringb = piece 'rringb'
+local rringl = piece 'rringl'
 local chest = piece 'chest'
 local rthigh = piece 'rthigh'
 local lthigh = piece 'lthigh'
@@ -18,9 +36,7 @@ local lfoot = piece 'lfoot'
 local lmissile = piece 'lmissile'
 local rmissile = piece 'rmissile'
 local rmuzzle = piece 'rmuzzle'
-local rexhaust = piece 'rexhaust'
 local lmuzzle = piece 'lmuzzle'
-local lexhaust = piece 'lexhaust'
 
 local thigh = {lthigh, rthigh}
 local shin = {lshin, rshin}
@@ -98,6 +114,8 @@ local function Walk()
 			Turn(head, y_axis, 0, 2.0)
 			Turn(chest, x_axis, math.rad(10), truespeed*math.rad(40))
 			Turn(chest, y_axis, math.rad(-10)*sway, truespeed*math.rad(40))
+			Spin(lring, z_axis, -1)
+			Spin(rring, z_axis, 1)
 		end
 
 		Turn(hips, z_axis, math.rad(-5)*sway, truespeed*math.rad(45))
@@ -177,10 +195,26 @@ end
 local function RestoreAfterDelay()
 	Sleep(2000)
 	Turn(chest, y_axis, 0, RESTORE_SPEED)
-	Turn(rtcover, x_axis, 0, RESTORE_SPEED)
-	Turn(rbcover, x_axis, 0, RESTORE_SPEED)
-	Turn(ltcover, x_axis, 0, RESTORE_SPEED)
-	Turn(lbcover, x_axis, 0, RESTORE_SPEED)
+	Turn(ltcover, x_axis, math.rad(0), 0.5)
+	Turn(lrcover, x_axis, math.rad(0), 0.5)
+	Turn(lbcover, x_axis, math.rad(0), 0.5)
+	Turn(llcover, x_axis, math.rad(0), 0.5)
+	Turn(rtcover, x_axis, math.rad(0), 0.5)
+	Turn(rrcover, x_axis, math.rad(0), 0.5)
+	Turn(rbcover, x_axis, math.rad(0), 0.5)
+	Turn(rlcover, x_axis, math.rad(0), 0.5)
+	Move(lpiston, z_axis, 0, 1)
+	Spin(lring, z_axis, -1)
+	Turn(lringt, x_axis, math.rad(0), 0.5)
+	Turn(lringr, x_axis, math.rad(0), 0.5)
+	Turn(lringb, x_axis, math.rad(0), 0.5)
+	Turn(lringl, x_axis, math.rad(0), 0.5)
+	Move(rpiston, z_axis, 0, 1)
+	Spin(rring, z_axis, 1)
+	Turn(rringt, x_axis, math.rad(0), 0.5)
+	Turn(rringr, x_axis, math.rad(0), 0.5)
+	Turn(rringb, x_axis, math.rad(0), 0.5)
+	Turn(rringl, x_axis, math.rad(0), 0.5)
 	aiming = false
 
 	StartThread(Idle)
@@ -191,19 +225,31 @@ function script.AimFromWeapon(num)
 end
 
 function script.AimWeapon(num, heading, pitch)
-	Signal(SIG_AIM)
-	Signal(SIG_IDLE)
-	SetSignalMask(SIG_AIM)
-	aiming = true
 	Turn(head, y_axis, 0, 4.0)
 	Turn(chest, x_axis, 0, math.rad(120))
 	Turn(chest, y_axis, heading, math.rad(450))
 	Turn(lshoulder, x_axis, -pitch, math.rad(500))
+	Move(lpiston, z_axis, -2.5, 2.5)
+	Turn(ltcover, x_axis, math.rad(-90))
+	Turn(lrcover, x_axis, math.rad(-90))
+	Turn(lbcover, x_axis, math.rad(-90))
+	Turn(llcover, x_axis, math.rad(-90))
 	Turn(rshoulder, x_axis, -pitch, math.rad(500))
-	Turn(rtcover, x_axis, -COVER_UNFOLD_ANGLE, COVER_UNFOLD_SPEED)
-	Turn(rbcover, x_axis, COVER_UNFOLD_ANGLE, COVER_UNFOLD_SPEED)
-	Turn(ltcover, x_axis, -COVER_UNFOLD_ANGLE, COVER_UNFOLD_SPEED)
-	Turn(lbcover, x_axis, COVER_UNFOLD_ANGLE, COVER_UNFOLD_SPEED)
+	Move(rpiston, z_axis, -2.5, 2.5)
+	Turn(rtcover, x_axis, math.rad(-90))
+	Turn(rrcover, x_axis, math.rad(-90))
+	Turn(rbcover, x_axis, math.rad(-90))
+	Turn(rlcover, x_axis, math.rad(-90))
+	Spin(lring, z_axis, -6)
+	Turn(lringt, x_axis, math.rad(-60), 2)
+	Turn(lringr, x_axis, math.rad(-60), 2)
+	Turn(lringb, x_axis, math.rad(-60), 2)
+	Turn(lringl, x_axis, math.rad(-60), 2)
+	Spin(rring, z_axis, 6)
+	Turn(rringt, x_axis, math.rad(-60), 2)
+	Turn(rringr, x_axis, math.rad(-60), 2)
+	Turn(rringb, x_axis, math.rad(-60), 2)
+	Turn(rringl, x_axis, math.rad(-60), 2)
 	WaitForTurn(chest, y_axis)
 	WaitForTurn(lshoulder, x_axis)
 	StartThread(RestoreAfterDelay)
@@ -213,12 +259,10 @@ end
 function script.Shot(num)
 	if gun then
 		EmitSfx(lmuzzle,  1024)
-		EmitSfx(lexhaust,  1025)
 		Move(lmissile, z_axis, -1 )
 		Move(lmissile, z_axis, 0, 500)
 	else
 		EmitSfx(rmuzzle,  1024)
-		EmitSfx(rexhaust,  1025)
 		Move(rmissile, z_axis, -1 )
 		Move(rmissile, z_axis, 0, 500)
 	end

@@ -683,8 +683,6 @@ local function checkWidget(widget)
 	end
 end
 
-VFS.Include("LuaUI/Utilities/json.lua");
-
 local function SetLang(self)
 	echo('Setting language: "' .. self.lang .. '" ')
 
@@ -2704,12 +2702,12 @@ local function MakeQuitButtons()
 
 	AddOption('', {
 		type = 'button',
-		name = 'Vote Resign',
-		desc = "Ask teammates to resign",
+		name = 'Toggle Surrender',
+		desc = "Press this button if you believe the game is no longer winnable but want to continue playing. If enough of your team also decides to surrender, the game will end as a loss for your team.\nNote: you can also toggle this at any time by the white flag in the top left corner of the UI.\nUnlike Abandoning the game, this will not cause you to lose control over your units.",
 		icon = imgPath..'epicmenu/whiteflag_check.png',
 		OnChange = function()
 				if not (Spring.GetPlayerRulesParam(Spring.GetLocalPlayerID(), "initiallyPlayingPlayer") ~= 1 or PlayingButNoTeammate() or isMission) then
-					spSendCommands("say !poll resign")
+					WG.ToggleResignState()
 					ActionMenu()
 				end
 			end,
@@ -2720,8 +2718,8 @@ local function MakeQuitButtons()
 	})
 	AddOption('', {
 		type = 'button',
-		name = 'Resign',
-		desc = "Abandon team and become spectator",
+		name = 'Abandon Game',
+		desc = "Abandon team and become spectator. Unlike Surrender, this option is not reversible.",
 		icon = imgPath..'epicmenu/whiteflag.png',
 		OnChange = function()
 				if not (isMission or Spring.GetSpectatingState()) then

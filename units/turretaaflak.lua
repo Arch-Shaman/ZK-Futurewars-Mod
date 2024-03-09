@@ -1,148 +1,122 @@
 return { turretaaflak = {
-		unitname                      = [[turretaaflak]],
-		name                          = [[Thresher]],
-		description                   = [[Flak Canister AAA]],
-		acceleration                  = 0,
-		brakeRate                     = 0,
-		buildCostMetal                = 650,
+		unitname                      = "turretaaflak",
+		name                          = "Thresher",
+		description                   = "Flak Canister AAA",
+		buildCostMetal                = 575,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 5,
 		buildingGroundDecalSizeY      = 5,
-		buildingGroundDecalType       = [[turretaaflak_aoplane.dds]],
-		buildPic                      = [[turretaaflak.png]],
-		category                      = [[FLOAT]],
-		collisionVolumeOffsets        = [[0 11 -4]],
-		collisionVolumeScales         = [[50 86 50]],
-		collisionVolumeType	        = [[CylY]],
-		corpse                        = [[DEAD]],
-
+		buildingGroundDecalType       = "turretaaflak_aoplane.dds",
+		buildPic                      = "turretaaflak.png",
+		category                      = "FLOAT",
+		collisionVolumeOffsets        = "0 11 -4",
+		collisionVolumeScales         = "50 86 50",
+		collisionVolumeType	        = "CylY",
+		corpse                        = "DEAD",
 		customParams                  = {
-			aimposoffset   = [[0 16 0]],
+			aimposoffset   = "0 16 0",
 		},
-
-		explodeAs                     = [[MEDIUM_BUILDINGEX]],
+		explodeAs                     = "MEDIUM_BUILDINGEX",
 		floater                       = true,
 		footprintX                    = 3,
 		footprintZ                    = 3,
-		iconType                      = [[staticaa]],
+		iconType                      = "staticaa",
 		idleAutoHeal                  = 5,
 		idleTime                      = 1800,
 		levelGround                   = false,
-		maxDamage                     = 3000,
+		health                        = 3500,
 		maxSlope                      = 18,
-		maxVelocity                   = 0,
 		maxWaterDepth                 = 5000,
-		minCloakDistance              = 150,
 		noAutoFire                    = false,
-		noChaseCategory               = [[FIXEDWING LAND SINK TURRET SHIP SATELLITE SWIM GUNSHIP FLOAT SUB HOVER]],
-		objectName                    = [[corflak.s3o]],
-		script                        = [[turretaaflak.lua]],
-		selfDestructAs                = [[MEDIUM_BUILDINGEX]],
-
+		noChaseCategory               = "FIXEDWING LAND SINK TURRET SHIP SATELLITE SWIM GUNSHIP FLOAT SUB HOVER",
+		objectName                    = "corflak.s3o",
+		script                        = "turretaaflak.lua",
+		selfDestructAs                = "MEDIUM_BUILDINGEX",
 		sfxtypes               = {
-
-		explosiongenerators = {
-				[[custom:HEAVY_CANNON_MUZZLE]],
+			explosiongenerators = {
+				"custom:heavy_cannon_muzzle",
 			},
-
 		},
-		sightDistance                 = 660,
-		turnRate                      = 0,
+		sightDistance                 = 720,
 		useBuildingGroundDecal        = true,
-		workerTime                    = 0,
-		yardMap                       = [[ooo ooo ooo]],
-
+		yardMap                       = "ooo ooo ooo",
 		weapons                       = {
 			{
-				def                = [[ARMFLAK_GUN]],
-				--badTargetCategory  = [[FIXEDWING]],
-				onlyTargetCategory = [[FIXEDWING GUNSHIP]],
+				def                = "ARMFLAK_GUN",
+				--badTargetCategory  = "FIXEDWING",
+				onlyTargetCategory = "FIXEDWING GUNSHIP",
 			},
-
 		},
-
-
 		weaponDefs                    = {
-
 			ARMFLAK_GUN = {
-				name                    = [[Flak Canister]],
+				name                    = "Flak Canister",
 				areaOfEffect            = 0,
 				burnblow                = true,
 				canattackground         = false,
-				--cegTag                  = [[vulcanfx]],
+				--cegTag                  = "vulcanfx",
 				craterBoost             = 0,
 				craterMult              = 0,
 				cylinderTargeting       = 1,
-
+				cameraShake				= 0,
 				customParams        	  = {
-					reaim_time = 8, -- COB
-					isaa = [[1]],
+					isaa = "1", -- Weapondefs_post to set this to 10% for ground units.
 					light_radius = 0,
-					numprojectiles1 = 4, -- how many of the weapondef we spawn. OPTIONAL. Default: 1.
-					projectile1 = "turretaaflak_tritary", -- the weapondef name. we will convert this to an ID in init. REQUIRED. If defined in the unitdef, it will be unitdefname_weapondefname.
-					--spreadradius1 = 3, -- used in clusters. OPTIONAL. Default: 100.
-					clustervec1 = "randomxyz", -- accepted values: randomx, randomy, randomz, randomxy, randomxz, randomyz, random. OPTIONAL. default: random.
-					use2ddist = 0, -- should we check 2d or 3d distance? OPTIONAL. Default: 0.
-					spawndist = 240, -- at what distance should we spawn the projectile(s)? REQUIRED.
-					vradius1 = "-5,-1,-5,5,1,5", -- velocity that is randomly added. covers range of +-vradius. OPTIONAL. Default: 4.2
-					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
-					proxy = 1, -- check for nearby units?
-					damage_vs_shield = [[200]],
+					numprojectiles1 = 6,
+					projectile1 = "turretaaflak_tritary",
+					spawndist = 370,
+					velspread1 = "6.37, 3, 6.37",
+					proxy = 1, 
+					damage_vs_shield = "300.3",
 				},
-
 				damage  = {
-					default = 5*4,
-					planes  = 100*4,
+					default = 100.1*6,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.5,
-				explosionGenerator      = [[custom:EMG_HIT_HE]],
+				explosionGenerator      = "custom:EMG_HIT_HE",
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				leadLimit 				= 200,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 1600,
+				range                   = 1200,
 				reloadtime              = 1/2,
 				size                    = 8,
-				soundHit                = [[weapon/cannon/cannon_fire4]],
+				soundHit                = "weapon/cannon/cannon_fire4",
 				soundHitVolume	        = 0.5,
-				soundStart              = [[weapon/cannon/cannon_fire9]],
+				soundStart              = "weapon/cannon/cannon_fire9",
 				soundStartVolume	= 1,
 				turret                  = true,
-				weaponType              = [[Cannon]],
+				weaponType              = "Cannon",
 				weaponVelocity          = 1200,
 				--coverage = 2200,
 			},
-	
 			TRITARY = {
-				name                    = [[Flechette]],
-				cegTag                  = [[flak_trail]],
+				name                    = "Flechette",
+				cegTag                  = "flak_trail",
 				areaOfEffect            = 160,
 				coreThickness           = 0.5,
 				craterBoost             = 0,
 				craterMult              = 0,
-
+				cameraShake				= 0,
 				customParams            = {
 					light_camera_height = 2000,
-					light_color = [[1 0.2 0.2]],
-					light_radius = 128,
+					light_color = "1 0.2 0.2",
 					reaim_time = 8, -- COB
-					isaa = [[1]],
+					isaa = "1",
 					light_radius = 0,
 					isFlak = 3,
-					flaktime = -25,
+					flaktime = -10,
+					cegtrail = "flak_trail",
 				},
-
 				damage = {
-					default = 5,
-					planes  = 100,
+					default = 100.1,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.8,
 				duration                = 0.02,
-				explosionGenerator      = [[custom:flakplosion]],
+				explosionGenerator      = "custom:flakplosion",
 				fireStarter             = 50,
 				heightMod               = 1,
 				impulseBoost            = 0,
@@ -150,8 +124,8 @@ return { turretaaflak = {
 				interceptedByShieldType = 1,
 				range                   = 300,
 				reloadtime              = 0.8,
-				rgbColor                = [[0.2 0.2 0.2]],
-				soundHit                = [[weapon/flak_hit2]],
+				rgbColor                = "0.2 0.2 0.2",
+				soundHit                = "weapon/flak_hit2",
 				soundHitVolume	      = 0.4,
 				--soundTrigger            = true,
 				sprayangle              = 1500,
@@ -159,31 +133,25 @@ return { turretaaflak = {
 				thickness               = 2,
 				tolerance               = 10000,
 				turret                  = true,
-				weaponType              = [[Cannon]],
+				weaponType              = "Cannon",
 				weaponVelocity          = 880,
 				--coverage = 1000,
 			},
-
 		},
 		featureDefs                   = {
-
 			DEAD  = {
 				blocking         = true,
-				featureDead      = [[HEAP]],
+				featureDead      = "HEAP",
 				footprintX       = 3,
 				footprintZ       = 3,
-				object           = [[corflak_dead.s3o]],
+				object           = "corflak_dead.s3o",
 			},
-
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 3,
 				footprintZ       = 3,
-				object           = [[debris3x3a.s3o]],
+				object           = "debris3x3a.s3o",
 			},
-
 		},
-
 	}
 }

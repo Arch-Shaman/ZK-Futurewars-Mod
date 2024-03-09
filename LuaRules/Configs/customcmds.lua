@@ -40,9 +40,14 @@ local cmds = {
 	GBCANCEL = 13926, -- global build command area cancel cmd
 	STOP_PRODUCTION = 13954,
 	SELECTION_RANK = 13987,
+	FORMATION_RANK = 13988,
 	SELECT_MISSILES = 14001,
-
+	BUILD_PLATE = 14002,
+	SELECT_DRONES = 14003,
+	
+	AMMO_SELECT_GENERIC = 20500, -- Probably is safe.
 	AREA_MEX = 30100,
+	AREA_TERRA_MEX = 30101,
 	STEALTH = 31100,
 	CLOAK_SHIELD = 31101,
 	RAW_MOVE = 31109, --cmd_raw_move.lua
@@ -66,6 +71,7 @@ local cmds = {
 	MISC_PRIORITY = 34221,
 	RETREAT = 34223,
 	RETREATSHIELD = 34224,
+	QUEUE_MODE = 34225,
 	UNIT_BOMBER_DIVE_STATE = 34281, -- bomber dive
 	AP_FLY_STATE = 34569, -- unit_air_plants
 	AP_AUTOREPAIRLEVEL = 34570, -- unit_air_plants
@@ -79,6 +85,7 @@ local cmds = {
 	ABANDON_PW = 35200,
 	RECALL_DRONES = 35300,
 	TOGGLE_DRONES = 35301,
+	DRONE_SET_TARGET = 35302,
 	GREYGOO = 35600,
 	GOO_GATHER = 35646,
 	PUSH_PULL = 35666, -- weapon_impulse
@@ -86,21 +93,27 @@ local cmds = {
 	UNIT_KILL_SUBORDINATES = 35821, -- unit_capture
 	DISABLE_ATTACK = 35822, -- unit_launcher
 	UNIT_AI = 36214,
-	WARD_FIRE = 36215,
+	FIRE_AT_SHIELD = 36215,
+	FIRE_TOWARDS_ENEMY = 362516,
 	WANT_CLOAK = 37382,
 	PREVENT_OVERKILL = 38291,
-	TRANSFER_UNIT = 38292,
 	PREVENT_BAIT = 38293,
 	TRANSFER_UNIT = 38292,
 	DONT_FIRE_AT_RADAR = 38372, -- fire at radar toggle gadget
 	JUMP = 38521,
 	TIMEWARP = 38522,
 	TURN = 38530,
+	AIR_MANUALFIRE = 38571,
 	WANTED_SPEED = 38825,
 	SWEEPFIRE = 38886, -- cmd_sweepfire gadget
-	SWEEPFIRE_MINES = 38888,
 	SWEEPFIRE_CANCEL = 38887,
+	SWEEPFIRE_MINES = 38888,
+	FIRECYCLE = 38889, -- cmd_firecycle gadget
+	OVERRECLAIM = 38950,
 	AIR_STRAFE = 39381,
+	AUTOJUMP = 39382, -- Tactical AI / Jump Fall Avoidance
+	ARMORSTATE = 39383, -- Bastion / Azimuth command.
+	IMMEDIATETAKEOFF = 39384, -- Airpad abort.
 	-- terraform
 	RAMP = 39734,
 	LEVEL = 39736,
@@ -111,6 +124,12 @@ local cmds = {
 	
 	TERRAFORM_INTERNAL = 39801,
 }
+
+local extras, _ = VFS.Include("LuaRules/Configs/ammostatecmds.lua")
+for name, id in pairs(extras) do
+	cmds[name] = id
+end
+
 -- not included here, just listed
 --[[
 PURCHASE = 32601	-- planetwars, range up to 32601 + #purchases

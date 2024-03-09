@@ -5,14 +5,15 @@ local tooltips = {
 	priority = "Priority: Set construction priority (low, normal, high)",
 	retreat = "Retreat: Retreat to closest retreat point at 30/65/99% of health (right-click to disable)",
 	retreatshield = "Retreat: Retreat to closest retreat point at 30/50/80% shield (right-click to disable)",
+	autojump = "Autojump: Allow unit to use its jump to assault or preserve itself.",
 	landat = "Repair level: set the HP % at which this aircraft will go to a repair pad (0, 30, 50, 80)",
 	factoryGuard = "Auto Assist: Newly built constructors automatically assist their factory",
 	diveBomb = "Dive bomb (never; target under shield; any target; always (including moving))",
-
+	overreclaim = "Overreclaim Protection: Constructors will not reclaim metal when your storage is almost full",
 	fireState = "Fire State: Sets under what conditions a unit will fire without an explicit attack order (never, when attacked, always)",
 	moveState = "Move State: Sets how far out of its way a unit will move to attack enemies",
 	["repeat"] = "Repeat: if on the unit will continously push finished orders to the end of its order queue",
-	autoCallTransport = "Automatically call transports between constructor tasks."
+	autoCallTransport = "Automatically call transports between constructor tasks.",
 }
 
 
@@ -218,9 +219,10 @@ local overrides = {
 	[CMD_BUMPY] = {texture = imageDir .. 'bumpy.png'},
 
 	[CMD_AREA_MEX] = {caption = '', texture = imageDir .. 'Bold/mex.png'},
+	[CMD_AREA_TERRA_MEX] = {caption = '', texture = imageDir .. 'Bold/mex.png'},
 
 	[CMD_JUMP] = {texture = imageDir .. 'Bold/jump.png'},
-	[CMD_SWEEPFIRE] = {texture = imageDir .. 'sweepfire.png'}
+	[CMD_SWEEPFIRE] = {texture = imageDir .. 'sweepfire.png'},
 	[CMD_SWEEPFIRE_CANCEL] = {texture = imageDir .. 'sweepfire_cancel.png'},
 	[CMD_FIND_PAD] = {caption = '', texture = imageDir .. 'Bold/rearm.png'},
 
@@ -231,7 +233,7 @@ local overrides = {
 	[CMD_UNIT_SET_TARGET] = {texture = imageDir .. 'Bold/action.png'},
 
 	[CMD_ABANDON_PW] = {caption= '', texture = 'LuaUI/Images/Crystal_Clear_action_flag_white.png'},
-
+	[CMD_IMMEDIATETAKEOFF] = {caption = '', texture = 'LuaUI/Images/Commands/takeoff.png'},
 	[CMD_PLACE_BEACON] = {caption= '', texture = imageDir .. 'Bold/drop_beacon.png'},
 
 	[CMD_RECALL_DRONES] = {caption= '', texture = imageDir .. 'Bold/recall_drones.png'},
@@ -257,6 +259,9 @@ local overrides = {
 		caption='', tooltip = tooltips.retreat,},
 	[CMD_RETREATSHIELD] = { texture = {imageDir .. 'states/shield_off.png', imageDir .. 'states/shield_30.png', imageDir .. 'states/shield_50.png', imageDir .. 'states/shield_80.png'},
 		caption='', tooltip = tooltips.retreatshield,},
+	[CMD_AUTOJUMP] = { texture = {imageDir .. 'states/autojumpoff.png', imageDir .. 'states/autojumpon.png'}, caption= '', tooltip = tooltips.autojump},
+	[CMD_FIRECYCLE] = {texture = {imageDir .. 'states/firecycle_off.png', imageDir .. 'states/firecycle_on.png'}, caption=''},
+	[CMD_OVERRECLAIM] = { texture = {imageDir .. 'states/goo_off.png', imageDir .. 'states/goo_on.png'},},
 	[CMD.IDLEMODE] = { texture = {imageDir .. 'states/fly_on.png', imageDir .. 'states/fly_off.png'}, caption=''},
 	[CMD_AP_FLY_STATE] = { texture = {imageDir .. 'states/fly_on.png', imageDir .. 'states/fly_off.png'}, caption=''},
 	[CMD.AUTOREPAIRLEVEL] = { texture = {imageDir .. 'states/landat_off.png', imageDir .. 'states/landat_30.png', imageDir .. 'states/landat_50.png', imageDir .. 'states/landat_80.png'},
@@ -274,7 +279,9 @@ local overrides = {
 	[CMD_AIR_STRAFE] = { texture = {imageDir .. 'states/strafe_off.png', imageDir .. 'states/strafe_on.png'}, caption=''},
 	[CMD_UNIT_FLOAT_STATE] = { texture = {imageDir .. 'states/amph_sink.png', imageDir .. 'states/amph_attack.png', imageDir .. 'states/amph_float.png'}, caption=''},
 	[CMD_SELECTION_RANK] = { texture = {imageDir .. 'states/selection_rank_0.png', imageDir .. 'states/selection_rank_1.png', imageDir .. 'states/selection_rank_2.png', imageDir .. 'states/selection_rank_3.png'}, text=''},
-	}
+	[CMD_FORMATION_RANK] = { texture = {imageDir .. 'states/formation_rank_0.png', imageDir .. 'states/formation_rank_1.png', imageDir .. 'states/formation_rank_2.png', imageDir .. 'states/formation_rank_3.png'}, text=''},
+	[CMD_QUEUE_MODE] = { texture = {imageDir .. 'states/queueoff.png', imageDir .. 'states/queueon.png'}, text=''},
+}
 
 -- noone really knows what this table does but it's needed for epic menu to get the hotkey
 local custom_cmd_actions = {	-- states are 2, not states are 1
@@ -314,6 +321,7 @@ local custom_cmd_actions = {	-- states are 2, not states are 1
 	sethaven=1,
 	--build=1,
 	areamex=1,
+	areaterramex=1,
 	disembark=1,
 	mine=1,
 	build=1,
@@ -343,6 +351,7 @@ local custom_cmd_actions = {	-- states are 2, not states are 1
 --	stealth=2, --no longer applicable
 	cloak_shield=2,
 	retreat=2,
+	overreclaim = 0,
 	['luaui noretreat']=2,
 	priority=2,
 	ap_fly_state=2,
@@ -360,6 +369,7 @@ local custom_cmd_actions = {	-- states are 2, not states are 1
 	airstrafe=2,
 	divestate=2,
 	selection_rank = 2,
+	formation_rank = 2,
 }
 
 

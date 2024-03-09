@@ -4,8 +4,11 @@ local dynamicRockData
 include "trackControl.lua"
 include "pieceControl.lua"
 
-local base, body, turret1, sleeve1, barrel1, firepoint1, turret2, sleeve2, gun2, firepoint2
-	= piece("base", "body", "turret1", "sleeve1", "barrel1", "firepoint1", "turret2", "sleeve2", "gun2", "firepoint2")
+local base, body, turret1, sleeve1, barrel1, firepoint1, turret2, sleeve2, barrel2, firepoint2, turret3, sleeve3, barrel3, firepoint3
+	= piece("base", "body", "turret1", "sleeve1", "barrel1", "firepoint1", "turret2", "sleeve2", "barrel2", "firepoint2", "turret3", "sleeve3", "barrel3", "firepoint3")
+
+local dgunning = false
+local available = true
 	
 -- Signal definitions
 local SIG_AIM1 = 1
@@ -47,7 +50,7 @@ rockData = {
 
 local trackData = {
 	wheels = {
-		large = {piece('wheels1'), piece('wheels6')},
+		large = {piece('wheels1'), piece('wheels8')},
 		small = {},
 	},
 	tracks = {},
@@ -64,7 +67,7 @@ local trackData = {
 for i = 1, 3 do
 	trackData.tracks[i] = piece ('tracks' .. i)
 end
-for i = 2, 5 do
+for i = 2, 7 do
 	trackData.wheels.small[i - 1] = piece('wheels' .. i)
 end
 
@@ -81,22 +84,18 @@ local ROCK_X_FIRE_1 = -24
 local aimPoints = {
 	turret1,
 	turret2,
+	turret3,
 }
 local firePoints = {
 	firepoint1,
 	firepoint2,
+	firepoint3,
 }
 
 function RestoreMainGun()
 	Sleep(RESTORE_DELAY)
-	Turn(turret1, y_axis, 0, math.rad(45))
+	Turn(turret1, z_axis, 0, math.rad(45))
 	Turn(sleeve1, x_axis, 0, math.rad(15))
-end
-
-function RestoreSideGun()
-	Sleep(RESTORE_DELAY)
-	Turn(turret2, y_axis, 0, math.rad(120))
-	Turn(sleeve2, x_axis, 0, math.rad(90))
 end
 
 function RestoreBarrel()
@@ -136,24 +135,17 @@ function script.AimWeapon(num, heading, pitch)
 		Signal(SIG_AIM1)
 		SetSignalMask(SIG_AIM1)
 		
-		Turn(turret1, y_axis, heading, math.rad(60))
+		Turn(turret1, z_axis, heading, math.rad(60))
 		Turn(sleeve1, x_axis, -pitch, math.rad(30))
-		WaitForTurn(turret1, y_axis)
+		WaitForTurn(turret1, z_axis)
 		WaitForTurn(sleeve1, x_axis)
 		StartThread(RestoreMainGun)
 		gunHeading = heading
 		return true
-	else
-		Signal(SIG_AIM2)
-		SetSignalMask(SIG_AIM2)
-
-		Turn(turret2, y_axis, heading, math.rad(180))
-		Turn(sleeve2, x_axis, -pitch, math.rad(90))
-		WaitForTurn(turret2, y_axis)
-		WaitForTurn(sleeve2, x_axis)
-
-		StartThread(RestoreSideGun)
-		return true
+	elseif num == 2 then
+		return false
+	elseif num == 3 then
+		return false
 	end
 end
 
@@ -174,8 +166,100 @@ function script.Shot(num)
 	StartThread(GG.ScriptRock.Rock, dynamicRockData[x_axis], gunHeading - hpi, ROCK_FIRE_FORCE)
 	
 	EmitSfx(firepoint1, LARGE_MUZZLE_FLASH_FX)
-	Move(barrel1, z_axis, -5)
+	Move(barrel1, z_axis, -20)
 	StartThread(RestoreBarrel)
+end
+
+local sprayoffset = math.rad(35)
+local maxoffset = math.rad(22.5)
+local minigunrange = 680 * 0.92
+
+local function TurnMinigunsThread()
+	local traveling = 1
+	while dgunning do
+		Turn(turret2, x_axis, maxoffset * traveling, sprayoffset)
+		Turn(turret3, x_axis, maxoffset * traveling, sprayoffset)
+		WaitForTurn(turret2, x_axis)
+		traveling = -traveling
+		Sleep(10)
+	end
+	Turn(turret2, x_axis, 0, sprayoffset * 3)
+	Turn(turret3, x_axis, 0, sprayoffset * 3)
+end
+
+local function MinigunThread()
+    Turn(turret2, y_axis, math.rad(90), 2)
+	Turn(turret3, y_axis, math.rad(-90), 2)
+	WaitForTurn(turret2, y_axis)
+	WaitForTurn(turret3, y_axis)
+	Move(barrel2, z_axis, 13, 9)
+	Move(barrel3, z_axis, 13, 9)
+	WaitForMove(barrel2, z_axis)
+	WaitForMove(barrel3, z_axis)
+	Spin(sleeve2, z_axis, 1.875)
+	Spin(sleeve3, z_axis, -1.875)
+	Sleep(250)
+	Spin(sleeve2, z_axis, 3.75)
+	Spin(sleeve3, z_axis, -3.75)
+	Sleep(250)
+	Spin(sleeve2, z_axis, 7.5)
+	Spin(sleeve3, z_axis, -7.5)
+	Sleep(250)
+	Spin(sleeve2, z_axis, 15)
+	Spin(sleeve3, z_axis, -15)
+	Sleep(250)
+	Spin(sleeve2, z_axis, 30)
+	Spin(sleeve3, z_axis, -30)
+	Sleep(250)
+	Spin(sleeve2, z_axis, 60)
+	Spin(sleeve3, z_axis, -60)
+	local t = 0
+	local offset = 0
+	local traveling = -1
+	local x, y, z, tx, tz, facing
+	dgunning = true
+	StartThread(TurnMinigunsThread)
+	while t <= 10000 do
+		t = t + 33
+		EmitSfx(firepoint2, GG.Script.FIRE_W2)
+		EmitSfx(firepoint3, GG.Script.FIRE_W2)
+		Sleep(33)
+	end
+	dgunning = false
+	Turn(turret2, z_axis, 0, sprayoffset * 3)
+	Turn(turret3, z_axis, 0, sprayoffset * 3)
+	WaitForTurn(turret2, z_axis)
+	Spin(sleeve2, z_axis, 30)
+	Spin(sleeve3, z_axis, -30)
+	Sleep(500)
+	Spin(sleeve2, z_axis, 30)
+	Spin(sleeve3, z_axis, -30)
+	Sleep(500)
+	Spin(sleeve2, z_axis, 15)
+	Spin(sleeve3, z_axis, -15)
+	Sleep(500)
+	Spin(sleeve2, z_axis, 7.5)
+	Spin(sleeve3, z_axis, -7.5)
+	Sleep(500)
+	Spin(sleeve2, z_axis, 3.75)
+	Spin(sleeve3, z_axis, -3.75)
+	Sleep(500)
+	Spin(sleeve2, z_axis, 1.875)
+	Spin(sleeve3, z_axis, -1.875)
+	Sleep(500)
+	Spin(sleeve2, z_axis, 0)
+	Spin(sleeve3, z_axis, 0)
+	Move(barrel2, z_axis, 0, 9)
+	Move(barrel3, z_axis, 0, 9)
+	WaitForMove(barrel2, z_axis)
+	WaitForMove(barrel3, z_axis)
+	Turn(turret2, y_axis, math.rad(0), 2)
+	Turn(turret3, y_axis, math.rad(0), 2)
+end
+
+function Minigun()
+	Spring.SetUnitWeaponState(unitID, 3, "reloadFrame", 2250 + Spring.GetGameFrame())
+	StartThread(MinigunThread)
 end
 
 function script.Killed(recentDamage, maxHealth)
@@ -185,26 +269,20 @@ function script.Killed(recentDamage, maxHealth)
 		return 1
 	elseif (severity < 0.5) then
 		Explode(barrel1, SFX.FALL)
-		Explode(gun2, SFX.SHATTER)
 		Explode(sleeve1, SFX.FALL)
 		Explode(turret1, SFX.SHATTER)
-		Explode(turret2, SFX.FALL)
 		Explode(body, SFX.SMOKE)
 		return 1
 	elseif (severity < 1) then
 		Explode(barrel1, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
-		Explode(gun2, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
 		Explode(sleeve1, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
 		Explode(turret1, SFX.SHATTER)
-		Explode(turret2, SFX.SHATTER)
 		return 2
 	end
 	
 	Explode(barrel1, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
-	Explode(gun2, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
 	Explode(sleeve1, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
 	Explode(turret1, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
-	Explode(turret2, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT)
 	Explode(body, SFX.SHATTER)
 	return 2
 end

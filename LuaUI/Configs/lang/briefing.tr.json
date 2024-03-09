@@ -1,0 +1,16 @@
+{
+	"update_header": "Küçük Güncelleme 0.39.14: Geleceğe Giden Yol Noktası",
+	"shameless_plug" : "Future Wars'tan hoşlanıyorsanız ve geri bildirimlerinizle projeye katkıda bulunmak veya diğer oyuncularla sohbet etmek istiyorsanız discordumuza katılmayı düşünün: https://discord.com/invite/GMUnRGUuSy veya zk'de #fw'ye katılın. Sunucu. Şu anda projeye katkıda bulunacak ve bize yeni bir kat katacak fikirler, grafik sanatçıları ve çevirmenler arıyoruz.",
+	"entry_1" : "Bu güncelleme, son zamanlarda sorunlara yönelik çeşitli düzeltmeleri ele alıyor. Aktif geliştirmeye geri döndüm ve arka planda çeşitli sorunlarla ilgileniyorum. İlk olarak, ızgara katmanında büyük optimizasyonlar yapıldı. Artık sorun yaşamazsınız. enerji kaynakları inşa etmeleri için çok sayıda inşaatçıya emir vererek.",
+	"entry_2" : "Gelişmeler listesinin ikinci sırasında Future Wars AI'nın bir yaması var, dolayısıyla yüklediyseniz lütfen Github'dan güncelleyin. Bu yama, bir fabrika kapandığında oyunun çökmesine neden olan kritik bir hatayı giderir. İlginiz için teşekkürler. raporlar!",
+	"entry_3": "Gelişmelerin son kısmı ve belki de en büyüğü, Athenas ve Strider Merkezleri için komut sıralarının tanıtılmasıdır. Seçili athenalar ile bayrak simgesine tıklayarak, onlar için yol noktalarını düzenleyebilirsiniz. Lütfen bunu bir deneyin ve Anlaşmazlığımız veya #modding ile ilgili geri bildirimlerinizi bildirin.",
+	"entry_4": "Şimdi bazı arka uç haberlerine geçelim: Bazı harika özelliklere sahip yeni bir otomatik yama oluşturucumuz var. Kontrol etmek için #modding veya #fw'ye katılın. Onay listemizden otomatik olarak yama notları oluşturacaktır. Bu süreç mükemmel değil , ancak yama notlarını manuel olarak oluşturmaktan bir adım ötede.",
+	"chicken_header" : "Oyun modu: Tavuklar",
+	"chicken_entry_1" : "Tavuklar büyük ordularla üssünüze topyekün saldırılar düzenlemek ve güçlerini yeniden toplamak için geri çekilmek arasında gidip gelecekler. Saldırılarını zayıflatmak için tavuklar dinlenirken tavuk tüneklerini yok ettiğinizden emin olun",
+	"chicken_entry_2" : "Tavuklar sonunda tehdit olarak bilinen inanılmaz güçlü tavuklar inşa etmeye başlayacaklar. Bitirmeden önce onları yok edin. Yapım aşamasındaki tehditler Raffesia'nın yok edilemez kalkanı tarafından korunur ve bu da onları topçu ateşine karşı bağışık hale getirir.",
+	"chicken_entry_3" : "Kovanın öfkesi zamanla artacak. Kovanın öfkesi %100'e ulaştığında, Tavuk Kraliçe savaş alanına gelecek (sonsuz modda değilseniz) ve tavuklar durmadan saldırmaya başlayacak. Tüm ateş gücünüzü tavuk kraliçesine odaklayın çünkü onun ölümü sürünün parçalanmasına neden olacaktır",
+	"comm_wars_header" : "Oyun modu: Komutan Savaşları",
+	"comm_wars_entry_1" : "Bu oyun modunda sadece komutanınıza erişiminiz var, başka hiçbir şeye erişiminiz yok. Komutanınız artık inşa edemez, sadece onarabilir ve geri alabilir. Komutan morph sistemi aracılığıyla daha fazla modül vererek komutanınızı yükseltin ve düşman komutanlarını yenin!",
+	"comm_wars_entry_2" : "Ek olarak, sadece komutanlara özel bir oyun modunda daha dengeli olması için birçok komutan modülünde ve silahında denge değişiklikleri yapıldı. Denge hala deneyseldir, bu nedenle geri bildirim çok takdir edilecektir",
+	"houserules" : "Ev Kuralları: "
+}

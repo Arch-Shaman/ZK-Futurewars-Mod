@@ -145,31 +145,41 @@ local function IdleAnim()
 end
 
 local function RestoreAfterDelay()
-	Signal(SIG_RESTORE)
-	SetSignalMask(SIG_RESTORE)
-	Sleep(8000)
-	--torso
-	if not dead then
-		Turn(torso, y_axis, 0, math.rad(100))
-		
-		Turn(ruparm, x_axis, 0, math.rad(250))
-		Turn(ruparm, y_axis, 0, math.rad(250))
-		Turn(ruparm, z_axis, math.rad(-(0)), math.rad(250))
-		Turn(rarm, x_axis, 0, math.rad(250))	 --up 2
-		Turn(rarm, y_axis, 0, math.rad(250))
-		Turn(rarm, z_axis, math.rad(-(0)), math.rad(250))	--up -12
-		Turn(flagellum, x_axis, 0, math.rad(90))
-	
-		Turn(luparm, x_axis, 0, math.rad(250))	 --up -9
-		Turn(luparm, y_axis, 0, math.rad(250))
-		Turn(luparm, z_axis, math.rad(-(0)), math.rad(250))
-		Turn(larm, x_axis, 0, math.rad(250))	 --up 5
-		Turn(larm, y_axis, 0, math.rad(250))	 --up -3
-		Turn(larm, z_axis, math.rad(-(0)), math.rad(250))	 --up 22
-		RestorePose()
+	local counter = 8
+	while true do
+		if counter > 0 then
+			counter = counter - 1
+		end
+		if resetRestore then
+			resetRestore = false
+			counter = 8
+		end
+		if counter == 0 then
+			--torso
+			if not dead then
+				Turn(torso, y_axis, 0, math.rad(100))
+				
+				Turn(ruparm, x_axis, 0, math.rad(250))
+				Turn(ruparm, y_axis, 0, math.rad(250))
+				Turn(ruparm, z_axis, math.rad(-(0)), math.rad(250))
+				Turn(rarm, x_axis, 0, math.rad(250))	 --up 2
+				Turn(rarm, y_axis, 0, math.rad(250))
+				Turn(rarm, z_axis, math.rad(-(0)), math.rad(250))	--up -12
+				Turn(flagellum, x_axis, 0, math.rad(90))
+			
+				Turn(luparm, x_axis, 0, math.rad(250))	 --up -9
+				Turn(luparm, y_axis, 0, math.rad(250))
+				Turn(luparm, z_axis, math.rad(-(0)), math.rad(250))
+				Turn(larm, x_axis, 0, math.rad(250))	 --up 5
+				Turn(larm, y_axis, 0, math.rad(250))	 --up -3
+				Turn(larm, z_axis, math.rad(-(0)), math.rad(250))	 --up 22
+				RestorePose()
+			end
+			StartThread(IdleAnim)
+			armsFree = true
+		end
+		Sleep(1000)
 	end
-	StartThread(IdleAnim)
-	armsFree = true
 end
 
 --------------------------------------------------------------------------------
@@ -306,7 +316,7 @@ function script.Create()
 	Hide(lf3)
 	Hide(jet1)
 	Hide(jet2)
-	
+	StartThread(RestoreAfterDelay)
 	if math.random() < 0.5 then
 	Spin(flame1, z_axis, HEATRAY_TURNSPEED)
 	Spin(flame2, z_axis, -HEATRAY_TURNSPEED)
@@ -383,7 +393,7 @@ function script.AimWeapon(num, heading, pitch)
 		Turn(flame1, x_axis, -pitch)
 		Turn(flame2, x_axis, -pitch)
 		WaitForTurn(torso, y_axis)
-		StartThread(RestoreAfterDelay)
+		resetRestore = true
 		return true
 	elseif num == 3 then
 		dgunning = true
@@ -420,7 +430,7 @@ function script.AimWeapon(num, heading, pitch)
 		WaitForTurn(ruparm, x_axis)
 		WaitForTurn(flagellum, x_axis)
 		WaitForTurn(torso, y_axis)
-		StartThread(RestoreAfterDelay)
+		resetRestore = true
 		return true
 	end
 end
@@ -443,17 +453,21 @@ end
 
 function script.BlockShot(num, targetID)
 	if num == 2 then
-		if not targetID or spValidUnitID(targetID) then --try and fix a bug I caught in testing
-			return false
-		else
-			return true
-		end
+		StartThread(DoSomeHax) -- Try harder to fix the bug
 	else
 		if num ~= 1 then
 			return false
 		end
 		local reloadState = Spring.GetUnitWeaponState(unitID, 3, 'reloadState')
 		return not (reloadState and (reloadState < 0 or reloadState < Spring.GetGameFrame()))
+	end
+end
+
+local function DoSomeHax()
+	Sleep(33)
+	local commands = Spring.GetCommandQueue(unitID, 0)
+	if commands == 0 then
+		Spring.GiveOrderToUnit(unitID, CMD.STOP, 0, 0)
 	end
 end
 

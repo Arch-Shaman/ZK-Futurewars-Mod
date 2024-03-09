@@ -39,7 +39,7 @@ if not gadgetHandler:IsSyncedCode() then
 			end
 		end
 		if playsound == f then
-			Spring.PlaySoundFile("sounds/reply/advisor/nuclearthreat.wav", 100)
+			Spring.PlaySoundFile("nukewarning", 100)
 		end
 	end
 	

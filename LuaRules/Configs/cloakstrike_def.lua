@@ -1,107 +1,46 @@
--- reloadTime is in seconds
-
 local StrikeWepDefs = {}
 
-local StrikeWepDefNames = {
-	cloakheavyraid = {
-		persistance = 30,
-		cloakRecharge = 2,    -- NYI
-		maxRecharge = 60,     -- NYI
-		attackDecharge = -1,  -- NYI apparently (None of this matters anyways because Persistence is a thing.)
-		WeaponStats = {
-			[1] = {
-				cloakedWeaponStates = {}, 
-				decloakedWeaponStates = {}, 
-				cloakedWeaponDamages = {
-					[0] = 855, 
-					[1] = 855, 
-					[2] = 855, 
-					[3] = 855, 
-					[4] = 855, 
-					[5] = 855,
-				}, 
-				decloakedWeaponDamages = {
-					[0] = 285, 
-					[1] = 285, 
-					[2] = 285, 
-					[3] = 285, 
-					[4] = 285, 
-					[5] = 285,
-				},
-			}
-		}, 
-		cloakedRulesParam = {
-			selfMoveSpeedChange = 1.25,
-		}, 
-		decloakedRulesParam = {
-			selfMoveSpeedChange = 0.75,
-		}, 
-		updateAttributes = true,
-	}
-}
+-- Some of the old code here did not work as expected due to the way lua handles tables! This has been rewritten to allow balance changes.
 
-local defaultStates = {
-	persistance = 30, 
-	cloakRecharge = 2, 
-	maxRecharge = 60, 
-	attackDecharge = -1, 
-	WeaponStats = {},
-}
-local defaultWeapon = {
-	cloakedWeaponStates = {}, 
-	decloakedWeaponStates = {}, 
-	cloakedWeaponDamages = {
-		[0] = 10000, 
-		[1] = 10000, 
-		[2] = 10000, 
-		[3] = 10000, 
-		[4] = 10000, 
-		[5] = 10000,
-	}, 
-	decloakedWeaponDamages = {
-		[0] = 10000, 
-		[1] = 10000, 
-		[2] = 10000, 
-		[3] = 10000, 
-		[4] = 10000, 
-		[5] = 10000,
-	},
-}
-
-local cpDefsCache = {}
-
-for i=1, #WeaponDefs do
-	local wd = WeaponDefs[i]
-	local cp = wd.customParams
-	if cp.cloakstrike_amp then
-		cpDefsCache[i] = {wd.damages[0], cp.cloakstrike_amp}
-	end
-end
-
-for i=1, #UnitDefs do
-	local ud = UnitDefs[i]
-	local myStates = defaultStates
-	local hasCSWep = false
-	for n=1, #ud.weapons do
-		local wdefid = ud.weapons[n].weaponDef
-		if cpDefsCache[wdefid] then
-			local defaultdmg = cpDefsCache[wdefid][1]
-			local cloakeddmg = cpDefsCache[wdefid][2] * defaultdmg
-			for m=0,5 do --changing defaultWeapon since there is no reason to create a new table
-				defaultWeapon["cloakedWeaponDamages"][m] = cloakeddmg
-				defaultWeapon["decloakedWeaponDamages"][m] = defaultdmg
+for i = 1, #UnitDefs do
+	local def = UnitDefs[i]
+	local cp = def.customParams
+	local duration = tonumber(cp.cloakstrikeduration)
+	if duration then
+		local wepmodifiers = {}
+		local speed = tonumber(cp.cloakstrikespeed) or 1
+		local slowdown = tonumber(cp.cloakstrikeslow) or 1
+		local wepstats = {}
+		for j = 1, #def.weapons do
+			local weapon = WeaponDefs[def.weapons[j].weaponDef]
+			local bonus = tonumber(weapon.customParams.cloakstrike)
+			if bonus then
+				local damagetable = weapon.damages
+				wepstats[j] = {
+					cloakedWeaponStates = {}, -- no idea if this is NYI or what?
+					decloakedWeaponStates = {}, -- ditto
+					cloakedWeaponDamages = {},
+					decloakedWeaponDamages = {},
+				}
+				local defaultvalue = damagetable[0] or 0
+				for k = 0, 5 do
+					--Spring.Echo(k .. ": ", damagetable[k])
+					wepstats[j].cloakedWeaponDamages[k] = (damagetable[k] or defaultvalue) * bonus
+					wepstats[j].decloakedWeaponDamages[k] = (damagetable[k] or defaultvalue)
+				end
 			end
-			myStates["WeaponStats"][n] = defaultWeapon
-			hasCSWep = true
 		end
-	end
-	if hasCSWep then
-		StrikeWepDefNames[ud.name] = myStates
-	end
-end
-for name, data in pairs(StrikeWepDefNames) do
-	if UnitDefNames[name] then
-		StrikeWepDefs[UnitDefNames[name].id] = data
+		StrikeWepDefs[i] = {
+			persistance = duration,
+			cloakRecharge = 2,    -- NYI
+			maxRecharge = 60,     -- NYI
+			attackDecharge = -1,  -- NYI apparently (None of this matters anyways because Persistence is a thing.)
+			WeaponStats = wepstats,
+			cloakedRulesParam = { selfMoveSpeedChange = speed},
+			decloakedRulesParam = { selfMoveSpeedChange = slowdown},
+			updateAttributes = speed ~= slowdown,
+		}
+		--Spring.Echo("[CloakStrike] Added " .. i .. "\nDuration: " .. duration .. "\nCloak Speed: " .. speed .. "\nnormal speed: " .. slowdown)
 	end
 end
 

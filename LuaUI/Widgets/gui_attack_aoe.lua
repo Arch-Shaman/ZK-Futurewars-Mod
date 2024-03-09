@@ -23,10 +23,16 @@ local aoeColor             = {1, 0, 0, 1}
 local aoeLineWidthMult     = 64
 local scatterColor         = {1, 1, 0, 1}
 local scatterLineWidthMult = 1024
+local depthColor           = {1, 0, 0, 0.5}
+local depthLineWidth       = 1
 local circleDivs           = 64
 local minSpread            = 8 --weapons with this spread or less are ignored
 local numAoECircles        = 9
 local pointSizeMult        = 2048
+
+local overrides = {
+	[UnitDefNames["bomberheavy"].id] = 0.6
+}
 
 --------------------------------------------------------------------------------
 --vars
@@ -54,6 +60,7 @@ local detrimentUnitID = nil
 --------------------------------------------------------------------------------
 --speedups
 --------------------------------------------------------------------------------
+local spGetUnitDefID         = Spring.GetUnitDefID
 local GetActiveCommand       = Spring.GetActiveCommand
 local GetCameraPosition      = Spring.GetCameraPosition
 local GetFeaturePosition     = Spring.GetFeaturePosition
@@ -75,6 +82,7 @@ local glColor                = gl.Color
 local glDeleteList           = gl.DeleteList
 local glDepthTest            = gl.DepthTest
 local glDrawGroundCircle     = gl.DrawGroundCircle
+local glLineStipple          = gl.LineStipple
 local glLineWidth            = gl.LineWidth
 local glPointSize            = gl.PointSize
 local glPopMatrix            = gl.PopMatrix
@@ -131,16 +139,16 @@ end
 
 local function GetMouseTargetPosition()
 	local mx, my = GetMouseState()
-	local mouseTargetType, mouseTarget = TraceScreenRay(mx, my, false, true)
+	local mouseTargetType, mouseTarget = TraceScreenRay(mx, my, false, true, false, true)
 
 	if (mouseTargetType == "ground") then
-		return mouseTarget[1], mouseTarget[2], mouseTarget[3]
+		return mouseTarget[1], mouseTarget[2], mouseTarget[3], true
 	elseif (mouseTargetType == "unit") then
 		return GetUnitPosition(mouseTarget)
 	elseif (mouseTargetType == "feature") then
-		local _, coords = TraceScreenRay(mx, my, true, true)
+		local _, coords = TraceScreenRay(mx, my, true, true, false, true)
 		if coords and coords[3] then
-			return coords[1], coords[2], coords[3]
+			return coords[1], coords[2], coords[3], true
 		else
 			return GetFeaturePosition(mouseTarget)
 		end
@@ -354,7 +362,7 @@ local function UpdateSelection()
 
 	for unitDefID, unitIDs in pairs(sel) do
 		if unitDefID ~= "n" then
-			local unitID = unitIDs[1]			
+			local unitID = unitIDs[1]
 		
 			if unitDefID == sumoDefID then
 				sumoSelected = true
@@ -659,7 +667,7 @@ end
 --------------------------------------------------------------------------------
 --dropped
 --------------------------------------------------------------------------------
-local function DrawDroppedScatter(aoe, ee, scatter, v, fx, fy, fz, tx, ty, tz, salvoSize, salvoDelay)
+local function DrawDroppedScatter(aoe, ee, scatter, v, fx, fy, fz, tx, ty, tz, salvoSize, salvoDelay, alphaOverride)
 	local dx = tx - fx
 	local dz = tz - fz
 
@@ -672,6 +680,11 @@ local function DrawDroppedScatter(aoe, ee, scatter, v, fx, fy, fz, tx, ty, tz, s
 	local vertices = {}
 	local currScatter = scatter * v * sqrt(2*fy/g)
 	local alphaMult = min(v * salvoDelay / aoe, 1)
+	if alphaOverride then
+		alphaMult = alphaOverride
+	else
+		alphaMult = min(v * salvoDelay / aoe, 1)
+	end
 
 	for i=1,salvoSize do
 		local delay = salvoDelay * (i - (salvoSize + 1) / 2)
@@ -699,6 +712,20 @@ local function DrawOrbitalScatter(scatter, tx, ty, tz)
 	glColor(1,1,1,1)
 	glLineWidth(1)
 end
+
+--------------------------------------------------------------------------------
+--underwater
+--------------------------------------------------------------------------------
+local function DrawWaterDepth(tx, ty, tz)
+	glColor(depthColor)
+	glLineWidth(depthLineWidth)
+	glLineStipple(1, 255)
+	glBeginEnd(GL_LINES, VertexList, {{tx,0,tz},{tx,ty,tz}})
+	glLineStipple(false)
+	glColor(1,1,1,1)
+	glLineWidth(1)
+end
+
 --------------------------------------------------------------------------------
 --callins
 --------------------------------------------------------------------------------
@@ -716,8 +743,8 @@ end
 
 function widget:DrawWorld()
 	mouseDistance = GetMouseDistance() or 1000
-
-	local tx, ty, tz = GetMouseTargetPosition()
+	local alphaOverride
+	local tx, ty, tz, targetIsGround = GetMouseTargetPosition()
 	if (not tx) then
 		return
 	end
@@ -737,6 +764,7 @@ function widget:DrawWorld()
 	if (cmd == CMD_ATTACK and aoeUnitInfo) then
 		info = aoeUnitInfo
 		unitID = aoeUnitID
+		alphaOverride = overrides[spGetUnitDefID(unitID)]
 	elseif (cmd == CMD_MANUALFIRE and dgunUnitInfo) then
 		info = dgunUnitInfo
 		local extraDrawParam = Spring.GetUnitRulesParam(dgunUnitID, "secondary_range")
@@ -764,12 +792,14 @@ function widget:DrawWorld()
 		fy = fy + GetUnitRadius(unitID)
 	end
 
+	if ty < 0 and targetIsGround then
+		DrawWaterDepth(tx, ty, tz)
+	end
 	if (not info.waterWeapon) then
 		ty = max(0, ty)
 	end
 
 	local weaponType = info.type
-
 	if (weaponType == "noexplode") then
 		DrawNoExplode(info.aoe, fx, fy, fz, tx, ty, tz, info.range)
 	elseif (weaponType == "ballistic") then
@@ -787,7 +817,7 @@ function widget:DrawWorld()
 		DrawAoE(tx, ty, tz, info.aoe, info.ee)
 		DrawDirectScatter(info.scatter, fx, fy, fz, tx, ty, tz, info.range, GetUnitRadius(unitID))
 	elseif (weaponType == "dropped") then
-		DrawDroppedScatter(info.aoe, info.ee, info.scatter, info.v, fx, info.h, fz, tx, ty, tz, info.salvoSize, info.salvoDelay)
+		DrawDroppedScatter(info.aoe, info.ee, info.scatter, info.v, fx, info.h, fz, tx, ty, tz, info.salvoSize, info.salvoDelay, alphaOverride)
 	elseif (weaponType == "wobble") then
 		DrawAoE(tx, ty, tz, info.aoe, info.ee)
 		DrawWobbleScatter(info.scatter, fx, fy, fz, tx, ty, tz, info.rangeScatter, info.range)

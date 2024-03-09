@@ -1,0 +1,5 @@
+{
+	"ai_warning" : "WARNUNG: Der KI-Controller, %{name}, %{reason}! Die folgenden KIs bleiben bis zu ihrer Rückkehr im Leerlauf:",
+	"ai_warning_disconnected" : "hat die Verbindung getrennt",
+	"ai_warning_left_prematurely" : "wurde nicht geladen oder verlassen, bevor das Spiel begann"
+}

@@ -298,7 +298,9 @@ function AutoAttack_Thread()
 				local reloadFrame = gameFrame + WAVE_RELOAD / reloadMult
 				spSetUnitWeaponState(unitID, 3, {reloadFrame = reloadFrame})
 				EmitSfx(emit, GG.Script.UNIT_SFX1)
-				EmitSfx(emit, GG.Script.DETO_W2)
+				--EmitSfx(emit, GG.Script.DETO_W2)
+				local x, y, z = Spring.GetUnitPosition(unitID)
+				GG.AddBlastwave(waveWeaponDef.id, x, y, z, unitID, -1, Spring.GetUnitAllyTeam(unitID))
 				FireAnim()
 			end
 		end

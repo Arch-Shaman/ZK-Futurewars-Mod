@@ -9,15 +9,37 @@ local turret, launcher, firep1, firep2 = piece('turret', 'launcher', 'firep1', '
 local explodables1 = {turret, hinge1, hinge2} -- not visible on wreck so we can throw these
 local explodables2 = {door2, door1, launcher}
 local smokePiece = { body, turret }
-
+local armorValue = UnitDefs[unitDefID].armoredMultiple
 local gun = false
 local closed = true
 local stuns = {false, false, false}
 local disarmed = false
 local currentTask = 0
-local openrate = math.rad(275*2)
+local openrate = math.rad(275*6)
 
 local SigAim = 1
+
+local spGetUnitHealth = Spring.GetUnitHealth
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spGetUnitIsStunned = Spring.GetUnitIsStunned
+local spSetUnitHealth = Spring.SetUnitHealth
+local BUNKERED_AUTOHEAL = tonumber (UnitDef.customParams.armored_regen or 20) / 2 -- applied every 0.5s
+
+local function ArmoredThread()
+	local stunned_or_inbuild = false
+	while closed do
+		stunned_or_inbuild = spGetUnitIsStunned(unitID) or (spGetUnitRulesParam(unitID, "disarmed") == 1)
+		if not stunned_or_inbuild then
+			local hp = spGetUnitHealth(unitID)
+			local slowMult = (spGetUnitRulesParam(unitID,"baseSpeedMult") or 1)
+			if hp then
+				local newHp = hp + slowMult*BUNKERED_AUTOHEAL
+				spSetUnitHealth(unitID, newHp)
+			end
+		end
+		Sleep(500)
+	end
+end
 
 local function Close ()
 	currentTask = 1
@@ -35,11 +57,12 @@ local function Close ()
 	if disarmed then return	end
 
 	currentTask = 0
-	Spring.SetUnitArmored (unitID, true)
+	GG.SetUnitArmor(unitID, armorValue)
+	StartThread(ArmoredThread)
 end
 
 local function RestoreAfterDelay()
-	Sleep (5000)
+	Sleep (1500)
 	Close()
 end
 
@@ -47,7 +70,7 @@ local function Open ()
 	StartThread (RestoreAfterDelay)
 	if not closed then return end
 	currentTask = 2
-	Spring.SetUnitArmored (unitID, false)
+	GG.SetUnitArmor(unitID, 1.0)
 
 	Turn (door1, z_axis, 0, openrate)
 	Turn (door2, z_axis, 0, openrate)

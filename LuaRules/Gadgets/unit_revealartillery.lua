@@ -30,6 +30,7 @@ local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitIsCloaked = Spring.GetUnitIsCloaked
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetPositionLosState = Spring.GetPositionLosState
+local spGetUnitLosState = Spring.GetUnitLosState
 
 -- CONFIG --
 local wantedDefs = {}
@@ -59,8 +60,11 @@ local function Reveal(unitID)
 			--Spring.Echo(allyTeamID .. ": In radar: " .. tostring(inRadar))
 			if inRadar then
 				--Spring.Echo("Setting LOS Mask")
-				spSetUnitLosMask(unitID, allyTeamID, 15) -- see: https://github.com/ZeroK-RTS/Zero-K/blob/master/LuaRules/Gadgets/unit_show_shooter.lua
-				spSetUnitLosState(unitID, allyTeamID, 15)
+				local unitLosState = spGetUnitLosState(unitID, allyTeamID, true)
+				if unitLosState == nil or unitLosState ~= 15 then
+					spSetUnitLosMask(unitID, allyTeamID, 15) -- see: https://github.com/ZeroK-RTS/Zero-K/blob/master/LuaRules/Gadgets/unit_show_shooter.lua
+					spSetUnitLosState(unitID, allyTeamID, 15)
+				end
 			else
 				spSetUnitLosMask(unitID, allyTeamID, 0)
 				spSetUnitLosState(unitID, allyTeamID, 0)
@@ -76,10 +80,17 @@ local function Unreveal(unitID)
 	for i = 1, #allyTeams do
 		local allyTeamID = allyTeams[i]
 		if myAllyTeam ~= allyTeamID then
-			spSetUnitLosMask(unitID, allyTeamID, 0)
-			spSetUnitLosState(unitID, allyTeamID, 0)
+			if not GG.IsUnitBeingRevealedBySensorTag(unitID, allyTeamID) then
+				spSetUnitLosMask(unitID, allyTeamID, 0)
+				spSetUnitLosState(unitID, allyTeamID, 0)
+			end
 		end
 	end
+end
+
+local function IsUnitRevealedArtillery(unitID)
+	local data = IterableMap.Get(units, unitID)
+	return data ~= nil
 end
 
 local function CheckReveal(unitID)
@@ -142,10 +153,14 @@ function gadget:UnitDecloaked(unitID)
 	end
 end
 
+function gadget:Initialize()
+	GG.IsUnitRevealedArtillery = IsUnitRevealedArtillery
+end
+
 function gadget:GameFrame(f)
-	if f%30 == 0 then -- 2hz
+	if f%15 == 0 then -- 2hz
 		for unitID, timer in IterableMap.Iterator(units) do
-			timer = timer - 1
+			timer = timer - 0.5
 			IterableMap.Set(units, unitID, timer)
 			--Spring.Echo("[RevealArty] " .. unitID .. ": " .. timer)
 			if timer == 0 then

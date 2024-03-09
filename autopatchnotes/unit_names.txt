@@ -1,0 +1,259 @@
+Glint
+Wasp
+Longbow
+Forsaken
+Strider Plate
+Ambusher Factory
+Lobster
+Polisher
+Missile Silo
+Wolf
+Fusion Reactor
+Chicken Queen
+Barbarian
+Listener
+Imp
+Sentry
+Basilisk
+Spear
+Blade
+Digger
+Leaper
+Lobber
+Urchin
+Colossus
+Mirador
+Roc
+Skyshield
+Drone
+Cornea
+Limpet
+Rover Assembly
+Hardpoint
+Nebula
+Flail
+Sparky
+Chicken Tube
+Starlight
+Crab
+Lancelet
+Storage
+Sapper
+Angler
+Rejuvenator
+Clarity
+Pestle
+Hades
+RTG
+Trisula
+Striker
+Aegis
+Safeguard
+Duster
+Rafflesia
+Empirical DPS thing
+Bayonet
+Conservator
+Singularity Reactor
+Menace
+Spidermonkey
+Vigilante
+Firefly
+Blobber
+Advanced Geothermal
+Caretaker
+Terraform
+Talon
+Energy Pylon
+Divinity
+Blooper
+Dodo
+Hella
+Armageddon
+Wurm
+Spicula
+Eclipse
+Snare
+Solar Collector
+Aurora
+Shieldbot Factory
+Ambusher Plate
+Shieldbot Plate
+Spider Plate
+Jumpbot Plate
+Rover Plate
+Tank Plate
+Hovercraft Plate
+Amphbot Plate
+Ship Plate
+Plane Plate
+Gunship Plate
+Cockatrice
+Pike
+Skuttle
+Commander Production Line
+Mediator
+Chicken
+Sporeshooter
+Hailstorm
+Oblivion
+Silencer MkIII
+Punisher
+Widow
+Breaker
+Sentinel
+Longsword
+Badger
+Ultimatum
+Metal Extractor
+Fractal
+Grebe
+Lance
+Parcel
+Iris
+Weaver
+Claymore
+Purifier
+Neeb Comm
+Airplane Plant
+Seeker
+Inferno
+Amphbot Factory
+Shipyard
+Ravager
+Disco Rave Party
+Parapet
+Waylayer
+Revolver
+Preserver
+Roost
+Support Commander
+Python
+Responder
+Lurker
+Trident
+Dampener
+Charon
+Titan
+Geothermal Generator
+Prosperity
+Pathfinder
+Blimpy
+Viper
+Athena
+Sonar Station
+Huntsman
+Jack
+Flare
+Hovercraft Platform
+Dusk
+Cobbler
+Antinuke
+Liberator
+Phantom
+Garmr Cannon
+Disperser
+Disbander
+Radar Tower
+Bombard
+Anarchid
+Sunbeam
+Funnelweb
+Assailant
+Greater Spire
+Pulse
+Spider Factory
+White Dragon
+Spiker
+Vulcan
+Siege Commander
+Riot Commander
+Brood Princess
+Gremlin
+Impaler
+Zenith
+Gatekeeper
+Twilight
+LOS Provider
+Lamp
+Wake
+Ghost Commander
+Shockley
+Strider Hub
+Conch
+Commando
+Hermit
+Azimuth
+Firewall
+Lynx
+Pigeon
+Assassin
+Placeholder
+Bloom
+Djinn
+Mariner
+Cutter
+Swell
+Crest
+Seawolf
+Charybdis
+Kingstad
+Tsunami
+Dominion
+Undercurrent
+Shogun
+Gunship Plant
+Bastion
+Newton
+Vanquisher
+Guardian
+Quake
+Scorpion
+Dominatrix
+Tank Foundry
+Mogul
+Siren
+Empíreas
+Crucible
+Jumpbot Factory
+Gravitas
+Puppy
+Razor
+Spike
+Firestorm
+Thunderclap
+Advanced Radar
+Ripple
+Aspis
+Arsonist
+Orion
+Trailblazer
+Mirage
+Tracer
+Vindicator
+Froth
+Crane
+Pistin
+Whirlwind
+Warden
+Surge
+Milta
+Deserter
+Quetzalcoatl
+Heron
+Rampart
+Morningstar
+Tiamat
+Heretic
+Airpad
+Recon Commander
+Gnat
+Firebrand
+Apogee
+Merlin
+Breacher
+Agitator
+Fenix
+Bully
+Riptide
+Commander

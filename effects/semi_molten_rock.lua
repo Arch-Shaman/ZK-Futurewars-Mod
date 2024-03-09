@@ -199,19 +199,6 @@ return {
         texture            = [[plasma]],
       },
     },
-	napalm = {
-      air                = true,
-      class              = [[CExpGenSpawner]],
-      count              = 1,
-      ground             = true,
-      water              = true,
-      properties = {
-        delay              = 0,
-        explosiongenerator = [[custom:napalm_gunshipbomb]],
-        pos                = [[0, 0, 0]],
-      },
-	
-	}
   },
 
   ["smr"] = { --recoloured xamelimpact
@@ -408,19 +395,6 @@ return {
         texture            = [[flare]],
       },
     },
-	napalm = {
-      air                = true,
-      class              = [[CExpGenSpawner]],
-      count              = 1,
-      ground             = true,
-      water              = true,
-      properties = {
-        delay              = 0,
-        explosiongenerator = [[custom:napalm_firewalker_small]],
-        pos                = [[0, 0, 0]],
-      },
-	
-	}
   },
 
 

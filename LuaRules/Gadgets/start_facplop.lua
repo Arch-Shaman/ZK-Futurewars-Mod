@@ -1,3 +1,7 @@
+if not (gadgetHandler:IsSyncedCode()) then
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Facplop",
@@ -8,10 +12,6 @@ function gadget:GetInfo()
 		layer     = -1, -- Before terraforming gadget (for facplop terraforming)
 		enabled   = true,  --  loaded by default?
 	}
-end
-
-if not (gadgetHandler:IsSyncedCode()) then
-	return
 end
 
 include("LuaRules/Configs/start_facplops.lua")
@@ -74,6 +74,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		SETHEALTH.health = maxHealth
 		spSetUnitHealth(unitID, SETHEALTH)
 		local x, y, z = spGetUnitPosition(unitID)
+		GG.Lagmonitor.RegisterFacPlop(unitID, builderID)
 		spSpawnCEG("teleport_in", x, y, z)
 		-- This is obsolete, but still live. See ZKDev chat.
 		--[[local _, playerID, _, isAI, _, allyTeam = spGetTeamInfo(unitTeam, false)

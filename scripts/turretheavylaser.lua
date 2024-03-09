@@ -1,6 +1,7 @@
 include "constants.lua"
 include "pieceControl.lua"
-include "aimPosTerraform.lua"
+
+local scriptReload = include("scriptReload.lua")
 ----------------------------------------------------------------------------------------------
 -- Model Pieces
 
@@ -9,13 +10,23 @@ local flares = {piece('flare1', 'flare2', 'flare3')}
 
 local smokePiece = {basebottom, basemid, basetop}
 
+local gameSpeed = Game.gameSpeed
+local RELOAD_TIME = tonumber(WeaponDefs[UnitDefs[unitDefID].weapons[1].weaponDef].customParams.script_reload) * gameSpeed
+local ammoMax = tonumber(WeaponDefs[UnitDefs[unitDefID].weapons[1].weaponDef].customParams.script_burst)
+local shot = 0
+local gun = {}
+
+for i = 0, ammoMax - 1 do
+	gun[i] = {firepoint = flares[(i + 1)%3 + 1 ], loaded = true}
+end
+
 ----------------------------------------------------------------------------------------------
 -- Local Constants
 
 local BASETOP_TURN_SPEED = math.rad(200)
 local BASEMID_TURN_SPEED = math.rad(230)
 local HOUSING_TURN_SPEED = math.rad(200)
-local SPINDLE_TURN_SPEED = math.rad(300)
+local SPINDLE_TURN_SPEED = math.rad(600)
 
 local firing = false
 local index = 2
@@ -32,6 +43,8 @@ local SIG_AIM = 2
 -- Localising Functions
 
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
+
 
 ----------------------------------------------------------------------------------------------
 -- Local Animation Functions
@@ -47,12 +60,13 @@ end
 
 function script.Create()
 	local ud = UnitDefs[unitDefID]
+	scriptReload.SetupScriptReload(ammoMax, RELOAD_TIME)
 	local midTable = ud.model
 	
 	local midpos = {midTable.midx, midTable.midy,      midTable.midz}
 	local aimpos = {midTable.midx, midTable.midy + 15, midTable.midz}
 
-	GG.SetupAimPosTerraform(unitID, ud.floatOnWater, midpos, aimpos, midTable.midy + 15, midTable.midy + 60, 15, 48)
+	GG.Script_SetupAimPosTerraform(unitID, ud.floatOnWater, midpos, aimpos, midTable.midy + 15, midTable.midy + 60, 15, 48)
 	
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 end
@@ -60,7 +74,7 @@ end
 ----------------------------------------------------------------------------------------------
 -- Weapon Animations
 
-function script.QueryWeapon(num) return flares[index] end
+function script.QueryWeapon(num) return gun[shot].firepoint end
 function script.AimFromWeapon(num) return holder end
 
 local function StunThread ()
@@ -98,27 +112,36 @@ function script.AimWeapon(num, heading, pitch)
 	end
 
 	local slowMult = (Spring.GetUnitRulesParam(unitID,"baseSpeedMult") or 1)
-	Turn(basetop, y_axis, heading, BASETOP_TURN_SPEED*slowMult)
+	Turn(basetop, z_axis, heading, BASETOP_TURN_SPEED*slowMult)
 	Turn(housing, x_axis, -pitch, HOUSING_TURN_SPEED*slowMult)
-	WaitForTurn(basetop, y_axis)
+	WaitForTurn(basetop, z_axis)
 	WaitForTurn(housing, x_axis)
 	StartThread (RestoreAfterDelay)
 	return (spGetUnitRulesParam(unitID, "lowpower") == 0)
 end
 
-function script.Shot(num)
-	index = index - 1
-	if index == 0 then
-		index = #flares
+local function reload(num)
+	scriptReload.GunStartReload(num)
+	gun[num].loaded = false
+	SleepAndUpdateReload(num, RELOAD_TIME)
+	gun[num].loaded = true
+	if scriptReload.GunLoaded(num) then
+		shot = 0
 	end
-	EmitSfx(flares[index], GG.Script.UNIT_SFX2)
+end
+
+function script.Shot(num)
+	StartThread(reload, shot)
+	EmitSfx(gun[shot].firepoint, GG.Script.UNIT_SFX2)
+	shot = (shot + 1)%ammoMax
 	local rz = select(3, Spring.UnitScript.GetPieceRotation(spindle))
-	Turn(spindle, z_axis, rz + math.rad(120),SPINDLE_TURN_SPEED)
+	Turn(spindle, z_axis, rz + math.rad(120), SPINDLE_TURN_SPEED)
 end
 
 function script.BlockShot(num, targetID)
 	-- Block for less than full damage and time because the target may dodge.
-	return (targetID and (GG.DontFireRadar_CheckBlock(unitID, targetID) or GG.OverkillPrevention_CheckBlock(unitID, targetID, 680.1, 18))) or false
+	local ammoReady = not gun[shot].loaded
+	return ammoReady or (targetID and (GG.DontFireRadar_CheckBlock(unitID, targetID) or GG.OverkillPrevention_CheckBlock(unitID, targetID, 825.1, 18))) or false
 end
 
 

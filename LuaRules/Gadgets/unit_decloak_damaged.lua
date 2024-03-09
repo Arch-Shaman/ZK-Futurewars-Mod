@@ -1,3 +1,7 @@
+if (not gadgetHandler:IsSyncedCode()) then
+	return false  --  silent removal
+end
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -31,10 +35,6 @@ local unitWantCloakCommandDesc = {
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-
-if (not gadgetHandler:IsSyncedCode()) then
-	return false  --  silent removal
-end
 
 local alliedTrueTable = {allied = true}
 
@@ -390,6 +390,10 @@ function gadget:UnitCreated(unitID, unitDefID)
 			Spring.RemoveUnitCmdDesc(unitID, cloakDescID)
 		end
 	end
+end
+
+function GG.ReinitCloak(unitID, unitDefID)
+	gadget:UnitCreated(unitID, unitDefID)
 end
 
 function gadget:Initialize()

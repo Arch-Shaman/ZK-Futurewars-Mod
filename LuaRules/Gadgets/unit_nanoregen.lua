@@ -45,8 +45,10 @@ for i = 1, #UnitDefs do
 	end
 end
 
+local configoverrides = {} -- used to add commanders
+
 function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
-	if config[unitDefID] then
+	if config[unitDefID] or configoverrides[unitID] then
 		units[unitID] = unitDefID
 	end
 end
@@ -55,27 +57,25 @@ function gadget:GameFrame(f)
 	if f%updaterate == 3 then -- before idle regen.
 		for id, unitdef in pairs(units) do
 			local hp, maxhp = spGetUnitHealth(id)
-			if hp then
-				local data = config[unitdef]
+			if hp and hp < maxhp then
+				local data = configoverrides[id] or config[unitdef]
 				local emped = Spring.GetUnitIsStunned(id)
 				local actualregen = (data.regen * (1 - (spGetUnitRulesParam(id, "slowState") or 0))) * (30 / updaterate) * min(1/(max(hp, 1)/maxhp), data.maxregenmult)
 				if emped then
 					actualregen = 0
 				end
 				spSetUnitRulesParam(id, "nanoregen", actualregen, INLOS)
-				if hp < maxhp then
-					hp = min(hp + actualregen, maxhp)
-					spSetUnitHealth(id, hp)
-					if hp == maxhp then
-						units[id] = nil
-						spSetUnitRulesParam(id, "nanoregen", nil)
-					end
-				else
+				hp = min(hp + actualregen, maxhp)
+				spSetUnitHealth(id, hp)
+				if hp == maxhp then
 					units[id] = nil
 					spSetUnitRulesParam(id, "nanoregen", nil)
 				end
+			elseif hp == nil then
+				units[id] = nil
 			else
 				units[id] = nil
+				spSetUnitRulesParam(id, "nanoregen", nil)
 			end
 		end
 	end
@@ -84,5 +84,18 @@ end
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	units[unitID] = nil
 	spSetUnitRulesParam(unitID, "nanoregen", nil)
+	configoverrides[unitID] = nil
 end
 
+local function AddUnit(unitID, regen, maxregenmult)
+	configoverrides[unitID] = {regen = regen, maxregenmult = maxregenmult}
+	spSetUnitRulesParam(unitID, "commander_regen", regen, INLOS)
+	spSetUnitRulesParam(unitID, "commander_max", maxregenmult, INLOS)
+	units[unitID] = Spring.GetUnitDefID(unitID) 
+end
+
+local function RemoveUnit(unitID)
+	configoverrides[unitID] = nil
+end
+
+GG.NanoRegen = {AddUnit = AddUnit, RemoveUnit}

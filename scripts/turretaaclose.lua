@@ -34,6 +34,7 @@ local SIG_SPIN = 2
 local RESTORE_DELAY = 2000
 
 local gameSpeed = Game.gameSpeed
+local reloadTime = 4.7
 
 local function TracerThread()
 	while true do
@@ -45,7 +46,7 @@ local function TracerThread()
 			lockprogress = 0
 			ready = false
 		end
-		if lockprogress > 20 and not ready then
+		if lockprogress > 10 and not ready and currenttarget then
 			ready = true
 			local x, y, z = Spring.GetUnitPosition(currenttarget)
 			GG.PlayFogHiddenSound("sounds/weapon/laser/archer-trackingcomplete.wav", 2, x, y, z)
@@ -94,8 +95,8 @@ function script.AimWeapon(num, heading, pitch)
 	--local _, curHeading = Spring.GetUnitPieceDirection(unitID, turret)
 	--local curPitch = Spring.GetUnitPieceDirection(unitID, launcher1)
 	--
-	--local diffHeading = math.pi - math.abs((curHeading - heading)%GG.Script.tau - math.pi)
-	--local diffPitch = math.pi - math.abs((curPitch + pitch)%GG.Script.tau - math.pi)
+	--local diffHeading = math.pi - math.abs((curHeading - heading)%math.tau - math.pi)
+	--local diffPitch = math.pi - math.abs((curPitch + pitch)%math.tau - math.pi)
 	--
 	--local sleepTime = (diffHeading/math.rad(200))*1000 - 300
 	--Spring.Echo(sleepTime)
@@ -116,7 +117,7 @@ local function reload(num)
 	scriptReload.GunStartReload(num)
 	gun[num].loaded = false
 
-	SleepAndUpdateReload(num, 6 * gameSpeed)
+	SleepAndUpdateReload(num, reloadTime * gameSpeed)
 
 	if scriptReload.GunLoaded(num) then
 		shot = 0
@@ -162,7 +163,7 @@ function script.BlockShot(num, targetID)
 end
 
 function script.Create()
-	scriptReload.SetupScriptReload(4, 6 * gameSpeed)
+	scriptReload.SetupScriptReload(4, reloadTime * gameSpeed)
 	StartThread(GG.Script.SmokeUnit, unitID, {base})
 	StartThread(RestoreAfterDelay)
 	StartThread(TracerThread)

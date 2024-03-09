@@ -1,3 +1,7 @@
+if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
+	return
+end
+
 function gadget:GetInfo()
   return {
     name      = "Sweepfire",
@@ -8,10 +12,6 @@ function gadget:GetInfo()
     layer     = 5,
     enabled   = true,
   }
-end
-
-if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
-	return
 end
 
 -- Speedups --
@@ -26,6 +26,7 @@ local spGetUnitWeaponTarget = Spring.GetUnitWeaponTarget
 local spGetUnitWeaponState = Spring.GetUnitWeaponState
 local spGetUnitHeading = Spring.GetUnitHeading
 local spGetGameFrame = Spring.GetGameFrame
+local spValidUnitID = Spring.ValidUnitID
 local spUtilitiesGetEffectiveWeaponRange = Spring.Utilities.GetEffectiveWeaponRange
 local cos = math.cos
 local sin = math.sin
@@ -70,7 +71,7 @@ local minelayer_desc = {
 
 -- Variables --
 local UnitData = IterableMap.New()
-local debug = false
+local debugMode = false
 local CommandOrder = 123456
 local overrides = {}
 
@@ -93,7 +94,7 @@ local function PrintConfig()
 	DebugEcho("Starting Game with configuration: " .. str)
 end
 
-if debug then
+if debugMode then
 	PrintConfig()
 end
 
@@ -134,9 +135,9 @@ local function GetLowestHeightOnCircle(x, z, radius, points)
 	return lowest
 end
 
-local function GetUnitRange(unitID, weaponNum, runs)
+local function GetUnitRange(unitID, weaponNum, runs, unitDefID)
 	local x, y, z = spGetUnitPosition(unitID)
-	local unitDefID = spGetUnitDefID(unitID)
+	--local unitDefID = spGetUnitDefID(unitID)
 	local weapondefid = UnitDefs[unitDefID].weapons[weaponNum].weaponDef
 	local weapondef = WeaponDefs[weapondefid]
 	local originalrange = weapondef.range
@@ -166,7 +167,7 @@ end
 local function CalculateAngle(x, z, targetx, targetz) -- first set of coords: center, second: point
 	--local heading = GetUnitHeading(unitID)
 	local angle = atan2(targetz - z, targetx - x )
-	if debug then
+	if debugMode then
 		DebugEcho("Initial heading: " .. deg(angle))
 	end
 	return angle -- Used for determining the center of the arc.
@@ -186,7 +187,7 @@ local function UpdateOffset(unitID, weaponID)
 	local configuration = config[data.unitdef][weaponID]
 	local currentoffset = data.weaponstates[weaponID].currentoffset
 	local offset = currentoffset + (((data.weaponstates[weaponID].reversed and -1) or 1) * configuration.step)
-	if debug then
+	if debugMode then
 		DebugEcho(unitID .. " Offset: " .. currentoffset .. " -> " .. offset)
 	end
 	data.weaponstates[weaponID].currentoffset = offset
@@ -197,11 +198,11 @@ end
 
 local function UpdateFiringPoint(unitID, weapon, angle, unitdef)
 	local x, y, z = spGetUnitPosition(unitID, true)
-	local range = GetUnitRange(unitID, weapon, 1)
+	local range = GetUnitRange(unitID, weapon, 1, unitdef)
 	local myconfig = config[unitdef][weapon]
 	if myconfig.minelayer then
 		range = random(ceil(range * 0.4), range)
-		if debug then
+		if debugMode then
 			DebugEcho("New range: " .. range)
 		end
 	end
@@ -211,7 +212,7 @@ end
 
 local function GetWeaponIsFiringAtSomething(unitID, weaponID)
 	local type, isUserTarget = spGetUnitWeaponTarget(unitID, weaponID)
-	if debug then
+	if debugMode then
 		DebugEcho("isUser: " .. tostring(isUserTarget) .. "\ntype: " .. tostring(type) .. "\nReturn: " .. tostring(type == 1 or isUserTarget == true))
 	end
 	return type == 1 or isUserTarget == true
@@ -219,7 +220,7 @@ end
 
 
 local function AddUnit(unitID, cmdParams)
-	if debug then
+	if debugMode then
 		local paramstr = ''
 		if type(cmdParams):lower() == 'table' then
 			for id, data in pairs(cmdParams) do
@@ -245,7 +246,7 @@ local function AddUnit(unitID, cmdParams)
 end
 
 local function CheckUnitHasTargetInRange(unitID, range)
-	if debug then
+	if debugMode then
 		DebugEcho("HasTargetInRange: " .. tostring(spGetUnitNearestEnemy(unitID, range, true) ~= nil))
 	end
 	return spGetUnitNearestEnemy(unitID, range, true) ~= nil
@@ -255,7 +256,7 @@ local function CheckUnitNeedsSweeping(unitID, def)
 	local range = 0
 	for i = 1, #UnitDefs[def].weapons do
 		if config[def][ReverseLookup(def, i)] ~= nil then
-			local myrange = GetUnitRange(unitID, i, 1)
+			local myrange = GetUnitRange(unitID, i, 1, def)
 			local isfiring = GetWeaponIsFiringAtSomething(unitID, i)
 			if isfiring then
 				return false
@@ -326,6 +327,10 @@ function gadget:UnitDestroyed(unitID)
 	end
 end
 	
+function gadget:AllowCommand_GetWantedCommand()
+	local wanted = {[CMD_SWEEPFIRE] = true, [CMD_SWEEPFIRE_MINES] = true, [CMD.STOP] = true}
+	return wanted
+end
 
 function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOptions) -- route commands.
 	if cmdID == CMD_SWEEPFIRE or cmdID == CMD_SWEEPFIRE_MINES then
@@ -335,48 +340,52 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
 			UpdateUnitInfo(unitID, cmdParams)
 		end
 		return false
-	elseif cmdID == CMD.STOP then
+	else
+		GG.RemoveTemporaryPosTarget(unitID)
 		RemoveUnit(unitID)
 		return true
 	end
-	return true
 end
 
 function gadget:GameFrame(f)
 	for id, data in IterableMap.Iterator(UnitData) do
 		if data.nextupdate <= f then
-			local wantssweep = CheckUnitNeedsSweeping(id, data.unitdef)
-			if wantssweep then -- we have no target, so we can sweep away.
-				data.sweeping = true
-				local configuration = overrides[id] or config[data.unitdef]
-				local nextupdate = math.huge
-				for w = 1, #configuration do
-					local weaponnum = configuration[w].weaponNum
-					local reload = spGetUnitWeaponState(id, weaponnum, "reloadState")
-					local potential = min(f + floor(WeaponDefs[UnitDefs[data.unitdef].weapons[weaponnum].weaponDef].reload * 30), reload)
-					if potential < nextupdate then
-						nextupdate = potential
-					end
-					if reload == nil or reload <= f then -- we're ready to go
-						if configuration[w].centerreadjust then
-							data.initialangle = GetUnitHeading(id)
-						end
-						UpdateOffset(id, weaponnum)
-						nextupdate = f + ((configuration[w].fastupdate and 0) or 3)
-						if debug then
-							DebugEcho("Next update: " .. nextupdate)
-						end
-						local wantedangle = data.weaponstates[weaponnum].currentoffset + data.initialangle
-						UpdateFiringPoint(id, weaponnum, wantedangle, data.unitdef)
-					end
-				end
-				data.nextupdate = nextupdate
+			if not spValidUnitID(id) then
+				IterableMap.Remove(UnitData, id)
 			else
-				if data.sweeping then
-					GG.RemoveTemporaryPosTarget(id)
-					data.sweeping = false
+				local wantssweep = CheckUnitNeedsSweeping(id, data.unitdef)
+				if wantssweep then -- we have no target, so we can sweep away.
+					data.sweeping = true
+					local configuration = overrides[id] or config[data.unitdef]
+					local nextupdate = math.huge
+					for w = 1, #configuration do
+						local weaponnum = configuration[w].weaponNum
+						local reload = spGetUnitWeaponState(id, weaponnum, "reloadState")
+						local potential = min(f + floor(WeaponDefs[UnitDefs[data.unitdef].weapons[weaponnum].weaponDef].reload * 30), reload)
+						if potential < nextupdate then
+							nextupdate = potential
+						end
+						if reload == nil or reload <= f then -- we're ready to go
+							if configuration[w].centerreadjust then
+								data.initialangle = GetUnitHeading(id)
+							end
+							UpdateOffset(id, weaponnum)
+							nextupdate = f + ((configuration[w].fastupdate and 0) or 3)
+							if debugMode then
+								DebugEcho("Next update: " .. nextupdate)
+							end
+							local wantedangle = data.weaponstates[weaponnum].currentoffset + data.initialangle
+							UpdateFiringPoint(id, weaponnum, wantedangle, data.unitdef)
+						end
+					end
+					data.nextupdate = nextupdate
+				else
+					if data.sweeping then
+						GG.RemoveTemporaryPosTarget(id)
+						data.sweeping = false
+					end
+					data.nextupdate = f + 10 -- check again later.
 				end
-				data.nextupdate = f + 10 -- check again later.
 			end
 		end
 	end

@@ -9,18 +9,14 @@ local gs1l, gs2l, gs3l, gs4l = piece('gs1l', 'gs2l', 'gs3l', 'gs4l')
 local SIG_AIM = 1
 local SIG_MOVE = 2
 local RESTORE_DELAY = 3000
-local TURRET_TURN_SPEED = math.rad(90)
-local SLEEVE_TURN_SPEED = math.rad(45)
+local TURRET_TURN_SPEED = math.rad(180)
+local SLEEVE_TURN_SPEED = math.rad(90)
 
 local angle = math.rad(90)
 
-local recoil = -1.75
-local recoilamount = 10
-local returnspeed = 1.5
-local fired = false
-
 local mainhead = 0
 
+local recoil = -1.75
 local SUSPENSION_BOUND = 3
 local SPEEDUP_FACTOR = tonumber (UnitDef.customParams.boost_speed_mult)
 local SPEEDUP_DURATION = tonumber (UnitDef.customParams.boost_duration)
@@ -47,13 +43,27 @@ end
 local xtiltv, ztiltv = 0, 0
 local spGetUnitVelocity = Spring.GetUnitVelocity
 
+local function IsStunnedOrDisarmed()
+	local disarmed = (Spring.GetUnitRulesParam(unitID, "disarmed") or 0) == 1
+	return Spring.GetUnitIsStunned(unitID) or disarmed
+end
+
 function SprintThread()
-	for i=1, SPEEDUP_DURATION do
+	GG.Sprint.Start(unitID, SPEEDUP_FACTOR)
+	local disarmed = false
+	local f = 0
+	while f < SPEEDUP_DURATION do
+		disarmed = IsStunnedOrDisarmed()
+		while disarmed do
+			Sleep(66)
+			disarmed = IsStunnedOrDisarmed()
+		end
 		EmitSfx(rwheel4, 1026)
 		EmitSfx(lwheel4, 1026)
 		Sleep(33)
+		f = f + 1
 	end
-	
+	GG.Sprint.End(unitID)
 	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", POSTSPRINT_SPEED)
 	GG.UpdateUnitAttributes(unitID)
 	Sleep(POSTSPRINT_DURATION * 33)
@@ -65,9 +75,7 @@ end
 
 function Sprint()
 	StartThread(SprintThread)
-	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", SPEEDUP_FACTOR)
 	-- Spring.MoveCtrl.SetAirMoveTypeData(unitID, "maxAcc", 3)
-	GG.UpdateUnitAttributes(unitID)
 end
 
 local CMD_ONECLICK_WEAPON = Spring.Utilities.CMD.ONECLICK_WEAPON
@@ -165,7 +173,9 @@ function script.QueryWeapon(num)
 end
 
 function script.BlockShot(num, targetID)
-	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 210, 40, 0.3, 0, true) -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
+	local canfire = GG.FireControl.CanFireWeapon(unitID, num)
+	--Spring.Echo("Can fire: " .. tostring(canfire))
+	return GG.OverkillPrevention_CheckBlock(unitID, targetID, 210, 40, 0.3, 0, true) or not canfire -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
 end
 
 function script.AimWeapon(num, heading, pitch)
@@ -181,11 +191,16 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.Shot(num) -- Moved off FireWeapon for modders/tweakunits mostly.
-	xtiltv = xtiltv - cos(mainhead) / 69
-	ztiltv = ztiltv - sin(mainhead) / 69
+	local firerate = GG.FireControl.GetBonusFirerate(unitID, num)
+	xtiltv = xtiltv - ((cos(mainhead) / 69)/firerate)
+	ztiltv = ztiltv - ((sin(mainhead) / 69)/firerate)
 	EmitSfx(firepoint, 1024)
 	EmitSfx(firepoint, 1025)
 	StartThread(BarrelRecoil)
+end
+
+function script.FireWeapon(num)
+	GG.FireControl.WeaponFired(unitID, num)
 end
 
 function script.Create()

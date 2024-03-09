@@ -1,3 +1,7 @@
+if (not gadgetHandler:IsSyncedCode()) then
+	return false  --  silent removal
+end
+
 function gadget:GetInfo()
 	return {
 		name      = "Cloak-strike",
@@ -10,10 +14,6 @@ function gadget:GetInfo()
 	}
 end
 
-if (not gadgetHandler:IsSyncedCode()) then
-	return false  --  silent removal
-end
-
 local spSetUnitWeaponState = Spring.SetUnitWeaponState
 local spSetUnitWeaponDamages = Spring.SetUnitWeaponDamages
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
@@ -21,7 +21,6 @@ local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
 local handledUnits = IterableMap.New()
 local cloakstrike_defs = include("LuaRules/Configs/cloakstrike_def.lua")
-local frame = 0
 
 function gadget:UnitCloaked(unitID, unitDefID, unitTeam)
 	if cloakstrike_defs[unitDefID] then
@@ -74,7 +73,6 @@ end
 
 
 function gadget:GameFrame(f)
-	frame = f
 	for unitID, data in IterableMap.Iterator(handledUnits) do
 		data.timer = data.timer - 1
 		spSetUnitRulesParam(unitID, "cloakstrike_active", data.timer)

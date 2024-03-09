@@ -1,0 +1,215 @@
+include "constants.lua"
+
+local base = piece 'base'
+local hull = piece 'hull'
+local gunf = piece 'gunf'
+local barrelfl = piece 'barrelfl'
+local flarefl = piece 'flarefl'
+local barrelfr = piece 'barrelfr'
+local flarefr = piece 'flarefr'
+local gunb = piece 'gunb'
+local barrelbl = piece 'barrelbl'
+local flarebl = piece 'flarebl'
+local barrelbr = piece 'barrelbr'
+local flarebr = piece 'flarebr'
+local wake1 = piece 'wake1'
+local wake2 = piece 'wake2'
+
+local smokePiece = {gunf, hull, gunb}
+
+local SPEEDUP_FACTOR = tonumber (UnitDef.customParams.boost_speed_mult)
+local SPEEDUP_DURATION = tonumber (UnitDef.customParams.boost_duration)
+local POSTSPRINT_SPEED = tonumber (UnitDef.customParams.boost_postsprint_speed)
+local POSTSPRINT_DURATION = tonumber (UnitDef.customParams.boost_postsprint_duration)
+
+local turretData = {
+	{
+		gun = gunb,
+		barrelRight = barrelbr,
+		barrelLeft = barrelbl,
+		flares = {flarebr, flarebl},
+		SIG_AIM = 2,
+		SIG_RESTORE = 4,
+		shot = 1,
+		gunRestore = math.rad(180),
+	},
+	{
+		gun = gunf,
+		barrelRight = barrelfr,
+		barrelLeft = barrelfl,
+		flares = {flarefr, flarefl},
+		SIG_AIM = 16,
+		SIG_RESTORE = 32,
+		shot = 1,
+		gunRestore = 0,
+	}
+}
+
+-- Signal definitions
+local SIG_MOVE = 8
+local SIG_SPRINT = 64
+
+local RESTORE_DELAY = 3000
+
+
+function script.Create()
+	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+
+	Turn(gunb, y_axis, math.rad(-180))
+end
+
+local function MoveThread()
+	Signal(SIG_MOVE)
+	SetSignalMask(SIG_MOVE)
+	while true do
+		if(not Spring.GetUnitIsCloaked(unitID)) then
+			EmitSfx(wake1, 2)
+			EmitSfx(wake2, 2)
+		end
+		Sleep(300)
+	end
+end
+
+function script.StartMoving()
+	StartThread(MoveThread)
+end
+
+function script.StopMoving()
+	Signal(SIG_MOVE)
+end
+
+local spGetUnitVelocity = Spring.GetUnitVelocity
+
+local function IsStunnedOrDisarmed()
+	local disarmed = (Spring.GetUnitRulesParam(unitID, "disarmed") or 0) == 1
+	return Spring.GetUnitIsStunned(unitID) or disarmed
+end
+
+function SprintThread()
+	Signal(SIG_SPRINT)
+	SetSignalMask(SIG_SPRINT)
+	GG.Sprint.Start(unitID, SPEEDUP_FACTOR)
+	local disarmed = false
+	local f = 0
+	while f < SPEEDUP_DURATION do
+		disarmed = IsStunnedOrDisarmed()
+		while disarmed do
+			Sleep(66)
+			disarmed = IsStunnedOrDisarmed()
+		end
+		EmitSfx(wake1, 1026)
+		EmitSfx(wake2, 1026)
+		Sleep(33)
+		f = f + 1
+	end
+	GG.Sprint.End(unitID)
+	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", POSTSPRINT_SPEED)
+	GG.UpdateUnitAttributes(unitID)
+	Sleep(POSTSPRINT_DURATION * 33)
+	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
+	GG.UpdateUnitAttributes(unitID)
+	-- Spring.MoveCtrl.SetAirMoveTypeData(unitID, "maxAcc", 0.5)
+	GG.UpdateUnitAttributes(unitID)
+end
+
+function Sprint()
+	StartThread(SprintThread)
+	-- Spring.MoveCtrl.SetAirMoveTypeData(unitID, "maxAcc", 3)
+end
+
+local CMD_ONECLICK_WEAPON = Spring.Utilities.CMD.ONECLICK_WEAPON
+
+local function RetreatThread()
+	Sleep(800)
+	local specialReloadState = Spring.GetUnitRulesParam(unitID,"specialReloadFrame")
+	if (not specialReloadState or (specialReloadState <= Spring.GetGameFrame())) then
+		Spring.GiveOrderToUnit(unitID, CMD.INSERT, {0, CMD_ONECLICK_WEAPON, CMD.OPT_INTERNAL,}, CMD.OPT_ALT)
+	end
+end
+
+function RetreatFunction()
+	StartThread(RetreatThread)
+end
+
+local function RestoreAfterDelay(num)
+	local turret = turretData[num]
+	
+	Signal(turret.SIG_RESTORE)
+	SetSignalMask(turret.SIG_RESTORE)
+	Sleep(RESTORE_DELAY)
+	
+	Turn(turret.gun, y_axis, turret.gunRestore, math.rad(90))
+	Turn(turret.barrelRight, x_axis, 0, math.rad(50))
+	Turn(turret.barrelLeft, x_axis, 0, math.rad(50))
+end
+
+function script.AimWeapon(num, heading, pitch)
+	local turret = turretData[num]
+
+	Signal(turret.SIG_AIM)
+	SetSignalMask(turret.SIG_AIM)
+	
+	Turn(turret.gun, y_axis, heading, math.rad(800)) -- Was 375
+	Turn(turret.barrelRight, x_axis, -pitch, math.rad(150))
+	Turn(turret.barrelLeft, x_axis, -pitch, math.rad(150))
+	WaitForTurn(turret.gun, y_axis)
+	WaitForTurn(turret.barrelRight, x_axis)
+	StartThread(RestoreAfterDelay, num)
+	return true
+end
+
+function script.Shot(num)
+	local turret = turretData[num]
+
+	EmitSfx(turret.flares[turret.shot], 1024)
+	EmitSfx(turret.gun, 1025)
+	turret.shot = 3 - turret.shot
+end
+
+function script.AimFromWeapon(num)
+	return turretData[num].gun
+end
+
+function script.QueryWeapon(num)
+	local turret = turretData[num]
+
+	return turret.flares[turret.shot]
+end
+
+function script.Killed(recentDamage, maxHealth)
+	local severity = recentDamage / maxHealth
+	if (severity <= 0.25) then
+		Explode(hull, SFX.NONE)
+		Explode(gunf, SFX.NONE)
+		Explode(base, SFX.NONE)
+		Explode(gunb, SFX.NONE)
+		Explode(barrelfr, SFX.NONE)
+		return 1
+	end
+	if severity <= 0.50 then
+		Explode(hull, SFX.NONE)
+		Explode(gunf, SFX.FALL)
+		Explode(base, SFX.NONE)
+		Explode(gunb, SFX.FALL)
+		Explode(barrelbr, SFX.FALL)
+		return 1
+	end
+	if severity <= 0.99 then
+		Explode(hull, SFX.SHATTER)
+		Explode(gunf, SFX.FALL)
+		Explode(base, SFX.NONE)
+		Explode(gunb, SFX.FALL)
+		Explode(barrelbr, SFX.FALL)
+		Explode(barrelfr, SFX.FALL)
+		Explode(barrelfl, SFX.FALL)
+		return 2
+	end
+	Explode(hull, SFX.SHATTER)
+	Explode(gunf, SFX.FALL)
+	Explode(base, SFX.NONE)
+	Explode(gunb, SFX.FALL)
+	Explode(barrelbr, SFX.FALL)
+	Explode(barrelfr, SFX.FALL)
+	Explode(barrelfl, SFX.FALL)
+	return 2
+end

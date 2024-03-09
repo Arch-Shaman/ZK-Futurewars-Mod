@@ -43,6 +43,8 @@ local nanoPieces = {nanospray}
 
 local SPEED_MULT = 1
 local sizeSpeedMult = 1
+local priorityAim = false
+local priorityAimNum = 0
 
 --------------------------------------------------------------------------------
 -- constants
@@ -66,6 +68,7 @@ local bAiming = false
 local shieldOn = true
 local inJumpMode = false
 local okpconfig
+local reconPulse = false
 
 --------------------------------------------------------------------------------
 -- funcs
@@ -79,6 +82,50 @@ local function GetOKP()
 	--Spring.Echo("Use OKP: " .. tostring(okpconfig[1].useokp or okpconfig[2].useokp))
 	if okpconfig[1].useokp or okpconfig[2].useokp then
 		GG.OverkillPrevention_ForceAdd(unitID)
+	end
+end
+
+local function StartPriorityAim(num)
+	priorityAim = true
+	priorityAimNum = num
+	Sleep(5000)
+	priorityAim = false
+end
+
+local function ReconPulseThread()
+	--local x, y, z, gy, t
+	local defID = WeaponDefNames["commweapon_revealaura"].id
+	local projectileAttributes = {
+		pos = {0, 0, 0},
+		speed = {0, 0, 0},
+		owner = unitID,
+		gravity = 0,
+		ttl = 1,
+		team = Spring.GetUnitTeam(unitID),
+	}
+	--projectileAttributes["end"] = {0, 0, 0}
+	local spGetUnitPosition = Spring.GetUnitPosition
+	local spGetUnitTeam = Spring.GetUnitTeam
+	local stunned
+	t = 2000
+	while true do
+		--x, y, z = Spring.GetUnitPosition(unitID)
+		--gy = Spring.GetGroundHeight(x, z)
+		--if y - gy > 10 then -- airborn
+			--t = 100
+		--else
+		stunned = Spring.GetUnitIsStunned(unitID) or (Spring.GetUnitRulesParam(unitID, "disarmed") == 1)
+		if reconPulse and not stunned then
+			projectileAttributes.team = spGetUnitTeam(unitID)
+			projectileAttributes.pos[1], projectileAttributes.pos[2], projectileAttributes.pos[3] = spGetUnitPosition(unitID)
+			--projectileAttributes["end"] = projectileAttributes.pos
+			Spring.SpawnProjectile(defID, projectileAttributes)
+			--Spring.Echo("Spawned with defID ", defID)
+			GG.PokeDecloakUnit(unitID, unitDefID)
+			Sleep(2000)
+		else
+			Sleep(100)
+		end
 	end
 end
 
@@ -389,7 +436,7 @@ function script.StopMoving()
 end
 
 function script.AimFromWeapon(num)
-	return pelvis
+	return head
 end
 
 local function AimRifle(heading, pitch, isDgun)
@@ -447,7 +494,17 @@ function script.AimWeapon(num, heading, pitch)
 	if weaponNum == 3 then -- shield
 		return true
 	end
-	
+	if priorityAim and weaponNum ~= priorityAimNum then
+		return false
+	end
+	if weaponNum and dyncomm.IsManualFire(num) and not priorityAim and dyncomm.PriorityAimCheck(num) then
+		StartThread(StartPriorityAim, weaponNum)
+		if weaponNum == 1 then
+			Signal(SIG_AIM)
+		else
+			Signal(SIG_AIM_2)
+		end
+	end
 	if weaponNum == 1 then
 		Signal(SIG_AIM)
 		SetSignalMask(SIG_AIM)
@@ -481,6 +538,9 @@ end
 
 function script.FireWeapon(num)
 	dyncomm.EmitWeaponFireSfx(flare, num)
+	if dyncomm.IsManualFire(num) then
+		priorityAim = false
+	end
 end
 
 function script.Shot(num)
@@ -554,12 +614,17 @@ function script.QueryNanoPiece()
 	return nanospray
 end
 
+function StartReconPulse()
+	StartThread(ReconPulseThread)
+	reconPulse = true
+end
+
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
 	dead = true
+	local x, y, z = Spring.GetUnitPosition(unitID)
 --	Turn(turret, y_axis, 0, math.rad(500))
-	if severity <= 0.5 and not inJumpMode then
-		dyncomm.SpawnModuleWrecks(1)
+	if not inJumpMode then
 		Turn(base, x_axis, math.rad(80), math.rad(80))
 		Turn(turret, x_axis, math.rad(-16), math.rad(50))
 		Turn(turret, y_axis, 0, math.rad(90))
@@ -569,7 +634,6 @@ function script.Killed(recentDamage, maxHealth)
 		Turn(lupleg, x_axis, math.rad(7), math.rad(250))
 		Turn(lloleg, y_axis, math.rad(21), math.rad(250))
 		Turn(lfoot, x_axis, math.rad(24), math.rad(250))
-		
 		GG.Script.InitializeDeathAnimation(unitID)
 		Sleep(200) --give time to fall
 		Turn(ruparm, x_axis, math.rad(-48), math.rad(350))
@@ -582,35 +646,21 @@ function script.Killed(recentDamage, maxHealth)
 		--StartThread(burn)
 		--Sleep((1000 * rand (2, 5)))
 		Sleep(100)
-		dyncomm.SpawnWreck(1)
+	end
+	local assetDenialSystemActivated = dyncomm.Explode(x, y, z)
+	local explodables = {[1] = head, [2] = gun, [3] = pelvis, [4] = lloarm, [5] = luparm, [6] = lloleg, [7] = lupleg, [8] = rloarm, [9] = rloleg, [10] = ruparm, [11] = rupleg}
+	local flags = SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE
+	if assetDenialSystemActivated then
+		for i = 1, #explodables do
+			Explode(explodables[i], flags)
+		end
+		Explode(torso, flags)
 	elseif severity <= 0.5 then
-		dyncomm.SpawnModuleWrecks(1)
-		Explode(gun,	SFX.FALL + SFX.SMOKE + SFX.EXPLODE)
-		Explode(head, SFX.FIRE + SFX.EXPLODE)
-		Explode(pelvis, SFX.FIRE + SFX.EXPLODE)
-		Explode(lloarm, SFX.FIRE + SFX.EXPLODE)
-		Explode(luparm, SFX.FIRE + SFX.EXPLODE)
-		Explode(lloleg, SFX.FIRE + SFX.EXPLODE)
-		Explode(lupleg, SFX.FIRE + SFX.EXPLODE)
-		Explode(rloarm, SFX.FIRE + SFX.EXPLODE)
-		Explode(rloleg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(ruparm, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(rupleg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(torso, SFX.SHATTER + SFX.EXPLODE)
 		dyncomm.SpawnWreck(1)
 	else
-		dyncomm.SpawnModuleWrecks(2)
-		Explode(gun, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(head, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(pelvis, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(lloarm, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(luparm, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(lloleg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(lupleg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(rloarm, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(rloleg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(ruparm, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
-		Explode(rupleg, SFX.FALL + SFX.FIRE + SFX.SMOKE + SFX.EXPLODE)
+		for i = 1, #explodables do
+			Explode(explodables[i], flags)
+		end
 		Explode(torso, SFX.SHATTER + SFX.EXPLODE)
 		dyncomm.SpawnWreck(2)
 	end

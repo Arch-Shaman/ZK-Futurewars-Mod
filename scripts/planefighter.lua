@@ -17,13 +17,16 @@ local flare = {
 
 
 local fast = 3.75
-local slow = 0.85
+local slow = 0.9
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitMoveTypeData = Spring.GetUnitMoveTypeData
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
-local SetAirMoveTypeData = Spring.MoveCtrl.SetAirMoveTypeData
+--local SetAirMoveTypeData = Spring.MoveCtrl.SetAirMoveTypeData
 local movectrlGetTag = Spring.MoveCtrl.GetTag
 local block = false
+local ammoState = 0
+local currentLoadout = -1
+local distanceSet = false
 
 ----------------------------------------------------------
 
@@ -57,38 +60,63 @@ end]]
 	--GG.UpdateUnitAttributes(unitID)
 --end
 
-function SpeedThread()
-	spSetUnitRulesParam(unitID, "selfMoveSpeedChange", fast)
-	SetAirMoveTypeData(unitID, "maxAcc", 1)
-	GG.UpdateUnitAttributes(unitID)
-	local ammo = 0
-	local reloading = false
-	while spGetUnitMoveTypeData(unitID).aircraftState ~= "crashing" do
-		ammo = spGetUnitRulesParam(unitID,"noammo") or 0
-		if ammo == 0 and reloading then -- being reloaded.
-			while movectrlGetTag(unitID) ~= nil do
-				Sleep(33)
-			end
-			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", fast)
-			SetAirMoveTypeData(unitID, "maxAcc", 1)
-			GG.UpdateUnitAttributes(unitID)
-			Sleep(330)
-			reloading = false
-			block = false
-		elseif ammo == 1 and not reloading then
-			spSetUnitRulesParam(unitID, "selfMoveSpeedChange", slow)
-			SetAirMoveTypeData(unitID, "maxAcc", slow/2)
-			GG.UpdateUnitAttributes(unitID)
-			reloading = true
-		else
-			Sleep(66)
+local function SetDistance()
+	if currentLoadout == 1 then
+		Spring.SetUnitMaxRange(unitID, 700)
+		Spring.MoveCtrl.SetAirMoveTypeData(unitID, {attackSafetyDistance = 100})
+	else
+		Spring.SetUnitMaxRange(unitID, 180)
+		Spring.MoveCtrl.SetAirMoveTypeData(unitID, {attackSafetyDistance = 3500})
+	end
+	distanceSet = true
+end
+
+function OnAmmoChange(newState)
+	ammoState = newState
+	if newState == 0 then
+		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", fast)
+		spSetUnitRulesParam(unitID, "selfMaxAccelerationChange", fast)
+		GG.UpdateUnitAttributes(unitID)
+		GG.UpdateUnitAttributes(unitID)
+		if not distanceSet then
+			SetDistance()
 		end
+	elseif newState == 1 then
+		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", slow)
+		spSetUnitRulesParam(unitID, "selfMaxAccelerationChange", slow)
+		GG.UpdateUnitAttributes(unitID)
+		GG.UpdateUnitAttributes(unitID)
+		SetUnarmedAI()
 	end
 end
-		
+
+function OnAmmoTypeChange(newAmmo, bypassReload)
+	local _, _, inBuild = Spring.GetUnitIsStunned(unitID)
+	if bypassReload == nil or not inBuild then
+		Reload()
+	end
+	currentLoadout = newAmmo + 1
+	if newAmmo == 0 then
+		fast = 3.75
+		slow = 1.875
+	else
+		fast = 2.0
+		slow = 1.0
+	end
+	if Spring.MoveCtrl.GetTag(unitID) == nil then
+		SetDistance()
+	else
+		distanceSet = false
+	end
+	if ammoState == 0 and bypassReload == nil and not inBuild then
+		OnAmmoChange(1)
+	end
+end
 
 function OnLoadGame()
 	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
+	ammoState = Spring.GetUnitRulesParam(unitID, "noammo") or 0
+	OnAmmoChange(ammoState)
 	GG.UpdateUnitAttributes(unitID)
 end
 
@@ -112,7 +140,8 @@ function script.Create()
 	Move(rwing, x_axis, WING_DISTANCE)
 	Move(lwing, x_axis, -WING_DISTANCE)
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-	StartThread(SpeedThread)
+	OnAmmoTypeChange(0, true)
+	OnAmmoChange(0)
 end
 
 function script.StartMoving()
@@ -124,6 +153,9 @@ function script.StopMoving()
 end
 
 function script.QueryWeapon(num) 
+	if num == 2 then
+		return base
+	end
 	return flare[shotCycle]
 end
 
@@ -132,29 +164,50 @@ function script.AimFromWeapon(num)
 end
 
 function script.AimWeapon(num, heading, pitch)
-	if (GetUnitValue(COB.CRASHING) == 1)  or spGetUnitRulesParam(unitID, "noammo") == 1 then
+	if (GetUnitValue(COB.CRASHING) == 1) or ammoState ~= 0 then
 		return false
 	else
 		return true
 	end
 end
 
-function script.FireWeapon(num)
-	EmitSfx(missile, UNIT_SFX2)
-	shotCycle = 1 - shotCycle
-	if num ~= 3 then
-		spSetUnitRulesParam(unitID,"noammo",1)
+local function reloadThread(num)
+	if num == 1 then
+		Sleep(600)
+	elseif num == 3 then
+		Sleep(1100)
 	end
+	spSetUnitRulesParam(unitID, "noammo", 1)
+	OnAmmoChange(1)
+	Reload()
+end
+
+function script.Shot(num)
+	EmitSfx(missile, UNIT_SFX2)
+	if num ~= 2 then
+		shotCycle = 1 - shotCycle
+	end
+	StartThread(reloadThread, num)
 end
 
 function script.BlockShot(num, targetID)
-	if (GetUnitValue(COB.CRASHING) == 1) or spGetUnitRulesParam(unitID, "noammo") == 1 or movectrlGetTag(unitID) ~= nil or block then
+	if (GetUnitValue(COB.CRASHING) == 1) or ammoState ~= 0 then
 		return true
 	end
+	if num ~= currentLoadout then
+		if currentLoadout == 1 and num == 3 then
+			return false
+		else
+			return true
+		end
+	end
+	if targetID == nil then
+		return false
+	end
 	if num == 1 then -- ATA overkill prevention
-		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 133, 135)
+		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 900, 50)
 	elseif num == 2 then -- ATG okp
-		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 126, 60, 0.25, 0.4) -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
+		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 905, 60, 0.25, 0.4) -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
 	end
 	return false
 end

@@ -1,3 +1,6 @@
+if (not gadgetHandler:IsSyncedCode()) then
+	return false  --  no unsynced code
+end
 
 function gadget:GetInfo()
 	return {
@@ -13,15 +16,9 @@ end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-
-if (not gadgetHandler:IsSyncedCode()) then
-	return false  --  no unsynced code
-end
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
 -- Speedups
 
+local spGetGroundHeight     = Spring.GetGroundHeight
 local spGetGameFrame        = Spring.GetGameFrame
 local spInsertUnitCmdDesc   = Spring.InsertUnitCmdDesc
 local spGetCommandQueue     = Spring.GetCommandQueue
@@ -68,6 +65,8 @@ local UPDATE_RATE = 20
 local MAX_UPRATE_RATE = 2
 
 local unitAIBehaviour = include("LuaRules/Configs/tactical_ai_defs.lua")
+local bombardDef = UnitDefNames["turretriot"].id
+local bombardRange = WeaponDefNames["turretriot_weapon"].range
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -408,10 +407,25 @@ end
 --------------------------------------------------------------------------------
 ---- Unit AI Execution
 
+local function DoJump(unitID, cx, cy, cz)
+	local cmdID, _, cmdTag, cp_1, cp_2, cp_3 = Spring.GetUnitCurrentCommand(unitID)
+	if cmdID == CMD.MOVE or cmdID == CMD_RAW_MOVE then
+		GG.recursion_GiveOrderToUnit = true
+		spGiveOrderToUnit(unitID, CMD_REMOVE, {cmdTag}, 0)
+		GG.recursion_GiveOrderToUnit = false
+	end
+	GG.recursion_GiveOrderToUnit = true
+	GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD_JUMP, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
+	GG.recursion_GiveOrderToUnit = false
+end
+
 local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typeKnown, move, isIdleAttack, cmdID, cmdTag, fightX, fightY, fightZ, frame)
 	local unitData = unit[unitID]
-	
+	local myunitdef = spGetUnitDefID(unitID)
 	local doDebug = (debugUnit and debugUnit[unitID]) or debugAll
+	local canJump = UnitDefs[myunitdef].customParams.jump_range and behaviour.jumpAttack and (spGetUnitRulesParam(unitID, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
+	local jumpRange = UnitDefs[myunitdef].customParams.jump_range
+	local jumpEnabled = GG.GetAutoJumpState(unitID)
 	if debugAction or doDebug then
 		if doDebug then
 			Spring.Echo(" === DoSwarmEnemy", unitID, "===")
@@ -419,14 +433,24 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 		Spring.Utilities.UnitEcho(unitID, "Swarm")
 	end
 	
-	if not (enemy and typeKnown) then
+	if not (enemy and typeKnown) and not behaviour.dontjink then
+		
 		if not (((cmdID == CMD_FIGHT) or move) and fightZ) then
 			return false
 		end
 		local ex, ey, ez = fightX, fightY, fightZ
 		local ux, uy, uz = spGetUnitPosition(unitID) -- my position
 		local cx, cy, cz -- command position
-		
+		if canJump and jumpEnabled and behaviour.jumpMovement then
+			local moveDistance = math.sqrt(((ux - ex) * (ux - ex)) + ((uz - ez) * (uz - ez)))
+			disScale = jumpRange/moveDistance*0.95
+			cx, cy, cz = ux + disScale*(ex - ux), ey, uz + disScale*(ez - uz)
+			cy = spGetGroundHeight(cx, cz)
+			if cy >= 0 then
+				DoJump(unitID, cx, cy, cz)
+				return true
+			end
+		end
 		local pointDis = Dist(ex, ez, ux, uz)
 		UpdateJink(behaviour, unitData)
 		
@@ -480,8 +504,33 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 		UpdateIdleAgressionState(unitID, behaviour, unitData, frame, enemy, typeKnown and enemyUnitDef, behaviour.swarmEnemyDefaultRange, pointDis, ux, uz, ex, ez)
 	end
 	
+	local jumpRange = UnitDefs[myunitdef].customParams.jump_range
+	if canJump and jumpEnabled and pointDis < jumpRange * 0.95 and pointDis > behaviour.minJumpRange * jumpRange then
+		local vx, vy, vz = spGetUnitVelocity(enemy)
+		local timescale = math.ceil(pointDis / UnitDefs[myunitdef].customParams.jump_speed) -- estimate the time to get to the point and multiply velocity by it to get predicted location.
+		cx = ex + (vx * timescale)
+		cz = ez + (vz * timescale)
+		cy = spGetGroundHeight(cx, cz)
+		
+		if cy >= 0 and ey - cy < 50 then
+			DoJump(unitID, cx, cy, cz)
+			return true
+		end
+	end
+	
+	if behaviour.dontjink then
+		return false
+	end
+	
+	if behaviour.selfDestructSwarm and behaviour.selfDestructSwarm[enemyUnitDef] and math.sqrt(((ux - ex) * (ux - ex)) + ((uz - ez) * (uz - ez))) < behaviour.selfdrange then
+		GG.recursion_GiveOrderToUnit = true
+		GiveClampedOrderToUnit(unitID, CMD.INSERT, { 0, CMD.SELFD, CMD.OPT_INTERNAL, cx, cy, cz}, CMD.OPT_ALT)
+		GG.recursion_GiveOrderToUnit = false
+		return true
+	end
+	
 	if behaviour.maxSwarmRange < pointDis then -- if I cannot shoot at the enemy
-		UpdateJink(behaviour, unitData)
+		UpdateJink(behaviour, unitData) -- TODO: Add jump to range.
 		
 		-- jink towards the enemy
 		if behaviour.localJinkOrder and behaviour.jinkParallelLength < pointDis then
@@ -551,11 +600,13 @@ end
 
 local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typeKnown, move, isIdleAttack, cmdID, cmdTag, frame, haveFightAndHoldPos, doHug)
 	local unitData = unit[unitID]
-	--local pointDis = spGetUnitSeparation (enemy, unitID, true)
+	local pointDis = spGetUnitSeparation (enemy, unitID, true)
 	
 	local vx, vy, vz, enemySpeed = spGetUnitVelocity(enemy)
 	local ex, ey, ez, _, aimY = spGetUnitPosition(enemy, false, true) -- enemy position
+	local enemyX, enemyZ = ex, ez
 	local ux, uy, uz = spGetUnitPosition(unitID) -- my position
+	local myDef = spGetUnitDefID(unitID)
 
 	local doDebug = (debugUnit and debugUnit[unitID]) or debugAll
 	if debugAction or doDebug then
@@ -602,12 +653,12 @@ local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 		dx, dy, dz = dx - uvx*behaviour.velocityPrediction, dy - uvy*behaviour.velocityPrediction, dz - uvz*behaviour.velocityPrediction
 	end
 	
-	local eDistSq = ex^2 + ey^2 + ez^2
+	local eDistSq = ex^2 + ez^2
 	local eDist = sqrt(eDistSq)
 	local bonusSkirmRange = enemyUnitDef and behaviour.bonusRangeUnits and behaviour.bonusRangeUnits[enemyUnitDef]
 	
 	-- Scalar projection of prediction vector onto enemy vector
-	local predProj = (ex*dx + ey*dy + ez*dz)/eDistSq
+	local predProj = (ex*dx + ez*dz)/eDistSq
 
 	-- Calculate predicted enemy distance
 	local predictedDist = eDist
@@ -638,6 +689,43 @@ local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 	local skirmRange = (doHug and behaviour.hugRange) or ((GetEffectiveWeaponRange(unitData.udID, -dy, behaviour.weaponNum) or 0) - behaviour.skirmLeeway)
 	--Spring.Echo("skirmRange", skirmRange, GetEffectiveWeaponRange(unitData.udID, -dy, behaviour.weaponNum))
 	local reloadFrames
+	
+	local canJump = UnitDefs[myDef].customParams.jump_range and (spGetUnitRulesParam(unitID, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
+	local jumpEnabled = GG.GetAutoJumpState(unitID)
+	--Spring.Echo("CanJump: " .. tostring(canJump))
+	if canJump and jumpEnabled and (behaviour.emergencyJumpRange and behaviour.emergencyJumpRange + behaviour.skirmLeeway > pointDis) and ((behaviour.flees and behaviour.flees[enemyUnitDef]) or behaviour.skirms[enemyUnitDef]) and not (behaviour.hugs and behaviour.hugs[enemyUnitDef]) then
+		--Spring.Echo("EmergencyJump")
+		local jumpRange = UnitDefs[myDef].customParams.jump_range
+		local wantedDis = jumpRange * 0.95
+		local cx = ux - wantedDis * ex/eDist
+		local cy = uy
+		local cz = uz - wantedDis * ez/eDist
+		cy = spGetGroundHeight(cx, cz)
+		if cy >= 0 then
+			DoJump(unitID, cx, cy, cz)
+			unitData.cx, unitData.cy, unitData.cz = cx, cy, cz
+			unitData.receivedOrder = true
+			return true
+		end
+	end
+	if canJump and jumpEnabled and (behaviour.hugs and behaviour.hugs[enemyUnitDef]) then -- DoHug jump
+		--Spring.Echo("DoHugJump")
+		local jumpRange = UnitDefs[myDef].customParams.jump_range * 0.99
+		local vx, vy, vz = spGetUnitVelocity(enemy)
+		local timescale = math.ceil(pointDis / UnitDefs[myDef].customParams.jump_speed) -- estimate the time to get to the point and multiply velocity by it to get predicted location.
+		local eex, eez = enemyX + (vx * timescale), enemyZ + (vz * timescale) -- estimated enemy position after we jump
+		local angle =  math.atan2(eez - uz, eex - ux) -- atan2(targetz - z, targetx - x )
+		local estimatedDistance = math.sqrt((ux - eex)*(ux - eex) + ((uz - eez)*(uz - eez)))
+		local r = math.min(jumpRange, estimatedDistance)
+		
+		local cx, cy, cz = ux + (r * math.cos(angle)), 0, uz + (r * math.sin(angle)) -- x + (radius * cos(angle)), z + (radius * sin(angle))
+		cy = spGetGroundHeight(cx, cz)
+		
+		if cy >= 0 and ey - cy < 50 and estimatedDistance > 75 then
+			DoJump(unitID, cx, cy, cz)
+			return true
+		end
+	end
 	if behaviour.reloadSkirmLeeway then
 		local reloadState = spGetUnitWeaponState(unitID, behaviour.weaponNum, 'reloadState')
 		if reloadState then
@@ -657,7 +745,7 @@ local function DoSkirmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 	if doHug or skirmRange > predictedDist then
 		if behaviour.skirmOnlyNearEnemyRange then
 			local enemyRange = (GetEffectiveWeaponRange(enemyUnitDef, dy, behaviour.weaponNum) or 0) + behaviour.skirmOnlyNearEnemyRange
-			if enemyRange < predictedDist then
+			if enemyRange and enemyRange < predictedDist then
 				if doDebug then
 					Spring.Echo("return enemyRange < predictedDist", enemyRange, predictedDist)
 				end
@@ -721,7 +809,9 @@ local function DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typ
 	local fleeDistance = behaviour.fleeDistance
 	local orderdistance = behaviour.fleeOrderDis
 	local cloakstrike = spGetUnitRulesParam(unitID, "cloakstrike_active")
+	local myDef = spGetUnitDefID(unitID)
 	local cloakedflee = behaviour.cloakFlee and not Spring.GetUnitIsCloaked(unitID) and (cloakstrike == nil or cloakstrike < 10)
+	local jumpEnabled = GG.GetAutoJumpState(unitID)
 	if cloakedflee then
 		enemyRange = behaviour.minDecloakFleeRange or 500
 		fleeDistance = behaviour.decloakFleeDistance or 100
@@ -771,7 +861,20 @@ local function DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typ
 			return false
 		end
 	end
-	
+	local canJump = UnitDefs[myDef].customParams.jump_range and behaviour.emergencyJumpRange and (spGetUnitRulesParam(unitID, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(unitID, "disarmed") or 0) == 0 and not Spring.GetUnitIsStunned(unitID)
+	--Spring.Echo("CanJump: " .. tostring(canJump))
+	if canJump and jumpEnabled and behaviour.emergencyJumpRange + behaviour.fleeLeeway > pointDis then
+		--Spring.Echo("Jump flee")
+		local jumpRange = UnitDefs[myDef].customParams.jump_range * 0.995
+		local angle = math.rad(360) - math.atan((uy-ey)/(ux-ex))
+		local cx = ux + (jumpRange * math.sin(angle))
+		local cy = uy
+		local cz = uz + (jumpRange * math.cos(angle))
+		DoJump(unitID, cx, cy, cz)
+		unitData.cx, unitData.cy, unitData.cz = cx, cy, cz
+		unitData.receivedOrder = true
+		return true
+	end
 	if enemyRange + behaviour.fleeLeeway > pointDis then
 		local dis = orderdistance
 		if (pointDis+dis > behaviour.skirmRange-behaviour.stoppingDistance) then
@@ -781,9 +884,7 @@ local function DoFleeEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, typ
 		local cx = ux+(ux-ex)*f
 		local cy = uy
 		local cz = uz+(uz-ez)*f
-
 		GG.recursion_GiveOrderToUnit = true
-
 		if cmdID then
 			if move then
 				cx, cy, cz = GiveClampedOrderToUnit(unitID, CMD_INSERT, {0, CMD_RAW_MOVE, CMD_OPT_INTERNAL, cx, cy, cz }, CMD.OPT_ALT )
@@ -841,13 +942,13 @@ local function DoTacticalAI(unitID, cmdID, cmdOpts, cmdTag, cp_1, cp_2, cp_3,
 	if enemy then
 		local ex, _, ez = spGetUnitPosition(enemy)
 		local myx, _, myz = spGetUnitPosition(unitID)
-		distance = math.sqrt(((myx - ex)*(myx - ex)) + ((myz - ez)*(myz - ez)))
+		distance = ex and math.sqrt(((myx - ex)*(myx - ex)) + ((myz - ez)*(myz - ez))) or 90000
 	end
 	if (typeKnown and (not haveFight) and behaviour.fightOnlyUnits and behaviour.fightOnlyUnits[enemyUnitDef]) then
 		return false -- Do not tactical AI enemy if it is fight-only.
 	end
 	local wantsreloadflee = false
-	if behaviour.reloadFlee and enemy then
+	if behaviour.reloadFlee and enemy and not holdPos then
 		local numweapons = #UnitDefs[myunitdef].weapons
 		local somethingNotReloading = false
 		local loadedGuns = spGetUnitRulesParam(unitID, "scriptLoaded") or 1
@@ -856,7 +957,8 @@ local function DoTacticalAI(unitID, cmdID, cmdOpts, cmdTag, cp_1, cp_2, cp_3,
 			wantsreloadflee = true
 		else
 			for i = 1, numweapons do
-				if WeaponDefs[UnitDefs[myunitdef].weapons[i].weaponDef].customParams.targeter == nil then -- check everything not a targeting laser.
+				local wd = WeaponDefs[UnitDefs[myunitdef].weapons[i].weaponDef]
+				if wd.customParams.targeter == nil and wd.type ~= "Shield" then -- check everything not a targeting laser or shield.
 					local _, loaded, _, salvoleft = Spring.GetUnitWeaponState(unitID, i)
 					if loaded or salvoleft > 0 then
 						somethingNotReloading = true
@@ -1205,6 +1307,12 @@ end
 
 function gadget:UnitIdle(unitID, unitDefID)
 	AddIdleUnit(unitID, unitDefID)
+	if unitDefID == bombardDef then
+		local enemy = Spring.GetUnitNearestEnemy(unitID, bombardRange, true)
+		if enemy then
+			spGiveOrderToUnit(unitID, CMD_ATTACK, {enemy}, 0)
+		end
+	end
 end
 
 function gadget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOpts, cmdTag, playerID, fromSynced, fromLua)

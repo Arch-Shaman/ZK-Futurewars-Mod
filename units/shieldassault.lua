@@ -1,160 +1,145 @@
 return { 
 	shieldassault = {
-		unitname            = [[shieldassault]],
-		name                = [[Vindicator]],
-		description         = [[Shielded Skirmisher/Assault Bot]],
+		unitname            = "shieldassault",
+		name                = "Vindicator",
+		description         = "Shielded Skirmisher/Assault Bot",
 		acceleration        = 0.75,
 		activateWhenBuilt   = true,
 		brakeRate           = 1.32,
-		buildCostMetal      = 300,
-		buildPic            = [[shieldassault.png]],
+		buildCostMetal      = 260,
+		buildPic            = "shieldassault.png",
 		canGuard            = true,
 		canMove             = true,
 		canPatrol           = true,
-		category            = [[LAND]],
-		selectionVolumeOffsets = [[0 0 0]],
-		selectionVolumeScales  = [[45 45 45]],
-		selectionVolumeType    = [[ellipsoid]],
-		corpse              = [[DEAD]],
-
+		category            = "LAND",
+		selectionVolumeOffsets = "0 0 0",
+		selectionVolumeScales  = "68 68 68",
+		selectionVolumeType    = "ellipsoid",
+		corpse              = "DEAD",
 		customParams        = {
 			shield_emit_height = 17,
 			cus_noflashlight   = 1,
 			selection_scale    = 0.82,
+			outline_x = 80,
+			outline_y = 80,
+			outline_yoff = 15.5,
 		},
-
-		explodeAs           = [[BIG_UNITEX]],
+		explodeAs           = "BIG_UNITEX",
 		footprintX          = 3,
 		footprintZ          = 3,
-		iconType            = [[walkerassault]],
+		iconType            = "walkerassault",
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		leaveTracks         = true,
-		maxDamage           = 720,
+		health              = 720,
 		maxSlope            = 36,
-		maxVelocity         = 1.9,
+		speed               = 1.9,
 		maxWaterDepth       = 22,
 		minCloakDistance    = 75,
-		movementClass       = [[KBOT3]],
-		noChaseCategory     = [[TERRAFORM FIXEDWING SUB]],
-		objectName          = [[thud.s3o]],
+		movementClass       = "KBOT3",
+		noChaseCategory     = "TERRAFORM FIXEDWING SUB",
+		objectName          = "thud.s3o",
 		onoffable           = false,
-		script              = [[shieldassault.lua]],
-		selfDestructAs      = [[BIG_UNITEX]],
-
+		script              = "shieldassault.lua",
+		selfDestructAs      = "BIG_UNITEX",
 		sfxtypes            = {
-
 			explosiongenerators = {
-				[[custom:THUDMUZZLE]],
-				[[custom:THUDSHELLS]],
-				[[custom:THUDDUST]],
+				"custom:THUDMUZZLE",
+				"custom:THUDSHELLS",
+				"custom:THUDDUST",
 			},
-
 		},
-
 		sightDistance       = 420,
 		trackOffset         = 0,
 		trackStrength       = 8,
 		trackStretch        = 1,
-		trackType           = [[ComTrack]],
+		trackType           = "ComTrack",
 		trackWidth          = 22,
 		turnRate            = 2400,
 		upright             = true,
-
 		weapons             = {
-
 			{
-				def                = [[THUD_WEAPON]],
-				badTargetCategory  = [[FIXEDWING]],
-				onlyTargetCategory = [[FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER]],
+				def                = "THUD_WEAPON",
+				badTargetCategory  = "FIXEDWING",
+				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
 			},
-
 			{
-				def = [[SHIELD]],
+				def                = "THUD_WEAPON",
+				badTargetCategory  = "FIXEDWING",
+				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
 			},
-
+			{
+				def = "SHIELD",
+			},
 		},
-
 		weaponDefs          = {
-
 			SHIELD      = {
-				name                    = [[Energy Shield]],
-
+				name                    = "Energy Shield",
 				damage                  = {
 					default = 10,
 				},
-				
 				customParams			= {
 					--shield_recharge_delay   = 10,
 				},
-
 				exteriorShield          = true,
 				shieldAlpha             = 0.2,
-				shieldBadColor          = [[1 0.1 0.1 1]],
-				shieldGoodColor         = [[0.1 0.1 1 1]],
+				shieldBadColor          = "1 0.1 0.1 1",
+				shieldGoodColor         = "0.1 0.1 1 1",
 				shieldInterceptType     = 3,
-				shieldPower             = 3000,
-				shieldPowerRegen        = 25,
-				shieldPowerRegenEnergy  = 3,
-				shieldRadius            = 80,
+				shieldPower             = 4000,
+				shieldPowerRegen        = 35,
+				shieldPowerRegenEnergy  = 4,
+				shieldRadius            = 270,
 				shieldRepulser          = false,
 				shieldStartingPower     = 2000,
 				smartShield             = true,
 				visibleShield           = false,
 				visibleShieldRepulse    = false,
-				weaponType              = [[Shield]],
+				weaponType              = "Shield",
 			},
-
 			THUD_WEAPON = {
-				name                    = [[Medium Plasma Cannon]],
+				name                    = "Medium Plasma Cannon",
 				areaOfEffect            = 36,
+				accuracy				= 300,
 				craterBoost             = 0,
 				craterMult              = 0,
-				burst = 2,
-				burstrate = 0.5,
-
+				burst = 3,
+				burstrate = 6/30,
 				customParams        = {
 					light_camera_height = 1400,
-					light_color = [[0.80 0.54 0.23]],
-					light_radius = 200,
+					light_color = "0.80 0.54 0.23",
+					light_radius = 80,
 				},
-
 				damage                  = {
-					default = 125.1,
+					default = 45.1,
 				},
-
-				explosionGenerator      = [[custom:MARY_SUE]],
+				explosionGenerator      = "custom:MARY_SUE",
 				impulseBoost            = 0,
-				impulseFactor           = 0.4,
+				impulseFactor           = 0,
 				interceptedByShieldType = 1,
 				range                   = 420,
-				reloadtime              = 3 + 1/3,
-				soundHit                = [[impacts/shotgun_impactv5]],
-				soundStart              = [[weapon/cannon/cannon_fire4]],
+				reloadtime              = 3.0,
+				soundHit                = "weapon/cannon/cannon_hit_001",
+				soundStart              = "weapon/cannon/cannon_fire4",
 				turret                  = true,
-				weaponType              = [[Cannon]],
-				weaponVelocity          = 300,
+				weaponType              = "Cannon",
+				weaponVelocity          = 410,
 			},
 		},
-
 		featureDefs         = {
-
 			DEAD  = {
 				blocking         = true,
-				featureDead      = [[HEAP]],
+				featureDead      = "HEAP",
 				footprintX       = 2,
 				footprintZ       = 2,
-				object           = [[thug_d.s3o]],
+				object           = "thug_d.s3o",
 			},
-
 			HEAP  = {
 				blocking         = false,
 				footprintX       = 2,
 				footprintZ       = 2,
-				object           = [[debris2x2c.s3o]],
+				object           = "debris2x2c.s3o",
 			},
-
 		},
-
 	} 
 }

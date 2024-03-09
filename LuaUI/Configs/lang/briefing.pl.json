@@ -1,0 +1,16 @@
+{
+	"update_header": "Drobna aktualizacja 0.39.14: Punkt orientacyjny do przyszłości",
+	"shameless_plug": "Jeśli podoba Ci się Future Wars i chcesz podzielić się swoją opinią z projektem lub porozmawiać z innymi graczami, rozważ dołączenie do naszego discorda: https://discord.com/invite/GMUnRGUuSy lub dołącz do #fw w zk serwer. Obecnie poszukujemy pomysłów, grafików i tłumaczy, którzy włączą się w projekt i dadzą nam świeżą warstwę farby.",
+	"entry_1": "Ta aktualizacja rozwiązuje kilka ostatnich problemów. Wróciłem do aktywnego programowania i zajmuję się kilkoma problemami w tle. Po pierwsze, wykonano duże optymalizacje w nakładce siatki. Nie powinieneś już mieć problemów ze zlecaniem wielu konstruktorom budowy źródeł energii.",
+	"entry_2": "Drugi na liście ulepszeń, Future Wars AI ma łatkę, więc jeśli ją masz zainstalowaną, zaktualizuj ją z Githuba. Naprawia ona krytyczny błąd, który powoduje awarię gry, gdy umiera fabryka. Dziękujemy za twoją pomoc raporty!",
+	"entry_3": "Ostatnim krokiem w postępie i być może największym jest wprowadzenie kolejek poleceń dla Athenas i Strider Hubs. Klikając ikonę flagi z wybraną atheną, możesz edytować dla nich punkty trasy. Spróbuj tego zgłaszaj wszelkie uwagi na naszym discordzie lub w #modding.",
+	"entry_4": "A teraz trochę nowości z backendu: mamy nowy, automatyczny generator łatek z kilkoma fajnymi nowymi funkcjami. Dołącz do #modding lub #fw, aby to sprawdzić. Automatycznie wygeneruje notatki o łatkach z naszej listy zatwierdzeń. Ten proces nie jest doskonały , ale jest to krok naprzód w porównaniu z ręcznym generowaniem notatek o poprawkach.",
+	"chicken_header" : "Tryb gry: Chicken",
+	"chicken_entry_1" : "Kurczaki będą na przemian przeprowadzać ataki na twoją bazę ogromnymi hordami i pozostawać w tyle, aby odzyskać siły. Upewnij się, że zniszczyłeś grzędę kurczaka, gdy kurczaki odpoczywają, aby osłabić ich ataki",
+	"chicken_entry_2" : "Kurczaki w końcu zaczną konstruować niewiarygodnie potężne kurczaki znane jako zagrożenia. Zniszcz je, zanim skończą. Budowane zagrożenia są chronione przez niezniszczalną tarczę rafezji, dzięki czemu są odporne na ostrzał artyleryjski",
+	"chicken_entry_3" : "Gniew roju będzie z czasem wzrastał. Gdy gniew ula osiągnie 100%, na polu bitwy pojawi się sama Królowa Kurczaków (chyba że jesteś w trybie nieskończonym), a kurczaki zaczną atakować bez przerwy. Skoncentruj całą swoją siłę ognia na królowej kurczaków, ponieważ jej śmierć spowoduje rozpad roju",
+	"comm_wars_header" : "Tryb gry: Wojny dowódców",
+	"comm_wars_entry_1" : "W tym trybie gry masz dostęp tylko do swojego dowódcy i niczego więcej. Dowódca nie może już budować, a jedynie naprawiać i odzyskiwać. Ulepsz swojego dowódcę, dając mu więcej modułów poprzez system morfowania dowódców i pokonaj wrogich dowódców!",
+	"comm_wars_entry_2" : "Dodatkowo wprowadzono zmiany w balansie wielu modułów i broni dowódców, aby uczynić je bardziej zrównoważonymi w trybie gry tylko dla dowódców. Balans jest jednak nadal eksperymentalny, więc opinie będą bardzo mile widziane",
+	"houserules" : "Zasady domowe: "
+}

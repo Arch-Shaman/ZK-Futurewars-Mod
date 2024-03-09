@@ -33,6 +33,7 @@ local BUNKERED_AUTOHEAL = tonumber(UnitDef.customParams.armored_regen or 20) / 2
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitHealth = Spring.GetUnitHealth
+local armorValue = UnitDefs[unitDefID].armoredMultiple
 
 -- Tasks for open/close state
 local TASK_NEUTRAL = 0
@@ -167,7 +168,7 @@ function script.Create()
 	while (select(5, Spring.GetUnitHealth(unitID)) < 1) do
 		Sleep (100)
 	end
-	Spring.SetUnitArmored(unitID,true)
+	GG.SetUnitArmor(unitID, armorValue)
 	StartThread(Regen)
 end
 
@@ -191,7 +192,7 @@ local function Close()
 	if disarmed then return end
 
 	currentTask = TASK_NEUTRAL
-	Spring.SetUnitArmored(unitID, true)
+	GG.SetUnitArmor(unitID, armorValue)
 end
 
 local function RestoreAfterDelay()
@@ -216,7 +217,7 @@ local function Open()
 	StartThread(RestoreAfterDelay)
 	if not closed then return end
 	currentTask = TASK_OPENING
-	Spring.SetUnitArmored(unitID, false)
+	GG.SetUnitArmor(unitID, 1)
 
 	Move(turretbase, y_axis, 3, 30)
 	Turn(turretbase, x_axis, math.rad(30), math.rad(150.000000))

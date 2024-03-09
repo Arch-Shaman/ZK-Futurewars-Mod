@@ -1,7 +1,7 @@
 function widget:GetInfo()
 	return {
-		name      = "Commander Alerts",
-		desc      = "Dynamic Commander Alerts.",
+		name      = "Alert Callouts",
+		desc      = "Points out several events to the player.",
 		author    = "Shaman",
 		date      = "2/11/2021",
 		license   = "CC-0",
@@ -33,6 +33,11 @@ local spEcho = Spring.Echo
 local spGetGameFrame = Spring.GetGameFrame
 local max = math.max
 local sounddir = 'sounds/reply/advisor/'
+local spottedsuperweapons = {}
+
+local airlevel = 110 -- how high up units must be before being declared an airborn threat.
+
+local spottedair = false
 
 local function PlaySound(file, vol)
 	spPlaySoundFile(sounddir .. file, vol, 'userinterface')
@@ -41,6 +46,43 @@ end
 
 local function AddToConsole(str)
 	spEcho("game_message: " .. str)
+end
+
+local function ReportEnemyAircraft()
+	if not spottedair then
+		widgetHandler:RemoveCallIn("UnitEnteredRadar")
+		spottedair = true
+		PlaySound("airborn_threat.wav", 1.0)
+		AddToConsole("Airborne enemy on radar!")
+	end
+end
+
+function widget:UnitEnteredRadar(unitID, unitTeam, allyTeam, unitDefID)
+	local x, y, z = Spring.GetUnitPosition(unitID)
+	local gy = math.max(Spring.GetGroundHeight(x, z), 0)
+	if (unitDefID and UnitDefs[unitDefID].isAirUnit) or (y - gy > airlevel) then
+		ReportEnemyAircraft()
+	end
+end
+
+function widget:UnitEnteredLos(unitID, unitTeam)
+	local unitDefID = Spring.GetUnitDefID(unitID)
+	if not spottedair and unitDefID and UnitDefs[unitDefID].isAirUnit then
+		ReportEnemyAircraft()
+		return
+	end
+	if spottedsuperweapons[unitID] == nil and unitDefID and (UnitDefs[unitDefID].customParams.superweapon or UnitDefs[unitDefID].name == "mahlazer") then
+		local _, _, _, _, buildprogress = Spring.GetUnitHealth(unitID)
+		spottedsuperweapons[unitID] = true
+		if buildprogress < 1.0 then
+			PlaySound("superweapon_construction.wav", 1.0)
+		end
+		return
+	end
+	if spottedsuperweapons[unitID] == nil and unitDefID and UnitDefs[unitDefID].name == "staticmissilesilo" then
+		spottedsuperweapons[unitID] = true
+		PlaySound("missile_silo_detected.wav", 1.0)
+	end
 end
 
 function widget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
@@ -67,6 +109,13 @@ function widget:UnitTaken(unitID, unitDefID, oldTeam, newTeam)
 	if commanders[unitID] then
 		commanders[unitID] = nil
 		lastwarning[unitID] = nil
+	end
+end
+
+function widget:StockpileChanged(unitID, unitDefID, unitTeam, weaponNum, oldCount, newCount)
+	if UnitDefs[unitDefID].name == "staticnuke" and (newCount - oldCount) == 1 and spGetGameFrame() >= globalcooldown then
+		AddToConsole("Oblivion MIRV Ready")
+		PlaySound("strategic_missile_ready.wav", 1.0)
 	end
 end
 
