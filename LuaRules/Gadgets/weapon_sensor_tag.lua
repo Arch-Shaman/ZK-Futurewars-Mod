@@ -42,9 +42,9 @@ local function AddUnit(unitID, allyTeamID, timer)
 	spSetUnitLosState(unitID, allyTeamID, 15)
 	local data = IterableMap.Get(handled, unitID)
 	if data then
-		data[allyTeam] = timer
+		data[allyTeamID] = timer
 	else
-		data = {[allyTeam] = timer}
+		data = {[allyTeamID] = timer}
 		IterableMap.Add(handled, unitID, data)
 	end
 end
@@ -64,16 +64,20 @@ local function CheckUnit(unitID, data)
 	for allyTeam, timer in pairs(data) do
 		count = count + 1
 		timer = timer - reduction
+		data[allyTeam] = timer -- force update?
 		if timer > max then max = timer end
 		if timer <= 0 then
-			Spring.SetUnitRulesParam(unitID, "sensortag_" .. allyTeam, nil, ALLIED)
+			Spring.SetUnitRulesParam(unitID, "sensortag_" .. allyTeam, nil, PUBLIC)
+			Spring.SetUnitRulesParam(unitID, "sensortag", nil, ALLIED)
 			if not GG.IsUnitRevealedArtillery(unitID, allyTeam) then
-				Spring.SetUnitLosMask(unitID, allyTeam, 0)
+				spSetUnitLosMask(unitID, allyTeam, 0)
+				spSetUnitLosState(unitID, allyTeam, 0)
 			end
 			count = count - 1
 			data[allyTeam] = nil
 		else
 			Spring.SetUnitRulesParam(unitID, "sensortag_" .. allyTeam, timer, PUBLIC) -- unfortunately with widgets you can get this information
+			Spring.SetUnitRulesParam(unitID, "sensortag", max, ALLIED)
 		end
 	end
 	if doOwnersKnowTagState then -- so owners should know about it anyways.
@@ -98,7 +102,7 @@ local function GetAllyTeamFromTeam(teamID)
 end
 
 function gadget:GameFrame(f)
-	if f%frameNum == 2 then
+	if f%frameNum == 0 then
 		for unitID, data in IterableMap.Iterator(handled) do
 			CheckUnit(unitID, data)
 		end
