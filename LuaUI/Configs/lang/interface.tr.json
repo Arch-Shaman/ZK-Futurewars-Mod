@@ -110,5 +110,7 @@
 	"x_units_in_queue" : {
 		"one" : "%{count} ünite kuyrukta",
 		"other" : "%{count} üniteler kuyrukta"
-	}
+	},
+	"sensorsteal" : "Sensörler hacklendi",
+	"sensortag" : "Birim izlendi"
 }

@@ -118,5 +118,7 @@
 		"few" : "%{count} units in queue",
 		"many" : "%{count} units in queue",
 		"other" : "%{count} units in queue"
-	}
+	},
+	"sensorsteal": "เซ็นเซอร์ถูกแฮ็ก",
+	"sensortag" : "ติดตามหน่วย"
 }

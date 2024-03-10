@@ -113,5 +113,7 @@
 		"few" : "%{count} jednostki w kolejce",
 		"many" : "%{count} jednostek w kolejce",
 		"other" : "%{count} jednostek w kolejce"
-	}
+	},
+	"sensorsteal": "Zhakowanie czujników",
+	"sensortag": "Jednostka śledzona"
 }
