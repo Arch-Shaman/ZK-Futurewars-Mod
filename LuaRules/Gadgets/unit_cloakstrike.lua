@@ -18,7 +18,7 @@ local spSetUnitWeaponState = Spring.SetUnitWeaponState
 local spSetUnitWeaponDamages = Spring.SetUnitWeaponDamages
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 local handledUnits = IterableMap.New()
 local cloakstrike_defs = include("LuaRules/Configs/cloakstrike_def.lua")
 

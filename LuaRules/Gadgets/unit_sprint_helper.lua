@@ -18,7 +18,7 @@ local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitIsStunned  = Spring.GetUnitIsStunned
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 local handled = IterableMap.New()
 GG.Sprint = {}
 

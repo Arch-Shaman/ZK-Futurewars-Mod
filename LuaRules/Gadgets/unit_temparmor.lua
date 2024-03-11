@@ -14,7 +14,7 @@ function gadget:GetInfo()
 	}
 end
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 local handledUnits = IterableMap.New() -- which units currently have armor. Table structure: {duration = number, armorValue = number}
 local armoredUnits = {} -- table that holds units with armor.
 local watchWeapons = {} -- table that tells PreDamageWantedDefs which weapondefs we want

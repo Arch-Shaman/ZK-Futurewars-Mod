@@ -45,7 +45,7 @@ local oneClickWepCMD = {
 local INITIAL_CMD_DESC_ID = 500
 
 local defs = include "LuaRules/Configs/oneclick_weapon_defs.lua"
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 local disarmedHandling = IterableMap.New()
 
 --local reloadFrame = {}

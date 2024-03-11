@@ -16,7 +16,7 @@ end
 
 local debugMode = false
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 
 local handled = IterableMap.New()
 

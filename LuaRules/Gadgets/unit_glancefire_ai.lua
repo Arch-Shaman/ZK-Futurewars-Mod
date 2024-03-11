@@ -14,7 +14,7 @@ function gadget:GetInfo()
 	}
 end
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 
 local overshootdefs = {} -- unitdefs to watch
 local unitstocheck = IterableMap.New()

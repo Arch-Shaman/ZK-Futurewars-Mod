@@ -39,7 +39,7 @@ local GetEffectiveWeaponRange = Spring.Utilities.GetEffectiveWeaponRange
 
 local UPDATE_RATE = 20
 local MEX_UPDATE_RATE = 35
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 
 local unitAIBehaviour = include("LuaRules/Configs/tactical_ai_defs.lua")
 local mexShootBehaviour = include("LuaRules/Configs/mex_shoot_defs.lua")

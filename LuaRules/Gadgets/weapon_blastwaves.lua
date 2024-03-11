@@ -74,7 +74,7 @@ for i = 1, #WeaponDefs do
 	end
 end
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 local handled = IterableMap.New()
 
 local spGetUnitsInSphere = Spring.GetUnitsInSphere

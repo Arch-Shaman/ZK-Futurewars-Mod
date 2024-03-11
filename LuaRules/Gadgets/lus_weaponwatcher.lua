@@ -14,7 +14,7 @@ function gadget:GetInfo()
   }
 end
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 local WatchUnits = IterableMap.New()
 local WatchFrames = {}
 
