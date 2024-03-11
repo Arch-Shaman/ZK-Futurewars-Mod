@@ -14,6 +14,9 @@ local lfleg = piece 'lfleg'
 local digger = piece 'digger'
 local movingData = {}
 
+local dgunProjectile = WeaponDefNames["spiderscout_dgun"].id
+local reloadtime = WeaponDefNames["spiderscout_laser"].reload
+
 include "constants.lua"
 include 'reliableStartMoving.lua'
 
@@ -246,6 +249,27 @@ local function WalkControl()
 	end
 end
 
+local function DgunThread()
+	local isReloading = true
+	while isReloading do
+		Sleep(66)
+		isReloading = Spring.GetGameFrame() < Spring.GetUnitWeaponState(unitID, 1, "reloadFrame")
+	end
+	Spring.SetUnitWeaponState(unitID, 1, "reloadTime",  reloadtime)
+end
+
+function Dgun()
+	local x, y, z = Spring.GetUnitPosition(unitID)
+	if y > Spring.GetGroundHeight(x, z) then
+		return
+	end
+	local projectileParams = {pos = {x, y, z}, gravity = -30, maxRange = 1, team = Spring.GetUnitTeam(unitID), owner = unitID, ttl = -1}
+	Spring.SpawnProjectile(dgunProjectile, projectileParams)
+	Spring.SetUnitWeaponState(unitID, 1, "reloadTime", 10)
+	Spring.SetUnitWeaponState(unitID, 1, "reloadFrame", Spring.GetGameFrame() + 300)
+	StartThread(DgunThread)
+end
+
 function script.StartMoving()
 	movingData.moving = true
 	StartThread(WalkControl)
@@ -279,6 +303,7 @@ function script.QueryWeapon(num)
 end
 
 function script.AimWeapon(num, heading, pitch)
+	if num == 2 then return false end
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
 	aiming = true

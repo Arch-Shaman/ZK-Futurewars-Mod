@@ -51,8 +51,8 @@
 	},
 	"spiderscout" : {
 		"name" : "Wolf",
-		"description" : "Light Scout/Raider Spider",
-		"helptext" : "The Wolf has a combined role of scout and raider. It has moderately high dps for its cost and it can be used in small groups to effectively raid mexes early on. In maps with tall cliffs, it can attack from unexpected angles."
+		"description" : "Light Spider Raider",
+		"helptext" : "Upgraded in the years leading up to the coalition wars, the Wolf's signiture Tracer Beam is a ground breaking weapon that allows for long range tracking of enemies using specialized ionizing radiation that is easily tracked by long range scanners. This allows units impacted by the beam to be detected even outside of sensor and radar range. Not only does this allow units to be detected at range, it also slows them down."
 	},
 	"energyfusion" : {
 		"name" : "Fusion Reactor",

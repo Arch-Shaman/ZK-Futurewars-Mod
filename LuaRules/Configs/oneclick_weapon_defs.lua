@@ -72,6 +72,9 @@ local oneClickWepDefNames = {
 	gunshipraid = {
 		{ functionToCall = "Overdrive", reloadTime = 900, name = "Overdrive", tooltip = "For 7 seconds: Increase weapon damage by 33%, reload and movement speed by 50%. Main weapon becomes instant hit. Disables weapons for 10 seconds afterwards.", useSpecialReloadFrame = true, texture = "LuaUI/Images/Commands/Bold/sprint.png",},
 	},
+	spiderscout = {
+		{ functionToCall = "Dgun", reloadTime = 600, name = "Overload", tooltip = "Overloads the Tracer Laser, dealing minor damage and slowing enemy units in a 400 elmo radius. These units are tracked for 40 seconds. Disables weapons for 10 seconds.", texture = "unitpics/module_recon_pulse.png",},
+	},
 	--staticmissilesilo = {
 	--	dummy = true,
 	--	{ functionToCall = nil, name = "Select Missiles", tooltip = "Select missiles", texture = "LuaUI/Images/Commands/Bold/missile.png"},
