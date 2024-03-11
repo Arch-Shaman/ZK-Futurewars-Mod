@@ -45,7 +45,11 @@ local osClock               = os.clock
 --------------------------------------------------------------------------------
 -- Variables/config
 
+local gameVersion = Game.gameVersion
 
+if string.find(gameversion, "dev") then
+	return
+end
 
 local briefing, lastWrittenVersion = VFS.Include("LuaUI/Configs/briefing.lua")
 local writeVersion
@@ -54,7 +58,6 @@ local showBriefing = true
 
 do
 	local configLocation = "luaui\\config\\fw_patchnotes.lua"
-	local gameVersion = Game.gameVersion
 	local splittedVersion = {}
 	gameVersion = string.gsub(gameVersion, "v", "")
 	for str in string.gmatch(gameVersion, "%d+") do
