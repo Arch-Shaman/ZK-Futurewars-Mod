@@ -158,7 +158,7 @@ end
 
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam, projectileID)
 	local weaponConfig = config[weaponDefID]
-	if weaponConfig and attackerTeam then
+	if unitTeam and weaponConfig and attackerTeam and not Spring.AreTeamsAllied(unitTeam, attackerTeam) then
 		CreateSensorUnit(unitID, attackerTeam, config[weaponDefID])
 	end
 	return 1, 1
