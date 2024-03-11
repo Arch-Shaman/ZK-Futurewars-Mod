@@ -92,7 +92,7 @@ return {
 				rgbColor2				= "0.1176 0.4705 0.6902",
 				soundStart              = "weapon/laser/ion_burn",
 				soundstartvolume	    = 0.1,
-				thickness               = 2,25,
+				thickness               = 2.25,
 				tolerance               = 10000,
 				turret                  = true,
 				waterWeapon             = true,
