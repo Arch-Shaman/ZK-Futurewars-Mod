@@ -79,7 +79,6 @@ return {
 					sweepfire_step = 1.5,
 					sweepfire_fastupdate = 1,
 					sensortag = 25,
-					timeslow_damagefactor = 1/3,
 				},
 				damage                  = {
 					default = 10.5,
