@@ -15,7 +15,7 @@ function gadget:GetInfo()
 end
 
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 include("LuaRules/Configs/customcmds.h.lua")
 
 local wantedDefs = {} -- stores jump ranges of units that can midair jump.

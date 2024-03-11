@@ -39,7 +39,7 @@ local pi = math.pi
 local random = math.random
 local ceil = math.ceil
 local deg = math.deg
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
 
 -- constants --

@@ -30,7 +30,7 @@ local g_CHAR = string.byte('g')
 local u_CHAR = string.byte('u')
 local f_CHAR = string.byte('f')
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 
 local missiles = IterableMap.New() -- {weaponDef = ID, targeterID = unitID, state}
 local targeters = {} -- holds the targeting information.

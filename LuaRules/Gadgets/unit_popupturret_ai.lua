@@ -10,7 +10,7 @@ function gadget:GetInfo() return {
 	enabled   = true,
 } end
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 local handled = IterableMap.New()
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
 

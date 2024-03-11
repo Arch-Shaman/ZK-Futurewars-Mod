@@ -15,7 +15,7 @@ if not gadgetHandler:IsSyncedCode() then -- SYNCED
 end
 
 VFS.Include("LuaRules/Configs/customcmds.h.lua")
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 local newtons = IterableMap.New()
 
 -- config --

@@ -16,7 +16,7 @@ function gadget:GetInfo()
 end
 
 include("LuaRules/Configs/customcmds.h.lua")
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 
 local handled = IterableMap.New()
 local featurecache = {}

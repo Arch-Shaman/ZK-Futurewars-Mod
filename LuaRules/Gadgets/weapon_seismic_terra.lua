@@ -10,7 +10,7 @@ function gadget:GetInfo() return {
 	enabled   = false,
 } end
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
 
 local seismicEvents = IterableMap.New()
 
