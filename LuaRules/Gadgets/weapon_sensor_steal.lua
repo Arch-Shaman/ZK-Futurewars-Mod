@@ -20,6 +20,13 @@ local config = {}
 local wantedDefs = {}
 local handled = IterableMap.New() -- unitID = {{[allyTeamID] = {seconds, losUnit = unitID}}, count = 0}
 
+local ALLIED = {allied = true}
+local PUBLIC = {public = true}
+
+local function SendError(str)
+	Spring.Echo("[weapon_sensor_steal]: " .. str)
+end
+
 for i = 1, #WeaponDefs do
 	local cp = WeaponDefs[i].customParams
 	if cp.sensorsteal then
@@ -31,16 +38,63 @@ for i = 1, #WeaponDefs do
 	end
 end
 
-local function SendError(str)
-	Spring.Echo("[weapon_sensor_steal] " .. str)
+local function UpdateSensorForUnit(losUnitID, newLos, newRadar, airLos)
+	Spring.SetUnitSensorRadius(losUnitID, "los", newLos)
+	Spring.SetUnitSensorRadius(losUnitID, "radar", newRadar)
+	Spring.SetUnitSensorRadius(losUnitID, "sonar", newLos)
+	if airLos then
+		Spring.SetUnitSensorRadius(losUnit, "airlos", airLos)
+	end
 end
 
-local function OnSensorChange(unitID)
-	local data = IterableMap.Get
+local function OnSensorChange(unitID, newLos, newRadar)
+	local data = IterableMap.Get(unitID)
+	if data then
+		for _, unitData in pairs(data) do
+			local losUnitID = unitData.losUnit
+			UpdateSensorForUnit(losUnitID, newLos, newRadar)
+		end
+	end
 end
 
-local function AddUnit(unitID)
+local function TryToCreateUnit(unitID, teamID)
+	local x, y, z = Spring.GetUnitPosition(unitID)
+	local losUnit = Spring.CreateUnit("fakeunit", x, y, z, 0, teamID)
+	if losUnit then
+		Spring.UnitAttach(unitID, losUnit, 1)
+		Spring.SetUnitNoDraw(losUnit, true)
+		Spring.SetUnitNoSelect(losUnit, true)
+		Spring.SetUnitNoMinimap(losUnit, true)
+		Spring.SetUnitLeaveTracks(losUnit, true)
+		local unitDef = UnitDefs[Spring.GetUnitDefID(unitID)]
+		UpdateSensorForUnit(losUnit, unitDef.losRadius, unitDef.radarRadius or 0, unitDef.airLosRadius or 0)
+		Spring.SetUnitRulesParam(targetID, "untargetable", 1)
+		return losUnit
+	else
+		SendError("Failed to create los unit for " .. teamID .. " on " .. unitID)
+	end
+end
 	
+
+local function CreateSensorUnit(unitID, teamID, duration)
+	local teamsAllyTeam = select(6, Spring.GetTeamInfo(teamID))
+	local data = IterableMap.Get(unitID)
+	if data then
+		if data[teamsAllyTeam] and data[teamsAllyTeam].timer < duration then
+			data[teamsAllyTeam].timer = duration
+		elseif data[teamsAllyTeam] == nil then 
+			local losUnitID = TryToCreateUnit(unitID, teamID)
+			if losUnitID then
+				data[teamsAllyTeam] = {timer = duration, losUnit = losUnitID}
+			end
+		end
+	else
+		local losUnit = TryToCreateUnit(unitID, teamID)
+		if losUnit then
+			local newTable = {[teamsAllyTeam] = {losUnit = losUnit, timer = duration}}
+			IterableMap.Add(handled, unitID, newTable)
+		end
+	end
 end
 
 local function RemoveUnit(unitID)
@@ -54,13 +108,12 @@ local function RemoveUnit(unitID)
 	end
 end
 
-local function UnitMorphed(unitID)
+local function UnitMorphed(unitID, newUnitID)
 	local data = IterableMap.Get(handled, unitID)
 	if data then
-		local newTable = {}
 		for allyTeam, unitData in pairs(data) do
-			newTable[allyTeam] = {timer = unitData.timer, losID = unitData.losID}
-			Spring.UnitAttach(unitID, unitData.losID, 1)
+			IterableMap.ReplaceKey(handled, unitID, newUnitID)
+			Spring.UnitAttach(newUnitID, unitData.losID, 1)
 		end
 	end
 end
@@ -69,13 +122,12 @@ local function RemoveAllyTeam(unitID, allyTeamID, data)
 	local losUnit = data[allyTeamID] and data[allyTeamID].losID
 	if losUnit then
 		Spring.DestroyUnit(losUnit, true, true)
+		Spring.SetUnitRulesParam(unitID, "sensorsteal_" .. allyTeamID, nil)
 		data[allyTeamID] = nil
 		for k, v in pairs(data) do
 			return -- don't remove! something still exists.
 		end
-		if data.count == 0 then
-			IterableMap.Remove(handled, unitID)
-		end
+		IterableMap.Remove(handled, unitID)
 	else
 		SendError("Attempt to remove ally team that does not exist from " .. unitID)
 	end
@@ -86,18 +138,45 @@ function gadget:UnitDestroyed(unitID)
 	if wasMorphed then
 		local data = IterableMap.Get(handled, unitID)
 		if data then
-			IterableMap.Add(handled, unitID, data)
-			IterableMap.Remove(handled, unitID)
+			UnitMorphed(unitID, wasMorphed)
 		end
 	else
 		RemoveUnit(unitID)
 	end
 end
 
-function gadget:UnitPreDamage_GetWantedDefs()
+function gadget:UnitPreDamaged_GetWantedWeaponDef()
 	return wantedDefs
 end
 
-function gadget:UnitPreDamage(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
-	
+function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, attackerID, attackerDefID, attackerTeam, projectileID)
+	local weaponConfig = config[weaponDefID]
+	if weaponConfig and attackerTeam then
+		CreateSensorUnit(unitID, attackerTeam, config[weaponDefID])
+	end
+	return 1, 1
+end
+
+function gadget:Initialize()
+	GG.SensorHackUpdateUnitSensor = OnSensorChange
+end
+
+function gadget:GameFrame(f)
+	if f%3 == 0 then
+		for unitID, data in IterableMap.Iterator(handled) do
+			local max = 0
+			for allyTeam, unitData in pairs(data) do
+				unitData.timer = unitData.timer - 0.1
+				if unitData.timer > max then
+					max = unitData.timer
+				end
+				if unitData.timer <= 0 then
+					RemoveAllyTeam(unitID, allyTeam, data)
+				else
+					Spring.SetUnitRulesParam(unitID, "sensorsteal_" .. allyTeam, unitData.timer, PUBLIC)
+				end
+			end
+			Spring.SetUnitRulesParam(unitID, "sensorsteal", max, ALLIED)
+		end
+	end
 end
