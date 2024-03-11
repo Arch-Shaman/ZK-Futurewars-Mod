@@ -81,7 +81,7 @@ local function TryToCreateUnit(unitID, teamID)
 		SendError("Failed to create los unit for " .. teamID .. " on " .. unitID)
 	end
 end
-	
+
 
 local function CreateSensorUnit(unitID, teamID, duration)
 	local teamsAllyTeam = select(6, Spring.GetTeamInfo(teamID))
