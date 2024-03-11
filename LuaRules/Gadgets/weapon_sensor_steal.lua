@@ -10,7 +10,7 @@ function gadget:GetInfo()
 		date    = "2024.3.10",
 		license = "CC-0",
 		layer   = -2,
-		enabled = false,
+		enabled = true,
 	} 
 end
 
@@ -43,12 +43,12 @@ local function UpdateSensorForUnit(losUnitID, newLos, newRadar, airLos)
 	Spring.SetUnitSensorRadius(losUnitID, "radar", newRadar)
 	Spring.SetUnitSensorRadius(losUnitID, "sonar", newLos)
 	if airLos then
-		Spring.SetUnitSensorRadius(losUnit, "airlos", airLos)
+		Spring.SetUnitSensorRadius(losUnitID, "airLos", airLos)
 	end
 end
 
 local function OnSensorChange(unitID, newLos, newRadar)
-	local data = IterableMap.Get(unitID)
+	local data = IterableMap.Get(handled, unitID)
 	if data then
 		for _, unitData in pairs(data) do
 			local losUnitID = unitData.losUnit
@@ -59,16 +59,23 @@ end
 
 local function TryToCreateUnit(unitID, teamID)
 	local x, y, z = Spring.GetUnitPosition(unitID)
-	local losUnit = Spring.CreateUnit("fakeunit", x, y, z, 0, teamID)
+	local losUnit = Spring.CreateUnit("los_superwep", x, y, z, 0, teamID)
 	if losUnit then
 		Spring.UnitAttach(unitID, losUnit, 1)
 		Spring.SetUnitNoDraw(losUnit, true)
 		Spring.SetUnitNoSelect(losUnit, true)
 		Spring.SetUnitNoMinimap(losUnit, true)
 		Spring.SetUnitLeaveTracks(losUnit, true)
+		Spring.SetUnitRulesParam(losUnit, "untargetable", 1)
+		Spring.SetUnitCloak(losUnit, 4)
+		Spring.SetUnitStealth(losUnit, true)
+		Spring.SetUnitBlocking(losUnit, false, false, false)
 		local unitDef = UnitDefs[Spring.GetUnitDefID(unitID)]
-		UpdateSensorForUnit(losUnit, unitDef.losRadius, unitDef.radarRadius or 0, unitDef.airLosRadius or 0)
-		Spring.SetUnitRulesParam(targetID, "untargetable", 1)
+		if unitDef.customParams.commtype or unitDef.customParams.dynamic_comm then
+			UpdateSensorForUnit(losUnit, Spring.GetUnitRulesParam(unitID, "sightRangeOverride") or 0, Spring.GetUnitRulesParam(unitID, "radarRangeOverride") or 0, unitDef.airLosRadius or 0)
+		else
+			UpdateSensorForUnit(losUnit, unitDef.losRadius, unitDef.radarRadius or 0, unitDef.airLosRadius or 0)
+		end
 		return losUnit
 	else
 		SendError("Failed to create los unit for " .. teamID .. " on " .. unitID)
@@ -78,7 +85,7 @@ end
 
 local function CreateSensorUnit(unitID, teamID, duration)
 	local teamsAllyTeam = select(6, Spring.GetTeamInfo(teamID))
-	local data = IterableMap.Get(unitID)
+	local data = IterableMap.Get(handled, unitID)
 	if data then
 		if data[teamsAllyTeam] and data[teamsAllyTeam].timer < duration then
 			data[teamsAllyTeam].timer = duration
@@ -101,7 +108,7 @@ local function RemoveUnit(unitID)
 	local data = IterableMap.Get(handled, unitID)
 	if data then
 		for allyTeam, unitData in pairs(data) do
-			local losUnit = unitData.losID
+			local losUnit = unitData.losUnit
 			Spring.DestroyUnit(losUnit, true, true)
 		end
 		IterableMap.Remove(handled, unitID)
@@ -113,13 +120,13 @@ local function UnitMorphed(unitID, newUnitID)
 	if data then
 		for allyTeam, unitData in pairs(data) do
 			IterableMap.ReplaceKey(handled, unitID, newUnitID)
-			Spring.UnitAttach(newUnitID, unitData.losID, 1)
+			Spring.UnitAttach(newUnitID, unitData.losUnit, 1)
 		end
 	end
 end
 
 local function RemoveAllyTeam(unitID, allyTeamID, data)
-	local losUnit = data[allyTeamID] and data[allyTeamID].losID
+	local losUnit = data[allyTeamID] and data[allyTeamID].losUnit
 	if losUnit then
 		Spring.DestroyUnit(losUnit, true, true)
 		Spring.SetUnitRulesParam(unitID, "sensorsteal_" .. allyTeamID, nil)
