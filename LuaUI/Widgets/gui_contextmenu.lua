@@ -1072,18 +1072,6 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 					end
 				end
 			end
-			if cp.sensortag then
-				local secs = tonumber(cp.sensortag) or 0
-				if secs > 0 then
-					AddEntryToCells(WG.Translate("interface", "sensor_tag", {seconds = numformat(secs, 1)}), layer + 2, '', cells)
-				end
-			end
-			if cp.sensorsteal then
-				local secs = tonumber(cp.sensorsteal) or 0
-				if secs > 0 then
-					AddEntryToCells(WG.Translate("interface", "sensor_steal", {seconds = numformat(secs, 1)}), layer + 2, '', cells)
-				end
-			end
 			-- shield damage
 			if (wd.interceptedByShieldType ~= 0) and show_damage and not cp.stats_hide_shield_damage and not deathExplosion then
 				if cp.damage_vs_shield then
@@ -1130,6 +1118,18 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 			if cp.setunitsonfire then
 				local afterburn_frames = (cp.burntime or (450 * (wd.fireStarter or 0)))
 				AddEntryToCells(localization.stats_burn_time .. ':', layer + 1, color2incolor(colorFire) .. numformat(afterburn_frames/30) .. 's (15' .. localization.acronyms_dps .. ')\008', cells)
+			end
+			if cp.sensortag then
+				local secs = tonumber(cp.sensortag) or 0
+				if secs > 0 then
+					AddEntryToCells(WG.Translate("interface", "sensor_tag", {seconds = numformat(secs, 1)}), layer + 1, '', cells)
+				end
+			end
+			if cp.sensorsteal then
+				local secs = tonumber(cp.sensorsteal) or 0
+				if secs > 0 then
+					AddEntryToCells(WG.Translate("interface", "sensor_steal", {seconds = numformat(secs, 1)}), layer + 1, '', cells)
+				end
 			end
 			if show_range and not bombletCount then
 				local range = cp.truerange or wd.range
