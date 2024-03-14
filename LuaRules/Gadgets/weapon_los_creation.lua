@@ -115,7 +115,7 @@ local function AddIndex(projectileID, weaponDefID)
 	local c = handled.count + 1
 	local los = con.los or 0
 	local radar = con.radar or 0
-	SendError("AddIndex: " .. los .. ", " .. radar)
+	--SendError("AddIndex: " .. los .. ", " .. radar)
 	UpdateSensorForUnit(losUnit, los, radar)
 	if handled.data[c] then
 		handled.data[c].id = projectileID
