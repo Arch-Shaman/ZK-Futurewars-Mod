@@ -65,7 +65,7 @@ local function UpdateSensorForUnit(losUnitID, newLos, newRadar)
 end
 
 local function TryToCreateUnit(teamID, x, y, z)
-	local losUnit = Spring.CreateUnit("los_superwep", -10000, -10000, -10000, 0, teamID)
+	local losUnit = Spring.CreateUnit("los_scan", -10000, -10000, -10000, 0, teamID)
 	if losUnit then
 		Spring.SetUnitNoDraw(losUnit, true)
 		Spring.SetUnitNoSelect(losUnit, true)

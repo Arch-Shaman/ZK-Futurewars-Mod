@@ -1,0 +1,45 @@
+return {
+	los_scan = {
+		name                  = "LOS Unit",
+		description           = "So we're seriously doing starcraft in Spring now? What happened to CNC Generals in Spring?",
+		acceleration          = 1,
+		brakeRate             = 0.8,
+		autoheal              = 900000,
+		builder               = false,
+		buildPic              = "levelterra.png",
+		canFly                = true,
+		canGuard              = true,
+		canMove               = true,
+		canPatrol             = true,
+		canSubmerge           = false,
+		canSelfDestruct       = false,
+		category              = "FAKEUNIT",
+		
+		customParams          = {
+			dontcount         = 1,
+			dontkill          = 1,
+			completely_hidden = 1, -- for widget-senpai not to notice me >w<
+			singuimmune = 1,
+		},
+		
+		floater               = true,
+		footprintX            = 3,
+		footprintZ            = 3,
+		health                = 900000,
+		iconType              = [[none]],
+		idleAutoHeal          = 10,
+		idleTime              = 300,
+		levelGround           = false,
+		maxWaterDepth         = 0,
+		metalCost             = 0.45,
+		minCloakDistance      = 9,
+		noAutoFire            = false,
+		objectName            = "debris1x1b.s3o",
+		script                = "fakeunit_los.lua",
+		sightDistance         = 100,
+		speed                 = 0.1,
+		stealth               = true,
+		turnRate              = 0,
+		workerTime            = 0,
+	}
+}
