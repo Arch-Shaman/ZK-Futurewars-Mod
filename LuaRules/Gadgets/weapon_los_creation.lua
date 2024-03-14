@@ -39,8 +39,8 @@ for i = 1, #WeaponDefs do
 		end
 	end
 	if cp.onimpact_los or cp.onimpact_radar then
-		local los = tonumber(cp.generates_los) or 0
-		local radar = tonumber(cp.generates_radar) or 0
+		local los = tonumber(cp.onimpact_los) or 0
+		local radar = tonumber(cp.onimpact_radar) or 0
 		local timer = tonumber(cp.onimpact_duration) or 0
 		if los > 0 or radar > 0 and timer > 0 then
 			wantsImpact = true
