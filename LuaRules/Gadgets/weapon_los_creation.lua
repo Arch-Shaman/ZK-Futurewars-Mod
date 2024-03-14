@@ -21,9 +21,13 @@ local wantedDefs = {}
 local losOnImpact = {count = 0, data = {}}
 
 -- speedups --
-local mcSetPosition = Spring.MoveControl.SetPosition
+local mcSetPosition = Spring.MoveCtrl.SetPosition
 local spGetProjectilePosition = Spring.GetProjectilePosition
 local spSetUnitSensorRadius = Spring.SetUnitSensorRadius
+
+local function SendError(str)
+	Spring.Echo("[weapon_los_creation]: " .. str)
+end
 
 for i = 1, #WeaponDefs do
 	local cp = WeaponDefs[i].customParams
@@ -33,7 +37,7 @@ for i = 1, #WeaponDefs do
 		local radar = tonumber(cp.generates_radar) or 0
 		if los > 0 or radar > 0 then
 			config[i] = {radar = radar, los = los}
-			Script.SetWatchExplosion(i, true)
+			Script.SetWatchExplosion(i, true) -- probably not necessary.
 			Script.SetWatchWeapon(i, true)
 			wantsImpact = true
 		end
@@ -53,10 +57,6 @@ for i = 1, #WeaponDefs do
 	end
 end
 
-local function SendError(str)
-	Spring.Echo("[weapon_los_creation]: " .. str)
-end
-
 local function UpdateSensorForUnit(losUnitID, newLos, newRadar)
 	spSetUnitSensorRadius(losUnitID, "los", newLos)
 	spSetUnitSensorRadius(losUnitID, "radar", newRadar)
@@ -64,9 +64,15 @@ local function UpdateSensorForUnit(losUnitID, newLos, newRadar)
 	spSetUnitSensorRadius(losUnitID, "airLos", newLos)
 end
 
-local function TryToCreateUnit(teamID, x, y, z)
-	local losUnit = Spring.CreateUnit("los_scan", -10000, -10000, -10000, 0, teamID)
+local function TryToCreateUnit(teamID, x, y, z, isScan)
+	local losUnit
+	if isScan then 
+		losUnit = Spring.CreateUnit("los_scan", -10000, -10000, -10000, 0, teamID) 
+	else
+		losUnit = Spring.CreateUnit("los_superwep", -10000, -10000, -10000, 0, teamID) 
+	end
 	if losUnit then
+		Spring.MoveCtrl.Enable(losUnit)
 		Spring.SetUnitNoDraw(losUnit, true)
 		Spring.SetUnitNoSelect(losUnit, true)
 		Spring.SetUnitNoMinimap(losUnit, true)
@@ -75,7 +81,6 @@ local function TryToCreateUnit(teamID, x, y, z)
 		Spring.SetUnitCloak(losUnit, 4)
 		Spring.SetUnitStealth(losUnit, true)
 		Spring.SetUnitBlocking(losUnit, false, false, false)
-		Spring.MoveControl.Enable(losUnit)
 		mcSetPosition(losUnit, x, y, z)
 		return losUnit
 	else
@@ -108,7 +113,10 @@ local function AddIndex(projectileID, weaponDefID)
 	local con = config[weaponDefID]
 	if losUnit == nil then return end -- abort!
 	local c = handled.count + 1
-	UpdateSensorForUnit(losUnit, con.los or 0, con.radar or 0)
+	local los = con.los or 0
+	local radar = con.radar or 0
+	SendError("AddIndex: " .. los .. ", " .. radar)
+	UpdateSensorForUnit(losUnit, los, radar)
 	if handled.data[c] then
 		handled.data[c].id = projectileID
 		handled.data[c].los = losUnit
@@ -116,7 +124,7 @@ local function AddIndex(projectileID, weaponDefID)
 		handled.data[c] = {id = projectileID, los = losUnit}
 	end
 	handled.count = c
-	handled.byID[projectileID] = true
+	handled.byID[projectileID] = c
 end
 
 local function AddTimedIndex(teamID, x, y, z, con)
@@ -135,7 +143,7 @@ end
 
 function gadget:Explosion(weaponDefID, px, py, pz, attackerID, projectileID)
 	local index = handled.byID[projectileID]
-	if index then
+	if index then -- it'll get cleaned up also under ProjectileUpdate, apparently.
 		RemoveIndex(index, handled)
 		handled.byID[projectileID] = nil
 	end
@@ -154,15 +162,15 @@ end
 
 function gadget:ProjectileCreated(proID, unitFiringID, weaponDefID) -- it would be nice if this had an equivalent to Explosion_GetWantedWeaponDef
 	if config[weaponDefID] then
-		AddIndex(projectileID)
+		AddIndex(proID, weaponDefID)
 	end
 end
 
-function gadget:ProjectileDestroyed(proID)
-	if singleHitMultiWeapon[proID] then
-		singleHitProjectile[proID] = nil
+--[[function gadget:ProjectileDestroyed(proID) -- not needed?
+	if handled.byID[proID] then
+		RemoveIndex(index, handled.byID[proID])
 	end
-end
+end]]
 
 local function ProjectileUpdate()
 	local toRemove = {}
@@ -179,7 +187,7 @@ local function ProjectileUpdate()
 	local maxIndex = #toRemove
 	if maxIndex > 0 then
 		for i = 1, maxIndex do
-			RemoveIndex(toRemove[i])
+			RemoveIndex(toRemove[i], handled)
 		end
 	end
 end
