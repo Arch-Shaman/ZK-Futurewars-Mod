@@ -14,7 +14,8 @@ function gadget:GetInfo()
 	} 
 end
 
-local IterableMap = VFS.Include("LuaRules/Gadgets/Include/IterableMap.lua")
+local IterableMap = Spring.Utilities.IterableMap
+local imIterator = IterableMap.Iterator
 
 local config = {}
 local wantedDefs = {}
@@ -22,6 +23,7 @@ local handled = IterableMap.New() -- unitID = {{[allyTeamID] = {seconds, losUnit
 
 local ALLIED = {allied = true}
 local PUBLIC = {public = true}
+local spSetUnitSensorRadius = Spring.SetUnitSensorRadius
 
 local function SendError(str)
 	Spring.Echo("[weapon_sensor_steal]: " .. str)
@@ -39,11 +41,11 @@ for i = 1, #WeaponDefs do
 end
 
 local function UpdateSensorForUnit(losUnitID, newLos, newRadar, airLos)
-	Spring.SetUnitSensorRadius(losUnitID, "los", newLos)
-	Spring.SetUnitSensorRadius(losUnitID, "radar", newRadar)
-	Spring.SetUnitSensorRadius(losUnitID, "sonar", newLos)
+	spSetUnitSensorRadius(losUnitID, "los", newLos)
+	spSetUnitSensorRadius(losUnitID, "radar", newRadar)
+	spSetUnitSensorRadius(losUnitID, "sonar", newLos)
 	if airLos then
-		Spring.SetUnitSensorRadius(losUnitID, "airLos", airLos)
+		spSetUnitSensorRadius(losUnitID, "airLos", airLos)
 	end
 end
 
@@ -173,7 +175,7 @@ end
 
 function gadget:GameFrame(f)
 	if f%3 == 0 then
-		for unitID, data in IterableMap.Iterator(handled) do
+		for unitID, data in imIterator(handled) do
 			local max = 0
 			for allyTeam, unitData in pairs(data) do
 				unitData.timer = unitData.timer - 0.1
