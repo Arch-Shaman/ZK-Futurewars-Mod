@@ -99,7 +99,7 @@ Hailstorm
 Oblivion
 Silencer MkIII
 Punisher
-Widow
+Shade
 Breaker
 Sentinel
 Longsword

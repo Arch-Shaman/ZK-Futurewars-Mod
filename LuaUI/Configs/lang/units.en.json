@@ -545,9 +545,9 @@
 		"helptext" : "The Punisher has a shotgun which shoots a spray of projectiles which are good against large targets or tight clusters of enemies."
 	},
 	"spiderantiheavy" : {
-		"name" : "Widow",
+		"name" : "Shade",
 		"description" : "Cloaked Scout/Anti-Heavy",
-		"helptext" : "The Widow is useful in two ways. Firstly it is an excellent scout, and very difficult to detect. It can penetrate deep into enemy lines. It also has the capacity to shoot a paralyzing bolt that will freeze any one target, good against heavy enemies and enemy infrastructure."
+		"helptext" : "Built off the premier infiltration unit, the Widow, the Shade is not only faster than its predecessor, but boosts additional utility and a much stronger sting. It can hack enemy units' sensors and listen into their reports, allowing it to passively scout using enemy movements. This allows it greater infiltration ability, as well as a more rewarding payoff for getting it into position. The Shade, however, costs much more than a Widow."
 	},
 	"energywind" : {
 		"name" : "Wind/Tidal Generator",
