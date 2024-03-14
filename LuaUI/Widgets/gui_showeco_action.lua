@@ -425,30 +425,34 @@ local function DoUpdate()
 		local queue = Spring.GetUnitCommands(unitID, -1)
 		local index = 1
 		local data = IterableMap.Get(queuedPylons, unitID)
-		if queue and #queue > 0 then
-			updates = updates + 1
-			IterableMap.Remove(needsUpdate, unitID)
-			ClearData(data)
-			local cmd
-			for i = 1, #queue do
-				cmd = queue[i]
-				--Spring.Echo("DoUpdate: " .. Spring.Utilities.CommandNameByID(cmd.id))
-				if cmd.id < 0 then -- this is a unit construction order
-					local unitDef = -cmd.id
-					if pylonDefs[unitDef] then
-						local d = BuildTableFromCommand(cmd.id, cmd.params, 0, unitDef, cmd.tag)
-						if d then
-							data[index] = d
-							data.taglookup[cmd.tag] = index
-							index = index + 1
-						else
-							Spring.Echo("[Ecoview] Table failed to build")
+		if not data then -- missing data.
+			IterableMap.Remove(unitID, needsUpdate)
+		else
+			if queue and #queue > 0 then
+				updates = updates + 1
+				IterableMap.Remove(needsUpdate, unitID)
+				ClearData(data)
+				local cmd
+				for i = 1, #queue do
+					cmd = queue[i]
+					--Spring.Echo("DoUpdate: " .. Spring.Utilities.CommandNameByID(cmd.id))
+					if cmd.id < 0 then -- this is a unit construction order
+						local unitDef = -cmd.id
+						if pylonDefs[unitDef] then
+							local d = BuildTableFromCommand(cmd.id, cmd.params, 0, unitDef, cmd.tag)
+							if d then
+								data[index] = d
+								data.taglookup[cmd.tag] = index
+								index = index + 1
+							else
+								Spring.Echo("[Ecoview] Table failed to build")
+							end
 						end
 					end
 				end
+			elseif queue and #queue == 0 then
+				ClearData(data)
 			end
-		elseif queue and #queue == 0 then
-			ClearData(data)
 		end
 	end
 	if updates > 0 then
