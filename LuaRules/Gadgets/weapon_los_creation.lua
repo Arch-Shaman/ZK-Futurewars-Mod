@@ -85,7 +85,7 @@ end
 
 local function RemoveIndex(index, tab)
 	if tab.data[index] == nil or index > tab.count then
-		SendError("Attempt to remove a nonexistent value!\n Index: " .. index .. "\ncount: " .. handled.count .. "\nactual count in memory: " .. #handled.data)
+		SendError("Attempt to remove a nonexistent value!\n Index: " .. index .. "\ncount: " .. tab.count .. "\nactual count in memory: " .. #tab.data)
 		Spring.Echo("game_message: /!\ A serious error has occurred in weapon_los_creation.\nThe game may still be playable but you may have unintentional LOS.")
 		return
 	end
