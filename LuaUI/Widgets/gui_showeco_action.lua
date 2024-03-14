@@ -426,7 +426,7 @@ local function DoUpdate()
 		local index = 1
 		local data = IterableMap.Get(queuedPylons, unitID)
 		if not data then -- missing data.
-			IterableMap.Remove(unitID, needsUpdate)
+			IterableMap.Remove(needsUpdate, unitID)
 		else
 			if queue and #queue > 0 then
 				updates = updates + 1
