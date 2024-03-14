@@ -115,8 +115,6 @@ return {
 					chainlightning_donttargetfeature = ">w<",
 					chainlightning_efficiency = 0.25,
 					chainlightning_extrabounces = 1,
-					stats_custom_tooltip_1 = " - Forks to 5 different targets up to 250 elmos away at 10% efficency",
-					stats_custom_tooltip_3 = " - Forks bounce to 3 additional targets each",
 				},
 				damage                  = {
 					default        = 150,
