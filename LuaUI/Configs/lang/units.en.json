@@ -1095,9 +1095,9 @@
 		"helptext" : "The Quake creates a powerful seismic shockwave that smooths a wide area of terrain, while causing minimal harm to units."
 	},
 	"missileslow" : {
-		"name" : "Zeno",
-		"description" : "Slow Homing Missile - High single-target slow damage with lingering damage over time",
-		"helptext" : "The Zeno slows down a single target and leaves a slowing area behind it. It has far more range than other combat missiles and homes onto its target."
+		"name" : "Wraith",
+		"description" : "Recon Missile",
+		"helptext" : "The Wraith creates a small area of vision as it crosses the battlefield. Any unit hit by it will be revealed for a short period of time. Counter it by placing shields around your front."
 	},
 	"striderscorpion" : {
 		"name" : "Scorpion",
