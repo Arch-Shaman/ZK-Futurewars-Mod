@@ -101,6 +101,7 @@ local function RemoveIndex(index, tab)
 		local d = tab.data[tab.count]
 		tab.data[tab.count] = tab.data[index]
 		tab.data[index] = d
+		tab.byID[d.id] = index
 		tab.count = tab.count - 1
 	end
 	Spring.DestroyUnit(losID, true, true)
