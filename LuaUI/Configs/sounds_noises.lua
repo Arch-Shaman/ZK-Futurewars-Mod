@@ -1582,7 +1582,14 @@ local sounds = {
 			[1] = "radar_select",
 		},
 	},
-	
+	missileslow = {
+		ok = {
+			[1] = "turret_select",
+		},
+		select = {
+			[1] = "silo_select",
+		},
+	},
 	shieldshield = {
 		ok = {
 			volume = 0.6,
