@@ -108,7 +108,7 @@ return {
 			},
 			DGUN = {
 				name                    = "Overload",
-				areaOfEffect            = 1200,
+				areaOfEffect            = 600,
 				craterBoost             = 0,
 				craterMult              = 0,
 				commandFire				= true,
