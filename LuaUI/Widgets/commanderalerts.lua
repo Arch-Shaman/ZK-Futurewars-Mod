@@ -67,7 +67,7 @@ end
 
 function widget:UnitEnteredLos(unitID, unitTeam)
 	local unitDefID = Spring.GetUnitDefID(unitID)
-	if not spottedair and unitDefID and UnitDefs[unitDefID].isAirUnit then
+	if not spottedair and unitDefID and UnitDefs[unitDefID].isAirUnit and UnitDefs[unitDefID].customParams.completely_hidden == nil then
 		ReportEnemyAircraft()
 		return
 	end
