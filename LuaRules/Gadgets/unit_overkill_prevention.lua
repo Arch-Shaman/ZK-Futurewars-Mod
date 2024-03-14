@@ -20,20 +20,28 @@ end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local spValidUnitID         = Spring.ValidUnitID
-local spSetUnitTarget       = Spring.SetUnitTarget
-local spGetUnitHealth       = Spring.GetUnitHealth
-local spGetGameFrame        = Spring.GetGameFrame
-local spFindUnitCmdDesc     = Spring.FindUnitCmdDesc
-local spEditUnitCmdDesc     = Spring.EditUnitCmdDesc
-local spInsertUnitCmdDesc   = Spring.InsertUnitCmdDesc
-local spGetUnitTeam         = Spring.GetUnitTeam
-local spGetUnitDefID        = Spring.GetUnitDefID
-local spGetUnitRulesParam   = Spring.GetUnitRulesParam
-local spGetCommandQueue     = Spring.GetCommandQueue
-local spGiveOrderToUnit     = Spring.GiveOrderToUnit
-local spGetUnitShieldState  = Spring.GetUnitShieldState
+local spValidUnitID           = Spring.ValidUnitID
+local spSetUnitTarget         = Spring.SetUnitTarget
+local spGetUnitHealth         = Spring.GetUnitHealth
+local spGetGameFrame          = Spring.GetGameFrame
+local spFindUnitCmdDesc       = Spring.FindUnitCmdDesc
+local spEditUnitCmdDesc       = Spring.EditUnitCmdDesc
+local spInsertUnitCmdDesc     = Spring.InsertUnitCmdDesc
+local spGetUnitTeam           = Spring.GetUnitTeam
+local spGetUnitDefID          = Spring.GetUnitDefID
+local spGetUnitRulesParam     = Spring.GetUnitRulesParam
+local spGetCommandQueue       = Spring.GetCommandQueue
+local spGiveOrderToUnit       = Spring.GiveOrderToUnit
+local spGetUnitShieldState    = Spring.GetUnitShieldState
+local spUtilCheckBit          = Spring.Utilities.CheckBit
+local spUtilGetUnitFireState  = Spring.Utilities.GetUnitFireState
+local spGetUnitCurrentCommand = Spring.GetUnitCurrentCommand
 
+local CMD_ATTACK       = CMD.ATTACK
+local CMD_FIGHT        = CMD.FIGHT
+local CMD_OPT_INTERNAL = CMD.OPT_INTERNAL
+
+local DEBUG_NAME = "OKP"
 local pmap = VFS.Include("LuaRules/Utilities/pmap.lua")
 
 local DECAY_FRAMES = 1200 -- time in frames it takes to decay 100% para to 0 (taken from unit_boolean_disable.lua)
@@ -79,7 +87,7 @@ local preventOverkillCmdDesc = {
 	name    = "Prevent Overkill.",
 	action  = 'preventoverkill',
 	tooltip	= 'Enable to prevent units shooting at units which are already going to die.',
-	params 	= {0, "Fire at anything", "Prevent Overkill"}
+	params 	= {0, "Fire at anything", "On automatic commands", "On fire at will", "Prevent Overkill"}
 }
 
 -------------------------------------------------------------------------------------
@@ -287,7 +295,7 @@ local function CheckBlockCommon(unitID, targetID, gameFrame, fullDamage, disarmD
 				if cmdID == CMD.ATTACK and Spring.Utilities.CheckBit(gadget:GetInfo().name, cmdOpts, CMD.OPT_INTERNAL) and cp_1 and (not cp_2) and cp_1 == targetID then
 					--Spring.Echo("Removing auto-attack command")
 					GG.recursion_GiveOrderToUnit = true
-					spGiveOrderToUnit(unitID, CMD.REMOVE, {cmdTag}, 0 )
+					spGiveOrderToUnit(unitID, CMD.REMOVE, cmdTag, 0)
 					GG.recursion_GiveOrderToUnit = false
 				end
 			else
@@ -304,9 +312,30 @@ local function CheckBlockCommon(unitID, targetID, gameFrame, fullDamage, disarmD
 	return false
 end
 
+function GG.OverkillPrevention_IsWanted(unitID, targetID, stateTable)
+	if not (unitID and targetID and stateTable[unitID]) then
+		return false
+	end
+	if (stateTable[unitID] == 2 or stateTable[unitID] == 1) and spUtilGetUnitFireState(unitID) ~= 2 then
+		return false
+	end
+	if stateTable[unitID] == 1 then
+		if targetID == GG.GetUnitTarget(unitID) then
+			return false
+		end
+		local cmdID, cmdOpts, cmdTag, cmdParam1 = spGetUnitCurrentCommand(unitID)
+		if cmdID == CMD_ATTACK and cmdParam1 == targetID and not spUtilCheckBit(DEBUG_NAME, cmdOpts, CMD_OPT_INTERNAL) then
+			local cmdID_2 = Spring.GetUnitCurrentCommand(unitID, 2)
+			if cmdID_2 ~= CMD_FIGHT then
+				return false
+			end
+		end
+	end
+	return true
+end
 
 function GG.OverkillPrevention_CheckBlockDisarm(unitID, targetID, damage, timeout, disarmTimer, fastMult, radarMult, staticOnly)
-	if not (unitID and targetID and units[unitID]) then
+	if not GG.OverkillPrevention_IsWanted(unitID, targetID, units) then
 		return false
 	end
 
@@ -318,7 +347,7 @@ function GG.OverkillPrevention_CheckBlockDisarm(unitID, targetID, damage, timeou
 end
 
 function GG.OverkillPrevention_CheckBlockNoFire(unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
-	if not (unitID and targetID and units[unitID]) then
+	if not GG.OverkillPrevention_IsWanted(unitID, targetID, units) then
 		return false
 	end
 
@@ -331,7 +360,7 @@ function GG.OverkillPrevention_CheckBlockNoFire(unitID, targetID, damage, timeou
 end
 
 function GG.OverkillPrevention_CheckBlock(unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
-	if not (unitID and targetID and units[unitID]) then
+	if not GG.OverkillPrevention_IsWanted(unitID, targetID, units) then
 		return false
 	end
 
@@ -348,16 +377,17 @@ end
 local function PreventOverkillToggleCommand(unitID, cmdParams, cmdOptions)
 	if canHandleUnit[unitID] then
 		local state = cmdParams[1]
+		if cmdOptions and cmdOptions.right then
+			state = (state - 2)%4
+		end
 		local cmdDescID = spFindUnitCmdDesc(unitID, CMD_PREVENT_OVERKILL)
 
 		if (cmdDescID) then
 			preventOverkillCmdDesc.params[1] = state
 			spEditUnitCmdDesc(unitID, cmdDescID, {params = preventOverkillCmdDesc.params})
 		end
-		if state == 1 then
-			if not units[unitID] then
-				units[unitID] = true
-			end
+		if state >= 1 then
+			units[unitID] = state
 		else
 			if units[unitID] then
 				units[unitID] = nil
