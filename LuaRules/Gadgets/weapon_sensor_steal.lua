@@ -71,7 +71,7 @@ local function TryToCreateUnit(unitID, teamID)
 		Spring.SetUnitNoMinimap(losUnit, true)
 		Spring.SetUnitLeaveTracks(losUnit, true)
 		Spring.SetUnitRulesParam(losUnit, "untargetable", 1)
-		Spring.SetUnitCloak(losUnit, 4)
+		--Spring.SetUnitCloak(losUnit, 4)
 		Spring.SetUnitStealth(losUnit, true)
 		Spring.SetUnitBlocking(losUnit, false, false, false)
 		if unitDef.customParams.commtype or unitDef.customParams.dynamic_comm then
