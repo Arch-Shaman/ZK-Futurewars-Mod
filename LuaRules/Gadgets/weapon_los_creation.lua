@@ -7,7 +7,7 @@ function gadget:GetInfo()
     name      = "Weapon Los Creation",
     desc      = "Creates fake LOS units for attacks.",
     author    = "Shaman",
-    date      = "1 Oct 2024",
+    date      = "14 March, 2024",
     license   = "CC-0",
     layer     = 0,
     enabled   = true,
