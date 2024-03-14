@@ -58,6 +58,10 @@ local function OnSensorChange(unitID, newLos, newRadar)
 end
 
 local function TryToCreateUnit(unitID, teamID)
+	local unitDef = UnitDefs[Spring.GetUnitDefID(unitID)]
+	if (unitDef.radarRadius or 0) == 0 and (unitDef.losRadius or 0) == 0 then
+		return
+	end
 	local x, y, z = Spring.GetUnitPosition(unitID)
 	local losUnit = Spring.CreateUnit("los_superwep", x, y, z, 0, teamID)
 	if losUnit then
@@ -70,7 +74,6 @@ local function TryToCreateUnit(unitID, teamID)
 		Spring.SetUnitCloak(losUnit, 4)
 		Spring.SetUnitStealth(losUnit, true)
 		Spring.SetUnitBlocking(losUnit, false, false, false)
-		local unitDef = UnitDefs[Spring.GetUnitDefID(unitID)]
 		if unitDef.customParams.commtype or unitDef.customParams.dynamic_comm then
 			UpdateSensorForUnit(losUnit, Spring.GetUnitRulesParam(unitID, "sightRangeOverride") or 0, Spring.GetUnitRulesParam(unitID, "radarRangeOverride") or 0, unitDef.airLosRadius or 0)
 		else
