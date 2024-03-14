@@ -21,7 +21,7 @@ local wantedDefs = {}
 local losOnImpact = {count = 0, data = {}}
 
 -- speedups --
-local mcSetPosition = Spring.MoveCtrl.SetPosition
+local spSetUnitPosition = Spring.SetUnitPosition
 local spGetProjectilePosition = Spring.GetProjectilePosition
 local spSetUnitSensorRadius = Spring.SetUnitSensorRadius
 
@@ -72,7 +72,6 @@ local function TryToCreateUnit(teamID, x, y, z, isScan)
 		losUnit = Spring.CreateUnit("los_superwep", -10000, -10000, -10000, 0, teamID) 
 	end
 	if losUnit then
-		Spring.MoveCtrl.Enable(losUnit)
 		Spring.SetUnitNoDraw(losUnit, true)
 		Spring.SetUnitNoSelect(losUnit, true)
 		Spring.SetUnitNoMinimap(losUnit, true)
@@ -81,7 +80,7 @@ local function TryToCreateUnit(teamID, x, y, z, isScan)
 		--Spring.SetUnitCloak(losUnit, 4)
 		Spring.SetUnitStealth(losUnit, true)
 		Spring.SetUnitBlocking(losUnit, false, false, false)
-		mcSetPosition(losUnit, x, y, z)
+		spSetUnitPosition(losUnit, x, y, z)
 		return losUnit
 	else
 		SendError("Failed to create los unit for " .. teamID)
@@ -182,7 +181,7 @@ local function ProjectileUpdate()
 		if x == nil then -- something has fucked up
 			toRemove[#toRemove + 1] = i
 		else
-			mcSetPosition(losID, x, y, z)
+			spSetUnitPosition(losID, x, y, z)
 		end
 	end
 	local maxIndex = #toRemove
