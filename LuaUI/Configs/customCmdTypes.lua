@@ -44,7 +44,10 @@ local custom_cmd_actions = {
 	firestate =       {cmdType = 2, cmdID = CMD.FIRE_STATE, name = "Fire State", states = {'Hold Fire', 'Return Fire', 'Fire At Will'}},
 	idlemode =        {cmdType = 2, cmdID = CMD.IDLEMODE, name = "Air Idle State", states = {'Land', 'Fly'}},
 	autorepairlevel = {cmdType = 2, name = "Air Retreat Threshold", states = {'Off', '30%', '50%', '80%'}},
-	preventoverkill = {cmdType = 2, cmdID = CMD_PREVENT_OVERKILL, name = "Prevent Overkill", states = {'Off', 'On'}},
+	preventoverkill = {cmdType = 2, cmdID = CMD_PREVENT_OVERKILL, name = "Prevent Overkill", states = {'Off', 'When set to Fire At Will', 'On'}},
+	preventbait     = {cmdType = 2, cmdID = CMD_PREVENT_BAIT, name = "Avoid Bad Targets", states = {'Disabled', '35', '90', '240', '420'}},
+	fireatshields   = {cmdType = 2, cmdID = CMD_FIRE_AT_SHIELD, name = "Fire at Shields", states = {'Off', 'On'}},
+	firetowards     = {cmdType = 2, cmdID = CMD_FIRE_TOWARDS_ENEMY, name = "Fire Towards Enemies", states = {'Off', 'On'}},
 	trajectory      = {cmdType = 2, cmdID = CMD.TRAJECTORY, name = "Trajectory", states = {'Low', 'High'}},
 
 	--CUSTOM COMMANDS
@@ -90,6 +93,9 @@ local custom_cmd_actions = {
 	restoreground = {cmdType = 1, name = "Terraform Restore"},
 	--terraform_internal = {cmdType = 1, name = "--terraform_internal"},
 
+	--build a "generic" plate from build factory menu
+	buildplate = {cmdType = 1, name = "Build Plate"},
+	
 	resetfire = {cmdType = 3, name = "Reset Fire"},
 	resetmove = {cmdType = 3, name = "Reset Move"},
 
@@ -146,6 +152,7 @@ local usedActions = {
 	["areaguard"] = true,
 	["orbitdraw"] = true,
 	["preventoverkill"] = true,
+	["preventbait"] = true,
 	["retreat"] = true,
 	["unitai"] = true,
 	["settarget"] = true,
@@ -161,12 +168,14 @@ local usedActions = {
 	["repair"] = true,
 	["reclaim"] = true,
 	["areamex"] = true,
+	["areaterramex"] = true,
 	["priority"] = true,
 	["rampground"] = true,
 	["levelground"] = true,
 	["raiseground"] = true,
 	["smoothground"] = true,
 	["restoreground"] = true,
+	["buildplate"] = true,
 	["jump"] = true,
 	["idlemode"] = true,
 	["areaattack"] = true,
@@ -174,7 +183,7 @@ local usedActions = {
 	["find_pad"] = true,
 	["recalldrones"] = true,
 	["toggledrones"] = true,
-	["divestate"] = true,
+	--["divestate"] = true,
 	["wantcloak"] = true,
 	["oneclickwep"] = true,
 	["floatstate"] = true,
@@ -205,6 +214,8 @@ local usedActions = {
 	["formation_rank"] = true,
 	["pushpull"] = true,
 	["unit_kill_subordinates"] = true,
+	["fireatshields"] = true,
+	["firetowards"] = true,
 	["goostate"] = true,
 	["firecycle"] = true,
 
