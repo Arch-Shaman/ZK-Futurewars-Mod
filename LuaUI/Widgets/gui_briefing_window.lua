@@ -47,7 +47,7 @@ local osClock               = os.clock
 
 local gameVersion = Game.gameVersion
 
-if string.find(gameversion, "dev") then
+if string.find(gameVersion, "develop") then
 	return
 end
 
