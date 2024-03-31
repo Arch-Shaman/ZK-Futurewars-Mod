@@ -96,7 +96,7 @@ return {
 				soundHit                = "weapon/missile/rapid_rocket_hit",
 				soundHitVolume          = 40,
 				soundStart              = "weapon/missile/mlr_launch",
-				soundStartVolume        = 100,
+				soundStartVolume        = 20,
 				startVelocity           = 100,
 				tolerance               = 30512,
 				fireTolerance 			= 512,
