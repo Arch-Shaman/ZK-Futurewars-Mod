@@ -671,7 +671,7 @@ local options = {
 		section = 'multipliers',
 		def     = 0.3, -- don't change, won't take effect as this is engine value
 		min     = 0.1,
-		max     = 2.0,
+		max     = 8.0,
 		step    = 0.1,
 	},
 	{
