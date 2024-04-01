@@ -48,7 +48,7 @@ if showBriefing then
 		{"entry_3", image = "unitpics/staticnuke.png"},
 		{"entry_4", image = "unitpics/spiderantiheavy.png"},
 		{"entry_5", image = "unitpics/missileslow.png"},
-		{"entry_6"}
+		{"entry_6"},
 		{""},
 		{""},
 	}
