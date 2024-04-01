@@ -439,7 +439,7 @@ function Spring.UnitScript.StartThread(fun, ...)
 		Spring.Echo("[Unit_Script]: Attempt to start thread from dead unit? Trace: " .. Spring.Utilities.Traceback(fun))
 		return -- safety
 	end
-	if debugMode and not fun then
+	if not fun then
 		Spring.Echo("Error in StartThread", activeUnit.unitID)
 		Spring.Utilities.UnitEcho(activeUnit.unitID, UnitDefs[Spring.GetUnitDefID(activeUnit.unitID)].name)
 	end
