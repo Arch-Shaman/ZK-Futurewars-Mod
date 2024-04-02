@@ -98,6 +98,7 @@ local commandDisplayConfig = {
 	[CMD_SWEEPFIRE_CANCEL] = {texture = imageDir .. 'sweepfire_cancel.png', tooltip = "Clear Sweepfire: Clears the sweepfire command for this unit."},
 	[CMD_GREYGOO] = {texture = imageDir .. 'Bold/GreyGoo.png', tooltip = "Reclaim (Grey Goo): Consumes wreck(s) in an area (or a single wreck)."},
 	[CMD_EXCLUDE_PAD] = {texture = imageDir .. 'Bold/excludeairpad.png', tooltip = "Exclude Airpad: Toggle whether any of your aircraft use the targeted airpad."},
+	[CMD_FIELD_FAC_SELECT] = {texture = imageDir .. 'Bold/fac_select.png', tooltip = "Copy Factory Blueprint: Copy a production option from target functional friendly factory."},
 	[CMD_IMMEDIATETAKEOFF] = {texture = imageDir .. 'takeoff.png', tooltip = "Abort Landing\nImmediately take off from airpads or abort landing."},
 	[CMD_EMBARK] = {texture = imageDir .. 'Bold/embark.png'},
 	[CMD_DISEMBARK] = {texture = imageDir .. 'Bold/disembark.png'},

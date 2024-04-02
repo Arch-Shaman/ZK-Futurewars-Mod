@@ -59,12 +59,14 @@ local cmdPosDef = {
 	[CMD_DRONE_SET_TARGET] = {pos = 7, priority = 11},
 	[CMD_SELECT_DRONES] = {pos = 7, priority = 12},
 	
-	[CMD_AREA_TERRA_MEX]= {pos = 13, priority = 1},
+	[CMD_FIELD_FAC_SELECT]       = {pos = 13, priority = 0.6},
+	[CMD_MISC_BUILD]             = {pos = 13, priority = 0.7},
+	[CMD_AREA_TERRA_MEX]         = {pos = 13, priority = 1},
 	[CMD_UNIT_SET_TARGET_CIRCLE] = {pos = 13, priority = 2},
 	[CMD_UNIT_CANCEL_TARGET]     = {pos = 13, priority = 3},
-	[CMD_EMBARK]        = {pos = 13, priority = 5},
-	[CMD_DISEMBARK]     = {pos = 13, priority = 6},
-	[CMD_EXCLUDE_PAD]   = {pos = 13, priority = 7},
+	[CMD_EMBARK]                 = {pos = 13, priority = 5},
+	[CMD_DISEMBARK]              = {pos = 13, priority = 6},
+	[CMD_EXCLUDE_PAD]            = {pos = 13, priority = 7},
 	[CMD_IMMEDIATETAKEOFF] = {pos = 13, priority = 8},
 	-- States
 	[CMD.REPEAT]           = {pos = 1, priority = 1},

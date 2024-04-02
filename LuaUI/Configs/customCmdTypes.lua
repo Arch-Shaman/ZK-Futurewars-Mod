@@ -53,6 +53,7 @@ local custom_cmd_actions = {
 	--CUSTOM COMMANDS
 	sethaven = {cmdType = 1, name = "Add Retreat Zone"},
 	excludeairpad = {cmdType = 1, name = "Exclude an Airpad"},
+	field_fac_select = {cmdType = 1, name = "Copy Factory Blueprint"},
 	--build = {cmdType = 1, name = "--build"},
 	areamex = {cmdType = 1, name = "Area Mex"},
 	areaterramex = {cmdType = 1, name = "Area Terra Mex"},
@@ -208,6 +209,7 @@ local usedActions = {
 	["setferry"] = true,
 	["sethaven"] = true,
 	["exclude_pad"] = true,
+	["field_fac_select"] = true,
 	["setfirezone"] = true,
 	["cancelfirezone"] = true,
 	["selection_rank"] = true,
