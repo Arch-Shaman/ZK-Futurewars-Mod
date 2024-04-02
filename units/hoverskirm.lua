@@ -67,18 +67,16 @@ return {
 					lups_explodespeed = 0.5,
 					light_radius = 80,
 					blastwave_size = 35,
-					blastwave_impulse = 0.8,
+					blastwave_impulse = 1.6,
 					blastwave_speed = 1.5,
 					blastwave_life = 30,
 					blastwave_lossfactor = 0.80,
 					blastwave_damage = 75,
 					damage_vs_shield = 400,
 				},
-
 				damage                  = {
 					default = 150.01,
 				},
-
 				cegTag                  = "sonicarcher",
 				cylinderTargeting       = 1,
 				explosionGenerator      = "custom:sonic_80",
