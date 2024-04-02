@@ -3,7 +3,7 @@ return {
 		unitname            = "hoverriot",
 		name                = "Longsword",
 		description         = "Riot/Skirmisher Hover",
-		acceleration        = 0.14,
+		acceleration        = 0.5,
 		activateWhenBuilt   = true,
 		brakeRate           = 0.432,
 		buildCostMetal      = 300,
@@ -21,6 +21,7 @@ return {
 		customParams        = {
 			selection_scale    = 0.92,
 			aim_lookahead      = 80,
+			needsfighthax = 1,
 		},
 
 		explodeAs           = "BIG_UNITEX",
@@ -31,7 +32,7 @@ return {
 		idleTime            = 1800,
 		health              = 1400,
 		maxSlope            = 36,
-		speed               = 2.2,
+		speed               = 2.5,
 		movementClass       = "HOVER4",
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE SUB",
@@ -48,8 +49,7 @@ return {
 
 		sightDistance       = 520,
 		turninplace         = 0,
-		turnRate            = 400,
-		workerTime          = 0,
+		turnRate            = 600,
 		weapons             = {
 			{
 				def                = "GAUSS",
@@ -65,7 +65,7 @@ return {
 				--cegTag                  = "sonictrail",
 				craterBoost             = 0,
 				craterMult              = 0,
-				accuracy				= 1100,
+				accuracy				= 1600,
 				burnblow				= true,
 				customParams            = {
 					reaim_time = 1,
@@ -74,10 +74,10 @@ return {
 					sweepfire_step = 1.5,
 					sweepfire_fastupdate = 1,
 					sweepfire_maxrangemult = 0.92,
+					groundnoexplode = 1,
 				},
-
 				damage                  = {
-					default = 30.1,
+					default = 20.1,
 				},
 				explosionGenerator      = "custom:gauss_hit_m",
 				impactOnly              = false,
@@ -86,9 +86,8 @@ return {
 				interceptedByShieldType = 1,
 				noExplode               = true,
 				noSelfDamage            = true,
-				range                   = 460,
-				reloadtime              = 2/30,
-				movingaccuracy			= 2200,
+				range                   = 350,
+				reloadtime              = 1/30,
 				mygravity				= 0.001,
 				rgbColor                = "0.5 1 1",
 				separation              = 0.5,
