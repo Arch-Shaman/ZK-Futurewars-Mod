@@ -30,6 +30,7 @@ return {
 			outline_x = 80,
 			outline_y = 80,
 			outline_yoff = 12.5,
+			needsfighthax = 1,
 		},
 		explodeAs              = "BIG_UNITEX",
 		footprintX             = 3,

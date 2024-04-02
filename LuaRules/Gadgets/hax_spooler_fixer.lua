@@ -14,10 +14,13 @@ function gadget:GetInfo()
 	}
 end
 
-local wantedDefs = {
-	[UnitDefNames["cloakriot"].id] = true,
-	[UnitDefNames["vehassault"].id] = true,
-}
+local wantedDefs = {}
+
+for i = 1, #UnitDefs do
+	if UnitDefs[i].customParams.needsfighthax then
+		wanteddefs[i] = true
+	end
+end
 
 local aiTeams = {}
 

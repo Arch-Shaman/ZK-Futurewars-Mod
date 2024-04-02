@@ -39,6 +39,7 @@ return {
 			cloakstrikeduration = 60,
 			cloakstrikespeed = 1.33,
 			cloakstrikeslow = 0.85,
+			needsfighthax = 1,
 		},
 		explodeAs              = "SMALL_UNITEX",
 		footprintX             = 3,
