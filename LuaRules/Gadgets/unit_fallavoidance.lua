@@ -148,6 +148,10 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
 	return false
 end
 
+function gadget:AllowCommand_GetWantedCommand()
+	return {[CMD_AUTOJUMP] = true}
+end
+
 function gadget:UnitFinished(unitID, unitDefID)
 	if wantedDefs[unitDefID] then
 		IterableMap.Add(units, unitID, {nextupdate = 0, unitdef = unitDefID, inAir = false})
