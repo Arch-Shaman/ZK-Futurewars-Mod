@@ -79,8 +79,6 @@ local missileGun = 1
 local SIG_MOVE = 1
 local SIG_RESTORE = 2
 
-include "LuaRules/Configs/customcmds.h.lua"
-
 function script.Create()
 	Hide(Launcher)
 	Hide(WakeForeLeft)
