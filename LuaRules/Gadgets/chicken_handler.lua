@@ -15,7 +15,7 @@ function gadget:GetInfo()
 	}
 end
 
-include("LuaRules/Configs/customcmds.h.lua")
+
 
 if (gadgetHandler:IsSyncedCode()) then
 -- BEGIN SYNCED
