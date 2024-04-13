@@ -23,9 +23,7 @@ local spGetUnitHealth     = Spring.GetUnitHealth
 local spGetUnitTeam       = Spring.GetUnitTeam
 local spGetUnitIsDead     = Spring.GetUnitIsDead
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
-
-
-include "LuaRules/Configs/customcmds.h.lua"
+local CMD_ONECLICK_WEAPON = Spring.Utilities.CMD.ONECLICK_WEAPON
 
 if (gadgetHandler:IsSyncedCode()) then
 --------------------------------------------------------------------------------

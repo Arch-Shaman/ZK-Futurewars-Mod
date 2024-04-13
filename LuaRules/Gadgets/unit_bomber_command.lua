@@ -40,14 +40,17 @@ local CMD_FIGHT  = CMD.FIGHT
 local CMD_INSERT = CMD.INSERT
 local CMD_REMOVE = CMD.REMOVE
 local CMD_STOP   = CMD.STOP
-
 local CMD_FIRE_STATE = CMD.FIRE_STATE
-
 local CMD_OPT_ALT      = CMD.OPT_ALT
 local CMD_OPT_INTERNAL = CMD.OPT_INTERNAL
 local CMD_OPT_SHIFT    = CMD.OPT_SHIFT
+local CMD_EXCLUDE_PAD  = Spring.Utilities.CMD.EXCLUDE_PAD
+local CMD_FIND_PAD     = Spring.Utilities.CMD.FIND_PAD
+local CMD_RAW_BUILD    = Spring.Utilities.CMD.RAW_BUILD
+local CMD_RAW_MOVE     = Spring.Utilities.CMD.RAW_MOVE
+local CMD_REARM        = Spring.Utilities.CMD.REARM
+--local CMD_WAIT         = CMD.WAIT
 
-include "LuaRules/Configs/customcmds.h.lua"
 
 local airpadDefs = VFS.Include("LuaRules/Configs/airpad_defs.lua", nil, VFS.GAME)
 
