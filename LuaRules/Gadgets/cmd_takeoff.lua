@@ -10,7 +10,7 @@ function gadget:GetInfo() return {
 	enabled   = true,
 } end
 
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
+local CMD_IMMEDIATETAKEOFF = Spring.Utilities.CMD.IMMEDIATETAKEOFF
 
 local takeoffCMD = {
 	id      = CMD_IMMEDIATETAKEOFF,
