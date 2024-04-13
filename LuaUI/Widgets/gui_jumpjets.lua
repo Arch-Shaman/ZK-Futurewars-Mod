@@ -29,6 +29,8 @@ local CMD_ATTACK               = CMD.ATTACK
 local CMD_FIGHT                = CMD.FIGHT
 local CMD_MOVE                 = CMD.MOVE
 local CMD_SET_WANTED_MAX_SPEED = CMD.SET_WANTED_MAX_SPEED
+local CMD_JUMP                 = Spring.Utilities.CMD.JUMP
+local CMD_RAW_MOVE             = Spring.Utilities.CMD.RAW_MOVE
 local GL_LINE_STRIP            = GL.LINE_STRIP
 local glBeginEnd               = gl.BeginEnd
 local glColor                  = gl.Color
@@ -53,7 +55,7 @@ local spGetUnitRulesParam	   = Spring.GetUnitRulesParam
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
+
 
 local pairs = pairs
 
