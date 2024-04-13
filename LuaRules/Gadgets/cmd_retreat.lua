@@ -123,8 +123,8 @@ for i = 1, #UnitDefs do
 			--Spring.Echo("Added shield retreat to " .. i .. " ( has " .. tostring(WeaponDefs[wep].shieldPower) .. ")")
 		end
 	end
-	local movetype = Spring.Utilities.getMovetype(unitDef)
-	if movetype == 1 and not Spring.Utilities.tobool(unitDef.customParams.cantuseairpads) then
+	local movetype = Spring.Utilities.getMovetype(def)
+	if movetype == 1 and not Spring.Utilities.tobool(def.customParams.cantuseairpads) then
 		gunshipDefs[i] = true
 	end
 end
