@@ -27,6 +27,7 @@ return {
 			outline_x = 128,
 			outline_y = 128,
 			outline_yoff = 16,
+			field_factory = "1",
 		},
 		energyUse              = 0,
 		explodeAs              = "SMALL_UNITEX",
