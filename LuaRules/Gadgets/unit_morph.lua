@@ -24,7 +24,12 @@ function gadget:GetInfo()
 	}
 end
 
-include("LuaRules/Configs/customcmds.h.lua")
+local CMD_MORPH = Spring.Utilities.CMD.Morph
+local CMD_MORPH_BASE_ID = Spring.Utilities.CMD.MORPH_BASE_ID
+local CMD_MORPH_STOP = Spring.Utilities.CMD.MORPH_STOP
+local CMD_MORPH_STOP_BASE_ID = Spring.Utilities.CMD.MORPH_STOP_BASE_ID
+local CMD_MORPH_UPGRADE_INTERNAL = Spring.Utilities.CMD.MORPH_UPGRADE_INTERNAL
+local CMD_UPGRADE_STOP = Spring.Utilities.CMD.UPGRADE_STOP
 
 local SAVE_FILE = "Gadgets/unit_morph.lua"
 local emptyTable = {} -- for speedups

@@ -24,7 +24,7 @@ local FIREWALL_HEALTH        = 1000
 
 local SAVE_FILE = "Gadgets/unit_capture.lua" -- Is this actually needed?
 
-include("LuaRules/Configs/customcmds.h.lua")
+local CMD_UNIT_KILL_SUBORDINATES = Spring.Utilities.CMD.UNIT_KILL_SUBORDINATES
 local CMD_STOP = CMD.STOP
 local CMD_SELFD = CMD.SELFD
 
@@ -713,7 +713,7 @@ if gadgetHandler:IsSyncedCode() then
 
 	local lastFrame = 0
 	function gadget:DrawWorld()
-		if Spring.GetGameFrame() ~= lastFrame then
+		if spGetGameFrame() ~= lastFrame then
 			UpdateList()
 		end
 		

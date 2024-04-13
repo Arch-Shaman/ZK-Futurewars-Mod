@@ -11,7 +11,7 @@ function gadget:GetInfo()
 	}
 end
 
-include("LuaRules/Configs/customcmds.h.lua")
+
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 
@@ -20,6 +20,9 @@ include("LuaRules/Configs/customcmds.h.lua")
 local BEACON_WAIT_RANGE_MOVE = 150
 local BEACON_TELEPORT_RADIUS = 200
 local BEACON_TELEPORT_RADIUS_SQR = BEACON_TELEPORT_RADIUS^2
+local CMD_PLACE_BEACON = Spring.Utilities.CMD.PLACE_BEACON
+local CMD_WAIT_AT_BEACON = Spring.Utilities.CMD.WAIT_AT_BEACON
+local CMD_WANT_CLOAK = Spring.Utilities.CMD.WANT_CLOAK
 
 local testoffsets = {
 	["amphtele"] = 16,

@@ -236,7 +236,13 @@ local debugModeUnitID
 -- Custom Commands
 --------------------------------------------------------------------------------
 
-include("LuaRules/Configs/customcmds.h.lua")
+local CMD_BUMPY = Spring.Utilities.CMD.BUMPY
+local CMD_LEVEL = Spring.Utilities.CMD.LEVEL
+local CMD_RAISE = Spring.Utilities.CMD.RAISE
+local CMD_RAMP = Spring.Utilities.CMD.RAMP
+local CMD_RESTORE = Spring.Utilities.CMD.RESTORE
+local CMD_SMOOTH = Spring.Utilities.CMD.SMOOTH
+local CMD_TERRAFORM_INTERNAL = Spring.Utilities.CMD.TERRAFORM_INTERNAL
 
 local rampCmdDesc = {
 	id      = CMD_RAMP,

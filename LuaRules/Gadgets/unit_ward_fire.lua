@@ -67,8 +67,8 @@ local CMD_OPT_INTERNAL = CMD.OPT_INTERNAL
 local CMD_OPT_RIGHT    = CMD.OPT_RIGHT
 local CMD_INSERT       = CMD.INSERT
 local CMD_REMOVE       = CMD.REMOVE
-
-include("LuaRules/Configs/customcmds.h.lua")
+local CMD_FIRE_AT_SHIELD = Spring.Utilities.CMD.FIRE_AT_SHIELD
+local CMD_FIRE_TOWARDS_ENEMY = Spring.Utilities.CMD.FIRE_TOWARDS_ENEMY
 
 local cmdDescs = {
 	[CMD_FIRE_AT_SHIELD] = {

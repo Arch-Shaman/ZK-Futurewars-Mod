@@ -29,6 +29,8 @@ local spGetUnitDefID        = Spring.GetUnitDefID
 
 local debugBait = false
 
+local CMD_PREVENT_BAIT = Spring.Utilities.CMD.PREVENT_BAIT
+
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 -- Value is the default state of the command
@@ -36,7 +38,7 @@ local baitPreventionDefaults, targetBaitLevelDefs, targetBaitLevelArmorDefs, tar
 
 local unitBaitLevel = {}
 
-include("LuaRules/Configs/customcmds.h.lua")
+
 
 local preventChaffShootingCmdDesc = {
 	id      = CMD_PREVENT_BAIT,

@@ -40,6 +40,7 @@ local spGetUnitCurrentCommand = Spring.GetUnitCurrentCommand
 local CMD_ATTACK       = CMD.ATTACK
 local CMD_FIGHT        = CMD.FIGHT
 local CMD_OPT_INTERNAL = CMD.OPT_INTERNAL
+local CMD_PREVENT_OVERKILL = Spring.Utilities.CMD.PREVENT_OVERKILL
 
 local DEBUG_NAME = "OKP"
 local pmap = VFS.Include("LuaRules/Utilities/pmap.lua")
@@ -78,8 +79,6 @@ for i = 1, #UnitDefs do
 	end
 	maxEffectiveHealth[i] = (ud.health / ud.armoredMultiple + (shieldPowerDef[i] or 0))
 end
-
-include("LuaRules/Configs/customcmds.h.lua")
 
 local preventOverkillCmdDesc = {
 	id      = CMD_PREVENT_OVERKILL,

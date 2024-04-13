@@ -16,7 +16,7 @@ end
 
 
 local IterableMap = Spring.Utilities.IterableMap
-include("LuaRules/Configs/customcmds.h.lua")
+local CMD_SUBMUNITION_TARGET = Spring.Utilities.CMD.SUBMUNITION_TARGET
 
 --Speedups--
 local spEcho = Spring.Echo

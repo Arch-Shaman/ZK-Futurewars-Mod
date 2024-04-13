@@ -15,12 +15,13 @@ function gadget:GetInfo()
 	}
 end
 
-include("LuaRules/Configs/customcmds.h.lua")
+
 local IterableMap = Spring.Utilities.IterableMap
 
 local handled = IterableMap.New()
 local featurecache = {}
 local needLOS = true
+local CMD_GREYGOO = Spring.Utilities.CMD.GREYGOO
 
 local areaGreyGooDesc = {
 	id      = CMD_GREYGOO,

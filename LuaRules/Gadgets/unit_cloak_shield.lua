@@ -33,10 +33,10 @@ end
 --
 --------------------------------------------------------------------------------
 
-include("LuaRules/Configs/customcmds.h.lua")
 include("LuaRules/Configs/constants.lua")
 
 local SYNCSTR = "unit_cloak_shield"
+local CMD_CLOAK_SHIELD = Spring.Utilities.CMD.CLOAK_SHIELD
 
 
 --------------------------------------------------------------------------------

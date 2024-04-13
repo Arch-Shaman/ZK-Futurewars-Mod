@@ -12,7 +12,6 @@ end
 
 if (not gadgetHandler:IsSyncedCode()) then return end
 
-include("LuaRules/Configs/customcmds.h.lua")
 -- needed for checks
 
 local SAVE_FILE  = "Gadgets/unit_jumpjets.lua"
@@ -33,6 +32,7 @@ local CMD_STOP   = CMD.STOP
 local CMD_WAIT   = CMD.WAIT
 local CMD_MOVE   = CMD.MOVE
 local CMD_REMOVE = CMD.REMOVE
+local CMD_JUMP   = Spring.Utilities.CMD.JUMP
 local privateTable = {private = true}
 
 local spGetHeadingFromVector = Spring.GetHeadingFromVector

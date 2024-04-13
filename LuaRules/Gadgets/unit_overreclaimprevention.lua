@@ -29,8 +29,6 @@ if (not gadgetHandler:IsSyncedCode()) then
 	return
 end
 
-include("LuaRules/Configs/customcmds.h.lua")
-
 local spGetTeamResources = Spring.GetTeamResources
 local spEcho = Spring.Echo
 local spGetUnitDefID = Spring.GetUnitDefID
@@ -39,7 +37,7 @@ local spGetFeatureResurrect = Spring.GetFeatureResurrect
 local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
 local exceptionUnits = {} -- units that bypass ORP
 local wantedUnits = {}
-
+local CMD_OVERRECLAIM = Spring.Utilities.CMD.OVERRECLAIM
 
 for i = 1, #UnitDefs do
 	if UnitDefs[i].canReclaim and UnitDefs[i].buildSpeed > 0 then

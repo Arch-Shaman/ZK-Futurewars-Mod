@@ -48,15 +48,15 @@ local spGetUnitCommands        = Spring.GetUnitCommands
 local CMD_FIRE_STATE = CMD.FIRE_STATE
 local CMD_MOVE_STATE = CMD.MOVE_STATE
 local CMD_GUARD      = CMD.GUARD
+local CMD_GOO_GATHER = Spring.Utilities.CMD.GOO_GATHER
+local CMD_GREYGOO    = Spring.Utilities.CMD.GREYGOO
+local CMD_STOP       = CMD.STOP
 
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 -- Commands
 
 local DEFAULT_GOO = 1
-local CMD_STOP = CMD.STOP
-
-include("LuaRules/Configs/customcmds.h.lua")
 
 local gooGatherBehaviour = {
 	id      = CMD_GOO_GATHER,

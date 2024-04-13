@@ -35,6 +35,7 @@ local spSetUnitMass = Spring.SetUnitMass
 local spRemoveUnitCmdDesc = Spring.RemoveUnitCmdDesc
 local spSetUnitStealth = Spring.SetUnitStealth
 local spGetUnitHealth = Spring.GetUnitHealth
+local CMD_UPGRADE_STOP = Spring.Utilities.CMD.UPGRADE_STOP
 local zombies = false
 
 local defaultProfiles = {
@@ -54,7 +55,6 @@ do
 	end
 end
 
-include("LuaRules/Configs/customcmds.h.lua")
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

@@ -98,8 +98,9 @@ local CMD_OPT_INTERNAL = CMD.OPT_INTERNAL
 local CMD_OPT_RIGHT    = CMD.OPT_RIGHT
 local CMD_INSERT       = CMD.INSERT
 local CMD_REMOVE       = CMD.REMOVE
-
-include("LuaRules/Configs/customcmds.h.lua")
+local CMD_JUMP         = Spring.Utilities.CMD.JUMP
+local CMD_RAW_MOVE     = Spring.Utilities.CMD.RAW_MOVE
+local CMD_UNIT_AI      = Spring.Utilities.CMD.UNIT_AI
 
 local unitAICmdDesc = {
 	id      = CMD_UNIT_AI,

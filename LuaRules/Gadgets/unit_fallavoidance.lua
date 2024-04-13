@@ -16,7 +16,7 @@ end
 
 
 local IterableMap = Spring.Utilities.IterableMap
-include("LuaRules/Configs/customcmds.h.lua")
+
 
 local wantedDefs = {} -- stores jump ranges of units that can midair jump.
 local canJumpDefs = {} -- we need a separate table for units that can jump because this gadget also gives out the autojump command.
@@ -54,6 +54,8 @@ local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spGetUnitDefID = Spring.GetUnitDefID
 local spEcho = Spring.Echo
 local GiveClampedOrderToUnit = Spring.Utilities.GiveClampedOrderToUnit
+local CMD_AUTOJUMP = Spring.Utilities.CMD.AUTOJUMP
+local CMD_JUMP = Spring.Utilities.CMD.JUMP
 
 local unitStates = {}
 

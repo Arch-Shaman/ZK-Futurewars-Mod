@@ -38,9 +38,14 @@ local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
 local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
 
-
+local CMD_QUEUE_MODE = Spring.Utilities.CMD.QUEUE_MODE
+local CMD_AREA_GUARD = Spring.Utilities.CMD.AREA_GUARD
+local CMD_JUMP = Spring.Utilities.CMD.JUMP
+local CMD_ORBIT = Spring.Utilities.CMD.ORBIT
+local CMD_ORBIT_DRAW = Spring.Utilities.CMD.ORBIT_DRAW
+local CMD_RAW_MOVE = Spring.Utilities.CMD.RAW_MOVE
+local CMD_JUMP = Spring.Utilities.CMD.JUMP
 -- command --
-include("LuaRules/Configs/customcmds.h.lua")
 
 local CommandOrder = 123456
 local CommandDesc = {

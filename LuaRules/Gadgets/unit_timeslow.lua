@@ -37,11 +37,10 @@ local CMD_ATTACK = CMD.ATTACK
 local CMD_REMOVE = CMD.REMOVE
 local CMD_MOVE   = CMD.MOVE
 local CMD_FIGHT  = CMD.FIGHT
+local CMD_RAW_BUILD = Spring.Utilities.CMD.RAW_BUILD
+local CMD_RAW_MOVE = Spring.Utilities.CMD.RAW_MOVE
 local CMD_SET_WANTED_MAX_SPEED = CMD.SET_WANTED_MAX_SPEED
 local LOS_ACCESS = {inlos = true}
-
-include("LuaRules/Configs/customcmds.h.lua")
-
 local gaiaTeamID = Spring.GetGaiaTeamID()
 
 --------------------------------------------------------------------------------
