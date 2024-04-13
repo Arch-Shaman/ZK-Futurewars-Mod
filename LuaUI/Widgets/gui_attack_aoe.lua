@@ -72,6 +72,7 @@ local GetUnitRadius          = Spring.GetUnitRadius
 local TraceScreenRay         = Spring.TraceScreenRay
 local CMD_ATTACK             = CMD.ATTACK
 local CMD_MANUALFIRE         = CMD.MANUALFIRE
+local CMD_JUMP               = Spring.Utilities.CMD.JUMP
 local g                      = Game.gravity
 local GAME_SPEED             = 30
 local g_f                    = g / GAME_SPEED / GAME_SPEED
@@ -102,8 +103,6 @@ local floor                  = math.floor
 local max                    = math.max
 local min                    = math.min
 local sqrt                   = math.sqrt
-
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
 
 local sumoDefID = UnitDefNames.jumpsumo.id
 local sumoAoE = WeaponDefNames.jumpsumo_landing.damageAreaOfEffect
