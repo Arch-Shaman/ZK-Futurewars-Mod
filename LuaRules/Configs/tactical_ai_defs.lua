@@ -1,6 +1,4 @@
 
-include("LuaRules/Configs/customcmds.h.lua")
-
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -2573,7 +2571,7 @@ local function GetBehaviourTable(behaviourData, ud)
 		behaviourData.wardFireLeeway          = behaviourData.wardFireLeeway or 10
 		behaviourData.wardFireEnableLeeway    = behaviourData.wardFireEnableLeeway or 3
 		behaviourData.wardFireHeight          = behaviourData.wardFireHeight or 0
-		behaviourData.wardFireCmdID           = behaviourData.wardFireCmdID or CMD_FIRE_AT_SHIELD
+		behaviourData.wardFireCmdID           = behaviourData.wardFireCmdID or Spring.Utilities.CMD.FIRE_AT_SHIELD
 	end
 	
 	if behaviourData.fightOnlyOverride then
