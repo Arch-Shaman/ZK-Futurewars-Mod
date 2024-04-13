@@ -17,7 +17,6 @@ end
 --------------
 --CONSTANTS---
 --------------
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
 
 local REAIM_TIME = 8
 local checkRate = 2 -- how fast Newton retarget. Default every 2 frame. Basically you control responsives and accuracy. On big setups checkRate = 1 is not recomended + count your ping in
@@ -49,7 +48,14 @@ local floor = math.floor
 
 local CMD_NEWTON_FIREZONE = 10283
 local CMD_STOP_NEWTON_FIREZONE = 10284
-local CMD_UNIT_AI = 36214
+local CMD_UNIT_AI = Spring.Utilities.CMD.UNIT_AI
+local CMD_JUMP = Spring.Utilities.CMD.JUMP
+local CMD_FIRE_STATE = CMD.FIRE_STATE
+local CMD_MOVE = CMD.MOVE
+local CMD_RAW_MOVE = Spring.Utilities.CMD.RAW_MOVE
+local CMD_MOVE_STATE = CMD.MOVE_STATE
+local CMD_RETREAT = Spring.Utilities.CMD.RETREAT
+local CMD_REPEAT = CMD.REPEAT
 
 local cmdFirezone = {
 	id      = CMD_NEWTON_FIREZONE,
