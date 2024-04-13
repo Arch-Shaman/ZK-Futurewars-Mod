@@ -19,7 +19,6 @@ Changelog:
 		- Added leash so that builders return to where they were sitting when they began autorepairing if they stray too far.
 		- Other small code fixes.
 --]]
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
 
 local repairUnits = {}
 local idleRepairUnits = {}
@@ -36,6 +35,8 @@ local spGetTeamUnits = Spring.GetTeamUnits
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetSelectedUnits = Spring.GetSelectedUnits
+
+local CMD_RAW_MOVE = Spring.Utilities.CMD.RAW_MOVE
 
 local function DisableForCommshare() -- this breaks commshare very badly by blocking con orders and forcing them to return.
 	if Spring.GetMyTeamID() ~= myteam or #Spring.GetPlayerList(Spring.GetMyTeamID()) > 1 then
