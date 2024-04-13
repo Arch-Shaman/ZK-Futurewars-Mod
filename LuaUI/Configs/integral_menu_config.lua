@@ -638,7 +638,7 @@ local instantCommands = {
 -- Commands that only exist in LuaUI cannot have a hidden param. Therefore those that should be hidden are placed in this table.
 local widgetSpaceHidden = {
 	[60] = true, -- CMD.PAGES
-	[SUC.SETHAVEN] = true,
+	[SUC.RETREAT_ZONE] = true,
 	[SUC.SET_AI_START] = true,
 	[SUC.CHEAT_GIVE] = true,
 	[SUC.SET_FERRY] = true,

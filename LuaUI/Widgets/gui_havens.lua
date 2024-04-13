@@ -16,7 +16,7 @@ end
 
 local CMD_RETREAT = Spring.Utilities.CMD.RETREAT
 local CMD_RETREATSHIELD = Spring.Utilities.CMD.RETREATSHIELD
-local CMD_SETHAVEN = Spring.Utilities.CMD.SETHAVEN
+local CMD_SETHAVEN = Spring.Utilities.CMD.RETREAT_ZONE
 
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
