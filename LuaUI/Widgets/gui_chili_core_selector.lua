@@ -16,7 +16,8 @@ end
 -------------------------------------------------------------------------------
 
 include("Widgets/COFCTools/ExportUtilities.lua")
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
+local CMD_WANT_CLOAK = Spring.Utilities.CMD.WANT_CLOAK
+local CMD_WANT_ONOFF = Spring.Utilities.CMD.WANT_ONOFF
 
 Spring.Utilities = Spring.Utilities or {}
 VFS.Include("LuaRules/Utilities/unitDefReplacements.lua")

@@ -15,8 +15,13 @@ end
 --------------------------------------------------------------------------------
 
 include("keysym.lua")
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
+
 include("Widgets/COFCTools/ExportUtilities.lua")
+local CMD_LEVEL = Spring.Utilities.CMD.LEVEL
+local CMD_RAISE = Spring.Utilities.CMD.RAISE
+local CMD_RAMP  = Spring.Utilities.CMD.RAMP
+local CMD_RESTORE = Spring.Utilities.CMD.RESTORE
+local CMD_SMOOTH = Spring.Utilities.CMD.SMOOTH
 local _, _, ammoStateInfo = VFS.Include("LuaRules/Configs/ammostateinfo.lua")
 
 local spGetMouseState = Spring.GetMouseState

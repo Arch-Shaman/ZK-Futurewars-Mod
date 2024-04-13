@@ -19,6 +19,8 @@ end
 
 include("colors.lua")
 VFS.Include("LuaRules/Configs/constants.lua")
+local CMD_MORPH_UPGRADE_INTERNAL = Spring.Utilities.CMD.MORPH_UPGRADE_INTERNAL
+local CMD_UPGRADE_UNIT = Spring.Utilities.CMD.UPGRADE_UNIT
 
 local Chili
 local Button
@@ -52,7 +54,7 @@ local screen0
 -- Module config
 local moduleDefs, chassisDefs, upgradeUtilities, LEVEL_BOUND, _, moduleDefNames = VFS.Include("LuaRules/Configs/dynamic_comm_defs.lua")
 
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
+
 
 -- Configurable things, possible to add to Epic Menu later.
 local BUTTON_SIZE = 55

@@ -14,7 +14,9 @@ function widget:GetInfo()
   }
 end
 
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
+local CMD_RETREAT = Spring.Utilities.CMD.RETREAT
+local CMD_RETREATSHIELD = Spring.Utilities.CMD.RETREATSHIELD
+local CMD_SETHAVEN = Spring.Utilities.CMD.SETHAVEN
 
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
