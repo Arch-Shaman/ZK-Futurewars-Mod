@@ -14,7 +14,11 @@ function widget:GetInfo()
 	}
 end
 
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
+local CMD_AREA_MEX = Spring.Utilities.CMD.AREA_MEX
+local CMD_AREA_TERRA_MEX = Spring.Utilities.CMD.AREA_TERRA_MEX
+local CMD_LEVEL = Spring.Utilities.CMD.LEVEL
+local CMD_TERRAFORM_INTERNAL = Spring.Utilities.CMD.TERRAFORM_INTERNAL
+
 local _, _, GetAllyTeamOctant = VFS.Include("LuaUI/Headers/startbox_utilities.lua")
 local GetMiniMapFlipped = Spring.Utilities.IsMinimapFlipped
 include("keysym.lua")
