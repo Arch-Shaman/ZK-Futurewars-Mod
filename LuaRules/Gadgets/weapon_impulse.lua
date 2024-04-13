@@ -20,7 +20,6 @@ end
 
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
-VFS.Include("LuaRules/Configs/customcmds.h.lua", nil, VFS.GAME)
 
 local GRAVITY = Game.gravity
 local GRAVITY_BASELINE = 120
@@ -42,6 +41,7 @@ local CMD_REPEAT = CMD.REPEAT
 local CMD_GUARD = CMD.GUARD
 local CMD_STOP = CMD.STOP
 local CMD_ONOFF = CMD.ONOFF
+local CMD_PUSH_PULL = Spring.Utilities.CMD.PUSH_PULL
 
 --local BALLISTIC_GUNSHIP_GRAVITY = -0.2
 --local BALLISTIC_GUNSHIP_HEIGHT = 600000
