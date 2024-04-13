@@ -17,7 +17,29 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
+local CMD_AIR_STRAFE = Spring.Utilities.CMD.AIR_STRAFE
+local CMD_AP_FLY_STATE = Spring.Utilities.CMD.AP_FLY_STATE
+local CMD_ARMORSTATE   = Spring.Utilities.CMD.ARMORSTATE
+local CMD_AUTOJUMP     = Spring.Utilities.CMD.AUTOJUMP
+local CMD_DISABLE_ATTACK = Spring.Utilities.CMD.DISABLE_ATTACK
+local CMD_DONT_FIRE_AT_RADAR = Spring.Utilities.CMD.DONT_FIRE_AT_RADAR
+local CMD_FACTORY_GUARD = Spring.Utilities.CMD.FACTORY_GUARD
+local CMD_FIRECYCLE     = Spring.Utilities.CMD.FIRECYCLE
+local CMD_FIRE_AT_SHIELD = Spring.Utilities.CMD.FIRE_AT_SHIELD
+local CMD_FIRE_TOWARDS_ENEMY = Spring.Utilities.CMD.FIRE_TOWARDS_ENEMY
+local CMD_GOO_GATHER = Spring.Utilities.CMD.GOO_GATHER
+local CMD_MISC_PRIORITY = Spring.Utilities.CMD.MISC_PRIORITY
+local CMD_OVERRECLAIM = Spring.Utilities.CMD.OVERRECLAIM
+local CMD_PREVENT_BAIT = Spring.Utilities.CMD.PREVENT_BAIT
+local CMD_PREVENT_OVERKILL = Spring.Utilities.CMD.PREVENT_OVERKILL
+local CMD_PRIORITY = Spring.Utilities.CMD.PRIORITY
+local CMD_PUSH_PULL = Spring.Utilities.CMD.PUSH_PULL
+local CMD_RETREAT = Spring.Utilities.CMD.RETREAT
+local CMD_RETREATSHIELD = Spring.Utilities.CMD.RETREATSHIELD
+local CMD_UNIT_AI = Spring.Utilities.CMD.UNIT_AI
+local CMD_UNIT_FLOAT_STATE = Spring.Utilities.CMD.UNIT_FLOAT_STATE
+local CMD_WANT_CLOAK = Spring.Utilities.CMD.WANT_CLOAK
+local CMD_WANT_ONOFF = Spring.Utilities.CMD.WANT_ONOFF
 
 local overkillPrevention, overkillPreventionBlackHole = include("LuaRules/Configs/overkill_prevention_defs.lua")
 local baitPreventionDefault = include("LuaRules/Configs/bait_prevention_defs.lua")
