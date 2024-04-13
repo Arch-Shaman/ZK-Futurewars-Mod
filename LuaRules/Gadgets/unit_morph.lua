@@ -24,7 +24,7 @@ function gadget:GetInfo()
 	}
 end
 
-local CMD_MORPH = Spring.Utilities.CMD.Morph
+local CMD_MORPH = Spring.Utilities.CMD.MORPH
 local CMD_MORPH_BASE_ID = Spring.Utilities.CMD.MORPH_BASE_ID
 local CMD_MORPH_STOP = Spring.Utilities.CMD.MORPH_STOP
 local CMD_MORPH_STOP_BASE_ID = Spring.Utilities.CMD.MORPH_STOP_BASE_ID
