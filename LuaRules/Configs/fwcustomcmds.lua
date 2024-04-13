@@ -2,6 +2,7 @@
 -- When adding a custom command use Spring.Utilities.CMD instead of the old method.
 
 local fwCMDS = {
+	SUBMUNITION_TARGET = 11321,
 	SELECT_DRONES = 14003,
 	AMMO_SELECT_GENERIC = 20500, -- Probably is safe.
 	RETREATSHIELD = 34224,
