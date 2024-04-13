@@ -1,47 +1,46 @@
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
-local extraStateTypes, _ = VFS.Include("LuaRules/Configs/ammostateinfo.lua")
+local extraStateTypes = Spring.Utilities.AmmoBasedCommands
 
 local stateData = {
-	[CMD_WANT_ONOFF] = 2,
+	[Spring.Utilities.CMD.WANT_ONOFF] = 2,
 	[CMD.IDLEMODE] = 2,
-	[CMD_AP_FLY_STATE] = 2,
-	[CMD_CLOAK_SHIELD] = 2,
-	[CMD_DONT_FIRE_AT_RADAR] = 2,
-	[CMD_FACTORY_GUARD] = 2,
-	[CMD_WANT_CLOAK] = 2,
-	[CMD_PRIORITY] = 3,
-	[CMD_TOGGLE_DRONES] = 2,
-	[CMD_UNIT_FLOAT_STATE] = 3,
-	[CMD_AIR_STRAFE] = 2,
+	[Spring.Utilities.CMD.AP_FLY_STATE] = 2,
+	[Spring.Utilities.CMD.CLOAK_SHIELD] = 2,
+	[Spring.Utilities.CMD.DONT_FIRE_AT_RADAR] = 2,
+	[Spring.Utilities.CMD.FACTORY_GUARD] = 2,
+	[Spring.Utilities.CMD.WANT_CLOAK] = 2,
+	[Spring.Utilities.CMD.PRIORITY] = 3,
+	[Spring.Utilities.CMD.TOGGLE_DRONES] = 2,
+	[Spring.Utilities.CMD.UNIT_FLOAT_STATE] = 3,
+	[Spring.Utilities.CMD.AIR_STRAFE] = 2,
 	[CMD.FIRE_STATE] = 3,
 	[CMD.MOVE_STATE] = 3,
-	[CMD_PUSH_PULL] = 2,
-	[CMD_MISC_PRIORITY] = 3,
-	[CMD_GOO_GATHER] = 2,
+	[Spring.Utilities.CMD.PUSH_PULL] = 2,
+	[Spring.Utilities.CMD.MISC_PRIORITY] = 3,
+	[Spring.Utilities.CMD.GOO_GATHER] = 2,
 	[CMD.REPEAT] = 2,
-	[CMD_RETREAT] = 4,
-	[CMD_RETREATSHIELD] = 4,
-	[CMD_AUTOJUMP] = 2,
+	[Spring.Utilities.CMD.RETREAT] = 4,
+	[Spring.Utilities.CMD.RETREATSHIELD] = 4,
+	[Spring.Utilities.CMD.AUTOJUMP] = 2,
 	[CMD.TRAJECTORY] = 2,
-	[CMD_DISABLE_ATTACK] = 2,
-	[CMD_UNIT_BOMBER_DIVE_STATE] = 4,
-	--[CMD_AUTO_CALL_TRANSPORT] = 2, -- Handled entirely in luaUI so not included here.
-	--[CMD_GLOBAL_BUILD] = 2, -- Handled entirely in luaUI so not included here.
-	[CMD_UNIT_KILL_SUBORDINATES] = 2,
-	[CMD_PREVENT_OVERKILL] = 3,
-	[CMD_PREVENT_BAIT] = 5,
-	[CMD_FIRE_AT_SHIELD] = 2,
-	[CMD_FIRE_TOWARDS_ENEMY] = 2,
-	--[CMD_SELECTION_RANK] = 2, -- Handled entirely in luaUI so not included here.
-	[CMD_UNIT_AI] = 2,
-	[CMD_OVERRECLAIM] = 2,
-	[CMD_FIRECYCLE] = 2,
-	[CMD_ARMORSTATE] = 2,
-	[CMD_QUEUE_MODE] = 2,
+	[Spring.Utilities.CMD.DISABLE_ATTACK] = 2,
+	[Spring.Utilities.CMD.UNIT_BOMBER_DIVE_STATE] = 4,
+	--[Spring.Utilities.CMD.AUTO_CALL_TRANSPORT] = 2, -- Handled entirely in luaUI so not included here.
+	--[Spring.Utilities.CMD.GLOBAL_BUILD] = 2, -- Handled entirely in luaUI so not included here.
+	[Spring.Utilities.CMD.UNIT_KILL_SUBORDINATES] = 2,
+	[Spring.Utilities.CMD.PREVENT_OVERKILL] = 3,
+	[Spring.Utilities.CMD.PREVENT_BAIT] = 5,
+	[Spring.Utilities.CMD.FIRE_AT_SHIELD] = 2,
+	[Spring.Utilities.CMD.FIRE_TOWARDS_ENEMY] = 2,
+	--[Spring.Utilities.CMD.SELECTION_RANK] = 2, -- Handled entirely in luaUI so not included here.
+	[Spring.Utilities.CMD.UNIT_AI] = 2,
+	[Spring.Utilities.CMD.OVERRECLAIM] = 2,
+	[Spring.Utilities.CMD.FIRECYCLE] = 2,
+	[Spring.Utilities.CMD.ARMORSTATE] = 2,
+	[Spring.Utilities.CMD.QUEUE_MODE] = 2,
 }
 
 local specialHandling = {
-	[CMD_RETREAT] = function (state, options)
+	[Spring.Utilities.CMD.RETREAT] = function (state, options)
 		if options.right then
 			state = 0
 		elseif state == 0 then --note: this means that to set "Retreat Off" (state = 0) you need to use the "right" modifier, whether the command is given by the player using an ui button or by Lua
@@ -49,7 +48,7 @@ local specialHandling = {
 		end
 		return state
 	end,
-	[CMD_RETREATSHIELD] = function (state, options)
+	[Spring.Utilities.CMD.RETREATSHIELD] = function (state, options)
 		if options.right then
 			state = 0
 		elseif state == 0 then --note: this means that to set "Retreat Off" (state = 0) you need to use the "right" modifier, whether the command is given by the player using an ui button or by Lua
@@ -60,17 +59,17 @@ local specialHandling = {
 }
 
 local gadgetReverse = {
-	[CMD_PRIORITY] = true,
-	[CMD_UNIT_FLOAT_STATE] = true,
-	[CMD_MISC_PRIORITY] = true,
-	[CMD_UNIT_BOMBER_DIVE_STATE] = true,
-	[CMD_PREVENT_BAIT] = true,
-	[CMD_PREVENT_OVERKILL] = true,
-	[CMD_GOO_GATHER] = true,
-	[CMD_OVERRECLAIM] = true,
-	[CMD_FIRECYCLE] = true,
-	[CMD_ARMORSTATE] = true,
-	[CMD_QUEUE_MODE] = true,
+	[Spring.Utilities.CMD.PRIORITY] = true,
+	[Spring.Utilities.CMD.UNIT_FLOAT_STATE] = true,
+	[Spring.Utilities.CMD.MISC_PRIORITY] = true,
+	[Spring.Utilities.CMD.UNIT_BOMBER_DIVE_STATE] = true,
+	[Spring.Utilities.CMD.PREVENT_BAIT] = true,
+	[Spring.Utilities.CMD.PREVENT_OVERKILL] = true,
+	[Spring.Utilities.CMD.GOO_GATHER] = true,
+	[Spring.Utilities.CMD.OVERRECLAIM] = true,
+	[Spring.Utilities.CMD.FIRECYCLE] = true,
+	[Spring.Utilities.CMD.ARMORSTATE] = true,
+	[Spring.Utilities.CMD.QUEUE_MODE] = true,
 }
 
 for id, num in pairs(extraStateTypes) do

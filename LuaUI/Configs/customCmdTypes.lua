@@ -2,8 +2,7 @@
 -- In reverse, one can use Spring.GetActionHotkey(name) to get the key binded to this name.
 -- This table is used in Epicmenu for hotkey management.
 
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
-local extras = VFS.Include("LuaRules/Configs/ammostatecmds.lua")
+local extras = Spring.Utilities.AmmoBasedCommands
 local _, info =  VFS.Include("LuaRules/Configs/ammostateinfo.lua")
 
 local custom_cmd_actions = {
@@ -37,17 +36,17 @@ local custom_cmd_actions = {
 	rawmove = {cmdType = 1, name = "Move"},
 
 	-- states
-	wantonoff =       {cmdType = 2, cmdID = CMD_WANT_ONOFF, name = "On/Off", states = {'Off', 'On'}},
+	wantonoff =       {cmdType = 2, cmdID = Spring.Utilities.CMD.WANT_ONOFF, name = "On/Off", states = {'Off', 'On'}},
 	['repeat'] =      {cmdType = 2, cmdID = CMD.REPEAT, name = "Repeat", states = {'Off', 'On'}},
-	wantcloak =       {cmdType = 2, cmdID = CMD_WANT_CLOAK, name = "Cloak", states = {'Off', 'On'}},
+	wantcloak =       {cmdType = 2, cmdID = Spring.Utilities.CMD.WANT_CLOAK, name = "Cloak", states = {'Off', 'On'}},
 	movestate =       {cmdType = 2, cmdID = CMD.MOVE_STATE, name = "Move State", states = {'Hold Position', 'Maneuver', 'Roam'}},
 	firestate =       {cmdType = 2, cmdID = CMD.FIRE_STATE, name = "Fire State", states = {'Hold Fire', 'Return Fire', 'Fire At Will'}},
 	idlemode =        {cmdType = 2, cmdID = CMD.IDLEMODE, name = "Air Idle State", states = {'Land', 'Fly'}},
 	autorepairlevel = {cmdType = 2, name = "Air Retreat Threshold", states = {'Off', '30%', '50%', '80%'}},
-	preventoverkill = {cmdType = 2, cmdID = CMD_PREVENT_OVERKILL, name = "Prevent Overkill", states = {'Off', 'When set to Fire At Will', 'On'}},
-	preventbait     = {cmdType = 2, cmdID = CMD_PREVENT_BAIT, name = "Avoid Bad Targets", states = {'Disabled', '35', '90', '240', '420'}},
-	fireatshields   = {cmdType = 2, cmdID = CMD_FIRE_AT_SHIELD, name = "Fire at Shields", states = {'Off', 'On'}},
-	firetowards     = {cmdType = 2, cmdID = CMD_FIRE_TOWARDS_ENEMY, name = "Fire Towards Enemies", states = {'Off', 'On'}},
+	preventoverkill = {cmdType = 2, cmdID = Spring.Utilities.CMD.PREVENT_OVERKILL, name = "Prevent Overkill", states = {'Off', 'When set to Fire At Will', 'On'}},
+	preventbait     = {cmdType = 2, cmdID = Spring.Utilities.CMD.PREVENT_BAIT, name = "Avoid Bad Targets", states = {'Disabled', '35', '90', '240', '420'}},
+	fireatshields   = {cmdType = 2, cmdID = Spring.Utilities.CMD.FIRE_AT_SHIELD, name = "Fire at Shields", states = {'Off', 'On'}},
+	firetowards     = {cmdType = 2, cmdID = Spring.Utilities.CMD.FIRE_TOWARDS_ENEMY, name = "Fire Towards Enemies", states = {'Off', 'On'}},
 	trajectory      = {cmdType = 2, cmdID = CMD.TRAJECTORY, name = "Trajectory", states = {'Low', 'High'}},
 
 	--CUSTOM COMMANDS
@@ -102,33 +101,33 @@ local custom_cmd_actions = {
 
 	--states
 --	stealth = {cmdType = 2, name = "stealth"}, --no longer applicable
-	firecycle =         {cmdType = 2, cmdID = CMD_FIRECYCLE, name = "Firecycle", states = {'Off', 'On'}},
-	cloak_shield =      {cmdType = 2, cmdID = CMD_CLOAK_SHIELD, name = "Area Cloaker", states = {'Off', 'On'}},
-	retreat =           {cmdType = 2, cmdID = CMD_RETREAT, name = "Retreat Threshold", states = {'Off', '30%', '65%', '99%'}, actionOverride = {'cancelretreat'}},
-	retreatshield =     {cmdType = 2, cmdID = CMD_RETREATSHIELD, name = "Retreat Shield Threshold", states = {'Off', '30%', '50%', '80%'}, actionOverride = {'cancelretreat'}},
-	autojump =          {cmdType = 2, cmdID = CMD_AUTOJUMP, name = "Autojump", states = {'off', 'on'}},
-	overreclaim =       {cmdType = 2, cmdID = CMD_OVERRECLAIM, name = "Overreclaim Prevention", states = {'On', 'Off'}},
+	firecycle =         {cmdType = 2, cmdID = Spring.Utilities.CMD.FIRECYCLE, name = "Firecycle", states = {'Off', 'On'}},
+	cloak_shield =      {cmdType = 2, cmdID = Spring.Utilities.CMD.CLOAK_SHIELD, name = "Area Cloaker", states = {'Off', 'On'}},
+	retreat =           {cmdType = 2, cmdID = Spring.Utilities.CMD.RETREAT, name = "Retreat Threshold", states = {'Off', '30%', '65%', '99%'}, actionOverride = {'cancelretreat'}},
+	retreatshield =     {cmdType = 2, cmdID = Spring.Utilities.CMD.RETREATSHIELD, name = "Retreat Shield Threshold", states = {'Off', '30%', '50%', '80%'}, actionOverride = {'cancelretreat'}},
+	autojump =          {cmdType = 2, cmdID = Spring.Utilities.CMD.AUTOJUMP, name = "Autojump", states = {'off', 'on'}},
+	overreclaim =       {cmdType = 2, cmdID = Spring.Utilities.CMD.OVERRECLAIM, name = "Overreclaim Prevention", states = {'On', 'Off'}},
 	['luaui noretreat'] = {cmdType = 2, name = "luaui noretreat"},
-	priority =          {cmdType = 2, cmdID = CMD_PRIORITY, name = "Construction Priority", states = {'Low', 'Normal', 'High'}},
-	miscpriority =      {cmdType = 2, cmdID = CMD_MISC_PRIORITY, name = "Misc. Priority", states = {'Low', 'Normal', 'High'}},
-	ap_fly_state =      {cmdType = 2, cmdID = CMD_AP_FLY_STATE, name = "Air Idle State", states = {'Land', 'Fly'}},
+	priority =          {cmdType = 2, cmdID = Spring.Utilities.CMD.PRIORITY, name = "Construction Priority", states = {'Low', 'Normal', 'High'}},
+	miscpriority =      {cmdType = 2, cmdID = Spring.Utilities.CMD.MISC_PRIORITY, name = "Misc. Priority", states = {'Low', 'Normal', 'High'}},
+	ap_fly_state =      {cmdType = 2, cmdID = Spring.Utilities.CMD.AP_FLY_STATE, name = "Air Idle State", states = {'Land', 'Fly'}},
 	ap_autorepairlevel = {cmdType = 2, name = "Auto Repair", states = {'Off', '30%', '50%', '80%'}},
 	floatstate =        {cmdType = 2, name = "Float State", states = {'Sink', 'When Shooting', 'Float'}},
-	dontfireatradar =   {cmdType = 2, cmdID = CMD_DONT_FIRE_AT_RADAR, name = "Firing at Radar Dots", states = {'Off', 'On'}},
+	dontfireatradar =   {cmdType = 2, cmdID = Spring.Utilities.CMD.DONT_FIRE_AT_RADAR, name = "Firing at Radar Dots", states = {'Off', 'On'}},
 	antinukezone =      {cmdType = 2, name = "Ceasefire Antinuke Zone", states = {'Off', 'On'}},
-	unitai =            {cmdType = 2, cmdID = CMD_UNIT_AI, name = "Unit AI", states = {'Off', 'On'}},
+	unitai =            {cmdType = 2, cmdID = Spring.Utilities.CMD.UNIT_AI, name = "Unit AI", states = {'Off', 'On'}},
 	selection_rank =    {cmdType = 2, name = "Selection Rank", states = {'0', '1', '2', '3'}},
 	formation_rank =    {cmdType = 2, name = "Formation Rank", states = {'0', '1', '2', '3'}},
 	autocalltransport = {cmdType = 2, name = "Auto Call Transport", states = {'Off', 'On'}},
-	unit_kill_subordinates = {cmdType = 2, cmdID = CMD_UNIT_KILL_SUBORDINATES, name = "Dominatrix Kill", states = {'Off', 'On'}},
-	goostate =     {cmdType = 2, cmdID = CMD_GOO_GATHER, name = "Goo State", states = {'Off', 'When uncloaked', 'On'}},
-	disableattack = {cmdType = 2, cmdID = CMD_DISABLE_ATTACK, name = "Allow Attack", states = {'Allowed', 'Blocked'}},
-	pushpull =      {cmdType = 2, cmdID = CMD_PUSH_PULL, name = "Impulse Mode", states = {'Pull', 'Push'}},
-	autoassist =    {cmdType = 2, cmdID = CMD_FACTORY_GUARD, name = "Factory Auto Assist", states = {'Off', 'On'}},
-	airstrafe =     {cmdType = 2, cmdID = CMD_AIR_STRAFE, name = "Gunship Strafe", states = {'Off', 'On'}},
-	divestate =     {cmdType = 2, cmdID = CMD_UNIT_BOMBER_DIVE_STATE, name = "Raven Dive", states = {'Never', 'Under Shields', 'For Mobiles', 'Always Low'}},
-	globalbuild =   {cmdType = 2, cmdID = CMD_GLOBAL_BUILD, name = "Constructor Global AI", states = {'Off', 'On'}},
-	toggledrones =  {cmdType = 2, cmdID = CMD_TOGGLE_DRONES, name = "Drone Construction.", states = {'Off', 'On'}},
+	unit_kill_subordinates = {cmdType = 2, cmdID = Spring.Utilities.CMD.UNIT_KILL_SUBORDINATES, name = "Dominatrix Kill", states = {'Off', 'On'}},
+	goostate =     {cmdType = 2, cmdID = Spring.Utilities.CMD.GOO_GATHER, name = "Goo State", states = {'Off', 'When uncloaked', 'On'}},
+	disableattack = {cmdType = 2, cmdID = Spring.Utilities.CMD.DISABLE_ATTACK, name = "Allow Attack", states = {'Allowed', 'Blocked'}},
+	pushpull =      {cmdType = 2, cmdID = Spring.Utilities.CMD.PUSH_PULL, name = "Impulse Mode", states = {'Pull', 'Push'}},
+	autoassist =    {cmdType = 2, cmdID = Spring.Utilities.CMD.FACTORY_GUARD, name = "Factory Auto Assist", states = {'Off', 'On'}},
+	airstrafe =     {cmdType = 2, cmdID = Spring.Utilities.CMD.AIR_STRAFE, name = "Gunship Strafe", states = {'Off', 'On'}},
+	divestate =     {cmdType = 2, cmdID = Spring.Utilities.CMD.UNIT_BOMBER_DIVE_STATE, name = "Raven Dive", states = {'Never', 'Under Shields', 'For Mobiles', 'Always Low'}},
+	globalbuild =   {cmdType = 2, cmdID = Spring.Utilities.CMD.GLOBAL_BUILD, name = "Constructor Global AI", states = {'Off', 'On'}},
+	toggledrones =  {cmdType = 2, cmdID = Spring.Utilities.CMD.TOGGLE_DRONES, name = "Drone Construction.", states = {'Off', 'On'}},
 }
 
 -- These actions are created from echoing all actions that appear when all units are selected.
