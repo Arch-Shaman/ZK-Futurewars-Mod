@@ -40,7 +40,9 @@ local random = math.random
 local ceil = math.ceil
 local deg = math.deg
 local IterableMap = Spring.Utilities.IterableMap
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
+
+local CMD_SWEEPFIRE = Spring.Utilities.CMD.SWEEPFIRE
+local CMD_SWEEPFIRE_MINES = Spring.Utilities.CMD.SWEEPFIRE_MINES
 
 -- constants --
 local headingtorad = (math.pi * 2 / 65536)
