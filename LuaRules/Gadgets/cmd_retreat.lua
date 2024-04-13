@@ -17,7 +17,11 @@ end
 --------------------------------------------------------------------------------
 
 local CMD_RETREATSHIELD = Spring.Utilities.CMD.RETREATSHIELD
-local CMD_RETREAT = Spring.Utilities.CMD.RETREAT
+local CMD_RETREAT       = Spring.Utilities.CMD.RETREAT
+local CMD_ORBIT         = Spring.Utilities.CMD.ORBIT
+local CMD_RAW_BUILD     = Spring.Utilities.CMD.RAW_BUILD
+local CMD_RAW_MOVE      = Spring.Utilities.CMD.RAW_MOVE
+local CMD_REARM         = Spring.Utilities.CMD.REARM
 
 local Tooltips = {
 	'Orders: Never retreat.',
