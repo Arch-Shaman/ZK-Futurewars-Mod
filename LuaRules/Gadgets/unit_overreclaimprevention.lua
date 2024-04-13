@@ -118,6 +118,10 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
 	return true
 end
 
+function gadget:AllowCommand_GetWantedCommand()
+	return {[CMD_OVERRECLAIM] = true}
+end
+
 local function UpdateSaveReferences()
 	_G.ORP = exceptionUnits
 end
