@@ -30,8 +30,12 @@ Example:
 local newUnitID = GG.MorphUnit(unitID, UnitDefNames.cloakraid.id, {upgradeDef = nil, facing = false, cheap = false})
 --]]
 
-
-include("LuaRules/Configs/customcmds.h.lua")
+local CMD_MISC_PRIORITY = Spring.Utilities.CMD.MISC_PRIORITY
+local CMD_ORBIT = Spring.Utilities.CMD.ORBIT
+local CMD_PRIORITY = Spring.Utilities.CMD.PRIORITY
+local CMD_RAW_MOVE = Spring.Utilities.CMD.RAW_MOVE
+local CMD_RETREAT = Spring.Utilities.CMD.RETREAT
+local CMD_WANT_CLOAK = Spring.Utilities.CMD.WANT_CLOAK
 
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
