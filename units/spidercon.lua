@@ -24,6 +24,7 @@ return {
 			modelradius        = "15",
 			selection_scale    = 1.2,
 			idle_cloak         = 1,
+			field_factory = "1",
 		},
 		energyUse              = 0,
 		explodeAs              = "BIG_UNITEX",
@@ -52,7 +53,7 @@ return {
 		trackType              = "ChickenTrackPointyShort",
 		trackWidth             = 54,
 		turnRate               = 1400,
-		workerTime             = 7.5,
+		workerTime             = 10,
 		sfxtypes            = {
 			explosiongenerators = {
 				"custom:digdig",
