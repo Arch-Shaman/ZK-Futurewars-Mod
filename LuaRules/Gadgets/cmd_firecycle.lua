@@ -14,8 +14,6 @@ function gadget:GetInfo()
 	}
 end
 
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
-
 local unitStates = {}
 local wantedDefs = {} -- unitDefID = {[weaponID] = true}
 local wantedWeaponDefs = {}
@@ -30,6 +28,7 @@ local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetUnitWeaponTarget = Spring.GetUnitWeaponTarget
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
+local CMD_FIRECYCLE = Spring.Utilities.CMD.FIRECYCLE
 
 Spring.Echo("[Firecycle] Scanning units")
 for i = 1, #UnitDefs do

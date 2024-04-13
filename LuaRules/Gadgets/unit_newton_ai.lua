@@ -14,7 +14,6 @@ if not gadgetHandler:IsSyncedCode() then -- SYNCED
 	return
 end
 
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
 local IterableMap = Spring.Utilities.IterableMap
 local newtons = IterableMap.New()
 
@@ -84,6 +83,9 @@ local pullparam = {0}
 
 local newtonRange = 550
 local simframes = 11
+
+local CMD_UNIT_AI = Spring.Utilities.CMD.UNIT_AI
+local CMD_PUSH_PULL = Spring.Utilities.CMD.PUSH_PULL
 
 local unitAICmdDesc = {
 	id      = CMD_UNIT_AI,

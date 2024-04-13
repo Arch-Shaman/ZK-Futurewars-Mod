@@ -10,8 +10,6 @@ function gadget:GetInfo() return {
 	enabled   = true,
 } end
 
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
-
 local config = {}
 local params = {}
 local states = {}
@@ -22,8 +20,8 @@ do
 	for i = 1, #UnitDefs do
 		local ud = UnitDefs[i]
 		if ud.customParams.ammocount then
-			config[i] = CMD_AMMO_SELECT_GENERIC + num
-			wantedCMDs[CMD_AMMO_SELECT_GENERIC + num] = true
+			config[i] = Spring.Utilities.CMD.AMMO_SELECT_GENERIC + num
+			wantedCMDs[Spring.Utilities.CMD.AMMO_SELECT_GENERIC + num] = true
 			num = num + 1
 		end
 	end

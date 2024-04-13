@@ -10,7 +10,7 @@ function gadget:GetInfo() return {
 	enabled   = true,
 } end
 
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
+
 
 local spInsertUnitCmdDesc		= Spring.InsertUnitCmdDesc
 local spFindUnitCmdDesc			= Spring.FindUnitCmdDesc
@@ -20,6 +20,7 @@ local spGetUnitHealth			= Spring.GetUnitHealth
 local spSetUnitRulesParam		= Spring.SetUnitRulesParam
 
 local inLOS = {inlos = true}
+local CMD_ARMORSTATE = Spring.Utilities.CMD.ARMORSTATE
 
 local cmdDesc = {
 	id      = CMD_ARMORSTATE,

@@ -58,8 +58,6 @@ local min = math.min
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
-
 local mobilePadDefs = {}
 local padCount = {}
 
@@ -77,7 +75,10 @@ local reammoFrames = {}
 local reammoDrain = {}
 local padRepairBp = {}
 local rotateUnit = {}
-
+local CMD_FIND_PAD = Spring.Utilities.CMD.FIND_PAD
+local CMD_IMMEDIATETAKEOFF = Spring.Utilities.CMD.IMMEDIATETAKEOFF
+local CMD_RAW_MOVE = Spring.Utilities.CMD.RAW_MOVE
+local CMD_REARM = Spring.Utilities.CMD.REARM
 
 for i = 1, #UnitDefs do
 	local movetype = Spring.Utilities.getMovetype(UnitDefs[i])
