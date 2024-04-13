@@ -12,7 +12,27 @@ function widget:GetInfo()
 	}
 end
 
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
+local CMD_FORMATION_RANK = Spring.Utilities.CMD.FORMATION_RANK
+local CMD_JUMP           = Spring.Utilities.CMD.JUMP
+local CMD_PLACE_BEACON   = Spring.Utilities.CMD.PLACE_BEACON
+local CMD_RAW_BUILD      = Spring.Utilities.CMD.RAW_BUILD
+local CMD_RAW_MOVE       = Spring.Utilities.CMD.RAW_MOVE
+local CMD_SELECTION_RANK = Spring.Utilities.CMD.SELECTION_RANK
+local CMD_UNIT_SET_TARGET = Spring.Utilities.CMD.UNIT_SET_TARGET
+local CMD_UNIT_SET_TARGET_CIRCLE = Spring.Utilities.CMD.UNIT_SET_TARGET_CIRCLE
+local CMD_WAIT_AT_BEACON  = Spring.Utilities.CMD.WAIT_AT_BEACON
+local CMD_INSERT = CMD.INSERT
+local CMD_MOVE = CMD.MOVE
+local CMD_ATTACK = CMD.ATTACK
+local CMD_UNLOADUNIT = CMD.UNLOAD_UNIT
+local CMD_UNLOADUNITS = CMD.UNLOAD_UNITS
+local CMD_SET_WANTED_MAX_SPEED = CMD.SET_WANTED_MAX_SPEED
+local CMD_OPT_ALT = CMD.OPT_ALT
+local CMD_OPT_CTRL = CMD.OPT_CTRL
+local CMD_OPT_META = CMD.OPT_META
+local CMD_OPT_SHIFT = CMD.OPT_SHIFT
+local CMD_OPT_RIGHT = CMD.OPT_RIGHT
+local CMD_WANTED_SPEED = Spring.Utilities.CMD.WANTED_SPEED
 
 local formationRank = {}
 local defaultRank = {}
@@ -266,18 +286,6 @@ local cos = math.cos
 local max = math.max
 local huge = math.huge
 local pi2 = 2*math.pi
-
-local CMD_INSERT = CMD.INSERT
-local CMD_MOVE = CMD.MOVE
-local CMD_ATTACK = CMD.ATTACK
-local CMD_UNLOADUNIT = CMD.UNLOAD_UNIT
-local CMD_UNLOADUNITS = CMD.UNLOAD_UNITS
-local CMD_SET_WANTED_MAX_SPEED = CMD.SET_WANTED_MAX_SPEED
-local CMD_OPT_ALT = CMD.OPT_ALT
-local CMD_OPT_CTRL = CMD.OPT_CTRL
-local CMD_OPT_META = CMD.OPT_META
-local CMD_OPT_SHIFT = CMD.OPT_SHIFT
-local CMD_OPT_RIGHT = CMD.OPT_RIGHT
 
 local REMOVED_SET_WANTED_MAX_SPEED = not CMD.SET_WANTED_MAX_SPEED
 
