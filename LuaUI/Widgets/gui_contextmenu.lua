@@ -1525,7 +1525,7 @@ local function printAbilities(ud, unitID, isFeature)
 		AddEntryToCells(localization.vampirism_kills_increase_hp .. ":", 2, WG.Translate("interface", "vampirism_kills_increase_hp_desc", {number = numformat(cp.vampirism_kill * 100, 1)}), cells)
 	end
 	if cp.field_factory then
-		AddEntryToCells(localization.field_fac, 1 '', cells)
+		AddEntryToCells(localization.field_fac, 1, '', cells)
 	end
 
 	if ud.armoredMultiple < 1 then
