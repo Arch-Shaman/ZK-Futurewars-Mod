@@ -12,6 +12,7 @@
 -- * Missing commands have {pos = 1, priority = 100}
 
 local SUC = Spring.Utilities.CMD
+local extras = Spring.Utilities.AmmoBasedCommands
 
 local cmdPosDef = {
 	-- Commands

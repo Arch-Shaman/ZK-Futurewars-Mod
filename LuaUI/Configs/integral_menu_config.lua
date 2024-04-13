@@ -7,6 +7,7 @@ local buildCmdFactory, buildCmdEconomy, buildCmdDefence, buildCmdSpecial, buildC
 local imageDir = 'LuaUI/Images/commands/'
 
 local _, ammoCMDS = VFS.Include("LuaRules/Configs/ammostateinfo.lua")
+local SUC = Spring.Utilities.CMD
 
 local tooltips = {
 	WANT_ONOFF = "Activation (_STATE_)\n  Toggles unit abilities such as radar, shield charge, and radar jamming.",
@@ -60,77 +61,77 @@ local commandDisplayConfig = {
 	[CMD.FIGHT] = { texture = imageDir .. 'Bold/fight.png', tooltip = "Attack Move: Move to a position engaging targets along the way."},
 	[CMD.GUARD] = { texture = imageDir .. 'Bold/guard.png'},
 	[CMD.MOVE] = { texture = imageDir .. 'Bold/move.png'},
-	[CMD_RAW_MOVE] = { texture = imageDir .. 'Bold/move.png'},
+	[SUC.RAW_MOVE] = { texture = imageDir .. 'Bold/move.png'},
 	[CMD.PATROL] = { texture = imageDir .. 'Bold/patrol.png', tooltip = "Patrol: Attack Move back and forth between one or more waypoints."},
 	[CMD.WAIT] = { texture = imageDir .. 'Bold/wait.png', tooltip = "Wait: Pause the units command queue and have it hold its current position."},
-	[CMD_SUBMUNITION_TARGET] = { texture = imageDir .. 'Bold/nuke.png', tooltip = "Set Submunition Target: Adds a payload target at the selected position. Payloads without a target will be targeted at a random nearby location (Issue on exsiting target to cancel target)"},
+	[SUC.SUBMUNITION_TARGET] = { texture = imageDir .. 'Bold/nuke.png', tooltip = "Set Submunition Target: Adds a payload target at the selected position. Payloads without a target will be targeted at a random nearby location (Issue on exsiting target to cancel target)"},
 	[CMD.REPAIR] = {texture = imageDir .. 'Bold/repair.png', tooltip = "Repair: Assist construction or repair a unit. Click and drag for area repair."},
 	[CMD.RECLAIM] = {texture = imageDir .. 'Bold/reclaim.png', tooltip = "Reclaim: Take resources from a wreck. Click and drag for area reclaim."},
 	[CMD.RESURRECT] = {texture = imageDir .. 'Bold/resurrect.png', tooltip = "Resurrect: Spend energy to turn a wreck into a unit."},
-	[CMD_BUILD] = {texture = imageDir .. 'Bold/build.png'},
+	[SUC.BUILD] = {texture = imageDir .. 'Bold/build.png'},
 	[CMD.MANUALFIRE] = { texture = imageDir .. 'Bold/dgun.png', tooltip = "Fire Special Weapon: Fire the unit's special weapon."},
-	[CMD_AIR_MANUALFIRE] = { texture = imageDir .. 'Bold/dgun.png', tooltip = "Fire Special Weapon: Fire the unit's special weapon."},
+	[SUC.AIR_MANUALFIRE] = { texture = imageDir .. 'Bold/dgun.png', tooltip = "Fire Special Weapon: Fire the unit's special weapon."},
 	[CMD.STOCKPILE] = {tooltip = "Stockpile: Queue missile production. Right click to reduce the queue."},
 
 	[CMD.LOAD_UNITS] = { texture = imageDir .. 'Bold/load.png', tooltip = "Load: Pick up a unit. Click and drag to load unit in an area."},
 	[CMD.UNLOAD_UNITS] = { texture = imageDir .. 'Bold/unload.png', tooltip = "Unload: Set down a carried unit. Click and drag to unload in an area."},
 	[CMD.AREA_ATTACK] = { texture = imageDir .. 'Bold/areaattack.png', tooltip = "Area Attack: Indiscriminately bomb the terrain in an area."},
-	[CMD_BUILD_PLATE] = {texture = imageDir .. 'Bold/buildplate.png', tooltip = "Build Plate: Place near a factory for an extra production queue."},
+	[SUC.BUILD_PLATE] = {texture = imageDir .. 'Bold/buildplate.png', tooltip = "Build Plate: Place near a factory for an extra production queue."},
 
-	[CMD_RAMP] = {texture = imageDir .. 'ramp.png'},
-	[CMD_LEVEL] = {texture = imageDir .. 'level.png'},
-	[CMD_RAISE] = {texture = imageDir .. 'raise.png'},
-	[CMD_SMOOTH] = {texture = imageDir .. 'smooth.png'},
-	[CMD_RESTORE] = {texture = imageDir .. 'restore.png'},
-	[CMD_BUMPY] = {texture = imageDir .. 'bumpy.png'},
+	[SUC.RAMP] = {texture = imageDir .. 'ramp.png'},
+	[SUC.LEVEL] = {texture = imageDir .. 'level.png'},
+	[SUC.RAISE] = {texture = imageDir .. 'raise.png'},
+	[SUC.SMOOTH] = {texture = imageDir .. 'smooth.png'},
+	[SUC.RESTORE] = {texture = imageDir .. 'restore.png'},
+	[SUC.BUMPY] = {texture = imageDir .. 'bumpy.png'},
 
-	[CMD_AREA_GUARD] = { texture = imageDir .. 'Bold/guard.png', tooltip = "Guard: Protect the target and assist its production."},
+	[SUC.AREA_GUARD] = { texture = imageDir .. 'Bold/guard.png', tooltip = "Guard: Protect the target and assist its production."},
 
-	[CMD_AREA_MEX] = {texture = imageDir .. 'Bold/mex.png'},
-	[CMD_AREA_TERRA_MEX] = {texture = imageDir .. 'Bold/mex.png'},
+	[SUC.AREA_MEX] = {texture = imageDir .. 'Bold/mex.png'},
+	[SUC.AREA_TERRA_MEX] = {texture = imageDir .. 'Bold/mex.png'},
 
-	[CMD_JUMP] = {texture = imageDir .. 'Bold/jump.png'},
+	[SUC.JUMP] = {texture = imageDir .. 'Bold/jump.png'},
 
-	[CMD_FIND_PAD] = {texture = imageDir .. 'Bold/rearm.png', tooltip = "Resupply: Return to nearest Airpad for repairs and, for bombers, ammo."},
+	[SUC.FIND_PAD] = {texture = imageDir .. 'Bold/rearm.png', tooltip = "Resupply: Return to nearest Airpad for repairs and, for bombers, ammo."},
 	
-	[CMD_SWEEPFIRE] = {texture = imageDir .. 'sweepfire.png', tooltip = "Sweepfire: Sets a direction for sweeping an area with attack commands."},
-	[CMD_SWEEPFIRE_MINES] = {texture = imageDir .. 'sweepfire.png', tooltip = "Lay Mines: Sets a direction for randomly laying mines in."},
-	[CMD_SWEEPFIRE_CANCEL] = {texture = imageDir .. 'sweepfire_cancel.png', tooltip = "Clear Sweepfire: Clears the sweepfire command for this unit."},
-	[CMD_GREYGOO] = {texture = imageDir .. 'Bold/GreyGoo.png', tooltip = "Reclaim (Grey Goo): Consumes wreck(s) in an area (or a single wreck)."},
-	[CMD_EXCLUDE_PAD] = {texture = imageDir .. 'Bold/excludeairpad.png', tooltip = "Exclude Airpad: Toggle whether any of your aircraft use the targeted airpad."},
-	[CMD_FIELD_FAC_SELECT] = {texture = imageDir .. 'Bold/fac_select.png', tooltip = "Copy Factory Blueprint: Copy a production option from target functional friendly factory."},
-	[CMD_IMMEDIATETAKEOFF] = {texture = imageDir .. 'takeoff.png', tooltip = "Abort Landing\nImmediately take off from airpads or abort landing."},
-	[CMD_EMBARK] = {texture = imageDir .. 'Bold/embark.png'},
-	[CMD_DISEMBARK] = {texture = imageDir .. 'Bold/disembark.png'},
+	[SUC.SWEEPFIRE] = {texture = imageDir .. 'sweepfire.png', tooltip = "Sweepfire: Sets a direction for sweeping an area with attack commands."},
+	[SUC.SWEEPFIRE_MINES] = {texture = imageDir .. 'sweepfire.png', tooltip = "Lay Mines: Sets a direction for randomly laying mines in."},
+	[SUC.SWEEPFIRE_CANCEL] = {texture = imageDir .. 'sweepfire_cancel.png', tooltip = "Clear Sweepfire: Clears the sweepfire command for this unit."},
+	[SUC.GREYGOO] = {texture = imageDir .. 'Bold/GreyGoo.png', tooltip = "Reclaim (Grey Goo): Consumes wreck(s) in an area (or a single wreck)."},
+	[SUC.EXCLUDE_PAD] = {texture = imageDir .. 'Bold/excludeairpad.png', tooltip = "Exclude Airpad: Toggle whether any of your aircraft use the targeted airpad."},
+	[SUC.FIELD_FAC_SELECT] = {texture = imageDir .. 'Bold/fac_select.png', tooltip = "Copy Factory Blueprint: Copy a production option from target functional friendly factory."},
+	[SUC.IMMEDIATETAKEOFF] = {texture = imageDir .. 'takeoff.png', tooltip = "Abort Landing\nImmediately take off from airpads or abort landing."},
+	[SUC.EMBARK] = {texture = imageDir .. 'Bold/embark.png'},
+	[SUC.DISEMBARK] = {texture = imageDir .. 'Bold/disembark.png'},
 
-	[CMD_ONECLICK_WEAPON] = {},--texture = imageDir .. 'Bold/action.png'},
-	[CMD_UNIT_SET_TARGET_CIRCLE] = {texture = imageDir .. 'Bold/settarget.png'},
-	[CMD_UNIT_CANCEL_TARGET] = {texture = imageDir .. 'Bold/canceltarget.png'},
+	[SUC.ONECLICK_WEAPON] = {},--texture = imageDir .. 'Bold/action.png'},
+	[SUC.UNIT_SET_TARGET_CIRCLE] = {texture = imageDir .. 'Bold/settarget.png'},
+	[SUC.UNIT_CANCEL_TARGET] = {texture = imageDir .. 'Bold/canceltarget.png'},
 
-	[CMD_ABANDON_PW] = {texture = imageDir .. 'Bold/drop_beacon.png'},
+	[SUC.ABANDON_PW] = {texture = imageDir .. 'Bold/drop_beacon.png'},
 
-	[CMD_PLACE_BEACON] = {texture = imageDir .. 'Bold/drop_beacon.png'},
-	[CMD_UPGRADE_STOP] = { texture = imageDir .. 'Bold/cancelupgrade.png'},
-	[CMD_STOP_PRODUCTION] = { texture = imageDir .. 'Bold/stopbuild.png'},
-	[CMD_GBCANCEL] = { texture = imageDir .. 'Bold/stopbuild.png'},
+	[SUC.PLACE_BEACON] = {texture = imageDir .. 'Bold/drop_beacon.png'},
+	[SUC.UPGRADE_STOP] = { texture = imageDir .. 'Bold/cancelupgrade.png'},
+	[SUC.STOP_PRODUCTION] = { texture = imageDir .. 'Bold/stopbuild.png'},
+	[SUC.GBCANCEL] = { texture = imageDir .. 'Bold/stopbuild.png'},
 
-	[CMD_RECALL_DRONES] = {texture = imageDir .. 'Bold/recall_drones.png'},
-	[CMD_DRONE_SET_TARGET] = { texture = imageDir .. 'Bold/dronesettarget.png'},
+	[SUC.RECALL_DRONES] = {texture = imageDir .. 'Bold/recall_drones.png'},
+	[SUC.DRONE_SET_TARGET] = { texture = imageDir .. 'Bold/dronesettarget.png'},
 
 	-- states
-	[CMD_WANT_ONOFF] = {
+	[SUC.WANT_ONOFF] = {
 		texture = {imageDir .. 'states/off.png', imageDir .. 'states/on.png'},
 		stateTooltip = {tooltips.WANT_ONOFF:gsub("_STATE_", "Off"), tooltips.WANT_ONOFF:gsub("_STATE_", "On")}
 	},
-	[CMD_UNIT_AI] = {
+	[SUC.UNIT_AI] = {
 		texture = {imageDir .. 'states/bulb_off.png', imageDir .. 'states/bulb_on.png'},
 		stateTooltip = {tooltips.UNIT_AI:gsub("_STATE_", "Disabled"), tooltips.UNIT_AI:gsub("_STATE_", "Enabled")},
 	},
-	[CMD_FIRE_TOWARDS_ENEMY] = {
+	[SUC.FIRE_TOWARDS_ENEMY] = {
 		texture = {imageDir .. 'states/shoot_towards_off.png', imageDir .. 'states/shoot_towards_on.png'},
 		stateTooltip = {tooltips.FIRE_TOWARDS_ENEMY:gsub("_STATE_", "Disabled"), tooltips.FIRE_TOWARDS_ENEMY:gsub("_STATE_", "Enabled")},
 	},
-	[CMD_FIRE_AT_SHIELD] = {
+	[SUC.FIRE_AT_SHIELD] = {
 		texture = {imageDir .. 'states/ward_off.png', imageDir .. 'states/ward_on.png'},
 		stateTooltip = {tooltips.FIRE_AT_SHIELD:gsub("_STATE_", "Disabled"), tooltips.FIRE_AT_SHIELD:gsub("_STATE_", "Enabled")},
 	},
@@ -138,15 +139,15 @@ local commandDisplayConfig = {
 		texture = {imageDir .. 'states/repeat_off.png', imageDir .. 'states/repeat_on.png'},
 		stateTooltip = {tooltips.REPEAT:gsub("_STATE_", "Disabled"), tooltips.REPEAT:gsub("_STATE_", "Enabled")}
 	},
-	[CMD_WANT_CLOAK] = {
+	[SUC.WANT_CLOAK] = {
 		texture = {imageDir .. 'states/cloak_off.png', imageDir .. 'states/cloak_on.png'},
 		stateTooltip = {tooltips.WANT_CLOAK:gsub("_STATE_", "Disabled"), tooltips.WANT_CLOAK:gsub("_STATE_", "Enabled")}
 	},
-	[CMD_CLOAK_SHIELD] = {
+	[SUC.CLOAK_SHIELD] = {
 		texture = {imageDir .. 'states/areacloak_off.png', imageDir .. 'states/areacloak_on.png'},
 		stateTooltip = {tooltips.CLOAK_SHIELD:gsub("_STATE_", "Disabled"), tooltips.CLOAK_SHIELD:gsub("_STATE_", "Enabled")}
 	},
-	[CMD_PRIORITY] = {
+	[SUC.PRIORITY] = {
 		texture = {imageDir .. 'states/wrench_low.png', imageDir .. 'states/wrench_med.png', imageDir .. 'states/wrench_high.png'},
 		stateTooltip = {
 			tooltips.PRIORITY:gsub("_STATE_", "Low"),
@@ -154,21 +155,21 @@ local commandDisplayConfig = {
 			tooltips.PRIORITY:gsub("_STATE_", "High")
 		}
 	},
-	[CMD_OVERRECLAIM] = {
+	[SUC.OVERRECLAIM] = {
 		texture = {imageDir .. 'states/goo_off.png', imageDir .. 'states/goo_cloak.png'},
 		stateTooltip = {
 			tooltips.OVERRECLAIM:gsub("_STATE_", "Enabled"),
 			tooltips.OVERRECLAIM:gsub("_STATE_", "Disabled"),
 		}
 	},
-	[CMD_FIRECYCLE] = {
+	[SUC.FIRECYCLE] = {
 		texture = {imageDir .. 'states/firecycle_off.png', imageDir .. 'states/firecycle_on.png'},
 		stateTooltip = {
 			tooltips.FIRECYCLE:gsub("_STATE_", "Disabled"),
 			tooltips.FIRECYCLE:gsub("_STATE_", "Enabled"),
 		}
 	},
-	[CMD_MISC_PRIORITY] = {
+	[SUC.MISC_PRIORITY] = {
 		texture = {imageDir .. 'states/wrench_low_other.png', imageDir .. 'states/wrench_med_other.png', imageDir .. 'states/wrench_high_other.png'},
 		stateTooltip = {
 			tooltips.MISC_PRIORITY:gsub("_STATE_", "Low"),
@@ -176,16 +177,16 @@ local commandDisplayConfig = {
 			tooltips.MISC_PRIORITY:gsub("_STATE_", "High")
 		}
 	},
-	[CMD_FACTORY_GUARD] = {
+	[SUC.FACTORY_GUARD] = {
 		texture = {imageDir .. 'states/autoassist_off.png',
 		imageDir .. 'states/autoassist_on.png'},
 		stateTooltip = {tooltips.FACTORY_GUARD:gsub("_STATE_", "Disabled"), tooltips.FACTORY_GUARD:gsub("_STATE_", "Enabled")}
 	},
-	[CMD_AUTO_CALL_TRANSPORT] = {
+	[SUC.AUTO_CALL_TRANSPORT] = {
 		texture = {imageDir .. 'states/auto_call_off.png', imageDir .. 'states/auto_call_on.png'},
 		stateTooltip = {tooltips.AUTO_CALL_TRANSPORT:gsub("_STATE_", "Disabled"), tooltips.AUTO_CALL_TRANSPORT:gsub("_STATE_", "Enabled")}
 	},
-	[CMD_GLOBAL_BUILD] = {
+	[SUC.GLOBAL_BUILD] = {
 		texture = {imageDir .. 'Bold/buildgrey.png', imageDir .. 'Bold/build_light.png'},
 		stateTooltip = {tooltips.GLOBAL_BUILD:gsub("_STATE_", "Disabled"), tooltips.GLOBAL_BUILD:gsub("_STATE_", "Enabled")}
 	},
@@ -223,7 +224,7 @@ local commandDisplayConfig = {
 			},
 		}
 	},
-	[CMD_PREVENT_BAIT] = {
+	[SUC.PREVENT_BAIT] = {
 		texture = {
 			imageDir .. 'states/bait_off_alternate.png',
 			imageDir .. 'states/bait_1.png',
@@ -239,7 +240,7 @@ local commandDisplayConfig = {
 			tooltips.PREVENT_BAIT:gsub("_STATE_", "Heavy"):gsub("_DESC_", "Avoid cost under 420, unknown radar dots and armour."),
 		}
 	},
-	[CMD_RETREAT] = {
+	[SUC.RETREAT] = {
 		texture = {imageDir .. 'states/retreat_off.png', imageDir .. 'states/retreat_30.png', imageDir .. 'states/retreat_60.png', imageDir .. 'states/retreat_90.png'},
 		stateTooltip = {
 			tooltips.RETREAT:gsub("_STATE_", "Disabled"),
@@ -248,7 +249,7 @@ local commandDisplayConfig = {
 			tooltips.RETREAT:gsub("_STATE_", "99%% Health")
 		}
 	},
-	[CMD_RETREATSHIELD] = {
+	[SUC.RETREATSHIELD] = {
 		texture = {imageDir .. 'states/shield_off.png', imageDir .. 'states/shield_30.png', imageDir .. 'states/shield_50.png', imageDir .. 'states/shield_80.png'},
 		stateTooltip = {
 			tooltips.RETREATSHIELD:gsub("_STATE_", "Disabled"),
@@ -257,7 +258,7 @@ local commandDisplayConfig = {
 			tooltips.RETREATSHIELD:gsub("_STATE_", "80%% Shield")
 		}
 	},
-	[CMD_AUTOJUMP] = {
+	[SUC.AUTOJUMP] = {
 		texture = {imageDir .. 'states/autojumpoff.png', imageDir .. 'states/autojumpon.png',},
 		stateTooltip = {
 			tooltips.AUTOJUMP:gsub("_STATE_", "Manual Jump Only"),
@@ -268,11 +269,11 @@ local commandDisplayConfig = {
 		texture = {imageDir .. 'states/fly_on.png', imageDir .. 'states/fly_off.png'},
 		stateTooltip = {tooltips.IDLEMODE:gsub("_STATE_", "Fly"), tooltips.IDLEMODE:gsub("_STATE_", "Land")}
 	},
-	[CMD_AP_FLY_STATE] = {
+	[SUC.AP_FLY_STATE] = {
 		texture = {imageDir .. 'states/fly_on.png', imageDir .. 'states/fly_off.png'},
 		stateTooltip = {tooltips.AP_FLY_STATE:gsub("_STATE_", "Fly"), tooltips.AP_FLY_STATE:gsub("_STATE_", "Land")}
 	},
-	[CMD_UNIT_BOMBER_DIVE_STATE] = {
+	[SUC.UNIT_BOMBER_DIVE_STATE] = {
 		texture = {imageDir .. 'states/divebomb_off.png', imageDir .. 'states/divebomb_shield.png', imageDir .. 'states/divebomb_attack.png', imageDir .. 'states/divebomb_always.png'},
 		stateTooltip = {
 			tooltips.UNIT_BOMBER_DIVE_STATE:gsub("_STATE_", "Always Fly High"),
@@ -281,11 +282,11 @@ local commandDisplayConfig = {
 			tooltips.UNIT_BOMBER_DIVE_STATE:gsub("_STATE_", "Always Fly Low")
 		}
 	},
-	[CMD_UNIT_KILL_SUBORDINATES] = {
+	[SUC.UNIT_KILL_SUBORDINATES] = {
 		texture = {imageDir .. 'states/capturekill_off.png', imageDir .. 'states/capturekill_on.png'},
 		stateTooltip = {tooltips.UNIT_KILL_SUBORDINATES:gsub("_STATE_", "Keep"), tooltips.UNIT_KILL_SUBORDINATES:gsub("_STATE_", "Kill")}
 	},
-	[CMD_GOO_GATHER] = {
+	[SUC.GOO_GATHER] = {
 		texture = {imageDir .. 'states/goo_off.png', imageDir .. 'states/goo_on.png', imageDir .. 'states/goo_cloak.png'},
 		stateTooltip = {
 			tooltips.GOO_GATHER:gsub("_STATE_", "Off"),
@@ -293,23 +294,23 @@ local commandDisplayConfig = {
 			tooltips.GOO_GATHER:gsub("_STATE_", "On always")
 		}
 	},
-	[CMD_DISABLE_ATTACK] = {
+	[SUC.DISABLE_ATTACK] = {
 		texture = {imageDir .. 'states/disableattack_off.png', imageDir .. 'states/disableattack_on.png'},
 		stateTooltip = {tooltips.DISABLE_ATTACK:gsub("_STATE_", "Allowed"), tooltips.DISABLE_ATTACK:gsub("_STATE_", "Blocked")}
 	},
-	[CMD_ARMORSTATE] = {
+	[SUC.ARMORSTATE] = {
 		texture = {imageDir .. 'states/armor_off.png', imageDir .. 'states/armor_on.png'},
 		stateTooltip = {tooltips.ARMORSTATE:gsub("_STATE_", "Off"), tooltips.ARMORSTATE:gsub("_STATE_", "On")}
 	},
-	[CMD_PUSH_PULL] = {
+	[SUC.PUSH_PULL] = {
 		texture = {imageDir .. 'states/pull_alt.png', imageDir .. 'states/push_alt.png'},
 		stateTooltip = {tooltips.PUSH_PULL:gsub("_STATE_", "Pull"), tooltips.PUSH_PULL:gsub("_STATE_", "Push")}
 	},
-	[CMD_DONT_FIRE_AT_RADAR] = {
+	[SUC.DONT_FIRE_AT_RADAR] = {
 		texture = {imageDir .. 'states/stealth_on.png', imageDir .. 'states/stealth_off.png'},
 		stateTooltip = {tooltips.DONT_FIRE_AT_RADAR:gsub("_STATE_", "Fire"), tooltips.DONT_FIRE_AT_RADAR:gsub("_STATE_", "Hold Fire")}
 	},
-	[CMD_PREVENT_OVERKILL] = {
+	[SUC.PREVENT_OVERKILL] = {
 		texture = {imageDir .. 'states/overkill_off.png', imageDir .. 'states/overkill_on.png'},
 		stateTooltip = {tooltips.PREVENT_OVERKILL:gsub("_STATE_", "Disabled"), tooltips.PREVENT_OVERKILL:gsub("_STATE_", "Enabled")}
 	},
@@ -317,11 +318,11 @@ local commandDisplayConfig = {
 		texture = {imageDir .. 'states/traj_low.png', imageDir .. 'states/traj_high.png'},
 		stateTooltip = {tooltips.TRAJECTORY:gsub("_STATE_", "Low"), tooltips.TRAJECTORY:gsub("_STATE_", "High")}
 	},
-	[CMD_AIR_STRAFE] = {
+	[SUC.AIR_STRAFE] = {
 		texture = {imageDir .. 'states/strafe_off.png', imageDir .. 'states/strafe_on.png'},
 		stateTooltip = {tooltips.AIR_STRAFE:gsub("_STATE_", "No Strafe"), tooltips.AIR_STRAFE:gsub("_STATE_", "Strafe")}
 	},
-	[CMD_UNIT_FLOAT_STATE] = {
+	[SUC.UNIT_FLOAT_STATE] = {
 		texture = {imageDir .. 'states/amph_sink.png', imageDir .. 'states/amph_attack.png', imageDir .. 'states/amph_float.png'},
 		stateTooltip = {
 			tooltips.UNIT_FLOAT_STATE:gsub("_STATE_", "Never Float"),
@@ -329,7 +330,7 @@ local commandDisplayConfig = {
 			tooltips.UNIT_FLOAT_STATE:gsub("_STATE_", "Always Float")
 		}
 	},
-	[CMD_SELECTION_RANK] = {
+	[SUC.SELECTION_RANK] = {
 		texture = {imageDir .. 'states/selection_rank_0.png', imageDir .. 'states/selection_rank_1.png', imageDir .. 'states/selection_rank_2.png', imageDir .. 'states/selection_rank_3.png'},
 		stateTooltip = {
 			tooltips.SELECTION_RANK:gsub("_STATE_", "0"),
@@ -338,7 +339,7 @@ local commandDisplayConfig = {
 			tooltips.SELECTION_RANK:gsub("_STATE_", "3")
 		}
 	},
-	[CMD_FORMATION_RANK] = {
+	[SUC.FORMATION_RANK] = {
 		texture = {imageDir .. 'states/formation_rank_0.png', imageDir .. 'states/formation_rank_1.png', imageDir .. 'states/formation_rank_2.png', imageDir .. 'states/formation_rank_3.png'},
 		stateTooltip = {
 			tooltips.FORMATION_RANK:gsub("_STATE_", "0"),
@@ -347,14 +348,14 @@ local commandDisplayConfig = {
 			tooltips.FORMATION_RANK:gsub("_STATE_", "3")
 		}
 	},
-	[CMD_TOGGLE_DRONES] = {
+	[SUC.TOGGLE_DRONES] = {
 		texture = {imageDir .. 'states/drones_off.png', imageDir .. 'states/drones_on.png'},
 		stateTooltip = {
 			tooltips.TOGGLE_DRONES:gsub("_STATE_", "Disabled"),
 			tooltips.TOGGLE_DRONES:gsub("_STATE_", "Enabled"),
 		}
 	},
-	[CMD_QUEUE_MODE] = {
+	[SUC.QUEUE_MODE] = {
 		texture = {imageDir .. 'states/queueoff.png', imageDir .. 'states/queueon.png'},
 		stateTooltip = {
 			tooltips.QUEUEMODE:gsub("_STATE_", "Unit Command"),
@@ -619,28 +620,28 @@ local instantCommands = {
 	[CMD.SELFD] = true,
 	[CMD.STOP] = true,
 	[CMD.WAIT] = true,
-	[CMD_FIND_PAD] = true,
-	[CMD_EMBARK] = true,
-	[CMD_DISEMBARK] = true,
-	[CMD_LOADUNITS_SELECTED] = true,
-	[CMD_ONECLICK_WEAPON] = true,
-	[CMD_UNIT_CANCEL_TARGET] = true,
-	[CMD_STOP_NEWTON_FIREZONE] = true,
-	[CMD_RECALL_DRONES] = true,
-	[CMD_MORPH_UPGRADE_INTERNAL] = true,
-	[CMD_UPGRADE_STOP] = true,
-	[CMD_STOP_PRODUCTION] = true,
-	[CMD_RESETFIRE] = true,
-	[CMD_RESETMOVE] = true,
+	[SUC.FIND_PAD] = true,
+	[SUC.EMBARK] = true,
+	[SUC.DISEMBARK] = true,
+	[SUC.LOADUNITS_SELECTED] = true,
+	[SUC.ONECLICK_WEAPON] = true,
+	[SUC.UNIT_CANCEL_TARGET] = true,
+	[SUC.STOP_NEWTON_FIREZONE] = true,
+	[SUC.RECALL_DRONES] = true,
+	[SUC.MORPH_UPGRADE_INTERNAL] = true,
+	[SUC.UPGRADE_STOP] = true,
+	[SUC.STOP_PRODUCTION] = true,
+	[SUC.RESETFIRE] = true,
+	[SUC.RESETMOVE] = true,
 }
 
 -- Commands that only exist in LuaUI cannot have a hidden param. Therefore those that should be hidden are placed in this table.
 local widgetSpaceHidden = {
 	[60] = true, -- CMD.PAGES
-	[CMD_SETHAVEN] = true,
-	[CMD_SET_AI_START] = true,
-	[CMD_CHEAT_GIVE] = true,
-	[CMD_SET_FERRY] = true,
+	[SUC.SETHAVEN] = true,
+	[SUC.SET_AI_START] = true,
+	[SUC.CHEAT_GIVE] = true,
+	[SUC.SET_FERRY] = true,
 	[CMD.MOVE] = true,
 }
 
