@@ -18,7 +18,7 @@ local wantedDefs = {}
 
 for i = 1, #UnitDefs do
 	if UnitDefs[i].customParams.needsfighthax then
-		wanteddefs[i] = true
+		wantedDefs[i] = true
 	end
 end
 
