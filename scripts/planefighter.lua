@@ -30,10 +30,6 @@ local distanceSet = false
 
 ----------------------------------------------------------
 
-VFS.Include("LuaRules/Configs/customcmds.h.lua")
-
-----------------------------------------------------------
-
 --[[function SprintThread()
 	for i=1, SPEEDUP_DURATION do
 		EmitSfx(ljet, 1027)
