@@ -41,6 +41,7 @@ return {
 		maneuverleashlength = "64000",
 		maxSlope            = 36,
 		metalCost           = 0,
+		power               = 1,
 		energyCost          = 0,
 		buildTime           = 1270,
 		minCloakDistance    = 250,

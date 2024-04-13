@@ -32,12 +32,12 @@ return {
 		maxSlope            = 84,
 		maxWaterDepth       = 5000,
 		metalCost           = 0,
-		energyCost          = 0,
 		buildTime           = 1270,
 		movementClass       = "ATKBOT4",
 		noAutoFire          = false,
 		noChaseCategory     = "SHIP SWIM FLOAT TERRAFORM FIXEDWING SATELLITE GUNSHIP MINE",
 		objectName          = "chickena.s3o",
+		power               = 1,
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
 

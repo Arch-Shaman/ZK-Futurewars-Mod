@@ -39,6 +39,7 @@ return {
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP SUB MOBILE STUPIDTARGET MINE",
 		objectName          = "chickenr.s3o",
+		power = 1,
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
 
