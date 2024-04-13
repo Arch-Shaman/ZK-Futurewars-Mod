@@ -283,5 +283,6 @@
 	"chainlightning_extrajumps" : "ดิวิชั่นพิเศษ",
 	"chainlightning_efficency" : "ประสิทธิภาพ",
 	"sensor_steal": "แฮ็กเซ็นเซอร์เป็นเวลา %{seconds} วินาที",
-	"sensor_tag" : "เปิดเผยยูนิตที่ถูกโจมตีเป็นเวลา %{seconds} วินาที"
+	"sensor_tag" : "เปิดเผยยูนิตที่ถูกโจมตีเป็นเวลา %{seconds} วินาที",
+	"field_fac" : "สามารถดาวน์โหลดข้อมูลนาโนเฟรมจากโรงงานที่เป็นมิตร"
 }

@@ -285,5 +285,6 @@
 	"chainlightning_extrajumps" : "Number of subforks",
 	"chainlightning_efficency" : "Efficiency",
 	"sensor_steal" : "Hacks sensors for %{seconds}sec",
-	"sensor_tag" : "Reveals attacked units for %{seconds}sec"
+	"sensor_tag" : "Reveals attacked units for %{seconds}sec",
+	"field_fac" : "Can download nanoframe data from friendly factories"
 }

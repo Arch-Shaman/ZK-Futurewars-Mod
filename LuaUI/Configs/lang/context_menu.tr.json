@@ -283,5 +283,6 @@
 	"chainlightning_extrajumps": "Ekstra bölümler",
 	"chainlightning_efficency": "Verimlilik",
 	"sensor_steal": "Sensörleri %{seconds}sn boyunca hackler",
-	"sensor_tag": "%{seconds}sn boyunca saldırıya uğrayan birimleri ortaya çıkarır"
+	"sensor_tag": "%{seconds}sn boyunca saldırıya uğrayan birimleri ortaya çıkarır",
+	"field_fac": "Dost fabrikalardan nanoframe verileri indirilebilir"
 }

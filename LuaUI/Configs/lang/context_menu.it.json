@@ -283,5 +283,6 @@
 	"chainlightning_extrajumps": "Divisioni extra",
 	"chainlightning_efficency": "Efficienza",
 	"sensor_steal": "Hackera i sensori per %{seconds} secondi",
-	"sensor_tag": "Rivela le unità attaccate per %{seconds} secondi"
+	"sensor_tag": "Rivela le unità attaccate per %{seconds} secondi",
+	"field_fac": "Può scaricare dati nanoframe da fabbriche amichevoli"
 }

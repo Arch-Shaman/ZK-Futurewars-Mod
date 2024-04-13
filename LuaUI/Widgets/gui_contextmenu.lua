@@ -523,7 +523,7 @@ local localization = {
 	chainlightning_jumps = "Jumps to",
 	chainlightning_efficency = "Effiency:",
 	chainlightning_extrajumps = "Forks jump to nearby units",
-	
+	field_fac = "field factory",
 }
 
 local function UpdateLocalization()
@@ -1523,6 +1523,9 @@ local function printAbilities(ud, unitID, isFeature)
 	if cp.vampirism_kill then
 		AddEntryToCells(localization.vampirism, 1, '', cells)
 		AddEntryToCells(localization.vampirism_kills_increase_hp .. ":", 2, WG.Translate("interface", "vampirism_kills_increase_hp_desc", {number = numformat(cp.vampirism_kill * 100, 1)}), cells)
+	end
+	if cp.field_factory then
+		AddEntryToCells(localization.field_fac, 1 '', cells)
 	end
 
 	if ud.armoredMultiple < 1 then
