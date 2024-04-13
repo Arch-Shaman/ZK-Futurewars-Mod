@@ -15,6 +15,11 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+local CMD_WAIT = CMD.WAIT
+local CMD_FIRE_STATE = CMD.FIRE_STATE
+local CMD_UNIT_CANCEL_TARGET = Spring.Utilities.CMD.UNIT_CANCEL_TARGET
+local CMD_UNIT_SET_TARGET = Spring.Utilities.CMD.UNIT_SET_TARGET
+local CMD_UNIT_SET_TARGET_CIRCLE = Spring.Utilities.CMD.SET_TARGET_CIRCLE
 
 if not gadgetHandler:IsSyncedCode() then
 	function gadget:Initialize()
@@ -44,12 +49,6 @@ local spGetUnitNearestEnemy = Spring.GetUnitNearestEnemy
 local GetUnitRange = Spring.Utilities.GetUnitRange
 local getMovetype  = Spring.Utilities.getMovetype
 local tobool       = Spring.Utilities.tobool
-
-local CMD_WAIT = CMD.WAIT
-local CMD_FIRE_STATE = CMD.FIRE_STATE
-local CMD_UNIT_CANCEL_TARGET = Spring.Utilities.CMD.UNIT_CANCEL_TARGET
-local CMD_UNIT_SET_TARGET = Spring.Utilities.CMD.UNIT_SET_TARGET
-local CMD_UNIT_SET_TARGET_CIRCLE = Spring.Utilities.CMD.SET_TARGET_CIRCLE
 
 -- Constans
 local TARGET_NONE   = 0
