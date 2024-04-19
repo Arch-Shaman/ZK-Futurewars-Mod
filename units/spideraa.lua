@@ -63,19 +63,19 @@ return {
 				avoidGround  = false,
 				canAttackGround         = false,
 				beamDecay               = 0.9,
-				beamTime                = 6/30,
+				beamTime                = 2/30,
 				beamTTL                 = 30,
 				craterBoost             = 0,
 				craterMult              = 0,
 				coreThickness           = 0.9,
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
-					aimdelay = 60, -- 2 seconds
+					aimdelay = 45, -- 2 seconds
 					light_color = "0.203 0.631 0.196",
 					light_radius = 320,
 					reveal_unit = 8,
-					allowedpitcherror = 30,
-					allowedheadingerror = 90,
+					allowedpitcherror = 90,
+					allowedheadingerror = 120,
 					isaa = "1",
 					aimdelayresettime = 20,
 				},
