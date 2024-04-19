@@ -3,7 +3,7 @@ return {
 		unitname                      = "turretmissile",
 		name                          = "Mirador",
 		description                   = "Missile Barrage Tower",
-		buildCostMetal                = 160,
+		buildCostMetal                = 180,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 4,
