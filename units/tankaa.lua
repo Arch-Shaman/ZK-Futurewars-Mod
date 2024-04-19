@@ -74,15 +74,15 @@ return {
 					reaim_time = 8, -- COB
 					isaa = "1",
 					light_radius = 0,
-					numprojectiles1 = 5,
+					numprojectiles1 = 6,
 					projectile1 = "tankaa_tritary",
-					spawndist = 300,
+					spawndist = 350,
 					velspread1 = "6.37, 1, 6.37",
 					proxy = 1, 
 					damage_vs_shield = "150"
 				},
 				damage  = {
-					default = 60.1*5,
+					default = 70.1*6,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.25,
@@ -91,7 +91,7 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 960,
+				range                   = 1040,
 				reloadtime              = 1/3,
 				myGravity				= 0.03,
 				size                    = 8,
@@ -119,7 +119,7 @@ return {
 					isFlak = 1,
 				},
 				damage = {
-					default = 60.1,
+					default = 70.1,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.95,
