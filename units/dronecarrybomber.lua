@@ -95,7 +95,7 @@ local dronecarrybomber = {
 				blastwave_lossfactor = 1,
 				blastwave_damage = 0,
 				blastwave_disarm = 75,
-				blastwave_diarm_time = 30,
+				blastwave_diarm_time = 10,
 				blastwave_size = 2,
 				blastwave_impulse = 0,
 				blastwave_slowdmg = 0,
@@ -105,7 +105,6 @@ local dronecarrybomber = {
 
 			damage                  = {
 				default = 550,
-				planes  = 550,
 			},
 			
 			explosionGenerator      = "custom:spawk_expwosion_hewon",
