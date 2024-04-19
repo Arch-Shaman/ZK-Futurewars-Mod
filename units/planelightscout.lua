@@ -27,7 +27,7 @@ return {
 			outline_y = 75,
 			outline_yoff = 10,
 			battery = 750,
-			batteryrearmrate = 5,
+			batteryrearmrate = 2,
 			batterygain = 0, -- no passive battery regen. beamlaser_gold_muzzle
 			initialbattery = 750,
 			fighter_pullup_dist = 150,
@@ -148,7 +148,7 @@ return {
 				shieldPowerRegen        = 100,	
 				shieldPowerRegenEnergy  = 0.001, -- needed so we trick shield gadget into checking battery levels.
 				shieldRadius            = 120,
-				shieldStartingPower     = 2000,
+				shieldStartingPower     = 2500,
 				shieldRepulser          = false,
 				smartShield             = true,	
 				visibleShield           = false,	
@@ -220,10 +220,10 @@ return {
 					light_camera_height = 2000,
 					light_color = "0.85 0.85 1.2",
 					light_radius = 150,
-					batterydrain = 10,
+					batterydrain = 15,
 				},
 				damage                  = {
-					default        = 30.1,
+					default        = 25.1,
 				},
 				explosionGenerator      = "custom:LIGHTNINGPLOSION_NOPOST",
 				duration                = 10,
