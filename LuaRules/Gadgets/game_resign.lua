@@ -21,7 +21,7 @@ if (not gadgetHandler:IsSyncedCode()) then
 		local _, _, spec, teamID = Spring.GetPlayerInfo(playerID, false)
 		local _, _, isDead = Spring.GetTeamInfo(teamID, false)
 		if spec and not isDead then
-			Spring.Echo("Tell lua rules I said hi")
+			--Spring.Echo("Tell lua rules I said hi")
 			Spring.SendLuaRulesMsg("selfresigned")
 		end
 	end
