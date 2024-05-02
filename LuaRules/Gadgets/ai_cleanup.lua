@@ -21,7 +21,7 @@ local function CleanUpAI()
 		if isAiTeam and not (teamLuaAI and string.find(string.lower(teamLuaAI), "chicken")) then
 			local numUnits = #Spring.GetTeamUnits(teamID)
 			if numUnits == 0 then
-				print("Resigning Team: "..teamID)
+				Spring.Echo("[AI Cleanup]: " .. teamID)
 				GG.ResignTeam(teamID)
 			end
 		end
