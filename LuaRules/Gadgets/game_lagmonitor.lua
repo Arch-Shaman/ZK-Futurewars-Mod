@@ -376,6 +376,15 @@ local function IsTeamActuallyDead(teamID)
 	return true
 end
 
+local function CheckIfMessageIsApplicable(teamID)
+	local isAI = select(4, Spring.GetTeamInfo(teamID, false)) ~= nil
+	if not isAI or (Spring.GetGameFrame() > 30 and isAI) then
+		return true
+	else
+		return false
+	end
+end
+
 local function DoUnitGiveAway(allyTeamID, recieveTeamID, giveAwayTeams, doPlayerLineage)
 	for i = 1, #giveAwayTeams do
 		local giveTeamID = giveAwayTeams[i]
@@ -640,7 +649,9 @@ function gadget:Initialize()
 		allyTeamResourceShares[allyTeamID] = (allyTeamResourceShares[allyTeamID] or 0) + shareCount
 		
 		if isAI then
-			teamNames[teamID] = select(2, Spring.GetAIInfo(teamID))
+			local _, botName, _, botType = Spring.GetAIInfo(teamID)
+			teamNames[teamID] = (botType or "AI") .. " - " .. (botName or "unnamed")
+			--teamNames[teamID] = select(2, Spring.GetAIInfo(teamID))
 		else
 			teamNames[teamID] = Spring.GetPlayerInfo(playerID, false)
 		end
