@@ -73,7 +73,7 @@ local shipriot = {
 
 	weaponDefs             = {
 		FEMBOY_BWAST = {
-			name                    = "Femboy Blast",
+			name                    = "Medium Railgun",
 			alphaDecay              = 0.3,
 			areaOfEffect            = 48,
 			burnBlow                = true,
