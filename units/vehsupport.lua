@@ -26,6 +26,7 @@ return {
 			outline_x = 80,
 			outline_y = 80,
 			outline_yoff = 12.5,
+			okp_damage = 115,
 		},
 		explodeAs              = "BIG_UNITEX",
 		footprintX             = 3,
