@@ -66,7 +66,7 @@ return {
 					light_radius = 20,
 				},
 				damage                  = {
-					default = 69.1,
+					default = 27.1,
 				},
 				duration                = 2/30,
 				explosionGenerator      = "custom:beamweapon_hit_orange",
@@ -78,7 +78,7 @@ return {
 				leadLimit               = 0,
 				noSelfDamage            = true,
 				range                   = 690,
-				reloadtime              = 5/30,
+				reloadtime              = 2/30,
 				rgbColor                = "1 0.40059 0",
 				soundStart              = "weapon/laser/heavy_pulser",
 				soundstartvolume	    = 135,
