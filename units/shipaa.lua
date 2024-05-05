@@ -77,11 +77,9 @@ return {
 					light_beam_mult = 8,
 				},
 				damage                  = {
-					default = 16.1,
+					default = 9.0,
 				},
 				cylinderTargeting 		= 100,
-				dynDamageExp            = 1,
-				dynDamageInverted       = false,
 				duration                = 2/30,
 				explosionGenerator      = "custom:beamlaser_hit_saphire",
 				largeBeamLaser          = true,
