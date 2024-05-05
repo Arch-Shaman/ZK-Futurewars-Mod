@@ -27,7 +27,7 @@ return {
 		leaveTracks            = true,
 		health                 = 480,
 		maxSlope               = 36,
-		speed                  = 2.6,
+		speed                  = 2.9,
 		maxWaterDepth          = 5000,
 		movementClass          = "AKBOT2",
 		noChaseCategory        = "TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET",
