@@ -196,14 +196,19 @@ end
 
 function script.Killed(recentDamage, maxHealth)
 	local severity = recentDamage/maxHealth
-	Explode( body, SFX.SHATTER)
-	if  severity <= 0.25  then
-		return 1
-	elseif  severity <= 0.50  then
-		Explode(ship, SFX.FALL + SFX.SHATTER)
+	--Explode( body, SFX.SHATTER)
+	local explodables = {beamCannonBase, beamCannonTurret, ship}
+	local explosiontype = SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT
+	if  severity <= 0.5  then
+		for i = 1, #explodables do
+			Explode(explodables[i], explosiontype)
+		end
 		return 1
 	else
-		Explode(ship, SFX.FALL + SFX.SMOKE + SFX.FIRE + SFX.EXPLODE_ON_HIT + SFX.SHATTER)
+		explosiontype = SFX.SHATTER
+		for i = 1, #explodables do
+			Explode(explodables[i], explosiontype)
+		end
 		return 2
 	end
 end
