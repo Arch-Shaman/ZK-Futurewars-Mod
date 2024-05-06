@@ -99,7 +99,6 @@ local function Erect()
 	WaitForMove(beamCannonTurret, z_axis)
 	WaitForMove(beamCannonGun, y_axis)
 	erect = true
-	wantedState = 2 -- unset
 end
 
 local function Unerect()
