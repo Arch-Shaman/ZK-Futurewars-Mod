@@ -89,24 +89,27 @@ local function SetAbleToMove(newMove)
 end
 
 local function Erect()
-	-- Don't set signals because this is called from aimweapon and spring complains if we set signals
-	--Signal(SIG_AIM)
-	--SetSignalMask(SIG_AIM)
+	if moving then return end
+	-- Don't set signals because this is called from aimweapon and spring complains if we set signals 
+	Signal(SIG_AIM) -- well, yes, because you were calling it as a FUNCTION and not a THREAD.
+	SetSignalMask(SIG_AIM)
 	SetAbleToMove(false)
-	Move(beamCannonTurret, z_axis, 0, 5)
+	Move(beamCannonTurret, z_axis, 0, 11)
 	Move(beamCannonGun,    y_axis, 0, 11)
 	WaitForMove(beamCannonTurret, z_axis)
 	WaitForMove(beamCannonGun, y_axis)
 	erect = true
+	wantedState = 2 -- unset
 end
 
 local function Unerect()
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
-	if not erect then return end
-	Turn(azimuthHack, z_axis, 0, azimuthSpeed)
-	Turn(beamCannonTurret, x_axis, 0, elevationSpeed)
-	WaitForTurn(azimuthHack, z_axis)
+	Signal(SIG_EXTEND)
+	--if not erect then return end
+	Turn(azimuthHack, z_axis, 0, azimuthSpeed * 2)
+	Turn(beamCannonTurret, x_axis, 0, elevationSpeed * 2)
+	--WaitForTurn(azimuthHack, z_axis)
 	WaitForTurn(beamCannonTurret, x_axis)
 	Move(beamCannonGun, y_axis, 20, 11)
 	WaitForMove(beamCannonGun, y_axis)
@@ -130,13 +133,25 @@ end
 
 function script.StartMoving()
 	moving = true
+	Signal(SIG_AIM)
+	Signal(SIG_EXTEND)
 	StartThread(Unerect)
 	StartThread(Wake)
+end
+
+local function ErectAfterTimeThread()
+	Signal(SIG_EXTEND)
+	SetSignalMask(SIG_EXTEND)
+	Sleep(3500)
+	if moving then return end
+	StartThread(Erect)
 end
 
 function script.StopMoving()
 	moving = false
 	Signal(SIG_MOVE)
+	Signal(SIG_AIM)
+	StartThread(ErectAfterTimeThread)
 end
 
 -- function script.ChangeHeading(deltaHeading) 
@@ -161,17 +176,16 @@ function script.AimFromWeapon()
 end
 
 function script.AimWeapon(num, heading, pitch)
-	Signal(SIG_AIM)
-	SetSignalMask(SIG_AIM)
-
-	if moving then
+	if not erect then
+		Signal(SIG_EXTEND)
+		Signal(SIG_AIM)
+		StartThread(Erect)
+	end
+	if moving or not erect then
 		return false
 	end
-
-	if not erect then
-		Erect()
-	end
-	
+	Signal(SIG_AIM)
+	SetSignalMask(SIG_AIM)
 	Turn(azimuthHack, z_axis, heading, azimuthSpeed)
 	Turn(beamCannonTurret, x_axis, -pitch, elevationSpeed)
 	WaitForTurn(azimuthHack, z_axis)
