@@ -31,7 +31,7 @@ return {
 		idleTime               = 1800,
 		losEmitHeight          = 30,
 		health                 = 4200,
-		speed                  = 1.7,
+		speed                  = 1.4,
 		minCloakDistance       = 350,
 		minWaterDepth          = 10,
 		movementClass          = "BOAT3",
@@ -74,6 +74,9 @@ return {
 					airlaunched = 1, -- don't ask me why.
 					cruisedist = 420,
 					reveal_unit = 10,
+					cruiserandomradius = 120,
+					cruisetracking = 1,
+					cruise_nolock = 1,
 				},
 				damage                  = {
 					default = 300.1,
