@@ -17,7 +17,7 @@ return {
 			battery = 100,
 			batterygain = 4,
 			initialbattery = 100,
-			amph_regen        = 22,
+			amph_regen        = 35,
 			amph_submerged_at = 40,
 		},
 		explodeAs              = "BIG_UNITEX",
