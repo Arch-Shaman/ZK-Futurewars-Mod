@@ -48,7 +48,6 @@ shiparty = {
 	turninplace            = 0,
 	turnRate               = 370,
 	waterline              = 0,
-
 	weapons                = {
 		{
 			def                = "PLASMA",
@@ -56,7 +55,6 @@ shiparty = {
 			onlyTargetCategory = "SWIM LAND SHIP SINK TURRET FLOAT GUNSHIP HOVER",
 		},
 	},
-
 	weaponDefs             = {
 		PLASMA = {
 			name                    = "Railgun Artillery", -- wish this had more guns, that'd be fun.
@@ -93,7 +91,7 @@ shiparty = {
 			stages                  = 15,
 			turret                  = true,
 			weaponType              = "Cannon",
-			weaponVelocity          = 650,
+			weaponVelocity          = 450,
 			waterWeapon             = true,
 		},
 	},
