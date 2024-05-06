@@ -34,7 +34,7 @@ return {
 		leaveTracks            = true,
 		health                 = 1200,
 		maxSlope               = 36,
-		speed                  = 2.5,
+		speed                  = 2.6,
 		movementClass          = "AKBOT3",
 		noChaseCategory        = "TERRAFORM FIXEDWING GUNSHIP",
 		objectName             = "amphraider2.s3o",
