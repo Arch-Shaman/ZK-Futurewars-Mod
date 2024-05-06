@@ -1051,8 +1051,8 @@
 	},
 	"shiparty" : {
 		"name" : "Dominion",
-		"description" : "Artillery Battlecruiser, Must stop to fire",
-		"helptext" : "A Philosopher once said 'Life is cold and hard, Boobs are warm and soft'."
+		"description" : "Artillery Cruiser, Must stop to fire",
+		"helptext" : "The Dominion is an artillery cruiser designed to engage both submersible targets and fortified shore positions. Its shots easily penetrate even the most hardened armor, but are fairly slow."
 	},
 	"shipaa" : {
 		"name" : "Undercurrent",
