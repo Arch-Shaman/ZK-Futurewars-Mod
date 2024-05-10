@@ -241,9 +241,15 @@ function widget:Shutdown()
 	WG.LocalColor.localTeamColorToggle = nil
 end
 
-function widget:PlayerChangedTeam(playerID, oldTeam, newTeam) -- This is better than the previous one and updates on spectator (which is needed by the new color schemes)
+local oldTeam = Spring.GetMyTeamID()
+
+function widget:PlayerChanged(playerID) -- This is better than the previous one and updates on spectator (which is needed by the new color schemes)
 	if playerID == Spring.GetMyPlayerID() then
-		UpdateColor(true)
+		local newTeam = Spring.GetMyTeamID()
+		if newTeam ~= oldTeam then
+			UpdateColorNotify()
+			oldTeam = newTeam
+		end
 	end
 end
 

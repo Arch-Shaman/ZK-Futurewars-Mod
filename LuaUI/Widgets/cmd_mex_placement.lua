@@ -999,6 +999,11 @@ function widget:PlayerChanged(playerID)
 	if myPlayerID ~= playerID then
 		return
 	end
+	local oldAllyTeam = myAllyTeam
+	myAllyTeam = spGetMyAllyTeamID()
+	if myAllyTeam ~= oldAllyTeam then
+		wantDrawListUpdate = true
+	end
 	UpdateOctant()
 end
 
