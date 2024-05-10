@@ -1155,6 +1155,7 @@ local function getSpotColor(id)
 		end
 		local allyTeam = select(6, Spring.GetTeamInfo(teamID, false))
 		local isEnemy = allyTeam ~= myAllyTeam
+		
 		if isEnemy then
 			if colorization == 2 then
 				return 255/255, 065/255, 065/255
@@ -1163,7 +1164,13 @@ local function getSpotColor(id)
 				return Spring.GetTeamColor(teamList[1])
 			end
 		else
-			return Spring.GetTeamColor(Spring.GetMyTeamID())
+			local isSpectating, isFullView = spGetSpectatingState()
+			if isSpectating then
+				local teamList = Spring.GetTeamList(allyTeam)
+				return Spring.GetTeamColor(teamList[1])
+			else
+				return Spring.GetTeamColor(Spring.GetMyTeamID())
+			end
 		end
 	end
 end
