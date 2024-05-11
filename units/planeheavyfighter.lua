@@ -26,8 +26,8 @@ local unitDef = {
 		aimposoffset   = "0 3 0",
 		modelradius    = "10",
 		refuelturnradius = "120",
-		fighter_pullup_dist = 380,
-		combat_slowdown = 1.3,
+		fighter_pullup_dist = 180,
+		combat_slowdown = 1.0,
 		selection_scale = 1.4,
 		bait_level_default = 1,
 		outline_x = 120,
@@ -94,7 +94,7 @@ local unitDef = {
 				antibaitbypass = "ärsytät minua",
 			},
 			damage                  = {
-				default = 2.51,
+				default = 2.20,
 			},
 			explosionGenerator      = "custom:FLASHPLOSION",
 			impactOnly              = true,
@@ -138,7 +138,7 @@ local unitDef = {
 				script_burst = "4",
 			},
 			damage                  = {
-				default = 250.1,
+				default = 325.1,
 			},
 			explosionGenerator      = "custom:sonic",
 			fireStarter             = 70,
