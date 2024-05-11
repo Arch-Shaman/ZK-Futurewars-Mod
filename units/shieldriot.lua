@@ -193,7 +193,7 @@ return {
 				shieldPowerRegenEnergy  = 0.5,
 				shieldRadius            = 120,	
 				shieldRepulser          = false,	
-				shieldStartingPower     = 1100,	
+				shieldStartingPower     = 1650,	
 				smartShield             = true,	
 				visibleShield           = false,	
 				visibleShieldRepulse    = false,	
