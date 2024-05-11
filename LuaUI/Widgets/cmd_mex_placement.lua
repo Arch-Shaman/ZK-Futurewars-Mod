@@ -10,6 +10,7 @@ function widget:GetInfo()
 		layer     = 1001, -- Under Chili
 		enabled   = true,
 		alwaysStart = true,
+		handler   = true
 	}
 end
 
@@ -74,8 +75,6 @@ local glTranslate        = gl.Translate
 local glCallList         = gl.CallList
 local glCreateList       = gl.CreateList
 local glDrawCircle
-local glDepthMask        = gl.DepthMask
-local glDepthTest        = gl.DepthTest
 
 local GL_FRONT_AND_BACK = GL.FRONT_AND_BACK
 local GL_FILL           = GL.FILL
@@ -108,7 +107,6 @@ local MAP_SIZE_Z_SCALED = MAP_SIZE_Z / METAL_MAP_SQUARE_SIZE
 
 local MEX_WALL_SIZE = 8 * 6
 local MEX_HOLE_SIZE = 3 * 6
-local preGame = true
 
 --------------------------------------------------------------------------------
 -- Variables
@@ -1010,10 +1008,6 @@ function widget:PlayerChanged(playerID)
 end
 
 function widget:Initialize()
-	pregame = not (Spring.GetGameFrame() > 0)
-	if not pregame then
-		widgetHandler:RemoveCallIn("GameFrame")
-	end
 	if metalSpotsNil and WG.metalSpots ~= nil then
 		Initialize()
 		UpdateOctant()
@@ -1049,30 +1043,8 @@ local camDir
 local debounceCamUpdate
 local incomeLabelList
 local DrawIncomeLabels
-local currentCommand
-local showecoMode
-local drawing = true
-local spPos2BuildPos = Spring.Pos2BuildPos
-local glGetViewSizes = gl.GetViewSizes
-local spGetMouseStartPosition = Spring.GetMouseStartPosition
-local spIsGUIHidden = Spring.IsGUIHidden
-
 function widget:Update(dt)
-	--widget:Initialize() -- Why?
-	local isGuiHidden = spIsGUIHidden()
-	if drawing and isGuiHidden then -- 166 without
-		widgetHandler:RemoveCallIn("DrawWorld")
-		widgetHandler:RemoveCallIn("DrawWorldPreUnit")
-		drawing = false
-	elseif not drawing and not isGuiHidden then
-		widgetHandler:UpdateCallIn("DrawWorld")
-		widgetHandler:UpdateCallIn("DrawWorldPreUnit")
-		drawing = true
-	end
-		
-	_, currentCommand = spGetActiveCommand()
-	showecoMode = WG.showeco
-	
+	widget:Initialize()
 	cumDt = cumDt + dt
 	
 	if firstFewUpdates then
@@ -1172,35 +1144,32 @@ end
 local circleOnlyMexDrawList = 0
 local minimapDrawList = 0
 local gaiaTeamID = Spring.GetGaiaTeamID()
-local spGetTeamColor = Spring.GetTeamColor
-local spGetTeamList = Spring.GetTeamList
-local spGetTeamInfo = Spring.GetTeamInfo
 
 local function getSpotColor(id)
 	local teamID = (spotData[id] and spotData[id].team) or gaiaTeamID
 	if colorization == 3 then
-		return spGetTeamColor(teamID)
+		return Spring.GetTeamColor(teamID)
 	else
 		if teamID == gaiaTeamID then
-			return spGetTeamColor(gaiaTeamID)
+			return Spring.GetTeamColor(gaiaTeamID)
 		end
-		local _, _, _, _, _, allyTeam = spGetTeamInfo(teamID, false)
+		local allyTeam = select(6, Spring.GetTeamInfo(teamID, false))
 		local isEnemy = allyTeam ~= myAllyTeam
 		
 		if isEnemy then
 			if colorization == 2 then
 				return 255/255, 065/255, 065/255
 			else -- use first team color per allyteam!
-				local teamList = spGetTeamList(allyTeam)
-				return spGetTeamColor(teamList[1])
+				local teamList = Spring.GetTeamList(allyTeam)
+				return Spring.GetTeamColor(teamList[1])
 			end
 		else
 			local isSpectating, isFullView = spGetSpectatingState()
 			if isSpectating then
-				local teamList = spGetTeamList(allyTeam)
-				return spGetTeamColor(teamList[1])
+				local teamList = Spring.GetTeamList(allyTeam)
+				return Spring.GetTeamColor(teamList[1])
 			else
-				return spGetTeamColor(Spring.GetMyTeamID())
+				return Spring.GetTeamColor(Spring.GetMyTeamID())
 			end
 		end
 	end
@@ -1222,7 +1191,7 @@ local function calcMainMexDrawList()
 
 		glPushMatrix()
 
-		glDepthTest(true)
+		gl.DepthTest(true)
 
 		glColor(0,0,0,0.7)
 		glLineWidth(width*2.4)
@@ -1360,46 +1329,48 @@ function widget:Shutdown()
 end
 
 local function DoLine(x1, y1, z1, x2, y2, z2)
-	glVertex(x1, y1, z1)
-	glVertex(x2, y2, z2)
+	gl.Vertex(x1, y1, z1)
+	gl.Vertex(x2, y2, z2)
 end
 
 function widget:DrawWorldPreUnit()
-	--[[if Spring.IsGUIHidden() then
+	if Spring.IsGUIHidden() then
 		return false
-	end]]
+	end
 
 	-- Check command is to build a mex
-	--local _, cmdID = spGetActiveCommand()
-	local peruse = pregame or showecoMode or spGetMapDrawMode() == 'metal'
+	local _, cmdID = spGetActiveCommand()
+	local showecoMode = WG.showeco
+	local peruse = spGetGameFrame() < 1 or showecoMode or spGetMapDrawMode() == 'metal'
 
-	drawMexSpots = ((currentCommand and mexDefIDs[-currentCommand]) or CMD_AREA_MEX == currentCommand or CMD_AREA_TERRA_MEX == currentCommand or peruse)
+	drawMexSpots = ((cmdID and mexDefIDs[-cmdID]) or CMD_AREA_MEX == cmdID or CMD_AREA_TERRA_MEX == cmdID or peruse)
 
 	if WG.metalSpots and (drawMexSpots or WG.showeco_always_mexes) then
-		glDepthTest(true)
-		glDepthMask(true)
+		gl.DepthTest(true)
+		gl.DepthMask(true)
 
 		if drawMexSpots and incomeLabelList then
 			glCallList(incomeLabelList)
 		end
 		glCallList(circleOnlyMexDrawList)
 
-		glDepthTest(false)
-		glDepthMask(false)
+		gl.DepthTest(false)
+		gl.DepthMask(false)
 	end
 end
 
 function widget:DrawWorld()
-	--[[if spIsGUIHidden() then
+	if Spring.IsGUIHidden() then
 		return false
-	end]]
+	end
 
 	-- Check command is to build a mex
-	if not currentCommand then return end
-	local isMexCmd = mexDefIDs[-currentCommand]
-	local mexDefID = isMexCmd and -currentCommand or primaryMexDefID
+	local _, cmdID = spGetActiveCommand()
+	local isMexCmd = cmdID and mexDefIDs[-cmdID]
+	local mexDefID = isMexCmd and -cmdID or primaryMexDefID
 
 	mexSpotToDraw = false
+	local pregame = (spGetGameFrame() < 1)
 
 	if WG.metalSpots and (isMexCmd or pregame or ((WG.showeco or WG.showeco_always_mexes) and WG.selectionEntirelyCons) or CMD_AREA_MEX == cmdID or CMD_AREA_TERRA_MEX == cmdID) then
 		local mx, my, leftPressed = spGetMouseState()
@@ -1410,15 +1381,15 @@ function widget:DrawWorld()
 		end
 
 		-- Find build position and check if it is valid (Would get 100% metal)
-		local bx, by, bz = spPos2BuildPos(mexDefID, pos[1], pos[2], pos[3])
+		local bx, by, bz = Spring.Pos2BuildPos(mexDefID, pos[1], pos[2], pos[3])
 		local closestSpot, distance, index = GetClosestMetalSpot(bx, bz)
 		local wantShow = (isMexCmd or distance <= 60)
 		if (not wantShow) and (options.area_point_command.value and (CMD_AREA_MEX == cmdID or CMD_AREA_TERRA_MEX == cmdID)) then
 			if leftPressed then
-				local pressX, pressY = spGetMouseStartPosition(1)
+				local pressX, pressY = Spring.GetMouseStartPosition(1)
 				if pressX then
-					local _, windowHeight = glGetViewSizes() -- Not posioned by UI scaling.
-					local distance = ((pressX - mx)*(pressX - mx)) + ((pressY - (windowHeight - my))*(pressY - (windowHeight - my)))
+					local _, windowHeight = gl.GetViewSizes() -- Not posioned by UI scaling.
+					local distance = (pressX - mx)^2 + (pressY - (windowHeight - my))^2
 					if distance < PRESS_DRAG_THRESHOLD_SQR then
 						wantShow = true
 					end
@@ -1441,26 +1412,26 @@ function widget:DrawWorld()
 			local height = spGetGroundHeight(closestSpot.x,closestSpot.z)
 			height = height > 0 and height or 0
 
-			glDepthTest(false)
+			gl.DepthTest(false)
 
-			glLineWidth(1.49)
-			glColor(1, 1, 0, 0.5)
-			glBeginEnd(GL.LINE_STRIP, DoLine, bx, by, bz, closestSpot.x, height, closestSpot.z)
-			glLineWidth(1.0)
+			gl.LineWidth(1.49)
+			gl.Color(1, 1, 0, 0.5)
+			gl.BeginEnd(GL.LINE_STRIP, DoLine, bx, by, bz, closestSpot.x, height, closestSpot.z)
+			gl.LineWidth(1.0)
 
-			glDepthTest(true)
-			glDepthMask(true)
+			gl.DepthTest(true)
+			gl.DepthMask(true)
 
-			glColor(1, 1, 1, 0.5)
-			glPushMatrix()
-			glTranslate(closestSpot.x, height, closestSpot.z)
-			glRotate(90 * bface, 0, 1, 0)
-			glUnitShape(mexDefID, Spring.GetMyTeamID(), false, true, false)
-			glPopMatrix()
+			gl.Color(1, 1, 1, 0.5)
+			gl.PushMatrix()
+			gl.Translate(closestSpot.x, height, closestSpot.z)
+			gl.Rotate(90 * bface, 0, 1, 0)
+			gl.UnitShape(mexDefID, Spring.GetMyTeamID(), false, true, false)
+			gl.PopMatrix()
 
-			glDepthTest(false)
-			glDepthMask(false)
-			glColor(1, 1, 1, 1)
+			gl.DepthTest(false)
+			gl.DepthMask(false)
+			gl.Color(1, 1, 1, 1)
 		end
 	end
 
