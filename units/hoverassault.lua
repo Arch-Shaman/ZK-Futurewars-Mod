@@ -63,7 +63,7 @@ return {
 				coreThickness           = 0.7,
 				craterBoost             = 0,
 				craterMult              = 0,
-				beamTime                = 0.2,
+				beamTime                = 8/30,
 				customParams              = {
 					light_camera_height = 1600,
 					light_color = "0.0 0.0 2.3",
