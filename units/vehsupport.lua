@@ -68,6 +68,9 @@ return {
 				def                = "CORTRUCK_MISSILE",
 				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
 			},
+			{
+				def 			   = "PARTICLEBEAM",
+			},
 		},
 		weaponDefs             = {
 			CORTRUCK_MISSILE = {
