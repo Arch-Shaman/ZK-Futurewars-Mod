@@ -19,6 +19,7 @@ local p4 = piece 'p4'
 
 include "constants.lua"
 
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local armorValue = UnitDefs[unitDefID].armoredMultiple
 
@@ -173,7 +174,10 @@ function script.AimWeapon(num, heading, pitch)
 	if num == 2 then return false end
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
-	
+	local powered = (spGetUnitRulesParam(unitID, "lowpower") or 1) == 0
+	if not powered then
+		return
+	end
 	if not readyToFire then
 		StartThread(popUp)
 		Sleep(250)
@@ -190,7 +194,7 @@ function script.AimWeapon(num, heading, pitch)
 	WaitForTurn(sleeve, x_axis)
 	WaitForTurn(turret, y_axis)
 	StartThread(RestoreAfterDelay)
-	return true
+	return powered
 end
 
 function script.FireWeapon(num)

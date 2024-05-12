@@ -23,6 +23,8 @@ return {
 			aim_lookahead  = 50,
 			popupholdfirehp = 0.45,
 			popupunholdfirehp = 0.66,
+			neededlink  = 10,
+			pylonrange  = 150,
 			armortype = 1, -- for context menu.
 		},
 		damageModifier                = 0.2,
