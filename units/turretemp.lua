@@ -3,7 +3,7 @@ return {
 		unitname                      = "turretemp",
 		name                          = "Pulse",
 		description                   = "EMP Turret",
-		buildCostMetal                = 275,
+		buildCostMetal                = 325,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 4,
