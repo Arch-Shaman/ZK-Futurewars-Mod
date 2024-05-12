@@ -220,7 +220,7 @@ return {
 				range					= 400,
 				tracks 					= true,
 				startVelocity           = 100,
-				turnrate			    = 65536/4, -- 90 degrees
+				turnrate			    = 65536, -- 90 degrees
 				tolerance               = 65536/2, -- 180 degrees
 				soundHit                = "explosion/mini_nuke_2",
 				soundHitVolume          = 10,
@@ -228,7 +228,7 @@ return {
 				waterweapon             = true,
 				weaponType              = "MissileLauncher",
 				weaponAcceleration      = 800,
-				weaponVelocity          = 1200,
+				weaponVelocity          = 700,
 			},
 			BOMBLET = {
 				name                    = "High Explosive Bomblet",
