@@ -29,6 +29,24 @@ local Sounds = {
 			MapEntryValExtract(items, "rolloff", rolloff);
 		},
 		--]]
+		mlr_launch = {
+			file = "sounds/weapon/missile/mlr_launch.wav",
+			maxconcurrent = 30,
+			pitchmod = 0.09,
+			in3d = true,
+			dopplerscale = 0.1,
+			rolloff = 0.42,
+			gain = 1.25,
+		},
+		mlr_impact = {
+			file = "sounds/weapon/missile/rapid_rocket_hit.wav",
+			maxconcurrent = 100,
+			pitchmod = 0.02,
+			in3d = true,
+			dopplerscale = 0.2,
+			rolloff = 0.5,
+			gain = 1.4,
+		},
 		PulseLaser = {
 			file = "sounds/weapon/laser/pulse_laser_start.wav",
 			pitchmod = 0.15,
