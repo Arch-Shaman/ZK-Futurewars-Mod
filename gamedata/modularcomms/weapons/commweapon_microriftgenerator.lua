@@ -27,6 +27,7 @@ local weaponDef = {
 		default = 0,
 	},
 	explosionGenerator      = "custom:BEAMWEAPON_HIT_ORANGE",
+	fireSubmersed           = false,
 	impulseBoost            = 0,
 	impulseFactor           = 0,
 	impactOnly              = true,
