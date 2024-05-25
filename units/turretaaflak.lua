@@ -70,7 +70,7 @@ return { turretaaflak = {
 					damage_vs_shield = "300.3",
 				},
 				damage  = {
-					default = 100.1*6,
+					default = 150.1*6,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.5,
@@ -110,7 +110,7 @@ return { turretaaflak = {
 					cegtrail = "flak_trail",
 				},
 				damage = {
-					default = 100.1,
+					default = 150.1,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.8,
