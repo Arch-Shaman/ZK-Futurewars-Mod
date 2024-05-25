@@ -154,7 +154,6 @@ local unitDef = {
 			myGravity               = 0.4,
 			model                   = "missilesingu.dae",
 			projectiles             = 1,
-			range                   = 600,
 			reloadtime              = 18,
 			rgbColor                = "0.05 0.05 0.05",
 			size                    = 16,
