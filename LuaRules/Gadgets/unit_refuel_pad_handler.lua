@@ -117,6 +117,10 @@ local unitMovectrled = {}
 
 local coroutines = {}
 
+function GG.IsUnitOnPad(unitID)
+	return unitMovectrled[unitID] ~= nil
+end
+
 local function StartScript(fn)
 	local co = coroutine.create(fn)
 	coroutines[#coroutines + 1] = co
