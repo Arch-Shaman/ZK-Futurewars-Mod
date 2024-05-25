@@ -266,7 +266,15 @@ local function SitOnPad(unitID)
 				end
 			end
 			resTable.e = updateCost*updateRate
-			if reammoProgress then
+			if GG.GetShieldChargePercent(unitID) < 1 or not batteryRecharged then -- battery based ammunition
+				if effectiveBuildRate > 0 and (updateCost == 0 or spUseUnitResource(landData.padID, resTable)) then
+					local batteryToAdd = ((padRepairBp[padunitDef] * effectiveBuildRate) / 10) * (UnitDefs[unitDefID].customParams.batteryrearmrate or 1)
+					GG.BatteryManagement.RechargeBattery(unitID, batteryToAdd)
+					if GG.BatteryManagement.IsBatteryRecharged(unitID) then
+						GG.RefuelComplete(unitID)
+					end
+				end
+			elseif batteryRecharged and reammoProgress then
 				if (effectiveBuildRate > 0) and ((updateCost == 0) or spUseUnitResource(landData.padID, resTable)) then
 					local progressToAdd = (padRepairBp[padunitDef] * effectiveBuildRate) / 10
 					--Spring.Echo("Adding " .. progressToAdd .. " instead of " .. updateRate)
@@ -277,14 +285,6 @@ local function SitOnPad(unitID)
 						Spring.SetUnitRulesParam(unitID, "reammoProgress", nil, LOS_ACCESS)
 					else
 						Spring.SetUnitRulesParam(unitID, "reammoProgress", reammoProgress/reammoMaxTime, LOS_ACCESS)
-					end
-				end
-			elseif GG.GetShieldChargePercent(unitID) < 1 or not batteryRecharged then -- battery based ammunition
-				if effectiveBuildRate > 0 and (updateCost == 0 or spUseUnitResource(landData.padID, resTable)) then
-					local batteryToAdd = ((padRepairBp[padunitDef] * effectiveBuildRate) / 10) * (UnitDefs[unitDefID].customParams.batteryrearmrate or 1)
-					GG.BatteryManagement.RechargeBattery(unitID, batteryToAdd)
-					if GG.BatteryManagement.IsBatteryRecharged(unitID) then
-						GG.RefuelComplete(unitID)
 					end
 				end
 			else -- repairs
