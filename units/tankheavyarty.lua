@@ -1,6 +1,6 @@
 tankheavyarty = {
 	unitname               = "tankheavyarty",
-	name                   = "Tremor",
+	name                   = "Orion",
 	description            = "Earth-Shattering Artillery Tank",
 	acceleration           = 0.3,
 	brakeRate              = 1.24,
@@ -67,7 +67,7 @@ tankheavyarty = {
 		PLASMA = {
 			name                    = "Desolation Cannon",
 			accuracy                = 0,
-			areaOfEffect            = 120,
+			areaOfEffect            = 192,
 			avoidFeature            = false,
 			avoidGround             = true,
 			craterBoost             = 10,
@@ -82,9 +82,9 @@ tankheavyarty = {
 				movestructures = "0.25",
 			},
 			damage                  = {
-				default = 6000.01,
+				default = 8500.01,
 			},
-			explosionGenerator      = "custom:lrpc_expl",
+			explosionGenerator      = "custom:NUKE_150",
 			edgeEffectiveness		= 0.1,
 			fireTolerance           = 1820, -- 10 degrees
 			impulseBoost            = 2,
