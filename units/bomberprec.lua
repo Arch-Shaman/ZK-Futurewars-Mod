@@ -33,7 +33,6 @@ return {
 			outline_yoff = 10,
 			fighter_pullup_dist = 3500, -- dont bother.
 			extradrawrange = 520,
-			
 			ammocount = 3,
 			ammotexture_1 = "States/ammostates/divinity_clusters.png",
 			ammotexture_2 = "States/ammostates/divinity_torps.png",
@@ -118,6 +117,7 @@ return {
 					keepmomentum1 = 0,
 					groundimpact = 1,
 					reaim_time = 60, -- see what the hell this does.
+					mass = 50,
 				},
 				explosionGenerator      = "custom:WEAPEXP_PUFF",
 				fireStarter             = 70,
@@ -236,6 +236,9 @@ return {
 				areaOfEffect            = 170,
 				craterBoost             = 10,
 				craterMult              = 5,
+				customParams = {
+					mass = 15,
+				},
 				damage                  = {
 					default = 185,
 				},
