@@ -99,7 +99,7 @@ return {
 				reloadtime				= 0.1,
 				smokeTrail				= true,
 				soundHit				= "weapon/missile/rocket_hit",
-				soundStart				= "weapon/missile/missile_fire7",
+				soundStart				= "missile_fire7",
 				startVelocity			= 350,
 				texture2				= "AAsmoketrail",
 				tolerance				= 9000,
