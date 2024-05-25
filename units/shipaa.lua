@@ -61,7 +61,7 @@ return {
 		weaponDefs             = {
 			AALASER       = {
 				name                    = "High Intensity Laser",
-				areaOfEffect            = 8,
+				areaOfEffect            = 40,
 				coreThickness           = 0.8,
 				beamTime                = 1/30,
 				craterBoost             = 0,
@@ -77,7 +77,7 @@ return {
 					light_beam_mult = 8,
 				},
 				damage                  = {
-					default = 9.0,
+					default = 12.0,
 				},
 				cylinderTargeting 		= 100,
 				duration                = 2/30,
@@ -91,8 +91,7 @@ return {
 				impulseFactor           = 0.7,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 840,
-				proximityPriority       = 20,
+				range                   = 1020,
 				reloadtime              = 1/30,
 				rgbColor                = "0.0588 0.3215 0.7294",
 				rgbColor2               = "0.3215 0.54509 0.898",
