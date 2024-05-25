@@ -14,6 +14,9 @@ include "fixedwingTakeOff.lua"
 local SIG_TAKEOFF = 1
 local takeoffHeight = UnitDefNames["bomberriot"].wantedHeight
 local ammoState = 0
+local currentAmmo = 0
+local isCrashing = false
+
 
 local function Lights()
 	while select(5, Spring.GetUnitHealth(unitID)) < 1 do
@@ -27,7 +30,15 @@ local function Lights()
 end
 
 local function DeathThread()
-	local wd = WeaponDefNames["bomberriot_napalm"]
+	isCrashing = true
+	local wd
+	if currentAmmo == 0 then
+		wd = WeaponDefNames["bomberriot_napalm"]
+	elseif currentAmmo == 1 then
+		wd = WeaponDefNames["bomberriot_black_hole"]
+	else
+		wd = WeaponDefNames["bomberriot_seismic"]
+	end
 	local count = wd.salvoSize
 	local weaponID = wd.id
 	local delay = math.floor(wd.salvoDelay * 1000)
@@ -62,17 +73,20 @@ end
 
 function OnAmmoChange(newState)
 	ammoState = newState
-	--[[if newState == 0 then
-		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
-		spSetUnitRulesParam(unitID, "selfMaxAccelerationChange", 1)
-		GG.UpdateUnitAttributes(unitID)
-		GG.UpdateUnitAttributes(unitID)
-	elseif newState == 1 then
-		spSetUnitRulesParam(unitID, "selfMoveSpeedChange", 1.15)
-		spSetUnitRulesParam(unitID, "selfMaxAccelerationChange", 1.15)
-		GG.UpdateUnitAttributes(unitID)
-		GG.UpdateUnitAttributes(unitID)
-	end]]
+	if newState == 1 then
+		SetUnarmedAI()
+	end
+end
+
+function OnAmmoTypeChange(newAmmo)
+	if newAmmo ~= currentAmmo then
+		local _, _, inBuild = Spring.GetUnitIsStunned(unitID)
+		if not inBuild then
+			OnAmmoChange(1)
+			Reload()
+		end
+		currentAmmo = newAmmo
+	end
 end
 
 function script.StopMoving()
@@ -99,13 +113,13 @@ function script.Shot(num)
 end
 
 function script.BlockShot(num)
-	return RearmBlockShot()
+	return isCrashing or (num - 1) ~= currentAmmo
 end
 
 function script.FireWeapon(num)
 	Move(drop, x_axis, math.random()*50 - 25)
 	SetUnarmedAI()
-	ammoState = 1
+	OnAmmoChange(1)
 	Sleep(400)
 	Move(drop, x_axis, 0)
 	Reload()
