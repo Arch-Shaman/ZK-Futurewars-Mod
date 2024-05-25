@@ -110,8 +110,7 @@ end
 function gadget:GameFrame(f)
 	frameNum = f
 	if (f%DAMAGE_PERIOD == 0) then
-		local i = 1
-		for _, data in IterableMap.Iterator(explosions) do
+		for i, data in IterableMap.Iterator(explosions) do
 			local pos = data.pos
 			local ulist = spGetUnitsInSphere(pos.x, pos.y, pos.z, data.radius)
 			if (ulist) then
@@ -136,11 +135,7 @@ function gadget:GameFrame(f)
 			end
 			data.damage = data.damage - data.timeLoss
 			if f >= data.expiry then
-				explosionList[i] = explosionList[explosionCount]
-				explosionList[explosionCount] = nil
-				explosionCount = explosionCount - 1
-			else
-				i = i + 1
+				IterableMap.Remove(explosions, i)
 			end
 		end
 	end
