@@ -106,8 +106,7 @@ return { turretaaflak = {
 					reaim_time = 8, -- COB
 					isaa = "1",
 					light_radius = 0,
-					isFlak = 3,
-					flaktime = -10,
+					isFlak = 1,
 					cegtrail = "flak_trail",
 				},
 				damage = {
