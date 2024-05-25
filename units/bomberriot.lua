@@ -64,7 +64,6 @@ local unitDef = {
 		},
 	},
 	weaponDefs          = {
-
 		NAPALM_SECONDARY = {
 			name 					= "Thermite",
 			cegTag                  = "flamer",
@@ -124,11 +123,9 @@ local unitDef = {
 				useheight = 1,
 				reaim_time = 60, -- Fast update not required (maybe dangerous)
 			},
-		  
 			damage                  = {
 				default = 25*9,
 			},
-
 			edgeEffectiveness       = 0.7,
 			explosionGenerator      = "custom:STARFIRE", --custom:napalm_phoenix
 			fireStarter             = 250,
@@ -148,8 +145,6 @@ local unitDef = {
 			weaponType              = "AircraftBomb",
 		},
 	},
-
-
 	featureDefs         = {
 		DEAD  = {
 			blocking         = true,
