@@ -1,5 +1,7 @@
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
+if not gadgetHandler:IsSyncedCode() then
+	return
+end
+
 function gadget:GetInfo()
 	return {
 		name = "Area Denial",
@@ -12,25 +14,17 @@ function gadget:GetInfo()
 	}
 end
 
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-local SAVE_FILE = "Gadgets/weapon_area_damage.lua"
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-if gadgetHandler:IsSyncedCode() then
---------------------------------------------------------------------------------
--- SYNCED
---------------------------------------------------------------------------------
-
 local frameNum
+local IterableMap = Spring.Utilities.IterableMap
 local DAMAGE_PERIOD, weaponInfo = VFS.Include("LuaRules/Configs/area_damage_defs.lua", nil, VFS.GAME)
-
+local explosions = IterableMap.New()
 local explosionList = {}
 local explosionCount = 0
 local burnproof = {}
-
-_G.explosionList = explosionList
+local spAddUnitDamage = Spring.AddUnitDamage
+local spGetUnitPosition = Spring.GetUnitPosition
+local spGetUnitsInSphere = Spring.GetUnitsInSphere
+local sqrt = math.sqrt
 
 function gadget:UnitPreDamaged_GetWantedWeaponDef()
 	local wantedWeaponList = {}
@@ -92,9 +86,7 @@ function gadget:Explosion(weaponID, px, py, pz, ownerID)
 				end
 			end
 		end
-		
-		explosionCount = explosionCount + 1
-		explosionList[explosionCount] = {
+		IterableMap.AddSelf(explosions, {
 			radius = weaponInfo[weaponID].radius,
 			plateauRadius = weaponInfo[weaponID].plateauRadius,
 			damage = weaponDamage,
@@ -106,34 +98,39 @@ function gadget:Explosion(weaponID, px, py, pz, ownerID)
 			pos = {x = px, y = py, z = pz},
 			owner=ownerID,
 			isFire = isFire,
-		}
+		})
 	end
 	return false
+end
+
+local function GetDistance(x1, y1, x2, y2)
+	return sqrt(((x2-x1)*(x2-x1)) + ((y2 - y1) * (y2 - y1)))
 end
 
 function gadget:GameFrame(f)
 	frameNum = f
 	if (f%DAMAGE_PERIOD == 0) then
 		local i = 1
-		while i <= explosionCount do
-			local data = explosionList[i]
+		for _, data in IterableMap.Iterator(explosions) do
 			local pos = data.pos
-			local ulist = Spring.GetUnitsInSphere(pos.x, pos.y, pos.z, data.radius)
+			local ulist = spGetUnitsInSphere(pos.x, pos.y, pos.z, data.radius)
 			if (ulist) then
+				local divisor = data.radius - data.plateauRadius
+				local damageFall = damage*data.rangeFall
 				for j = 1, #ulist do
 					local u = ulist[j]
-					local ux, uy, uz = Spring.GetUnitPosition(u)
+					local ux, uy, uz = spGetUnitPosition(u)
 					local damage = data.damage
-					local distance = math.sqrt((ux-pos.x)^2 + (uy-pos.y)^2 + (uz-pos.z)^2)
+					local distance = GetDistance(ux, uy, pos.x, pos.z)
 					if data.rangeFall ~= 0 and distance > data.plateauRadius then
-						damage = damage - damage*data.rangeFall*(distance - data.plateauRadius)/(data.radius - data.plateauRadius)
+						damage = damage - damageFall * (distance - data.plateauRadius) / (divisor)
 					end
 					if data.impulse then
 						GG.AddGadgetImpulse(u, pos.x - ux, pos.y - uy, pos.z - uz, damage, false, true, false, {0.22,0.7,1})
 						GG.SetUnitFallDamageImmunity(u, f + 10)
 						GG.DoAirDrag(u, damage)
 					elseif data.isFire and not burnproof[u] then
-						Spring.AddUnitDamage(u, damage, 0, data.owner, data.id, 0, 0, 0)
+						spAddUnitDamage(u, damage, 0, data.owner, data.id, 0, 0, 0)
 					end
 				end
 			end
@@ -154,35 +151,3 @@ function gadget:Initialize()
 		Script.SetWatchExplosion(w, true)
 	end
 end
-
-function gadget:Load(zip)
-	if not (GG.SaveLoad and GG.SaveLoad.ReadFile) then
-		Spring.Log(gadget:GetInfo().name, LOG.ERROR, "Failed to access save/load API")
-		return
-	end
-	
-	local savedGameFrame = Spring.GetGameRulesParam("lastSaveGameFrame")
-	local loadData = GG.SaveLoad.ReadFile(zip, "Weapon area damage", SAVE_FILE) or {}
-	explosionList = loadData
-	for i=1,#explosionList do
-		local explo = explosionList[i]
-		explo.owner = GG.SaveLoad.GetNewUnitID(explo.ownerID)
-		explo.expiry = explo.expiry - savedGameFrame
-	end
-	
-	_G.explosionList = explosionList
-	explosionCount = #explosionList
-end
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-else
---------------------------------------------------------------------------------
--- unsynced
---------------------------------------------------------------------------------
-function gadget:Save(zip)
-	GG.SaveLoad.WriteSaveData(zip, SAVE_FILE, Spring.Utilities.MakeRealTable(SYNCED.explosionList, "Weapon area damage"))
-end
---------------------------------------------------------------------------------
-end
---------------------------------------------------------------------------------
