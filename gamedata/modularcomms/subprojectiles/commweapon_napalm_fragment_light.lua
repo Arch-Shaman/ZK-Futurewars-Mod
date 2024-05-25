@@ -18,6 +18,8 @@ weaponDef = {
 		light_camera_height = 2500,
 		light_color = [[0.25 0.13 0.05]],
 		light_radius = 500,
+		isFlak = 3,
+		flaktime = 5,
 	},
 	damage                  = {
 		default = 30,
