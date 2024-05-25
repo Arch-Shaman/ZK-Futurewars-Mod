@@ -248,7 +248,7 @@ return {
 				range                   = 200,
 				reloadtime              = 1,
 				smokeTrail              = true,
-				soundHit                = "explosion/ex_med6",
+				soundHit                = "bomb_hit",
 				soundHitVolume          = 8,
 				soundStart              = "weapon/cannon/mini_cannon",
 				soundStartVolume        = 2,

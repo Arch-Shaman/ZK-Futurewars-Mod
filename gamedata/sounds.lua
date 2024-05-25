@@ -73,6 +73,14 @@ local Sounds = {
 			rolloff = 0.80,
 			gain = 0.66,
 		},
+		bomb_hit = {
+			file = "sounds/explosion/ex_med6.wav",
+			maxconcurrent = 100,
+			in3d = true,
+			dopplerscale = 0.6,
+			rolloff = 0.9,
+			gain = 0.7,
+		},
 		soft_tracker = {
 			file = "sounds/weapon/laser/tracker.wav",
 			maxconcurrent = 100,
