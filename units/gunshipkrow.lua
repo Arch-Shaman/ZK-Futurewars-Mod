@@ -152,6 +152,7 @@ return {
 					light_color = "1.175 0.0 1.7",
 					light_radius = 1082,
 					lups_noshockwave = "1",
+					combatrange = 150,
 				},
 				damage                  = {
 					default = 27000,
