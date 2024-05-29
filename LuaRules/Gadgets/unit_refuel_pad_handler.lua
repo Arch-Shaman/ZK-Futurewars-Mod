@@ -134,6 +134,16 @@ local function GetBuildRate(unitID)
 	return (spGetUnitRulesParam(unitID, "totalBuildPowerChange") or 1)
 end
 
+local function CallAsUnitIfExists(unitID, funcName, ...)
+	local env = Spring.UnitScript.GetScriptEnv(unitID)
+	if not env then
+		return
+	end
+	if env and env[funcName] then
+		Spring.UnitScript.CallAsUnit(unitID, env[funcName], ...)
+	end
+end
+
 local function ForceImmediateAbort(unitID, padID, isLanded)
 	if (not spGetUnitIsDead(unitID)) and Spring.ValidUnitID(unitID) then
 		spSetUnitLeaveTracks(unitID, true)
@@ -151,6 +161,7 @@ local function ForceImmediateAbort(unitID, padID, isLanded)
 		end
 		mcDisable(unitID)
 		GG.UpdateUnitAttributes(unitID)
+		CallAsUnitIfExists(unitID, "OnAmmoInterrupted")
 	end
 	unitMovectrled[unitID] = nil
 	landingUnit[unitID] = nil
@@ -209,6 +220,7 @@ local function SitOnPad(unitID)
 	-- deactivate unit to cause the lups jets away
 	Spring.SetUnitCOBValue(unitID, COB.ACTIVATION, 0)
 	padCount[landData.padID] = (padCount[landData.padID] or 0) + 1
+	CallAsUnitIfExists(unitID, "OnStartReloading")
 	local function SitLoop()
 		-- read unitrulesparam for save/load handling
 		local reammoProgress = GG.RequireRefuel(unitID) and reammoMaxTime and (Spring.GetUnitRulesParam(unitID, "reammoProgress") or 0) * reammoMaxTime
