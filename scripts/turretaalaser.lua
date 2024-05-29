@@ -131,6 +131,8 @@ end
 function script.QueryWeapon() return gun and firep1 or firep2 end
 function script.AimFromWeapon() return aim end
 
+local aimspeed = math.rad(720)
+
 function script.AimWeapon (num, heading, pitch)
 
 	if disarmed and closed then return false end -- prevents slowpoke.jpg (when it opens up after stun wears off even if target is long gone)
@@ -148,8 +150,8 @@ function script.AimWeapon (num, heading, pitch)
 	end
 
 	local slowMult = (Spring.GetUnitRulesParam(unitID,"baseSpeedMult") or 1)
-	Turn (turret, y_axis, heading, math.rad(270)*slowMult)
-	Turn (launcher, x_axis, -pitch, math.rad(180)*slowMult)
+	Turn (turret, y_axis, heading, aimspeed*slowMult)
+	Turn (launcher, x_axis, -pitch, (aimspeed/2)*slowMult)
 
 	WaitForTurn (turret, y_axis)
 	WaitForTurn (launcher, x_axis)
