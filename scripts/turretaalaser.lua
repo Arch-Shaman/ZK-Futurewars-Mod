@@ -117,7 +117,7 @@ local function UnstunThread ()
 	elseif currentTask == 2 then
 		Open()
 	else
-		RestoreAfterDelay()
+		StartThread(RestoreAfterDelay)
 	end
 end
 
@@ -147,8 +147,9 @@ local aimspeed = math.rad(720)
 
 function script.AimWeapon (num, heading, pitch)
 	if disarmed and closed then return false end -- prevents slowpoke.jpg (when it opens up after stun wears off even if target is long gone)
-	Signal (SigAim)
+	
 	Signal(SIG_RESTORE)
+	Signal (SigAim)
 	SetSignalMask (SigAim)
 
 	while disarmed do
