@@ -141,7 +141,7 @@ return {
 				tolerance               = 5000,
 				turret                  = true,
 				weaponType              = "LaserCannon",
-				weaponVelocity          = 400,
+				weaponVelocity          = 300,
 			},
 			SWEEPER = {
 				name                    = "Sweeping Flamethrower",
@@ -198,7 +198,7 @@ return {
 				tolerance               = 5000,
 				turret                  = true,
 				weaponType              = "LaserCannon",
-				weaponVelocity          = 400,
+				weaponVelocity          = 300,
 			},
 			COCKTAIL = {
 				name                    = "Molotov Cocktail", --CREDITS: Cliver5
@@ -215,7 +215,7 @@ return {
 					manualfire = 1,
 					numprojectiles1 = 24,
 					projectile1 = "jumpraid_napalm_fragment_dummy",
-					velspread1 = "1.91, 4, 1.91, _, 6, 1.91",
+					velspread1 = "-2.2, 4, -2.2, 2.2, 7, 2.2",
 					noairburst = "I belive I can fly...",
 					onexplode = "by the power of god, disco and hentai...",
 					
@@ -238,7 +238,7 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
 				model                   = "wep_b_fabby.s3o", --TODO: replace with SharkGameDev's better model. delete this once it's done.
-				range                   = 340,
+				range                   = 450,
 				reloadtime              = 45,
 				smokeTrail              = true,
 				soundHit                = "weapon/cannon/wolverine_hit",
@@ -279,7 +279,7 @@ return {
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
-				myGravity               = 0.1,
+				myGravity               = 0.05,
 				noExplode               = true,
 				projectiles             = 10,
 				range                   = 900,
