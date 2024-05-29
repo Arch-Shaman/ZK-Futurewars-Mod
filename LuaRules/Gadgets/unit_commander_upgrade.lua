@@ -627,6 +627,16 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 		moduleList = AddAddons(moduleList, chassis)
 	end
 	moduleEffectData = GetModuleEffectsData(moduleList, level, chassis)
+	if moduleEffectData.personalCloak then
+		unitCreatedCloak = true
+	end
+	if moduleEffectData.radarJammingRange then
+		unitCreatedJammingRange = COMMANDER_JAMMING_COST
+	end
+	
+	if moduleEffectData.areaCloak then
+		unitCreatedCloakShield = true
+	end
 	if level == 1 and not moduleEffectData.weapon1 then
 		local default = GetCommanderChassisDefaultWeapon(chassis)
 		moduleList[#moduleList + 1] = moduleDefNames[default]
