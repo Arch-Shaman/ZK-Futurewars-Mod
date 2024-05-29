@@ -187,7 +187,24 @@ local function GetMissileDestination(num, allyteam, unguided)
 			return fx, currentY, fz
 		end
 	end
-		
+end
+
+local function GetMissileCruiseProgress(projectileID)
+	local data = IterableMap.Get(missiles, projectileID)
+	if data == nil then return nil end
+	if data.takeoff then
+		return 0
+	end
+	local x, y, z = GetMissileDestination(projectileID, data.allyteam, data.unguided)
+	local projectiledef = data.configid
+	local missileconfig = config[projectiledef]
+	local mindist = missileconfig.distance
+	local cx, cy, cz = spGetProjectilePosition(projectile)
+	local distance = Distance(cx, x, cz, z)
+	
+	local progress = mindist/distance
+	if progress > 1 then return 1 end
+	return progress
 end
 
 local function ProccessOffset(wep, proID) -- send the offset request to the proper area. This way we don't have to update it anywhere else its being used.
@@ -294,6 +311,7 @@ function gadget:Initialize()
 	GG.GetCruiseTarget = GetTargetPosition
 	GG.SetCruiseMissileUnguided = SetMissileUnguided
 	GG.ForceMissileToCruise = ForceMissileToCruise
+	GG.GetMissileCruiseProgress = GetMissileCruiseProgress
 end
 
 function gadget:GameFrame(f)
