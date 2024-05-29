@@ -18,6 +18,8 @@ weaponDef = {
 		light_camera_height = 2500,
 		light_color = [[0.25 0.13 0.05]],
 		light_radius = 500,
+		isFlak = 3,
+		flaktime = -5,
 	},
 	damage                  = {
 		default = 40,
@@ -28,7 +30,7 @@ weaponDef = {
 	impulseBoost            = 0,
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 1,
-	myGravity               = 0.25,
+	myGravity               = 0.85,
 	projectiles             = 10,
 	range                   = 900,
 	reloadtime              = 12,
