@@ -91,7 +91,7 @@ function gadget:Explosion(weaponID, px, py, pz, ownerID)
 			plateauRadius = weaponInfo[weaponID].plateauRadius,
 			damage = weaponDamage,
 			impulse = weaponInfo[weaponID].impulse,
-			expiry = frameNum + weaponInfo[weaponID].duration,
+			expiry = weaponInfo[weaponID].duration,
 			rangeFall = weaponInfo[weaponID].rangeFall,
 			timeLoss = timeLoss,
 			id = weaponID,
@@ -108,33 +108,34 @@ local function GetDistance(x1, y1, x2, y2)
 end
 
 function gadget:GameFrame(f)
-	frameNum = f
 	if (f%DAMAGE_PERIOD == 0) then
 		for i, data in IterableMap.Iterator(explosions) do
 			local pos = data.pos
 			local ulist = spGetUnitsInSphere(pos.x, pos.y, pos.z, data.radius)
 			if (ulist) then
 				local divisor = data.radius - data.plateauRadius
-				local damage = data.damage
-				local damageFall = damage*data.rangeFall
+				local damageFall = data.damage * data.rangeFall
 				for j = 1, #ulist do
 					local u = ulist[j]
 					local ux, uy, uz = spGetUnitPosition(u)
 					local distance = GetDistance(ux, uz, pos.x, pos.z)
+					local damageToDeal = data.damage
 					if data.rangeFall ~= 0 and distance > data.plateauRadius then
-						damage = damage - damageFall * (distance - data.plateauRadius) / (divisor)
+						damageToDeal = damageToDeal - damageFall * (distance - data.plateauRadius) / (divisor)
 					end
 					if data.impulse then
-						GG.AddGadgetImpulse(u, pos.x - ux, pos.y - uy, pos.z - uz, damage, false, true, false, {0.22,0.7,1})
+						GG.AddGadgetImpulse(u, pos.x - ux, pos.y - uy, pos.z - uz, damageToDeal, false, true, false, {0.22,0.7,1})
 						GG.SetUnitFallDamageImmunity(u, f + 10)
-						GG.DoAirDrag(u, damage)
+						GG.DoAirDrag(u, damageToDeal)
 					elseif data.isFire and not burnproof[u] then
-						spAddUnitDamage(u, damage, 0, data.owner, data.id, 0, 0, 0)
+						spAddUnitDamage(u, damageToDeal, 0, data.owner, data.id, 0, 0, 0)
 					end
 				end
 			end
 			data.damage = data.damage - data.timeLoss
-			if f >= data.expiry then
+			data.expiry = data.expiry - DAMAGE_PERIOD
+			--Spring.Echo(i .. ": Expiration: " .. data.expiry)
+			if data.expiry < 0 then
 				IterableMap.Remove(explosions, i)
 			end
 		end
