@@ -534,7 +534,14 @@ local function SetUpFeatureRules(featureID)
 	local _, maxHealth = Spring.GetUnitHealth(unitID)
 	local cost = Spring.GetUnitRulesParam(unitID, "comm_cost")
 	-- For context menu purposes --
-	
+	local decorationCount = Spring.GetUnitRulesParam(unitID, "comm_decoration_count")
+	--Spring.Echo("decorationCount = " .. tostring(decorationCount))
+	TransferParamToFeature(featureID, "comm_decoration_count")
+	if decorationCount and decorationCount > 0 then
+		for i = 1, decorationCount do
+			TransferParamToFeature(featureID, "comm_decoration_" .. i)
+		end
+	end
 	TransferParamToFeature(featureID, "upgradesSpeedMult")
 	TransferParamToFeature(featureID, "carrier_count_drone")
 	TransferParamToFeature(featureID, "comm_weapon_num_1")

@@ -885,9 +885,29 @@ local function GetCommanderInfoFromWreck(featureID, unitID)
 	local baseWreckID = Spring.GetFeatureRulesParam(featureID, "comm_baseWreckID")
 	local baseHeapID = Spring.GetFeatureRulesParam(featureID, "comm_baseHeapID")
 	local chassisID = Spring.GetFeatureRulesParam(featureID, "comm_chassis")
+	local overheadBanner = Spring.GetFeatureRulesParam(featureID, "comm_banner_overhead")
+	local decorationCount = Spring.GetFeatureRulesParam(featureID, "comm_decoration_count") or 0
+	TransferParamFromFeature(featureID, unitID, "comm_decoration_count")
+	--Spring.Echo("Count: " .. decorationCount)
+	if decorationCount > 0 then
+		for i = 1, decorationCount do
+			TransferParamFromFeature(featureID, unitID, "comm_decoration_" .. i)
+		end
+	end
+	local skin = Spring.GetFeatureRulesParam(featureID, "comm_texture") 
+	TransferParamFromFeature(featureID, unitID, "comm_banner_overhead")
+	if chassisID == 1 then
+		spSetUnitRulesParam(unitID, "comm_personal_cloak", 1, INLOS)
+	end
 	--Spring.Echo("Module count: " .. tostring(count))
 	for i = 1, count do
 		modules[i] = Spring.GetFeatureRulesParam(featureID, "comm_module_" .. i)
+	end
+	if overheadBanner ~= nil then
+		modules[#modules + 1] = moduleDefNames["banner_overhead"]
+	end
+	if skin ~= nil then
+		modules[#modules + 1] = moduleDefNames["skin_" .. skin]
 	end
 	-- do some transfer --
 	TransferParamFromFeature(featureID, unitID, "commander_owner")
