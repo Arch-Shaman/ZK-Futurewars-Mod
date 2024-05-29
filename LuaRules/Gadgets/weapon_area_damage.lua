@@ -120,7 +120,7 @@ function gadget:GameFrame(f)
 				for j = 1, #ulist do
 					local u = ulist[j]
 					local ux, uy, uz = spGetUnitPosition(u)
-					local distance = GetDistance(ux, uy, pos.x, pos.z)
+					local distance = GetDistance(ux, uz, pos.x, pos.z)
 					if data.rangeFall ~= 0 and distance > data.plateauRadius then
 						damage = damage - damageFall * (distance - data.plateauRadius) / (divisor)
 					end
