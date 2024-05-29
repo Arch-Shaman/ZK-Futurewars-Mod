@@ -273,6 +273,27 @@ local function CallAsUnitIfExists(unitID, func, ...)
 	end
 end
 
+local function compare(a, b)
+	return (a and a[1] < b[1]) or false
+end
+
+local function OrganizeModuleListByEffectOrder(moduleList)
+	local newList = {}
+	local ret = {}
+	local moduleNames
+	for i = 1, #moduleList do
+		--Spring.Echo(moduleList[i])
+		if moduleList[i] ~= nil then
+			newList[#newList + 1] = {moduleDefs[moduleList[i]].effectPriority or 5, moduleList[i]}
+		end
+	end
+	--Spring.Echo("New list size: " .. #newList)
+	table.sort(newList, compare)
+	for i = 1, #newList do
+		ret[i] = newList[i][2]
+	end
+	return ret
+end
 
 local function SetUnitRulesModule(unitID, counts, moduleDefID)
 	local slotType = moduleSlotTypeMap[moduleDefs[moduleDefID].slotType]
@@ -572,7 +593,7 @@ end
 
 local function GetModuleEffectsData(moduleList, level, chassis)
 	local moduleByDefID = upgradeUtilities.ModuleListToByDefID(moduleList)
-	
+	moduleList = OrganizeModuleListByEffectOrder(moduleList)
 	local moduleEffectData = {}
 	for i = 1, #moduleList do
 		local moduleDef = moduleDefs[moduleList[i]]
@@ -914,7 +935,6 @@ local function GetCommanderInfoFromWreck(featureID, unitID)
 	TransferParamFromFeature(featureID, unitID, "comm_personal_cloak")
 	TransferParamFromFeature(featureID, unitID, "comm_jammed")
 	TransferParamFromFeature(featureID, unitID, "comm_shield_num")
-	TransferParamFromFeature(featureID, unitID, "comm_banner_overhead")
 	TransferParamFromFeature(featureID, unitID, "comm_texture")
 	--
 	--Spring.Echo("Got:" .. totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID)
@@ -945,6 +965,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 				local modules, totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID = GetCommanderInfoFromWreck(featureID, unitID)
 				local profileID = profileID or GG.ModularCommAPI.GetProfileIDByBaseDefID(unitDefID)
 				local commProfileInfo = GG.ModularCommAPI.GetCommProfileInfo(profileID)
+				local moduleEffects = GetModuleEffectsData(modules, level, chassisID)
 				if commProfileInfo then
 					InitializeDynamicCommander(
 						unitID,
@@ -956,7 +977,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 						baseWreckID,
 						baseHeapID,
 						modules,
-						false,
+						moduleEffects,
 						commProfileInfo.images,
 						profileID
 					)
@@ -971,7 +992,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 						baseWreckID,
 						baseHeapID,
 						modules,
-						false,
+						moduleEffects,
 						{},
 						profileID
 					)

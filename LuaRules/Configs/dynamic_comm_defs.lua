@@ -177,6 +177,7 @@ local moduleDefs = {
 		cost = 0,
 		requireLevel = 0,
 		slotType = "module",
+		effectPriority = 0,
 	},
 	{
 		name = "nullbasicweapon", -- TODO: Remove.
@@ -188,6 +189,7 @@ local moduleDefs = {
 		cost = 0,
 		requireLevel = 0,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 	},
 	{
 		name = "nulladvweapon", -- TODO: Remove.
@@ -199,6 +201,7 @@ local moduleDefs = {
 		cost = 0 * COST_MULT,
 		requireLevel = 0,
 		slotType = "adv_weapon",
+		effectPriority = 1,
 	},
 	
 	-- Weapons
@@ -212,6 +215,7 @@ local moduleDefs = {
 		requireChassis = {"support", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -233,6 +237,7 @@ local moduleDefs = {
 		requireChassis = {"riot", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -254,6 +259,7 @@ local moduleDefs = {
 		requireChassis = {"recon"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -275,6 +281,7 @@ local moduleDefs = {
 		requireChassis = {"strike"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -296,6 +303,7 @@ local moduleDefs = {
 		requireChassis = {"knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -317,6 +325,7 @@ local moduleDefs = {
 		requireChassis = {"strike"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
+		effectPriority = 1,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -335,6 +344,7 @@ local moduleDefs = {
 		requireChassis = {"assault"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -358,6 +368,7 @@ local moduleDefs = {
 		requireChassis = {"recon"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -379,6 +390,7 @@ local moduleDefs = {
 		requireChassis = {"riot", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -408,6 +420,7 @@ local moduleDefs = {
 		requireChassis = {"strike"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -430,6 +443,7 @@ local moduleDefs = {
 		requireChassis = {"recon"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -452,6 +466,7 @@ local moduleDefs = {
 		requireChassis = {"strike"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -474,6 +489,7 @@ local moduleDefs = {
 		requireChassis = {"support", "knight"},
 		requireLevel = 1,
 		slotType = "adv_weapon",
+		effectPriority = 1,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -494,6 +510,7 @@ local moduleDefs = {
 		requireChassis = {"assault"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -517,6 +534,7 @@ local moduleDefs = {
 		requireChassis = {"support", "strike", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -539,6 +557,7 @@ local moduleDefs = {
 		requireChassis = {"support", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -561,6 +580,7 @@ local moduleDefs = {
 		requireChassis = {"knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -582,6 +602,7 @@ local moduleDefs = {
 		requireChassis = {"assault"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -603,6 +624,7 @@ local moduleDefs = {
 		requireChassis = {"riot", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -625,6 +647,7 @@ local moduleDefs = {
 		requireChassis = {"assault"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -647,6 +670,7 @@ local moduleDefs = {
 		requireChassis = {"support"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -669,6 +693,7 @@ local moduleDefs = {
 		requireChassis = {"strike", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -691,6 +716,7 @@ local moduleDefs = {
 		requireChassis = {"recon"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -713,6 +739,7 @@ local moduleDefs = {
 		requireChassis = {"riot"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -738,6 +765,7 @@ local moduleDefs = {
 		requireChassis = {"riot"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -760,6 +788,7 @@ local moduleDefs = {
 		requireChassis = {"support"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -782,6 +811,7 @@ local moduleDefs = {
 		requireChassis = {"support"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -805,6 +835,7 @@ local moduleDefs = {
 		requireOneOf = {"commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_lparticlebeam"},
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 2,
 		applicationFunction = ApplyHighFrequencyBeamKit
 	},
 	{
@@ -818,6 +849,7 @@ local moduleDefs = {
 		requireOneOf = {"commweapon_artillery_heavy", "commweapon_taclaser", "commweapon_rocketbarrage", "commweapon_rocketlauncher", "commweapon_artillery_light"},
 		requireLevel = 6,
 		slotType = "module",
+		effectPriority = 2,
 		applicationFunction = ApplyHeavyOrdinance1
 	},
 	{
@@ -831,6 +863,7 @@ local moduleDefs = {
 		requireOneOf = {"commweapon_light_disintegrator"},
 		requireLevel = 10,
 		slotType = "module",
+		effectPriority = 2,
 		applicationFunction = ApplyDisintegratorUpgrade
 	},
 	{
@@ -844,6 +877,7 @@ local moduleDefs = {
 		requireOneOf = {"commweapon_leolaser"},
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 2,
 		applicationFunction = ApplyShotgunModule
 	},
 	{
@@ -857,6 +891,7 @@ local moduleDefs = {
 		requireTwoOf = {"commweapon_leolaser"},
 		requireLevel = 4,
 		slotType = "module",
+		effectPriority = 2,
 		applicationFunction = ApplyShotgunModule
 	},
 	{
@@ -870,6 +905,7 @@ local moduleDefs = {
 		requireTwoOf = {"commweapon_artillery_heavy", "commweapon_taclaser", "commweapon_rocketbarrage", "commweapon_rocketlauncher"},
 		requireLevel = 7,
 		slotType = "module",
+		effectPriority = 2,
 		applicationFunction = ApplyHeavyOrdinance2
 	},
 	{
@@ -883,6 +919,7 @@ local moduleDefs = {
 		requireTwoOf = {"commweapon_disruptorprojector", "commweapon_beamlaser", "commweapon_lparticlebeam"},
 		requireLevel = 4,
 		slotType = "module",
+		effectPriority = 2,
 		applicationFunction = ApplyHighFrequencyBeamKit
 	},
 	{
@@ -895,6 +932,7 @@ local moduleDefs = {
 		requireChassis = {"support", "knight"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			local weaponName = "commweapon_shockrifle"
 			if sharedData.noMoreWeapons then
@@ -918,6 +956,7 @@ local moduleDefs = {
 		requireChassis = {"riot"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			local weaponName = "commweapon_sonicgun"
 			if sharedData.noMoreWeapons then
@@ -942,6 +981,7 @@ local moduleDefs = {
 		requireChassis = {"recon", "assault", "knight"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
+		effectPriority = 1,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -963,6 +1003,7 @@ local moduleDefs = {
 		requireChassis = {"riot"},
 		requireLevel = 2,
 		slotType = "adv_weapon",
+		effectPriority = 1,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -984,6 +1025,7 @@ local moduleDefs = {
 		requireChassis = {"recon", "strike"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
+		effectPriority = 1,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -1005,6 +1047,7 @@ local moduleDefs = {
 		requireChassis = {"recon", "riot", "knight"},
 		requireLevel = 2,
 		slotType = "adv_weapon",
+		effectPriority = 1,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -1026,6 +1069,7 @@ local moduleDefs = {
 		requireChassis = {"knight"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
+		effectPriority = 1,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -1047,6 +1091,7 @@ local moduleDefs = {
 		requireChassis = {"strike", "knight"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
+		effectPriority = 1,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -1066,6 +1111,7 @@ local moduleDefs = {
 		requireChassis = {"support", "knight"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
+		effectPriority = 1,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -1087,6 +1133,7 @@ local moduleDefs = {
 		requireChassis = {"support", "strike", "knight"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
+		effectPriority = 1,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -1109,6 +1156,7 @@ local moduleDefs = {
 		requireChassis = {"recon"},
 		requireLevel = 1,
 		slotType = "basic_weapon",
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -1131,6 +1179,7 @@ local moduleDefs = {
 		requireChassis = {"assault", "recon", "knight"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
+		effectPriority = 1,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -1152,6 +1201,7 @@ local moduleDefs = {
 		requireChassis = {"support"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
+		effectPriority = 1,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -1173,6 +1223,7 @@ local moduleDefs = {
 		--requireChassis = {"assault"},
 		--requireLevel = 1,
 		--slotType = "basic_weapon",
+		--effectPriority = 0,
 		--applicationFunction = function (modules, sharedData)
 			--if sharedData.noMoreWeapons then
 				--return
@@ -1194,6 +1245,7 @@ local moduleDefs = {
 		requireChassis = {"knight"},
 		requireLevel = 3,
 		slotType = "adv_weapon",
+		effectPriority = 1,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.noMoreWeapons then
 				return
@@ -1217,6 +1269,7 @@ local moduleDefs = {
 		cost = 100 * COST_MULT,
 		requireLevel = 0,
 		slotType = "module",
+		effectPriority = 2,
 		applicationFunction = function (modules, sharedData)
 			sharedData.metalIncome = (sharedData.metalIncome or 0) + 6
 			sharedData.energyIncome = (sharedData.energyIncome or 0) + 8
@@ -1233,6 +1286,7 @@ local moduleDefs = {
 		requireChassis = {"support", "riot", "recon", "assault", "knight"},
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 2,
 		applicationFunction = function (modules, sharedData)
 			-- Do not override area shield
 			sharedData.shield = sharedData.shield or "commweapon_personal_shield"
@@ -1250,6 +1304,7 @@ local moduleDefs = {
 		prohibitingModules = {"module_personal_cloak", "module_jammer"},
 		requireLevel = 3,
 		slotType = "module",
+		effectPriority = 3,
 		applicationFunction = function (modules, sharedData)
 			sharedData.shield = "commweapon_areashield"
 		end
@@ -1265,6 +1320,7 @@ local moduleDefs = {
 		requireOneOf = {"commweapon_riotcannon", "commweapon_canistercannon", "commweapon_heavymachinegun"},
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 3,
 	},
 	{
 		name = "weaponmod_napalm_warhead",
@@ -1277,6 +1333,7 @@ local moduleDefs = {
 		requireOneOf = {"commweapon_rocketlauncher", "commweapon_artillery_heavy", "commweapon_riotcannon"},
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 3,
 	},
 	{
 		name = "conversion_disruptor",
@@ -1289,6 +1346,7 @@ local moduleDefs = {
 		requireOneOf = {"commweapon_heavymachinegun", "commweapon_leolaser", "commweapon_heavyrifle", "commweapon_tankbuster", "commweapon_emg", "commweapon_shotgun", "commweapon_hparticlebeam", "commweapon_lparticlebeam"},
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 3,
 	},
 	{
 		name = "weaponmod_stun_booster",
@@ -1301,6 +1359,7 @@ local moduleDefs = {
 		requireOneOf = {"commweapon_lightninggun", "commweapon_multistunner"},
 		requireLevel = 4,
 		slotType = "module",
+		effectPriority = 3,
 	},
 	{
 		name = "module_jammer",
@@ -1312,6 +1371,7 @@ local moduleDefs = {
 		requireLevel = 2,
 		slotType = "module",
 		requireChassis = {"support", "knight"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			if not sharedData.cloakFieldRange then
 				sharedData.radarJammingRange = 500
@@ -1328,6 +1388,7 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"recon", "strike"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			if not sharedData.cloakFieldRange then
 				sharedData.personaljammer = true
@@ -1343,6 +1404,7 @@ local moduleDefs = {
 		cost = 75 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
+		effectPriority = 3,
 		applicationFunction = function (modules, sharedData)
 			sharedData.radarRange = 1800
 		end
@@ -1357,6 +1419,7 @@ local moduleDefs = {
 		cost = 75 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.radarRange = (sharedData.radarRange or 1800) + 180
 		end
@@ -1371,6 +1434,7 @@ local moduleDefs = {
 		cost = 125 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.sightrangebonus = (sharedData.sightrangebonus or 1) + .2
 		end
@@ -1386,6 +1450,7 @@ local moduleDefs = {
 		requireChassis = {"strike", "knight"},
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 3,
 		applicationFunction = function (modules, sharedData)
 			sharedData.decloakDistance = math.max(sharedData.decloakDistance or 0, 150)
 			sharedData.personalCloak = true
@@ -1403,6 +1468,7 @@ local moduleDefs = {
 		requireOneOf = {"module_jammer"},
 		requireLevel = 3,
 		slotType = "module",
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.areaCloak = true
 			sharedData.decloakDistance = 180
@@ -1423,6 +1489,7 @@ local moduleDefs = {
 		requireLevel = 2, -- hard limit
 		slotType = "module",
 		prohibitingModules = {"module_drone_package"},
+		effectPriority = 3,
 		applicationFunction = function (modules, sharedData)
 			sharedData.canResurrect = true
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 20
@@ -1440,6 +1507,7 @@ local moduleDefs = {
 		requireLevel = 2,
 		slotType = "module",
 		prohibitingModules = {"module_resurrect"},
+		effectPriority = 3,
 		applicationFunction = function (modules, sharedData)
 			sharedData.extradroneslots = (sharedData.extradroneslots or 1) + 1
 			sharedData.dronebuildmod = (sharedData.dronebuildmod or 1) + 0.5
@@ -1459,6 +1527,7 @@ local moduleDefs = {
 		prohibitingModules = {"module_jumprange", "module_jumpretrofit"},
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 3,
 		applicationFunction = function (modules, sharedData)
 			local reloadbonus = sharedData.jumpreloadbonus or 0
 			sharedData.jumpreloadbonus = reloadbonus + 0.2
@@ -1476,6 +1545,7 @@ local moduleDefs = {
 		requireLevel = 5,
 		slotType = "module",
 		prohibitingModules = {"commweapon_microriftgenerator"},
+		effectPriority = 3,
 		applicationFunction = function (modules, sharedData)
 			local detpacklv = (sharedData.detpacklv or 0) + 1
 			sharedData.healthBonus = (sharedData.healthBonus or 0) - 1000*HP_MULT
@@ -1493,6 +1563,7 @@ local moduleDefs = {
 		prohibitingModules = {"module_jumpreload", "module_jumprange"},
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 3,
 		applicationFunction = function (modules, sharedData)
 			local rangebonus = sharedData.jumprangebonus or 0
 			local reloadbonus = sharedData.jumpreloadbonus or 0
@@ -1513,6 +1584,7 @@ local moduleDefs = {
 		prohibitingModules = {"module_jumpreload", "module_jumpretrofit"},
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 3,
 		applicationFunction = function (modules, sharedData)
 			local rangebonus = sharedData.jumprangebonus or 0
 			sharedData.jumprangebonus = rangebonus + 0.5
@@ -1530,6 +1602,7 @@ local moduleDefs = {
 		requireChassis = {"knight"},
 		requireLevel = 3,
 		slotType = "module",
+		effectPriority = 2,
 		applicationFunction = function (modules, sharedData)
 			sharedData.canJump = true
 		end
@@ -1546,6 +1619,7 @@ local moduleDefs = {
 		requireChassis = {"support", "knight"},
 		requireLevel = 1,
 		slotType = "module",
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			if modules[moduleDefNames.module_drone_package] then
 				sharedData.drones = (sharedData.drones or 0) + 2
@@ -1565,6 +1639,7 @@ local moduleDefs = {
 		requireOneOf = {"module_drone_package"},
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.droneheavyslows = (sharedData.droneheavyslows or 0) + 1
 		end
@@ -1580,6 +1655,7 @@ local moduleDefs = {
 		requireOneOf = {"module_drone_package"},
 		requireLevel = 5,
 		slotType = "module",
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.dronerange = (sharedData.dronerange or 1) + 0.5
 		end
@@ -1596,6 +1672,7 @@ local moduleDefs = {
 		slotType = "module",
 		prohibitingModules = {"module_full_choke"},
 		requireOneOf = {"commweapon_shotgun"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.weapon1 and (sharedData.weapon1 == "commweapon_shotgun" or sharedData.weapon1 == "commweapon_shotgun_disrupt") then
 				sharedData.sprayAngleBonus1 = (sharedData.sprayAngleBonus1 or 0) - 0.3
@@ -1621,6 +1698,7 @@ local moduleDefs = {
 		slotType = "module",
 		requireOneOf = {"commweapon_shotgun"},
 		prohibitingModules = {"module_improved_choke"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.weapon1 and (sharedData.weapon1 == "commweapon_shotgun" or sharedData.weapon1 == "commweapon_shotgun_disrupt") then
 				sharedData.sprayAngleBonus1 = (sharedData.sprayAngleBonus1 or 0) + 0.11
@@ -1645,6 +1723,7 @@ local moduleDefs = {
 		requireChassis = {"strike"},
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.weapon1 and (sharedData.weapon1 == "commweapon_shotgun" or sharedData.weapon1 == "commweapon_shotgun_disrupt") then
 				sharedData.reloadOverride1 = 26/30
@@ -1667,6 +1746,7 @@ local moduleDefs = {
 		requireOneOf = {"module_drone_package"},
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.dronecon = (sharedData.dronecon or 0) + 1
 		end
@@ -1682,6 +1762,7 @@ local moduleDefs = {
 		requireOneOf = {"module_drone_package"},
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.droneassault = (sharedData.droneassault or 0) + 1
 		end
@@ -1697,6 +1778,7 @@ local moduleDefs = {
 		requireLevel = 2,
 		slotType = "module",
 		requireOneOf = {"module_drone_package"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.extradroneslots = (sharedData.extradroneslots or 1) + 1 -- should equal 6 at max level. 1 from drone package + 4 from this.
 			sharedData.dronebuildmod = (sharedData.dronebuildmod or 1) + 0.1
@@ -1714,6 +1796,7 @@ local moduleDefs = {
 		requireLevel = 2,
 		slotType = "module",
 		requireOneOf = {"module_drone_package"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.dronebuildmod = (sharedData.dronebuildmod or 1) + 0.5
 			sharedData.dronereloadtime = (sharedData.dronereloadtime or 1) + 0.2
@@ -1730,6 +1813,7 @@ local moduleDefs = {
 		slotType = "module",
 		requireChassis = {"recon", "assault", "support", "strike", "knight"},
 		prohibitingModules = {"module_striderpower"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10
 			--sharedData.healthBonus = (sharedData.healthBonus or 0) - 75*HP_MULT
@@ -1746,6 +1830,7 @@ local moduleDefs = {
 		requireChassis = {"riot"},
 		requireOneOf = {"module_striderpower"},
 		slotType = "module",
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.nanoregen = (sharedData.nanoregen or 0) + 21
 			sharedData.nanomax = (sharedData.nanomax or 0) + 10
@@ -1762,6 +1847,7 @@ local moduleDefs = {
 		requireChassis = {"riot"},
 		requireOneOf = {"module_nanorepair"},
 		slotType = "module",
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.nanoregen = (sharedData.nanoregen or 0) + 3
 			sharedData.healthBonus = (sharedData.healthBonus or 0) + 500*HP_MULT
@@ -1778,6 +1864,7 @@ local moduleDefs = {
 		requireChassis = {"riot"},
 		requireOneOf = {"module_nanorepair"},
 		slotType = "module",
+		effectPriority = 5,
 		applicationFunction = function (modules, sharedData)
 			sharedData.nanomax = (sharedData.nanomax or 0) + 2
 		end
@@ -1791,6 +1878,7 @@ local moduleDefs = {
 		cost = 200 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.healthBonus = (sharedData.healthBonus or 0) + 1400*HP_MULT
 		end
@@ -1805,6 +1893,7 @@ local moduleDefs = {
 		requireLevel = 2,
 		slotType = "module",
 		requireChassis = {"riot"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.healthBonus = (sharedData.healthBonus or 0) + 550 * HP_MULT
 			sharedData.speedMalus = (sharedData.speedMalus or 0) + 6
@@ -1822,6 +1911,7 @@ local moduleDefs = {
 		requireChassis = {"riot"},
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 5,
 		applicationFunction = function (modules, sharedData)
 			sharedData.healthBonus = (sharedData.healthBonus or 0) + 4000*HP_MULT
 			sharedData.speedMalus = (sharedData.speedMalus or 0) + 0.35
@@ -1838,6 +1928,7 @@ local moduleDefs = {
 		slotType = "module",
 		requireChassis = {"riot"},
 		requireOneOf = {"module_striderpower"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			-- Damage boost is applied via clone swapping
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.15
@@ -1855,6 +1946,7 @@ local moduleDefs = {
 		slotType = "module",
 		requireChassis = {"strike"},
 		prohibitingModules = {"module_autoloader"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.weapon1 and sharedData.weapon1 ~= "commweapon_microriftgenerator" then
 				sharedData.reloadBonus1 = (sharedData.reloadBonus1 or 0) - 0.5
@@ -1877,6 +1969,7 @@ local moduleDefs = {
 		requireChassis = {"assault"},
 		requireOneOf = {"commweapon_rocketbarrage", "commweapon_rocketlauncher"},
 		prohibitingModules = {"module_rocketrangereducer"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			local baseRange = {
 				["commweapon_rocketlauncher"] = 720,
@@ -1918,6 +2011,7 @@ local moduleDefs = {
 		requireChassis = {"assault"},
 		requireOneOf = {"commweapon_rocketbarrage", "commweapon_rocketlauncher"},
 		prohibitingModules = {"module_heavyrocket"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			local baseRange = {
 				["commweapon_rocketlauncher"] = 720,
@@ -1949,6 +2043,7 @@ local moduleDefs = {
 		requireChassis = {"assault"},
 		requireOneOf = {"commweapon_rocketbarrage"},
 		prohibitingModules = {"module_rocketconservation"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage" then
 				local basereload = 7.2
@@ -1982,6 +2077,7 @@ local moduleDefs = {
 		requireChassis = {"assault"},
 		prohibitingModules = {"module_expandedrocketsalvo"},
 		requireOneOf = {"commweapon_rocketbarrage"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.conservativedeployments = (sharedData.conservativedeployments or 0) + 1
 			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage" then
@@ -2033,6 +2129,7 @@ local moduleDefs = {
 		slotType = "module",
 		requireChassis = {"strike"},
 		prohibitingModules = {"module_alphastrike"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			-- Damage boost is applied via clone swapping
 			--sharedData.damageMult = (sharedData.damageMult or 1) - 0.20
@@ -2079,6 +2176,7 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"support", "assault", "recon", "knight", "strike"},
+		effectPriority = 5,
 		applicationFunction = function (modules, sharedData)
 			-- Damage boost is applied via clone swapping
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.1
@@ -2096,6 +2194,7 @@ local moduleDefs = {
 		slotType = "module",
 		requireChassis = {"riot"},
 		prohibitingModules = {"module_autorepair"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.speedMalus = (sharedData.speedMalus or 0) + 1.1
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.33
@@ -2111,6 +2210,7 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"riot", "assault"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.speedMod = (sharedData.speedMod or 0) + 1.5
 		end
@@ -2124,6 +2224,7 @@ local moduleDefs = {
 		cost = 250 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.malusMult = math.max((sharedData.malusMult or 1) - 0.25, 0)
 		end
@@ -2138,6 +2239,7 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"strike", "support"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.speedMod = (sharedData.speedMod or 0) + 2.5
 		end
@@ -2152,6 +2254,7 @@ local moduleDefs = {
 		requireLevel = 1,
 		requireChassis = {"recon"},
 		slotType = "module",
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.speedMod = (sharedData.speedMod or 0) + 3.25
 		end
@@ -2166,6 +2269,7 @@ local moduleDefs = {
 		requireLevel = 3,
 		slotType = "module",
 		requireChassis = {"strike", "recon"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.speedMod = (sharedData.speedMod or 0) + 5
 			sharedData.healthBonus = (sharedData.healthBonus or 0) - 500*HP_MULT
@@ -2181,6 +2285,7 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"strike"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.cloakregen = (sharedData.cloakregen or 0) + 20
 		end
@@ -2195,6 +2300,7 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"strike", "recon", "support", "riot"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.075
 			sharedData.speedMalus = (sharedData.speedMalus or 0) + 0.75
@@ -2210,6 +2316,7 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"assault"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.1
 			sharedData.speedMalus = (sharedData.speedMalus or 0) + 2
@@ -2226,6 +2333,7 @@ local moduleDefs = {
 		cost = 100 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.metalIncome = (sharedData.metalIncome or 0) + 4
 			sharedData.energyIncome = (sharedData.energyIncome or 0) + 6
@@ -2241,6 +2349,7 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"assault", "riot"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 1.5
 			sharedData.extrastorage = (sharedData.extrastorage or 0) + 10
@@ -2256,6 +2365,7 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"strike", "recon"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 2.5
 			sharedData.extrastorage = (sharedData.extrastorage or 0) + 25
@@ -2271,6 +2381,7 @@ local moduleDefs = {
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"support"},
+		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 7.5
 			sharedData.extrastorage = (sharedData.extrastorage or 0) + 75
@@ -2286,6 +2397,7 @@ local moduleDefs = {
 		requireLevel = 3,
 		slotType = "module",
 		requireChassis = {"recon"},
+		effectPriority = 4,
 		prohibitingModules = {"module_personal_cloak"},
 		applicationFunction = function (modules, sharedData)
 			sharedData.reconPulse = 1
@@ -2303,6 +2415,7 @@ local moduleDefs = {
 		requireChassis = {},
 		requireLevel = 0,
 		slotType = "decoration",
+		effectPriority = 5,
 		applicationFunction = function (modules, sharedData)
 			sharedData.bannerOverhead = true
 		end
@@ -2321,6 +2434,7 @@ for name, data in pairs(skinDefs) do
 		requireLevel = 0,
 		slotType = "decoration",
 		isDeco = true,
+		effectPriority = 5,
 		applicationFunction = function (modules, sharedData)
 			sharedData.skinOverride = name
 		end
