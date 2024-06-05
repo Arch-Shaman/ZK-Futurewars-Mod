@@ -1,4 +1,5 @@
 -- see http://springrts.com/wiki/Sounds.lua for help
+local maxdistance = 12000
 local Sounds = {
 	SoundItems = {
 		default = {
@@ -37,6 +38,17 @@ local Sounds = {
 			dopplerscale = 0.1,
 			rolloff = 0.42,
 			gain = 1.25,
+		},
+		ion_loop = {
+			file = "sounds/weapon/laser/ion_burn.wav",
+			maxconcurrent = 30,
+			pitchmod = 0.01,
+			in3d = true,
+			dopplerscale = 0.7,
+			rolloff = 0.4,
+			gain = 0.1,
+			looptime = 145,
+			maxdist = maxdistance,
 		},
 		mlr_impact = {
 			file = "sounds/weapon/missile/rapid_rocket_hit.wav",
