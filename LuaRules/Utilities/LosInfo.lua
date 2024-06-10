@@ -6,6 +6,22 @@ local function TranslateLosBitToBools(bit) -- turns Spring.GetUnitLosState into 
 	return inLOS, inRadar, prevLOS, contRadar
 end
 
+local function IsInLOS(bit)
+	return bit%2 == 1
+end
+
+local function IsInRadar(bit)
+	return bit%4 >= 2
+end
+
+local function WasInLOS(bit)
+	return bit%8 >= 4
+end
+
+local function IsContRadar(bit)
+	return bit > 7
+end
+
 local function TranslateLosBitToTable(bit) -- turns Spring.GetUnitLosState into a nice human readable table.
 	local inLOS, inRadar, prevLOS, contRadar = TranslateLosBitToBools(bit)
 	return {inLOS = inLOS, inRadar = inRadar, prevLOS = prevLOS, contRadar = contRadar}
@@ -28,5 +44,5 @@ local function LosInfoToBit(inLOS, inRadar, prevLOS, contRadar) -- turns bools i
 	return ret
 end
 
-local LosInfo = {TranslateLosBitToBools = TranslateLosBitToBools, LosInfoToBit = LosInfoToBit, TranslateLosBitToTable = TranslateLosBitToTable}
+local LosInfo = {TranslateLosBitToBools = TranslateLosBitToBools, LosInfoToBit = LosInfoToBit, TranslateLosBitToTable = TranslateLosBitToTable, InLOS = IsInLOS, InRadar = IsInRadar, WasInLOS = WasInLOS, IsContRadar = IsContRadar}
 Spring.Utilities.LosInfo = LosInfo
