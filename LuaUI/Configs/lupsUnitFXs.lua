@@ -227,9 +227,28 @@ effectUnitDefs = {
 	-- length tag does nothing
 	--// PLANES //----------------------------
 	bomberheavy = {
-		{class='AirJet', options={color={0.4,0.1,0.8}, width=3.5, length=30, piece="nozzle1", onActive=true, noIconDraw = true}},
-		{class='AirJet', options={color={0.4,0.1,0.8}, width=3.5, length=30, piece="nozzle2", onActive=true, noIconDraw = true}},
-	 },
+		-- jets
+		{class='AirJet', options={color={0.4,0.1,0.8}, width=3.4, length=35, piece="thrust_L", onActive=true, noIconDraw = true, }},
+		{class='AirJet', options={color={0.4,0.1,0.8}, width=3.4, length=35, piece="thrust_R", onActive=true, noIconDraw = true, }},
+
+		-- ribbons
+		{class='Ribbon', options={width=0.5, size=10, piece="wingtip_L", noIconDraw = true}},
+		{class='Ribbon', options={width=0.5, size=10, piece="wingtip_R", noIconDraw = true}},
+
+		-- portable singularity
+		--{class='Bursts', options=MergeTable(energysinguBursts,{piece="ball", noIconDraw = true, size=5, pos={0,0,0}})},
+		--{class='StaticParticles', options=MergeTable(energysinguCorona,{piece="ball", noIconDraw = true, size=18, pos={0,0,0}})},
+
+		-- blinky lights
+		{class='StaticParticles', options=MergeTable(blinkyLightRed,   {piece="extra_L"}) },
+		{class='StaticParticles', options=MergeTable(blinkyLightGreen, {piece="extra_R"}) },
+
+		-- radiator
+		{class='AirJet', options={color={1,0.8,0.4}, width=2.5, length=2.2, piece="rad_L", noIconDraw = true, }},
+		{class='AirJet', options={color={1,0.8,0.4}, width=2.5, length=2.2, piece="rad_R", noIconDraw = true,}},
+		{class='StaticParticles', options=MergeTable(energysinguCorona,{piece="rad_L", noIconDraw = true, size=8.8, pos={0,0,0}})},
+		{class='StaticParticles', options=MergeTable(energysinguCorona,{piece="rad_R", noIconDraw = true, size=8.8, pos={0,0,0}})},
+	},
 	--[[armhawk2 = {
 		{class='AirJet', options={color={0.2,0.2,1.0}, width=2.8, length=25, piece="enginel", onActive=true, noIconDraw = true}},
 		{class='AirJet', options={color={0.2,0.2,1.0}, width=2.8, length=25, piece="enginer", onActive=true, noIconDraw = true}},
