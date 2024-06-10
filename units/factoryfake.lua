@@ -18,6 +18,7 @@ return {
 			completely_hidden = 1,
 			buggeroff_radius = 0, -- completely disable this because fake factories dont build anything
 			factorytab = 1,
+			isFake = 1,
 		},
 		footprintX                    = 1,
 		footprintZ                    = 1,
