@@ -1,4 +1,4 @@
-local function TranslateLosInfo(bit)
+local function TranslateLosBitToBools(bit) -- turns Spring.GetUnitLosState into booleans. This makes it easier to read code.
 	local inLOS = bit%2 == 1
 	local inRadar = bit%4 >= 2
 	local prevLOS = bit%8 >= 4
@@ -6,7 +6,12 @@ local function TranslateLosInfo(bit)
 	return inLOS, inRadar, prevLOS, contRadar
 end
 
-local function LOSInfoToBit(inLOS, inRadar, prevLOS, contRadar)
+local function TranslateLosBitToTable(bit) -- turns Spring.GetUnitLosState into a nice human readable table.
+	local inLOS, inRadar, prevLOS, contRadar = TranslateLosBitToBools(bit)
+	return {inLOS = inLOS, inRadar = inRadar, prevLOS = prevLOS, contRadar = contRadar}
+end
+
+local function LosInfoToBit(inLOS, inRadar, prevLOS, contRadar) -- turns bools into a number for SetUnitLosState.
 	local ret = 0
 	if inLOS then
 		ret = ret + 1
@@ -23,5 +28,5 @@ local function LOSInfoToBit(inLOS, inRadar, prevLOS, contRadar)
 	return ret
 end
 
-local LosInfo = {TranslateLosInfo = TranslateLosInfo, LOSInfoToBit = LOSInfoToBit}
+local LosInfo = {TranslateLosBitToBools = TranslateLosBitToBools, LosInfoToBit = LosInfoToBit, TranslateLosBitToTable = TranslateLosBitToTable}
 Spring.Utilities.LosInfo = LosInfo
