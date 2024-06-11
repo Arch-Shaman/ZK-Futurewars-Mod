@@ -38,6 +38,7 @@ local Sounds = {
 			dopplerscale = 0.1,
 			rolloff = 0.42,
 			gain = 1.25,
+			maxdist = maxdistance,
 		},
 		ion_loop = {
 			file = "sounds/weapon/laser/ion_burn.wav",
@@ -58,6 +59,7 @@ local Sounds = {
 			dopplerscale = 0.2,
 			rolloff = 0.5,
 			gain = 1.4,
+			maxdist = maxdistance,
 		},
 		missile_fire7 = {
 			file = "sounds/weapon/missile/missile_fire7.wav",
@@ -66,6 +68,7 @@ local Sounds = {
 			in3d = true,
 			dopplerscale = 0.2,
 			rolloff = 0.33,
+			maxdist = maxdistance,
 		},
 		sabot_hit_soft = {
 			file = "sounds/weapon/missile/sabot_hit.wav",
@@ -75,6 +78,7 @@ local Sounds = {
 			dopplerscale = 0.2,
 			rolloff = 0.80,
 			gain = 0.7,
+			maxdist = maxdistance,
 		},
 		waylayer_launch = {
 			file = "sounds/weapon/missile/gator_launch.wav",
@@ -84,6 +88,7 @@ local Sounds = {
 			dopplerscale = 0.4,
 			rolloff = 0.80,
 			gain = 0.66,
+			maxdist = maxdistance,
 		},
 		bomb_hit = {
 			file = "sounds/explosion/ex_med6.wav",
@@ -92,6 +97,7 @@ local Sounds = {
 			dopplerscale = 0.6,
 			rolloff = 0.9,
 			gain = 0.7,
+			maxdist = maxdistance,
 		},
 		soft_tracker = {
 			file = "sounds/weapon/laser/tracker.wav",
@@ -101,6 +107,7 @@ local Sounds = {
 			rolloff = 0.90,
 			gain = 1,
 			looptime = 445,
+			maxdist = maxdistance,
 		},
 		PulseLaser = {
 			file = "sounds/weapon/laser/pulse_laser_start.wav",
@@ -108,6 +115,7 @@ local Sounds = {
 			gainmod = 0.1,
 			pitch = 1,
 			gain = 1.5,
+			maxdist = maxdistance,
 		},
 		BladeSwing = {
 			file = "sounds/weapon/blade/blade_swing.wav",
@@ -141,8 +149,11 @@ local Sounds = {
 			gain = 1.0,
 			pitch = 1.0,
 			priority = 0,
-			maxconcurrent = 4, --- some reasonable limits
-			maxdist = nil, --- no cutoff at all (engine defaults to FLT_MAX)
+			maxconcurrent = 20, --- some reasonable limits
+			--maxdist = nil, --- no cutoff at all (engine defaults to FLT_MAX)
+			maxdist = maxdistance,
+			rolloff = 0.5,
+			in3d = true,
 		},
 		DetrimentJump = {
 			file = "sounds/detriment_jump.wav",
@@ -163,21 +174,29 @@ local Sounds = {
 			pitchmod = 0.05,
 			gainmod = 0,
 			gain = 2.4,
+			maxdist = maxdistance,
+			rolloff = 0.5,
 		},
 		TorpedoHitVariable = {
 			file = "sounds/explosion/wet/ex_underwater.wav",
 			pitchmod = 0.1,
 			gainmod = 0.05,
+			maxdist = maxdistance,
+			rolloff = 0.5,
 		},
 		Jump = {
 			file = "sounds/jump.wav",
 			pitchmod = 0.1,
 			gainmod = 0.05,
+			maxdist = maxdistance,
+			rolloff = 0.7,
 		},
 		JumpLand = {
 			file = "sounds/jump_land.wav",
 			pitchmod = 0.1,
 			gainmod = 0.05,
+			maxdist = maxdistance,
+			rolloff = 0.7,
 		},
 		Teleport2 = {
 			file = "sounds/misc/teleport2.wav",
@@ -185,6 +204,8 @@ local Sounds = {
 			gain = 1.0,
 			pitch = 1.0,
 			preload = true,
+			maxdist = maxdistance,
+			rolloff = 0.7,
 		},
 		SiloLaunch = {
 			file = "sounds/weapon/missile/tacnuke_launch.wav",
@@ -193,7 +214,8 @@ local Sounds = {
 			priority = 2,
 			maxconcurrent = 16,
 			preload = true,
-			maxdist = nil,
+			maxdist = maxdistance,
+			rolloff = 0.8,
 		},
 		LurkerHit = {
 			file = "sounds/weapon/cannon/lurker_hit.wav",
@@ -201,8 +223,8 @@ local Sounds = {
 			pitch = 1.0,
 			maxconcurrent = 16,
 			preload = false,
-			maxdist = nil,
 			rollOff = 0.4,
+			maxdist = maxdistance,
 		},
 		LurkerFire = {
 			file = "sounds/weapon/cannon/lurker_fire.wav",
@@ -212,6 +234,7 @@ local Sounds = {
 			preload = false,
 			maxdist = nil,
 			rollOff = 0.4,
+			maxdist = maxdistance,
 		},
 		PreserverSecondaryHit = {
 			file = "sounds/weapon/emp/LightningBolt3.wav",
@@ -219,8 +242,8 @@ local Sounds = {
 			pitch = 1.0,
 			maxconcurrent = 20,
 			preload = false,
-			maxdist = nil,
 			rollOff = 0.6,
+			maxdist = maxdistance,
 		},
 		flamethrowerfire = {
 			file = "sounds/weapon/cannon/flamethrower_fire.wav",
@@ -230,6 +253,7 @@ local Sounds = {
 			maxconcurrent = 20,
 			preload = false,
 			rollOff = 0.5,
+			maxdist = maxdistance,
 		},
 		flamethrowerhit = {
 			file = "sounds/weapon/cannon/wolverine_hit.wav",
@@ -239,6 +263,7 @@ local Sounds = {
 			maxconcurrent = 20,
 			preload = false,
 			rollOff = 0.5,
+			maxdist = maxdistance,
 		},
 		gausslimitedfire = {
 			file = "sounds/weapon/cannon/gauss_rapid.wav",
@@ -248,6 +273,7 @@ local Sounds = {
 			preload = false,
 			maxconcurrent = 14,
 			rollOff = 0.6,
+			maxdist = maxdistance,
 		},
 		gausslimitedhit = {
 			file = "sounds/weapon/cannon/heavy_gauss_hit.wav",
@@ -257,6 +283,7 @@ local Sounds = {
 			preload = false,
 			maxconcurrent = 14,
 			rollOff = 0.5,
+			maxdist = maxdistance,
 		},
 		nukewarning = {
 			file = "sounds/reply/advisor/nuclearthreat.wav",
@@ -265,6 +292,7 @@ local Sounds = {
 			priority = 20,
 			preload = true,
 			maxconcurrent = 1,
+			maxdist = nil, -- UI land.
 		},
 	},
 }
