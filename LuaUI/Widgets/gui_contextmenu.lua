@@ -2118,6 +2118,7 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 
 	local cost = numformat(ud.metalCost)
 	local health = numformat(ud.health)
+	local rawhealth = ud.health
 	local speed = numformat(ud.speed)
 	local mass = numformat(ud.mass)
 	
@@ -2134,6 +2135,8 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 		if isFeature then
 			cost = Spring.GetFeatureRulesParam(unitID, "comm_cost") or 1200
 			health = select(2, Spring.GetFeatureHealth(unitID))
+			rawhealth = health
+			health = numformat(health)
 			speedMult = Spring.GetFeatureRulesParam(unitID, "upgradesSpeedMult") or 1
 			mass = numformat(Spring.GetFeatureRulesParam(unitID, "massOverride") or ud.mass)
 			level = Spring.GetFeatureRulesParam(unitID, "comm_level") or 0
@@ -2141,6 +2144,8 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 		else
 			cost = Spring.GetUnitRulesParam(unitID, "comm_cost") or 1200
 			health = select(2, Spring.GetUnitHealth(unitID))
+			rawhealth = health
+			health = numformat(health)
 			speedMult = Spring.GetUnitRulesParam(unitID, "upgradesSpeedMult") or 1
 			mass = numformat(Spring.GetUnitRulesParam(unitID, "massOverride") or ud.mass)
 			level = Spring.GetUnitRulesParam(unitID, "comm_level") or 0
@@ -2206,7 +2211,7 @@ local function printunitinfo(ud, buttonWidth, unitID, isFeature)
 	AddEntry(localization.cost .. ": ", 1, costStr, color.stats_fg, color.stats_fg, statschildren) 
 	AddEntry(localizationCommon.health .. ":", 1, health, color.stats_fg, color.stats_fg, statschildren)
 	if ud.metalCost > 0 then
-		AddEntry(localizationCommon.health .. "/" .. localization.cost .. ':', 1, string.format("%.2f", health / cost), color.stats_fg, color.stats_fg, statschildren)
+		AddEntry(localizationCommon.health .. "/" .. localization.cost .. ':', 1, string.format("%.2f", rawhealth / cost), color.stats_fg, color.stats_fg, statschildren)
 	end
 	AddEntry(localization.mass .. ":", 1, mass, color.stats_fg, color.stats_fg, statschildren)
 	if not ud.isImmobile then
