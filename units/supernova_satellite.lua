@@ -121,7 +121,6 @@ return {
 				coreThickness           = 0.5,
 				craterBoost             = 30,
 				craterMult              = 30,
-
 				customParams              = {
 					light_color = "3 0.2 4",
 					light_radius = 1200,
@@ -131,7 +130,6 @@ return {
 				damage                  = {
 					default = 150,
 				},
-
 				explosionGenerator      = "custom:FLASHLAZER",
 				impulseBoost            = 0,
 				impulseFactor           = 0,
@@ -175,7 +173,6 @@ return {
 				damage                  = {
 					default = 150,
 				},
-
 				explosionGenerator      = "custom:FLASHLAZER",
 				impulseBoost            = 0,
 				impulseFactor           = 0,
