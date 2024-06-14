@@ -5,7 +5,7 @@ return {
 		description         = "Assault/Riot Strider",
 		acceleration        = 0.295,
 		brakeRate           = 1.435,
-		buildCostMetal      = 5250,
+		buildCostMetal      = 5000,
 		builder             = false,
 		buildPic            = "striderdante.png",
 		canGuard            = true,
@@ -25,7 +25,7 @@ return {
 		idleTime            = 600,
 		leaveTracks         = true,
 		losEmitHeight       = 50,
-		health              = 35700,
+		health              = 35000,
 		maxSlope            = 36,
 		speed               = 1.45,
 		maxWaterDepth       = 22,
@@ -131,7 +131,7 @@ return {
 				tolerance               = 5000,
 				turret                  = true,
 				weaponType              = "LaserCannon",
-				weaponVelocity          = 800,
+				weaponVelocity          = 500,
 			},
 			HEATRAY = {
 				name                    = "Rotary Heatray Array",
@@ -160,7 +160,7 @@ return {
 					stats_custom_tooltip_entry_3 = "100deg/s",
 				},
 				damage                  = {
-					default = 25.1,
+					default = 30.1,
 				},
 				duration                = 0.3,
 				dynDamageExp            = 1,
@@ -212,7 +212,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 140.1,
+					default = 300.1,
 				},
 			
 				edgeEffectiveness       = 0.75,
@@ -356,7 +356,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 140.1,
+					default = 300.1,
 				},
 				dance                   = 15,
 				edgeEffectiveness       = 0.75,
