@@ -19,6 +19,11 @@
 		"description" : "Kinetik Öldürme Aracı",
 		"helptext" : "Apogee, bir hedefe sert bir şekilde düşmeden önce uzaya uçan ve büyük hasar veren ucuz bir kinetik saldırı silahıdır. AOE'si arzulanan çok şey bıraksa da, ucuz ve istenmeyen posta gönderilebilir, bu da ona karşı yarı iyi kalkanlar."
 	},
+	"Striderraider": {
+		"name": "Çapulcu",
+		"description": "Ağır Taciz",
+		"Helptext": "Çapulcu, öngörüye bir yanıt olarak eski bir çatışma sırasında yapılan kardeş biriminden, öngörülenden çok farklı. Öngörü ağır kalkanlarına nüfuz edememesi nedeniyle orijinal yaratıcıları tarafından hızla terk edildi. Gerçek güç, herhangi bir zırhı çok az olmasına rağmen, yüksek hareketliliğinde yatıyor. "
+	},
     "gunshipskirm": {
         "name": "Harpy",
         "description": "Çok rollü Destek Kopteri",

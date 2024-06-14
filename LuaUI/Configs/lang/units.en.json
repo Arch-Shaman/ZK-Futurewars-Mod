@@ -19,6 +19,11 @@
 		"description" : "Fire Support Gunship",
 		"helptext" : "The Longbow replaced the Harpy after a paradigm shift demanded further air support. The Longbow fills a role between airborn skirmisher and artillery. Its rockets are fairly inaccurate and large groups can saturate an area, but beware: up close, it's inaccurate."
 	},
+	"striderraider" : {
+		"name" : "Marauder",
+		"description" : "Heavy Raider",
+		"helptext" : "The Marauder is starkly different than its sister unit, the Foresaken. Made during an ancient conflict as a response to the Foresaken, it was quickly abandoned by its original creators due to an inability to penetrate the Foresaken's heavy shields. Its true power lies in its high mobility, despite having little if any armor."
+	},
 	"striderrazorback" : {
 		"name" : "Forsaken",
 		"description" : "Heavy Assault/Riot Walker",

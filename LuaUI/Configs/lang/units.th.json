@@ -9,6 +9,11 @@
 		"description" : "Starlight relay satellite",
 		"helptext" : "This is the satellite used by Starlight for targeting."
 	},
+	"Striderraider": {
+		"name": "Marauder",
+		"description": "ผู้ล่วงละเมิดหนัก",
+		"Helptext": "The Marauder นั้นแตกต่างจากหน่วยน้องสาวอย่างสิ้นเชิงผู้คาดการณ์ล่วงหน้าทำในช่วงความขัดแย้งโบราณเพื่อตอบสนองต่อการคาดการณ์ล่วงหน้ามันถูกทิ้งร้างอย่างรวดเร็วโดยผู้สร้างดั้งเดิม พลังที่แท้จริงอยู่ในความคล่องตัวสูงแม้จะมีเกราะเล็ก ๆ น้อย ๆ ถ้ามีเกราะใด ๆ "
+	},
 	"gunshipcon" : {
 		"name" : "Wasp",
 		"description" : "Heavy Gunship Constructor",

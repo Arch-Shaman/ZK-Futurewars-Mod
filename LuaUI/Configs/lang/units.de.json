@@ -9,6 +9,11 @@
 		"description" : "Flakpanzer",
 		"helptext" : "Ettin Flakkanone macht kurzen Prozess mit feindlichen Hubschraubern, aber auch gegen Flugzeuge erweist sie sich als nützlich."
 	},
+	"StriderRraider": {
+		"Name": "Marauder",
+		"description": "Heavy Raider",
+		"Helptext": "Der Marauder unterscheidet sich stark von seiner Schwestereinheit, dem Forsaken. Während eines alten Konflikts als Reaktion auf die Vorhauen wurde er schnell von seinen ursprünglichen Schöpfer aufgegeben, da es nicht in der Lage ist, in die schweren Schilde des Vorhabens einzudringen. Wahre Macht liegt in seiner hohen Mobilität, obwohl sie wenig oder gar keine Rüstung haben. "
+	},
 	"energypylon" : {
 		"name" : "Energy Pylon",
 		"description" : "Erweitert den Bereich des Overdrive-Energienetzes",

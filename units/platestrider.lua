@@ -12,6 +12,7 @@ return {
 		buildingGroundDecalType       = "striderhub_aoplane.dds",
 		buildoptions                  = {
 			"striderantiheavy",
+			"striderraider",
 			"striderscorpion",
 			"striderdante",
 			"striderrazorback",

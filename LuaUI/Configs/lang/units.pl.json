@@ -9,6 +9,11 @@
 		"description" : "Satelita",
 		"helptext" : "Satelita pomocniczy Starlighta."
 	},
+	"Striderraider": {
+		"name": "Marauder",
+		"description": "Heavy Raider",
+		"Helptext": "Huncwot jest wyraźnie inny niż jego siostrzana jednostka, przewidywanie. Wykonane podczas starożytnego konfliktu w odpowiedzi na przewidywanie, szybko został porzucony przez swoich pierwotnych twórców ze względu na niezdolność do przenikania ciężkich tarcz przewidywania. Prawdziwa moc polega na jego wysokiej mobilności, mimo że nie ma żadnej, jeśli w ogóle pancerza. "
+	},
 	"gunshipcon" : {
 		"name" : "Wasp",
 		"description" : "Ciężki powietrzny konstruktor",
