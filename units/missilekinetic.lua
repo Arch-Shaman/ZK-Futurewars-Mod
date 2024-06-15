@@ -110,9 +110,9 @@ local unitDef = {
 				stats_hide_reload = 1,		
 				light_color = "1.35 0.5 0.36",
 				light_radius = 550,
-				cruise_minterrainheight = 300,
+				cruise_minterrainheight = 1000,
 				cruisealt = 3500,
-				cruisedist = 480,
+				cruisedist = 180,
 				cruise_ignoreterrain = 1,
 			},
 			damage                  = {
