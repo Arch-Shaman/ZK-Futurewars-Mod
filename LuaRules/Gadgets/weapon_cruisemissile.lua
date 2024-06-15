@@ -379,7 +379,7 @@ function gadget:GameFrame(f)
 						end
 						--spEcho("Successful torpedo target: " .. tostring(success))
 					end
-				else
+				else -- normal missile
 					local cruiseheight = config[projectiledef].altitude
 					local originalgroundheight = max(spGetGroundHeight(cx, cz), 0)
 					local wantedheight = originalgroundheight + cruiseheight
