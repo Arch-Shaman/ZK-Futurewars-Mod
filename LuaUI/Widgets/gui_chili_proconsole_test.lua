@@ -209,6 +209,7 @@ options_order = {
 	
 	'hideSpec', 'hideAlly', 'hidePoint', 'hideLabel', 'hideLog',
 	'error_opengl_source',
+	'filter_luaHandleCheckStack',
 	
 	--'pointButtonOpacity',
 	
@@ -289,6 +290,14 @@ options = {
 		value = true,
 		desc = "This filter out \'Error: OpenGL: source\' error message from ingame chat, which happen specifically in Spring 91 with Intel Mesa driver."
 		.."\nTips: the spam will be written in infolog.txt, if the file get unmanageably large try set it to Read-Only to prevent write.",
+		path = filter_path ,
+		advanced = true,
+	},
+	filter_luaHandleCheckStack = {
+		name = "Filter out \'LuaHandle::CheckStack\' error",
+		type = 'bool',
+		value = true,
+		desc = "This filters out a message that appears usesless, and started being spammed in 105.1.1-2511.",
 		path = filter_path ,
 		advanced = true,
 	},
@@ -1602,6 +1611,9 @@ function widget:AddConsoleMessage(msg)
 	end
 	if msg.msgtype == 'other' then
 		if options.error_opengl_source.value and (msg.argument):find('Error: OpenGL: source') then
+			return
+		end
+		if options.filter_luaHandleCheckStack.value and (msg.argument):find("Warning: [LuaHandle::CheckStack] LuaRules stack-top", 0, true) then
 			return
 		end
 		
