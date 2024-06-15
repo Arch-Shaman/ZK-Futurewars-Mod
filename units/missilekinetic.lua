@@ -113,6 +113,7 @@ local unitDef = {
 				cruise_minterrainheight = 300,
 				cruisealt = 3500,
 				cruisedist = 480,
+				cruise_ignoreterrain = 1,
 			},
 			damage                  = {
 				default = 3000.01,
