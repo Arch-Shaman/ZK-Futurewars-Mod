@@ -267,7 +267,7 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 	if weapon1 then
 		local baserange = extraInfo[1].rangeOverride or tonumber(WeaponDefs[weaponDef1.weaponDefID].range)
 		isManual[weapon1] = weaponDef1.manualFire
-		local damageBooster = math.max(1 + extraInfo[2].damageBoost, 0.01)
+		local damageBooster = math.max(1 + extraInfo[1].damageBoost, 0.01)
 		local range = baserange*rangeMult
 		if weaponDef1.manualFire then
 			otherRange = range
