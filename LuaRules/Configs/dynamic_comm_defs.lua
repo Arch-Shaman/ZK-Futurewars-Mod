@@ -30,7 +30,7 @@ if (Spring.GetModOptions) then
         if modOptions.hpmult and modOptions.hpmult ~= 1 then
             HP_MULT = modOptions.hpmult
         end
-		allowCommEco = (modOptions.commeco or 0) == 1
+		allowCommEco = (modOptions.commeco or "0") == "1"
 		commwars = modOptions.commwars or "0" == "1"
 		if modOptions.disabledcommmodules and modOptions.disabledcommmodules ~= "" then
 			local s = modOptions.disabledcommmodules
