@@ -17,7 +17,7 @@ end
 local unitsThatCantLand = {}
 for i = 1, #UnitDefs do
 	local ud = UnitDefs[i]
-	if ud.customParam.cantland then
+	if ud.customParams.cantland then
 		unitsThatCantLand[i] = true
 	end
 end
