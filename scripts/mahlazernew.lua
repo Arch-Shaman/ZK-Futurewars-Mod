@@ -74,7 +74,6 @@ local PITCH_AIM_RATE = math.rad(0.75)
 
 local oldHeight = 0
 local shooting = 0
-local wantedDirection = 0
 
 local ROTATION_PER_FRAME = YAW_AIM_RATE/30
 local TARGET_ALT = 143565270/2^16
@@ -86,280 +85,19 @@ local spGetUnitRulesParam = Spring.GetUnitRulesParam
 
 local satUnitID = false
 
-local DOCKED = 1
-local READY = 2
-local FALLING = 3
-local UNDOCKING = 4
-
 local aimingDone = false
 local isStunned = true
-local state = DOCKED
 
 -- Signal definitions
 local SIG_AIM = 2
 local SIG_DOCK = 4
 
 local function IsDisabled()
-	local state = Spring.GetUnitStates(unitID)
-	if not (state and state.active) then
-		return true
-	end
 	return spGetUnitIsStunned(unitID) or (spGetUnitRulesParam(unitID, "disarmed") == 1) or (spGetUnitRulesParam(unitID, "lowpower") == 1)
 end
 
-local function CallSatelliteScript(funcName, args, args2)
-	if not satUnitID then
-		return
-	end
-	local env = Spring.UnitScript.GetScriptEnv(satUnitID)
-	if not env then
-		return
-	end
-	local func = env[funcName]
-	if func then
-		Spring.UnitScript.CallAsUnit(satUnitID, func, args, args2)
-	end
-end
-
-local HEADING_TO_RAD = 1/32768*math.pi
-local function GetDir(checkUnitID)
-	if not satUnitID then
-		return
-	end
-	local heading = Spring.GetUnitHeading(satUnitID)
-	if heading then
-		return math.pi/2 - heading*HEADING_TO_RAD
-	end
-end
-
-function StopAim()
-	CallSatelliteScript('mahlazer_StopAim')
-	GG.PieceControl.StopTurn(SatelliteMuzzle, x_axis)
-	Signal(SIG_AIM)
-	if satUnitID then
-		wantedDirection = GetDir(satUnitID)
-	end
-end
-
-local isFiring = false
-local function SetFiringState(shouldFire)
-	if isFiring == shouldFire then
-		return
-	end
-	isFiring = shouldFire
-
-	if shouldFire then
-		CallSatelliteScript('mahlazer_EngageTheLaserBeam')
-	else
-		CallSatelliteScript('mahlazer_DisengageTheLaserBeam')
-		StopAim()
-	end
-end
-
-function Undock()
-	SetSignalMask(SIG_DOCK)
-	
-	while IsDisabled() do
-		Sleep(500)
-	end
-	
-	if state == DOCKED then
-		state = UNDOCKING
-		for i = 1, 4 do
-			Turn(DocksClockwise[i]      ,z_axis,math.rad(-42.5),1)
-			Turn(DocksCounterClockwise[i],z_axis,math.rad( 42.5),1)
-			
-			Turn(ActuatorBaseClockwise[i],z_axis,math.rad(-86),2)
-			Turn(ActuatorBaseCCW[i]      ,z_axis,math.rad( 86),2)
-			
-			Turn(ActuatorMidCW [i],z_axis,math.rad( 53),1.5)
-			Turn(ActuatorMidCCW[i],z_axis,math.rad( 53),1.5)
-			
-			Turn(ActuatorTipCW [i],z_axis,math.rad( 90),2.2)
-			Turn(ActuatorTipCCW[i],z_axis,math.rad( 90),2.2)
-
-			-- 53 for mid
-			-- 90 for tip
-		end
-
-		Sleep(1000)
-		CallSatelliteScript('mahlazer_Undock')
-		
-		Sleep(1200)
-	end
-	state = READY
-	
-	Move(SatelliteMount, z_axis, TARGET_ALT, 30*4)
-end
-
-function Dock()
-	SetSignalMask(SIG_DOCK)
-	state = FALLING
-	SetFiringState(false)
-	
-	Move(SatelliteMount, z_axis, 0, 30*4)
-	WaitForMove(SatelliteMount,z_axis)
-	
-	state = DOCKED
-	Move(ShortSpikes,z_axis, -5,1)
-	Move(LongSpikes,z_axis, -10,1.5)
-	Sleep(100)
-	
-	while not Spring.ValidUnitID(satUnitID) do
-		Sleep(30)
-	end
-	
-	local dx, _, dz = Spring.GetUnitDirection(unitID)
-	if dx then
-		local heading = Vector.Angle(dx, dz)
-		
-		while spGetUnitIsStunned(unitID) or (spGetUnitRulesParam(unitID, "disarmed") == 1) do
-			-- This is basically just visuals to stop animation while visually stunned.
-			Sleep(500)
-		end
-		CallSatelliteScript('mahlazer_Dock')
-		
-		Sleep(100)
-		
-		for i = 1, 4 do
-			Turn(DocksClockwise[i]	   ,z_axis,0,1)
-			Turn(DocksCounterClockwise[i],z_axis,0,1)
-			
-			Turn(ActuatorBaseClockwise[i],z_axis,0,2)
-			Turn(ActuatorBaseCCW[i]	  ,z_axis,0,2)
-			
-			Turn(ActuatorMidCW [i],z_axis,0,1.5)
-			Turn(ActuatorMidCCW[i],z_axis,0,1.5)
-			
-			Turn(ActuatorTipCW [i],z_axis,0,2.2)
-			Turn(ActuatorTipCCW[i],z_axis,0,2.2)
-		end
-	end
-end
-
-function SpiralDown()
-	SetSignalMask(SIG_DOCK)
-	
-	while state == FALLING do
-		-- this ignores base unit rotation. because it wants to snap to multiples of 90, and base unit is guaranteed to be
-		-- always snapped to multiples of 90 because of how buildings are
-		-- this is an invitation for someone to implement arbitrary 360-deg rotation and break this. I dare you. Fight me.
-		if not satUnitID then
-			break
-		end
-		
-		local dx, _, dz = Spring.GetUnitDirection(satUnitID)
-		if not dx then
-			break
-		end
-		local currentHeading  = Vector.Angle(dx, dz)
-		local closestMultiple = math.round(currentHeading/(math.pi/2))*math.pi/2
-		local aimOff = closestMultiple - currentHeading
-
-		if aimOff < 0 then
-			aimOff = math.max(-ROTATION_PER_FRAME, aimOff)
-		else
-			aimOff = math.min(ROTATION_PER_FRAME, aimOff)
-		end
-		
-		CallSatelliteScript('mahlazer_AimAt', 0, PITCH_AIM_RATE)
-		Turn(SatelliteMuzzle, x_axis, 0, YAW_AIM_RATE)
-		
-		Spring.SetUnitRotation(satUnitID, 0, currentHeading + aimOff - math.pi/2 , 0)
-		
-		if (currentHeading == closestMultiple) then
-			break
-		end
-		
-		Sleep(33)
-	end
-end
-
-function TargetingLaserUpdate()
-	while true do
-		isStunned = IsDisabled()
-		SetFiringState(state == READY and not isStunned)
-		if satUnitID then
-			if state == READY then
-				if isStunned then
-					Signal(SIG_DOCK)
-					StartThread(Dock)
-					StartThread(SpiralDown)
-					Signal(SIG_AIM)
-				else
-					--// Aiming
-					local dx, _, dz = Spring.GetUnitDirection(satUnitID)
-					local otherCurrentHeading = GetDir(satUnitID)
-					if dx and otherCurrentHeading then
-						local currentHeading = Vector.Angle(dx, dz)
-						local aimOff = (otherCurrentHeading - wantedDirection + math.pi)%(2*math.pi) - math.pi
-						
-						if aimOff < 0 then
-							if aimOff < -ROTATION_PER_FRAME then
-								aimOff = -ROTATION_PER_FRAME
-								aimingDone = false
-							else
-								aimingDone = true
-							end
-						else
-							if aimOff > ROTATION_PER_FRAME then
-								aimOff = ROTATION_PER_FRAME
-								aimingDone = false
-							else
-								aimingDone = true
-							end
-						end
-						
-						Spring.SetUnitRotation(satUnitID, 0, currentHeading - aimOff - math.pi/2, 0)
-						
-						--// Relay range
-						local _, flashY = Spring.GetUnitPiecePosition(unitID, EmitterMuzzle)
-						local _, SatelliteMuzzleY = Spring.GetUnitPiecePosition(unitID, SatelliteMuzzle)
-						newHeight = max(SatelliteMuzzleY-flashY, 1)
-						if newHeight ~= oldHeight then
-							Spring.SetUnitWeaponState(unitID, 2, "range", newHeight)
-							Spring.SetUnitWeaponState(unitID, 3, "range", newHeight)
-							oldHeight = newHeight
-						end
-						
-						--// Sound effects
-						if soundTime < 0 then
-							local px, py, pz = Spring.GetUnitPosition(unitID)
-							Spring.PlaySoundFile("sounds/weapon/laser/laser_burn6.wav", 10, px, (py + flashY)/2, pz)
-							soundTime = 46
-						else
-							soundTime = soundTime - 1
-						end
-						
-						--// Shooting
-						if shooting ~= 0 then
-							EmitSfx(EmitterMuzzle, GG.Script.FIRE_W2)
-							shooting = shooting - 1
-						else
-							EmitSfx(EmitterMuzzle, GG.Script.FIRE_W3)
-						end
-					end
-				end
-			elseif not isStunned and state ~= UNDOCKING then
-				Signal(SIG_DOCK)
-				StartThread(Undock)
-			end
-		end
-		
-		Sleep(30)
-	end
-end
-
-local function SnapSatellite()
-	while true do
-		local x,y,z = Spring.GetUnitPiecePosDir(unitID,SatelliteMount)
-		Spring.MoveCtrl.SetPosition(satUnitID,x,y,z)
-		Sleep(30)
-	end
-end
-
 local function DeferredInitialize()
-	while select(3, Spring.GetUnitIsStunned(unitID)) do
+	while IsDisabled() do
 		Sleep(30)
 	end
 	
@@ -378,16 +116,9 @@ local function DeferredInitialize()
 	
 	while not Spring.ValidUnitID(satUnitID) do
 		Sleep(30)
-		satUnitID = Spring.CreateUnit('starlight_satellite',x,y,z,0,Spring.GetUnitTeam(unitID))
+		satUnitID = Spring.CreateUnit('supernova_satellite',x,y,z,0,Spring.GetUnitTeam(unitID))
 		if satUnitID then
 			satelliteCreated = true
-			Spring.SetUnitNoSelect(satUnitID,true)
-			Spring.SetUnitNoMinimap(satUnitID,true)
-			Spring.SetUnitNeutral(satUnitID,true)
-			Spring.MoveCtrl.Enable(satUnitID)
-			Spring.MoveCtrl.SetPosition(satUnitID,x,y,z)
-			Spring.SetUnitRotation(satUnitID, 0, heading+math.pi/2, 0)
-			Spring.SetUnitLoadingTransport(satUnitID,unitID)
 			Spring.SetUnitRulesParam(satUnitID,'cannot_damage_unit',unitID)
 			Spring.SetUnitRulesParam(satUnitID,'parent_unit_id',unitID)
 			Spring.SetUnitRulesParam(satUnitID,'untargetable',1)
@@ -405,69 +136,23 @@ local function DeferredInitialize()
 			Hide(SatelliteMuzzle)
 		end
 	end
-	
-	StartThread(SnapSatellite)
 end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-	-- Give the targeter +500 extra range to allow the build UI to show what a Starlight can hit
-	Spring.SetUnitWeaponState(unitID, 1, "range", 10500)
 
 	--Move(ShortSpikes,z_axis, -5)
 	--Move(LongSpikes,z_axis, -10)
 	local facing = Spring.GetUnitBuildFacing(unitID)
-	StartThread(TargetingLaserUpdate)
-	
-	wantedDirection = math.pi*(3 - facing)/2
 	StartThread(DeferredInitialize)
 end
 
-function script.Activate()
-	Signal(SIG_DOCK)
-	StartThread(Undock)
-end
-
-function script.Deactivate()
-	Signal(SIG_DOCK)
-	StartThread(Dock)
-	StartThread(SpiralDown)
-	Signal(SIG_AIM)
-end
-
 function script.AimWeapon(num, heading, pitch)
-	if (not isStunned) and state == READY and num == 1 then
-		Signal(SIG_AIM)
-		SetSignalMask(SIG_AIM)
-		
-		local dx, _, dz = Spring.GetUnitDirection(unitID)
-		if not dx then
-			return false
-		end
-		local currentHeading = Vector.Angle(dx, dz)
-		
-		wantedDirection = currentHeading - heading + math.pi
-		
-		-- Starlight misses Gnat at max range if the fudge
-		-- factor is either 0.998 or 1.0, unsure why.
-		pitchFudge = (math.pi/2 + pitch)*0.999 - math.pi/2
-		
-		local speedMult = (GG.att_ReloadChange[unitID] or 1)
-		CallSatelliteScript('mahlazer_AimAt', pitchFudge + math.pi/2, PITCH_AIM_RATE*speedMult)
-		Turn(SatelliteMuzzle, x_axis, math.pi/2 + pitch, PITCH_AIM_RATE*speedMult)
-		WaitForTurn(SatelliteMuzzle, x_axis)
-		return aimingDone and (spGetUnitRulesParam(unitID, "lowpower") == 0)
-	end
 	return false
 end
 
 function script.QueryWeapon(num)
 	return SatelliteMuzzle
-end
-
-function script.FireWeapon(num)
-	shooting = 30
-	CallSatelliteScript('mahlazer_SetShoot',shooting)
 end
 
 function script.AimFromWeapon(num)
