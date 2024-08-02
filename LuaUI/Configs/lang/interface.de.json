@@ -100,5 +100,7 @@
 		"other" : "%{count} Einheiten in Warteschlange"
 	}
 	"sensorsteal" : "Sensoren gehackt",
-	"sensortag" : "Einheit verfolgt"
+	"sensortag" : "Einheit verfolgt",
+	"supernova_rate" : "Verstärkungsrate / Einheitsgeschwindigkeit: ",
+	"charge_rate" : "Aktueller Laderate: "
 }

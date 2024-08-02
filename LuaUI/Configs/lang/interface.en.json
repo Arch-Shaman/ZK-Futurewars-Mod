@@ -139,5 +139,7 @@
 		"other" : "%{count} units in queue"
 	},
 	"sensorsteal" : "Sensors hacked",
-	"sensortag" : "Unit tracked"
+	"sensortag" : "Unit tracked",
+	"supernova_rate" : "Satellite Amplification Rate / Speed: ",
+	"charge_rate" : "Current Charge Rate: "
 }

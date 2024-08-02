@@ -115,5 +115,7 @@
 		"other" : "%{count} jednostek w kolejce"
 	},
 	"sensorsteal": "Zhakowanie czujników",
-	"sensortag": "Jednostka śledzona"
+	"sensortag": "Jednostka śledzona",
+	"supernova_rate" : "Współczynnik wzmocnienia / prędkość ruchu: ",
+	"charge_rate" : "Aktualna stawka opłaty: "
 }

@@ -120,5 +120,7 @@
 		"other" : "%{count} units in queue"
 	},
 	"sensorsteal": "เซ็นเซอร์ถูกแฮ็ก",
-	"sensortag" : "ติดตามหน่วย"
+	"sensortag" : "ติดตามหน่วย",
+	"supernova_rate" : "อัตราการขยาย/การเคลื่อนที่: ",
+	"charge_rate" : "อัตราการชาร์จปัจจุบัน: "
 }

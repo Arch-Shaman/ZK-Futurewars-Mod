@@ -112,5 +112,7 @@
 		"other" : "%{count} üniteler kuyrukta"
 	},
 	"sensorsteal" : "Sensörler hacklendi",
-	"sensortag" : "Birim izlendi"
+	"sensortag" : "Birim izlendi",
+	"supernova_rate" : "Amplifikasyon / Hareket oranı: ",
+	"charge_rate" : "Güncel ücret oranı: "
 }
