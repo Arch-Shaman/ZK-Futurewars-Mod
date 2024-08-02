@@ -234,8 +234,11 @@ local function GetSuperweaponTooltip(unitID, ud)
 	else
 		fireRate = string.format("%.2f %%", math.round(superRate, 2))
 	end
+	if ud.name == "supernova_base" or ud.name == "supernova_satellite" then
+		return (WG.Translate("units", ud.name .. ".description") or "Supernova Basestation") .. "\n" .. (WG.Translate("interface", "supernova_rate") or "Satellite Amplification and Speed: ") .. fireRate
+	end
 	if ud.name == "turretaaheavy" then
-		return (WG.Translate("units", ud.name .. ".description") or "Lolcannon") .. "\n" .. "Charge Rate: " .. fireRate
+		return (WG.Translate("units", ud.name .. ".description") or "Lolcannon") .. "\n" .. (WG.Translate("interface", "charge_rate") or "Charge Rate: ") .. fireRate
 	end
 	return (WG.Translate("units", ud.name .. ".description") or "Lolcannon") .. "\n" .. (WG.Translate("interface", "fire_rate") or "Fire Rate: ") .. " " .. fireRate
 end
