@@ -1,4 +1,4 @@
-local aimTime = 6.9*30 -- in frames
+local aimTime = 3.5*30 -- in frames
 
 return { 
 	turretsunlance = {
@@ -81,7 +81,7 @@ return {
 					allowedheadingerror = 14,
 				},
 				damage                  = {
-					default = 1500.1,
+					default = 850.1,
 				},
 				explosionGenerator      = "custom:DOT_Pillager_Explo",
 				fireTolerance           = 1820, -- 10 degrees
