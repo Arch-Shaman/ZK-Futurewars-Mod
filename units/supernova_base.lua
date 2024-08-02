@@ -23,8 +23,12 @@ return {
 			select_no_rotate   = "1", -- tells selection widgets to treat the unit as if it has no rotation.
 			bait_level_default = 0,
 			draw_blueprint_facing = 1,
+			neededlink			= 450,
+			pylonrange			= 150,
+			superweapon = 1,
+			superweaponcoef    = 0.2,
 			reveal_losunit = "los_superwep",
-			reveal_onprogress = 0.5,
+			reveal_onprogress = 0.75,
 		},
 		explodeAs                     = "ATOMIC_BLAST", -- TODO: improved death explosion.
 		footprintX                    = 10,
