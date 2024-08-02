@@ -31,12 +31,16 @@ local setup = false
 
 local currentSpeedMult = 0.01
 local noPower = false
+local currentFiringTime = 0
 
 local restartTime = 2.2 * 30
 local beamLevelTime = {}
 beamLevelTime[0] = 2 * 30 -- Tracker -> laser
-beamLevelTime[1] = 10 * 30, -- laser -> cutter
-beamLevelTime[2] = 20 * 30, -- cutter -> deathlaser
+beamLevelTime[1] = 10 * 30 -- laser -> cutter
+beamLevelTime[2] = 20 * 30 -- cutter -> deathlaser
+
+local spGetUnitIsStunned = Spring.GetUnitIsStunned
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 
 local function RoundToNearestFrame(num) -- take whole number, put out whole number
 	local prenumber = num * 10
@@ -51,18 +55,31 @@ local function GetFrameTimeToNextLevel(level)
 	end
 end
 
+local function CheckLevel()
+	if currentFiringTime >= GetFrameTimeToNextLevel(currentStage) then
+		currentFiringTime = 0
+		currentStage = currentStage + 1
+	end
+end
+
 local function SuperWeaponThread()
 	SetSignalMask(SIG_SUPERWEAPON)
+	local INLOS = {inlos = true}
 	while true do
-		if parentUnitID and Spring.ValidUnitID(parentUnitID) then
+		if parentUnitID and Spring.ValidUnitID(parentUnitID) and setup then
+			local disabled = spGetUnitIsStunned(parentUnitID)
 			noPower = not ((Spring.GetUnitRulesParam(parentUnitID,"disarmed") ~= 1) and (Spring.GetUnitRulesParam(parentUnitID, "lowpower") or 0) ~= 1)
 			if noPower then
-				currentSpeedMult = 0
+				currentSpeedMult = 0.000000001
 			else
-				currentSpeedMult = currentSpeedMult = Spring.GetUnitRulesParam(parentUnitID, "superweapon_mult")
+				currentSpeedMult = Spring.GetUnitRulesParam(parentUnitID, "superweapon_mult") or 0.000000001
+				Spring.Echo("Mult: " .. currentSpeedMult)
+				Spring.SetUnitRulesParam(unitID, "superweapon_mult", currentSpeedMult, INLOS)
 			end
 			Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", math.max(currentSpeedMult, 0.01))
 			GG.UpdateUnitAttributes(unitID)
+		else
+			currentSpeedMult = 0
 		end
 		Sleep(198) -- 5hz
 	end
@@ -72,158 +89,71 @@ local function MonitorThread()
 	SetSignalMask(SIG_WATCH)
 	local timeSinceFire = 0
 	local currentGameFrame = -1
+	noPower = true
 	while true do
 		currentGameFrame = Spring.GetGameFrame()
 		if currentStage > 0 and currentGameFrame - lastFrameShot > restartTime then
 			currentStage = 0
+			currentFiringTime = 0
 		end
-		if not Spring.ValidUnitID(parentUnitID) and setup then
+		if setup then
+			CheckLevel()
+		end
+		if (not Spring.ValidUnitID(parentUnitID)) and setup then
+			Spring.Echo("Crashing")
 			Spring.SetUnitCrashing(unitID, true)
 			Spring.SetUnitHealth(unitID, 0)
 		elseif not parentUnitID then
-			parentUnitID = Spring.GetUnitRulesParam(unitID,'cannot_damage_unit') -- set up
-			setup = true
-		elseif parentUnitID then
-			
+			parentUnitID = Spring.GetUnitRulesParam(unitID,'parent_unit_id') -- set up
+			if parentUnitID then
+				setup = true
+				Spring.Echo("Parent ID is " .. parentUnitID .. " Valid: " .. tostring(Spring.ValidUnitID(parentUnitID)))
+			end
 		end
 		Sleep(33)
 	end
 end
 
-local function MonitorHost()
-	SetSignalMask(SIG_WATCH)
-	while true do
-		if(parentUnitID) then
-			if not Spring.ValidUnitID(parentUnitID) then
-				on = false
-				Signal(SIG_DOCK+SIG_SHOOT)
-				Spring.SetUnitHealth(unitID, 500)
-				EmitSfx(Satellite, 1025)
-				Spring.MoveCtrl.SetRotationVelocity(unitID, math.random(1, 20) - 10,math.random(1, 20) - 10,math.random(1, 20) - 10)
-				Spring.MoveCtrl.Disable(unitID)
-				Spring.AddUnitImpulse(unitID, math.random(1, 10) - 5, math.random(1, 10) - 5, math.random(1, 10) - 5)
-				Spring.SetUnitNoSelect(unitID, false)
-				Spring.SetUnitNoMinimap(unitID, false)
-				Spring.SetUnitNeutral(unitID, false)
-				Spring.SetUnitRulesParam(unitID, 'untargetable', nil)
-				Spring.SetUnitCollisionVolumeData(unitID, 30, 30, 30, 10, 0, 0, 0, 0, 0)
-				GG.starlightSatelliteInvulnerable[unitID] = false
-				return
-			end
-		else
-			parentUnitID = Spring.GetUnitRulesParam(unitID,'cannot_damage_unit')
-			--if not parentUnitID then return end
-		end
-		Sleep(33)
+local function Undock()
+	Spring.Echo("UNDOCK")
+	Sleep(100)
+	Spring.Echo("Issue flight command")
+	Spring.GiveOrderToUnit(unitID, CMD.IDLEMODE, {0}, CMD.OPT_SHIFT)
+	local x, y, z = Spring.GetUnitPosition(unitID)
+	Spring.GiveOrderToUnit(unitID, CMD.MOVE, {x + 1800, y, z + 1800}, CMD.OPT_SHIFT)
+	Sleep(200)
+	for i=1,4 do
+		Turn(InnerLimbs[i],y_axis,math.rad(-85),1)
+		Turn(OuterLimbs[i],y_axis,math.rad(-85),1)
 	end
+	Spring.Echo("STOP")
+	Spring.GiveOrderToUnit(unitID, CMD.STOP, {}, {})
 end
 
 function script.Create()
 	--Move(Satellite, y_axis, -10)
 	--Spin(Satellite, x_axis, math.rad(80))
+	StartThread(Undock)
 	StartThread(SuperWeaponThread)
-	StartThread(MonitorHost)
+	StartThread(MonitorThread)
 	GG.starlightSatelliteInvulnerable = GG.starlightSatelliteInvulnerable or {}
 	GG.starlightSatelliteInvulnerable[unitID] = true
 end
 
-local function Dock()
-	SetSignalMask(SIG_DOCK)
-	for i=1,4 do
-		Turn(InnerLimbs[i],y_axis,0,1)
-		Turn(OuterLimbs[i],y_axis,0,1)
-	end
-end
-
-local function Undock()
-	SetSignalMask(SIG_DOCK)
-	for i=1,4 do
-		Turn(InnerLimbs[i],y_axis,math.rad(-85),1)
-		Turn(OuterLimbs[i],y_axis,math.rad(-85),1)
-	end
-end
-
-local cutterCycle = 1
-local function EmitShot()
-	if not parentUnitID then
-		return
-	end
-	
-	if GG.Starlight_DamageFrame[parentUnitID] then
-		local frame = Spring.GetGameFrame()
-		if frame <= GG.Starlight_DamageFrame[parentUnitID] + 1 then
-			return
-		end
-		GG.Starlight_DamageFrame[parentUnitID] = nil
-	end
-	
-	if shooting ~= 0 then
-		EmitSfx(SatelliteMuzzle, GG.Script.FIRE_W1)
-		shooting = shooting - 1
-	else
-		if cutterCycle == 0 then
-			EmitSfx(SatelliteMuzzle, GG.Script.FIRE_W2)
-		else
-			EmitSfx(SatelliteMuzzle, GG.Script.FIRE_W3)
-		end
-		cutterCycle = (cutterCycle + 1)%5
-	end
-end
-
-function Shoot()
-	SetSignalMask(SIG_SHOOT)
-	while(on) do
-		EmitShot()
-		Sleep(30)
-	end
-end
-
-function mahlazer_Hide()
-	for i=1,4 do
-		Hide(InnerLimbs[i])
-		Hide(OuterLimbs[i])
-	end
-	Hide(Satellite)
-end
-
-function mahlazer_Show()
-	for i = 1, 4 do
-		Show(InnerLimbs[i])
-		Show(OuterLimbs[i])
-	end
-	Show(Satellite)
-end
-
-function mahlazer_StopAim()
-	GG.PieceControl.StopTurn(SatelliteMuzzle, x_axis)
-	GG.PieceControl.StopTurn(Satellite, x_axis)
-end
-
-function mahlazer_AimAt(pitch, speed)
-	Turn(SatelliteMuzzle, x_axis, pitch, speed)
-	Turn(Satellite, x_axis, pitch/2, speed*0.5)
-end
-
-function mahlazer_Undock()
-	Signal(SIG_DOCK)
-	StartThread(Undock)
-end
-
-function mahlazer_Dock()
-	Signal(SIG_DOCK)
-	StartThread(Dock)
-end
-
 function script.AimWeapon(num, heading, pitch)
-	return false
+	return num == currentStage + 1 
 end
 
 function script.FireWeapon(num)
 	lastFrameShot = Spring.GetGameFrame()
-	return false
+	currentFiringTime = currentFiringTime + 1
 end
 
 function script.AimFromWeapon(num)
+	return Satellite
+end
+
+function script.QueryWeapon(num)
 	return SatelliteMuzzle
 end
 

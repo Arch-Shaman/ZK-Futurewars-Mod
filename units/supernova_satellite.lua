@@ -30,7 +30,7 @@ return {
 		noChaseCategory        = "TERRAFORM SATELLITE FIXEDWING GUNSHIP",
 		noAutoFire             = false,
 		objectName             = "starlight_satellite.dae",
-		script                 = "starlight_satellite.lua",
+		script                 = "starlight_satellite_new.lua",
 		selfDestructAs         = "GUNSHIPEX",
 		sightDistance          = 700,
 		customParams           = {
@@ -38,6 +38,7 @@ return {
 			outline_x = 100,
 			outline_y = 100,
 			outline_yoff = 0,
+			cantland = 1,
 		},
 		sfxtypes               = {
 			explosiongenerators = {
@@ -52,21 +53,25 @@ return {
 				def                = "TRACKER",
 				badTargetCategory  = "FIXEDWING GUNSHIP",
 				onlyTargetCategory = "SWIM LAND SHIP SINK TURRET FLOAT GUNSHIP FIXEDWING HOVER",
+				--mainDir            = "0 -1 0", 
 			},
 			{
 				def                = "LASER",
 				badTargetCategory  = "FIXEDWING GUNSHIP",
 				onlyTargetCategory = "SWIM LAND SHIP SINK TURRET FLOAT GUNSHIP FIXEDWING HOVER",
+				--mainDir            = "0 -1 0", 
 			},
 			{
 				def                = "CUTTER",
 				badTargetCategory  = "FIXEDWING GUNSHIP",
 				onlyTargetCategory = "SWIM LAND SHIP SINK TURRET FLOAT GUNSHIP FIXEDWING HOVER",
+				--mainDir            = "0 -1 0", 
 			},
 			{
 				def                = "DEATHLASER",
 				badTargetCategory  = "FIXEDWING GUNSHIP",
 				onlyTargetCategory = "SWIM LAND SHIP SINK TURRET FLOAT GUNSHIP FIXEDWING HOVER",
+				--mainDir            = "0 -1 0", 
 			},
 		},
 		weaponDefs                    = {
@@ -104,7 +109,7 @@ return {
 				leadLimit               = 18,
 				minIntensity            = 0.01,
 				noSelfDamage            = true,
-				range                   = 100,
+				range                   = 300,
 				reloadtime              = 1/30,
 				rgbColor                = "0.7 0 0",
 				soundStart              = "weapon/laser/tracker",
@@ -141,7 +146,7 @@ return {
 					combatrange	= 10,
 				},
 				damage                  = {
-					default = 60000,
+					default = 240000,
 				},
 				explosionGenerator      = "custom:beamlaser_hit_saphire",
 				impulseBoost            = 0,
@@ -150,13 +155,13 @@ return {
 				largeBeamLaser          = true,
 				laserFlareSize          = 12,
 				minIntensity            = 1,
-				range                   = 100,
+				range                   = 300,
 				reloadtime              = 3,
 				rgbColor                = "0.05 0.12 1",
 				scrollSpeed             = 8,
 				soundStartVolume        = 1,
 				soundTrigger            = true,
-				soundStart              = "weapon/laser/tracker",
+				soundStart              = "weapon/laser/space_laser_fire",
 				texture1                = "largelaser",
 				texture2                = "flare",
 				texture3                = "flare",
@@ -179,13 +184,11 @@ return {
 				coreThickness           = 0.5,
 				craterBoost             = 30,
 				craterMult              = 30,
+				cylinderTargeting       = 128, -- can attack from space into ocean
 				customParams              = {
 					light_color = "3 0.2 4",
 					light_radius = 2000,
 					light_beam_start = 0.8,
-					aimdelay = 5*30,
-					allowedpitcherror = 180,
-					allowedheadingerror = 180,
 					combatrange	= 10,
 				},
 				damage                  = {
@@ -198,7 +201,7 @@ return {
 				largeBeamLaser          = true,
 				laserFlareSize          = 20,
 				minIntensity            = 1,
-				range                   = 100,
+				range                   = 300,
 				reloadtime              = 1/30,
 				rgbColor                = "1 0.5 0",
 				scrollSpeed             = 8,
@@ -227,6 +230,7 @@ return {
 				coreThickness           = 0.5,
 				craterBoost             = 30,
 				craterMult              = 30,
+				cylinderTargeting       = 128, -- can attack from space into ocean
 				customParams              = {
 					light_color = "3 0.2 4",
 					light_radius = 1200,
@@ -244,7 +248,7 @@ return {
 				largeBeamLaser          = true,
 				laserFlareSize          = 12,
 				minIntensity            = 1,
-				range                   = 100,
+				range                   = 300,
 				reloadtime              = 1/30,
 				rgbColor                = "0.2 1 0",
 				scrollSpeed             = 8,
