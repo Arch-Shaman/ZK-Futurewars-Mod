@@ -42,7 +42,7 @@ return {
 		noChaseCategory               = "FIXEDWING LAND SHIP SATELLITE SWIM GUNSHIP SUB HOVER",
 		objectName                    = "starlight.dae",
 		script                        = "mahlazernew.lua",
-		onoffable                     = true,
+		onoffable                     = false,
 		selfDestructAs                = "ATOMIC_BLAST",
 		sfxtypes                      = {
 			explosiongenerators = {
