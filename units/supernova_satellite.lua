@@ -45,7 +45,7 @@ return {
 				"custom:xamelimpact",
 			},
 		},
-		speed                  = 1.4,
+		speed                  = 1.5,
 		turnRate               = 500, -- some inertia, but not much.
 		weapons                       = {
 			{

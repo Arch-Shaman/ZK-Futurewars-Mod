@@ -41,7 +41,7 @@ return {
 		maxWaterDepth                 = 0,
 		noChaseCategory               = "FIXEDWING LAND SHIP SATELLITE SWIM GUNSHIP SUB HOVER",
 		objectName                    = "starlight.dae",
-		script                        = "mahlazer.lua",
+		script                        = "mahlazernew.lua",
 		onoffable                     = true,
 		selfDestructAs                = "ATOMIC_BLAST",
 		sfxtypes                      = {

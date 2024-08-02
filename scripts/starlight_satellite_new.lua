@@ -19,11 +19,76 @@ local OuterLimbs = {LimbA2,LimbB2,LimbC2,LimbD2}
 local SIG_DOCK  = 2
 local SIG_SHOOT = 4
 local SIG_WATCH = 8
+local SIG_SUPERWEAPON = 16
 
 local on = false
 local shooting = 0
 
 local parentUnitID
+local lastFrameShot = -1
+local currentStage = 0
+local setup = false
+
+local currentSpeedMult = 0.01
+local noPower = false
+
+local restartTime = 2.2 * 30
+local beamLevelTime = {}
+beamLevelTime[0] = 2 * 30 -- Tracker -> laser
+beamLevelTime[1] = 10 * 30, -- laser -> cutter
+beamLevelTime[2] = 20 * 30, -- cutter -> deathlaser
+
+local function RoundToNearestFrame(num) -- take whole number, put out whole number
+	local prenumber = num * 10
+	return math.ceil(prenumber/ 10)
+end
+
+local function GetFrameTimeToNextLevel(level)
+	if beamLevelTime[level] and not noPower then
+		return RoundToNearestFrame(beamLevelTime[level] / currentSpeedMult)
+	else
+		return 10000000
+	end
+end
+
+local function SuperWeaponThread()
+	SetSignalMask(SIG_SUPERWEAPON)
+	while true do
+		if parentUnitID and Spring.ValidUnitID(parentUnitID) then
+			noPower = not ((Spring.GetUnitRulesParam(parentUnitID,"disarmed") ~= 1) and (Spring.GetUnitRulesParam(parentUnitID, "lowpower") or 0) ~= 1)
+			if noPower then
+				currentSpeedMult = 0
+			else
+				currentSpeedMult = currentSpeedMult = Spring.GetUnitRulesParam(parentUnitID, "superweapon_mult")
+			end
+			Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", math.max(currentSpeedMult, 0.01))
+			GG.UpdateUnitAttributes(unitID)
+		end
+		Sleep(198) -- 5hz
+	end
+end
+
+local function MonitorThread()
+	SetSignalMask(SIG_WATCH)
+	local timeSinceFire = 0
+	local currentGameFrame = -1
+	while true do
+		currentGameFrame = Spring.GetGameFrame()
+		if currentStage > 0 and currentGameFrame - lastFrameShot > restartTime then
+			currentStage = 0
+		end
+		if not Spring.ValidUnitID(parentUnitID) and setup then
+			Spring.SetUnitCrashing(unitID, true)
+			Spring.SetUnitHealth(unitID, 0)
+		elseif not parentUnitID then
+			parentUnitID = Spring.GetUnitRulesParam(unitID,'cannot_damage_unit') -- set up
+			setup = true
+		elseif parentUnitID then
+			
+		end
+		Sleep(33)
+	end
+end
 
 local function MonitorHost()
 	SetSignalMask(SIG_WATCH)
@@ -56,6 +121,7 @@ end
 function script.Create()
 	--Move(Satellite, y_axis, -10)
 	--Spin(Satellite, x_axis, math.rad(80))
+	StartThread(SuperWeaponThread)
 	StartThread(MonitorHost)
 	GG.starlightSatelliteInvulnerable = GG.starlightSatelliteInvulnerable or {}
 	GG.starlightSatelliteInvulnerable[unitID] = true
@@ -112,10 +178,6 @@ function Shoot()
 	end
 end
 
-function mahlazer_SetShoot(n)
-	shooting = n
-end
-
 function mahlazer_Hide()
 	for i=1,4 do
 		Hide(InnerLimbs[i])
@@ -130,18 +192,6 @@ function mahlazer_Show()
 		Show(OuterLimbs[i])
 	end
 	Show(Satellite)
-end
-
--- prepare the laser beam, i'm gonna use it tonite
-function mahlazer_EngageTheLaserBeam() -- it's gonna END YOUR LIFE
-	on = true
-	Signal(SIG_SHOOT)
-	StartThread(Shoot)
-end
-
-function mahlazer_DisengageTheLaserBeam()
-	Signal(SIG_SHOOT)
-	on = false
 end
 
 function mahlazer_StopAim()
@@ -169,6 +219,7 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.FireWeapon(num)
+	lastFrameShot = Spring.GetGameFrame()
 	return false
 end
 
