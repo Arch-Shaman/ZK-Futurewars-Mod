@@ -1353,5 +1353,15 @@
 		"name" : "Commander",
 		"description" : "Mobile Assault Commander",
 		"helptext" : "The Knight Commander chassis is a well-balanced command platform that can mount most modules, with decent speed, armor, and regeneration."
+	},
+	"supernova_base" : {
+		"name" : "Supernova Uplink",
+		"description" : "Supernova basestation",
+		"helptext" : "The Supernova Defense satellite is a directed energy mounted on a space based satellite system capable of striking targets with complete impunity. This uplink station provides it with the power it needs to fire off its deadly laser and provide power to its thrust systems. Should the uplink station die or become incapacitated such as being EMPed, disarmed, or removed from the grid, the satellite will cease to function."
+	},
+	"supernova_satellite" : {
+		"name" : "Supernova Defense Satellite",
+		"description" : "Laser Amplifier Superweapon",
+		"helptext" : "The Supernova Defense Satellite takes pure energy from its uplink station to power a massive laser mounted below itself as well as its maneuver jets. This laser fires in 4 stages with increasing firepower as it continues firing. Conceived from a Starlight, it has been refined to float over its target to fire its deadly laser instead of bouncing off the base station."
 	}
 }

@@ -1213,5 +1213,15 @@
         "name": "Komutan",
         "description": "Mobil Taarruz Komutan",
         "helptext": "Şovalye Komutan şasi, çoğu modülü uygun hız, zırh ve rejenerasyonla monte edebilen dengeli bir komut platformudur."
-    }
+    },
+	"supernova_base" : {
+		"name" : "Supernova Uplink",
+		"description" : "Supernova basestation",
+		"helptext" : "Supernova Defense uydusu, hedefleri tamamen cezasız bir şekilde vurabilen uzay tabanlı bir uydu sistemine monte edilmiş yönlendirilmiş bir enerjidir. Bu uplink istasyonu, ona ölümcül lazerini ateşlemesi ve itme sistemlerine güç sağlaması için ihtiyaç duyduğu gücü sağlar. Uplink istasyonu ölürse veya EMP'ye maruz kalma, silahsızlanma veya şebekeden çıkarılma gibi bir durumda devre dışı kalırsa, uydu işlevini yitirir."
+	},
+	"supernova_satellite" : {
+		"name" : "Süpernova Savunma Uydusu",
+		"description" : "Lazer Amplifikatörlü Süper Silah",
+		"helptext" : "Süpernova Savunma Uydusu, kendisinin altına monte edilmiş devasa bir lazeri ve manevra jetlerini çalıştırmak için uplink istasyonundan saf enerji alır. Bu lazer, ateş etmeye devam ettikçe artan ateş gücüyle 4 aşamada ateş eder. Bir Starlight'tan tasarlanan bu uydu, baz istasyonundan sekmek yerine hedefinin üzerinde süzülerek ölümcül lazerini ateşlemek için rafine edilmiştir."
+	}
 }

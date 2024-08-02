@@ -1213,5 +1213,15 @@
 		"name" : "Dowódca",
 		"description" : "Dowódca szturmowy",
 		"helptext" : "Knight to zrównoważony Dowódca, który może używać większość modułów i ma dobre osiągi. Posiada zwiększoną regenerację w porównaniu do innych Dowódców."
+	},
+		"supernova_base" : {
+		"name" : "Łącze w górę Supernova",
+		"description" : "Stacja bazowa Supernova",
+		"helptext" : "Satelita Supernova Defense to ukierunkowana energia zamontowana w systemie satelitarnym w przestrzeni kosmicznej, zdolnym do atakowania celów z całkowitą bezkarnością. Ta stacja uplink zapewnia mu moc potrzebną do wystrzelenia śmiercionośnego lasera i zasilania jego systemów napędowych. Jeśli stacja uplink ulegnie awarii lub zostanie unieruchomiona, np. w wyniku EMP, rozbrojenia lub usunięcia z sieci, satelita przestanie działać."
+	},
+		"supernova_satellite" : {
+		"name" : "Satelita obronny Supernova",
+		"description" : "Wzmacniacz laserowy Superbroń",
+		"helptext" : "Supernova Defense Satellite pobiera czystą energię ze swojej stacji uplink, aby zasilić potężny laser zamontowany pod nim, a także swoje dysze manewrowe. Ten laser strzela w 4 etapach, zwiększając siłę ognia w miarę kontynuowania strzelania. Zaprojektowany na podstawie Starlight, został udoskonalony tak, aby unosił się nad celem i wystrzeliwał śmiercionośny laser zamiast odbijać się od stacji bazowej."
 	}
 }

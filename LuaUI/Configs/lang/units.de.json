@@ -1208,5 +1208,15 @@
 		"name" : "Likho",
 		"description" : "Implosion Bomber",
 		"helptext" : "Likho ist ein mächtiger Bomber, der alles in Schutt und Asche legt. Seine Schlagkraft und Ausdauer ist riesig, doch muss er nach jedem Angriff Munition nachladen, was ihn eher für Angriffe auf einzelne Ziele prädestiniert."
+	},
+		"supernova_base" : {
+		"name" : "Supernova Uplink",
+		"description" : "Supernova Basisstation",
+		"helptext" : "Der Supernova Verteidigungssatellit ist ein Energiesatellit, der auf einem weltraumgestützten Satellitensystem montiert ist und Ziele völlig ungestraft treffen kann. Diese Uplink-Station versorgt ihn mit der Energie, die er braucht, um seinen tödlichen Laser abzufeuern und seine Antriebssysteme mit Energie zu versorgen. Sollte die Uplink-Station ausfallen oder außer Gefecht gesetzt werden, z. B. durch EMP, Entwaffnung oder Trennung vom Netz, wird der Satellit seinen Dienst einstellen."
+	},
+	"supernova_satellite" : {
+		"name" : "Supernova-Abwehrsatellit",
+		"description" : "Laserverstärker-Superwaffe",
+		"helptext" : "Der Supernova Verteidigungssatellit bezieht reine Energie von seiner Uplink-Station, um einen massiven Laser, der unter ihm montiert ist, sowie seine Manöverdüsen anzutreiben. Dieser Laser feuert in 4 Stufen und seine Feuerkraft nimmt mit der Zeit zu. Er wurde von einem Starlight abgeleitet und so verbessert, dass er über seinem Ziel schwebt, um seinen tödlichen Laser abzufeuern, anstatt von der Basisstation abzuprallen."
 	}
 }
