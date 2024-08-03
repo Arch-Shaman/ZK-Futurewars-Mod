@@ -97,6 +97,7 @@ local function IsDisabled()
 end
 
 local function DeferredInitialize()
+	Sleep(1000) -- let the rest of the script environment update (IE grid)
 	while IsDisabled() do
 		Sleep(30)
 	end
