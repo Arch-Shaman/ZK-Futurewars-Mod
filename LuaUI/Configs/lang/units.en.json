@@ -549,6 +549,11 @@
 		"description" : "Transport Hovercraft",
 		"helptext" : "An all purpose hoverboard that allows units to bypass their normal domains and go into sea or land. It's tanky enough for front line combat, but is completely unarmed."
 	},
+	"hovertransport" : {
+		"name" : "Hoverboard",
+		"description" : "Transport Hovercraft",
+		"helptext" : "An all purpose hoverboard that allows units to bypass their normal domains and go into sea or land. It's tanky enough for front line combat, but is completely unarmed."
+	},
 	"hovershotgun" : {
 		"name" : "Punisher",
 		"description" : "Shotgun Hover",
