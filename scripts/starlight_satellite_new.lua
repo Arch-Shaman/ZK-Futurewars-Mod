@@ -42,6 +42,7 @@ local beamLevelTime = {}
 beamLevelTime[0] = 2 * 30 -- Tracker -> laser
 beamLevelTime[1] = 10 * 30 -- laser -> cutter
 beamLevelTime[2] = 20 * 30 -- cutter -> deathlaser
+local coolingOff = false
 
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
@@ -76,10 +77,10 @@ local function GetVerticalAngle(x2, y2, z2, x1, y1, z1)
 end
 
 local aimPoints = {
-	[1] = LimbA2,
-	[2] = LimbB2,
-	[3] = LimbC2,
-	[4] = LimbD2,
+	[1] = LimbA1,
+	[2] = LimbB1,
+	[3] = LimbC1,
+	[4] = LimbD1,
 }
 
 local function SuperWeaponThread()
@@ -93,7 +94,7 @@ local function SuperWeaponThread()
 				currentSpeedMult = 0.000000001
 			else
 				currentSpeedMult = Spring.GetUnitRulesParam(parentUnitID, "superweapon_mult") or 0.000000001
-				Spring.Echo("Mult: " .. currentSpeedMult)
+				--Spring.Echo("Mult: " .. currentSpeedMult)
 				Spring.SetUnitRulesParam(unitID, "superweapon_mult", currentSpeedMult, INLOS)
 			end
 			Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", math.max(currentSpeedMult, 0.01))
@@ -115,6 +116,7 @@ local function MonitorThread()
 		if currentStage > 0 and currentGameFrame - lastFrameShot > restartTime then
 			currentStage = 0
 			currentFiringTime = 0
+			coolingOff = false
 		end
 		if setup then
 			CheckLevel()
@@ -248,7 +250,10 @@ local firepoints = {
 }
 
 local function FireZeBeam() -- BEAM LASERS *FUCKING* SUCK.
-	local unitTargetType, _, target = Spring.GetUnitWeaponTarget(unitID, 1)
+	if coolingOff then
+		return
+	end
+	--[[local unitTargetType, _, target = Spring.GetUnitWeaponTarget(unitID, 1)
 	local x, y, z = Spring.GetUnitPosition(unitID)
 	local defID = weapondefsbylevel[currentStage + 1]
 	local ex, ey, ez
@@ -258,12 +263,15 @@ local function FireZeBeam() -- BEAM LASERS *FUCKING* SUCK.
 		ex = target[1]
 		ey = target[2]
 		ez = target[3]
-	elseif num == 3 then
+	elseif unitTargetType == 3 then
 		ex, ey, ez = Spring.GetProjectilePosition(target)
 	end
-	ey = Spring.GetGroundHeight(ex, ez) - 50
+	ey = Spring.GetGroundHeight(ex, ez) - 50]]
 	lastFrameShot = Spring.GetGameFrame()
 	currentFiringTime = currentFiringTime + 1
+	if currentStage == 3 and currentFiringTime > (90 * currentSpeedMult) then
+		coolingOff = true
+	end
 	for i = 1, 4 do
 		EmitSfx(firepoints[i], 2052 + currentStage)
 	end
