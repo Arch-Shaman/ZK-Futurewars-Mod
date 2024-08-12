@@ -675,6 +675,12 @@ local function CacheUnitInfo(unitDefID)
 		customInfoUnits[unitDefID].weaponOverride = 2
 	elseif ud.name == "staticnuke" then
 		customInfoUnits[unitDefID].weaponOverride = 1
+	elseif ud.name == "supernova_satellite" then
+		customInfoUnits[unitDefID].usesSuperWeaponReload = false
+		customInfoUnits[unitDefID].needsFireControl = false
+	elseif ud.name == "supernova_base" then
+		customInfoUnits[unitDefID].usesSuperWeaponReload = false
+		customInfoUnits[unitDefID].needsFireControl = false
 	elseif ud.name == "staticheavyshield" then
 		customInfoUnits[unitDefID].needsFireControl = false
 		customInfoUnits[unitDefID].usesSuperWeaponReload = false
