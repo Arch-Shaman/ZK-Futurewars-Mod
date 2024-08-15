@@ -8,7 +8,7 @@ return {
 		brakeRate              = 2.736,
 		bankingAllowed         = false,
 		builder                = false,
-		buildPic               = "satellite.png",
+		buildPic               = "supernova_satellite.png",
 		canFly                 = true,
 		canGuard               = true,
 		canMove                = true,
