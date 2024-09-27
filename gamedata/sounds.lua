@@ -40,6 +40,16 @@ local Sounds = {
 			gain = 1.25,
 			maxdist = maxdistance,
 		},
+		space_laser_fire = {
+			file = "sounds/weapon/laser/space_laser_fire.wav",
+			maxconcurrent = 50,
+			pitchmod = 0.09,
+			in3d = true,
+			dopplerscale = 1.2,
+			rolloff = 0.42,
+			gain = 1.25,
+			maxdist = maxdistance,
+		},
 		ion_loop = {
 			file = "sounds/weapon/laser/ion_burn.wav",
 			maxconcurrent = 30,
