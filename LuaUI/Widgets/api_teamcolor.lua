@@ -12,14 +12,14 @@ function widget:GetInfo()
 	}
 end
 
-local colorListeners = {}
+local listeners = {}
 local listenerCount = 0
 
 local function addListener(l, widgetName)
 	if l and type(l) == "function" then
 		local okay, err = pcall(l, -1)
 		if okay then
-			colorListeners[widgetName] = l
+			listeners[widgetName] = l
 		else
 			Spring.Echo("TeamColor subscribe failed: " .. widgetName .. "\nCause: " .. err)
 		end
@@ -29,17 +29,17 @@ local function addListener(l, widgetName)
 end
 
 local function FireColorUpdate(teamID)
-	for w,f in pairs(langListeners) do
+	for w,f in pairs(listeners) do
 		local okay, err = pcall(f, teamID)
 		if not okay then
 			Spring.Echo("TeamColor update failed: " .. w .. "\nCause: " .. err)
-			colorListeners[w] = nil
+			listeners[w] = nil
 		end
 	end
 end
 
 local function Unsubscribe(widget_name)
-	colorListeners[widget_name] = nil
+	listeners[widget_name] = nil
 end
 
 WG.TeamColorSubscribe = addListener
