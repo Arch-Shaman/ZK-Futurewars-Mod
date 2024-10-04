@@ -46,6 +46,7 @@ function Spring.SetTeamColor(teamid, r, g, b)
   -- set and cache
   SetTeamColor(teamid, r, g, b)
   teamColor[teamid] = { GetTeamColor(teamid) }
+  if WG.TeamColorWasUpdated then WG.TeamColorWasUpdated(teamid) end
 end
 
 local spSetUnitNoSelect = Spring.SetUnitNoSelect
