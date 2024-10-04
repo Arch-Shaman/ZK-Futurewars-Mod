@@ -539,13 +539,13 @@ local function UpdateTeam(teamID)
 	end
 end
 
-local function UpdatePlayer(playerID)
+local function UpdatePlayer(playerID, forceUpdate)
 	local controls = playersByPlayerID[playerID]
 	if not controls then
 		return
 	end
 	
-	local toSort = UpdateEntryData(controls.entryData, controls)
+	local toSort = UpdateEntryData(controls.entryData, controls, nil, forceUpdate or false)
 	if toSort then
 		SortEntries()
 	end
@@ -721,6 +721,17 @@ function widget:TeamChanged(teamID)
 	UpdateTeam(teamID)
 end
 
+local function TeamColorsUpdated(teamID)
+	if teamID == -1 then 
+		Spring.Echo("crudeplayerlist: Successfully subscribed!")
+		return 
+	end -- test event.
+	local playerList = Spring.GetPlayerList(teamID)
+	for i = 1, #playerList do
+		UpdatePlayer(playerID, true)
+	end
+end
+
 function widget:Initialize()
 	Chili = WG.Chili
 
@@ -730,8 +741,10 @@ function widget:Initialize()
 	end
 	InitializePlayerlist()
 	Spring.SendCommands("info 0")
+	WG.TeamColorSubscribe(TeamColorsUpdated, GetInfo().name)
 end
 
---function widget:Shutdown()
---	Spring.SendCommands("info 1")
---end
+function widget:Shutdown()
+	--Spring.SendCommands("info 1")
+	WG.RemoveColorListener(GetInfo().name)
+end
