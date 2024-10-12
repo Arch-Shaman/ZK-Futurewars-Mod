@@ -141,5 +141,9 @@
 	"sensorsteal" : "Sensors hacked",
 	"sensortag" : "Unit tracked",
 	"supernova_rate" : "Satellite Amplification Rate / Speed: ",
-	"charge_rate" : "Current Charge Rate: "
+	"charge_rate" : "Current Charge Rate: ",
+	"has_cons" : "%{name} has constructors.",
+	"has_cons_squad" : "%{name}'s squad has constructors",
+	"has_no_cons" : "%{name} needs constructors!",
+	"has_no_cons_squad" : "%{name}'s squad needs constructors!"
 }
