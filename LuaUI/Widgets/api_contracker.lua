@@ -5,14 +5,14 @@ function widget:GetInfo()
 		author    = "Shaman",
 		date      = "09/24/18",
 		license   = "PD",
-		layer     = -99999,
+		layer     = -math.huge,
 		enabled   = true,
 		alwaysStart = true,
 		handler = true,
 	}
 end
 
-local listeners = {}
+local conListeners = {}
 
 local teamCons = {}
 local teamState = {}
@@ -24,55 +24,67 @@ local myIdleCons = {}
 
 local function addListener(l, widgetName)
 	if l and type(l) == "function" then
-		local okay, err = pcall(l, -1)
+		local okay, err = pcall(l, -1, false)
 		if okay then
-			listeners[widgetName] = l
+			conListeners[widgetName] = l
+			--Spring.Echo("Added " .. widgetName)
+			for k, v in pairs(conListeners) do
+				Spring.Echo(k .. ", " .. tostring(v))
+			end
 		else
-			Spring.Echo("OnPlayerLostAllCons: subscribe failed: " .. widgetName .. "\nCause: " .. err)
+			--Spring.Echo("OnPlayerLostAllCons: subscribe failed: " .. widgetName .. "\nCause: " .. err)
 		end
 	else
-		Spring.Echo("OnPlayerLostAllCons: subscribe failed: " .. widgetName .. "\nCause: Not a function.")
+		--Spring.Echo("OnPlayerLostAllCons: subscribe failed: " .. widgetName .. "\nCause: Not a function.")
 	end
 end
 
 local function FireUpdate(teamID)
-	Spring.Echo("api_contracker: " .. teamID .. ", " .. tostring(teamState[teamID]))
-	for w,f in pairs(listeners) do
+	--Spring.Echo("api_contracker: Firing update on " .. teamID .. ", " .. tostring(teamState[teamID]))
+	for w,f in pairs(conListeners) do
+		--Spring.Echo("Update: " .. w .. ", " .. teamID .. ", " .. tostring(teamState[teamID]))
 		local okay, err = pcall(f, teamID, teamState[teamID])
 		if not okay then
-			Spring.Echo("OnPlayerLostAllCons update failed: " .. w .. "\nCause: " .. err)
-			listeners[w] = nil
+			--Spring.Echo("OnPlayerLostAllCons update failed: " .. w .. "\nCause: " .. err)
+			conListeners[w] = nil
 		end
 	end
 end
 
 local function CheckTeam(teamID)
-	Spring.Echo("api_contracker: " .. teamID .. ": " .. tostring(teamCons[teamID]))
+	--Spring.Echo("api_contracker: " .. teamID .. ": " .. tostring(teamCons[teamID]))
+	--[[for k, v in pairs(conListeners) do
+		Spring.Echo(k .. ", " .. tostring(v))
+	end]]
 	if teamCons[teamID] == 0 then
 		teamState[teamID] = false
+		--Spring.Echo("Firing update")
 		FireUpdate(teamID)
 	elseif not teamState[teamID] and teamCons[teamID] > 0 then
 		teamState[teamID] = true
+		--Spring.Echo("Firing update")
 		FireUpdate(teamID)
 	end
 end
 
 local function Unsubscribe(widget_name)
-	listeners[widget_name] = nil
+	--Spring.Echo(tostring(widget_name) .. " unsubscribed")
+	conListeners[widget_name] = nil
 end
 
 local function IsUnitACon(unitDefID)
 	local ud = UnitDefs[unitDefID]
-	return (ud.isBuilder or ud.isFactory) and ud.canAssist -- prevent detection of rejuvs
+	return (ud.isBuilder and ud.isMobileBuilder and ud.canAssist) or ud.isFactory -- prevent detection of rejuvs
 end
 
 function widget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerUnitID, attackerDefID, attackerTeam)
 	if IsUnitACon(unitDefID) then
-		Spring.Echo("UnitDestroyed: " .. tostring(unitTeam))
-		teamCons[unitTeam] = teamCons[unitTeam] - 1
-		CheckTeam(unitTeam)
-		if unitTeam == Spring.GetMyTeamID() then
-			myConstructors[unitID] = nil
+		if Spring.AreTeamsAllied(unitTeam, Spring.GetMyTeamID()) or Spring.GetSpectatingState() then
+			teamCons[unitTeam] = teamCons[unitTeam] - 1
+			CheckTeam(unitTeam)
+			if unitTeam == Spring.GetMyTeamID() then
+				myConstructors[unitID] = nil
+			end
 		end
 	end
 end
@@ -81,10 +93,12 @@ function widget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
 	if IsUnitACon(unitDefID) then
 		teamCons[oldTeam] = teamCons[oldTeam] - 1
 		teamCons[newTeam] = teamCons[newTeam] + 1
-		CheckTeam(unitTeam)
+		CheckTeam(oldTeam)
+		CheckTeam(newTeam)
 		local myTeam = Spring.GetMyTeamID()
 		if oldTeam == myTeam then
 			myConstructors[unitID] = nil
+			myIdleCons[unitID] = nil
 		elseif newTeam == myTeam then
 			myConstructors[unitID] = true
 		end
@@ -97,6 +111,7 @@ function widget:UnitReverseBuilt(unitID, unitDefID, unitTeam)
 		CheckTeam(unitTeam)
 		if unitTeam == Spring.GetMyTeamID() then
 			myConstructors[unitID] = nil
+			myIdleCons[unitID] = nil
 		end
 	end
 end
@@ -119,25 +134,6 @@ local function SetUpTeam(teamID, force)
 		widget:UnitFinished(units[u], Spring.GetUnitDefID(units[u]), teamID)
 	end
 	CheckTeam(teamID)
-end
-
-function widget:Initialize()
-	myAllyTeam = Spring.GetMyAllyTeamID()
-	amISpectator = Spring.GetSpectatingState()
-	if amISpectator then
-		local allyteams = Spring.GetAllyTeamList()
-		for a = 1, #allyteams do
-			local teamList = Spring.GetTeamList(allyteams[a])
-			for t = 1, #teamList do
-				SetUpTeam(teamList[t])
-			end
-		end
-	else
-		local teamList = Spring.GetTeamList(myAllyTeam)
-		for t = 1, #teamList do
-			SetUpTeam(teamList[t])
-		end
-	end
 end
 
 function widget:PlayerChanged(playerID)
@@ -177,12 +173,21 @@ function widget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, optio
 	end
 end
 
+--[[function widget:Update()
+	Spring.Echo("Listeners: ")
+	for k, v in pairs(conListeners) do
+		Spring.Echo(k)
+	end
+end]]
+
 local function GetIdleCons()
 	local ret = {}
 	local myTeamID = Spring.GetMyTeamID()
 	for id, _ in pairs(myIdleCons) do
-		if Spring.GetUnitTeamID() == myTeamID then
+		if Spring.GetUnitTeamID(id) == myTeamID then
 			ret[#ret + 1] = id
+		else
+			myIdleCons[id] = nil
 		end
 	end
 	return ret
@@ -192,10 +197,28 @@ local function GetTeamConStatus(teamID)
 	return teamCons[teamID] and teamCons[teamID] > 0
 end
 
-WG.ConTracker = {
-	Subscribe = addListener,
-	Unsubscribe = Unsubscribe,
-	GetMyCons = GetMyCons,
-	GetIdleCons = GetIdleCons,
-	GetTeamConStatus = GetTeamConStatus
-}
+function widget:Initialize()
+	myAllyTeam = Spring.GetMyAllyTeamID()
+	amISpectator = Spring.GetSpectatingState()
+	if amISpectator then
+		local allyteams = Spring.GetAllyTeamList()
+		for a = 1, #allyteams do
+			local teamList = Spring.GetTeamList(allyteams[a])
+			for t = 1, #teamList do
+				SetUpTeam(teamList[t])
+			end
+		end
+	else
+		local teamList = Spring.GetTeamList(myAllyTeam)
+		for t = 1, #teamList do
+			SetUpTeam(teamList[t])
+		end
+	end
+	WG.ConTracker = {
+		Subscribe = addListener,
+		Unsubscribe = Unsubscribe,
+		GetMyCons = GetMyCons,
+		GetIdleCons = GetIdleCons,
+		GetTeamConStatus = GetTeamConStatus
+	}
+end
