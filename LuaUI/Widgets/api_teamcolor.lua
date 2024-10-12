@@ -20,6 +20,7 @@ local function addListener(l, widgetName)
 		local okay, err = pcall(l, -1)
 		if okay then
 			listeners[widgetName] = l
+			--Spring.Echo("TeamColor " .. widgetName .. " successfully subscribed")
 		else
 			Spring.Echo("TeamColor subscribe failed: " .. widgetName .. "\nCause: " .. err)
 		end
@@ -29,8 +30,10 @@ local function addListener(l, widgetName)
 end
 
 local function FireColorUpdate(teamID)
+	Spring.Echo("FireColorUpdate")
 	for w,f in pairs(listeners) do
 		local okay, err = pcall(f, teamID)
+		Spring.Echo("Update " .. w)
 		if not okay then
 			Spring.Echo("TeamColor update failed: " .. w .. "\nCause: " .. err)
 			listeners[w] = nil

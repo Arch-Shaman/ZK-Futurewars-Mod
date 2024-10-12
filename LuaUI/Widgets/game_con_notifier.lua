@@ -1,9 +1,9 @@
 function widget:GetInfo()
 	return {
 		name      = "Con Notifier",
-		desc      = "Notifies when a player is out of cons",
+		desc      = "Notifies when you're out of cons",
 		author    = "Shaman",
-		date      = "10/11/2024",
+		date      = "4/15/2021",
 		license   = "PD-0",
 		layer     = 1,
 		enabled   = true,  --  loaded by default?

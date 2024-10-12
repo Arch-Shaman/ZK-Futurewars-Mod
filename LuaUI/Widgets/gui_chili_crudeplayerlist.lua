@@ -1,7 +1,7 @@
 
 function widget:GetInfo()
 	return {
-		name      = "Chili Crude Player List",
+		name      = "Chili Crude Player List v2",
 		desc      = "An inexpensive playerlist.",
 		author    = "GoogleFrog",
 		date      = "8 November 2019",
@@ -36,6 +36,7 @@ end
 local fallbackAllyTeamID    = Spring.GetMyAllyTeamID()
 
 local Chili
+local playerStatuses = {}
 
 local function GetColorChar(colorTable)
 	if colorTable == nil then return string.char(255,255,255,255) end
@@ -67,6 +68,9 @@ local UPDATE_PERIOD = 1
 local IMAGE_SHARE  = ":n:" .. LUAUI_DIRNAME .. "Images/playerlist/share.png"
 local IMAGE_CPU    = ":n:" .. LUAUI_DIRNAME .. "Images/playerlist/cpu.png"
 local IMAGE_PING   = ":n:" .. LUAUI_DIRNAME .. "Images/playerlist/ping.png"
+local IMAGE_AWAY   = ":n:" .. LUAUI_DIRNAME .. "Images/Misc/away.png"
+local IMAGE_NOCON  = ":n:" .. LUAUI_DIRNAME .. "Images/Misc/no_cons.png"
+local IMAGE_RESIGN = ":n:" .. LUAUI_DIRNAME .. "Images/Crystal_Clear_action_flag_white.png"
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -117,9 +121,32 @@ local function GetPlayerTeamColor(teamID, isDead)
 	return {r, g, b, a}
 end
 
+local function IsTeamAFK(teamID)
+	local playerList = Spring.GetPlayerList(teamID)
+	--Spring.Echo("Number of players: " .. tostring(#playerList))
+	if #playerList == 0 then return false end
+	for p = 1, #playerList do
+		local playerID = playerList[p]
+		if not spGetPlayerRulesParam(playerID, "lagmonitor_lagging") then
+			return false
+		end
+	end
+	return true
+end
+
+local function IsPlayerAFK(playerID)
+	local val = spGetPlayerRulesParam(playerID, "lagmonitor_lagging") ~= nil
+	--Spring.Echo("IsPlayerAFK: " .. tostring(val))
+	return val
+end
+
 local function ShareUnits(playername, teamID)
 	if not teamID then
 		Spring.Echo('Player List: Invalid team to share.')
+		return
+	end
+	if IsTeamAFK(teamID) then
+		Spring.Echo("game_message: Can't share units to an AFK team.")
 		return
 	end
 	local selcnt = Spring.GetSelectedUnitsCount()
@@ -130,6 +157,7 @@ local function ShareUnits(playername, teamID)
 		Spring.Echo('Player List: No units selected to share.')
 	end
 end
+	
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -139,6 +167,21 @@ local function UpdateEntryData(entryData, controls, pingCpuOnly, forceUpdateCont
 	local newIsLagging = entryData.isLagging
 	local newIsWaiting = entryData.isWaiting
 	local isSpectator = false
+	local isAFK = false
+	
+	local teamHasCons = WG.ConTracker.GetTeamConStatus(entryData.teamID)
+	--Spring.Echo("Team has cons: " .. tostring(teamHasCons))
+	if controls and entryData.hasCons ~= teamHasCons and not entryData.isAfk then
+		entryData.hasCons = teamHasCons
+		--Spring.Echo("Has cons: " .. tostring(teamHasCons))
+		if teamHasCons then
+			controls.imStatus:Hide()
+		else
+			controls.imStatus:Show()
+			controls.imStatus.file = IMAGE_NOCON
+			controls.imStatus:Invalidate()
+		end
+	end
 	
 	if entryData.playerID then
 		local playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank = Spring.GetPlayerInfo(entryData.playerID, false)
@@ -181,6 +224,20 @@ local function UpdateEntryData(entryData, controls, pingCpuOnly, forceUpdateCont
 				controls.textName:SetCaption(GetName(entryData.name, controls.textName.font, entryData))
 			end
 		end
+		isAFK = IsPlayerAFK(entryData.playerID)
+		if controls and isAFK ~= entryData.isAfk then
+			entryData.isAfk = isAFK
+			if isAFK then -- TODO: Add ResignState
+				controls.imStatus:Show()
+				controls.imStatus.file = IMAGE_AWAY
+				controls.imStatus:Invalidate()
+			elseif entryData.hasCons then
+				controls.imStatus:Hide()
+			elseif not entryData.hasCons then
+				controls.imStatus.file = IMAGE_NOCON
+				controls.imStatus:Invalidate()
+			end
+		end
 		
 		newIsWaiting = (not active)
 		if forceUpdateControls or newIsWaiting ~= entryData.isWaiting then
@@ -190,13 +247,13 @@ local function UpdateEntryData(entryData, controls, pingCpuOnly, forceUpdateCont
 			end
 		end
 		
-		newIsAfk = (spGetPlayerRulesParam(entryData.playerID, "lagmonitor_lagging") and true) or false
+		--[[newIsAfk = (spGetPlayerRulesParam(entryData.playerID, "lagmonitor_lagging") and true) or false
 		if forceUpdateControls or newIsAfk ~= entryData.isAfk then
 			entryData.isAfk = newIsAfk
 			if controls and not (entryData.isDead or entryData.isLagging or entryData.isWaiting) then
 				controls.textName:SetCaption(GetName(entryData.name, controls.textName.font, entryData))
 			end
-		end
+		end]]
 		
 		if pingCpuOnly then
 			return false
@@ -207,7 +264,6 @@ local function UpdateEntryData(entryData, controls, pingCpuOnly, forceUpdateCont
 	
 	-- Ping and CPU cannot resort
 	local resortRequired = false
-	
 	if forceUpdateControls or newTeamID ~= entryData.teamID then
 		entryData.teamID = newTeamID
 		entryData.isMyTeam = (entryData.teamID == myTeamID)
@@ -238,7 +294,6 @@ local function UpdateEntryData(entryData, controls, pingCpuOnly, forceUpdateCont
 			controls.btnShare:SetVisibility((myAllyTeamID and entryData.isMyAlly and not entryData.isDead and (entryData.teamID ~= myTeamID) and true) or false)
 		end
 	end
-	
 	local newIsDead = ((isSpectator or Spring.GetTeamRulesParam(entryData.teamID, "isDead")) and true) or false
 	if forceUpdateControls or newIsDead ~= entryData.isDead then
 		entryData.isDead = newIsDead
@@ -252,7 +307,7 @@ local function UpdateEntryData(entryData, controls, pingCpuOnly, forceUpdateCont
 	return resortRequired
 end
 
-local function GetEntryData(playerID, teamID, allyTeamID, isAiTeam, isDead)
+local function GetEntryData(playerID, teamID, allyTeamID, isAiTeam, isDead, hasCons)
 	local entryData = {
 		playerID = playerID,
 		teamID = teamID,
@@ -261,6 +316,7 @@ local function GetEntryData(playerID, teamID, allyTeamID, isAiTeam, isDead)
 		initAllyTeamID = allyTeamID,
 		isAiTeam = isAiTeam,
 		isDead = isDead,
+		hasCons = hasCons,
 	}
 	
 	if playerID then
@@ -293,16 +349,49 @@ local function GetEntryData(playerID, teamID, allyTeamID, isAiTeam, isDead)
 	return entryData
 end
 
+local function OnStatusClick(teamID)
+	local playerList = Spring.GetPlayerList(teamID)
+	local isBot = #playerList == 0
+	local isAFK = false
+	if #playerList > 0 then
+		local playerActive = false
+		for i = 1, #playerList do
+			local playerID = playerList[i]
+			if not IsPlayerAFK(playerID) then
+				playerActive = true
+			end
+		end
+		isAFK = not playerActive
+	end
+	if WG.ConTracker.GetTeamConStatus(teamID) and not isAFK then
+		local playerName, _, _, playerTeam = Spring.GetPlayerInfo(playerID)
+		local selection = WG.ConTracker.GetIdleCons()
+		local selected
+		local currentSelection = Spring.GetSelectedUnits()
+		for i = 1, #selection do
+			local unitDefID = Spring.GetUnitDefID()
+			local ud = UnitDefs[unitDefID]
+			if ud.customParams.level == nil and ud.customParams.dynamic_comm == nil then
+				selected = selection[i]
+				Spring.SelectUnit(selected)
+				ShareUnits(playerTeam, playerName)
+				Spring.SelectUnitMap(currentSelection)
+				return
+			end
+		end
+	end
+end
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local function GetUserControls(playerID, teamID, allyTeamID, isAiTeam, isDead, parent)
+local function GetUserControls(playerID, teamID, allyTeamID, isAiTeam, isDead, parent, hasCons)
 	local offset             = 0
 	local offsetY            = 0
 	local height             = options.text_height.value + 4
 	local userControls = {}
 
-	userControls.entryData = GetEntryData(playerID, teamID, allyTeamID, isAiTeam, isDead)
+	userControls.entryData = GetEntryData(playerID, teamID, allyTeamID, isAiTeam, isDead, hasCons)
 
 	userControls.mainControl = Chili.Control:New {
 		name = playerID,
@@ -315,6 +404,21 @@ local function GetUserControls(playerID, teamID, allyTeamID, isAiTeam, isDead, p
 	}
 
 	offset = offset + 1
+	userControls.imStatus = Chili.Image:New {
+		name = "imStatus",
+		x = offset,
+		y = offsetY,
+		width = options.text_height.value + 4,
+		height = options.text_height.value + 3,
+		parent = userControls.mainControl,
+		keepAspect = true,
+		file = "LuaUI/Images/Misc/no_cons.png",
+		OnClick = OnStatusClick(playerID),
+	}
+	if hasCons or (not Spring.GetSpectatingState() and not Spring.AreTeamsAllied(teamID, Spring.GetMyTeamID())) or Spring.GetGameFrame() < 0 then
+		userControls.imStatus:Hide()
+	end
+	offset = offset + options.text_height.value + 5
 	if userControls.entryData.country then
 		userControls.imCountry = Chili.Image:New {
 			name = "imCountry",
@@ -539,6 +643,18 @@ local function UpdateTeam(teamID)
 	end
 end
 
+local function ForceUpdateTeam(teamID)
+	local controls = teamByTeamID[teamID]
+	if not controls then
+		return
+	end
+	
+	local toSort = UpdateEntryData(controls.entryData, controls, false, true)
+	if toSort then
+		SortEntries()
+	end
+end
+
 local function UpdatePlayer(playerID, forceUpdate)
 	local controls = playersByPlayerID[playerID]
 	if not controls then
@@ -571,7 +687,7 @@ local function InitializePlayerlist()
 		teamByTeamID = {}
 	end
 	local screenWidth, screenHeight = Spring.GetViewGeometry()
-	local windowWidth = MAX_NAME_LENGTH + 10*(options.text_height.value or 13)
+	local windowWidth = MAX_NAME_LENGTH + 13*(options.text_height.value or 13)
 
 	--// WINDOW
 	playerlistWindow = Chili.Window:New{
@@ -608,8 +724,8 @@ local function InitializePlayerlist()
 				if isAiTeam then
 					leaderID = nil
 				end
-				
-				local controls = GetUserControls(leaderID, teamID, allyTeamID, isAiTeam, isDead, playerlistWindow)
+				local hasCons = WG.ConTracker.GetTeamConStatus(teamID)
+				local controls = GetUserControls(leaderID, teamID, allyTeamID, isAiTeam, isDead, playerlistWindow, hasCons)
 				
 				listControls[#listControls + 1] = controls
 				teamByTeamID[teamID] = controls
@@ -721,30 +837,52 @@ function widget:TeamChanged(teamID)
 	UpdateTeam(teamID)
 end
 
-local function TeamColorsUpdated(teamID)
+function TeamColorsUpdated(teamID)
 	if teamID == -1 then 
 		Spring.Echo("crudeplayerlist: Successfully subscribed!")
 		return 
 	end -- test event.
-	local playerList = Spring.GetPlayerList(teamID)
-	for i = 1, #playerList do
-		UpdatePlayer(playerID, true)
+	Spring.Echo("TeamColorsUpdated::" .. teamID)
+	ForceUpdateTeam(teamID)
+end
+
+function TeamConUpdate(teamID, hasCons)
+	if teamID == -1 then -- test
+		Spring.Echo("crudeplayerlist: team con status subscribed!")
+	else
+		--Spring.Echo("TeamConUpdate: " .. teamID .. ", " .. tostring(hasCons))
+		local playerList = Spring.GetPlayerList(teamID)
+		--Spring.Echo("crudeplayerlist: team con status updating")
+		for p = 1, #playerList do
+			local playerID = playerList[p]
+			if hasCons then
+				playerStatuses[playerID] = ""
+				--Spring.Echo("HAs cons")
+			else
+				playerStatuses[playerID] = "nocons"
+				--Spring.Echo("No cons")
+			end
+			UpdatePlayer(playerID, true)
+		end
+		UpdateTeam(teamID)
 	end
 end
 
+
 function widget:Initialize()
 	Chili = WG.Chili
-
 	if (not Chili) then
 		widgetHandler:RemoveWidget()
 		return
 	end
 	InitializePlayerlist()
 	Spring.SendCommands("info 0")
-	WG.TeamColorSubscribe(TeamColorsUpdated, GetInfo().name)
+	WG.ConTracker.Subscribe(TeamConUpdate, "crudeplayerlistv2")
+	WG.TeamColorSubscribe(TeamColorsUpdated, "crudeplayerlistv2")
 end
 
 function widget:Shutdown()
 	--Spring.SendCommands("info 1")
-	WG.RemoveColorListener(GetInfo().name)
+	WG.RemoveColorListener("crudeplayerlistv2")
+	WG.ConTracker.Unsubscribe(TeamConUpdate, "crudeplayerlistv2")
 end
