@@ -67,20 +67,23 @@ local function CheckLevel()
 	end
 end
 
-local function GetAngle(x2, y2, z2, x1, y1, z1)
-	local distance = math.sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)) + ((z2 - z1) * (z2 - z1)))
-	return math.asin(math.sqrt(((x2 - x1) * (x2 - x1)) + ((z2 - z1) * (z2 - z1))) / distance) + math.rad(90)
-end
+local function GetFixedAngle(x1, y1, z1, x2, y2, z2, relativePosition)
+    local currentFacing, _ = Spring.GetUnitRotation(unitID)
 
-local function GetVerticalAngle(x2, y2, z2, x1, y1, z1)
-	return math.asin(math.sqrt((z2 - z1) * (z2 - z1)) / math.sqrt((x2 - x1) * (x2 - x1) + ((z2 - z1) * (z2 - z1))))
+	local dx = x1 - x2
+	local dy = y1 - y2
+	local dz = z1 - z2
+	local distance = math.sqrt((dx * dx) + (dz * dz))
+    local pitch = Spring.Utilities.Vector.Angle(dy, distance)
+	local heading = Spring.Utilities.Vector.Angle(dz, dx)
+    return pitch, heading
 end
 
 local aimPoints = {
-	[1] = LimbA1,
-	[2] = LimbB1,
-	[3] = LimbC1,
-	[4] = LimbD1,
+	[1] = LimbA2,
+	[2] = LimbB2,
+	[3] = LimbC2,
+	[4] = LimbD2,
 }
 
 local function SuperWeaponThread()
@@ -137,9 +140,9 @@ local function MonitorThread()
 end
 
 local function Undock()
-	Spring.Echo("UNDOCK")
+	--Spring.Echo("UNDOCK")
 	Sleep(100)
-	Spring.Echo("Issue flight command")
+	--Spring.Echo("Issue flight command")
 	Spring.GiveOrderToUnit(unitID, CMD.IDLEMODE, {0}, CMD.OPT_SHIFT)
 	local x, y, z = Spring.GetUnitPosition(unitID)
 	Spring.GiveOrderToUnit(unitID, CMD.MOVE, {x + 1800, y, z + 1800}, CMD.OPT_SHIFT)
@@ -148,7 +151,7 @@ local function Undock()
 		Turn(InnerLimbs[i],y_axis,math.rad(0),1)
 		Turn(OuterLimbs[i],y_axis,math.rad(0),1)
 	end
-	Spring.Echo("STOP")
+	--Spring.Echo("STOP")
 	Spring.GiveOrderToUnit(unitID, CMD.STOP, {}, {})
 	Sleep(1000)
 end
@@ -175,7 +178,7 @@ local SIG_AIM2 = 64
 local SIG_AIM3 = 128
 local SIG_AIM4 = 256
 
-local rotationRate = math.rad(180)
+local rotationRate = math.rad(720)
 
 local states = {
 	[1] = false,
@@ -184,45 +187,81 @@ local states = {
 	[4] = false,
 }
 
-function script.AimWeapon(num, heading, pitch)
+local relativePosition = {
+	[1] = math.rad(0),
+	[2] = math.rad(90),
+	[3] = math.rad(180),
+	[4] = math.rad(270),
+}
+
+
+function script.AimWeapon(num, head)
+	local targetType, _, target = Spring.GetUnitWeaponTarget(unitID, num)
+	local tx, ty, tz
+	if targetType == 1 then
+		tx, ty, tz = Spring.GetUnitPosition(target)
+	elseif targetType == 3 then
+		_, _, _, _, _, _, tx, ty, tz = Spring.GetProjectilePosition(target, true, true)
+	elseif targetType == 2 then
+		tx, ty, tz = target[1], target[2], target[3]
+	end
+	if not tx then return end -- silently fail because we have no target!
 	if num == 1 then
-		states[num] = false
+		local cx, cy, cz = Spring.GetUnitPiecePosDir(unitID, LimbA2)
+		if not cx then return end
+		
+		states[num] = false -- is aiming
 		Signal(SIG_AIM1)
 		SetSignalMask(SIG_AIM1)
-		Turn(LimbA2, x_axis, heading, rotationRate)
-		Turn(LimbA2, y_axis, -pitch, rotationRate)
+		local pitch, heading = GetFixedAngle(cx, cy, cz, tx, ty, tz, relativePosition[1])
+		Turn(LimbA2, z_axis, heading, rotationRate)
+		Turn(LimbA2, x_axis, pitch, rotationRate * 2)
+		--Turn(LimbA2, y_axis, -pitch, rotationRate)
 		WaitForTurn(LimbA2, x_axis)
 		WaitForTurn(LimbA2, y_axis)
+		WaitForTurn(LimbA2, z_axis)
 		states[num] = true
 		return true
 	elseif num == 2 then
+		local cx, cy, cz = Spring.GetUnitPiecePosDir(unitID, LimbB2)
+		if not cx then return end
 		states[2] = false
 		Signal(SIG_AIM2)
 		SetSignalMask(SIG_AIM2)
-		Turn(LimbB2, x_axis, heading, rotationRate)
-		Turn(LimbB2, y_axis, -pitch, rotationRate)
+		local pitch, heading = GetFixedAngle(cx, cy, cz, tx, ty, tz, relativePosition[1])
+		Turn(LimbB2, z_axis, heading, rotationRate)
+		Turn(LimbB2, x_axis, pitch, rotationRate * 2)
 		WaitForTurn(LimbB2, x_axis)
 		WaitForTurn(LimbB2, y_axis)
+		WaitForTurn(LimbB2, z_axis)
 		states[2] = true
 		return true
 	elseif num == 3 then
+		local cx, cy, cz = Spring.GetUnitPiecePosDir(unitID, LimbC2)
+		if not cx then return end
 		states[3] = false
 		Signal(SIG_AIM3)
 		SetSignalMask(SIG_AIM3)
-		Turn(LimbC2, x_axis, heading, rotationRate)
-		Turn(LimbC2, y_axis, -pitch, rotationRate)
+		local pitch, heading = GetFixedAngle(cx, cy, cz, tx, ty, tz, relativePosition[1])
+		Turn(LimbC2, z_axis, heading, rotationRate)
+		Turn(LimbC2, x_axis, pitch, rotationRate * 2)
 		WaitForTurn(LimbC2, x_axis)
 		WaitForTurn(LimbC2, y_axis)
+		WaitForTurn(LimbC2, z_axis)
 		states[3] = true
 		return true
 	elseif num == 4 then
+		local cx, cy, cz = Spring.GetUnitPiecePosDir(unitID, LimbD2)
+		if not cx then return end
 		states[4] = false
 		Signal(SIG_AIM4)
 		SetSignalMask(SIG_AIM4)
-		Turn(LimbD2, x_axis, heading, rotationRate)
-		Turn(LimbD2, y_axis, -pitch, rotationRate)
+		local pitch, heading = GetFixedAngle(cx, cy, cz, tx, ty, tz, relativePosition[1])
+		Turn(LimbD2, z_axis, heading, rotationRate)
+		Turn(LimbD2, x_axis, pitch, rotationRate * 2)
 		WaitForTurn(LimbD2, x_axis)
 		WaitForTurn(LimbD2, y_axis)
+		WaitForTurn(LimbD2, z_axis)
 		states[4] = true
 		return true
 	else
@@ -249,6 +288,28 @@ local firepoints = {
 	[4] = LaserD,
 }
 
+local function FinalFireThread()
+	coolingOff = true
+	local fireTime = 70
+	local num = 0
+	while fireTime > 0 do
+		fireTime = fireTime - 1
+		num = num + 1
+		if num%5 == 0 then
+			local x, y, z = Spring.GetUnitPosition(unitID)
+			Spring.PlaySoundFile("sounds\\weapon\\laser\\space_laser_fire.wav", 0.85, x, y, z, 30, 30, 30, "battle") -- this sound effect is obnoxious to make work :|
+		end
+		for i = 1, 4 do
+			EmitSfx(firepoints[i], 2052 + currentStage)
+		end
+		Sleep(33)
+	end
+	Sleep(7000)
+	currentStage = 0
+	currentFiringTime = 0
+	coolingOff = false
+end
+
 local function FireZeBeam() -- BEAM LASERS *FUCKING* SUCK.
 	if coolingOff then
 		return
@@ -269,11 +330,13 @@ local function FireZeBeam() -- BEAM LASERS *FUCKING* SUCK.
 	ey = Spring.GetGroundHeight(ex, ez) - 50]]
 	lastFrameShot = Spring.GetGameFrame()
 	currentFiringTime = currentFiringTime + 1
-	if currentStage == 3 and currentFiringTime > (90 * currentSpeedMult) then
+	if currentStage == 3 and not coolingOff then
+		StartThread(FinalFireThread)
 		coolingOff = true
-	end
-	for i = 1, 4 do
-		EmitSfx(firepoints[i], 2052 + currentStage)
+	else
+		for i = 1, 4 do
+			EmitSfx(firepoints[i], 2052 + currentStage)
+		end
 	end
 end
 
