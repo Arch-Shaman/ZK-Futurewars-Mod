@@ -28,9 +28,9 @@ local function addListener(l, widgetName)
 		if okay then
 			conListeners[widgetName] = l
 			--Spring.Echo("Added " .. widgetName)
-			for k, v in pairs(conListeners) do
-				Spring.Echo(k .. ", " .. tostring(v))
-			end
+			--for k, v in pairs(conListeners) do
+			--	Spring.Echo(k .. ", " .. tostring(v))
+			--end
 		else
 			--Spring.Echo("OnPlayerLostAllCons: subscribe failed: " .. widgetName .. "\nCause: " .. err)
 		end
@@ -194,6 +194,10 @@ local function GetIdleCons()
 	return ret
 end
 
+local function GetConstructorsCount(teamID)
+	return teamCons[teamID]
+end
+
 local function GetTeamConStatus(teamID)
 	return teamCons[teamID] and teamCons[teamID] > 0
 end
@@ -231,6 +235,7 @@ function widget:Initialize()
 		GetMyCons = GetMyCons,
 		GetTeamsWithoutCons = GetTeamsWithoutCons,
 		GetIdleCons = GetIdleCons,
-		GetTeamConStatus = GetTeamConStatus
+		GetTeamConStatus = GetTeamConStatus,
+        GetConstructorsCount = GetConstructorsCount
 	}
 end
