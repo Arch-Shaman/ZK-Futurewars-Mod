@@ -118,5 +118,6 @@
 	"has_cons" : "%{name}'in kurucuları var.",
 	"has_cons_squad" : "%{name}'in ekibinin kurucuları var",
 	"has_no_cons" : "%{name}'in kuruculara ihtiyacı var!",
-	"has_no_cons_squad" : "%{name}'in ekibinin kuruculara ihtiyacı var!"
+	"has_no_cons_squad" : "%{name}'in ekibinin kuruculara ihtiyacı var!",
+	"give_con_button" : "Boş bir kurucuyu olmayan bir müttefike verin"
 }

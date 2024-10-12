@@ -106,5 +106,6 @@
 	"has_cons" : "%{name} hat Konstrukteure",
 	"has_cons_squad" : "Der Kader von %{Name} hat wieder Konstruktoren.",
 	"has_no_cons" : "%{name} braucht Konstrukteure!",
-	"has_no_cons_squad" : "Der Kader von %{Name} braucht Konstrukteure!"
+	"has_no_cons_squad" : "Der Kader von %{Name} braucht Konstrukteure!",
+	"give_con_button" : "Geben Sie einem Verbündeten, der keinen Konstruktor hat, einen ungenutzten Konstruktor."
 }

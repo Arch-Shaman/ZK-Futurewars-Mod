@@ -121,5 +121,6 @@
 	"has_cons" : "%{name} ma konstruktorów.",
 	"has_cons_squad" : "Drużyna %{name} ma konstruktorów",
 	"has_no_cons" : "%{name} potrzebuje konstruktorów!",
-	"has_no_cons_squad" : "%Drużyna %{name} potrzebuje konstruktorów!"
+	"has_no_cons_squad" : "%Drużyna %{name} potrzebuje konstruktorów!",
+	"give_con_button": "Przekaż bezczynny konstruktor sojusznikowi, który go nie posiada"
 }

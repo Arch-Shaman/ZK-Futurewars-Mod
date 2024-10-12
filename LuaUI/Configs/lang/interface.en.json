@@ -145,5 +145,6 @@
 	"has_cons" : "%{name} has constructors.",
 	"has_cons_squad" : "%{name}'s squad has constructors",
 	"has_no_cons" : "%{name} needs constructors!",
-	"has_no_cons_squad" : "%{name}'s squad needs constructors!"
+	"has_no_cons_squad" : "%{name}'s squad needs constructors!",
+	"give_con_button" : "Give an idle constructor to an ally without one"
 }
