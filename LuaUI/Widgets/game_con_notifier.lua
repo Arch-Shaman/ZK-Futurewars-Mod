@@ -128,14 +128,16 @@ local function OnConStateChange(teamID, hasCons)
 	end
 end
 
-local function OnLocaleChange()
+local function OnLocaleChanged()
 	global_command_button.tooltip = WG.Translate("interface", "give_con_button")
+	global_command_button:Invalidate()
 end
 
 function widget:Initialize()
 	WG.ConTracker.Subscribe(OnConStateChange, "connotifier")
 	ColorToInColor = WG.Chili.color2incolor
-	global_command_button = WG.GlobalCommandBar.AddCommand("LuaUI/Images/Misc/no_cons.png", WG.Translate("interface", "give_con_button", DoTheThing)
+	global_command_button = WG.GlobalCommandBar.AddCommand("LuaUI/Images/Misc/no_cons.png", WG.Translate("interface", "give_con_button"), DoTheThing)
+	WG.InitializeTranslation(OnLocaleChanged, GetInfo().name)
 end
 
 function widget:ShutDown()
