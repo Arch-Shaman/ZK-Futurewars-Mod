@@ -36,7 +36,6 @@ end
 local fallbackAllyTeamID    = Spring.GetMyAllyTeamID()
 
 local Chili
-local playerStatuses = {}
 
 local function GetColorChar(colorTable)
 	if colorTable == nil then return string.char(255,255,255,255) end
@@ -59,7 +58,7 @@ local pingCpuColors = {
 local ALLY_COLOR  = {0, 1, 1, 1}
 local ENEMY_COLOR = {1, 0, 0, 1}
 
-local PING_TIMEOUT = 10 -- seconds. Remember: pingTime is in seconds!
+local PING_TIMEOUT = 5000 -- ms
 
 local MAX_NAME_LENGTH = 150
 
@@ -256,7 +255,7 @@ local function UpdateEntryData(entryData, controls, pingCpuOnly, forceUpdateCont
 			controls.imCpu.tooltip = CpuUsageOut(cpuUsage)
 			controls.imPing.tooltip = PingTimeOut(pingTime)
 		end
-		pingTime = pingTime
+		pingTime = pingTime * 1000
 		newIsLagging = pingTime and (pingTime > PING_TIMEOUT)
 		--Spring.Echo(entryData.playerID .. " lagging: " .. tostring(newIsLagging) .. "(" .. tostring(pingTime) .. ")")
 		isAFK = IsPlayerAFK(entryData.playerID)
@@ -352,7 +351,6 @@ local function UpdateEntryData(entryData, controls, pingCpuOnly, forceUpdateCont
 end
 
 local function GetEntryData(playerID, teamID, allyTeamID, isAiTeam, isDead, hasCons)
-	--Spring.Echo("Get Entry Data: " .. tostring(playerID) .. ", " .. teamID)
 	local entryData = {
 		playerID = playerID,
 		teamID = teamID,
@@ -366,7 +364,6 @@ local function GetEntryData(playerID, teamID, allyTeamID, isAiTeam, isDead, hasC
 	
 	if isAiTeam then -- first run
 		local host = select(3, Spring.GetAIInfo(entryData.teamID))
-		--Spring.Echo("Host is " .. host)
 		entryData.aiHost = host
 		if host then
 			if aiHosts[host] then
@@ -381,7 +378,7 @@ local function GetEntryData(playerID, teamID, allyTeamID, isAiTeam, isDead, hasC
 		
 		entryData.isMe = (entryData.playerID == myPlayerID)
 		entryData.name = playerName
-		entryData.country = (country and country ~= '' and ("LuaUI/Images/flags/" .. country ..".png"))
+		entryData.country = Spring.Utilities.GetCountryFlagPath(country)
 		entryData.rank = ("LuaUI/Images/LobbyRanks/" .. (customKeys.icon or "0_0") .. ".png")
 		
 		if customKeys.clan and customKeys.clan ~= "" then
@@ -392,7 +389,7 @@ local function GetEntryData(playerID, teamID, allyTeamID, isAiTeam, isDead, hasC
 	end
 	
 	if isAiTeam then
-		local _, name = Spring.GetAIInfo(teamID)
+		name = GetAIName(teamID)
 		entryData.name = name
 	end
 	
@@ -405,44 +402,10 @@ local function GetEntryData(playerID, teamID, allyTeamID, isAiTeam, isDead, hasC
 	return entryData
 end
 
-local function OnStatusClick(teamID)
-	local playerList = Spring.GetPlayerList(teamID)
-	local isBot = #playerList == 0
-	local isAFK = false
-	if #playerList > 0 then
-		local playerActive = false
-		for i = 1, #playerList do
-			local playerID = playerList[i]
-			if not IsPlayerAFK(playerID) then
-				playerActive = true
-			end
-		end
-		isAFK = not playerActive
-	end
-	if WG.ConTracker.GetTeamConStatus(teamID) and not isAFK then
-		local playerName, _, _, playerTeam = Spring.GetPlayerInfo(playerID)
-		local selection = WG.ConTracker.GetIdleCons()
-		local selected
-		local currentSelection = Spring.GetSelectedUnits()
-		for i = 1, #selection do
-			local unitDefID = Spring.GetUnitDefID()
-			local ud = UnitDefs[unitDefID]
-			if ud.customParams.level == nil and ud.customParams.dynamic_comm == nil then
-				selected = selection[i]
-				Spring.SelectUnit(selected)
-				ShareUnits(playerTeam, playerName)
-				Spring.SelectUnitMap(currentSelection)
-				return
-			end
-		end
-	end
-end
-
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
 local function GetUserControls(playerID, teamID, allyTeamID, isAiTeam, isDead, parent, hasCons)
-	--Spring.Echo("GetUserControls: " .. tostring(playerID) .. ", " .. tostring(teamID))
 	local offset             = 0
 	local offsetY            = 0
 	local height             = options.text_height.value + 4
@@ -470,10 +433,8 @@ local function GetUserControls(playerID, teamID, allyTeamID, isAiTeam, isDead, p
 		parent = userControls.mainControl,
 		keepAspect = true,
 		file = "LuaUI/Images/Misc/no_cons.png",
-		--OnClick = OnStatusClick(playerID),
 	}
 	if playerID then
-		--Spring.Echo("initializing player " .. playerID)
 		local _, active, spectator, _, _, ping = Spring.GetPlayerInfo(playerID)
 		UpdateStatusImage(userControls, not active, IsPlayerAFK(playerID), hasCons, (ping > PING_TIMEOUT))
 	else
@@ -732,7 +693,6 @@ end
 --------------------------------------------------------------------------------
 
 local function InitializePlayerlist()
-	--Spring.Echo("Initialize Player list")
 	if playerlistWindow then
 		playerlistWindow:Dispose()
 		playerlistWindow = nil
@@ -777,32 +737,18 @@ local function InitializePlayerlist()
 	for i = 1, #teamList do
 		local teamID = teamList[i]
 		if teamID ~= gaiaTeamID then
-			local _, leaderID, isDead, isAiTeam, _, allyTeamID = Spring.GetTeamInfo(teamID, false)
-			--Spring.Echo(teamID .. " LeaderID: " .. tostring(leaderID))
-			--Spring.Echo("isAI: " .. tostring(isAiTeam))
-			local skirmishAIID, name, hostingPlayerID = Spring.GetAIInfo(teamID)
-			--pring.Echo("AIInfo: " .. tostring(skirmishAIID) .. ", " .. tostring(name) .. ", " .. tostring(hostingPlayerID))
-			local isActuallyAI = Spring.GetTeamRulesParam(teamID, "initAI")
-			--Spring.Echo("TeamID " .. teamID .. " is init AI: " .. tostring(isActuallyAI))
+			local _, leaderID, isDead, _, _, allyTeamID = Spring.GetTeamInfo(teamID, false)
+			local isAiTeam = IsTeamAI(teamID)
 			if leaderID < 0 then
 				leaderID = Spring.GetTeamRulesParam(teamID, "initLeaderID") or leaderID
-				--Spring.Echo("Leader ID is now: " .. leaderID)
 			end
 			
 			if leaderID >= 0 then
-				if isAiTeam or isActuallyAI then
-					--Spring.Echo("teamID " .. teamID .. " is AI!")
+				if isAiTeam then
 					leaderID = nil
-					--[[local host = Spring.GetTeamRulesParam(teamID, "initAIHost", host, PUBLIC_VISIBLE)
-					local name = Spring.GetTeamRulesParam(teamID, "initAIName", name, PUBLIC_VISIBLE)
-					local short = Spring.GetTeamRulesParam(teamID, "initAIShort", shortName, PUBLIC_VISIBLE)
-					local version = Spring.GetTeamRulesParam(teamID, "initAIVersion", version, PUBLIC_VISIBLE)
-					Spring.Echo("Hosted by " .. host .. "\nName: " .. tostring(name) .. "\nshort: " .. tostring(short))]]
 				end
 				local hasCons = WG.ConTracker.GetTeamConStatus(teamID)
-				--Spring.Echo("Calling GetUserControls: " .. tostring(leaderID) .. ", " .. teamID .. ", " .. allyTeamID)
 				local controls = GetUserControls(leaderID, teamID, allyTeamID, isAiTeam, isDead, playerlistWindow, hasCons)
-				--Spring.Echo("Listed controls for " .. teamID)
 				listControls[#listControls + 1] = controls
 				teamByTeamID[teamID] = controls
 				if leaderID then
