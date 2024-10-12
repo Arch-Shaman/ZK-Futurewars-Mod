@@ -59,7 +59,7 @@ local pingCpuColors = {
 local ALLY_COLOR  = {0, 1, 1, 1}
 local ENEMY_COLOR = {1, 0, 0, 1}
 
-local PING_TIMEOUT = 2000 -- ms
+local PING_TIMEOUT = 10 -- seconds. Remember: pingTime is in seconds!
 
 local MAX_NAME_LENGTH = 150
 
@@ -71,6 +71,8 @@ local IMAGE_PING   = ":n:" .. LUAUI_DIRNAME .. "Images/playerlist/ping.png"
 local IMAGE_AWAY   = ":n:" .. LUAUI_DIRNAME .. "Images/Misc/away.png"
 local IMAGE_NOCON  = ":n:" .. LUAUI_DIRNAME .. "Images/Misc/no_cons.png"
 local IMAGE_RESIGN = ":n:" .. LUAUI_DIRNAME .. "Images/Crystal_Clear_action_flag_white.png"
+local IMAGE_DISCONNECTED = ":n:" .. LUAUI_DIRNAME .. "Images/connection_lost.png"
+local IMAGE_REJOINING = ":n:" .. LUAUI_DIRNAME .. "Images/clock.png"
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -99,12 +101,14 @@ end
 local function GetName(name, font, state)
 	if state.isDead then
 		name = "<Dead> " .. name
-	elseif state.isLagging then
+	--[[elseif state.isLagging then
 		name = "<Lagging> " .. name
 	elseif state.isWaiting then
 		name = "<Waiting> " .. name
 	elseif state.isAfk then
-		name = "<AFK> " .. name
+		name = "<AFK> " .. name]]
+	elseif state.isResigning then -- TODO: Localization.
+		name = "<Surrendering>"
 	end
 	
 	if not font then
@@ -162,24 +166,57 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+local function UpdateStatusImage(controls, waiting, afk, cons, lagging)
+	if not controls then Spring.Echo("No controls!"); return end
+	if cons and Spring.GetGameFrame() < 30 then
+		cons = false
+	end
+	local visibilityState = waiting or afk or cons or lagging
+	if visibilityState ~= controls.imStatus.visible then
+		if visibilityState then
+			controls.imStatus:Show()
+		else
+			controls.imStatus:Hide()
+			return
+		end
+	end
+	if waiting then -- disconnected
+		controls.imStatus.file = IMAGE_DISCONNECTED
+	elseif lagging then -- lagging
+		controls.imStatus.file = IMAGE_REJOINING
+	elseif afk then -- afk
+		controls.imStatus.file = IMAGE_AWAY
+	elseif cons then -- no cons
+		controls.imStatus.file = IMAGE_NOCON
+	end
+	controls.imStatus:Invalidate()
+end
+
+local aiHosts = {}
+
 local function UpdateEntryData(entryData, controls, pingCpuOnly, forceUpdateControls)
 	local newTeamID, newAllyTeamID = entryData.teamID, entryData.allyTeamID
 	local newIsLagging = entryData.isLagging
 	local newIsWaiting = entryData.isWaiting
 	local isSpectator = false
 	local isAFK = false
-	
+
 	local teamHasCons = WG.ConTracker.GetTeamConStatus(entryData.teamID)
+	local needsConUpdate = entryData.hasCons ~= teamHasCons
+	local needsUpdating = needsConUpdate
 	--Spring.Echo("Team has cons: " .. tostring(teamHasCons))
-	if controls and entryData.hasCons ~= teamHasCons and not entryData.isAfk then
+	if controls and entryData.hasCons ~= teamHasCons then
 		entryData.hasCons = teamHasCons
-		--Spring.Echo("Has cons: " .. tostring(teamHasCons))
-		if teamHasCons then
-			controls.imStatus:Hide()
-		else
-			controls.imStatus:Show()
-			controls.imStatus.file = IMAGE_NOCON
-			controls.imStatus:Invalidate()
+	end
+	if needsUpdating and not entryData.playerID then
+		--Spring.Echo("Updating team status")
+		if entryData.isAI then
+			if entryData.aiHost then
+				local aiEntryData = playersByPlayerID[entryData.aiHost].entryData
+				UpdateStatusImage(controls, aiEntryData.isWaiting, false, not teamHasCons, aiEntryData.isLagging)
+			else
+				UpdateStatusImage(controls, false, false, not teamHasCons, false)
+			end
 		end
 	end
 	
@@ -216,35 +253,39 @@ local function UpdateEntryData(entryData, controls, pingCpuOnly, forceUpdateCont
 			controls.imCpu.tooltip = CpuUsageOut(cpuUsage)
 			controls.imPing.tooltip = PingTimeOut(pingTime)
 		end
-		
-		newIsLagging = ((pingTime > PING_TIMEOUT) and true) or false
+		pingTime = pingTime
+		newIsLagging = pingTime and (pingTime > PING_TIMEOUT)
+		--Spring.Echo(entryData.playerID .. " lagging: " .. tostring(newIsLagging) .. "(" .. tostring(pingTime) .. ")")
+		isAFK = IsPlayerAFK(entryData.playerID)
+		newIsWaiting = (not active)
 		if forceUpdateControls or newIsLagging ~= entryData.isLagging then
 			entryData.isLagging = newIsLagging
-			if controls and not entryData.isDead then
-				controls.textName:SetCaption(GetName(entryData.name, controls.textName.font, entryData))
-			end
-		end
-		isAFK = IsPlayerAFK(entryData.playerID)
-		if controls and isAFK ~= entryData.isAfk then
-			entryData.isAfk = isAFK
-			if isAFK then -- TODO: Add ResignState
-				controls.imStatus:Show()
-				controls.imStatus.file = IMAGE_AWAY
-				controls.imStatus:Invalidate()
-			elseif entryData.hasCons then
-				controls.imStatus:Hide()
-			elseif not entryData.hasCons then
-				controls.imStatus.file = IMAGE_NOCON
-				controls.imStatus:Invalidate()
-			end
+			needsUpdating = true
 		end
 		
-		newIsWaiting = (not active)
-		if forceUpdateControls or newIsWaiting ~= entryData.isWaiting then
+		if isAFK ~= entryData.isAfk then
+			entryData.isAfk = isAFK
+			needsUpdating = true
+		end
+		
+		if newIsWaiting ~= entryData.isWaiting then
 			entryData.isWaiting = newIsWaiting
-			if controls and not (entryData.isDead or entryData.isLagging) then
-				controls.textName:SetCaption(GetName(entryData.name, controls.textName.font, entryData))
-			end
+			needsUpdating = true
+		end
+		
+		if controls and (needsUpdating or forceUpdate) then
+			--Spring.Echo("Updating player " .. entryData.playerID)
+			UpdateStatusImage(controls, entryData.isWaiting, entryData.isAfk, not teamHasCons, entryData.isLagging)
+			--[[if (entryData.isWaiting or entryData.isLagging) and aiHosts[entryData.playerID] then
+				for i = 1, #aiHosts[entryData.playerID] do
+					local teamID = aiHosts[entryData.playerID][i]
+					--Spring.Echo("Updating AI " .. teamID)
+					local AIcontrols = teamByTeamID[teamID]
+					if AIcontrols then
+						UpdateStatusImage(AIcontrols, entryData.isWaiting, false, WG.ConTracker.GetTeamConStatus(teamID), entryData.isLagging)
+					end
+				end
+			end]] -- Do not bother until engine makes AI resisitation possible.
 		end
 		
 		--[[newIsAfk = (spGetPlayerRulesParam(entryData.playerID, "lagmonitor_lagging") and true) or false
@@ -308,6 +349,7 @@ local function UpdateEntryData(entryData, controls, pingCpuOnly, forceUpdateCont
 end
 
 local function GetEntryData(playerID, teamID, allyTeamID, isAiTeam, isDead, hasCons)
+	--Spring.Echo("Get Entry Data: " .. tostring(playerID) .. ", " .. teamID)
 	local entryData = {
 		playerID = playerID,
 		teamID = teamID,
@@ -318,6 +360,17 @@ local function GetEntryData(playerID, teamID, allyTeamID, isAiTeam, isDead, hasC
 		isDead = isDead,
 		hasCons = hasCons,
 	}
+	
+	if isAiTeam then -- first run
+		local host = select(3, Spring.GetAIInfo(entryData.teamID))
+		--Spring.Echo("Host is " .. host)
+		entryData.aiHost = host
+		if host then
+			if aiHosts[host] then
+				aiHosts[host][#aiHosts[host] + 1] = entryData.teamID
+			end
+		end
+	end
 	
 	if playerID then
 		local playerName, active, spectator, teamID, allyTeamID, pingTime, cpuUsage, country, rank, customKeys = Spring.GetPlayerInfo(playerID, true)
@@ -386,6 +439,7 @@ end
 --------------------------------------------------------------------------------
 
 local function GetUserControls(playerID, teamID, allyTeamID, isAiTeam, isDead, parent, hasCons)
+	--Spring.Echo("GetUserControls: " .. tostring(playerID) .. ", " .. tostring(teamID))
 	local offset             = 0
 	local offsetY            = 0
 	local height             = options.text_height.value + 4
@@ -415,7 +469,11 @@ local function GetUserControls(playerID, teamID, allyTeamID, isAiTeam, isDead, p
 		file = "LuaUI/Images/Misc/no_cons.png",
 		OnClick = OnStatusClick(playerID),
 	}
-	if hasCons or (not Spring.GetSpectatingState() and not Spring.AreTeamsAllied(teamID, Spring.GetMyTeamID())) or Spring.GetGameFrame() < 0 then
+	if playerID then
+		--Spring.Echo("initializing player " .. playerID)
+		local _, active, spectator, _, _, ping = Spring.GetPlayerInfo(playerID)
+		UpdateStatusImage(userControls, not active, IsPlayerAFK(playerID), false, (ping > PING_TIMEOUT))
+	else
 		userControls.imStatus:Hide()
 	end
 	offset = offset + options.text_height.value + 5
@@ -671,6 +729,7 @@ end
 --------------------------------------------------------------------------------
 
 local function InitializePlayerlist()
+	--Spring.Echo("Initialize Player list")
 	if playerlistWindow then
 		playerlistWindow:Dispose()
 		playerlistWindow = nil
@@ -716,17 +775,31 @@ local function InitializePlayerlist()
 		local teamID = teamList[i]
 		if teamID ~= gaiaTeamID then
 			local _, leaderID, isDead, isAiTeam, _, allyTeamID = Spring.GetTeamInfo(teamID, false)
+			--Spring.Echo(teamID .. " LeaderID: " .. tostring(leaderID))
+			Spring.Echo("isAI: " .. tostring(isAiTeam))
+			local skirmishAIID, name, hostingPlayerID = Spring.GetAIInfo(teamID)
+			--pring.Echo("AIInfo: " .. tostring(skirmishAIID) .. ", " .. tostring(name) .. ", " .. tostring(hostingPlayerID))
+			local isActuallyAI = Spring.GetTeamRulesParam(teamID, "initAI")
+			--Spring.Echo("TeamID " .. teamID .. " is init AI: " .. tostring(isActuallyAI))
 			if leaderID < 0 then
 				leaderID = Spring.GetTeamRulesParam(teamID, "initLeaderID") or leaderID
+				--Spring.Echo("Leader ID is now: " .. leaderID)
 			end
 			
 			if leaderID >= 0 then
-				if isAiTeam then
+				if isAiTeam or isActuallyAI then
+					--Spring.Echo("teamID " .. teamID .. " is AI!")
 					leaderID = nil
+					--[[local host = Spring.GetTeamRulesParam(teamID, "initAIHost", host, PUBLIC_VISIBLE)
+					local name = Spring.GetTeamRulesParam(teamID, "initAIName", name, PUBLIC_VISIBLE)
+					local short = Spring.GetTeamRulesParam(teamID, "initAIShort", shortName, PUBLIC_VISIBLE)
+					local version = Spring.GetTeamRulesParam(teamID, "initAIVersion", version, PUBLIC_VISIBLE)
+					Spring.Echo("Hosted by " .. host .. "\nName: " .. tostring(name) .. "\nshort: " .. tostring(short))]]
 				end
 				local hasCons = WG.ConTracker.GetTeamConStatus(teamID)
+				--Spring.Echo("Calling GetUserControls: " .. tostring(leaderID) .. ", " .. teamID .. ", " .. allyTeamID)
 				local controls = GetUserControls(leaderID, teamID, allyTeamID, isAiTeam, isDead, playerlistWindow, hasCons)
-				
+				--Spring.Echo("Listed controls for " .. teamID)
 				listControls[#listControls + 1] = controls
 				teamByTeamID[teamID] = controls
 				if leaderID then
@@ -842,7 +915,7 @@ function TeamColorsUpdated(teamID)
 		Spring.Echo("crudeplayerlist: Successfully subscribed!")
 		return 
 	end -- test event.
-	Spring.Echo("TeamColorsUpdated::" .. teamID)
+	--Spring.Echo("TeamColorsUpdated::" .. teamID)
 	ForceUpdateTeam(teamID)
 end
 
@@ -855,13 +928,6 @@ function TeamConUpdate(teamID, hasCons)
 		--Spring.Echo("crudeplayerlist: team con status updating")
 		for p = 1, #playerList do
 			local playerID = playerList[p]
-			if hasCons then
-				playerStatuses[playerID] = ""
-				--Spring.Echo("HAs cons")
-			else
-				playerStatuses[playerID] = "nocons"
-				--Spring.Echo("No cons")
-			end
 			UpdatePlayer(playerID, true)
 		end
 		UpdateTeam(teamID)
