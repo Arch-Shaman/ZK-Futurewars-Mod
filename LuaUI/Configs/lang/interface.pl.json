@@ -117,5 +117,9 @@
 	"sensorsteal": "Zhakowanie czujników",
 	"sensortag": "Jednostka śledzona",
 	"supernova_rate" : "Współczynnik wzmocnienia / prędkość ruchu: ",
-	"charge_rate" : "Aktualna stawka opłaty: "
+	"charge_rate" : "Aktualna stawka opłaty: ",
+	"has_cons" : "%{name} ma konstruktorów.",
+	"has_cons_squad" : "Drużyna %{name} ma konstruktorów",
+	"has_no_cons" : "%{name} potrzebuje konstruktorów!",
+	"has_no_cons_squad" : "%Drużyna %{name} potrzebuje konstruktorów!"
 }

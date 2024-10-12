@@ -114,5 +114,9 @@
 	"sensorsteal" : "Sensörler hacklendi",
 	"sensortag" : "Birim izlendi",
 	"supernova_rate" : "Amplifikasyon / Hareket oranı: ",
-	"charge_rate" : "Güncel ücret oranı: "
+	"charge_rate" : "Güncel ücret oranı: ",
+	"has_cons" : "%{name}'in kurucuları var.",
+	"has_cons_squad" : "%{name}'in ekibinin kurucuları var",
+	"has_no_cons" : "%{name}'in kuruculara ihtiyacı var!",
+	"has_no_cons_squad" : "%{name}'in ekibinin kuruculara ihtiyacı var!"
 }

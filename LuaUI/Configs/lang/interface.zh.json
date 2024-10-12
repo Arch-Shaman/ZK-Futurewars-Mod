@@ -128,5 +128,9 @@
 	"sensorsteal" : "传感器被黑客攻击",
 	"sensortag" : "跟踪单位",
 	"supernova_rate" : "卫星放大率/速度： ",
-	"charge_rate" : "目前的收费标准： "
+	"charge_rate" : "目前的收费标准： ",
+	"has_cons" : "%{name} 有构造函数。",
+	"has_cons_squad" : "%{name} 的小队有构造函数",
+	"has_no_cons" :"%{name} 需要构造函数！",
+	"has_no_cons_squad" : "%{name} 的小队需要构造函数！"
 }

@@ -122,5 +122,9 @@
 	"sensorsteal": "เซ็นเซอร์ถูกแฮ็ก",
 	"sensortag" : "ติดตามหน่วย",
 	"supernova_rate" : "อัตราการขยาย/การเคลื่อนที่: ",
-	"charge_rate" : "อัตราการชาร์จปัจจุบัน: "
+	"charge_rate" : "อัตราการชาร์จปัจจุบัน: ",
+	"has_cons" : "%{name} has constructors.",
+	"has_cons_squad" : "%{name}'s squad has constructors",
+	"has_no_cons" : "%{name} needs constructors!",
+	"has_no_cons_squad" : "%{name}'s squad needs constructors!"
 }

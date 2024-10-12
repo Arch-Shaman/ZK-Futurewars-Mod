@@ -102,5 +102,9 @@
 	"sensorsteal" : "Sensoren gehackt",
 	"sensortag" : "Einheit verfolgt",
 	"supernova_rate" : "Verstärkungsrate / Einheitsgeschwindigkeit: ",
-	"charge_rate" : "Aktueller Laderate: "
+	"charge_rate" : "Aktueller Laderate: ",
+	"has_cons" : "%{name} hat Konstrukteure",
+	"has_cons_squad" : "Der Kader von %{Name} hat wieder Konstruktoren.",
+	"has_no_cons" : "%{name} braucht Konstrukteure!",
+	"has_no_cons_squad" : "Der Kader von %{Name} braucht Konstrukteure!"
 }
