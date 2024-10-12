@@ -140,6 +140,7 @@ function widget:PlayerChanged(playerID)
 	if not amISpectator then
 		if Spring.GetSpectatingState() then -- player resigned
 			amISpectator = true
+			local allyteams = Spring.GetAllyTeamList()
 			for a = 1, #allyteams do
 				local teamList = Spring.GetTeamList(allyteams[a])
 				for t = 1, #teamList do
@@ -197,6 +198,16 @@ local function GetTeamConStatus(teamID)
 	return teamCons[teamID] and teamCons[teamID] > 0
 end
 
+local function GetTeamsWithoutCons()
+	local ret = {}
+	for teamID, status in pairs(teamState) do
+		if not status then
+			ret[teamID] = true
+		end
+	end
+	return ret
+end
+
 function widget:Initialize()
 	myAllyTeam = Spring.GetMyAllyTeamID()
 	amISpectator = Spring.GetSpectatingState()
@@ -218,6 +229,7 @@ function widget:Initialize()
 		Subscribe = addListener,
 		Unsubscribe = Unsubscribe,
 		GetMyCons = GetMyCons,
+		GetTeamsWithoutCons = GetTeamsWithoutCons,
 		GetIdleCons = GetIdleCons,
 		GetTeamConStatus = GetTeamConStatus
 	}
