@@ -24,7 +24,7 @@ local function addListener(l, widgetName)
 			Spring.Echo("TeamColor subscribe failed: " .. widgetName .. "\nCause: " .. err)
 		end
 	else
-		Spring.Echo("TeamColor subscribe failed: " widgetName .. "\nCause: Not a function.")
+		Spring.Echo("TeamColor subscribe failed: " .. widgetName .. "\nCause: Not a function.")
 	end
 end
 
@@ -42,6 +42,8 @@ local function Unsubscribe(widget_name)
 	listeners[widget_name] = nil
 end
 
-WG.TeamColorSubscribe = addListener
-WG.TeamColorWasUpdated = FireColorUpdate
-WG.RemoveColorListener = Unsubscribe
+function widget:Initialize()
+	WG.TeamColorSubscribe = addListener
+	WG.TeamColorWasUpdated = FireColorUpdate
+	WG.RemoveColorListener = Unsubscribe
+end
