@@ -139,9 +139,7 @@ local function IsTeamAFK(teamID)
 end
 
 local function IsPlayerAFK(playerID)
-	local val = spGetPlayerRulesParam(playerID, "lagmonitor_lagging") ~= nil
-	--Spring.Echo("IsPlayerAFK: " .. tostring(val))
-	return val
+	return spGetPlayerRulesParam(playerID, "lagmonitor_lagging") ~= nil
 end
 
 local function ShareUnits(playername, teamID)
@@ -467,7 +465,7 @@ local function GetUserControls(playerID, teamID, allyTeamID, isAiTeam, isDead, p
 		parent = userControls.mainControl,
 		keepAspect = true,
 		file = "LuaUI/Images/Misc/no_cons.png",
-		OnClick = OnStatusClick(playerID),
+		--OnClick = OnStatusClick(playerID),
 	}
 	if playerID then
 		--Spring.Echo("initializing player " .. playerID)
