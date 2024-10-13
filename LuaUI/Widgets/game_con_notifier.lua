@@ -99,7 +99,10 @@ local function OnButtonClick(teamID, isAI)
 	local selection = WG.ConTracker.GetIdleCons()
 	local selected
 	local currentSelection = Spring.GetSelectedUnits()
-	if selection == nil or #selection == 0 then SendGameMessage(ColorToInColor({0.7,0,0,1}) .. WG.Translate("Interface", "give_con_no_con") return end -- nothing idle!
+	if selection == nil or #selection == 0 then -- nothing idle!
+		SendGameMessage(ColorToInColor({0.7,0,0,1}) .. WG.Translate("Interface", "give_con_no_con"))
+		return 
+	end 
 	for i = 1, #selection do
 		local unitDefID = Spring.GetUnitDefID(selection[i])
 		local ud = UnitDefs[unitDefID]
