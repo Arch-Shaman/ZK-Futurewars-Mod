@@ -75,6 +75,7 @@ return {
 					sweepfire_fastupdate = 1,
 					sweepfire_maxrangemult = 0.92,
 					groundnoexplode = 1,
+					armorpiercing       = 0.33,
 				},
 				damage                  = {
 					default = 20.1,
