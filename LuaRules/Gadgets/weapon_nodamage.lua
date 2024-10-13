@@ -15,11 +15,13 @@ function gadget:GetInfo()
 end
 
 local fakeweapons = {}
+local wantedDefs = {}
 
 for wid = 1, #WeaponDefs do
 	--debugecho(wid .. ": " .. tostring(WeaponDefs[wid].type) .. "\ntracker: " .. tostring(WeaponDefs[wid].customParams.tracker))
 	if WeaponDefs[wid].customParams.norealdamage or WeaponDefs[wid].customParams.targeter then
 		fakeweapons[wid] = true
+		wantedDefs[#wantedDefs + 1] = wid
 	end
 end
 
@@ -27,4 +29,8 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	if fakeweapons[weaponDefID] then
 		return 0, 0
 	end
+end
+
+function gadget:UnitPreDamaged_GetWantedWeaponDef() -- only do certain weapons.
+	return wantedDefs
 end
