@@ -119,6 +119,12 @@ options = {
 		value = false,
 		OnChange = UpdateColorNotify
 	},
+	spectatorChangesColors = {
+		name = 'Change colors as Spectator',
+		type = 'bool',
+		value = true,
+		OnChange = UpdateColorNotify
+	},
 	simpleEnemyAllyTeam = {
 		name = 'Colour Enemies By Team',
 		type = 'radioButton',
@@ -247,7 +253,12 @@ function widget:PlayerChanged(playerID) -- This is better than the previous one 
 	if playerID == Spring.GetMyPlayerID() then
 		local newTeam = Spring.GetMyTeamID()
 		if newTeam ~= oldTeam then
-			UpdateColorNotify()
+			local spectating = Spring.GetSpectatingState()
+			if spectating and options.spectatorChangesColors.value then
+				UpdateColorNotify()
+			elseif not spectating then
+				UpdateColorNotify()
+			end
 			oldTeam = newTeam
 		end
 	end
