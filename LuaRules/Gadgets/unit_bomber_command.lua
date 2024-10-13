@@ -395,7 +395,7 @@ local function RequestRearm(unitID, team, forceNow, replaceExisting, followMove)
 		return true --already reserved an airpad, do not reserve another one again
 	end
 	team = team or spGetUnitTeam(unitID)
-	if spGetUnitRulesParam(unitID, "noammo") ~= 1 and GG.BatteryManagement.GetChargeLevel(unitID) == 1 then
+	if spGetUnitRulesParam(unitID, "noammo") ~= 1 and GG.BatteryManagement.GetChargePercent(unitID) == 1 then
 		local health, maxHealth = Spring.GetUnitHealth(unitID)
 		if health and maxHealth and health > maxHealth - 1 then
 			return false
@@ -783,7 +783,7 @@ function gadget:AllowCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdO
 	local noAmmo = spGetUnitRulesParam(unitID, "noammo")
 	if not noAmmo or noAmmo == 0 then
 		local health, maxHealth = Spring.GetUnitHealth(unitID)
-		if ((cmdID == CMD_REARM or cmdID == CMD_FIND_PAD) and (not cmdOptions.shift and health > maxHealth - 1 and GG.BatteryManagement.GetChargeLevel(unitID) == 1)) then
+		if ((cmdID == CMD_REARM or cmdID == CMD_FIND_PAD) and (not cmdOptions.shift and health > maxHealth - 1 and GG.BatteryManagement.GetChargePercent(unitID) == 1)) then
 			return false  -- don't rearm unless damaged or need ammo
 		end
 	elseif noAmmo == 2 or noAmmo==3 then

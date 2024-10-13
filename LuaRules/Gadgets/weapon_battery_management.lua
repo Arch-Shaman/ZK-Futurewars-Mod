@@ -130,13 +130,18 @@ local function UseCharge(unitID, amount)
 	return ret
 end
 
-local function GetChargeLevel(unitID)
+local function GetChargePercent(unitID)
 	local data = IterableMap.Get(handled, unitID)
 	return data and data.battery / data.maxbattery or 1
 end
 
+local function GetChargeLevel(unitID)
+	local data = IterableMap.Get(handled, unitID)
+	return data and data.battery
+end
+
 function gadget:Initialize()
-	GG.BatteryManagement = {CanFire = CanFire, GetChargeLevel = GetChargeLevel, CanUseCharge = CanUseCharge, WeaponFired = WeaponFired, IsBatteryRecharged = IsBatteryRecharged, UseCharge = UseCharge, RechargeBattery = RechargeBattery, HasBattery = HasBattery}
+	GG.BatteryManagement = {CanFire = CanFire, GetChargeLevel = GetChargeLevel, GetChargePercent = GetChargePercent, CanUseCharge = CanUseCharge, WeaponFired = WeaponFired, IsBatteryRecharged = IsBatteryRecharged, UseCharge = UseCharge, RechargeBattery = RechargeBattery, HasBattery = HasBattery}
 end
 
 function gadget:UnitCreated(unitID, unitDefID)
