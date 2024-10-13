@@ -98,7 +98,7 @@ return {
 				reloadtime              = 1/30,
 				rgbColor                = "1 0.27059 0",
 				soundStart              = "weapon/laser/orange_micropulse",
-				soundstartvolume	    = 75,
+				soundstartvolume	    = 30,
 				thickness               = 0.5,
 				tolerance               = 10000,
 				turret                  = true,
