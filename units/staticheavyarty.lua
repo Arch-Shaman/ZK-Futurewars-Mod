@@ -22,7 +22,7 @@ return {
 			selectionscalemult = 1,
     		superweapon    = 1,
     		superweaponcoef = 0.2,
-			superweapondenom = 50,
+			superweapondenom = 20,
     		neededlink     = 750,
 			pylonrange     = 150,
 			outline_x = 270,
