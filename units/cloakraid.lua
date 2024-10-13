@@ -109,7 +109,7 @@ return {
 				soundHitVolume          = 0.2,
 				soundStartVolume        = 0.2,
 				soundTrigger            = true,
-				sprayAngle              = 2200,
+				sprayAngle              = 1700,
 				stages                  = 18,
 				tolerance               = 5000,
 				turret                  = true,
