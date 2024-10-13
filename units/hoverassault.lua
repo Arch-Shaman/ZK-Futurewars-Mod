@@ -69,6 +69,7 @@ return {
 					light_color = "0.0 0.0 2.3",
 					light_radius = 160,
 					combat_range = 200,
+					armorpiercing       = 0.33,
 				},
 				damage                  = {
 					default = 860.1,
