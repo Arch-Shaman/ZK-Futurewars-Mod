@@ -215,12 +215,12 @@ return {
 					manualfire = 1,
 					numprojectiles1 = 24,
 					projectile1 = "jumpraid_napalm_fragment_dummy",
-					velspread1 = "-2.2, 4, -2.2, 2.2, 7, 2.2",
+					velspread1 = "-3.5, 4, -3.5, 3.5, 7, 3.5",
 					noairburst = "I belive I can fly...",
 					onexplode = "by the power of god, disco and hentai...",
 					
 					area_damage = 1,
-					area_damage_radius = 70,
+					area_damage_radius = 128,
 					area_damage_dps = 40,
 					area_damage_duration = 12,
 					
@@ -307,8 +307,8 @@ return {
 					burntime = 60,
 					
 					area_damage = 1,
-					area_damage_radius = 48,
-					area_damage_dps = 20,
+					area_damage_radius = 64,
+					area_damage_dps = 40,
 					area_damage_duration = 10,
 
 					--lups_heat_fx = "firewalker",
