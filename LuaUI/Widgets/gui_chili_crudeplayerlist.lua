@@ -37,6 +37,17 @@ local fallbackAllyTeamID    = Spring.GetMyAllyTeamID()
 
 local Chili
 
+local function GetAIName(teamID)
+	local _, name = Spring.GetAIInfo(teamID)
+	local fallbackName = Spring.GetTeamRulesParam(teamID, "initAIName") or "Unknown AI"
+	return name or "<Broken> " .. fallbackName
+end
+
+local function IsTeamAI(teamID) -- Creates a fallback. Probably should be a Utility function
+	local _, _, _, isAiTeam = Spring.GetTeamInfo(teamID, false)
+	return isAiTeam or Spring.GetTeamRulesParam(teamID, "initAI")
+end
+
 local function GetColorChar(colorTable)
 	if colorTable == nil then return string.char(255,255,255,255) end
 	local col = {}
