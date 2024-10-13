@@ -24,7 +24,7 @@ end
 local GRAVITY = Game.gravity
 local GRAVITY_BASELINE = 120
 local GROUND_PUSH_CONSTANT = 1.12*GRAVITY/30/30
-local UNSTICK_CONSTANT = 4
+local UNSTICK_CONSTANT = 4.5
 
 local spSetUnitVelocity = Spring.SetUnitVelocity
 local spAddUnitImpulse = Spring.AddUnitImpulse
@@ -35,6 +35,14 @@ local spGetUnitVelocity = Spring.GetUnitVelocity
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local getMovetype = Spring.Utilities.getMovetype
 local abs = math.abs
+
+local function DrawLine(p1, p2)
+	Spring.MarkerAddLine(p1[1], 0, p1[2], p2[1], 0, p2[2])
+end
+
+local function DrawPoint(p1, message)
+	Spring.MarkerAddPoint(p1[1], 0, p1[2], message or "")
+end
 
 local CMD_IDLEMODE = CMD.IDLEMODE
 local CMD_REPEAT = CMD.REPEAT
@@ -49,6 +57,7 @@ local CMD_PUSH_PULL = Spring.Utilities.CMD.PUSH_PULL
 --local spAreTeamsAllied = Spring.AreTeamsAllied
 
 local GUNSHIP_VERTICAL_MULT = 0.25 -- prevents rediculus gunship climb
+local FIXEDWING_VERTICAL_MULT = 0.5 -- prevents rediculus gunship climb
 
 local impulseMult = {
 	[0] = 0.022, -- fixedwing
@@ -62,8 +71,8 @@ for i = 1, #WeaponDefs do
 	if wd.customParams and wd.customParams.impulse then
 		impulseWeaponID[i] = {
 			impulse = tonumber(wd.customParams.impulse),
-			normalDamage = wd.customParams.impulsedoesdamage ~= nil,
-			checkLOS = true
+			normalDamage = (wd.customParams.normaldamage and true or false),
+			checkLOS = true,
 		}
 		--Spring.Echo("Normal damage for " .. i .. ": " .. tostring(wd.customParams.impulsedoesdamage))
 		if wd.customParams.impulsemaxdepth and wd.customParams.impulsedepthmult then
@@ -201,9 +210,9 @@ local function AddGadgetImpulse(unitID, x, y, z, magnitude, affectTransporter, p
 	local mag = magnitude*GRAVITY_BASELINE/dis*impulseMult[moveTypeByID[unitDefID]]*myImpulseMult[moveTypeByID[unitDefID]+1]/myMass
 
 	if moveTypeByID[unitDefID] == 0 then
-		x,y,z = x*mag, y*mag, z*mag
-	elseif moveTypeByID[unitDefID] == 1 then
 		x,y,z = x*mag, y*mag * GUNSHIP_VERTICAL_MULT, z*mag
+	elseif moveTypeByID[unitDefID] == 1 then
+		x,y,z = x*mag, y*mag * FIXEDWING_VERTICAL_MULT, z*mag
 	elseif moveTypeByID[unitDefID] == 2 then
 		x,y,z = x*mag, y*mag, z*mag
 		y = y + abs(magnitude)/(20*myMass)
@@ -321,28 +330,6 @@ function gadget:Initialize()
 	end
 end
 
-function gadget:Load(zip)
-	if not GG.SaveLoad then
-		Spring.Log(gadget:GetInfo().name, LOG.ERROR, "Failed to access save/load API")
-		return
-	end
-	local units = GG.SaveLoad.GetSavedUnitsCopy()
-	for oldID, data in pairs(units) do
-		local newID = GG.SaveLoad.GetNewUnitID(oldID)
-		if newID and data.states.custom then
-			local state = data.states.custom[CMD_PUSH_PULL]
-			if state then
-				local unitDefID = Spring.GetUnitDefID(newID)
-				PushPullToggleCommand(newID, unitDefID, tonumber(state))
-			end
-		end
-	end
-	if collectgarbage then
-		units = nil
-		collectgarbage("collect")
-	end
-end
-
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 -- Main Impulse Handling
@@ -393,6 +380,17 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	return damage
 end
 
+local function ForceAircraftToFly(unitID)
+	if unitID and Spring.ValidUnitID(unitID) and not Spring.GetUnitIsActive(unitID) then
+		local ux, uy, uz = Spring.GetUnitPosition(unitID)
+		if ux then
+			Spring.SetUnitMoveGoal(unitID, ux, uy, uz)
+			Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
+			Spring.GiveOrderToUnit(unitID, CMD.WAIT, {}, 0)
+		end
+	end
+end
+
 local function AddImpulses()
 	if thereIsStuffToDo then
 		for i = 1, unitByID.count do
@@ -401,6 +399,7 @@ local function AddImpulses()
 			if data.moveType == 1 then
 				local vx, vy, vz = spGetUnitVelocity(unitID)
 				if vx then
+					ForceAircraftToFly(unitID)
 					spSetUnitVelocity(unitID, vx + data.x, vy + data.y, vz + data.z)
 
 					--if data.allied then
@@ -421,15 +420,19 @@ local function AddImpulses()
 					--]]
 				end
 			elseif data.moveType == 0 then
+				ForceAircraftToFly(unitID)
 				spAddUnitImpulse(unitID, data.x, data.y, data.z)
 			else
 				if data.pushOffGround then
 					data.y = data.y + GROUND_PUSH_CONSTANT
 				end
 				if data.useDummy then
-					spAddUnitImpulse(unitID, UNSTICK_CONSTANT,0,0) --dummy impulse (applying impulse>1 make unit less sticky to map surface)
+					local dir = math.random()*2*math.pi
+					local mag = UNSTICK_CONSTANT
+					local dummyX, dummyZ = mag*math.cos(dir), mag*math.sin(dir)
+					spAddUnitImpulse(unitID, dummyX, 0, dummyZ) --dummy impulse (applying impulse>1 make unit less sticky to map surface)
 					spAddUnitImpulse(unitID, data.x, data.y, data.z)
-					spAddUnitImpulse(unitID, -UNSTICK_CONSTANT,0,0) --remove dummy impulse
+					spAddUnitImpulse(unitID, -dummyX, 0, -dummyZ) --remove dummy impulse
 				else
 					spAddUnitImpulse(unitID, data.x, data.y, data.z)
 				end
