@@ -133,5 +133,6 @@
 	"has_cons_squad" : "%{name} 的小队有构造函数",
 	"has_no_cons" :"%{name} 需要构造函数！",
 	"has_no_cons_squad" : "%{name} 的小队需要构造函数！",
-	"give_con_button" : "给没有闲置构造函数的盟友"
+	"give_con_button" : "给没有闲置构造函数的盟友",
+	"give_con_no_con" : "错误：您没有任何有效的构造函数。如果您希望提供构造函数，请手动提供。请注意，只有空闲的构造函数才能自动提供。"
 }

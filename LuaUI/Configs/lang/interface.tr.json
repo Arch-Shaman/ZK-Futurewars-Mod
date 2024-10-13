@@ -119,5 +119,6 @@
 	"has_cons_squad" : "%{name}'in ekibinin kurucuları var",
 	"has_no_cons" : "%{name}'in kuruculara ihtiyacı var!",
 	"has_no_cons_squad" : "%{name}'in ekibinin kuruculara ihtiyacı var!",
-	"give_con_button" : "Boş bir kurucuyu olmayan bir müttefike verin"
+	"give_con_button" : "Boş bir kurucuyu olmayan bir müttefike verin",
+	"give_con_no_con" : "Hata: Geçerli bir oluşturucunuz yok. Bir oluşturucu vermek isterseniz lütfen bunu manuel olarak yapın. Sadece boşta olan oluşturucuların otomatik olarak verilebileceğini unutmayın."
 }

@@ -107,5 +107,6 @@
 	"has_cons_squad" : "Der Kader von %{Name} hat wieder Konstruktoren.",
 	"has_no_cons" : "%{name} braucht Konstrukteure!",
 	"has_no_cons_squad" : "Der Kader von %{Name} braucht Konstrukteure!",
-	"give_con_button" : "Geben Sie einem Verbündeten, der keinen Konstruktor hat, einen ungenutzten Konstruktor."
+	"give_con_button" : "Geben Sie einem Verbündeten, der keinen Konstruktor hat, einen ungenutzten Konstruktor.",
+	"give_con_no_con" : "Fehler: Sie haben keine gültigen Konstruktoren. Wenn Sie einen Konstruktor angeben möchten, tun Sie dies bitte manuell. Beachten Sie, dass nur inaktive Konstruktoren automatisch angegeben werden können."
 }

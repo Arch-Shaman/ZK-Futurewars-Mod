@@ -185,7 +185,7 @@ local function GetIdleCons()
 	local ret = {}
 	local myTeamID = Spring.GetMyTeamID()
 	for id, _ in pairs(myIdleCons) do
-		if Spring.GetUnitTeamID(id) == myTeamID then
+		if Spring.GetUnitTeam(id) == myTeamID then
 			ret[#ret + 1] = id
 		else
 			myIdleCons[id] = nil
@@ -236,6 +236,6 @@ function widget:Initialize()
 		GetTeamsWithoutCons = GetTeamsWithoutCons,
 		GetIdleCons = GetIdleCons,
 		GetTeamConStatus = GetTeamConStatus,
-        GetConstructorsCount = GetConstructorsCount
+        GetConstructorsCount = GetConstructorsCount,
 	}
 end
