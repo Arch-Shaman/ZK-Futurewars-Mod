@@ -71,7 +71,7 @@ return {
 					groundnoexplode     = 1,
 				},
 				damage                  = {
-					default = 40.1,
+					default = 42.1,
 				},
 				explosionGenerator      = "custom:gauss_hit_l",
 				groundbounce            = 1,
@@ -82,7 +82,7 @@ return {
 				noExplode               = true,
 				noSelfDamage            = true,
 				numbounce               = 10,
-				range                   = 235,
+				range                   = 260,
 				reloadtime              = 50/30,
 				rgbColor                = "0.5 1 1",
 				separation              = 0.5,
