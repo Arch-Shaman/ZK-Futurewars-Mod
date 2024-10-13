@@ -100,7 +100,7 @@ local function OnButtonClick(teamID, isAI)
 	local selected
 	local currentSelection = Spring.GetSelectedUnits()
 	if selection == nil or #selection == 0 then -- nothing idle!
-		SendGameMessage(ColorToInColor({0.7,0,0,1}) .. WG.Translate("Interface", "give_con_no_con"))
+		SendGameMessage(ColorToInColor({0.7,0,0,1}) .. WG.Translate("interface", "give_con_no_con"))
 		return 
 	end 
 	for i = 1, #selection do
@@ -114,12 +114,12 @@ local function OnButtonClick(teamID, isAI)
 			return
 		end
 	end
-	SendGameMessage(ColorToInColor(errorColor) .. WG.Translate("Interface", "give_con_no_con"))
+	SendGameMessage(ColorToInColor(errorColor) .. WG.Translate("interface", "give_con_no_con"))
 end
 
 local function DoTheThing()
-	if WG.ConTracker.GetConstructorsCount(Spring.GetMyTeamID()) < 1 then 
-		SendGameMessage(ColorToInColor(errorColor) .. WG.Translate("Interface", "give_con_no_con")) 
+	if WG.ConTracker.GetConstructorsCount(Spring.GetMyTeamID()) < 2 then 
+		SendGameMessage(ColorToInColor(errorColor) .. WG.Translate("interface", "give_con_no_con")) 
 		return 
 	end
 	local longestWaiter = 9999999999999999999999999
