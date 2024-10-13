@@ -136,7 +136,7 @@ function gadget:GameFrame(n)
 				spSetUnitShieldState(unitID, data.shieldNum, charge)
 				data.restoreCharge = nil
 			end
-			local batteryCost = def and def.batterychargecost
+			local batteryCost = (def and def.batterychargecost) or 0
 			if data.resTable then
 				-- The engine handles charging for free shields.
 				local hitTime = Spring.GetUnitRulesParam(unitID, "shieldHitFrame") or -999999
@@ -160,17 +160,20 @@ function gadget:GameFrame(n)
 					end
 					-- Deal with overflow
 					local chargeAdd = newChargeRate*def.chargePerUpdate
-					if charge + chargeAdd > def.maxCharge then
+					local chargeNeeded = def.maxCharge - charge
+					if charge > chargeNeeded then costMult = (chargeNeeded/charge) end
+					if charge + chargeAdd > def.maxCharge and batteryCost == 0 then
 						local overProportion = 1 - (charge + chargeAdd - def.maxCharge)/chargeAdd
 						data.resTable.e = data.resTable.e*overProportion
 						chargeAdd = chargeAdd*overProportion
-						if batteryCost then
-							local batteryAvailable = GG.BatteryManagement.UseCharge(unitID, batteryCost)
-							chargeAdd = chargeAdd * batteryAvailable
+					elseif batteryCost > 0 then
+						local batteryAvailable = GG.BatteryManagement.GetChargeLevel(unitID)
+						local chargeMult = 1
+						if batteryAvailable > batteryCost then
+							GG.BatteryManagement.UseCharge(unitID, batteryCost)
+						else
+							chargeAdd = 0
 						end
-					elseif batteryCost then
-						local batteryAvailable = GG.BatteryManagement.UseCharge(unitID, batteryCost)
-						chargeAdd = chargeAdd * batteryAvailable
 					end
 
 					-- Check if the change can be carried out
