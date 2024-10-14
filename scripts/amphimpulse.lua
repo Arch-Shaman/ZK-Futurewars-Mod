@@ -27,6 +27,8 @@ local BODY_TILT_ANGLE = math.rad(5)
 local BODY_TILT_SPEED = math.rad(10)
 local BODY_RISE_HEIGHT = 4
 local BODY_RISE_SPEED = 6*PACE
+local lockedTarget
+local isLockedAtm = false
 
 local ARM_FRONT_ANGLE = -math.rad(20)
 local ARM_FRONT_SPEED = math.rad(22.5) * PACE
@@ -266,6 +268,33 @@ function unit_teleported(position)
 	return GG.Floating_UnitTeleported(unitID, position)
 end
 
+local function LockAimThreadUnit()
+	local duration = 1000
+	Sleep(66) -- time enough for initial impulse to kick in
+	isLockedAtm = true
+	Spring.SetUnitWeaponState(unitID, 3, "range", 650)
+	while duration > 0 do
+		Spring.SetUnitTarget(unitID, lockedTarget, false, false, -1)
+		duration = duration - 33
+		Sleep(33)
+	end
+	Spring.SetUnitTarget(unitID, nil, false, false, -1) -- clear target.
+	Spring.SetUnitWeaponState(unitID, 3, "range", 100)
+	local reloadFrame = Spring.GetUnitWeaponState(unitID, 1, "reloadFrame")
+	local currentFrame = Spring.GetGameFrame()
+	local newReloadTime = 45
+	if reloadFrame > currentFrame then
+		newReloadTime = newReloadTime - (reloadFrame - currentFrame)
+	end
+	Spring.SetUnitWeaponState(unitID, 1, "reloadFrame", newReloadTime + currentFrame)
+	isLockedAtm = false
+end
+
+function GravityLassoUnit(unitID) -- TODO: Add ground base gravity lasso.
+	lockedTarget = unitID
+	StartThread(LockAimThreadUnit)
+end
+
 --------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
 -- four-stroke bipedal (reverse-jointed) walkscript
@@ -343,7 +372,7 @@ end
 
 function script.Create()
 	--StartThread(Walk)
-
+	Spring.SetUnitWeaponState(unitID, 3, "range", 100)
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 end
 
@@ -361,16 +390,25 @@ function script.AimFromWeapon()
 	return aimpoint
 end
 
+local turnSpeed = math.rad(480)
+
 function script.AimWeapon(num, heading, pitch)
+	if num == 3 and not isLockedAtm then return false end
 	if aimWeaponLinger > 0 then
 		GG.Floating_AimWeapon(unitID)
 		aimWeaponLinger = aimWeaponLinger - 1
 	end
 	Signal(SIG_AIM1)
 	SetSignalMask(SIG_AIM1)
-	Turn(torso, y_axis, heading, math.rad(480))
-	Turn(lshoulder, x_axis, -pitch, math.rad(200))
-	Turn(rshoulder, x_axis, -pitch, math.rad(200))
+	if not isLockedAtm then
+		Turn(torso, y_axis, heading, turnSpeed)
+		Turn(lshoulder, x_axis, -pitch, turnSpeed/2)
+		Turn(rshoulder, x_axis, -pitch, turnSpeed/2)
+	else
+		Turn(torso, y_axis, heading, turnSpeed*3)
+		Turn(lshoulder, x_axis, -pitch, turnSpeed*1.33)
+		Turn(rshoulder, x_axis, -pitch, turnSpeed*1.33)
+	end
 	WaitForTurn(torso, y_axis)
 	WaitForTurn(lshoulder, x_axis)
 	StartThread(RestoreAfterDelay)
@@ -378,6 +416,8 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.BlockShot(num, targetID)
+	if num == 3 and not isLockedAtm then return true end
+	if num ~= 3 and isLockedAtm then return true end
 	GG.Floating_AimWeapon(unitID)
 	aimWeaponLinger = 5
 	-- Lower than real damage (155) to help against Duck regen case.
@@ -388,11 +428,17 @@ function script.QueryWeapon(num)
 	return firepoints[gun_1]
 end
 
+local function RecoilThread(barrelnum)
+	Move(firepoints[barrelnum], z_axis, 4, 1.2)
+	EmitSfx(firepoints[barrelnum], 1024)
+	WaitForMove(firepoints[barrelnum], z_axis)
+	Move(firepoints[barrelnum], z_axis, 0, -2)
+end
+
 function script.Shot(num)
 	GG.Floating_AimWeapon(unitID)
-	Move(firepoints[gun_1], z_axis, 4)
-	EmitSfx(firepoints[gun_1], 1024)
-	Move(firepoints[gun_1], z_axis, 0)
+	if num == 3 then return end
+	RecoilThread(gun_1)
 	gun_1 = 1 - gun_1
 end
 
