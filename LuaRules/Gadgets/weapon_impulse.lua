@@ -73,6 +73,10 @@ for i = 1, #WeaponDefs do
 			impulse = tonumber(wd.customParams.impulse),
 			normalDamage = (wd.customParams.normaldamage and true or false),
 			checkLOS = true,
+			wantedRange = tonumber(wd.customParams.impulserange) or 0,
+			wantedMult = tonumber(wd.customParams.impulsemult) or 1,
+			minheightdiff = tonumber(wd.customParams.impulseminheightdiff),
+			maxrange = wd.range
 		}
 		--Spring.Echo("Normal damage for " .. i .. ": " .. tostring(wd.customParams.impulsedoesdamage))
 		if wd.customParams.impulsemaxdepth and wd.customParams.impulsedepthmult then
@@ -353,7 +357,24 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 
 		local x,y,z = (ux-ax), (uy-ay), (uz-az)
 		local magnitude = defData.impulse
-
+		local wantedRange = defData.wantedRange
+		if wantedRange > 0 then -- gravity lassos
+			local wantedMult = defData.wantedMult
+			local maxrange = defData.maxrange
+			local dx = ax - ux
+			local dy = ay - uy
+			local dz = az - uz
+			local dist = math.sqrt((dx * dx) + (dy * dy) + (dz * dz))
+			magnitude = magnitude * (((dist - wantedRange)/(maxrange - wantedRange)) * wantedMult)
+		end
+		local minDiff = defData.minheightdiff
+		if minDiff and y > -minDiff and y < minDiff then
+			if y < 0 then 
+				y = -minDiff
+			else
+				y = minDiff
+			end
+		end
 		if defData.impulseMaxDepth then
 			local depth = spGetGroundHeight(ax,az)
 			if depth < 0 then
