@@ -32,7 +32,7 @@ end
 -- speed ups --
 local CMD_UNIT_CANCEL_TARGET = Spring.Utilities.CMD.UNIT_CANCEL_TARGET
 local CMD_UNIT_AI            = Spring.Utilities.CMD.UNIT_AI
-local CMD_ARMORSTATE         = Spring.Utilities.CMD_ARMORSTATE
+local CMD_ARMORSTATE         = Spring.Utilities.CMD.ARMORSTATE
 local EMPTY                  = {}
 local spFindUnitCmdDesc      = Spring.FindUnitCmdDesc
 local spEditUnitCmdDesc      = Spring.EditUnitCmdDesc
