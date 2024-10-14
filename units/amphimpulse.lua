@@ -48,7 +48,7 @@ return {
 				"custom:bubbles_small",
 			},
 		},
-		sightDistance          = 600,
+		sightDistance          = 700,
 		trackOffset            = 0,
 		trackStrength          = 8,
 		trackStretch           = 1,
