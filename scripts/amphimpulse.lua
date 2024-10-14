@@ -438,7 +438,7 @@ end
 function script.Shot(num)
 	GG.Floating_AimWeapon(unitID)
 	if num == 3 then return end
-	RecoilThread(gun_1)
+	StartThread(RecoilThread, gun_1)
 	gun_1 = 1 - gun_1
 end
 
