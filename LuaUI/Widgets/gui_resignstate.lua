@@ -24,12 +24,12 @@ local maxresign
 local allyteamcount = 0
 local MyAllyTeamID = Spring.GetMyAllyTeamID()
 local verboseResign = false
-local strings = {
+--[[local strings = {
 	progressbar_help = "Resign Status:\nThe first number represents the number of people voting and the second is the threshold until the timer begins.\nNote: An unanimous vote will immediately resign your team!\n\n",
 	exemption = "The following players do NOT currently count towards the total player count nor are their votes contributing to resign:\n",
 	voted = "The following players want to resign:\n",
 	enemyvote = "You are unaware of which players vote for resign!",
-}
+}]]
 
 local firstVote = false
 
@@ -183,9 +183,12 @@ local function UpdateResignState(allyTeamID)
 	else
 		tooltip = tooltip .. "\n" .. strings.enemyvote
 	end]]
+	local timeLeft = TimeToText(timer)
+	local vote = "[" .. count .. " / " .. threshold .. " ]"
 	if (count > 0 or timer < maxresign - 5) and progressbars[allyTeamID] == nil then
 		--Spring.Echo(name .. " ( allyTeamID: " .. allyTeamID .. ")")
-		progressbars[allyTeamID] = Chili.Progressbar:New{parent = grid, width = '100%', caption = name .. ' [' .. count .. " / " .. threshold .. " ] Time Left: " .. TimeToText(timer), tooltip = "Not Initialized", useValueTooltip = true, min = 0, max = threshold, value = count}
+		local text = WG.Translate("interface", "resign_state_voting", {name = name, count = vote})
+		progressbars[allyTeamID] = Chili.Progressbar:New{parent = grid, width = '100%', caption = text, useValueTooltip = true, min = 0, max = threshold, value = count}
 		--Spring.Echo(progressbars[allyTeamID].y)
 	end
 	if progressbars[allyTeamID] and ((timer > maxresign - 5 and count == 0) or total == 0 or timer <= 0) then
@@ -195,7 +198,7 @@ local function UpdateResignState(allyTeamID)
 	end
 	if progressbars[allyTeamID] and count >= threshold then
 		progressbars[allyTeamID]:SetMinMax(0, maxresign)
-		progressbars[allyTeamID]:SetCaption(name .. " RESIGNING! [ " .. count .. " / " .. total .. " for instant resign] Time Left until resign: " .. TimeToText(timer))
+		progressbars[allyTeamID]:SetCaption(WG.Translate("interface", "resign_state_resigning", {name = name, count = vote, time = timeLeft}) -- "%{name} Surrendering %{count}: %{time}"
 		progressbars[allyTeamID]:SetValue(timer)
 		local ratio = timer / maxresign
 		if ratio >= 0.9 then
@@ -212,11 +215,10 @@ local function UpdateResignState(allyTeamID)
 	elseif progressbars[allyTeamID] then
 		progressbars[allyTeamID]:SetMinMax(0, threshold)
 		progressbars[allyTeamID]:SetValue(count)
-		if total > 3 then
-			progressbars[allyTeamID]:SetCaption(name .. ' [' .. count .. " / " .. threshold .. " for timer]")
-		else
-			progressbars[allyTeamID]:SetCaption(name .. ' [' .. count .. " / " .. total .. " for instant resign]")
+		if total < 4 then
+			vote = "[" .. count .. " / " .. total .. " ]"
 		end
+		progressbars[allyTeamID]:SetCaption(WG.Translate("interface", "resign_state_voting", {name = name, count = vote}))
 		local ratio = count / threshold
 		if allied then
 			if ratio >= 0.75 then
@@ -242,7 +244,15 @@ local function UpdateResignState(allyTeamID)
 	end
 end
 
+local function LocaleUpdated()
+	localization.want_resign = "\n" .. WG.Translate("interface", "resign_state_want_resign")
+	localization.want_resign_first = "\n" .. localization.want_resign .. "\n" .. WG.Translate("interface", "resign_state_want_resign_first")
+	localization.no_resign = "\n" .. WG.Translate("interface", "resign_state_no_longer_want_resign")
+	UpdateResignState()
+end
+
 function widget:Initialize()
+	WG.InitializeTranslation(LocaleUpdated, GetInfo().name)
 	widgetHandler:RegisterGlobal(widget, "UpdateResignState", UpdateResignState)
 	widgetHandler:RegisterGlobal(widget, "UpdatePlayer", UpdatePlayer)
 	widgetHandler:RegisterGlobal(widget, "UpdateVote", UpdateVote)
