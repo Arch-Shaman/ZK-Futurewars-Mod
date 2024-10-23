@@ -147,5 +147,10 @@
 	"has_no_cons" : "%{name} needs constructors!",
 	"has_no_cons_squad" : "%{name}'s squad needs constructors!",
 	"give_con_button" : "Give an idle constructor to an ally without one",
-	"give_con_no_con" : "Error: You don't have any valid constructors. If you wish to give a constructor, please do so manaully. Note only idle constructors can be given automatically."
+	"give_con_no_con" : "Error: You don't have any valid constructors. If you wish to give a constructor, please do so manaully. Note only idle constructors can be given automatically.",
+	"resign_state_resigning" : "%{name} Surrendering %{count}: %{time}",
+	"resign_state_voting" : "%{name} voting to surrender %{count}",
+	"resign_state_want_resign" : "You've voted to surrender! Please wait until your allies agree to the surrender.",
+	"resign_state_want_resign_first" : "If enough players on your team wish to surrender, a timer will begin shortly.",
+	"resign_state_no_longer_want_resign" : "You've rescinded your vote to surrender!"
 }

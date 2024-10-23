@@ -120,5 +120,10 @@
 	"has_no_cons" : "%{name}'in kuruculara ihtiyacı var!",
 	"has_no_cons_squad" : "%{name}'in ekibinin kuruculara ihtiyacı var!",
 	"give_con_button" : "Boş bir kurucuyu olmayan bir müttefike verin",
-	"give_con_no_con" : "Hata: Geçerli bir oluşturucunuz yok. Bir oluşturucu vermek isterseniz lütfen bunu manuel olarak yapın. Sadece boşta olan oluşturucuların otomatik olarak verilebileceğini unutmayın."
+	"give_con_no_con" : "Hata: Geçerli bir oluşturucunuz yok. Bir oluşturucu vermek isterseniz lütfen bunu manuel olarak yapın. Sadece boşta olan oluşturucuların otomatik olarak verilebileceğini unutmayın.",
+	"resign_state_resigning" : "%{name} Teslim Oluyor %{count}: %{time}",
+	"resign_state_voting" : "%{name} teslim olmaya oy veriyor %{count}",
+	"resign_state_want_resign" : "Teslim olmaya oy verdiniz! Lütfen müttefikleriniz teslim olmayı kabul edene kadar bekleyin.",
+	"resign_state_want_resign_first" : "Takımınızdaki yeterli sayıda oyuncu teslim olmak isterse, kısa süre içinde bir zamanlayıcı başlayacak.",
+	"resign_state_no_longer_want_resign" : "Teslim olma oyunuzu geri çektiniz!"
 }

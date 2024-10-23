@@ -123,5 +123,10 @@
 	"has_no_cons" : "%{name} potrzebuje konstruktorów!",
 	"has_no_cons_squad" : "%Drużyna %{name} potrzebuje konstruktorów!",
 	"give_con_button": "Przekaż bezczynny konstruktor sojusznikowi, który go nie posiada",
-	"give_con_no_con" : "Błąd: Nie masz żadnych prawidłowych konstruktorów. Jeśli chcesz podać konstruktor, zrób to ręcznie. Należy pamiętać, że tylko bezczynne konstruktory mogą być podawane automatycznie."
+	"give_con_no_con" : "Błąd: Nie masz żadnych prawidłowych konstruktorów. Jeśli chcesz podać konstruktor, zrób to ręcznie. Należy pamiętać, że tylko bezczynne konstruktory mogą być podawane automatycznie.",
+	"resign_state_resigning" : "%{name} Poddaje się %{count}: %{time}",
+	"resign_state_voting" : "%{name} głosuje za poddaniem się %{count}",
+	"resign_state_want_resign" : "Głosowałeś za poddaniem się! Proszę czekać, aż twoi sojusznicy zgodzą się na poddanie.",
+	"resign_state_want_resign_first" : "Jeśli wystarczająca liczba graczy w twojej drużynie zechce się poddać, za chwilę rozpocznie się odliczanie.",
+	"resign_state_no_longer_want_resign" : "Cofnąłeś swój głos za poddaniem się!"
 }
