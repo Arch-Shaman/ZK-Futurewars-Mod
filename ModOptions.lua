@@ -129,7 +129,7 @@ local options = {
 		section= 'a_important',
 		def = 180,
 		min = 30,
-		max = 1200,
+		max = 300,
 		step = 1,
 	},
 	{
