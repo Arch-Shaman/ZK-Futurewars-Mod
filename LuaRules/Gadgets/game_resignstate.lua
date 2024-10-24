@@ -515,6 +515,9 @@ function gadget:GameFrame(f)
 		for i = 1, #resignteams do
 			local allyTeamID = resignteams[i]
 			if states[allyTeamID].thresholdState or states[allyTeamID].forcedTimer then
+				if states[allyTeamID].forcedTimer then
+					CheckForFailureState(allyTeamID)
+				end
 				states[allyTeamID].timer = states[allyTeamID].timer - 1
 				UpdateResignTimer(allyTeamID)
 				if states[allyTeamID].timer == 0 then

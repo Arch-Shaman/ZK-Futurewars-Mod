@@ -202,7 +202,7 @@ local function UpdateResignState(allyTeamID)
 			name = GetTeamInColor(teamList[1]) .. name .. ColorToInColor({1,1,1,1})
 		end
 	end
-	if (forcedTimer or count > 0 or timer < maxresign - 5) and progressbars[allyTeamID] == nil then
+	if (forcedTimer or count > 0) and progressbars[allyTeamID] == nil then
 		--Spring.Echo(name .. " ( allyTeamID: " .. allyTeamID .. ")")
 		local text = WG.Translate("interface", "resign_state_voting", {name = name, count = vote})
 		progressbars[allyTeamID] = Chili.Progressbar:New{parent = grid, width = '100%', caption = text, useValueTooltip = true, min = 0, max = threshold, value = count}
@@ -215,10 +215,9 @@ local function UpdateResignState(allyTeamID)
 	end
 	if progressbars[allyTeamID] and (forcedTimer or count >= threshold) then
 		if forcedTimer then
-			progressbars[allyTeamID]:SetMinMax(0, 60)
-		else
-			progressbars[allyTeamID]:SetMinMax(0, maxresign)
+			maxresign = 60
 		end
+		progressbars[allyTeamID]:SetMinMax(0, maxresign)
 		if not forcedTimer then
 			progressbars[allyTeamID]:SetCaption(WG.Translate("interface", "resign_state_resigning", {name = name, count = vote, time = timeLeft})) -- "%{name} Surrendering %{count}: %{time}"
 		else
@@ -237,7 +236,7 @@ local function UpdateResignState(allyTeamID)
 		else
 			progressbars[allyTeamID]:SetColor(colors["low"])
 		end
-	elseif progressbars[allyTeamID] then
+	elseif progressbars[allyTeamID] and count > 0 then
 		progressbars[allyTeamID]:SetMinMax(0, threshold)
 		progressbars[allyTeamID]:SetValue(count)
 		if total < 4 then
@@ -266,6 +265,8 @@ local function UpdateResignState(allyTeamID)
 				progressbars[allyTeamID]:SetColor(colors["low"])
 			end
 		end
+	elseif progressbars[allyTeamID] then
+		progressbars[allyTeamID]:Dispose()
 	end
 end
 
