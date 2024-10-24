@@ -630,6 +630,7 @@ local function ProcessLastAlly()
 				if (allyTeamID ~= supreme) and (allyTeamID ~= gaiaAllyTeamID) then
 					RevealAllianceUnits(allyTeamID)
 					revealed = true
+					GG.ResignState.ForceTimerForAllyTeam(allyTeamID, 60, true)
 				end
 			end
 		end
