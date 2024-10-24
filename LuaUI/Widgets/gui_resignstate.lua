@@ -183,7 +183,7 @@ local function UpdateResignState(allyTeamID)
 	local resigned = ""
 	if total == 0 and progressbars[allyTeamID] then
 		progressbars[allyTeamID]:Dispose()
-		states[allyTeamID] = nil -- destroyed.
+		--states[allyTeamID] = nil -- destroyed.
 		return
 	end
 	--[[local tooltip = strings["progressbar_help"] .. strings.exemption .. allyteamstrings[allyTeamID].exempt
@@ -214,11 +214,15 @@ local function UpdateResignState(allyTeamID)
 		return
 	end
 	if progressbars[allyTeamID] and (forcedTimer or count >= threshold) then
-		progressbars[allyTeamID]:SetMinMax(0, maxresign)
+		if forcedTimer then
+			progressbars[allyTeamID]:SetMinMax(0, 60)
+		else
+			progressbars[allyTeamID]:SetMinMax(0, maxresign)
+		end
 		if not forcedTimer then
 			progressbars[allyTeamID]:SetCaption(WG.Translate("interface", "resign_state_resigning", {name = name, count = vote, time = timeLeft})) -- "%{name} Surrendering %{count}: %{time}"
 		else
-			Progressbar[allyTeamID]:SetCaption(WG.Translate("interface", "resign_state_forced", {name = name, time = timeLeft}))
+			progressbars[allyTeamID]:SetCaption(WG.Translate("interface", "resign_state_forced", {name = name, time = timeLeft}))
 		end
 		progressbars[allyTeamID]:SetValue(timer)
 		local ratio = timer / maxresign
@@ -281,7 +285,6 @@ end
 function widget:Initialize()
 	Chili = WG.Chili
 	ColorToInColor = WG.Chili.color2incolor
-	WG.InitializeTranslation(LocaleUpdated, GetInfo().name)
 	widgetHandler:RegisterGlobal(widget, "UpdateResignState", UpdateResignState)
 	widgetHandler:RegisterGlobal(widget, "UpdatePlayer", UpdatePlayer)
 	widgetHandler:RegisterGlobal(widget, "UpdateVote", UpdateVote)
@@ -308,6 +311,7 @@ function widget:Initialize()
 		local allyTeamID = allylist[i]
 		UpdateResignState(allyTeamID)
 	end
+	WG.InitializeTranslation(LocaleUpdated, GetInfo().name)
 end
 
 function widget:PlayerChangedTeam(playerID)
