@@ -80,7 +80,8 @@ local function GetAllyTeamPlayerCount(allyTeamID)
 		local playerList = Spring.GetPlayerList(teamID) -- spectators are ignored as of 104.0
 		for p = 1, #playerList do
 			local playerID = playerList[p]
-			if Spring.GetPlayerRulesParam(playerID, "lagmonitor_lagging") == nil and exemptplayers[playerID] == nil then
+			local _, active, spectator = Spring.GetPlayerInfo(playerID, true)
+			if Spring.GetPlayerRulesParam(playerID, "lagmonitor_lagging") == nil and exemptplayers[playerID] == nil and active and not spectator then
 				playerCount = playerCount + 1
 			end
 		end
