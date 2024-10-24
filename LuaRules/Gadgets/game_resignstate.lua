@@ -65,6 +65,16 @@ local afkplayers = {}
 local checkTeams = {count = 0, teams = {}} -- forces a check next frame when something changes
 local checking = {} -- teamID = true/false
 local gaiaID = -1
+local checkForceResign = true
+
+do
+	local modoptions = Spring.GetModOptions()
+	mintime = tonumber(modoptions.resignstate_mintimer) or 60
+	resigntimer = tonumber(modoptions.resignstate_timer) or 300
+	if tonumber(modoptions["forceresign"] or 1) == 0 then
+		checkForceResign = false
+	end
+end
 
 -- config --
 
@@ -272,6 +282,12 @@ function gadget:Initialize()
 		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_timer", resigntimer, PUBLIC)
 		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_forcedtimer", false, PUBLIC)
 		local teamlist = Spring.GetTeamList(allyTeamID)
+		if not checkForceResign then
+			gadgetHandler:RemoveCallIn("UnitDestroyed")
+			gadgetHandler:RemoveCallIn("UnitGiven")
+			gadgetHandler:RemoveCallIn("UnitFinished")
+			gadgetHandler:RemoveCallIn("UnitReverseBuilt")
+		end
 		for t = 1, #teamlist do
 			local teamID = teamlist[t]
 			local playerList = Spring.GetPlayerList(teamID)
