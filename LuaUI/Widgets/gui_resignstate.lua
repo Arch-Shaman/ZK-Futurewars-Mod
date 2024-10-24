@@ -166,7 +166,7 @@ local function TimeToText(val) -- gives us 00:30 or 00:05
 end
 
 local function UpdateResignState(allyTeamID)
-	Spring.Echo("UpdateResignState " .. tostring(allyTeamID))
+	--Spring.Echo("UpdateResignState " .. tostring(allyTeamID))
 	--[[if allyteamstrings[allyTeamID] == nil then
 		allyteamstrings[allyTeamID] = {exempt = "", voted = ""}
 	end]]
@@ -213,7 +213,7 @@ local function UpdateResignState(allyTeamID)
 		progressbars[allyTeamID] = nil
 		return
 	end
-	if forcedTimer or progressbars[allyTeamID] and count >= threshold then
+	if progressbars[allyTeamID] and (forcedTimer or count >= threshold) then
 		progressbars[allyTeamID]:SetMinMax(0, maxresign)
 		if not forcedTimer then
 			progressbars[allyTeamID]:SetCaption(WG.Translate("interface", "resign_state_resigning", {name = name, count = vote, time = timeLeft})) -- "%{name} Surrendering %{count}: %{time}"
@@ -279,13 +279,13 @@ local function LocaleUpdated()
 end
 
 function widget:Initialize()
+	Chili = WG.Chili
 	ColorToInColor = WG.Chili.color2incolor
 	WG.InitializeTranslation(LocaleUpdated, GetInfo().name)
 	widgetHandler:RegisterGlobal(widget, "UpdateResignState", UpdateResignState)
 	widgetHandler:RegisterGlobal(widget, "UpdatePlayer", UpdatePlayer)
 	widgetHandler:RegisterGlobal(widget, "UpdateVote", UpdateVote)
 	Spring.SendLuaRulesMsg("resignrejoin") -- tell the gadget I want to rejoin (in case I already quit)
-	Chili = WG.Chili
 	Screen0 = Chili.Screen0
 	if WG.GlobalCommandBar and not Spring.GetSpectatingState() then
 		local image = mystate and images.on or images.off
