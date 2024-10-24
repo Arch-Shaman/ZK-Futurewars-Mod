@@ -65,6 +65,8 @@ local thresholds = {
 	[16] = 8,
 }
 
+local unitCounts = {}
+
 local function GetAllyTeamPlayerCount(allyTeamID)
 	local teamlist = Spring.GetTeamList(allyTeamID)
 	local aiteam = true
@@ -171,6 +173,7 @@ local function UpdateAllyTeam(allyTeamID)
 	states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
 	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
 	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
+	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_forcedtimer", states[allyTeamID].forcedTimer, PUBLIC)
 	SendToUnsynced("MakeUpdate", allyTeamID)
 end
 
@@ -209,12 +212,14 @@ function gadget:Initialize()
 			playerStates = {},
 			count = 0,
 			timer = resigntimer,
+			forcedTimer = false,
 		}
 		states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
 		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
 		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
 		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_count", 0, PUBLIC)
 		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_timer", resigntimer, PUBLIC)
+		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_forcedtimer", false, PUBLIC)
 		local teamlist = Spring.GetTeamList(allyTeamID)
 		for t = 1, #teamlist do
 			local teamID = teamlist[t]
@@ -265,12 +270,12 @@ function gadget:GameFrame(f)
 	if f%30 == 0 and #resignteams > 0 then
 		for i = 1, #resignteams do
 			local allyTeamID = resignteams[i]
-			if states[allyTeamID].thresholdState then
+			if states[allyTeamID].thresholdState or states[allyTeamID].forcedTimer then
 				states[allyTeamID].timer = states[allyTeamID].timer - 1
 				UpdateResignTimer(allyTeamID)
 				if states[allyTeamID].timer == 0 then
 					if GetAllyTeamPlayerCount(allyTeamID) > 1 then
-						Spring.Echo("game_message: Team " .. allyTeamID .. " Destroyed due to morale.")
+						Spring.Echo("game_message: Team " .. allyTeamID .. " Destroyed due to morale.") -- TODO: send as a localized event.
 					end
 					DestroyAlliance(allyTeamID)
 					RemoveResignTeam(allyTeamID)
