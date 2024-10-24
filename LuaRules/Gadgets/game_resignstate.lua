@@ -150,35 +150,6 @@ local function UpdateAllyTeam(allyTeamID)
 	SendToUnsynced("MakeUpdate", allyTeamID)
 end
 
-local function ForceTimerForAllyTeam(allyTeamID, value, state)
-	if not states[allyTeamID] then return end
-	states[allyTeamID].forcedTimer = state
-	if states[allyTeamID].timer > value then
-		states[allyTeamID].timer = value
-	end
-	UpdateAllyTeam(allyTeamID)
-end
-
-local function CheckForAllTeamsOutOfWorkers()
-	for i = 0, #unitCounts do
-		if unitCounts[i].workers > 0 then
-			return false
-		end
-	end
-	return true
-end
-
-local function CheckForAllTeamsOutOfCombatUnits()
-	for i = 0, #unitCounts do
-		if unitCounts[i].combat > 0 then
-			return false
-		end
-	end
-	return true
-end
-
-
-
 local function AddResignTeam(allyTeamID)
 	local count = #resignteams
 	for i = 1, count do
@@ -208,6 +179,36 @@ local function RemoveResignTeam(allyTeamID)
 	resignteams[#resignteams] = nil
 end
 
+local function ForceTimerForAllyTeam(allyTeamID, value, state)
+	if not states[allyTeamID] then return end
+	states[allyTeamID].forcedTimer = state
+	if states[allyTeamID].timer > value then
+		states[allyTeamID].timer = value
+	end
+	if value and not states[allyTeamID].thresholdState then
+		AddResignTeam(allyTeamID)
+	end
+	UpdateAllyTeam(allyTeamID)
+end
+
+local function CheckForAllTeamsOutOfWorkers()
+	for i = 0, #unitCounts do
+		if unitCounts[i].workers > 0 then
+			return false
+		end
+	end
+	return true
+end
+
+local function CheckForAllTeamsOutOfCombatUnits()
+	for i = 0, #unitCounts do
+		if unitCounts[i].combat > 0 then
+			return false
+		end
+	end
+	return true
+end
+
 local function CheckAllyTeamState(allyTeamID)
 	if states[allyTeamID].count == states[allyTeamID].total then
 		states[allyTeamID].timer = 1
@@ -216,6 +217,7 @@ local function CheckAllyTeamState(allyTeamID)
 	end
 	if states[allyTeamID].count >= states[allyTeamID].threshold and not states[allyTeamID].thresholdState then
 		states[allyTeamID].thresholdState = true
+		if states[allyTeamID].forcedTimer then return end
 		AddResignTeam(allyTeamID)
 	elseif states[allyTeamID].count < states[allyTeamID].threshold and states[allyTeamID].thresholdState then
 		states[allyTeamID].thresholdState = false
@@ -318,6 +320,7 @@ local function UpdateResignTimer(allyTeamID)
 end
 
 local function CheckForFailureState(allyTeamID)
+	--Spring.Echo("CheckForFailureState: " .. allyTeamID)
 	if unitCounts[allyTeamID] == nil then return end
 	local hasWorkers = unitCounts[allyTeamID].workers > 0
 	if not hasWorkers and unitCounts[allyTeamID].combat == 0 then
@@ -325,85 +328,16 @@ local function CheckForFailureState(allyTeamID)
 		return
 	end
 	local beingForcedResigned = states[allyTeamID].forcedTimer
-	local hasBeenRatioed = unitCounts[allyTeamID].combatValue / topCombatValue < 0.5 
-	if not hasWorkers and not beingForcedResigned and hasBeenRatioed then
+	local combatValueRatio = unitCounts[allyTeamID].combatValue / topCombatValue
+	--Spring.Echo("CombatRatio: " .. combatValueRatio)
+	if not hasWorkers and not beingForcedResigned and combatValueRatio < 0.5 then
 		ForceTimerForAllyTeam(allyTeamID, 60, true)
-	elseif (hasWorkers or not hasBeenRatioed) and beingForcedResigned then
+	elseif (hasWorkers or combatValueRatio >= 0.5) and beingForcedResigned then
 		ForceTimerForAllyTeam(allyTeamID, 60, false)
 	end
 end
 
 local triggeredNoCons = false
-
-function gadget:GameFrame(f)
-	if not gameStarted then gameStarted = true end
-	if checkTeams.count > 0 and f > 30 then
-		for i = 1, checkTeams.count do
-			CheckForFailureState(checkTeams.teams[i])
-			checking[checkTeams.teams[i]] = false
-		end
-		checkTeams.count = 0
-	end
-	if f%120 == 10 and f > 180 then
-		noWorkers = CheckForAllTeamsOutOfWorkers()
-		if noWorkers and not triggeredNoCons then
-			for i = 0, #states do
-				ForceTimerForAllyTeam(i, 9999, false)
-			end
-			triggeredNoCons = true
-		elseif not noWorkers and triggeredNoCons then
-			triggeredNoCons = false
-		end
-		if noWorkers and CheckForAllTeamsOutOfCombatUnits() then
-			local gaiaAllyTeam = select(6, Spring.GetTeamInfo(Spring.GetGaiaTeamID()))
-			Spring.GameOver(gaiaAllyTeam) -- end as a draw.
-		end
-	end
-	if f%90 == 15 then
-		if resigntimer > mintime then
-			for i = 0, #states do
-				if states[i].timer >= resigntimer - 1 then
-					states[i].timer = states[i].timer - 1
-					UpdateResignTimer(i)
-					SendToUnsynced("MakeUpdate", i)
-				end
-			end
-			resigntimer = resigntimer - 1
-			spSetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
-		end
-		if #resignteams > 0 then
-			for i = 1, #resignteams do
-				local allyTeamID = resignteams[i]
-				if not states[allyTeamID].thresholdState then
-					states[allyTeamID].timer = states[allyTeamID].timer + 1
-					UpdateResignTimer(allyTeamID)
-					if states[allyTeamID].timer == resigntimer then
-						RemoveResignTeam(allyTeamID)
-					end
-				end
-				SendToUnsynced("MakeUpdate", allyTeamID)
-			end
-		end
-	end
-	if f%30 == 0 and #resignteams > 0 then
-		for i = 1, #resignteams do
-			local allyTeamID = resignteams[i]
-			if states[allyTeamID].thresholdState or states[allyTeamID].forcedTimer then
-				states[allyTeamID].timer = states[allyTeamID].timer - 1
-				UpdateResignTimer(allyTeamID)
-				if states[allyTeamID].timer == 0 then
-					if GetAllyTeamPlayerCount(allyTeamID) > 1 then
-						Spring.Echo("game_message: Team " .. allyTeamID .. " Destroyed due to morale.") -- TODO: send as a localized event.
-					end
-					DestroyAlliance(allyTeamID)
-					RemoveResignTeam(allyTeamID)
-					spSetGameRulesParam("resign_" .. allyTeamID .. "_total", 0, PUBLIC)
-					SendToUnsynced("MakeUpdate", allyTeamID)
-				end
-			end
-		end
-	end
-end
 
 function gadget:GameOver()
 	gadgetHandler:RemoveCallIn("gameframe") -- stop teams from resigning.
@@ -422,11 +356,11 @@ local function UpdateUnitType(unitDefID, teamID, value)
 	local allyTeam = Spring.GetTeamAllyTeamID(teamID)
 	if unitTypes[unitDefID] == 1 then
 		unitCounts[allyTeam].workers = unitCounts[allyTeam].workers + value
-		Spring.Echo("Workers for " .. allyTeam .. " is " .. unitCounts[allyTeam].workers)
+		--Spring.Echo("Workers for " .. allyTeam .. " is " .. unitCounts[allyTeam].workers)
 	elseif unitTypes[unitDefID] == 2 then
 		unitCounts[allyTeam].combat = unitCounts[allyTeam].combat + value
 		unitCounts[allyTeam].combatValue = unitCounts[allyTeam].combatValue + (value * UnitDefs[unitDefID].metalCost)
-		Spring.Echo("Combat Value for " .. allyTeam .. " is " .. unitCounts[allyTeam].combatValue)
+		--Spring.Echo("Combat Value for " .. allyTeam .. " is " .. unitCounts[allyTeam].combatValue)
 		if unitCounts[allyTeam].combatValue > topCombatValue then
 			topCombatValue = unitCounts[allyTeam].combatValue
 			topCombatValueID = allyTeam
@@ -439,11 +373,11 @@ local function UpdateUnitTypeForAllyTeam(unitDefID, allyTeam, value)
 	if not unitTypes[unitDefID] then return end
 	if unitTypes[unitDefID] == 1 then
 		unitCounts[allyTeam].workers = unitCounts[allyTeam].workers + value
-		Spring.Echo("Workers for " .. allyTeam .. " is " .. unitCounts[allyTeam].workers)
+		--Spring.Echo("Workers for " .. allyTeam .. " is " .. unitCounts[allyTeam].workers)
 	elseif unitTypes[unitDefID] == 2 then
 		unitCounts[allyTeam].combat = unitCounts[allyTeam].combat + value
 		unitCounts[allyTeam].combatValue = unitCounts[allyTeam].combatValue + (value * UnitDefs[unitDefID].metalCost)
-		Spring.Echo("Combat Value for " .. allyTeam .. " is " .. unitCounts[allyTeam].combatValue)
+		--Spring.Echo("Combat Value for " .. allyTeam .. " is " .. unitCounts[allyTeam].combatValue)
 		if unitCounts[allyTeam].combatValue > topCombatValue then
 			topCombatValue = unitCounts[allyTeam].combatValue
 			topCombatValueID = allyTeam
@@ -523,5 +457,76 @@ function gadget:RecvLuaMsg(msg, playerID)
 		UpdateAllyTeam(allyTeamID)
 		CheckAllyTeamState(allyTeamID)
 		SendToUnsynced("MakePlayerUpdate", playerID, "normal")
+	end
+end
+
+function gadget:GameFrame(f)
+	if not gameStarted then gameStarted = true end
+	if checkTeams.count > 0 then
+		for i = 1, checkTeams.count do
+			local allyTeam = checkTeams.teams[i]
+			CheckForFailureState(allyTeam)
+			checking[allyTeam] = false
+		end
+		checkTeams.count = 0
+	end
+	if f%120 == 10 and f > 180 then
+		noWorkers = CheckForAllTeamsOutOfWorkers()
+		if noWorkers and not triggeredNoCons then
+			for i = 0, #states do
+				ForceTimerForAllyTeam(i, 9999, false)
+			end
+			triggeredNoCons = true
+		elseif not noWorkers and triggeredNoCons then
+			triggeredNoCons = false
+		end
+		if noWorkers and CheckForAllTeamsOutOfCombatUnits() then
+			local gaiaAllyTeam = select(6, Spring.GetTeamInfo(Spring.GetGaiaTeamID()))
+			Spring.GameOver(gaiaAllyTeam) -- end as a draw.
+		end
+	end
+	if f%90 == 15 then
+		if resigntimer > mintime then
+			for i = 0, #states do
+				if states[i].timer >= resigntimer - 1 then
+					states[i].timer = states[i].timer - 1
+					UpdateResignTimer(i)
+					SendToUnsynced("MakeUpdate", i)
+				end
+			end
+			resigntimer = resigntimer - 1
+			spSetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
+		end
+		if #resignteams > 0 then
+			for i = 1, #resignteams do
+				local allyTeamID = resignteams[i]
+				if not states[allyTeamID].thresholdState and not states[allyTeamID].forcedTimer then
+					states[allyTeamID].timer = states[allyTeamID].timer + 1
+					UpdateResignTimer(allyTeamID)
+					if states[allyTeamID].timer == resigntimer then
+						RemoveResignTeam(allyTeamID)
+					end
+				end
+				SendToUnsynced("MakeUpdate", allyTeamID)
+			end
+		end
+	end
+	if f%30 == 0 and #resignteams > 0 then
+		for i = 1, #resignteams do
+			local allyTeamID = resignteams[i]
+			if states[allyTeamID].thresholdState or states[allyTeamID].forcedTimer then
+				states[allyTeamID].timer = states[allyTeamID].timer - 1
+				UpdateResignTimer(allyTeamID)
+				if states[allyTeamID].timer == 0 then
+					if GetAllyTeamPlayerCount(allyTeamID) > 1 then
+						Spring.Echo("game_message: Team " .. allyTeamID .. " Destroyed due to morale.") -- TODO: send as a localized event.
+					end
+					DestroyAlliance(allyTeamID)
+					RemoveResignTeam(allyTeamID)
+					spSetGameRulesParam("resign_" .. allyTeamID .. "_total", 0, PUBLIC)
+					SendToUnsynced("MakeUpdate", allyTeamID)
+				end
+			end
+		end
 	end
 end
