@@ -41,10 +41,12 @@ local unitTypes = {}
 
 for i = 1, #UnitDefs do -- preprocess
 	local ud = UnitDefs[i]
-	if (ud.isFactory and not ud.customParams.nobuildpower) or (ud.isMobileBuilder and not discardUnitDefNames[ud.name]) then
-		unitTypes[i] = 1 -- con
-	elseif not discardUnitDefNames[ud.name] and not ud.customParams.is_drone and (ud.weapons and #ud.weapons > 0) and ud.speed > 0 then
-		unitTypes[i] = 2 -- combat
+	if not discardUnitDefNames[ud.name] then
+		if (ud.isFactory and not ud.customParams.nobuildpower) or ud.isMobileBuilder then
+			unitTypes[i] = 1 -- con
+		elseif not ud.customParams.is_drone and ud.speed > 0 then -- all mobiles technically have weapons.
+			unitTypes[i] = 2 -- combat
+		end
 	end
 end
 
@@ -66,6 +68,8 @@ local checkTeams = {count = 0, teams = {}} -- forces a check next frame when som
 local checking = {} -- teamID = true/false
 local gaiaID = -1
 local checkForceResign = true
+local topCombatValue = 0
+local topCombatValueID = -1
 
 do
 	local modoptions = Spring.GetModOptions()
@@ -281,7 +285,7 @@ function gadget:Initialize()
 			timer = resigntimer,
 			forcedTimer = false,
 		}
-		unitCounts[allyTeamID] = {combat = 0, workers = 0}
+		unitCounts[allyTeamID] = {combat = 0, workers = 0, combatValue = 0}
 		states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
 		spSetGameRulesParam("resign_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
 		spSetGameRulesParam("resign_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
@@ -315,31 +319,45 @@ end
 
 local function CheckForFailureState(allyTeamID)
 	if unitCounts[allyTeamID] == nil then return end
-	if unitCounts[allyTeamID].workers == 0 and unitCounts[allyTeamID].combat == 0 then
+	local hasWorkers = unitCounts[allyTeamID].workers > 0
+	if not hasWorkers and unitCounts[allyTeamID].combat == 0 then
 		ForceTimerForAllyTeam(allyTeamID, lostAllCombatUnitsTime, true)
+		return
 	end
-	if unitCounts[allyTeamID].workers == 0 and not noWorkers then
+	local beingForcedResigned = states[allyTeamID].forcedTimer
+	local hasBeenRatioed = unitCounts[allyTeamID].combatValue / topCombatValue < 0.5 
+	if not hasWorkers and not beingForcedResigned and hasBeenRatioed then
 		ForceTimerForAllyTeam(allyTeamID, 60, true)
+	elseif (hasWorkers or not hasBeenRatioed) and beingForcedResigned then
+		ForceTimerForAllyTeam(allyTeamID, 60, false)
 	end
 end
+
+local triggeredNoCons = false
 
 function gadget:GameFrame(f)
 	if not gameStarted then gameStarted = true end
 	if checkTeams.count > 0 and f > 30 then
-		if CheckForAllTeamsOutOfCombatUnits() then
-			Spring.GameOver(16) -- end as a draw.
-		end
-		noWorkers = CheckForAllTeamsOutOfWorkers()
-		if noWorkers then
-			for i = 0, #states do
-				ForceTimerForAllyTeam(i, 9999, false)
-			end
-		end
 		for i = 1, checkTeams.count do
 			CheckForFailureState(checkTeams.teams[i])
 			checking[checkTeams.teams[i]] = false
 		end
 		checkTeams.count = 0
+	end
+	if f%120 == 10 and f > 180 then
+		noWorkers = CheckForAllTeamsOutOfWorkers()
+		if noWorkers and not triggeredNoCons then
+			for i = 0, #states do
+				ForceTimerForAllyTeam(i, 9999, false)
+			end
+			triggeredNoCons = true
+		elseif not noWorkers and triggeredNoCons then
+			triggeredNoCons = false
+		end
+		if noWorkers and CheckForAllTeamsOutOfCombatUnits() then
+			local gaiaAllyTeam = select(6, Spring.GetTeamInfo(Spring.GetGaiaTeamID()))
+			Spring.GameOver(gaiaAllyTeam) -- end as a draw.
+		end
 	end
 	if f%90 == 15 then
 		if resigntimer > mintime then
@@ -400,13 +418,17 @@ local function AddAllyTeamToCheck(allyTeamID)
 end
 
 local function UpdateUnitType(unitDefID, teamID, value)
-	if teamID == gaiaID then return end
-	if not unitTypes[unitDefID] then return end
+	if teamID == gaiaID or unitTypes[unitDefID] == nil then return end
 	local allyTeam = Spring.GetTeamAllyTeamID(teamID)
 	if unitTypes[unitDefID] == 1 then
 		unitCounts[allyTeam].workers = unitCounts[allyTeam].workers + value
 	elseif unitTypes[unitDefID] == 2 then
 		unitCounts[allyTeam].combat = unitCounts[allyTeam].combat + value
+		unitCounts[allyTeam].combatValue = unitCounts[allyTeam].combatValue + (value * UnitDefs[unitDefID].metalCost)
+		if unitCounts[allyTeam].combatValue > topCombatValue then
+			topCombatValue = unitCounts[allyTeam].combatValue
+			topCombatValueID = allyTeam
+		end
 	end
 	AddAllyTeamToCheck(allyTeam)
 end
@@ -417,6 +439,11 @@ local function UpdateUnitTypeForAllyTeam(unitDefID, allyTeam, value)
 		unitCounts[allyTeam].workers = unitCounts[allyTeam].workers + value
 	elseif unitTypes[unitDefID] == 2 then
 		unitCounts[allyTeam].combat = unitCounts[allyTeam].combat + value
+		unitCounts[allyTeam].combatValue = unitCounts[allyTeam].combatValue + (value * UnitDefs[unitDefID].metalCost)
+		if unitCounts[allyTeam].combatValue > topCombatValue then
+			topCombatValue = unitCounts[allyTeam].combatValue
+			topCombatValueID = allyTeam
+		end
 	end
 	AddAllyTeamToCheck(allyTeam)
 end
