@@ -128,5 +128,6 @@
 	"resign_state_voting" : "%{name} głosuje za poddaniem się %{count}",
 	"resign_state_want_resign" : "Głosowałeś za poddaniem się! Proszę czekać, aż twoi sojusznicy zgodzą się na poddanie.",
 	"resign_state_want_resign_first" : "Jeśli wystarczająca liczba graczy w twojej drużynie zechce się poddać, za chwilę rozpocznie się odliczanie.",
-	"resign_state_no_longer_want_resign" : "Cofnąłeś swój głos za poddaniem się!"
+	"resign_state_no_longer_want_resign" : "Cofnąłeś swój głos za poddaniem się!",
+	"resign_state_forced": "%{name} zmuszony do poddania się za %{time}"
 }

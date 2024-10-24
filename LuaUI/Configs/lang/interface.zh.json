@@ -139,5 +139,6 @@
 	"resign_state_voting" : "%{name} 投票投降 %{count}",
 	"resign_state_want_resign" : "您已投票投降！请等待您的盟友同意投降。",
 	"resign_state_want_resign_first" : "如果您团队中有足够多的玩家希望投降，计时器将很快开始。",
-	"resign_state_no_longer_want_resign" : "您已撤销投降投票！"
+	"resign_state_no_longer_want_resign" : "您已撤销投降投票！",
+	"resign_state_forced" : "%{name} 被迫于 %{time} 投降"
 }

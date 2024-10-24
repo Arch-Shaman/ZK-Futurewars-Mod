@@ -113,5 +113,6 @@
 	"resign_state_voting" : "%{name} stimmen für Kapitulation %{count}",
 	"resign_state_want_resign" : "Sie haben für die Kapitulation gestimmt! Bitte warten Sie, bis Ihre Verbündeten der Kapitulation zustimmen.",
 	"resign_state_want_resign_first" : "Wenn genügend Spieler Ihres Teams aufgeben möchten, wird in Kürze ein Timer gestartet.",
-	"resign_state_no_longer_want_resign" : "Sie haben Ihre Abstimmung zur Kapitulation zurückgezogen!"
+	"resign_state_no_longer_want_resign" : "Sie haben Ihre Abstimmung zur Kapitulation zurückgezogen!",
+	"resign_state_forced" : "%{name} wurde in %{time} zur Kapitulation gezwungen"
 }
