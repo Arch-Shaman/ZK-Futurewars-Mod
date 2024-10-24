@@ -167,6 +167,7 @@ local function UpdateResignState(allyTeamID)
 	local count = Spring.GetGameRulesParam("resign_" .. allyTeamID .. "_count") or 0
 	local timer = Spring.GetGameRulesParam("resign_" .. allyTeamID .. "_timer")
 	local name = Spring.GetGameRulesParam("allyteam_long_name_" .. allyTeamID)
+	local forcedTimer = Spring.GetGameRulesParam("resign_" .. allyTeamID .. "_forcedtimer")
 	maxresign = Spring.GetGameRulesParam("resigntimer_max") or 180
 	--Spring.Echo("Resign State" .. allyTeamID .. ":\nTotal: " .. tostring(total) .. "\nthreshold: " .. tostring(threshold) .. "\ncount: " .. count .. "\nTimer: " .. tostring(timer))
 	local allied = allyTeamID == MyAllyTeamID
@@ -187,7 +188,12 @@ local function UpdateResignState(allyTeamID)
 	local vote = "[" .. count .. " / " .. threshold .. " ]"
 	if (count > 0 or timer < maxresign - 5) and progressbars[allyTeamID] == nil then
 		--Spring.Echo(name .. " ( allyTeamID: " .. allyTeamID .. ")")
-		local text = WG.Translate("interface", "resign_state_voting", {name = name, count = vote})
+		local text
+		if count > 0 then
+			text = WG.Translate("interface", "resign_state_voting", {name = name, count = vote})
+		else
+			text = name
+		end
 		progressbars[allyTeamID] = Chili.Progressbar:New{parent = grid, width = '100%', caption = text, useValueTooltip = true, min = 0, max = threshold, value = count}
 		--Spring.Echo(progressbars[allyTeamID].y)
 	end
@@ -196,7 +202,7 @@ local function UpdateResignState(allyTeamID)
 		progressbars[allyTeamID] = nil
 		return
 	end
-	if progressbars[allyTeamID] and count >= threshold then
+	if progressbars[allyTeamID] and (forcedTimer or count >= threshold) then
 		progressbars[allyTeamID]:SetMinMax(0, maxresign)
 		progressbars[allyTeamID]:SetCaption(WG.Translate("interface", "resign_state_resigning", {name = name, count = vote, time = timeLeft}) -- "%{name} Surrendering %{count}: %{time}"
 		progressbars[allyTeamID]:SetValue(timer)
