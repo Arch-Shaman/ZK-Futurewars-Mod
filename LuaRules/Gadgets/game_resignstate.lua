@@ -31,18 +31,40 @@ if not gadgetHandler:IsSyncedCode() then
 	return
 end
 
+local discardUnitDefNames = {
+	["staticcon"] = true,
+	["staticrepair"] = true,
+	["dronecon"] = true,
+}
+
+local unitTypes = {}
+
+for i = 1, #UnitDefs do -- preprocess
+	local ud = UnitDefs[i]
+	if (ud.isFactory and not ud.customParams.nobuildpower) or (ud.isMobileBuilder and not discardUnitDefNames[ud.name]) then
+		unitTypes[i] = 1 -- con
+	elseif not discardUnitDefNames[ud.name] and not ud.customParams.is_drone and (ud.weapons and #ud.weapons > 0) and ud.speed > 0 then
+		unitTypes[i] = 2 -- combat
+	end
+end
+
 local DestroyAlliance = GG.DestroyAlliance
 local PUBLIC = {public = true}
 local ALLIED = {allied = true}
 local gameStarted = false
+local noWorkers = false
 
 local states = {} -- allyTeamID = {count = num, playerStates = {}}
 local playerMap = {} -- playerID = allyTeamID
 local resigntimer = 180 -- timer starts at 3 minutes and loses a second every 3rd second (down to 60s) over the first 6 minutes.
 local mintime = 60
+local lostAllCombatUnitsTime = 10
 local resignteams = {}
 local exemptplayers = {} -- players who are exempt.
 local afkplayers = {}
+local checkTeams = {count = 0, teams = {}} -- forces a check next frame when something changes
+local checking = {} -- teamID = true/false
+local gaiaID = -1
 
 -- config --
 
@@ -65,7 +87,7 @@ local thresholds = {
 	[16] = 8,
 }
 
-local unitCounts = {}
+local unitCounts = {} -- allyteamID = {workers = num, combat = num}
 
 local function GetAllyTeamPlayerCount(allyTeamID)
 	local teamlist = Spring.GetTeamList(allyTeamID)
@@ -91,6 +113,41 @@ local function GetAllyTeamPlayerCount(allyTeamID)
 		end
 	end
 	return playerCount
+end
+
+local function UpdateAllyTeam(allyTeamID)
+	states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
+	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
+	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
+	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_forcedtimer", states[allyTeamID].forcedTimer, PUBLIC)
+	SendToUnsynced("MakeUpdate", allyTeamID)
+end
+
+local function ForceTimerForAllyTeam(allyTeamID, value, state)
+	if not states[allyTeamID] then return end
+	states[allyTeamID].forcedTimer = state
+	if states[allyTeamID].timer > value then
+		states[allyTeamID].timer = value
+	end
+	UpdateAllyTeam(allyTeamID)
+end
+
+local function CheckForAllTeamsOutOfWorkers()
+	for i = 0, #unitCounts do
+		if unitCounts[i].workers > 0 then
+			return false
+		end
+	end
+	return true
+end
+
+local function CheckForAllTeamsOutOfCombatUnits()
+	for i = 0, #unitCounts do
+		if unitCounts[i].combat > 0 then
+			return false
+		end
+	end
+	return true
 end
 
 local function GetAllyTeamThreshold(allyTeamID)
@@ -169,14 +226,6 @@ local function UpdatePlayerResignState(playerID, state, update)
 	SendToUnsynced("MakeUpdate", allyTeamID)
 end
 
-local function UpdateAllyTeam(allyTeamID)
-	states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
-	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
-	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
-	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_forcedtimer", states[allyTeamID].forcedTimer, PUBLIC)
-	SendToUnsynced("MakeUpdate", allyTeamID)
-end
-
 local function AFKUpdate(playerID)
 	if not playerMap[playerID] then
 		return
@@ -200,10 +249,11 @@ local function AFKUpdate(playerID)
 	end
 end
 
-GG.ResignState = {UpdateAFK = AFKUpdate}
+GG.ResignState = {UpdateAFK = AFKUpdate, ForceTimerForAllyTeam = ForceTimerForAllyTeam}
 
 function gadget:Initialize()
 	local allyteamlist = Spring.GetAllyTeamList()
+	gaiaID = Spring.GetGaiaTeamID()
 	Spring.Echo("ResignState: Loading")
 	Spring.SetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
 	for a = 1, #allyteamlist do
@@ -214,6 +264,7 @@ function gadget:Initialize()
 			timer = resigntimer,
 			forcedTimer = false,
 		}
+		unitCounts[allyTeamID] = {combat = 0, workers = 0}
 		states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
 		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
 		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
@@ -239,8 +290,34 @@ local function UpdateResignTimer(allyTeamID)
 	SendToUnsynced("MakeUpdate", allyTeamID)
 end
 
+local function CheckForFailureState(allyTeamID)
+	if unitCounts[allyTeamID] == nil then return end
+	if unitCounts[allyTeamID].workers == 0 and unitCounts[allyTeamID].combat == 0 then
+		ForceTimerForAllyTeam(allyTeamID, lostAllCombatUnitsTime, true)
+	end
+	if unitCounts[allyTeamID].workers == 0 and not noWorkers then
+		ForceTimerForAllyTeam(allyTeamID, 60, true)
+	end
+end
+
 function gadget:GameFrame(f)
 	if not gameStarted then gameStarted = true end
+	if checkTeams.count > 0 then
+		if CheckForAllTeamsOutOfCombatUnits() then
+			Spring.GameOver() -- end as a draw.
+		end
+		noWorkers = CheckForAllTeamsOutOfWorkers()
+		if noWorkers then
+			for i = 0, #states do
+				ForceTimerForAllyTeam(i, 9999, false)
+			end
+		end
+		for i = 1, checkTeams.count do
+			CheckForFailureState(checkTeams.teams[i])
+			checking[checkTeams.teams[i]] = false
+		end
+		checkTeams.count = 0
+	end
 	if f%90 == 15 then
 		if resigntimer > mintime then
 			for i = 0, #states do
@@ -289,6 +366,70 @@ end
 
 function gadget:GameOver()
 	gadgetHandler:RemoveCallIn("gameframe") -- stop teams from resigning.
+end
+
+local function AddAllyTeamToCheck(allyTeamID)
+	if not checking[allyTeamID] then
+		checking[allyTeamID] = true
+		checkTeams.count = checkTeams.count + 1
+		checkTeams.teams[checkTeams.count] = allyTeamID
+	end
+end
+
+local function UpdateUnitType(unitDefID, teamID, value)
+	if teamID == gaiaID then return end
+	if not unitTypes[unitDefID] then return end
+	local allyTeam = Spring.GetTeamAllyTeamID(teamID)
+	if unitTypes[unitDefID] == 1 then
+		unitCounts[allyTeam].workers = unitCounts[allyTeam].workers + value
+	elseif unitTypes[unitDefID] == 2 then
+		unitCounts[allyTeam].combat = unitCounts[allyTeam].combat + value
+	end
+	AddAllyTeamToCheck(allyTeam)
+end
+
+local function UpdateUnitTypeForAllyTeam(unitDefID, allyTeam, value)
+	if not unitTypes[unitDefID] then return end
+	if unitTypes[unitDefID] == 1 then
+		unitCounts[allyTeam].workers = unitCounts[allyTeam].workers + value
+	elseif unitTypes[unitDefID] == 2 then
+		unitCounts[allyTeam].combat = unitCounts[allyTeam].combat + value
+	end
+	AddAllyTeamToCheck(allyTeam)
+end
+
+function gadget:UnitFinished(unitID, unitDefID, unitTeam)
+	if teamID == gaiaID then return end
+	if not unitTypes[unitDefID] then return end
+	UpdateUnitType(unitDefID, unitTeam, 1)
+end
+
+function gadget:UnitReverseBuilt(unitID, unitDefID, unitTeam)
+	if teamID == gaiaID then return end
+	if not unitTypes[unitDefID] then return end
+	UpdateUnitType(unitDefID, unitTeam, -1)
+end
+
+function gadget:UnitGiven(unitID, unitDefID, newTeam, oldTeam)
+	if not unitTypes[unitDefID] then return end
+	local newAllyTeam = Spring.GetTeamAllyTeamID(newTeam)
+	local oldAllyTeam = Spring.GetTeamAllyTeamID(oldTeam)
+	if newTeam == gaiaID then
+		UpdateUnitTypeForAllyTeam(unitDefID, oldAllyTeam, -1)
+		return
+	elseif oldTeam == gaiaID then
+		UpdateUnitTypeForAllyTeam(unitDefID, newAllyTeam, 1)
+		return
+	end
+	if newAllyTeam ~= oldAllyTeam then
+		UpdateUnitTypeForAllyTeam(unitDefID, newAllyTeam, 1)
+		UpdateUnitTypeForAllyTeam(unitDefID, oldAllyTeam, -1)
+	end
+end
+
+function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
+	if not unitTypes[unitDefID] then return end
+	UpdateUnitType(unitDefID, unitTeam, -1)
 end
 
 function gadget:RecvLuaMsg(msg, playerID)
