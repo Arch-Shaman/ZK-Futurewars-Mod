@@ -175,7 +175,7 @@ local function UpdateResignState(allyTeamID)
 	local count = Spring.GetGameRulesParam("resign_" .. allyTeamID .. "_count") or 0
 	local timer = Spring.GetGameRulesParam("resign_" .. allyTeamID .. "_timer")
 	local name = Spring.GetGameRulesParam("allyteam_long_name_" .. allyTeamID)
-	local forcedTimer = Spring.GetGameRulesParam("resign_" .. allyTeamID .. "_forcedtimer")
+	local forcedTimer = Spring.GetGameRulesParam("resign_" .. allyTeamID .. "_forcedtimer") == 1
 	maxresign = Spring.GetGameRulesParam("resigntimer_max") or 180
 	--Spring.Echo("Resign State" .. allyTeamID .. ":\nTotal: " .. tostring(total) .. "\nthreshold: " .. tostring(threshold) .. "\ncount: " .. count .. "\nTimer: " .. tostring(timer))
 	local allied = allyTeamID == MyAllyTeamID

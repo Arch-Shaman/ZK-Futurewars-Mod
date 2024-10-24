@@ -146,7 +146,7 @@ local function UpdateAllyTeam(allyTeamID)
 	states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
 	spSetGameRulesParam("resign_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
 	spSetGameRulesParam("resign_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
-	spSetGameRulesParam("resign_" .. allyTeamID .. "_forcedtimer", states[allyTeamID].forcedTimer, PUBLIC)
+	spSetGameRulesParam("resign_" .. allyTeamID .. "_forcedtimer", states[allyTeamID].forcedTimer and 1 or 0, PUBLIC)
 	SendToUnsynced("MakeUpdate", allyTeamID)
 end
 
@@ -422,9 +422,11 @@ local function UpdateUnitType(unitDefID, teamID, value)
 	local allyTeam = Spring.GetTeamAllyTeamID(teamID)
 	if unitTypes[unitDefID] == 1 then
 		unitCounts[allyTeam].workers = unitCounts[allyTeam].workers + value
+		Spring.Echo("Workers for " .. allyTeam .. " is " .. unitCounts[allyTeam].workers)
 	elseif unitTypes[unitDefID] == 2 then
 		unitCounts[allyTeam].combat = unitCounts[allyTeam].combat + value
 		unitCounts[allyTeam].combatValue = unitCounts[allyTeam].combatValue + (value * UnitDefs[unitDefID].metalCost)
+		Spring.Echo("Combat Value for " .. allyTeam .. " is " .. unitCounts[allyTeam].combatValue)
 		if unitCounts[allyTeam].combatValue > topCombatValue then
 			topCombatValue = unitCounts[allyTeam].combatValue
 			topCombatValueID = allyTeam
@@ -437,9 +439,11 @@ local function UpdateUnitTypeForAllyTeam(unitDefID, allyTeam, value)
 	if not unitTypes[unitDefID] then return end
 	if unitTypes[unitDefID] == 1 then
 		unitCounts[allyTeam].workers = unitCounts[allyTeam].workers + value
+		Spring.Echo("Workers for " .. allyTeam .. " is " .. unitCounts[allyTeam].workers)
 	elseif unitTypes[unitDefID] == 2 then
 		unitCounts[allyTeam].combat = unitCounts[allyTeam].combat + value
 		unitCounts[allyTeam].combatValue = unitCounts[allyTeam].combatValue + (value * UnitDefs[unitDefID].metalCost)
+		Spring.Echo("Combat Value for " .. allyTeam .. " is " .. unitCounts[allyTeam].combatValue)
 		if unitCounts[allyTeam].combatValue > topCombatValue then
 			topCombatValue = unitCounts[allyTeam].combatValue
 			topCombatValueID = allyTeam
