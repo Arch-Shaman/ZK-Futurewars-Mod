@@ -34,6 +34,7 @@ end
 local DestroyAlliance = GG.DestroyAlliance
 local PUBLIC = {public = true}
 local ALLIED = {allied = true}
+local gameStarted = false
 
 local states = {} -- allyTeamID = {count = num, playerStates = {}}
 local playerMap = {} -- playerID = allyTeamID
@@ -81,6 +82,7 @@ local function GetAllyTeamPlayerCount(allyTeamID)
 		for p = 1, #playerList do
 			local playerID = playerList[p]
 			local _, active, spectator = Spring.GetPlayerInfo(playerID, true)
+			active = active or not gameStarted
 			if Spring.GetPlayerRulesParam(playerID, "lagmonitor_lagging") == nil and exemptplayers[playerID] == nil and active and not spectator then
 				playerCount = playerCount + 1
 			end
@@ -233,6 +235,7 @@ local function UpdateResignTimer(allyTeamID)
 end
 
 function gadget:GameFrame(f)
+	if not gameStarted then gameStarted = true end
 	if f%90 == 15 then
 		if resigntimer > mintime then
 			for i = 0, #states do
