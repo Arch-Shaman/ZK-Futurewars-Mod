@@ -129,6 +129,15 @@ local function GetAllyTeamPlayerCount(allyTeamID)
 	return playerCount
 end
 
+local function GetAllyTeamThreshold(allyTeamID)
+	local playerCount = GetAllyTeamPlayerCount(allyTeamID)
+	local threshold = thresholds[playerCount] or math.max(math.ceil((playerCount / 2) + 1), math.min(playerCount, 3))
+	if threshold > playerCount then
+		threshold = playerCount
+	end
+	return threshold, playerCount
+end
+
 local function UpdateAllyTeam(allyTeamID)
 	states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
 	spSetGameRulesParam("resign_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
@@ -164,14 +173,7 @@ local function CheckForAllTeamsOutOfCombatUnits()
 	return true
 end
 
-local function GetAllyTeamThreshold(allyTeamID)
-	local playerCount = GetAllyTeamPlayerCount(allyTeamID)
-	local threshold = thresholds[playerCount] or math.max(math.ceil((playerCount / 2) + 1), math.min(playerCount, 3))
-	if threshold > playerCount then
-		threshold = playerCount
-	end
-	return threshold, playerCount
-end
+
 
 local function AddResignTeam(allyTeamID)
 	local count = #resignteams
