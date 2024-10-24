@@ -97,6 +97,10 @@ local thresholds = {
 	[16] = 8,
 }
 
+local spSetGameRulesParam = Spring.SetGameRulesParam
+local spSetPlayerRulesParam = Spring.SetPlayerRulesParam
+local spGetPlayerRulesParam = Spring.GetPlayerRulesParam
+
 local unitCounts = {} -- allyteamID = {workers = num, combat = num}
 
 local function GetAllyTeamPlayerCount(allyTeamID)
@@ -117,7 +121,7 @@ local function GetAllyTeamPlayerCount(allyTeamID)
 			local playerID = playerList[p]
 			local _, active, spectator = Spring.GetPlayerInfo(playerID, true)
 			active = active or not gameStarted
-			if Spring.GetPlayerRulesParam(playerID, "lagmonitor_lagging") == nil and exemptplayers[playerID] == nil and active and not spectator then
+			if spGetPlayerRulesParam(playerID, "lagmonitor_lagging") == nil and exemptplayers[playerID] == nil and active and not spectator then
 				playerCount = playerCount + 1
 			end
 		end
@@ -127,9 +131,9 @@ end
 
 local function UpdateAllyTeam(allyTeamID)
 	states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
-	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
-	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
-	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_forcedtimer", states[allyTeamID].forcedTimer, PUBLIC)
+	spSetGameRulesParam("resign_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
+	spSetGameRulesParam("resign_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
+	spSetGameRulesParam("resign_" .. allyTeamID .. "_forcedtimer", states[allyTeamID].forcedTimer, PUBLIC)
 	SendToUnsynced("MakeUpdate", allyTeamID)
 end
 
@@ -217,7 +221,7 @@ local function UpdatePlayerResignState(playerID, state, update)
 	local currentState = states[allyTeamID].playerStates[playerID] or false
 	local val
 	if state then val = 1 else val = 0 end
-	Spring.SetPlayerRulesParam(playerID, "resign_state", val, ALLIED)
+	spSetPlayerRulesParam(playerID, "resign_state", val, ALLIED)
 	if currentState == state then
 		return
 	end
@@ -228,7 +232,7 @@ local function UpdatePlayerResignState(playerID, state, update)
 		mod = -1
 	end
 	states[allyTeamID].count = states[allyTeamID].count + mod
-	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_count", states[allyTeamID].count, PUBLIC)
+	spSetGameRulesParam("resign_" .. allyTeamID .. "_count", states[allyTeamID].count, PUBLIC)
 	states[allyTeamID].playerStates[playerID] = state
 	if update then
 		CheckAllyTeamState(allyTeamID)
@@ -240,7 +244,7 @@ local function AFKUpdate(playerID)
 	if not playerMap[playerID] then
 		return
 	end
-	local state = Spring.GetPlayerRulesParam(playerID, "lagmonitor_lagging") or 0
+	local state = spGetPlayerRulesParam(playerID, "lagmonitor_lagging") or 0
 	local allyTeamID = playerMap[playerID]
 	if state == 1 and not afkplayers[playerID] then
 		local wantsResign = states[allyTeamID].playerStates[playerID]
@@ -265,7 +269,7 @@ function gadget:Initialize()
 	local allyteamlist = Spring.GetAllyTeamList()
 	gaiaID = Spring.GetGaiaTeamID()
 	Spring.Echo("ResignState: Loading")
-	Spring.SetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
+	spSetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
 	for a = 1, #allyteamlist do
 		local allyTeamID = allyteamlist[a]
 		states[allyTeamID] = {
@@ -276,11 +280,11 @@ function gadget:Initialize()
 		}
 		unitCounts[allyTeamID] = {combat = 0, workers = 0}
 		states[allyTeamID].threshold, states[allyTeamID].total = GetAllyTeamThreshold(allyTeamID)
-		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
-		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
-		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_count", 0, PUBLIC)
-		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_timer", resigntimer, PUBLIC)
-		Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_forcedtimer", false, PUBLIC)
+		spSetGameRulesParam("resign_" .. allyTeamID .. "_threshold", states[allyTeamID].threshold, PUBLIC)
+		spSetGameRulesParam("resign_" .. allyTeamID .. "_total", states[allyTeamID].total, PUBLIC)
+		spSetGameRulesParam("resign_" .. allyTeamID .. "_count", 0, PUBLIC)
+		spSetGameRulesParam("resign_" .. allyTeamID .. "_timer", resigntimer, PUBLIC)
+		spSetGameRulesParam("resign_" .. allyTeamID .. "_forcedtimer", false, PUBLIC)
 		local teamlist = Spring.GetTeamList(allyTeamID)
 		if not checkForceResign then
 			gadgetHandler:RemoveCallIn("UnitDestroyed")
@@ -294,7 +298,7 @@ function gadget:Initialize()
 			for p = 1, #playerList do
 				local playerID = playerList[p]
 				states[allyTeamID].playerStates[playerID] = false
-				Spring.SetPlayerRulesParam(playerID, "resign_state", 0, ALLIED)
+				spSetPlayerRulesParam(playerID, "resign_state", 0, ALLIED)
 				playerMap[playerID] = allyTeamID
 			end
 		end
@@ -302,7 +306,7 @@ function gadget:Initialize()
 end
 
 local function UpdateResignTimer(allyTeamID)
-	Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_timer", states[allyTeamID].timer, PUBLIC)
+	spSetGameRulesParam("resign_" .. allyTeamID .. "_timer", states[allyTeamID].timer, PUBLIC)
 	SendToUnsynced("MakeUpdate", allyTeamID)
 end
 
@@ -344,7 +348,7 @@ function gadget:GameFrame(f)
 				end
 			end
 			resigntimer = resigntimer - 1
-			Spring.SetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
+			spSetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
 		end
 		if #resignteams > 0 then
 			for i = 1, #resignteams do
@@ -372,7 +376,7 @@ function gadget:GameFrame(f)
 					end
 					DestroyAlliance(allyTeamID)
 					RemoveResignTeam(allyTeamID)
-					Spring.SetGameRulesParam("resign_" .. allyTeamID .. "_total", 0, PUBLIC)
+					spSetGameRulesParam("resign_" .. allyTeamID .. "_total", 0, PUBLIC)
 					SendToUnsynced("MakeUpdate", allyTeamID)
 				end
 			end
