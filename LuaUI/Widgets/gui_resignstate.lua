@@ -55,7 +55,8 @@ local colors = {
 }
 
 local function GetTeamInColor(teamID)
-	local teamColor = Spring.GetTeamColor(teamID)
+	local r,g,b,a = Spring.GetTeamColor(teamID)
+	local teamColor = {r,g,b,a}
 	return ColorToInColor(teamColor)
 end
 
@@ -165,6 +166,7 @@ local function TimeToText(val) -- gives us 00:30 or 00:05
 end
 
 local function UpdateResignState(allyTeamID)
+	Spring.Echo("UpdateResignState " .. tostring(allyTeamID))
 	--[[if allyteamstrings[allyTeamID] == nil then
 		allyteamstrings[allyTeamID] = {exempt = "", voted = ""}
 	end]]
@@ -193,12 +195,14 @@ local function UpdateResignState(allyTeamID)
 	local timeLeft = TimeToText(timer)
 	local vote = "[" .. count .. " / " .. threshold .. " ]"
 	if allyTeamID == Spring.GetMyAllyTeamID() then
-		name = GetTeamColor(Spring.GetMyTeamID()) .. name .. ColorToInColor({1,1,1,1})
+		name = GetTeamInColor(Spring.GetMyTeamID()) .. name .. ColorToInColor({1,1,1,1})
 	else
 		local teamList = Spring.GetTeamList(allyTeamID)
-		name = GetTeamColor(teamList[1]) .. name .. ColorToInColor({1,1,1,1})
+		if #teamList > 0 then
+			name = GetTeamInColor(teamList[1]) .. name .. ColorToInColor({1,1,1,1})
+		end
 	end
-	if (forcedTimer or (count > 0 or timer < maxresign - 5)) and progressbars[allyTeamID] == nil then
+	if (forcedTimer or count > 0 or timer < maxresign - 5) and progressbars[allyTeamID] == nil then
 		--Spring.Echo(name .. " ( allyTeamID: " .. allyTeamID .. ")")
 		local text = WG.Translate("interface", "resign_state_voting", {name = name, count = vote})
 		progressbars[allyTeamID] = Chili.Progressbar:New{parent = grid, width = '100%', caption = text, useValueTooltip = true, min = 0, max = threshold, value = count}
@@ -209,12 +213,12 @@ local function UpdateResignState(allyTeamID)
 		progressbars[allyTeamID] = nil
 		return
 	end
-	if forcedTimer or (progressbars[allyTeamID] and count >= threshold) then
+	if forcedTimer or progressbars[allyTeamID] and count >= threshold then
 		progressbars[allyTeamID]:SetMinMax(0, maxresign)
 		if not forcedTimer then
-			progressbars[allyTeamID]:SetCaption(WG.Translate("interface", "resign_state_resigning", {name = name, count = vote, time = timeLeft}) -- "%{name} Surrendering %{count}: %{time}"
+			progressbars[allyTeamID]:SetCaption(WG.Translate("interface", "resign_state_resigning", {name = name, count = vote, time = timeLeft})) -- "%{name} Surrendering %{count}: %{time}"
 		else
-			Progressbar[allyTeamID]:SetCaption(WG.Translate("interface", "resign_state_forced", {name = name, time = timeLeft})
+			Progressbar[allyTeamID]:SetCaption(WG.Translate("interface", "resign_state_forced", {name = name, time = timeLeft}))
 		end
 		progressbars[allyTeamID]:SetValue(timer)
 		local ratio = timer / maxresign
@@ -265,7 +269,13 @@ local function LocaleUpdated()
 	localization.want_resign = "\n" .. WG.Translate("interface", "resign_state_want_resign")
 	localization.want_resign_first = "\n" .. localization.want_resign .. "\n" .. WG.Translate("interface", "resign_state_want_resign_first")
 	localization.no_resign = "\n" .. WG.Translate("interface", "resign_state_no_longer_want_resign")
-	UpdateResignState()
+	local allyTeams = Spring.GetAllyTeamList()
+	for i = 1, #allyTeams do
+		local teams = Spring.GetTeamList(allyTeams[i])
+		if #teams > 0 then
+			UpdateResignState(allyTeams[i])
+		end
+	end
 end
 
 function widget:Initialize()

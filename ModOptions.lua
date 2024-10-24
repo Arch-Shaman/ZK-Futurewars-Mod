@@ -113,7 +113,7 @@ local options = {
 	{
 		key = "resignstate_mintimer",
 		name = "Minimum resign state timer",
-		desc = "Prevent battle from being dragged on by players being out of units.",
+		desc = "Resign state will tick down by 1 second every 3 seconds until it hits this many seconds.",
 		type   = 'number',
 		section= 'a_important',
 		def = 60,
@@ -123,11 +123,11 @@ local options = {
 	},
 	{
 		key = "resignstate_timer",
-		name = "Minimum resign state timer",
-		desc = "Prevent battle from being dragged on by players being out of units.",
+		name = "Resign state initial timer",
+		desc = "Resign state will begin at this many seconds.",
 		type   = 'number',
 		section= 'a_important',
-		def = 300,
+		def = 180,
 		min = 30,
 		max = 1200,
 		step = 1,

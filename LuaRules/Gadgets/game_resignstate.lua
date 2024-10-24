@@ -272,6 +272,7 @@ function gadget:Initialize()
 	gaiaID = Spring.GetGaiaTeamID()
 	Spring.Echo("ResignState: Loading")
 	spSetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
+	Spring.Echo("Resign state settings: \nminTime: " .. mintime .. "\nCheckForForceResign: " .. tostring(checkForceResign) .. "\nStartingValue: " .. resigntimer)
 	for a = 1, #allyteamlist do
 		local allyTeamID = allyteamlist[a]
 		states[allyTeamID] = {
@@ -324,9 +325,9 @@ end
 
 function gadget:GameFrame(f)
 	if not gameStarted then gameStarted = true end
-	if checkTeams.count > 0 then
+	if checkTeams.count > 0 and f > 30 then
 		if CheckForAllTeamsOutOfCombatUnits() then
-			Spring.GameOver() -- end as a draw.
+			Spring.GameOver(16) -- end as a draw.
 		end
 		noWorkers = CheckForAllTeamsOutOfWorkers()
 		if noWorkers then
