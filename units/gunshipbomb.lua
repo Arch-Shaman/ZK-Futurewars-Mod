@@ -6,7 +6,7 @@ return {
 		acceleration           = 0.3,
 		airStrafe              = 0,
 		brakeRate              = 0.4,
-		buildCostMetal         = 60,
+		buildCostMetal         = 70,
 		builder                = false,
 		buildPic               = "gunshipbomb.png",
 		canFly                 = true,
