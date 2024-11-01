@@ -1,0 +1,5 @@
+{
+	"ai_warning" : "ATTENTION: L'gôte de l'AI %{name} est %{reason}! Les AIs suivantes vont rester inertes jusqu'à sa reconnexion':",
+	"ai_warning_disconnected" : "déconnecté",
+	"ai_warning_left_prematurely" : "N'a pas encore chargé ou est parti prématurément"
+}
