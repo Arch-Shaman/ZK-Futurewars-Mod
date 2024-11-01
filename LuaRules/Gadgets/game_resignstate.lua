@@ -319,10 +319,22 @@ local function UpdateResignTimer(allyTeamID)
 	SendToUnsynced("MakeUpdate", allyTeamID)
 end
 
+local function UpdateHighestCombatValue()
+	topCombatValue = 0
+	topCombatValueID = -1
+	for id, data in pairs(unitCounts) do
+		if data.combatValue > topCombatValue then
+			topCombatValue = data.combatValue
+			topCombatValueID = id
+		end
+	end
+end
+
 local function CheckForFailureState(allyTeamID)
 	--Spring.Echo("CheckForFailureState: " .. allyTeamID)
 	if unitCounts[allyTeamID] == nil then return end
 	local hasWorkers = unitCounts[allyTeamID].workers > 0
+	--Spring.Echo("CheckForFailureState: " .. allyTeamID .. " :\nWorkers: " .. unitCounts[allyTeamID].workers .. "\nCombat: " .. unitCounts[allyTeamID].combat .. "\nCombatValue: " .. unitCounts[allyTeamID].combatValue .. "\nHighest Value: " .. topCombatValue .. "\nRatio: " .. unitCounts[allyTeamID].combatValue / topCombatValue)
 	if not hasWorkers and unitCounts[allyTeamID].combat == 0 then
 		ForceTimerForAllyTeam(allyTeamID, lostAllCombatUnitsTime, true)
 		return
@@ -361,10 +373,6 @@ local function UpdateUnitType(unitDefID, teamID, value)
 		unitCounts[allyTeam].combat = unitCounts[allyTeam].combat + value
 		unitCounts[allyTeam].combatValue = unitCounts[allyTeam].combatValue + (value * UnitDefs[unitDefID].metalCost)
 		--Spring.Echo("Combat Value for " .. allyTeam .. " is " .. unitCounts[allyTeam].combatValue)
-		if unitCounts[allyTeam].combatValue > topCombatValue then
-			topCombatValue = unitCounts[allyTeam].combatValue
-			topCombatValueID = allyTeam
-		end
 	end
 	AddAllyTeamToCheck(allyTeam)
 end
@@ -417,7 +425,10 @@ end
 
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam)
 	if not unitTypes[unitDefID] then return end
-	UpdateUnitType(unitDefID, unitTeam, -1)
+	local _, _, _, _, buildProgress = Spring.GetUnitHealth(unitID)
+	if buildProgress >= 1 then
+		UpdateUnitType(unitDefID, unitTeam, -1)
+	end
 end
 
 function gadget:RecvLuaMsg(msg, playerID)
@@ -510,6 +521,9 @@ function gadget:GameFrame(f)
 				SendToUnsynced("MakeUpdate", allyTeamID)
 			end
 		end
+	end
+	if f%10 == 5 then
+		UpdateHighestCombatValue()
 	end
 	if f%30 == 0 and #resignteams > 0 then
 		for i = 1, #resignteams do
