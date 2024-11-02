@@ -21,7 +21,7 @@ return {
 			modelradius    = "35",
 			selectionscalemult = 1,
     		superweapon    = 1,
-    		superweaponcoef = 0.36,
+    		superweaponcoef = 0.41,
 			superweapondenom = 11,
     		neededlink     = 750,
 			pylonrange     = 150,
