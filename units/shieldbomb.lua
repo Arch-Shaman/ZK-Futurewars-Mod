@@ -171,7 +171,7 @@ return {
 					light_radius = 220,
 					blastwave_size = 25,
 					blastwave_impulse = 0.7,
-					blastwave_speed = 45,
+					blastwave_speed = 25,
 					blastwave_life = 4,
 					blastwave_lossfactor = 0.4545,
 					blastwave_damage = 550,
