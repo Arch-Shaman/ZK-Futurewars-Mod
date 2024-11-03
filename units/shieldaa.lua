@@ -5,7 +5,7 @@ return {
 		description            = "Anti-Air Bot",
 		acceleration           = 1.35,
 		brakeRate              = 8.1,
-		buildCostMetal         = 140,
+		buildCostMetal         = 130,
 		buildPic               = "shieldaa.png",
 		canGuard               = true,
 		canMove                = true,
@@ -73,7 +73,7 @@ return {
 				cameraShake				= 0,
 				customParams              = {
 					burst = Shared.BURST_RELIABLE,
-					disarmDamageMult = 4,
+					disarmDamageMult = 5,
 					disarmDamageOnly = 0,
 					disarmTimer      = 3, -- seconds
 					isaa = "1",
@@ -81,7 +81,7 @@ return {
 					light_radius = 380,
 				},
 				damage                  = {
-					default = 135.1,
+					default = 145.1,
 				},
 				explosionGenerator      = "custom:disarmaa_explosion_140",
 				fireStarter             = 70,
@@ -91,7 +91,7 @@ return {
 				interceptedByShieldType = 2,
 				model                   = "wep_m_fury.s3o",
 				noSelfDamage            = true,
-				range                   = 600,
+				range                   = 700,
 				reloadtime              = 1,
 				smokeTrail              = true,
 				soundHit                = "weapon/missile/small_lightning_missile",
