@@ -43,6 +43,7 @@ local unitCount = 0
 local max = math.max
 
 local shieldUnitDefID = {}
+local shieldsDisrupted = {}
 
 for unitDefID = 1, #UnitDefs do
 	local ud = UnitDefs[unitDefID]
@@ -74,6 +75,11 @@ end
 --------------------------------------------------------------------------------
 -- Unit Updating
 
+local function SetShieldDisrupted(unitID, endingFrame)
+	shieldsDisrupted[unitID] = endingFrame
+	Spring.SetUnitRulesParam(unitID, "shield_disrupted", endingFrame, losTable)
+end
+
 local function IsShieldEnabled(unitID)
 	local enabled, charge = spGetUnitShieldState(unitID)
 	if not enabled then
@@ -101,6 +107,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, teamID)
 		unitList[unitCount] = nil
 		unitMap[unitID] = nil
 		unitCount = unitCount - 1
+		shieldsDisrupted[unitID] = nil
 	end
 end
 
@@ -137,6 +144,15 @@ function gadget:GameFrame(n)
 				data.restoreCharge = nil
 			end
 			local batteryCost = (def and def.batterychargecost) or 0
+			local disrupted = shieldsDisrupted[unitID]
+			local disruptedTime = 0
+			if disrupted and disrupted <= n then
+				shieldsDisrupted[unitID] = nil
+				spSetUnitRulesParam(unitID, "shield_disrupted", nil)
+				disrupted = false
+			elseif disrupted and disrupted > n then 
+				disrupted = true 
+			end
 			if data.resTable then
 				-- The engine handles charging for free shields.
 				local hitTime = Spring.GetUnitRulesParam(unitID, "shieldHitFrame") or -999999
@@ -149,7 +165,7 @@ function gadget:GameFrame(n)
 						spSetUnitRulesParam(unitID, "shieldRegenTimer", remainingTime, losTable)
 					end
 				end
-				if enabled and charge < def.maxCharge and not inCooldown and spGetUnitRulesParam(unitID, "shieldChargeDisabled") ~= 1 then
+				if enabled and charge < def.maxCharge and not inCooldown and not disrupted and spGetUnitRulesParam(unitID, "shieldChargeDisabled") ~= 1 then
 					-- Get changed charge rate based on slow
 					local newChargeRate = GetChargeRate(unitID)
 					if data.oldChargeRate ~= newChargeRate then
@@ -279,6 +295,7 @@ function gadget:Initialize()
 		gadget:UnitCreated(unitID, unitDefID, teamID)
 		gadget:UnitFinished(unitID, unitDefID, teamID)
 	end
+	GG.SetShieldDisrupted = SetShieldDisrupted
 end
 
 --------------------------------------------------------------------------------
