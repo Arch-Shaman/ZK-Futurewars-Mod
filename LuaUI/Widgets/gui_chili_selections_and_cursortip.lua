@@ -37,6 +37,7 @@ local spGetUnitCurrentBuildPower = Spring.GetUnitCurrentBuildPower
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spScaledGetMouseState = Spring.ScaledGetMouseState
 local spGetUnitShieldState = Spring.GetUnitShieldState
+local spGetGameFrame = Spring.GetGameFrame
 
 local GetUnitBuildSpeed = Spring.Utilities.GetUnitBuildSpeed
 local GetHumanName = Spring.Utilities.GetHumanName
@@ -655,7 +656,7 @@ end
 local function GetWeaponReloadStatus(unitID, weapNum, reloadTime)
 	local _, _, weaponReloadFrame, _, _ = spGetUnitWeaponState(unitID, weapNum) --select weapon no.X
 	if weaponReloadFrame then
-		local currentFrame, _ = Spring.GetGameFrame()
+		local currentFrame, _ = spGetGameFrame()
 		local remainingTime = (weaponReloadFrame - currentFrame)/30
 		local reloadFraction = 1 - remainingTime/reloadTime
 		return reloadFraction, remainingTime
@@ -667,7 +668,7 @@ local function GetRulesParamReloadStatus(unitID, rulesParam, reloadTime)
 	local specialReloadState = spGetUnitRulesParam(unitID, rulesParam)
 	if specialReloadState then
 		if reloadTime > 0 then
-			--local currentFrame, _ = Spring.GetGameFrame()
+			--local currentFrame, _ = spGetGameFrame()
 			--local remainingTime = (specialReloadState - currentFrame)
 			--local reloadFraction = 1 - remainingTime/reloadTime
 			--return reloadFraction
