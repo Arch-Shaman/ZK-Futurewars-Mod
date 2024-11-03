@@ -736,7 +736,13 @@ local function GetUnitShieldRegenString(unitID, ud)
 	if spGetUnitRulesParam(unitID, "att_shieldDisabled") == 1 then
 		return ""
 	end
-	
+	local shieldDisruption = spGetUnitRulesParam(unitID, "shield_disrupted")
+	if shieldDisruption then
+		shieldDisruption = (shieldDisruption - spGetGameFrame()) / 30
+		if shieldDisruption > 0 then
+			return Chili.color2incolor({0.7, 0, 0, 1}) .. WG.Translate("interface", "shield_disrupted", {duration = strFormat("%+.1f", shieldDisruption)}) .. Chili.color2incolor({1,1,1,1})
+		end
+	end
 	local shieldRegen = spGetUnitRulesParam(unitID, "shieldRegenTimer")
 	if shieldRegen and shieldRegen > 0 then
 		return "  (" .. math.ceil(shieldRegen / 30) .. "s)"

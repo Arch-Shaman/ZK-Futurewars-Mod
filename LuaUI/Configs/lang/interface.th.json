@@ -134,5 +134,6 @@
 	"resign_state_want_resign" : "คุณได้โหวตยอมแพ้แล้ว! โปรดรอจนกว่าพันธมิตรของคุณจะยอมยอมแพ้",
 	"resign_state_want_resign_first" : "หากผู้เล่นในทีมของคุณเพียงพอต้องการยอมแพ้ เวลาจะเริ่มในไม่ช้านี้",
 	"resign_state_no_longer_want_resign" : "คุณได้เพิกถอนการโหวตยอมแพ้ของคุณแล้ว!",
-	"resign_state_forced" : "%{name} ถูกบังคับให้ยอมแพ้ใน %{time}"
+	"resign_state_forced" : "%{name} ถูกบังคับให้ยอมแพ้ใน %{time}",
+	"shield_disrupted" : "หยุดชะงัก (%{duration} วินาที)"
 }
