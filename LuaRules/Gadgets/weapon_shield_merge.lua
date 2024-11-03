@@ -40,9 +40,14 @@ local gameFrame = 0
 
 local shieldDamages = {}
 local defaultShielDamages = {}
+local shieldDisruptors = {}
 for i = 1, #WeaponDefs do
 	shieldDamages[i] = tonumber(WeaponDefs[i].customParams.shield_damage)
 	defaultShielDamages[i] = WeaponDefs[i].damages[SHIELD_ARMOR]
+	local disruptionTime = tonumber(WeaponDefs[i].customParams.shield_disruption) or 0
+	if disruptionTime > 0 then
+		shieldDisruptors[i] = disruptionTime
+	end
 end
 
 local beamWeaponDef = {}
@@ -331,6 +336,10 @@ function gadget:ShieldPreDamaged(proID, proOwnerID, shieldEmitterWeaponNum, shie
 	local projectilePasses = DrainShieldAndCheckProjectilePenetrate(shieldCarrierUnitID, damage, defaultShielDamages[weaponDefID], hackyProID or proID)
 	if not projectilePasses then
 		GG.Awards.AddAwardPoints('shield', spGetUnitTeam(shieldCarrierUnitID), damage)
+		local disruptionTime = shieldDisruptors[weaponDefID]
+		if disruptionTime then
+			GG.SetShieldDisrupted(shieldCarrierUnitID, Spring.GetGameFrame() + disruptionTime)
+		end
 	end
 	return projectilePasses
 end
