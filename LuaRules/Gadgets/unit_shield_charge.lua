@@ -140,7 +140,7 @@ function gadget:GameFrame(n)
 			if data.resTable then
 				-- The engine handles charging for free shields.
 				local hitTime = Spring.GetUnitRulesParam(unitID, "shieldHitFrame") or -999999
-				local currTime = Spring.GetGameFrame()
+				local currTime = n
 				local inCooldown = false
 				if def.rechargeDelay then
 					local remainingTime = hitTime + def.rechargeDelay * 30 - currTime
