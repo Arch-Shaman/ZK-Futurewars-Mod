@@ -91,7 +91,7 @@ return {
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 1040,
+				range                   = 1200,
 				reloadtime              = 1/3,
 				myGravity				= 0.03,
 				size                    = 8,
@@ -101,7 +101,7 @@ return {
 				soundStartVolume	    = 1,
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 900,
+				weaponVelocity          = 1300,
 				--coverage = 2200,
 			},
 			TRITARY = {
