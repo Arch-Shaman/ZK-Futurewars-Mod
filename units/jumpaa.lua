@@ -95,7 +95,7 @@ return {
 				--impulseFactor           = 0.4,
 				interceptedByShieldType = 0,
 				model                   = "wep_m_frostshard.s3o",
-				range                   = 920,
+				range                   = 980,
 				reloadtime              = 2.1,
 				smokeTrail              = true,
 				sprayAngle              = 10000,
@@ -134,7 +134,7 @@ return {
 					isaa = 1,
 				},
 				damage                  = {
-					default = 53.3,
+					default = 55.1,
 				},
 				duration                = 0.3,
 				dynDamageExp            = 1,
