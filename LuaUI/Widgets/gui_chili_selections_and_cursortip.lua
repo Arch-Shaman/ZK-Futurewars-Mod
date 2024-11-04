@@ -204,6 +204,10 @@ local dynamicTooltipDefs = {
 	[UnitDefNames["terraunit"].id] = true,
 	[UnitDefNames["energypylon"].id] = true,
 	[UnitDefNames["zenith"].id] = true,
+	[UnitDefNames["staticheavyarty"].id] = true,
+	[UnitDefNames["staticarty"].id] = true,
+	[UnitDefNames["raveparty"].id] = true,
+	[UnitDefNames["supernova_base"].id] = true,
 }
 
 for unitDefID,_ in pairs(econStructureDefs) do
@@ -742,7 +746,7 @@ local function GetUnitShieldRegenString(unitID, ud)
 	if shieldDisruption then
 		shieldDisruption = (shieldDisruption - spGetGameFrame()) / 30
 		if shieldDisruption > 0 then
-			return Chili.color2incolor({0.7, 0, 0, 1}) .. WG.Translate("interface", "shield_disrupted", {duration = strFormat("%+.1f", shieldDisruption)}) .. Chili.color2incolor({1,1,1,1})
+			return " " .. Chili.color2incolor({0.7, 0, 0, 1}) .. WG.Translate("interface", "shield_disrupted", {duration = strFormat("%+.1f", shieldDisruption)}) .. Chili.color2incolor({1,1,1,1})
 		end
 	end
 	local shieldRegen = spGetUnitRulesParam(unitID, "shieldRegenTimer")
@@ -2095,15 +2099,19 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		local healthPos
 		local hasShieldBar = false
 		if shieldBarUpdate then
-			if ud and ((ud.shieldPower or 0) > 0 or ud.level) and progress >= 1 then
+			if ud and ((ud.shieldPower or 0) > 0 or ud.level) then
 				local shieldPower = spGetUnitRulesParam(unitID, "comm_shield_max") or ud.shieldPower
 				local _, shieldCurrentPower = spGetUnitShieldState(unitID, -1)
+				local wantBar = true
+				if progress == nil or progress >= 1 then
+					wantBar = false
+				end
 				if shieldCurrentPower and shieldPower then
 					shieldBarUpdate(true, nil, shieldCurrentPower, shieldPower, (shieldCurrentPower < shieldPower) and GetUnitShieldRegenString(unitID, ud))
+					endBarPosition = PIC_HEIGHT + 4 + BAR_SPACING + 32
+					healthPos = PIC_HEIGHT + 4 + BAR_SPACING
+					hasShieldBar = true
 				end
-				endBarPosition = PIC_HEIGHT + 4 + BAR_SPACING + 32
-				healthPos = PIC_HEIGHT + 4 + BAR_SPACING
-				hasShieldBar = true
 			else
 				shieldBarUpdate(false)
 				healthPos = PIC_HEIGHT + 4
@@ -2178,8 +2186,8 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			local value = 100 - (reclaimLeft * 100)
 			buildProgressUpdate(true, nil, value, 100, "", value .. "% " .. reclaimedTooltip)
 			if playerNameLabel then
-				playerNameLabel:SetPos(nil, PIC_HEIGHT + 4 + BAR_SPACING + 32, nil, nil, nil, true)
-				spaceClickLabel:SetPos(nil, PIC_HEIGHT + 4 + BAR_SPACING + 32, nil, nil, nil, true)
+				playerNameLabel:SetPos(nil, PIC_HEIGHT + 4 + BAR_SPACING, nil, nil, nil, true)
+				spaceClickLabel:SetPos(nil, PIC_HEIGHT + 4 + BAR_SPACING + 14, nil, nil, nil, true)
 			end
 		end
 	end
