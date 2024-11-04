@@ -283,6 +283,7 @@ return {
 					light_color = "2.4 1.5 0.6",
 					reveal_unit = 36,
 					ballistic_guidance = 75,
+					shield_disruption = 8 * 30,
 				},
 				damage                  = {
 					default = 600,
