@@ -146,5 +146,7 @@
 	"resign_state_want_resign_first" : "Se un numero sufficiente di giocatori del tuo team desidera arrendersi, un timer inizierà a breve.",
 	"resign_state_no_longer_want_resign" : "Hai revocato il tuo voto per arrenderti!",
 	"resign_state_forced" : "%{name} costretto ad arrendersi in %{time}",
-	"shield_disrupted" : "Interrotto (%{duration}s)"
+	"shield_disrupted" : "Interrotto (%{duration}s)",
+	"reclaimed" : "riciclato",
+	"build_progress" : "costruito"
 }

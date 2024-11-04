@@ -115,5 +115,7 @@
 	"resign_state_want_resign_first" : "Wenn genügend Spieler Ihres Teams aufgeben möchten, wird in Kürze ein Timer gestartet.",
 	"resign_state_no_longer_want_resign" : "Sie haben Ihre Abstimmung zur Kapitulation zurückgezogen!",
 	"resign_state_forced" : "%{name} wurde in %{time} zur Kapitulation gezwungen",
-	"shield_disrupted" : "Gestört (%{duration}s)"
+	"shield_disrupted" : "Gestört (%{duration}s)",
+	"reclaimed" : "recycelt",
+	"build_progress" : "gebaut"
 }

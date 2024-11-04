@@ -130,5 +130,7 @@
 	"resign_state_want_resign_first" : "Если достаточное количество игроков в вашей команде захотят сдаться, вскоре начнется отсчет времени.",
 	"resign_state_no_longer_want_resign" : "Вы отозвали свой голос за капитуляцию!",
 	"resign_state_forced": "%{name} вынужден сдаться через %{time}",
-	"shield_disrupted" : "нарушен (%{duration}с)"
+	"shield_disrupted" : "нарушен (%{duration}с)",
+	"reclaimed" : "переработан",
+	"build_progress" : "сконструировано"
 }

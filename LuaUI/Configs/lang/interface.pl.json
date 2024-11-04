@@ -130,5 +130,7 @@
 	"resign_state_want_resign_first" : "Jeśli wystarczająca liczba graczy w twojej drużynie zechce się poddać, za chwilę rozpocznie się odliczanie.",
 	"resign_state_no_longer_want_resign" : "Cofnąłeś swój głos za poddaniem się!",
 	"resign_state_forced": "%{name} zmuszony do poddania się za %{time}",
-	"shield_disrupted" : "Zakłócony (%{duration}s)"
+	"shield_disrupted" : "Zakłócony (%{duration}s)",
+	"reclaimed" : "Recykling",
+	"build_progress" : "skonstruowane"
 }

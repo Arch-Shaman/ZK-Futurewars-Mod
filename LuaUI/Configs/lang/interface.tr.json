@@ -127,5 +127,7 @@
 	"resign_state_want_resign_first" : "Takımınızdaki yeterli sayıda oyuncu teslim olmak isterse, kısa süre içinde bir zamanlayıcı başlayacak.",
 	"resign_state_no_longer_want_resign" : "Teslim olma oyunuzu geri çektiniz!",
 	"resign_state_forced": "%{name} %{time} içinde teslim olmaya zorlandı",
-	"shield_disrupted" : "Sıkışmış (%{duration}s)"
+	"shield_disrupted" : "Sıkışmış (%{duration}s)",
+	"reclaimed" : "geri alınmış",
+	"build_progress" : "inşa edilmiş"
 }

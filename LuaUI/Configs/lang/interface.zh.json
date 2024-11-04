@@ -141,5 +141,7 @@
 	"resign_state_want_resign_first" : "如果您团队中有足够多的玩家希望投降，计时器将很快开始。",
 	"resign_state_no_longer_want_resign" : "您已撤销投降投票！",
 	"resign_state_forced" : "%{name} 被迫于 %{time} 投降",
-	"shield_disrupted" : "破坏 (%{duration}秒)"
+	"shield_disrupted" : "破坏 (%{duration}秒)",
+	"reclaimed" : "回收",
+	"build_progress" : "构造"
 }

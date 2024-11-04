@@ -154,5 +154,7 @@
 	"resign_state_want_resign_first" : "If enough players on your team wish to surrender, a timer will begin shortly.",
 	"resign_state_no_longer_want_resign" : "You've rescinded your vote to surrender!",
 	"resign_state_forced" : "%{name} forced to surrender in %{time}",
-	"shield_disrupted" : "Disrupted (%{duration}s)"
+	"shield_disrupted" : "Disrupted (%{duration}s)",
+	"reclaimed" : "reclaimed",
+	"build_progress" : "built"
 }

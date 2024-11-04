@@ -113,6 +113,8 @@ local iconTypesPath = LUAUI_DIRNAME .. "Configs/icontypes.lua"
 local icontypes = VFS.FileExists(iconTypesPath) and VFS.Include(iconTypesPath)
 local _, iconFormat = VFS.Include(LUAUI_DIRNAME .. "Configs/chilitip_conf.lua" , nil, VFS.ZIP)
 local UNIT_BURST_DAMAGES = VFS.Include(LUAUI_DIRNAME .. "Configs/burst_damages.lua" , nil, VFS.ZIP)
+local reclaimedTooltip = "Reclaimed"
+local builtTooltip = "Built"
 
 local terraformGeneralTip =
 	green.. 'Click&Drag'..white..': Free draw terraform. \n'..
@@ -1952,6 +1954,7 @@ end
 
 local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 	local selectedUnitID
+	local endBarPosition = PIC_HEIGHT + 4 + BAR_SPACING + 32
 	
 	local leftPanel = Chili.Control:New{
 		name = "leftPanel",
@@ -2034,7 +2037,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		playerNameLabel = Chili.Label:New{
 			name = "playerNameLabel",
 			x = 4,
-			y = PIC_HEIGHT + 31,
+			y = PIC_HEIGHT + 53,
 			right = 0,
 			height = BAR_FONT,
 			objectOverrideFont = WG.GetFont(IMAGE_FONT),
@@ -2043,7 +2046,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		spaceClickLabel = Chili.Label:New{
 			name = "spaceClickLabel",
 			x = 4,
-			y = PIC_HEIGHT + 55,
+			y = PIC_HEIGHT + 73,
 			right = 0,
 			height = 18,
 			objectOverrideFont = WG.GetFont(IMAGE_FONT),
@@ -2051,6 +2054,8 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			parent = rightPanel,
 		}
 		costInfoPanel = GetCostInfoPanel(rightPanel, PIC_HEIGHT + 4)
+		shieldBarUpdate = GetBarWithImage(rightPanel, "shieldBarUpdate", PIC_HEIGHT + 2, IMAGE.SHIELD, {0.3,0,0.9,1})
+		buildProgressUpdate = GetBarWithImage(rightPanel, "buildProgress", PIC_HEIGHT + 2, IMAGE.BUILD, {0.8,0.8,0.2,1})
 	else
 		shieldBarUpdate = GetBarWithImage(rightPanel, "shieldBarUpdate", PIC_HEIGHT + 4, IMAGE.SHIELD, {0.3,0,0.9,1})
 		buildBarUpdate = GetBarWithImage(rightPanel, "buildBarUpdate", PIC_HEIGHT + 58, IMAGE.BUILD, {0.8,0.8,0.2,1})
@@ -2086,27 +2091,44 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			energyInfoUpdate(false)
 		end
 		minWindLabel(false)
-		
+		local health, maxHealth, _, _, progress = spGetUnitHealth(unitID)
 		local healthPos
+		local hasShieldBar = false
 		if shieldBarUpdate then
-			if ud and ((ud.shieldPower or 0) > 0 or ud.level) then
+			if ud and ((ud.shieldPower or 0) > 0 or ud.level) and progress >= 1 then
 				local shieldPower = spGetUnitRulesParam(unitID, "comm_shield_max") or ud.shieldPower
 				local _, shieldCurrentPower = spGetUnitShieldState(unitID, -1)
 				if shieldCurrentPower and shieldPower then
 					shieldBarUpdate(true, nil, shieldCurrentPower, shieldPower, (shieldCurrentPower < shieldPower) and GetUnitShieldRegenString(unitID, ud))
 				end
+				endBarPosition = PIC_HEIGHT + 4 + BAR_SPACING + 32
 				healthPos = PIC_HEIGHT + 4 + BAR_SPACING
+				hasShieldBar = true
 			else
 				shieldBarUpdate(false)
 				healthPos = PIC_HEIGHT + 4
+				endBarPosition = healthPos + BAR_SPACING
 			end
 		end
 		
-		local health, maxHealth = spGetUnitHealth(unitID)
+		if buildProgressUpdate and isTooltipVersion then
+			if progress >= 1 then
+				--Spring.Echo("Hide: " .. progress .. " " .. unitID)
+				buildProgressUpdate(false) -- UpdateBar(visible, yPos, currentValue, maxValue, extraCaption, newCaption)
+				if not hasShieldBar then
+					endBarPosition = healthPos + BAR_SPACING
+				end
+			else
+				--Spring.Echo("Show " .. unitID)
+				progress = progress * 100
+				buildProgressUpdate(true, nil, progress, 100, "", strFormat("%+.1f", progress) .. "% " .. builtTooltip)
+				endBarPosition = PIC_HEIGHT + 4 + BAR_SPACING + 32
+				healthPos = PIC_HEIGHT + 4 + BAR_SPACING
+			end
+		end
 		if health and maxHealth then
 			healthBarUpdate(true, healthPos, health, maxHealth, (health < maxHealth) and GetUnitRegenString(unitID, ud))
 		end
-		
 		if buildBarUpdate then
 			if ud and ud.buildSpeed > 0 then
 				local metalMake, metalUse, energyMake,energyUse = Spring.GetUnitResources(unitID)
@@ -2132,18 +2154,30 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		end
 		
 		UpdateReloadTime(unitID, unitDefID)
+		if playerNameLabel then
+			playerNameLabel:SetPos(nil, endBarPosition, nil, nil, nil, true)
+			spaceClickLabel:SetPos(nil, endBarPosition + 14, nil, nil, nil, true)
+		end
 		
 		return showMetalInfo
 	end
 	
 	local function UpdateDynamicFeatureAttributes(featureID, unitDefID)
-		local metal, _, energy, _, _ = Spring.GetFeatureResources(featureID)
+		local metal, metalMax, energy, energyMax, reclaimLeft = Spring.GetFeatureResources(featureID)
 		local leftOffset = -2
 		if unitDefID then
 			leftOffset = PIC_HEIGHT + LEFT_SPACE
 		end
 		metalInfoUpdate(true, Format(metal), IMAGE.METAL_RECLAIM, leftOffset + 4)
 		energyInfoUpdate(true, Format(energy), IMAGE.ENERGY_RECLAIM, leftOffset + LEFT_SPACE + 4)
+		--local progress = math.max(metal/metalMax, energy/energyMax)
+		if shieldBarUpdate then
+			shieldBarUpdate(false)
+		end
+		if buildProgressUpdate then
+			local value = 100 - (reclaimLeft * 100)
+			buildProgressUpdate(true, nil, value, 100, "", value .. "% " .. reclaimedTooltip)
+		end
 	end
 	
 	local function UpdateDynamicEconInfo(unitDefID, mousePlaceX, mousePlaceY)
@@ -2255,7 +2289,12 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			unitImage.file = "#" .. unitDefID
 			unitImage.file2 = GetUnitBorder(unitDefID)
 			unitImage:Invalidate()
-
+			if unitID == nil and shieldBarUpdate then
+				shieldBarUpdate(false)
+			end
+			if unitID == nil and buildProgressUpdate and not featureID then
+				buildProgressUpdate(false)
+			end
 			local unitCost = math.floor(GetUnitCost(unitID, unitDefID) or 0)
 			if featureID and UnitDefs[unitDefID].customParams.dynamic_comm then
 				unitCost = Spring.GetFeatureRulesParam(featureID, "comm_cost") or 0
@@ -2286,8 +2325,8 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 			
 			if unitID then
 				if playerNameLabel then
-					playerNameLabel:SetPos(nil, PIC_HEIGHT + 32, nil, nil, nil, true)
-					spaceClickLabel:SetPos(nil, PIC_HEIGHT + 56, nil, nil, nil, true)
+					playerNameLabel:SetPos(nil, endBarPosition, nil, nil, nil, true)
+					spaceClickLabel:SetPos(nil, endBarPosition + 14, nil, nil, nil, true)
 				end
 			end
 			if (not (unitID and visible)) and not featureDefID then
@@ -2921,7 +2960,8 @@ function widget:Initialize()
 			green .. "+ " .. WG.Translate("interface", "ctrl")  .. ": " .. WG.Translate("interface", "defer_selection") .. "\n" ..
 			green .. WG.Translate("interface", "mmb")   .. ": " .. WG.Translate("interface", "go_to") .. "\n" ..
 			green .. WG.Translate("interface", "space_click_show_stats")
-
+		reclaimedTooltip = WG.Translate("interface", "reclaimed")
+		builtTooltip = WG.Translate("interface", "build_progress")
 		unitSelectionTooltipCache = {}
 		unitSingleSelectionTooltipCache = {}
 
