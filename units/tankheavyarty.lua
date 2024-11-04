@@ -80,6 +80,7 @@ tankheavyarty = {
 				smoothmult   = "0.5",
 				smoothexponent = "0.75",
 				movestructures = "0.25",
+				shield_disruption = 7*30,
 			},
 			damage                  = {
 				default = 8500.01,
