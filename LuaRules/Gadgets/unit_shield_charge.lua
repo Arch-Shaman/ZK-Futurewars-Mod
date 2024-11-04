@@ -76,8 +76,10 @@ end
 -- Unit Updating
 
 local function SetShieldDisrupted(unitID, endingFrame)
-	shieldsDisrupted[unitID] = endingFrame
-	Spring.SetUnitRulesParam(unitID, "shield_disrupted", endingFrame, losTable)
+	if shieldsDisrupted[unitID] == nil or endingFrame > shieldsDisrupted[unitID] then
+		shieldsDisrupted[unitID] = endingFrame
+		Spring.SetUnitRulesParam(unitID, "shield_disrupted", endingFrame, losTable)
+	end
 end
 
 local function IsShieldEnabled(unitID)
