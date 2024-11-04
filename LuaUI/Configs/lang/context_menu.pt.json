@@ -284,5 +284,6 @@
 	"sensor_tag": "Revela unidades atacadas por %{seconds}seg",
 	"sensor_steal" : "Hackeia sensores por %{seconds}seg",
 	"sensor_tag": "Revela unidades atacadas por %{seconds}seg",
-	"field_fac": "Pode baixar dados de nanoframes de fábricas amigáveis"
+	"field_fac": "Pode baixar dados de nanoframes de fábricas amigáveis",
+	"disrupt_shields" : "Interrompe a regeneração do escudo"
 }

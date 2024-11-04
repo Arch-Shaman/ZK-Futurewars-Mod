@@ -284,5 +284,6 @@
 	"chainlightning_efficency": "Verimlilik",
 	"sensor_steal": "Sensörleri %{seconds}sn boyunca hackler",
 	"sensor_tag": "%{seconds}sn boyunca saldırıya uğrayan birimleri ortaya çıkarır",
-	"field_fac": "Dost fabrikalardan nanoframe verileri indirilebilir"
+	"field_fac": "Dost fabrikalardan nanoframe verileri indirilebilir",
+	"disrupt_shields" : "Kalkan yenilenmesini bozar"
 }

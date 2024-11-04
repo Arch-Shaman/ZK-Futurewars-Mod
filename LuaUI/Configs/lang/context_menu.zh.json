@@ -284,5 +284,6 @@
 	"chainlightning_efficency" : "效率",
 	"sensor_steal": "攻击传感器%{seconds}秒",
 	"sensor_tag": "显示受攻击 %{seconds} 秒的单位",
-	"field_fac" : "可以从友好工厂下载纳米帧数据"
+	"field_fac" : "可以从友好工厂下载纳米帧数据",
+	"disrupt_shields" : "破坏盾牌再生"
 }

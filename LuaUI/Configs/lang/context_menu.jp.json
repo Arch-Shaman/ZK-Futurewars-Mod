@@ -286,5 +286,6 @@
 	"chainlightning_efficency" : "効率性",
 	"sensor_steal" : "%{seconds}秒間センサーをハックする",
 	"sensor_tag" : "攻撃されたユニットを %{seconds}秒間表示",
-	"field_fac" : "友好的な工場からナノフレームデータをダウンロード可能"
+	"field_fac" : "友好的な工場からナノフレームデータをダウンロード可能",
+	"disrupt_shields" : "シールド再生を混乱させます"
 }
