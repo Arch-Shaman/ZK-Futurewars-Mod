@@ -2177,6 +2177,10 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		if buildProgressUpdate then
 			local value = 100 - (reclaimLeft * 100)
 			buildProgressUpdate(true, nil, value, 100, "", value .. "% " .. reclaimedTooltip)
+			if playerNameLabel then
+				playerNameLabel:SetPos(nil, PIC_HEIGHT + 4 + BAR_SPACING + 32, nil, nil, nil, true)
+				spaceClickLabel:SetPos(nil, PIC_HEIGHT + 4 + BAR_SPACING + 32, nil, nil, nil, true)
+			end
 		end
 	end
 	
