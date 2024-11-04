@@ -524,6 +524,7 @@ local localization = {
 	chainlightning_efficency = "Effiency:",
 	chainlightning_extrajumps = "Forks jump to nearby units",
 	field_fac = "field factory",
+	disrupts_shields = "Disrupts shields"
 }
 
 local function UpdateLocalization()
@@ -1084,6 +1085,9 @@ local function weapons2Table(cells, ws, unitID, bombletCount, recursedWepIds, de
 						AddEntryToCells(str1, layer + 1, numformat(math.floor(cp.stats_shield_damage * mult * comm_mult), 2), cells)
 					end
 				end
+			end
+			if cp.shield_disruption then
+				AddEntryToCells(localization.disrupts_shields .. ":", layer + 1, numformat(tonumber(cp.shield_disruption) / 30, 1) .. localization.acronyms_second, cells)
 			end
 			if cp.post_capture_reload then
 				AddEntryToCells(localization.stats_reload .. ':', layer + 1, numformat (tonumber(cp.post_capture_reload)/30,2) .. localization.acronyms_second, cells)
