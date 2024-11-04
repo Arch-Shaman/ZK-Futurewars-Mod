@@ -69,6 +69,7 @@ return {
 					nofriendlyfire            = 1,
 					script_reload = "6.5",
 					script_burst = "3",
+					shield_disruption = 3*30,
 				},
 				damage                  = {
 					default = 210.1,
