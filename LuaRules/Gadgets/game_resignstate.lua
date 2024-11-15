@@ -67,6 +67,7 @@ local afkplayers = {}
 local checkTeams = {count = 0, teams = {}} -- forces a check next frame when something changes
 local checking = {} -- teamID = true/false
 local gaiaID = -1
+local chickenID = nil
 local checkForceResign = true
 local topCombatValue = 0
 local topCombatValueID = -1
@@ -181,7 +182,7 @@ end
 
 local function ForceTimerForAllyTeam(allyTeamID, value, state)
 	if not states[allyTeamID] then return end
-	states[allyTeamID].forcedTimer = state
+	states[allyTeamID].forcedTimer = (chickenID ~= allyTeamID) and state
 	if states[allyTeamID].timer > value then
 		states[allyTeamID].timer = value
 	end
@@ -279,6 +280,11 @@ function gadget:Initialize()
 	Spring.Echo("ResignState: Loading")
 	spSetGameRulesParam("resigntimer_max", resigntimer, PUBLIC)
 	Spring.Echo("Resign state settings: \nminTime: " .. mintime .. "\nCheckForForceResign: " .. tostring(checkForceResign) .. "\nStartingValue: " .. resigntimer)
+
+	if Spring.GetGameRulesParam("chicken_chickenTeamID") then
+		_, _, _, _, _, chickenID = Spring.GetTeamInfo(Spring.GetGameRulesParam("chicken_chickenTeamID"))
+	end
+
 	for a = 1, #allyteamlist do
 		local allyTeamID = allyteamlist[a]
 		states[allyTeamID] = {
