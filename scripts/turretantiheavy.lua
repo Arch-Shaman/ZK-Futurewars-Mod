@@ -15,40 +15,44 @@ local smokePiece = {base, turret}
 include "constants.lua"
 
 local spGetUnitRulesParam 	= Spring.GetUnitRulesParam
-local SpGetGameSeconds = Spring.GetGameSeconds
-local SpGetGameFrame = Spring.GetGameFrame
-local spEcho = Spring.Echo
+local spGetUnitHealth = Spring.GetUnitHealth
+local spGetGameFrame = Spring.GetGameFrame
 local SpUnitWeaponFire = Spring.UnitWeaponFire
 local SpSetUnitRulesParam = Spring.SetUnitRulesParam
 local SpetUnitWeaponState = Spring.SetUnitWeaponState
 local spGetUnitTeam = Spring.GetUnitTeam
 local spIsUnitInLos = Spring.IsUnitInLos
 local spSpawnProjectile = Spring.SpawnProjectile
-local spGetUnitPiecePosition = Spring.GetUnitPiecePosition
+local spGetUnitPiecePosDir  = Spring.GetUnitPiecePosDir
 local spGetUnitPosition = Spring.GetUnitPosition
 local spAddUnitDamage = Spring.AddUnitDamage
 local spSpawnCEG = Spring.SpawnCEG
+local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
+local spGetUnitWeaponTarget = Spring.GetUnitWeaponTarget
+local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local abs = math.abs
 local huge = math.huge
+local max = math.max
+local rand = math.random
 
 -- Signal definitions
 local SIG_AIM = 2
 local SIG_OPEN = 1
-local SIG_FIRING = 4
 
 local inlosTrueTable = {inlos = true}
 
+local myAllyteam
 local open = true
 local firing = false
 local reloading = false
 local turnrateMod = 0.5
 local target = nil
-local lastHeading
-local lastPitch
+local okpTarget = nil
 local registeredGroundFire = false
 local registeredTarget = false
 local firingTime = 0
 local reloadGrace = 30
+local lastOKPFrame = 0
 local armorValue = UnitDefs[unitDefID].armoredMultiple
 local reloadTime = tonumber(WeaponDefNames["turretantiheavy_ata"].customParams.reload_override) * 30
 
@@ -59,11 +63,22 @@ for i=0, 60 do
 	weaponIDs[i] = WeaponDefNames["turretantiheavy_ata_"..i].id
 end
 
+if not GG.AzimuthAvoidance then
+	GG.AzimuthAvoidance = {}
+end
+
 --[[
 TO DO:
 
 	 - reduce the amount of times spGetUnitTeam is called (how though?)
 ]]--
+
+local function AllyteamThread()
+	while true do
+		myAllyteam = spGetUnitAllyTeam(unitID)
+		Sleep(1000)
+	end
+end
 
 local function Open()
 	Signal(SIG_OPEN)
@@ -95,6 +110,22 @@ local function Open()
 	
 	
 	open = true
+end
+
+local function setOKPTarget(targetID)
+	if targetID == okpTarget then
+		return
+	end
+	if okpTarget then
+		GG.AzimuthAvoidance[okpTarget] = GG.AzimuthAvoidance[okpTarget] - 1
+		if GG.AzimuthAvoidance[okpTarget] <= 0 then
+			GG.AzimuthAvoidance[okpTarget] = nil
+		end
+	end
+	if targetID then
+		GG.AzimuthAvoidance[targetID] = (GG.AzimuthAvoidance[targetID] or 0) + 1
+	end
+	okpTarget = targetID
 end
 
 local function Close()
@@ -133,39 +164,71 @@ local function Close()
 	GG.SetUnitArmor(unitID, armorValue)
 end
 
-local function handleFire(targetID)
-	firing = true
-	turnrateMod = 10
-	firingTime = firingTime + 1
-	local beam = math.min(math.floor(firingTime / 3 + 0.01), 60)
-	local d = (beam / 10 + 1)
-
-	local weaponID = weaponIDs[beam]
-
-	local ux, uy, uz = spGetUnitPosition(unitID)
-	local px, py, pz = spGetUnitPiecePosition(unitID, firepiece)
-	local _, _, _, tx, ty, tz = spGetUnitPosition(targetID, false, true)
-	spSpawnProjectile(weaponID, {
-		pos = {ux+px, uy+py, uz+pz},
-		["end"] = {tx, ty, tz},
-		owner = unitID,
-		team = spGetUnitTeam(unitID),
-		ttl = 1,
-	})
-	spSpawnCEG("ataalasergrow", tx, ty, tz, 0, 1, 0, 1, math.sqrt(d))
-	spAddUnitDamage(targetID, 20 * (1 + beam / 10), 0, unitID, weaponID)
+local function CheckStillFiring()
+	if (not open) or (spGetUnitRulesParam(unitID, "lowpower") == 1) then
+		return false
+	else
+		local targetType, _, targetID = spGetUnitWeaponTarget(unitID, 1)
+		if targetType ~= 1 then
+			return false
+		else
+			return targetID == target
+		end
+	end
 end
 
-local function FiringTimeoutThread()
-	Signal(SIG_FIRING)
-	SetSignalMask(SIG_FIRING)
-	Sleep(100)
-	--spEcho("reload due to timeout")
+
+local function StartReload()
+	firing = false
+	turnrateMod = 0.5
+	setOKPTarget(nil)
+
+	local reloadmod = firingTime/reloadGrace
+	if reloadmod > 1 then reloadmod = 1 elseif reloadmod < 0.15 then reloadmod = 0.15 end
+	local slowState = Spring.GetUnitRulesParam(unitID, "slowState") or 0
+	if slowState > 0.5 then slowState = 0.5 end
+	slowState = 1 - slowState
+	frame = spGetGameFrame() + math.ceil((reloadTime * reloadmod)/slowState)
+	SpetUnitWeaponState(unitID, 1, "reloadState", frame)
+
+	target = nil
+	firingTime = 0
+end
+
+local function FiringThread()
+	firing = true
+	turnrateMod = 10
+	firingTime = 0
+	setOKPTarget(target)
+
+	while CheckStillFiring() do
+		firingTime = firingTime + 1
+		local beam = math.min(math.floor(firingTime / 3 + 0.01), 60)
+		local damageMult = (beam / 10 + 1)
+
+		local weaponID = weaponIDs[beam]
+
+		local px, py, pz = spGetUnitPiecePosDir(unitID, firepiece)
+		local _, _, _, tx, ty, tz = spGetUnitPosition(target, false, true)
+		spSpawnProjectile(weaponID, {
+			pos = {px, py, pz},
+			["end"] = {tx, ty, tz},
+			owner = unitID,
+			team = spGetUnitTeam(unitID),
+			ttl = 1,
+		})
+		spSpawnCEG("ataalasergrow", tx, ty, tz, 0, 1, 0, 1, math.sqrt(damageMult))
+		spAddUnitDamage(target, 20 * damageMult, 0, unitID, weaponID)
+
+		Sleep(33)
+	end
+
 	StartReload()
 end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+	StartThread(AllyteamThread)
 	Spin(radar, y_axis, math.rad(1000))
 end
 
@@ -198,78 +261,49 @@ function script.AimWeapon(weaponNum, heading, pitch)
 		Sleep (100)
 	end
 
-	GG.DontFireRadar_CheckAim(unitID)
-	
-	if (target == nil) and firing then 
-		if registeredGroundFire then
-			if abs(lastHeading - heading) + abs(lastPitch - pitch) > 0.01 then
-				--spEcho("reload due to turn")
-				StartReload()
-			end
-		else
-			registeredGroundFire = true
-			lastHeading = heading
-			lastPitch = pitch
-		end
+	local targetType, _, targetID = spGetUnitWeaponTarget(unitID, 1)
+	if targetType ~= 1 then
+		return
 	end
+	setOKPTarget(targetID)
+	GG.DontFireRadar_CheckAim(unitID)
 	
 	local slowMult = (Spring.GetUnitRulesParam(unitID,"baseSpeedMult") or 1)
 	Turn(turret, y_axis, heading, math.rad(50)*slowMult*turnrateMod)
 	Turn(gun, x_axis, 0 - pitch, math.rad(40)*slowMult*turnrateMod)
 	WaitForTurn(turret, y_axis)
 	WaitForTurn(gun, x_axis)
-	return (spGetUnitRulesParam(unitID, "lowpower") == 0)	--checks for sufficient energy in grid
+
+	return (spGetUnitRulesParam(unitID, "lowpower") == 0)
 end
 
 function script.FireWeapon()
 end
 
 function script.BlockShot(num, targetID)
-	if ((targetID and not spIsUnitInLos(targetID, Spring.GetUnitAllyTeam(unitID))) or false) then
-		return true
-	end
-
-	-- We block weapon 1 from firing and subsitute in our own shot
-
-	if target == nil then
+	if not firing then
 		target = targetID
-	elseif target ~= targetID then
-		StartReload()
-		return true
+		StartThread(FiringThread)
 	end
-
-	handleFire(targetID)
-
-	StartThread(FiringTimeoutThread)
-
 	return true
 end
 
 function script.TargetWeight(num, targetUnitID)
-	if spIsUnitInLos(targetUnitID, Spring.GetUnitAllyTeam(unitID)) then
-		return 1
+	if firing then
+		-- Give lucifer adderall
+		if targetUnitID == target then
+			return 0.1
+		else
+			return huge
+		end
+	elseif spIsUnitInLos(targetUnitID, myAllyteam) then
+		local hp = spGetUnitHealth(targetUnitID)
+		hp = max(hp - (GG.AzimuthAvoidance[targetUnitID] or 0) * 20000 + rand() * 500, 50)
+		return (25000 / hp) ^ 4
 	else
 		return huge
 	end
 end
-
-function StartReload()
-	firing = false
-	turnrateMod = 0.5
-	local reloadmod = firingTime/reloadGrace
-	if reloadmod > 1 then reloadmod = 1 elseif reloadmod < 0.15 then reloadmod = 0.15 end
-	local slowState = Spring.GetUnitRulesParam(unitID, "slowState") or 0
-	if slowState > 0.5 then slowState = 0.5 end
-	slowState = 1 - slowState
-	local totalReloadTime = math.ceil((reloadTime * reloadmod)/slowState)
-	frame = SpGetGameFrame() + math.ceil((reloadTime * reloadmod)/slowState)
-	SpetUnitWeaponState(unitID, 1, "reloadState", frame)
-	target = nil
-	registeredGroundFire = false
-	firingTime = 0
-end
-
-
 
 
 --[[
@@ -297,6 +331,7 @@ function script.QueryWeapon(weaponNum)
 end
 
 function script.Killed(recentDamage, maxHealth)
+	setOKPTarget(nil)
 	local severity = recentDamage/maxHealth
 	if severity <= .25 then
 		Explode(base, SFX.NONE)
