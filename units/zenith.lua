@@ -125,7 +125,7 @@ return {
 				collideEnemy            = false,
 				avoidFriendly           = false,
 				canAttackGround         = false,
-				coreThickness           = 1,
+				coreThickness           = 0.5,
 				craterBoost             = 0,
 				craterMult              = 0,
 				customParams            = {
