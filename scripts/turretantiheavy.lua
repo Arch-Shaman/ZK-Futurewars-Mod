@@ -45,7 +45,7 @@ local myAllyteam
 local open = true
 local firing = false
 local reloading = false
-local turnrateMod = 0.5
+local turnrateMod = 1
 local target = nil
 local okpTarget = nil
 local registeredGroundFire = false
@@ -180,7 +180,7 @@ end
 
 local function StartReload()
 	firing = false
-	turnrateMod = 0.5
+	turnrateMod = 1
 	setOKPTarget(nil)
 
 	local reloadmod = firingTime/reloadGrace
