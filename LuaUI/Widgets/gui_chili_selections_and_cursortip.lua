@@ -2120,6 +2120,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		end
 		
 		if buildProgressUpdate and isTooltipVersion then
+			progress = progress or 1 -- prevent nil error.
 			if progress >= 1 then
 				--Spring.Echo("Hide: " .. progress .. " " .. unitID)
 				buildProgressUpdate(false) -- UpdateBar(visible, yPos, currentValue, maxValue, extraCaption, newCaption)
