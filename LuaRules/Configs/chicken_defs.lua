@@ -100,7 +100,7 @@ menaceMaxNum = 1
 menaceScalingMult = 1
 menaceEvoSpeedMod = 1
 
-strengthPerBurrow = 0.92	-- multiply strength by this when a burrow dies
+strengthPerBurrow = 0.95	-- multiply strength by this when a burrow dies
 strengthPerSecond = 0.003	-- how much strength increases per second
 
 wrathPerBurrow = 0.09	-- how much wrath increases per wave
@@ -303,7 +303,8 @@ difficulties = {
 		queenTime	     = 32*60,
 		gracePeriod	     = 150,
 		startTechs       = 1,
-		waveSizeMult	 = 2,
+		waveSizeMult	 = 1.4,
+		baseHyperEvo     = 1.5,
 		techCostMult     = 0.9,
 		menaceEvoMod     = -1,
 		defenseMult      = 0.7,
@@ -312,8 +313,8 @@ difficulties = {
 	},
 
 	['Suicidal'] = {
-		waveSizeMult	 = 3,
-		baseHyperEvo     = 1.5,
+		waveSizeMult	 = 1.75,
+		baseHyperEvo     = 3,
 		scoreMult   	 = 5,
 		startTechs       = 1,
 		menaceEvoMod     = 1,
@@ -322,8 +323,8 @@ difficulties = {
 	},
 
 	['Annihilation'] = {
-		waveSizeMult	 = 3,
-		baseHyperEvo     = 5,
+		waveSizeMult	 = 2,
+		baseHyperEvo     = 6,
 		techCostMult     = 0.7,
 		startTechs       = 1,
 		menaceStartWave  = 1,
