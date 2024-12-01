@@ -91,7 +91,7 @@
 	},
 	"chickenc" : {
 		"name" : "Basilisk",
-		"description" : "All-Terrain Riot",
+		"description" : "Riot-Assault Chicken",
 		"helptext" : "The Basilisk climbs walls like a spider to surprise the enemy with its highly acidic spit. Only a vigilant watch keeps these critters from sauntering over hills to wreck your base from unexpected directions. Gunships are the best solution to Basilisk incursions."
 	},
 	"hoverraid" : {
@@ -110,13 +110,13 @@
 		"helptext" : "The Digger's strong claws can scoop through the hardest rock like gravy. As such, it can undetectably travel underground and appear anyplace it can cause mayhem. Protect your valuables directly, as Diggers can bypass your main defense lines."
 	},
 	"chicken_leaper" : {
-		"name" : "Leaper",
-		"description" : "Hopping Raider",
-		"helptext" : "The Leaper is the chickens' fast attack unit, running down enemies and leaping over obstacles."
+		"name" : "Gander",
+		"description" : "Fat Chicken",
+		"helptext" : "Helptext to be added"
 	},
 	"chickenr" : {
-		"name" : "Lobber",
-		"description" : "Artillery",
+		"name" : "Kentucky",
+		"description" : "Anti-Static Artillery Chicken",
 		"helptext" : "A form of organic artillery, the Lobber hurls balls of venom at a high trajectory over long distances. It proves a problem for those who rely excessively on static defenses, but is practically helpless when attacked directly."
 	},
 	"turrettorp" : {
@@ -141,7 +141,7 @@
 	},
 	"chicken_roc" : {
 		"name" : "Roc",
-		"description" : "Heavy Attack Flyer",
+		"description" : "Arial Assault Chicken",
 		"helptext" : "Large, angry and capable of fighting both air and land opposition, the Roc is a formidable flying chicken."
 	},
 	"turretaaheavy" : {
@@ -153,6 +153,21 @@
 		"name" : "Drone",
 		"description" : "Morphs Into Chicken Structures",
 		"helptext" : "A hapless non-combat organism whose sole purpose in life is to morph into one of the Chicken Hive's structures."
+	},
+	"chicken_con_basic" : {
+		"name" : "Chicken Swarmkeeper",
+		"description" : "Basic Chicken Constructor, Breeds Basic Chickens.",
+		"helptext" : "The swarmkeeper is one of the many types of chickens whose purpose in life is to breed and propagate the hive. Although chicken hives are often located in deep underground tunnels, it seems that this specimen has been deployed to the surface to assist in offensive operations."
+	},
+	"chicken_con_improved" : {
+		"name" : "Chicken Broodmother",
+		"description" : "Advanced Chicken Constructor, Breeds Advanced Chickens.",
+		"helptext" : "The broodmother is one of the many types of chickens whose purpose in life is to breed and propagate the hive. Although chicken hives are often located in deep underground tunnels, it seems that this specimen has been deployed to the surface to assist in offensive operations."
+	},
+	"chicken_con_advanced" : {
+		"name" : "Chicken Geneweaver",
+		"description" : "Ultimate Chicken Constructor, Breeds Ultimate Chickens.",
+		"helptext" : "The geneweaver is one of the many types of chickens whose purpose in life is to breed and propagate the hive. Although chicken hives are often located in deep underground tunnels, it seems that this specimen has been deployed to the surface to assist in offensive operations."
 	},
 	"staticjammer" : {
 		"name" : "Cornea",
@@ -191,6 +206,16 @@
 	},
 	"chickend" : {
 		"name" : "Chicken Tube",
+		"description" : "Defense and energy source",
+		"helptext" : "The Tube is the chickens' only defense structure, firing deadly spores at air and ground targets alike."
+	},
+	"chickend_improved" : {
+		"name" : "Greater Chicken Tube",
+		"description" : "Defense and energy source",
+		"helptext" : "The Tube is the chickens' only defense structure, firing deadly spores at air and ground targets alike."
+	},
+	"chickend_advanced" : {
+		"name" : "Chicken Hive Tube",
 		"description" : "Defense and energy source",
 		"helptext" : "The Tube is the chickens' only defense structure, firing deadly spores at air and ground targets alike."
 	},
@@ -335,8 +360,8 @@
 		"helptext" : "The Menace is a tactical support bird which lacks direct damage for the most part, but makes up for it in crowd control capabilities. It can equip one of three loadouts: a bundle of slow bombs, a gravity assisted disarm pulse, or a mine deployment system. This gives it a set of options for reactive and proactive bombing runs."
 	},
 	"chicken_spidermonkey" : {
-		"name" : "Spidermonkey",
-		"description" : "All-Terrain Support",
+		"name" : "Razorwing",
+		"description" : "Disruptor-Skirmisher Chicken",
 		"helptext" : "The Spidermonkey is a very unusual support chicken. As the name suggests, it can climb walls, however it can also spin a silk line that slows and yanks enemies."
 	},
 	"shieldskirm" : {
@@ -350,8 +375,8 @@
 		"helptext" : "The Firefly is an attack drone with a weak high precision pulse laser. They can protect their parent unit from light enemy units. They do not share stealth with it though, so they can also betray the presence of a cloaked commander."
 	},
 	"chickenblobber" : {
-		"name" : "Blobber",
-		"description" : "Heavy Artillery",
+		"name" : "Papanok",
+		"description" : "Heavy Artillery Chicken",
 		"helptext" : "The Lobber's big brother, the Blobber hurls a wide-scatter rain of acid goo. It can pummel even the toughest shield network very quickly, but remains relatively prone to direct attack."
 	},
 	"energyheavygeo" : {
@@ -371,7 +396,7 @@
 	},
 	"chickenf" : {
 		"name" : "Talon",
-		"description" : "Flying Spike Spitter",
+		"description" : "Arial Bombardment Chicken",
 		"helptext" : "It's a flying chicken! The Talon is a lethal predator that takes down enemy aircraft with its spikes, but will also happily employ them on ground targets. It can be defeated like any other air unit, however."
 	},
 	"energypylon" : {
@@ -385,13 +410,13 @@
 		"helptext" : "The Divinity's sole purpose is to deliver its payload of cluster bombs to a position where it will rain destruction upon the enemy. Very useful against enemy defenses and clusters of slow to medium speed units."
 	},
 	"chicken_shield" : {
-		"name" : "Blooper",
-		"description" : "Shield/Anti-Air",
+		"name" : "Felarar",
+		"description" : "Shielded Skirmisher/Anti-air Chicken",
 		"helptext" : "Protects adjacent chickens."
 	},
 	"chicken_dodo" : {
 		"name" : "Dodo",
-		"description" : "Sacrifical Pheromone Bomb",
+		"description" : "Suicide Chicken",
 		"helptext" : "The Dodo's body contains a volatile mixture of organic explosives and pheromones. At the slightest provocation, it explodes spectacularly, with the resulting shockwave throwing nearby units into the air. Beware, it leaves an acidic pool that releases phermones that aid other chickens' regeneration!"
 	},
 	"bomberheavy" : {
@@ -406,7 +431,7 @@
 	},
 	"chickenwurm" : {
 		"name" : "Wurm",
-		"description" : "Burrowing Flamer (Assault/Riot)",
+		"description" : "Burrowing Assault Chicken",
 		"helptext" : "The Wurm \"burrows\" under the surface of the ground, revealing itself to hurl a ball of fire that immolates a large swathe of terrain. It can climb cliffs and surprise defense turrets, but is weak to assaults."
 	},
 	"dronefighter" : {
@@ -496,7 +521,7 @@
 	},
 	"chickena" : {
 		"name" : "Cockatrice",
-		"description" : "Assault/Anti-Armor",
+		"description" : "Heavy Assault Chicken",
 		"helptext" : "The Cockatrice is truly a beast. Seemingly impervious to enemy fire, it casually walks up to its target and dismembers it with its incredibly powerful jaws. Fortunately, it is not fast or particularly intelligent, and can be destroyed with skirmishers or swarmers easily."
 	},
 	"hoverskirm" : {
@@ -521,12 +546,12 @@
 	},
 	"chicken" : {
 		"name" : "Chicken",
-		"description" : "Novacula maxillas",
+		"description" : "Basic Chicken",
 		"helptext" : "The common chicken, also known as Novacula maxillas is an invasive species of strange rectiles that have appeared on this planet. The common chicken can nourish itself when it attacks other units, including robots!"
 	},
 	"chicken_sporeshooter" : {
-		"name" : "Sporeshooter",
-		"description" : "All-Terrain Spores (Anti-Air/Skirm)",
+		"name" : "Helspawn",
+		"description" : "Shielded Assault Chicken",
 		"helptext" : "The Sporeshooter shoots spores to drop aircraft and hit land targets from a distance. Can climb walls for surprise attacks."
 	},
 	"turretaafar" : {
@@ -750,8 +775,8 @@
 		"helptext" : "In the later half of the Coalition Wars, a more combat oriented Constable was produced in order to quickly secure hillside encampments. In doing so, the Pathfinder lost significant chunks of armoring in favor of faster jumpjets, faster nanolathes, a powerful pulse disruptor, and more speed. However, this retrofit made the model more costly."
 	},
 	"chicken_blimpy" : {
-		"name" : "Blimpy",
-		"description" : "Dodo Bomber",
+		"name" : "Minokawa",
+		"description" : "Cockatrice Bomber Chicken",
 		"helptext" : "Blimpy drops a Dodo on unsuspecting armies and bases."
 	},
 	"droneheavyslow" : {
@@ -880,8 +905,8 @@
 		"helptext" : "The white dragon is the chicken hive's ultimate answer to direct ground assault. Towering above anything short of a superstrider, It's impossibly strong carapace and untold auxillary organs means it's capable of withstanding the firepower of even a superweapon. Beware, for underestimating a chicken menace suck as the white dragon is something you'll only do once."
 	},
 	"chickens" : {
-		"name" : "Spiker",
-		"description" : "Skirmisher",
+		"name" : "Curassow",
+		"description" : "Skirmisher Chicken",
 		"helptext" : "The Spiker's razor sharp projectiles can pierce even the thickest armor. While it doesn't have much health, it remains a potent threat to both air and ground units. Counter with anything that can reliably outrange it."
 	},
 	"striderdante" : {
@@ -933,6 +958,16 @@
 		"name" : "LOS Provider",
 		"description" : "Knows all and sees all",
 		"helptext" : "Kilrogg would be proud!"
+	},
+	"los_menace" : {
+		"name" : "LOS Provider for chicken menaces",
+		"description" : "I think it's only fair~",
+		"helptext" : "There's gotta be some butterflies somewhere (wanna share?)~"
+	},
+	"los_superwep" : {
+		"name" : "LOS Provider for superweps",
+		"description" : "Our final charge~",
+		"helptext" : "The world looks so small when you hold the sun in your hands~"
 	},
 	"tele_beacon" : {
 		"name" : "Lamp",
@@ -990,8 +1025,8 @@
 		"helptext" : "An all-terrain AA unit that supports other spiders against air with its long range, high damage laser. It must aim at a target briefly before releasing its high energy laser. Be warned: it requires an unimpeded view of the target, making it useless near hills."
 	},
 	"chicken_pigeon" : {
-		"name" : "Pigeon",
-		"description" : "Flying Pest",
+		"name" : "Falcon",
+		"description" : "Flying Chicken",
 		"helptext" : "The Pigeon is a basic flying chicken that drops acidic spit on its pray in order to make it easier to digest. It is a major threat against static or stationary units who will take a lot of damage. Best countered with longer ranged AA to kill it before it gets into range."
 	},
 	"cloakheavyraid" : {
@@ -1286,7 +1321,7 @@
 	},
 	"chicken_tiamat" : {
 		"name" : "Tiamat",
-		"description" : "Heavy Assault/Riot",
+		"description" : "Ultimate Assault Chicken",
 		"helptext" : "The ultimate assault chicken, the Tiamat is a fire-breathing, iron-jawed, spore-spewing monstrosity that knows no fear, no mercy. It even has a mucous shield to protect itself and surrounding chickens from damage."
 	},
 	"bomberstrike" : {

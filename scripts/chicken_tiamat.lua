@@ -32,8 +32,8 @@ local firepoint = piece 'firepoint'
 --linear constant 163840
 
 local rad = math.rad
-local bMoving, gun_1
-local firepoints = {firepoint, spike2, firepoint, body}
+local bMoving
+local firepoints = {firepoint, spike2, spike3, body}
 
 -- Signal definitions
 local SIG_AIM = 2
@@ -184,27 +184,23 @@ local function stopwalk()
 end
 
 local function ShotThread()
-	if gun_1 == 1 then
-		Turn(lforearmu, y_axis, rad(-140), rad(600))
-		Turn(lbladeu, y_axis, rad(140), rad(600))
-		Turn(rforearmu, y_axis, rad(140), rad(600))
-		Turn(rbladeu, y_axis, rad(-140), rad(600))
-		WaitForTurn(lbladeu, y_axis)
-		Turn(lforearmu, y_axis, 0, rad(120))
-		Turn(lbladeu, y_axis, 0, rad(120))
-		Turn(rforearmu, y_axis, 0, rad(120))
-		Turn(rbladeu, y_axis, 0, rad(120))
-	elseif gun_1 == 2 then
-		Turn(lforearml, y_axis, rad(-140), rad(600))
-		Turn(lbladel, y_axis, rad(140), rad(600))
-		Turn(rforearml, y_axis, rad(140), rad(600))
-		Turn(rbladel, y_axis, rad(-140), rad(600))
-		WaitForTurn(rbladel, y_axis)
-		Turn(lforearml, y_axis, 0, rad(120))
-		Turn(lbladel, y_axis, 0, rad(120))
-		Turn(rforearml, y_axis, 0, rad(120))
-		Turn(rbladel, y_axis, 0, rad(120))
-	end
+	Turn(lforearmu, y_axis, rad(-140), rad(600))
+	Turn(lbladeu, y_axis, rad(140), rad(600))
+	Turn(rforearmu, y_axis, rad(140), rad(600))
+	Turn(rbladeu, y_axis, rad(-140), rad(600))
+	Turn(lforearml, y_axis, rad(-140), rad(600))
+	Turn(lbladel, y_axis, rad(140), rad(600))
+	Turn(rforearml, y_axis, rad(140), rad(600))
+	Turn(rbladel, y_axis, rad(-140), rad(600))
+	WaitForTurn(lbladeu, y_axis)
+	Turn(lforearmu, y_axis, 0, rad(120))
+	Turn(lbladeu, y_axis, 0, rad(120))
+	Turn(rforearmu, y_axis, 0, rad(120))
+	Turn(rbladeu, y_axis, 0, rad(120))
+	Turn(lforearml, y_axis, 0, rad(120))
+	Turn(lbladel, y_axis, 0, rad(120))
+	Turn(rforearml, y_axis, 0, rad(120))
+	Turn(rbladel, y_axis, 0, rad(120))
 end
 
 function script.StartMoving()
@@ -252,17 +248,8 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.Shot(num)
-	if num == 3 then
-		EmitSfx(firepoint, 1024+3)
-		return
-	end
 	if num ~= 1 then
 		return
-	end
-	
-	gun_1 = gun_1 + 1
-	if gun_1 > 2 then
-		gun_1 = 1
 	end
 
 	StartThread(ShotThread)

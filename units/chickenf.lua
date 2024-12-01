@@ -8,6 +8,7 @@ return {
 		brakeRate           = 0.32,
 		builder             = false,
 		buildPic            = "chickenf.png",
+		buildTime           = 500,
 		canFly              = true,
 		canGuard            = true,
 		canLand             = true,
@@ -24,6 +25,7 @@ return {
 			outline_y = 180,
 			outline_yoff = 17.5,
 			model_rescale = 1.4,
+			chicken_spawncost = 500,
 		},
 
 		explodeAs           = "NOWEAPON",
@@ -36,7 +38,6 @@ return {
 		idleTime            = 300,
 		leaveTracks         = true,
 		maxSlope            = 18,
-		buildTime           = 750,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE STUPIDTARGET MINE",
 		objectName          = "chickenf.s3o",
@@ -84,7 +85,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 3000,
+					default = 2000,
 				},
 
 				explosionGenerator      = "custom:100rlexplode",

@@ -2455,12 +2455,12 @@ local behaviourConfig = {
 		skirmBlockedApproachFrames = 16,
 		fleeLeeway = 400,
 		fleeDistance = 300,
-		reloadFlee = true,
-		wardFireTargets = wardFireAllShieldsNoMex,
-		wardFireLeeway = 10,
-		wardFirePredict = 35,
-		wardFireShield = 60,
-		wardFireDefault = true,
+		--reloadFlee = true,
+		--wardFireTargets = wardFireAllShieldsNoMex,
+		--wardFireLeeway = 10,
+		--wardFirePredict = 35,
+		--wardFireShield = 60,
+		--wardFireDefault = true,
 	},
 	
 	-- Ward fire only units.

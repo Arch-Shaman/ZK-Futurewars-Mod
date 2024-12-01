@@ -7,6 +7,7 @@ return {
 		brakeRate           = 1.23,
 		builder             = false,
 		buildPic            = "chickena.png",
+		buildTime           = 650,
 		canGuard            = true,
 		canMove             = true,
 		canPatrol           = true,
@@ -14,25 +15,25 @@ return {
 
 		customParams        = {
 			chicken = "uwu",
+			chicken_wants_bogus_defs = "uwu",
 			outline_x = 235,
 			outline_y = 235,
 			outline_yoff = 25,
 			model_rescale = 1.3,
 			singuimmune = 1,
+			chicken_spawncost = 650,
 		},
 
 		explodeAs           = "NOWEAPON",
 		footprintX          = 4,
 		footprintZ          = 4,
-		health              = 27430,
+		health              = 21700,
 		iconType            = "chickena",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
 		leaveTracks         = true,
-		maxSlope            = 84,
+		maxSlope            = 90,
 		maxWaterDepth       = 5000,
-		metalCost           = 0,
-		buildTime           = 1270,
 		movementClass       = "ATKBOT4",
 		noAutoFire          = false,
 		noChaseCategory     = "SHIP SWIM FLOAT TERRAFORM FIXEDWING SATELLITE GUNSHIP MINE",
@@ -83,7 +84,7 @@ return {
 				},
 
 				damage                  = {
-					default = 2700.1,
+					default = 1000.1,
 				},
 
 				explosionGenerator      = "custom:NONE",

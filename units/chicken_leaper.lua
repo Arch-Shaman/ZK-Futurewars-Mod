@@ -1,6 +1,6 @@
 return {
 	chicken_leaper = {
-		name                = "Leaper",
+		name                = "Gander",
 		description         = "Hopping Raider",
 		acceleration        = 1.5,
 		brakeRate           = 1.23,
@@ -13,7 +13,7 @@ return {
 
 		customParams        = {
 			chicken = "uwu",
-			model_rescale = 1.4,
+			chicken_spawncost = 150,
 			outline_x = 145,
 			outline_y = 145,
 			outline_yoff = 17.5,
@@ -23,16 +23,16 @@ return {
 		floater             = false,
 		footprintX          = 3,
 		footprintZ          = 3,
-		health              = 720,
+		health              = 3000,
 		iconType            = "chickenleaper",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
 		leaveTracks         = false,
-		maxSlope            = 36,
+		maxSlope            = 90,
 		metalCost           = 0,
 		energyCost          = 0,
-		buildTime           = 100,
-		movementClass       = "AKBOT3",
+		buildTime           = 150,
+		movementClass       = "ATKBOT3",
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP",
 		objectName          = "chicken_leaper.s3o",
@@ -49,7 +49,7 @@ return {
 		},
 		sightDistance       = 256,
 		script              = "chicken_leaper.lua",
-		speed               = 120,
+		speed               = 240,
 		turnRate            = 1920,
 		upright             = true,
 		workerTime          = 0,
@@ -76,8 +76,8 @@ return {
 				craterMult              = 0,
 
 				damage                  = {
-					default = 50,
-					planes  = 50,
+					default = 300,
+					planes  = 300,
 				},
 
 				duration                = 0.0333,
@@ -89,7 +89,7 @@ return {
 				interceptedByShieldType = 0,
 				noSelfDamage            = true,
 				range                   = 100,
-				reloadtime              = 1,
+				reloadtime              = 1.4,
 				rgbColor                = "0 0 0",
 				rgbColor2               = "0 0 0",
 				size                    = 0,

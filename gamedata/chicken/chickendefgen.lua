@@ -24,6 +24,7 @@ local function genChix(name, step, chix)
 	--if chix.speed then
 	--	chix.speed = chix.speed * rangeMult
 	--end
+
 	for name, wdef in pairs(chix.weapondefs or {}) do
 		wdef.customparams = wdef.customparams or {}
 		local params = wdef.customparams
@@ -53,8 +54,13 @@ local function genChix(name, step, chix)
 	end
 end
 
-local function genDefs(defs, minStep, maxStep)
-	minStep = minStep or 1
+local function postProcessChix(chix, step)
+	local params = chix.customparams
+
+	if params.chicken_disable_weapons_below_level and step < params.chicken_disable_weapons_below_level then
+		chix.weapondefs = nil
+		chix.weapons = nil
+	end
 end
 
 -- Hold new chickens so pairs doesn't get confused
@@ -62,8 +68,10 @@ local chickenDefs = {}
 
 for name, udef in pairs(UnitDefs) do
 	local params = udef.customparams
-	if params.chicken and ((params.chicken_shield and not params.chicken_shield_invul) or params.chicken_menace or params.chicken_needs_bogus_defs) then
-		params.chicken_needs_bogus_defs = true
+	if params.chicken and (params.chicken_shield or params.chicken_menace or params.chicken_needs_bogus_defs or params.chicken_wants_bogus_defs) then
+		if not params.chicken_wants_bogus_defs then
+			params.chicken_needs_bogus_defs = true
+		end
 		minStep = -2
 		maxStep = 20
 		--if params.chicken_menace then
@@ -80,10 +88,14 @@ for name, udef in pairs(UnitDefs) do
 				step = step - 1
 			end
 			genChix(name, step, chix)
-			
+			postProcessChix(chix, step)
+
+
 			chickenDefs[name.."_"..step] = chix
 		end
 	end
+
+	postProcessChix(udef, 0)
 end
 
 for name, udef in pairs(chickenDefs) do

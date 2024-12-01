@@ -13,7 +13,6 @@ return {
 			chicken_roost = ">w<",
 		},
 		
-		energyMake        = 12,
 		explodeAs         = "NOWEAPON",
 		footprintX        = 3,
 		footprintZ        = 3,
@@ -23,11 +22,15 @@ return {
 		idleTime          = 300,
 		levelGround       = false,
 		maxSlope          = 36,
+		metalStorage      = 1000,
+		energyStorage     = 1000,
 		buildTime         = 540,
 		--metalMake         = 3,
 		noAutoFire        = false,
 		power             = 540,
 		objectName        = "roost.s3o",
+		radarDistance     = 100000,
+		radarEmitHeight   = 50000,
 		script            = "roost.lua",
 		selfDestructAs    = "NOWEAPON",
 

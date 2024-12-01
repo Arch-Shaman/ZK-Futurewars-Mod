@@ -22,6 +22,7 @@ return {
 		customParams        = {
 			chicken = "uwu",
 			model_rescale = 1.1,
+			chicken_spawncost = 130,
 		},
 		explodeAs           = "NOWEAPON",
 		floater             = true,

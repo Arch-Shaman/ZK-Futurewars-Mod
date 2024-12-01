@@ -21,27 +21,31 @@ return {
 --	},
 	{
 		name = 'Chicken: Beginner',
-		desc = 'For PvE in PvP games'
+		desc = 'A difficulty for those who are just picking up RTS games'
 	},
 	{
 		name = 'Chicken: Very Easy',
-		desc = 'For PvE in PvP games'
+		desc = 'A difficulty for players who are new to Future Wars'
 	},
 	{
 		name = 'Chicken: Easy',
-		desc = 'Ice cold'
+		desc = 'A Chill and easy experiance that still offers challange'
 	},
 	{
 		name = 'Chicken: Normal',
-		desc = 'Lukewarm'
+		desc = 'The Default: A mix between challange and feasibility'
 	},
 	{
 		name = 'Chicken: Hard',
-		desc = 'Will burn your ass'
+		desc = 'A challanging experiance meant for experianced Future Wars players'
 	},
 	{
 		name = 'Chicken: Suicidal',
-		desc = 'Flaming hell!'
+		desc = 'An Onslaught meant for grizzled veterans of Future Wars'
+	},
+	{
+		name = 'Chicken: Annihilation',
+		desc = 'This clucking hell will push the very best players to their limits. Good Luck.'
 	},
 	{
 		name = 'Chicken: Custom',

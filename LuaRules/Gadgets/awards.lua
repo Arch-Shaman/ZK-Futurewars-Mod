@@ -27,6 +27,7 @@ if (gadgetHandler:IsSyncedCode()) then
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 local spAreTeamsAllied      = Spring.AreTeamsAllied
+local spGetTeamRulesParam   = Spring.GetTeamRulesParam
 local spGetUnitHealth       = Spring.GetUnitHealth
 local spGetAllUnits         = Spring.GetAllUnits
 local spGetUnitTeam         = Spring.GetUnitTeam
@@ -670,36 +671,23 @@ function gadget:GameOver(winningAllys)
 	local chickenDifficulty = spGetGameRulesParam("chicken_difficulty") or -1
 	if chickenDifficulty > 0 then
 		-- chicken awards
-		local chickenScore = floor(spGetGameRulesParam("chicken_score"))
+		local defaultScore = floor(spGetGameRulesParam("chicken_score"))
+		local defaultAward = spGetGameRulesParam("chicken_award")
 		local chickenTeam = spGetGameRulesParam("chicken_chickenTeamID")
-		Spring.Echo("cteam", chickenTeam)
-		if spGetGameRulesParam("chicken_award") then
-			for i = 1, #winningAllys do
-				local allyTeam = winningAllys[i]
-				local teamList = Spring.GetTeamList(allyTeam)
-				for j = 1, #teamList do
-					local teamID = teamList[j]
-					local teamUnits = #Spring.GetTeamUnits(teamID)
-					if teamUnits > 0 then
-						awardAward(teamID, "chickenWin", "Score: " .. chickenScore)
+
+		local teamList = Spring.GetTeamList()
+		for j = 1, #teamList do
+			local teamID = teamList[j]
+			if (not spAreTeamsAllied(teamID, chickenTeam)) then
+				local teamScore = math.floor(spGetTeamRulesParam(teamID, "chicken_score") or defaultScore)
+				local teamAward = spGetTeamRulesParam(teamID, "chicken_award") or defaultAward
+
+				if teamScore > 100 then
+					if teamAward == 2 then
+						awardAward(teamID, "chickenWin", "Score: " .. teamScore)
+					elseif teamAward == 1 then
+						awardAward(teamID, "chicken", "Score: " .. teamScore)
 					end
-				end
-			end
-		elseif spGetGameRulesParam("chicken_award_endless") then
-			local teamList = Spring.GetTeamList()
-			for j = 1, #teamList do
-				local teamID = teamList[j]
-				if not spAreTeamsAllied(teamID, chickenTeam) then
-					awardAward(teamID, "chickenWin", "Score: " .. chickenScore)
-				end
-			end
-		elseif spGetGameRulesParam("chicken_waveNumber") > 2 then
-			local teamList = Spring.GetTeamList()
-			for j = 1, #teamList do
-				local teamID = teamList[j]
-				Spring.Echo("teamID", teamID)
-				if not spAreTeamsAllied(teamID, chickenTeam) then
-					awardAward(teamID, "chicken", "Score: " .. chickenScore)
 				end
 			end
 		end

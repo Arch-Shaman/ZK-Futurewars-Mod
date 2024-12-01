@@ -1201,18 +1201,12 @@ end
 
 local playerCanSpecchatCache = {}
 
-local function IsFWDev(name)
-	return name == "Shaman" or name == "LeojEspino" or name == "Stuff" -- FW devs
-end
-
-
 local function GetPlayerAbilityToSpecchat(playerID)
 	-- this function controls when players can bypass the specmute modoption.
 	if playerCanSpecchatCache[playerID] ~= nil then return playerCanSpecchatCache[playerID] end
 	local ret = false
-	local name = Spring.GetPlayerInfo(playerID)
-	if IsFWDev(name) then -- FW devs
-		playerCanSpecchatCache[playerID] = true
+	local isDev = Spring.Utilities.isPlayerFWDev(playerID)
+	if isDev then
 		return true
 	end
 	local cp = select(10, Spring.GetPlayerInfo(playerID))
@@ -1544,7 +1538,7 @@ function widgetHandler:AddConsoleLine(msg, priority)
 			end
 			-- IGNORE FEATURE--
 			local username = select(1, Spring.GetPlayerInfo(playerID_msg, false))
-			if ignorelist.ignorees[username] and not IsFWDev(username) then
+			if ignorelist.ignorees[username] and not Spring.Utilities.isFWDev(username) then
 				return
 			end
 		end

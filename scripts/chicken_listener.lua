@@ -13,7 +13,7 @@ local rsack = piece 'rsack'
 local lsack = piece 'lsack' 
 
 local rad = math.rad
-local bMoving, restore_delay, bDigging
+local bMoving, restore_delay
 
 -- Signal definitions
 local SIG_RESTORE = 2
@@ -21,96 +21,6 @@ local SIG_STATE = 4
 
 include "constants.lua"
 
-local function lua_ReplaceMe() return 0 end
-local function lua_Surface() return 0 end
-
-
-local function activatescr()
-	bDigging = true
- 
-	Move(body, y_axis, -30.0)
-	Turn(body, x_axis, rad(-45))
- 
-	Show(body)
-	Show(head)
-	Show(tail)
-	Show(lthigh)
-	Show(lknee)
-	Show(lshin)
-	Show(lfoot)
-	Show(rthigh)
-	Show(rknee)
-	Show(rshin)
-	Show(rfoot)
-	Show(rsack)
-	Show(lsack)
-		
-	if not bMoving then 
-		Turn(body, y_axis, rad(180))
-		Turn(body, y_axis, 0, rad(150))
-	end
-     	
-	Move(body, y_axis, 0, 8)
-	Turn(body, x_axis, 0, rad(10))
-	WaitForMove(body, y_axis)
-
-	bDigging = false
-	
-end
-
-local function digdig()
-	while true do
-		lua_Surface()
-		Sleep(500)
-	end
-end
-
-local function deactivatescr()
-	bDigging = true
-	
-	--StartThread(digdig)
-	
-	if not bMoving then 
-		Turn(body, y_axis, rad(180), rad(150))
-	end
-			
-	Turn(body, x_axis, rad(45), rad(30))	
-	Move(body, y_axis, -30, 6)
-
-	WaitForMove(body, y_axis)
-	Turn(body, y_axis, 0)
-	bDigging = false		
-
-end
-
-local function Go()
-	Signal(SIG_STATE)
-	SetSignalMask(SIG_STATE)
-	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1/3)
-	GG.UpdateUnitAttributes(unitID)
-	 activatescr()
-	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
-	GG.UpdateUnitAttributes(unitID)
-end
-
-local function Stop()
-	Signal(SIG_STATE)
-	SetSignalMask(SIG_STATE)
-	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1)
-	GG.UpdateUnitAttributes(unitID)
-	deactivatescr()
-	
-	lua_Surface()
-	lua_ReplaceMe()
-end
-
-function script.Activate()
-	StartThread(Go)
-end
-
-function script.Deactivate()
-	StartThread(Stop)
-end
 
 local function walk()
 	Turn(lthigh, x_axis, rad(70), rad(57))
@@ -197,16 +107,15 @@ local function stopwalk()
 	Turn(rshin, y_axis, 0, rad(100))
 end
 
-local function MotionControl(moving, justmoved, digging)
+local function MotionControl(moving, justmoved)
 	justmoved = true
 	while true do
 		moving = bMoving
-		digging = bDigging
-		if moving and not digging then
+		if moving then
 			walk()
 			justmoved = true
 		end
-		if not moving and not digging and justmoved then
+		if not moving and justmoved then
 			 stopwalk()
 			justmoved = false
 		end
@@ -225,6 +134,7 @@ function script.StopMoving()
 end
 
 function script.Create()
+	Spring.SetUnitNanoPieces(unitID, {head})
 	EmitSfx(body, 1024+2)
 	
 	Hide(body)
@@ -242,10 +152,6 @@ function script.Create()
 	Hide(lsack)
 		
 	bMoving = false
-	bDigging = true
-
-	Spring.SetUnitRulesParam(unitID, "selfMoveSpeedChange", 1/3)
-	GG.UpdateUnitAttributes(unitID)
 	
 	StartThread(MotionControl)
 	

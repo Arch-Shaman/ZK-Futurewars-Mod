@@ -7,6 +7,7 @@ return { chickenlandqueen = {
 		brakeRate              = 18.0,
 		builder                = false,
 		buildPic               = "chickenflyerqueen.png",
+		buildTime              = 360000,
 		canGuard               = true,
 		canMove                = true,
 		canPatrol              = true,
@@ -44,11 +45,8 @@ return { chickenlandqueen = {
 		idleAutoHeal           = 200,
 		idleTime               = 300,
 		leaveTracks            = true,
-		health                 = 3000000,
+		health                 = 7000000,
 		speed                  = 75,
-		metalCost              = 0,
-		energyCost             = 0,
-		buildTime              = 240000,
 		minCloakDistance       = 250,
 		movementClass          = "TKBOT4",
 		noAutoFire             = false,
@@ -97,69 +95,10 @@ return { chickenlandqueen = {
 				def                = "HIGHSPORES",
 				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
 			},
-			{
-				def                = "BOGUSSPORES",
-				onlyTargetCategory = "NONE",
-			},
-			{
-				def                = "BOGUSSPORES",
-				onlyTargetCategory = "NONE",
-			},
-			{
-				def                = "BOGUSSPORES",
-				onlyTargetCategory = "NONE",
-			},
 		},
 
 
 		weaponDefs             = {
-			BOGUSSPORES = {
-				name                    = "Dummy Spores",
-				areaOfEffect            = 96,
-				avoidFriendly           = false,
-				collideFriendly         = false,
-				craterBoost             = 0,
-				craterMult              = 0,
-				
-				customParams            = {
-					light_radius = 0,
-					armorpiercing = 0.4,
-					combatrange = 750,
-					bogus = 1,
-				},
-				
-				damage                  = {
-					default = 100,
-					planes  = 100,
-				},
-
-				dance                   = 90,
-				explosionGenerator      = "custom:goo_v2_red",
-				fireStarter             = 0,
-				flightTime              = 5,
-				groundbounce            = 1,
-				heightmod               = 0.5,
-				impulseBoost            = 0,
-				impulseFactor           = 0.4,
-				interceptedByShieldType = 2,
-				model                   = "chickeneggyellow.s3o",
-				range                   = 1000,
-				reloadtime              = 3,
-				smokeTrail              = true,
-				startVelocity           = 271,
-				texture1                = "",
-				texture2                = "sporetrail",
-				tolerance               = 10000,
-				tracks                  = true,
-				trajectoryHeight        = 0.5,
-				turnRate                = 20000,
-				turret                  = true,
-				waterweapon             = true,
-				--weaponAcceleration      = 100,
-				weaponType              = "MissileLauncher",
-				weaponVelocity          = 271,
-				wobble                  = 48000,
-			},
 			FIREGOO    = {
 				name                    = "Napalm Goo",
 				areaOfEffect            = 256,
@@ -206,27 +145,27 @@ return { chickenlandqueen = {
 			},
 			SPORES = {
 				name                    = "Explosive Spores",
-				areaOfEffect            = 96,
+				areaOfEffect            = 192,
 				avoidFriendly           = false,
 				burst                   = 24,
 				burstrate               = 1/30,
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
-				
+
 				customParams            = {
 					light_radius = 0,
 					armorpiercing = 0.4,
 					combatrange = 750,
 				},
-				
+
 				damage                  = {
-					default = 100,
-					planes  = 100,
+					default = 400,
+					planes  = 400,
 				},
 
 				dance                   = 90,
-				explosionGenerator      = "custom:goo_v2_red",
+				explosionGenerator      = "custom:goo_v2_green_large",
 				fireStarter             = 0,
 				flightTime              = 5,
 				groundbounce            = 1,
@@ -234,13 +173,13 @@ return { chickenlandqueen = {
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
-				model                   = "chickeneggyellow.s3o",
+				model                   = "chickenegggreen_big.s3o",
 				range                   = 1000,
 				reloadtime              = 3,
 				smokeTrail              = true,
 				startVelocity           = 271,
 				texture1                = "",
-				texture2                = "sporetrail",
+				texture2                = "sporetrail2",
 				tolerance               = 10000,
 				tracks                  = true,
 				trajectoryHeight        = 0.5,
@@ -254,27 +193,27 @@ return { chickenlandqueen = {
 			},
 			HIGHSPORES = {
 				name                    = "Explosive Spores (alt)",
-				areaOfEffect            = 96,
+				areaOfEffect            = 192,
 				avoidFriendly           = false,
 				burst                   = 32,
 				burstrate               = 1/30,
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
-				
+
 				customParams            = {
 					light_radius = 0,
 					armorpiercing = 0.4,
 					combatrange = 750,
 				},
-				
+
 				damage                  = {
-					default = 100,
-					planes  = 100,
+					default = 400,
+					planes  = 400,
 				},
 
 				dance                   = 90,
-				explosionGenerator      = "custom:goo_v2_red",
+				explosionGenerator      = "custom:goo_v2_green_large",
 				fireStarter             = 0,
 				flightTime              = 5,
 				groundbounce            = 1,
@@ -282,13 +221,13 @@ return { chickenlandqueen = {
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
 				interceptedByShieldType = 2,
-				model                   = "chickeneggyellow.s3o",
+				model                   = "chickenegggreen_big.s3o",
 				range                   = 1000,
 				reloadtime              = 4,
 				smokeTrail              = true,
 				startVelocity           = 271,
 				texture1                = "",
-				texture2                = "sporetrail",
+				texture2                = "sporetrail2",
 				tolerance               = 10000,
 				tracks                  = true,
 				trajectoryHeight        = 1.5,
@@ -304,22 +243,22 @@ return { chickenlandqueen = {
 				name                    = "Anti-Air Spores",
 				areaOfEffect            = 200,
 				avoidFriendly           = false,
-				burst                   = 20,
+				burst                   = 30,
 				burstrate               = 2/30,
 				canAttackGround         = false,
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
-				
+
 				customParams            = {
 					light_radius = 0,
 					armorpiercing = 0.4,
 					isaa = ">w<",
 					combatrange = 750,
 				},
-				
+
 				damage                  = {
-					default  = 800,
+					default  = 1200,
 				},
 
 				dance                   = 120,

@@ -26,6 +26,7 @@ local firepoint = piece 'firepoint'
 local rad = math.rad
 local pi = math.pi
 local bMoving, gun_1
+local permitSalvo = false
 
 -- Signal definitions
 local SIG_AIM = 2
@@ -172,6 +173,7 @@ end
 local function ShotThread()
 	Signal(SIG_SHOT)
 	SetSignalMask(SIG_SHOT)
+	permitSalvo = true
 	Turn(lsack, y_axis, rad(30), rad(200))
 	Turn(rsack, y_axis, rad(-30), rad(200))
 	Move(rsack, x_axis, 1, 9)
@@ -181,6 +183,8 @@ local function ShotThread()
 	Turn(rsack, y_axis, 0, rad(20))
 	Move(rsack, x_axis, -0, 0.3)
 	Move(lsack, x_axis, -0, 0.3)
+	Sleep(100)
+	permitSalvo = false
 end
 
 function script.StartMoving()
@@ -208,6 +212,10 @@ function script.QueryWeapon(num)
 end
 
 function script.AimWeapon(num, heading, pitch)
+	if num ~= 1 then
+		return true
+	end
+
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
 	if heading > pi then
@@ -222,8 +230,14 @@ function script.AimWeapon(num, heading, pitch)
 	return true
 end
 	
-function script.Shot()
-	StartThread(ShotThread)
+function script.FireWeapon(num)
+	if num == 1 then
+		StartThread(ShotThread)
+	end
+end
+
+function script.BlockShot(num, targetUnitID, userTarget)
+	return (num ~= 1 and (not permitSalvo))
 end
 	
 

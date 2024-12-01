@@ -6,9 +6,9 @@
 function gadget:GetInfo()
 	return {
 		name     = "Chicken Handler",
-		desc     = "JHandes the chicken gamemode chickens",
+		desc     = "Handes the chicken gamemode chickens",
 		author   = "quantum, improved by KingRaptor and Stuffphoton",
-		date     = "April 29, 2008", --last update: 2023 August 21st
+		date     = "April 29, 2008", --last update: 2024 Nov 27st
 		license  = "GNU GPL, v2 or later",
 		layer    = 0,
 		enabled  = true --	loaded by default?
@@ -44,6 +44,7 @@ local CMD_FIGHT				= CMD.FIGHT
 local CMD_ATTACK			= CMD.ATTACK
 local CMD_STOP				= CMD.STOP
 local spEcho				= Spring.Echo
+local spLog                 = Spring.Log
 local spGiveOrderToUnit		= Spring.GiveOrderToUnit
 local spGetTeamUnits		= Spring.GetTeamUnits
 local spGetUnitTeam			= Spring.GetUnitTeam
@@ -55,24 +56,22 @@ local spGetUnitPosition		= Spring.GetUnitPosition
 local spGetUnitDefID		= Spring.GetUnitDefID
 local spGetUnitSeparation	= Spring.GetUnitSeparation
 local spGetGameFrame		= Spring.GetGameFrame
+local spGetUnitHealth		= Spring.GetUnitHealth
 local spSetUnitHealth		= Spring.SetUnitHealth
-local spSetUnitMaxHealth		= Spring.SetUnitMaxHealth
+local spSetUnitMaxHealth	= Spring.SetUnitMaxHealth
 local spGetUnitsInCylinder	= Spring.GetUnitsInCylinder
 local spValidUnitID			= Spring.ValidUnitID
-local spGetTeamResources			= Spring.GetTeamResources
-local spSetTeamResource			= Spring.SetTeamResource
-local spGetTeamRulesParam           = Spring.GetTeamRulesParam
-local spGetUnitCommands             = Spring.GetUnitCommands
-local spSetGameRulesParam      = Spring.SetGameRulesParam
-local spDestroyUnit       = Spring.DestroyUnit
-local GetUnitCost  = Spring.Utilities.GetUnitCost
-local spSetUnitCosts = Spring.SetUnitCosts
+local spGetTeamResources	= Spring.GetTeamResources
+local spGetTeamRulesParam   = Spring.GetTeamRulesParam
+local spGetUnitCommands     = Spring.GetUnitCommands
+local spSetGameRulesParam   = Spring.SetGameRulesParam
+local spDestroyUnit         = Spring.DestroyUnit
+local GetUnitCost           = Spring.Utilities.GetUnitCost
+local spSetUnitCosts        = Spring.SetUnitCosts
 local spSetUnitWeaponDamages = Spring.SetUnitWeaponDamages
-local spSetUnitWeaponState = Spring.SetUnitWeaponState
+local spSetUnitWeaponState  = Spring.SetUnitWeaponState
 
-local echo = Spring.Echo
-
-local chickend 
+local chickend
 
 local mexesUnitDefID = {}
 local mexes = {}
@@ -83,9 +82,9 @@ for i = 1, #UnitDefs do
 		mexes[ud.name] = true
 	end
 end
- 
+
 local debugMode = false    -- prints debug info to the console
-local tachyonCandy = false -- every 60 seconds, half an hour passes
+local tachyonChicken = false -- accelerates chickens """slightly"""
 local section = 'chicken_handler.lua'
 
 --------------------------------------------------------------------------------
@@ -95,21 +94,21 @@ local CMD_MOVESTATE_ROAM = CMD.MOVESTATE_ROAM
 local maxTries		= 600
 local propagateTries	= 400
 local maxTriesSmall	= 100
-local spawnDeviation   = 0.15
 local lava = (Game.waterDamage > 0)
 local eggs = tobool(Spring.GetModOptions().eggs)
 local pvp = false
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local luaAI
+local luaAI = 0
 local chickenTeamID
 local computerTeams	= {}
 local humanTeams	= {}
+local numHumanTeams = 0
 local gameFrameOffset = 0
 
 local time = 1
-local chickenMult = 1
+local waveCostComponents = 1
 local hyperevo = 1
 local defenseHyperevo = 1
 local menaceHyperevo = 1
@@ -125,13 +124,15 @@ local data = {
 	burrowsQuadfield = Spring.Utilities.QuadField(250),
 	chickens = {},
 	menaces = {},
-	
+
 	waveSchedule = math.huge,	-- wave spawns when this gameframe is reached
 	graceSchedule = math.huge,
 	waveActive = false,
 	waveNumber = 0,
 	waveChickens = {{"chicken", 1}},
-	
+	waveTotalCost = 20,
+	waveTotalWeight = 1,
+
 	eggDecay = {},	-- indexed by featureID, value = game second
 	targets = {},	--indexed by unitID, value = teamID
 	menacePool = {},
@@ -143,26 +144,29 @@ local data = {
 	nextUnlockTime = 0,
 
 	cookery = 0,
-	strength = 1,
+	strength = 0.5,
 	wrath = 0,
-	
+
 	endgame = false,
 	victory = false,
 	endMenaceNum = 0,
-	
+
 	morphFrame = -1,
 	morphed = false,
 
 	nextCookery = false,
 	cookeryWork = 0,
 	cookeryDelay = 0,
-	
+
 	angerTime = 1,
 	angerTimeBonus = 1,
 	techTime = 1,
 
 	bonusScore = 0,
 	totalScore = 0,
+	currentAward = 0,
+
+	gameoverSchedule = 1000000000
 }
 
 _G.data = data
@@ -180,8 +184,6 @@ do -- load config file
 	setfenv(chunk, gadget)
 	chunk()
 end
-
-echo("burrowName: "..burrowName)
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -230,16 +232,27 @@ local function QTimeLerp(lmin, lmax)
 end
 
 local hyperevoFactor = 350000
-local function updateHyperevo()
-	local techmult = data.techTime--min(tt^1.34, 34*tt+420)
-	chickenMult = techmult * (1 + data.wrath/2) * max(0.5, data.strength) * sqrt(waveSizeMult)
-	hyperevo = max(chickenMult/hyperevoFactor, 1)
-	chickenMult = min(chickenMult, hyperevoFactor)
+local function UpdateHyperevo()
+	local costComponents = {}
+	data.waveCostComponents = costComponents
+	--costComponents.time = (waveSizePerTime) * (((time) ^ 2.5) * sqrt(waveSizeMult)) * (0.5 + #data.waveChickens/2) * 0.00003
+	costComponents.time = (chickenWaveExponent ^ (data.waveNumber - 1)) * baseWaveSize * sqrt(waveSizeMult)
+	costComponents.value = min(totalhumanValue, 1000000) * waveSizePerValue
+	costComponents.base = waveSizePerPlayer * numHumanTeams + waveSizeBase
+	costComponents.mult = sqrt(waveSizeMult) * max(0.5, data.strength)
+	costComponents.wrath = (1 + data.wrath/2)
+
+	costComponents.total = costComponents.time + costComponents.value + costComponents.base
+	costComponents.total = costComponents.total * costComponents.mult * costComponents.wrath
+
+	costComponents.max = data.waveTotalCost * 40 / #data.waveChickens
+	hyperevo = max(costComponents.total / costComponents.max, 1) * baseHyperEvo
+	costComponents.total = min(costComponents.total, costComponents.max)
+
 	spSetGameRulesParam("chicken_hyperevo", hyperevo)
 
-	baseHyperevo = max(techmult/hyperevoFactor, 1)
-	defenseHyperevo = 2^min(data.waveNumber * defenseEvoMult * 0.6, 5) * baseHyperevo / max(0.5, data.strength)
-	menaceHyperevo = eular^((min(data.waveNumber - menaceStartWave, 5) * menaceScalingMult + menaceEvoMod)/ 2) * baseHyperevo
+	defenseHyperevo = (defenseWaveExponent ^ min(data.waveNumber * defenseEvoMult, 5)) * hyperevo / max(0.5, data.strength)
+	menaceHyperevo = eular ^ ((min(menaceEvoSpeedMod * (data.waveNumber - menaceStartWave), 5) * menaceScalingMult + menaceEvoMod)/ 2)
 	--spEcho("hyperuwu", hyperevo, defenseHyperevo, menaceHyperevo, queenHyperevo)
 end
 
@@ -251,50 +264,61 @@ end
 
 local function getDifficaulty(str)
 	local i
-	for i=1, #modes do
-		echo("checking", modes[i], string.find(str, modes[i]))
-		if string.find(str, modes[i]) then
+	for i=1, #idToDifficulty do
+		if string.find(str, idToDifficulty[i]) then
 			return i
 		end
 	end
-	return 0
+	return 4 --default to normal
 end
+
+
+
+local modoptions = Spring.GetModOptions() or {}
+if modoptions.chickengaiaai and difficultyToId[modoptions.chickengaiaai] then
+	luaAI = difficultyToId[modoptions.chickengaiaai]
+	chickenTeamID = Spring.GetGaiaTeamID()
+end
+
 
 
 if (not gameMode) then -- set human and computer teams
 	humanTeams[0]		= true
+	numHumanTeams       = 1
 	computerTeams[1]	= true
 	chickenTeamID		= 1
-	luaAI			= 0 --defaultDifficulty
+	luaAI			    = 4 -- Normal
 else
 	local teams = Spring.GetTeamList()
-	local lastChickenTeam = nil
 	-- the problem is with human controlled chickens, otherwise it counts them as robot-players and difficulty increases very much
 	-- probably, ideally this needs to be taught to differentiate between human chickens and human robots...
 	for _, teamID in pairs(teams) do
 		local _, teamLuaAI = Spring.GetAIInfo(teamID)
 		if (teamLuaAI and teamLuaAI ~= "" and string.find(string.lower(teamLuaAI), "chicken")) then
-			chickenTeamID = teamID
-			local difficulty = getDifficaulty(teamLuaAI) or 4 -- default to normal
-			if difficulty > 0 then
-				luaAI = math.max(difficulty, (luaAI or 0))
+			local difficulty = getDifficaulty(teamLuaAI)
+			if luaAI < difficulty then
+				luaAI = difficulty
+				chickenTeamID = teamID
 			end
 		end
 	end
 	if chickenTeamID then
-		spEcho("Chicken Detected on team "..chickenTeamID.." with difficaulty "..luaAI)
-	end
-	for _, teamID in pairs(teams) do
-		if chickenTeamID and Spring.AreTeamsAllied(teamID, chickenTeamID) then
-			computerTeams[teamID] = true
-		else
-			humanTeams[teamID] = true
+		spLog(section, LOG.NOTICE, "Chicken Detected on team "..chickenTeamID.." with difficaulty "..luaAI)
+		spSetGameRulesParam("chicken_chickenTeamID", chickenTeamID)
+		for _, teamID in pairs(teams) do
+			if Spring.AreTeamsAllied(teamID, chickenTeamID) then
+				computerTeams[teamID] = true
+			else
+				humanTeams[teamID] = true
+				if teamID ~= Spring.GetGaiaTeamID() then
+					numHumanTeams = numHumanTeams + 1
+				end
+			end
 		end
 	end
-	if chickenTeamID then
-		spSetGameRulesParam("chicken_chickenTeamID", chickenTeamID)
-	end
 end
+
+spLog(section, LOG.NOTICE, "Detected ".. numHumanTeams .. " human teams")
 
 if (not luaAI) or (luaAI == 0) then
 	return false	-- nothing to do here, go home
@@ -306,13 +330,17 @@ local gaiaTeamID = Spring.GetGaiaTeamID()
 local _, _, _, _, _, chickenAllyTeamID = Spring.GetTeamInfo(chickenTeamID)
 computerTeams[gaiaTeamID] = nil
 humanTeams[gaiaTeamID] = nil
+computerTeams[chickenTeamID] = true
 
 local humanTeamsOrdered = {}
-for id,_ in ipairs(humanTeams) do humanTeamsOrdered[#humanTeamsOrdered+1] = id end
-for i=1, #humanTeamsOrdered do
-	if humanTeamsOrdered[i+1] and not Spring.AreTeamsAllied(humanTeamsOrdered[i], humanTeamsOrdered[i+1]) then
+for id,_ in pairs(humanTeams) do
+	humanTeamsOrdered[#humanTeamsOrdered+1] = id
+end
+
+for i=1, #humanTeamsOrdered-1 do
+	if not Spring.AreTeamsAllied(humanTeamsOrdered[i], humanTeamsOrdered[i+1]) then
 		pvp = true
-		Spring.Log(gadget:GetInfo().name, LOG.INFO, "Chicken: PvP mode detected")
+		spLog(gadget:GetInfo().name, LOG.NOTICE, "Chicken: PvP mode detected")
 		break
 	end
 end
@@ -332,14 +360,17 @@ local function SetGlobals(difficulty)
 	gadget.difficulties = nil
 end
 
-difficulty = modes[luaAI]
-SetGlobals(modes[luaAI]) -- set difficulty
+SetGlobals(idToDifficulty[luaAI]) -- set difficulty
 
 queenTime = queenTime * 30
+chickenSpawnRate = gracePeriod + wavePeriod
+queenTimePerBurrow = queenTimePerBurrow * 30
+chickenTechTime = chickenTechTime * 30
 strengthPerSecond = strengthPerSecond
 chickenSpawnRate = max(chickenSpawnRate, gracePeriod + 60)
+menaceBuildSpeed = 1 / 30 / ((chickenSpawnRate - gracePeriod) * 0.1 + gracePeriod)
 
-echo("Chicken configured for "..tostring(difficulty).." ("..luaAI..")v difficaulty")
+spEcho("Chicken configured for "..tostring(idToDifficulty[luaAI]).." ("..luaAI..") difficaulty")
 
 local function DisableBuildButtons(unitID, buildNames)
 	for _, unitName in ipairs(buildNames) do
@@ -353,21 +384,6 @@ local function DisableBuildButtons(unitID, buildNames)
 	end
 end
 
-local modoptions = Spring.GetModOptions() or {}
---waveSizeMult = waveSizeMult * (modoptions.wavesizemult or 1)
---techCostMult = techCostMult * (modoptions.techtimemult or 1)
-menaceBuildSpeed = 1 / 30 / ((chickenSpawnRate - gracePeriod) * 0.1 + gracePeriod)
-
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
---
--- Game Rules
---
-
-
-local difficulty = luaAI
-
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --
@@ -376,27 +392,24 @@ local difficulty = luaAI
 
 local function KillAllComputerUnits()
 	data.victory = true
-	spSetGameRulesParam("chicken_award", 1)
 
-	local ggDestroyAlliance = GG.DestroyAlliance
-	if not ggDestroyAlliance then
-		return
+	for unitID, _ in pairs(data.chickens) do
+		spDestroyUnit(unitID, true)
+	end
+	for unitID, _ in pairs(data.menaces) do
+		spDestroyUnit(unitID, true)
 	end
 
-	
-	local allyteamsToKill = {}
-	local count = 0
-	local spGetTeamInfo = Spring.GetTeamInfo
-	for teamID in pairs(computerTeams) do
-		local _, _, _, _, _, allyTeam = spGetTeamInfo(teamID, false)
-		count = count + 1
-		allyteamsToKill[count] = allyTeam
-	end
+	data.currentAward = math.max(data.currentAward, 2)
+	spSetGameRulesParam("chicken_award", data.currentAward)
 
-	for i = 1, count do
-		-- not destroyed directly in the previous loop
-		-- because removal breaks the pairs iterator
-		ggDestroyAlliance(allyteamsToKill[i])
+	spEcho("Chicken resigning")
+	_G.chickenEventArgs = {type="resign"}
+	SendToUnsynced("ChickenEvent")
+	_G.chickenEventArgs = nil
+
+	if chickenTeamID ~= Spring.GetGaiaTeamID() then
+		data.gameoverSchedule = time + 90
 	end
 end
 
@@ -469,16 +482,16 @@ local function UpdateBurrowTarget(burrowID, targetArg)
 			targetData.targetID = targetArg
 		end
 	end
-	--echo("Final selected target ID: "..data.targetID)
+	--spEcho("Final selected target ID: "..data.targetID)
 	local validUnitID = spValidUnitID(data.targetID) --in case multiple UnitDestroyed() is called at same frame and burrow happen to choose a target before all Destroyed unit is registered.
 	if validUnitID and targetData.targetID ~= oldTarget then
 		targetData.targetTeam = spGetUnitTeam(data.targets[data.targetID])
 		--spGiveOrderToUnit(burrowID, CMD_ATTACK, data.targetID, 0)
-		--echo("Target for burrow ID ".. burrowID .." updated to target ID " .. data.targetID)
+		--spEcho("Target for burrow ID ".. burrowID .." updated to target ID " .. data.targetID)
 	elseif not validUnitID then
 		targetData.targetID = nil
 		--spGiveOrderToUnit(burrowID, CMD_STOP, 0, 0)
-		--echo("Target for burrow ID ".. burrowID .." lost, waiting")
+		--spEcho("Target for burrow ID ".. burrowID .." lost, waiting")
 	end
 end
 
@@ -526,7 +539,7 @@ end
 -- Unused for now
 local colours = {
 	{1, 0.1, 0.1}, -- Hunter-Killer / x3 dmg, x3 hp
-	{0.9, 0.3, 0}, -- 
+	{0.9, 0.3, 0}, --
 	{0.7, 0.7, 0}, -- Hypersonic    / x3 speed x3 rof
 	{0.1, 1, 0.1}, -- Greater       / x10 hp
 	{0.1, 0.1, 1}, --               / x2 range
@@ -535,7 +548,7 @@ local colours = {
 local function applyHyperevo(unitName, evo, minTier, maxTier, round)
 	local tier = math.log(evo, 2.718281828) * 2
 	tier = max(min(tier, maxTier), minTier)
-	if round then 
+	if round then
 		tier = floor(tier + 0.5)
 	else
 		tier = floor(tier + random())
@@ -572,7 +585,7 @@ local function createWithHyperevo(unitName, evo, ...)
 	local unitDef = UnitDefNames[unitName]
 	local unitID = spCreateUnit(unitName, ...)
 	if not unitID then
-		Spring.Log(section, LOG.ERROR, "createWithHyperevo: Failed to create unit " .. unitName .. " with evo " .. evo)
+		spLog(section, LOG.ERROR, "createWithHyperevo: Failed to create unit " .. unitName .. " with evo " .. evo)
 		return unitID
 	end
 	if not defwise then
@@ -632,19 +645,29 @@ local function ChooseChicken(units)
 	chix[#chix+1] = Choose1Chicken(techs, techNum,   units, picked, cost)
 	chix[#chix+1] = Choose1Chicken(techs, techNum-1, units, picked, cost)
 	chix[#chix+1] = Choose1Chicken(techs, techNum-2, units, picked, cost)
-	spEcho("Testing chicken Count: "..#chix)
-	if #chix > 2 then
-		local maxNum, maxIndex, i = 0, 1
-		for i=0, 2 do
-			if SetCount(techs[techNum - i] or {}) > maxNum then
-				maxNum = SetCount(techs[techNum - i])
-				maxIndex = techNum - i
-			end
-		end
-		chix[#chix+1] = Choose1Chicken(techs, maxIndex,  units, picked, cost)
-	end
+-- 	if #chix > 2 then
+-- 		local maxNum, maxIndex, i = 0, 1
+-- 		for i=0, 2 do
+-- 			if SetCount(techs[techNum - i] or {}) > maxNum then
+-- 				maxNum = SetCount(techs[techNum - i])
+-- 				maxIndex = techNum - i
+-- 			end
+-- 		end
+-- 		chix[#chix+1] = Choose1Chicken(techs, maxIndex,  units, picked, cost)
+-- 	end
 
 	return chix
+end
+
+local function ChooseWaveChickens(units)
+	data.waveChickens = ChooseChicken(units)
+	local totalPower, totalWeight = 0, 0
+	for _, entry in pairs(data.waveChickens) do
+		totalPower = totalPower +  chickenUnionNames[entry[1]].spawncost * entry[2]
+		totalWeight = totalWeight +  entry[2]
+	end
+	data.waveTotalCost = totalPower
+	data.waveTotalWeight = totalWeight
 end
 
 local function SpawnAround(unitName, evo, bx, by, bz, spawnNumber, target, registar)
@@ -670,7 +693,7 @@ end
 
 local function SpawnChicken(burrowID, spawnNumber, chickenName, chickenEvo)
 	if Spring.IsGameOver() then return end
-	
+
 	local bx, by, bz = spGetUnitPosition(burrowID)
 	if (not bx or not by or not bz) then
 		return
@@ -698,7 +721,7 @@ local function SpawnTurrets(burrowID)
 	local neighborCount = #data.burrowsQuadfield:GetNeighbors(burrowID)
 	local wantedTurrets = max(floor(burrowData.defenseDelta + sqrt(min(data.waveNumber, 8)) / (neighborCount + 1) * defenseMult * 2), 1)
 	if wantedTurrets > burrowData.defenses then
-		local i 
+		local i
 		local bx, by, bz = spGetUnitPosition(burrowID)
 		for i=burrowData.defenses, wantedTurrets-1 do
 			SpawnAround(chicken_turret, defenseHyperevo, bx, by, bz, 1)
@@ -710,10 +733,10 @@ end
 local function SpawnBurrow(number)
 	if (data.victory or data.endgame) then return end
 	if Spring.IsGameOver() then return end
-	
+
 	local t		 = spGetGameSeconds()
 	local unitID
-		
+
 	for i=1, (number or 1) do
 		local x, y, z
 		local tries = 0
@@ -743,7 +766,7 @@ local function SpawnBurrow(number)
 						break
 					end
 				end
-			
+
 				for j=1, #proximity, 1 do
 					if (spGetUnitTeam(proximity[j]) ~= chickenTeamID) then
 						humanUnitsInProximity = true
@@ -758,7 +781,7 @@ local function SpawnBurrow(number)
 					end
 					data.burrowsQuadfield:Remove(-1)
 				end
-			
+
 				if (humanUnitsInProximity or not humanUnitsInVicinity) and not propagate then
 					blocking = 1
 				end
@@ -768,7 +791,7 @@ local function SpawnBurrow(number)
 			end
 		until (blocking == 2 or tries > maxTries)
 
-		spEcho("[chicken_handler.lua] Spawning roost at ("..x..", "..y..", "..z..") after "..tries.." tries. humanUnitsInProximity: "..tostring(humanUnitsInProximity)..", humanUnitsInVicinity: "..tostring(humanUnitsInVicinity)..", propagate: "..tostring(propagate)..", minDist: "..tostring(minDist))
+		--spEcho("[chicken_handler.lua] Spawning roost at ("..x..", "..y..", "..z..") after "..tries.." tries. humanUnitsInProximity: "..tostring(humanUnitsInProximity)..", humanUnitsInVicinity: "..tostring(humanUnitsInVicinity)..", propagate: "..tostring(propagate)..", minDist: "..tostring(minDist))
 
 		x, z = clampPos(x, z)
 		unitID = createWithHyperevo(burrowName, defenseHyperevo, x, y, z, "n", chickenTeamID)
@@ -792,7 +815,7 @@ local function SpawnUnit(unitName, number, minDist, maxDist, target)
 	local x, y, z
 	local tries = 0
 	local block = false
-	
+
 	repeat
 		if not target then
 			x = random(spawnSquare, Game.mapSizeX - spawnSquare)
@@ -804,7 +827,7 @@ local function SpawnUnit(unitName, number, minDist, maxDist, target)
 		y = Spring.GetGroundHeight(x, z)
 		tries = tries + 1
 		block = false
-		
+
 		local proximity = spGetUnitsInCylinder(x, z, minDist)
 		local vicinity = spGetUnitsInCylinder(x, z, maxDist)
 		local humanUnitsInVicinity = false
@@ -815,20 +838,20 @@ local function SpawnUnit(unitName, number, minDist, maxDist, target)
 				break
 			end
 		end
-		
+
 		for i=1, #proximity, 1 do
 			if (spGetUnitTeam(proximity[i]) ~= chickenTeamID) then
 				humanUnitsInProximity = true
 				break
 			end
 		end
-		
+
 		if (humanUnitsInProximity or not humanUnitsInVicinity) then
 			block = true
 			minDist = minDist * 0.9997
 		end
 	until (not spGetGroundBlocked(x, z) or (not block) or (tries > number + maxTries*2))
-	
+
 	for i=1, (number or 1) do
 		sx, sz = clampPos(x + random(-spawnSquare, spawnSquare), z + random(-spawnSquare, spawnSquare))
 		local unitID = spCreateUnit(unitName, sx, y, sz, "n", chickenTeamID)
@@ -850,7 +873,7 @@ local function SpawnQueen()
 
 	local validBurrows = {}
 	for id, data in pairs(data.burrows) do
-		validBurrows[#validBurrows+1] = id 
+		validBurrows[#validBurrows+1] = id
 	end
 	repeat
 		x, _, z = spGetUnitPosition(validBurrows[random(1, #validBurrows)])
@@ -870,18 +893,19 @@ local function SpawnQueen()
 			end
 		end
 	until (blocking == 2 or tries > maxTries)
+	local queenEvoMod = math.floor(menaceEvoMod + math.max(2 - menaceStartWave, 0))
 	if menaceEvoMod ~= 0 then
 		queenName = queenName.."_"..menaceEvoMod
 		queenMorphName = queenMorphName.."_"..menaceEvoMod
 	end
 	x, z = clampPos(x, z)
 	local unitID = spCreateUnit(queenName, x, y, z, "n", chickenTeamID)
-	
+
 	if queenMorphName ~= '' then SetMorphFrame() end
 	return unitID
 end
 
-local function updateMenace(menaceID)
+local function MenaceFastUpdate(menaceID)
 	local menaceData = data.menaces[menaceID]
 	local menaceDef = menaceData.def
 
@@ -907,13 +931,44 @@ local function updateMenace(menaceID)
 	return false
 end
 
+
+local function MenaceSlowUpdate(menaceID)
+	local menaceData = data.menaces[menaceID]
+	local menaceDef = menaceData.def
+
+	if menaceData.building then
+		return
+	end
+
+	if menaceDef.spawns then
+		local spawnMult = menaceDef.spawns
+		if menaceDef.scaleSpawnByDamage then
+			local hp, maxHp = spGetUnitHealth(menaceID)
+			spawnMult = spawnMult * (1 - (hp / maxHp))
+		end
+
+		local toSpawnCost = data.waveCostComponents.total * spawnMult / 3 -- Divide by 3 because this function runs 3 times more often than wave()
+		local burrowSpawnCost = toSpawnCost / data.waveTotalWeight
+
+		for i, entry in pairs(data.waveChickens) do
+			local spawns = burrowSpawnCost / chickenUnionNames[entry[1]].spawncost * entry[2]
+			local chixCount = floor(spawns + random())
+			if chixCount > 0.1 then
+				SpawnChicken(menaceID, chixCount, entry[1], hyperevo)
+			end
+		end
+	end
+
+	return false
+end
+
 local function SpawnMenace()
 	local x, y, z
 	local tries = 0
 
 	local validBurrows = {}
 	for id, data in pairs(data.burrows) do
-		validBurrows[#validBurrows+1] = id 
+		validBurrows[#validBurrows+1] = id
 	end
 	local menacePool = data.menacePool
 	if #menacePool == 0 then
@@ -959,7 +1014,7 @@ local function SpawnMenace()
 	else
 		unitID = spCreateUnit(finishedName, x, y, z, "n", chickenTeamID, true)
 	end
-	
+
 	if unitID then
 		spSetUnitHealth(unitID, math.huge)
 
@@ -970,14 +1025,14 @@ local function SpawnMenace()
 			finishedName = finishedName,
 			shield = {}
 		}
-		
+
 		spGiveOrderToUnit(unitID, CMD.MOVE_STATE, CMD_MOVESTATE_ROAM, 0)
 
-		SpawnAround(chicken_turret, max(menaceHyperevo*4, defenseHyperevo), x, y, z, 3)
+		SpawnAround(chicken_turret, defenseHyperevo, x, y, z, 3)
 		if not cocoonMode then
 			SpawnAround(chicken_shield, menaceHyperevo, x, y, z, 1, nil, data.menaces[unitID].shield)
 		end
-		updateMenace(unitID)
+		MenaceFastUpdate(unitID)
 	end
 end
 
@@ -986,16 +1041,19 @@ local function UpdateTech()
 	if data.techTime < data.nextUnlockTime then
 		return
 	end
-	data.nextUnlockTime = data.nextUnlockTime + queenTime / chicken_totaltech * techCostMult
+	data.nextUnlockTime = data.nextUnlockTime + chickenTechTime * techCostMult
 	data.unlockedCount = data.unlockedCount + 1
 	if stockChickens[data.unlockedCount] then
 		data.stockChicken = stockChickens[data.unlockedCount]
 		return
-	end		
+	end
 	local techs = data.unlockedChickens
 	local tier = #techs
 	if tier == 0 or (chickenTechTree[tier] and (SetCount(techs[tier]) >= chickenTechTree[tier].max)) then
 		tier = tier + 1
+		if not chickenTechTree[tier] then
+			return
+		end
 		techs[tier] = {}
 	end
 	if not chickenTechTree[tier] then
@@ -1013,6 +1071,7 @@ local function UpdateTech()
 	chix = allowed[random(#allowed)]
 	ttechs[chix] = true
 	data.unlockedChickensUnion[chix] = true
+	spLog(section, LOG.NOTICE, "Chickens unlocked "..chix.." as technology number "..data.unlockedCount.." , current techTime: "..data.techTime)
 
 	if data.techTime > data.nextUnlockTime then
 		UpdateTech()
@@ -1027,52 +1086,20 @@ local function Wave(waveMult)
 
 	local chickens = data.waveChickens
 	local burrowCount = SetCount(data.burrows)
-	local waveCost = (0.003*sqrt(time))*chickenMult*(0.5+#chickens/2) * 0.01
-		+ min(totalhumanValue, 1000000)*waveSizePerValue * 0.01
-		+ waveSizePerPlayer*#humanTeams
-	waveCost = waveCost * waveMult * sqrt(waveSizeMult)
-	
-	local totalPower = 0
-	for _, entry in pairs(chickens) do
-		--totalPower = totalPower +  UnitDefNames[entry[1]].power * entry[2]
-		totalPower = totalPower +  UnitDefNames[entry[1]].buildTime * entry[2]
-	end
-	local totalSpawns = min(waveCost/totalPower + 0.01/#chickens, burrowCount * waveSizeMult * 5)
-	
-	local spawned = {}
-	for i, entry in pairs(chickens) do
-		spawned[i] = {entry[1], 0}
-	end
-	
-	for menaceID, menaceData in pairs(data.menaces) do
-		if not menaceData.building and menaceData.def.spawns then
-			local spawnMult = menaceData.def.spawns
-			for i, entry in pairs(chickens) do
-				local chixCount = floor(totalSpawns*entry[2]*(1-spawnDeviation+2*spawnDeviation*random())*spawnMult + random())
-				if chixCount > 0.1 then
-					SpawnChicken(menaceID, chixCount, entry[1], hyperevo)
-					spawned[i][2] = spawned[i][2] + chixCount
-				end
-			end
-		end
-	end
+	local waveCost = data.waveCostComponents.total
+	waveCost = waveCost * waveMult
 
-	local burrowSpawns = totalSpawns / burrowCount
- 
+	local burrowSpawnCost = waveCost / data.waveTotalWeight / burrowCount
+
 	for i, entry in pairs(chickens) do
-		local actualChixCount = 0
-		local spawns = burrowSpawns * entry[2] * (1 - spawnDeviation + 2 *spawnDeviation*random())
+		local spawns = burrowSpawnCost / chickenUnionNames[entry[1]].spawncost * entry[2]
 		for burrowID in pairs(data.burrows) do
 			local chixCount = floor(spawns + random())
 			if chixCount > 0.1 then
 				SpawnChicken(burrowID, chixCount, entry[1], hyperevo)
-				actualChixCount = actualChixCount + chixCount
 			end
 		end
-		spawned[i][2] = spawned[i][2] + actualChixCount
 	end
-	
-	return spawned
 end
 
 
@@ -1086,10 +1113,18 @@ local function waveStart()
 	spSetGameRulesParam("chicken_waveNumber", data.waveNumber)
 	spSetGameRulesParam("chicken_waveActive", 1)
 
-	
-	if data.endgame then
+	UpdateHyperevo()
+
+	spLog(section, LOG.NOTICE, "Wave "..data.waveNumber.." Started. "..Spring.Utilities.TableToString(data.waveCostComponents, "Wave cost breakdown for current time "))
+
+	if data.waveNumber > 2 then
+		data.currentAward = math.max(data.currentAward, 1)
+		spSetGameRulesParam("chicken_award", data.currentAward)
+	end
+
+	if data.endgame and not endlessMode then
 		UpdateTech()
-		data.waveChickens = ChooseChicken(nil)
+		ChooseWaveChickens(nil)
 		spSetGameRulesParam("chicken_waveActive", 0)
 	end
 
@@ -1124,24 +1159,29 @@ local function waveEnd()
 		SpawnBurrow(burrowDiff)
 	end
 	if data.waveNumber >= menaceStartWave then
-		local wantedMenaces = min(menaceStartNum + math.floor(data.waveNumber / menaceStartWave - 0.4), menaceMaxNum)
+		local wantedMenaces = min(1 + math.floor(data.waveNumber / menaceStartWave - 0.4), menaceMaxNum)
 		local i
 		for i=1, wantedMenaces do
 			SpawnMenace()
 		end
 	end
-	if data.endgame then
+
+	if data.endgame and not endlessMode then
 		return
 	end
-	
+
 	UpdateTech()
-	data.waveChickens = ChooseChicken(nil)
+	ChooseWaveChickens(nil)
 	spSetGameRulesParam("chicken_waveActive", 0)
-	
+
 	_G.chickenEventArgs = {type="waveEnd", waveNumber = data.waveNumber, wave = data.waveChickens}
 	SendToUnsynced("ChickenEvent")
 	_G.chickenEventArgs = nil
-	
+
+	if data.endgame or speedChickens then
+		return
+	end
+
 	for unitID, _ in pairs(data.chickens) do
 		spDestroyUnit(unitID, true)
 	end
@@ -1172,7 +1212,7 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	--burrow targetting
 	local name = UnitDefs[unitDefID].name
 	if (humanTeams[unitTeam]) and UnitDefs[unitDefID].isImmobile and (not noTarget[name]) then
-		--echo("Building ID "..unitID .." added to target array")
+		--spEcho("Building ID "..unitID .." added to target array")
 		local x, y, z = spGetUnitPosition(unitID)
 		data.targets[unitID] = unitTeam
 		--distance check for existing burrows goes here
@@ -1185,22 +1225,41 @@ end
 function gadget:GameStart()
 	if pvp then Spring.Echo("Chicken: PvP mode initialized") end
 	--data.waveSchedule[gracePeriod*30] = true	-- schedule first wave
-	data.waveSchedule = gracePeriod * 30 + 42
+	data.waveSchedule = (gracePeriod + initialGraceBonus) * 30 + 42
 	spSetGameRulesParam("chicken_waveSchedule", data.waveSchedule)
+
+	for i=1, startTechs do
+		data.nextUnlockTime = -100
+		UpdateTech()
+	end
+	ChooseWaveChickens(nil)
+	_G.chickenEventArgs = {type="spawnUpdate", waveNumber = data.waveNumber, wave = data.waveChickens}
+	SendToUnsynced("ChickenEvent")
+	_G.chickenEventArgs = nil
+	data.nextUnlockTime = chickenTechTime * techCostMult
 end
 
 function gadget:GameFrame(n)
-	if tachyonCandy then
-		time = n*30 + 17
+	if tachyonChicken then
+		time = n*31 + 17
 	else
 		time = n
+	end
+
+	if time > data.gameoverSchedule then
+		local _, _, _, _, _, allyteamToKill = Spring.GetTeamInfo(chickenTeamID, false)
+		GG.DestroyAlliance(allyteamToKill)
+	end
+
+	if data.victory then
+		return
 	end
 
 	local burrowDiff = minBurrows - SetCount(data.burrows)
 	if burrowDiff > 0 then
 		SpawnBurrow(burrowDiff)
 	end
-	
+
 	if time > data.waveSchedule then
 		waveStart()
 	end
@@ -1211,14 +1270,13 @@ function gadget:GameFrame(n)
 
 	-- Run this every frame to ensure smooth build animations
 	for meanceID, _ in pairs(data.menaces) do
-		if updateMenace(meanceID) then -- This is horrible but it works
+		if MenaceFastUpdate(meanceID) then -- This is horrible but it works
 			break
 		end
 	end
 
 	if ((n+17) % 30 < 0.1) then
 		data.angerTime = time + data.angerTimeBonus
-		data.techTime = time
 		data.strength = data.strength + strengthPerSecond
 		data.wrath = data.wrath + wrathPerSecond
 		spSetGameRulesParam("chicken_angerTime", data.angerTime)
@@ -1226,37 +1284,39 @@ function gadget:GameFrame(n)
 		spSetGameRulesParam("chicken_wrath", data.wrath)
 
 		totalhumanValue = 1
-		local incomeTechMod = 0
+		--local incomeTechMod = 0
 		for team in pairs(humanTeams) do
 			totalhumanValue = totalhumanValue + spGetTeamRulesParam(team, "stats_history_unit_value_current")
-			local _, _, _, income, _, share = spGetTeamResources(team, "metal")
-			incomeTechMod = incomeTechMod + math.max(income - share, 0) * techPerIncome
+			--local _, _, _, income, _, share = spGetTeamResources(team, "metal")
+			--spLog(section, LOG.NOTICE, "Income for team "..team.." is "..income.." income and "..share.." share")
+			--incomeTechMod = incomeTechMod + math.max(income - share, 0) * techPerIncome
 		end
-		incomeTechMod = incomeTechMod + #humanTeams * techPerPlayer
-		data.techTime = data.techTime + max(incomeTechMod, 0)
+		--incomeTechMod = incomeTechMod + #humanTeams * techPerPlayer
+		data.techTime = time-- + max(incomeTechMod, 0)
 		UpdateTech()
-		updateHyperevo()
+		UpdateHyperevo()
 
-		spSetTeamResource(chickenTeamID, "m", 10000)
-		spSetTeamResource(chickenTeamID, "e", 10000)
-		spSetTeamResource(chickenTeamID, "ms", 2000000)
-		spSetTeamResource(chickenTeamID, "es", 2000000)
 		Spring.SetGlobalLos(chickenAllyTeamID, true) -- globallos could get disabled
 
 		local waveMult = 0
-	
+
 		if (data.angerTime >= queenTime) and (not data.endgame) then
+			data.currentAward = max(data.currentAward, 2)
+			spSetGameRulesParam("chicken_award", data.currentAward)
+			spEcho("Chicken max anger reached, spawning queen")
 			if endlessMode then
-				spSetGameRulesParam("chicken_award_endless", 1)
+				data.currentAward = math.max(data.currentAward, 2)
+				spSetGameRulesParam("chicken_award", data.currentAward)
+			elseif pvp then
+				KillAllComputerUnits()
 			else
+				spEcho("Chicken queening")
 				_G.chickenEventArgs = {type="queen"}
 				SendToUnsynced("ChickenEvent")
 				_G.chickenEventArgs = nil
-				if not pvp then
-					local queenID = SpawnQueen()
-					if queenID then
-						data.queenID = queenID
-					end
+				local queenID = SpawnQueen()
+				if queenID then
+					data.queenID = queenID
 				end
 			end
 			data.endgame = true
@@ -1269,25 +1329,33 @@ function gadget:GameFrame(n)
 		local baseScore = qTime ^ 2 * scoreQueenTime
 		data.totalScore = (baseScore + data.bonusScore) * scoreMult
 		spSetGameRulesParam("chicken_score", data.totalScore)
+
+		for meanceID, _ in pairs(data.menaces) do
+			if MenaceSlowUpdate(meanceID) then -- This is horrible but it works
+				break
+			end
+		end
 	end
-	
+
 	if ((n+29) % 90) < 0.1 then
 		DecayEggs()
-		
-		if data.waveActive or data.endgame then
+
+		if data.endgame and not endlessMode then
+			Wave(1)
+		elseif data.waveActive or data.endgame then
 			local waveProgress
 			if data.endgame then
 				waveProgress = (1-((data.waveSchedule-time)/chickenSpawnRate/30))
 			else
 				waveProgress = (1-((data.graceSchedule-time)/(chickenSpawnRate-gracePeriod)/30))
 			end
-			if waveProgress < 0.5 then
-				Wave(waveProgress*1.5+0.25)
+			if waveProgress < 0.3 then
+				Wave(1)
 			else
-				Wave((2-waveProgress*2)^2)
+				Wave(max(1.3 - waveProgress, 0)^2)
 			end
 		end
-	
+
 		data.targetCache = ChooseTarget()
 
 		if (data.targetCache) then
@@ -1299,12 +1367,30 @@ function gadget:GameFrame(n)
 				end
 			end
 		end
-		-- FIXME: don't make chickens lose if they won
-		--if (not data.victory) and Spring.IsGameOver() then
-		--	KillAllComputerUnits()
-		--end
+
+		if pvp and not data.victory then
+			-- check if there are still multiple human teams alive
+
+			local humanTeamsAliveOrdered = {}
+			for teamID ,_ in pairs(humanTeams) do
+				humanTeamsAliveOrdered[#humanTeamsAliveOrdered+1] = teamID
+			end
+
+			local pvpAlive = false
+			for i=1, #humanTeamsAliveOrdered do
+				if humanTeamsAliveOrdered[i+1] and not Spring.AreTeamsAllied(humanTeamsAliveOrdered[i], humanTeamsAliveOrdered[i+1]) then
+					pvpAlive = true
+					break
+				end
+			end
+
+			if not pvpAlive then
+				spLog(section, LOG.NOTICE, "Chicken: All but 1 human team died, resigning")
+				KillAllComputerUnits()
+			end
+		end
 	end
-	
+
 	--morphs queen
 	if n == data.morphFrame then
 		--Spring.Echo("Morphing queen")
@@ -1319,7 +1405,7 @@ function gadget:GameFrame(n)
 			Spring.Echo("LUA_ERRRUN chicken queen was not recreated correctly, chicken team unit count / total unit count / maxunits ", Spring.GetTeamUnitCount(queenOwner), #Spring.GetAllUnits(), Spring.GetModOptions().maxunits or 10000)
 			return
 		end
-	
+
 		data.morphed = not data.morphed
 		SetMorphFrame()
 	end
@@ -1344,6 +1430,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 		end
 		if (unitID == data.queenID) then
 			data.bonusScore = data.bonusScore + scorePerQueen
+			spLog(section, LOG.ERROR, "Queen kill detected, initiating gadget shutdown")
 			KillAllComputerUnits()
 		end
 		if data.menaces[unitID] then
@@ -1365,13 +1452,12 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 			--data.wrath = data.wrath + wrathPerBurrow
 			data.strength = data.strength * strengthPerBurrow
 			data.bonusScore = data.bonusScore + scorePerBurrow
-		
+			if data.strength < 0.5 then
+				data.angerTimeBonus = data.angerTimeBonus + queenTimePerBurrow
+			end
+
 			if alwaysEggs then SpawnEggs(spGetUnitPosition(unitID)) end
 			if (eggs) then SpawnEggs(spGetUnitPosition(unitID)) end
-		
-			if pvp and data.endgame then
-				if count == 0 then KillAllComputerUnits() end
-			end
 		end
 		if chickenUnion[unitDefID] then
 			local x, y, z = spGetUnitPosition(unitID)
@@ -1406,6 +1492,8 @@ end
 function gadget:TeamDied(teamID)
 	humanTeams[teamID] = nil
 	computerTeams[teamID] = nil
+	Spring.SetTeamRulesParam(teamID, "chicken_score", data.totalScore)
+	Spring.SetTeamRulesParam(teamID, "chicken_award", data.currentAward)
 end
 
 function gadget:AllowCommand_GetWantedCommand()
@@ -1438,19 +1526,38 @@ function gadget:GameOver()
 		return num > 1
 	end
 	local modopts = Spring.GetModOptions()
-	local metalmult = tonumber(Spring.GetModOptions().metalmult) or 1
-	local energymult = tonumber(Spring.GetModOptions().energymult) or 1
-	if ExceedsOne(modopts.metalmult) or ExceedsOne(modopts.metalmult) or (not ExceedsOne((modopts.terracostmult or 1) + 0.001)) then
-		Spring.Log(gadget:GetInfo().name, LOG.INFO, "<Chicken> Cheating modoptions, no score sent")
+	if ExceedsOne(modopts.metalmult) or
+			ExceedsOne(modopts.metalmult) or
+			(not ExceedsOne((modopts.terracostmult or 1) + 0.001)) then
+		spLog(gadget:GetInfo().name, LOG.NOTICE, "<Chicken> Cheating modoptions, no score sent")
 		return
 	end
-	
+
 	--Spring.Echo("<Chicken> AGGRO STATS")
 	--for waveNum,aggro in ipairs(data.humanAggroPerWave) do
 	--	Spring.Echo(waveNum, aggro)
 	--end
-	
+
 	--Spring.SendCommands("wbynum 255 SPRINGIE:score,ID: "..Spring.Utilities.Base64Encode(tostring(spGetGameFrame() + gameFrameOffset).."/"..tostring(math.floor(score))))
+end
+
+
+local function ToggleChickenSpeed(cmd,line,words,player)
+	if not Spring.IsCheatingEnabled() then
+		return
+	end
+
+	tachyonChicken = not tachyonChicken
+	return true
+end
+
+local function MenaceWrapper(cmd,line,words,player)
+	if not Spring.IsCheatingEnabled() then
+		return
+	end
+
+	SpawnMenace()
+	return true
 end
 
 function gadget:Initialize()
@@ -1463,8 +1570,15 @@ function gadget:Initialize()
 	spSetGameRulesParam("chicken_strength", data.strength)
 	spSetGameRulesParam("chicken_wrath", data.wrath)
 	spSetGameRulesParam("chicken_hyperevo", hyperevo)
-	spSetGameRulesParam("chicken_difficulty", difficulty)
+	spSetGameRulesParam("chicken_difficulty", luaAI)
 	spSetGameRulesParam("chicken_score", 0)
+	spSetGameRulesParam("chicken_pvp", ((pvp and 1) or 0))
+	spSetGameRulesParam("chicken_award", data.currentAward)
+
+	gadgetHandler:AddChatAction("chicken_speed", ToggleChickenSpeed, "Makes chickens 30x faster")
+	Script.AddActionFallback("chicken_speed"..' ', "Makes chickens 30x faster")
+	gadgetHandler:AddChatAction("chicken_spawnmenace", MenaceWrapper, "Spawn a chicken Menace")
+	Script.AddActionFallback("chicken_speed"..' ', "Spawn a chicken Menace")
 end
 
 --------------------------------------------------------------------------------

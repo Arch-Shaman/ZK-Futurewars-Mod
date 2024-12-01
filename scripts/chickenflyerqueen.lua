@@ -27,10 +27,20 @@ local feet = true
 
 --maximum HP for additional weapons
 local healthSpore3 = 0.55
-local healthDodoDrop = 0.65
-local healthDodo2Drop = 0.3
-local healthBasiliskDrop = 0.5
-local healthTiamatDrop = 0.2
+local triceMinAmt = 8
+local triceAddAmt = 8
+
+local gooDef = WeaponDefs[UnitDefs[unitDefID].weapons[1].weaponDef]
+local triceSpeed = gooDef.projectilespeed / 3
+local triceGrav = 0.1
+local triceID = WeaponDefNames[(UnitDefs[unitDefID].name).."_cockatrice"].id
+local spSpawnProjectile = Spring.SpawnProjectile
+local spGetUnitHealth = Spring.GetUnitHealth
+local dirDown = 0
+local function randTweak(num)
+	return (0.6 + 0.6 * math.random()) * num
+end
+
 
 --signals
 local SIG_Aim = 1
@@ -168,6 +178,22 @@ end
 
 function script.FireWeapon(weaponNum)
 	if weaponNum == 1 then
+
+		local x, y, z, dx, dy, dz = Spring.GetUnitPiecePosDir(unitID, firepoint)
+		local vx, vy, vz = triceSpeed * dx, triceSpeed * dy, triceSpeed * dz
+		local team = Spring.GetUnitTeam(unitID)
+		local hp, maxHP = spGetUnitHealth(unitID)
+		local triceCount = math.floor(triceMinAmt + (1 - (hp/maxHP)) * triceAddAmt)
+		for i=1, triceCount do
+			spSpawnProjectile(triceID, {
+				pos = {x, y, z},
+				speed = {randTweak(vx), randTweak(vy), randTweak(vz)},
+				team = team,
+				owner = unitID,
+				ttl = 300,
+				gravity = -triceGrav,
+			})
+		end
 		Turn(lforearmu, y_axis, -bladeAngle, bladeExtendSpeed)
 		Turn(lbladeu, y_axis, bladeAngle, bladeExtendSpeed)
 		Turn(lforearml, y_axis, -bladeAngle, bladeExtendSpeed)

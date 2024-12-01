@@ -7,7 +7,7 @@ return {
 		brakeRate           = 1.5,
 		builder             = false,
 		buildPic            = "chickenr.png",
-		buildCostMetal      = 1,
+		buildTime           = 425,
 		canGuard            = true,
 		canMove             = true,
 		canPatrol           = true,
@@ -19,6 +19,7 @@ return {
 			outline_y = 85,
 			outline_yoff = 20,
 			model_rescale = 1.2,
+			chicken_spawncost = 425,
 		},
 
 		explodeAs           = "NOWEAPON",
@@ -30,11 +31,8 @@ return {
 		idleAutoHeal        = 20,
 		idleTime            = 300,
 		leaveTracks         = true,
-		maxSlope            = 84,
+		maxSlope            = 90,
 		maxWaterDepth       = 5000,
-		metalCost           = 0,
-		energyCost          = 0,
-		buildTime           = 625,
 		movementClass       = "ATKBOT3",
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP SUB MOBILE STUPIDTARGET MINE",
@@ -80,7 +78,7 @@ return {
 		weaponDefs          = {
 			WEAPON = {
 				name                    = "Blob",
-				areaOfEffect            = 96,
+				areaOfEffect            = 48,
 				craterBoost             = 0,
 				craterMult              = 0,
 							

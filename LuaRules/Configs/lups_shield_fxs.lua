@@ -130,11 +130,12 @@ for unitDefID = 1, #UnitDefs do
 		local isChicken = false
 		if params.chicken_shield then
 			isChicken = true
-			if params.chicken_shield_invul then
-				myShield.colormap1 = {{0.3, 0.9, 0.9, 0.6}, {0.3, 0.9, 0.9, 0.6}}
-			else
-				myShield.colormap1 = {{0.3, 0.9, 0.2, 0.6}, {0.6, 0.4, 0.1, 0.6}}
-			end
+			--if params.chicken_shield_invul then
+			--	myShield.colormap1 = {{0.3, 0.9, 0.9, 0.6}, {0.3, 0.9, 0.9, 0.6}}
+			--else
+			--	myShield.colormap1 = {{0.3, 0.9, 0.2, 0.6}, {0.6, 0.4, 0.1, 0.6}}
+			--end
+			myShield.colormap1 = {{0.3, 0.9, 0.2, 0.6}, {0.6, 0.4, 0.1, 0.6}}
 			myShield.hitResposeMult = 0.5
 			--myShield.texture = "bitmaps/GPL/bubbleShield.png"
 			myShield.texture = "bitmaps/PD/shield.png"

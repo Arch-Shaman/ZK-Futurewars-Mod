@@ -47,6 +47,7 @@ local waveY           = 800
 local waveSpeed       = 0.2
 local waveTime
 local alertedHyperevo = false
+local gameOver        = false
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -79,7 +80,7 @@ end
 widget.difficulties = nil
 ]]--
 
-local difficulty = widget.difficulties[modes[Spring.GetGameRulesParam("chicken_difficulty")]]
+local difficulty = widget.difficulties[idToDifficulty[Spring.GetGameRulesParam("chicken_difficulty")]]
 
 local rules = {
 	"angerTime",
@@ -92,6 +93,7 @@ local rules = {
 	"graceSchedule",
 	"waveActive",
 	"waveNumber",
+	"pvp",
 }
 
 --------------------------------------------------------------------------------
@@ -192,8 +194,14 @@ local function WriteTooltipsOnce()
 		"Hive strength increases by "..("%.1f"):format(GetDifficultyValue('strengthPerSecond')*60*100).."% per minute"
 	label_anger.tooltip = "At 100% anger, the Chicken Queen will spawn and chickens will start attacking nonstop with no breaks"
 	label_score.tooltip = "Score multiplier from difficaulty: "..("%.1f"):format(GetDifficultyValue('scoreMult')*100).."%"
+	label_hyperevo.tooltip = "Hyperevolution is an anti-lag mechanic which triggers when an otherwise insane amount of chickens would spawn.\n"..
+		"Hyperevolution gives chickens increased stats while culling their spawns to a reasonable amount."
 
-	label_contents:SetCaption("Wave contents: " .. GetColouredName("chicken")) -- first wave is hardcoded to be chickens
+	if GetDifficultyValue("startTechs") == 0 then
+		label_contents:SetCaption("Wave contents: " .. GetColouredName("chicken")) -- first wave is hardcoded to be chickens on lower difficulties
+	else
+		label_contents:SetCaption("Wave contents revealed after start")
+	end
 	-- Code to spawn in the longest chicken names
 	-- label_contents:SetCaption("Wave contents: " .. GetColouredName("chickena") .. ", " .. GetColouredName("chicken_sporeshooter") .. ", " .. GetColouredName("chicken_spidermonkey") .. ", " .. GetColouredName("chickenc") .. ", " .. GetColouredName("chicken_tiamat"))
 end
@@ -202,10 +210,19 @@ end
 local function UpdateAnger()
 	--Spring.SendMessageToPlayer (Spring.GetLocalPlayerID ( ) ,"game_message: \255\255\255\0 >> \255\255\255\255 UwU Fuck me harder Daddy \255\255\255\0 <<")
 	local curTime = gameInfo.angerTime
+
+	if gameOver then
+		return
+	end
 	
 	local angerPercent = (curTime / gameInfo.queenTime)
-	local angerString = "Hive Anger : ".. GetColor(angerPercent) ..("%.1f"):format(angerPercent*100).."% \008"
-	if (angerPercent < 1) and (not endlessMode) then angerString = angerString .. "("..FormatTime((gameInfo.queenTime - curTime) / 30) .. " left)" end
+	local angerString = ""
+	if (gameInfo["pvp"] == 1) then
+		angerString = "Chickens reatreat in "..FormatTime((gameInfo.queenTime - curTime) / 30)
+	else
+		angerString = "Hive Anger : ".. GetColor(angerPercent) ..("%.1f"):format(angerPercent*100).."% \008"
+		if (angerPercent < 1) and (not endlessMode) then angerString = angerString .. "("..FormatTime((gameInfo.queenTime - curTime) / 30) .. " left)" end
+	end
 	
 	label_anger:SetCaption(angerString)
 
@@ -213,10 +230,10 @@ local function UpdateAnger()
 	if angerPercent > 1 then
 		label_next:SetCaption("The Hive is Angered!")
 	elseif frame < 100 then
-		label_next:SetCaption("Wave 1 Starts in :"..GetColor(0)..FormatTime(GetDifficultyValue("gracePeriod")-frame/30))
+		label_next:SetCaption("Wave 1 Starts in :"..GetColor(0)..FormatTime((GetDifficultyValue("gracePeriod") + GetDifficultyValue("initialGraceBonus"))-frame/30))
 	elseif gameInfo["waveActive"] == 1 then
 		local timeUntil = (gameInfo["graceSchedule"]-frame)/30
-		label_next:SetCaption("Wave "..gameInfo["waveNumber"].." Ends in : "..GetColor(timeUntil/(GetDifficultyValue("chickenSpawnRate") - GetDifficultyValue("gracePeriod")))..FormatTime(timeUntil))
+		label_next:SetCaption("Wave "..gameInfo["waveNumber"].." Ends in : "..GetColor(timeUntil/(GetDifficultyValue("wavePeriod")))..FormatTime(timeUntil))
 	else
 		local timeUntil = (gameInfo["waveSchedule"]-frame)/30
 		label_next:SetCaption("Wave "..(gameInfo["waveNumber"]+1).." Starts in : "..GetColor(1-timeUntil/GetDifficultyValue("gracePeriod"))..FormatTime(timeUntil))
@@ -240,8 +257,16 @@ local function UpdateRules()
 		gameInfo[rule] = Spring.GetGameRulesParam("chicken_"..rule) or 0
 	end
 
+	if gameOver then
+		return
+	end
+
 	-- write info
 	label_strength:SetCaption("Hive Strength : "..GetColor(gameInfo["strength"]/2)..("%.1f"):format(gameInfo["strength"]*100).."%")
+
+	label_strength.tooltip = "Each burrow killed decreases hive strength by "..("%.1f"):format((1-GetDifficultyValue('strengthPerBurrow'))*100).."% of the total\n"..
+		"Hive strength increases by "..("%.1f"):format(GetDifficultyValue('strengthPerSecond')*60*100).."% per minute\n"..
+		"At current hive strength, the amount of chickens that are spawned is multiplied by "..(("%.1f"):format(gameInfo["strength"]*100).."%")
 	
 	if gameInfo["hyperevo"] < 1.01 then
 		label_hyperevo:SetCaption("Hyperevolution : "..("%.1f"):format((gameInfo["hyperevo"] - 1)*100).."%")
@@ -306,11 +331,16 @@ function ChickenEvent(chickenEventArgs)
 		end
 		
 		label_contents:SetCaption("Wave contents: " .. contentsString)
-		
-	-- table.foreachi(waveMessage, print)
-	-- local t = Spring.GetGameSeconds()
-	-- print(string.format("time %d:%d", t/60, t%60))
-	-- print""
+	elseif (chickenEventArgs.type == "spawnUpdate") then
+		local contentsString = ""
+		for i, entry in pairs(chickenEventArgs.wave) do
+			contentsString = contentsString .. GetColouredName(entry[1])
+			if i < #chickenEventArgs.wave then
+				contentsString = contentsString .. ", "
+			end
+		end
+
+		label_contents:SetCaption("Wave contents: " .. contentsString)
 	elseif (chickenEventArgs.type == "burrowSpawn") then
 		UpdateRules()
 	elseif (chickenEventArgs.type == "miniQueen") then
@@ -321,9 +351,25 @@ function ChickenEvent(chickenEventArgs)
 		waveMessage    = {}
 		waveMessage[1] = "The Hive is angered!"
 		waveTime = Spring.GetTimer()
+	elseif (chickenEventArgs.type == "resign") then
+		waveMessage    = {}
+		waveMessage[1] = "The Chickens retreat!"
+		waveTime = Spring.GetTimer()
+		gameOver = true
+
+		label_anger:SetCaption("")
+		label_next:SetCaption("The chickens have been defeated!")
+		label_contents:SetCaption("")
+		label_strength:SetCaption("")
+		label_hyperevo:SetCaption("")
+
 	elseif (chickenEventArgs.type == "refresh") then
 		UpdateRules()
 		UpdateAnger()
+	else
+		waveMessage    = {}
+		waveMessage[1] = "Uh oh, something went wrong! Please ping @stuffphoton on discord"
+		waveTime = Spring.GetTimer()
 	end
 end
 

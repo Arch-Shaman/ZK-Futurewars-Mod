@@ -8,6 +8,7 @@ return {
 		builder             = false,
 		buildPic            = "chicken_blimpy.png",
 		buildCostMetal      = 1,
+		buildTime           = 1000,
 		canFly              = true,
 		canGuard            = true,
 		canLand             = true,
@@ -20,21 +21,22 @@ return {
 
 		customParams        = {
 			chicken = "uwu",
-			model_rescale = 1.5,
+			chicken_needs_bogus_defs = "^w^",
+			model_rescale = 2.5,
+			chicken_spawncost = 5000,
 		},
 
 		explodeAs           = "NOWEAPON",
 		floater             = true,
 		footprintX          = 4,
 		footprintZ          = 4,
-		health              = 32800,
+		health              = 164000,
 		iconType            = "bomberassault",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
 		leaveTracks         = true,
 		maneuverleashlength = "64000",
 		maxSlope            = 18,
-		buildTime           = 3600,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP STUPIDTARGET",
 		objectName          = "chicken_blimpy.s3o",
@@ -81,6 +83,8 @@ return {
 			BOGUS_BOMB  = {
 				name                    = "Fake Bomb",
 				areaOfEffect            = 80,
+				burst                   = 5,
+				burstrate               = 0.2,
 				commandfire             = true,
 				craterBoost             = 0,
 				craterMult              = 0,
@@ -163,8 +167,8 @@ return {
 				},
 
 				damage                  = {
-					default = 1500,
-					planes  = 1500,
+					default = 500,
+					planes  = 500,
 				},
 
 				explosionGenerator      = "custom:330rlexplode",
@@ -176,7 +180,7 @@ return {
 				model                   = "chickena.s3o",
 				noSelfDamage            = true,
 				range                   = 900,
-				reloadtime              = 5,
+				reloadtime              = 10,
 				smokeTrail              = false,
 				startVelocity           = 200,
 				tolerance               = 8000,

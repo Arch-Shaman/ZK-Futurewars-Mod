@@ -5,6 +5,9 @@ local chicken_rafflesia = {
 	builder                       = false,
 	buildPic                      = "chicken_rafflesia.png",
 	category                      = "SINK",
+	collisionVolumeOffsets        = "0 0 0",
+	collisionVolumeScales         = "60 120 60",
+	collisionVolumeType           = "ellipsoid",
 
 	customParams                  = {
 		chicken = "uwu",
@@ -34,6 +37,9 @@ local chicken_rafflesia = {
 	power                         = 10500,
 	reclaimable                   = false,
 	selfDestructAs                = "NOWEAPON",
+	selectionVolumeOffsets        = "0 0 0",
+	selectionVolumeScales         = "75 150 75",
+	selectionVolumeType	          = "ellipsoid",
 
 	sfxtypes                      = {
 		explosiongenerators = {
@@ -71,13 +77,15 @@ local chicken_rafflesia = {
 			impulseFactor           = 0,
 			interceptedByShieldType = 1,
 			shieldAlpha             = 0.15,
-			shieldBadColor          = "0.1 0.1 1 1.0",
-			shieldGoodColor         = "0.1 0.1 1 1.0",
-			shieldInterceptType     = 8,
-			shieldPower             = 2710000000000000000,
-			shieldPowerRegen        = 2710000000000000000,
+			shieldBadColor          = "1.0 1 0.1 1",
+			shieldGoodColor         = "0.1 1.0 0.1 1",
+--			shieldBadColor          = "0.1 0.1 1 1.0",
+--			shieldGoodColor         = "0.1 0.1 1 1.0",
+			shieldInterceptType     = 15,
+			shieldPower             = 5000000,
+			shieldPowerRegen        = 5000000,
 			shieldPowerRegenEnergy  = 0,
-			shieldRadius            = 750,
+			shieldRadius            = 1500,
 			shieldRepulser          = false,
 			smartShield             = true,
 			visibleShield           = false,
@@ -139,13 +147,16 @@ local MergeWithDefault = Spring.Utilities.MergeWithDefault
 
 local cocoon_base = MergeWithDefault(chicken_rafflesia, {
 	iconType = "chickenminiq",
+	collisionVolumeScales         = "100 200 100",
 	customParams                  = {
-		selection_scale = 5,
 		model_rescale = 5,
 		chicken_menace = "eeep",
 		reveal_losunit = "los_menace",
 		reveal_onprogress = 0.1,
+
+		chicken_disable_weapons_below_level = 5 -- hackity hack
 	},
+	selectionVolumeScales = "125 250 125",
 }, true)
 
 local chicken_dragon_cocoon = MergeWithDefault(cocoon_base, {

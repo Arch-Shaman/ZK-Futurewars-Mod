@@ -8,7 +8,7 @@ return {
 		brakeRate           = 0.8,
 		builder             = false,
 		buildPic            = "chicken_roc.png",
-		buildCostMetal      = 1,
+		buildTime           = 2540,
 		canFly              = true,
 		canGuard            = true,
 		canLand             = true,
@@ -25,14 +25,15 @@ return {
 			outline_x = 180,
 			outline_y = 180,
 			outline_yoff = 17.5,
-			model_rescale = 1.2,
+			model_rescale = 1.5,
+			chicken_spawncost = 2540,
 		},
 
 		explodeAs           = "NOWEAPON",
 		floater             = true,
 		footprintX          = 2,
 		footprintZ          = 2,
-		health              = 15200,
+		health              = 36400,
 		hoverattack         = true,
 		iconType            = "heavygunship",
 		idleAutoHeal        = 20,
@@ -43,7 +44,6 @@ return {
 		metalCost           = 0,
 		power               = 1,
 		energyCost          = 0,
-		buildTime           = 1270,
 		minCloakDistance    = 250,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM FIXEDWING SATELLITE GUNSHIP STUPIDTARGET MINE",
@@ -103,7 +103,7 @@ return {
 				},
 
 				damage                  = {
-					default = 200,
+					default = 250,
 				},
 
 				explosionGenerator      = "custom:goo_v2_green",
@@ -113,7 +113,7 @@ return {
 				interceptedByShieldType = 1,
 				proximityPriority       = -4,
 				range                   = 550,
-				reloadtime              = 6,
+				reloadtime              = 3,
 				rgbColor                = "0.2 0.6 0",
 				size                    = 16,
 				sizeDecay               = 0,
@@ -145,7 +145,7 @@ return {
 				},
 				
 				damage                  = {
-					default  = 400,
+					default  = 600,
 				},
 
 				dance                   = 120,
@@ -195,7 +195,7 @@ return {
 				},
 
 				damage                  = {
-					default = 150,
+					default = 250,
 				},
 
 				dance                   = 90,
@@ -214,16 +214,16 @@ return {
 				range                   = 1000,
 				reloadtime              = 6,
 				smokeTrail              = true,
-				sprayangle              = 4096,
-				startVelocity           = 50,
+				startVelocity           = 500,
 				texture1                = "",
 				texture2                = "sporetrail",
 				tolerance               = 10000,
 				tracks                  = true,
+				trajectoryHeight        = 2,
 				turnRate                = 24000,
 				turret                  = true,
 				waterweapon             = true,
-				weaponAcceleration      = 200,
+				weaponAcceleration      = 100,
 				weaponType              = "MissileLauncher",
 				weaponVelocity          = 1000,
 				wobble                  = 48000,

@@ -1,4 +1,4 @@
-return { 
+return {
 	chicken = {
 		unitname            = "chicken",
 		name                = "Chicken",
@@ -7,10 +7,9 @@ return {
 		autoheal            = 10,
 		activateWhenBuilt   = true,
 		brakeRate           = 1.23,
-		buildCostMetal      = 1,
 		builder             = false,
 		buildPic            = "chicken.png",
-		buildTime           = 50,
+		buildTime           = 25,
 		canGuard            = true,
 		canMove             = true,
 		canPatrol           = true,
@@ -20,6 +19,7 @@ return {
 			outline_x = 70,
 			outline_y = 70,
 			outline_yoff = 15,
+			chicken_spawncost = 20,
 		},
 		explodeAs           = "NOWEAPON",
 		footprintX          = 2,
@@ -28,8 +28,8 @@ return {
 		idleAutoHeal        = 20,
 		idleTime            = 180,
 		leaveTracks         = true,
-		health              = 800,
-		maxSlope            = 84,
+		health              = 500,
+		maxSlope            = 90,
 		maxWaterDepth       = 5000,
 		speed               = 200,
 		movementClass       = "ATKBOT2",
@@ -86,7 +86,7 @@ return {
 					light_radius = 0,
 				},
 				damage                  = {
-					default = 60.01,
+					default = 30.01,
 				},
 
 				explosionGenerator      = "custom:NONE",
@@ -94,8 +94,8 @@ return {
 				impulseBoost            = 0,
 				impulseFactor           = 1.5,
 				interceptedByShieldType = 0,
-				range                   = 85,
-				reloadtime              = 0.7,
+				range                   = 70,
+				reloadtime              = 2.4,
 				size                    = 0,
 				soundHit                = "chickens/chickenbig2",
 				soundStart              = "chickens/chicken",
@@ -120,7 +120,7 @@ return {
 				},
 
 				damage                  = {
-					default = 30.01,
+					default = 10.01,
 				},
 
 				duration                = 0.1,
