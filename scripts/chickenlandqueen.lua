@@ -38,10 +38,6 @@ local jawNum = 1
 
 --maximum HP for additional weapons
 local healthSpore3 = 0.55
-local healthStomp = 0.7
-local healthDodoDrop = 0.6
-local healthBasiliskDrop = 0.45
-local healthTiamatDrop = 0.2
 
 --signals
 local SIG_Aim = {
@@ -61,11 +57,6 @@ function MorphFunc()
 	--Move(body, y_axis, 100)
 	--Sleep(33)
 	--Move(body, y_axis, 0, 60)
-end
-
-local function Stomp(piece)
-	local health, maxHealth = spGetUnitHealth(unitID)
-	if (health/maxHealth) < healthStomp then EmitSfx(piece, 4096 + 5) end
 end
 
 local function Walk()
@@ -91,7 +82,6 @@ local function Walk()
 		WaitForTurn(leftThigh, x_axis)
 		Sleep(0)	-- needed to prevent anim breaking, DO NOT REMOVE
 		
-		Stomp(leftFoot)
 		Turn(leftThigh, x_axis, math.rad(-10), math.rad(160))
 		Turn(leftKnee, x_axis, math.rad(15), math.rad(145) * PACE)
 		Turn(leftShin, x_axis, math.rad(-60), math.rad(250) * PACE)
@@ -124,7 +114,6 @@ local function Walk()
 		WaitForTurn(rightThigh, x_axis)
 		Sleep(0)
 		
-		Stomp(rightFoot)
 		Turn(rightThigh, x_axis, math.rad(-10), math.rad(160) * PACE)
 		Turn(rightKnee, x_axis, math.rad(15), math.rad(145) * PACE)
 		Turn(rightShin, x_axis, math.rad(-60), math.rad(250) * PACE)
@@ -188,16 +177,16 @@ end
 --weapons (in order): spikes, firegoo, spores (3)
 
 function script.AimFromWeapon(weaponNum)
-	if weaponNum == 1 or weaponNum == 2 then return firepoint
-	elseif weaponNum == 3 then return spore1
-	elseif weaponNum == 4 then return spore2
-	elseif weaponNum == 5 then return spore3
+	if weaponNum == 1 then return firepoint
+	elseif weaponNum == 2 then return spore1
+	elseif weaponNum == 3 then return spore2
+	elseif weaponNum == 4 then return spore3
 	--elseif weaponNum == 5 then return body
 	else return body end
 end
 
 function script.AimWeapon(weaponNum, heading, pitch)
-	if weaponNum == 1 or weaponNum == 2 then
+	if weaponNum == 1 then
 		Signal(SIG_Aim[weaponNum])
 		SetSignalMask(SIG_Aim[weaponNum])
 		Turn(head, y_axis, heading, math.rad(250))
@@ -207,19 +196,19 @@ function script.AimWeapon(weaponNum, heading, pitch)
 		WaitForTurn(head, x_axis)
 		StartThread(RestoreAfterDelay)
 		return true
-	elseif weaponNum == 5 then
+	elseif weaponNum == 4 then
 		local health, maxHealth = spGetUnitHealth(unitID)
 		if (health/maxHealth) < healthSpore3 then return true end
-	elseif weaponNum >= 3 and weaponNum <= 5 then return true
-	else return false
+	else
+		return true
 	end
 end
 
 function script.QueryWeapon(weaponNum)
-	if weaponNum == 1 or weaponNum == 2 then return firepoint
-	elseif weaponNum == 3 then return spore1
-	elseif weaponNum == 4 then return spore2
-	elseif weaponNum == 5 then return spore3
+	if weaponNum == 1 then return firepoint
+	elseif weaponNum == 2 then return spore1
+	elseif weaponNum == 3 then return spore2
+	elseif weaponNum == 4 then return spore3
 	--elseif weaponNum == 5 then
 	--	if feet then return leftFoot
 	--	else return rightFoot end

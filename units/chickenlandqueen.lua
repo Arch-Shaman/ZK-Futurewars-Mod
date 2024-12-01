@@ -80,7 +80,7 @@ return { chickenlandqueen = {
 			{
 				def                = "FIREGOO",
 				mainDir            = "0 0 1",
-				maxAngleDif        = 150,
+				maxAngleDif        = 30,
 				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER",
 			},
 			{
@@ -117,8 +117,8 @@ return { chickenlandqueen = {
 				craterMult              = 0,
 
 				damage                  = {
-					default = 400,
-					planes  = 400,
+					default = 800,
+					planes  = 800,
 				},
 
 				explosionGenerator      = "custom:napalm_koda",
