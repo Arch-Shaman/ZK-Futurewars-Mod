@@ -17,6 +17,7 @@
 local ignorelist = {count = 0, ignorees = {} } -- Ignore workaround for WG table.
 local playerstate = {} -- for PlayerChangedTeam, PlayerResigned
 local resetWidgetDetailLevel = false -- has widget detail level changed
+local myPlayerID = Spring.GetLocalPlayerID()
 
 local ORDER_VERSION = 8 --- change this to reset enabled/disabled widgets
 local DATA_VERSION = 9 -- change this to reset widget settings
@@ -44,6 +45,8 @@ vfsInclude("LuaRules/Utilities/unitTypeChecker.lua"  , nil, vfsGame)
 vfsInclude("LuaRules/Utilities/function_override.lua", nil, vfsGame)
 vfsInclude("LuaUI/Utilities/truncate.lua"            , nil, vfsGame)
 vfsInclude("LuaRules/Utilities/minimap.lua"          , nil, vfsGame)
+vfsInclude("LuaRules/Utilities/lobbyStuff.lua"       , nil, vfsGame)
+vfsInclude("LuaUI/Utilities/truncate.lua"            , nil, vfsGame)
 vfsInclude("LuaUI/keysym.lua"                        , nil, vfsGame)
 vfsInclude("LuaUI/system.lua"                        , nil, vfsGame)
 vfsInclude("LuaUI/cache.lua"                         , nil, vfsGame)
@@ -97,7 +100,12 @@ local ipairs = ipairs
 -- read local widgets config
 local localWidgetsFirst = false
 local localWidgets = false
-local disableLocalWidgets = (Spring.GetModOptions().disable_local_widgets and Spring.GetModOptions().disable_local_widgets ~= "0" and Spring.GetModOptions().disable_local_widgets ~= 0)
+local disableLocalWidgets = (
+	Spring.GetModOptions().disable_local_widgets and
+	Spring.GetModOptions().disable_local_widgets ~= "0" and
+	Spring.GetModOptions().disable_local_widgets ~= 0 and
+	not (Spring.GetSpectatingState() or Spring.IsReplay())
+)
 
 if VFS.FileExists(CONFIG_FILENAME) then --check config file whether user want to use localWidgetsFirst
 	if not disableLocalWidgets then
@@ -239,6 +247,13 @@ local flexCallIns = {
 	'AddConsoleMessage',
 	'Save',
 	'Load',
+	'GameID',
+
+	-- From gadgets
+	"UnitStructureMoved",
+	'MissileFired',
+	'MissileDestroyed',
+	"PreGameTimekeeping",
 }
 local flexCallInMap = {}
 for _, ci in ipairs(flexCallIns) do
@@ -473,6 +488,22 @@ local function InitPlayerData(playerID)
 	return {team = teamID, spectator = spectator}
 end
 
+-- https://github.com/beyond-all-reason/spring/issues/1526
+-- FIXME: poison VFS.DirList directly since the issue affects any call thereof
+local function RemoveDuplicateFilenames(files)
+	local commons = {}
+	local i = 1
+	while files[i] do
+		local filename = files[i]:gsub('\\','/')
+		if commons[filename] then
+			table.remove(files,i)
+		else
+			commons[filename] = true
+			i = i + 1
+		end
+	end
+end
+
 function widgetHandler:Initialize()
 	TimeLoad("==== widgetHandler Begin ====")
 	local gaia = Spring.GetGaiaTeamID()
@@ -518,11 +549,18 @@ function widgetHandler:Initialize()
 	TimeLoad("Start loading widget files")
 	-- stuff the widgets into unsortedWidgets
 	local widgetFiles = VFS.DirList(WIDGET_DIRNAME, "*.lua", VFSMODE)
+	if VFSMODE == VFS.ZIP_FIRST or VFSMODE == VFS.RAW_FIRST then
+		RemoveDuplicateFilenames(widgetFiles)
+	end
+	local wantYield = Spring.Yield and Spring.Yield()
 	for k, wf in ipairs(widgetFiles) do
 		local widget = self:LoadWidget(wf)
 		TimeLoad("LoadWidget " .. wf)
 		if (widget) then
 			table.insert(unsortedWidgets, widget)
+		end
+		if wantYield then
+			Spring.Yield()
 		end
 	end
 	TimeLoad("End loading widget files")
@@ -583,11 +621,14 @@ local restrictedFunctions = {
 	     Feel free to make a gadget instead though. See https://zero-k.info/Forum/Thread/34108 ]]
 	"GetVisibleProjectiles",
 	"GetProjectilesInRectangle",
+
+	"GetTeamDamageStats", -- LoS hax
 }
 local restrictedWhitelist = {
 	--[[ Other widgets have security holes and there is
 	     no reason for them to have access anyway. ]]
 	['LuaUI/Widgets/gfx_projectile_lights.lua'] = true,
+	['LuaUI/Widgets/gfx_deferred_rendering_gl4.lua'] = true,
 }
 
 for i = 1, #restrictedFunctions do
@@ -2257,6 +2298,7 @@ function widgetHandler:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 	end
 end
 
+-- NB: called via Lua at the moment, not engine
 function widgetHandler:UnitResurrected(unitID, unitDefID, unitTeam, builderID)
 	for _, w in r_ipairs(self.UnitResurrectedList) do
 		w:UnitResurrected(unitID, unitDefID, unitTeam, builderID)
@@ -2353,9 +2395,16 @@ function widgetHandler:UnitCmdDone(unitID, unitDefID, unitTeam, cmdID, cmdParams
 end
 
 
-function widgetHandler:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer)
+function widgetHandler:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+	local spectating = playerstate[myPlayerID].spectator
 	for _, w in r_ipairs(self.UnitDamagedList) do
-		w:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer)
+		-- The engine only provides attackerID etc if the attacker is visible.
+		-- OTOH weaponDefID and projectileID are always provided - elide projectileID so that widgets can't aquire projectile vector and locate the attacker.
+		if spectating then
+			w:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+		else
+			w:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, attackerID and weaponDefID, nil, attackerID, attackerDefID, attackerTeam)
+		end
 	end
 end
 
@@ -2366,30 +2415,30 @@ function widgetHandler:UnitStunned(unitID, unitDefID, unitTeam, stunned)
 end
 
 
-function widgetHandler:UnitEnteredRadar(unitID, unitTeam)
+function widgetHandler:UnitEnteredRadar(unitID, unitTeam, forAllyTeamID, unitDefID)
 	for _, w in r_ipairs(self.UnitEnteredRadarList) do
-		w:UnitEnteredRadar(unitID, unitTeam)
+		w:UnitEnteredRadar(unitID, unitTeam, forAllyTeamID, unitDefID)
 	end
 end
 
 
-function widgetHandler:UnitEnteredLos(unitID, unitTeam)
+function widgetHandler:UnitEnteredLos(unitID, unitTeam, forAllyTeamID, unitDefID)
 	for _, w in r_ipairs(self.UnitEnteredLosList) do
-		w:UnitEnteredLos(unitID, unitTeam)
+		w:UnitEnteredLos(unitID, unitTeam, forAllyTeamID, unitDefID)
 	end
 end
 
 
-function widgetHandler:UnitLeftRadar(unitID, unitTeam)
+function widgetHandler:UnitLeftRadar(unitID, unitTeam, forAllyTeamID, unitDefID)
 	for _, w in r_ipairs(self.UnitLeftRadarList) do
-		w:UnitLeftRadar(unitID, unitTeam)
+		w:UnitLeftRadar(unitID, unitTeam, forAllyTeamID, unitDefID)
 	end
 end
 
 
-function widgetHandler:UnitLeftLos(unitID, unitDefID, unitTeam)
+function widgetHandler:UnitLeftLos(unitID, unitTeam, forAllyTeamID, unitDefID)
 	for _, w in r_ipairs(self.UnitLeftLosList) do
-		w:UnitLeftLos(unitID, unitDefID, unitTeam)
+		w:UnitLeftLos(unitID, unitTeam, forAllyTeamID, unitDefID)
 	end
 end
 
@@ -2422,9 +2471,9 @@ function widgetHandler:UnitLeftAir(unitID, unitDefID, unitTeam)
 end
 
 
-function widgetHandler:UnitSeismicPing(x, y, z, strength)
+function widgetHandler:UnitSeismicPing(x, y, z, strength, allyTeamID, unitID, unitDefID)
 	for _, w in r_ipairs(self.UnitSeismicPingList) do
-		w:UnitSeismicPing(x, y, z, strength)
+		w:UnitSeismicPing(x, y, z, strength, allyTeamID, unitID, unitDefID)
 	end
 end
 
@@ -2523,6 +2572,37 @@ function widgetHandler:AlliedUnitsChanged(visibleUnits, numVisibleUnits)
 	end
 end
 
+function widgetHandler:GameID(gameID)
+	for _, w in ipairs(self.GameIDList) do
+		w:GameID(gameID)
+	end
+end
+
+function widgetHandler:UnitStructureMoved(unitID, unitDefID, newX, newZ)
+	for _, w in r_ipairs(self.UnitStructureMovedList) do
+		w:UnitStructureMoved(unitID, unitDefID, newX, newZ)
+	end
+end
+
+--------------------------------------------------------------------------------
+--
+-- Projectile call-ins
+--
+
+function widgetHandler:MissileFired(proID, proOwnerID, weaponDefID, rx, ry, rz, rt, targetID)
+	for _,w in r_ipairs(self.MissileFiredList) do
+		w:MissileFired(proID, proOwnerID, weaponDefID, rx, ry, rz, rt, targetID)
+	end
+	return
+end
+
+
+function widgetHandler:MissileDestroyed(proID, proOwnerID, weaponDefID)
+	for _,w in r_ipairs(self.MissileDestroyedList) do
+		w:MissileDestroyed(proID, proOwnerID, weaponDefID)
+	end
+	return
+end
 
 -- local helper (not a real call-in)
 local oldSelection = {}
@@ -2599,6 +2679,13 @@ end
 function widgetHandler:Load(zip)
 	for _, w in r_ipairs(self.LoadList) do
 		w:Load(zip)
+	end
+end
+
+
+function widgetHandler:PreGameTimekeeping(secondsUntilStart)
+	for _,w in r_ipairs(self.PreGameTimekeepingList) do
+		w:PreGameTimekeeping(secondsUntilStart)
 	end
 end
 
