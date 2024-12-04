@@ -53,6 +53,7 @@ local translationExtras = { -- lists databases to be merged into the main one
 local translations = {
 	units = true,
 	interface = true,
+	epicmenu = true,
 	missions = true,
 	briefing = true,
 }
