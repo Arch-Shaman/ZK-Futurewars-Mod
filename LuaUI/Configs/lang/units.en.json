@@ -1300,7 +1300,7 @@
 		"helptext" : "Designed shortly after the advent of cluster munitions, the Deserter Mk4 has replaced the aging swift design. Built for scouting and early response, it can quickly reach a scene and fire off its payload of cluster missiles. It is incredibly fast, however, this speed dimminishes greatly after deploying its payload."
 	},
 	"dronecarry" : {
-		"name" : "Quetzalcoatl",
+		"name" : "Coatl",
 		"description" : "Carrier-Based Drone",
 		"helptext" : "Gull is currently unfinished and subject to furthur change"
 	},

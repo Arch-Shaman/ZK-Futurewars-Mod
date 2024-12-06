@@ -1,6 +1,6 @@
 local dronecarry = {
 	unitname            = "dronecarry",
-	name                = "Gull",
+	name                = "Coatl",
 	description         = "Carrier Drone",
 	acceleration        = 0.3,
 	airHoverFactor      = 4,
