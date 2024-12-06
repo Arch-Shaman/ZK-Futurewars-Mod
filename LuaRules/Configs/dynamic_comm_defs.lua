@@ -2623,7 +2623,7 @@ local chassisDefs = {
 				sharedData.jumprangebonus = (sharedData.jumprangebonus or 0) + 0.025 * (level - 1)
 			end
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
-			sharedData.speedMod = (sharedData.speedMod or 0) + 7.5 + 3 * level
+			--sharedData.speedMod = (sharedData.speedMod or 0) + 7.5 + 3 * level
 		end,
 		levelDefs = levelDefGenerator("dynrecon", GetReconCloneModulesString, 3)
 	},
