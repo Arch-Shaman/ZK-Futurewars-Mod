@@ -39,15 +39,15 @@ noTarget = {
 }
 
 idToDifficulty = {
-	[0] = 0,
-	[1] = 'Beginner',
-	[2] = 'Very Easy',
-	[3] = 'Easy',
-	[4] = 'Normal',
-	[5] = 'Hard',
-	[6] = 'Suicidal',
-	[7] = 'Annihilation',
-	[8] = 'Custom',
+    [0] = 0,
+    [1] = 'Casual',
+    [2] = 'Normal',
+    [3] = 'Hard',
+    [4] = 'Brutal',
+    [5] = 'Suicidal',
+    [6] = 'Nightmare',
+    [7] = 'Annihilation',
+    [8] = 'Custom',
 }
 difficultyToId = {}
 for id, difficulty in pairs(idToDifficulty) do
@@ -240,14 +240,14 @@ local function SetCustomMiniQueenTime()
 end
 	
 difficulties = {
-	['Beginner'] = {
+	['Casual'] = {
 		queenTime	     = 40*60,
 		gracePeriod      = 210,
 		waveSizeMult     = 0.25,
 		strengthPerSecond = 0.001,
 		menaceStartWave  = 3,
 		menaceMaxNum     = 1,
-		menaceEvoMod     = -3,
+		menaceEvoMod     = -2,
 		defenseMult      = 0.2,
 		defenseEvoMult   = 0.4,
 		maxBurrows       = 25,
@@ -256,14 +256,14 @@ difficulties = {
 		scoreMult        = 0.25,
 	},
 
-	['Very Easy'] = {
+	['Normal'] = {
 		queenTime	     = 38*60,
 		gracePeriod      = 195,
 		waveSizeMult     = 0.4,
 		strengthPerSecond = 0.0015,
 		menaceStartWave  = 3,
 		menaceMaxNum     = 1,
-		menaceEvoMod     = -3,
+		menaceEvoMod     = -1,
 		defenseMult      = 0.2,
 		defenseEvoMult   = 0.4,
 		maxBurrows       = 25,
@@ -272,14 +272,14 @@ difficulties = {
 		scoreMult        = 0.4,
 	},
 	
-	['Easy'] = {
+	['Hard'] = {
 		queenTime	     = 36*60,
 		gracePeriod      = 180,
 		waveSizeMult     = 0.6,
 		strengthPerSecond = 0.002,
 		menaceStartWave  = 3,
 		menaceMaxNum     = 1,
-		menaceEvoMod     = -2,
+		menaceEvoMod     = 0,
 		defenseMult      = 0.3,
 		defenseEvoMult   = 0.5,
 		maxBurrows       = 40,
@@ -288,36 +288,36 @@ difficulties = {
 		scoreMult        = 0.6,
 	},
 	
-	['Normal'] = {
+	['Brutal'] = {
 		queenTime	     = 34*60,
 		gracePeriod	     = 165,
 		waveSizeMult	 = 1,
 		strengthPerSecond = 0.0025,
-		menaceEvoMod     = -2,
+		menaceEvoMod     = 0,
 		defenseMult      = 0.5,
 		defenseEvoMult   = 0.65,
 		scoreMult		 = 1,
 	},
 
-	['Hard'] = {
+	['Suicidal'] = {
 		queenTime	     = 32*60,
 		gracePeriod	     = 150,
 		startTechs       = 1,
 		waveSizeMult	 = 1.4,
 		baseHyperEvo     = 1.5,
 		techCostMult     = 0.9,
-		menaceEvoMod     = -1,
+		menaceEvoMod     = 1,
 		defenseMult      = 0.7,
 		defenseEvoMult   = 0.85,
 		scoreMult	     = 2,
 	},
 
-	['Suicidal'] = {
+	['Nightmare'] = {
 		waveSizeMult	 = 1.75,
 		baseHyperEvo     = 3,
 		scoreMult   	 = 5,
 		startTechs       = 1,
-		menaceEvoMod     = 1,
+		menaceEvoMod     = 2,
 		defenseEvoMult   = 1,
 		techCostMult     = 4,
 	},

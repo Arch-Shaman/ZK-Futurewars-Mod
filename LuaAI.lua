@@ -20,27 +20,27 @@ return {
 --		desc = 'Another AI that plays regular Zero-K'
 --	},
 	{
-		name = 'Chicken: Beginner',
+		name = 'Chicken: Casual',
 		desc = 'A difficulty for those who are just picking up RTS games'
 	},
 	{
-		name = 'Chicken: Very Easy',
+		name = 'Chicken: Normal',
 		desc = 'A difficulty for players who are new to Future Wars'
 	},
 	{
-		name = 'Chicken: Easy',
+		name = 'Chicken: Hard',
 		desc = 'A Chill and easy experiance that still offers challange'
 	},
 	{
-		name = 'Chicken: Normal',
+		name = 'Chicken: Brutal',
 		desc = 'The Default: A mix between challange and feasibility'
 	},
 	{
-		name = 'Chicken: Hard',
+		name = 'Chicken: Suicidal',
 		desc = 'A challanging experiance meant for experianced Future Wars players'
 	},
 	{
-		name = 'Chicken: Suicidal',
+		name = 'Chicken: Nightmare',
 		desc = 'An Onslaught meant for grizzled veterans of Future Wars'
 	},
 	{

@@ -4,12 +4,12 @@ configs.roostName = 'roost'
 
 configs.difficulties = {
     [0] = 0,
-    [1] = 'Beginner',
-    [2] = 'Very Easy',
-    [3] = 'Easy',
-    [4] = 'Normal',
-    [5] = 'Hard',
-    [6] = 'Brutal',
+    [1] = 'Casual',
+    [2] = 'Normal',
+    [3] = 'Hard',
+    [4] = 'Brutal',
+    [5] = 'Suicidal',
+    [6] = 'Nightmare',
     [7] = 'Annihilation',
     [8] = 'Custom',
 }
