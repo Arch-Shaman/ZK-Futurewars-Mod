@@ -96,7 +96,7 @@ return {
 					cloakstrike = 1 + 1/3,
 					laserguidance_failtime = 20,
 					laserguidancefalls = 1,
-					script_reload = "3.5",
+					script_reload = "7",
 					script_burst = "3",
 				},
 				damage                  = {
