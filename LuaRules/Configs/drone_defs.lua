@@ -57,7 +57,7 @@ local carrierDefNames = {
 			sitsOnPad = true,
 			untargetableOnPad = true,
 			canLaunch = true,
-			launchedLife = 21,
+			launchedLife = 15,
 			maxBuild = 1,
 			launchVel = {0, 4, 0},
 		},
