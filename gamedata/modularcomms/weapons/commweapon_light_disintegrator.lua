@@ -21,7 +21,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default    = 175,
+		default    = 350,
 	},
 
 	explosionGenerator      = "custom:DGUNTRACE",
@@ -34,7 +34,7 @@ local weaponDef = {
 	noExplode               = true,
 	noSelfDamage            = true,
 	range                   = 270,
-	reloadtime              = 0.8,
+	reloadtime              = 3,
 	size                    = 6,
 	soundHit                = "explosion/light_dgun_hit",
 	soundStart              = "weapon/laser/light_dgun_fire",
@@ -43,7 +43,7 @@ local weaponDef = {
 	targetBorder            = 1, -- aim for the close border instead of the center.
 	waterWeapon             = true,
 	weaponType              = "Cannon",
-	weaponVelocity          = 400,
+	weaponVelocity          = 300,
 }
 
 return name, weaponDef

@@ -20,7 +20,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default    = 1250,
+		default    = 500,
 	},
 
 	explosionGenerator      = "custom:DGUNTRACE",
@@ -33,7 +33,7 @@ local weaponDef = {
 	noExplode               = true,
 	noSelfDamage            = true,
 	range                   = 270,
-	reloadtime              = 5.0,
+	reloadtime              = 2.0,
 	size                    = 6,
 	soundHit                = "explosion/ex_med6",
 	soundStart              = "weapon/laser/dgun_fire",
