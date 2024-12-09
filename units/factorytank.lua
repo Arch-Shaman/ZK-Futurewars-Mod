@@ -105,7 +105,7 @@ return {
 					stats_shield_damage = (100*20) + 1200,
 				},
 				damage                  = {
-					default = 1200.2,
+					default = 400.2,
 				},
 				explosionGenerator      = "custom:DOT_Pillager_Explo",
 				fireTolerance           = 1820, -- 10 degrees
