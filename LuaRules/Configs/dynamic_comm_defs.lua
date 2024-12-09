@@ -43,6 +43,7 @@ if (Spring.GetModOptions) then
     end
 	if commwars then
 		COST_MULT = COST_MULT * 0.5
+		HP_MULT = HP_MULT * 2
 	end
 end
 
