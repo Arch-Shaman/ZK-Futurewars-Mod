@@ -65,9 +65,10 @@ local originX = MAP_WIDTH/2
 local originZ = MAP_HEIGHT/2
 local startDistanceSq = originX*originX + originZ*originZ
 local startDistance = math.sqrt(startDistanceSq)
-local suddenDeathFrame = 60*30*30
-local suddenSweepFrames = 60*30
+local suddenDeathFrame = 60*20*30
+local suddenSweepFrames = 10*60*30
 local damageReferenceDistance = 400
+local damageRampFactor = 1.0001
 
 local baseDamage          = 30 * UPDATE_FREQ_DAMAGE / 30
 local propDamage          = 0.05 * UPDATE_FREQ_DAMAGE / 30
@@ -81,12 +82,19 @@ local propDamageAtRefDist = 0.05 * UPDATE_FREQ_DAMAGE / 30
 local function GetDefaultConfig()
 	local suddenDeathMinutes = tonumber((Spring.GetModOptions() or {}).sudden_death_minutes) or false
 	local suddenDeathSweepSeconds = tonumber((Spring.GetModOptions() or {}).sudden_death_sweep_seconds) or false
+
+
+	if (tonumber((Spring.GetModOptions() or {}).commwars) or 0) == 1 then
+		suddenDeathMinutes = suddenDeathMinutes or 10
+		suddenDeathSweepSeconds = suddenDeathSweepSeconds or 600
+	end
+
 	if not suddenDeathMinutes then
 		return false
 	end
 	return {
 		suddenDeathStartSeconds = suddenDeathMinutes*60,
-		suddenDeathSweepSeconds = suddenDeathSweepSeconds or 60,
+		suddenDeathSweepSeconds = suddenDeathSweepSeconds or 600,
 	}
 end
 
@@ -104,6 +112,7 @@ local function SetupSuddenDeath()
 	suddenSweepFrames       = (config.suddenDeathSweepSeconds and config.suddenDeathSweepSeconds*30) or suddenSweepFrames
 	startDistance           = config.startDistance or startDistance
 	damageMult              = config.damageMult or false
+	damageRampFactor        = math.max(config.damageRampFactor or damageRampFactor, 1.00002)
 	
 	startDistanceSq   = startDistance*startDistance
 	if damageMult then
@@ -236,6 +245,12 @@ function gadget:GameFrame(n)
 	if (not allEligibleUnits) then
 		SuddenDeathActivate()
 	end
+
+	baseDamage = baseDamage * damageRampFactor
+	propDamage = propDamage * damageRampFactor
+	baseDamageAtRefDist = baseDamageAtRefDist * damageRampFactor
+	propDamageatRefDist = propDamageatRefDist * damageRampFactor
+
 	IterableMap.ApplyFraction(allEligibleUnits, UPDATE_FREQ, n%UPDATE_FREQ, CheckOutOfBounds)
 	IterableMap.ApplyFraction(beingDamagedUnits, UPDATE_FREQ_DAMAGE, n%UPDATE_FREQ_DAMAGE, CheckDamage)
 end
