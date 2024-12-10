@@ -82,7 +82,7 @@ return {
 					damage_vs_shield = "150"
 				},
 				damage  = {
-					default = 70.1*6,
+					default = 60.1*6,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.25,
@@ -119,7 +119,7 @@ return {
 					isFlak = 1,
 				},
 				damage = {
-					default = 70.1,
+					default = 60.1,
 				},
 				--interceptor = 2,
 				edgeEffectiveness       = 0.95,
