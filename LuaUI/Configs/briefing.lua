@@ -38,16 +38,15 @@ local briefing = {
 }
 
 -- TODO: Document this somewhere.
-
 if showBriefing then
 	briefing["entries"] = {
 		{"update_header", fontsize = 24},
 		{"entry_1"},
 		{""},
-		{"entry_2", image = "unitpics/spiderscout.png"},
-		{"entry_3", image = "unitpics/staticnuke.png"},
-		{"entry_4", image = "unitpics/spiderantiheavy.png"},
-		{"entry_5", image = "unitpics/missileslow.png"},
+		{"entry_2", image = "unitpics/commweapon_disintegrator.png"},
+		{"entry_3", image = "unitpics/cloakskirm.png"},
+		{"entry_4", image = "unitpics/factorytank.png"},
+		{"entry_5", image = "unitpics/module_autorepair.png"},
 		{"entry_6"},
 		{""},
 		{""},
