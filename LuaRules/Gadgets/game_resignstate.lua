@@ -72,14 +72,15 @@ local checkForceResign = true
 local topCombatValue = 0
 local topCombatValueID = -1
 
-do
-	local modoptions = Spring.GetModOptions()
-	mintime = tonumber(modoptions.resignstate_mintimer) or 60
-	resigntimer = tonumber(modoptions.resignstate_timer) or 300
-	if tonumber(modoptions["forceresign"] or 1) == 0 then
-		checkForceResign = false
-	end
+local modoptions = Spring.GetModOptions()
+mintime = tonumber(modoptions.resignstate_mintimer) or 60
+resigntimer = tonumber(modoptions.resignstate_timer) or 300
+if tonumber(modoptions["forceresign"] or 1) == 0 then
+	checkForceResign = false
 end
+
+playableZombies = modoptions.playable_zombies
+playableZombiesWarned = false
 
 -- config --
 
@@ -498,8 +499,14 @@ function gadget:GameFrame(f)
 			triggeredNoCons = false
 		end
 		if noWorkers and CheckForAllTeamsOutOfCombatUnits() then
-			local gaiaAllyTeam = select(6, Spring.GetTeamInfo(Spring.GetGaiaTeamID()))
-			Spring.GameOver(gaiaAllyTeam) -- end as a draw.
+			--local gaiaAllyTeam = select(6, Spring.GetTeamInfo(Spring.GetGaiaTeamID()))
+			if playable_zombies then -- TODO: Actually figure out what causes this bug.
+				if not playableZombiesWarned then
+					Spring.Log("game_resignstate.lua", LOG.ERROR, "Stalemate detection was triggered during a game of players as zombies and was forcibly stopped. Please Debug why this happens instead of relying on this hacky fix")
+				end
+			else
+				Spring.GameOver() -- end as a draw.
+			end
 		end
 	end
 	if f%90 == 15 then
