@@ -249,7 +249,7 @@ function gadget:GameFrame(n)
 	baseDamage = baseDamage * damageRampFactor
 	propDamage = propDamage * damageRampFactor
 	baseDamageAtRefDist = baseDamageAtRefDist * damageRampFactor
-	propDamageatRefDist = propDamageatRefDist * damageRampFactor
+	propDamageAtRefDist = propDamageAtRefDist * damageRampFactor
 
 	IterableMap.ApplyFraction(allEligibleUnits, UPDATE_FREQ, n%UPDATE_FREQ, CheckOutOfBounds)
 	IterableMap.ApplyFraction(beingDamagedUnits, UPDATE_FREQ_DAMAGE, n%UPDATE_FREQ_DAMAGE, CheckDamage)
