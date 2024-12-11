@@ -43,7 +43,7 @@ if (Spring.GetModOptions) then
     end
 	if commwars then
 		COST_MULT = COST_MULT * 0.5
-		HP_MULT = HP_MULT * 2
+		HP_MULT = HP_MULT * 3
 	end
 end
 
@@ -2597,7 +2597,7 @@ local chassisDefs = {
 			if level > 1 then
 				-- hit points (in terms of player-visible level) was 1=4200, 2=4200, 3=4000, 3=5000 ....
 				-- (a change is now made over in dynstrike.lua to reduce the first levels to 3000)
-				sharedData.healthBonus = (sharedData.healthBonus or 0) + 1000 * (level - 1)
+				sharedData.healthBonus = (sharedData.healthBonus or 0) + 1000 * (level - 1) * HP_MULT
 			end
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 			sharedData.decloakDistance = 200 - 20 * math.min(level,6)
@@ -2619,7 +2619,7 @@ local chassisDefs = {
 			--Spring.Echo("Apply level-up function to Recon lvl " .. (level+1) .. ".")
 			if level > 1 then
 				-- hit points (in terms of player-visible level) was 1=3250, 2=3250, 3=4000, 3=4750 ....
-				sharedData.healthBonus = (sharedData.healthBonus or 0) + 1000 * (level - 1)
+				sharedData.healthBonus = (sharedData.healthBonus or 0) + 1000 * (level - 1) * HP_MULT
 				sharedData.jumpspeedbonus = (sharedData.jumpspeedbonus or 0) + 0.1 * (level - 1)
 				sharedData.jumprangebonus = (sharedData.jumprangebonus or 0) + 0.025 * (level - 1)
 			end
@@ -2639,7 +2639,7 @@ local chassisDefs = {
 			--Spring.Echo("Apply level-up function to Support lvl " .. (level+1) .. ".")
 			if level > 1 then
 				-- hit points (in terms of player-visible level) was 1=3800, 2=3800, 3=4750, 3=5250 ....
-				sharedData.healthBonus = (sharedData.healthBonus or 0) + 250 + 750 * (level - 1)
+				sharedData.healthBonus = (sharedData.healthBonus or 0) + 250 + 750 * (level - 1) * HP_MULT
 			end
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 5 * level
 			sharedData.extrastorage = (sharedData.extrastorage or 0) + 200 + (200 * level)
@@ -2660,7 +2660,11 @@ local chassisDefs = {
 			if level > 1 then
 				-- hit points (in terms of player-visible level) was 1=4400, 2=4400, 3=3000, 4=3750, 5=4500 ....
 				-- (a change is now made over in dynassault.lua to reduce the first levels to 2250)
-				sharedData.healthBonus = (sharedData.healthBonus or 0) + 500 * (level - 1)
+				if commwars then
+					sharedData.healthBonus = (sharedData.healthBonus or 0) + 2500 * (level - 1) * HP_MULT
+				else
+					sharedData.healthBonus = (sharedData.healthBonus or 0) + 500 * (level - 1) * HP_MULT
+				end
 			end
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 2.5
 			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.075 * (level + 1)
@@ -2679,7 +2683,7 @@ local chassisDefs = {
 			--Spring.Echo("Apply level-up function to Riot (comm) lvl " .. (level+1) .. ".")
 			if level > 1 then
 				-- hit points (in terms of player-visible level) was 1=5500, 2=5500, 3=7500, 3=9000, 4=10500 ....
-				sharedData.healthBonus = (sharedData.healthBonus or 0) + 1000 + 1750 * (level - 1)
+				sharedData.healthBonus = (sharedData.healthBonus or 0) + 1000 + 1750 * (level - 1) * HP_MULT
 			end
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10 * level
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.125 * (level + 1)
@@ -2697,7 +2701,7 @@ local chassisDefs = {
 		chassisApplicationFunction = function (level, modules, sharedData)
 			-- level expected to be 1 less than the value the player sees
 			--Spring.Echo("Apply level-up function to Knight (comm) lvl " .. (level+1) .. ".")
-			sharedData.healthBonus = (sharedData.healthBonus or 0) + 1200 + 600 * level    -- 2=4600, 3=5200, 4=5800
+			sharedData.healthBonus = (sharedData.healthBonus or 0) + 1200 + 600 * level * HP_MULT    -- 2=4600, 3=5200, 4=5800
 			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
 		end,
 		levelDefs = levelDefGenerator("dynknight", GetKnightCloneModulesString, 3)
