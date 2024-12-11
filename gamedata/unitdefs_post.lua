@@ -428,7 +428,7 @@ for name, ud in pairs(UnitDefs) do
 		ud.energymake = (ud.workertime * 3) + 1
 		ud.metalmake = 20
 		ud.health = ud.health * 3
-		ud.autoheal = ud.autoheal * 3
+		ud.autoheal = (ud.autoheal or 0) * 3
 	end
 	
 	-- 3dbuildrange for all none plane builders
