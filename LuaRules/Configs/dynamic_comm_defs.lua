@@ -1415,7 +1415,7 @@ local moduleDefs = {
 		humanName = "Radar Amplifier",
 		description = "Increases radar by 10%.",
 		image = moduleImagePath .. "module_fieldradar.png",
-		limit = 8,
+		-- unlimited
 		requireChassis = {"recon"},
 		cost = 75 * COST_MULT,
 		requireLevel = 2,
@@ -1430,7 +1430,7 @@ local moduleDefs = {
 		humanName = "Enhanced Sensors",
 		description = "Increases sight radius by 20%.",
 		image = moduleImagePath .. "module_radarnet2.png",
-		limit = 8,
+		-- unlimited
 		requireChassis = {"recon"},
 		cost = 125 * COST_MULT,
 		requireLevel = 2,
@@ -1615,7 +1615,7 @@ local moduleDefs = {
 		humanName = "Companion Drone",
 		description = "Adds a light protective drone. With the Drone Package, spawn 2 instead.",
 		image = moduleImagePath .. "module_companiondrone.png",
-		limit = 8,
+		-- unlimited
 		cost = 75 * COST_MULT,
 		requireChassis = {"support", "knight"},
 		requireLevel = 1,
@@ -1634,7 +1634,7 @@ local moduleDefs = {
 		humanName = "Battle Drone",
 		description = "Commander spawns a heavy drone.",
 		image = moduleImagePath .. "module_droneheavyslow.png",
-		limit = 8,
+		-- unlimited
 		cost = 100 * COST_MULT,
 		requireChassis = {"support"},
 		requireOneOf = {"module_drone_package"},
@@ -1741,7 +1741,7 @@ local moduleDefs = {
 		humanName = "Repair Drone",
 		description = "Adds a Repair Drone to your maximum drone control. Repair drones have a shield and can repair friendly units at 10 bp.",
 		image = moduleImagePath .. "module_dronecon.png",
-		limit = 8,
+		-- unlimited
 		cost = 100 * COST_MULT,
 		requireChassis = {"support"},
 		requireOneOf = {"module_drone_package"},
@@ -1757,7 +1757,7 @@ local moduleDefs = {
 		humanName = "Assault Drone",
 		description = "Adds an Assault Drone to your maximum drone control. Assault drones have high hp, and fire a cannon at targets.",
 		image = moduleImagePath .. "module_droneassault.png",
-		limit = 8,
+		-- unlimited
 		cost = 100 * COST_MULT,
 		requireChassis = {"support"},
 		requireOneOf = {"module_drone_package"},
@@ -1791,7 +1791,7 @@ local moduleDefs = {
 		humanName = "Drone Autofab Improvements",
 		description = "Requires Drone Package.\n+50% drone build speed.",
 		image = moduleImagePath .. "module_drone_buildspeed.png",
-		limit = 8,
+		-- unlimited
 		cost = 120 * COST_MULT,
 		requireChassis = {"support"},
 		requireLevel = 2,
@@ -1806,9 +1806,9 @@ local moduleDefs = {
 	{
 		name = "module_autorepair",
 		humanName = "Damage Control Systems",
-		description = "Commander self-repairs at +10 hp/s.",
+		description = "Commander self-repairs at +"..20*HP_MULT.." hp/s.",
 		image = moduleImagePath .. "module_autorepair.png",
-		limit = 8,
+		-- unlimited
 		cost = 175 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
@@ -1816,7 +1816,7 @@ local moduleDefs = {
 		prohibitingModules = {"module_striderpower"},
 		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
-			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10
+			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 20*HP_MULT
 			--sharedData.healthBonus = (sharedData.healthBonus or 0) - 75*HP_MULT
 		end
 	},
@@ -1840,7 +1840,7 @@ local moduleDefs = {
 	{
 		name = "module_nanorepair_upgrade_regen",
 		humanName = "Nanite Dense Armor",
-		description = "Improves base nanoreactive regeneration speed by 3, increasing max regeneration by 30. Increases health by " .. 500*HP_MULT .. "Riot only.",
+		description = "Improves base nanoreactive regeneration speed by " .. 3*HP_MULT .. ", increasing max regeneration by " .. 30*HP_MULT .. ". Increases health by " .. 500*HP_MULT .. "Riot only.",
 		image = moduleImagePath .. "module_nano_armor.png",
 		limit = 4,
 		cost = 400 * COST_MULT,
@@ -1850,7 +1850,7 @@ local moduleDefs = {
 		slotType = "module",
 		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
-			sharedData.nanoregen = (sharedData.nanoregen or 0) + 3
+			sharedData.nanoregen = (sharedData.nanoregen or 0) + 3*HP_MULT
 			sharedData.healthBonus = (sharedData.healthBonus or 0) + 500*HP_MULT
 		end
 	},
@@ -1875,7 +1875,7 @@ local moduleDefs = {
 		humanName = "Ablative Armour Plates",
 		description = "Provides " .. 1400*HP_MULT .. " health.",
 		image = moduleImagePath .. "module_ablative_armor.png",
-		limit = 8,
+		-- unlimited
 		cost = 200 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
@@ -1906,7 +1906,7 @@ local moduleDefs = {
 		humanName = "High Density Plating",
 		description = "Provides " .. 4000*HP_MULT .. " health but reduces speed by 0.35.\nRiot exclusive.",
 		image = moduleImagePath .. "module_heavy_armor.png",
-		limit = 8,
+		-- unlimited
 		cost = 200 * COST_MULT,
 		requireOneOf = {"module_ablative_armor"},
 		requireChassis = {"riot"},
@@ -1923,7 +1923,7 @@ local moduleDefs = {
 		humanName = "Weapon Retrofits",
 		description = "Provides a 15% boost in firepower. Increases HP by " .. 200*HP_MULT ..	".\nRiot Exclusive.",
 		image = moduleImagePath .. "module_dmg_booster.png",
-		limit = 8,
+		--unlimited
 		cost = 100 * COST_MULT,
 		requireLevel = 4,
 		slotType = "module",
@@ -2172,7 +2172,7 @@ local moduleDefs = {
 		humanName = "Enhanced Weapon Systems",
 		description = "Increases damage by 10% but reduces speed by 1.",
 		image = moduleImagePath .. "module_dmg_booster.png",
-		--limit = 8, no limits, fw lategame has more crazier shit anyways
+		--unlimited
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
@@ -2279,16 +2279,16 @@ local moduleDefs = {
 	{
 		name = "module_cloakregen",
 		humanName = "Nanobot Sleeve",
-		description = "Increases regen while cloaked by 20.",
+		description = "Increases regen while cloaked by " .. 20*HP_MULT .. ".",
 		image = moduleImagePath .. "module_cloakregen.png",
-		limit = 8,
+		-- unlimited
 		cost = 75 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"strike"},
 		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
-			sharedData.cloakregen = (sharedData.cloakregen or 0) + 20
+			sharedData.cloakregen = (sharedData.cloakregen or 0) + 20*HP_MULT
 		end
 	},
 	{
@@ -2296,7 +2296,7 @@ local moduleDefs = {
 		humanName = "Adv. Targeting System",
 		description = "Increases range by 7.5% but reduces speed by 0.75.",
 		image = moduleImagePath .. "module_adv_targeting.png",
-		limit = 8,
+		-- unlimited
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
@@ -2312,7 +2312,7 @@ local moduleDefs = {
 		humanName = "Improved Targeting System",
 		description = "Increases range by 10% but reduces speed by 2.",
 		image = moduleImagePath .. "module_adv_targeting.png",
-		limit = 8,
+		-- unlimited
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
@@ -2345,7 +2345,7 @@ local moduleDefs = {
 		humanName = "Basic Nanolathe",
 		description = "Increases build power by 1.5. Increases storage by 10.",
 		image = moduleImagePath .. "module_adv_nano.png",
-		limit = 8,
+		-- unlimited
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
@@ -2361,7 +2361,7 @@ local moduleDefs = {
 		humanName = "Advanced Nanolathe",
 		description = "Increases build power by 2.5. Increases storage by 25.",
 		image = moduleImagePath .. "module_adv_nano.png",
-		limit = 8,
+		-- unlimited
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
@@ -2377,7 +2377,7 @@ local moduleDefs = {
 		humanName = "Superior Nanolathe",
 		description = "Increases build power by 7.5. Increases storage by 75.",
 		image = moduleImagePath .. "module_adv_nano.png",
-		limit = 8,
+		-- unlimited
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
