@@ -67,13 +67,11 @@ local startDistanceSq = originX*originX + originZ*originZ
 local startDistance = math.sqrt(startDistanceSq)
 local suddenDeathFrame = 60*20*30
 local suddenSweepFrames = 10*60*30
-local damageReferenceDistance = 400
-local damageRampFactor = 1.0001
+local damageDoubleDistance = 500
+local damageRampFactor = 1.00004
 
 local baseDamage          = 30 * UPDATE_FREQ_DAMAGE / 30
 local propDamage          = 0.05 * UPDATE_FREQ_DAMAGE / 30
-local baseDamageAtRefDist = 30 * UPDATE_FREQ_DAMAGE / 30
-local propDamageAtRefDist = 0.05 * UPDATE_FREQ_DAMAGE / 30
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -118,8 +116,6 @@ local function SetupSuddenDeath()
 	if damageMult then
 		baseDamage = baseDamage * damageMult
 		propDamage = propDamage * damageMult
-		baseDamageAtRefDist = baseDamageAtRefDist * damageMult
-		propDamageatRefDist = propDamageatRefDist * damageMult
 	end
 	
 	if suddenSweepFrames < 1 then
@@ -173,14 +169,14 @@ local function CheckDamage(unitID)
 	end
 	
 	local inDist = math.sqrt(distSq) - suddenDeathRadius
-	inDist = (inDist / damageReferenceDistance)
+	inDist = (inDist / damageDoubleDistance)
+	local damageMult = 2 ^ inDist
 	
 	local _, maxHealth = spGetUnitHealth(unitID)
 	local armored, armorMult = spGetUnitArmored(unitID)
 	maxHealth = maxHealth / (armorMult or 1)
-	local damagePerElmo = baseDamageAtRefDist + propDamageAtRefDist * maxHealth
 	
-	Spring.AddUnitDamage(unitID, baseDamage + propDamage * maxHealth + inDist * inDist * damagePerElmo)
+	Spring.AddUnitDamage(unitID, (baseDamage + propDamage * maxHealth + inDist * inDist * damagePerElmo) * damageMult)
 end
 
 local function UpdateSuddenDeathRing(n)
@@ -248,8 +244,6 @@ function gadget:GameFrame(n)
 
 	baseDamage = baseDamage * damageRampFactor
 	propDamage = propDamage * damageRampFactor
-	baseDamageAtRefDist = baseDamageAtRefDist * damageRampFactor
-	propDamageAtRefDist = propDamageAtRefDist * damageRampFactor
 
 	IterableMap.ApplyFraction(allEligibleUnits, UPDATE_FREQ, n%UPDATE_FREQ, CheckOutOfBounds)
 	IterableMap.ApplyFraction(beingDamagedUnits, UPDATE_FREQ_DAMAGE, n%UPDATE_FREQ_DAMAGE, CheckDamage)
