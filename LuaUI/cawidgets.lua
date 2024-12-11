@@ -43,6 +43,7 @@ vfsInclude("LuaRules/Utilities/gametype.lua"         , nil, vfsGame)
 vfsInclude("LuaRules/Utilities/vector.lua"           , nil, vfsGame)
 vfsInclude("LuaRules/Utilities/unitTypeChecker.lua"  , nil, vfsGame)
 vfsInclude("LuaRules/Utilities/function_override.lua", nil, vfsGame)
+vfsInclude("LuaRules/Utilities/isDev.lua"            , nil, vfsGame)
 vfsInclude("LuaUI/Utilities/truncate.lua"            , nil, vfsGame)
 vfsInclude("LuaRules/Utilities/minimap.lua"          , nil, vfsGame)
 vfsInclude("LuaRules/Utilities/lobbyStuff.lua"       , nil, vfsGame)
@@ -1246,7 +1247,7 @@ local function GetPlayerAbilityToSpecchat(playerID)
 	-- this function controls when players can bypass the specmute modoption.
 	if playerCanSpecchatCache[playerID] ~= nil then return playerCanSpecchatCache[playerID] end
 	local ret = false
-	local isDev = Spring.Utilities.isPlayerFWDev(playerID)
+	local isDev = Spring.Utilities.IsPlayerFWDev(playerID)
 	if isDev then
 		return true
 	end
