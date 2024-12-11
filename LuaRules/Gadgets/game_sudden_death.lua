@@ -70,8 +70,8 @@ local suddenSweepFrames = 10*60*30
 local damageDoubleDistance = 500
 local damageRampFactor = 1.00004
 
-local baseDamage          = 30 * UPDATE_FREQ_DAMAGE / 30
-local propDamage          = 0.05 * UPDATE_FREQ_DAMAGE / 30
+local baseDamage          = 50 * UPDATE_FREQ_DAMAGE / 30
+local propDamage          = 0.01 * UPDATE_FREQ_DAMAGE / 30
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -176,7 +176,7 @@ local function CheckDamage(unitID)
 	local armored, armorMult = spGetUnitArmored(unitID)
 	maxHealth = maxHealth / (armorMult or 1)
 	
-	Spring.AddUnitDamage(unitID, (baseDamage + propDamage * maxHealth + inDist * inDist * damagePerElmo) * damageMult)
+	Spring.AddUnitDamage(unitID, (baseDamage + propDamage * maxHealth) * damageMult)
 end
 
 local function UpdateSuddenDeathRing(n)
