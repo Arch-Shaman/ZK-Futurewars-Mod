@@ -117,14 +117,6 @@ function gadget:GameFrame(n)
 	SendToUnsynced("PrintUIMessage", true, nextGiftTime)
 end
 
-function gadget:Initialize()
-	local teams = Spring.GetTeamList()
-	for _, teamID in pairs(teams) do
-		Spring.SetTeamResource (teamID, "ms", baseStorage)
-		Spring.SetTeamResource (teamID, "es", baseStorage)
-	end
-end
-
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 else

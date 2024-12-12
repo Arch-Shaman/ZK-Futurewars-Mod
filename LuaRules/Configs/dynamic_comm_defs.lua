@@ -1274,6 +1274,9 @@ local moduleDefs = {
 		applicationFunction = function (modules, sharedData)
 			sharedData.metalIncome = (sharedData.metalIncome or 0) + 6
 			sharedData.energyIncome = (sharedData.energyIncome or 0) + 8
+			if commwars then
+				sharedData.extrastorage = (sharedData.extrastorage or 0) + 10000
+			end
 		end
 	},
 	{
