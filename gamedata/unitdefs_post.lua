@@ -421,14 +421,13 @@ for name, ud in pairs(UnitDefs) do
 	end
 	
 	if (string.find(ud.name, "dyn") or ud.customparams.commtype or ud.customparams.level) and commwars then
-		Spring.Echo("[UnitDefs_Post] Comm wars applied to " .. ud.name)
 		ud.buildoptions = nil
 		ud.canassist = false
 		ud.repairspeed = ud.workertime * 3
-		ud.energymake = (ud.workertime * 3) + 1
-		ud.metalmake = 20
 		ud.health = ud.health * 3
 		ud.autoheal = (ud.autoheal or 0) * 3
+		ud.radardistance = 10000000
+		ud.radaremitheight = 100000
 	end
 	
 	-- 3dbuildrange for all none plane builders
