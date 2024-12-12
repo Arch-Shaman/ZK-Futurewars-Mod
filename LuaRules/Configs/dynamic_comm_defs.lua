@@ -319,7 +319,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_microriftgenerator",
 		humanName = "Microrift Generator",
-		description = "Instantly teleports your commander to any location within range. +75% damage.\nDisables Peaceful Wind module.",
+		description = "Instantly teleports your commander to any location within range.\nDisables Peaceful Wind module.",
 		image = moduleImagePath .. "commweapon_microrift.png",
 		limit = 1,
 		cost = 100 * COST_MULT,
@@ -332,7 +332,7 @@ local moduleDefs = {
 				return
 			end
 			sharedData.weapon2 = "commweapon_microriftgenerator"
-			sharedData.damageMult = (sharedData.damageMult or 1) + 0.75
+			--sharedData.damageMult = (sharedData.damageMult or 1) + 0.75
 		end
 	},
 	{
@@ -1368,7 +1368,7 @@ local moduleDefs = {
 		description = "Hide the radar signals of nearby units.",
 		image = moduleImagePath .. "module_jammer.png",
 		limit = 1,
-		cost = 300 * COST_MULT,
+		cost = ((commwars and 2000) or 300) * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
 		requireChassis = {"support", "knight"},
@@ -1385,7 +1385,7 @@ local moduleDefs = {
 		description = "Hides you from radar.",
 		image = moduleImagePath .. "module_jammer.png",
 		limit = 1,
-		cost = 500 * COST_MULT,
+		cost = ((commwars and 3000) or 500) * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"recon", "strike"},
@@ -1407,7 +1407,11 @@ local moduleDefs = {
 		slotType = "module",
 		effectPriority = 3,
 		applicationFunction = function (modules, sharedData)
-			sharedData.radarRange = 1800
+			if commwars then
+				sharedData.radarRange = 10000000
+			else
+				sharedData.radarRange = 1800
+			end
 		end
 	},
 	{
@@ -2514,9 +2518,13 @@ end
 -- these were (apparently) designed to be extremely flexible, but that flexibility wasn't used, so they were just complex
 -- by generating this structure dynamically, we simplify but leave other parts of the code alone
 local function levelDefGenerator(commname, cloneModulesStringFunc, weapon2Level)
+	local bpmult = 1
+	if commwars then
+		bpmult = 10
+	end
 	local res = {
 		[0] = {
-			morphBuildPower = 10,
+			morphBuildPower = 10 * bpmult,
 			morphBaseCost = 0,
 			morphUnitDefFunction = function(modulesByDefID)
 				return UnitDefNames[commname .. "0"].id
@@ -2524,10 +2532,6 @@ local function levelDefGenerator(commname, cloneModulesStringFunc, weapon2Level)
 			upgradeSlots = {},
 		}
 	}
-	local bpmult = 1
-	if commwars then
-		bpmult = 2
-	end
 	for i = 1, maxCommLevel do
 		--Spring.Echo("Do idx " .. i .. " for comm " .. commname .. ".")
 		res[i] = {
@@ -2623,7 +2627,11 @@ local chassisDefs = {
 				sharedData.jumpspeedbonus = (sharedData.jumpspeedbonus or 0) + 0.1 * (level - 1)
 				sharedData.jumprangebonus = (sharedData.jumprangebonus or 0) + 0.025 * (level - 1)
 			end
-			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+			if commwars then
+				sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 2.5 * level * HP_MULT
+			else
+				sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5 * HP_MULT
+			end
 			sharedData.speedMod = (sharedData.speedMod or 0) + 7.5 + 2 * math.min(level, 10)
 		end,
 		levelDefs = levelDefGenerator("dynrecon", GetReconCloneModulesString, 3)
@@ -2643,7 +2651,11 @@ local chassisDefs = {
 			end
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 5 * level
 			sharedData.extrastorage = (sharedData.extrastorage or 0) + 200 + (200 * level)
-			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 2.5
+			if commwars then
+				sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5 * level * HP_MULT
+			else
+				sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 2.5 * HP_MULT
+			end
 		end,
 		levelDefs = levelDefGenerator("dynsupport", GetSupportCloneModulesString, 3)
 	},
@@ -2666,7 +2678,11 @@ local chassisDefs = {
 					sharedData.healthBonus = (sharedData.healthBonus or 0) + 500 * (level - 1) * HP_MULT
 				end
 			end
-			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 2.5
+			if commwars then
+				sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10 * level * HP_MULT
+			else
+				sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 2.5 * HP_MULT
+			end
 			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.075 * (level + 1)
 		end,
 		levelDefs = levelDefGenerator("dynassault", GetAssaultCloneModulesString, 3)
@@ -2685,7 +2701,11 @@ local chassisDefs = {
 				-- hit points (in terms of player-visible level) was 1=5500, 2=5500, 3=7500, 3=9000, 4=10500 ....
 				sharedData.healthBonus = (sharedData.healthBonus or 0) + 1000 + 1750 * (level - 1) * HP_MULT
 			end
-			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10 * level
+			if commwars then
+				sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5 * level * HP_MULT
+			else
+				sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 10 * level
+			end
 			sharedData.damageMult = (sharedData.damageMult or 1) + 0.125 * (level + 1)
 		end,
 		levelDefs = levelDefGenerator("dynriot", GetRiotCloneModulesString, 2)
@@ -2702,7 +2722,11 @@ local chassisDefs = {
 			-- level expected to be 1 less than the value the player sees
 			--Spring.Echo("Apply level-up function to Knight (comm) lvl " .. (level+1) .. ".")
 			sharedData.healthBonus = (sharedData.healthBonus or 0) + 1200 + 600 * level * HP_MULT    -- 2=4600, 3=5200, 4=5800
-			sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5
+			if commwars then
+				sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5 * level * HP_MULT
+			else
+				sharedData.autorepairRate = (sharedData.autorepairRate or 0) + 5 * HP_MULT
+			end
 		end,
 		levelDefs = levelDefGenerator("dynknight", GetKnightCloneModulesString, 3)
 	},
