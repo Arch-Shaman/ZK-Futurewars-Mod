@@ -126,6 +126,7 @@ local commChoice = {}
 local allyTeamCommanderCount = {}
 --local prespawnedCommIDs = {}	-- [teamID] = unitID
 
+GG.allyTeamCommanderCount = allyTeamCommanderCount
 GG.startUnits = {}	-- WARNING: this is liable to break with new dyncomms (entries will likely not be an actual unitDefID)
 GG.CommanderSpawnLocation = {}
 
