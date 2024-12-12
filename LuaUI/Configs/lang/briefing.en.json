@@ -17,5 +17,6 @@
 	"comm_wars_header" : "Game mode: Commander Wars",
 	"comm_wars_entry_1" : "In this gamemode you have access to only your commander and nothing else. Your commander can no longer build, only repair and reclaim. Upgrade your commander by giving it more modules through the commander morph system and defeat the enemy commanders!",
 	"comm_wars_entry_2" : "Additionally, balance changes have been made to many commander modules and weapons in order to make them more balanced in a commander-only gamemode. The balance is still experimental however so feedback would be greatly appreciated.",
+	"comm_wars_entry_2" : "You are encouraged to fight enemy commanders in this gamemode. Every few minutes, the players who have dealt the most damage will be granted extra income. Additionally, after some amount of time, A ring of death will be created that will slowly shrink into the center of the map, forcing players into a fight to the death.",
 	"houserules" : "House Rules: "
 }

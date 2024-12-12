@@ -72,6 +72,7 @@ if (tonumber(modoptions["commwars"]) or 0) == 1 then
 		[1] = {"comm_wars_header", fontsize = 24},
 		[2] = {"comm_wars_entry_1", image = "unitpics/commstrike.png"},
 		[3] = {"comm_wars_entry_2", image = "unitpics/commweapon_disintegrator.png"},
+		[3] = {"comm_wars_entry_3", image = "unitpics/staticmex.png"},
 		[4] = {""},
 		[5] = {""},
 	}
