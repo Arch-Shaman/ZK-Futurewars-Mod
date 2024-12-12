@@ -30,13 +30,15 @@ local vecDistSq = Spring.Utilities.Vector.DistSq
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitDefID    = Spring.GetUnitDefID
 local spGetUnitHealth   = Spring.GetUnitHealth
+local spSetUnitHealth   = Spring.SetUnitHealth
+local spDestroyUnit     = Spring.DestroyUnit
 local spGetUnitArmored  = Spring.GetUnitArmored
 
 local MAP_WIDTH = Game.mapSizeX
 local MAP_HEIGHT = Game.mapSizeZ
 
 local UPDATE_FREQ = 9
-local UPDATE_FREQ_DAMAGE = 2
+local UPDATE_FREQ_DAMAGE = 4
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -67,11 +69,12 @@ local startDistanceSq = originX*originX + originZ*originZ
 local startDistance = math.sqrt(startDistanceSq)
 local suddenDeathFrame = 60*20*30
 local suddenSweepFrames = 10*60*30
-local damageDoubleDistance = 500
-local damageRampFactor = 1.00004
+local damageDoubleDistance = 400
+local damageRampFactor = 2 ^ (1/(60*30))
+local damageRampActive = false
 
 local baseDamage          = 50 * UPDATE_FREQ_DAMAGE / 30
-local propDamage          = 0.01 * UPDATE_FREQ_DAMAGE / 30
+local propDamage          = 0.02 * UPDATE_FREQ_DAMAGE / 30
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -83,8 +86,8 @@ local function GetDefaultConfig()
 
 
 	if (tonumber((Spring.GetModOptions() or {}).commwars) or 0) == 1 then
-		suddenDeathMinutes = suddenDeathMinutes or 10
-		suddenDeathSweepSeconds = suddenDeathSweepSeconds or 600
+		suddenDeathMinutes = suddenDeathMinutes or 7
+		suddenDeathSweepSeconds = suddenDeathSweepSeconds or 300
 	end
 
 	if not suddenDeathMinutes then
@@ -170,28 +173,34 @@ local function CheckDamage(unitID)
 	
 	local inDist = math.sqrt(distSq) - suddenDeathRadius
 	inDist = (inDist / damageDoubleDistance)
-	local damageMult = 2 ^ inDist
+	local damageMult = (2 ^ inDist) - 0.9
 	
-	local _, maxHealth = spGetUnitHealth(unitID)
+	local health, maxHealth = spGetUnitHealth(unitID)
 	local armored, armorMult = spGetUnitArmored(unitID)
 	maxHealth = maxHealth / (armorMult or 1)
-	
-	Spring.AddUnitDamage(unitID, (baseDamage + propDamage * maxHealth) * damageMult)
+
+	local newHP = health - (baseDamage + propDamage * maxHealth) * damageMult
+	if newHP < 0 then
+		spDestroyUnit(unitID)
+	end
+	spSetUnitHealth(unitID, newHP)
 end
 
 local function UpdateSuddenDeathRing(n)
 	if stopSuddenDeath then
 		return
 	end
-	local progress = (n - suddenDeathFrame) / suddenSweepFrames
-	if progress < 1 then
-		suddenDeathRadius = (1 - progress)*(1 - progress)*(1 - progress*(1 - progress)) * startDistance
-	else
-		suddenDeathRadius = (1 - progress) * startDistance -- Accelerate the killing time.
+	local progress = 0.1 ^ ((n - suddenDeathFrame) / suddenSweepFrames)
+	suddenDeathRadius = progress * startDistance
+
+	if (not damageRampActive) and n > (suddenDeathFrame + suddenSweepFrames) then
+		damageRampActive = true
+		Spring.Echo("game_priority_message: Ring of death damage will now double every minute!")
 	end
+
 	suddenDeathRadiusSq = suddenDeathRadius * suddenDeathRadius
 	Spring.SetGameRulesParam("suddenDeathRadius", suddenDeathRadius)
-	Spring.SetGameRulesParam("suddenDeathProgress", progress)
+	Spring.SetGameRulesParam("suddenDeathProgress", (1 - progress))
 end
 
 local function SuddenDeathActivate()
@@ -242,8 +251,10 @@ function gadget:GameFrame(n)
 		SuddenDeathActivate()
 	end
 
-	baseDamage = baseDamage * damageRampFactor
-	propDamage = propDamage * damageRampFactor
+	if damageRampActive then
+		baseDamage = baseDamage * damageRampFactor
+		propDamage = propDamage * damageRampFactor
+	end
 
 	IterableMap.ApplyFraction(allEligibleUnits, UPDATE_FREQ, n%UPDATE_FREQ, CheckOutOfBounds)
 	IterableMap.ApplyFraction(beingDamagedUnits, UPDATE_FREQ_DAMAGE, n%UPDATE_FREQ_DAMAGE, CheckDamage)
