@@ -38,8 +38,20 @@ START_ENERGY  = 400
 
 INNATE_INC_METAL   = 2
 INNATE_INC_ENERGY  = 2
-
 START_STORAGE = 0
+
+local commwars = false
+if (Spring.GetModOptions) then
+	local modOptions = Spring.GetModOptions()
+    if modOptions then
+		commwars = modOptions.commwars or "0" == "1"
+	end
+end
+if commwars then
+	INNATE_INC_METAL = 9
+	INNATE_INC_ENERGY = 10000
+end
+
 
 COMM_SELECT_TIMEOUT = 30 * 15 -- 15 seconds
 
