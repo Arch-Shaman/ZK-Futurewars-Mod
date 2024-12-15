@@ -18,7 +18,7 @@ local commwars = false
 if (Spring.GetModOptions) then
 	local modOptions = Spring.GetModOptions()
     if modOptions then
-		commwars = modOptions.commwars or "0" == "1"
+		commwars = modOptions.commwars == "1"
 	end
 end
 

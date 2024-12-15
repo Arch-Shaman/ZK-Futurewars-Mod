@@ -97,7 +97,7 @@ local isCommwars = false
 
 do
 	local modoptions = Spring.GetModOptions() or {}
-	isCommwars = (tonumber(modoptions.commwars) or 0) == 1
+	isCommwars = modoptions.commwars == "1"
 end
 
 local staticO_small = {

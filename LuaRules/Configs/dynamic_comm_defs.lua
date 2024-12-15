@@ -31,7 +31,7 @@ if (Spring.GetModOptions) then
             HP_MULT = modOptions.hpmult
         end
 		allowCommEco = (modOptions.commeco or "0") == "1"
-		commwars = modOptions.commwars or "0" == "1"
+		commwars = modOptions.commwars == "1"
 		if modOptions.disabledcommmodules and modOptions.disabledcommmodules ~= "" then
 			local s = modOptions.disabledcommmodules
 			s = string.gsub(s, " ", "") -- remove whitespace
