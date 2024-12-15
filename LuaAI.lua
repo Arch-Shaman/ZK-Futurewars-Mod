@@ -33,15 +33,15 @@ return {
 	},
 	{
 		name = 'Chicken: Brutal',
-		desc = 'The Default: A mix between challange and feasibility'
+		desc = 'A mix between challange and feasibility.'
 	},
 	{
 		name = 'Chicken: Suicidal',
-		desc = 'A challanging experiance meant for experianced Future Wars players'
+		desc = 'A challanging experiance meant for experianced Future Wars players.'
 	},
 	{
 		name = 'Chicken: Nightmare',
-		desc = 'An Onslaught meant for grizzled veterans of Future Wars'
+		desc = 'An Onslaught meant for grizzled veterans of Future Wars.'
 	},
 	{
 		name = 'Chicken: Annihilation',
