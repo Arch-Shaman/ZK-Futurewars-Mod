@@ -21,12 +21,12 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 1300.1,
+		default = 3000.1,
 	},
 
 	edgeEffectiveness       = 0.5,
 	explosionGenerator      = "custom:100rlexplode",
-	impulseBoost            = 300,
+	impulseBoost            = 50,
 	impulseFactor           = 4,
 	interceptedByShieldType = 1,
 	range                   = 530,
