@@ -44,6 +44,7 @@ local SIG_RESTORE_TORSO = 32
 
 local TORSO_SPEED_YAW = math.rad(300)
 local ARM_SPEED_PITCH = math.rad(180)
+local needsBattery = false
 
 local PACE = 1.8
 local BASE_VELOCITY = UnitDefNames.benzcom1.speed or 1.25*30
@@ -226,6 +227,7 @@ function script.Create()
 	dyncomm.Create()
 	Hide(rcannon_flare)
 	Hide(lnanoflare)
+	needsBattery = dyncomm.SetUpBattery()
 --	Turn(larm, x_axis, math.rad(30))
 --	Turn(rarm, x_axis, math.rad(-10))
 --	Turn(rhand, x_axis, math.rad(41))
@@ -360,7 +362,11 @@ function script.BlockShot(num, targetID)
 		okp = GG.OverkillPrevention_CheckBlock(unitID, targetID, okpconfig[weaponNum].damage, okpconfig[weaponNum].timeout, okpconfig[weaponNum].speedmult, okpconfig[weaponNum].structureonly) or false -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
 		--Spring.Echo("OKP: " .. tostring(okp))
 	end
-	return okp or radarcheck
+	local battery = false
+	if needsBattery then
+		battery = GG.BatteryManagement.CanFire(unitID, weaponNum)
+	end
+	return okp or radarcheck or battery
 end
 
 function script.Shot(num)

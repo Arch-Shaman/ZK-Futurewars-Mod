@@ -80,6 +80,7 @@ local animationSpeedMult = 1.0
 local currentSpeed = 0
 local REF_SPEED = 1
 local sizeSpeedMult = 1.0
+local needsBattery = false
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -423,7 +424,7 @@ function script.Create()
 	Move(nanospray, z_axis, 1*dyncomm.GetScale())
 	Move(nanospray, y_axis, 1.8*dyncomm.GetScale())
 	Move(nanospray, x_axis, 1.5*dyncomm.GetScale())
-
+	needsBattery = dyncomm.SetUpBattery()
 	StartThread(MotionSpeedControl)
 	StartThread(MotionControl)
 	StartThread(RestoreAfterDelay)
@@ -574,7 +575,11 @@ function script.BlockShot(num, targetID)
 		okp = GG.OverkillPrevention_CheckBlock(unitID, targetID, okpconfig[weaponNum].damage, okpconfig[weaponNum].timeout, okpconfig[weaponNum].speedmult, okpconfig[weaponNum].structureonly) or false -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
 		--Spring.Echo("OKP: " .. tostring(okp))
 	end
-	return okp or radarcheck
+	local battery = false
+	if needsBattery then
+		battery = GG.BatteryManagement.CanFire(unitID, weaponNum)
+	end
+	return okp or radarcheck or battery
 end
 
 function script.StopBuilding()

@@ -40,6 +40,7 @@ local grenade = piece 'grenade'
 
 local smokePiece = {torso}
 local nanoPieces = {nanospray}
+local needsBattery = false
 
 local SPEED_MULT = 1
 local sizeSpeedMult = 1
@@ -394,6 +395,7 @@ end
 function script.Create()
 	dyncomm.Create()
 	StartThread(GetOKP)
+	needsBattery = dyncomm.SetUpBattery()
 	sizeSpeedMult = (1 - (1 - dyncomm.GetPace())/2.5) *SPEED_MULT
 	--alert to dirt
 	Turn(armhold, x_axis, math.rad(-45), math.rad(250)) --upspring at -45
@@ -607,7 +609,11 @@ function script.BlockShot(num, targetID)
 		okp = GG.OverkillPrevention_CheckBlock(unitID, targetID, okpconfig[weaponNum].damage, okpconfig[weaponNum].timeout, okpconfig[weaponNum].speedmult, okpconfig[weaponNum].structureonly) or false -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
 		--Spring.Echo("OKP: " .. tostring(okp))
 	end
-	return okp or radarcheck
+	local battery = false
+	if needsBattery then
+		battery = GG.BatteryManagement.CanFire(unitID, weaponNum)
+	end
+	return okp or radarcheck or battery
 end
 function script.QueryNanoPiece()
 	GG.LUPS.QueryNanoPiece(unitID,unitDefID,Spring.GetUnitTeam(unitID),nanospray)

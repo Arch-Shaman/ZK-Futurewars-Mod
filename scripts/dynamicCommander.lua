@@ -452,6 +452,24 @@ local function GetOKP()
 	return okp
 end
 
+local function SetUpBattery()
+	local battery = {}
+	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
+	local weaponname2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2")
+	local efficiency = Spring.GetUnitRulesParam(unitID, "comm_battery_efficiency") or 1
+	local wep1 = WeaponDefs[unitWeaponNames[weaponname1].weaponDefID]
+	local wep2 = weaponname2 and WeaponDefs[unitWeaponNames[weaponname2].weaponDefID] or nil
+	if wep2 ~= nil then
+		battery[2] = tonumber(wep2.customParams["batterydrain"]) or 0 / efficiency
+	end
+	battery[1] = tonumber(wep1.customParams["batterydrain"]) or 0 / efficiency
+	local needsBattery = false
+	if battery[1] > 0 or battery[2] > 0 then
+		needsBattery = true
+	end
+	return needsBattery
+end
+
 local function Create()
 	-- copy the dgun command table because we sometimes need to reinsert it
 	local cmdID = Spring.FindUnitCmdDesc(unitID, CMD.MANUALFIRE)

@@ -76,6 +76,7 @@ local spooling1 = false
 local spooling2 = false
 local priorityAim = false
 local priorityAimNum = 0
+local needsBattery = false
 
 --------------------------------------------------------------------------------
 -- vars
@@ -160,6 +161,7 @@ function script.Create()
 	Hide(lfirept)
 	Hide(rbigflash)
 	Hide(nanospray)
+	needsBattery = dyncomm.SetUpBattery()
 	
 	Turn(luparm, x_axis, math.rad(30))
 	Turn(ruparm, x_axis, math.rad(-10))
@@ -246,7 +248,11 @@ function script.BlockShot(num, targetID)
 		spool = not GG.FireControl.CanFireWeapon(unitID, weaponNum)
 		--Spring.Echo("SpoolCheck2: " .. tostring(spool))
 	end
-	return spool or okp or radarcheck
+	local battery = false
+	if needsBattery then
+		battery = GG.BatteryManagement.CanFire(unitID, weaponNum)
+	end
+	return spool or okp or radarcheck or battery
 end
 
 local function RestoreLaser()

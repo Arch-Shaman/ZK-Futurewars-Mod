@@ -161,6 +161,7 @@ local RESTORE_DELAY = 2500
 local instantaimweapon2 = false
 local priorityAim = false
 local priorityAimNum = 0
+local needsBattery = false
 
 local function GetOKP()
 	while Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") == nil do
@@ -998,12 +999,16 @@ function script.BlockShot(num, targetID)
 	local weaponNum = dyncomm.GetWeapon(num)
 	--Spring.Echo(unitID .. ": BlockShot: " .. weaponNum)
 	local radarcheck = (targetID and GG.DontFireRadar_CheckBlock(unitID, targetID)) and true or false
+	local battery = false
+	if needsBattery then
+		battery = GG.BatteryManagement.CanFire(unitID, weaponNum)
+	end
 	local okp = false
 	if okpconfig and okpconfig[weaponNum] and okpconfig[weaponNum].useokp and targetID then
 		okp = GG.OverkillPrevention_CheckBlock(unitID, targetID, okpconfig[weaponNum].damage, okpconfig[weaponNum].timeout, okpconfig[weaponNum].speedmult, okpconfig[weaponNum].structureonly) or false -- (unitID, targetID, damage, timeout, fastMult, radarMult, staticOnly)
 		--Spring.Echo("OKP: " .. tostring(okp))
 	end
-	return okp or radarcheck
+	return okp or radarcheck or battery
 end
 
 ---------------------------------------------------------------------
@@ -1011,11 +1016,11 @@ end
 -- Creation and Death
 
 function script.Create()
-    local map = Spring.GetUnitPieceMap(unitID);
-    local offsets = constructSkeleton(unitID,map.Scene, {0,0,0});
+	local map = Spring.GetUnitPieceMap(unitID);
+	local offsets = constructSkeleton(unitID,map.Scene, {0,0,0});
 	Spin(detpack1, z_axis, 1)
 	Spin(detpack3, z_axis, -2)
-    
+	needsBattery = dyncomm.SetUpBattery()
     for a,anim in pairs(Animations) do
         for i,keyframe in pairs(anim) do
             local commands = keyframe.commands;
