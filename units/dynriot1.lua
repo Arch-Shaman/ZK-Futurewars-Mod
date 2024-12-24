@@ -45,7 +45,7 @@ return {
 		movementClass       = "AKBOT2",
 		noChaseCategory     = "TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET",
 		objectName          = "corcomAlt.s3o",
-		script              = "corcom_alt.lua",
+		script              = "dynriot.lua",
 		selfDestructAs      = "ESTOR_BUILDINGEX",
 		sfxtypes            = {
 			explosiongenerators = {
