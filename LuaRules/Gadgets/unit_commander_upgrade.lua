@@ -401,6 +401,33 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 			spRemoveUnitCmdDesc(unitID, onOffCmd)
 		end
 	end
+	if data.battery then
+		local weaponname1 = data.weapon1
+		local weaponname2 = data.weapon2
+		local efficiency = data.batteryefficiency or 1
+		local chargeRate = data.batteryrechargerate or 10
+		local chargeMax = data.batterymax or 300
+		local wep1 = WeaponDefs[unitWeaponNames[weaponname1].weaponDefID]
+		local wep2 = weaponname2 and WeaponDefs[unitWeaponNames[weaponname2].weaponDefID] or nil
+		local morphedFrom = Spring.GetUnitRulesParam(unitID, "wasMorphedTo")
+		local costs = {}
+		local checks = {}
+		costs[1] = (tonumber(wep1.customParams.batterydrain) or 0) * efficiency
+		checks[1] = math.ceil(costs[1] * 1.1)
+		if wep2 then
+			costs[2] = (tonumber(wep2.customParams.batterydrain) or 0) * efficiency
+			checks[2] = math.ceil(costs[2] * 1.1)
+		end
+		if morphedFrom then
+			local charge = Spring.GetUnitRulesParam(morphedFrom, "battery") or 0.75 * chargeMax
+			if GG.BatteryManagement.IsUnitManaged(morphedFrom) then
+				GG.BatteryManagement.SetUpMorphedUnit(unitID, morphedFrom)
+				GG.BatteryManagement.SetBatteryStats(unitID, charge, chargeMax, chargeRate, costs, checks)
+			else
+				GG.BatteryManagement.SetBatteryStats(unitID, charge, chargeMax, chargeRate, costs, checks)
+			end
+		end
+	end
 	if data.fireproof then
 		spSetUnitRulesParam(unitID, "fireproof", 1, INLOS)
 		GG.MakeUnitFireproof(unitID)

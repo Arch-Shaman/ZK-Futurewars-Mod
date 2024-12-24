@@ -131,6 +131,34 @@ local function UseCharge(unitID, amount)
 	return ret
 end
 
+function deepcopy(orig)
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in next, orig, nil do
+            copy[deepcopy(orig_key)] = deepcopy(orig_value)
+        end
+        setmetatable(copy, deepcopy(getmetatable(orig)))
+    else
+        copy = orig
+    end
+    return copy
+end
+
+local function IsUnitManaged(unitID)
+	local data = IterableMap.Get(handled, unitID)
+	return data ~= nil
+end
+
+local function SetUpMorphedUnit(unitID, oldUnitID)
+	local data = IterableMap.Get(handled, oldUnitID)
+	if data == nil then return end
+	local newData = deepcopy(data)
+	IterableMap.Add(handled, unitID, newData)
+	IterableMap.Remove(handled, oldUnitID)
+end
+
 local function GetChargePercent(unitID)
 	local data = IterableMap.Get(handled, unitID)
 	return data and data.battery / data.maxbattery or 1
@@ -158,20 +186,32 @@ end
 local function SetBatteryStats(unitID, charge, maxbattery, rechargerate, costs, checks)
 	local data = IterableMap.Get(handled, unitID)
 	if data then
-		if charge then data.battery = charge end
-		if rechargerate then data.gain = rechargerate end
-		if maxbattery then data.maxbattery = maxbattery end
+		if charge then 
+			data.battery = charge 
+			spSetUnitRulesParam(unitID, "battery", charge, INLOS)
+		end
+		if rechargerate then 
+			data.gain = rechargerate 
+			spSetUnitRulesParam(unitID, "battery_recharge", rechargerate, INLOS) -- for context menu
+		end
+		if maxbattery then 
+			data.maxbattery = maxbattery
+			spSetUnitRulesParam(unitID, "battery_max", maxbattery, INLOS)
+		end
 		if costs then data.costs = costs end
 		if checks then data.checks = checks end
 	else
 		local data = {battery = charge, gain = rechargerate, maxbattery = maxbattery, costs = costs, scales = config.scales, checks = checks, reverseBuilt = false}
+		spSetUnitRulesParam(unitID, "battery", charge or 0, INLOS)
+		spSetUnitRulesParam(unitID, "battery_recharge", rechargerate, INLOS)
+		spSetUnitRulesParam(unitID, "battery_max", maxbattery, INLOS)
 		IterableMap.Add(handled, unitID, data)
 		forceUpdateUnits[unitID] = true
 	end
 end
 
 function gadget:Initialize()
-	GG.BatteryManagement = {SetBatteryCosts = SetBatteryCosts, SetBatteryChecks = SetBatteryChecks, SetBatteryStats = SetBatteryStats, CanFire = CanFire, GetChargeLevel = GetChargeLevel, GetChargePercent = GetChargePercent, CanUseCharge = CanUseCharge, WeaponFired = WeaponFired, IsBatteryRecharged = IsBatteryRecharged, UseCharge = UseCharge, RechargeBattery = RechargeBattery, HasBattery = HasBattery}
+	GG.BatteryManagement = {IsUnitManaged = IsUnitManaged, SetBatteryCosts = SetBatteryCosts, SetBatteryChecks = SetBatteryChecks, SetBatteryStats = SetBatteryStats, CanFire = CanFire, GetChargeLevel = GetChargeLevel, GetChargePercent = GetChargePercent, CanUseCharge = CanUseCharge, WeaponFired = WeaponFired, IsBatteryRecharged = IsBatteryRecharged, UseCharge = UseCharge, RechargeBattery = RechargeBattery, HasBattery = HasBattery}
 end
 
 function gadget:UnitCreated(unitID, unitDefID)
