@@ -452,22 +452,32 @@ local function GetOKP()
 	return okp
 end
 
-local function SetUpBattery()
-	local battery = {}
+local function SetUpBatteryThread()
 	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
+	while weaponname1 == nil do -- dynamic comm not set up yet
+		Spring.Echo("[SetUpBattery]: Warning: comm weapon not set yet!")
+		weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
+		Sleep(33)
+	end
+	local battery = {}
 	local weaponname2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2")
 	local efficiency = Spring.GetUnitRulesParam(unitID, "comm_battery_efficiency") or 1
 	local wep1 = WeaponDefs[unitWeaponNames[weaponname1].weaponDefID]
 	local wep2 = weaponname2 and WeaponDefs[unitWeaponNames[weaponname2].weaponDefID] or nil
 	if wep2 ~= nil then
-		battery[2] = tonumber(wep2.customParams["batterydrain"]) or 0 / efficiency
+		battery[2] = (tonumber(wep2.customParams["batterydrain"]) or 0) / efficiency
 	end
-	battery[1] = tonumber(wep1.customParams["batterydrain"]) or 0 / efficiency
+	battery[1] = (tonumber(wep1.customParams["batterydrain"]) or 0) / efficiency
 	local needsBattery = false
-	if battery[1] > 0 or battery[2] > 0 then
+	if battery[1] > 0 or (battery[2] and battery[2] > 0) then
 		needsBattery = true
 	end
+	Spring.Echo("Battery setup complete")
 	return needsBattery
+end
+
+local function SetUpBattery()
+	StartThread(SetUpBatteryThread)
 end
 
 local function Create()
@@ -664,6 +674,7 @@ local function SpawnWreck(wreckLevel)
 end
 
 return {
+	SetUpBattery      = SetUpBattery,
 	GetPace           = GetPace,
 	GetScale          = GetScale,
 	GetWeapon         = GetWeapon,
