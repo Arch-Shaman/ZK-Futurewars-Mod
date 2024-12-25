@@ -157,7 +157,7 @@ return {
 					default        = 18.01,
 				},
 				duration                = 10,
-				xplosionGenerator       = "custom:lightningplosion_nopost",
+				explosionGenerator       = "custom:lightningplosion_nopost",
 				fireStarter             = 150,
 				impactOnly              = true,
 				impulseBoost            = 0,
