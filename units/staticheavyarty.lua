@@ -104,7 +104,7 @@ return {
 					armorpiercing = 0.4,
 				},
 				damage                  = {
-					default = 200.01,
+					default = 175.01,
 				},
 				explosionScar           = false,
 				edgeEffectiveness       = 0.6,
@@ -152,7 +152,7 @@ return {
 					armorpiercing = 0.4,
 				},
 				damage                  = {
-					default = 200*7,
+					default = 175*7,
 				},
 				edgeEffectiveness       = 0.6,
 				explosionGenerator      = "custom:tremor",
@@ -201,7 +201,7 @@ return {
 					armorpiercing = 0.4,
 				},
 				damage                  = {
-					default = 200*7*10,
+					default = 175*7*10,
 				},
 				explosionGenerator      = "custom:MEDMISSILE_EXPLOSION",
 				fireTolerance           = 1820, -- 10 degrees
@@ -231,8 +231,8 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				customParams            = {
-					disarmDamageMult = 200,
-					disarmTimer      = 10,
+					disarmDamageMult = 150,
+					disarmTimer      = 6,
 					restrict_in_widgets = 1,
 					light_camera_height = 1500,
 					light_radius = 120,
