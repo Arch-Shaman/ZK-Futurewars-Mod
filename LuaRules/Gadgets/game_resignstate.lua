@@ -31,6 +31,10 @@ if not gadgetHandler:IsSyncedCode() then
 	return
 end
 
+resigntimer, mintime = VFS.Include("LuaRules\\Configs\\Resignstate_overrides.lua")
+mintime = mintime or 60
+resigntimer = resigntimer or 180
+
 local discardUnitDefNames = {
 	["staticcon"] = true,
 	["staticrepair"] = true,
@@ -58,8 +62,6 @@ local noWorkers = false
 
 local states = {} -- allyTeamID = {count = num, playerStates = {}}
 local playerMap = {} -- playerID = allyTeamID
-local resigntimer = 180 -- timer starts at 3 minutes and loses a second every 3rd second (down to 60s) over the first 6 minutes.
-local mintime = 60
 local lostAllCombatUnitsTime = 10
 local resignteams = {}
 local exemptplayers = {} -- players who are exempt.
@@ -72,15 +74,14 @@ local checkForceResign = true
 local topCombatValue = 0
 local topCombatValueID = -1
 
-local modoptions = Spring.GetModOptions()
-mintime = tonumber(modoptions.resignstate_mintimer) or 60
-resigntimer = tonumber(modoptions.resignstate_timer) or 300
-if tonumber(modoptions["forceresign"] or 1) == 0 then
-	checkForceResign = false
+do
+	local modoptions = Spring.GetModOptions()
+	mintime = tonumber(modoptions.resignstate_mintimer) or 60
+	resigntimer = tonumber(modoptions.resignstate_timer) or 300
+	if tonumber(modoptions["forceresign"] or 1) == 0 then
+		checkForceResign = false
+	end
 end
-
-playableZombies = modoptions.playable_zombies
-playableZombiesWarned = false
 
 -- config --
 
@@ -142,6 +143,25 @@ local function GetAllyTeamThreshold(allyTeamID)
 		threshold = playerCount
 	end
 	return threshold, playerCount
+end
+
+local function GetVotesOnAllyTeam(allyTeamID)
+	if not gameStarted then return 0 end -- game is not started, don't bother.
+	local voteCount = 0
+	local teamList = Spring.GetTeamList(allyTeamID)
+	for t = 1, #teamList do
+		local teamID = teamList[t]
+		local playerList = Spring.GetPlayerList(teamID)
+		for p = 1, #playerList do
+			local playerID = playerList[p]
+			local _, active, spectator = Spring.GetPlayerInfo(playerID, true)
+			local voteState = states[allyTeamID].playerStates[playerID]
+			if voteState and not exemptplayers[playerID] and active and not spectator then
+				voteCount = voteCount + 1
+			end
+		end
+	end
+	return voteCount
 end
 
 local function UpdateAllyTeam(allyTeamID)
@@ -499,14 +519,8 @@ function gadget:GameFrame(f)
 			triggeredNoCons = false
 		end
 		if noWorkers and CheckForAllTeamsOutOfCombatUnits() then
-			--local gaiaAllyTeam = select(6, Spring.GetTeamInfo(Spring.GetGaiaTeamID()))
-			if playable_zombies then -- TODO: Actually figure out what causes this bug.
-				if not playableZombiesWarned then
-					Spring.Log("game_resignstate.lua", LOG.ERROR, "Stalemate detection was triggered during a game of players as zombies and was forcibly stopped. Please Debug why this happens instead of relying on this hacky fix")
-				end
-			else
-				Spring.GameOver() -- end as a draw.
-			end
+			local gaiaAllyTeam = select(6, Spring.GetTeamInfo(Spring.GetGaiaTeamID()))
+			Spring.GameOver(gaiaAllyTeam) -- end as a draw.
 		end
 	end
 	if f%90 == 15 then
