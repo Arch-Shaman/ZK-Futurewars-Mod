@@ -26,6 +26,8 @@ smokePiece = {torso}
 local SIG_WALK = 1
 local SIG_RESTORE = 8
 local SIG_AIM = 2
+local SIG_PRIORITY_AIM = 16
+
 
 local TORSO_SPEED_YAW = math.rad(240)
 local ARM_SPEED_PITCH = math.rad(120)
@@ -287,9 +289,24 @@ local function RestoreAfterDelay()
 	Turn(ruparm, x_axis, 0, ARM_SPEED_PITCH)
 end
 
+local priorityAimNum = 1
+
+local function StartPriorityAim(num)
+	Signal(SIG_PRIORITY_AIM)
+	SetSignalMask(SIG_PRIORITY_AIM)
+	priorityAimNum = num
+	Sleep(3000)
+	priorityAimNum = 1
+end
 
 function script.AimWeapon(num, heading, pitch)
 	if num == 1 or num == 4 then
+		if priorityAimNum == 4 and num == 1 then
+			return false
+		end
+		if num == 4 then
+			StartThread(StartPriorityAim, num)
+		end
 		if bJumping then return false end
 		Signal(SIG_AIM)
 		SetSignalMask(SIG_AIM)
@@ -320,6 +337,10 @@ end
 local barrels = {[1] = lfbarrel1, [2] = lfbarrel2, [3] = rfbarrel1, [4] = rfbarrel2}
 
 function script.Shot(num)
+	if num == 4 then
+		priorityAimNum = 1
+		Signal(SIG_PRIORITY_AIM)
+	end
 	if num == 4 then num = 1 end
 	gunIndex[num] = gunIndex[num] + 1
 	if gunIndex[num] > 4 then gunIndex[num] = 1 end
