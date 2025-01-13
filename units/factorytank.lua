@@ -105,7 +105,7 @@ return {
 					stats_shield_damage = (100*20) + 1200,
 				},
 				damage                  = {
-					default = 400.2,
+					default = 1000.2,
 				},
 				explosionGenerator      = "custom:DOT_Pillager_Explo",
 				fireTolerance           = 1820, -- 10 degrees
@@ -114,7 +114,7 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 600,
-				reloadtime              = 4.7,
+				reloadtime              = 5.0,
 				rgbColor                = "0.2 0.2 0.2",
 				soundHit                = "weapon/cannon/frag_impact",
 				soundStart              = "explosion/ex_large5",
