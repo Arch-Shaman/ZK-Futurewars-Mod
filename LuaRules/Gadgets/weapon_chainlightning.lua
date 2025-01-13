@@ -27,7 +27,7 @@ local spSpawnSFX                   = Spring.SpawnSFX
 local spGetUnitDefID               = Spring.GetUnitDefID
 local spGetUnitCollisionVolumeData = Spring.GetUnitCollisionVolumeData
 local spGetFeatureCollisionVolumeData = Spring.GetFeatureCollisionVolumeData
---local spSpawnProjectile            = Spring.SpawnProjectile 
+local spSpawnProjectile            = Spring.SpawnProjectile 
 local spGetUnitWeaponTarget        = Spring.GetUnitWeaponTarget
 local spGetFeatureDefID            = Spring.GetFeatureDefID
 
@@ -37,7 +37,7 @@ local invalidFeatures = {}
 
 for i = 1, #WeaponDefs do
 	local cp = WeaponDefs[i].customParams
-	if cp.chainlightning_index then
+	if cp.chainlightning_index or cp.chainlightning_spawndef then
 		wantedWeapons[#wantedWeapons + 1] = i
 		config[i] = {
 			targetSearchDistance = tonumber(cp.chainlightning_searchdist),
@@ -49,7 +49,16 @@ for i = 1, #WeaponDefs do
 			canTargetFeature = cp.chainlightning_donttargetfeature == nil,
 			canStrikeTwice = cp.chainlightning_hittwice ~= nil,
 			dontspawn = cp.chainlightning_blockexplosion ~= nil,
+			forceSpawn = cp.chainlightning_spawndef,
 		}
+		if config[i].forceSpawn then
+			local wd = WeaponDefNames[config[i].forceSpawn]
+			if wd then
+				config[i].forceSpawn = wd.id
+			else
+				Spring.Echo("[Chainlightning]: Invalid weapondef! " .. tostring(config[i].forceSpawn) .. " does not exist!")
+			end
+		end
 		--Spring.Echo("[ChainLightning] Added " .. i)
 		Script.SetWatchExplosion(i, true)
 		if config[i].forksub then
@@ -59,9 +68,10 @@ for i = 1, #WeaponDefs do
 end
 
 for i = 1, #FeatureDefs do
-	local name = FeatureDefs[i].tooltip
+	local name = string.lower(FeatureDefs[i].tooltip)
 	--Spring.Echo(i .. ": " .. tostring(name))
-	if string.find(name, "Shards") or string.find(name, "Debris -") or name == "Metal Vein" or name == "Coagulation Node" or name == "contains metal" or string.find(name, "Geothermal vent") then
+	
+	if string.find(name, "shards") or string.find(name, "debris -") or (string.find(name, "geothermal") and not string.find(name, "wreck")) or name == "metal vein" or name == "coagulation node" or name == "contains metal" then
 		invalidFeatures[i] = true
 		--Spring.Echo(i .. " ( " .. name .. ") is invalid")
 	end
@@ -157,6 +167,22 @@ local function SpawnLightning(attackerID, index, x, y, z, targetX, targetY, targ
 	else
 		spSpawnSFX(attackerID, 2047 + index, x, y, z, dirx, diry, dirz, true)
 	end
+end
+
+local function SpawnLightningProjectile(attackerID, def, x, y, z, targetX, targetY, targetZ, dirx, diry, dirz, targetID)
+	dirx, diry, dirz = PointToDir(x, y, z, targetX, targetY, targetZ)
+	if debugMode then
+		Spring.Echo("Chain Lightning: Spawning using weaponIndex ", index)
+		Spring.MarkerAddLine(x, y, z, targetX, targetY, targetZ)
+	end
+	local params = {
+		pos = {x, y, z},
+		speed = {dirx, diry, dirz},
+		owner = attackerID,
+		tracking = targetID,
+	}
+	params["end"] = {targetX, targetY, targetZ} -- why recoil INSISTS on using a lua keyword is beyond me.
+	spSpawnProjectile(def, params)
 end
 
 local function GetDirectionFromSomething(targetID, originX, originY, originZ, isFeature)
@@ -278,7 +304,11 @@ local function DoChainLightning(weaponDefID, px, py, pz, AttackerID, damagedUnit
 			Spring.Echo("ChainLightning: Fallback due to nil sx")
 			sx, sy, sz = px, py, pz
 		end
-		SpawnLightning(AttackerID, c.weaponIndex, sx, sy, sz, x2, y2, z2, dirx, diry, dirz)
+		if c.forceSpawn then
+			SpawnLightningProjectile(AttackerID, c.forceSpawn, sx, sy, sz, x2, y2, z2, dirx, diry, dirz, targetID)
+		else
+			SpawnLightning(AttackerID, c.weaponIndex, sx, sy, sz, x2, y2, z2, dirx, diry, dirz)
+		end
 	end
 end
 
