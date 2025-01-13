@@ -187,6 +187,9 @@ function gadget:GameFrame(n)
 					elseif batteryCost > 0 then
 						local batteryAvailable = GG.BatteryManagement.GetChargeLevel(unitID)
 						local chargeMult = 1
+						local overProportion = 1 - (charge + chargeAdd - def.maxCharge)/chargeAdd
+						batteryCost = batteryCost * overProportion
+						chargeAdd = chargeAdd*overProportion
 						if batteryAvailable > batteryCost then
 							GG.BatteryManagement.UseCharge(unitID, batteryCost)
 							data.oldChargeRate = GetChargeRate(unitID)
