@@ -32,6 +32,5 @@ local weaponDef = {
 	weaponType              = "Cannon",
 	weaponVelocity          = 6000,
 }
-}
 
 return name, weaponDef
