@@ -6,7 +6,7 @@ do
 		["polish flag"] = {time = 60, mintime = 20},
 		["winniedapoohv3"] = {time = 60, mintime = 20},
 	}
-	local mapName = string.lower(game.mapName)
+	local mapName = string.lower(Game.mapName)
 	if mapTable[mapName] then
 		overrideTime = mapTable[mapName].time
 		overrideMinTime = mapTable[mapName].mintime
