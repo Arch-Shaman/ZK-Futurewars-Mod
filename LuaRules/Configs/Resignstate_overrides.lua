@@ -12,9 +12,7 @@ do
 		overrideMinTime = mapTable[mapName].mintime
 	end
 end
+overrideMinTime = overrideMinTime or 30
+overrideTime = overrideTime or 180
 
-if overrideMinTime and overrideTime then
-	return overrideTime, overrideMinTime
-else
-	return 180, 60
-end
+Spring.Echo("ResignState: MinTime: " .. overrideMinTime .. ", Starting time: " .. overrideTime)
