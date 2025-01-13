@@ -1438,6 +1438,7 @@ local moduleDefs = {
 		description = "Increases sight radius by 20%.",
 		image = moduleImagePath .. "module_radarnet2.png",
 		-- unlimited
+		limit = 16,
 		requireChassis = {"recon"},
 		cost = 125 * COST_MULT,
 		requireLevel = 2,
@@ -1623,7 +1624,8 @@ local moduleDefs = {
 		description = "Adds a light protective drone. With the Drone Package, spawn 2 instead.",
 		image = moduleImagePath .. "module_companiondrone.png",
 		-- unlimited
-		cost = 75 * COST_MULT,
+		limit = 20,
+		cost = 50 * COST_MULT,
 		requireChassis = {"support", "knight"},
 		requireLevel = 1,
 		slotType = "module",
@@ -1642,6 +1644,7 @@ local moduleDefs = {
 		description = "Commander spawns a heavy drone.",
 		image = moduleImagePath .. "module_droneheavyslow.png",
 		-- unlimited
+		limit = 20,
 		cost = 100 * COST_MULT,
 		requireChassis = {"support"},
 		requireOneOf = {"module_drone_package"},
@@ -1749,6 +1752,7 @@ local moduleDefs = {
 		description = "Adds a Repair Drone to your maximum drone control. Repair drones have a shield and can repair friendly units at 10 bp.",
 		image = moduleImagePath .. "module_dronecon.png",
 		-- unlimited
+		limit = 40,
 		cost = 100 * COST_MULT,
 		requireChassis = {"support"},
 		requireOneOf = {"module_drone_package"},
@@ -1765,6 +1769,7 @@ local moduleDefs = {
 		description = "Adds an Assault Drone to your maximum drone control. Assault drones have high hp, and fire a cannon at targets.",
 		image = moduleImagePath .. "module_droneassault.png",
 		-- unlimited
+		limit = 40,
 		cost = 100 * COST_MULT,
 		requireChassis = {"support"},
 		requireOneOf = {"module_drone_package"},
@@ -1816,6 +1821,7 @@ local moduleDefs = {
 		description = "Commander self-repairs at +"..20*HP_MULT.." hp/s.",
 		image = moduleImagePath .. "module_autorepair.png",
 		-- unlimited
+		limit = 20,
 		cost = 175 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
@@ -2289,6 +2295,7 @@ local moduleDefs = {
 		description = "Increases regen while cloaked by " .. 20*HP_MULT .. ".",
 		image = moduleImagePath .. "module_cloakregen.png",
 		-- unlimited
+		limit = 20,
 		cost = 75 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
@@ -2305,6 +2312,7 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_adv_targeting.png",
 		-- unlimited
 		cost = 100 * COST_MULT,
+		limit = 10,
 		requireLevel = 1,
 		slotType = "module",
 		requireChassis = {"strike", "recon", "support", "riot"},
@@ -2320,6 +2328,7 @@ local moduleDefs = {
 		description = "Increases range by 10% but reduces speed by 2.",
 		image = moduleImagePath .. "module_adv_targeting.png",
 		-- unlimited
+		limit = 9,
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
