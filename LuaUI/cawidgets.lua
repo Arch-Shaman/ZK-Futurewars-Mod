@@ -1580,7 +1580,7 @@ function widgetHandler:AddConsoleLine(msg, priority)
 			end
 			-- IGNORE FEATURE--
 			local username = select(1, Spring.GetPlayerInfo(playerID_msg, false))
-			if ignorelist.ignorees[username] and not Spring.Utilities.isFWDev(username) then
+			if ignorelist.ignorees[username] and not Spring.Utilities.IsFWDev(username) then
 				return
 			end
 		end
