@@ -39,6 +39,8 @@ return {
 			aimposoffset   = "0 15 -35",
 			midposoffset   = "0 15 -10",
 			modelradius    = "100",
+			neededlink  = 12,
+			pylonrange  = 250,
 			unstick_help   = 1,
 			factorytab       = 1,
 			shared_energy_gen = 1,

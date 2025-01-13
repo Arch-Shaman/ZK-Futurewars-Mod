@@ -18,9 +18,11 @@ local stuns = {}
 local SIG_ANIM = 1
 local SIG_AIM = 2
 local disarmed = false
+local hasEnergy = false
 --local StopPieceTurn = GG.PieceControl.StopTurn
 
 local turnrate = 60.1 -- degrees per second
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 turnrate = turnrate/30
 
 local function RestoreAfterDelay()
@@ -203,7 +205,7 @@ function script.AimWeapon(num, heading, pitch)
 	WaitForTurn(turret, y_axis)
 	WaitForTurn(barrel, x_axis)
 	StartThread(RestoreAfterDelay)
-	return true
+	return (spGetUnitRulesParam(unitID, "lowpower") == 0)
 end
 
 function script.FireWeapon(num)
