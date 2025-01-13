@@ -2096,7 +2096,7 @@ local function GetSingleUnitInfoPanel(parentControl, isTooltipVersion)
 		end
 		minWindLabel(false)
 		local health, maxHealth, _, _, progress = spGetUnitHealth(unitID)
-		local healthPos
+		local healthPos = 0
 		local hasShieldBar = false
 		if shieldBarUpdate then
 			if ud and ((ud.shieldPower or 0) > 0 or ud.level) then
