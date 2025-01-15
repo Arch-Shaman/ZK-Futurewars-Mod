@@ -1,4 +1,5 @@
 local overrideTime, overrideMinTime
+Spring.Echo("[ResignState] loading override for '".. Game.mapName .. "'")
 do
 	local mapTable = {
 		["duck"] = {time = 60, mintime = 20},
