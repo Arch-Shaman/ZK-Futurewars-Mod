@@ -34,6 +34,14 @@ local spGetFeatureDefID            = Spring.GetFeatureDefID
 local debugMode = false
 local subProjectileDefs = {}
 local invalidFeatures = {}
+local invalidDefs = {}
+
+for i = 1, #UnitDefs do
+	local ud = UnitDefs[i]
+	if ud.customParams and ud.customParams.dontkill then
+		invalidDefs[i] = true
+	end
+end
 
 for i = 1, #WeaponDefs do
 	local cp = WeaponDefs[i].customParams
@@ -86,7 +94,7 @@ local function GetValidTargets(x, y, z, radius, allowFriendlyFire, attackerTeam,
 	local validTargets = {}
 	for i = 1, #potentialTargets do
 		local unitID = potentialTargets[i]
-		if not disallowedUnitIDs[unitID] then
+		if not disallowedUnitIDs[unitID] and not invalidDefs[spGetUnitDefID(unitID)] then
 			if allowFriendlyFire then
 				validTargets[#validTargets + 1] = unitID
 			else
