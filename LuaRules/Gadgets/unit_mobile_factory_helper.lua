@@ -37,6 +37,7 @@ local spGiveOrderArrayToUnit = Spring.GiveOrderArrayToUnit
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
 local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
+local spSetUnitCloak = Spring.SetUnitCloak
 
 local CMD_QUEUE_MODE = Spring.Utilities.CMD.QUEUE_MODE
 local CMD_AREA_GUARD = Spring.Utilities.CMD.AREA_GUARD
@@ -108,6 +109,7 @@ local function AddFakeFactory(unitID)
 		spSetUnitNoDraw(fakeUnitID, true)
 		spSetUnitNoMinimap(fakeUnitID, true)
 		spSetUnitNoSelect(fakeUnitID, true)
+		spSetUnitCloak(fakeUnitID, 4)
 		spSetUnitBlocking(fakeUnitID, false, false, false, false, false, false, false)
 		fakeUnits[unitID] = fakeUnitID
 		spSetUnitRulesParam(unitID, "queueunit", fakeUnitID, ALLIEDONLY)
