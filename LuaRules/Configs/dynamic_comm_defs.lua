@@ -641,7 +641,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_rocketlauncher",
 		humanName = "Portable EOS Launcher",
-		description = "Long range nuclear cruise missile that seeks its target before dropping out of the air and exploding. High damage and long range makes it good for sniping buildings and slow units. May be upgraded to a heavier, longer reload version (NYI).",
+		description = "Long range nuclear cruise missile that seeks its target before dropping out of the air and exploding. High damage and long range makes it good for sniping buildings and slow units. May be upgraded to a heavier, longer reload version.",
 		image = moduleImagePath .. "commweapon_rocketlauncher.png",
 		limit = 2,
 		cost = 750 * COST_MULT,
