@@ -2359,7 +2359,7 @@ local moduleDefs = {
 	{
 		name = "module_basic_nano",
 		humanName = "Basic Nanolathe",
-		description = "Increases build power by 1.5. Increases storage by 10.",
+		description = "Increases build power by 1.5. Increases storage by 15.",
 		image = moduleImagePath .. "module_adv_nano.png",
 		-- unlimited
 		cost = 100 * COST_MULT,
@@ -2369,7 +2369,7 @@ local moduleDefs = {
 		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
 			sharedData.bonusBuildPower = (sharedData.bonusBuildPower or 0) + 1.5
-			sharedData.extrastorage = (sharedData.extrastorage or 0) + 10
+			sharedData.extrastorage = (sharedData.extrastorage or 0) + 15
 		end
 	},
 	{
