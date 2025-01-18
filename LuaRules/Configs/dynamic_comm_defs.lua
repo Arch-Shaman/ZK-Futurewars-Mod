@@ -687,7 +687,7 @@ local moduleDefs = {
 	{
 		name = "commweapon_shotgun",
 		humanName = "Shotgun",
-		description = "Can hammer a single large target or shred several small ones",
+		description = "Can hammer a single large target or shred several small ones.",
 		image = moduleImagePath .. "commweapon_shotgun.png",
 		limit = 2,
 		cost = 50 * COST_MULT,
@@ -2065,7 +2065,7 @@ local moduleDefs = {
 				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) + 0.8
 			elseif sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage_nuclear" then
 				local basereload = 25
-				sharedData.burstOverride1 = (sharedData.burstOverride1 or 30) + 10
+				sharedData.burstOverride1 = (sharedData.burstOverride1 or 30) + 6
 				sharedData.reloadOverride1 = (sharedData.reloadOverride1 or basereload) + 5.4
 			end
 			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage" then
@@ -2074,7 +2074,7 @@ local moduleDefs = {
 				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) + 0.8
 			elseif sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage_nuclear" then
 				local basereload = 25
-				sharedData.burstOverride2 = (sharedData.burstOverride2 or 30) + 10
+				sharedData.burstOverride2 = (sharedData.burstOverride2 or 30) + 6
 				sharedData.reloadOverride2 = (sharedData.reloadOverride2 or basereload) + 5.4
 			end
 		end
