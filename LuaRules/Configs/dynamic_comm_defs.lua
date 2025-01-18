@@ -2323,7 +2323,7 @@ local moduleDefs = {
 		end
 	},
 	{
-		name = "module_adv_targeting",
+		name = "module_adv_targeting_artillery",
 		humanName = "Improved Targeting System",
 		description = "Increases range by 10% but reduces speed by 2.",
 		image = moduleImagePath .. "module_adv_targeting.png",
