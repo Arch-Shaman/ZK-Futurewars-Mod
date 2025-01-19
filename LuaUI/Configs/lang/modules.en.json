@@ -177,7 +177,7 @@
 	"module_heavy_armor_name" : "High Density Plating",
 	"module_heavy_armor_desc" : "Increases max health by %{health} but reduces speed by 0.35.",
 	"module_dmg_booster_adv_name" : "Weapon Retrofits",
-	"module_dmg_booster_adv_desc" : "Provides a 15% boost in firepower.",
+	"module_dmg_booster_adv_desc" : "Provides a 15%% boost in firepower.",
 	"module_alphastrike_name" : "Alpha Strike",
 	"module_alphastrike_desc" : "Provides a 70%% boost in firepower. Decreases reload speed by 50%.\nNote: Reload bonuses do not affect microrift.",
 	"module_heavyrocket_name" : "Heavy Rocket Motors",
