@@ -1,4 +1,5 @@
 {
+	"module_weapon_notes" : "武器のステータス",
 	"requires_modules" : "%{modules} または %{lastmodule} が必要です。",
 	"requires_module" : "%{module} が必要です。",
 	"prevents_module" : "%{module} のインストールを防止します",
@@ -163,7 +164,7 @@
 	"module_drone_buildspeed_name" : "ドローン自動製造の改善",
 	"module_drone_buildspeed_desc" : "司令官はドローンを 50%% 速く製造します。",
 	"module_autorepair_name" : "ダメージ制御システム",
-	"module_autorepair_desc" : "司令官は +%{health} hp/s で自己修復します。",
+	"module_autorepair_desc" : "司令官は +%{health} で自己修復します。",
 	"module_nanorepair_name" : "ナノリアクティブ アーマーのインストール",
 	"module_nanorepair_desc" : "アーマーにナノマシン修復システムをインストールします。ダメージを受けると、より多くのナノマシンがアーマーに放出されて修復され、最大 210 hp/秒の修復が可能になります。レベル 5 を超えてさらにアップグレードできます。",
 	"module_nanorepair_upgrade_regen_name" : "ナノマシン高密度アーマー",

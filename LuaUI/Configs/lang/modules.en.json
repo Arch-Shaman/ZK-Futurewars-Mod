@@ -1,4 +1,5 @@
 {
+	"module_weapon_notes" : "Weapon Stats",
 	"requires_modules" : "Requires %{modules} or %{lastmodule}.",
 	"requires_module" : "Requires %{module}.",
 	"prevents_module" : "Prevents installation of %{module}",

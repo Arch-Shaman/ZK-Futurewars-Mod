@@ -1,4 +1,5 @@
 {
+	"module_weapon_notes" : "Statistiche delle armi",
 	"requires_modules" : "Richiede %{modules} o %{lastmodule}.",
 	"requires_module" : "Richiede %{module}.",
 	"prevents_module" : "Impedisce l'installazione di %{module}",
