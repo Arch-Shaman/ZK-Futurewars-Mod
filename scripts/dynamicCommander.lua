@@ -455,7 +455,6 @@ end
 local function SetUpBatteryThread()
 	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
 	while weaponname1 == nil do -- dynamic comm not set up yet
-		Spring.Echo("[SetUpBattery]: Warning: comm weapon not set yet!")
 		weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
 		Sleep(33)
 	end
@@ -472,7 +471,6 @@ local function SetUpBatteryThread()
 	if battery[1] > 0 or (battery[2] and battery[2] > 0) then
 		needsBattery = true
 	end
-	Spring.Echo("Battery setup complete")
 	return needsBattery
 end
 
