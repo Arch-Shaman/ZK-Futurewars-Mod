@@ -428,6 +428,9 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 			end
 		end
 	end
+	if data.damageMult and data.damageMult < 0.1 then
+		data.damageMult = 0.1
+	end
 	if data.fireproof then
 		spSetUnitRulesParam(unitID, "fireproof", 1, INLOS)
 		GG.MakeUnitFireproof(unitID)
