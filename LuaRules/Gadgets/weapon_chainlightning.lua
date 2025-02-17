@@ -30,11 +30,13 @@ local spGetFeatureCollisionVolumeData = Spring.GetFeatureCollisionVolumeData
 local spSpawnProjectile            = Spring.SpawnProjectile 
 local spGetUnitWeaponTarget        = Spring.GetUnitWeaponTarget
 local spGetFeatureDefID            = Spring.GetFeatureDefID
+local spGetUnitRulesParam		   = Spring.GetUnitRulesParam
 
 local debugMode = false
 local subProjectileDefs = {}
 local invalidFeatures = {}
 local invalidDefs = {}
+local projectileData = {}
 
 for i = 1, #UnitDefs do
 	local ud = UnitDefs[i]
@@ -45,6 +47,16 @@ end
 
 for i = 1, #WeaponDefs do
 	local cp = WeaponDefs[i].customParams
+	if cp.chainlightning_hax then
+		wantedWeapons[#wantedWeapons + 1] = i
+		Script.SetWatchExplosion(i, true)
+		local visualEffect = cp.chainlightning_visual
+		if WeaponDefNames[visualEffect] then
+			config[i] = {visualEffect = WeaponDefNames[visualEffect].id}
+		else
+			Spring.Echo("[ChainLightning]: Invalid visual effect for " .. i)
+		end
+	end
 	if cp.chainlightning_index or cp.chainlightning_spawndef then
 		wantedWeapons[#wantedWeapons + 1] = i
 		config[i] = {
@@ -58,6 +70,7 @@ for i = 1, #WeaponDefs do
 			canStrikeTwice = cp.chainlightning_hittwice ~= nil,
 			dontspawn = cp.chainlightning_blockexplosion ~= nil,
 			forceSpawn = cp.chainlightning_spawndef,
+			visualEffect = cp.chainlightning_visual,
 		}
 		if config[i].forceSpawn then
 			local wd = WeaponDefNames[config[i].forceSpawn]
@@ -177,20 +190,44 @@ local function SpawnLightning(attackerID, index, x, y, z, targetX, targetY, targ
 	end
 end
 
-local function SpawnLightningProjectile(attackerID, def, x, y, z, targetX, targetY, targetZ, dirx, diry, dirz, targetID)
+local function SpawnLightningProjectile(attackerID, def, x, y, z, targetX, targetY, targetZ, dirx, diry, dirz, targetID, config, isVisual) -- hacky version for comms.
 	dirx, diry, dirz = PointToDir(x, y, z, targetX, targetY, targetZ)
+	local wd = WeaponDefs[def]
+	Spring.Echo("Attempting to spawn " .. def)
 	if debugMode then
-		Spring.Echo("Chain Lightning: Spawning using weaponIndex ", index)
+		Spring.Echo("Chain Lightning: Spawning using hax")
 		Spring.MarkerAddLine(x, y, z, targetX, targetY, targetZ)
 	end
-	local params = {
-		pos = {x, y, z},
-		speed = {dirx, diry, dirz},
-		owner = attackerID,
-		tracking = targetID,
-	}
-	params["end"] = {targetX, targetY, targetZ} -- why recoil INSISTS on using a lua keyword is beyond me.
-	spSpawnProjectile(def, params)
+	local speedMult = math.sqrt(((x - targetX) * (x - targetX)) + ((y - targetY) * (y - targetY)) + ((z - targetZ) * (z - targetZ))) / 3 -- hit within 3 frames
+	local params
+	if not isVisual then
+		params = {
+			pos = {x, y + 1, z},
+			speed = {dirx * speedMult, diry * speedMult, dirz * speedMult},
+			owner = attackerID,
+			maxRange = speedMult * 3,
+			tracking = targetID,
+		}
+	else
+		params = {
+			pos = {x, y, z},
+			speed = {dirx, diry, dirz},
+			owner = attackerID,
+			tracking = targetID,
+		}
+		params["end"] = {targetX, targetY, targetZ} -- why recoil INSISTS on using a lua keyword is beyond me.
+	end
+	local p = spSpawnProjectile(def, params)
+	if p and not isVisual then
+		projectileData[p] = {x, y, z}
+		local damageMult = spGetUnitRulesParam(attackerID, "comm_damage_mult") or 1
+		Spring.Echo("DamageMult: " .. damageMult)
+		local damages = wd.damages
+		local proDamages = {}
+		for k, v in pairs(damages) do
+			Spring.SetProjectileDamages(p, 0, k, v * DamageMult)
+		end
+	end
 end
 
 local function GetDirectionFromSomething(targetID, originX, originY, originZ, isFeature)
@@ -313,7 +350,7 @@ local function DoChainLightning(weaponDefID, px, py, pz, AttackerID, damagedUnit
 			sx, sy, sz = px, py, pz
 		end
 		if c.forceSpawn then
-			SpawnLightningProjectile(AttackerID, c.forceSpawn, sx, sy, sz, x2, y2, z2, dirx, diry, dirz, targetID)
+			SpawnLightningProjectile(AttackerID, c.forceSpawn, sx, sy, sz, x2, y2, z2, dirx, diry, dirz, targetID, c, false)
 		else
 			SpawnLightning(AttackerID, c.weaponIndex, sx, sy, sz, x2, y2, z2, dirx, diry, dirz)
 		end
@@ -324,10 +361,21 @@ function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, ProjectileID)
 	if debugMode then
 		Spring.Echo("Chainlightning: Explosion: ", px, py, pz, AttackerID, ProjectileID)
 	end
-	if AttackerID == nil or config[weaponDefID].dontspawn then
+	local c = config[weaponDefID]
+	if AttackerID == nil or (c and c.dontspawn) then
 		return
 	end
-	local num, _, target = spGetUnitWeaponTarget(AttackerID, config[weaponDefID].weaponNum)
+	local visual = c.visualEffect
+	if visual then
+		Spring.Echo("Explosion::SpawnVisual: " .. visual)
+		local p = projectileData[ProjectileID]
+		local x, y, z = p[1], p[2], p[3]
+		local dirx, diry, dirz = PointToDir(px, py, pz, x, y, z)
+		projectileData[ProjectileID] = nil
+		SpawnLightningProjectile(AttackerID, visual, x, y, z, px, py, pz, dirx, diry, dirz, nil, c, true)
+		return
+	end
+	local num, _, target = spGetUnitWeaponTarget(AttackerID, c.weaponNum)
 	if subProjectileDefs[weaponDefID] then -- we can't rely on checking target (for obvious reasons, we're not actually aiming at any of these sub targets!)
 		local potentialUnits = spGetUnitsInSphere(px, py, pz, 30) -- did we hit another unit?
 		if potentialUnits and #potentialUnits > 0 then
