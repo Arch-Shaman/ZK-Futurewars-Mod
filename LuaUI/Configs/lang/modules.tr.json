@@ -208,6 +208,8 @@
 	"module_high_power_servos_improved_desc" : "Hızı 5 artırır, sağlığı %{health} azaltır",
 	"module_cloakregen_name" : "Nanobot Kılıfı",
 	"module_cloakregen_desc" : "%{health} tarafından gizlenirken rejenerasyonu artırır.",
+	"module_adv_targeting_close_name" : "Uzun Menzilli Hedefleme Sistemi",
+	"module_adv_targeting_close_desc" : "Menzili %5 artırır ancak hasarı %10 azaltır.",
 	"module_adv_targeting_name" : "Gelişmiş Hedefleme Sistemi",
 	"module_adv_targeting_desc" : "Menzili %7,5 artırır ancak hızı 0,75 azaltır.",
 	"module_adv_targeting_artillery_name" : "Geliştirilmiş Hedefleme Sistemi",

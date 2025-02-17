@@ -207,6 +207,8 @@
 	"module_high_power_servos_improved_desc" : "Increases speed by 5, decreases health by %{health}",
 	"module_cloakregen_name" : "Nanobot Sleeve",
 	"module_cloakregen_desc" : "Increases regen while cloaked by %{health}.",
+	"module_adv_targeting_close_name": "Sistema de mira de longo alcance",
+	"module_adv_targeting_close_desc": "Aumenta o alcance em 5%%, mas reduz o dano em 10%%.",
 	"module_adv_targeting_name" : "Adv. Targeting System",
 	"module_adv_targeting_desc" : "Increases range by 7.5% but reduces speed by 0.75.",
 	"module_adv_targeting_artillery_name" : "Improved Targeting System",

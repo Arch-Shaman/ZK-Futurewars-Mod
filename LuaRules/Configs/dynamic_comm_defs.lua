@@ -2306,19 +2306,36 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "module_adv_targeting_close",
+		humanName = "Long Range Targeting System",
+		description = "Increases range by 5% but reduces damage by 10%.",
+		image = moduleImagePath .. "module_adv_targeting.png",
+		-- unlimited
+		cost = 100 * COST_MULT,
+		limit = 20,
+		requireLevel = 1,
+		slotType = "module",
+		requireChassis = {"strike", "recon", "riot"},
+		effectPriority = 4,
+		applicationFunction = function (modules, sharedData)
+			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.05
+			sharedData.damageMult = (sharedData.damageMult or 1) - 0.1, 0.1
+		end
+	},
+	{
 		name = "module_adv_targeting",
 		humanName = "Adv. Targeting System",
 		description = "Increases range by 7.5% but reduces speed by 0.75.",
 		image = moduleImagePath .. "module_adv_targeting.png",
 		-- unlimited
 		cost = 100 * COST_MULT,
-		limit = 10,
+		limit = 20,
 		requireLevel = 1,
 		slotType = "module",
-		requireChassis = {"strike", "recon", "support", "riot"},
+		requireChassis = {"support"},
 		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
-			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.075
+			sharedData.rangeMult = (sharedData.rangeMult or 1) + 0.055
 			sharedData.speedMalus = (sharedData.speedMalus or 0) + 0.75
 		end
 	},
@@ -2328,7 +2345,7 @@ local moduleDefs = {
 		description = "Increases range by 10% but reduces speed by 2.",
 		image = moduleImagePath .. "module_adv_targeting.png",
 		-- unlimited
-		limit = 9,
+		limit = 20,
 		cost = 100 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",

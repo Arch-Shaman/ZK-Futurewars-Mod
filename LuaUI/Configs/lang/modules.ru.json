@@ -207,6 +207,8 @@
 	"module_high_power_servos_improved_desc": "Увеличивает скорость на 5, уменьшает здоровье на %{health}",
 	"module_cloakregen_name": "Рукав нанобота",
 	"module_cloakregen_desc": "Увеличивает регенерацию при скрытии на %{health}.",
+	"module_adv_targeting_close_name" : "Система дальнего наведения",
+	"module_adv_targeting_close_desc" : "Увеличивает дальность на 5%%, но снижает урон на 10%%.",
 	"module_adv_targeting_name": "Расшир. Система наведения",
 	"module_adv_targeting_desc" : "Увеличивает дальность на 7,5%, но снижает скорость на 0,75.",
 	"module_adv_targeting_artillery_name" : "Улучшенная система наведения",
