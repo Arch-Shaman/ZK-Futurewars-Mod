@@ -181,7 +181,7 @@
 	"module_dmg_booster_adv_name" : "Silah Yenilemeleri",
 	"module_dmg_booster_adv_desc" : "Ateş gücünde %15 artış sağlar.",
 	"module_alphastrike_name" : "Alfa Saldırısı",
-	"module_alphastrike_desc" : "Ateş gücünde %70 artış sağlar. Yeniden yükleme hızını %50 azaltır.\nNot: Yeniden yükleme bonusları mikro yarığı etkilemez.",
+	"module_alphastrike_desc" : "Ateş gücünde %%70 artış sağlar. Yeniden yükleme hızını %%50 azaltır.\nNot: Yeniden yükleme bonusları mikro yarığı etkilemez.",
 	"module_heavyrocket_name" : "Ağır Roket Motorları",
 	"module_heavyrocket_desc" : "Yeniden yükleme hızı pahasına roket menzilini artırır. Temel menzili %33 artırır (değişikliklerden önce menzil), yeniden yükleme hızı -50%%.",
 	"module_rocketrangereducer_name" : "Yüksek Patlayıcılı Roketler",
