@@ -184,7 +184,7 @@
 	"module_heavyrocket_name" : "Motori razzo pesanti",
 	"module_heavyrocket_desc" : "Migliora la gittata del razzo a scapito della velocità di ricarica. Aumenta la gittata di base del 33%% (gittata prima delle modifiche), velocità di ricarica -50%%.",
 	"module_rocketrangereducer_name" : "Razzi ad alto potenziale esplosivo",
-	"module_rocketrangereducer_desc" : "Riduce la gittata base (prima dei potenziamenti di gittata) dell'11,5%. Il danno base (prima dei potenziamenti di danno) aumenta del 25%%.",
+	"module_rocketrangereducer_desc" : "Riduce la gittata base (prima dei potenziamenti di gittata) dell'11,5%%. Il danno base (prima dei potenziamenti di danno) aumenta del 25%%.",
 	"module_expandedrocketsalvo_name" : "Magazzino munizioni razzo ampliato",
 	"module_expandedrocketsalvo_desc" : "Espandi significativamente le tue riserve di razzi, creando un torrente di razzi da lanciare contro i tuoi nemici. Aumenta la dimensione della raffica di razzi di 8 proiettili, aumenta la ricarica di 0,8 s. Se hai installato munizioni pesanti, aumenta il conteggio dei proiettili di 6 e ricarica di 5,4 s.",
 	"module_rocketconservation_name" : "Dispiegamento conservativo",

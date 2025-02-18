@@ -124,7 +124,7 @@
 	"module_radaramplifier_name" : "Radar Amplifikatörü",
 	"module_radaramplifier_desc" : "Radar'ı %10 artırır.",
 	"module_visionenhancer_name" : "Gelişmiş Sensörler",
-	"module_visionenhancer_desc" : "Görüş yarıçapını %10 artırır.",
+	"module_visionenhancer_desc" : "Görüş yarıçapını %%10 artırır.",
 	"module_visionenhancer_name" : "Görüş yarıçapını 20%%.",
 	"module_personal_cloak_name" : "Kişisel Gizlenme",
 	"module_personal_cloak_desc" : "Kişisel gizleme aygıtı.",

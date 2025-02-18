@@ -32,6 +32,18 @@ local LayoutPanel
 local Image
 local screen0
 
+local localization = {}
+
+local HP_MULT = 1
+if (Spring.GetModOptions) then
+	local modOptions = Spring.GetModOptions()
+    if modOptions then
+        if modOptions.hpmult and modOptions.hpmult ~= 1 then
+            HP_MULT = modOptions.hpmult
+        end
+	end
+end
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- Most things are local to their own code block. These blocks are (in order)
@@ -53,7 +65,7 @@ local screen0
 
 -- Module config
 local moduleDefs, chassisDefs, upgradeUtilities, LEVEL_BOUND, _, moduleDefNames = VFS.Include("LuaRules/Configs/dynamic_comm_defs.lua")
-
+WG.ModuleTranslations = {} -- Store these so we can use them in Context Menu as well as the comm upgrade one.
 
 
 -- Configurable things, possible to add to Epic Menu later.
@@ -74,6 +86,9 @@ local viewAlreadyOwnedButton
 
 local moduleTextColor = {.8,.8,.8,.9}
 
+local damageBooster = 1
+local rangeBooster = 1
+
 local commanderUnitDefID = {}
 for i = 1, #UnitDefs do
 	if UnitDefs[i].customParams.dynamic_comm then
@@ -91,11 +106,153 @@ local UPGRADE_CMD_DESC = {
 	texture = 'LuaUI/Images/commands/Bold/upgrade.png',
 }
 
+-- IN8N
+local needsExtraHelp = {
+	["module_heavy_armor"] = true,
+	["module_fireproofing"] = true,
+	["module_high_power_servos_improved"] = true,
+	["module_cloakregen"] = true,
+}
+
+local translationOverrides = {
+	["module_heavyprojector_second"] = "module_heavyprojector",
+	["module_shotgunlaser_second"] = "module_shotgunlaser",
+	["module_heavyordinance_second"] = "module_heavyordinance",
+	["nulladvweapon"] = "nullbasicweapon",
+}
+
+local weaponTemplate, shieldTemplate, aoeTemplate, waterCapableTemplate
+
+local function GetWeaponTemplate()
+	weaponTemplate = "\n\255\255\061\061" .. WG.Translate("interface", "module_weapon_notes") .. ":\n\255\255\255\031- " .. WG.Translate("interface", "stats_range") .. ":\255\255\255\255_range_"
+	weaponTemplate = weaponTemplate .. "\n\255\255\255\031- " .. WG.Translate("interface", "acronyms_dps") ..  ":\255\255\255\255_dps_\n"
+	shieldTemplate = "\n" .. WG.Translate("interface", "shield_hp") ..  ":\255\255\255\255 %shield_hp%\n\255\255\255\031" .. WG.Translate("interface", "regen") .. ":\255\255\255\255 %shieldregen%\n\255\255\255\031" .. WG.Translate("interface", "shield_regencost") .. ": \255\255\255\255 %shieldregencost%"
+	aoeTemplate = "\n\255\255\255\031- " .. WG.Translate("interface", "stats_aoe") .. ":\255\255\255\255 _aoe_\n"
+	waterCapableTemplate = "\n\255\255\255\031- \255\031\255\255" .. WG.Translate("interface", "weapon_water_capable") .. "\255\255\255\255"
+end
+
+local function OnLocaleChanged()
+	local cost = WG.Translate("interface", "commodule_cost")
+	local limit = WG.Translate("interface", "commodule_limit")
+	local hp = WG.Translate("interface", "acronyms_hp")
+	local sec = WG.Translate("interface", "acronyms_second")
+	GetWeaponTemplate() -- reduce the number of translations we need to do.
+	for internalName, translation in pairs(WG.ModuleTranslations) do
+		local def = moduleDefs[moduleDefNames[internalName]]
+		local name
+		Spring.Echo("Translating " .. internalName)
+		if translationOverrides[internalName] then
+			name = WG.Translate("interface", translationOverrides[internalName] .. "_name")
+			Spring.Echo("Overriding " .. internalName .. " -> " .. translationOverrides[internalName] .. ": '" .. tostring(name) .. "'")
+		else
+			Spring.Echo("No override needed")
+			name = WG.Translate("interface", internalName .. "_name")
+		end
+		WG.ModuleTranslations[internalName].name = name
+		local descStringName = internalName .. "_desc"
+		local desc = name .. "\n" .. cost .. def.cost .. "\n"
+		if internalName == "module_detpack" then
+			desc = desc .. "\n" .. WG.Translate("interface", descStringName, {health = 1000*HP_MULT})
+		elseif internalName == "module_autorepair" then
+			desc = desc .. "\n" .. WG.Translate("interface", descStringName, {health = 20*HP_MULT .. hp .. "/" .. sec})
+		elseif internalName == "module_nanorepair_upgrade_regen" then
+			desc = desc .. "\n" .. WG.Translate("interface", descStringName, {regen_mult = 3 * HP_MULT, max_regen = 30 * HP_MULT, max_health = 500 * HP_MULT})
+		elseif internalName == "module_ablative_armor" then
+			desc = desc .. "\n" .. WG.Translate("interface", descStringName, {health = 1400 * HP_MULT})
+		elseif internalName == "module_heavy_armor" then
+			desc = desc .. "\n" .. WG.Translate("interface", descStringName, {health = 4000 * HP_MULT})
+		elseif internalName == "module_fireproofing" then
+			desc = desc .. "\n" .. WG.Translate("interface", descStringName, {health = 550 * HP_MULT})
+		elseif internalName == "module_high_power_servos_improved" then
+			desc = desc .. "\n" .. WG.Translate("interface", descStringName, {health = 500*HP_MULT})
+		elseif internalName == "module_cloakregen" then
+			desc = desc .. "\n" ..  WG.Translate("interface", descStringName, {health = 20*HP_MULT .. " " .. hp .. "/" .. sec})
+		else
+			if translationOverrides[internalName] then
+				desc = desc .. "\n" .. WG.Translate("interface", translationOverrides[internalName] .. "_desc")
+			else
+				desc = desc .. "\n" .. WG.Translate("interface", internalName .. "_desc")
+			end
+		end
+		if def.slotType == "basic_weapon" or def.slotType == "adv_weapon" then -- add stats
+			local wd = WeaponDefNames["0_" .. internalName]
+			desc = desc .. weaponTemplate
+			if wd then
+				if not wd.impactOnly then
+					desc = desc .. "\n" .. aoeTemplate
+				end
+				if wd.waterWeapon then
+					desc = desc .. waterCapableTemplate
+				end
+			else
+				Spring.Echo("Unable to load " .. internalName .. " weaponDef, skipping")
+			end
+		elseif internalName:find("shield") then
+			desc = desc .. shieldTemplate
+		end
+		translation.desc = desc
+	end
+	Spring.Echo("Finished setting up translation")
+end
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- New Module Selection Button Handling
 
 local newButtons = {}
+
+local function GetModuleDescription(moduleData) -- dynamically updated.
+	local isShield = moduleData.name:find("shield") ~= nil
+	if moduleData.slotType == "module" and not isShield then
+		return WG.ModuleTranslations[moduleData.name].desc
+	else -- dynamically generated.
+		if not isShield then
+			local name = moduleData.name
+			Spring.Echo("GetModuleDescription::InternalName: " .. tostring(name))
+			
+			local wd = WeaponDefNames["0_" .. name]
+			local description = WG.ModuleTranslations[name].desc
+			if wd then
+				local aoe = wd.damageAreaOfEffect
+				local reload = wd.reload
+				local customparams = wd.customParams or wd.customparams or {}
+				local extradps = "" -- damagemult, rangemult
+				local dps = ""
+				local projectiles = wd.projectiles or 1
+				local burst = wd.burst or 1
+				local damage = wd.damages[1] * burst * projectiles 
+				if customparams.extra_damage_mult then -- emp
+					local extradmg = tonumber(customparams.extra_damage_mult) or 0
+					local extradps = (extradmg * damage * damageBooster) / reload
+					extradps = extradps .. "\255\51\179\255" .. string.format("%.1f", extradps) .. "P\255\255\255\255 "
+				end
+				if customparams.is_capture then
+					extradps = extradps .. "\255\153\255\153" .. string.format("%.1f", damage * damageBooster / reload) .. WG.Translate("interface", "acronyms_capture") .. "\255\255\255\255 "
+				elseif customparams.disarmDamageOnly or customparams.disarmdamageonly then
+					extradps = extradps .. "\255\128\128\128" .. string.format("%.1f", damage * damageBooster / reload) .. WG.Translate("interface", "acronyms_disarm") .. "\255\255\255\255 "
+				end
+				if wd.paralyzeTime == nil and wd.paralyzetime == nil then
+					dps = "\255\255\255\255 " .. string.format("%.1f", damage * damageBooster / reload)
+				else
+					dps = "\255\51\179\255 " .. string.format("%.1f", damage * damageBooster / reload) .. "P"
+				end
+				description = string.gsub(description, "_dps_", extradps .. dps)
+				description = string.gsub(description, "_range_", wd.range * rangeBooster)
+				if customparams.setunitsonfire then
+					local burntime = tonumber(customparams.burntime) or 0
+					burntime = burntime / 30 -- convert to seconds
+					description = description .. "\255\255\77\0 " .. string.format("%.1f", damage * damageBooster / reload) .. " (" .. string.format("%.1f", burntime) .. WG.Translate("interface", "acronyms_second") .. ")"
+				end
+				if aoe > 16 and not wd.impactOnly then
+					description = description:gsub("_aoe_", aoe)
+				end
+				return description
+			else
+				Spring.Echo("Failed to load weapondef for " .. moduleData.name)
+			end
+		end
+	end
+end
 
 local function AddNewSelectonButton(buttonIndex, moduleDefID)
 	local moduleData = moduleDefs[moduleDefID]
@@ -111,7 +268,7 @@ local function AddNewSelectonButton(buttonIndex, moduleDefID)
 		},
 		backgroundColor = {0.5,0.5,0.5,0.1},
 		color = {1,1,1,0.1},
-		tooltip = moduleData.description
+		tooltip = GetModuleDescription(moduleData)
 	}
 
 	Image:New{
@@ -132,7 +289,7 @@ end
 local function UpdateNewSelectionButton(buttonIndex, moduleDefID)
 	local moduleData = moduleDefs[moduleDefID]
 	local button = newButtons[buttonIndex]
-	button.tooltip = moduleData.description
+	button.tooltip = GetModuleDescription(moduleData) 
 	button.moduleDefID = moduleDefID
 	button.children[1].file = moduleData.image
 	button.children[1]:Invalidate()
@@ -470,7 +627,7 @@ local function AddCurrentModuleButton(slotIndex, moduleDefID)
 				CurrentModuleClick(self, slotIndex)
 			end
 		},
-		tooltip = moduleData.description
+		tooltip = GetModuleDescription(moduleData)
 	}
 
 	Image:New{
@@ -488,7 +645,7 @@ local function AddCurrentModuleButton(slotIndex, moduleDefID)
 		right  = 8,
 		bottom = 8,
 		valign = "left",
-		text   = moduleData.humanName,
+		text   = WG.ModuleTranslations[moduleData.name].name,
 		font   = {size = 16, outline = true, color = moduleTextColor, outlineWidth = 2, outlineWeight = 2},
 		parent = newButton,
 	}
@@ -502,14 +659,15 @@ end
 local function ModuleReplacmentWithButton(slotIndex, moduleDefID)
 	local moduleData = moduleDefs[moduleDefID]
 	local button = currentModuleButton[slotIndex]
-	button.tooltip = moduleData.description
+	button.tooltip = GetModuleDescription(moduleData)
 	button.children[1].file = moduleData.image
 	button.children[1]:Invalidate()
-	button.children[2]:SetText(moduleData.humanName)
+	button.children[2]:SetText(WG.ModuleTranslations[moduleData.name].name)
+	Spring.Echo("SetChild2: " .. WG.ModuleTranslations[moduleData.name].name)
 	UpdateSlotModule(slotIndex, moduleDefID)
 end
 
-local function GetCurrentModuleButton(moduleDefID, slotIndex, level, chassis, slotAllows, empty)
+local function GetCurrentModuleButton(moduleDefID, slotIndex, level, chassis, slotAllows, empty, alreadyOwnedModules)
 	if not currentModuleButton[slotIndex] then
 		AddCurrentModuleButton(slotIndex, moduleDefID)
 	end
@@ -836,7 +994,7 @@ local function ShowModuleListWindow(slotDefaults, level, chassis, alreadyOwnedMo
 	-- Actually add the default modules and slot data
 	for i = 1, #slots do
 		local slotData = slots[i]
-		currentModuleList:AddChild(GetCurrentModuleButton(GetSlotModule(i, slotData.empty), i, level, chassis, slotData.slotAllows, slotData.empty))
+		currentModuleList:AddChild(GetCurrentModuleButton(GetSlotModule(i, slotData.empty), i, level, chassis, slotData.slotAllows, slotData.empty, alreadyOwnedModules))
 	end
 end
 
@@ -927,7 +1085,8 @@ local function CreateModuleListWindowFromUnit(unitID)
 		alreadyOwned[#alreadyOwned + 1] = module
 	end
 	table.sort(alreadyOwned)
-	
+	damageBooster = Spring.GetUnitRulesParam(unitID, "comm_damage_mult") or 1
+	rangeBooster  = Spring.GetUnitRulesParam(unitID, "comm_range_mult") or 1
 	-- Record the signature of the morphing unit for later application.
 	upgradeSignature.level = level
 	upgradeSignature.chassis = chassis
@@ -1076,11 +1235,19 @@ function widget:Initialize()
 	Image = Chili.Image
 	Progressbar = Chili.Progressbar
 	screen0 = Chili.Screen0
-
+	for _, modDef in pairs(moduleDefs) do -- preload for translation, translation will occur post loading.
+		Spring.Echo(modDef.name)
+		if modDef.slotType ~= "decoration" then
+			Spring.Echo("Adding " .. modDef.name)
+			WG.ModuleTranslations[modDef.name] = {name = modDef.humanName, desc = modDef.description}
+		end
+	end
+	
 	if (not Chili) then
 		widgetHandler:RemoveWidget()
 		return
 	end
+	WG.InitializeTranslation(OnLocaleChanged, "gui_chili_commander_upgrade")
 end
 
 --------------------------------------------------------------------------------

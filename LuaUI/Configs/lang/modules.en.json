@@ -11,7 +11,7 @@
 	"nullmodule_desc" : "No module selected",
 	"nullbasicweapon_name" : "Default Weapon",
 	"nullbasicweapon_desc" : "Use the default weapon for this chasis.",
-	"commweapon_beamlaser_name" : "Beaam Laser",
+	"commweapon_beamlaser_name" : "Beam Laser",
 	"commweapon_beamlaser_desc" : "An effective short-range cutting tool operating in the visual light range. Can be upgraded into a heavier laser.",
 	"commweapon_flamethrower_name" : "Heavy Flamethrower",
 	"commweapon_flamethrower_desc" : "A heavier flamethrower with massive upfront damage but short range.",
