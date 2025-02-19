@@ -221,5 +221,8 @@
 	"module_adv_nano_support_name" : "高级纳米车床",
 	"module_adv_nano_support_desc" : "增加 7.5 倍建造能力。增加 75 个存储量。",
 	"module_recon_pulse_name" : "侦察脉冲",
-	"module_recon_pulse_desc" : "每 2 秒增加一次脉冲,使敌方隐形单位脱离隐形状态。警告:禁用隐形能力。\n- 范围:400\n- 空中时不会触发。"
+	"module_recon_pulse_desc" : "每 2 秒增加一次脉冲,使敌方隐形单位脱离隐形状态。警告:禁用隐形能力。\n- 范围:400\n- 空中时不会触发。",
+	"commupgrade_accept" : "开始升级",
+	"commupgrade_view" : "查看当前模块",
+	"commupgrade_cancel" : "取消模块选择"
 }

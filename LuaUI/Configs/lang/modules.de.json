@@ -222,5 +222,8 @@
 	"module_adv_nano_support_name" : "Überlegene Nanodrehmaschine",
 	"module_adv_nano_support_desc" : "Erhöht die Bauleistung um 7,5. Erhöht die Lagerung um 75.",
 	"module_recon_pulse_name" : "Aufklärungspuls",
-	"module_recon_pulse_desc" : "Fügt einen Impuls hinzu, der alle 2 Sekunden getarnte feindliche Einheiten enttarnt. WARNUNG: DEAKTIVIERT DIE MÖGLICHKEIT ZUR TARNUNG.\n- Reichweite: 400\n- Wird nicht in der Luft ausgelöst."
+	"module_recon_pulse_desc" : "Fügt einen Impuls hinzu, der alle 2 Sekunden getarnte feindliche Einheiten enttarnt. WARNUNG: DEAKTIVIERT DIE MÖGLICHKEIT ZUR TARNUNG.\n- Reichweite: 400\n- Wird nicht in der Luft ausgelöst.",
+	"commupgrade_accept" : "Verbesserung beginnen",
+	"commupgrade_view" : "Aktuelle Module anzeigen",
+	"commupgrade_cancel" : "Modulauswahl abbrechen"
 }

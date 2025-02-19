@@ -222,5 +222,8 @@
 	"module_adv_nano_support_name" : "Nanolathe superiore",
 	"module_adv_nano_support_desc" : "Aumenta la potenza di costruzione di 7,5. Aumenta lo spazio di archiviazione di 75.",
 	"module_recon_pulse_name" : "Impulso di ricognizione",
-	"module_recon_pulse_desc" : "Aggiunge un impulso che rivela l'occultamento delle unità nemiche occultate ogni 2 secondi. ATTENZIONE: DISATTIVA LA ABILITÀ DI OCCULTAMENTO.\n- Raggio d'azione: 400\n- Non si attiva in aria."
+	"module_recon_pulse_desc" : "Aggiunge un impulso che rivela l'occultamento delle unità nemiche occultate ogni 2 secondi. ATTENZIONE: DISATTIVA LA ABILITÀ DI OCCULTAMENTO.\n- Raggio d'azione: 400\n- Non si attiva in aria.",
+	"commupgrade_accept" : "Avvia l'aggiornamento",
+	"commupgrade_view" : "Visualizza i moduli correnti",
+	"commupgrade_cancel" : "Annulla la selezione del modulo"
 }

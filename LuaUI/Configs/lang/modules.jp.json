@@ -222,5 +222,8 @@
 	"module_adv_nano_support_name" : "優れたナノ旋盤",
 	"module_adv_nano_support_desc" : "ビルドパワーが7.5増加します。ストレージが 75 増加します。",
 	"module_recon_pulse_name" : "偵察パルス",
-	"module_recon_pulse_desc" : "2 秒ごとに敵のクロークされたユニットのクロークを解除するパルスを追加します。警告: クロークする能力を無効にします。\n- 範囲: 400\n- 空中にいる間はトリガーされません。"
+	"module_recon_pulse_desc" : "2 秒ごとに敵のクロークされたユニットのクロークを解除するパルスを追加します。警告: クロークする能力を無効にします。\n- 範囲: 400\n- 空中にいる間はトリガーされません。",
+	"commupgrade_accept" : "アップグレードを開始",
+	"commupgrade_view" : "現在のモジュールを表示",
+	"commupgrade_cancel" : "モジュール選択をキャンセル"
 }

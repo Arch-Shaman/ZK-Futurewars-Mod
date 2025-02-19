@@ -222,5 +222,8 @@
 	"module_adv_nano_support_name" : "Superior Nanolathe",
 	"module_adv_nano_support_desc" : "Increases build power by 7.5. Increases storage by 75.",
 	"module_recon_pulse_name" : "Recon Pulse",
-	"module_recon_pulse_desc" : "Adds a pulse that decloaks enemy cloaked units every 2 seconds. WARNING: DISABLES THE ABILITY TO CLOAK.\n- Range: 400\n- Does not trigger while airborn."
+	"module_recon_pulse_desc" : "Adds a pulse that decloaks enemy cloaked units every 2 seconds. WARNING: DISABLES THE ABILITY TO CLOAK.\n- Range: 400\n- Does not trigger while airborn.",
+	"commupgrade_accept": "Iniciar atualização",
+	"commupgrade_view": "Ver módulos atuais",
+	"commupgrade_cancel" : "Cancelar seleção de módulo"
 }
