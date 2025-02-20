@@ -66,7 +66,8 @@ end
 -- Module config
 local moduleDefs, chassisDefs, upgradeUtilities, LEVEL_BOUND, _, moduleDefNames = VFS.Include("LuaRules/Configs/dynamic_comm_defs.lua")
 WG.ModuleTranslations = {} -- Store these so we can use them in Context Menu as well as the comm upgrade one.
-
+local nullweapon = moduleDefNames["nullbasicweapon"]
+local nulladvweapon = moduleDefNames["nulladvweapon"]
 
 -- Configurable things, possible to add to Epic Menu later.
 local BUTTON_SIZE = 55
@@ -96,6 +97,17 @@ for i = 1, #UnitDefs do
 	end
 end
 
+-- Nullweapon and Nulladvweapon are both technical junk that users should NOT see in FW. Probably in base game too?
+local defaultweapons = {
+	[1] = "commweapon_heavyrifle", -- strike
+	[2] = "commweapon_heatray", -- recon
+	[3] = "commweapon_beamlaser", -- support
+	[4] = "commweapon_rocketbarrage", -- bombard
+	[5] = "commweapon_heavymachinegun", -- riot
+	[6] = "commweapon_beamlaser", -- knight (presumably?)
+	[7] = "commweapon_heavymachinegun", -- riot
+}
+
 local UPGRADE_CMD_DESC = {
 	id      = CMD_UPGRADE_UNIT,
 	type    = CMDTYPE.ICON,
@@ -122,6 +134,7 @@ local translationOverrides = {
 }
 
 local weaponTemplate, shieldTemplate, aoeTemplate, waterCapableTemplate
+local acceptText, cancelText, viewText
 
 local function GetWeaponTemplate()
 	weaponTemplate = "\n\255\255\061\061" .. WG.Translate("interface", "module_weapon_notes") .. ":\n\255\255\255\031- " .. WG.Translate("interface", "stats_range") .. ":\255\255\255\255_range_"
@@ -132,6 +145,9 @@ local function GetWeaponTemplate()
 end
 
 local function OnLocaleChanged()
+	acceptText = WG.Translate("interface", "commupgrade_accept")
+	cancelText = WG.Translate("interface", "commupgrade_cancel")
+	viewText   = WG.Translate("interface", "commupgrade_view")
 	local cost = WG.Translate("interface", "commodule_cost")
 	local limit = WG.Translate("interface", "commodule_limit")
 	local hp = WG.Translate("interface", "acronyms_hp")
@@ -140,17 +156,26 @@ local function OnLocaleChanged()
 	for internalName, translation in pairs(WG.ModuleTranslations) do
 		local def = moduleDefs[moduleDefNames[internalName]]
 		local name
-		Spring.Echo("Translating " .. internalName)
+		--spring.echo("Translating " .. internalName)
 		if translationOverrides[internalName] then
 			name = WG.Translate("interface", translationOverrides[internalName] .. "_name")
-			Spring.Echo("Overriding " .. internalName .. " -> " .. translationOverrides[internalName] .. ": '" .. tostring(name) .. "'")
+			--spring.echo("Overriding " .. internalName .. " -> " .. translationOverrides[internalName] .. ": '" .. tostring(name) .. "'")
 		else
-			Spring.Echo("No override needed")
+			--spring.echo("No override needed")
 			name = WG.Translate("interface", internalName .. "_name")
 		end
 		WG.ModuleTranslations[internalName].name = name
 		local descStringName = internalName .. "_desc"
 		local desc = name .. "\n" .. cost .. def.cost .. "\n"
+		if def.slotType ~= "basic_weapon" and def.slotType ~= "adv_weapon" then
+			desc = desc .. limit .. ": "
+			local moduleLimit = def.limit
+			if moduleLimit then
+				desc = desc .. moduleLimit .. "\n\n"
+			else
+				desc = desc .. "∞\n\n"
+			end
+		end
 		if internalName == "module_detpack" then
 			desc = desc .. "\n" .. WG.Translate("interface", descStringName, {health = 1000*HP_MULT})
 		elseif internalName == "module_autorepair" then
@@ -185,14 +210,14 @@ local function OnLocaleChanged()
 					desc = desc .. waterCapableTemplate
 				end
 			else
-				Spring.Echo("Unable to load " .. internalName .. " weaponDef, skipping")
+				--spring.echo("Unable to load " .. internalName .. " weaponDef, skipping")
 			end
 		elseif internalName:find("shield") then
 			desc = desc .. shieldTemplate
 		end
 		translation.desc = desc
 	end
-	Spring.Echo("Finished setting up translation")
+	--spring.echo("Finished setting up translation")
 end
 
 --------------------------------------------------------------------------------
@@ -208,7 +233,7 @@ local function GetModuleDescription(moduleData) -- dynamically updated.
 	else -- dynamically generated.
 		if not isShield then
 			local name = moduleData.name
-			Spring.Echo("GetModuleDescription::InternalName: " .. tostring(name))
+			--spring.echo("GetModuleDescription::InternalName: " .. tostring(name))
 			
 			local wd = WeaponDefNames["0_" .. name]
 			local description = WG.ModuleTranslations[name].desc
@@ -222,19 +247,55 @@ local function GetModuleDescription(moduleData) -- dynamically updated.
 				local burst = wd.burst or 1
 				local damage = wd.damages[1] * burst * projectiles 
 				if customparams.extra_damage_mult then -- emp
+					--spring.echo("EMP")
 					local extradmg = tonumber(customparams.extra_damage_mult) or 0
-					local extradps = (extradmg * damage * damageBooster) / reload
-					extradps = extradps .. "\255\51\179\255" .. string.format("%.1f", extradps) .. "P\255\255\255\255 "
+					local empdps = (extradmg * damage * damageBooster) / reload
+					extradps = extradps .. "\255\51\179\255" .. string.format("%.1f", empdps) .. "P\255\255\255\255"
 				end
+				--spring.echo("EMP: " .. extradps)
 				if customparams.is_capture then
-					extradps = extradps .. "\255\153\255\153" .. string.format("%.1f", damage * damageBooster / reload) .. WG.Translate("interface", "acronyms_capture") .. "\255\255\255\255 "
-				elseif customparams.disarmDamageOnly or customparams.disarmdamageonly then
-					extradps = extradps .. "\255\128\128\128" .. string.format("%.1f", damage * damageBooster / reload) .. WG.Translate("interface", "acronyms_disarm") .. "\255\255\255\255 "
+					local capture = " \255\153\255\153" .. string.format("%.1f", damage * damageBooster / reload) .. WG.Translate("interface", "acronyms_capture") .. "\255\255\255\255"
+					if extradps == "" then
+						extradps = capture
+					else
+						extradps = extradps .. " \255\255\255\031+" .. capture
+					end
 				end
+				if customparams.timeslow_damagefactor or customparams.timeslow_onlyslow then
+					local factor = tonumber(customparams.timeslow_damagefactor) or 0
+					if factor * damage > 0 then
+						local slow = damage * damageBooster * factor
+						local slowstr = "\255\230\51\255" .. string.format("%.1f", slow) .. WG.Translate("interface", "acronyms_slow") .. "\255\255\255\255"
+						if extradps == "" then
+							extradps = slowstr
+						else
+							extradps = extradps .. "\255\255\255\031+ " .. slowstr
+						end
+					end
+				end
+				if customparams.disarmDamageOnly or customparams.disarmdamageonly then
+					local disarm = "\255\128\128\128" .. string.format("%.1f", damage * damageBooster / reload) .. WG.Translate("interface", "acronyms_disarm") .. "\255\255\255\255"
+					if extradps ~= "" then
+						extradps = extradps .. " \255\255\255\031+\255\128\128\128 " .. disarm
+					else
+						extradps = disarm
+					end
+				end
+				--spring.echo("Disarm: " .. extradps)
 				if wd.paralyzeTime == nil and wd.paralyzetime == nil then
-					dps = "\255\255\255\255 " .. string.format("%.1f", damage * damageBooster / reload)
+					if not customparams.disarmDamageOnly and not customparams.disarmdamageonly and not customparams.timeslow_onlyslow then
+						dps = "\255\255\255\255 " .. string.format("%.1f", damage * damageBooster / reload)
+					end
 				else
 					dps = "\255\51\179\255 " .. string.format("%.1f", damage * damageBooster / reload) .. "P"
+				end
+				--spring.echo("Final: " .. extradps)
+				if extradps ~= "" and dps ~= "" then
+					description = string.gsub(description, "_dps_", dps .. "(" .. extradps .. ")")
+				elseif dps == "" then
+					description = string.gsub(description, "_dps_", extradps)
+				else
+					description = string.gsub(description, "_dps_", dps)
 				end
 				description = string.gsub(description, "_dps_", extradps .. dps)
 				description = string.gsub(description, "_range_", wd.range * rangeBooster)
@@ -248,7 +309,7 @@ local function GetModuleDescription(moduleData) -- dynamically updated.
 				end
 				return description
 			else
-				Spring.Echo("Failed to load weapondef for " .. moduleData.name)
+				--spring.echo("Failed to load weapondef for " .. moduleData.name)
 			end
 		end
 	end
@@ -466,6 +527,7 @@ local function GetAlreadyOwned()
 end
 
 local function GetSlotModule(slot, emptyModule)
+	--spring.echo("EmptyModule: " .. tostring(emptyModule))
 	return currentModulesBySlot[slot] or emptyModule
 end
 
@@ -550,7 +612,7 @@ local function GetNewReplacementSet(level, chassis, slotAllows, ignoreSlot)
 			end
 			
 			-- Add the module once accepted
-			if accepted then
+			if accepted and i ~= nullweapon and i ~= nulladvweapon then
 				replacementSet[#replacementSet + 1] = i
 			end
 		end
@@ -663,7 +725,7 @@ local function ModuleReplacmentWithButton(slotIndex, moduleDefID)
 	button.children[1].file = moduleData.image
 	button.children[1]:Invalidate()
 	button.children[2]:SetText(WG.ModuleTranslations[moduleData.name].name)
-	Spring.Echo("SetChild2: " .. WG.ModuleTranslations[moduleData.name].name)
+	--spring.echo("SetChild2: " .. WG.ModuleTranslations[moduleData.name].name)
 	UpdateSlotModule(slotIndex, moduleDefID)
 end
 
@@ -678,7 +740,11 @@ local function GetCurrentModuleButton(moduleDefID, slotIndex, level, chassis, sl
 	current.level = level
 	current.chassis = chassis
 	current.slotAllows = slotAllows
-	current.empty = empty
+	if empty ~= nullweapon and empty ~= nulladvweapon then
+		current.empty = empty
+	else
+		current.empty = defaultweapons[chassis]
+	end
 	current.replacementSet = GetNewReplacementSet(level, chassis, slotAllows, slotIndex)
 
 	ModuleReplacmentWithButton(slotIndex, moduleDefID)
@@ -855,7 +921,7 @@ local function CreateMainWindow()
 		height = 55,
 		padding = {0, 0, 0, 0},
 		backgroundColor = {0.5,0.5,0.5,0.5},
-		tooltip = "Start upgrade",
+		tooltip = acceptText,
 		OnClick = {
 			function()
 				if mainWindowShown then
@@ -874,7 +940,7 @@ local function CreateMainWindow()
 		height = 55,
 		padding = {0, 0, 0, 0},
 		backgroundColor = {0.5,0.5,0.5,0.5},
-		tooltip = "View current modules",
+		tooltip =  viewText,
 		OnClick = {
 			function(self)
 				AlreadyOwnedModuleClick(self)
@@ -891,10 +957,10 @@ local function CreateMainWindow()
 		height = 55,
 		padding = {0, 0, 0, 0},
 		backgroundColor = {0.5,0.5,0.5,0.5},
-		tooltip = "Cancel module selection",
+		tooltip = cancelText,
 		OnClick = {
 			function()
-				--Spring.Echo("Upgrade UI Debug - Cancel Clicked")
+				----spring.echo("Upgrade UI Debug - Cancel Clicked")
 				HideMainWindow()
 			end
 		},
@@ -1050,7 +1116,7 @@ function SendUpgradeCommand(newModules)
 	end
 	
 	-- Remove main window
-	--Spring.Echo("Upgrade UI Debug - Upgrade Command Sent")
+	----spring.echo("Upgrade UI Debug - Upgrade Command Sent")
 	HideMainWindow()
 end
 
@@ -1162,7 +1228,7 @@ end
 function widget:CommandsChanged()
 	local units = cachedSelectedUnits or Spring.GetSelectedUnits()
 	if mainWindowShown then
-		--Spring.Echo("Upgrade UI Debug - Number of units selected", #units)
+		----spring.echo("Upgrade UI Debug - Number of units selected", #units)
 		local foundMatchingComm = false
 		for i = 1, #units do
 			local unitID = units[i]
@@ -1187,7 +1253,7 @@ function widget:CommandsChanged()
 			local customCommands = widgetHandler.customCommands
 			customCommands[#customCommands+1] = UPGRADE_CMD_DESC
 		else
-			----Spring.Echo("Upgrade UI Debug - Commander Deselected")
+			------spring.echo("Upgrade UI Debug - Commander Deselected")
 			HideMainWindow() -- Hide window if no commander matching the window is selected
 		end
 	end
@@ -1236,9 +1302,9 @@ function widget:Initialize()
 	Progressbar = Chili.Progressbar
 	screen0 = Chili.Screen0
 	for _, modDef in pairs(moduleDefs) do -- preload for translation, translation will occur post loading.
-		Spring.Echo(modDef.name)
+		--spring.echo(modDef.name)
 		if modDef.slotType ~= "decoration" then
-			Spring.Echo("Adding " .. modDef.name)
+			--spring.echo("Adding " .. modDef.name)
 			WG.ModuleTranslations[modDef.name] = {name = modDef.humanName, desc = modDef.description}
 		end
 	end
