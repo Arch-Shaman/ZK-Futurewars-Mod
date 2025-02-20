@@ -266,7 +266,10 @@ local function DoChainLightning(weaponDefID, px, py, pz, AttackerID, damagedUnit
 	if c.canTargetFeature then
 		potentialFeatures, badFeatures = GetValidFeatureTargets(px, py, pz, c.targetSearchDistance, badFeatures)
 	end
-	for targetNum = 1, c.maxTargets do
+	local maxTargets = c.maxTargets
+	local targetBonus = Spring.GetUnitRulesParam(attackerID, "comm_chainlightningboosters") or 0
+	maxTargets = maxTargets + targetBonus
+	for targetNum = 1, maxTargets do
 		local x2, y2, z2, dirx, diry, dirz
 		local sx, sy, sz, newTarget, targetFeature
 		if #potentialTargets > 0 and #potentialFeatures == 0 then
@@ -346,7 +349,7 @@ local function DoChainLightning(weaponDefID, px, py, pz, AttackerID, damagedUnit
 			sx, sy, sz = px, py, pz
 		end
 		if sx == nil then
-			Spring.Echo("ChainLightning: Fallback due to nil sx")
+			--Spring.Echo("ChainLightning: Fallback due to nil sx")
 			sx, sy, sz = px, py, pz
 		end
 		if c.forceSpawn then
@@ -367,7 +370,7 @@ function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, ProjectileID)
 	end
 	local visual = c.visualEffect
 	if visual then
-		Spring.Echo("Explosion::SpawnVisual: " .. visual)
+		--Spring.Echo("Explosion::SpawnVisual: " .. visual)
 		local p = projectileData[ProjectileID]
 		local x, y, z = p[1], p[2], p[3]
 		local dirx, diry, dirz = PointToDir(px, py, pz, x, y, z)
