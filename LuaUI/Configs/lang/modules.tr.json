@@ -189,7 +189,7 @@
 	"module_expandedrocketsalvo_name" : "Genişletilmiş Roket Mühimmat Deposu",
 	"module_expandedrocketsalvo_desc" : "Roket rezervlerinizi önemli ölçüde genişleterek düşmanlarınıza fırlatmak için bir roket seli yaratır. Roket Barajı boyutunu 8 mermi artırır, yeniden yüklemeyi 0,8 saniye artırır. Ağır mühimmatınız varsa, mermi sayısını 6 artırın ve yeniden yüklemeyi 5,4 saniye artırın.",
 	"module_rocketconservation_name" : "Muhafazakar Dağıtım",
-	"module_rocketconservation_desc" : "Roket mühimmatınızın çoğunu yedekte tutun, bu size daha hızlı yeniden yükleme süresi kazandırır. Bir barajdaki roket sayısını 2 azaltır ancak yeniden yüklemeyi 0,8 saniye azaltır. Ağır mühimmatınız varsa, yeniden yükleme hızını 3 saniye azaltın.",
+	"module_rocketconservation_desc" : "Roket mühimmatınızın çoğunu yedekte tutun, bu size daha hızlı yeniden yükleme süresi kazandırır. Bir barajdaki roket sayısını 2 azaltır ancak yeniden yüklemeyi 0,8 saniye azaltır. Ağır mühimmatınız varsa, yeniden yükleme hızını 2.5 saniye azaltın.",
 	"module_autoloader_name" : "Hızlı Otomatik Yükleyici",
 	"module_autoloader_desc" : "Yeniden yükleme hızını %33 artırır. Temel hasarı %12,5 azaltır. Patlayıcı Silahlar (yıldırım silahları veya orta tüfekler gibi) daha hızlı ateş eder. Minimum %5 hasar.",
 	"module_dmg_booster_name" : "Geliştirilmiş Silah Sistemleri",

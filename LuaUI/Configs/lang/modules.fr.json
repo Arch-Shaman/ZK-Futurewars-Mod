@@ -188,7 +188,7 @@
 	"module_expandedrocketsalvo_name" : "Expanded Rocket Ammunition Storage",
 	"module_expandedrocketsalvo_desc" : "Expand your rocket reserves significantly, creating a torrent of rockets to fly at your foes. Increases Rocket Barrage size by 8 projectiles, increases reload by 0.8s. If you have heavy ordinance installed, increase projectile count by 6 instead and reload by 5.4s instead.",
 	"module_rocketconservation_name" : "Conservative Deployment",
-	"module_rocketconservation_desc" : "Hold much of your rocket ammunition in reserve, granting you faster reload time. Reduces the number of rockets in a barrage by 2 but decreases reload by 0.8s. If you have heavy ordinance installed, decrease reload speed by 3s instead.",
+	"module_rocketconservation_desc" : "Hold much of your rocket ammunition in reserve, granting you faster reload time. Reduces the number of rockets in a barrage by 2 but decreases reload by 0.8s. If you have heavy ordinance installed, decrease reload speed by 2.5s instead.",
 	"module_autoloader_name" : "Rapid Autoloader",
 	"module_autoloader_desc" : "Increases reload speed by 33%%. Reduces base damage by 12.5%%. Burst Weapons (such as lightning guns or medium rifles) fire faster. Minimum 5%% damage.",
 	"module_dmg_booster_name" : "Enhanced Weapon Systems",

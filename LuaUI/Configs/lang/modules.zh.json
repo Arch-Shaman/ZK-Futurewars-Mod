@@ -187,7 +187,7 @@
 	"module_expandedrocketsalvo_name" : "扩大火箭弹药储存",
 	"module_expandedrocketsalvo_desc" : "大幅扩大火箭储备,制造火箭洪流向敌人。增加火箭弹幕大小 8 枚,增加装填时间 0.8 秒。如果安装了重型弹药,则增加弹幕数量 6 枚,装填时间 5.4 秒。",
 	"module_rocketconservation_name" : "保守部署",
-	"module_rocketconservation_desc" : "保留大部分火箭弹药作为储备,缩短装填时间。减少弹幕中的火箭数量 2 枚,但减少装填时间 0.8 秒。如果您安装了重型武器,则将装填速度降低 3 秒。",
+	"module_rocketconservation_desc" : "保留大部分火箭弹药作为储备,缩短装填时间。减少弹幕中的火箭数量 2 枚,但减少装填时间 0.8 秒。如果您安装了重型武器,则将装填速度降低 2.5 秒。",
 	"module_autoloader_name" : "快速自动装填器",
 	"module_autoloader_desc" : "装填速度提高 33%%。基础伤害降低 12.5%%。爆发性武器（如闪电枪或中型步枪）射击速度更快。最低伤害为 5%%。",
 	"module_dmg_booster_name" : "增强型武器系统",

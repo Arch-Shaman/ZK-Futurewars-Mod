@@ -2108,8 +2108,8 @@ local moduleDefs = {
 				sharedData.reloadOverride1 = basereload - (0.8 * sharedData.conservativedeployments)
 			elseif sharedData.weapon1 and sharedData.weapon1 == "commweapon_rocketbarrage_nuclear" then
 				local basereload = 25
-				sharedData.burstOverride1 = (sharedData.burstOverride1 or 30) - 2
-				sharedData.reloadOverride1 = basereload - (3 * sharedData.conservativedeployments)
+				sharedData.burstOverride1 = 30 - (2 * sharedData.conservativedeployments)
+				sharedData.reloadOverride1 = basereload - (2.5 * sharedData.conservativedeployments)
 				sharedData.projectileOverride1 = 1
 			end
 			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage" then
@@ -2126,8 +2126,8 @@ local moduleDefs = {
 				sharedData.reloadOverride2 = basereload - (0.8 * sharedData.conservativedeployments)
 			elseif sharedData.weapon2 and sharedData.weapon2 == "commweapon_rocketbarrage_nuclear" then
 				local basereload = 25
-				sharedData.burstOverride2 = (sharedData.burstOverride2 or 30) - 2
-				sharedData.reloadOverride2 = basereload - (3 * sharedData.conservativedeployments)
+				sharedData.burstOverride2 = 30 - (2 * sharedData.conservativedeployments)
+				sharedData.reloadOverride2 = basereload - (2.5 * sharedData.conservativedeployments)
 				sharedData.projectileOverride2 = 1
 			end
 		end

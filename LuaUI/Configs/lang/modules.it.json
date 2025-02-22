@@ -188,7 +188,7 @@
 	"module_expandedrocketsalvo_name" : "Magazzino munizioni razzo ampliato",
 	"module_expandedrocketsalvo_desc" : "Espandi significativamente le tue riserve di razzi, creando un torrente di razzi da lanciare contro i tuoi nemici. Aumenta la dimensione della raffica di razzi di 8 proiettili, aumenta la ricarica di 0,8 s. Se hai installato munizioni pesanti, aumenta il conteggio dei proiettili di 6 e ricarica di 5,4 s.",
 	"module_rocketconservation_name" : "Dispiegamento conservativo",
-	"module_rocketconservation_desc" : "Conserva gran parte del tuo razzo munizioni in riserva, garantendoti tempi di ricarica più rapidi. Riduce il numero di razzi in una raffica di 2 ma diminuisce la ricarica di 0,8 s. Se hai installato munizioni pesanti, diminuisci la velocità di ricarica di 3 s.",
+	"module_rocketconservation_desc" : "Conserva gran parte del tuo razzo munizioni in riserva, garantendoti tempi di ricarica più rapidi. Riduce il numero di razzi in una raffica di 2 ma diminuisce la ricarica di 0,8 s. Se hai installato munizioni pesanti, diminuisci la velocità di ricarica di 2.5s.",
 	"module_autoloader_name" : "Caricatore automatico rapido",
 	"module_autoloader_desc" : "Aumenta la velocità di ricarica del 33%%. Riduce i danni base del 12,5%%. Le armi a raffica (come le pistole a fulmini o i fucili medi) sparano più velocemente. Danni minimi del 5%%.",
 	"module_dmg_booster_name" : "Sistemi d'arma potenziati",

@@ -188,7 +188,7 @@
 	"module_expandedrocketsalvo_name" : "Erweitertes Raketenmunitionslager",
 	"module_expandedrocketsalvo_desc" : "Erweitern Sie Ihre Raketenreserven erheblich und erzeugen Sie einen Raketenhagel, der auf Ihre Feinde abgefeuert wird. Erhöht die Größe des Raketensalvens um 8 Projektile und erhöht die Nachladezeit um 0,8 s. Wenn Sie schwere Munition installiert haben, erhöhen Sie stattdessen die Projektilanzahl um 6 und die Nachladezeit um 5,4 s.",
 	"module_rocketconservation_name" : "Konservativer Einsatz",
-	"module_rocketconservation_desc" : "Halten Sie einen Großteil Ihrer Raketenmunition in Reserve, um schneller nachzuladen. Reduziert die Anzahl der Raketen in einem Sperrfeuer um 2, verkürzt aber die Nachladezeit um 0,8 s. Wenn Sie schwere Munition installiert haben, verringert sich die Nachladegeschwindigkeit stattdessen um 3 s.",
+	"module_rocketconservation_desc" : "Halten Sie einen Großteil Ihrer Raketenmunition in Reserve, um schneller nachzuladen. Reduziert die Anzahl der Raketen in einem Sperrfeuer um 2, verkürzt aber die Nachladezeit um 0,8 s. Wenn Sie schwere Munition installiert haben, verringert sich die Nachladegeschwindigkeit stattdessen um 2.5s.",
 	"module_autoloader_name" : "Schneller Autoloader",
 	"module_autoloader_desc" : "Erhöht die Nachladegeschwindigkeit um 33%%. Reduziert den Grundschaden um 12,5%%. Salvenwaffen (wie Blitzgewehre oder mittlere Gewehre) feuern schneller. Mindestens 5%% Schaden.",
 	"module_dmg_booster_name" : "Verbesserte Waffensysteme",
