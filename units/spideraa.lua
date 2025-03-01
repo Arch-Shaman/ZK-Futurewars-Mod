@@ -60,7 +60,7 @@ return {
 				name                    = "Heavy AA Laser",
 				areaOfEffect            = 20,
 				avoidFeature = false,
-				avoidGround  = false,
+				avoidGround  = true,
 				canAttackGround         = false,
 				beamDecay               = 0.9,
 				beamTime                = 2/30,
