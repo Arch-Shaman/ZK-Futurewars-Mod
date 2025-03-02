@@ -43,7 +43,7 @@ local function AddUnit(unitID, allyTeamID, timer)
 	spSetUnitLosState(unitID, allyTeamID, 15)
 	local data = IterableMap.Get(handled, unitID)
 	if data then
-		local currentTimer = data[allyTeamID]
+		local currentTimer = data[allyTeamID] or 0
 		if timer > currentTimer then
 			data[allyTeamID] = timer
 		end
