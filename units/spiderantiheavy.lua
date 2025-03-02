@@ -76,7 +76,7 @@ return {
 					light_radius = 300,
 				},
 				damage                  = {
-					default        = 1500.1,
+					default        = 2000.1,
 				},
 				duration                = 8,
 				explosionGenerator      = "custom:YELLOW_LIGHTNINGPLOSION",
