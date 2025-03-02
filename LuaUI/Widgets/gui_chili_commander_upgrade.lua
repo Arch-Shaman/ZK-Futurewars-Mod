@@ -183,7 +183,7 @@ local function OnLocaleChanged()
 		elseif internalName == "module_nanorepair_upgrade_regen" then
 			desc = desc .. "\n" .. WG.Translate("interface", descStringName, {regen_mult = 3 * HP_MULT, max_regen = 30 * HP_MULT, max_health = 500 * HP_MULT})
 		elseif internalName == "module_ablative_armor" then
-			desc = desc .. "\n" .. WG.Translate("interface", descStringName, {health = 1400 * HP_MULT})
+			desc = desc .. "\n" .. WG.Translate("interface", descStringName, {health = 1200 * HP_MULT})
 		elseif internalName == "module_heavy_armor" then
 			desc = desc .. "\n" .. WG.Translate("interface", descStringName, {health = 4000 * HP_MULT})
 		elseif internalName == "module_fireproofing" then

@@ -1886,15 +1886,16 @@ local moduleDefs = {
 	{
 		name = "module_ablative_armor",
 		humanName = "Ablative Armour Plates",
-		description = "Provides " .. 1400*HP_MULT .. " health.",
+		description = "Provides " .. 1200*HP_MULT .. " health.",
 		image = moduleImagePath .. "module_ablative_armor.png",
 		-- unlimited
+		limit = 10,
 		cost = 200 * COST_MULT,
 		requireLevel = 1,
 		slotType = "module",
 		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
-			sharedData.healthBonus = (sharedData.healthBonus or 0) + 1400*HP_MULT
+			sharedData.healthBonus = (sharedData.healthBonus or 0) + 1200*HP_MULT
 		end
 	},
 	{
