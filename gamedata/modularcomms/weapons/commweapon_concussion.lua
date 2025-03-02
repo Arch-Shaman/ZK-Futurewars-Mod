@@ -21,13 +21,13 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 3000.1,
+		default = 2000.1,
 	},
 
 	edgeEffectiveness       = 0.5,
 	explosionGenerator      = "custom:100rlexplode",
-	impulseBoost            = 50,
-	impulseFactor           = 4,
+	impulseBoost            = 0,
+	impulseFactor           = 2.5,
 	interceptedByShieldType = 1,
 	range                   = 530,
 	reloadtime              = 10,
@@ -41,7 +41,7 @@ local weaponDef = {
 	turret                  = true,
 	waterweapon				= true,
 	weaponType              = "Cannon",
-	weaponVelocity          = 1000,
+	weaponVelocity          = 700,
 }
 
 return name, weaponDef
