@@ -78,7 +78,7 @@ return {
 					armorpiercing       = 0.33,
 				},
 				damage                  = {
-					default = 20.1,
+					default = 21.2,
 				},
 				explosionGenerator      = "custom:gauss_hit_m",
 				impactOnly              = false,
@@ -102,7 +102,7 @@ return {
 				turret                  = true,
 				waterweapon				= true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 1100,
+				weaponVelocity          = 900,
 			},
 		},
 		featureDefs         = {
