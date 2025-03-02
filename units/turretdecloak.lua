@@ -4,7 +4,7 @@ return {
 		name                          = "Clarity",
 		description                   = "Cloak Detection System",
 		activateWhenBuilt             = true,
-		buildCostMetal                = 350,
+		buildCostMetal                = 300,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 4,
