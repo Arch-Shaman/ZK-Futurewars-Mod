@@ -267,7 +267,7 @@ local function DoChainLightning(weaponDefID, px, py, pz, AttackerID, damagedUnit
 		potentialFeatures, badFeatures = GetValidFeatureTargets(px, py, pz, c.targetSearchDistance, badFeatures)
 	end
 	local maxTargets = c.maxTargets
-	local targetBonus = Spring.GetUnitRulesParam(attackerID, "comm_chainlightningboosters") or 0
+	local targetBonus = Spring.GetUnitRulesParam(AttackerID, "comm_chainlightningboosters") or 0
 	maxTargets = maxTargets + targetBonus
 	for targetNum = 1, maxTargets do
 		local x2, y2, z2, dirx, diry, dirz
