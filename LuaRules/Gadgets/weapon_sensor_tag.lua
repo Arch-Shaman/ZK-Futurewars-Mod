@@ -38,6 +38,7 @@ for i = 1, #WeaponDefs do
 end
 
 local function AddUnit(unitID, allyTeamID, timer)
+	if timer == nil then return end
 	spSetUnitLosMask(unitID, allyTeamID, 15) -- see: https://github.com/ZeroK-RTS/Zero-K/blob/master/LuaRules/Gadgets/unit_show_shooter.lua
 	spSetUnitLosState(unitID, allyTeamID, 15)
 	local data = IterableMap.Get(handled, unitID)
