@@ -145,6 +145,14 @@ function script.QueryBuildInfo()
 	return build
 end
 
+function script.QueryWeapon(num)
+	return nano1
+end
+
+function script.AimWeapon(num)
+	return true -- placeholder, needs a turret
+end
+
 function script.QueryNanoPiece()
 	if (nanoIdx == 2) then
 		nanoIdx = 1
