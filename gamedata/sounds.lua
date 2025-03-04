@@ -71,6 +71,15 @@ local Sounds = {
 			gain = 1.4,
 			maxdist = maxdistance,
 		},
+		missile_fire5 = {
+			file = "sounds/weapon/missile/missile_fire5.wav",
+			maxconcurrent = 100,
+			pitchmod = 0.05,
+			in3d = true,
+			dopplerscale = 0.2,
+			rolloff = 0.33,
+			maxdist = maxdistance,
+		},
 		missile_fire7 = {
 			file = "sounds/weapon/missile/missile_fire7.wav",
 			maxconcurrent = 100,
