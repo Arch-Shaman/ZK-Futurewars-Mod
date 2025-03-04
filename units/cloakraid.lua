@@ -74,8 +74,6 @@ return {
 				areaOfEffect            = 24,
 				colormap                = "1 0.95 0.4 1   1 0.95 0.4 1    0 0 0 0.01    1 0.7 0.2 1",
 				craterBoost             = 0,
-				burst                   = 2,
-				burstRate               = 1/30,
 				projectiles             = 16,
 				craterMult              = 0,
 				cylinderTargeting 		= 1,
@@ -86,7 +84,7 @@ return {
 					isflak = 1,
 				},
 				damage                  = {
-					default = 5.05,
+					default = 10.1,
 				},
 				explosionGenerator      = "custom:emg_hit_le",
 				impactOnly              = false,
