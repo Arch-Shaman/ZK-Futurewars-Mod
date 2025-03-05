@@ -267,11 +267,12 @@ function script.AimWeapon(num, heading, pitch)
 	return true
 end
 
+local recoilSpeed = -math.rad(420)
 local function RecoilThread()
 	recoil = true
 	Sleep(5)	
-	Turn(lshoulder, x_axis, math.rad(-105), math.rad(-280))
-    Turn(lforearm, x_axis, math.rad(-45), math.rad(-280))
+	Turn(lshoulder, x_axis, math.rad(-105), recoilSpeed)
+    Turn(lforearm, x_axis, math.rad(-45), recoilSpeed)
 	WaitForTurn(lshoulder, x_axis)
 	recoil = false
 end
