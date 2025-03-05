@@ -146,10 +146,10 @@ function script.QueryBuildInfo()
 end
 
 function script.QueryWeapon(num)
-	return nano1
+	return bay
 end
 
-function script.AimWeapon(num)
+function script.AimWeapon(num, heading, pitch)
 	return true -- placeholder, needs a turret
 end
 
