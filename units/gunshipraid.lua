@@ -98,7 +98,7 @@ return {
 				range                   = 341,
 				reloadtime              = 2.0,
 				rgbColor                = "0.8941 0.7647 0.1255",
-				soundStart              = "weapon/laser/medium_phaser",
+				soundStart              = "medium_phaser",
 				soundHit				= "weapon/impacts/impact-light01",
 				soundHitVolume			= 50,
 				soundStartVolume		= 25,

@@ -71,6 +71,15 @@ local Sounds = {
 			gain = 1.4,
 			maxdist = maxdistance,
 		},
+		medium_phaser = {
+			file = "weapon/laser/medium_phaser.wav",
+			maxconcurrent = 100,
+			pitchmod = 0.025,
+			in3d = true,
+			dopplerscale = 0.4,
+			rolloff = 0.33,
+			maxdist = maxdistance,
+		},
 		missile_fire5 = {
 			file = "sounds/weapon/missile/missile_fire5.wav",
 			maxconcurrent = 100,
