@@ -249,8 +249,10 @@ local function WalkControl()
 	end
 end
 
+local isReloading = false
+
 local function DgunThread()
-	local isReloading = true
+	isReloading = true
 	while isReloading do
 		Sleep(66)
 		isReloading = Spring.GetGameFrame() < Spring.GetUnitWeaponState(unitID, 1, "reloadFrame")
@@ -260,7 +262,7 @@ end
 
 function Dgun()
 	local x, y, z = Spring.GetUnitPosition(unitID)
-	if y > Spring.GetGroundHeight(x, z) then
+	if y > Spring.GetGroundHeight(x, z) or isReloading then
 		return
 	end
 	local projectileParams = {pos = {x, y, z}, gravity = -30, maxRange = 1, team = Spring.GetUnitTeam(unitID), owner = unitID, ttl = -1}
