@@ -6,7 +6,7 @@ return {
 		acceleration        = 0.4,
 		airHoverFactor      = 7,
 		brakeRate           = 0.4,
-		buildCostMetal      = 35,
+		buildCostMetal      = 5,
 		builder             = false,
 		buildPic            = "droneheavyslow.png",
 		canBeAssisted       = false,

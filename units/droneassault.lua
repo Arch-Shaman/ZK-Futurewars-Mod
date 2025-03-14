@@ -6,7 +6,7 @@ return {
 		acceleration        = 0.15,
 		airHoverFactor      = 4,
 		brakeRate           = 0.24,
-		buildCostMetal      = 75,
+		buildCostMetal      = 25,
 		builder             = false,
 		buildPic            = "droneassault.png",
 		canBeAssisted       = false,

@@ -6,7 +6,7 @@ return {
 		acceleration        = 0.3,
 		airHoverFactor      = 4,
 		brakeRate           = 0.24,
-		buildCostMetal      = 50,
+		buildCostMetal      = 5,
 		builder             = true,
 		canAssist           = false,
 		buildPic            = "dronecon.png",
