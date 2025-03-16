@@ -5,7 +5,7 @@ return {
 		description         = "Heavy AA Jumper",
 		acceleration        = 0.54,
 		brakeRate           = 1.2,
-		buildCostMetal      = 625,
+		buildCostMetal      = 500,
 		buildPic            = "jumpaa.png",
 		canMove             = true,
 		category            = "LAND",
