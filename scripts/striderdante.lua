@@ -450,6 +450,14 @@ function script.Shot(num)
 	end
 end
 
+local function DoSomeHax()
+	Sleep(33)
+	local commands = Spring.GetCommandQueue(unitID, 0)
+	if commands == 0 then
+		Spring.GiveOrderToUnit(unitID, CMD.STOP, 0, 0)
+	end
+end
+
 function script.BlockShot(num, targetID)
 	if num == 2 then
 		StartThread(DoSomeHax) -- Try harder to fix the bug
@@ -459,14 +467,6 @@ function script.BlockShot(num, targetID)
 		end
 		local reloadState = Spring.GetUnitWeaponState(unitID, 3, 'reloadState')
 		return not (reloadState and (reloadState < 0 or reloadState < Spring.GetGameFrame()))
-	end
-end
-
-local function DoSomeHax()
-	Sleep(33)
-	local commands = Spring.GetCommandQueue(unitID, 0)
-	if commands == 0 then
-		Spring.GiveOrderToUnit(unitID, CMD.STOP, 0, 0)
 	end
 end
 
