@@ -58,8 +58,8 @@ return {
 					stats_hide_reload = 1,
 					cruisealt = 500,
 					cruisedist = 400,
-					generates_los = 200,
-					generates_radar = 1000,
+					generates_los = 650,
+					generates_radar = 1800,
 					sensortag = 40,
 				},
 				damage                  = {
