@@ -135,6 +135,16 @@ end
 --------------------------------------------------------------------------------
 -- Unit tracking
 
+function gadget:UnitUnloaded(unitID, unitDefID, unitTeam, transportID, transportTeam)
+	if unitDefID == UnitDefNames["staticshield"].id or unitDefID == UnitDefNames["staticheavyshield"].id then
+		local unitData = IterableMap.Get(allyTeamShields[Spring.GetUnitAllyTeam(unitID)], unitID)
+		local ux,uy,uz = spGetUnitPosition(unitID)
+		unitData.x = ux
+		unitData.y = uy
+		unitData.z = uz
+	end
+end
+
 function gadget:UnitCreated(unitID, unitDefID)
 	-- only count finished buildings
 	local stunned_or_inbuild, _, inbuild = spGetUnitIsStunned(unitID)
