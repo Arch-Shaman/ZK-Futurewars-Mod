@@ -162,6 +162,7 @@ end
 function gadget:UnitDestroyed(unitID, unitDefID)
 	local ud = UnitDefs[unitDefID]
 	local allyTeamID = spGetUnitAllyTeam(unitID)
+	disruptedShields[unitID] = nil
 	if allyTeamShields[allyTeamID] and allyTeamShields[allyTeamID][unitID] then
 		local unitData = allyTeamShields[allyTeamID][unitID]
 		if unitData then
@@ -470,7 +471,6 @@ function gadget:UnitCreated(unitID, unitDefID)
 end
 
 function gadget:UnitDestroyed(unitID, unitDefID)
-	disruptedShields[unitID] = nil
 	if UnitDefs[unitDefID].shieldWeaponDef then
 		for i=1, #shieldUnits do
 			if shieldUnits[i] == unitID then
