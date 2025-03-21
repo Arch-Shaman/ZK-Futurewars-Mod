@@ -73,8 +73,8 @@ return {
 				craterMult              = 0,
 				customParams = {
 					burst = Shared.BURST_RELIABLE,
-					shield_damage = 200.4,
-					armorpiercing = 0.1,
+					shield_damage = 90*3,
+					armorpiercing = 0.25,
 				},
 				damage                  = {
 					default = 90.01,
