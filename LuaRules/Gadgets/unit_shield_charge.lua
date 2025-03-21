@@ -58,7 +58,7 @@ for unitDefID = 1, #UnitDefs do
 					perSecondCost = tonumber(shieldWep.customParams.shield_drain),
 					startPower = shieldWep.customParams.shieldstartingpower and tonumber(shieldWep.customParams.shieldstartingpower),
 					rechargeDelay = shieldWep.customParams.shield_recharge_delay and tonumber(shieldWep.customParams.shield_recharge_delay),
-					batterychargecost = tonumber(shieldWep.customParams.shield_regenbatterycost),
+					batterychargecost = (tonumber(shieldWep.customParams.shield_regenbatterycost) or 0) / TEAM_SLOWUPDATE_RATE,
 				}
 			else
 				shieldUnitDefID[unitDefID] = {
@@ -140,6 +140,7 @@ function gadget:GameFrame(n)
 			local enabled, charge = IsShieldEnabled(unitID)
 			local transported = Spring.GetUnitTransporter(unitID) ~= nil
 			local def = data.def
+			local costMult = 1
 			if data.restoreCharge and not transported then
 				charge = data.restoreCharge
 				spSetUnitShieldState(unitID, data.shieldNum, charge)
@@ -147,7 +148,7 @@ function gadget:GameFrame(n)
 			end
 			local batteryCost = (def and def.batterychargecost) or 0
 			local disrupted = shieldsDisrupted[unitID]
-			local disruptedTime = 0
+			local disabled = (spGetUnitRulesParam(unitID, "shieldChargeDisabled") or 0) == 1
 			if disrupted and disrupted <= n then
 				shieldsDisrupted[unitID] = nil
 				spSetUnitRulesParam(unitID, "shield_disrupted", nil)
@@ -156,6 +157,7 @@ function gadget:GameFrame(n)
 				disrupted = true 
 			end
 			if data.resTable then
+				Spring.Echo("Doing shieldUpdate: " .. unitID)
 				-- The engine handles charging for free shields.
 				local hitTime = Spring.GetUnitRulesParam(unitID, "shieldHitFrame") or -999999
 				local currTime = n
@@ -167,7 +169,7 @@ function gadget:GameFrame(n)
 						spSetUnitRulesParam(unitID, "shieldRegenTimer", remainingTime, losTable)
 					end
 				end
-				if enabled and charge < def.maxCharge and not inCooldown and not disrupted and spGetUnitRulesParam(unitID, "shieldChargeDisabled") ~= 1 then
+				if enabled and charge < def.maxCharge and not inCooldown and not disrupted and not disabled then
 					-- Get changed charge rate based on slow
 					local newChargeRate = GetChargeRate(unitID)
 					if data.oldChargeRate ~= newChargeRate then
@@ -180,16 +182,19 @@ function gadget:GameFrame(n)
 					local chargeAdd = newChargeRate*def.chargePerUpdate
 					local chargeNeeded = def.maxCharge - charge
 					if charge > chargeNeeded then costMult = (chargeNeeded/charge) end
-					if charge + chargeAdd > def.maxCharge and batteryCost == 0 then
+					if charge + chargeAdd > def.maxCharge then
 						local overProportion = 1 - (charge + chargeAdd - def.maxCharge)/chargeAdd
 						data.resTable.e = data.resTable.e*overProportion
 						chargeAdd = chargeAdd*overProportion
-					elseif batteryCost > 0 then
-						local batteryAvailable = GG.BatteryManagement.GetChargeLevel(unitID)
-						local chargeMult = 1
-						local overProportion = 1 - (charge + chargeAdd - def.maxCharge)/chargeAdd
 						batteryCost = batteryCost * overProportion
+					end
+					if charge + chargeAdd > def.maxCharge then
+						local overProportion = 1 - (charge + chargeAdd - def.maxCharge)/chargeAdd
+						data.resTable.e = data.resTable.e*overProportion
 						chargeAdd = chargeAdd*overProportion
+					end
+					if batteryCost > 0 then
+						local batteryAvailable = GG.BatteryManagement.GetChargeLevel(unitID)
 						if batteryAvailable > batteryCost then
 							GG.BatteryManagement.UseCharge(unitID, batteryCost)
 							data.oldChargeRate = GetChargeRate(unitID)
