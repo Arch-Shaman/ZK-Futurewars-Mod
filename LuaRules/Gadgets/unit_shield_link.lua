@@ -1,6 +1,6 @@
 function gadget:GetInfo()
 	return {
-		name    = "Shield Link",
+		name    = "Shield Link v1.3",
 		desc    = "Nearby shields on the same ally team share charge to and from each other. Working Version",
 		author  = "lurker",
 		date    = "2009",
@@ -9,7 +9,6 @@ function gadget:GetInfo()
 		enabled = true -- loaded by default?
 	}
 end
-local version = 1.232
 
 -- CHANGELOG
 --	2009-5-24: CarRepairer: Added graphic lines to show links of shields (also shows links of enemies' visible shields, can remove if desired).
@@ -324,6 +323,9 @@ function gadget:GameFrame(n)
 			local unitID, unitData
 			for i = 1, unitList.count do
 				unitID = unitList[i]
+				if disruptedShields[unitID] and disruptedShields[unitID] < n then
+					disruptedShields[unitID] = nil -- effect over.
+				end
 				unitData = allyTeamShields[allyTeamID][unitID]
 				if unitData.enabled ~= unitData.oldEnabled then --if unit was linked/unlinked but now stunned/unstunned (state changes)
 					if not unitData.oldEnabled then
@@ -468,6 +470,7 @@ function gadget:UnitCreated(unitID, unitDefID)
 end
 
 function gadget:UnitDestroyed(unitID, unitDefID)
+	disruptedShields[unitID] = nil
 	if UnitDefs[unitDefID].shieldWeaponDef then
 		for i=1, #shieldUnits do
 			if shieldUnits[i] == unitID then
