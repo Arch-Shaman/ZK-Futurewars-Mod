@@ -87,12 +87,14 @@ function script.AimFromWeapon(id)
 end
 
 function script.QueryWeapon(id)
+	if id == 9 then return base end
 	return flare[id]
 end
 
 local turretTurnSpeed = math.rad(500)
 
 function script.AimWeapon(id, heading, pitch)
+	if id == 9 then return true end
 	Signal(SIG_Aim[id])
 	SetSignalMask(SIG_Aim[id])
 	local slowMult = (Spring.GetUnitRulesParam(unitID,"baseSpeedMult") or 1) -- TODO: Optimize

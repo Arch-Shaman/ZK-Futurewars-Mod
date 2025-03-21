@@ -24,7 +24,7 @@ return {
 			outline_y = 160,
 			outline_yoff = 25,
 			aim_lookahead = 600,
-			battery = 1000,
+			battery = 1200,
 			batterygain = 30,
 			initialbattery = 500,
 			dontfireatradarcommand = '0',
@@ -86,6 +86,9 @@ return {
 				def                = "AALASER",
 				onlyTargetCategory = "FIXEDWING GUNSHIP",
 			},
+			{
+				def                = "SHIELD",
+			},
 		},
 		weaponDefs             = {
 			SHIELD = {
@@ -104,7 +107,7 @@ return {
 				shieldInterceptType     = 3,	
 				shieldPower             = 7000,	
 				shieldPowerRegen        = 100,	
-				shieldPowerRegenEnergy  = 0.001, -- needed so we trick shield gadget into checking battery levels.
+				shieldPowerRegenEnergy  = 10, -- needed so we trick shield gadget into checking battery levels.
 				shieldRadius            = 400,
 				shieldStartingPower     = 5000,
 				shieldRepulser          = false,
