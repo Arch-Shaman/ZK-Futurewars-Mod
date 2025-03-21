@@ -68,7 +68,7 @@ return {
 					light_radius = 600,
 				},
 				damage                  = {
-					default = 40.01,
+					default = 32.01,
 				},
 				edgeEffectiveness		= 1/3,
 				explosionGenerator      = "custom:STARFIRE",
@@ -117,10 +117,10 @@ return {
 					projectile1 = "turretmissile_bomblet",
 					spawndist = 180,
 					timeoutspawn = 1, 
-					velspread1 = "5.09, 1, 5.09",
+					velspread1 = "8.09, 1, 8.09",
 				},
 				damage                  = {
-					default = 40.01*6,
+					default = 32.01*6,
 				},
 				fireStarter             = 70,
 				flightTime              = 8.45,
