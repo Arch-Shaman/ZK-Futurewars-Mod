@@ -28,6 +28,7 @@ local spGetUnitTeam      = Spring.GetUnitTeam
 local spGetTeamInfo      = Spring.GetTeamInfo
 local spGetUnitAllyTeam  = Spring.GetUnitAllyTeam
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 
 local modOptions = Spring.GetModOptions()
 local MERGE_ENABLED = (modOptions.shield_merge == "share")
@@ -41,6 +42,7 @@ local gameFrame = 0
 local shieldDamages = {}
 local defaultShielDamages = {}
 local shieldDisruptors = {}
+local currentFrame = -1
 for i = 1, #WeaponDefs do
 	shieldDamages[i] = tonumber(WeaponDefs[i].customParams.shield_damage)
 	defaultShielDamages[i] = WeaponDefs[i].damages[SHIELD_ARMOR]
@@ -49,6 +51,8 @@ for i = 1, #WeaponDefs do
 		shieldDisruptors[i] = disruptionTime
 	end
 end
+
+local disruptedShields = {}
 
 local beamWeaponDef = {}
 local errorSent = false
@@ -65,13 +69,17 @@ local function ShieldsAreTouching(shield1, shield2)
 	return xDiff <= sumRadius and zDiff <= sumRadius and (xDiff*xDiff + yDiff*yDiff + zDiff*zDiff) < sumRadius*sumRadius
 end
 
+local function CheckDisruptionDelinked(shield1, shield2)
+	return disruptedShields[shield1] or disruptedShields[shield2]
+end
+
 local otherID
 local otherData
 local otherMobile
 local function UpdateLink(unitID, unitData)
 	if unitID ~= otherID and (otherMobile or unitData.mobile) then
 		local currentlyNeighbors = (IterableMap.InMap(otherData.neighbors, unitID) or IterableMap.InMap(unitData.neighbors, otherID))
-		local touching = ShieldsAreTouching(unitData, otherData)
+		local touching = ShieldsAreTouching(unitData, otherData) and not CheckDisruptionDelinked(unitID, otherID)
 		if currentlyNeighbors and not touching then
 			--Spring.Utilities.UnitEcho(unitID, "-")
 			--Spring.Utilities.UnitEcho(otherID, "-")
@@ -106,7 +114,7 @@ local function PossiblyUpdateLinks(unitID, allyTeamID)
 	if not unitData then
 		return
 	end
-	if unitData.nextUpdateTime < gameFrame then
+	if unitData.nextUpdateTime < Spring.GetGameFrame() then
 		unitData.nextUpdateTime = gameFrame + 15
 		AdjustLinks(unitID, shieldUnits)
 	end
@@ -122,6 +130,33 @@ local function RemoveUnitFromNeighbors(thisShieldTeam, unitID, neighbors)
 	IterableMap.Apply(neighbors, RemoveNeighbor, thisShieldTeam, unitID)
 end
 
+local function DisableShieldFromNeighbors(unitID, allyTeamID)
+	local shieldUnits = allyTeamShields[allyTeamID]
+	local unitData = IterableMap.Get(shieldUnits, unitID)
+	if unitData then
+		RemoveUnitFromNeighbors(shieldUnits, unitID, unitData.neighbors)
+	end
+end
+
+local function CheckShieldDisrupted(unitID)
+	Spring.Echo("CheckShieldDisrupted")
+	local disruptedUntil = spGetUnitRulesParam(unitID, "shield_disrupted")
+	if disruptedUntil and disruptedUntil < Spring.GetGameFrame() and disruptedShields[unitID] == nil then
+		local shieldUnits = allyTeamShields[allyTeamID]
+		local unitData = IterableMap.Get(shieldUnits, unitID)
+		unitData.nextUpdateTime = 0
+		disruptedShields[unitID] = true
+		PossiblyUpdateLinks(unitID, spGetUnitAllyTeam(unitID))
+		Spring.Echo("Disrupted: " .. unitID)
+	elseif disruptedShields[unitID] then
+		disruptedShields[unitID] = nil
+		local shieldUnits = allyTeamShields[allyTeamID]
+		local unitData = IterableMap.Get(shieldUnits, unitID)
+		unitData.nextUpdateTime = 0
+		PossiblyUpdateLinks(unitID, spGetUnitAllyTeam(unitID))
+	end
+end
+
 local function UpdatePosition(unitID, unitData)
 	if unitData.mobile then
 		local ux,uy,uz = spGetUnitPosition(unitID)
@@ -129,6 +164,7 @@ local function UpdatePosition(unitID, unitData)
 		unitData.y = uy
 		unitData.z = uz
 	end
+	--CheckShieldDisrupted(unitID)
 end
 
 --------------------------------------------------------------------------------
@@ -201,6 +237,7 @@ function gadget:UnitDestroyed(unitID, unitDefID)
 		end
 		IterableMap.Remove(allyTeamShields[allyTeamID], unitID)
 	end
+	disruptedShields[unitID] = nil
 end
 
 function gadget:UnitGiven(unitID, unitDefID, unitTeam, oldTeam)
@@ -236,6 +273,11 @@ function gadget:GameFrame(n)
 	if n%13 == 7 then
 		for allyTeamID, unitList in pairs(allyTeamShields) do
 			IterableMap.ApplyNoArg(unitList, UpdatePosition)
+		end
+	end
+	if n%15 == 2 then
+		for allyTeamID, unitList in pairs(allyTeamShields) do
+			IterableMap.ApplyNoArg(unitList, CheckShieldDisrupted)
 		end
 	end
 end
@@ -348,7 +390,10 @@ function gadget:ShieldPreDamaged(proID, proOwnerID, shieldEmitterWeaponNum, shie
 		GG.Awards.AddAwardPoints('shield', spGetUnitTeam(shieldCarrierUnitID), damage)
 		local disruptionTime = shieldDisruptors[weaponDefID]
 		if disruptionTime then
-			GG.SetShieldDisrupted(shieldCarrierUnitID, Spring.GetGameFrame() + disruptionTime)
+			--Spring.Echo("Disruption time: " .. disruptionTime .. " until " .. Spring.GetGameFrame() + disruptionTime)
+			local disruptedUntil = Spring.GetGameFrame() + disruptionTime
+			GG.SetShieldDisrupted(shieldCarrierUnitID, disruptedUntil)
+			GG.NotifyShieldDisruption(shieldCarrierUnitID, disruptedUntil)
 		end
 	end
 	return projectilePasses

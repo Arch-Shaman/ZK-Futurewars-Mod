@@ -32,6 +32,7 @@ local spGetUnitShieldState  = Spring.GetUnitShieldState
 local spSetUnitShieldState  = Spring.SetUnitShieldState
 local spSetUnitRulesParam   = Spring.SetUnitRulesParam
 local spGetUnitRulesParam   = Spring.GetUnitRulesParam
+local frame = -1
 
 ------------
 local RECHARGE_KOEF = 0.01
@@ -45,6 +46,11 @@ local unitRulesParamsSetting = {inlos = true} -- Let enemies see links. It is in
 
 local updateLink = {}
 local updateAllyTeamLinks = {}
+local disruptedShields = {}
+
+local function NotifyShieldDisruption(unitID, untilFrame)
+	disruptedShields[unitID] = untilFrame
+end
 
 -- Double table with index in things
 local function AddDataThingToIterable(id, data, things, thingByID)
@@ -93,6 +99,7 @@ function gadget:Initialize()
 		local unitDefID = spGetUnitDefID(unitID)
 		gadget:UnitCreated(unitID, unitDefID, teamID)
 	end
+	GG.NotifyShieldDisruption = NotifyShieldDisruption
 end
 
 function gadget:UnitCreated(unitID, unitDefID)
@@ -296,9 +303,12 @@ local function DoChargeTransfer(lowID, lowData, lowCharge, highID, highData, hig
 	--2)not be more than donator's available charge,
 	--3)leave spaces for receiver to regen,
 	--charge flow is capable: to reverse flow (IS DISABLED!) when receiver have regen and is full,
+	local lowDisruptedUntil = disruptedShields[lowID] or 0
+	local highDisruptedUntil = disruptedShields[highID] or 0
+	local disrupted = lowDisruptedUntil > frame or highDisruptedUntil > frame
 	local chargeFlow = math.min(RECHARGE_KOEF*(highCharge - lowCharge),highCharge, lowData.shieldMaxCharge - lowData.shieldRegen - lowCharge) --minimize positive flow
 	if chargeFlow > 0 then -- Disallow negative flow
-		chargeFlow = chargeFlow * (spGetUnitRulesParam(highID, "totalReloadSpeedChange") or 1)
+		chargeFlow = chargeFlow * (spGetUnitRulesParam(highID, "totalReloadSpeedChange") or 1) * (disrupted and 0 or 1) -- disallow disrupted shields to connect.
 		spSetUnitShieldState(highID, highData.shieldNum, highCharge - chargeFlow)
 		spSetUnitShieldState(lowID, lowData.shieldNum, lowCharge + chargeFlow)
 		return chargeFlow
@@ -307,6 +317,7 @@ local function DoChargeTransfer(lowID, lowData, lowCharge, highID, highData, hig
 end
 
 function gadget:GameFrame(n)
+	frame = n
 	if n%30 == 18 then  --update every 30 frames at the 18th frame
 		--note: only update link when unit moves reduce total consumption by 53% when unit idle.
 		for allyTeamID,unitList in pairs(allyTeamShieldList) do
@@ -327,7 +338,7 @@ function gadget:GameFrame(n)
 							QueueLinkUpdate(allyTeamID, unitID)
 						end
 					else
-						Spring.Echo("Warning: shieldUnitPosition for " .. unitID .. " is NIL") --should not happen, all ShieldUnit should've been subjected to linking check at least once
+						Spring.Echo("Warning: shieldUnitPosition for " .. unitID .. " is nil") --should not happen, all ShieldUnit should've been subjected to linking check at least once
 						updateAllyTeamLinks[allyTeamID] = true --re-create all link
 						break; --nothing else to do, escape loop
 					end
@@ -360,6 +371,7 @@ function gadget:GameFrame(n)
 			for i = 1, unitList.count do
 				unitID = unitList[i]
 				unitData = shieldUnits[unitID]
+				local isDisrupted = (spGetUnitRulesParam(unitID, "shield_disrupted") or -1) >= n
 				on, unitCharge = spGetUnitShieldState(unitID, unitData.shieldNum)
 				chargeFlow = 0
 				attempt = 1
