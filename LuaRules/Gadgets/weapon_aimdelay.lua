@@ -33,7 +33,7 @@ for i = 1, #WeaponDefs do
 		WeaponDefOverrides[i] = {
 			heading = math.rad(headingError), 
 			pitch = math.rad(pitchError), 
-			aimReset = tonumber(WeaponDefs[i].customParams.aimdelayresettime) or 60
+			aimReset = tonumber(WeaponDefs[i].customParams.aimdelayresettime) or 60,
 		}
 	end
 end
