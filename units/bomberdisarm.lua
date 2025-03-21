@@ -187,6 +187,7 @@ return {
 					blastwave_slowdmg = 3000,
 					blastwave_overslow = 10,
 					blastwave_nofriendly = "superhot",
+					shield_disruption = 10*30,
 				},
 				damage = {
 					default          = 0,
