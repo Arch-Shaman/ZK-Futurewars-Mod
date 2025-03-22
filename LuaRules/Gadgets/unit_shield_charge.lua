@@ -157,7 +157,7 @@ function gadget:GameFrame(n)
 				disrupted = true 
 			end
 			if data.resTable then
-				Spring.Echo("Doing shieldUpdate: " .. unitID)
+				--Spring.Echo("Doing shieldUpdate: " .. unitID)
 				-- The engine handles charging for free shields.
 				local hitTime = Spring.GetUnitRulesParam(unitID, "shieldHitFrame") or -999999
 				local currTime = n
