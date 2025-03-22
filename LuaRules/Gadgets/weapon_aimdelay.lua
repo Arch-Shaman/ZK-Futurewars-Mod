@@ -87,6 +87,10 @@ end
 function GG.AimDelay_ForceWeaponRestart(unitID, weaponNum, delay)
 	if unitDelayedArray[unitID] then
 		unitDelayedArray[unitID][weaponNum].forcereset = true
+		if delay then
+			unitDelayedArray[unitID][weaponNum].delayedUntil = frame + delay
+			spSetUnitRulesParam(unitID, "aimdelay", frame + delay, LOS_ACCESS) -- Tell LUAUI this unit is currently aiming!
+		end
 	end
 end
 
