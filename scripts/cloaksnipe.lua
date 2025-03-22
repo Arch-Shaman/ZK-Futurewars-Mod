@@ -61,16 +61,83 @@ local AIM_SPEED = math.rad(480) -- noscope
 
 local RELOAD_PENALTY = tonumber(UnitDefs[unitDefID].customParams.reload_move_penalty or 1)
 local RELOAD_PENALTY_HALF = 0.5 + 0.5 * tonumber(UnitDefs[unitDefID].customParams.reload_move_penalty or 1)
+local delay = {}
+local currentDelay = 0
+for i=1, #UnitDef.weapons do
+	local wd = WeaponDefs[UnitDef.weapons[i].weaponDef]
+	if wd.customParams.aimdelay then
+		delay[i] = {
+			base = tonumber(wd.customParams.aimdelay),
+			min = tonumber(wd.customParams.aimdelay_min),
+			bonus = tonumber(wd.customParams.aimdelay_bonus) or 0,
+		}
+		currentDelay = delay[i].base
+	end
+end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 local bAiming, canAim, gun_unpacked, aimBlocked = false, true, false, false
 local maintainHeading = false
 local torsoHeading = 0
+local currentTarget
+local lastAimFrame = -1
+local inLOS = {inlos = true}
 
 local function GetSpeedMod()
 	-- disallow zero (instant turn instead -> infinite loop)
 	return math.max(0.05, GG.att_MoveChange[unitID] or 1)
+end
+
+local function UpdateAimDelay()
+	--Spring.Echo("New Aim Time: " .. currentDelay)
+	Spring.SetUnitRulesParam(unitID, "comm_aimtime", currentDelay, inLOS)
+end
+
+local function ArePositionsTheSame(target1, target2)
+	return target1[1] == target2[1] and target1[2] == target2[2] and target1[3] == target2[3]
+end
+
+function ReloadWatcher()
+	local frame, target, currentTarget, targetType, lastTargetType, wantsReset
+	lastTargetType = -1
+	local baseTime = delay[1].base
+	while true do
+		Sleep(33)
+		frame = Spring.GetGameFrame()
+		-- Targeting based reset --
+		if currentDelay < baseTime then
+			if frame - lastAimFrame > 60 then -- reset if lastAim is longer than 2s.
+				wantsReset = true
+			end
+			targetType, _, target = Spring.GetUnitWeaponTarget(unitID, 1)
+			if lastTargetType ~= -1 then
+				if not targetType then
+					lastTargetType = -1
+					wantsReset = true
+					--Spring.Echo("No target type")
+				elseif targetType ~= lastTargetType then
+					wantsReset = true
+					--Spring.Echo("Wrong target type!")
+				elseif targetType == 2 and not ArePositionsTheSame(currentTarget, target) then
+					wantsReset = true
+					--Spring.Echo("Not same pos!")
+				elseif targetType == 1 and currentTarget ~= target then
+					wantsReset = true
+					--Spring.Echo("Wrong unit!")
+				end
+			end
+			currentTarget = target
+			lastTargetType = targetType
+		end
+		if wantsReset then
+			--Spring.Echo("Resetting reload time")
+			wantsReset = false
+			currentDelay = delay[1].base
+			GG.AimDelay_ForceWeaponRestart(unitID, 1, currentDelay)
+			UpdateAimDelay()
+		end
+	end
 end
 
 local function Walk()
@@ -370,6 +437,7 @@ function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 	UnpackGunInstant()
 	StartThread(IdleAnim)
+	StartThread(ReloadWatcher)
 	--StartThread(TorsoHeadingThread)
 end
 
@@ -388,11 +456,11 @@ function script.AimWeapon(num, heading, pitch)
 	maintainHeading = true
 
 	GG.DontFireRadar_CheckAim(unitID)
-
 	-- Announce that we would like to aim, and wait until we can
 	while aimBlocked or not canAim do
 		Sleep(500)
 	end
+	lastAimFrame = Spring.GetGameFrame()
 	bAiming = true
 	Turn(hips, x_axis, 0)
 	Turn(torsoTrue, x_axis, 0)
@@ -413,7 +481,7 @@ function script.AimWeapon(num, heading, pitch)
 	StartThread(RestoreAfterDelay)
 	torsoHeading = 0
 	Turn(camera, y_axis, 0, math.rad(100))
-	return(true)
+	return GG.AimDelay_AttemptToFire(unitID, num, heading, pitch, currentDelay)
 end
 
 function script.BlockShot(num, targetID)
@@ -421,13 +489,19 @@ function script.BlockShot(num, targetID)
 end
 
 function script.FireWeapon(num)
+	currentDelay = currentDelay * (1 - delay[1].bonus)
+	GG.AimDelay_ForceWeaponRestart(unitID, 1, currentDelay)
+	if currentDelay < delay[1].min then
+		currentDelay = delay[1].min
+	end
+	UpdateAimDelay()
 	Turn(forearmr, x_axis, math.rad(-20), math.rad(300))
 	Sleep(33)
 	Turn(torsoTrue, y_axis, math.rad(-20), math.rad(400))
 	Turn(camera, y_axis, math.rad(20), math.rad(400))
 	Turn(forearmr, y_axis, math.rad(10), math.rad(400))
 	Move(barrel, y_axis, 0)
-	StartThread(ReloadPenaltyAndAnimation)
+	--StartThread(ReloadPenaltyAndAnimation)
 	WaitForTurn(forearmr, x_axis)
 	Turn(forearmr, x_axis, 0, math.rad(-90), math.rad(15))
 	Turn(torsoTrue, y_axis, 0, math.rad(100))
