@@ -72,7 +72,7 @@ local Sounds = {
 			maxdist = maxdistance,
 		},
 		medium_phaser = {
-			file = "weapon/laser/medium_phaser.wav",
+			file = "sounds/weapon/laser/medium_phaser.wav",
 			maxconcurrent = 100,
 			pitchmod = 0.025,
 			in3d = true,
