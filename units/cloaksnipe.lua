@@ -1,5 +1,5 @@
-local aimTime = 12*30 -- in frames
-local aimTimeMin = 4*30
+local aimTime = 8*30 -- in frames
+local aimTimeMin = 2*30
 return { 
 	cloaksnipe = {
 		name                   = "Phantom",
@@ -82,10 +82,10 @@ return {
 				customParams              = {
 					reaim_time = 1, -- Keep aiming at target to prevent sideways gun, which can lead to teamkill.
 					burst = Shared.BURST_RELIABLE,
-					allowedpitcherror = 20,
-					allowedheadingerror = 20,
+					allowedpitcherror = 60,
+					allowedheadingerror = 60,
 					light_radius = 120,
-					shield_disruption = 3.6*30,
+					shield_disruption = 4*30,
 					armorpiercing = 0.10,
 					aimdelay = aimTime,
 					aimdelay_min = aimTimeMin,
@@ -105,7 +105,7 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				noExplode				= true,
-				range                   = 1950,
+				range                   = 1400,
 				reloadtime              = 0.1,
 				rgbColor                = "0.85 0.7215 0.086",
 				size                    = 5,
@@ -114,7 +114,7 @@ return {
 				soundStart              = "weapon/cannon/sniper_shot",
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 1900,
+				weaponVelocity          = 1200,
 			},
 		},
 		featureDefs            = {
