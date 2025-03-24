@@ -17,6 +17,7 @@ return {
 			shield_emit_height = 25,
 			shield_color_mult = 1.1,
 			dontfireatradarcommand = '1',
+			bait_level_default = 1,
 		},
 		explodeAs           = "BIG_UNITEX",
 		footprintX          = 3,
