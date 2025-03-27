@@ -223,9 +223,8 @@ local function SpawnLightningProjectile(attackerID, def, x, y, z, targetX, targe
 		local damageMult = spGetUnitRulesParam(attackerID, "comm_damage_mult") or 1
 		Spring.Echo("DamageMult: " .. damageMult)
 		local damages = wd.damages
-		local proDamages = {}
 		for k, v in pairs(damages) do
-			Spring.SetProjectileDamages(p, 0, k, v * DamageMult)
+			Spring.SetProjectileDamages(p, 0, k, v * damageMult)
 		end
 	end
 end
