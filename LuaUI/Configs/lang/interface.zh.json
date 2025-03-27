@@ -143,5 +143,6 @@
 	"resign_state_forced" : "%{name} 被迫于 %{time} 投降",
 	"shield_disrupted" : "破坏 (%{duration}秒)",
 	"reclaimed" : "回收",
-	"build_progress" : "构造"
+	"build_progress" : "构造",
+	"replay_controls_speed_max" : "最快的速度"
 }

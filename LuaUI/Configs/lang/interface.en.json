@@ -156,5 +156,6 @@
 	"resign_state_forced" : "%{name} forced to surrender in %{time}",
 	"shield_disrupted" : "Disrupted (%{duration}s)",
 	"reclaimed" : "reclaimed",
-	"build_progress" : "built"
+	"build_progress" : "built",
+	"replay_controls_speed_max" : "MAX"
 }

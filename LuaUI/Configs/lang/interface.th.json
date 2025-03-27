@@ -137,5 +137,6 @@
 	"resign_state_forced" : "%{name} ถูกบังคับให้ยอมแพ้ใน %{time}",
 	"shield_disrupted" : "หยุดชะงัก (%{duration} วินาที)",
 	"reclaimed" : "ที่นำกลับมาใช้ใหม่",
-	"build_progress" : "ที่สร้างขึ้น"
+	"build_progress" : "ที่สร้างขึ้น",
+	"replay_controls_speed_max" : "แม็กซ์"
 }

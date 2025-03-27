@@ -129,5 +129,6 @@
 	"resign_state_forced": "%{name} %{time} içinde teslim olmaya zorlandı",
 	"shield_disrupted" : "Sıkışmış (%{duration}s)",
 	"reclaimed" : "geri alınmış",
-	"build_progress" : "inşa edilmiş"
+	"build_progress" : "inşa edilmiş",
+	"replay_controls_speed_max" : "MAKSIMUM"
 }

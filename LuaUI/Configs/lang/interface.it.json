@@ -148,5 +148,6 @@
 	"resign_state_forced" : "%{name} costretto ad arrendersi in %{time}",
 	"shield_disrupted" : "Interrotto (%{duration}s)",
 	"reclaimed" : "riciclato",
-	"build_progress" : "costruito"
+	"build_progress" : "costruito",
+	"replay_controls_speed_max" : "MASSIMO"
 }
