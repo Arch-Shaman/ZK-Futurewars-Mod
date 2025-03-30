@@ -39,6 +39,7 @@ for i = 1, #WeaponDefs do
 end
 
 local LOS_ACCESS = {inlos = true}
+local fullCircle = math.rad(360)
 
 --local unitDefsArray = {}
 local unitDelayedArray = {}
@@ -60,7 +61,18 @@ local function CallInAsUnit(unitID, trackProgress)
 end
 
 local function CalculateAngleDifference(angle1, angle2)
-	return 180 - abs(abs(angle1 - angle2) - 180)
+	local clockWise = abs(angle1 - angle2)
+	local counterClockwise
+	if clockWise < 0 then
+		counterClockwise = fullCircle + clockWise
+	else
+		counterClockwise = fullCircle - clockWise
+	end
+	if clockWise < counterClockwise then
+		return clockWise
+	else
+		return counterClockwise
+	end
 end
 
 local function isCloseEnough(heading1, heading2, pitch1, pitch2, weaponDefID, lastAimFrame)
