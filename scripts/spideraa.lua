@@ -55,7 +55,7 @@ local reloading = false
 local sounded = false
 local delay = WeaponDefs[UnitDef.weapons[1].weaponDef].customParams.aimdelay
 
-local turretTurnRate = math.rad(180)
+local turretTurnRate = math.rad(360)
 
 -- four-stroke hexapedal walkscript
 local function Walk()

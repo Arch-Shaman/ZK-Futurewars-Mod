@@ -82,8 +82,8 @@ return {
 				customParams              = {
 					reaim_time = 1, -- Keep aiming at target to prevent sideways gun, which can lead to teamkill.
 					burst = Shared.BURST_RELIABLE,
-					allowedpitcherror = 60,
-					allowedheadingerror = 60,
+					allowedpitcherror = 10,
+					allowedheadingerror = 10,
 					light_radius = 120,
 					shield_disruption = 4*30,
 					armorpiercing = 0.10,
