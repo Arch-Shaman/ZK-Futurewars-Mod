@@ -28,7 +28,7 @@ local sounded = false
 local lastcheck = -1
 --local turning = false
 
-local turnrate = math.rad(45)
+local turnrate = math.rad(130)
 
 local function Tilt()
 	while true do
