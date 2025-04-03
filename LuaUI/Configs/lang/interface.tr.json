@@ -130,5 +130,6 @@
 	"shield_disrupted" : "Sıkışmış (%{duration}s)",
 	"reclaimed" : "geri alınmış",
 	"build_progress" : "inşa edilmiş",
-	"replay_controls_speed_max" : "MAKSIMUM"
+	"replay_controls_speed_max" : "MAKSIMUM",
+	"close_menu" : "Kapatmak"
 }

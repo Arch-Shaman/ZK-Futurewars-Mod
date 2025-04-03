@@ -103,22 +103,6 @@
 	"cheatsheet_cat_wacky" : "古怪的",
 	"cheatsheet_cat_planetwars" : "星球战争",
 	"cheatsheet_cat_rejects" : "技术垃圾",
-    "startup_commenu_sitelink" : "您可以在 Zero-K 网站 https://zero-k.info 上定制多人游戏中使用的指挥官。",
-	"startup_commenu_hide_default_commanders" : "隐藏默认指挥官",
-	"startup_commenu_module_tooltips" : "模块工具提示",
-	"startup_commenu_open" : "打开通讯选择屏幕",
-	"startup_commenu_close" : "关闭",
-	"startup_commenu_title" : "指挥官选择器",
-	"startup_commenu_guardian_name" : "选择炮兵底盘",
-	"startup_commenu_guardian_desc" : "缓慢的坦克底盘，配备多种武器和内置战斗无人机。可双持武器，并可从装甲模块获得 25% 的额外生命值。",
-	"startup_commenu_recon_name" : "选择侦察底盘",
-	"startup_commenu_recon_desc" : "灵活的底盘，利用速度和跳跃喷射器探索地图并避开对手。通过速度模块获得额外的速度和跳跃冷却时间。但生存能力较差，构建能力较低。",
-	"startup_commenu_strike_name" : "选择罢工机箱",
-	"startup_commenu_strike_desc" : "全面的底盘，拥有良好的速度和生命值。可以双持，并能随着等级的提高获得额外的生命值再生。",
-	"startup_commenu_engineer_name" : "选择工程师机箱",
-	"startup_commenu_engineer_desc" : "一种注重经济性的底盘，利用其较高的构建范围和基础构建能力来提高产量。它的速度和健康状况相对较差。",
-	"startup_commenu_campaign_name" : "选择活动底盘",
-	"startup_commenu_campaign_desc" : "可安装任何模块。",
 	"x_units_in_queue" : {
 		"one" : "%{count}队列中的单位",
 		"few" : "%{count}队列中的单位",
@@ -144,5 +128,6 @@
 	"shield_disrupted" : "破坏 (%{duration}秒)",
 	"reclaimed" : "回收",
 	"build_progress" : "构造",
-	"replay_controls_speed_max" : "最快的速度"
+	"replay_controls_speed_max" : "最快的速度",
+	"close_menu" : "合"
 }

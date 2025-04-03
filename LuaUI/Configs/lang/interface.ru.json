@@ -133,5 +133,6 @@
 	"shield_disrupted" : "нарушен (%{duration}с)",
 	"reclaimed" : "переработан",
 	"build_progress" : "сконструировано",
-	"replay_controls_speed_max" : "МАКС"
+	"replay_controls_speed_max" : "МАКС",
+	"close_menu" : "Закрываться"
 }

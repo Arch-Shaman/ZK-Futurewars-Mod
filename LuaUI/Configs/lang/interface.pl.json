@@ -133,5 +133,6 @@
 	"shield_disrupted" : "Zakłócony (%{duration}s)",
 	"reclaimed" : "Recykling",
 	"build_progress" : "skonstruowane",
-	"replay_controls_speed_max" : "MAKS"
+	"replay_controls_speed_max" : "MAKS",
+	"close_menu" : "Zewrzeć"
 }

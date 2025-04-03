@@ -138,5 +138,6 @@
 	"shield_disrupted" : "หยุดชะงัก (%{duration} วินาที)",
 	"reclaimed" : "ที่นำกลับมาใช้ใหม่",
 	"build_progress" : "ที่สร้างขึ้น",
-	"replay_controls_speed_max" : "แม็กซ์"
+	"replay_controls_speed_max" : "แม็กซ์",
+	"close_menu" : "จบ"
 }

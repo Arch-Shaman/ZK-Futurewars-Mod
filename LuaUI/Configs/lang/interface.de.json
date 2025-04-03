@@ -118,5 +118,6 @@
 	"shield_disrupted" : "Gestört (%{duration}s)",
 	"reclaimed" : "recycelt",
 	"build_progress" : "gebaut",
-	"replay_controls_speed_max" : "MAX"
+	"replay_controls_speed_max" : "MAX",
+	"close_menu" : "Schließen"
 }
