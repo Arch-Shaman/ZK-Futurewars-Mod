@@ -238,6 +238,7 @@ return {
 				craterMult              = 5,
 				customParams = {
 					mass = 15,
+					lups_noshockwave = 1,
 				},
 				damage                  = {
 					default = 185,
