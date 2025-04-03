@@ -417,7 +417,7 @@ local function SetupAiming()
 	if aimconfig[1].aimtime and aimconfig[2].aimtime then
 		Spring.SetUnitRulesParam(unitID, "comm_aimtime", math.max(aimconfig[1].aimtime, aimconfig[2].aimtime) * (Spring.GetUnitRulesParam(unitID, "comm_aimbonus") or 1), INLOS)
 	elseif aimconfig[1].aimtime or aimconfig[2].aimtime then
-		Spring.SetUnitRulesParam(unitID, "comm_aimtime", (aimconfig[1].aimtime or aimconfig[2].aimtime)), INLOS)
+		Spring.SetUnitRulesParam(unitID, "comm_aimtime", (aimconfig[1].aimtime or aimconfig[2].aimtime), INLOS)
 	end
 	return aimconfig
 end
