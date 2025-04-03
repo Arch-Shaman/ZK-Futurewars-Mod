@@ -88,6 +88,7 @@ local function GetCommSelectTemplate(num, data)
 		cmd = "customcomm:"..commProfileID,
 		unitname = comm1Name,
 		commProfile = commProfileID,
+		chassis = data.chassis,
 		trainer = string.find(commProfileID, "trainer") ~= nil,	-- FIXME should probably be in the def table
 	}
 	
