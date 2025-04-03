@@ -835,9 +835,9 @@
 		"helptext" : "The hulking Liberator cannon prior to the Coalition Wars saw peaceful applications as a railgun, delivering light payloads into space and to unknown frontiers. Those peaceful applications are now sunsetted into a long forgotten memory as the modern Liberator taps into the grid to deliver a variety of devastating shells to the enemy. Careful utilisation of Its wide arsenal of shells will prove devastating any army or defense line. Giving it more power increases its overall firing rate."
 	},
 	"cloaksnipe" : {
-		"name" : "Phantom",
-		"description" : "Cloaked Skirmish/Anti-Heavy Artillery Bot",
-		"helptext" : "The Phantom's energy rifle inflicts heavy damage to a single target. It can fire while cloaked; however its visible round betrays its position. It requires quite a bit of energy to keep cloaked, especially when moving. The best way to locate a Phantom is by sweeping the area with many cheap units."
+		"name" : "Stalker",
+		"description" : "Cloaked Anti-Heavy Artillery Bot",
+		"helptext" : "The Stalker is a recent innovation on the old Phantom chassis. Designed to punch through armor and disrupt shields at safe ranges, the Stalker will increase its fire rate with each successive fire on a singular target as its range finding algorithms optimize."
 	},
 	"staticarty" : {
 		"name" : "Garmr Cannon",
