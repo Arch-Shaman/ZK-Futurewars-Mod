@@ -40,6 +40,7 @@ local okpconfig
 
 local priorityAim = false
 local priorityAimNum = 0
+local aimTime = {[1] = 0, [2] = 0}
 
 -- Drone spots --
 local drone1 = piece 'drone1'
@@ -81,13 +82,15 @@ local currentSpeed = 0
 local REF_SPEED = 1
 local sizeSpeedMult = 1.0
 local needsBattery = false
+local aimDelay = {}
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local function GetOKP()
+local function SetUp()
 	while Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1") == nil do
 		Sleep(33)
 	end
+	aimDelay = dyncomm.SetupAiming()
 	okpconfig = dyncomm.GetOKPConfig()
 	--Spring.Echo("Use OKP: " .. tostring(okpconfig[1].useokp or okpconfig[2].useokp))
 	if okpconfig[1].useokp or okpconfig[2].useokp then
@@ -395,7 +398,7 @@ end
 
 function script.Create()
 	dyncomm.Create()
-	StartThread(GetOKP)
+	StartThread(SetUp)
 	--alert to dirt
 	Turn(armhold, x_axis, math.rad(-45), math.rad(250)) --upspring
 	Turn(ruparm, x_axis, 0, math.rad(250))
@@ -452,7 +455,9 @@ function script.QueryWeapon(num)
 	return shield
 end
 
-local function AimRifle(heading, pitch, isDgun)
+local aimspeed = math.rad(250)
+
+local function AimRifle(heading, pitch, isDgun, num)
 	if pitch < -0.3 then
 		Move(flare, z_axis, pitch*20 - 10)
 	else
@@ -460,21 +465,21 @@ local function AimRifle(heading, pitch, isDgun)
 	end
 	
 	--torso
-	Turn(torso, x_axis, math.rad(5), math.rad(250))
-	Turn(torso, y_axis, 0, math.rad(250))
-	Turn(torso, z_axis, 0, math.rad(250))
+	Turn(torso, x_axis, math.rad(5), aimspeed)
+	Turn(torso, y_axis, 0, aimspeed)
+	Turn(torso, z_axis, 0, aimspeed)
 	--head
-	Turn(head, x_axis, 0, math.rad(250))
-	Turn(head, y_axis, 0, math.rad(250))
-	Turn(head, z_axis, 0, math.rad(250))
+	Turn(head, x_axis, 0, aimspeed)
+	Turn(head, y_axis, 0, aimspeed)
+	Turn(head, z_axis, 0, aimspeed)
 	--rarm
-	Turn(ruparm, x_axis, math.rad(-55), math.rad(250))
-	Turn(ruparm, y_axis, 0, math.rad(250))
-	Turn(ruparm, z_axis, 0, math.rad(250))
+	Turn(ruparm, x_axis, math.rad(-55), aimspeed)
+	Turn(ruparm, y_axis, 0, aimspeed)
+	Turn(ruparm, z_axis, 0, aimspeed)
 	
-	Turn(rarm, x_axis, math.rad(13), math.rad(250))
-	Turn(rarm, y_axis, math.rad(46), math.rad(250))
-	Turn(rarm, z_axis, math.rad(9), math.rad(250))
+	Turn(rarm, x_axis, math.rad(13), aimspeed)
+	Turn(rarm, y_axis, math.rad(46), aimspeed)
+	Turn(rarm, z_axis, math.rad(9), aimspeed)
 	
 	Turn(rloarm, x_axis, math.rad(16), math.rad(250))
 	Turn(rloarm, y_axis, math.rad(-23), math.rad(250))
@@ -497,7 +502,7 @@ local function AimRifle(heading, pitch, isDgun)
 	Turn(lloarm, z_axis, math.rad(58), math.rad(250))
 	
 	--aim
-	Turn(turret, y_axis, heading, math.rad(350))
+	Turn(turret, y_axis, heading, aimspeed)
 	Turn(armhold, x_axis, -pitch, math.rad(250))
 	WaitForTurn(turret, y_axis)
 	WaitForTurn(armhold, x_axis) --need to make sure not
@@ -505,7 +510,11 @@ local function AimRifle(heading, pitch, isDgun)
 	WaitForTurn(rloarm, y_axis) --still setting up
 	
 	StartThread(RestoreAfterDelay)
-	return true
+	if aimDelay[num] then
+		return GG.AimDelay_CommAttemptToFire(unitID, num, heading, pitch,  aimDelay[num].aimtime,  aimDelay[num].allowedheadingerror, aimDelay[num].allowedpitch, 30)
+	else
+		return true
+	end
 end
 
 function script.AimWeapon(num, heading, pitch)
@@ -530,13 +539,13 @@ function script.AimWeapon(num, heading, pitch)
 		Signal(SIG_AIM)
 		SetSignalMask(SIG_AIM)
 		bAiming = true
-		return AimRifle(heading, pitch)
+		return AimRifle(heading, pitch, canDgun, weaponNum)
 	elseif weaponNum == 2 then
 		Signal(SIG_AIM)
 		Signal(SIG_AIM_2)
 		SetSignalMask(SIG_AIM_2)
 		bAiming = true
-		return AimRifle(heading, pitch, canDgun)
+		return AimRifle(heading, pitch, canDgun, weaponNum)
 	end
 	return false
 end
@@ -557,6 +566,10 @@ function script.Shot(num)
 	dyncomm.EmitWeaponShotSfx(flare, num)
 	if dyncomm.IsManualFire(num) then
 		priorityAim = false
+	end
+	local weaponNum = dyncomm.GetWeapon(num)
+	if aimDelay[weaponNum] then
+		GG.AimDelay_ForceWeaponRestart(unitID, weaponNum)
 	end
 end
 

@@ -101,6 +101,23 @@ local function isCloseEnough(heading1, heading2, pitch1, pitch2, weaponDefID, la
 	end
 end
 
+local function isCommCloseEnough(heading1, heading2, pitch1, pitch2, lastAimFrame, headingerror, pitcherror, aimTimeout)
+	if not (heading1 and heading2 and pitch1 and pitch2) then
+		return false
+	end
+	--local angleDiffHeading = CalculateAngleDifference(heading1, heading2)
+	--local angleDiffPitch = CalculateAngleDifference(pitch1, pitch2)
+	--Spring.Echo("Heading: " .. heading1 .. ", " .. heading2 .. "\nPitch: " .. pitch1 .. ", " .. pitch2)
+	--Spring.Echo("Heading Diff: " .. angleDiffHeading .. " [Max: " .. headingerror .. "]\n " .. "Pitch Diff: " .. angleDiffPitch .. " [Max: " .. pitcherror .. "]")
+	if CalculateAngleDifference(heading1, heading2) > headingerror then
+		return false
+	elseif CalculateAngleDifference(pitch1, pitch2) > pitcherror then
+		return false
+	else
+		return frame - lastAimFrame <= aimTimeout
+	end
+end
+
 function GG.AimDelay_ForceWeaponRestart(unitID, weaponNum, delay)
 	if unitDelayedArray[unitID] then
 		unitDelayedArray[unitID][weaponNum].forcereset = true
@@ -111,13 +128,51 @@ function GG.AimDelay_ForceWeaponRestart(unitID, weaponNum, delay)
 	end
 end
 
-local function FixAngle(angle)
+local function FixAngle(angle) -- turns a negative angle into a positive one. IE: -5 -> 355
 	if angle >= 0 then return angle end
 	return fullCircle + angle
 end
 
 local function GetAdjustedHeading(heading, unitHeading)
 	return (heading + unitHeading) % fullCircle
+end
+
+function GG.AimDelay_CommAttemptToFire(unitID, weaponNum, heading, pitch, delay, allowedHeadingError, allowedPitchError, aimTimeout)
+	--[[Goal is to get the 'world angle' from the turret's aim point and current unit heading.
+	This makes it agnostic to facing (remember: that shifts as the unit rotates)
+	This version handles comms and is more "dynamic"
+	]]
+	local fixedHeading = FixAngle(heading)
+	local unitHeading = Spring.GetUnitHeading(unitID, true) or 0
+	unitHeading = FixAngle(unitHeading - halfAngle) -- 180 degrees is "north" in spring. 0 is south.
+	unitDelayedArray[unitID] = unitDelayedArray[unitID] or {}
+	unitDelayedArray[unitID][weaponNum] = unitDelayedArray[unitID][weaponNum] or {
+		heading = false,
+		pitch = false,
+		delayedUntil = 0,
+		forcereset = false,
+		lastAimFrame = frame,
+		originalHeading = 0,
+	}
+	local adjustedHeading = GetAdjustedHeading(fixedHeading, unitHeading)
+	--unitDelayedArray[unitID][weaponNum].previousUnitFacing = unitHeading
+	local unitData = unitDelayedArray[unitID][weaponNum]
+	--Spring.Echo("UnitHeading is: " .. unitHeading .. "\nCurrent heading: " .. adjustedHeading .. " ( " .. heading .. ", " .. fixedHeading .. ")\nCurrent aim heading: " .. tostring(unitDelayedArray[unitID][weaponNum].heading))
+	if not isCommCloseEnough(unitData.heading, adjustedHeading, unitData.pitch, pitch, unitData.lastAimFrame, allowedHeadingError, allowedPitchError, aimTimeout) or unitData.forcereset then
+		unitData.delayedUntil = frame + delay
+		unitData.heading = adjustedHeading
+		unitData.pitch = pitch
+		unitData.forcereset = false
+		unitData.lastAimFrame = frame
+		Spring.Echo("Aiming error, returning false")
+		spSetUnitRulesParam(unitID, "aimdelay", unitData.delayedUntil, LOS_ACCESS) -- Tell LUAUI this unit is currently aiming!
+		return false
+	end
+	unitDelayedArray[unitID][weaponNum].lastAimFrame = frame
+	local delayTime = unitDelayedArray[unitID][weaponNum].delayedUntil - frame
+	--Spring.Echo("AttemptToFire: " .. unitID .. ": " .. weaponNum .. " (" ..  tostring(frame >= unitData.delayedUntil) .. ")")
+	CallInAsUnit(unitID, 1 - (delayTime / delay))
+	return delayTime <= 0
 end
 
 function GG.AimDelay_AttemptToFire(unitID, weaponNum, heading, pitch, delay)
@@ -137,23 +192,22 @@ function GG.AimDelay_AttemptToFire(unitID, weaponNum, heading, pitch, delay)
 		originalHeading = 0,
 	}
 	local weaponDefID = UnitDefs[Spring.GetUnitDefID(unitID)].weapons[weaponNum].weaponDef or 0
-	local weaponDelay = unitDelayedArray[unitID][weaponNum]
 	local adjustedHeading = GetAdjustedHeading(fixedHeading, unitHeading)
 	--unitDelayedArray[unitID][weaponNum].previousUnitFacing = unitHeading
 	local unitData = unitDelayedArray[unitID][weaponNum]
 	--Spring.Echo("UnitHeading is: " .. unitHeading .. "\nCurrent heading: " .. adjustedHeading .. " ( " .. heading .. ", " .. fixedHeading .. ")\nCurrent aim heading: " .. tostring(unitDelayedArray[unitID][weaponNum].heading))
-	if (not isCloseEnough(weaponDelay.heading, adjustedHeading, weaponDelay.pitch, pitch, weaponDefID, weaponDelay.lastAimFrame)) or weaponDelay.forcereset then
+	if (not isCloseEnough(unitData.heading, adjustedHeading, unitData.pitch, pitch, weaponDefID, unitData.lastAimFrame)) or unitData.forcereset then
 		unitData.delayedUntil = frame + delay
 		unitData.heading = adjustedHeading
 		unitData.pitch = pitch
 		unitData.forcereset = false
 		unitData.lastAimFrame = frame
-		spSetUnitRulesParam(unitID, "aimdelay", weaponDelay.delayedUntil, LOS_ACCESS) -- Tell LUAUI this unit is currently aiming!
+		spSetUnitRulesParam(unitID, "aimdelay", unitData.delayedUntil, LOS_ACCESS) -- Tell LUAUI this unit is currently aiming!
 		return false
 	end
 	unitDelayedArray[unitID][weaponNum].lastAimFrame = frame
 	local delayTime = unitDelayedArray[unitID][weaponNum].delayedUntil - frame
-	--Spring.Echo("AttemptToFire: " .. unitID .. ": " .. weaponNum .. " (" ..  tostring(frame >= weaponDelay.delayedUntil) .. ")")
+	--Spring.Echo("AttemptToFire: " .. unitID .. ": " .. weaponNum .. " (" ..  tostring(frame >= unitData.delayedUntil) .. ")")
 	CallInAsUnit(unitID, 1 - (delayTime / delay))
 	return delayTime <= 0
 end

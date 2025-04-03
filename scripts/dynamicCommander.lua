@@ -393,25 +393,25 @@ local function SetupAiming()
 	local aimconfig = {[1] = {}, [2] = {}}
 	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
 	local weaponname2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2")
+	local aimbonus = Spring.GetUnitRulesParam(unitID, "comm_aimbonus") or 1
+	local default = 10
 	if weaponname1 then
 		local cp1 = WeaponDefs[unitWeaponNames[weaponname1].weaponDefID].customParams
 		if cp1.aimdelay then
-			aimconfig[1].allowedpitch = cp1.allowedpitcherror
-			aimconfig[1].allowedheadingerror = cp1.allowedheadingerror
-			aimconfig[1].aimtime = cp1.aimdelay
+			aimconfig[1].allowedpitch = math.rad(tonumber(cp1.allowedpitcherror) or default)
+			aimconfig[1].allowedheadingerror = math.rad(tonumber(cp1.allowedheadingerror) or default)
+			aimconfig[1].aimtime = tonumber(cp1.aimdelay) * aimbonus
+			Spring.SetUnitRulesParam(unitID, "comm_aimdelay1", tonumber(cp1.aimdelay) * aimbonus, INLOS)
 		end
 	end
 	if weaponname2 then
 		local cp2 = WeaponDefs[unitWeaponNames[weaponname2].weaponDefID].customParams
 		if cp2.aimdelay then
-			aimconfig[1].allowedpitch = cp2.allowedpitcherror
-			aimconfig[1].allowedheadingerror = cp2.allowedheadingerror
-			aimconfig[1].aimtime = cp2.aimdelay
+			aimconfig[2].allowedpitch = math.rad(tonumber(cp2.allowedpitcherror) or default)
+			aimconfig[2].allowedheadingerror = math.rad(tonumber(cp2.allowedheadingerror) or default)
+			aimconfig[2].aimtime = tonumber(cp2.aimdelay) * aimbonus
+			Spring.SetUnitRulesParam(unitID, "comm_aimdelay2", tonumber(cp2.aimdelay) * aimbonus, INLOS)
 		end
-	end
-	local aimbonus
-	if aimconfig[1].aimtime or aimconfig[2].aimtime then
-		
 	end
 	if aimconfig[1].aimtime and aimconfig[2].aimtime then
 		Spring.SetUnitRulesParam(unitID, "comm_aimtime", math.max(aimconfig[1].aimtime, aimconfig[2].aimtime) * (Spring.GetUnitRulesParam(unitID, "comm_aimbonus") or 1), INLOS)
@@ -610,6 +610,7 @@ local function SetUpFeatureRules(featureID)
 		TransferParamToFeature(featureID, weapon2 .. "_baseburstrate")
 		TransferParamToFeature(featureID, weapon2 .. "_basereload")
 		TransferParamToFeature(featureID, weapon2 .. "_actual_dmgboost")
+		TransferParamToFeature(featureID, weapon2 .. "_aimdelay")
 	end
 	TransferParamToFeature(featureID, weapon1 .. "_speed")
 	TransferParamToFeature(featureID, weapon1 .. "_projectilecount_override")
@@ -619,6 +620,7 @@ local function SetUpFeatureRules(featureID)
 	TransferParamToFeature(featureID, weapon1 .. "_updatedburst_count")
 	TransferParamToFeature(featureID, weapon1 .. "_basereload")
 	TransferParamToFeature(featureID, weapon1 .. "_actual_dmgboost")
+	TransferParamToFeature(featureID, weapon1 .. "_aimdelay")
 	
 	-- Things tooltips need --
 	TransferParamToFeature(featureID, "commander_owner")
@@ -687,4 +689,5 @@ return {
 	Explode			  = DoDeathExplosion,
 	SetupSpooling     = SetupSpooling,
 	PriorityAimCheck  = PriorityAimCheck,
+	SetupAiming       = SetupAiming,
 }
