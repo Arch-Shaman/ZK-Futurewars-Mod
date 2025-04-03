@@ -394,12 +394,13 @@ local function SetupAiming()
 	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
 	local weaponname2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2")
 	local aimbonus = Spring.GetUnitRulesParam(unitID, "comm_aimbonus") or 1
+	local tolerancebonus = Spring.GetUnitRulesParam(unitID, "comm_tolerancebonus") or 1
 	local default = 10
 	if weaponname1 then
 		local cp1 = WeaponDefs[unitWeaponNames[weaponname1].weaponDefID].customParams
 		if cp1.aimdelay then
-			aimconfig[1].allowedpitch = math.rad(tonumber(cp1.allowedpitcherror) or default)
-			aimconfig[1].allowedheadingerror = math.rad(tonumber(cp1.allowedheadingerror) or default)
+			aimconfig[1].allowedpitch = math.rad(tonumber(cp1.allowedpitcherror) or default) * tolerancebonus
+			aimconfig[1].allowedheadingerror = math.rad(tonumber(cp1.allowedheadingerror) or default) * tolerancebonus
 			aimconfig[1].aimtime = tonumber(cp1.aimdelay) * aimbonus
 			Spring.SetUnitRulesParam(unitID, "comm_aimdelay1", tonumber(cp1.aimdelay) * aimbonus, INLOS)
 		end
@@ -407,8 +408,8 @@ local function SetupAiming()
 	if weaponname2 then
 		local cp2 = WeaponDefs[unitWeaponNames[weaponname2].weaponDefID].customParams
 		if cp2.aimdelay then
-			aimconfig[2].allowedpitch = math.rad(tonumber(cp2.allowedpitcherror) or default)
-			aimconfig[2].allowedheadingerror = math.rad(tonumber(cp2.allowedheadingerror) or default)
+			aimconfig[2].allowedpitch = math.rad(tonumber(cp2.allowedpitcherror) or default) * tolerancebonus
+			aimconfig[2].allowedheadingerror = math.rad(tonumber(cp2.allowedheadingerror) or default) * tolerancebonus
 			aimconfig[2].aimtime = tonumber(cp2.aimdelay) * aimbonus
 			Spring.SetUnitRulesParam(unitID, "comm_aimdelay2", tonumber(cp2.aimdelay) * aimbonus, INLOS)
 		end
