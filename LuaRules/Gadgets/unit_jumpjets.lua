@@ -540,16 +540,12 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
 end
 
 function gadget:CommandFallback(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions) -- Only calls for custom commands
-	if (not jumpDefs[unitDefID]) then
+	if (not jumpDefs[unitDefID]) or (cmdID ~= CMD_JUMP) then
 		return false
 	end
 
 	if (jumpDefs[unitDefID].noJumpHandling) then
 		return true, false
-	end
-	
-	if (cmdID ~= CMD_JUMP) then
-		return false
 	end
 
 	if (not Spring.ValidUnitID(unitID)) or (not cmdParams[3]) then
