@@ -2827,8 +2827,11 @@ for i = 1, #moduleDefs do -- Add name, cost, dps, etc
 			name = moduleDefs[i].override
 		end
 		--Spring.Echo("[Modular Comms] ModuleDefs: Proccessing description for " .. tostring(name))
+		-- HANDLED IN LUAUI NOW WITH LOCALIZATION!
+		--[[
 		moduleDefs[i].description = moduleDefs[i].humanName ..":\nCost: " .. moduleDefs[i].cost .. "m" .. "\n" .. moduleDefs[i].description
 		local wd
+		
 		if name:find("commweapon") or name:find("shield") then
 			if VFS.FileExists("gamedata\\modularcomms\\weapons\\" .. name .. ".lua") then
 				--Spring.Echo("Loading future wars file")
@@ -2841,7 +2844,7 @@ for i = 1, #moduleDefs do -- Add name, cost, dps, etc
 				--_, wd = VFS.Include("gamedata\\modularcomms\\weapons\\" .. string.gsub(name:gsub("commweapon_", ""), "_", "") .. ".lua")
 			--end
 		end
-		if wd and not name:find("shield") then
+		if wd and not name:find("shield") then 
 			local projectiles = wd.projectiles or 1
 			local burst = wd.burst or 1
 			local damage = wd.damage.default * burst * projectiles
@@ -2899,7 +2902,7 @@ for i = 1, #moduleDefs do -- Add name, cost, dps, etc
 			moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\255\031Shield Radius:\255\255\255\255 " .. wd.shieldRadius .. "\n\255\255\255\031Shield HP:\255\255\255\255 " .. wd.shieldPower .. "\n\255\255\255\031Shield Regen:\255\255\255\255 " .. wd.shieldPowerRegen .. "\n\255\255\255\031Shield Regen Cost:\255\255\255\255 " .. wd.shieldPowerRegenEnergy
 		elseif not name:find("null") then
 			moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\061\061Limit: " .. tostring(moduleDefs[i].limit) .. "\255\255\255\255" -- why does this have a boolean?
-		end
+		end]]
 		if disabledModules[name] then
 			moduleDefs[i].requireChassis = {"banned"}
 		end
