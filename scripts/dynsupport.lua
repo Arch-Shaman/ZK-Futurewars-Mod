@@ -510,7 +510,7 @@ local function AimRifle(heading, pitch, isDgun, num)
 	WaitForTurn(rloarm, y_axis) --still setting up
 	
 	StartThread(RestoreAfterDelay)
-	if aimDelay[num] then
+	if aimDelay[num].aimtime then
 		return GG.AimDelay_CommAttemptToFire(unitID, num, heading, pitch,  aimDelay[num].aimtime,  aimDelay[num].allowedheadingerror, aimDelay[num].allowedpitch, 30)
 	else
 		return true
@@ -568,7 +568,7 @@ function script.Shot(num)
 		priorityAim = false
 	end
 	local weaponNum = dyncomm.GetWeapon(num)
-	if aimDelay[weaponNum] then
+	if aimDelay[weaponNum].aimtime then
 		GG.AimDelay_ForceWeaponRestart(unitID, weaponNum)
 	end
 end

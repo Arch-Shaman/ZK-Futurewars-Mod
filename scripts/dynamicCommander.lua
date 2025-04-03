@@ -401,7 +401,7 @@ local function SetupAiming()
 		if cp1.aimdelay then
 			aimconfig[1].allowedpitch = math.rad(tonumber(cp1.allowedpitcherror) or default) * tolerancebonus
 			aimconfig[1].allowedheadingerror = math.rad(tonumber(cp1.allowedheadingerror) or default) * tolerancebonus
-			aimconfig[1].aimtime = tonumber(cp1.aimdelay) * aimbonus
+			aimconfig[1].aimtime = math.ceil(tonumber(cp1.aimdelay) * aimbonus)
 			Spring.SetUnitRulesParam(unitID, "comm_aimdelay1", tonumber(cp1.aimdelay) * aimbonus, INLOS)
 		end
 	end
@@ -410,12 +410,12 @@ local function SetupAiming()
 		if cp2.aimdelay then
 			aimconfig[2].allowedpitch = math.rad(tonumber(cp2.allowedpitcherror) or default) * tolerancebonus
 			aimconfig[2].allowedheadingerror = math.rad(tonumber(cp2.allowedheadingerror) or default) * tolerancebonus
-			aimconfig[2].aimtime = tonumber(cp2.aimdelay) * aimbonus
+			aimconfig[2].aimtime = math.ceil(tonumber(cp2.aimdelay) * aimbonus)
 			Spring.SetUnitRulesParam(unitID, "comm_aimdelay2", tonumber(cp2.aimdelay) * aimbonus, INLOS)
 		end
 	end
 	if aimconfig[1].aimtime and aimconfig[2].aimtime then
-		Spring.SetUnitRulesParam(unitID, "comm_aimtime", math.max(aimconfig[1].aimtime, aimconfig[2].aimtime) * (Spring.GetUnitRulesParam(unitID, "comm_aimbonus") or 1), INLOS)
+		Spring.SetUnitRulesParam(unitID, "comm_aimtime", math.max(aimconfig[1].aimtime, aimconfig[2].aimtime), INLOS)
 	elseif aimconfig[1].aimtime or aimconfig[2].aimtime then
 		Spring.SetUnitRulesParam(unitID, "comm_aimtime", (aimconfig[1].aimtime or aimconfig[2].aimtime), INLOS)
 	end
