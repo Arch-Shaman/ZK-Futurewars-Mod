@@ -223,5 +223,9 @@
 	"module_adv_nano_support_name" : "Üstün Nano Torna Tezgahı",
 	"module_adv_nano_support_desc" : "Yapı gücünü 7,5 artırır. Depolamayı 75 artırır.",
 	"module_recon_pulse_name" : "Keşif Darbesi",
-	"module_recon_pulse_desc" : "Her 2 saniyede bir düşmanın gizlenmiş birimlerini görünmezlikten çıkaran bir darbe ekler. UYARI: GİZLENME YETENEĞİNİ DEVRE DIŞI BIRAKIR.\n- Menzil: 400\n- Havadayken tetiklenmez."
+	"module_recon_pulse_desc" : "Her 2 saniyede bir düşmanın gizlenmiş birimlerini görünmezlikten çıkaran bir darbe ekler. UYARI: GİZLENME YETENEĞİNİ DEVRE DIŞI BIRAKIR.\n- Menzil: 400\n- Havadayken tetiklenmez.",
+	"module_faster_lockon_name" : "Kilitli yardımcı işlemciler",
+	"module_faster_lockon_desc" : "Hedef edinme hızını 10%% oranında artırır ancak hedefleme toleranslarını 15%% oranında azaltır. Maksimum seviyede, bu nişan alma süresini 4,2 saniyeye düşürür. Şok tüfeklerini etkiler.",
+	"module_aimtolerance_name" : "Mesafe Bulma Algoritması Optimizasyonu",
+	"module_aimtolerance_desc" : "Temel menzili 7,25%% oranında azaltır (çarpansal). Nişan alma süresini 15%% oranında iyileştirir. Maksimum seviyede, bu ~575 menzile ve 2,3 saniyelik nişan alma süresine eşittir."
 }

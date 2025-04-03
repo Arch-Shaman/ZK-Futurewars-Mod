@@ -2423,6 +2423,48 @@ local moduleDefs = {
 		end
 	},
 	{
+		name = "module_faster_lockon",
+		humanName = "Lock-on co-processors",
+		description = "Improves target acquisition speed by 10% but reduces targeting tolerances by 15%. At max level, this reduces aim time to 4.2s. Affects shock rifles.",
+		image = moduleImagePath .. "module_lockon.png",
+		limit = 10,
+		cost = 100 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		requireChassis = {"support"},
+		prohibitingModules = {"module_aimtolerance"},
+		requireOneOf = {"commweapon_shockrifle"},
+		effectPriority = 4,
+		applicationFunction = function (modules, sharedData)
+			sharedData.tolerancebonus = (sharedData.tolerancebonus or 1) * 0.85
+			sharedData.aimbonus = (sharedData.aimbonus or 1) * 0.9
+		end
+	},
+	{
+		name = "module_aimtolerance",
+		humanName = "Rangefinding Algorithm Optimization",
+		description = "Reduces base range by 7.25% (multiplicative). Improves aim time by 15%. At max level, this equates to ~575 range and 2.3s of aim time.",
+		image = moduleImagePath .. "module_widerlock.png",
+		limit = 10,
+		cost = 100 * COST_MULT,
+		requireLevel = 2,
+		slotType = "module",
+		requireChassis = {"support"},
+		prohibitingModules = {"module_faster_lockon"},
+		requireOneOf = {"commweapon_shockrifle"},
+		effectPriority = 1,
+		applicationFunction = function (modules, sharedData)
+			local baseRange = 1250
+			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_shockrifle" then
+				sharedData.rangeoverride1 = (sharedData.rangeoverride1 or baseRange) * 0.925
+			end
+			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_shockrifle" then
+				sharedData.rangeoverride2 = (sharedData.rangeoverride2 or baseRange) * 0.925
+			end
+			sharedData.aimbonus = (sharedData.aimbonus or 1) * 0.85
+		end
+	},
+	{
 		name = "module_recon_pulse",
 		humanName = "Recon Pulse",
 		description = "Adds a pulse that decloaks enemy cloaked units every 2 seconds. WARNING: DISABLES THE ABILITY TO CLOAK.\n- Range: 400\n- Does not trigger while airborn.",

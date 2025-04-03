@@ -225,5 +225,9 @@
 	"module_recon_pulse_desc" : "2 秒ごとに敵のクロークされたユニットのクロークを解除するパルスを追加します。警告: クロークする能力を無効にします。\n- 範囲: 400\n- 空中にいる間はトリガーされません。",
 	"commupgrade_accept" : "アップグレードを開始",
 	"commupgrade_view" : "現在のモジュールを表示",
-	"commupgrade_cancel" : "モジュール選択をキャンセル"
+	"commupgrade_cancel" : "モジュール選択をキャンセル",
+	"module_faster_lockon_name" : "ロックオン コプロセッサ",
+	"module_faster_lockon_desc" : "ターゲット捕捉速度が 10%% 向上しますが、ターゲット許容範囲が 15%% 減少します。最大レベルでは、照準時間が 4.2 秒に短縮されます。ショック ライフルに影響します。",
+	"module_aimtolerance_name" : "距離測定アルゴリズムの最適化",
+	"module_aimtolerance_desc" : "基本範囲が 7.25%% (乗法) 減少します。照準時間が 15%% 向上します。最大レベルでは、範囲が約 575、照準時間が 2.3 秒に相当します。"
 }

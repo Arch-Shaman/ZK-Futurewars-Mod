@@ -225,5 +225,9 @@
 	"module_recon_pulse_desc" : "Fügt einen Impuls hinzu, der alle 2 Sekunden getarnte feindliche Einheiten enttarnt. WARNUNG: DEAKTIVIERT DIE MÖGLICHKEIT ZUR TARNUNG.\n- Reichweite: 400\n- Wird nicht in der Luft ausgelöst.",
 	"commupgrade_accept" : "Verbesserung beginnen",
 	"commupgrade_view" : "Aktuelle Module anzeigen",
-	"commupgrade_cancel" : "Modulauswahl abbrechen"
+	"commupgrade_cancel" : "Modulauswahl abbrechen",
+	"module_faster_lockon_name" : "Co-Prozessoren sperren",
+	"module_faster_lockon_desc" : "Verbessert die Zielerfassungsgeschwindigkeit um 10%%, reduziert aber die Zieltoleranzen um 15%%. Auf der höchsten Stufe reduziert dies die Zielzeit auf 4,2 s. Betrifft Schockgewehre.",
+	"module_aimtolerance_name" : "Optimierung des Entfernungsmessungsalgorithmus",
+	"module_aimtolerance_desc" : "Reduziert die Basisreichweite um 7,25%% (multiplikativ). Verbessert die Zielzeit um 15%%. Auf dem höchsten Level entspricht dies einer Reichweite von ~575 und einer Zielzeit von 2,3 s."
 }

@@ -225,5 +225,9 @@
 	"module_recon_pulse_desc" : "Aggiunge un impulso che rivela l'occultamento delle unità nemiche occultate ogni 2 secondi. ATTENZIONE: DISATTIVA LA ABILITÀ DI OCCULTAMENTO.\n- Raggio d'azione: 400\n- Non si attiva in aria.",
 	"commupgrade_accept" : "Avvia l'aggiornamento",
 	"commupgrade_view" : "Visualizza i moduli correnti",
-	"commupgrade_cancel" : "Annulla la selezione del modulo"
+	"commupgrade_cancel" : "Annulla la selezione del modulo",
+	"module_faster_lockon_name" : "Coprocessori di aggancio",
+	"module_faster_lockon_desc" : "Migliora la velocità di acquisizione del bersaglio del 10%% ma riduce le tolleranze di puntamento del 15%%. Al livello massimo, riduce il tempo di mira a 4,2 s. Influisce sui fucili a scossa.",
+	"module_aimtolerance_name" : "Ottimizzazione dell'algoritmo di telemetria",
+	"module_aimtolerance_desc" : "Riduce la portata di base del 7,25%% (moltiplicativo). Migliora il tempo di mira del 15%%. Al livello massimo, ciò equivale a circa 575 di portata e 2,3 s di tempo di mira."
 }

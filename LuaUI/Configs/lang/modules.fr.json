@@ -225,5 +225,9 @@
 	"module_recon_pulse_desc" : "Adds a pulse that decloaks enemy cloaked units every 2 seconds. WARNING: DISABLES THE ABILITY TO CLOAK.\n- Range: 400\n- Does not trigger while airborn.",
 	"commupgrade_accept" : "Démarrer la mise à niveau",
 	"commupgrade_view" : "Afficher les modules actuels",
-	"commupgrade_cancel" : "Annuler la sélection du module"
+	"commupgrade_cancel" : "Annuler la sélection du module",
+	"module_faster_lockon_name" : "Coprocesseurs de verrouillage",
+	"module_faster_lockon_desc" : "Améliore la vitesse d'acquisition de la cible de 10%%, mais réduit les tolérances de ciblage de 15%%. Au niveau maximum, cela réduit le temps de visée à 4,2 s. Affecte les fusils à choc.",
+	"module_aimtolerance_name" : "Optimisation de l'algorithme de télémétrie",
+	"module_aimtolerance_desc" : "Réduit la portée de base de 7,25%% (multiplicatif). Améliore le temps de visée de 15%%. Au niveau maximum, cela équivaut à environ 575 de portée et 2,3 s de temps de visée. Affecte les fusils à choc."
 }

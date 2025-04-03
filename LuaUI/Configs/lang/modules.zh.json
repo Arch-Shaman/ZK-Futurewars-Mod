@@ -207,7 +207,7 @@
 	"module_cloakregen_name" : "纳米机器人袖子",
 	"module_cloakregen_desc" : "隐形时增加 %{health} 的恢复。",
 	"module_adv_targeting_close_name" : "远程瞄准系统",
-	"module_adv_targeting_close_desc" : "射程增加 5%%，但伤害减少 10%%。",
+	"module_adv_targeting_close_desc" : "射程增加 5%%,但伤害减少 10%%。",
 	"module_adv_targeting_name" : "高级瞄准系统",
 	"module_adv_targeting_desc" : "增加射程 7.5%%,但降低速度 0.75。",
 	"module_adv_targeting_artillery_name" : "改进的瞄准系统",
@@ -224,5 +224,9 @@
 	"module_recon_pulse_desc" : "每 2 秒增加一次脉冲,使敌方隐形单位脱离隐形状态。警告:禁用隐形能力。\n- 范围:400\n- 空中时不会触发。",
 	"commupgrade_accept" : "开始升级",
 	"commupgrade_view" : "查看当前模块",
-	"commupgrade_cancel" : "取消模块选择"
+	"commupgrade_cancel" : "取消模块选择",
+	"module_faster_lockon_name" : "锁定协处理器",
+	"module_faster_lockon_desc" : "“增加 10%% 的目标捕获速度，但减少 15%% 的瞄准误差。在最高等级下，这会将瞄准时间缩短至 4.2 秒。影响狙击步枪。”",
+	"module_aimtolerance_name" : "测距算法优化",
+	"module_aimtolerance_desc" : "将基本射程减少 7.25%%（乘法）。将瞄准时间提高 15%%。在最高等级下,这相当于 ~575 的射程和 2.3 秒的瞄准时间。"
 }

@@ -225,5 +225,9 @@
 	"module_recon_pulse_desc" : "Adds a pulse that decloaks enemy cloaked units every 2 seconds. WARNING: DISABLES THE ABILITY TO CLOAK.\n- Range: 400\n- Does not trigger while airborn.",
 	"commupgrade_accept" : "Start upgrade",
 	"commupgrade_view" : "View current modules",
-	"commupgrade_cancel" : "Cancel module selection"
+	"commupgrade_cancel" : "Cancel module selection",
+	"module_faster_lockon_name" : "Lock-on co-processors",
+	"module_faster_lockon_desc" : "Improves target acquisition speed by 10%% but reduces targeting tolerances by 15%%. At max level, this reduces aim time to 4.2s. Affects shock rifles.",
+	"module_aimtolerance_name" : "Rangefinding Algorithm Optimization",
+	"module_aimtolerance_desc" : "Reduces base range by 7.25%% (multiplicative). Improves aim time by 15%%. At max level, this equates to ~575 range and 2.3s of aim time."
 }

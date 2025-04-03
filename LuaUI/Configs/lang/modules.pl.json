@@ -225,5 +225,9 @@
 	"module_recon_pulse_desc" : "Adds a pulse that decloaks enemy cloaked units every 2 seconds. WARNING: DISABLES THE ABILITY TO CLOAK.\n- Range: 400\n- Does not trigger while airborn.",
 	"commupgrade_accept" : "Rozpocznij aktualizację",
 	"commupgrade_view" : "Wyświetl bieżące moduły",
-	"commupgrade_cancel" : "Anuluj wybór modułu"
+	"commupgrade_cancel" : "Anuluj wybór modułu",
+	"module_faster_lockon_name" : "Koprocesory namierzania",
+	"module_faster_lockon_desc" : "Poprawia prędkość wykrywania celu o 10%%, ale zmniejsza tolerancję celowania o 15%%. Na maksymalnym poziomie skraca czas celowania do 4,2 s. Dotyczy karabinów udarowych.",
+	"module_aimtolerance_name" : "Optymalizacja algorytmu dalmierza",
+	"module_aimtolerance_desc" : "Zmniejsza zasięg podstawowy o 7,25%% (mnożnik). Poprawia czas celowania o 15%%. Na maksymalnym poziomie odpowiada to zasięgowi ~575 i czasowi celowania 2,3 s."
 }
