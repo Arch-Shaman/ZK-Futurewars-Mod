@@ -563,7 +563,7 @@ function gadget:CommandFallback(unitID, unitDefID, teamID, cmdID, cmdParams, cmd
 	end
 	
 	if (jumping[unitID]) then
-		return true, false -- command was used but don't remove it (unit is still jumping)
+		return true, true -- command was used but don't remove it (unit is still jumping)
 	end
 
 	if lastJumpPosition[unitID] then
@@ -638,23 +638,6 @@ function gadget:GameFrame(currFrame)
 	for coords, queue_n_age in pairs(jumps) do
 		if currFrame-queue_n_age[2] > 300 then
 			jumps[coords] = nil
-		end
-	end
-end
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
--- Save/Load
-
-function gadget:Load(zip)
-	for _, unitID in ipairs(Spring.GetAllUnits()) do
-		if Spring.GetUnitRulesParam(unitID, "is_jumping") == 1 then
-			local goalX = Spring.GetUnitRulesParam(unitID, "jump_goal_x")
-			local goalZ = Spring.GetUnitRulesParam(unitID, "jump_goal_z")
-			if goalX and goalZ then
-				local goal = {goalX, 0, goalZ}
-				Jump(unitID, goal, goal, true)
-			end
 		end
 	end
 end
