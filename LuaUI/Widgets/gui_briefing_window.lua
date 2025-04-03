@@ -359,7 +359,13 @@ local function OnLocaleChanged()
 	briefingWindow = InitializeBriefingWindow()
 	briefingWindow.Show()
 end
-	
+
+function widget:KeyPress(key)
+	if briefingWindow and key == 27 then -- pressing escape now closes the window.
+		briefingWindow.Hide()
+		return true
+	end
+end
 
 function widget:Initialize()
 	if #briefing.entries == 0 or not showBriefing then
