@@ -307,7 +307,7 @@
 	"staticheavyshield" : {
 		"name" : "Safeguard",
 		"description" : "Massive Area Shield",
-		"helptext" : "When the Aegis proved to be useless against strategic arms, the Safeguard was fabricated using an overdriven Funnelweb shield. While the Safeguard can stop even nuclear strikes without need of an anti-nuke, it is completely unable to handle substained bombardment. Use a constant bombardment of lesser artillery to keep it down."
+		"helptext" : "When the Aegis proved to be useless against strategic arms, the Safeguard was fabricated using an overdriven Funnelweb shield. While the Safeguard can stop even nuclear strikes without need of an anti-nuke, it is completely unable to handle sustained bombardment. Use a constant bombardment of lesser artillery to keep it down."
 	},
 	"turretaaclose" : {
 		"name" : "Duster",
