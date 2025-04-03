@@ -454,6 +454,12 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 			end
 		end
 	end
+	if data.aimbonus then
+		spSetUnitRulesParam(unitID, "comm_aimbonus", data.aimbonus, INLOS)
+	end
+	if data.tolerancebonus then
+		spSetUnitRulesParam(unitID, "comm_tolerancebonus", data.tolerancebonus, INLOS)
+	end
 	if data.damageMult and data.damageMult < 0.1 then
 		data.damageMult = 0.1
 	end
