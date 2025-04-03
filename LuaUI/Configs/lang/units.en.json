@@ -1190,9 +1190,9 @@
 		"helptext" : "This fast-moving suicide unit is good for raiding and sniping lightly-armored targets. When standing next to wreckages, it automatically draws metal from them to replicate itself, grey goo style."
 	},
 	"turretaalaser" : {
-		"name" : "Razor",
-		"description" : "Hardened Anti-Air Laser",
-		"helptext" : "The Razor is a hardy anti-air turret. Its high hit points and 4x armour bonus when closed makes it very hard for the enemy to dislodge."
+		"name" : "Corona",
+		"description" : "Short range Anti-Drone laser emplacement",
+		"helptext" : "The Corona protects against drones and small, fast maneuverable craft by firing a series of pulse lasers at targets. While it lacks the range of missile launchers, it makes up for it in sheer DPS and fire rate."
 	},
 	"hovercon" : {
 		"name" : "Spike",
