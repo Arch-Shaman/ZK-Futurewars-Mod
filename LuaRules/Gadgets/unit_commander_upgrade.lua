@@ -116,6 +116,15 @@ local names = {
 	"Mudosaka's Murder Machine",
 	"Buzzing Bees, Deadly Drones!",
 	"Explosive Enforcer",
+	-- other, dlc edition
+	"Blame it on Skill Issue",
+	"Liberator target",
+	"Kill me and u r n00b",
+	"Warning: Contents may violently explode",
+	"To unlock, complete the season pass!",
+	"Kalsarikannit moment",
+	"Captain obvious",
+	"Major stupidity",
 	-- Shamelessly stolen from Users --
 	"Ukraine BM", -- User: Ukraine
 	"ICE COLD BUT HOT", -- User: Ukraine
@@ -129,7 +138,24 @@ local names = {
 	"Important Commander", -- User: Hazy_uhyR
 	"Condola", -- User: terve886
 	"DLR", -- User: terve886
-	
+	"rikkaruohomyrkky", -- User: Shaman
+	"Harhautus", -- User:Shaman
+	"Boi 1", -- User: Sprang
+	"Boi 2", -- User: Sprang
+	"Default boi", -- User: Ehal45
+	"Legion", -- User: IIOuroborosII
+	"CombatEngineer", -- User: SparkezelPL
+	"Combat Necromancer", -- User: Someone64
+	"Hit and Run", -- User: Someone64
+	"Did he just walk up?", -- User: Jenbak
+	"Raiden", -- User: Shyrka
+	"Duke Nuke Them", -- User: MidnightTelevision
+	"Nuclear Warhead", -- User: Myopic
+	"Hayasaka", -- User: Myopic
+	"Com Attack", -- User: wptr_007
+	"Superbuild", -- User: Saber
+	"smashy smashy robots", -- User: rifqifajarzain, but Shaman meme!
+	"Rifqi", -- User: rifqifajarzain
 }
 
 local zombienames = {
