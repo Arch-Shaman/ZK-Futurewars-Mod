@@ -116,7 +116,6 @@
 	"cheatsheet_cat_wacky" : "Wacky",
 	"cheatsheet_cat_planetwars" : "Planet Wars",
 	"cheatsheet_cat_rejects" : "Technical junk",
-	"close_menu" : "Close",
 	"x_units_in_queue" : {
 		"one" : "%{count} unit in queue",
 		"few" : "%{count} units in queue",
@@ -142,5 +141,6 @@
 	"shield_disrupted" : "Disrupted (%{duration}s)",
 	"reclaimed" : "reclaimed",
 	"build_progress" : "built",
-	"replay_controls_speed_max" : "MAX"
+	"replay_controls_speed_max" : "MAX",
+	"close_menu" : "Close"
 }
