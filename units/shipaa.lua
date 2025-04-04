@@ -13,7 +13,7 @@ return {
 		canMove                = true,
 		canPatrol              = true,
 		category               = "SHIP",
-		collisionVolumeOffsets = "0 4 4",
+		collisionVolumeOffsets = "0 -30 4",
 		collisionVolumeScales  = "32 32 128",
 		collisionVolumeType    = "CylZ",
 		corpse                 = "DEAD",
