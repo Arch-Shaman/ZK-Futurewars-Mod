@@ -2104,6 +2104,10 @@ function widget:GameFrame(f)
 end
 
 function widget:TextCommand(msg)
+	local numberOfPlayers = #Spring.GetPlayerList()
+	if msg == "testlabel" then
+		Spring.MarkerAddPoint(math.random(1, 1000), 100, math.random(1, 1000), "Super Earth Will FALL", false, math.random(1, numberOfPlayers))
+	end
 	if msg == "testresign" then
 		SendPlayerResignedMessage(Spring.GetMyPlayerID(), Spring.GetMyPlayerID(), 10)
 	elseif msg == "testafk" then
