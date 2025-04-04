@@ -23,6 +23,7 @@ end
 include("Widgets/COFCTools/ExportUtilities.lua")
 VFS.Include("LuaRules/Utilities/tobool.lua")
 local GetRawBoxes = VFS.Include("LuaUI/Headers/startbox_utilities.lua")
+local moduleDefs, emptyModules, chassisDefs, upgradeUtilities, chassisDefByBaseDef, moduleDefNames, chassisDefNames = VFS.Include("LuaRules/Configs/dynamic_comm_defs.lua")
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --[[
@@ -42,6 +43,7 @@ local Label
 local screen0
 local Image
 local Button
+local openButton
 
 local vsx, vsy = Spring.GetViewGeometry()
 local modoptions = Spring.GetModOptions() --used in LuaUI\Configs\startup_info_selector.lua for planetwars
@@ -56,6 +58,7 @@ local showModulesCheckbox
 local buttonData = {}
 local buttonLabels = {}
 local trainerLabels = {}
+local closeButton
 local actionShow = "showstartupinfoselector"
 local optionData
 
@@ -75,19 +78,81 @@ if (vsx < 1024 or vsy < 768) then
 	BUTTON_HEIGHT = vsy*(BUTTON_HEIGHT/768)
 end
 
+
 local commTips = {
-	["LuaUI/Images/startup_info_selector/chassis_benzcom.png"] = "Select Bombard Chassis\nA slow chassis that focuses on dealing damage from afar.\nLevel up bonus:\n- +7,5% range\n - +500 hp\nStarting weapon: LLRM Battery (Area Bombardment)",
-	["LuaUI/Images/startup_info_selector/chassis_commrecon.png"] = "Select Recon Chassis\nA nimble chassis that excels at speed and DPS at the cost of multi-target weapons.\nLevel up bonus:\n- +3 speed\n- +2,5% Jump Range\n- +1000 HP\nAbility: Jump\nStarting Weapon: Heatray (Short range High single target DPS)",
-	["LuaUI/Images/startup_info_selector/chassis_commstrike.png"] = "Select Ghost Chassis\nA fast, stealthy chassis that excels at alpha strikes. Gains regeneration while cloaked.\nLevel up bonus:\n- +1000 hp\n- -1s recloak time (up to level 6)\n- +10 cloak regen\n- -20 decloak radius (up to level 6)\nAbility: Cloak\nStarting Weapon: Heavy Rifle (Short range AOE)",
-	["LuaUI/Images/startup_info_selector/chassis_commsupport.png"] = "Select Support Chassis\nA chassis focused on support, disruption and economy. Rather slow, but has access to exotic weapons with status effects or medium to long range single target weapons.\nLevel up bonus:\n- +750 hp\n- +5 build power\n- +200 storage per level\n- Gains build range every other level (up to lv10)\nStarting Weapon: Beam laser (Single target)",
-	["LuaUI/Images/startup_info_selector/chassis_commriot.png"] = "Select Riot Chassis\nA durable chassis focused on short range AOE weapons. Quite slow, but effective against raiders.\nLevel up bonus:\n- +1750 hp per level\n- +10 autoregen\n- +12,5% damage\nStarting Weapon: Chain Gun (Ramp up riot weapon)",
-	["LuaUI/Images/startup_info_selector/chassis_cremcom.png"] = "Select Campaign Chassis\nCan mount any module.",
+	["assault"] = "Not initialized!",
+	["recon"] = "Not initialized!",
+	["riot"] = "Not initialized!",
+	["strike"] = "Not initialized!",
+	["support"] = "Not initialized!",
+	["campaign"] = "Not initialized!",
+}
+
+local localization = {
+	["level"]   = "Level",
+	["modules"] = "Modules",
+	["close_menu"] = "CLOSE",
+	["commander_selector_title"] = "COMMANDER SELECTOR",
+	["commander_selector_module_tooltips"] = "Module tooltips",
+	["commander_selector_sitelink"] = "",
+	["commander_selector_open"] = "",
+	["commander_selector_hide_default"] = "",
 }
 
 --local wantLabelUpdate = false
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- wait for next screenframe so Grid can resize its elements first	-- doesn't actually work
+
+local colorWeapon = "\255\255\32\32"
+local colorConversion = "\255\255\96\0"
+local colorWeaponMod = "\255\255\0\255"
+local colorModule = "\255\128\128\255"
+
+local function GetTranslatedName(name)
+	local lowerName = string.lower(name)
+	if lowerName == "engineer" then
+		name = WG.Translate("interface", "support")
+	elseif lowerName == "guardian" then
+		name = WG.Translate("interface", "assault")
+	elseif commTips[lowerName] then
+		name = WG.Translate("interface", lowerName)
+	end
+	return name
+end
+
+local function FetchTooltip(profileID, commanderName)
+	local commData = WG.ModularCommAPI.GetCommProfileInfo(profileID)
+	commanderName = GetTranslatedName(commanderName)
+	local str = WG.Translate("interface", "select_commander", {name = commanderName}) or "Select " .. commanderName
+	str = str .. "\n\n"
+	local level = WG.Translate("interface", "level")
+	local modules = WG.Translate("interface", "modules")
+	--Spring.Echo("Fetching tooltip for " .. profileID .. " [ " .. commanderName .. "]")
+	for i=1,#commData.modules do
+		str = str .. "\n\255\255\255\000" .. string.upper(level) .. " " .. (i + 1) .. " " .. string.upper(modules) .. ":\255\255\255\255"	-- TODO calculate metal cost
+		for j, modulename in pairs(commData.modules[i]) do
+			if moduleDefNames[modulename] then
+				local moduleDef = moduleDefs[moduleDefNames[modulename]]
+				local substr = WG.Translate("interface", modulename .. "_name")
+				
+				-- assign color
+				if (modulename):find("commweapon_") then
+					substr = colorWeapon..substr
+				elseif (modulename):find("conversion_") then
+					substr = colorConversion..substr
+				elseif (modulename):find("weaponmod_") then
+					substr = colorWeaponMod..substr
+				else
+					substr = colorModule..substr
+				end
+				str = str.."\n\t\t"..substr.."\008"
+			end
+		end
+	end
+	return str
+end
+
 local function ToggleTrainerButtons(bool)
 	for i=1,#buttonData do
 		if buttonData[i].trainer and (#buttonData > 4) then
@@ -100,10 +165,24 @@ local function ToggleTrainerButtons(bool)
 	end
 end
 
+local function RebuildTooltips(bool)
+	for i = 1, #buttonData do
+		buttonData[i].tooltip = FetchTooltip(buttonData[i].profileID, buttonData[i].name)
+		local commTip = WG.Translate("interface", "select_" .. buttonData[i].chassis)
+		buttonData[i].control.tooltip = (bool and buttonData[i].tooltip .. "\n\n\n" or "") .. (commTip or "")
+		local name = GetTranslatedName(buttonData[i].name)
+		buttonData[i].label:SetCaption(name)
+		buttonData[i].control:Invalidate()
+		buttonData[i].label:Invalidate()
+	end
+end
+
 local function ToggleModuleTooltip(bool)
 	for i = 1, #buttonData do
-		buttonData[i].control.tooltip = ((bool and (buttonData[i].tooltip .. "\n\n\n")) or "") .. (commTips[buttonData[i].image] or "")
-		buttonData[i].control:Invalidate()
+		if buttonData[i].tooltip then
+			buttonData[i].control.tooltip = ((bool and (buttonData[i].tooltip .. "\n\n\n")) or "") .. (commTips[buttonData[i].chassis] or "")
+			buttonData[i].control:Invalidate()
+		end
 	end
 end
 
@@ -158,13 +237,37 @@ options = {
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+local function OnLocaleChanged()
+	for chassis, _ in pairs(commTips) do -- DO NOT use this for the initial setup!
+		commTips[chassis] = WG.Translate("interface", "select_" .. chassis)
+	end
+	if closeButton then
+		closeButton.caption = WG.Translate("interface", "close_menu")
+		closeButton:Invalidate()
+		openButton.tooltip = WG.Translate("interface", "commander_selector_open")
+		openButton:Invalidate()
+		options.showModules.name = WG.Translate("interface", "commander_selector_module_tooltips") -- will this even work?
+		options.hideTrainers.name = WG.Translate("interface", "commander_selector_hide_default")
+		options.hideTrainers.desc =  WG.Translate("interface", "commander_selector_sitelink")
+		trainerCheckbox.tooltip = WG.Translate("interface", "commander_selector_sitelink")
+		trainerCheckbox.caption = WG.Translate("interface", "commander_selector_hide_default")
+		trainerCheckbox:Invalidate()
+		showModulesCheckbox.caption = WG.Translate("interface", "commander_selector_module_tooltips")
+		showModulesCheckbox:Invalidate()
+		RebuildTooltips(options.showModules.value)
+		mainWindow.caption = WG.Translate("interface", "commander_selector_title")
+		mainWindow:Invalidate()
+	end
+	if openButton then
+		openButton.tooltip = WG.Translate("interface", "commander_selector_open")
+	end
+end
 
 local function PlaySound(filename, ...)
 	local path = filename..".WAV"
 	if (VFS.FileExists(path)) then
 		Spring.PlaySoundFile(path, ...)
 	else
-	--Spring.Echo(filename)
 		Spring.Echo("<Startup Info Selector>: Error - file "..path.." doesn't exist.")
 	end
 end
@@ -275,8 +378,8 @@ local function CreateWindow()
 		y = math.floor((vsy - WINDOW_HEIGHT)/2),
 		classname = "main_window",
 		parent = screen0,
-		caption = "COMMANDER SELECTOR",
-		}
+		caption = WG.Translate("interface", "commander_selector_title"),
+	}
 	--scroll = ScrollPanel:New{
 	--	parent = mainWindow,
 	--	horizontalScrollbar = false,
@@ -298,9 +401,8 @@ local function CreateWindow()
 	for index, option in ipairs(optionData) do
 		i = i + 1
 		local hideButton = options.hideTrainers.value and option.trainer and (#optionData > 4)
-		
-		local tooltip = ((options.showModules.value and (option.tooltip .. "\n\n\n")) or "") .. (commTips[option.image] or "")
-		
+		local commTip = WG.Translate("interface", "select_" .. option.chassis) or "???"
+		local tooltip = ((options.showModules.value and (FetchTooltip(option.commProfile, option.name) .. "\n\n\n")) or "") .. commTip
 		local button = Button:New {
 			parent = (not hideButton) and grid or nil,
 			caption = "",
@@ -311,16 +413,32 @@ local function CreateWindow()
 			padding = {5,5,5,5},
 			OnClick = {function()
 				Spring.SendLuaRulesMsg("customcomm:"..option.commProfile)
-				Spring.SendCommands({'say a:I choose: '..option.name..'!'})
+				Spring.SendLuaUIMsg("selectedcomm:" .. option.name .. "," .. option.chassis, "a")
+				--Spring.Echo("Sent: " .. option.name .. ", " .. option.chassis)
 				Close(false, true)
 			end},
+		}
+		local name = option.name
+		name = GetTranslatedName(name)
+		local label = Label:New{
+			parent = button,
+			x = 0, right = 0,
+			bottom = 4,
+			caption = name,
+			align = "center",
+			autosize = false,
+			font = {size = 14},
 		}
 		
 		buttonData[i] = {
 			control = button,
 			trainer = option.trainer,
 			tooltip = option.tooltip,
+			chassis = option.chassis,
 			image = option.image,
+			profileID = option.commProfile,
+			name = option.name,
+			label = label,
 		}
 		
 		local image = Image:New{
@@ -331,15 +449,6 @@ local function CreateWindow()
 			y = 2,
 			right = 2,
 			bottom = 12,
-		}
-		local label = Label:New{
-			parent = button,
-			x = 0, right = 0,
-			bottom = 4,
-			caption = option.name,
-			align = "center",
-			autosize = false,
-			font = {size = 14},
 		}
 		--if option.trainer then
 		--	local trainerLabel = Label:New{
@@ -355,9 +464,9 @@ local function CreateWindow()
 		--end
 	end
 	local cbWidth = WINDOW_WIDTH*0.4
-	local closeButton = Button:New{
+	closeButton = Button:New{
 		parent = mainWindow,
-		caption = "CLOSE",
+		caption = WG.Translate("interface", "close_menu"),
 		width = cbWidth,
 		x = WINDOW_WIDTH*0.5 + (WINDOW_WIDTH*0.5 - cbWidth)/2,
 		height = 30,
@@ -367,9 +476,10 @@ local function CreateWindow()
 	if #optionData > 4 then
 		trainerCheckbox = Chili.Checkbox:New{
 			parent = mainWindow,
-			x = 160,
-			bottom = 5,
-			width = 180,
+			x = 16,
+			bottom = 25,
+			width = 200,
+			boxalign = "left",
 			caption = options.hideTrainers.name,
 			tooltip = options.hideTrainers.desc,
 			checked = options.hideTrainers.value,
@@ -389,7 +499,8 @@ local function CreateWindow()
 		parent = mainWindow,
 		x = 16,
 		bottom = 5,
-		width = 115,
+		width = 200,
+		boxalign = "left",
 		caption = options.showModules.name,
 		tooltip = options.showModules.desc,
 		checked = options.showModules.value,
@@ -409,12 +520,13 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 function widget:Initialize()
-	optionData = include("Configs/startup_info_selector.lua")
-
-	if not (WG.Chili) then
+	if Spring.GetGameRulesParam("totalSaveGameFrame") or not (WG.Chili) then
 		widgetHandler:RemoveWidget()
+		return
 	end
 	CheckForSpec()
+	
+	optionData = include("Configs/startup_info_selector.lua")
 
 	-- chili setup
 	Chili = WG.Chili
@@ -465,7 +577,7 @@ function widget:Initialize()
 			screen0:AddChild(buttonWindow)
 		end
 		
-		button = Button:New{
+		openButton = Button:New{
 			parent = buttonWindow,
 			caption = '',
 			tooltip = "Open comm selection screen",
@@ -478,7 +590,7 @@ function widget:Initialize()
 		}
 		
 		buttonImage = Image:New{
-			parent = button,
+			parent = openButton,
 			width="100%";
 			height="100%";
 			x=0;
@@ -488,16 +600,13 @@ function widget:Initialize()
 		}
 		CreateWindow()
 	end
+	WG.InitializeTranslation(OnLocaleChanged, GetInfo().name)
 end
 
 -- hide window if game was loaded
 local timer = 0
 local startPosTimer = 0
-function widget:Update(dt)
-	if Spring.GetGameRulesParam("totalSaveGameFrame") then
-		widgetHandler:RemoveWidget()
-		return
-	end
+function widget:Update(dt) -- TODO: Remove this if possible.
 	
 	if timer then
 		timer = timer + dt

@@ -1,0 +1,21 @@
+{
+	"select_assault" : "Bombard Chassis:\nPowolne podwozie, które koncentruje się na zadawaniu obrażeń z daleka.\nPremia za awans:\n- +7,5%% zasięgu\n- +500 HP\nBroń startowa: Bateria LLRM (Bombardowanie obszarowe)",
+	"select_recon" : "Recon Chassis:\nZwinne podwozie, które wyróżnia się prędkością i DPS kosztem broni wielocelowej.\nPremia za awans:\n- +3 prędkości\n- +2,5%% zasięgu skoku\n- +1000 HP\nUmiejętność: Skok\nBroń startowa: Heatray (Krótki zasięg Wysoki DPS pojedynczego celu)",
+	"select_strike" : "Ghost Chassis:\nSzybkie, ciche podwozie, które wyróżnia się atakami alfa. Zyskuje regenerację, gdy jest zamaskowane.\nPremia za awans:\n- +1000 HP\n- -1 s ponownego ukrycia czas (do poziomu 6)\n- +10 regeneracji kamuflażu\n- -20 promienia decloak (do poziomu 6)\nUmiejętność: kamuflaż\nBroń początkowa: ciężki karabin (krótki zasięg AOE)",
+	"select_support" : "Podwozie wsparcia:\nPodwozie skoncentrowane na wsparciu, zakłócaniu i ekonomii. Raczej powolne, ale ma dostęp do egzotycznej broni z efektami statusu lub broni na pojedynczy cel o średnim i dużym zasięgu.\nPremia za awans na wyższy poziom:\n- +750 KM\n- +5 mocy budowy\n- +200 magazynowania na poziom\n- Zyskuje zasięg budowy co drugi poziom (do poziomu 10)\nBroń początkowa: laser wiązkowy (pojedynczy cel)",
+	"select_riot" : "Podwozie zamieszek:\nWytrzymałe podwozie skoncentrowane na broniach obszarowych o krótkim zasięgu. Dość powolny, ale skuteczny przeciwko raiderom.\nPremia za awans:\n- +1750 punktów zdrowia na poziom\n- +10 autoregeneracji\n- +12,5%% obrażeń\nBroń początkowa: Chain Gun (broń do rozkręcania zamieszek)",
+	"select_campaign" : "Podwozie kampanii:\nMożna zamontować większość modułów.",
+	"selected_commander" : "Wybieram: %{commandername}! (%{commanderchassis})",
+	"assault" : "Dowódca bombardowania",
+	"recon" : "Dowódca zwiadu",
+	"strike" : "Dowódca duchów",
+	"support" : "Dowódca wsparcia",
+	"campaign" : "Dowódca kampanii",
+	"riot" : "Dowódca zamieszek",
+	"commander_selector_hide_default" : "Ukryj domyślnych dowódców",
+	"commander_selector_sitelink" : "Możesz dostosować swoich dowódców do użycia w trybie wieloosobowym na stronie Zero-K: https://zero-k.info",
+	"commander_selector_module_tooltips" : "Podpowiedzi dotyczące modułów",
+	"commander_selector_open" : "Otwórz ekran wyboru dowódcy",
+	"commander_selector_title" : "Wybierz swojego dowódcę:",
+	"select_commander" : "Wybierz %{name}"
+}

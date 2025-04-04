@@ -1,0 +1,21 @@
+{
+	"select_assault" : "Bombard-Chassis:\nEin langsames Chassis, das sich auf Fernschaden konzentriert.\nStufenaufstiegsbonus:\n- +7,5 %% Reichweite\n - +500 PS\nStartwaffe: LLRM-Batterie (Flächenbombardement)",
+	"select_recon" : "Aufklärungs-Chassis:\nEin flinkes Chassis, das sich durch Geschwindigkeit und Schaden pro Sekunde auszeichnet, allerdings auf Kosten von Mehrzielwaffen.\nStufenaufstiegsbonus:\n- +3 Geschwindigkeit\n- +2,5 %% Sprungreichweite\n- +1000 PS\nFähigkeit: Sprung\nStartwaffe: Heatray (Kurze Reichweite, hoher Einzelziel-Schaden pro Sekunde)",
+	"select_strike" : "Geister-Chassis:\nEin schnelles, getarntes Chassis, das sich durch Alpha-Schläge auszeichnet. Regeneration im getarnten Zustand.\nStufenaufstiegsbonus:\n- +1000 PS\n- -1 s Wiedertarnungszeit (bis Stufe 6)\n- +10 Tarnungsregeneration\n- -20 Enttarnungsradius (bis Level 6)\nFähigkeit: Tarnung\nStartwaffe: Schweres Gewehr (Nahbereichs-AoE)",
+	"select_support" : "Support-Chassis:\nEin Chassis, das auf Unterstützung, Störung und Wirtschaftlichkeit ausgerichtet ist. Eher langsam, bietet aber Zugriff auf exotische Waffen mit Statuseffekten oder Einzelzielwaffen mittlerer bis großer Reichweite.\nLevel-Aufstiegsbonus:\n- +750 PS\n- +5 Baukraft\n- +200 Speicher pro Level\n- Erhöht die Baureichweite mit jedem zweiten Level (bis Level 10)\nStartwaffe: Strahlenlaser (Einzelziel)",
+	"select_riot" : "Riot-Chassis:\nEin robustes Chassis, das auf Nahbereichs-AoE-Waffen ausgerichtet ist. Ziemlich langsam, aber effektiv gegen Raider.\nLevel-Aufstiegsbonus:\n- +1750 PS pro Level\n- +10 Autoregeneration\n- +12,5 %% Schaden\nStartwaffe: Maschinengewehr (Ramp-up-Aufruhrwaffe)",
+	"select_campaign" : "Kampagnenchassis:\nKann die meisten Module montieren.",
+	"selected_commander" : "Ich wähle: %{commandername}! (%{commanderchassis})",
+	"assault" : "Bombardierkommandant",
+	"recon" : "Aufklärungskommandant",
+	"strike" : "Stealth-Kommandant",
+	"support" : "Unterstützungskommandant",
+	"campaign" : "Kampagnenkommandant",
+	"riot" : "Aufruhrkommandant",
+	"commander_selector_hide_default" : "Standard-Kommandanten ausblenden",
+	"commander_selector_sitelink" : "Du kannst deine Kommandanten für den Mehrspielermodus auf der Zero-K-Website anpassen: https://zero-k.info",
+	"commander_selector_module_tooltips" : "Modul-Tooltips",
+	"commander_selector_open" : "Kommandantenauswahl öffnen",
+	"commander_selector_title" : "Wähle deinen Kommandanten:",
+	"select_commander" : "Wähle %{name}"
+}

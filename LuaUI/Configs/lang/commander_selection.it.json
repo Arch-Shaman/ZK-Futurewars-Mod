@@ -1,0 +1,21 @@
+{
+	"select_assault" : "Telaio Bombard:\nUn telaio lento che si concentra sul causare danni da lontano.\nBonus di aumento di livello:\n- +7,5%% di gittata\n - +500 hp\nArma iniziale: Batteria LLRM (Bombardamento ad area)",
+	"select_recon" : "Telaio Recon:\nUn telaio agile che eccelle in velocità e DPS al costo di armi multi-bersaglio.\nBonus di aumento di livello:\n- +3 velocità\n- +2,5%% di gittata di salto\n- +1000 HP\nAbilità: Salto\nArma iniziale: Raggio di calore (Corto raggio DPS elevato su bersaglio singolo)",
+	"select_strike" : "Telaio Ghost:\nUn telaio veloce e furtivo che eccelle negli attacchi alfa. Ottiene rigenerazione mentre è occultato.\nBonus di aumento di livello:\n- +1000 hp\n- -1s di rioccultamento tempo (fino al livello 6)\n- +10 rigenerazione mantello\n- -20 raggio di decloak (fino al livello 6)\nAbilità: Mantello\nArma iniziale: Fucile pesante (AOE a corto raggio)",
+	"select_support" : "Telaio di supporto:\nUn telaio incentrato su supporto, interruzione ed economia. Piuttosto lento, ma ha accesso ad armi esotiche con effetti di stato o armi a bersaglio singolo a medio e lungo raggio.\nBonus di aumento di livello:\n- +750 hp\n- +5 potenza di costruzione\n- +200 stoccaggio per livello\n- Ottiene portata di costruzione ogni due livelli (fino al lv10)\nArma iniziale: Laser a raggio (bersaglio singolo)",
+	"select_riot" : "Telaio antisommossa:\nUn telaio resistente incentrato su armi AOE a corto raggio. Abbastanza lento, ma efficace contro i predoni.\nBonus di aumento di livello:\n- +1750 hp per livello\n- +10 autorigenerazione\n- +12,5%% danni\nArma iniziale: mitragliatrice (arma antisommossa potenziata)",
+	"select_campaign" : "Telaio campagna:\nPuò montare la maggior parte dei moduli.",
+	"selected_commander" : "Scelgo: %{commandername}! (%{commanderchassis})",
+	"assault" : "Comandante di Bombardamento",
+	"recon" : "Comandante di Ricognizione",
+	"strike" : "Comandante Fantasma",
+	"support" : "Comandante di Supporto",
+	"campaign" : "Comandante della Campagna",
+	"riot" : "Comandante Antisommossa",
+	"commander_selector_hide_default" : "Nascondi i comandanti predefiniti",
+	"commander_selector_sitelink" : "Puoi personalizzare i tuoi comandanti per usarli in modalità multigiocatore sul sito Zero-K: https://zero-k.info",
+	"commander_selector_module_tooltips" : "Descrizione modulo",
+	"commander_selector_open" : "Apri schermata di selezione comandante",
+	"commander_selector_title" : "Seleziona il tuo comandante:",
+	"select_commander" : "Seleziona %{name}"
+}

@@ -1,0 +1,21 @@
+{
+	"select_assault" : "选择轰炸底盘\n一种专注于远距离造成伤害的缓慢底盘。\n升级奖励：\n- +7,5%% 范围\n - +500 健康点\n起始武器：LLRM 电池（区域轰炸）",
+	"select_recon" : "选择侦察底盘\n一种敏捷的底盘，在速度和 DPS 方面表现出色，但多目标武器却很昂贵。\n升级奖励：\n- +3 速度\n- +2,5%% 跳跃范围\n- +1000 健康点\n能力：跳跃\n起始武器：Heatray（短距离高单目标 DPS）",
+	"select_strike" : "选择幽灵底盘\n一种快速、隐身的底盘，擅长阿尔法打击。隐形时获得再生。\n升级奖励：\n- +1000 健康点\n- -1s 重新隐形时间（最高至等级6)\n- +10 隐形再生\n- -20 隐形半径（最高 6 级）\n技能：隐形\n起始武器：重型步枪（短程 AOE）",
+	"select_support" : "选择支援底盘\n专注于支援、破坏和经济的底盘。速度较慢，但​​可以使用具有状态效果的奇特武器或中长程单目标武器。\n升级奖励:\n- +750 健康点\n- +5 建造能力\n- 每级 +200 存储\n- 每隔一级增加建造范围（最高 10 级）\n起始武器：光束激光（单目标）",
+	"select_riot" : "选择防暴底盘\n专注于短程 AOE 武器的耐用底盘。速度很慢，但对付袭击者很有效。\n升级奖励：\n- 每级 +1750 健康点\n- +10 自动再生\n- +12,5%% 伤害\n起始武器：链枪（加速防暴武器）",
+	"select_campaign" : "选择战役底盘\n可以安装大多数模块。",
+	"selected_commander" : "我选择：%{commandername}！ (%{commanderchassis})",
+	"assault" : "轰炸指挥官",
+	"recon" : "侦察指挥官",
+	"strike" : "幽灵指挥官",
+	"support" : "支援指挥官",
+	"campaign" : "战役指挥官",
+	"riot" : "暴动指挥官",
+	"commander_selector_hide_default": "隐藏默认指挥官",
+	"commander_selector_sitelink" : "您可以在 Zero-K 网站上自定义指挥官以用于多人游戏：https://zero-k.info",
+	"commander_selector_module_tooltips" : "模块工具提示",
+	"commander_selector_open" : "打开通讯选择屏幕",
+	"commander_selector_title" : "选择你的指挥官：",
+	"select_commander" : "选择 %{name}"
+}

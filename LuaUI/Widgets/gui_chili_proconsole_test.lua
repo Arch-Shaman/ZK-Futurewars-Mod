@@ -185,6 +185,7 @@ options_order = {
 	--'mousewheel',
 	'defaultAllyChat',
 	'defaultBacklogEnabled',
+	'filter_commanderselection',
 	'mousewheelBacklog',
 	'enableSwap',
 	'backlogHideNotChat',
@@ -415,6 +416,14 @@ options = {
 		noHotkey = true,
 		advanced = true,
 		path = hilite_path,
+	},
+	filter_commanderselection = {
+		name = "Filter out commander selection messages",
+		type = 'bool',
+		value = false,
+		desc = "This filters out commander messages.",
+		path = filter_path ,
+		advanced = false,
 	},
 --[[
 	highlight_filter = {
@@ -2103,7 +2112,55 @@ function widget:TextCommand(msg)
 	end
 end
 
+function WG.ProConsoleAddFakeMsg(playerID, msg)
+	local playerName, _, spectator, teamID, allyTeamID, _, _, _, _, customKeys = Spring.GetPlayerInfo(playerID, true)
+	local m = {
+		argument = msg,
+		priority = 35, -- wut?
+		msgtype = 'player_to_allies',
+		text = msg,
+		argument = msg,
+		playername = playerName,
+		player = {
+			id = playerID,
+			allyTeamId = allyTeamID,
+			muted = (customKeys and customKeys.muted == 1),
+			spec = spectator,
+			playername = playerName,
+			source = 'other', -- no idea what this does.
+		},
+	}
+	widget:AddConsoleMessage(m)
+end
+
 function widget:RecvLuaMsg(msg, playerID)
+	if msg:sub(1,13) == "selectedcomm:" and not options.filter_commanderselection.value then
+		local processedMsg = msg:sub(14)
+		local splitPoint = processedMsg:find(",")
+		local name = processedMsg:sub(1, splitPoint - 1)
+		local chassis = processedMsg:sub(splitPoint + 1)
+		local playerName, _, spectator, teamID, allyTeamID, _, _, _, _, customKeys = Spring.GetPlayerInfo(playerID, true)
+		Spring.Echo("Got: " .. name .. ", " .. chassis .. " from " .. playerName)
+		local body = WG.Translate("interface", "selected_commander", {commandername = name, commanderchassis = WG.Translate("interface", chassis)})
+		Spring.Echo("Body: " .. body)
+		local m = {
+			argument = body,
+			priority = 35, -- wut?
+			msgtype = 'player_to_allies',
+			text = body,
+			argument = body,
+			playername = playerName,
+			player = {
+				id = playerID,
+				allyTeamId = allyTeamID,
+				muted = (customKeys and customKeys.muted == 1),
+				spec = spectator,
+				playername = playerName,
+				source = 'other', -- no idea what this does.
+			},
+		}
+		widget:AddConsoleMessage(m)
+	end
 	if msg:sub(1,16) == 'LobbyChatUpdate_' then -- FIXME: why does an in-world object care about the overlay?
 		local message = msg:sub(17, msg:len())
 		if message then

@@ -83,12 +83,12 @@ local function GetCommSelectTemplate(num, data)
 	
 	local option = {
 		name = data.name,
-		tooltip = "Select "..data.name..WriteTooltip(commProfileID),
 		image = chassisImages[data.chassis],
 		cmd = "customcomm:"..commProfileID,
 		unitname = comm1Name,
 		commProfile = commProfileID,
 		chassis = data.chassis,
+		profileID = WG.ModularCommAPI.GetCommProfileInfo(commProfileID),
 		trainer = string.find(commProfileID, "trainer") ~= nil,	-- FIXME should probably be in the def table
 	}
 	

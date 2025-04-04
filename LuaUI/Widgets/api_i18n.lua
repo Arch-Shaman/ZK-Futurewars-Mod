@@ -47,7 +47,7 @@ local langListeners={}
 
 local translationExtras = { -- lists databases to be merged into the main one
 	units = {"campaign_units", "pw_units"},
-	interface = {"common", "healthbars", "resbars", "context_menu", "death_messages", "misc_aiwarning", "modules"},
+	interface = {"common", "healthbars", "resbars", "context_menu", "death_messages", "misc_aiwarning", "modules", "commander_selection"},
 }
 
 local translations = {

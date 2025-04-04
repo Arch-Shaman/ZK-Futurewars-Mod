@@ -1,0 +1,21 @@
+{
+	"select_assault" : "Chassis de bombardeamento:\nUm chassis lento que se concentra em causar dano de longe. \nBónus de subida de nível:\n- +7,5%% de alcance\n- +500 cv\nArma inicial: Bateria LLRM (Bombardeamento de área)",
+	"select_recon" : "Chassis de reconhecimento:\nUm chassis ágil que se destaca em velocidade e DPS à custa de armas multi-alvo. \nBónus de subida de nível:\n- +3 de velocidade\n- +2,5%% de alcance de salto\n- +1000 HP\nHabilidade: Salto\nArma inicial: Heatray (alcance curto, alto DPS em alvo único)",
+	"select_strike" : "Ghost Chassis:\nUm chassis rápido e furtivo que se destaca em ataques alfa. Ganha regeneração enquanto camuflado. \nBónus de subida de nível:\n- +1000 cv\n- -1s de tempo de recolonização (até ao nível 6)\n- +10 de regeneração de camuflagem\n- -20 de raio de desclonar (até ao nível 6)\nHabilidade: Camuflagem\nArma inicial: pesado (curto alcance AOE)",
+	"select_support" : "Chassis de suporte:\nUm chassis focado no suporte, interrupção e economia. Um pouco lento, mas tem acesso a armas exóticas com efeitos de estado ou armas de alvo único de médio a longo alcance. \nBónus de subida de nível:\n- +750 cv\n- +5 de poder de construção\n- +200 de armazenamento por nível\n- Ganha alcance de construção a cada dois níveis (até ao nível 10)\nArma inicial: Laser de feixe único)",
+	"select_riot" : "Chassi de choque:\nUm chassis durável focado em armas AOE de curto alcance. Bastante lento, mas eficaz contra invasores. \nBónus de subida de nível:\n- +1750 cv por nível\n- +10 autoregeneração\n- +12,5%% de dano\nArma inicial: Chain Gun (arma de choque de aumento)",
+	"select_campaign": "Chassis de campanha:\nPode montar a maioria dos módulos.",
+	"selected_commander": "Eu escolho: %{commandername}! (%{commanderchassis})",
+	"assalto": "Comandante de Bombardeiros",
+	"recon": "Comandante de Reconhecimento",
+	"strike": "Comandante Fantasma",
+	"support" : "Comandante de Suporte",
+	"campanha": "Comandante da campanha",
+	"riot": "Comandante da revolta",
+	"commander_selector_hide_default": "Ocultar comandantes padrão",
+	"commander_selector_sitelink": "Pode personalizar os seus comandantes para utilização no modo multijogador no site Zero-K: https://zero-k.info",
+	"commander_selector_module_tooltips": "Dicas de ferramentas do módulo",
+	"commander_selector_open": "Abrir ecrã de seleção de comandante",
+	"commander_selector_title": "Selecione o seu comandante:",
+	"select_commander": "Selecione %{nome}"
+}

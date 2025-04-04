@@ -1,0 +1,21 @@
+{
+	"select_assault" : "Bombard Şasisi:\nUzaktan hasar vermeye odaklanan yavaş bir şasi.\nSeviye atlama bonusu:\n- +7,5%% menzil\n- +500 hp\nBaşlangıç ​​silahı: LLRM Battery (Alan Bombardımanı)",
+	"select_recon" : "Recon Şasisi:\nÇok hedefli silahların bedeli olarak hız ve DPS'de üstünlük sağlayan çevik bir şasi.\nSeviye atlama bonusu:\n- +3 hız\n- +2,5%% Zıplama Menzili\n- +1000 HP\nYetenek: Zıplama\nBaşlangıç ​​Silahı: Heatray (Kısa menzil Yüksek tek hedef DPS)",
+	"select_strike" : "Ghost Şasisi:\nAlfa vuruşlarında üstünlük sağlayan hızlı, gizli bir şasi. Gizlendiğinde rejenerasyon kazanır.\nSeviye atlama bonusu:\n- +1000 hp\n- -1s yeniden gizlenme süresi (6. seviyeye kadar)\n- +10 gizlenme yenilenmesi\n- -20 gizlenme yarıçapı (6. seviyeye kadar)\nYetenek: Gizlenme\nBaşlangıç ​​Silahı: Ağır Tüfek (Kısa menzilli AOE)",
+	"select_support" : "Destek Şasisi:\nDestek, kesinti ve ekonomi odaklı bir şasi. Oldukça yavaş, ancak durum etkileri olan egzotik silahlara veya orta ila uzun menzilli tek hedefli silahlara erişimi var.\nSeviye atlama bonusu:\n- +750 hp\n- +5 yapı gücü\n- Seviye başına +200 depolama\n- Her iki seviyede bir yapı menzili kazanır (10. seviyeye kadar)\nBaşlangıç ​​Silahı: Işın lazeri (Tek hedef)",
+	"select_riot" : "Riot Şasisi:\nKısa menzilli AOE silahlarına odaklı dayanıklı bir şasi. Oldukça yavaş ama akıncılara karşı etkili.\nSeviye atlama bonusu:\n- Seviye başına +1750 can\n- +10 otomatik yenilenme\n- +12,5%% hasar\nBaşlangıç ​​Silahı: Zincir Silah (Ramp up isyan silahı)",
+	"select_campaign" : "Kampanya Şasisi:\nÇoğu modülü monte edebilir.",
+	"selected_commander" : "Seçtiğim: %{commandername}! (%{commanderchassis})",
+	"assault" : "Bombardıman Komutanı",
+	"recon" : "Keşif Komutanı",
+	"strike" : "Hayalet Komutan",
+	"support" : "Destek Komutanı",
+	"campaign" : "Kampanya Komutanı",
+	"riot" : "İsyan Komutanı",
+	"commander_selector_hide_default" : "Varsayılan komutanları gizle",
+	"commander_selector_sitelink" : "Çok oyunculu modda kullanım için komutanlarınızı Zero-K sitesinde özelleştirebilirsiniz: https://zero-k.info",
+	"commander_selector_module_tooltips" : "Modül araç ipuçları",
+	"commander_selector_open" : "Komutan seçim ekranını aç",
+	"commander_selector_title" : "Komutanınızı seçin:",
+	"select_commander" : "Seç %{name}"
+}
