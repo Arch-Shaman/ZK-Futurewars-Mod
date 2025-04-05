@@ -38,8 +38,8 @@ function Spring.GetTeamColor(teamid)
   return unpack(teamColor[teamid])
 end
 
-function Spring.MarkerAddPoint(x, y, z, t, b)
-	MarkerAddPoint(x,y,z,t,true)
+function Spring.MarkerAddPoint(x, y, z, t, b, p)
+	MarkerAddPoint(x,y,z,t,true,p)
 end
 
 function Spring.SetTeamColor(teamid, r, g, b)
