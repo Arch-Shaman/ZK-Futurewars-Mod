@@ -1,0 +1,40 @@
+{
+	"radardot" : "レーダーシグネチャー",
+	"localizedlabel_1" : "%{teamname} から空中の %{unitname} を発見しました！",
+	"localizedlabel_2" : "敵 %{unitname} がここにいます！",
+	"localizedlabel_3" : "レーダーに敵 %{unitname} がいます！",
+	"localizedlabel_4" : "%{teamname} の %{unitname} の残りヘルスは %{health} のみ！",
+	"localizedlabel_5" : "%{teamname} はここで %{constructionprogress}%% の %{unitname} の建造を完了しました！",
+	"localizedlabel_6" : "%{teamname} の %{unitname} を見てください。",
+	"localizedlabel_7" : "私の %{unitname} は修理が必要です！",
+	"localizedlabel_8" : "%{teamname} は撤退してください%{unitname}! (残り体力 %{health})",
+	"localizedlabel_9" : "%{teamname} の %{unitname} は修理が必要です!",
+	"localizedlabel_10" : "この %{unitname} の建設を手伝ってください。(進捗状況: %{progress}%% 完了)",
+	"localizedlabel_11" : "この %{unitname} の建設を手伝ってください。(進捗状況: %{progress}%% 完了)",
+	"localizedlabel_12" : "ここを見て!",
+	"localizedlabel_13" : "ここに %{unitname} を建設しましょう!",
+	"localizedlabel_14" : "ここに援軍が必要です!",
+	"localizedlabel_15" : "この %{unitname} と戦うのに手伝いが必要です。",
+	"localizedlabel_16" : "この %{unitname} を終わらせる必要があります。",
+	"localizedlabel_17" : "この %{unitname} の修理を手伝ってください！",
+	"localizedlabel_18": "この %{unitname} を守るためにユニットを送ってください！"
+	"localizedlabel_19": "この %{unitname} には護衛が必要です！"
+	"localizedlabel_20": "ここに %{unitname} を建設中です！"
+	"localizedlabel_21": "誰かここに出現できますか？"
+	"localizedlabel_22": "%{teamname} 後退してください！"
+	"localizedlabel_23": "%{teamname} は %{unitname} を撤退させてください！"
+	"localizedlabel_24": "ここを攻撃しましょう！"
+	"localizedlabel_25": "この %{unitname} を攻撃しましょう！"
+	"localizedlabel_26": "ここの航空支援を要請します！"
+	"localizedlabel_27": "この %{unitname} を爆撃してください！"
+	"localizedlabel_28" : "この %{unitname} を迎撃するには対空砲が必要です！",
+	"localizedlabel_29" : "このエリアを調べるために偵察隊を派遣してください。",
+	"localizedlabel_30" : "ここで砲兵支援を要請します。",
+	"localizedlabel_31" : "この %{unitname} を砲兵で攻撃してください。",
+	"localizedlabel_32" : "この %{unitname} に EMP ミサイルを発射してください。",
+	"localizedlabel_33" : "ここで EMP ミサイルを発射してください。",
+	"localizedlabel_34" : "この場所に核爆弾を発射しましょう。",
+	"localizedlabel_35" : "この %{unitname} をグリッドに接続してください。",
+	"localizedlabel_36" : "この %{unitname} に電力を供給するには、グリッドに %{power} のエネルギーが必要です。",
+	"localizedlabel_37" : "%{teamname} の %{unitname} は無効です! 攻撃するために何かを送ってください!"
+}
