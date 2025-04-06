@@ -181,20 +181,6 @@ local reloadBarColor = {013, 245, 243, 1}
 local fullHealthBarColor = {0, 255, 0, 1}
 
 local econStructureDefs = {}
-for i = 1, #UnitDefs do
-	local ud = UnitDefs[i]
-	local cp = ud.customParams
-
-	local energyIncome = tonumber(cp.income_energy) or 0
-	if energyIncome > 0 then
-		econStructureDefs[i] = {cost = ud.metalCost, income = energyIncome}
-	end
-
-	local mexMult = tonumber(cp.metal_extractor_mult) or 0
-	if mexMult > 0 then
-		econStructureDefs[i] = {cost = ud.metalCost, mex = mexMult}
-	end
-end
 
 econStructureDefs[UnitDefNames.energywind.id].isWind = true
 
@@ -232,15 +218,6 @@ local UPDATE_FREQUENCY = 0.2
 
 local isCommander = {}
 local maxShield = {}
-for i = 1, #UnitDefs do
-	local cp = UnitDefs[i].customParams
-	if cp.level or cp.dynamic_comm then
-		isCommander[i] = true
-	end
-	if cp.shield_power then
-		maxShield[i] = tonumber(cp.shield_power)
-	end
-end
 
 local manualFireTimeDefs = {}
 local specialReloadDefs = {}
@@ -248,6 +225,7 @@ local jumpReloadDefs = {}
 local ammoRequiringDefs = {}
 for unitDefID = 1, #UnitDefs do
 	local ud = UnitDefs[unitDefID]
+	local cp = UnitDefs[i].customParams
 	local unitWeapon = (ud and ud.weapons)
 	unitWeapon = unitWeapon and unitWeapon[3]
 	--Note: weapon no.3 is by ZK convention is usually used for user controlled weapon
@@ -262,6 +240,21 @@ for unitDefID = 1, #UnitDefs do
 	end
 	if ud.customParams.reammoseconds then
 		ammoRequiringDefs[unitDefID] = true
+	end
+	local energyIncome = tonumber(cp.income_energy) or 0
+	if energyIncome > 0 then
+		econStructureDefs[i] = {cost = ud.metalCost, income = energyIncome}
+	end
+
+	local mexMult = tonumber(cp.metal_extractor_mult) or 0
+	if mexMult > 0 then
+		econStructureDefs[i] = {cost = ud.metalCost, mex = mexMult}
+	end
+	if cp.level or cp.dynamic_comm then
+		isCommander[i] = true
+	end
+	if cp.shield_power then
+		maxShield[i] = tonumber(cp.shield_power)
 	end
 end
 
