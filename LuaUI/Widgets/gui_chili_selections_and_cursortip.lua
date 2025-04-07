@@ -169,10 +169,20 @@ local terraCmdTip = {
 }
 
 local DRAWING_TOOLTIP =
-	green.. 'Left click'..white..': Draw on map. \n' ..
-	green.. 'Right click'..white..': Erase. \n' ..
-	green.. 'Middle click'..white..': Place marker. \n' ..
-	green.. 'Double click'..white..': Place marker with label.'
+	green.. 'Left click'..white..': Draw on map.\n' ..
+	green.. 'Right click'..white..': Erase.\n' ..
+	green.. 'Middle click'..white..': Place marker.\n' ..
+	green.. 'Double click'..white..': Place marker with label.\n' ..
+	green.. '1' .. white .. ": Smart spotting -- ping an enemy or allied unit or location.\n" ..
+	green.. '2' .. white .. ": Request reinforcements or assistance with building something.\n" ..
+	green.. '3' .. white .. ": Tell an ally to retreat (hover over a unit to ping player)\n" ..
+	green.. '4' .. white .. ": Tell allies to attack a position or unit\n" ..
+	green.. '5' .. white .. ": Request Air Support at a location or to bomb/intercept a unit\n" ..
+	green.. '6' .. white .. ": Request allies fire an EMP missile at a target\n" ..
+	green.. '7' .. white .. ": Request artillery support\n" ..
+	green.. '8' .. white .. ": Suggest an area to nuke"
+	
+	
 
 local SPECIAL_WEAPON_RELOAD_PARAM = "specialReloadRemaining"
 local JUMP_RELOAD_PARAM = "jumpReload"
@@ -181,8 +191,6 @@ local reloadBarColor = {013, 245, 243, 1}
 local fullHealthBarColor = {0, 255, 0, 1}
 
 local econStructureDefs = {}
-
-econStructureDefs[UnitDefNames.energywind.id].isWind = true
 
 local TIDAL_HEALTH = UnitDefNames.energywind.customParams.tidal_health
 
@@ -225,7 +233,7 @@ local jumpReloadDefs = {}
 local ammoRequiringDefs = {}
 for unitDefID = 1, #UnitDefs do
 	local ud = UnitDefs[unitDefID]
-	local cp = UnitDefs[i].customParams
+	local cp = UnitDefs[unitDefID].customParams
 	local unitWeapon = (ud and ud.weapons)
 	unitWeapon = unitWeapon and unitWeapon[3]
 	--Note: weapon no.3 is by ZK convention is usually used for user controlled weapon
@@ -243,20 +251,22 @@ for unitDefID = 1, #UnitDefs do
 	end
 	local energyIncome = tonumber(cp.income_energy) or 0
 	if energyIncome > 0 then
-		econStructureDefs[i] = {cost = ud.metalCost, income = energyIncome}
+		econStructureDefs[unitDefID] = {cost = ud.metalCost, income = energyIncome}
 	end
 
 	local mexMult = tonumber(cp.metal_extractor_mult) or 0
 	if mexMult > 0 then
-		econStructureDefs[i] = {cost = ud.metalCost, mex = mexMult}
+		econStructureDefs[unitDefID] = {cost = ud.metalCost, mex = mexMult}
 	end
 	if cp.level or cp.dynamic_comm then
-		isCommander[i] = true
+		isCommander[unitDefID] = true
 	end
 	if cp.shield_power then
-		maxShield[i] = tonumber(cp.shield_power)
+		maxShield[unitDefID] = tonumber(cp.shield_power)
 	end
 end
+
+econStructureDefs[UnitDefNames.energywind.id].isWind = true
 
 for _, entry in pairs(ammoStateInfo) do
 	for key, pic in pairs(entry.texture) do
@@ -2450,7 +2460,7 @@ local function GetTooltipWindow()
 	local window = Chili.Window:New{
 		name = "tooltipWindow",
 		x = 300,
-		y = 250,
+		y = 450,
 		savespace = true,
 		resizable = false,
 		draggable = false,
@@ -2970,7 +2980,12 @@ function widget:Initialize()
 		builtTooltip = WG.Translate("interface", "build_progress")
 		unitSelectionTooltipCache = {}
 		unitSingleSelectionTooltipCache = {}
-
+		terraformGeneralTip = ""
+		for i = 1, 4 do
+			local str = green .. WG.Translate("interface", "terratooltip_" .. i)
+			local injectLocation = string.find(str, ":")
+			terraformGeneralTip = terraformGeneralTip .. string.sub(str, 1, injectLocation - 1) .. white .. string.sub(str, injectLocation) .. "\n"
+		end
 		if tooltipWindow.LanguageChange then
 			tooltipWindow.LanguageChange()
 		end

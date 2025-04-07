@@ -3,7 +3,7 @@
 	"localizedlabel_1" : "空中 %{unitname} 被发现来自 %{teamname}！",
 	"localizedlabel_2" : "敌人 %{unitname} 在此处！",
 	"localizedlabel_3" : "敌人 %{unitname} 出现在雷达上！",
-	"localizedlabel_4" : "%{teamname} 的 %{unitname} 只剩下 %{health}！",
+	"localizedlabel_4" : "%{teamname} 的 %{unitname} 只剩下 %{health} 生命值！",
 	"localizedlabel_5" : "%{teamname} 在此处建造 %{unitname} 的进度为 %{constructionprogress}%%！",
 	"localizedlabel_6" : "查看此处 %{teamname} 的 %{unitname}。",
 	"localizedlabel_7" : "我的 %{unitname} 需要维修！",
@@ -36,5 +36,6 @@
 	"localizedlabel_34" : "让我们在此位置发射核弹。",
 	"localizedlabel_35" : "将此 %{unitname} 连接到电网。",
 	"localizedlabel_36" : "需要电网中 %{power} 以上的能量来为此 %{unitname} 供电",
-	"localizedlabel_37" : "%{teamname} 的 %{unitname} 已被禁用！派出一些东西来攻击它！"
+	"localizedlabel_37" : "%{teamname} 的 %{unitname} 已被禁用！派出一些东西来攻击它！",
+	"localizedlabel_38" : "撤退！！"
 }

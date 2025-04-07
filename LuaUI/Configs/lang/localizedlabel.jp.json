@@ -3,7 +3,7 @@
 	"localizedlabel_1" : "%{teamname} から空中の %{unitname} を発見しました！",
 	"localizedlabel_2" : "敵 %{unitname} がここにいます！",
 	"localizedlabel_3" : "レーダーに敵 %{unitname} がいます！",
-	"localizedlabel_4" : "%{teamname} の %{unitname} の残りヘルスは %{health} のみ！",
+	"localizedlabel_4" : "%{teamname} の %{unitname} の体力は %{health} しか残っていません!",
 	"localizedlabel_5" : "%{teamname} はここで %{constructionprogress}%% の %{unitname} の建造を完了しました！",
 	"localizedlabel_6" : "%{teamname} の %{unitname} を見てください。",
 	"localizedlabel_7" : "私の %{unitname} は修理が必要です！",
@@ -36,5 +36,7 @@
 	"localizedlabel_34" : "この場所に核爆弾を発射しましょう。",
 	"localizedlabel_35" : "この %{unitname} をグリッドに接続してください。",
 	"localizedlabel_36" : "この %{unitname} に電力を供給するには、グリッドに %{power} のエネルギーが必要です。",
-	"localizedlabel_37" : "%{teamname} の %{unitname} は無効です! 攻撃するために何かを送ってください!"
+	"localizedlabel_37" : "%{teamname} の %{unitname} は無効です! 攻撃するために何かを送ってください!",
+	"localizedlabel_38" : "後退！",
+	"localizedlabel_39" : "これをリサイクルすべきです。"
 }

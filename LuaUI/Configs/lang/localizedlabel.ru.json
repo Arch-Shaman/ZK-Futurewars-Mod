@@ -3,7 +3,7 @@
 	"localizedlabel_1" : "Замечен %{unitname} в воздухе из %{teamname}!",
 	"localizedlabel_2" : "Здесь враг %{unitname}!",
 	"localizedlabel_3" : "На радаре враг %{unitname}!",
-	"localizedlabel_4" : "У %{unitname} команды %{teamname} осталось только %{health}!",
+	"localizedlabel_4" : "У %{unitname} команды %{teamname} осталось всего %{health} очков здоровья!",
 	"localizedlabel_5" : "%{teamname} завершила строительство %{unitname} здесь!",
 	"localizedlabel_6" : "Посмотрите на %{unitname} команды %{teamname} здесь.",
 	"localizedlabel_7" : "Моему %{unitname} нужен ремонт!",
@@ -36,5 +36,7 @@
 	"localizedlabel_34" : "Давайте запустим ядерную бомбу в этом месте.",
 	"localizedlabel_35" : "Подключите этот %{unitname} к сети.",
 	"localizedlabel_36" : "Нужно на %{power} больше энергии в сети для питания этого %{unitname}",
-	"localizedlabel_37" : "%{unitname} команды %{teamname} отключен! Отправьте что-нибудь, чтобы атаковать его!"
+	"localizedlabel_37" : "%{unitname} команды %{teamname} отключен! Отправьте что-нибудь, чтобы атаковать его!",
+	"localizedlabel_38" : "Отступление!",
+	"localizedlabel_39" : "Мы должны это переработать."
 }

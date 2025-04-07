@@ -3,7 +3,7 @@
 	"localizedlabel_1" : "Airborne %{unitname} spotted from %{teamname}!",
 	"localizedlabel_2" : "Enemy %{unitname} here!",
 	"localizedlabel_3" : "Enemy %{unitname} on radar!",
-	"localizedlabel_4" : "%{teamname}'s %{unitname} only has %{health} left!",
+	"localizedlabel_4" : "%{teamname}'s %{unitname} only has %{health} health left!",
 	"localizedlabel_5" : "%{teamname} is %{constructionprogress}%% done building a %{unitname} here!",
 	"localizedlabel_6" : "Look at %{teamname}'s %{unitname} here.",
 	"localizedlabel_7" : "My %{unitname} needs repairs!",
@@ -36,5 +36,7 @@
 	"localizedlabel_34" : "Let's fire a nuke at this location.",
 	"localizedlabel_35" : "Connect this %{unitname} to the grid.",
 	"localizedlabel_36" : "Need %{power} more energy in the grid to power this %{unitname}",
-	"localizedlabel_37" : "%{teamname}'s %{unitname} is disabled! Send something to attack it!"
+	"localizedlabel_37" : "%{teamname}'s %{unitname} is disabled! Send something to attack it!",
+	"localizedlabel_38" : "Retreat!",
+	"localizedlabel_39" : "We should reclaim this."
 }

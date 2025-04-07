@@ -3,7 +3,7 @@
 	"localizedlabel_1" : "Widoczny %{unitname} w powietrzu z %{teamname}!",
 	"localizedlabel_2" : "Wróg %{unitname} tutaj!",
 	"localizedlabel_3" : "Wróg %{unitname} na radarze!",
-	"localizedlabel_4" : "%{unitname} z %{teamname} ma tylko %{health}!",
+	"localizedlabel_4" : "%{unitname} z %{teamname} ma tylko %{health} punktów zdrowia!",
 	"localizedlabel_5" : "%{teamname} jest w %{constructionprogress}%% gotowy do budowy %{unitname} tutaj!",
 	"localizedlabel_6" : "Spójrz na %{unitname} z %{teamname} tutaj.",
 	"localizedlabel_7" : "Mój %{unitname} wymaga naprawy!",
@@ -36,5 +36,7 @@
 	"localizedlabel_34": "Wystrzelmy bombę atomową w tym miejscu.",
 	"localizedlabel_35": "Podłącz tę %{unitname} do sieci.",
 	"localizedlabel_36": "Potrzebujemy o %{power} więcej energii w sieci, aby zasilić tę %{unitname}",
-	"localizedlabel_37": "%{unitname} zespołu %{teamname} jest wyłączony! Wyślij coś, aby go zaatakować!"
+	"localizedlabel_37": "%{unitname} zespołu %{teamname} jest wyłączony! Wyślij coś, aby go zaatakować!",
+	"localizedlabel_38" : "rekolekcje!",
+	"localizedlabel_39" : "Powinniśmy to poddać recyklingowi."
 }

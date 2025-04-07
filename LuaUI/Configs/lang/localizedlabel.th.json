@@ -3,7 +3,7 @@
 	"localizedlabel_1" : "พบ %{unitname} ทางอากาศจาก %{teamname}!",
 	"localizedlabel_2" : "ศัตรู %{unitname} อยู่ที่นี่!",
 	"localizedlabel_3" : "ศัตรู %{unitname} บนเรดาร์!",
-	"localizedlabel_4" : "%{unitname} ของ %{teamname} เหลือเพียง %{health} เท่านั้น!",
+	"localizedlabel_4" : "%{unitname} ของ %{teamname} เหลือคะแนนสุขภาพเพียง %{health} คะแนนเท่านั้น!",
 	"localizedlabel_5" : "%{teamname} เสร็จสิ้นการสร้าง %{unitname} ที่นี่แล้ว!",
 	"localizedlabel_6" : "ดู %{unitname} ของ %{teamname} ที่นี่สิ",
 	"localizedlabel_7" : "%{unitname} ของฉันต้องได้รับการซ่อมแซม!",
@@ -26,7 +26,8 @@
 	"localizedlabel_24" : "มาโจมตีที่นี่กันเถอะ!",
 	"localizedlabel_25" : "มาโจมตี %{unitname} นี้กันเถอะ!",
 	"localizedlabel_26" : "กำลังร้องขอการสนับสนุนทางอากาศที่นี่!",
-	"localizedlabel_27" : "ทิ้งระเบิด %{unitname} นี้!", "localizedlabel_28" : "ต้องการ AA เพื่อสกัดกั้น %{unitname} นี้!",
+	"localizedlabel_27" : "ทิ้งระเบิด %{unitname} นี้!", 
+	"localizedlabel_28" : "ต้องการ AA เพื่อสกัดกั้น %{unitname} นี้!",
 	"localizedlabel_29" : "ส่งหน่วยลาดตระเวนไปตรวจสอบพื้นที่นี้",
 	"localizedlabel_30" : "กำลังร้องขอการสนับสนุนปืนใหญ่ที่นี่",
 	"localizedlabel_31" : "กำหนดเป้าหมาย %{unitname} นี้ด้วยปืนใหญ่",
@@ -35,5 +36,7 @@
 	"localizedlabel_34" : "มายิงนิวเคลียร์ที่ตำแหน่งนี้กันเถอะ",
 	"localizedlabel_35" : "เชื่อมต่อ %{unitname} นี้กับกริด",
 	"localizedlabel_36" : "ต้องการพลังงานเพิ่ม %{power} ในกริดเพื่อจ่ายพลังงานให้กับ %{unitname} นี้",
-	"localizedlabel_37" : "%{unitname} ของ %{teamname} ถูกปิดการใช้งาน! ส่งบางอย่างไปโจมตีมัน!"
+	"localizedlabel_37" : "%{unitname} ของ %{teamname} ถูกปิดการใช้งาน! ส่งบางอย่างไปโจมตีมัน!",
+	"localizedlabel_38" : "ถอยซะ!",
+	"localizedlabel_39" : "เราควรรีไซเคิลสิ่งนี้"
 }

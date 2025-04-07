@@ -1,0 +1,7 @@
+{
+	"terratooltip_1" : "Click&Drag: Free draw terraform.",
+	"terratooltip_2" : "Alt+Click&Drag: Box terraform.",
+	"terratooltip_3" : "Alt+Ctrl+Click&Drag: Hollow box terraform.",
+	"terratooltip_4" : "Ctrl+Click on unit: Terraform around unit."
+	
+}

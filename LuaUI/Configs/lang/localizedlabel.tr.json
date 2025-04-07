@@ -3,7 +3,7 @@
 	"localizedlabel_1" : "Havadaki %{unitname} %{teamname} tarafından görüldü!",
 	"localizedlabel_2" : "Düşman %{unitname} burada!",
 	"localizedlabel_3" : "Düşman %{unitname} radarda!",
-	"localizedlabel_4" : "%{teamname}'in %{unitname}'inin sadece %{health}'i kaldı!",
+	"localizedlabel_4" : "%{teamname}'in %{unitname}'inin sadece %{health} canı kaldı!",
 	"localizedlabel_5" : "%{teamname} burada bir %{unitname} inşa etmeyi %{constructionprogress}%% tamamladı!",
 	"localizedlabel_6" : "%{teamname}'in %{unitname}'ine buradan bakın.",
 	"localizedlabel_7" : "Benim %{unitname}'imin onarıma ihtiyacı var!",
@@ -36,5 +36,7 @@
 	"localizedlabel_34" : "Buraya bir nükleer bomba atalım.",
 	"localizedlabel_35" : "Buraya %{unitname} şebekesini bağlayın.",
 	"localizedlabel_36" : "Bu %{unitname}'i çalıştırmak için şebekede %{power} daha fazla enerjiye ihtiyaç var",
-	"localizedlabel_37" : "%{teamname}'in %{unitname}'i devre dışı! Saldırmak için bir şey gönder!"
+	"localizedlabel_37" : "%{teamname}'in %{unitname}'i devre dışı! Saldırmak için bir şey gönder!",
+	"localizedlabel_38" : "Geri çekil!",
+	"localizedlabel_39" : "Bunu geri dönüştürmeliyiz."
 }

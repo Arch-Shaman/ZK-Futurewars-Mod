@@ -3,7 +3,7 @@
 	"localizedlabel_1" : "%{unitname} in volo avvistato da %{teamname}!",
 	"localizedlabel_2" : "Nemico %{unitname} qui!",
 	"localizedlabel_3" : "Nemico %{unitname} sul radar!",
-	"localizedlabel_4" : "A %{teamname} %{unitname} sono rimasti solo %{health}!",
+	"localizedlabel_4" : "A %{unitname} di %{teamname} restano solo %{health} punti salute!",
 	"localizedlabel_5" : "%{teamname} ha %{constructionprogress}%% finito di costruire una %{unitname} qui!",
 	"localizedlabel_6" : "Guarda la %{unitname} di %{teamname} qui.",
 	"localizedlabel_7" : "La mia %{unitname} ha bisogno di riparazioni!",
@@ -36,5 +36,7 @@
 	"localizedlabel_34" : "Spariamo un'arma nucleare in questa posizione.",
 	"localizedlabel_35" : "Collega questo %{unitname} alla griglia.",
 	"localizedlabel_36" : "Serve %{power} energia in più nella rete per alimentare questa %{unitname}",
-	"localizedlabel_37" : "%{teamname}'s %{unitname} è disabilitato! Invia qualcosa per attaccarlo!"
+	"localizedlabel_37" : "%{teamname}'s %{unitname} è disabilitato! Invia qualcosa per attaccarlo!",
+	"localizedlabel_38" : "ritirarsi!",
+	"localizedlabel_39" : "Dovremmo riciclarlo."
 }
