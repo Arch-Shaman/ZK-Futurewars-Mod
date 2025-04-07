@@ -4,7 +4,7 @@
 	"localizedlabel_2" : "Feindlicher %{unitname} hier!",
 	"localizedlabel_3" : "Feindlicher %{unitname} auf dem Radar!",
 	"localizedlabel_4" : "%{teamname}s %{unitname} hat nur noch %{health} Gesundheit übrig!",
-	"localizedlabel_5" : "%{teamname} ist %{constructionprogress}%% fertig mit dem Bau eines %{unitname} hier!",
+	"localizedlabel_5" : "%{teamname} ist %{progress}%% fertig mit dem Bau eines %{unitname} hier!",
 	"localizedlabel_6" : "Seht euch hier %{teamname}s %{unitname} an.",
 	"localizedlabel_7" : "Mein %{unitname} braucht Reparaturen!",
 	"localizedlabel_8" : "%{teamname}, zieht euren %{unitname} zurück! (Verbleibende Gesundheit) %{health})",

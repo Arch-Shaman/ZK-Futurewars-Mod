@@ -4,7 +4,7 @@
 	"localizedlabel_2" : "ศัตรู %{unitname} อยู่ที่นี่!",
 	"localizedlabel_3" : "ศัตรู %{unitname} บนเรดาร์!",
 	"localizedlabel_4" : "%{unitname} ของ %{teamname} เหลือคะแนนสุขภาพเพียง %{health} คะแนนเท่านั้น!",
-	"localizedlabel_5" : "%{teamname} เสร็จสิ้นการสร้าง %{unitname} ที่นี่แล้ว!",
+	"localizedlabel_5" : "%{teamname} กำลังดำเนินการสร้าง %{unitname} อยู่ที่นี่ %{progress}%%!",
 	"localizedlabel_6" : "ดู %{unitname} ของ %{teamname} ที่นี่สิ",
 	"localizedlabel_7" : "%{unitname} ของฉันต้องได้รับการซ่อมแซม!",
 	"localizedlabel_8" : "%{teamname} ถอยทัพ %{unitname} ของคุณ! (เหลือพลังชีวิต %{health})",

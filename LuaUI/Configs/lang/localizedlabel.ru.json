@@ -4,7 +4,7 @@
 	"localizedlabel_2" : "Здесь враг %{unitname}!",
 	"localizedlabel_3" : "На радаре враг %{unitname}!",
 	"localizedlabel_4" : "У %{unitname} команды %{teamname} осталось всего %{health} очков здоровья!",
-	"localizedlabel_5" : "%{teamname} завершила строительство %{unitname} здесь!",
+	"localizedlabel_5" : "%{teamname} %{progress}%% завершила строительство %{unitname} здесь!",
 	"localizedlabel_6" : "Посмотрите на %{unitname} команды %{teamname} здесь.",
 	"localizedlabel_7" : "Моему %{unitname} нужен ремонт!",
 	"localizedlabel_8" : "%{teamname} отступите, %{unitname}! (Осталось здоровья: %{health})",

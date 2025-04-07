@@ -4,7 +4,7 @@
 	"localizedlabel_2" : "Düşman %{unitname} burada!",
 	"localizedlabel_3" : "Düşman %{unitname} radarda!",
 	"localizedlabel_4" : "%{teamname}'in %{unitname}'inin sadece %{health} canı kaldı!",
-	"localizedlabel_5" : "%{teamname} burada bir %{unitname} inşa etmeyi %{constructionprogress}%% tamamladı!",
+	"localizedlabel_5" : "%{teamname} burada bir %{unitname} inşa etmeyi %{progress}%% tamamladı!",
 	"localizedlabel_6" : "%{teamname}'in %{unitname}'ine buradan bakın.",
 	"localizedlabel_7" : "Benim %{unitname}'imin onarıma ihtiyacı var!",
 	"localizedlabel_8" : "%{teamname}, %{unitname}'inizi geri çekin! (Sağlık kaldı %{health})",

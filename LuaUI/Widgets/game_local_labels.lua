@@ -57,12 +57,12 @@ local function AddLocalizedLabel(playerID, num, x, z, unitDef, unitID, teamID, e
 	if not unitName then
 		unitName = WG.Translate("interface", "radardot")
 	end
-	--Spring.Echo("unitName: " .. tostring(unitName))
+	Spring.Echo("unitName: " .. tostring(unitName) .. ", " .. tostring(extrainfo) .. ", " .. num)
 	if num == 36 then -- special support neeeded 
 		str = WG.Translate("interface", "localizedlabel_36", {power = extrainfo})
 	elseif num == 8 then
 		str = WG.Translate("interface", "localizedlabel_8", {teamname = teamName, health = extrainfo})
-	elseif num >= 10 and num <= 11 then
+	elseif num == 10 or num == 11 or num == 5 then
 		str = WG.Translate("interface", "localizedlabel_"..num, {teamname = teamName, unitname = unitName, progress = extrainfo})
 	else
 		str = WG.Translate("interface", "localizedlabel_"..num, {teamname = teamName, unitname = unitName, health=extrainfo})
@@ -124,6 +124,7 @@ local function GetContextFromMousePos(contextNum)
 	local playerID = Spring.GetMyPlayerID()
 	if returntype == "feature" then
 		SendOutLabel(39, nil, nil, nil, nil, x, z)
+		return
 	end
 	if contextNum == 1 then -- General spotting
 		if returntype == "ground" then

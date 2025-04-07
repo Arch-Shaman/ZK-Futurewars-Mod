@@ -4,7 +4,7 @@
 	"localizedlabel_2" : "敵 %{unitname} がここにいます！",
 	"localizedlabel_3" : "レーダーに敵 %{unitname} がいます！",
 	"localizedlabel_4" : "%{teamname} の %{unitname} の体力は %{health} しか残っていません!",
-	"localizedlabel_5" : "%{teamname} はここで %{constructionprogress}%% の %{unitname} の建造を完了しました！",
+	"localizedlabel_5" : "%{teamname} はここで %{progress}%% の %{unitname} の建造を完了しました！",
 	"localizedlabel_6" : "%{teamname} の %{unitname} を見てください。",
 	"localizedlabel_7" : "私の %{unitname} は修理が必要です！",
 	"localizedlabel_8" : "%{teamname} は撤退してください%{unitname}! (残り体力 %{health})",

@@ -4,7 +4,7 @@
 	"localizedlabel_2" : "敌人 %{unitname} 在此处！",
 	"localizedlabel_3" : "敌人 %{unitname} 出现在雷达上！",
 	"localizedlabel_4" : "%{teamname} 的 %{unitname} 只剩下 %{health} 生命值！",
-	"localizedlabel_5" : "%{teamname} 在此处建造 %{unitname} 的进度为 %{constructionprogress}%%！",
+	"localizedlabel_5" : "%{teamname} 在此处建造 %{unitname} 的进度为 %{progress}%%！",
 	"localizedlabel_6" : "查看此处 %{teamname} 的 %{unitname}。",
 	"localizedlabel_7" : "我的 %{unitname} 需要维修！",
 	"localizedlabel_8" : "%{teamname} 撤退您的 %{unitname}！ (生命值剩余 %{health})",
