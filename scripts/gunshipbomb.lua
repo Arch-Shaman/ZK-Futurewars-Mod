@@ -80,6 +80,9 @@ local function RangeUpdateThread() -- shamelessly stolen from xponen's ballistic
 		if range < 10 then
 			range = 10
 		end
+		if range ~= range then -- prevent NaN from 2025.03.9
+			range = 10
+		end
 		Spring.SetUnitMaxRange(unitID, range/15)
 		Spring.SetUnitWeaponState(unitID, 1, {range = range, autoTargetRangeBoost = 100,})
 		--Spring.Echo("RANGEUPDATE\nVel: " .. velocity .. "\nRange: " .. range)
@@ -138,6 +141,8 @@ end
 local function GetHeading()
 	local vx, _, vy = Spring.GetUnitVelocity(unitID)
 	--Spring.Echo("GetHeading: " .. vx .. " , " .. vy)
+	if vx == 0 and vy == 0 then return 0 end -- div by zero!
+	if vx == 0 then return 0 end
 	return math.atan(vy/vx)
 end
 
@@ -222,6 +227,9 @@ end
 function Detonate() -- Giving an order causes recursion.
 	local h = GetHeading()
 	local ux, _, uy = Spring.GetUnitPosition(unitID)
+	if range ~= range then -- prevent NaN from 2025.03.9
+		range = 10
+	end
 	local x = ux + (range * math.sin(h))
 	local y = uy + (range * math.cos(h))
 	Terminate(x, Spring.GetGroundHeight(x,y), y)
