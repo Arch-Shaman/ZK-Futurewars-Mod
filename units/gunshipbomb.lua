@@ -182,9 +182,10 @@ return {
 				customParams            = {
 					numprojectiles1 = 20,
 					projectile1 = "gunshipbomb_secondary",
-					spawndist = 180,
-					velspread1 = "3.82, 1, 3.82, _, 1, _",
-					groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
+					spawndist = 85,
+					velspread1 = "-7, -2, -7, 7, 2, 7",
+					useheight = 1,
+					--groundimpact = 1, -- check the distance between ground and projectile? OPTIONAL.
 					reaim_time = 60, -- Fast update not required (maybe dangerous)
 					light_camera_height = 1500,
 					light_color = "0.8 0.76 0.38",
