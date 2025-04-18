@@ -24,6 +24,12 @@ local allowCommEco = false
 local disabledModules = {}
 local commwars = false
 
+local function RoundToNearestFrame(num)
+	num = num * 30
+	num = math.ceil(num)
+	return num / 30
+end
+
 if (Spring.GetModOptions) then
 	local modOptions = Spring.GetModOptions()
     if modOptions then
@@ -2438,6 +2444,12 @@ local moduleDefs = {
 		applicationFunction = function (modules, sharedData)
 			sharedData.tolerancebonus = (sharedData.tolerancebonus or 1) * 0.85
 			sharedData.aimbonus = (sharedData.aimbonus or 1) * 0.9
+			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_shockrifle" then
+				sharedData.reloadOverride1 = RoundToNearestFrame(9 * sharedData.aimbonus)
+			end
+			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_shockrifle" then
+				sharedData.reloadOverride2 = RoundToNearestFrame(9 * sharedData.aimbonus)
+			end
 		end
 	},
 	{
@@ -2455,13 +2467,16 @@ local moduleDefs = {
 		effectPriority = 1,
 		applicationFunction = function (modules, sharedData)
 			local baseRange = 1250
+			sharedData.aimbonus = (sharedData.aimbonus or 1) * 0.85
 			if sharedData.weapon1 and sharedData.weapon1 == "commweapon_shockrifle" then
 				sharedData.rangeoverride1 = (sharedData.rangeoverride1 or baseRange) * 0.925
+				sharedData.reloadOverride1 = RoundToNearestFrame(9 * sharedData.aimbonus)
 			end
 			if sharedData.weapon2 and sharedData.weapon2 == "commweapon_shockrifle" then
 				sharedData.rangeoverride2 = (sharedData.rangeoverride2 or baseRange) * 0.925
+				sharedData.reloadOverride2 = RoundToNearestFrame(9 * sharedData.aimbonus)
 			end
-			sharedData.aimbonus = (sharedData.aimbonus or 1) * 0.85
+			
 		end
 	},
 	{
