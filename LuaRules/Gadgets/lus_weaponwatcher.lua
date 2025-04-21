@@ -94,7 +94,15 @@ function gadget:GameFrame(f)
 		local removeNums = {}
 		for i = 1, #data do
 			local weaponNum = data[i]
-			local reloadFrame = Spring.GetUnitWeaponState(unitID, weaponNum, "reloadState")
+			local reloadFrame = Spring.GetUnitWeaponState(unitID, weaponNum, "reloadState") or 0
+			if reloadFrame == 0 and f > 10 then
+				local unitDef = Spring.GetUnitDefID(unitID)
+				if not unitDef then
+					Spring.Echo("WARNING: Potential nil in ReloadFrame for unitID " .. unitID .. " (dead?)")
+				else
+					Spring.Echo("WARNING: Potential nil in ReloadFrame for unitID " .. unitID .. " ( " .. UnitDefs[unitDef].humanName .. ")")
+				end
+			end
 			if reloadFrame <= f then
 				removeNums[#removeNums + 1] = i
 			end
