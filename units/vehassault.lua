@@ -77,6 +77,7 @@ return {
 				areaOfEffect            = 32,
 				craterBoost             = 0,
 				craterMult              = 0,
+				cegtag					= "light_plasma_trail",
 				customParams        = {
 					light_camera_height = 1500,
 					script_reload = "1.6",

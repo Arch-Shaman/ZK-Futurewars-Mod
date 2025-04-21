@@ -67,6 +67,7 @@ return {
 				avoidGround             = true,
 				craterBoost             = 0,
 				craterMult              = 0,
+				cegTag                  = "vulcanfx",
 				customParams            = {
 					light_color = "1.4 0.8 0.3",
 					reveal_unit = 14,
@@ -111,6 +112,7 @@ return {
 				avoidGround             = true,
 				craterBoost             = 0,
 				craterMult              = 0,
+				cegTag                  = "heavy_aoe_arty_trail",
 				customParams            = {
 					light_color = "1.4 0.8 0.3",
 					reveal_unit = 14,

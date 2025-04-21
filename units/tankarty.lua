@@ -59,6 +59,7 @@ return {
 				alphaDecay              = 0.7,
 				areaOfEffect            = 96,
 				burnblow                = true,
+				cegtag					= "light_arty_trail",
 				craterBoost             = 2,
 				craterMult              = 1,
 				customParams        = {
@@ -98,6 +99,7 @@ return {
 				avoidFeature            = false,
 				craterBoost             = 0,
 				craterMult              = 0,
+				cegtag					= "heavy_arty_trail",
 				customParams            = {
 					burst = Shared.BURST_RELIABLE,
 					numprojectiles1 = 8,

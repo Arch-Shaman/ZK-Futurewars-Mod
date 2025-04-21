@@ -85,6 +85,7 @@ return {
 				avoidGround             = true,
 				craterBoost             = 10,
 				craterMult              = 1.7,
+				cegtag                  = "cyclops_plasma_trail",
 				damage                  = {
 					default = 5200.01,
 				},

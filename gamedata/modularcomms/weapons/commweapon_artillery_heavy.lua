@@ -5,6 +5,7 @@ local weaponDef = {
 	areaOfEffect            = 96,
 	craterBoost             = 1,
 	craterMult              = 2,
+	cegTag					= "medium_arty_trail",
 	customParams            = {
 		is_unit_weapon = 1,
 		muzzleEffectFire = "custom:HEAVY_CANNON_MUZZLE",

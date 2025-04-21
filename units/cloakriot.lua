@@ -87,6 +87,7 @@ return {
 				burnblow                = false,
 				craterBoost             = 0,
 				craterMult              = 0,
+				cegtag					= "hmg_trail",
 				customParams        = {
 					light_camera_height = 1600,
 					light_color = "0.8 0.76 0.38",

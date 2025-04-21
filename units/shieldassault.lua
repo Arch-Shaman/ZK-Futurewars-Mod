@@ -105,6 +105,7 @@ return {
 				craterMult              = 0,
 				burst = 3,
 				burstrate = 6/30,
+				cegtag = "light_plasma_trail",
 				customParams        = {
 					light_camera_height = 1400,
 					light_color = "0.80 0.54 0.23",

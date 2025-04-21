@@ -1,6 +1,13 @@
 local accuracy = 500
 local velocity = 2350
 
+local alphaDecay  = 0.8
+local nogap       = false
+local separation  = 1
+local size        = 15
+local sizeDecay   = 0.000
+local stages      = 8
+
 return { 
 	raveparty = {
 		unitname                      = "raveparty",
@@ -102,10 +109,12 @@ return {
 			RED_KILLER = {
 				name                    = "Radioactive Red",
 				accuracy                = accuracy,
+				alphaDecay              = alphaDecay,
 				avoidFriendly           = false,
 				avoidFeature            = false,
 				avoidGround             = false,
 				collideFriendly         = false,
+				cegTag                  = "drp_trail_1",
 				areaOfEffect            = 800,
 				craterBoost             = 4,
 				craterMult              = 10,
@@ -125,11 +134,13 @@ return {
 				impulseFactor           = 2.3,
 				interceptedByShieldType = 1,
 				myGravity               = 0.36,
+				nogap                   = nogap,
 				range                   = 17000,
 				rgbColor                = "1 0.1 0.1",
 				reloadtime              = 1/30,
-				size                    = 15,
-				sizeDecay               = 0.03,
+				separation              = separation,
+				size                    = size,
+				sizeDecay               = sizeDecay,
 				soundHit                = "weapon/missile/mininuke_hit",
 				soundStart              = "weapon/cannon/big_begrtha_gun_fire",
 				stages                  = 30,
@@ -324,6 +335,7 @@ return {
 				name                    = "Orange Obliterator",
 				accuracy                = accuracy,
 				areaOfEffect            = 640,
+				alphaDecay              = alphaDecay,
 				craterAreaOfEffect      = 80,
 				avoidFriendly           = false,
 				avoidFeature            = false,
@@ -332,6 +344,7 @@ return {
 				craterBoost             = 0.25,
 				craterMult              = 0.5,
 				cameraShake				= 0,
+				cegTag                  = "drp_trail_2",
 				customParams              = {
 					script_reload = "6",
 					numprojectiles1 = 30,
@@ -353,14 +366,16 @@ return {
 				impulseFactor           = 0.1,
 				interceptedByShieldType = 1,
 				myGravity               = 0.36,
+				nogap					= nogap,
 				range                   = 17000,
 				rgbColor                = "0.9 0.3 0",
 				reloadtime              = 1/30,
-				size                    = 15,
-				sizeDecay               = 0.03,
+				separation              = separation,
+				size                    = size,
+				sizeDecay               = sizeDecay,
 				soundHit                = "weapon/cannon/mini_cannon",
 				soundStart              = "weapon/cannon/big_begrtha_gun_fire",
-				stages                  = 30,
+				stages                  = stages,
 				turret                  = true,
 				weaponType              = "Cannon",
 				weaponVelocity          = velocity,
@@ -410,8 +425,10 @@ return {
 			YELLOW_SLAMMER = {
 				name                    = "Yellow Yeeter",
 				accuracy                = accuracy,
+				alphaDecay              = alphaDecay,
 				areaOfEffect            = 360,
 				craterAreaOfEffect      = 96,
+				cegTag                  = "drp_trail_3",
 				avoidFriendly           = false,
 				avoidFeature            = false,
 				avoidGround             = false,
@@ -446,8 +463,9 @@ return {
 				range                   = 17000,
 				rgbColor                = "0.7 0.7 0",
 				reloadtime              = 1/30,
-				size                    = 15,
-				sizeDecay               = 0.03,
+				separation              = separation,
+				size                    = size,
+				sizeDecay               = sizeDecay,
 				soundHit                = "weapon/cannon/earthshaker",
 				soundStart              = "weapon/cannon/big_begrtha_gun_fire",
 				stages                  = 30,
@@ -540,6 +558,7 @@ return {
 			BLUE_SHOCKER = {
 				name                    = "Blue Bolter",
 				accuracy                = accuracy,
+				alphaDecay              = alphaDecay,
 				areaOfEffect            = 320,
 				avoidFriendly           = false,
 				avoidFeature            = false,
@@ -547,7 +566,7 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0.25,
 				craterMult              = 0.5,
-				cegTag                  = "drp_blue_trail",
+				cegTag                  = "drp_trail_5",
 				cameraShake				= 0,
 				customParams = {
 					script_reload = "6",
@@ -567,8 +586,9 @@ return {
 				range                   = 17000,
 				rgbColor                = "0.1 0.1 1",
 				reloadtime              = 1/30,
-				size                    = 15,
-				sizeDecay               = 0.03,
+				separation              = separation,
+				size                    = size,
+				sizeDecay               = sizeDecay,
 				soundHit                = "weapon/more_lightning",
 				soundStart              = "weapon/cannon/big_begrtha_gun_fire",
 				stages                  = 30,
@@ -580,6 +600,7 @@ return {
 				name                    = "Violent Violet",
 				accuracy                = accuracy,
 				areaOfEffect            = 720,
+				alphaDecay              = alphaDecay,
 				craterAreaOfEffect      = 90,
 				avoidFriendly           = false,
 				avoidFeature            = false,
@@ -588,6 +609,7 @@ return {
 				craterBoost             = 0.25,
 				craterMult              = 0.5,
 				cameraShake				= 0,
+				cegTag                  = "drp_trail_6",
 				customparams = {
 					timeslow_damagefactor = 10,
 					nofriendlyfire = "needs hax",
@@ -617,8 +639,9 @@ return {
 				range                   = 17000,
 				rgbColor                = "0.7 0 0.7",
 				reloadtime              = 1/30,
-				size                    = 15,
-				sizeDecay               = 0.03,
+				separation              = separation,
+				size                    = size,
+				sizeDecay               = sizeDecay,
 				soundHit                = "weapon/aoe_aura2",
 				soundStart              = "weapon/cannon/big_begrtha_gun_fire",
 				stages                  = 30,

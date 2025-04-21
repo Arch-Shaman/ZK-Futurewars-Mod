@@ -7,6 +7,7 @@ local weaponDef = {
 	burnblow                = false,
 	craterBoost             = 0,
 	craterMult              = 0,
+	cegtag					= "hmg_trail",
 
 	customParams            = {
 		is_unit_weapon = 1,

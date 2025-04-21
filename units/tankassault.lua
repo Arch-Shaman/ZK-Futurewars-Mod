@@ -69,6 +69,7 @@ return {
 		weaponDefs          = {
 			COR_REAP = {
 				name                    = "R-12 HEAT Cannon",
+				cegtag					= "light_plasma_trail",
 				areaOfEffect            = 70,
 				craterBoost             = 10,
 				craterMult              = 1.5,

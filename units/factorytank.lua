@@ -91,6 +91,7 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
+				cegtag                  = "medium_plasma_trail",
 				customParams            = {
 					restrict_in_widgets = 1,
 					-- light_color = "3 2.33 1.5", Not quite sure which ones are intentionally supposed to be here.
@@ -175,6 +176,7 @@ return {
 				coreThickness           = 0.5,
 				craterBoost             = 0,
 				craterMult              = 0,
+				cegtag                  = "light_plasma_trail",
 				customParams            = {
 					light_camera_height = 2000,
 					light_color = "1 0.2 0.2",

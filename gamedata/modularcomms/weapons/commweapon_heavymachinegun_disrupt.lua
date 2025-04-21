@@ -1,6 +1,7 @@
 local _, def = VFS.Include("gamedata/modularcomms/weapons/heavymachinegun.lua")
 
 def.name = "Disruptor " .. def.name
+def.cegtag = "hmg_trail_disrupt"
 def.customParams.timeslow_damagefactor = 3
 for armorType, damage in pairs (def.damage) do
 	def.damage[armorType] = damage * 0.85

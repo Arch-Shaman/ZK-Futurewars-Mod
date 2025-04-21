@@ -6,6 +6,7 @@ local weaponDef = {
 	burstrate               = 0.1,
 	craterBoost             = 0,
 	craterMult              = 0,
+	cegtag					= "hmg_trail",
 	customParams            = {
 		is_unit_weapon = 1,
 		muzzleEffectShot = "custom:HEAVY_CANNON_MUZZLE",

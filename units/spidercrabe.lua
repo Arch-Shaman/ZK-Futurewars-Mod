@@ -72,6 +72,7 @@ return {
 				areaOfEffect            = 128,
 				craterBoost             = 0,
 				craterMult              = 1.3,
+				cegtag                  = "crab_plasma_trail",
 				projectiles             = 10,
 				sprayAngle				= 1080,
 				customParams            = {

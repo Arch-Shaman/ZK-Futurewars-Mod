@@ -81,6 +81,7 @@ return {
 				areaOfEffect            = 32,
 				craterBoost             = 1,
 				craterMult              = 2,
+				cegtag					= "light_plasma_trail",
 				damage                  = {
 					default = 25.01,
 				},
