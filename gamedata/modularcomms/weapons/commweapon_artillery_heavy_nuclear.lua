@@ -26,7 +26,7 @@ local weaponDef = {
 
 	edgeEffectiveness       = 0.5,
 	explosionGenerator      = "custom:NUKE_150",
-	model                   = "wep_m_phoenix.s3o",
+	model                   = "wep_m_phoenix_fixed.dae",
 	impulseBoost            = 0,
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 9,
