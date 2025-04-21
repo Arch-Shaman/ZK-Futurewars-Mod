@@ -936,7 +936,7 @@ for name, ud in pairs(UnitDefs) do
 	end
 	
 	-- Remove engine transport limits
-	if not Script then -- 104-600, but Script.IsEngineMinVersion wasn't available back then
+	if Script then -- 104-600, but Script.IsEngineMinVersion wasn't available back then
 		-- set up structure transports:
 		if ud.yardmap ~= nil and ud.customparams.istacmissile == nil and ud.customparams.isgeo == nil and ud.buildcostmetal <= TRANSPORT_STRUCT_COST_MAX and not ud.customparams.child_of_factory and not ud.customparams.parent_of_plate and not ud.customparams.ismex then
 			if ud.buildcostmetal > TRANSPORT_LIGHT_STRUCT_COST_MAX then
