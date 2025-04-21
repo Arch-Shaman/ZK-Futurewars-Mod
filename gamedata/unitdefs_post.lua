@@ -183,7 +183,6 @@ end]]
 VFS.Include('gamedata/modularcomms/unitdefgen.lua')
 VFS.Include('gamedata/planetwars/pw_unitdefgen.lua')
 VFS.Include('gamedata/chicken/chickendefgen.lua')
-local Utilities = VFS.Include('gamedata/utilities.lua')
 
 -- Handle obsolete keys in mods gracefully while they migrate
 for name, ud in pairs(UnitDefs) do
@@ -226,11 +225,11 @@ end
 -- Make Terraunit not decloak enemies
 --
 
-if Utilities.IsCurrentVersionNewerThan(104, 1400) and not Utilities.IsCurrentVersionNewerThan(104, 1470) then
-	UnitDefs.terraunit.collisionvolumeoffsets = [[0 -550 0]]
-	UnitDefs.terraunit.selectionvolumeoffsets = [[0 550 0]]
-	UnitDefs.terraunit.customparams.midposoffset = [[0 -550 0]]
-end
+--if Utilities.IsCurrentVersionNewerThan(104, 1400) and not Utilities.IsCurrentVersionNewerThan(104, 1470) then
+--	UnitDefs.terraunit.collisionvolumeoffsets = [[0 -550 0]]
+--	UnitDefs.terraunit.selectionvolumeoffsets = [[0 550 0]]
+--	UnitDefs.terraunit.customparams.midposoffset = [[0 -550 0]]
+--end -- No longer needed? (Ask sprung at some point.
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -937,7 +936,7 @@ for name, ud in pairs(UnitDefs) do
 	end
 	
 	-- Remove engine transport limits
-	if Utilities.IsCurrentVersionNewerThan(104, 600) then
+	if not Script then -- 104-600, but Script.IsEngineMinVersion wasn't available back then
 		-- set up structure transports:
 		if ud.yardmap ~= nil and ud.customparams.istacmissile == nil and ud.customparams.isgeo == nil and ud.buildcostmetal <= TRANSPORT_STRUCT_COST_MAX and not ud.customparams.child_of_factory and not ud.customparams.parent_of_plate and not ud.customparams.ismex then
 			if ud.buildcostmetal > TRANSPORT_LIGHT_STRUCT_COST_MAX then
