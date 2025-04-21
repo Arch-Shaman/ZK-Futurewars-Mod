@@ -30,7 +30,7 @@ local weaponDef = {
 	impulseBoost            = 0,
 	impulseFactor           = 0.4,
 	interceptedByShieldType = 9,
-	myGravity               = 0.22,
+	myGravity               = 0.3,
 	hightrajectory          = 1,
 	range                   = 800,
 	reloadtime              = 25,
@@ -39,7 +39,7 @@ local weaponDef = {
 	soundStart              = "weapon/cannon/crabe_cannon",
 	turret                  = true,
 	weaponType              = "Cannon",
-	weaponVelocity          = 620,
+	weaponVelocity          = 1000,
 }
 
 return name, weaponDef

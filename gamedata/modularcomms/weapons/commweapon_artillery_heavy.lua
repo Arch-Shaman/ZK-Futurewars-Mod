@@ -34,7 +34,7 @@ local weaponDef = {
 	soundStart              = "weapon/cannon/pillager_fire",
 	turret                  = true,
 	weaponType              = "Cannon",
-	weaponVelocity          = 320,
+	weaponVelocity          = 500,
 }
 
 return name, weaponDef
