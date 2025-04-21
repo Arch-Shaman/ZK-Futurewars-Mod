@@ -6,6 +6,7 @@ local weaponDef = {
 	areaOfEffect            = 192,
 	craterBoost             = 20,
 	craterMult              = 2.5,
+	cegtag					= "heavy_arty_trail",
 	burst = 6,
 	burstrate = 1/3,
 
