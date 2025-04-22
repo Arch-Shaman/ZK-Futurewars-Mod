@@ -20,6 +20,7 @@ local CMD_FIRE_STATE = CMD.FIRE_STATE
 local CMD_UNIT_CANCEL_TARGET = Spring.Utilities.CMD.UNIT_CANCEL_TARGET
 local CMD_UNIT_SET_TARGET = Spring.Utilities.CMD.UNIT_SET_TARGET
 local CMD_UNIT_SET_TARGET_CIRCLE = Spring.Utilities.CMD.UNIT_SET_TARGET_CIRCLE
+local CMD_ATTACK = CMD.ATTACK
 
 if not gadgetHandler:IsSyncedCode() then
 	function gadget:Initialize()
@@ -50,15 +51,11 @@ local GetUnitRange = Spring.Utilities.GetUnitRange
 local getMovetype  = Spring.Utilities.getMovetype
 local tobool       = Spring.Utilities.tobool
 
-local CMD_WAIT = CMD.WAIT
-local CMD_FIRE_STATE = CMD.FIRE_STATE
-
 -- Constans
 local TARGET_NONE   = 0
 local TARGET_GROUND = 1
 local TARGET_UNIT   = 2
 
-local CMD_ATTACK = CMD.ATTACK
 local DEBUG_NAME = "Target on the move"
 
 --------------------------------------------------------------------------------
