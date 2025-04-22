@@ -64,6 +64,7 @@ return {
 					cruisedist = 400,
 					reveal_unit = 3,
 					cruise_ignoreterrain = "1",
+					shield_disruption = 30*30,
 				},
 				damage                  = {
 					default = 42000.1,
