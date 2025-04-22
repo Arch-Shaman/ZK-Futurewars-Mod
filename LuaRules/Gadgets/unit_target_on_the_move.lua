@@ -50,10 +50,17 @@ local GetUnitRange = Spring.Utilities.GetUnitRange
 local getMovetype  = Spring.Utilities.getMovetype
 local tobool       = Spring.Utilities.tobool
 
+local CMD_WAIT = CMD.WAIT
+local CMD_FIRE_STATE = CMD.FIRE_STATE
+
 -- Constans
 local TARGET_NONE   = 0
 local TARGET_GROUND = 1
 local TARGET_UNIT   = 2
+
+local CMD_ATTACK = CMD.ATTACK
+local DEBUG_NAME = "Target on the move"
+
 --------------------------------------------------------------------------------
 -- Config
 
@@ -325,7 +332,7 @@ local function setTarget(data, sendToWidget)
 				spSetUnitRulesParam(data.id,"target_z",data.z)
 				spSetUnitRulesParam(data.id,"target_towards", (data.fireTowards and (GetUnitRange(data.id, data.unitDefID) or 1)) or 0)
 			end
-		elseif spValidUnitID(data.targetID) and (data.allyAllowed or IsValidTargetBasedOnAllyTeam(data.targetID, data.allyTeam)) then
+		elseif spValidUnitID(data.targetID) and (data.allyAllowed or IsValidTargetBasedOnAllyTeam(data.targetID, data.allyTeam))and (data.id ~= data.targetID) then
 			if (not Spring.GetUnitIsCloaked(data.targetID)) and not (data.fireTowards and CheckFireTowardsUnitTarget(data.id, data, data.targetID)) then
 				spSetUnitTarget(data.id, data.targetID, false, true)
 			end
@@ -394,8 +401,8 @@ local function removeUnit(unitID)
 	if unitDefID and validUnits[unitDefID] and unitById[unitID] then
 		if waitWaitUnits[unitDefID] then
 			clearTarget(unitID)
-			spGiveOrderToUnit(unitID,CMD_WAIT, {}, 0)
-			spGiveOrderToUnit(unitID,CMD_WAIT, {}, 0)
+			spGiveOrderToUnit(unitID, CMD_WAIT, 0, 0)
+			spGiveOrderToUnit(unitID, CMD_WAIT, 0, 0)
 		end
 		if unitById[unitID] ~= unit.count then
 			unit.data[unitById[unitID]] = unit.data[unit.count]
@@ -429,7 +436,6 @@ function gadget:Initialize()
 		local teamID = Spring.GetUnitTeam(unitID)
 		gadget:UnitCreated(unitID, unitDefID, teamID)
 	end
-	
 end
 
 function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
@@ -627,6 +633,24 @@ function GG.GetUnitHasSetTarget(unitID)
 	if unitById[unitID] and unit.data[unitById[unitID]] then
 		local data = unit.data[unitById[unitID]]
 		return not (data.lingerOnly)
+	end
+	return false
+end
+
+function GG.GetAnyTypeOfUserUnitTarget(unitID)
+	if not unitID then
+		return false
+	end
+	if unitById[unitID] and unit.data[unitById[unitID]] then
+		local targetData = unit.data[unitById[unitID]]
+		if targetData.targetID then
+			return targetData.targetID
+		end
+		return targetData.x, targetData.y, targetData.z
+	end
+	local cmdID, cmdOpts, cmdTag, cp_1, cp_2, cp_3 = Spring.GetUnitCurrentCommand(unitID)
+	if cmdID == CMD_ATTACK and not Spring.Utilities.CheckBit(DEBUG_NAME, cmdOpts, CMD.OPT_INTERNAL) then
+		return cp_1, cp_2, cp_3
 	end
 	return false
 end
