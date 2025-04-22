@@ -1,10 +1,10 @@
 function widget:GetInfo()
   return {
     name      = "Localized Labels and Messages",
-    desc      = "The future of communication is here.",
+    desc      = "Provides label macros in your language.",
     author    = "Shaman",
-    date      = "2014-04-20",
-    license   = "GNU GPL, v2 or later",
+    date      = "April 5th, 2025",
+    license   = "CC-0",
     layer     = -100,
     enabled   = true,
   }
