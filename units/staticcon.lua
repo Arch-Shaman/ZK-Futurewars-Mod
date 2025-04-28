@@ -3,7 +3,7 @@ return {
 		unitname                      = "staticcon",
 		name                          = "Caretaker",
 		description                   = "Construction Assistant",
-		buildCostMetal                = 180,
+		buildCostMetal                = 150,
 		buildDistance                 = 500,
 		builder                       = true,
 		buildingGroundDecalDecaySpeed = 30,
