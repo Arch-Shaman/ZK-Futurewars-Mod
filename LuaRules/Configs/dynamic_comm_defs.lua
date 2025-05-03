@@ -2370,7 +2370,6 @@ local moduleDefs = {
 		image = moduleImagePath .. "module_efficency.png",
 		limit = 4,
 		requireChassis = {"knight"},
-		requireOneOf = {"econ"},
 		cost = 100 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
