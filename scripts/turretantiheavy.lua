@@ -10,6 +10,9 @@ local antenna = piece 'antenna'
 local door1 = piece 'door1'
 local door2 = piece 'door2'
 
+local weaponDefID = UnitDefs[unitDefID].weapons[1].weaponDef
+--Spring.Echo("Firing Piece is " .. firepiece)
+
 local smokePiece = {base, turret}
 
 include "constants.lua"
@@ -19,15 +22,15 @@ local spGetUnitHealth = Spring.GetUnitHealth
 local spGetGameFrame = Spring.GetGameFrame
 local SpUnitWeaponFire = Spring.UnitWeaponFire
 local SpSetUnitRulesParam = Spring.SetUnitRulesParam
-local SpetUnitWeaponState = Spring.SetUnitWeaponState
-local spGetUnitTeam = Spring.GetUnitTeam
+local SpSetUnitWeaponState = Spring.SetUnitWeaponState
+--local spGetUnitTeam = Spring.GetUnitTeam
 local spIsUnitInLos = Spring.IsUnitInLos
-local spSpawnProjectile = Spring.SpawnProjectile
-local spGetUnitPiecePosDir  = Spring.GetUnitPiecePosDir
+--local spSpawnProjectile = Spring.SpawnProjectile
+--local spGetUnitPiecePosDir  = Spring.GetUnitPiecePosDir
 local spGetUnitPosition = Spring.GetUnitPosition
-local spAddUnitDamage = Spring.AddUnitDamage
+local spGetUnitWeaponState = Spring.GetUnitWeaponState
+--local spAddUnitDamage = Spring.AddUnitDamage
 local spSpawnCEG = Spring.SpawnCEG
-local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spGetUnitWeaponTarget = Spring.GetUnitWeaponTarget
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local abs = math.abs
@@ -44,24 +47,25 @@ local inlosTrueTable = {inlos = true}
 local myAllyteam
 local open = true
 local firing = false
-local reloading = false
 local turnrateMod = 1
 local target = nil
+local reloading = false
 local okpTarget = nil
-local registeredGroundFire = false
-local registeredTarget = false
+--local registeredGroundFire = false
+--local registeredTarget = false
 local firingTime = 0
-local reloadGrace = 30
-local lastOKPFrame = 0
+local reloadGrace = 20
+--local lastOKPFrame = 0
+local hasFiredRecently = -1
 local armorValue = UnitDefs[unitDefID].armoredMultiple
 local reloadTime = tonumber(WeaponDefNames["turretantiheavy_ata"].customParams.reload_override) * 30
 
-local weaponIDs = {}
+--[[local weaponIDs = {}
 
 local i
 for i=0, 60 do
 	weaponIDs[i] = WeaponDefNames["turretantiheavy_ata_"..i].id
-end
+end]]
 
 if not GG.AzimuthAvoidance then
 	GG.AzimuthAvoidance = {}
@@ -73,12 +77,12 @@ TO DO:
 	 - reduce the amount of times spGetUnitTeam is called (how though?)
 ]]--
 
-local function AllyteamThread()
+--[[local function AllyteamThread()
 	while true do
 		myAllyteam = spGetUnitAllyTeam(unitID)
 		Sleep(1000)
 	end
-end
+end]]
 
 local function Open()
 	Signal(SIG_OPEN)
@@ -170,65 +174,81 @@ local function CheckStillFiring()
 	else
 		local targetType, _, targetID = spGetUnitWeaponTarget(unitID, 1)
 		if targetType ~= 1 then
+			--Spring.Echo("Target type is not valid")
 			return false
 		else
-			return targetID == target
+			local firedRecently = hasFiredRecently - (Spring.GetGameFrame() - 1) >= 0 -- blockshot updates every frame
+			--Spring.Echo("Has fired recently: " .. tostring(firedRecently) .. "(" .. hasFiredRecently - (Spring.GetGameFrame() - 3) .. ")")
+			return targetID == target and firedRecently
 		end
 	end
 end
 
 
 local function StartReload()
+	--Spring.Echo("StartReload")
 	firing = false
 	turnrateMod = 1
 	setOKPTarget(nil)
-
-	local reloadmod = firingTime/reloadGrace
+	
+	local reloadmod = firingTime / reloadGrace
+	--Spring.Echo("Firing time: " .. firingTime .. ", Reload mult: " .. reloadmod)
 	if reloadmod > 1 then reloadmod = 1 elseif reloadmod < 0.15 then reloadmod = 0.15 end
 	local slowState = Spring.GetUnitRulesParam(unitID, "slowState") or 0
 	if slowState > 0.5 then slowState = 0.5 end
 	slowState = 1 - slowState
-	frame = spGetGameFrame() + math.ceil((reloadTime * reloadmod)/slowState)
-	SpetUnitWeaponState(unitID, 1, "reloadState", frame)
-
+	local duration = math.ceil((reloadTime * reloadmod)/slowState)
+	--Spring.Echo("Setting reload time to " .. duration)
+	frame = spGetGameFrame() + duration
+	--Spring.Echo("Setting reload frame to " .. frame)
+	SpSetUnitWeaponState(unitID, 1, "reloadTime", duration) -- force render.
+	SpSetUnitWeaponState(unitID, 1, "reloadState", frame)
+	local damages = WeaponDefs[weaponDefID].damages
+	for k, v in pairs(damages) do
+		if type(k) == "number" then
+			Spring.SetUnitWeaponDamages(unitID, 1, k, v) -- restart damage to 100%
+		end
+	end
 	target = nil
 	firingTime = 0
 end
 
-local function FiringThread()
-	firing = true
-	turnrateMod = 10
-	firingTime = 0
-	setOKPTarget(target)
+local function DamageUpdateThread()
+	local damages = WeaponDefs[weaponDefID].damages
+	while true do
+		if firing and CheckStillFiring() then
+			local beam = math.min(math.floor(firingTime / 10 + 0.01), 60)
+			local damageMult = (beam / 10 + 1)
+			for k, v in pairs(damages) do
+				--Spring.Echo(k)
+				if type(k) == "number" then
+					Spring.SetUnitWeaponDamages(unitID, 1, k, v * damageMult)
+					--Spring.Echo("DamageUpdate: " .. k .. ": " .. v * damageMult)
+				end
+			end
+			Sleep(66)
+		else
+			Sleep(33)
+		end
+	end
+end
 
+local function WatchForFinishThread()
+	--Spring.Echo("Start WatchThread " .. Spring.GetGameFrame() .. "." .. math.random(1, 999))
 	while CheckStillFiring() do
-		firingTime = firingTime + 1
-		local beam = math.min(math.floor(firingTime / 3 + 0.01), 60)
-		local damageMult = (beam / 10 + 1)
-
-		local weaponID = weaponIDs[beam]
-
-		local px, py, pz = spGetUnitPiecePosDir(unitID, firepiece)
-		local _, _, _, tx, ty, tz = spGetUnitPosition(target, false, true)
-		spSpawnProjectile(weaponID, {
-			pos = {px, py, pz},
-			["end"] = {tx, ty, tz},
-			owner = unitID,
-			team = spGetUnitTeam(unitID),
-			ttl = 1,
-		})
-		spSpawnCEG("ataalasergrow", tx, ty, tz, 0, 1, 0, 1, math.sqrt(damageMult))
-		spAddUnitDamage(target, 20 * damageMult, 0, unitID, weaponID)
-
 		Sleep(33)
 	end
-
+	reloading = true
 	StartReload()
+	while spGetUnitWeaponState(unitID, 1, "reloadFrame") < Spring.GetGameFrame() do
+		Sleep(33)
+	end
+	reloading = false
 end
 
 function script.Create()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-	StartThread(AllyteamThread)
+	StartThread(DamageUpdateThread)
 	Spin(radar, y_axis, math.rad(1000))
 end
 
@@ -277,15 +297,26 @@ function script.AimWeapon(weaponNum, heading, pitch)
 	return (spGetUnitRulesParam(unitID, "lowpower") == 0)
 end
 
-function script.FireWeapon()
-end
-
 function script.BlockShot(num, targetID)
-	if not firing then
+	if not firing and not reloading then -- prevent firingTime from clearing or gaining turret turn rate while reloading.
+		SpSetUnitWeaponState(unitID, 1, "reloadTime", 1/30)
 		target = targetID
-		StartThread(FiringThread)
+		firing = true
+		hasFiredRecently = Spring.GetGameFrame()
+		turnrateMod = 10
+		setOKPTarget(target)
+		StartThread(WatchForFinishThread)
+		return false
 	end
-	return true
+	if firing and not CheckStillFiring() then
+		return true
+	elseif firing then
+		firingTime = firingTime + 1
+		SpSetUnitRulesParam(unitID, "azi_firing_time", firingTime, 1)
+		hasFiredRecently = Spring.GetGameFrame()
+		return false
+	end
+	return true -- something has gone wrong. Unhandled!
 end
 
 function script.TargetWeight(num, targetUnitID)
