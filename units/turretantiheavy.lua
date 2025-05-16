@@ -1,6 +1,6 @@
 local turretantiheavy = {
 	unitname						= "turretantiheavy",
-		name							= "Azimuth",
+	name							= "Azimuth",
 	description						= "Tachyonic Anti-Heavy Turret - Requires connection to a 225 energy grid",
 	activateWhenBuilt				= true,
 	buildCostMetal					= 3400,
@@ -70,7 +70,7 @@ local turretantiheavy = {
 			canattackground         = false,
 			customParams			= {
 				light_color = "1.6 1.05 2.25",
-					light_radius = 320,
+				light_radius = 320,
 				stats_hide_damage = 1, -- continuous laser
 				stats_hide_reload = 1,
 				dmg_scaling = 1/30,
