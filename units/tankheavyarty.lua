@@ -110,7 +110,7 @@ tankheavyarty = {
 			featureDead      = "HEAP",
 			footprintX       = 2,
 			footprintZ       = 2,
-			object           = "tremor_dead_new.s3o",
+			object           = "cortrem_dead.dae",
 		},
 		HEAP  = {
 			blocking         = false,
