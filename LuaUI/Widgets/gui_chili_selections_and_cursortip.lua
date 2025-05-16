@@ -173,9 +173,9 @@ local DRAWING_TOOLTIP =
 	green.. 'Right click'..white..': Erase.\n' ..
 	green.. 'Middle click'..white..': Place marker.\n' ..
 	green.. 'Double click'..white..': Place marker with label.\n' ..
-	green.. '1' .. white .. ": Smart spotting -- ping an enemy or allied unit or location.\n" ..
+	green.. '1' .. white .. ": Smart label: Will attempt to place a label based on context. (IE: repair me, enemy spotted, scout here, etc)\n" ..
 	green.. '2' .. white .. ": Request reinforcements or assistance with building something.\n" ..
-	green.. '3' .. white .. ": Tell an ally to retreat (hover over a unit to ping player)\n" ..
+	green.. '3' .. white .. ": Tell an ally to retreat (hover over a unit to ping specific player)\n" ..
 	green.. '4' .. white .. ": Tell allies to attack a position or unit\n" ..
 	green.. '5' .. white .. ": Request Air Support at a location or to bomb/intercept a unit\n" ..
 	green.. '6' .. white .. ": Request allies fire an EMP missile at a target\n" ..
