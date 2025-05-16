@@ -56,7 +56,7 @@ local turretantiheavy = {
 		},
 	},
 	weaponDefs                    = {
-		ATA = { -- changing the name causes an Vanilla gadget to become borked
+		ATA = { -- changing the name causes a Vanilla gadget to become borked
 			name					= "Tachyonic Feedback Loop",
 			areaOfEffect			= 20,
 			avoidFeature			= false,
