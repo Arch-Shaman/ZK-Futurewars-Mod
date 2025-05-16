@@ -261,7 +261,7 @@ return {
 				height           = "20",
 				hitdensity       = "100",
 				metal            = 1200,
-				object           = "wreck4x4b.s3o",
+				object           = "cadenza_dead.dae",
 				reclaimable      = true,
 				reclaimTime      = 1200,
 				seqnamereclamate = "TREE1RECLAMATE",
