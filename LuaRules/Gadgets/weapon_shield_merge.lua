@@ -139,7 +139,6 @@ local function DisableShieldFromNeighbors(unitID, allyTeamID)
 end
 
 local function CheckShieldDisrupted(unitID)
-	Spring.Echo("CheckShieldDisrupted")
 	local disruptedUntil = spGetUnitRulesParam(unitID, "shield_disrupted")
 	if disruptedUntil and disruptedUntil < Spring.GetGameFrame() and disruptedShields[unitID] == nil then
 		local shieldUnits = allyTeamShields[allyTeamID]
@@ -147,7 +146,6 @@ local function CheckShieldDisrupted(unitID)
 		unitData.nextUpdateTime = 0
 		disruptedShields[unitID] = true
 		PossiblyUpdateLinks(unitID, spGetUnitAllyTeam(unitID))
-		Spring.Echo("Disrupted: " .. unitID)
 	elseif disruptedShields[unitID] then
 		disruptedShields[unitID] = nil
 		local shieldUnits = allyTeamShields[allyTeamID]
@@ -315,6 +313,7 @@ local function DrainShieldAndCheckProjectilePenetrate(unitID, damage, realDamage
 	
 	if charge and damage < charge then
 		Spring.SetUnitShieldState(unitID, -1, true, charge - damage + realDamage)
+		--Spring.SetUnitShieldState(unitID, -1, true, charge - damage + realDamage)
 		return false
 	elseif MERGE_ENABLED then
 		damage = damage - charge
@@ -383,9 +382,10 @@ function gadget:ShieldPreDamaged(proID, proOwnerID, shieldEmitterWeaponNum, shie
 	if not weaponDefID then
 		return true
 	end
-
-	local damage = shieldDamages[weaponDefID]
-	local projectilePasses = DrainShieldAndCheckProjectilePenetrate(shieldCarrierUnitID, damage, defaultShielDamages[weaponDefID], hackyProID or proID)
+	local damageMultiplier = Spring.ValidUnitID(proOwnerID) and Spring.GetUnitRulesParam(proOwnerID, "comm_damage_mult") or 1
+	local damage = shieldDamages[weaponDefID] * damageMultiplier
+	local realDamage = defaultShielDamages[weaponDefID] * damageMultiplier
+	local projectilePasses = DrainShieldAndCheckProjectilePenetrate(shieldCarrierUnitID, damage, realDamage, hackyProID or proID)
 	if not projectilePasses then
 		GG.Awards.AddAwardPoints('shield', spGetUnitTeam(shieldCarrierUnitID), damage)
 		local disruptionTime = shieldDisruptors[weaponDefID]
