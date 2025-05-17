@@ -68,8 +68,6 @@ local turretantiheavy = {
 			craterMult				= 0,
 			canattackground         = false,
 			customParams			= {
-				light_color = "1.6 1.05 2.25",
-				light_radius = 320,
 				stats_hide_damage = 1, -- continuous laser
 				stats_hide_reload = 1,
 				dmg_scaling = 1/30,
@@ -145,20 +143,50 @@ function Spring.Utilities.MergeWithDefault(default, override)
 end
 
 local i
+local lastcolor = {1, 0.25, 0}
+local targetcolor = {1, 1, 0} -- yellow
+local shiftstep = {0, 0, 0}
 for i=0, 60 do
 	local mult = 1 + i / 10
 	-- turretantiheavy.weapons[#turretantiheavy.weapons+1] = Spring.Utilities.MergeWithDefault(turretantiheavy.weapons[1], {
 	-- 	def = "ATA_"..i,
 	-- })
+	if i == 1 then -- shift towards yellow
+		shiftstep[1] = (targetcolor[1] - lastcolor[1]) / 20
+		shiftstep[2] = (targetcolor[2] - lastcolor[2]) / 20
+		shiftstep[3] = (targetcolor[3] - lastcolor[3]) / 20
+	end
+	if i == 21 then -- green
+		targetcolor[1] = 90 / 255
+		targetcolor[2] = 255 / 255
+		targetcolor[3] = 0 / 255
+		shiftstep[1] = (targetcolor[1] - lastcolor[1]) / 20
+		shiftstep[2] = (targetcolor[2] - lastcolor[2]) / 20
+		shiftstep[3] = (targetcolor[3] - lastcolor[3]) / 20
+	elseif i == 41 then --light blue
+		targetcolor[1] = 15 / 255
+		targetcolor[2] = 82 / 255
+		targetcolor[3] = 186 / 255
+		shiftstep[1] = (targetcolor[1] - lastcolor[1]) / 20
+		shiftstep[2] = (targetcolor[2] - lastcolor[2]) / 20
+		shiftstep[3] = (targetcolor[3] - lastcolor[3]) / 20
+	end
+	lastcolor[1] = lastcolor[1] + shiftstep[1]
+	lastcolor[2] = lastcolor[2] + shiftstep[2]
+	lastcolor[3] = lastcolor[3] + shiftstep[3]
 	turretantiheavy.weaponDefs["ATA_"..i] = Spring.Utilities.MergeWithDefault(turretantiheavy.weaponDefs.ATA, {
 		customParams = {
 			bogus = 1,
+			light_color = 1.15 * lastcolor[1] .. " " .. lastcolor[2] * 1.15 .. " " .. lastcolor[3] * 1.15,
+			light_radius = 80 + (4 * i),
 		},
 		damage = {
-			default = 20.1 * mult,
+			default = 0,
 		},
+		coreThickness = 0.01 + (i * 0.005),
 		laserFlareSize = 10 / math.sqrt(mult),
-		thickness = 10 * mult,
+		thickness = 4 + (1.1 * i),
+		rgbColor = lastcolor[1] .. " " .. lastcolor[2] .. " " .. lastcolor[3],
 	})
 end
 
