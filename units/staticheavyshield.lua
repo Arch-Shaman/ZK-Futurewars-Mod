@@ -4,7 +4,7 @@ return {
 		name                          = "Safeguard",
 		description                   = "Massive Area Shield",
 		activateWhenBuilt             = true,
-		buildCostMetal                = 4000,
+		buildCostMetal                = 5000,
 		builder                       = false,
 		buildingGroundDecalDecaySpeed = 30,
 		buildingGroundDecalSizeX      = 4,
