@@ -44,8 +44,15 @@ local defaultShielDamages = {}
 local shieldDisruptors = {}
 local currentFrame = -1
 for i = 1, #WeaponDefs do
-	shieldDamages[i] = tonumber(WeaponDefs[i].customParams.shield_damage)
-	defaultShielDamages[i] = WeaponDefs[i].damages[SHIELD_ARMOR]
+	local wd = WeaponDefs[i]
+	shieldDamages[i] = tonumber(wd.customParams.shield_damage)
+	defaultShielDamages[i] = wd.damages[SHIELD_ARMOR]
+	if wd.type == "BeamLaser" then -- fixes spideraa bug, for some reason this HEALS shields. Wut.
+		local beamDuration = math.floor(wd.beamtime * 30)
+		if beamDuration > 1 then
+			defaultShielDamages[i] = defaultShielDamages[i] / beamDuration
+		end
+	end
 	local disruptionTime = tonumber(WeaponDefs[i].customParams.shield_disruption) or 0
 	if disruptionTime > 0 then
 		shieldDisruptors[i] = disruptionTime
@@ -312,6 +319,7 @@ local function DrainShieldAndCheckProjectilePenetrate(unitID, damage, realDamage
 	end
 	
 	if charge and damage < charge then
+		--Spring.Echo("DrainShieldAndCheckProjectilePenetrate: " .. damage .. ", " .. realDamage .. ", new value: " .. charge - damage + realDamage)
 		Spring.SetUnitShieldState(unitID, -1, true, charge - damage + realDamage)
 		--Spring.SetUnitShieldState(unitID, -1, true, charge - damage + realDamage)
 		return false
