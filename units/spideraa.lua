@@ -136,7 +136,7 @@ return {
 				impactOnly              = true,
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
-				interceptedByShieldType = 1,
+				interceptedByShieldType = 0,
 				largeBeamLaser          = true,
 				laserFlareSize          = 2,
 				leadLimit               = 18,
