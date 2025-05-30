@@ -1,5 +1,6 @@
 local strings = {
 	["en"] = {
+		["elapsed"] = "Load Time: ",
 		[1] = "Remember to reclaim units that you destroy. Reclaim can turn the tide of battle in your favor or secure your victory over your enemies!",
 		[2] = "The Future is in your hands, Commander. Remember that ultimate victory is never in question (anyone saying otherwise is a dissident and must be reported). If you must retreat, do so using the white flag located in the top left of the screen.\nThis is not a defeat; it is a tactical retreat!",
 		[3] = "Cooperation and communication is the key to conquest! Use the key located to the left of 1 on the top of the keyboard in order to draw on the map. You can put down a 'smart label' by pressing that key and 1 at the same time. These are also translated for other players who may not speak English. Report violations of communication protocol to your local loyalty assurance officer.",
@@ -17,6 +18,7 @@ local strings = {
 		[15] = "'Storage' structures are a myth perpetuated by anti-federation propagandists who want to ruin our way of life. All construction units and structures, including factories, Athenas, and Commanders are equipped with resource storages. Report anyone stating otherwise to your nearest loyalty assurance officer.",
 	},
 	["de"] = {
+		["elapsed"] = "Ladezeit: ",
 		[1] = "Denken Sie daran, zerstörte Einheiten zurückzufordern. Das kann den Ausgang der Schlacht zu Ihren Gunsten wenden oder Ihnen den Sieg über Ihre Feinde sichern!",
 		[2] = "Die Zukunft liegt in Ihren Händen, Commander. Denken Sie daran, dass der endgültige Sieg niemals in Frage steht (jeder, der etwas anderes behauptet, ist ein Dissident und muss gemeldet werden). Wenn Sie sich zurückziehen müssen, nutzen Sie die weiße Flagge oben links auf dem Bildschirm. Dies ist keine Niederlage, sondern ein taktischer Rückzug!",
 		[3] = "Zusammenarbeit und Kommunikation sind der Schlüssel zur Eroberung! Verwenden Sie die Taste links neben der 1 oben auf der Tastatur, um auf der Karte zu zeichnen. Sie können ein „Smart Label“ erstellen, indem Sie diese Taste und die 1 gleichzeitig drücken. Diese werden auch für andere Spieler übersetzt, die möglicherweise kein Deutch sprechen. Melden Sie Verstöße gegen das Kommunikationsprotokoll Ihrem lokalen Loyalitätsbeauftragten.",
@@ -34,6 +36,7 @@ local strings = {
 		[15] = "„Lager“-Strukturen sind ein Mythos, der von föderationsfeindlichen Propagandisten verbreitet wird, die unsere Lebensweise zerstören wollen. Alle Baueinheiten und Strukturen, einschließlich Fabriken, Athenas und Kommandanten, sind mit Ressourcenlagern ausgestattet. Melden Sie jeden, der etwas anderes behauptet, Ihrem nächstgelegenen Loyalitätsbeauftragten.", 
 	},
 	["fr"] = {
+		["elapsed"] = "Temps écoulé: ",
 		[1] = "N'oubliez pas de récupérer les unités détruites. Cela peut renverser le cours de la bataille en votre faveur ou assurer votre victoire sur vos ennemis!",
 		[2] = "L'avenir est entre vos mains, Commandant. N'oubliez pas que la victoire finale est indiscutable (quiconque prétend le contraire est un dissident et doit être dénoncé). Si vous devez battre en retraite, utilisez le drapeau blanc situé en haut à gauche de l'écran.\nCe n'est pas une défaite, c'est une retraite tactique !",
 		[3] = "Coopération et communication sont la clé de la conquête ! Utilisez la touche située à gauche du 1 en haut du clavier pour dessiner sur la carte. Vous pouvez poser une « étiquette intelligente » en appuyant simultanément sur cette touche et le 1. Ces étiquettes sont également traduites pour les autres joueurs qui ne parlent pas français. Signalez toute violation du protocole de communication à votre agent de fidélité local.",
@@ -51,6 +54,7 @@ local strings = {
 		[15] = "Les structures de «stockage» sont un mythe perpétué par des propagandistes anti-fédération qui veulent ruiner notre mode de vie. Toutes les unités et structures de construction, y compris les usines, les Athénas et les commandants, sont équipées de stockages de ressources. Signalez toute affirmation contraire à votre agent de loyauté le plus proche.",
 	},
 	["it"] = {
+		["elapsed"] = "Tempo di caricamento: ",
 		[1] = "Ricordati di riconquistare le unità che distruggi. Il recupero può volgere le sorti della battaglia a tuo favore o assicurarti la vittoria sui tuoi nemici!",
 		[2] = "Il futuro è nelle tue mani, Comandante. Ricorda che la vittoria finale non è mai in discussione (chiunque affermi il contrario è un dissidente e deve essere segnalato). Se devi ritirarti, fallo usando la bandiera bianca situata in alto a sinistra dello schermo.\nQuesta non è una sconfitta; è una ritirata tattica!",
 		[3] = "La cooperazione e la comunicazione sono la chiave per la conquista! Usa il tasto situato a sinistra di 1 in alto sulla tastiera per disegnare sulla mappa. Puoi impostare un'etichetta intelligente premendo quel tasto e 1 contemporaneamente. Queste sono anche tradotte per gli altri giocatori che potrebbero non parlare inglese. Segnala le violazioni del protocollo di comunicazione al tuo responsabile locale della garanzia di lealtà.",
@@ -68,6 +72,7 @@ local strings = {
 		[15] = "Le strutture di 'deposito' sono un mito perpetuato dai propagandisti anti-federali che vogliono rovinare il nostro stile di vita. Tutte le unità e le strutture di costruzione, comprese fabbriche, Athenas e Comandanti, sono dotate di depositi di risorse. Segnalate chiunque affermi il contrario al vostro più vicino responsabile della garanzia di fedeltà.",
 	},
 	["ja"] = {
+		["elapsed"] = "読み込み時間:",
 		[1] = "破壊したユニットは必ず回収しましょう。回収することで戦況を有利にしたり、敵に対する勝利を確実なものにすることができます！",
 		[2] = "未来はあなたの手の中にあります、司令官。最終的な勝利は決して疑う余地がないことを忘れないでください（反対意見を言う者は反体制派であり、報告する必要があります）。撤退する必要がある場合は、画面左上にある白い旗を使って撤退してください。\nこれは敗北ではなく、戦術的な撤退です！",
 		[3] = "協力とコミュニケーションが征服の鍵です！キーボード上部の1の左側にあるキーを使ってマップに描画します。そのキーと1を同時に押すと、'スマートラベル'を貼ることができます。これらは英語を話さない他のプレイヤーのために翻訳されています。コミュニケーションプロトコル違反は、地域の忠誠保証担当者に報告してください。",
@@ -85,6 +90,7 @@ local strings = {
 		[15] = "『貯蔵』構造物は、私たちの生活を破壊しようとする反連邦プロパガンダによって広められた神話です。工場、アテナ、司令官を含むすべての建設ユニットと構造物には、資源貯蔵庫が装備されています。これと異なる主張をする者は、最寄りの忠誠保証担当者に報告してください。",
 	},
 	["pl"] = {
+		["elapsed"] = "Czas ładowania: ",
 		[1] = "Pamiętaj o odzyskiwaniu zniszczonych jednostek. Odzyskiwanie może odwrócić losy bitwy na twoją korzyść lub zapewnić ci zwycięstwo nad wrogami!",
 		[2] = "Przyszłość jest w twoich rękach, Dowódco. Pamiętaj, że ostateczne zwycięstwo nigdy nie jest kwestionowane (każdy, kto twierdzi inaczej, jest dysydentem i musi zostać zgłoszony). Jeśli musisz się wycofać, zrób to, używając białej flagi znajdującej się w lewym górnym rogu ekranu.\nTo nie jest porażka; to taktyczny odwrót!",
 		[3] = "Współpraca i komunikacja są kluczem do podboju! Użyj klawisza znajdującego się po lewej stronie od 1 na górze klawiatury, aby rysować na mapie. Możesz umieścić „inteligentną etykietę”, naciskając ten klawisz i 1 w tym samym czasie. Są one również przetłumaczone dla innych graczy, którzy mogą nie mówić po angielsku. Zgłoś naruszenia protokołu komunikacyjnego lokalnemu oficerowi ds. zapewniania lojalności.",
@@ -102,6 +108,7 @@ local strings = {
 		[15] = "Struktury 'magazynowe' to mit podtrzymywany przez antyfederacyjnych propagandystów, którzy chcą zniszczyć nasz styl życia. Wszystkie jednostki budowlane i struktury, w tym fabryki, Athenas i Commanders, są wyposażone w magazyny zasobów. Zgłoś każdego, kto twierdzi inaczej, najbliższemu oficerowi ds. zapewniania lojalności.",
 	},
 	["pt"] = {
+		["elapsed"] = "Tempo de carregamento: ",
 		[1] = "Lembre-se de recuperar as unidades que você destruir. A recuperação pode virar o jogo a seu favor ou garantir sua vitória sobre seus inimigos!",
 		[2] = "O futuro está em suas mãos, Comandante. Lembre-se de que a vitória final nunca está em questão (qualquer um que diga o contrário é um dissidente e deve ser denunciado). Se precisar recuar, faça-o usando a bandeira branca localizada no canto superior esquerdo da tela.\nIsso não é uma derrota; é uma retirada tática!",
 		[3] = "Cooperação e comunicação são a chave para a conquista! Use a tecla localizada à esquerda de 1 na parte superior do teclado para desenhar no mapa. Você pode colocar um 'rótulo inteligente' pressionando essa tecla e 1 ao mesmo tempo. Essas teclas também são traduzidas para outros jogadores que podem não falar inglês. Relate violações do protocolo de comunicação ao seu agente de garantia de lealdade local.",
@@ -119,6 +126,7 @@ local strings = {
 		[15] = "Estruturas de 'armazenamento' são um mito perpetuado por propagandistas antifederação que querem arruinar nosso modo de vida. Todas as unidades e estruturas de construção, incluindo fábricas, Atenas e Comandantes, são equipadas com armazenamentos de recursos. Denuncie qualquer pessoa que afirme o contrário ao seu agente de garantia de lealdade mais próximo.",
 	},
 	["ru"] = {
+		["elapsed"] = "Время загрузки: ",
 		[1] = "Не забывайте возвращать уничтоженные вами отряды. Возврат может переломить ход битвы в вашу пользу или обеспечить вам победу над врагами!",
 		[2] = "Будущее в ваших руках, Командир. Помните, что окончательная победа никогда не ставится под сомнение (любой, кто говорит иначе, является диссидентом и должен быть доложен). Если вам нужно отступить, сделайте это, используя белый флаг, расположенный в левом верхнем углу экрана.\nЭто не поражение; это тактическое отступление!",
 		[3] = "Сотрудничество и коммуникация — ключ к завоеванию! Используйте клавишу, расположенную слева от 1 в верхней части клавиатуры, чтобы рисовать на карте. Вы можете поставить «умную метку», нажав эту клавишу и 1 одновременно. Они также переведены для других игроков, которые могут не говорить по-английски. Сообщайте о нарушениях протокола связи вашему местному офицеру по обеспечению лояльности.",
@@ -136,6 +144,7 @@ local strings = {
 		[15] = "Строения «хранилищ» — миф, увековеченный антифедеративными пропагандистами, которые хотят разрушить наш образ жизни. Все строительные подразделения и сооружения, включая фабрики, Афины и Командиры, оснащены хранилищами ресурсов. Сообщите о любом человеке, который утверждает обратное, ближайшему офицеру по обеспечению лояльности.",
 	},
 	["th"] = {
+		["elapsed"] = "เวลาในการโหลด: ",
 		[1] = "อย่าลืมเรียกคืนหน่วยที่คุณทำลาย การเรียกคืนสามารถพลิกกระแสการต่อสู้ให้เป็นไปในทางที่คุณต้องการหรือทำให้คุณได้รับชัยชนะเหนือศัตรู!",
 		[2] = "อนาคตอยู่ในมือของคุณแล้ว ผู้บัญชาการ จำไว้ว่าชัยชนะขั้นสุดท้ายนั้นไม่เคยถูกตั้งคำถาม (ใครก็ตามที่พูดเป็นอย่างอื่นถือเป็นผู้เห็นต่างและต้องถูกแจ้ง) หากคุณต้องล่าถอย ให้ทำเช่นนั้นโดยใช้ธงขาวที่อยู่ทางซ้ายบนของหน้าจอ\nนี่ไม่ใช่ความพ่ายแพ้ แต่เป็นการล่าถอยเชิงยุทธวิธี!",
 		[3] = "ความร่วมมือและการสื่อสารคือกุญแจสู่การพิชิต! ใช้ปุ่มที่อยู่ทางซ้ายของ 1 บนแป้นพิมพ์ด้านบนเพื่อวาดบนแผนที่ คุณสามารถใส่ 'ฉลากอัจฉริยะ' ได้โดยกดปุ่มนั้นและ 1 พร้อมกัน ฉลากเหล่านี้จะถูกแปลสำหรับผู้เล่นคนอื่นที่อาจพูดภาษาอังกฤษไม่ได้ รายงานการละเมิดโปรโตคอลการสื่อสารไปยังเจ้าหน้าที่รับรองความภักดีในพื้นที่ของคุณ",
@@ -153,6 +162,7 @@ local strings = {
 		[15] = "โครงสร้าง 'คลังเก็บของ' เป็นตำนานที่ผู้ต่อต้านสหพันธ์เผยแพร่เพื่อทำลายวิถีชีวิตของเรา หน่วยก่อสร้างและโครงสร้างทั้งหมด รวมถึงโรงงาน เอเธน่า และผู้บัญชาการ ต่างก็มีคลังเก็บของทรัพยากร รายงานใครก็ตามที่ระบุเป็นอย่างอื่นให้เจ้าหน้าที่รับรองความภักดีที่อยู่ใกล้คุณทราบ",
 	},
 	["zh"] = {
+		["elapsed"] = "加载时间： ",
 		[1] = "记住要夺回你摧毁的单位。夺回可以扭转战局，甚至确保你战胜敌人！",
 		[2] = "指挥官，未来掌握在你手中。记住，最终的胜利毋庸置疑（任何持不同意见的人都是异见者，必须举报）。如果你必须撤退，请使用屏幕左上角的白旗撤退。\n这不是失败；这是战术撤退！",
 		[3] = "合作与沟通是征服的关键！使用键盘顶部1左侧的按键在地图上绘图。你可以同时按下该键和1键来放置“智能标签”。这些标签也已翻译，方便其他不懂英语的玩家使用。向你当地的忠诚保证官报告违反通信协议的行为。",

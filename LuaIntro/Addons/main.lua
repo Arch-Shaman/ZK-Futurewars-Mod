@@ -14,8 +14,8 @@ end
 
 ------------------------------------------
 local BAR_SCALING = 0.72
-local X_OFFSET = -0.1575
-local Y_OFFSET = -0.02
+local X_OFFSET = 0.1575
+local Y_OFFSET = -0.1
 
 local lastLoadMessage = ""
 local lastProgress = {0, 0}
@@ -30,6 +30,7 @@ local font = gl.LoadFont("FreeSansBold.otf", 50, 20, 1.75)
 local strings = VFS.Include("LuaIntro/Configs/localization.lua")
 
 local tipTextLines, currentFontSize, tipFinalY, tipFont
+local loadingString
 
 Spring.Echo("[NGLS] Picked " .. currenttip)
 
@@ -46,6 +47,7 @@ do
 		lang = "en"
 	end
 	tiptext = strings[lang][currenttip]
+	loadingString = strings[lang]["elapsed"]
 end
 
 local function IsCJK(lang) -- CJK and thai do not have spaces! Use the alternative method.
@@ -192,7 +194,7 @@ local function UpdateText(text)
 	--tipFont = gl.LoadFont("FreeSansBold.otf", currentFontSize, 10, 1.75)
 end
 
-local firstRun = true
+local firstRun = false
 
 local function DrawText()
 	local viewSizeX, viewSizeY = gl.GetViewSizes()
@@ -219,8 +221,14 @@ local function DrawText()
 			currentY = currentY - (gl.GetTextHeight(tipTextLines[i + 1]) * currentFontSize) - descenderSize
 		end
 	end
-	firstRun = false
+	--firstRun = false
 	gl.PopMatrix()
+end
+
+local function UpdateLoadScreen()
+	currenttip = math.random(1, 14)
+	tiptext = strings[lang][currenttip]
+	UpdateText(tiptext)
 end
 
 local progressByLastLine = {
@@ -247,7 +255,26 @@ end
 
 UpdateText(strings[lang][currenttip])
 
+local function FormatTime(seconds)
+	local minutes = math.floor(seconds/60)
+	if minutes < 10 then
+		minutes = "0" .. minutes
+	end
+	local seconds = seconds%60
+	if seconds < 10 then
+		return minutes .. ":0" .. string.format("%.3f", seconds)
+	else
+		return minutes .. ":" .. string.format("%.3f", seconds)
+	end
+end
+
+local lastUpdated = os.clock()
+
 function addon.DrawLoadScreen()
+	if os.clock() - lastUpdated > 7 then
+		lastUpdated = os.clock()
+		UpdateLoadScreen()
+	end
 	gl.Texture(":n:LuaIntro/Images/tip" .. currenttip .. ".png")
 	gl.TexRect(0,0,1,1) -- whole screen.
 	gl.Texture(false)
@@ -297,8 +324,10 @@ function addon.DrawLoadScreen()
 	--font:Print(Game.gameName, vsx * 0.5, vsy * 0.95, vsy * 0.07, "sca")
 	--font:Print(lastLoadMessage, vsx * 0.2, vsy * 0.14, barTextSize*0.5, "sa")
 	font:Print(lastLoadMessage, vsx * 0.5, vsy * 0.125, barTextSize*0.775, "oc")
+	local loadPerc = ("%.0f%%"):format(loadProgress * 100)
+	local loadTime = FormatTime(os.clock() - start)
 	if loadProgress>0 then
-		font:Print(("%.0f%%"):format(loadProgress * 100), vsx * 0.5, vsy * 0.171, barTextSize*0.65, "oc")
+		font:Print(loadPerc .. " [ " .. loadingString .. loadTime .. "]", vsx * 0.5, vsy * 0.171, barTextSize*0.65, "oc")
 	else
 		font:Print("Loading...", vsx * 0.5, vsy * 0.171, barTextSize*0.65, "oc")
 	end
@@ -314,6 +343,7 @@ end
 
 
 function addon.Shutdown()
+	Spring.Echo("[NGLS] Finished loading in " .. FormatTime(os.difftime(os.clock(), start)))
 	gl.DeleteFont(font)
 	--gl.DeleteFont(tipFont)
 end
