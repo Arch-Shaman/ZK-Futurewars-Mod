@@ -16,6 +16,7 @@ local strings = {
 		[13] = "Assassins and Ghost Commanders (with a certain weapon system unlocked at level 4) can teleport, even while cloaked. Teleportation devices, however, do not work while wet.",
 		[14] = "Air power is war power. Never neglect your air force or anti-air. You never know when a surprise air switch will happen.",
 		[15] = "'Storage' structures are a myth perpetuated by anti-federation propagandists who want to ruin our way of life. All construction units and structures, including factories, Athenas, and Commanders are equipped with resource storages. Report anyone stating otherwise to your nearest loyalty assurance officer.",
+		[16] = "Lurkers are armed with a special radar absorbing armor that prevents them from showing up on enemy radar. Use this to your advantage to launch surprise raids against them!",
 	},
 	["de"] = {
 		["elapsed"] = "Ladezeit: ",
@@ -34,6 +35,7 @@ local strings = {
 		[13] = "Assassinen und Ghost Commander (mit einem bestimmten Waffensystem, das auf Level 4 freigeschaltet wird) können sich auch getarnt teleportieren. Teleportationsgeräte funktionieren jedoch nicht, wenn sie nass sind.",
 		[14] = "Luftmacht ist Kriegsmacht. Vernachlässigen Sie niemals Ihre Luftwaffe oder Flugabwehr. Man weiß nie, wann es zu einem überraschenden Luftwaffenwechsel kommt.",
 		[15] = "„Lager“-Strukturen sind ein Mythos, der von föderationsfeindlichen Propagandisten verbreitet wird, die unsere Lebensweise zerstören wollen. Alle Baueinheiten und Strukturen, einschließlich Fabriken, Athenas und Kommandanten, sind mit Ressourcenlagern ausgestattet. Melden Sie jeden, der etwas anderes behauptet, Ihrem nächstgelegenen Loyalitätsbeauftragten.", 
+		[16] = "Lurker sind mit einer speziellen radarabsorbierenden Panzerung ausgestattet, die verhindert, dass sie auf dem feindlichen Radar erscheinen. Nutzen Sie dies zu Ihrem Vorteil, um Überraschungsangriffe auf sie zu starten!",
 	},
 	["fr"] = {
 		["elapsed"] = "Temps écoulé: ",
@@ -52,6 +54,7 @@ local strings = {
 		[13] = "Les Assassins et les Commandants Fantômes (avec un système d'armes spécifique débloqué au niveau 4) peuvent se téléporter, même camouflés. Cependant, les dispositifs de téléportation ne fonctionnent pas lorsqu'ils sont mouillés.",
 		[14] = "La puissance aérienne est une puissance de guerre. Ne négligez jamais votre force aérienne ou votre défense antiaérienne. On ne sait jamais quand un changement de position aérien surprise peut se produire.",
 		[15] = "Les structures de «stockage» sont un mythe perpétué par des propagandistes anti-fédération qui veulent ruiner notre mode de vie. Toutes les unités et structures de construction, y compris les usines, les Athénas et les commandants, sont équipées de stockages de ressources. Signalez toute affirmation contraire à votre agent de loyauté le plus proche.",
+		[16] = "Les Lurkers sont équipés d'une armure spéciale absorbant les radars, ce qui les empêche d'être repérés par les ennemis. Utilisez-la à votre avantage pour lancer des raids surprise contre eux !",
 	},
 	["it"] = {
 		["elapsed"] = "Tempo di caricamento: ",
@@ -70,6 +73,7 @@ local strings = {
 		[13] = "Assassini e Comandanti Fantasma (con un certo sistema d'arma sbloccato al livello 4) possono teletrasportarsi, anche se occultati. I dispositivi di teletrasporto, tuttavia, non funzionano se bagnati.",
 		[14] = "La potenza aerea è potenza di guerra. Non trascurare mai la tua aeronautica o la tua contraerea. Non si sa mai quando avverrà un inaspettato scambio d'aria.",
 		[15] = "Le strutture di 'deposito' sono un mito perpetuato dai propagandisti anti-federali che vogliono rovinare il nostro stile di vita. Tutte le unità e le strutture di costruzione, comprese fabbriche, Athenas e Comandanti, sono dotate di depositi di risorse. Segnalate chiunque affermi il contrario al vostro più vicino responsabile della garanzia di fedeltà.",
+		[16] = "I Lurker sono armati con una speciale armatura che assorbe i radar e impedisce loro di apparire sui radar nemici. Usala a tuo vantaggio per lanciare incursioni a sorpresa contro di loro!"
 	},
 	["ja"] = {
 		["elapsed"] = "読み込み時間:",
@@ -88,6 +92,7 @@ local strings = {
 		[13] = "アサシンとゴーストコマンダー（レベル4で特定の兵器システムをアンロック）は、クローク中でもテレポートできます。ただし、テレポート装置は濡れていると機能しません。",
 		[14] = "航空戦力は戦争の力です。航空戦力や対空戦力を決して軽視してはいけません。いつ突然の空中切り替えが起こるかは分かりません。",
 		[15] = "『貯蔵』構造物は、私たちの生活を破壊しようとする反連邦プロパガンダによって広められた神話です。工場、アテナ、司令官を含むすべての建設ユニットと構造物には、資源貯蔵庫が装備されています。これと異なる主張をする者は、最寄りの忠誠保証担当者に報告してください。",
+		[16] = "ラーカーは敵のレーダーに映らない特殊なレーダー吸収装甲を装備しています。これを利用して奇襲攻撃を仕掛けましょう！",
 	},
 	["pl"] = {
 		["elapsed"] = "Czas ładowania: ",
@@ -106,6 +111,7 @@ local strings = {
 		[13] = "Zabójcy i Dowódcy Duchów (z pewnym systemem uzbrojenia odblokowanym na 4 poziomie) mogą się teleportować, nawet będąc zamaskowanymi. Urządzenia teleportacyjne nie działają jednak, gdy są mokre.",
 		[14] = "Siła powietrzna to siła wojenna. Nigdy nie zaniedbuj swoich sił powietrznych lub przeciwlotniczy. Nigdy nie wiesz, kiedy nastąpi niespodziewana zmiana powietrza.",
 		[15] = "Struktury 'magazynowe' to mit podtrzymywany przez antyfederacyjnych propagandystów, którzy chcą zniszczyć nasz styl życia. Wszystkie jednostki budowlane i struktury, w tym fabryki, Athenas i Commanders, są wyposażone w magazyny zasobów. Zgłoś każdego, kto twierdzi inaczej, najbliższemu oficerowi ds. zapewniania lojalności.",
+		[16] = "Lurkers są uzbrojeni w specjalny pancerz pochłaniający radar, który zapobiega ich pojawieniu się na radarze wroga. Wykorzystaj to na swoją korzyść, aby przeprowadzić na nich niespodziewane rajdy!",
 	},
 	["pt"] = {
 		["elapsed"] = "Tempo de carregamento: ",
@@ -124,6 +130,7 @@ local strings = {
 		[13] = "Assassinos e Comandantes Fantasmas (com um determinado sistema de armas desbloqueado no nível 4) podem se teletransportar, mesmo camuflados. Dispositivos de teletransporte, no entanto, não funcionam enquanto estiverem molhados.",
 		[14] = "Poder aéreo é poder de guerra. Nunca negligencie sua força aérea ou antiaérea. Nunca se sabe quando uma troca aérea surpresa acontecerá.",
 		[15] = "Estruturas de 'armazenamento' são um mito perpetuado por propagandistas antifederação que querem arruinar nosso modo de vida. Todas as unidades e estruturas de construção, incluindo fábricas, Atenas e Comandantes, são equipadas com armazenamentos de recursos. Denuncie qualquer pessoa que afirme o contrário ao seu agente de garantia de lealdade mais próximo.",
+		[16] = "Os Lurkers são armados com uma armadura especial que absorve radar, impedindo-os de aparecer no radar inimigo. Use isso a seu favor para lançar ataques surpresa contra eles!",
 	},
 	["ru"] = {
 		["elapsed"] = "Время загрузки: ",
@@ -142,6 +149,7 @@ local strings = {
 		[13] = "Убийцы и командиры-призраки (с определенной системой оружия, разблокированной на уровне 4) могут телепортироваться, даже будучи замаскированными. Однако устройства телепортации не работают, пока они мокрые.",
 		[14] = "Воздушная мощь — это военная мощь. Никогда не пренебрегайте своими воздушными силами или противовоздушная оборона. Никогда не знаешь, когда произойдет неожиданное переключение на воздушное пространство.",
 		[15] = "Строения «хранилищ» — миф, увековеченный антифедеративными пропагандистами, которые хотят разрушить наш образ жизни. Все строительные подразделения и сооружения, включая фабрики, Афины и Командиры, оснащены хранилищами ресурсов. Сообщите о любом человеке, который утверждает обратное, ближайшему офицеру по обеспечению лояльности.",
+		[16] = "Луркеры вооружены специальной броней, поглощающей радиолокационные лучи, которая не позволяет им обнаруживаться на радарах противника. Используйте это в своих интересах, чтобы устраивать внезапные набеги на них!",
 	},
 	["th"] = {
 		["elapsed"] = "เวลาในการโหลด: ",
@@ -160,6 +168,7 @@ local strings = {
 		[13] = "นักฆ่าและผู้บัญชาการผี (ที่มีระบบอาวุธบางอย่างที่ปลดล็อกที่ระดับ 4) สามารถเทเลพอร์ตได้ แม้จะอยู่ในผ้าคลุมตัวก็ตาม อย่างไรก็ตาม อุปกรณ์เทเลพอร์ตจะไม่ทำงานเมื่อเปียก",
 		[14] = "พลังทางอากาศคือพลังแห่งสงคราม อย่าละเลยกองทัพอากาศหรือหน่วยต่อต้านอากาศยานของคุณ ไม่มีทางรู้เลยว่าเมื่อไหร่จะเกิดการสลับอากาศกะทันหัน",
 		[15] = "โครงสร้าง 'คลังเก็บของ' เป็นตำนานที่ผู้ต่อต้านสหพันธ์เผยแพร่เพื่อทำลายวิถีชีวิตของเรา หน่วยก่อสร้างและโครงสร้างทั้งหมด รวมถึงโรงงาน เอเธน่า และผู้บัญชาการ ต่างก็มีคลังเก็บของทรัพยากร รายงานใครก็ตามที่ระบุเป็นอย่างอื่นให้เจ้าหน้าที่รับรองความภักดีที่อยู่ใกล้คุณทราบ",
+		[16] = "ผู้แอบซุ่มมีเกราะพิเศษที่ดูดซับเรดาร์ซึ่งป้องกันไม่ให้พวกเขาปรากฏตัวบนเรดาร์ของศัตรู ใช้สิ่งนี้ให้เป็นประโยชน์เพื่อโจมตีพวกมันแบบกะทันหัน!",
 	},
 	["zh"] = {
 		["elapsed"] = "加载时间： ",
@@ -178,6 +187,7 @@ local strings = {
 		[13] = "刺客和幽灵指挥官（在4级解锁特定武器系统）可以传送，即使在隐形状态下也可以。然而，传送装置在潮湿状态下无法工作。",
 		[14] = "空中力量就是战争力量。永远不要忽视你的空军或防空力量。你永远不知道什么时候会出现一个突袭性的空中切换。会发生。",
 		[15] = "‘储存’建筑是反联邦宣传者散布的谎言，他们想要毁掉我们的生活方式。所有建筑单位和建筑，包括工厂、雅典娜和指挥官，都配备了资源储存设施。如果有人声称存在相反的情况，请向最近的忠诚保证官举报。",
+		[16] = "潜伏者装备有特殊的雷达吸收装甲，可以防止他们出现在敌方雷达上。利用这一点对他们发动突然袭击！"
 	},
 }
 

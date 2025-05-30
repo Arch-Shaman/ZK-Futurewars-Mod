@@ -22,7 +22,7 @@ local lastProgress = {0, 0}
 local lang = "en"
 local start = os.clock()
 math.randomseed(start)
-local currenttip = math.random(1, 14)
+local currenttip = math.random(1, 16)
 local tiptext
 
 local font = gl.LoadFont("FreeSansBold.otf", 50, 20, 1.75)
