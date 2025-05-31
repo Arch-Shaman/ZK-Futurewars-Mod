@@ -3,9 +3,9 @@ return {
 		unitname            = "planecon",
 		name                = "Crane",
 		description         = "Construction Aircraft",
-		acceleration        = 0.22,
+		acceleration        = 1.9,
 		airStrafe           = 0,
-		brakeRate           = 0.44,
+		brakeRate           = 1.9,
 		buildCostMetal      = 250,
 		buildDistance       = 250,
 		selectionVolumeOffsets = "0 0 0",
@@ -36,6 +36,12 @@ return {
 			boost_speed_mult = 3.5,
 			boost_accel_mult = 6,
 			boost_duration = 40, -- frames
+			bp_overdrive = "MAXIMUM OVERDRIVE!",
+			bp_overdrive_initialcharge = 200,
+			bp_overdrive_chargedelay = 90, -- in frames.
+			bp_overdrive_bonus = 4,
+			bp_overdrive_totalcharge = 200,
+			bp_overdrive_chargerate = 10,
 		},
 
 		energyUse           = 0,
@@ -48,7 +54,7 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		health              = 1500,
-		speed               = 6,
+		speed               = 6.5,
 		minCloakDistance    = 75,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE FIXEDWING GUNSHIP HOVER SHIP SWIM SUB LAND FLOAT SINK TURRET",
@@ -58,7 +64,7 @@ return {
 		showNanoSpray       = false,
 		sightDistance       = 375,
 		turnRate            = 500,
-		workerTime          = 5,
+		workerTime          = 7.5,
 		sfxtypes               = {
 			explosiongenerators = {
 				"custom:MUZZLE_ORANGE",
