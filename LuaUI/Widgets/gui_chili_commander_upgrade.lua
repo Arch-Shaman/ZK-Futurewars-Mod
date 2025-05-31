@@ -200,7 +200,12 @@ local function OnLocaleChanged()
 			end
 		end
 		if def.slotType == "basic_weapon" or def.slotType == "adv_weapon" then -- add stats
-			local wd = WeaponDefNames["0_" .. internalName]
+			local wd
+			if internalName == "commweapon_heatray_recon" then
+				wd = WeaponDefNames["0_commweapon_heatray"]
+			else
+				wd = WeaponDefNames["0_" .. internalName]
+			end
 			desc = desc .. weaponTemplate
 			if wd then
 				if not wd.impactOnly then
@@ -217,6 +222,7 @@ local function OnLocaleChanged()
 			desc = desc .. shieldTemplate
 		end
 		translation.desc = desc
+		--Spring.Echo("Done. " .. internalName .. " : " .. tostring(desc))
 	end
 	--spring.echo("Finished setting up translation")
 end
@@ -236,7 +242,12 @@ local function GetModuleDescription(moduleData) -- dynamically updated.
 			local name = moduleData.name
 			--spring.echo("GetModuleDescription::InternalName: " .. tostring(name))
 			
-			local wd = WeaponDefNames["0_" .. name]
+			local wd
+			if name == "commweapon_heatray_recon" then
+				wd = WeaponDefNames["0_commweapon_heatray"]
+			else
+				wd = WeaponDefNames["0_" .. name]
+			end
 			local description = WG.ModuleTranslations[name].desc
 			if wd then
 				local aoe = wd.damageAreaOfEffect
