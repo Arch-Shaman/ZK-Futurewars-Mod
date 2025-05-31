@@ -9,5 +9,6 @@ return {
 	modtype=1,
 	depend = {
 		[[rapid://zk:stable]],
+		[[Future Wars Load Screens v1]],
 	},
 }
