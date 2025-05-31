@@ -11,8 +11,8 @@ return {
 		[[rapid://zk:stable]],
 		[[Future Wars Load Screens v1]],
 		[[Future Wars Texture Pack v2]],
-		[[Higher Resolution Flags v1]],
 		[[Future Wars Sound Pack v1]],
 		[[Future Wars Unitpics v1]],
+		[[Higher Resolution Flags v1]],
 	},
 }
