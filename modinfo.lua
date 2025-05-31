@@ -12,8 +12,8 @@ return {
 		[[Future Wars Load Screens v1]],
 		[[Future Wars Texture Pack v2]],
 		[[Future Wars Sound Pack v1]],
-		[[Future Wars Unitpics v1]],
-		[[Future Wars Model Pack v1]],
+		[[Future Wars Unitpics Pack v2]],
+		[[Future Wars Model Pack v2]],
 		[[Higher Resolution Flags v1]],
 	},
 }
