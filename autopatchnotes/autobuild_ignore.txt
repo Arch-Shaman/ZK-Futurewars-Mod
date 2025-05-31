@@ -9,3 +9,4 @@
 \Sounds
 \bitmaps
 \unitpics
+\icons
