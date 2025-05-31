@@ -9,10 +9,14 @@ local attacking = false
 local spGetUnitVelocity = Spring.GetUnitVelocity
 
 local gunEmits = {
-	{flare = rflare1, barrel = rbarrel},
-	{flare = lflare1, barrel = lbarrel},
-	{flare = rflare2, barrel = rbarrel},
-	{flare = lflare2, barrel = lbarrel},
+	[1] = {
+		{flare = rflare1, barrel = rbarrel},
+		{flare = rflare2, barrel = rbarrel},
+	},
+	[2] = {
+		{flare = lflare1, barrel = lbarrel},
+		{flare = lflare2, barrel = lbarrel},
+	},
 }
 
 local missileEmits = {
@@ -108,7 +112,7 @@ end
 
 
 function script.AimWeapon(num, heading, pitch)
-	if not num == 2 then
+	if not num == 3 then
 		Signal(SIG_AIM)
 		SetSignalMask(SIG_AIM)
 			
@@ -123,9 +127,9 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.QueryWeapon(num)
-	if num == 1 then
-		return gunEmits[gun].flare
-	elseif num == 2 then
+	if num <= 2 then
+		return gunEmits[num][gun].flare
+	elseif num == 3 then
 		return missileEmits[launcher].flare
 	else
 		return eye
@@ -133,7 +137,7 @@ function script.QueryWeapon(num)
 end
 
 function script.AimFromWeapon(num)
-	if num == 2 then
+	if num == 3 then
 		return missile
 	else
 		return eye
@@ -141,19 +145,29 @@ function script.AimFromWeapon(num)
 end
 
 function script.BlockShot(num, targetID)
-	if num == 2 then
+	if num == 3 then
 		return GG.OverkillPrevention_CheckBlock(unitID, targetID, 640.1, 70, 0.3)
 	else
-		return false
+		return not GG.FireControl.CanFireWeapon(unitID, num)
+	end
+end
+
+function script.FireWeapon(num)
+	if num <= 2 then
+		GG.FireControl.WeaponFired(unitID, num)
 	end
 end
 
 function script.Shot(num)
 	if num == 1 then
-		EmitSfx(gunEmits[gun].flare, 1024)
+		EmitSfx(gunEmits[num][gun].flare, 1024)
 		--EmitSfx(gunEmits[gun].barrel, 1025)
-		gun = (gun)%4 + 1
+		gun = gun%2 + 1
+		GG.FireControl.WeaponFired(unitID, num)
 	elseif num == 2 then
+		EmitSfx(gunEmits[num][gun].flare, 1024)
+		GG.FireControl.WeaponFired(unitID, num)
+	elseif num == 3 then
 		EmitSfx(missileEmits[launcher].flare, 1026)
 		if launcher % 2 == 1 then
 			Turn(missileEmits[launcher].flare, y_axis, math.rad(75 + math.random() * 30))

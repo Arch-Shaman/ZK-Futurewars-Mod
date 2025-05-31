@@ -28,6 +28,7 @@ return {
 			outline_x = 110,
 			outline_y = 110,
 			outline_yoff = 10,
+			needsfirecontrol = 1,
 		},
 
 		explodeAs           = "GUNSHIPEX",
@@ -39,8 +40,8 @@ return {
 		idleAutoHeal        = 5,
 		idleTime            = 1800,
 		maneuverleashlength = "1280",
-		health              = 7250,
-		speed               = 3.0,
+		health              = 9000,
+		speed               = 3,
 		minCloakDistance    = 75,
 		noAutoFire          = false,
 		noChaseCategory     = "TERRAFORM SATELLITE SUB",
@@ -56,8 +57,13 @@ return {
 		},
 		sightDistance       = 800,
 		turnRate            = 600,
-		workerTime          = 0,
 		weapons             = {
+			{
+				def                = "emg",
+				mainDir            = "0 0 1",
+				maxAngleDif        = 70,
+				onlyTargetCategory = "SWIM LAND SHIP SINK TURRET FLOAT GUNSHIP FIXEDWING HOVER",
+			},
 			{
 				def                = "emg",
 				mainDir            = "0 0 1",
@@ -80,15 +86,21 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0.3,
 				craterMult              = 0.15,
-				burst					= 2,
-				burstrate				= 2/30,
-
 				customparams = {
 					combatrange = 850,
-					single_hit_multi = true,
-					--light_camera_height = 2000,
-					--light_color = "0.9 0.84 0.45",
-					--light_ground_height = 120,
+					--single_hit_multi = true,
+					light_camera_height = 2000,
+					light_color = "0.9 0.84 0.45",
+					light_ground_height = 120,
+					light_radius = 30,
+					reaim_time = 1, -- fast update?
+					script_reload = "0.8",
+					recycler = 1,
+					recycle_reductiontime = 0.2,
+					recycle_reduction = 0.30,
+					recycle_bonus = 0.30,
+					recycle_reductionframes = 0.5,
+					recycle_maxbonus = 20,
 				},
 				damage                  = {
 					default = 38.1, --Statwise looks OP, but you have to consider that A LOT of the guass shots miss. ends up being roughly just as good as the missiles
@@ -101,7 +113,7 @@ return {
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
 				range                   = 900,
-				reloadtime              = 6/30,
+				reloadtime              = 1/30, -- 10 rnd per sec
 				rgbColor                = "0.5 1 1",
 				separation              = 0.5,
 				size                    = 0.8,
