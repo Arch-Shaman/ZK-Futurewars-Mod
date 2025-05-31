@@ -2,3 +2,10 @@
 \.git
 \.github
 \autopatchnotes
+\LuaIntro\Images
+\Objects3d
+\unittextures
+\LuaUI\Images\flags
+\Sounds
+\bitmaps
+\unitpics
