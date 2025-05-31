@@ -205,6 +205,7 @@ local function OnLocaleChanged()
 			if wd then
 				if not wd.impactOnly then
 					desc = desc .. "\n" .. aoeTemplate
+					desc = desc:gsub("_aoe_", wd.damageAreaOfEffect)
 				end
 				if wd.waterWeapon then
 					desc = desc .. waterCapableTemplate
