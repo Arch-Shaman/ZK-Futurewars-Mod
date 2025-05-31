@@ -561,7 +561,7 @@
 	},
 	"staticnuke" : {
 		"name" : "Oblivion",
-		"description" : "Strategic MIRV Launcher, Drains 30 m/s, 3.5 minute stockpile",
+		"description" : "Strategic MIRV Launcher, Drains 25 m/s, 3 minute stockpile",
 		"helptext" : "Oblivion, the pinnacle of human engineering. The absolute wizardry that it takes to cram 3 Hawking Bombs into a missile that can still fly across interplanetary space at fractions of the speed of light in unimaginable, yet somehow, some way, it was done."
 	},
 	"missilenuke" : {
