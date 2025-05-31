@@ -22,7 +22,7 @@ return {
 			selectionscalemult = 1,
     		superweapon    = 1,
     		superweaponcoef = 0.41,
-			superweapondenom = 11,
+			superweapondenom = 20,
     		neededlink     = 750,
 			pylonrange     = 150,
 			outline_x = 270,
@@ -231,7 +231,7 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				customParams            = {
-					disarmDamageMult = 150,
+					disarmDamageMult = 30,
 					disarmTimer      = 6,
 					restrict_in_widgets = 1,
 					light_camera_height = 1500,
@@ -239,6 +239,7 @@ return {
 					script_reload = "26", -- NB: Superweapon field in CP makes this handled by FireControl.
 					light_color = "2.4 1.5 0.6",
 					reveal_unit = 36,
+					shield_disruption = 15*30,
 				},
 				damage                  = {
 					default = 500,
