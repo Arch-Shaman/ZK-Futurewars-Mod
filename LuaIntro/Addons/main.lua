@@ -24,6 +24,7 @@ local start = os.clock()
 math.randomseed(start)
 local currenttip = math.random(1, 16)
 local tiptext
+local loadingStageString = ""
 
 local font = gl.LoadFont("FreeSansBold.otf", 50, 20, 1.75)
 
@@ -31,6 +32,7 @@ local strings = VFS.Include("LuaIntro/Configs/localization.lua")
 
 local tipTextLines, currentFontSize, tipFinalY, tipFont
 local loadingString
+local currentLocale
 
 Spring.Echo("[NGLS] Picked " .. currenttip)
 
@@ -42,12 +44,13 @@ do
 	else
 		Spring.Echo("[NGLS] No config! Localization defaulting to en.")
 	end
-	if not strings[lang] then
+	currentLocale = strings[lang]
+	if not currentLocale then
 		Spring.Echo("[NGLS] Warning: No strings for " .. lang .. "! Defaulting to en")
 		lang = "en"
 	end
-	tiptext = strings[lang][currenttip]
-	loadingString = strings[lang]["elapsed"]
+	tiptext = currentLocale[currenttip]
+	loadingString = currentLocale["elapsed"]
 end
 
 local function IsCJK(lang) -- CJK and thai do not have spaces! Use the alternative method.
@@ -227,20 +230,36 @@ end
 
 local function UpdateLoadScreen()
 	currenttip = math.random(1, 14)
-	tiptext = strings[lang][currenttip]
+	tiptext = currentLocale[currenttip]
 	UpdateText(tiptext)
 end
 
 local progressByLastLine = {
 	["Parsing Map Information"] = {0, 20},
-	["Loading Weapon Definitions"] = {10, 50},
-	["Loading LuaRules"] = {40, 80},
-	["Loading LuaUI"] = {70, 95},
+	["Loading Weapon Definitions"] = {20, 50},
+	["Loading LuaRules"] = {50, 80},
+	["Loading LuaUI"] = {80, 95},
 	["Loading Skirmish AIs"] = {90, 99},
 }
 
 for name,val in pairs(progressByLastLine) do
 	progressByLastLine[name] = {val[1]*0.01, val[2]*0.01}
+end
+
+local function UpdateLoadString(perc)
+	if perc == lastPerc then return end -- no update
+	if perc == "Parsing Map Information" then
+		loadingStageString = currentLocale["map"]
+	elseif perc == "Loading Weapon Definitions" then
+		loadingStageString = currentLocale["weapondefs"]
+	elseif perc == "Loading LuaRules" then
+		loadingStageString = currentLocale["luarules"]
+	elseif perc == "Loading LuaUI" then
+		loadingStageString = currentLocale["luaui"]
+	elseif perc == "Loading Skirmish AIs" then
+		loadingStageString = currentLocale["ai"]
+	end
+	lastPerc = perc
 end
 
 function addon.LoadProgress(message, replaceLastLine)
@@ -249,11 +268,13 @@ function addon.LoadProgress(message, replaceLastLine)
 		lastProgress = {0.3, 0.6}
 	end
 	lastProgress = progressByLastLine[message] or lastProgress
+	UpdateLoadString(lastLoadMessage)
 end
 
 ------------------------------------------
 
-UpdateText(strings[lang][currenttip])
+UpdateText(currentLocale[currenttip])
+loadingStageString = currentLocale["initializing"]
 
 local function FormatTime(seconds)
 	local minutes = math.floor(seconds/60)
@@ -269,6 +290,7 @@ local function FormatTime(seconds)
 end
 
 local lastUpdated = os.clock()
+local lastPerc = -1
 
 function addon.DrawLoadScreen()
 	if os.clock() - lastUpdated > 7 then
@@ -285,8 +307,10 @@ function addon.DrawLoadScreen()
 	local loadProgress = SG.GetLoadProgress()
 	if loadProgress == 0 then
 		loadProgress = lastProgress[1]
+		UpdateLoadString(loadProgress)
 	else
 		loadProgress = math.min(math.max(loadProgress, lastProgress[1]), lastProgress[2])
+		UpdateLoadString(loadProgress)
 	end
 
 	local vsx, vsy = gl.GetViewSizes()
@@ -323,7 +347,7 @@ function addon.DrawLoadScreen()
 	--font:Print(lastLoadMessage, vsx * 0.5, vsy * 0.3, 50, "sc")
 	--font:Print(Game.gameName, vsx * 0.5, vsy * 0.95, vsy * 0.07, "sca")
 	--font:Print(lastLoadMessage, vsx * 0.2, vsy * 0.14, barTextSize*0.5, "sa")
-	font:Print(lastLoadMessage, vsx * 0.5, vsy * 0.125, barTextSize*0.775, "oc")
+	font:Print(loadingStageString, vsx * 0.5, vsy * 0.125, barTextSize*0.775, "oc")
 	local loadPerc = ("%.0f%%"):format(loadProgress * 100)
 	local loadTime = FormatTime(os.clock() - start)
 	if loadProgress>0 then
