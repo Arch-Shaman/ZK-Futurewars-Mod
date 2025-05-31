@@ -13,6 +13,7 @@ return {
 		[[Future Wars Texture Pack v2]],
 		[[Future Wars Sound Pack v1]],
 		[[Future Wars Unitpics v1]],
+		[[Future Wars Model Pack v1]],
 		[[Higher Resolution Flags v1]],
 	},
 }
