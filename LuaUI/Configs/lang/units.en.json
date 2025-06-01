@@ -12,7 +12,7 @@
 	"gunshipcon" : {
 		"name" : "Wasp",
 		"description" : "Heavy Gunship Constructor",
-		"helptext" : "A heavy constructor which combines the convenience of flying with high buildpower."
+		"helptext" : "The Wasp is a heavy construction drone that can summon a repair turret that can also slow enemies down using an Ion beam. Unlike its cousin, the Crane, it is built to slowly expand the front while surviving the dangers of war."
 	},
 	"gunshipskirm" : {
 		"name" : "Longbow",
