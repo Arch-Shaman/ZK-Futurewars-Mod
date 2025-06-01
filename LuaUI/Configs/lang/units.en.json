@@ -36,7 +36,7 @@
 	},
 	"factorycloak" : {
 		"name" : "Ambusher Factory",
-		"description" : "Produces Cloaked, Mobile Robots",
+		"description" : "Produces Stealthy Mobile Light Walkers",
 		"helptext" : "Emphasizing stealth and burst damage over brute force and durability, the Ambusher Factory makes good use of stealth, mobility and EMP weapons to strike at the enemy's weak points. Comes equipped with a strong radar jammer and cloakfield. Key units: Lurker, Waylayer, Assailant, Snare, Sparky"
 	},
 	"amphlaunch" : {
@@ -52,7 +52,7 @@
 	"staticmissilesilo" : {
 		"name" : "Missile Silo",
 		"description" : "Produces Tactical Missiles",
-		"helptext" : "The Missile Silo constructs and holds up to four different cruise missiles, each with a unique warhead. It offers excellent standoff strike capability for offensive and defensive purposes."
+		"helptext" : "The Missile Silo constructs and holds up to four cruise missiles. It offers excellent standoff strike capability for offensive and defensive purposes by offering various warhead types."
 	},
 	"spiderscout" : {
 		"name" : "Wolf",
@@ -180,7 +180,7 @@
 		"helptext" : "The Limpet can dodge most slow projectiles thanks to its agility and small size, allowing it to get close to enemy units in order to detonate, slowing and damaging them."
 	},
 	"factoryveh" : {
-		"name" : "Rover Assembly",
+		"name" : "Rover Assembly Plant",
 		"description" : "Produces Light Wheeled Vehicles",
 		"helptext" : "A traditional favourite, the Rover Assembly is the ideal blitzkrieg fac with its fast, highly aggressive units. Those units that lack speed make up for it with copious firepower. Comes equipped with a drone autofabricator for defense. Key Units: Flare, Sunbeam, Ravager, Striker, Slasher"
 	},
@@ -461,7 +461,7 @@
 	},
 	"factoryshield" : {
 		"name" : "Shieldbot Factory",
-		"description" : "Produces Shielded Robots",
+		"description" : "Produces Shielded Heavy Slow Walkers",
 		"helptext" : "The Shield Bot Factory is tough yet flexible and the factory itself comes with a big area shield, useful for recharging other shield units. Its units are built to take the pain and dish it back out, without compromising mobility. Clever use of unit combos is well rewarded. Key units: Warden, Ward, Outlaw, Vigilante, Preserver."
 	},
 	"platecloak" : {
@@ -1150,7 +1150,7 @@
 		"helptext" : "The Dominatrix captures enemies, turning them against their former allies. Multiple Dominatrix can capture a single target faster, although only one becomes the controller. After taking control of a unit the Dominatrix cannot fire for 12 seconds. If a Dominatrix is destroyed all units it controls are freed."
 	},
 	"factorytank" : {
-		"name" : "Tank Foundry",
+		"name" : "Tank Foundry Plant",
 		"description" : "Produces Heavy Tracked Vehicles",
 		"helptext" : "The Tank Foundry is the ultimate in brute force methods - nothing gets the job done quite like a sustained artillery barrage followed by a decisive push with the largest tanks in the field. Key units: Emissary, Barbarian, Ogre, Cyclops"
 	},
@@ -1176,7 +1176,7 @@
 	},
 	"factoryjump" : {
 		"name" : "Jumpbot Factory",
-		"description" : "Produces Jumpjet Equipped Robots",
+		"description" : "Produces Jumpjet Equipped Walkers",
 		"helptext" : "The esoteric Jumpbot Factory offers unique tactical options for rapidly closing the distance in a knife fight, or getting over hills and rivers to cut a path through enemy lines. Key units: Arsonist, Moderator, Jack, Firewalker, Jugglenaut"
 	},
 	"jumpsumo" : {
