@@ -213,6 +213,8 @@
 	"module_adv_targeting_desc" : "Erhöht die Reichweite um 7,5%%, verringert jedoch die Geschwindigkeit um 0,75.",
 	"module_adv_targeting_artillery_name" : "Verbessertes Zielsystem",
 	"module_adv_targeting_artillery_desc" : "Erhöht die Reichweite um 10%%, verringert jedoch die Geschwindigkeit um 2.",
+	"module_heavy_barrel_name" : "Schwerer Laufersatz",
+	"module_heavy_barrel_desc" : "Schrotflinten:\nErhöht die Gesamtzahl der Projektile um 10. Erhöht die Nachladezeit auf 3 Sek.\n\nSonnenstrahlenkanone:\nWird zu einer 3-Schuss-Schrotflinte mit mäßiger Ungenauigkeit. Erhöht die Nachladezeit um 80 %%.\n\nSchwere Gewehre:\nVerdoppelt die Anzahl der Salven und das Nachladen auf 3,5 Sekunden.",
 	"efficiency_name" : "Efficient Resourcing",
 	"efficiency_desc" : "Durch die Aktualisierung der Ressourcenzuweisungsalgorithmen der Support-Kommunikation kann etwas zusätzliches Metall und Energie aus dem Ressourcengenerator des Chassis herausgepresst werden.\nBietet 2,5 m/s und 5e/s Einkommen.",
 	"module_basic_nano_name" : "Einfache Nanodrehmaschine",

@@ -213,6 +213,8 @@
 	"module_adv_targeting_close_desc" : "Aumenta la portata del 5%% ma riduce i danni del 10%%.",
 	"module_adv_targeting_artillery_name" : "Sistema di puntamento migliorato",
 	"module_adv_targeting_artillery_desc" : "Aumenta la portata del 10%% ma riduce la velocità del 2.",
+	"module_heavy_barrel_name": "Sostituzione canna pesante",
+	"module_heavy_barrel_desc": "Fucili a pompa:\nAumenta il numero totale di proiettili di 10. Aumenta il tempo di ricarica a 3 secondi.\n\nCannone Sunburst:\nSi trasforma in un fucile a pompa a 3 colpi con imprecisione moderata. Aumenta il tempo di ricarica dell'80%%.\n\nFucili pesanti:\nRaddoppia il numero di raffiche e il tempo di ricarica a 3,5 secondi.",
 	"efficiency_name" : "Risorse efficienti",
 	"efficiency_desc" : "Aggiornando gli algoritmi di allocazione delle risorse del comm di supporto, è possibile estrarre un po' di metallo ed energia extra dalle risorse del telaio generatore.\nFornisce 2,5 m/sec e 5 e/sec di entrate",
 	"module_basic_nano_name" : "Nanolathe di base",

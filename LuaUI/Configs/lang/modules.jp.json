@@ -213,6 +213,8 @@
 	"module_adv_targeting_desc" : "範囲が 7.5%% 増加しますが、速度が 0.75 減少します。",
 	"module_adv_targeting_artillery_name" : "改良されたターゲティング システム",
 	"module_adv_targeting_artillery_desc" : "範囲が 10% 増加しますが、速度が 2 減少します。",
+	"module_heavy_barrel_name" : "ヘビーバレル交換",
+	"module_heavy_barrel_desc" : "ショットガン:\n発射弾数が10発増加。リロード時間が3秒に延長。\n\nサンバーストキャノン:\n中程度の精度の3ショットショットガンに変化。リロード時間が80%%に延長。\n\nヘビーライフル:\nバースト数が2倍になり、リロード時間が3.5秒に延長。",
 	"efficiency_name" : "効率的なリソース",
 	"efficiency_desc" : "サポート通信のリソース割り当てアルゴリズムをアップグレードすることで、シャーシのリソースから余分な金属とエネルギーを絞り出すことができます。ジェネレータ。\n2.5m/秒および5e/秒の収入を提供します",
 	"module_basic_nano_name" : "基本的なナノ旋盤",

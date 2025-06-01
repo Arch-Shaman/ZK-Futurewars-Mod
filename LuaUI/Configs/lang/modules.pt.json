@@ -213,6 +213,8 @@
 	"module_adv_targeting_desc" : "Increases range by 7.5%% but reduces speed by 0.75.",
 	"module_adv_targeting_artillery_name" : "Improved Targeting System",
 	"module_adv_targeting_artillery_desc" : "Increases range by 10%% but reduces speed by 2.",
+	"module_heavy_barrel_name": "Substituição de Cano Pesado",
+	"module_heavy_barrel_desc": "Espingardas:\nAumenta o total de projéteis em 10. Aumenta o tempo de recarga para 3s.\n\nCanhão Sunburst:\nTransforma-se em uma espingarda de 3 tiros com imprecisão moderada. Aumenta o tempo de recarga em 80%%.\n\nRifles Pesados:\nDuplica a contagem de rajadas e a recarga para 3,5 segundos.",
 	"efficiency_name" : "Efficient Resourcing",
 	"efficiency_desc" : "By upgrading the Support comm's resource allocation algorithms, some extra metal and energy can be squeezed out of the chassis's resource generator.\nProvides 2.5m/sec and 5e/sec income",
 	"module_basic_nano_name" : "Basic Nanolathe",

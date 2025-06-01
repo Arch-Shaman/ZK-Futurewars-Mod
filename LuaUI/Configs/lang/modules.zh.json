@@ -212,6 +212,8 @@
 	"module_adv_targeting_desc" : "增加射程 7.5%%,但降低速度 0.75。",
 	"module_adv_targeting_artillery_name" : "改进的瞄准系统",
 	"module_adv_targeting_artillery_desc" : "增加射程 10%%,但降低速度 2。",
+	"module_heavy_barrel_name" : "重型枪管替代品",
+	"module_heavy_barrel_desc" : "霰弹枪：\n增加10发子弹。装填时间延长至3秒。\n\n日炎炮：n变为一把3发霰弹枪，精度略有下降。装填时间延长80%%。\n\n重型步枪：n连发数量加倍，装填时间延长至3.5秒。",
 	"efficiency_name" : "高效资源",
 	"efficiency_desc" : "通过升级支持通信的资源分配算法,可以从底盘的资源生成器中挤出一些额外的金属和能量。\n提供2.5m/sec 和 5e/sec 收入",
 	"module_basic_nano_name" : "基本纳米车床",
