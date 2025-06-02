@@ -1,1222 +1,1403 @@
 {
 	"factoryfake" : {
 		"name" : "UI HAX",
-		"description" : "You are hacking",
-		"helptext" : "YOU ARE IN VIOLATION OF EDF LAWS AND REGULATIONS!"
-	},
-	"tankaa" : {
-		"name" : "Ettin",
-		"description" : "Flakpanzer",
-		"helptext" : "Ettin Flakkanone macht kurzen Prozess mit feindlichen Hubschraubern, aber auch gegen Flugzeuge erweist sie sich als nützlich."
-	},
-	"StriderRraider": {
-		"Name": "Marauder",
-		"description": "Heavy Raider",
-		"Helptext": "Der Marauder unterscheidet sich stark von seiner Schwestereinheit, dem Forsaken. Während eines alten Konflikts als Reaktion auf die Vorhauen wurde er schnell von seinen ursprünglichen Schöpfer aufgegeben, da es nicht in der Lage ist, in die schweren Schilde des Vorhabens einzudringen. Wahre Macht liegt in seiner hohen Mobilität, obwohl sie wenig oder gar keine Rüstung haben. "
-	},
-	"energypylon" : {
-		"name" : "Energy Pylon",
-		"description" : "Erweitert den Bereich des Overdrive-Energienetzes",
-		"helptext" : "Durch das Energy Pylon wird es dir ermöglicht, weitere Energiequellen oder Metallextraktoren an ein bestehendes Overdrive-Energienetz anzuschließen."
-	},
-	"missilekinetic" : {
-		"name" : "Apogee",
-		"description" : "Kinetisches Tötungsfahrzeug",
-		"helptext" : "Die Apogee ist eine billige kinetische Schlagwaffe, die in den Weltraum fliegt, bevor sie hart auf ein Ziel stürzt und massiven Schaden verursacht. Während ihre AOE viel zu wünschen übrig lässt, ist sie billig und spammbar, was sie halbwegs anständig macht Schilde."
-	},
-	"dynstrike1" : {
-		"name" : "Strike Commander",
-		"description" : "Mobiler Sturmkommandant",
-		"helptext" : "Der Strike Commander bietet ein sehr ausgeglichenes Gerüst, das mit den meisten Modulen ausgerüstet werden kann, mit anständiger Geschwindigkeit, Panzerung und Selbstreparierung."
-	},
-	"factorycloak" : {
-		"name" : "Cloakbot Factory",
-		"description" : "Produziert Tarnroboter",
-		"helptext" : "List statt pure Gewalt lautet hier das Motto. Die Cloakbot Plant ermöglicht die Nutzung von Tarnung, Mobilität und EMP-Waffen, um die feindlichen Schwachstellen empfindlich zu treffen. Wichtigste Einheiten: Glaive, Ronin, Reaver, Knight, Sling"
-	},
-	"striderrazorback" : {
-		"name" : "Forsaken",
-		"description" : "Schwerer Angriff/Riot Walker",
-		"helptext" : "Die Forsaken ist ein uraltes Design, das sogar vor den Koalitionskriegen entstand. In einer vergangenen Ära von vergessenen Menschen gebaut und erst kürzlich wiederhergestellt, verfügt die Forsaken über einen mächtigen Angriffsschild, der unergründlichen Schaden aufsaugen kann. Bewaffnet mit zwei hochexplosiven Maschinen Kanonen und einem schweren Laser bietet der Forsaken eine Menge Frontalkraft. Seine Schwäche sind jedoch Feinde, die es schaffen, sich ihm zu nähern und unter seinen Schild zu gelangen. Seine schwache Panzerung (für einen Schreiter) und seine langsame Wendegeschwindigkeit ermöglichen es Angreifern, zu flankieren und zu beenden es schnell."
-	},
-	"platestrider" : {
-		"name" : "Strider-Platte",
-		"description" : "Konstruiert Schreiter",
-		"helptext" : "Die Strider Plate ist die Miniaturversion der Strider Nabe. Wie sein größerer Bruder setzt es Strider ein, die „riesigen Mechas“, die Ehrfurcht und Angst auf dem Schlachtfeld hervorrufen. Im Gegensatz zu einer normalen Fabrik wird die Platte nur benötigt, um ein Projekt zu starten, nicht um es abzuschließen."
-	},
-	"hoverdepthcharge" : {
-		"name" : "Claymore",
-		"description" : "Anti-Sub Hovercraft",
-		"helptext" : "The somewhat suicidal Claymore is armed with a heavy depthcharge launcher and has no qualms about dropping it on land."
-	},
-	"dronecon" : {
-		"name" : "Responder",
-		"description" : "Drohne reparieren",
-		"helptext" : "Der Responder ist eine einfache Drohne, die mit einem Schild und einem Reparaturstrahl ausgestattet ist. Sie kann keine Gebäude unterstützen oder zurückfordern."
-	},
-	"staticheavyshield" : {
-		"name" : "Safeguard",
-		"description" : "Massiver Bereichsschild",
-		"helptext" : "Als sich die Aegis als nutzlos gegen strategische Waffen erwies, wurde die Safeguard mit einem übersteuerten Funnelweb-Schild hergestellt. Während die Safeguard sogar nukleare Angriffe ohne die Notwendigkeit eines Anti-Atoms stoppen kann, ist sie völlig unfähig, mit anhaltendem Bombardement fertig zu werden . Verwenden Sie geringere Artillerie oder taktische Raketen, um es niederzuhalten."
-	},
-	"bomberdisarm" : {
-		"name" : "Thunderbird",
-		"description" : "Entwaffnungbomber",
-		"helptext" : "Schneller Entwaffnungbomber, der mit einem Stossspannungsgenerator zum Entwaffnen großflächiger Gebiete bewaffnet ist."
-	},
-	"droneassault" : {
-		"name" : "Python",
-		"description" : "Angriffsdrohne",
-		"helptext" : "Die Python ist eine High-Tech-Drohne mit schwerer Panzerung und einem Gluon-Beschleuniger. Sie kann Schläge einstecken und einen zurückgeben."
-	},
-	"gunshipassault" : {
-		"name" : "Revenant",
-		"description" : "Bodenangriff-Kampfhubschrauber",
-		"helptext" : "Der Revenant feuert salvenartig ungelenkte Raketen. Er besitzt eine hohe Lebensenergie und hat einen großen Schadensoutput, aber er ist teuer und unpräzise, vor allem gegen sich bewegende Ziele. Er ist gut, um Basisstrukturen und langsame oder stationäre Einheiten zu zerstören."
-	},
-	"hoverraid" : {
-		"name" : "Dagger",
-		"description" : "Schnellangriff Luftkissenboot",
-		"helptext" : "Der Dagger ist der Aufklärer unter den Luftkissenbooten. Es bietet dir eine kostengünstige, entbehrliche Möglichkeit deinen Feind frühzeitig um seine Rohstoffquellen zu bringen. Es kann auch U-Booten schiessen."
-	},
-	"zenith" : {
-		"name" : "Zenith",
-		"description" : "Meteor Controller",
-		"helptext" : "The Zenith collects meteorites from the sky (up to 300), which it can send anywhere to break things or provide a small reclaimable source of metal."
-	},
-	"athena" : {
-		"name" : "Athena",
-		"description" : "Fliegender SpecOps Bauleiter",
-		"helptext" : "Athene ist die Spitze der Tarnungsschlagkraft. Ausgerüstet mit einem Verhüllungsgeräte und einem Radarstörer kann es durch gegnerische Verteidigungslinien fliegen und Truppen aus Angreifern zusammenstellen, die dann Verwüstung nachsichziehen werden und die gegnerische Logistik vernichten können."
-	},
-	"spideremp" : {
-		"name" : "Venom",
-		"description" : "Unterstützende EMP Spinne",
-		"helptext" : "Venom ist eine geländeunabhängige Einheit, welche Gegner paralysieren kann, damit andere Einheiten diese einfach zerstören können. Venom besitzt eine AoE und ist nützlich, um gengerische Schwärme in Schach zu halten."
-	},
-	"wolverine_mine" : {
-		"name" : "Disperser",
-		"description" : "Mine",
-		"helptext" : "Der Disperser ist eine von der Artillerie abgefeuerte Landmine, die in die Luft schießt, bevor sie mehrere Sprengstoffe freisetzt. Es deaktiviert sich nach einer Minute."
-	},
-	"wolverine_mine" : {
-		"name" : "Disbander",
-		"description" : "Baubare Mine",
-		"helptext" : "Der Disbander ist eine baubare Landmine ähnlich dem Disperser, erfordert aber keinen Dachs, um ihn niederzulegen. Wie sein von der Artillerie abgefeuertes Gegenstück schießt es in die Luft, bevor es mehrere Sprengladungen abfeuert. Im Gegensatz zum Dispergierer schaltet er sich nicht nach einer Minute ab."
-	},
-	"neebcomm" : {
-		"name" : "Neeb Comm",
-		"description" : "Ugly Turkey",
-		"helptext" : "This fat chicken is presented to you as a reward for your misdeeds. Behave next time!"
-	},
-	"vehsupport" : {
-		"name" : "Fencer",
-		"description" : "Unterstützung/Flugabwehr Fahrzeug (muss zum Feuern anhalten)",
-		"helptext" : "Halte deinen Fencer immer auf maximaler Distanz zum Feind, um diesen am besten zu belagern. Seine Raketen sind gelenkt und somit ideal, um sich schnell bewegende Einheiten oder Crawling Bomben zu vernichten. Er kann sowohl Land-, als auch Lufteinheiten treffen, aber nicht über Wände und Hügel schießen. Außerdem versagt er kläglich, sobald sich Feinde dicht am ihm befinden. Im Gegensatz zu dem meisten normalen Skirmishern, kann der Fencer nicht Feuern, wenn er sich bewegt."
-	},
-	"factoryplane" : {
-		"name" : "Airplane Plant",
-		"description" : "Produziert Flugzeuge",
-		"helptext" : "Das Airplane Plant ermöglicht den Bau vielfältiger Starrflügelflugzeuge, um deine Bedürfnisse zu stillen. Wähle zwischen Allzweckjägern, die sowohl leichte Attacken fliegen können, als auch als Abfangjäger fungieren, und präzisen Bombern, um spezielle Ziele zu vernichten. Es befüllt außerdem die Bomber."
-	},
-	"shieldassault" : {
-		"name" : "Thug",
-		"description" : "Sturmroboter mit Schild",
-		"helptext" : "Der Thug ist zwar für sich alleine ziemlich schwach, doch bietet er für Rogues und Outlaws eine gute Abschirmung. Der sich verbindende Schild erzeugt mehr Stärke, sobald sich mehrere Thugs zusammenschließen, kann aber durch AoE Waffen oder fokusiertes Feuer geschlagen werden."
-	},
-	"cloakbomb" : {
-		"name" : "Imp",
-		"description" : "Geländegängige EMP Kriechbombe",
-		"helptext" : "Geschickt eingesetzt kann Imp sich mehrfach rentieren. Nutze Imp, um gegnerische Verteidigung, schwere Einheiten und gut geschützte Einheiten mit langsamen Waffen zu paralysieren. Andere deiner Einheiten haben so die Möglichkeit die feindlichen Truppen einfach, ohne Risiko zu eleminieren. Konter diese Einheit mit Raketentürmen oder einzelnen, billigen Einheiten. Diese Einheit tarnt sich sobald sie sich nicht mehr bewegt."
-	},
-	"spidercon" : {
-		"name" : "Weaver",
-		"description" : "Konstruktionsspinne",
-		"helptext" : "Der Weaver ist eine bauende Einheit, die Hindernisse überwinden und somit Verteidigungsanlagen auf Erhöhungen bauen kann. Er hat auch ein Radar."
-	},
-	"vehriot" : {
-		"name" : "Ripper",
-		"description" : "Riotfahrzeug",
-		"helptext" : "Seine Riotkanone ist sehr effektiv gegen größere Gruppen von Raidern und, um den gegnerischen Fortschritt aufzuhalten. Die Projektile können nicht bogenförmig abgeschoßen werden, weshalb sie nicht in einem Haufen, sondern entlang einer Frontlinie, ausgerichtet werden sollten. Durch ihren Mangel an Geschwindigkeit und Reichweite, sind sie für die meisten Skirmisher ein gefundenes Fressen."
-	},
-	"chickenlandqueen" : {
-		"name" : "Chicken Queen",
-		"description" : "Lachende Höllenbrut!",
-		"helptext" : "Zwei Worte: LAUF WEG! Die Chicken Queen ist die Matriarchin der Thunderbirdkolonie und sobald verärgert ist es eigentlich unmöglich sie noch zu stoppen. Sie kann kraftvolle Säure spucken, Landchicken abwerfen und Sporen gegen Lufteinheiten versprühen. Nur der entschlossenste und konzentrierteste Angriff kann es ermöglichen dieses Biest eventuell doch noch zu stoppen."
-	},
-	"vehraid" : {
-		"name" : "Scorcher",
-		"description" : "Raiderfahrzeug",
-		"helptext" : "Der Scorcher ist fähig Schaden einzustecken und auszuteilen, was ihn zu einer vielseitigen Einheit macht, welche für mehr als nur Überfälle nützlich ist. All das aber zum Preis der Manövrierfähigkeit und der Kosten. Obwohl er sich im Kampf meist gut schlägt, taugt er nichts gegen Antischwarm- und Rioteinheiten oder Verteidigung. Der Scorcher mehr Schaden verursacht, je naher er ist."
+		"description" : "Sie hacken",
+		"helptext" : "Sie verstoßen gegen die Gesetze und Vorschriften der EDF."
 	},
 	"starlight_satellite" : {
 		"name" : "Glint",
-		"description" : "Starlight Überbrückungssatellit",
-		"helptext" : "Dieser Satellit lenkt den tödlichen Energiestrahl des Starlights auf seine Feinde."
+		"description" : "Starlight-Relaissatellit",
+		"helptext" : "Dies ist der Satellit, den Starlight zur Zielerfassung verwendet."
 	},
-	"vehheavyarty" : {
-		"name" : "Impaler",
-		"description" : "Mobile Marschflugkörperabschussrampe",
-		"helptext" : "Der Impaler feuert seine Ballistgeschoss senkrecht ab. Ihn zeichnen seine hohe Präzision und die lange Reichweite seiner Flugkörper, sowie die Möglichkeit über Hindernisse zu schießen, aus. Die große Flugzeit macht ihn aber nutzlos gegenüber sich bewegenden Einheiten. Nutze den Impaler, um spezielle Einheiten/Gebäude zu zerstören."
+	"gunshipcon" : {
+		"name" : "Wasp",
+		"description" : "Konstrukteur eines schweren Kampfhubschraubers",
+		"helptext" : "Die Wasp ist eine schwere Baudrohne, die einen Reparaturturm herbeirufen kann, der Gegner mit einem Ionenstrahl verlangsamen kann. Im Gegensatz zu ihrem Cousin, dem Kran, ist sie darauf ausgelegt, die Front langsam auszudehnen und dabei den Gefahren des Krieges standzuhalten."
 	},
-	"staticheavyarty" : {
-		"name" : "Big Bertha",
-		"description" : "Strategische Plasma Kanone",
-		"helptext" : "Die Bertha ist eine massive Kanone, welche hochenergetische Plasmoide über die Karte verschiesst. Angemessener Gebrauch der Waffe kann gengerische Operationen von der eigenen, sicheren Basis aus schnell unterdrücken. Trotzdem erwarte nicht, dass du nur dich diese Waffe die Schlachten gewinnen wirst."
+	"gunshipskirm" : {
+		"name" : "Langbogen",
+		"description" : "Feuerunterstützungs-Kampfhubschrauber",
+		"helptext" : "Der Langbogen ersetzte die Harpy, nachdem ein Paradigmenwechsel zusätzliche Luftunterstützung erforderte. Der Langbogen besetzt eine Rolle zwischen luftgestütztem Plänkler und Artillerie. Seine Raketen sind relativ ungenau, und große Gruppen können ein Gebiet überschwemmen. Aber Vorsicht: Aus nächster Nähe ist er ungenau."
 	},
-	"napalmmissile" : {
-		"name" : "Inferno",
-		"description" : "Napalm-Rakete",
-		"helptext" : "Der Inferno ist eine große AoE Feuerwaffe. Sein direkter Schaden ist gering, aber die Flammenhölle erzeugt Verluste für längere Zeit."
+	"striderraider" : {
+		"name" : "Marodeur",
+		"description" : "Schwerer Raider",
+		"helptext" : "Der Marodeur unterscheidet sich grundlegend von seiner Schwestereinheit, den Verlassenen. Er wurde während eines uralten Konflikts als Reaktion auf die Verlassenen erschaffen und von seinen ursprünglichen Erschaffern schnell wieder verworfen, da er die schweren Schilde der Verlassenen nicht durchdringen konnte. Seine wahre Stärke liegt in seiner hohen Mobilität, obwohl er kaum oder gar keine Panzerung besitzt."
+	},
+	"striderrazorback" : {
+		"name" : "Verlassener",
+		"description" : "Schwerer Angriffs-/Riot Walker",
+		"helptext" : "Der Verlassene ist ein uraltes Design, das sogar noch vor den Koalitionskriegen existierte. Er wurde in einer vergangenen Ära von vergessenen Völkern gebaut und erst kürzlich wiederentdeckt. Er verfügt über einen mächtigen Angriffsschild, der unvorstellbaren Schaden absorbieren kann. Ausgestattet mit zwei hochexplosiven Maschinengewehren und einem schweren Laser verfügt der Verlassene über enorme Frontalkraft. Seine Schwäche sind jedoch Gegner, die sich ihm nähern und unter seinen Schild gelangen. Seine schwache Panzerung (für einen Strider) und seine langsame Wendegeschwindigkeit ermöglichen es Angreifern, ihn von der Seite anzugreifen und schnell zu erledigen."
+	},
+	"platestrider" : {
+		"name" : "Strider Plate",
+		"description" : "Konstruiert Strider",
+		"helptext" : "Die Strider Plate ist die Miniaturversion des Strider Hub. Wie ihr großer Bruder setzt sie Strider ein, die „riesigen Mechas“, die auf dem Schlachtfeld Ehrfurcht und Angst verbreiten. Anders als in einer normalen Fabrik wird die Platte nur benötigt, um ein Projekt zu beginnen, nicht um es zu beenden."
+	},
+	"factorycloak" : {
+		"name" : "Ambusher Factory",
+		"description" : "Produziert getarnte, mobile Leichtläufer",
+		"helptext" : "Die Ambusher Factory legt Wert auf Tarnung und Explosionsschaden statt auf rohe Gewalt und Robustheit. Sie nutzt Tarnung, Mobilität und EMP-Waffen, um die Schwachstellen des Gegners zu treffen. Sie ist mit einem starken Radarstörer und einem Tarnfeld ausgestattet. Wichtige Einheiten: Lurker, Waylayer, Assailant, Snare, Sparky"
+	},
+	"amphlaunch" : {
+		"name" : "Lobster",
+		"description" : "Amphibienwerfer-Bot",
+		"helptext" : "Da der Lobster über keine eigene Bewaffnung verfügt, setzt er auf Bedrohungen andere Einheiten ein. Obwohl er ursprünglich für den schnellen Einsatz an der Küste konzipiert war, ist er vielseitig einsetzbar und kann sogar gegnerische Einheiten offensiv abwerfen."
+	},
+	"tankarty" : {
+		"name" : "Polierer",
+		"description" : "Indirekte Feuerartillerie",
+		"helptext" : "Der Polierer ist ein indirektes Artilleriegeschütz, das sich im Allgemeinen für Einsätze in der hinteren Linie eignet. Seine Granate explodiert in der Luft, bevor sie auf dem Boden aufschlägt und Flächenschaden verursacht. Geeignet gegen extrem langsame schwere Panzer und dichte Verteidigungsverbände."
+	},
+	"staticmissilesilo" : {
+		"name" : "Raketensilo",
+		"description" : "Produziert taktische Raketen",
+		"helptext" : "Das Raketensilo kann bis zu vier Marschflugkörper bauen und aufnehmen. Es bietet dank verschiedener Sprengkopftypen hervorragende Angriffsmöglichkeiten aus der Distanz für offensive und defensive Zwecke."
+	},
+	"spiderscout" : {
+		"name" : "Wolf",
+		"description" : "Leichter Spinnenjäger",
+		"helptext" : "Der charakteristische Leuchtspurstrahl des Wolfs wurde in den Jahren vor den Koalitionskriegen verbessert und ist eine bahnbrechende Waffe. Er ermöglicht die Fernverfolgung von Feinden mithilfe spezieller ionisierender Strahlung, die von Langstreckenscannern leicht erfasst werden kann. Dadurch können vom Strahl getroffene Einheiten auch außerhalb der Sensor- und Radarreichweite erkannt werden. Dies ermöglicht nicht nur die Erkennung von Einheiten aus der Entfernung, sondern verlangsamt sie auch."
+	},
+	"energyfusion" : {
+		"name" : "Fusionsreaktor",
+		"description" : "Kraftwerk: +25e, steigt mit der Zeit",
+		"helptext" : "Fusionsreaktoren liefern eine gute, gleichmäßige Energieleistung zu einem fairen Preis. Sie sind attraktive Ziele und nicht besonders gut gepanzert, daher sollten sie gut geschützt werden. Fusionsreaktoren steigern ihre Leistung mit der Zeit, wenn sie sich erhitzen. Daher sollten sie gut geschützt werden (oder schnell aufgespürt werden)."
+	},
+	"chickenlandqueen" : {
+		"name" : "Chicken Queen",
+		"description" : "Gackerhuhn!",
+		"helptext" : "Zwei Worte: LAUFT WEG! Die Chicken Queen ist die Matriarchin der Thunderbird-Kolonie und ist im Zorn kaum zu stoppen. Sie kann feuriges Napalm spucken, Sporen versprühen, um Flugzeuge zu zerstören, und Landeinheiten von sich wegstoßen. Vor allem aber können ihre Kiefer den größten Angriffsroboter in Sekundenschnelle zerreißen. Nur der entschlossenste und konzentrierteste Angriff kann dieses Biest stoppen."
+	},
+	"tankassault" : {
+		"name" : "Barbar",
+		"description" : "Angriffspanzer",
+		"helptext" : "Ein schwerer Kampfpanzer. Der Barbar zeichnet sich durch hohe Schadensabsorption in offenen Schlachten aus, ist aber aufgrund seiner geringen Feuerrate nicht so gut gegen Schwärme geeignet, und seine schwere Panzerung geht auf Kosten der Manövrierfähigkeit."
 	},
 	"chicken_listener" : {
 		"name" : "Listener",
-		"description" : "Grabender, mobiler Körperschallmelder",
-		"helptext" : "Der Listener ist eine weiterentwickelte Form des Diggers. Zwar hat er seine Kampffertigkeiten verloren, doch im Gegenzug eine einzigartige Sinnesempfindung im Hören erhalten, was es ihm erlaubt gegnerische Bodentruppen haargenau zu lokalisieren."
+		"description" : "Eingrabender mobiler Seismikdetektor",
+		"helptext" : "Der Listener ist eine Weiterentwicklung des Digger. Er hat zwar alle Kampffähigkeiten verloren, verfügt aber über ein einzigartiges Gehör, das es ihm ermöglicht, die Position feindlicher Bodentruppen genau zu orten."
 	},
-	"factoryamph" : {
-		"name" : "Amphbot Factory",
-		"description" : "Produziert amhpibische Roboter",
-		"helptext" : "Diese Fabrik stellt langsame jedoch robuste, amphibische Roboter her. Unterwasser reparieren sich diese Roboter meist automatisch. "
+	"cloakbomb" : {
+		"name" : "Wichtel",
+		"description" : "Getarnte EMP-Bombe",
+		"helptext" : "Der Wichtel verlässt sich auf seine Geschwindigkeit und Tarnung, um ungenauen Waffen auszuweichen, insbesondere denen von Angreifern und vielen Plänklern. Er kann schwere Einheiten oder Gruppen leichter Angreifer lähmen, die ihn erst in Reichweite töten können. Angreifer oder Lauerer können die hilflosen Gegner dann gefahrlos ausschalten. Kontern Sie mit Verteidigungsanlagen oder einzelnen billigen Einheiten, um eine vorzeitige Detonation auszulösen."
 	},
-	"factoryship" : {
-		"name" : "Shipyard",
-		"description" : "Produziert Schiffe",
-		"helptext" : "Im Shipyard kannst du Schiffe jeder Art und für jeden Zweck bauen."
-	},
-	"vehcapture" : {
-		"name" : "Dominatrix",
-		"description" : "Kaperungsfahrzeug",
-		"helptext" : "Der Dominatrix erobert Einheiten, hetzt sie gegen die ehemaligen Verbündeten auf. Mehrere Dominatrixe können ein Ziel schneller erobern, obwohl nur einer von ihnen der Kontrolleur dieser Einheit wird. Nachdem eine gegnerische Einheit unter Kontrolle gebracht wurde, kann der Dominatrix für fünf Sekunden nicht schießen. Sobald ein Dominatrix zerstört wurde, sind alle Einheiten unter seiner Kontrolle wieder frei."
-	},
-	"factoryjump" : {
-		"name" : "Jumpbot Factory",
-		"description" : "Produziert Spezial- und Sprungdüsenroboter",
-		"helptext" : "Hier werden außergewöhnliche Einheiten erzeugt, die durch spezielle Fähigkeiten Distanzen schnell überbrücken können, um in den Nahkampf zu treten oder auch, um Hindernisse schnell zu überbrücken. Wichtigste Einheiten: Pyro, Moderator, Jack, Firewalker, Jugglenaut"
-	},
-	"raveparty" : {
-		"name" : "Disco Rave Party",
-		"description" : "Zerstörendregenbogenwerfer",
-		"helptext" : "Der Disco Rave Party verschießt sechs verschiedene Partygeschosse auf deinen Feind, wobei jedes Geschoss eine Überraschung darstellt. Ein Spaß für die ganze Familie!"
+	"shieldriot" : {
+		"name" : "Wächter",
+		"description" : "Abgeschirmter Wellenprojektor",
+		"helptext" : "Der Wächter sendet einen elektromagnetischen Störimpuls in einem weiten Umkreis aus, der gegnerische Einheiten beschädigt und verlangsamt. Verbündete Einheiten bleiben unberührt."
 	},
 	"chickenc" : {
 		"name" : "Basilisk",
-		"description" : "Geländegängige Rioteinheit",
-		"helptext" : "Der Basilisk erklettert Wände wie eine Spinne und kann somit den Gegner mit seiner hoch ätzenden Spucke überraschen. Nur ein wachsames Auge hält diese Viecher von deiner Basis fern. Kampfhubschrauber sind die beste Lösung gegen die Basiliskeneinfälle."
+		"description" : "Riot-Assault Chicken",
+		"helptext" : "Der Basilisk klettert wie eine Spinne Wände hoch, um den Feind mit seinem hochgradig säurehaltigen Speichel zu überraschen. Nur aufmerksames Beobachten verhindert, dass diese Viecher über Hügel schlendern und eure Basis aus unerwarteten Richtungen zerstören. Kampfhubschrauber sind die beste Lösung gegen Basilisk-Einfälle."
 	},
-	"vehassault" : {
-		"name" : "Ravager",
-		"description" : "Sturmfahrzeug",
-		"helptext" : "Zwar teuer, aber auch kraftvoll ist der Ravager, der in der Lage ist, sich selbst gegen die meisten Gegner am Leben zu halten. Obwohl seine Manövrierfähigkeit unglaublich schlecht ist, seine Stärke ist sich mit der Maximalgeschwindigkeit geradeaus zu bewegen. Währenddessen ist es fast unmöglich gegen ihn zu kämpfen. Deshalb solltest du auch darauf achten, dass du ihn im Kampf immer geradeaus bewegst. Das Projektil ermöglicht auch den bogenförmigen Beschuß, um z.B. über Wracks oder Einheiten zu schießen. Anfällig gegen Massen von Crawling Bomben."
+	"hoverraid" : {
+		"name" : "Spear",
+		"description" : "Schnellangriffs-Luftkissenfahrzeug",
+		"helptext" : "Der Spear ist der Raider/Scout der Luftkissenpflanze. Er verursacht mit seiner Gauss-Streukanone ordentlichen Schaden und bietet eine leicht zugängliche Methode zur Informationsbeschaffung, während er mäßig schnell ist. Seine Gauss-Streukanone kann auch Unterwasserziele treffen, allerdings mit geringerer Effizienz."
 	},
-	"dronecarry" : {
-		"name" : "Gull",
-		"description" : "Trägerdrohne",
-		"helptext" : "Diese kleine, aggressive Drohne verfügt über ein Plasma-Maschinengewehr, welches in Schwärmen auch grösseren Einheiten gefährlich werden kann."
-	},
-	"cloakheavyraid" : {
-		"name" : "Scythe",
-		"description" : "Getarnter Raider Roboter",
-		"helptext" : "Der Scythe ist nicht sehr zäh im Standkampf, aber seine Tarnfähigkeit ermöglicht es ihm hinter die feindliche Verteidigung zu gelangen und so die gegnerische Ökonomie zu beeinträchtigen."
-	},
-	"veharty" : {
-		"name" : "Badger",
-		"description" : "Artillerie Minenleger Fahrzeug",
-		"helptext" : "Der Badger legt Minen aus der Ferne, die ziemlich effektiv sind, aber nur eine begrenzte Lebensdauer besitzen. Er bedindet sich meist außerhalb der Reichweiten der Verteidigung, aber ist nur schwach gepanzert und kann nicht allzu schnell fliehen. Von daher begleite ihn lieber mit ein paar deiner Einheiten."
-	},
-	"staticrearm" : {
-		"name" : "Airpad",
-		"description" : "Repariert automatisch eigene/verbündete Lufteinheiten, jedes Pad repariert mit 2.5 e/s",
-		"helptext" : "Das Airpad repariert bis zu vier Flugzeuge gleichzeitig. Es befüllt und betankt außerdem die Bomber."
-	},
-	"striderantiheavy" : {
-		"name" : "Ultimatum",
-		"description" : "Desintegrator Wanderer (Anti-Strider)",
-		"helptext" : "Ultimatum beinhaltet nur eine Waffe: ein Desintegrator, welche gegnerische Panzer mit einem Schlag vaporisieren kann. Am meisten wird dafür er gebraucht, sich an gegenerische, harte Streicher heranzuschleichen und diese mit einigen Schüssen zu erledigen. Verteidigung gegen sie wird erreicht, indem man seine Schwergewicht mit leichten Einheiten beschützt."
+	"hoverheavyraid" : {
+		"name" : "Blade",
+		"description" : "Phaser-Unterstützungsschiff",
+		"helptext" : "Die Blade nutzt ihre Disruptor-Phaser, um gegnerische Einheiten zu verlangsamen. Der Phaserstrahl hat einen leichten Flächenschaden, der nahe Einheiten bis zum Schneckentempo verlangsamt."
 	},
 	"chicken_digger" : {
 		"name" : "Digger",
-		"description" : "Eingrabender Scout/Raider",
-		"helptext" : "Der Digger gräbt sich mit seinen scharfen Klauen auch durch das härteste Gestein. So kann er sich eingraben und sich im Untergrund sehr langsam fortbewegen, wo man ihn nur mit seismischen Detektionsgeräten entdecken kann."
-	},
-	"tankriot" : {
-		"name" : "Ogre",
-		"description" : "Schwerer Riot Unterstützungspanzer",
-		"helptext" : "Erstaunlich beweglich für eine Rioteinheit. Der Ogre ist mit Zwillings-Hochgeschwindigkeits Splitterraketen ausgerüstet, die verheerend für leichte Einheiten und Lufteinheiten sind, obwohl sie nur eine begrenzte Reichweite haben. Der Ogre wird schnell von Sturmeinheiten überrascht und sogar von Raider, weshalb du ihn mit deinen Abschirmungseinheiten beschützen musst. Anders als andere Rioteinheiten besitzt der Ogre die nötige Geschwindigkeit und Reichweite, um sich gegen die meisten Skirmishern zu halten."
+		"description" : "Grabender Späher/Raider",
+		"helptext" : "Die starken Klauen des Diggers können sich wie Soße durch härtestes Gestein graben. So kann er sich unbemerkt im Untergrund fortbewegen und überall dort auftauchen, wo er Chaos anrichten kann. Schützen Sie Ihre Wertgegenstände direkt, da Digger Ihre Hauptverteidigungslinien umgehen können."
 	},
 	"chicken_leaper" : {
-		"name" : "Leaper",
-		"description" : "Hopping Raider",
-		"helptext" : "Der Leaper ist die am schnellsten angreifende Chickeneinheit. Er überrennt die Gegner und kann Hindernisse überspringen."
+		"name" : "Gander",
+		"description" : "Fettes Huhn",
+		"helptext" : "Hilfetext wird hinzugefügt"
 	},
-	"shieldarty" : {
-		"name" : "Racketeer",
-		"description" : "Disarming Artillery",
-		"helptext" : "The Racketeer launches long range missiles that can disarm key enemy defences or units before assaulting them. Only one Racketeer is needed to keep a target disarmed, so pick a different target for each Racketeer. It is excellent at depleting the energy of enemy shields and rendering large units harmless."
+	"chickenr" : {
+		"name" : "Kentucky",
+		"description" : "Antistatisches Artilleriehuhn",
+		"helptext" : "Der Lobber ist eine Art organische Artillerie und verschießt Giftkugeln mit hoher Flugbahn über weite Distanzen. Er stellt ein Problem für diejenigen dar, die sich übermäßig auf statische Verteidigung verlassen, ist aber bei direkten Angriffen praktisch hilflos."
 	},
 	"turrettorp" : {
 		"name" : "Urchin",
 		"description" : "Torpedowerfer",
-		"helptext" : "Dieser Torpedowerfer dient zur Verteidigung gegen Schiffe und U-Boote."
-	},
-	"roost" : {
-		"name" : "Roost",
-		"description" : "Erzeugt Chicken",
-		"helptext" : "In den Nestern der Chicken wird die Brut herangezogen und nach einer gewissen Zeit auf die restliche Welt losgelassen."
-	},
-	"hoverarty" : {
-		"name" : "Lance",
-		"description" : "Mobiler Tachyonen Beschleuniger (Artillerie/Anti-Heavy)",
-		"helptext" : "Lances Waffe, genannt \"der Blaue Laser des Todes\", hat die Macht und Präzision die meisten Einheiten mit einem einzigen Schuss zu vernichten. Nutze ihn gegen gut gepanzerte Einheiten, aber halte ihn hinter den Frontlinien - er besitzt nur wenig Durchhaltevermögen und kann nicht ruckartig weglaufen."
-	},
-	"dynsupport1" : {
-		"name" : "Engineer Commander",
-		"description" : "Ökonomie/Untersützung Kommandant",
-		"helptext" : "Der geheimnisvolle Engineer Commander nutzt ein eher unothodoxes Waffenset besteht. Jedoch fehlt es ihm an Rüstung und Geschwindigkeit, darum macht sich dieser Unterbau vor allem durch den inhärenten Baubonus beliebt."
-	},
-	"chickenr" : {
-		"name" : "Lobber",
-		"description" : "Artillerie",
-		"helptext" : "Eine Form organischer Artillerie. Der Lobber schleudert Giftbälle in einer hohen Flugkurve über lange Distanzen. Er stellt eine Problem für diejenigen dar, die sich auf stationäre Verteidigungsanlagen verlassen. Relativ hilflos ist er, sobald er direkt angegriffen wird."
-	},
-	"hovercon" : {
-		"name" : "Quill",
-		"description" : "Konstruktionsluftkissenboot",
-		"helptext" : "Quill erlaubt dir leichtgängige Expansionen über Land und See."
-	},
-	"turretriot" : {
-		"name" : "Stardust",
-		"description" : "Anti-Schwarm EMG",
-		"helptext" : "Stardust ist ein Geschützturm mit einem lang perfektionierten und tödlichen energetischen Maschinengewehr. Zwar besitzt es nur eine kurze Reichweite, wodurch es sehr verletzbar gegenüber Skirmishern ist, dennoch machen es die hohe Feuerrate und die AoE zu einer guten Verteidigung gegen Schwärme und leichte Einheiten."
-	},
-	"turretmissile" : {
-		"name" : "Picket",
-		"description" : "Leichter Raketenturm (Flugabwehr/Skirmish)",
-		"helptext" : "Der Picket ist ein leichter, multifunktionaler Raketenturm. Er eignet sich gut, um Einheiten aus der Distanz zu töten und bietet ein wenig Flugabwehr. Außerdem zerlegt er feindliche LLT aufgrund seiner größeren Reichweite. Dennoch ist er extrem schwach gepanzert und zerbricht durch jedes Niesen."
-	},
-	"cloakcon" : {
-		"name" : "Conjurer",
-		"description" : "Getarnter Konstruktionsroboter",
-		"helptext" : "Der Conjurer besitzt einen Störsender mit kurzer Reichweite und ein Tarngerät, um geheim und unerkannt expandieren zu können. Er ist auch mit einem kleinen Tarnschild ausgestattet, der im Gegensatz zu den vorgenannten Fähigkeiten nutzt Energie."
-	},
-	"gunshipaa" : {
-		"name" : "Trident",
-		"description" : "Flugabwehr Hubschrauber",
-		"helptext" : "The Trident is a slow gunship that cuts down enemy aircraft with missiles. It is much slower than other gunships, so it is much easier to kill the Trident with ground units than with planes."
-	},
-	"turretlaser" : {
-		"name" : "Lotus",
-		"description" : "Leichter Laserturm",
-		"helptext" : "Der Lotus ist einer der Basisgeschütztürme. Eine wendige, massive Anti-Boden Waffe ermöglicht ihm die Verteidigung gegen Aufklärer oder auch ein, oder zwei Raidern. Von Skirmishern, Artillerie oder Sturmeinheiten kann er allerdings ohne Schutz sehr schnell überwältigt werden."
-	},
-	"hoverminer" : {
-		"name" : "Dampener",
-		"description" : "Minelaying Hover",
-		"helptext" : "The Dampener deploys mines a short distance from itself."
-	},
-	"shiptorpraider" : {
-		"name" : "Hunter",
-		"description" : "Torpedo-Boat (Raider)",
-		"helptext" : "The Torpedo Boat is a mobile raider and anti-submarine unit. It is effective against underwater units and large vessels."
-	},
-	"turretimpulse" : {
-		"name" : "Newton",
-		"description" : "Gravitationsturm - An zum Abstoßen, Aus zum Anziehen",
-		"helptext" : "Der Newton ist mit einem experimentellen Gravitonprojektor bewaffnet. Diese Waffe so gut wie keinen direkten Schaden, denn sie kann Einheiten anziehen und abstoßen. Das kann entweder mit deinen eigenen Einheiten passieren oder mit feindlichen."
-	},
-	"turretheavylaser" : {
-		"name" : "Stinger",
-		"description" : "Hochenergetischer Laserturm",
-		"helptext" : "Der Stinger ist ein durchschnittlicher Lasergeschützturm. Seine drei rotierenden Laserkanonen können so gut wie jede kleine Einheit töten, aber die langsame Feuerrate macht den Stinger anfällig für große Gruppen, sobald er nicht genützend abgesichert ist."
-	},
-	"tankheavyarty" : {
-		"name" : "Tremor",
-		"description" : "Schwerer Saturation Artillerie Panzer",
-		"helptext" : "Das Prinzip hinter dem Tremor ist einfach: flute ein Areal mit genug Schüssen und du wirst irgendwas, wenigstens einmal, treffen. Langsam, schwerfällig, anfällig und extrem beängstigend ist der Tremor, weshalb er gegen dichbesiedelte Gebiete sinnvoll einzusetzen ist."
-	},
-	"dynrecon1" : {
-		"name" : "Recon Commander",
-		"description" : "Hochmobiler Kommandant",
-		"helptext" : "Bei dem Recon Commander dreht sich alles um Mobilität und List. Dieser schwach gepanzerte Grundsatz kann um viele Spezialwaffen und -module erweitert werden. Er besitzt außerdem einen Düsenstrahl zum Springen."
-	},
-	"fakeunit" : {
-		"name" : "Fake radar signal",
-		"description" : "Created by scrambling devices.",
-		"helptext" : "Fake unit for technical purposes."
-	},
-	"spiderantiheavy" : {
-		"name" : "Widow",
-		"description" : "Spion, Anti-Heavy",
-		"helptext" : "Der Widow ist für zwei Dinge nützlich. Erstens ist er ein exzellenter Aufklärer und sehr schwer zu entdecken. Er kann sich tief hinter die feindlichen Linien begeben. Außerdem besitzt er die Eigentschaft einen paralysierenden Bolzen abzuschießen, der jedes Ziel einfriert, was gegen schwere Einheiten und feindliche Infrastruktur sehr nützlich ist."
-	},
-	"chicken_roc" : {
-		"name" : "Roc",
-		"description" : "Heavy Attack Flyer",
-		"helptext" : "Large, angry and capable of fighting both air and land opposition, the Roc is a formidable flying chicken."
-	},
-	"planeheavyfighter" : {
-		"name" : "Raptor",
-		"description" : "Luftüberlegenheitsjäger",
-		"helptext" : "Der Raptor ist darauf spezialisiert, alles vom Himmel zu holen, was dort umherfliegt. Er ist stabil genung, um begrenztes Flugabwehrfeuer auszuhalten, obwohl er keine Möglichkeit zum Angriff auf Bodenziele besitzt."
-	},
-	"chicken_blimpy" : {
-		"name" : "Blimpy",
-		"description" : "Dodo Bomber",
-		"helptext" : "Blimpy wirft Dodos auf ahnungslose Heere und Basen ab."
-	},
-	"jumpassault" : {
-		"name" : "Jack",
-		"description" : "Melee Sturmangriff Springer",
-		"helptext" : "Der Jack ist ein Melee Sturmangriff Roboter mit Sprungdüsen. Ein paar Jacks können schnell die meisten Verteidigungslinien egalisieren. Seine kleine Reichweite und die Langsamkeit machen ihn aber sehr verwundbar gegen Skirmisher."
-	},
-	"turretemp" : {
-		"name" : "Faraday",
-		"description" : "EMP Waffe",
-		"helptext" : "Faraday ist ein schlagkräftiger EMP Turm. Er hat einen großen Radius, sowie hohen Schaden. Er vervollständigt die Effekte anderer Türme, doch alleine ist er ziemlich nutzlos. Falls geschlossen, besitzt er mehr Lebenspunkte. Beachte dennoch seinen Flächenschaden, welcher auch nahegelegene eigene Einheiten paralysieren kann."
-	},
-	"turretantiheavy" : {
-		"name" : "Lucifer",
-		"description" : "Tachyonen Beschleuniger - Benötigt ein angeschlossenes Stromnetz von 50 Energie, um feuern zu können.",
-		"helptext" : "Innerhalb der hart gepanzerten Hülle befindet sich ein verheerender Tachyonen Beschleuniger. Diese furchteinregende Waffe ist imstande in einem riesigen Umkreis punktgenaue Zerstörung nach sich zu ziehen, vorausgesetzt du verbindest es mit einer Energiequelle. Beachte aber, dass der AnniHilator eine dezidierte Unterstützungswaffe ist; unbewacht wird er schnell von Angreifern überrumpelt."
-	},
-	"chicken_drone" : {
-		"name" : "Drone",
-		"description" : "Verwandelt sich in eine Chickenstruktur",
-		"helptext" : "Ein unglücklicher Nicht-Angriff Organismus, dessen einziger Zweck es ist, sich in eine Chickenstruktur zu verwandeln."
-	},
-	"bomberprec" : {
-		"name" : "Raven",
-		"description" : "Präzisionsbomber",
-		"helptext" : "Der Raven wirft eine einzige Bombe mit hohem Schaden ab. Ideal fungiert er dazu, einzelne, strategisch wichtige Gebäude wie z.B. Anti-Atom zu zerstören, um dann mit seinen Haupteinheiten einzufallen. Kleinere Einheiten werden aber nur schwelich getroffen und sollten von daher auf anderem Wege bekämpft werden."
-	},
-	"turretaalaser" : {
-		"name" : "Razor",
-		"description" : "Gehärtetes Flugabwehrlaser",
-		"helptext" : "Der Razor ist ein abgehärteter Flugabwehrturm, dessen hohe Trefferpunkte und Panzerungsbonus es für Gegner, sobald geschlossen, enorm schwer macht, ihn zu zerstören."
-	},
-	"striderbantha" : {
-		"name" : "Paladin",
-		"description" : "Schwerer Kampfstreicher",
-		"helptext" : "Der Paladin ist die Lösung für eine besonders schwierig zu knackende Verteidigungslinie. Dazu besitzt er einen Tachyonen Beschleuniger und Marschflugkörper für Pattsituationen, blitzschnelle Handfeuerwaffen für den normalen Kampf und haufenweise Munition. Dennoch gib Acht darauf, dass er gegen Luftangriffe fast schutzlos ist."
-	},
-	"amphbomb" : {
-		"name" : "Limpet",
-		"description" : "Amphibious slow mine",
-		"helptext" : "The Limpet can dodge most slow projectiles thanks to its agility and small size, allowing it to get close to enemy units in order to detonate, slowing and damaging them."
-	},
-	"factoryveh" : {
-		"name" : "Rover Assembly",
-		"description" : "Produziert Radfahrzeug",
-		"helptext" : "Der Traditionalist unter den Fabriken. Die Rover Assembly ist ideal für den Blitzkrieg, denn schnelle und hoch aggressive Einheiten werden hier gebaut. Diese Einheiten machen ihren Mangel an Geschwindigkeit mit reichlich Feuerkraft wieder wett. Wichtigste Einheiten: Dart, Scorcher, Ravager, Ripper, Fencer"
-	},
-	"turretaaflak" : {
-		"name" : "Thresher",
-		"description" : "Flugabwehrkanone",
-		"helptext" : "Die Cobraflak verteidigt deine Basis vor großen Gruppen gegnerischer Lufteinheiten, ermöglicht durch die schnelle Schussfrequenz der Flak. Für Bomber oder andere größere Flugeinheiten eignet sich diese Flak nur bedingt, da der Schaden nicht besonders groß ist."
-	},
-	"spiderassault" : {
-		"name" : "Hermit",
-		"description" : "Geländegängige Sturmspinne",
-		"helptext" : "Der Hermit kann unglaublich viel Schade einstecken und ist als Schutzschild für schwächere, oder zu schonende Einheiten, hervorragend geeignet."
-	},
-	"nebula" : {
-		"name" : "Nebula",
-		"description" : "Lufttraeger",
-		"helptext" : "Die Nebula ist stark und ungeschickt, aber sie hat ein Schild um sich zu schutzen und kann seine einige Jaegerdrohne herstellen."
-	},
-	"chicken_shield" : {
-		"name" : "Blooper",
-		"description" : "Schild/Luftabwehr",
-		"helptext" : "Beschützt nebenstehende Chicken."
-	},
-	"hoveraa" : {
-		"name" : "Flail",
-		"description" : "Flugabwehrgleiter",
-		"helptext" : "Der Flail verschießt eine einzige, große Flugabwehrrakete auf mittlerer Distanz, die wirklich großen Schaden anrichtet."
-	},
-	"gunshipheavytrans" : {
-		"name" : "Hercules",
-		"description" : "Schwerer, bewaffneter Lufttransport",
-		"helptext" : "Der Hercules kann jede Landeinheit im Spiel befördern. Seine doppelläufige Laserkanone und sein automatisches Frachtauswurfsystem machen ihn ideal für den Transport von Einheiten in umkämpfte Landezonen."
-	},
-	"striderfunnelweb" : {
-		"name" : "Funnelweb",
-		"description" : "Drone/Shield Support Strider",
-		"helptext" : "The slow all-terrain Funnelweb features an area shield and a powerful drone complement."
-	},
-	"factoryhover" : {
-		"name" : "Hovercraft Platform",
-		"description" : "Produziert Aerogleiter",
-		"helptext" : "Die Hovercraft Platform ist schnell und tödlich und eröffnet dir die Möglichkeit Wasser und Boden gleichzeitig zu überqueren und somit deinen Gegner geschickt zu überlisten. Wichtigste Einheiten: Dagger, Halberd, Scalpel, Mace, Lance"
-	},
-	"chickend" : {
-		"name" : "Chicken Tube",
-		"description" : "Verteidigung und Energiequelle",
-		"helptext" : "Tube ist die einzige Verteidigungsanlage der Chicken und verschießt tödliche Sporen gleichermaßen gegen Luft- und Bodenziele."
-	},
-	"tiptest" : {
-		"name" : "Turn In Place test",
-		"description" : "Sturmfahrzeug",
-		"helptext" : "Zwar teuer, aber auch kraftvoll ist der Ravager, der in der Lage ist, sich selbst gegen die meisten Gegner am Leben zu halten. Obwohl seine Manövrierfähigkeit unglaublich schlecht ist, seine Stärke ist sich mit der Maximalgeschwindigkeit geradeaus zu bewegen. Währenddessen ist es fast unmöglich gegen ihn zu kämpfen. Deshalb solltest du auch darauf achten, dass du ihn im Kampf immer geradeaus bewegst. Das Projektil ermöglicht auch den bogenförmigen Beschuß, um z.B. über Wracks oder Einheiten zu schießen. Anfällig gegen Massen von Crawling Bomben."
-	},
-	"rocksink" : {
-		"name" : "Rocking Damage Sink thing",
-		"description" : "Rocks when you shoot at it.",
-		"helptext" : "Technical unit."
-	},
-	"bomberriot" : {
-		"name" : "Phoenix",
-		"description" : "Napalmbomber",
-		"helptext" : "Die Napalmbomben des Firestorms dezimieren große Haufen an Einheiten und leichten Bauwerken."
-	},
-	"staticjammer" : {
-		"name" : "Cornea",
-		"description" : "Verhüllender Turm / Störsender",
-		"helptext" : "Störsender wie diese behindern das feindliche Radar, verschleiern, die von deinen Einheiten ausgelösten, Radarechos. Cornea bietet außerdem noch ein Deckmantel, um Einheiten in der Nähe vor dem Gegner zu verstecken."
-	},
-	"cloakraid" : {
-		"name" : "Glaive",
-		"description" : "Leichter Raider Roboter",
-		"helptext" : "Leicht und billig, der Glaive kann in Massen gebaut werden, stirbt aber genauso schnell und ist kaum von Nützlichkeit gegen ernsthafte Gegenwehr. Mit Riot Einheiten oder leichten Lasertürmen kontern."
-	},
-	"turretheavy" : {
-		"name" : "Desolator",
-		"description" : "Verteidigungsfestung mittlerer Reichweite - Benötigt ein angeschlossenes Stromnetz von 50 Energie, um feuern zu können.",
-		"helptext" : "Bewaffnet mit einer schweren Plasmakanone und einem Hitzestrahl nimmt die Desolator einen zentralen Punkt in der Verteidigung gegen feindliche Angriffsoffensiven ein. Die Maschine kann sich verbarrikadieren, um weitreichenden Artilleriebeschuss oder Luftangriffe zu überstehen, dabei kann sie aber nicht weiter feuern."
-	},
-	"tankassault" : {
-		"name" : "Minotaur",
-		"description" : "Sturmpanzer",
-		"helptext" : "Der Minotaur ist ein schwerer Kampfpanzer, der sich durch die Absorbtion von Schaden auszeichnet. Seine niedrige Feuerrate führt dazu, dass er mit großen Gruppen von Einheiten nicht gut klar kommt und seine schwere Panzerung wirkt sich negativ auf die Manövrierfähigkeit aus."
-	},
-	"mahlazer" : {
-		"name" : "Starlight",
-		"description" : "Planetarischer Energiemeißel",
-		"helptext" : "Diese gigantische Waffe nutzt ihren energetischen Strahl, um große Gräben im Terrain zu hinterlassen und dabei alles, was sich ihr in den Weg stellt, auszulöschen. Ebenfalls als Auslöscher von störenden Hindernissen, wie zum Beispiel nervtötende feindliche Enheiten und Basen, sehr nützlich."
-	},
-	"tele_beacon" : {
-		"name" : "Lamp",
-		"description" : "Teleport-Knoten - rechten Maustaste darauf",
-		"helptext" : "Dieser Teleport-Knoten teleportiert Einheiten zu der verknuepften Djinn."
-	},
-	"striderscorpion" : {
-		"name" : "Scorpion",
-		"description" : "Cloaked Infiltration Strider",
-		"helptext" : "The Scorpion paralyzes enemies with its lightning sting and then chews them up with its particle beam claws. Its tough carapace shrugs off most enemy fire, and can also turn the Scorpion transparent."
-	},
-	"shieldraid" : {
-		"name" : "Bandit",
-		"description" : "Mittel-leichter Raider Roboter",
-		"helptext" : "Als Raider opfert der Bandit die rohe Feuerkraft der Überlebensfähigkeit. Er ist etwas stärker als der Glaive, aber immer noch nicht stark genug, um gegen größere Kräfte zu bestehen. Mit Rioteinheiten und LLT entgegenwirken."
+		"helptext" : "Dieser Torpedowerfer bietet Schutz gegen Überwasser- und Unterwasserschiffe."
 	},
 	"tankheavyassault" : {
-		"name" : "Cyclops",
-		"description" : "Sehr schwerer Jagdpanzer",
-		"helptext" : "Der Cyclops ist der stärkste Panzer auf dem Platz. Seine mächtige Hauptkanone wurde entwickelt, um andere Einheiten ins Nirvana zu schicken. Trotzdem bewegt sich der Panzer wie eine Wasserwanne und seine kurze Reichweite macht ihn zur einfachen Beute von hochentwickelten Skirmishern oder Luftattacken."
-	},
-	"subscout" : {
-		"name" : "Lancelet",
-		"description" : "Scout/Suicide Minisub",
-		"helptext" : "The Lancelet is basically a large smart torpedo with scouting functionality. It can remain hidden in the depths to observe enemy movements, then detonate its explosive charge to sink unwary ships."
-	},
-	"tankcon" : {
-		"name" : "Welder",
-		"description" : "Bewaffneter Konstruktionspanzer",
-		"helptext" : "Mit einem kleinen Verteidigungsturm bewaffnet, kann der Welder sich selbst gegen leichte gegnerische Attacken wehren."
-	},
-	"spiderskirm" : {
-		"name" : "Recluse",
-		"description" : "Skrimish Spinne (Indirektes Feuer)",
-		"helptext" : "Eine raketenschiessende Einheit, die jedes Terrain betreten kann. Klettere mit der Spinne an Waeden hoch und ueberrasche deine Gegner mit Angriffen aus unmoeglichen Lagen. Die Raketen ohne Zielfuehrung treffen aber selten schnelle Ziele, trotzdem darf man ihre grosse Reichweite nicht vernachlaessigen."
-	},
-	"cloakjammer" : {
-		"name" : "Iris",
-		"description" : "Tarn-/Störsenderroboter",
-		"helptext" : "Der Iris besitzt ein Gerät zum Stören feindlicher Radarwellen. Des Weiteren ist er mit einem Tarnschild ausgestattet, um nahe, freundliche Einheiten zu tarnen."
-	},
-	"striderhub" : {
-		"name" : "Strider Hub",
-		"description" : "Erzeugt Strider",
-		"helptext" : "Das Strider Hub erzeugt Strider, welche sehr gefürchtet sind auf dem Schlachtfeld. Anders als normale Fabriken, wird dieser Hub nur benötigt, um ein Projekt zu starten, nicht, um es zu vollenden."
-	},
-	"cloakskirm" : {
-		"name" : "Ronin",
-		"description" : "Skirmisher Roboter (Direkt-Feuer)",
-		"helptext" : "Ronins geringer Schaden und die geringe Geschwindigkeit der Raketen wird durch seine Reichweite aufgehoben. Sie sind an Fronten sehr effektiv, da sie dort mit maximaler Reichweite agieren können. Kontere sie, indem du schnelle Einheiten schickst oder Verteidigung hinter einer Terraformmauer baust."
-	},
-	"tankarty" : {
-		"name" : "Emissary",
-		"description" : "Allzweck Artillerie",
-		"helptext" : "Die schwere, weitreichende Kanone des Emissaries macht ih zur pefekten Wahl, wenn es um einen Stellungskrieg geht und du Bauwerke usw. zerstören willst. Wie immer bei Artillerieeinheiten, musst du alledings alle feindlichen Einheiten von dem Emissary fernhalten."
-	},
-	"tacnuke" : {
-		"name" : "Eos",
-		"description" : "Taktische Rakete",
-		"helptext" : "Eine weitreichende, präzise Waffe. Die Druckwelle ist zwar klein, aber tödlich."
-	},
-	"amphimpulse" : {
-		"name" : "Archer",
-		"description" : "Amphibious Raider/Riot Bot",
-		"helptext" : "The Archer uses a powerful water cutting jet to hit enemies. Archers can float to surface in order to fight naval units."
-	},
-	"amphriot" : {
-		"name" : "Scallop",
-		"description" : "Amphibious Riot Bot (Anti-Sub)",
-		"helptext" : "A typical riot unit, the Scallop is armed with impact explosives for underwater use and a quadruple shotgun when on land."
-	},
-	"amphaa" : {
-		"name" : "Angler",
-		"description" : "Amphibischer Luftabwehrroboter",
-		"helptext" : "Angler ist eine amphibischer Luftabwehrroboter ausgelegt auf den Abschuss von Präzisionsbombern. Zwei davon können auftauchen und einen Präzisionsbomber in einer einzigen Salve zerstören."
-	},
-	"gunshipcon" : {
-		"name" : "Wasp",
-		"description" : "Schwere Konstruktionsdrohne",
-		"helptext" : "Eine schwere Konstruktionsdrohne, welche flugtauglich ist und schnell baut."
-	},
-	"subraider" : {
-		"name" : "Seawolf",
-		"description" : "Attack Submarine (Stealth Raider)",
-		"helptext" : "Stealthy, fast, and fragile, this Submarine can quickly strike unprotected targets. Slow damage allows it to effectively kill lone units. Watch out for anything with anti-sub weaponry, especially Torpedo Boats and Destroyers."
-	},
-	"tankraid" : {
-		"name" : "Kodachi",
-		"description" : "Raiderpanzer",
-		"helptext" : "Der kleine Kodachi ist ein einzigartiger Raider. Seine kleines, aber feines Fahrwerk hat genug Panzerung und Geschwindigkeit, um nahe genug an den Feind zu kommen, damit seine Waffe, eine Napalmstreubombe, abgefeuert werden kann. Er sollte dabei einen Schuß abgeben und sich danach solange wieder zurückziehen, bis der Nachladevorgang abgeschlossen ist."
-	},
-	"turretaaclose" : {
-		"name" : "Hacksaw",
-		"description" : "Flugabwehrraketenturm",
-		"helptext" : "Seine Zwillingsraketen schwer beschaedigen jedes Flugzeug in seine Reichweite, brauchen aber eine beachtliche Zeit zum Nachladen, was sie gegen leichtere Ziele nicht sehr effektiv macht."
-	},
-	"spideranarchid" : {
-		"name" : "Anarchid",
-		"description" : "Drohnengestell",
-		"helptext" : "Peitscht seine Feinde mit einem Energiestrahl!"
-	},
-	"asteroid" : {
-		"name" : "Asteroid",
-		"description" : "Space Rock",
-		"helptext" : "Asteroids can be manipulated to fall onto the planet by the Meteor Controller; they serve primarily as a weapon to crush the units they fall on, but they can also be reclaimed for resources."
-	},
-	"staticsonar" : {
-		"name" : "Sonar Station",
-		"description" : "Ortet Einheiten unter Wasser",
-		"helptext" : "Das Sonar ortet nach dem Echoprinzip von Radaranlagen feindliche Einheiten unter Wasser. Dazu strahlen sie selbst ein Signal aus und empfangen das entsprechende Echo, aus dessen Laufzeit auf die Entfernung zu den Einheiten geschlossen wird."
-	},
-	"energywind" : {
-		"name" : "Wind/Tidal Generator",
-		"description" : "Kleines Wind-/Wasserkraftwerk (variabel)",
-		"helptext" : "Windräder produzieren eine variable Menge an Energie, je nach Höhenlage und Windgeschwindigkeit. Sie sind extrem verletzlich und explodieren in einer Kettenreaktion, sobald sie zerstört werden. Platziere sie also mit Bedacht. Wasserkraftwerke sind um einiges robuster und erzeugen konstant Energie."
-	},
-	"energygeo" : {
-		"name" : "Geothermal Generator",
-		"description" : "Geothermisches Kraftwerk",
-		"helptext" : "Geothermische Anlagen sind hocheffiziente Energiequellen, die nur auf Thermalquellen auf der Karte gebaut werden können. Sie explodieren heftig, wenn sie zerstört werden. Von daher vermeide es, sie in unmittelbarer Nähe zu deiner Basis zu bauen."
-	},
-	"striderdetriment" : {
-		"name" : "Detriment",
-		"description" : "Ultimativer Sturmläufer",
-		"helptext" : "Der Detriment ist der stärkste Strider auf dem Platz. Er verteidigt sich selbst gegen Luftattacken oder nutzt seine Raketen, um entfernte Ziele zu treffen. Des Weiteren besitzt er eine Gaußkanone, die nur für einen Zweck konzipiert wurde: das schnelle und sichere Töten von starken, gegnerischen Einheiten. Beachte - der kluge Feldherr schickt seinen Detriment mit angebrachter Unterstützung aus, um Gruppen leichter Gegner, bzw. Lufteinheiten in Schach zu halten."
-	},
-	"striderdante" : {
-		"name" : "Dante",
-		"description" : "Sturm/Riotroboter",
-		"helptext" : "Der Dante ist eine schwere Sturmeinheit für den Fronteinsatz, wenn herkömmliche Mittel versagen. Sein Flammenwerfer und doppelläufiger Heat Ray sind zwar nichts besonderes, doch seine Brandraketen können in 20-Schuss Salven breite Schneisen in das Gelände schlagen."
-	},
-	"shieldcon" : {
-		"name" : "Convict",
-		"description" : "Konstruktionsroboter mit Schild",
-		"helptext" : "Der Convict ist ein ziemlich normaler Konstruktionsroboter mit einem Vorteil: er hat ein Schild um sich zu schutzen."
-	},
-	"striderarty" : {
-		"name" : "Merlin",
-		"description" : "Schwerer Raketen-Artillerie Läufer",
-		"helptext" : "Das Merlin ist ein Läufer mit Mehrfachraketenwerfer-Artilleriesystem. Es kann eine Salve von Raketen starten, was die Zerstörung von fast allem im Zielgebiet garantieren kann. Infolgedessen kann es sich schnell in freundliches Gebiet hinter den Fronteinheiten zurückziehen."
-	},
-	"staticstorage" : {
-		"name" : "Storage",
-		"description" : "Lagert Energie und Metall (500)",
-		"helptext" : "Dieser Energie- und Metallspeicher erweitert deine Lagermöglichkeiten um 500."
-	},
-	"energysolar" : {
-		"name" : "Solar Collector",
-		"description" : "Kleines Solarkraftwerk",
-		"helptext" : "Solaranlagen sind von den Energiestrukturen die mit der geringsten Kosteneffizienz, aber sie sind auch die verlässlichsten und stabilsten unter ihnen. Sobald sie angegriffen werden ziehen sie sich in eine gepanzerte Form fur 8 Sekunden zurück, die als exzellenter Schutz gegen Raider fungiert."
-	},
-	"empiricaldpser" : {
-		"name" : "Empirical DPS thing",
-		"description" : "Shoot at it for science.",
-		"helptext" : "Technical unit."
-	},
-	"staticshield" : {
-		"name" : "Aegis",
-		"description" : "Leichte Abschirmeinrichtung",
-		"helptext" : "Aegis schützt deine Einheiten in mit seinem Schild vor Angriffen, die durch den Schild absorbiert werden können, aber nur solange die nötige Energieversorgung gewährleistet ist und der Beschuss nicht zu stark wird."
-	},
-	"hoverassault" : {
-		"name" : "Halberd",
-		"description" : "Blockadebrecher Gleiter",
-		"helptext" : "Der Halberd zieht sich in seine gepanzerte Hülle zurück, sobald er nicht mehr feuert, was ihm einen exzellenten Schadenswiderstand bietet. Seine langsame, kurzreichweitige Waffe ist ungeeignet für den Einsatz gegen hochmobile Ziele."
-	},
-	"vehaa" : {
-		"name" : "Crasher",
-		"description" : "Schnelles Flugabwehr Fahrzeug",
-		"helptext" : "Crasher ist eine schnelle Antwort auf Flugzeuge. Er ist also gut genug gegen Hubschrauber."
-	},
-	"shiparty" : {
-		"name" : "Envoy",
-		"description" : "Cruiser (Artillery)",
-		"helptext" : "This Cruiser packs a powerful, long-range artillery cannon, useful for bombarding fixed emplacements and shore targets. Beware of aircraft, submarines and raider ships."
-	},
-	"chickenspire" : {
-		"name" : "Chicken Spire",
-		"description" : "Stationäre Artillerie",
-		"helptext" : "Weitreichende, stationäre Artillerie."
-	},
-	"staticradar" : {
-		"name" : "Radar Tower",
-		"description" : "Frühwarnsystem",
-		"helptext" : "Dieser Radarturm ermöglicht die frühzeitige Lokalisierung von feindlichen Einheiten in der entsprechenden Reichweite. Für den Betrieb wird eine sehr kleine Menge Energie benötigt. Die Radarbedeckung wird durch Gelände - beispielsweise Berge - blockiert."
-	},
-	"jumpbomb" : {
-		"name" : "Skuttle",
-		"description" : "Fortgeschrittene, verschleierbare Crawling Bombe",
-		"helptext" : "Der Skuttle wirft sich als Kamikazekrieger in die Schlacht und kann dir enorme Vorteile erarbeiten. Hochwirksam gegen schwere Ziele. Der Explosionsradius ist minimal, deshalb gilt: sorgfältig nutzen."
-	},
-	"factoryspider" : {
-		"name" : "Spider Factory",
-		"description" : "Produziert Spinnen",
-		"helptext" : "Ideal für unwegsames Gelände, liegt der Fokus der Spider Factory eher auf Einheiten mit großer Reichweite und Wendigkeit und weniger auf roher Gewalt. Wichtigste Einheiten: Flea, Recluse, Hermit, Crab"
-	},
-	"amphtele" : {
-		"name" : "Djinn",
-		"description" : "Amphibious Teleport Bridge",
-		"helptext" : "Djinn excels at moving large land based armies across bodies of water. When deployed it teleports units from around its pre-placed static beacon to its present location. The teleportation is one-way, so ensure the destination is safe."
-	},
-	"chickens" : {
-		"name" : "Spiker",
-		"description" : "Skirmisher",
-		"helptext" : "Spikers messerscharfe Projektile können auch die dickste Penzerung durchdringen. Zwar besitzen Spiker wenig Lebensenergie, dennoch stellen sie durchauch eine große Gefahr, für sowohl Boden- als auch Lufteinheiten, dar. Wirke den Spikern mit Einheiten entgegen, die eine größere Reichweite als sie besitzen."
-	},
-	"staticnuke" : {
-		"name" : "Trinity",
-		"description" : "Abschuß für atomare Interkontinentalraketen, Benötigt 18 M/s und 3 Minuten zum Bevorraten",
-		"helptext" : "Der Trinity verschießt verwüstende, atomare Raketen, die ganze Basen in Schutt und Asche legen können. Trotzdem kann es von einem feindlichen Anti-Atomsystem geschlagen werden. Aus diesem Grund solltest du dieses zunächst vernichten, bevor du deine Raketen abschießt."
-	},
-	"staticmissilesilo" : {
-		"name" : "Missile Silo",
-		"description" : "Produziert Raketen",
-		"helptext" : "Das Raketensilo erzeugt und lagert bis zu vier verschiedene Marschflugkörper, jede mit einem einzigartigen Sprengkopf. Das Silo bietet hervorragende Schlagkraft in Pattsituationen, sowohl für offensive, als auch defensive Zwecke."
-	},
-	"staticmex" : {
-		"name" : "Metal Extractor",
-		"description" : "Extrahiert Metall",
-		"helptext" : "Der Metallextraktor ist die primäre Quelle für die Metallförderung. Wenn du Energie bereitstellst, werden deine Extraktoren diese automatisch dazu nutzen, ihre Produktivität zu erhöhen und somit mehr Metall fördern."
-	},
-	"staticheavyradar" : {
-		"name" : "Advanced Radar",
-		"description" : "Langstreckenradar, halbiert Radarungenauigkeit",
-		"helptext" : "Der erweiterte Radarturm hat eine weitaus größere Radarreichweite als die Standardvariante. "
-	},
-	"vehcon" : {
-		"name" : "Mason",
-		"description" : "Konstruktionsfahrzeug",
-		"helptext" : "Hochmobiles, bewaffnetes Konstruktionsfahrzeug, das sich ideal für schnelle Expansionen über große Flächen eignet."
-	},
-	"spiderscout" : {
-		"name" : "Flea",
-		"description" : "Ultraleichte Kundschafter Spinne",
-		"helptext" : "Flea kann sich in unerreichbaren Gegenden verstecken, wo ein durchdachter Sensor es ermöglicht weiter zu sehen als Flea gesehen werden kann. In kleinen Gruppen kann es effektiv die gegnerischen Extraktoren überlaufen. Es macht aber nur wenig Schaden und stirbt sofort bei irgendeiner Gegenwehr."
-	},
-	"jumpaa" : {
-		"name" : "Toad",
-		"description" : "Flugabwehr Springer",
-		"helptext" : "Der Toad besitzt ein Doppel-Anti-Air-Laser und eine automatische Kanone, um gegnerische Lufteinheiten zu zerstören. Der Toad kann auch einen Sprung machen."
-	},
-	"dynassault1" : {
-		"name" : "Guardian Commander",
-		"description" : "Heavy Combat Commander",
-		"helptext" : "The Guardian Chassis features two main weapon slots and an array of heavy artillery options."
-	},
-	"gunshipkrow" : {
-		"name" : "Krow",
-		"description" : "Schwebendes Bollwerk",
-		"helptext" : "Der Krow scheint teuer und schwerfällig, aber seine unglaubliche Panzerung erlaubt ihm auch durch die größe Flugabwehr zu kommen und alles abzuholzen, was in Sichtweite seiner drei Laserkanonen kommt. Er kann sogar feindliche Jäger vom Himmel holen."
-	},
-	"chickenblobber" : {
-		"name" : "Blobber",
-		"description" : "Schwere Artillerie",
-		"helptext" : "Der große Bruder vom Lobber, der Blobber, schleudert eine weite Streuung an ätzender Schmiere. Er kann sogar die stäkrsten Schildnetze sehr schnell einschlagen, doch gegen direkte Attacken wirkt er sehr anfällig."
-	},
-	"shipskirm" : {
-		"name" : "Mistral",
-		"description" : "Raketenboot (Skirmisher)",
-		"helptext" : "Dieses Boot feuert eine Salve von vier Mittelreichweitenraketen, praktisch um See- sowie Landziele zu bombardieren. Einzig U-Boote und schnellere Einheiten sollten vermieden werden, da das Boot über keine Nahkampfwaffen verfügt."
-	},
-	"staticarty" : {
-		"name" : "Cerberus",
-		"description" : "Plasmabatterie - Benötigt ein angeschlossenes Stromnetz von 50 Energie, um feuern zu können.",
-		"helptext" : "Der Cerberus besitzt eine weitreichende (Erwiderungs-)Artilleriefähigkeit, um Zugang zu größeren Arealen zu verhindern. Er wurde nicht als Verteidigungsturm entwickelt und wird bei direktem Angriff in die Knie gezwungen."
-	},
-	"staticantinuke" : {
-		"name" : "Antinuke",
-		"description" : "Antinukleares System (Anti-Nuke)",
-		"helptext" : "Der Antinuke fängt automatisch gegnerische, atomare Interkontinentalraketen, welche in den, vom System abgedeckten, Bereich zielen, ab."
-	},
-	"spiderriot" : {
-		"name" : "Redback",
-		"description" : "Riot Spinne",
-		"helptext" : "Diese Spinne benutzt einen schnellfeuernden Teilchenbeschleunigerstrahl um kleine, flinke Einheiten effektiv zu bekämpfen."
-	},
-	"spidercrabe" : {
-		"name" : "Crab",
-		"description" : "Schwere Riot/Skirmish Spinne - Zieht sich bei Stillstand in seine Panzerung zurück",
-		"helptext" : "Die große Panzerung kann auch große Gruppen von billigen Einheiten wegstecken, sowie grundlegende Verteidigung. Sobald die Spinne zum Stillstand kommt, zieht sie sich in die gepanzerte Form zurück: ein gewaltiger Verteidigungsturm. Der Nachteil ist die große Bewegungseinschränkung."
-	},
-	"droneheavyslow" : {
-		"name" : "Viper",
-		"description" : "Kampfdrohne",
-		"helptext" : "Der Viper ist eine Kampfdrohne, die seinen Besitzer schutzt und feindliche Einheiten verlangsamt."
-	},
-	"vehscout" : {
-		"name" : "Dart",
-		"description" : "Raider/Aufklärer Fahrzeug",
-		"helptext" : "Billig und schnell, damit wird der Dart zur tödlichen Waffe in den ersten fünf Minuten eines Spiels, wenn du deinen Gegner überrumpeln willst. Raketentürme, LLT oder schnelle Einheiten stoppen die Darts."
-	},
-	"terraunit" : {
-		"name" : "Terraform",
-		"description" : "Ausgegeben: 0",
-		"helptext" : "Hier wird geschaufelt."
-	},
-	"chickenf" : {
-		"name" : "Talon",
-		"description" : "Fliegender Dornenspucker",
-		"helptext" : "Talon ist ein fliegenes Chicken! Er ist ein tödliches Rauptier, das feindliche Lufteinheiten mit seinen dicken Bolzen vom Himmel holt, diese aber auch außerordentlich gerne gegen Bodenziele richtet."
-	},
-	"spideraa" : {
-		"name" : "Tarantula",
-		"description" : "Flugabwehr Spinne",
-		"helptext" : "Eine geländegängige Flugabwehreinheit, die andere Spinnen mit ihren mittellangen Raketen gegen Luftangriffe verteidigt."
-	},
-	"staticcon" : {
-		"name" : "Caretaker",
-		"description" : "Nanoturm",
-		"helptext" : "Die effektivste Quelle an Baukraft: der Caretake ist ideal, um die Produktionsrate von Fabriken zu erhöhen oder nahegelegene Verteidigungsanlagen zu reparieren. Der Caretaker kann aber selbst keine neuen Bauten beginnen."
-	},
-	"shipscout" : {
-		"name" : "Cutter",
-		"description" : "Picket Ship (Disarming Scout)",
-		"helptext" : "Cheap, fast, and fragile, this Picket Ship is a good scout and spotter for more expensive ships. In numbers, their disarming missiles are effective against larger targets."
-	},
-	"shipriot" : {
-		"name" : "Corsair",
-		"description" : "Corvette (Raider/Riot)",
-		"helptext" : "This Corvette comes equipped with two shotguns which are effective against anything which gets close. It has no weapons effective against underwater targets."
-	},
-	"amphfloater" : {
-		"name" : "Buoy",
-		"description" : "Schwerer Amphibischer Skirmisher Roboter",
-		"helptext" : "Diese Einheit verfügt über eine Kanone, welche nicht nur über eine gute Reichweite verfügt, sondern zusätzlich den Feind mit jedem Treffer verlangsamt. Dies erschwert es dem Feind, zurückzufeuern oder abzuhauen. Da sie im Wasser nicht funktioniert, muss diese Einheit auftauchen um die Kanone abzufeuern."
-	},
-	"chicken_dodo" : {
-		"name" : "Dodo",
-		"description" : "Chicken Bombe",
-		"helptext" : "Dodos Körper besteht aus einer impulsiven Mixtur von organichen Sprengstoffen. Die kleinste Penetration und Dodo explodiert spektakulär mit einer Schockwelle, die nahegelegene Einheiten zurück schleudert. Hüte dich vor den fliegenden Gliedmaßen, die bleibende Schäden hinterlassen können."
-	},
-	"gunshipraid" : {
-		"name" : "Locust",
-		"description" : "Plünder Kampfhubschrauber",
-		"helptext" : "Der Locust ist ein leichter Kampfhubschrauber. Er besitzt nur wenig Ausdauer und macht wenig DPS. Er ist gut für direkte Attacken auf die Verteidiger (z.B. um Luftabwehr auszuschalten). Er trifft bewegte Einheiten sehr gut und erweist sich auch bei Verteidigung gegen Gegner ohne Luftabwehr als sehr nützlich."
-	},
-	"fakeunit_los" : {
-		"name" : "LOS Provider",
-		"description" : "Knows all and sees all",
-		"helptext" : "A technical unit to provide sight over an area."
-	},
-	"shieldriot" : {
-		"name" : "Outlaw",
-		"description" : "Riot Roboter",
-		"helptext" : "Der Outlaw stößt einen elektromagnetischen Störungspuls, in einem weiten Kreis um sich herum, aus, welcher feindliche Einheiten schädigt und verlangsamt. Freundliche Einheiten sind davon aber nicht betroffen."
-	},
-	"dronelight" : {
-		"name" : "Firefly",
-		"description" : "Kampfdrohne",
-		"helptext" : "Der Firefly ist eine Kampfdrohne, die seinen Besitzer schutzt."
-	},
-	"gunshipskirm" : {
-		"name" : "Harpy",
-		"description" : "Skirmisher/Flugabwehr Hubschrauber",
-		"helptext" : "Dieser leichte Kampfhubschrauber bekämpft seine Feinde mit präzisen Verfolgungsraketen. Diese verursachen zwar nicht den meisten Schaden, verlangsamen den Feind jedoch und verfehlen ihr Ziel fast nie. Die Reichweite und Geschwindigkeit dieses Hubschraubers sind eher begrenzt, dafür ist er relativ robust gebaut und kann die meisten Luft- und Bodeneinheiten effektiv bekämpfen."
-	},
-	"chickenwurm" : {
-		"name" : "Wurm",
-		"description" : "Grabender Flammenwerfer (Sturm/Riot)",
-		"helptext" : "Der Wurm \"gräbt\" sich unter die Bodenoberfläche und zeigt sich nur, wenn er Feuerbälle, die große Schneisen in das Gelände brennen, schleudert."
-	},
-	"energyfusion" : {
-		"name" : "Fusion Reactor",
-		"description" : "Fusionskraftwerk",
-		"helptext" : "Der Fusionsreaktor liefert eine gute Menge an konstanter Energie zu einem fairen Preis. Sie sind aber attraktive Ziele und schlecht gepanzert, also beschütze sie gut. Sobald ein Reaktor zerstört wird, werden Einheiten in der Nähe beschädigt."
-	},
-	"shipcon" : {
-		"name" : "Mariner",
-		"description" : "Konstruktionsschiff",
-		"helptext" : "Obwohl teuer, bietet diese Konstruktionseinheit extrem hohe Nanoleistung, kombiniert mit robuster Panzerung und Schnelligkeit."
-	},
-	"cloakaa" : {
-		"name" : "Gremlin",
-		"description" : "Flugabwehr Roboter",
-		"helptext" : "Durch seine Fähigkeit mobile Kräft vor Luftangriffen zu beschützen, gibt der Gremlin den entsprechenden Einheiten einen wichtigen Vorteil gegenüber Lufteinheiten. Verteidigungslos gegenüber Landeinheiten."
-	},
-	"amphcon" : {
-		"name" : "Conch",
-		"description" : "Amphibious Construction Bot - Armored When Idle",
-		"helptext" : "Ein robuster und effizienter Konstruktionsroboter der sowohl im Wasser als auch an Land seine Arbeit verrichtet."
-	},
-	"bomberassault" : {
-		"name" : "Eclipse",
-		"description" : "Assault Bomber (Anti-Static)",
-		"helptext" : "The Eclipse's imposing hull can weather significant punishment while steadily blazing to deliver its massive payload of devastation, but the unguided bomb has problems with hitting mobile targets, and big size makes it an easy target."
-	},
-	"shipcarrier" : {
-		"name" : "Reef",
-		"description" : "Flugzeugträger (Bomber)",
-		"helptext" : "The most versatile ship on the high seas, the carrier serves several functions. It is equipped with a manual-fire tactical missile launcher for long range bombardment and serves as a mobile repair base for friendly aircraft. Perhaps most notably, the carrier provides its own complement of surface attack drones to engage targets."
-	},
-	"shipassault" : {
-		"name" : "Siren",
-		"description" : "Destroyer (Riot/Assault)",
-		"helptext" : "This Destroyer is a general-purpose combat vessel, combining a strong area-of-effect sonic cannon, a medium-range vertical launch missile, and strong armor. Use its sonic gun against smaller opponents above and below the water, and its missile against static targets."
-	},
-	"grebe" : {
-		"name" : "Grebe",
-		"description" : "Amphibious Raider Bot",
-		"helptext" : "The Grebe is a basic raider armed with grenades - a decent short ranged anti-heavy weapon. Despite being amphibious, it cannot shoot while submerged."
-	},
-	"jumpsumo" : {
-		"name" : "Jugglenaut",
-		"description" : "Springender Sturm Roboter",
-		"helptext" : "The Jugglenaut's impressive armor makes it a near-unstoppable sphere of death. It stomps on enemy units to break up their formation and can toss the survivors around with its Gravity Beams. Its stomp is the only way it can damage buildings."
-	},
-	"shipaa" : {
-		"name" : "Zephyr",
-		"description" : "Anti-Air Frigate",
-		"helptext" : "With its powerful twin anti-air laser batteries, this Anti-Air Frigate protects your fleet from aerial attackers. As always, it is useless against targets that aren't airborne."
-	},
-	"shieldfelon" : {
-		"name" : "Felon",
-		"description" : "Shielded Riot/Skirmisher Bot",
-		"helptext" : "The Felon draws energy from its shield, discharging it in accurate bursts. Link it to other shields to increase its rate of fire."
-	},
-	"shieldskirm" : {
-		"name" : "Rogue",
-		"description" : "Skirmisher Roboter (Indirektes Feuer)",
-		"helptext" : "Der Rogue nutzt Raketen mit einer geringen Feuerrate, dafür aber mit großem Schaden. Von daher eignet er sich gut gegen Verteidigung. Gegen schnelle Einheiten sieht er alledings recht alt aus."
-	},
-	"jumpblackhole" : {
-		"name" : "Placeholder",
-		"description" : "Black Hole Launcher",
-		"helptext" : "The Placeholder is a support unit. Its projectiles create a vacuum that sucks in nearby units, clustering and holding them in place to help finish them off."
-	},
-	"shieldshield" : {
-		"name" : "Aspis",
-		"description" : "Koppelbarer Schildroboter",
-		"helptext" : "Der Aspis bietet den umliegenden, alliierten Einheiten durch seinen energetischen Schild Schutz vor Angriffen. Doch sobald Feinde in den Schild kommen oder sich die Energie dem Ende neigt, verfällt dieser Schutz und deine Einheiten stehen dem Gegner vielleicht schutzlos gegenüber. Mehrere Aspis verbinden sich untereinander zu einem großen Schild, was den Vorteil hat, dass Angriffe besser absorbiert werden können."
-	},
-	"factoryshield" : {
-		"name" : "Shieldbot Factory",
-		"description" : "Produziert zähe Roboter",
-		"helptext" : "Die Shieldbot Factory ist robust aber flexibel. Diese Einheiten werden gebaut, um all die Schmerzen auf sich zu nehmen und wieder zu verteilen, aber ohne Kompromisse bei der Mobilität. Schlauer Einsatz von Einheitenkombos wird gut belohnt. Wichtigste Einheiten: Bandit, Thug, Outlaw, Snitch, Dirtbag"
-	},
-	"shieldscout" : {
-		"name" : "Dirtbag",
-		"description" : "Behalter voller Dreck",
-		"helptext" : "The Dirtbag exists to block enemy movement and generally get in the way. They are so dedicated to this task that they release their dirt payload upon death to form little annoying mounds. While waiting for their fate Dirtbags enjoy headbutting and scouting."
-	},
-	"shipheavyarty" : {
-		"name" : "Shogun",
-		"description" : "Battleship (Heavy Artillery)",
-		"helptext" : "A single salvo from one of these will pummel almost any surface target into submission. The psychological effects of the muzzle flash and the ship recoiling in the water are impressive enough, to say nothing of the effects of a direct hit. Be warned--battleships are not meant to be used on their own, lacking in anti-air and anti-submarine protection as they are."
-	},
-	"tankheavyraid" : {
-		"name" : "Blitz",
-		"description" : "Blitzschlag Raider Panzer",
-		"helptext" : "Der Blitz ist ein hoch entwickelter Raider, dessen Waffe, eine Blitzkanone, hauptsächlich paralysierenden Schaden austeilt. Auf diesem Wege kann der Blitz Türme ausschalten und sich so durch die feindlichen Verteidigungslinien walzen, bis zur Egalisierung der feindlichen, ökonimischen Grundversorgung."
-	},
-	"factorygunship" : {
-		"name" : "Gunship Plant",
-		"description" : "Produziert Kampfhubschrauber",
-		"helptext" : "Kampfhubschrauber bieten aufgrund ihrer Beweglichkeit eine enorme Bandbreite an Einsetzbarkeit."
-	},
-	"chickena" : {
-		"name" : "Cockatrice",
-		"description" : "Sturm/Anti-Panzerung",
-		"helptext" : "Der Cockatrice ist wahrlich eine Bestie. Scheinbar unverletzlich, bewegt es sich einfach auf seine Ziele zu und zerstEkelt sie vor Ort mit seinem unglaublich starken Kiefer. GlEklicherweise ist er nicht besonders schnell und intelligent und kann somit von Skirmishern und Schwärmen leicht zerstört werden."
-	},
-	"shieldbomb" : {
-		"name" : "Snitch",
-		"description" : "Crawling Bombe",
-		"helptext" : "Diese flinke Kamikazeeinheit ist effektiv gegen größere Einheiten, besonderns Sturmpanzer. Sie besitzt eine Tarnvorrichting welche automatisch aktiviert wird sobald diese Einheit still steht. Bewahre Abstand zwischen diesen Einheiten, da sie in einer Kettenreaktion explodieren. Der Picket oder Raketenlaster sind effektiv gegen sie. Außerdem auch billige einzelne Einheiten, um eine frühzeitige Explosion zu erwirken."
-	},
-	"shieldaa" : {
-		"name" : "Vandal",
-		"description" : "Flugabwehr Roboter",
-		"helptext" : "Der Vandal ist ein billiger, dedizierter Flugabwehr Roboter, der den Robotern einen bestimmten Vorteil gegenüber Flugzeugen bringt. Schutzlos gegenüber Landstreitkräften."
-	},
-	"chicken_dragon" : {
-		"name" : "White Dragon",
-		"description" : "Über Sturmchicken",
-		"helptext" : "Der White Dragon ist ein außerordentlich monströses Wesen. Mit kraftvollen Stampfern, todbringendem Maul, ätzendem Schleim und einer Vielzahl von Sporen stellt er eine bedrohliche und furchteinflößende Gefahr dar."
-	},
-	"assaultcruiser" : {
-		"name" : "Vanquisher",
-		"description" : "Heavy Cruiser (Assault)",
-		"helptext" : "The Vanquisher cruiser boasts excellent armor and lethal close-in firepower. Its gauss cannons slice through surface targets like butter, while its missiles support it against enemies above and below the water surface. Its short range and lack of anti-air firepower leaves it vulnerable to standoff units and aircraft."
-	},
-	"turretaaheavy" : {
-		"name" : "Artemis",
-		"description" : "Extrem weitreichender Flugabwehrraketenturm, 20s zum Bevorraten",
-		"helptext" : "Der Artemis ist eine extrem weitreichende Flugabwehrwaffe, die eine klare Botschaft an die feindlichen Lufteinheiten sendet - hier kommst du nicht rein, Kleiner. Jeder Schuss muss 20 Sekunden bevorratet werden, doch das Warten lohnt sich, mit einer Raketensalve wird fast jeder Luftangriff zunichtegemacht."
-	},
-	"chickenbroodqueen" : {
-		"name" : "Chicken Brood Queen",
-		"description" : "Pflegt und hegt das Nest",
-		"helptext" : "Die eierlegende, brEende Königin ist im Gefecht nicht ganz so furchterregend wie die anderen Königinnen, aber auf weite Sicht kann sie sogar eine größere Gefahr darstellen. Sie erzeugt all die verschiedenen Chickenrassen der Chickens."
-	},
-	"turretgauss" : {
-		"name" : "Gauss",
-		"description" : "Versteckter Gaussturm",
-		"helptext" : "Der Gauss ist ein kompakter Turm mit einem Gausswerfer mittleren Bereichs. Wenn er sich in seine Panzerung zurückgezogen hat, ist es viermal schwerer ihn zu zerstören, was ihn effektive gegen gegnerische Artillerie macht. Es kann auch U-Booten schiessen."
-	},
-	"planefighter" : {
-		"name" : "Swift",
-		"description" : "Mehrzweck-Tarnkappenjäger",
-		"helptext" : "Der Swift kann sowohl Land-, als auch Lufteinheiten treffen. Er eignet sich gut zur Verteidigung gegen Lufteinheiten, aber feindliche Flugabwehr und Luftüberlegenheitsjäger werden ihn schnell erlegen. Zuhauf kann er aber Landeinheiten durchaus auf die Nerven gehen."
-	},
-	"planescout" : {
-		"name" : "Owl",
-		"description" : "Tarnkappen Radar/Sonar Flugzeug",
-		"helptext" : "Der Owl bietet dir die beispiellose Möglichkeit zur unerkannten, weitläufigen Aufklärung und kann mit seinem Sonar auch Unterwasserziele lokalisieren. Er hat auch ein Stoersender der gegen feindliche Radare wirkt."
-	},
-	"factorytank" : {
-		"name" : "Tank Foundry",
-		"description" : "Produziert schwere und speziallisierte Fahrzeuge",
-		"helptext" : "Die Tank Foundry ist das Ultimum für brachiale Gewalt. Nicht erledigt den Auftrag zu gut, wie ein anhaltendes Artilleriefeuer, gefolgt von einem entscheidenen Vorstoß mit den größten Panzern auf dem Feld. Wichtigste Einheiten: Emissary, Minotaur, Ogre, Cyclops"
-	},
-	"empmissile" : {
-		"name" : "Shockley",
-		"description" : "EMP Rakete",
-		"helptext" : "Der Shockley paralysiert Einheiten in seiner kleinen Reichweite für bis zu 45 Sekunden."
-	},
-	"chicken_sporeshooter" : {
-		"name" : "Sporeshooter",
-		"description" : "Geländegängige Sporen (Luftabwehr/Skirmish)",
-		"helptext" : "Der Sporeshooter verschießt Sporen, um Flugzeuge und Landziele aus der Distanz zu vernichten. Kann auch Wände erklimmen und somit überraschende Angriffe ausführen."
-	},
-	"jumpscout" : {
-		"name" : "Puppy",
-		"description" : "Wandernde Rakete",
-		"helptext" : "Diese flinke Kamikazeinheit ist ideal, um schlecht gepanzerte Ziele zu überfallen. Sobald sie neben Wracks steht, zieht sie automatisch Metall aus diesen, um sich selbst zu vervielfältigen."
-	},
-	"jumpraid" : {
-		"name" : "Pyro",
-		"description" : "Raider Jumpjet Roboter",
-		"helptext" : "Der Pyro ist ein günstiger und schneller Roboter, der mit einem Flammenwerfer ausgestattet ist. Dieser fügt großen Zielen erheblichen Schaden zu und kleineren entsprechend weniger. Außerdem können mehrere Ziele gleichzeitig getroffen werden, welche auch im Feuer aufgehen können. Der Pyro explodiert brutalst, sobald er zerstört wird. Zusätzlich besitzt er noch ein Jetpack, welches ihm zum Beispiel das Springen über Hindernisse ermöglicht."
-	},
-	"jumpcon" : {
-		"name" : "Constable",
-		"description" : "Konstruktionsjumpjet",
-		"helptext" : "Schnell und mit der Möglichkeit ausgestattet über kurze Distanzen oder Höhen zu springen, eignet sich der Constable als ideale Konstruktionseinheit für rasche Expansion."
-	},
-	"jumparty" : {
-		"name" : "Firewalker",
-		"description" : "Artillerieroboter für Sättigungsfeuer",
-		"helptext" : "Der Firewalker setzt mit seinem Mörser auf mittlerer Distanz Gebiete in Brand und macht sie somit für kurze Zeit unbrauchbar. Die Einheit selber ist schwerfällig und langsam zu manövrieren."
-	},
-	"gunshipemp" : {
-		"name" : "Gnat",
-		"description" : "Leichte, paralysierende Drohne",
-		"helptext" : "Gnats sind kleine Einheiten, die Feinde paralysieren können. Sie erweisen sich als Verteidigungseinheiten als sehr nützlich und unter der Kombination mit Locusts oder anderen Einheiten können die Feinde so lange bewegungsunfähig gemacht werden, bis deine Einheiten diese vernichtet haben. In der Offensive können sie sogar schwerere Einheiten paralysieren, doch sterben sie relativ schnell gegen Verteidiger."
-	},
-	"chicken_spidermonkey" : {
-		"name" : "Spidermonkey",
-		"description" : "Gelandegängige Luftabwehr",
-		"helptext" : "Der Spidermonkey ist ein sehr ungewöhnliches Chicken. Wie der Name verrät, kann er Wände hochklettern und schließlich auch wie eine Spinne per Netz seine Fliegen, bzw. Flugzeuge Luft fangen."
-	},
-	"chicken_rafflesia" : {
-		"name" : "Rafflesia",
-		"description" : "Chicken Shield (Static)",
-		"helptext" : "The Rafflesia protects nearby chicken units and structures with its shield."
-	},
-	"jumpskirm" : {
-		"name" : "Moderator",
-		"description" : "Kurzstrahl Roboter",
-		"helptext" : "Seine verlangsamender Strahl reduziert die Geschwindigkeit feindlicher Einheiten und die Feuerrate um bis zu 50%%, deshalb sind sie effektiv gegen fast alle Ziele."
-	},
-	"hovershotgun" : {
-		"name" : "Punisher",
-		"description" : "Shotgun Hover",
-		"helptext" : "The Punisher has a shotgun which shoots a spray of projectiles which are good against large targets or tight clusters of enemies."
-	},
-	"cloakassault" : {
-		"name" : "Knight",
-		"description" : "Sturmroboter",
-		"helptext" : "Langsam und zuverlässig, Gruppen von Knight' können sogar starken Beschuss ignorieren und so schnell an die feindliche Festung herankommen, bis sie dort ihre Blitzschlagkanonen mit kurzer Reichweite zum Einsatz bringen können, welche feindliche Einheiten schädigt und betäubt. Kontere den Knight mit Einheiten, die umherflitzen, damit sie nicht paralysiert werden (denn dann sind sie so gut wie tot)."
-	},
-	"hoverskirm" : {
-		"name" : "Scalpel",
-		"description" : "Skirmisher Gleiter (Anti-Heavy)",
-		"helptext" : "Nutze den Scalpel für Schlag-und-Renn Attacken. Er hat eine lange Nachladezeit und nicht allzu viele Lebenspunkte. Er sollte immer auf Distanz zum Feind gehalten werden. Die bogenförmige Schussbahn ermöglicht es über Hindernisse und freundliche Einheiten zu schießen."
-	},
-	"hoverskirm2" : {
-		"name" : "Trisula",
-		"description" : "Light Assault/Battle Hovercraft",
-		"helptext" : "The Trisula is a fairly fast, sturdy combatant armed with a scatter beam weapon that can erase multiple small targets or slag a single large one."
-	},
-	"seismic" : {
-		"name" : "Quake",
-		"description" : "Seismische Rakete",
-		"helptext" : "Die Rakete Quake erzeugt eine akustische Schockwelle, welche die anliegend Boden glatt macht, aber nur minimale Schäden an Einheiten aus Metall und Kohlenstoff-Nanoröhrchen verursacht."
-	},
-	"cloakriot" : {
-		"name" : "Reaver",
-		"description" : "Riot Roboter",
-		"helptext" : "Sein schweres Maschingewehr ist gegen die meisten Einheiten effektiv, vor allem gegen Raider. Dennoch versagt es kläglich gegen stationäre Verteidigung. Also nutze ihn nicht als Sturmeinheit. Kontere den Reaver, indem du aus seiner Reichweite bleibst, sie sind langsam."
-	},
-	"amphraid" : {
-		"name" : "Duck",
-		"description" : "Amphibious Raider Bot (Anti-Sub)",
-		"helptext" : "The Duck is the basic underwater raider. Armed with short ranged torpedoes, it uses its (relatively) high speed to harass sea targets that cannot shoot back, though it dies to serious opposition. On land it can launch the torpedoes a short distance as a decent short ranged anti-heavy weapon."
-	},
-	"chicken_pigeon" : {
-		"name" : "Pigeon",
-		"description" : "Fliegender Spore Scout",
-		"helptext" : "Ein kleiner, fliegender Chickenaufklärer mit Sporen."
-	},
-	"planecon" : {
-		"name" : "Crane",
-		"description" : "Konstruktionsflugzeug",
-		"helptext" : "Der Crane bewegt sich flink über das Terrain, ist aber auch anfällig gegenüber AA. Obwohl er ziemlich wenig Baukraft hat, ist er in der Lage auch auf außergewöhnlichen Plätzen zu bauen. Durch seine Mobilität ist er ideal dafür geschaffen, Wracks zu absorbieren und daraus das Metall zu gewinnen."
-	},
-	"pistin" : {
-		"name" : "Pistin",
-		"description" : "Einsatzbarer Reparatur-/Betäubungsturm",
-		"helptext" : "Der Pistin wurde von der Nanodrehmaschine der Wespe aus Schrottmaterial hergestellt und ist ein vielseitiger Geschützturm, der für alles Mögliche verwendet wird: von der Betäubung einzelner Angreifer über die Reparatur einer Armee bis hin zur Befestigung einer Position gegen feindliche Angriffe. Auch wenn sie nicht besonders leistungsstark sind, bedeutet die Tatsache, dass sie praktisch kostenlos sind, dass der Einsatz von einem oder hundert davon oft keinen Schaden anrichtet."
-	},
-	"turretsunlance" : {
-		"name" : "Sunlance",
-		"description" : "Anti-Tank Turret - Requires 25 Power",
-		"helptext" : "The Sunlance's heavy disruptor beam cripples even the heaviest assault unit and will stop any armored assault dead in its tracks."
-	},
-	"gunshipbomb" : {
-		"name" : "Blastwing",
-		"description" : "Fliegende Bombe/Aufklärer",
-		"helptext" : "Der Blastwing macht sehr wenig Schaden, ideal, um etwa Metallextraktoren, Soloranlagen, Leichte Lasertürme, Windanlagen und Nanotürme auszumerzen. Dennoch können gunshipbombs in Massen durchaus ordentlich Schaden anrichten. Beachte die Geschwindigkeit und Richtung, in die die Drohnen fliegen, denn der größte Schaden wird durch das Schrapnell erzielt, das nach dem Tod der Drohne weiter in Flugrichtung fliegen wird. Auf diese Weise kannst du deinen Gegner trotzdem mit Metallsplittern überhäufen, obwohl deine gunshipbombs schon vorher abgeschossen wurden. Vermeide, dass du die gunshipbombs zu nah aneinander stationiert, da sie in einer Kettenreaktion explodieren können. Kann sich zur Mine entwickeln."
-	},
-	"chicken_tiamat" : {
-		"name" : "Tiamat",
-		"description" : "Schwere Sturm-/Rioteinheit",
-		"helptext" : "Das ultimative Sturmchicken: Tiamat ist eine feuer-, eisenspuckende und Sporenspeiende Monstrosität, die keine Angst oder Furcht kennt, aber auch keine Gnade. Sie besitzt sogar ein schleimiges Schild, welches sie selbst und nahe, verbEdete Einheiten schützt."
-	},
-	"cloakarty" : {
-		"name" : "Sling",
-		"description" : "Leichter Artillerie/Skirmisher Roboter",
-		"helptext" : "Der Sling besitzt eine weitreichende Plasmakanone, die es ihm erlaubt über Hindernisse zu schießen und sich dabei außer Reichweite von gegnerischen Verteidigungsanlagen zu finden. Obwohl er auch effektiv gegen mobile Einheiten ist, sollte er beschützt werden, um Raider und andere schnelle Einheiten von ihm Fern zu halten."
-	},
-	"hoverriot" : {
-		"name" : "Mace",
-		"description" : "Riotgleiter",
-		"helptext" : "Der Mace ist ein mobiler Laserturm. Seine hohe Feuerkraft ist nützlich, um leichte, feindliche Einheiten zu töten. Er schießt höchst präzise und erweist sich gegen Hubschrauber und schnelle Einheiten als nützlich. Trotzdem macht ihn seine einfache Verteidigung anfällig für direkte Angriffe, vor allem durch Skirmisher."
-	},
-	"dynknight1" : {
-		"name" : "Commander",
-		"description" : "Mobiler Sturmkommandant",
-		"helptext" : "Der Commander bietet ein sehr ausgeglichenes Gerüst, das mit den meisten Modulen ausgerüstet werden kann, mit anständiger Geschwindigkeit, Panzerung und Selbstreparierung."
-	},
-	"gunshiptrans" : {
-		"name" : "Charon",
-		"description" : "Lufttransport",
-		"helptext" : "Der Charon ist ein einfacher Lufttransport. Er wird benutzt, um Einheiten an die Front zu befördern oder gezielte Abwürfe in das feindliche Territorium zu durchzuführen, allerdings mit der Einschränkung, sich ausdrücklich von jeder Luftabwehr fernzuhalten."
-	},
-	"hoversonic" : {
-		"name" : "Morningstar",
-		"description" : "Antisub Hovercraft",
-		"helptext" : "The Morningstar comes armed with a sonic pulse cannon which completely doesn't care whether target is above or under water."
-	},
-	"gunshipheavyskirm" : {
-		"name" : "Nimbus",
-		"description" : "Luftnaher Unterstützungskampfhubschrauber",
-		"helptext" : "Der Nimbus ist eine Angriffseinheit, die den meisten Bodenrakten ausweichen kann. Der Nimbus besitzt genug Munition, um begrenztes Anti-Air Feuer zu überleben und seine Zwillings-EMGs zerfetzen die Panzerung als wäre es Papier."
-	},
-	"bomberstrike" : {
-		"name" : "Kestrel",
-		"description" : "Tactical Strike Bomber",
-		"helptext" : "The Kestrel launches short-range surface attack missiles that can also hit submarines. It is the best bomber for picking off single mobile targets."
-	},
-	"cloaksnipe" : {
-		"name" : "Phantom",
-		"description" : "Scharfschützen Walker (Skirmish/Anti-Heavy)",
-		"helptext" : "Sein energetisches Gewehr richtet riesigen Schaden bei einzelnen Zielen an. Er kann auch schießen, wenn er getarnt ist. Dennoch verrät ihn sein sichtbarer Schuss. Um getarnt zu bleiben und schießen zu können, benötigt der Scharfschütze eine Menge Energie. Die einfachst Möglichkeit einen Scharfschützen ausfindig zu machen, ist die, indem man ein Gebiet mit vielen billigen überschwemmt."
-	},
-	"energyheavygeo" : {
-		"name" : "Advanced Geothermal",
-		"description" : "Großes geothermisches Kraftwerk GEFÄHRLICH",
-		"helptext" : "Das verbesserte geothermische Kraftwerk erzeugt eine große Menge an Energie, doch stellt es auch ein lohnendes Angriffsziel dar."
-	},
-	"fakeunit_aatarget" : {
-		"name" : "Fake AA target",
-		"description" : "Used by the jumpjet script.",
-		"helptext" : "Fake unit used by jumpjest scripts."
+		"name" : "Colossus",
+		"description" : "Fast undurchdringlicher Angriffspanzer",
+		"helptext" : "Der Colossus ist ein ultraschwerer Panzer, der mit seiner massiven Kanone schwächere Einheiten zerschmettern kann. Der Aufprall einer Oblivion-Kanone reicht aus, um die meisten mittleren Einheiten zurückzudrängen, sofern sie den Aufprall überleben."
 	},
 	"damagesink" : {
 		"name" : "Damage Sink thing",
 		"description" : "Does not care if you shoot at it.",
-		"helptext" : "Technical unit for testing."
+		"helptext" : "\"I sink, therefore I am.\""
 	},
-	"chicken" : {
-		"name" : "Chicken",
-		"description" : "Schwärmer",
-		"helptext" : "Diser Fußsoldat ist eine aggressive Einheit. Zwar besitzt es keine außergewöhnlichen, individuellen Qualitäten oder Stärken, doch kompensiert es diesen Mangel mit der ungeheuren Anzahl, mit der diese Einheiten erscheinen. Eine gute Rioteinheit wird empfohle, um diese Chicken zu stoppen."
+	"turretmissile" : {
+		"name" : "Mirador",
+		"description" : "Raketenbeschussturm",
+		"helptext" : "Der Mirador ist eine kostengünstige Lösung für Bombardierungen auf mittlere Distanz. Seine Raketen haben einen hohen Schusswinkel, wodurch er sich perfekt für den Angriff auf angreifende feindliche Bodeneinheiten aus der Deckung eignet. Obwohl er im Vergleich zu seinem Vorgänger, dem Defender, etwas robuster ist, ist er dennoch sehr anfällig für indirekte Artillerieangriffe."
+	},
+	"chicken_roc" : {
+		"name" : "Roc",
+		"description" : "Luftangriffshuhn",
+		"helptext" : "Groß, wütend und in der Lage, sowohl Luft- als auch Landgegner zu bekämpfen, ist der Roc ein beeindruckendes fliegendes Huhn."
+	},
+	"turretaaheavy" : {
+		"name" : "Himmelsschild",
+		"description" : "Flugabwehr-Maserturm mit sehr großer Reichweite",
+		"helptext" : "Der Himmelsschild bezieht Energie direkt aus seinem Netzanschluss, um Superkondensatoren aufzuladen, die seine Hauptwaffe mit Strom versorgen: einen extrem leistungsstarken Maser, der selbst Hellas mit erstaunlicher Geschwindigkeit zerstören kann. Noch gefährlicher: Bei Kontakt mit einem Objekt reicht die Kraft des Masers aus, um andere Flugzeuge im Umkreis des Zielobjekts zu erhitzen, was ihn zu einer tödlichen Flächenwaffe macht. Steht man einem Himmelsschild gegenüber, ist es am besten, seine Verbindung zum feindlichen Netz zu unterbrechen und zu warten, bis die Superkondensatoren entladen sind."
+	},
+	"chicken_drone" : {
+		"name" : "Drohne",
+		"description" : "Verwandelt sich in Hühnerstrukturen",
+		"helptext" : "Ein unglücklicher, nicht kämpfender Organismus, dessen einziger Lebenszweck darin besteht, sich in eine der Strukturen des Hühnerstocks zu verwandeln."
+	},
+	"chicken_con_basic" : {
+		"name" : "Hühnerschwarmhüter",
+		"description" : "Einfacher Hühnerkonstrukteur, züchtet einfache Hühner.",
+		"helptext" : "Der Schwarmhüter ist eine der vielen Hühnerarten, deren Lebenszweck darin besteht, den Stock zu züchten und zu vermehren. Obwohl Hühnerstöcke oft in tiefen unterirdischen Tunneln liegen, scheint dieses Exemplar an die Oberfläche gebracht worden zu sein, um bei Angriffsoperationen zu helfen."
+	},
+	"chicken_con_improved" : {
+		"name" : "Hühnerbrutmutter",
+		"description" : "Fortgeschrittener Hühnerkonstrukteur, züchtet fortgeschrittene Hühner.",
+		"helptext" : "Die Brutmutter ist eine der vielen Hühnerarten, deren Lebenszweck darin besteht, den Bienenstock zu züchten und zu vermehren. Obwohl Hühnerstöcke oft in tiefen unterirdischen Tunneln liegen, scheint dieses Exemplar an die Oberfläche gebracht worden zu sein, um bei Angriffsoperationen zu helfen."
+	},
+	"chicken_con_advanced" : {
+		"name" : "Huhn-Geneweber",
+		"description" : "Ultimativer Hühnerkonstrukteur, züchtet ultimative Hühner.",
+		"helptext" : "Der Geneweber ist eine der vielen Hühnerarten, deren Lebenszweck darin besteht, den Bienenstock zu züchten und zu vermehren. Obwohl Hühnerstöcke oft in tiefen unterirdischen Tunneln liegen, scheint dieses Exemplar an die Oberfläche gebracht worden zu sein, um bei Angriffsoperationen zu helfen."
+	},
+	"staticjammer" : {
+		"name" : "Cornea",
+		"description" : "Area Cloaker/Jammer",
+		"helptext" : "Störsender wie dieser stören feindliche Radarwellen und verbergen die Radarechos deiner Einheiten. Die Cornea ist außerdem mit einem Tarnschild ausgestattet, um nahe Einheiten vor feindlichen Blicken zu verbergen."
+	},
+	"amphbomb" : {
+		"name" : "Napfschnecke",
+		"description" : "Amphibische Langsambombe",
+		"helptext" : "Die Napfschnecke kann dank ihrer Wendigkeit und geringen Größe den meisten langsamen Geschossen ausweichen. So kann sie sich gegnerischen Einheiten nähern, um sie zu detonieren und sie zu verlangsamen und zu beschädigen."
+	},
+	"factoryveh" : {
+		"name" : "Rover-Montagewerk",
+		"description" : "Produziert leichte Radfahrzeuge",
+		"helptext" : "Das Rover-Montagewerk ist ein traditioneller Favorit und mit seinen schnellen, hochaggressiven Einheiten die ideale Blitzkriegsfabrik. Einheiten, denen es an Geschwindigkeit mangelt, gleichen dies durch enorme Feuerkraft aus. Zur Verteidigung ist es mit einem Drohnen-Autofabrikator ausgestattet. Wichtige Einheiten: Flare, Sunbeam, Ravager, Striker, Slasher"
+	},
+	"turretgauss" : {
+		"name" : "Hardpoint",
+		"description" : "Gauss-Geschützturm, 30 Gesundheit/s im geschlossenen Zustand",
+		"helptext" : "Der Hardpoint ist ein kompakter, robuster Geschützturm mit einer Gauss-Kanone mittlerer Reichweite. Im geschlossenen Zustand erleidet er ein Fünftel des erlittenen Schadens sowie eine geringe Gesundheitsregeneration. Wie alle Gauss-Waffen kann er auf Unterwasserziele feuern und verursacht zusätzlichen Schaden gegen Schilde.."
+	},
+	"nebula" : {
+		"name" : "Nebula",
+		"description" : "Atmosphärisches Mutterschiff",
+		"helptext" : "Die Nebula ist so wendig wie ein Ziegelstein und selbst nur mäßig bewaffnet. Dennoch ist sie eine furchterregende Streitmacht, da sie dank ihres Schildes Angriffen aus großer Entfernung standhält und mit ihrer Kampfdrohnen-Besatzung schwächere Gegner zerfetzt."
+	},
+	"hoveraa" : {
+		"name" : "Flail",
+		"description" : "Luftabwehr-Luftkissenfahrzeug",
+		"helptext" : "Die Flail startet eine einzelne große Flugabwehrrakete mit kurzer bis mittlerer Reichweite, die schweren Schaden verursacht."
+	},
+	"cloakarty" : {
+		"name" : "Sparky",
+		"description" : "Leichter EMP-Artillerie-Bot",
+		"helptext" : "Der Sparky ersetzte die Schleuder nach der Änderung der Cloakbot-Doktrin. Ausgestattet mit einem lästigen EMP können Schwärme von Schleuder die Verteidigung effektiv niederstrecken. Allerdings wurde seine Panzerung zugunsten der Geschwindigkeit deutlich abgebaut."
+	},
+	"chickend" : {
+		"name" : "Hühnerröhre",
+		"description" : "Verteidigung und Energiequelle",
+		"helptext" : "Die Röhre ist die einzige Verteidigungsstruktur der Hühner und feuert tödliche Sporen auf Luft- und Bodenziele ab."
+	},
+	"chickend_improved" : {
+		"name" : "Große Hühnerröhre",
+		"description" : "Verteidigung und Energiequelle",
+		"helptext" : "Die Röhre ist die einzige Verteidigungsstruktur der Hühner und feuert tödliche Sporen auf Luft- und Bodenziele ab."
+	},
+	"chickend_advanced" : {
+		"name" : "Hühnerstockröhre",
+		"description" : "Verteidigung und Energiequelle",
+		"helptext" : "Die Röhre ist die einzige Verteidigungsstruktur der Hühner und feuert tödliche Sporen auf Luft- und Bodenziele ab."
+	},
+	"rocksink" : {
+		"name" : "Schaukelndes Schadensenkungs-Ding",
+		"description" : "Rockt, wenn man darauf schießt.",
+		"helptext" : "Ich bin Fels und kann mich nicht brechen\nIch bin Riiiiiick und kann mich nicht schütteln."
+	},
+	"fakeunit_aatarget" : {
+		"name" : "Falsches Flugabwehrziel",
+		"description" : "Wird vom Sprungjet-Skript verwendet.",
+		"helptext" : "Falsche Einheit für technische Zwecke."
+	},
+	"mahlazer" : {
+		"name" : "Sternenlicht",
+		"description" : "Planetarischer Energiemeißel – Wird global bei 50%% Fertigstellung enthüllt",
+		"helptext" : "Dieses großflächige Werkzeug dient zur Geländeformung für Terraforming-Projekte. Es ist auch nützlich, um Hindernisse wie lästige feindliche Einheiten und Basen zu beseitigen."
+	},
+	"spidercrabe" : {
+		"name" : "Krabbe",
+		"description" : "Schwere Krawall-/Scharmützelspinne – Rollt sich im Stillstand in Panzerform ein",
+		"helptext" : "Die riesigen Panzer der Krabbe vernichten große Schwärme billiger Einheiten und können auch einfache Verteidigungsanlagen überwinden. Sobald sie stehen bleibt, rollt sich die Krabbe in Panzerform ein und reduziert so den erlittenen Schaden auf ein Viertel. Die größte Schwäche der Krabbe ist ihre mangelnde Mobilität."
+	},
+	"subscout" : {
+		"name" : "Lancelet",
+		"description" : "Selbstmord-Mini-U-Boot",
+		"helptext" : "Die Lancelet ist im Grunde ein großer, intelligenter Torpedo mit Aufklärungsfunktion. Sie kann in der Tiefe verborgen bleiben, um feindliche Bewegungen zu beobachten und dann ihre Sprengladung zu zünden, um unachtsame Schiffe zu versenken."
+	},
+	"staticstorage" : {
+		"name" : "Lager",
+		"description" : "Lagert Metall und Energie (500)",
+		"helptext" : "Lager dienen als Puffer, wenn ein großer Metallzufluss erwartet wird, z. B. bei der Bergung eines riesigen Trümmerfeldes. Längere Perioden mit erhöhtem Metalleinkommen lassen sich jedoch besser durch den Erwerb von mehr Baukraft bewältigen."
+	},
+	"shieldscout" : {
+		"name" : "Sapper",
+		"description" : "Geschützte Plage",
+		"helptext" : "Der Sapper dient dazu, feindliche Bewegungen zu blockieren und generell im Weg zu stehen. Er ist so sehr auf diese Aufgabe bedacht, dass er nach seinem Tod seine Erdladung abgibt und kleine lästige Hügel bildet. Vorsicht: Seine Schilde sind nicht besonders gut."
+	},
+	"amphaa" : {
+		"name" : "Angler",
+		"description" : "Amphibischer Flugabwehr-Bot",
+		"helptext" : "Angler ist ein amphibischer Flugabwehr-Bot, der dem Erzfeind der Fabrik, Raven, entgegenwirken soll. Zwei von ihnen können zusammen an die Oberfläche schweben und einen einzelnen Raven töten."
+	},
+	"staticrepair" : {
+		"name" : "Verjünger",
+		"description" : "Reparaturstation",
+		"helptext" : "Der Verjünger ist eine spezialisierte Form des Hausmeisters. Er kann zwar nicht beim Bauen helfen, aber er kann Dinge aus großer Entfernung und mit der dreifachen Geschwindigkeit eines Hausmeisters reparieren sowie nahegelegene Wracks wiederbeleben."
+	},
+	"turretdecloak" : {
+		"name" : "Clarity",
+		"description" : "Tarnerkennungssystem",
+		"helptext" : "Der Clarity sendet einen störenden elektromagnetischen Impuls aus, der feindliche Tarnfelder stört. Eure Einheiten sind davon nicht betroffen."
+	},
+	"tankaa" : {
+		"name" : "Pestle",
+		"description" : "Flak-Panzer",
+		"helptext" : "Die Flak-Sprengstoffkanister des Pestle erzeugen einen Sperrbereich aus der Luft. Er ist weniger effektiv als ein Crucible, da der Kanister für ein mobiles Fahrgestell verkleinert werden musste."
+	},
+	"asteroid" : {
+		"name" : "REDACTED",
+		"description" : "REDACTED",
+		"helptext" : "Acknowledging this unit's existence is considered treason. You will be disavowed. Report for immediate re-education."
+	},
+	"planeheavyfighter" : {
+		"name" : "Hades",
+		"description" : "Luftüberlegenheitsjäger",
+		"helptext" : "Der Hades ersetzte die veraltete Raptor-Ausrüstung, da ein flexibler Jäger benötigt wurde. Er kann Bodenziele mit seinem Maschinengewehr angreifen oder Bomber damit beschießen."
+	},
+	"staticenergyrtg" : {
+		"name" : "RTG",
+		"description" : "Kraftwerk: +18e, zerfällt mit der Zeit (GEFÄHRLICH)",
+		"helptext" : "Der Radioisotopen-Thermoelektrische Generator nutzt zerfallende radioaktive Partikel aus Standardmetall zur Energieerzeugung. Nach seiner Fertigstellung wird er instabil und seine Energieabgabe nimmt ab. Er ist nützlich, um wirtschaftliche Engpässe zu überwinden, aber verlassen Sie sich nicht auf ihn für Ihren Energiebedarf – er ist gefährlicher als Solarenergie und explosiv."
+	},
+	"hoverskirm2" : {
+		"name" : "Trisula",
+		"description" : "Leichtes Angriffs-/Kampf-Luftkissenfahrzeug",
+		"helptext" : "Die Trisula ist ein relativ schnelles, robustes Kampffahrzeug, das mit einer Streustrahlwaffe bewaffnet ist, die mehrere kleine Ziele auslöschen oder ein einzelnes großes Ziel vernichten kann."
+	},
+	"vehriot" : {
+		"name" : "Striker",
+		"description" : "Anti-Schwarm-Fahrzeug",
+		"helptext" : "Der Striker ist mit einer Kanisterkanone bewaffnet. Er kann ein einzelnes Ziel vernichten oder seinen Schaden auf mehrere Ziele in der Nähe verteilen."
+	},
+	"staticshield" : {
+		"name" : "Aegis",
+		"description" : "Flächenschild",
+		"helptext" : "Das Aegis schützt einen kleinen Bereich mit seinem Blasenschild, der ankommende Projektile (aber keine Flächeneffekte) abhält. Der Schild benötigt einen erheblichen Energieaufwand und blockt keine besonders starken Waffen."
+	},
+	"staticheavyshield" : {
+		"name" : "Schutzschild",
+		"description" : "Massiver Flächenschild",
+		"helptext" : "Als sich das Aegis gegen strategische Waffen als nutzlos erwies, wurde das Schutzschild mit einem übersteuerten Trichternetzschild konstruiert. Obwohl das Schutzschild selbst Atomschläge ohne Atombombenabwehr abwehren kann, ist es einem Dauerbeschuss völlig unfähig. Um ihn unter Kontrolle zu halten, wird ein Dauerbeschuss mit schwächerer Artillerie eingesetzt."
+	},
+	"turretaaclose" : {
+		"name" : "Duster",
+		"description" : "Lasergelenkte Flugabwehrrakete",
+		"helptext" : "Die Vierfachraketen des Duster treffen jedes Flugzeug, das in seine Reichweite kommt, brutal, benötigen aber eine beträchtliche Zielzeit, was sie gegen schnelle Ziele weniger ideal macht."
+	},
+	"chicken_rafflesia" : {
+		"name" : "Rafflesia",
+		"description" : "Unzerstörbarer Hühnerschild (Artillerieabwehr)",
+		"helptext" : "Die Rafflesia schützt mit ihrem Schild Hühnereinheiten und Gebäude in der Nähe."
+	},
+	"chicken_dragon_cocoon" : {
+		"name" : "Weißer Drachenkokon",
+		"description" : "Schlüpft zu einem weißen Drachen, wenn er nicht zerstört wird",
+		"helptext" : "Dieser Kokon enthält einen jungen weißen Drachen. Lässt man ihn heranreifen und schlüpfen, wirst du bald tödlichen Säurestrahlen und furchteinflößenden Kiefern ausgesetzt sein. Dieser Kokon erzeugt jedoch einen speziellen Schild um sich herum, der ihn gegen Artillerie aus großer Entfernung unverwundbar macht. Mobilisieren Sie Ihre Kräfte, um diesen Kokon zu zerstören, ist entscheidend, wenn Sie überleben wollen."
+	},
+	"chickenspire_cocoon" : {
+		"name" : "Kokon des Großen Turms",
+		"description" : "Schlüpft zu einem Großen Turm, wenn er nicht zerstört wird",
+		"helptext" : "Dieser Kokon enthält einen Teil des Großen Turms. Wenn er ausreift und vollständig ist, wirst du bald einem Sporenbeschuss aus großer Entfernung ausgesetzt sein. Dieser Kokon erzeugt jedoch einen speziellen Schild um sich herum, der ihn gegen Artillerie aus großer Entfernung immun macht. Die Mobilisierung deiner Streitkräfte zur Zerstörung dieses Kokons ist entscheidend, wenn du überleben willst."
+	},
+	"chickenbroodqueen_cocoon" : {
+		"name" : "Kokon der Brutprinzessin",
+		"description" : "Schlüpft zu einer Brutprinzessin, wenn sie nicht zerstört wird",
+		"helptext" : "Dieser Kokon enthält eine junge Brutprinzessin. Lässt man sie heranreifen und schlüpfen, wird man bald von Sporen aus großer Entfernung und einem noch zahlreicheren Schwarm getroffen. Dieser Kokon erzeugt jedoch einen speziellen Schild um sich herum, der ihn gegen Artillerie aus großer Entfernung unverwundbar macht. Die Mobilisierung aller Kräfte zur Zerstörung dieses Kokons ist entscheidend, wenn man überleben will."
+	},
+	"empiricaldpser" : {
+		"name" : "Empirisches DPS-Ding",
+		"description" : "Schießt für die Wissenschaft darauf.",
+		"helptext" : "Sie hat mich mit !!WISSENSCHAFT!! geblendet!"
+	},
+	"hoverassault" : {
+		"name" : "Bajonett",
+		"description" : "Gepanzertes Angriffs-Luftkissenfahrzeug",
+		"helptext" : "Das Bajonett ist eine kürzlich erfolgte Umrüstung des Halberd-Designs. Das neue Bajonett-Modell feuert einen hochintensiven Röntgenlaser ab, der das empfindliche Innere nur kurzzeitig freilegt, im Gegensatz zur ständigen Exposition des vorherigen Halberd-Modells. Das Bajonett verfügt außerdem über ein automatisches Panzerungssystem, das das Innere während des Nachladens schützt und so den Schaden um 75%% reduziert."
+	},
+	"shieldcon" : {
+		"name" : "Conservator",
+		"description" : "Geschützter Konstruktionsroboter",
+		"helptext" : "Der Conservator ist ein recht gewöhnlicher Konstruktionsroboter mit einer Besonderheit: einem leichten Schild zur Selbstverteidigung und Unterstützung verbündeter Schildroboter."
+	},
+	"energysingu" : {
+		"name" : "Singularitätsreaktor",
+		"description" : "Kraftwerk: +300e, steigt mit der Zeit (GEFÄHRLICH)",
+		"helptext" : "Der Singularitätsreaktor erzeugt mithilfe eines kontrollierten Schwarzen Lochs enorme Energiemengen – was ungefähr so ​​sicher ist, wie es klingt. Singularitätsreaktoren steigern ihre Leistung mit der Zeit auf natürliche Weise und sind daher attraktive Ziele für frühzeitige Ausschaltungen. Wird der Reaktor zerstört, implodiert das Schwarze Loch heftig und zieht Einheiten hinein."
+	},
+	"bomberdisarm" : {
+		"name" : "Menace",
+		"description" : "Taktischer Unterstützungsbomber",
+		"helptext" : "Der Menace ist ein taktischer Unterstützungsbomber, der größtenteils keinen direkten Schaden verursacht, dies aber durch seine Fähigkeit zur Massenkontrolle wettmacht. Er kann mit einer von drei Ausrüstungen ausgestattet werden: einem Bündel langsamer Bomben, einem schwerkraftunterstützten Entschärfungsimpuls oder einem Minenverlegungssystem. Dies bietet ihm verschiedene Möglichkeiten für reaktive und proaktive Bombenangriffe."
+	},
+	"chicken_spidermonkey" : {
+		"name" : "Razorwing",
+		"description" : "Disruptor-Skirmisher Chicken",
+		"helptext" : "Der Spidermonkey ist ein sehr ungewöhnliches Unterstützungshuhn. Wie der Name schon sagt, kann er Wände erklimmen, aber auch eine Seidenleine spinnen, die Gegner verlangsamt und mitreißt."
+	},
+	"shieldskirm" : {
+		"name" : "Vigilante",
+		"description" : "Marschflugkörper-Scharmützler-Bot",
+		"helptext" : "Die weitreichenden Flutraketen des Vigilante ermöglichen ihm den Erstschlag gegen andere Scharmützler. Seine geringe Geschwindigkeit und schwache Panzerung machen ihn jedoch zu einem leichten Ziel für Angreifer und andere schnelle Ziele. Er eignet sich zwar hervorragend für Flächenbombardements und Schildentzug, weist aber im Nahbereich mangelnde Angriffskraft auf. Kontere ihn mit allem, was schnell genug ist, um seinen Raketen auszuweichen."
+	},
+	"dronelight" : {
+		"name" : "Firefly",
+		"description" : "Angriffsdrohne",
+		"helptext" : "Die Firefly ist eine Angriffsdrohne mit einem schwachen, hochpräzisen Pulslaser. Sie kann ihre übergeordnete Einheit vor leichten feindlichen Einheiten schützen. Da sie jedoch nicht mit dieser getarnt ist, kann sie auch die Anwesenheit eines getarnten Kommandanten verraten."
+	},
+	"chickenblobber" : {
+		"name" : "Papanok",
+		"description" : "Schweres Artilleriehuhn",
+		"helptext" : "Der große Bruder des Lobbers, der Blobber, schleudert einen weitverteilten Säureregen. Er kann selbst das stärkste Schildnetzwerk sehr schnell zerstören, ist aber relativ anfällig für direkte Angriffe."
+	},
+	"energyheavygeo" : {
+		"name" : "Fortschrittliche Geothermie",
+		"description" : "Großes Kraftwerk +40e – Steigt langsam mit der Zeit, EXTREM GEFÄHRLICH",
+		"helptext" : "Das fortschrittliche Geothermiekraftwerk nutzt den Erdmantel, um extrem viel Energie zu sehr geringen Kosten zu erzeugen. Leider ist es so, dass selbst die besten Sicherheitsmechanismen nach seiner Zerstörung einen Supervulkanausbruch nicht verhindern können. Der Bau erfolgt auf eigene Gefahr."
+	},
+	"staticcon" : {
+		"name" : "Hausmeister",
+		"description" : "Bauassistent",
+		"helptext" : "Der Hausmeister ist die kostengünstigste Quelle für Baukraft und eignet sich ideal, um die Produktion von Fabriken zu steigern oder nahegelegene Verteidigungsanlagen automatisch zu reparieren. Er kann jedoch selbst keine Bauprojekte starten."
+	},
+	"terraunit" : {
+		"name" : "Terraform",
+		"description" : "Ausgegeben: 0",
+		"helptext" : "Diese Einheit repräsentiert ein Gebiet, das terraformt wird."
+	},
+	"chickenf" : {
+		"name" : "Talon",
+		"description" : "Luftbombardement-Huhn",
+		"helptext" : "Es ist ein fliegendes Huhn! Der Talon ist ein tödliches Raubtier, das feindliche Flugzeuge mit seinen Stacheln abschießt, sie aber auch gerne gegen Bodenziele einsetzt. Er kann jedoch wie jede andere Lufteinheit besiegt werden."
+	},
+	"energypylon" : {
+		"name" : "Energiemast",
+		"description" : "Erweitert das Overdrive-Netz",
+		"helptext" : "Energieübertragungsmasten helfen, Energienetze zu erweitern und mehr Extraktoren oder Energiequellen anzuschließen. Dies wiederum unterstützt den Overdrive der Extraktoren und die Produktion von mehr Metall. Masten bieten auch eine schnelle Möglichkeit, Verteidigungsanlagen, die auf das Energienetz angewiesen sind, mit Energie zu versorgen. Beachten Sie, dass über kurze Distanzen oder in Situationen mit niedrigem Energieverbrauch die Nutzung von Energieerzeugern wie Solarkollektoren zur Netzanbindung eine kostengünstigere Alternative sein kann."
+	},
+	"bomberprec" : {
+		"name" : "Divinity",
+		"description" : "Streubomber",
+		"helptext" : "Der einzige Zweck der Divinity besteht darin, ihre Streubombenladung an eine Position zu bringen, wo sie den Feind vernichtend trifft. Sehr nützlich gegen feindliche Verteidigungen und Gruppen langsamer bis mittelschneller Einheiten."
+	},
+	"chicken_shield" : {
+		"name" : "Felarar",
+		"description" : "Geschützter Plänkler/Luftabwehrhuhn",
+		"helptext" : "Schützt benachbarte Hühner."
+	},
+	"chicken_dodo" : {
+		"name" : "Dodo",
+		"description" : "Selbstmordhuhn",
+		"helptext" : "Der Körper des Dodos enthält eine explosive Mischung aus organischem Sprengstoff und Pheromonen. Beim geringsten Anlass explodiert er spektakulär, wobei die entstehende Schockwelle nahe Einheiten in die Luft schleudert. Vorsicht, er hinterlässt eine Säurelache, die Pheromone freisetzt, die die Regeneration anderer Hühner unterstützen!"
+	},
+	"bomberheavy" : {
+		"name" : "Hella",
+		"description" : "Strategischer Bomber",
+		"helptext" : "Die Hella ersetzte die Licho in jüngerer Vergangenheit, als sich die Luftdoktrin zugunsten schwererer strategischer Bomber änderte. Ihre Nutzlast besteht aus einer Atombombe. Aufgrund ihrer schweren Panzerung und ihrer hohen Nutzlast ist die Hella deutlich langsamer als die meisten Flugzeuge. Zwar fehlt ihr die Durchschlagskraft der Oblivion- oder Silencer MkIII-Raketen, doch ihre BN-22-Atombombe erzeugt immer noch eine stärkere Explosion als eine taktische Atombombe der Eos."
+	},
+	"tacnuke" : {
+		"name" : "Armageddon",
+		"description" : "Taktische Atombombe",
+		"helptext" : "Die Amrageddon nutzt einen Marschflugkörper, um eine verkleinerte Version der Hella-Bombe einzusetzen. Kontern Sie sie mit Schutzmaßnahmen oder stellen Sie sicher, dass Ihre Schilde geladen sind."
+	},
+	"chickenwurm" : {
+		"name" : "Wurm",
+		"description" : "Grabendes Angriffshuhn",
+		"helptext" : "Der Wurm gräbt sich unter die Erdoberfläche und schleudert einen Feuerball, der einen großen Teil des Geländes verbrennt. Er kann Klippen erklimmen und Verteidigungstürme überraschen, ist aber anfällig für Angriffe."
 	},
 	"dronefighter" : {
 		"name" : "Spicula",
-		"description" : "Kappenjaegerdrohne",
-		"helptext" : "Der Spicula ist eine schnelle Kappenjaegerdrohne, der kann Luft- und Landeinheiten schiessen."
+		"description" : "Kampfdrohne",
+		"helptext" : "Die Spicula ist eine schnelle Mehrzweck-Kampfdrohne, deren Partikelstrahl sowohl gegen Land- als auch gegen Luftziele wirksam ist."
 	},
-	"energysingu" : {
-		"name" : "Singularity Reactor",
-		"description" : "Großes Kraftwerk GEFÄHRLICH",
-		"helptext" : "Dieser Reaktor erzeugt eine riesige Menge an Energie, wozu er ein kontrolliertes Schwarzes Loch nutzt - was genauso sicher ist, wie es sich anhört. Wird der Reaktor zerstört, wird eine riesige Menge an Energie frei, die sich in einer Explosion ungeheuren Ausmaßes, vergleichbar mit einer Atomexplosion, äußert. Ein ganzer Kontinent, auf dem der Reaktor gebaut wird, sollte von nun an als unsicherer Boden betrachtet werden."
+	"bomberassault" : {
+		"name" : "Eclipse",
+		"description" : "Angriffsbomber (Antistatisch)",
+		"helptext" : "Der imposante Rumpf der Eclipse hält erheblichen Belastungen stand und feuert stetig, um seine massive, verheerende Ladung abzuwerfen. Die ungelenkte Bombe hat jedoch Probleme, mobile Ziele zu treffen, und ihre Größe macht sie zu einem leichten Ziel."
+	},
+	"cloakassault" : {
+		"name" : "Schlinge",
+		"description" : "Schock- und Ehrfurcht-Hinterhalt",
+		"helptext" : "Die Schlinge wurde parallel zum Sonnenstrahl entwickelt und nutzte die Fortschritte der Plasmaeindämmung. Im Gegensatz zu ihrem Cousin, dem Sonnenstrahl, erzeugt die Schlinge mit ihrer Plasmaeindämmung Kugelblitze, die die Elektronik gegnerischer Bots vorübergehend zerstören können. Vorsicht: Die Schlinge ist etwas ungenau und kann Verbündete verletzen."
+	},
+	"energysolar" : {
+		"name" : "Solarkollektor",
+		"description" : "Kraftwerk: +3e",
+		"helptext" : "Solarkollektoren sind die kostenintensivsten Energiestrukturen, aber auch die zuverlässigsten und robustesten. Bei einem Angriff rollen sich Solarkollektoren 8 Sekunden lang zu einem Panzer zusammen. Dies reduziert den erlittenen Schaden auf ein Viertel und bietet hervorragenden Schutz vor Angreifern."
+	},
+	"gunshipheavyskirm" : {
+		"name" : "Aurora",
+		"description" : "Feuerunterstützungs-Kampfhubschrauber",
+		"helptext" : "Eine Luftwaffenplattform, die den Feind aus der Reichweite seiner Waffen bombardiert. Ihre beiden Gauss-Maschinenkanonen sind leistungsstark, aber ungenau, während ihre kinetischen Raketen mit langsamen Zielen kurzen Prozess machen. Obwohl die Aurora nicht aus nassem Papier besteht und einiges aushält, ist es dennoch ratsam, sie hinter anderen Einheiten zu platzieren, da sie nicht besonders gut für das Abfangen von Beschuss geeignet ist."
+	},
+	"factoryshield" : {
+		"name" : "Schildbot-Fabrik",
+		"description" : "Produziert schwere, langsame Schildläufer mit Schild",
+		"helptext" : "Die Schildbot-Fabrik ist robust und dennoch flexibel. Sie verfügt über einen großflächigen Schild, der zum Aufladen anderer Schildeinheiten nützlich ist. Ihre Einheiten sind so konstruiert, dass sie Schaden einstecken und austeilen können, ohne dabei an Mobilität einzubüßen. Geschickter Einsatz von Einheitenkombinationen wird belohnt. Wichtige Einheiten: Wächter, Wächter, Gesetzloser, Rächer, Bewahrer."
+	},
+	"platecloak" : {
+		"name" : "Hinterhalt-Platte",
+		"description" : "Parallele Einheitenproduktion",
+		"helptext" : "Bauplatten erhöhen die Produktionskapazität benachbarter Fabriken, indem sie als unabhängige Bauwarteschlange fungieren. Platten sind die kostengünstigste Möglichkeit, die Einheitenproduktion zu steigern, da sie die Vielseitigkeit des Wächters zugunsten höherer Effizienz umgehen. Achtung: Eine Platte funktioniert nicht ohne eine nahegelegene Fabrik des entsprechenden Typs."
+	},
+	"plateshield" : {
+		"name" : "Shieldbot Plate",
+		"description" : "Parallele Einheitenproduktion",
+		"helptext" : "Bauplatten erhöhen die Produktionskapazität benachbarter Fabriken, indem sie als unabhängige Bauwarteschlange fungieren. Platten sind die kostengünstigste Möglichkeit, die Einheitenproduktion zu steigern, und verzichten auf die Vielseitigkeit des Hausmeisters zugunsten höherer Effizienz. Achtung: Eine Platte funktioniert nicht ohne eine nahegelegene Fabrik des entsprechenden Typs."
+	},
+	"platespider" : {
+		"name" : "Spider Plate",
+		"description" : "Parallele Einheitenproduktion",
+		"helptext" : "Bauplatten erhöhen die Produktionskapazität benachbarter Fabriken, indem sie als unabhängige Bauwarteschlange fungieren. Platten sind die kostengünstigste Möglichkeit, die Einheitenproduktion zu steigern, und verzichten auf die Vielseitigkeit des Hausmeisters zugunsten höherer Effizienz. Achtung: Eine Platte funktioniert nicht ohne eine nahegelegene Fabrik des entsprechenden Typs."
+	},
+	"platejump" : {
+		"name" : "Jumpbot Plate",
+		"description" : "Parallele Einheitenproduktion",
+		"helptext" : "Bauplatten erhöhen die Produktionskapazität nahegelegener Fabriken, indem sie als unabhängige Bauwarteschlange fungieren. Platten sind die kostengünstigste Möglichkeit, die Einheitenproduktion zu steigern, und verzichten auf die Vielseitigkeit des Hausmeisters zugunsten höherer Effizienz. Achtung: Eine Platte funktioniert nicht ohne eine nahegelegene Fabrik des entsprechenden Typs."
+	},
+	"plateveh" : {
+		"name" : "Rover Plate",
+		"description" : "Parallele Einheitenproduktion",
+		"helptext" : "Bauplatten erhöhen die Produktionskapazität nahegelegener Fabriken, indem sie als unabhängige Bauwarteschlange fungieren. Platten sind die kostengünstigste Möglichkeit, die Einheitenproduktion zu steigern, und verzichten auf die Vielseitigkeit des Hausmeisters zugunsten höherer Effizienz. Achtung: Eine Platte funktioniert nicht ohne eine nahegelegene Fabrik des entsprechenden Typs."
+	},
+	"platetank" : {
+		"name" : "Tankplatte",
+		"description" : "Parallele Einheitenproduktion",
+		"helptext" : "Bauplatten erhöhen die Produktionskapazität benachbarter Fabriken, indem sie als unabhängige Bauwarteschlange fungieren. Platten sind die kostengünstigste Möglichkeit, die Einheitenproduktion zu steigern. Sie verzichten auf die Vielseitigkeit des Hausmeisters zugunsten höherer Effizienz. Achtung: Eine Platte funktioniert nicht ohne eine nahegelegene Fabrik des entsprechenden Typs."
+	},
+	"platehover" : {
+		"name" : "Hovercraft-Platte",
+		"description" : "Parallele Einheitenproduktion",
+		"helptext" : "Bauplatten erhöhen die Produktionskapazität benachbarter Fabriken, indem sie als unabhängige Bauwarteschlange fungieren. Platten sind die kostengünstigste Möglichkeit, die Einheitenproduktion zu steigern, und verzichten auf die Vielseitigkeit des Hausmeisters zugunsten höherer Effizienz. Achtung: Eine Platte funktioniert nicht ohne eine nahegelegene Fabrik des entsprechenden Typs."
+	},
+	"plateamph" : {
+		"name" : "Amphbot-Platte",
+		"description" : "Parallele Einheitenproduktion",
+		"helptext" : "Bauplatten erhöhen die Produktionskapazität benachbarter Fabriken, indem sie als unabhängige Bauwarteschlange fungieren. Platten sind die kostengünstigste Möglichkeit, die Einheitenproduktion zu steigern, und verzichten auf die Vielseitigkeit des Hausmeisters zugunsten höherer Effizienz. Achtung: Eine Platte funktioniert nicht ohne eine nahegelegene Fabrik des entsprechenden Typs."
+	},
+	"plateship" : {
+		"name" : "Schiffsplatte",
+		"description" : "Parallele Einheitenproduktion",
+		"helptext" : "Bauplatten erhöhen die Produktionskapazität benachbarter Fabriken, indem sie als unabhängige Bauwarteschlange fungieren. Platten sind die kostengünstigste Möglichkeit, die Einheitenproduktion zu steigern. Sie verzichten auf die Vielseitigkeit des Hausmeisters zugunsten höherer Effizienz. Achtung: Eine Platte funktioniert nicht ohne eine nahegelegene Fabrik des entsprechenden Typs."
+	},
+	"plateplane" : {
+		"name" : "Plane Plate",
+		"description" : "Parallele Einheitenproduktion",
+		"helptext" : "Konstruktionsplatten erhöhen die Produktionskapazität benachbarter Fabriken, indem sie als unabhängige Bauwarteschlange fungieren. Platten sind die kostengünstigste Möglichkeit, die Einheitenproduktion zu steigern, und verzichten auf die Vielseitigkeit des Caretakers zugunsten höherer Effizienz. Achtung: Eine Platte funktioniert nicht ohne eine nahegelegene Fabrik des entsprechenden Typs."
+	},
+	"plategunship" : {
+		"name" : "Gunship Plate",
+		"description" : "Parallele Einheitenproduktion",
+		"helptext" : "Konstruktionsplatten erhöhen die Produktionskapazität benachbarter Fabriken, indem sie als unabhängige Bauwarteschlange fungieren. Platten sind die kostengünstigste Möglichkeit, die Einheitenproduktion zu steigern, und verzichten auf die Vielseitigkeit des Caretakers zugunsten höherer Effizienz. Achtung: Eine Platte funktioniert nicht ohne eine nahegelegene Fabrik des entsprechenden Typs."
+	},
+	"chickena" : {
+		"name" : "Bastard",
+		"description" : "Schweres Angriffshuhn",
+		"helptext" : "Der Basilisk ist ein wahres Biest. Scheinbar unempfindlich gegen feindliches Feuer, geht er lässig auf sein Ziel zu und zerstückelt es mit seinen unglaublich kräftigen Kiefern. Glücklicherweise ist er weder schnell noch besonders intelligent und kann leicht von Plänklern oder Schwärmern vernichtet werden."
+	},
+	"hoverskirm" : {
+		"name" : "Pike",
+		"description" : "Angriffs-/Aufruhr-Luftkissenfahrzeug",
+		"helptext" : "Der Pike ist ein amphibisches Aufruhrfahrzeug mit nanoreaktiver Panzerung. Er ist mit einer schweren Schallkanone bewaffnet, die Feinde in den meisten Bereichen angreifen kann. Vorsicht: Er ist beim Wenden ziemlich langsam und hat eine enorme Beschleunigung."
+	},
+	"jumpbomb" : {
+		"name" : "Skuttle",
+		"description" : "Getarnte Sprungbombe gegen schwere Bomben",
+		"helptext" : "Diese langsame, teure getarnte Einheit kann auf feindliche Einheiten springen und selbst schwere Panzer in die Luft jagen. Kontere mit Schwärmen billiger Abschirmeinheiten. Achte beim Einsatz auf den sehr kleinen Explosionsradius."
+	},
+	"factorycomm" : {
+		"name" : "Kommandanten-Produktionslinie",
+		"description" : "Produziert Kommandanten",
+		"helptext" : "Die Kommandanten-Produktionslinie (KPL) ist für die Herstellung der einzigartigen Kommandanten in der Galaxie verantwortlich. Hier werden Ersatzeinheiten oder neue Einheiten konstruiert, die sich dem endlosen Krieg anschließen, der das Universum verwüstet."
+	},
+	"jumpskirm" : {
+		"name" : "Mediator",
+		"description" : "Disruptor Skirmisher Walker",
+		"helptext" : "Die Disruptorkanone des Mediators reduziert die Geschwindigkeit und Feuerrate des Gegners um bis zu 50%% und verursacht zusätzlich Schaden."
+	},
+	"chicken" : {
+		"name" : "Huhn",
+		"description" : "Basishuhn",
+		"helptext" : "Das Gemeine Huhn, auch bekannt als Novacula maxillas, ist eine invasive Art seltsamer, auf diesem Planeten aufgetauchter Rektiltiere. Das Gemeine Huhn kann sich ernähren, indem es andere Einheiten, einschließlich Roboter, angreift!"
+	},
+	"chicken_sporeshooter" : {
+		"name" : "Helspawn",
+		"description" : "Geschütztes Angriffshuhn",
+		"helptext" : "Der Sporenschütze verschießt Sporen, um Flugzeuge abzuwerfen und Landziele aus der Ferne zu treffen. Er kann Wände für Überraschungsangriffe erklimmen."
 	},
 	"turretaafar" : {
-		"name" : "Chainsaw",
-		"description" : "Weitreichende Anti-Air Raketenbatterie",
-		"helptext" : "Der Chainsaw ist eine weitreichendes Anit-Air Geschütz, welches massiv Schaden austeilt und sogar Bomber vom Himmel holen kann. Dennoch kann es nicht viel Schaden einstecken und versagt kläglich, wenn es direkt angegriffen wird."
+		"name" : "Hailstorm",
+		"description" : "Schwere SAM-Batterie",
+		"helptext" : "Der Hailstorm wurde kürzlich überarbeitet und verfügt über 26 Raketen, die er auf seine Feinde abfeuern kann. Ein Paar Hailstorms kann schwere Lufteinheiten wie Hellas sehr leicht ausschalten."
 	},
-	"subtacmissile" : {
-		"name" : "Scylla",
-		"description" : "Tactical Nuke Missile Sub, Drains 20 m/s, 30 second stockpile",
-		"helptext" : "The Tactical Nuke Missile Sub provides a standoff precision strike weapon in the form of tactical missiles. It has no defence against direct attacks and should avoid contact with the enemy."
+	"staticnuke" : {
+		"name" : "Oblivion",
+		"description" : "Strategischer MIRV-Werfer, 25 m/s abgesaugt, 3 Minuten Vorrat",
+		"helptext" : "Oblivion, der Gipfel menschlicher Ingenieurskunst. Die absolute Zauberei, die nötig ist, um drei Hawking-Bomben in eine Rakete zu packen, die dennoch mit Bruchteilen der Lichtgeschwindigkeit durch den interplanetaren Raum fliegen kann, ist unvorstellbar, und doch ist es irgendwie gelungen."
+	},
+	"missilenuke" : {
+		"name" : "Silencer MkIII",
+		"description" : "Strategischer Nuklear-Marschflugkörper",
+		"helptext" : "Der Silencer MkIII ist eine Weiterentwicklung des ursprünglichen strategischen Silencer-Sprengkopfes und hat seinen Nanoprint so vereinfacht, dass er mit Nanodrehmaschinen in Fabriken hergestellt werden kann. Obwohl er dadurch praktisch auf den Raketensilo beschränkt ist, musste der Silencer MkIII einige Kompromisse eingehen, um dieses Ziel zu erreichen. Durch den Wegfall der Basisplattform (die zugunsten des neuen Oblivion-MIRV verwendet wurde) wurde seine Reichweite erheblich verringert. Dennoch ist er nach wie vor eine sehr wirksame und gefährliche Waffe."
+	},
+	"hovershotgun" : {
+		"name" : "Punisher",
+		"description" : "Schwebeflinte",
+		"helptext" : "Der Punisher verfügt über eine Schrotflinte, die einen Hagel von Projektilen verschießt, der sich gut gegen große Ziele oder dichte Gegnergruppen eignet."
+	},
+	"spiderantiheavy" : {
+		"name" : "Shade",
+		"description" : "Getarnter Scout/Anti-Heavy",
+		"helptext" : "Der Shade basiert auf der führenden Infiltrationseinheit, der Widow. Er ist nicht nur schneller als sein Vorgänger, sondern bietet auch zusätzliche Funktionalität und eine deutlich stärkere Wirkung. Er kann die Sensoren feindlicher Einheiten hacken und deren Meldungen abhören, wodurch er passiv feindliche Bewegungen auskundschaften kann. Dies ermöglicht ihm eine bessere Infiltrationsfähigkeit und eine höhere Belohnung für die Positionierung. Der Shade kostet jedoch deutlich mehr als eine Widow."
+	},
+	"energywind" : {
+		"name" : "Wind-/Gezeitengenerator",
+		"description" : "Kleines Kraftwerk",
+		"helptext" : "Windgeneratoren erzeugen je nach Höhe und Windgeschwindigkeit eine variable Energiemenge. Sie sind extrem zerbrechlich und explodieren kettenförmig, wenn sie gebündelt sind. Überlegen Sie sich daher gut, wo Sie sie platzieren. Im Wasser werden sie zu etwas robusteren Gezeitengeneratoren mit guter, konstanter Leistung."
 	},
 	"amphassault" : {
-		"name" : "Grizzly",
-		"description" : "Heavy Amphibious Assault Walker",
-		"helptext" : "The Grizzly is a classic assault unit - relatively slow, clumsy and next to unstoppable. Its weapon is a high power laser beam with high range and damage, ineffective against swarmers and fast aircraft but not much else. While its weapon cannot fire underwater, the Grizzly can float to surface in order to shoot."
+		"name" : "Breaker",
+		"description" : "Schwerer Amphibischer Angriffsläufer",
+		"helptext" : "Der Breaker ist eine klassische Angriffseinheit: langsam, schwerfällig und widerstandsfähig. Ausgestattet mit zwei schweren Gauss-Kanonen mit hoher Reichweite und hohem Schaden ist er gegen Schwärmer und schnelle Flugzeuge wirkungslos, gegen schwere Panzer jedoch tödlich."
 	},
-	"bomberheavy" : {
-		"name" : "Likho",
-		"description" : "Implosion Bomber",
-		"helptext" : "Likho ist ein mächtiger Bomber, der alles in Schutt und Asche legt. Seine Schlagkraft und Ausdauer ist riesig, doch muss er nach jedem Angriff Munition nachladen, was ihn eher für Angriffe auf einzelne Ziele prädestiniert."
+	"shieldaa" : {
+		"name" : "Wächter",
+		"description" : "Geschützte Flugabwehr",
+		"helptext" : "Der Wächter ersetzte den Vandal während der ersten Koalitionskriege. In dieser Version erhielt er schwerere Raketen, ein mobiles Radar und einen persönlichen Schutzschild. Diese Raketen enthalten leichte elektromagnetische Sprengladungen, die Ziele entwaffnen können."
 	},
-		"supernova_base" : {
-		"name" : "Supernova Uplink",
-		"description" : "Supernova Basisstation",
-		"helptext" : "Der Supernova Verteidigungssatellit ist ein Energiesatellit, der auf einem weltraumgestützten Satellitensystem montiert ist und Ziele völlig ungestraft treffen kann. Diese Uplink-Station versorgt ihn mit der Energie, die er braucht, um seinen tödlichen Laser abzufeuern und seine Antriebssysteme mit Energie zu versorgen. Sollte die Uplink-Station ausfallen oder außer Gefecht gesetzt werden, z. B. durch EMP, Entwaffnung oder Trennung vom Netz, wird der Satellit seinen Dienst einstellen."
+	"hoverriot" : {
+		"name" : "Langschwert",
+		"description" : "Luftkissenfahrzeug zur Sperrfeuerunterstützung",
+		"helptext" : "Nach den verheerenden Erfahrungen mit dem Unterwasserkampf gegen Schwebeeinheiten wurde der Streitkolben kurz darauf durch das Langschwert ersetzt. Ausgestattet mit einem Gauss-Maschinengewehr kann er sowohl Horden leichterer Einheiten als auch Unterwassereinheiten gleichermaßen angreifen. Er erhielt zudem eine leichte Zusatzpanzerung, was jedoch etwas an Geschwindigkeit einbüßt. Vorsicht: Seine Schüsse durchschlagen sowohl befreundete als auch feindliche Einheiten."
+	},
+	"veharty" : {
+		"name" : "Badger",
+		"description" : "Artillerie-Minenleger-Rover",
+		"helptext" : "Der Badger legt Minen, die zwar recht effektiv sind, aber aus der Ferne nur eine begrenzte Lebensdauer haben (eher willkürlich). Der Badger übertrifft die meisten Verteidigungsanlagen deutlich, ist aber leicht gepanzert und kann nicht so leicht fliehen. Beschütze ihn daher mit verbündeten Einheiten, möglicherweise unterstützt durch deine eigenen Minen."
+	},
+	"striderantiheavy" : {
+		"name" : "Ultimatum",
+		"description" : "Getarnter Anti-Schwer-/Anti-Strider-Läufer",
+		"helptext" : "Das Ultimatum verfügt nur über eine Waffe: ein Desintegratorgeschütz, das einen schweren Panzer mit einem Schuss verdampfen kann. Es eignet sich am besten, um sich an feindliche schwere Läufer heranzuschleichen und mit wenigen Schüssen schweren Schaden oder Zerstörung zu verursachen. Die Verteidigung dagegen erfolgt durch die Abschirmung schwerer Panzer durch leichtere Einheiten."
+	},
+	"staticmex" : {
+		"name" : "Metallextraktor",
+		"description" : "Produziert Metall für das Team",
+		"helptext" : "Der Metallextraktor (oder Mex) bohrt sich tief in die Erde, um verschiedene Metalle zu fördern. Obwohl der Bohrer zunächst langsam ist, verfügt er über einen Motor mit variabler Geschwindigkeit, der es ermöglicht, ihn durch Netzenergie zu übertreiben. Dieser Prozess hat jedoch abnehmende Erträge, daher ist es besser, mehr Abbaustätten zu erschließen, als die bestehenden zu übertreiben. Erobern Sie diese immer so schnell wie möglich und so aggressiv wie möglich.\n\nBei Teamspielen ist es wichtig zu beachten, dass der Besitz eines Metallextraktors Ihnen nicht den vollen Produktionswert einräumt, sondern Ihnen einen Anteil daran gewährt, auch wenn Sie ihn nicht gebaut haben. Daher ist es umso wichtiger, sich auf den Erwerb neuer Metallextraktoren zu konzentrieren, anstatt sich Gedanken darüber zu machen, wem was gehört."
+	},
+	"vehsupport" : {
+		"name" : "Fractal",
+		"description" : "Feuerunterstützung HEAT Rover (muss zum Feuern anhalten)",
+		"helptext" : "Die Hauptkanone des Fractals schießt praktisch eine weitere Kanone ab – eine mächtige Partikelschrotflinte, deren Rückstoß sich selbst und die Rakete, auf der sie montiert ist, in Stücke reißt und dabei dem Ziel großen Schaden zufügt. Sie ist anfällig gegen Flächenschilde, die die Rakete abfangen können, bevor sie ihre Schrotflinte abfeuern kann."
+	},
+	"grebe" : {
+		"name" : "Grebe",
+		"description" : "Amphibischer Raider-Bot",
+		"helptext" : "Der Grebe ist ein einfacher Raider, der mit Granaten bewaffnet ist – eine gute Waffe gegen schwere Gegner auf kurze Distanz. Obwohl er amphibisch ist, kann er unter Wasser nicht schießen."
+	},
+	"hoverarty" : {
+		"name" : "Lanze",
+		"description" : "Luftkissenfahrzeug gegen schwere Artillerie",
+		"helptext" : "Die Waffe der Lanze, auch bekannt als \"Todesstrahl\", ist kraftvoll und präzise genug, um die meisten Einheiten mit einem einzigen Schuss aufzuspießen. Setze sie gegen stark gepanzerte Einheiten ein, aber behalte sie hinter der Front – sie ist leicht gepanzert und kann nicht vor Gefahren fliehen."
+	},
+	"shieldbomb": {
+		"Name": "Paket",
+		"description": "Geschützte Streubombe",
+		"helptext": "Das Paket ist im Grunde eine Streubombe mit Beinen. Bei tödlichem Schaden oder dem Befehl zur Explosion setzt es seine Ladung frei: eine Detonationsstoßwelle und zehn kleine Sprengbomben. Diese zusätzlichen Bomblets ermöglichen es, Schilde zu entladen und Schildeinheiten direkten Schaden zuzufügen, verdächtige Tarnroboter zu erkennen oder nahegelegenen feindlichen Einheiten leichten Flächenschaden zuzufügen. Besonders effektiv ist es in Kombination mit einem Charon für den Lufteinsatz oder beim Start per Newton. \nEs gibt zwar Andeutungen, dass es als Munition für Streubomber eingesetzt werden könnte, doch dies sind lediglich Gerüchte und nicht Teil einer geplanten Weiterentwicklung von Lufteinheiten."
+	},
+	"cloakjammer" : {
+		"name" : "Iris",
+		"description" : "Area Cloaker/Jammer Walker",
+		"helptext" : "Die Iris verfügt über ein Störgerät, um die Radarsignale Ihrer Einheiten zu verbergen. Außerdem besitzt sie einen kleinen Tarnschild, um verbündete Einheiten in der Nähe vor feindlichen Blicken zu verbergen."
+	},
+	"spidercon" : {
+		"name" : "Weaver",
+		"description" : "Konstruktionsspinne",
+		"helptext" : "Die Weaver ist eine Konstruktor-Spinne, die jedes Hindernis überwinden und Verteidigungsanlagen auf Anhöhen errichten kann. Sie ist außerdem mit einem Kurzstreckenradar ausgestattet."
+	},
+	"hoverdepthcharge" : {
+		"name" : "Claymore",
+		"description" : "U-Boot-Abwehr-Luftkissenfahrzeug",
+		"helptext" : "Die etwas selbstmörderische Claymore ist mit einem schweren Wasserbombenwerfer bewaffnet und hat keine Skrupel, ihn an Land abzuwerfen."
+	},
+	"gunshipkrow" : {
+		"name" : "Purifier",
+		"description" : "Fliegende Kampfstation",
+		"helptext" : "Der teure und extrem robuste Purifier wurde auf einem Krow-Chassis gebaut. Mit seiner noch schwereren Bewaffnung ist sein einziger Zweck die Zerstörung von allem, was sich vor oder unter ihm befindet. Ausgestattet mit drei Schrotflinten und einem Todeslasersystem wird er den bodenliebenden Plebs, die unter ihm hausen, garantiert den Tag verderben."
+	},
+	"neebcomm" : {
+		"name" : "Neeb Comm",
+		"description" : "Hässlicher Truthahn",
+		"helptext" : "Dieses fette Huhn wird dir als Belohnung für deine Missetaten überreicht. Benimm dich nächstes Mal!"
+	},
+	"factoryplane" : {
+		"name" : "Flugzeugwerk",
+		"description" : "Produziert Flugzeuge",
+		"helptext" : "Das Flugzeugwerk bietet eine Vielzahl von Starrflügelflugzeugen für Ihre Bedürfnisse. Wählen Sie zwischen Mehrzweckjägern, die sowohl als leichte Angriffsflugzeuge als auch als spezialisierte Abfangjäger eingesetzt werden können, und zwischen Präzisionsbombern für den Abschuss bestimmter Ziele oder ihren Sättigungsbombern zur Zerstörung von Schwärmen. Im Lieferumfang des Werks ist außerdem ein Nachrüstsatz enthalten."
+	},
+	"gunshipbomb" : {
+		"name" : "Sucher",
+		"description" : "Lenkbare Streubombe",
+		"helptext" : "Der Sucher ist eine direkte Verbesserung zum Blastwing. Im Wesentlichen eine Streubombe mit zwei Flügeln, kann er Gruppen kleiner Ziele ausschalten. Er eignet sich am besten für Sichtkontakt zu Zielen und für den Einsatz auf Hügeln als primitive Luftartillerie. Gegen ihn kann man mit Langstrecken-Flugabwehr vorgehen."
+	},
+	"napalmmissile" : {
+		"name" : "Inferno",
+		"description" : "Napalmrakete",
+		"helptext" : "Der Inferno ist eine Waffe mit großem Flächenfeuer. Sein Direktschaden ist gering, aber die erzeugte Feuerwolke hält sehr lange an."
+	},
+	"factoryamph" : {
+		"name" : "Amphbot-Fabrik",
+		"description" : "Produziert Amphibienbots",
+		"helptext" : "Die Amphibienbetriebsanlage baut die langsamen, aber robusten Amphibienbots und bietet eine alternative Methode zur Land- und Seekriegsführung. Einheiten aus dieser Fabrik regenerieren sich typischerweise unter Wasser."
+	},
+	"factoryship" : {
+		"name" : "Werft",
+		"description" : "Produziert Marineeinheiten",
+		"helptext" : "In der Werft werden sowohl Schiffe als auch U-Boote gebaut. Andere Wassereinheiten wie Luftkissenfahrzeuge und Amphibienbots verfügen über separate Fabriken."
+	},
+	"vehassault" : {
+		"name" : "Ravager",
+		"description" : "Angriffsfahrzeug",
+		"helptext" : "Der moderne Ravager hat mehrere Entwicklungsstufen durchlaufen, bevor er sein heutiges Format erreichte. Dank eines neuen thermoregenerativen Plasmagenerators, der die bei der Plasmaerzeugung erzeugte Wärme recycelt, um weiteres Plasma zu produzieren, kann eine Ravager-Einheit Ziele mit dem gleichen Schaden wie eine Raider-Einheit beschießen. Darüber hinaus kann sie sich mit einem Notschub aus einer Situation befreien oder feindliche Einheiten abfangen, was jedoch zu einer Verlangsamung für einige Sekunden führt."
+	},
+	"raveparty" : {
+		"name" : "Disco Rave Party",
+		"description" : "Zerstörerischer Regenbogenprojektor – Global enthüllt bei 65%% Fertigstellung",
+		"helptext" : "Disco Rave Party. Dieser eher harmlos klingende Name wird mit größter Angst und Schrecken ausgesprochen. Dieses gewaltige Gerät ist eine Massenvernichtungswaffe, die nur von der Starlight und der Zenith übertroffen wird. Dank einer Technologie, die im Grunde genommen Magie sein könnte, kann die Disco Rave Party ein blendendes Trommelfeuer aus Granaten entfesseln, das jede Form von Tod birgt. Wenn du einen dieser Projektile im Bau durch den Feind entdeckst, wirf alles darauf, damit der Regenbogen nicht das Letzte ist, was du je siehst."
+	},
+	"turretlaser" : {
+		"name" : "Parapet",
+		"description" : "Mittelpulslaserturm",
+		"helptext" : "Der universelle Parapet-Laserturm ist eine direkte Weiterentwicklung des früheren Lotus-Modells und nutzt Laser mittlerer Energie, um angreifende feindliche Einheiten zu beschädigen. Seine Reichweite erlaubt es ihm nicht, Plänkler anzugreifen, erfordert aber erhebliche Investitionen in Angreifer, um seinen Umkreis zu durchdringen."
+		},
+	"cloakskirm" : {
+		"name" : "Waylayer",
+		"description" : "Hinterhalt-Scharmützler (lasergelenkt)",
+		"helptext" : "Der Waylayer wurde in den späten Koalitionskriegen entwickelt, die die Galaxis verwüsteten. Er ist ein spezialisierter Tarnkappen-Scharmützler, der gegnerische Schwachstellen angreifen und schwere Panzer in großen Gruppen mit massivem Schaden überfallen kann. Ausgestattet mit einem am Rucksack montierten Raketenwerfer können sie übereinander hinwegfeuern (Vorsicht: Der Laser kann nicht durch Verbündete hindurchfeuern!). Leider hinterlässt die Kombination aus vertikalem Startsystem und geringer Raketenwendegeschwindigkeit eine beträchtliche tote Zone um den Waylayer, was ihn extrem anfällig für schnelle Angreifer macht."
+	},
+	"tankcon" : {
+		"name" : "Revolver",
+		"description" : "Bewaffneter Baupanzer",
+		"helptext" : "Der Revolver ist mit zwei Rotationskanonen bewaffnet, deren Feuerrate beim Abfeuern zunimmt. Das macht ihn ideal für längere Gefechte, bei denen sein enormer Schaden pro Sekunde zum Tragen kommt. Kontern Sie ihn mit Hit-and-Run-Taktiken."
+	},
+	"shieldarty" : {
+		"name" : "Preserver",
+		"description" : "Entwaffnende Marschartillerie",
+		"helptext" : "Der Preserver feuert Langstrecken-Marschflugkörper ab, die EMP-Blitze abfeuern und so wichtige feindliche Verteidigungsanlagen oder Einheiten entwaffnen können. Er selbst ist jedoch nur mäßig abgeschirmt, daher sollte er nicht als Angriffseinheit eingesetzt werden."
+	},
+	"roost" : {
+		"name" : "Roost",
+		"description" : "Bringt Hühner hervor",
+		"helptext" : "Roosts wie dieser sind die Brutstätten der Thunderbirds."
+	},
+	"dynsupport1" : {
+		"name" : "Unterstützungskommandant",
+		"description" : "Disruptor-/Baukommandant",
+		"helptext" : "Das Unterstützungskommandant-Chassis konzentriert sich auf Baustärke, Unterstützung und Statusverstärkung, um seiner Armee einen Vorteil zu verschaffen. Zwar fehlt es ihm an den direkten Kampffähigkeiten der anderen Kommandanten, doch verfügt es über eine ungewöhnliche Auswahl an Statusverstärkungswaffen, mit denen es den Ausgang einer Schlacht entscheiden kann."
+	},
+	"droneassault" : {
+		"name" : "Python",
+		"description" : "Angriffsdrohne",
+		"helptext" : "Die Python ist eine Hightech-Drohne mit schwerer Panzerung und einem Gluon-Beschleuniger. Sie kann einiges einstecken und austeilen."
+	},
+	"dronecon" : {
+		"name" : "Responder",
+		"description" : "Reparaturdrohne",
+		"helptext" : "Der Responder ist eine einfache Drohne mit Schild und Reparaturstrahl. Er kann weder Gebäude unterstützen noch Gebäude wiederherstellen."
+	},
+	"cloakraid" : {
+		"name" : "Lurker",
+		"description" : "Stealth Raider Bot (Radarunsichtbar)",
+		"helptext" : "Der Lurker ist der furchteinflößende Raider der Ambusher-Fabrik. Er ist mit einem radarreflektierenden Material beschichtet, das ihn für feindliche Radare unsichtbar macht. Bewaffnet mit einer Schrotflinte und nur leicht gepanzert, dezimiert der Lurker schnell unbewachte Gebiete und kann seine Tarnfähigkeiten nutzen, um feindlichen Stellungen auszuweichen. Zusätzlich zu seinen Tarnfähigkeiten kann er im Stand optische Gegenmaßnahmen einsetzen, um Hinterhalte zu legen und zu heilen. Achtung: Im direkten Kampf ist er nicht gut. Nutze seine niedrigen Produktionskosten, um ihn in Gruppen zu erstellen und so größere Einheiten zu bekämpfen."
+	},
+	"gunshipaa" : {
+		"name" : "Trident",
+		"description" : "Flugabwehr-Kampfhubschrauber",
+		"helptext" : "Der Trident ist ein langsames Kampfhubschrauber, das feindliche Flugzeuge mit Raketen abschießt. Er ist deutlich langsamer als andere Kampfhubschrauber, daher ist es viel einfacher, den Trident mit Bodeneinheiten als mit Flugzeugen zu zerstören."
+	},
+	"hoverminer" : {
+		"name" : "Dampener",
+		"description" : "Minenleger-Schwebeflug",
+		"helptext" : "Der Dampener legt Minen in geringer Entfernung von sich selbst ab."
+	},
+	"gunshiptrans" : {
+		"name" : "Charon",
+		"description" : "Lufttransporter",
+		"helptext" : "Der Charon ist das Basis-Lufttransportflugzeug. Er eignet sich ideal, um Einheiten an die Front zu befördern oder tief hinter den feindlichen Linien abzuwerfen. Er sollte jedoch nicht für Landungen in Gebieten mit Flugabwehr eingesetzt werden."
+	},
+	"striderdetriment" : {
+		"name" : "Titan",
+		"description" : "Spielentscheidender Angriffs-Schläger – Wird bei 90%% abgeschlossener Stufe global enthüllt",
+		"helptext" : "Der Titan ist der schwerste Läufer im Feld. Geschmiedet aus den stärksten Legierungen des bekannten Universums, ausgestattet mit größeren Läufen als die meisten Einheiten, und mit einem einzigen Ziel gebaut: Alles in seinem Weg zu zerstören, notfalls sogar seinen eigenen. Der Titan stellt die Spitze mobiler Einheiten dar, und es wurden keine Kosten gescheut. Seine Hauptbewaffnung, die Devestator-Kanone, kann ganze Armeen vom Schlachtfeld fegen und ist auf die Vernichtung schwächerer Läufer spezialisiert. Nur ein anderer Titan kann einen Läufer der Titan-Klasse ohne ernsthafte Verluste besiegen. Verzweifelte Kommandanten können versuchen, ihn mit schwächeren Einheiten zu bedrängen – mit geringem Erfolg, aber zu erheblichen Kosten, oft höher als die des Titan selbst."
+	},
+	"energygeo" : {
+		"name" : "Geothermiegenerator",
+		"description" : "Kraftwerk: +8e, steigt mit der Zeit (Gefährlich)",
+		"helptext" : "Geothermiekraftwerke bohren sich in den Boden, um Energie zu speichern, und werden mit der Zeit immer effizienter. Sie können nur auf Geovents auf der Karte gebaut werden, was ihre Effektivität einschränkt. Sie explodieren sehr heftig, wenn sie zerstört werden. Vermeiden Sie daher, direkt daneben etwas zu platzieren."
+	},
+	"energyprosperity" : {
+		"name" : "Prosperity",
+		"description" : "Wirtschaftliche Superwaffe – Wird global bei 100%% Fertigstellung enthüllt",
+		"helptext" : "Der Prosperity-Reaktor erzeugt Metall und erzeugt enorme Energiemengen, um Ihr Netz zu überlasten. Wenn Sie einen entdecken, sollten Sie ihn so schnell wie möglich ausschalten."
+	},
+	"jumpcon" : {
+		"name" : "Pathfinder",
+		"description" : "Jumpjet-Konstrukteur",
+		"helptext" : "In der zweiten Hälfte der Koalitionskriege wurde ein kampforientierterer Constable entwickelt, um Hanglager schnell zu sichern. Dabei verlor der Pathfinder erhebliche Panzerungsanteile zugunsten schnellerer Sprungdüsen, schnellerer Nanodrehmaschinen, eines leistungsstarken Impulsdisruptors und höherer Geschwindigkeit. Diese Umrüstung machte das Modell jedoch teurer."
+	},
+	"chicken_blimpy" : {
+		"name" : "Minokawa",
+		"description" : "Cockatrice Bomber Chicken",
+		"helptext" : "Blimpy wirft einen Dodo auf ahnungslose Armeen und Stützpunkte."
+	},
+	"droneheavyslow" : {
+		"name" : "Viper",
+		"description" : "Fortschrittliche Kampfdrohne",
+		"helptext" : "Die Viper ist eine fortschrittliche Kampfdrohne, ähnlich der Firefly, jedoch mit einem Disruptor-Pulsstrahl ausgestattet, der ihre Ziele mit jedem Treffer stärker verlangsamt."
+	},
+	"athena" : {
+		"name" : "Athena",
+		"description" : "Luftgestützter Spezialeinsatzingenieur",
+		"helptext" : "Die Athena ist der Gipfel der Tarnkappenangriffe. Ausgestattet mit einer Tarnvorrichtung und einem Radarstörer kann sie durch feindliche Linien schlüpfen, um Trupps von Angreifern zusammenzustellen und die gegnerische Logistik zu zerstören. Die Athena kann außerdem Wracks auf dem Schlachtfeld wiederbeleben und sie deiner Armee hinzufügen."
+	},
+	"staticsonar" : {
+		"name" : "Sonarstation",
+		"description" : "Ortet Wassereinheiten",
+		"helptext" : "Die fügsame Sonarstation bietet eine der wenigen Möglichkeiten, Unterwasserziele zu orten."
+	},
+	"spideremp" : {
+		"name" : "Huntsman",
+		"description" : "Entwaffnende Riot Spider",
+		"helptext" : "Der agile Huntsman kann deutlich schneller reagieren als der Commando, verfügt aber im Gegensatz zu diesem teilweise über keinen nennenswerten Wirkungsbereich. Diese Beschreibung ist in Bearbeitung."
+	},
+	"jumpassault" : {
+		"name" : "Jack",
+		"description" : "Nahkampf-Angriffsspringer",
+		"helptext" : "Der Jack ist ein Nahkampf-Angriffsspringer mit Sprungdüsen. Einige Jacks können die meisten Befestigungslinien problemlos dem Erdboden gleichmachen. Seine geringe Reichweite und sehr niedrige Geschwindigkeit machen ihn sehr anfällig für Plänkler."
+	},
+	"vehscout" : {
+		"name" : "Flare",
+		"description" : "Disruptiver Scout",
+		"helptext" : "Der Flare ersetzte den Dart zu Beginn des Jahrhunderts. Als leichter Drohnenträger und Disruptor ermöglicht er anderen Fahrzeugen effektiveres Kämpfen. Aber Vorsicht: Alleine gewinnt er keine Schlachten und ist recht teuer."
+	},
+	"factoryhover" : {
+		"name" : "Luftkissenfahrzeug-Plattform",
+		"description" : "Produziert Luftkissenfahrzeuge",
+		"helptext" : "Die Luftkissenfahrzeug-Plattform ist schnell und tödlich. Sie kann sowohl Meer als auch Ebenen überqueren und den Feind ausmanövrieren. Wichtige Einheiten: Dolch, Hellebarde, Skalpell, Streitkolben, Lanze."
+	},
+	"gunshipassault" : {
+		"name" : "Dusk",
+		"description" : "Schwerer Angriffs-/Raider",
+		"helptext" : "Die Dusk ist ein schwerer Angriffs-Kanonenhubschrauber, der auf hohe Schadenskonzentration spezialisiert ist. Sie ist außergewöhnlich gut gepanzert und kann mit ihren Kanonen mit kurzer Reichweite in kurzer Zeit großen Schaden verursachen. Vorsicht ist jedoch geboten: Sie kann hochmobile Ziele verfehlen."
+	},
+	"tankriot" : {
+		"name" : "Cobbler",
+		"description" : "Schwerer Feuerunterstützungspanzer (Scharmützler)",
+		"helptext" : "Der Cobbler ist ein schwerer Feuerunterstützungspanzer mit Kanisterraketen, die Projektile flächendeckend verschießen. Seine Fabriken können bis zu vier Raketen gleichzeitig aufnehmen, müssen diese jedoch langsam nachbauen."
+	},
+	"staticantinuke" : {
+		"name" : "Antinuke",
+		"description" : "Nuklearer Abfangjäger",
+		"helptext" : "Der Antinuke fängt automatisch feindliche nukleare Interkontinentalraketen innerhalb seines Reichweitenradius ab. WARNUNG: Funktioniert nicht auf MIRVs im Weltraum. Funktioniert nur mit MIRV-Sprengköpfen!"
+	},
+	"staticheavyarty" : {
+		"name" : "Liberator",
+		"description" : "Übersteuerbare strategische Artillerie",
+		"helptext" : "Die gewaltige Liberator-Kanone wurde vor den Koalitionskriegen friedlich als Railgun eingesetzt und beförderte leichte Ladungen in den Weltraum und an unbekannte Grenzen. Diese friedlichen Anwendungen gehören nun der Vergangenheit an, da der moderne Liberator das Netz nutzt, um dem Feind eine Vielzahl verheerender Granaten zuzuführen. Der gezielte Einsatz seines umfangreichen Arsenals an Granaten wird jede Armee oder Verteidigungslinie vernichten. Mehr Leistung erhöht die Gesamtfeuerrate."
+	},
+	"cloaksnipe" : {
+		"name" : "Stalker",
+		"description" : "Getarnter Bot zur Abwehr schwerer Artillerie",
+		"helptext" : "Der Stalker ist eine neue Innovation auf Basis des alten Phantom-Chassis. Er wurde entwickelt, um Panzerungen zu durchschlagen und Schilde auf sichere Distanz zu zerstören. Mit jedem weiteren Schuss auf ein einzelnes Ziel erhöht der Stalker seine Feuerrate, während seine Entfernungsmessalgorithmen optimiert werden."
+	},
+	"staticarty" : {
+		"name" : "Garmr-Kanone",
+		"description" : "Taktische Artilleriebatterie",
+		"helptext" : "Die Garmr-Kanone ist ein taktisches Artilleriegeschütz, das schweres Plasma frontal abfeuern kann. Geschwindigkeit und Reichweite steigen je nach Overdrive-Level. Im Gegensatz zum Liberator kann sie direkt feuern und dabei ihre FENIX-Granaten abfeuern, um den Schaden auf eine kleinere Gruppe von Einheiten zu konzentrieren. Im Modus "Hohe Flugbahn" feuert sie Tempest-Granaten ab, die sich in kleinere Fragmente aufspalten, bevor sie beim Aufprall erneut zersplittern. Nutze den Modus "Hohe Flugbahn" gegen Schilde und Verteidigungsgruppen und den Modus "Niedrige Flugbahn" gegen schwere und mittlere Ziele."
+	},
+	"wolverine_mine" : {
+		"name" : "Disperser",
+		"description" : "Dachsmine",
+		"helptext" : "Der Disperser ist eine artilleriebefeuerte Landmine, die in die Luft schießt und mehrere Sprengladungen freisetzt. Sie deaktiviert sich nach einer Minute."
+	},
+	"wolverine_mine_buildable" : {
+		"name" : "Disbander",
+		"description" : "Landmine",
+		"helptext" : "Der Disbander ist eine baubare Landmine, ähnlich dem Disperser, benötigt aber keinen Dachs zum Verlegen. Wie sein artilleriebefeuertes Gegenstück schießt er in die Luft und setzt mehrere Sprengladungen frei. Im Gegensatz zum Disperser deaktiviert er sich nicht nach einer Minute."
+	},
+	"staticradar" : {
+		"name" : "Radarturm",
+		"description" : "Frühwarnsystem",
+		"helptext" : "Der Radarturm warnt frühzeitig vor feindlichen Einheiten und deren Bewegungen über eine moderate Distanz und das nahezu kostenlos. Er verbraucht nur sehr wenig, aber konstant Energie und schaltet sich automatisch ab, wenn die Energie ausgeht. Radartürme können sich in Sparrows – leichte Aufklärungsflugzeuge – verwandeln, um ihre Fähigkeit zur Informationsbeschaffung zu verbessern. Die Radarabdeckung wird durch Gelände wie Berge eingeschränkt."
+	},
+	"turretriot" : {
+		"name" : "Bombard",
+		"description" : "Anti-Schwarm-Geschützturm",
+		"helptext" : "Der Bombard ist mit einer leistungsstarken und präzisen Kanister-Maschinenkanone ausgestattet, die angreifende Einheiten schnell vernichtet. Er benötigt jedoch ein kleines Stromnetz, um seine Schnellfabrikatoren mit Strom zu versorgen."
+	},
+	"spideranarchid" : {
+		"name" : "Anarchid",
+		"description" : "Riot EMP Spider",
+		"helptext" : "Der Anarchid ist wie ein Starlight, nur eben eine Spinne."
+	},
+	"vehraid" : {
+		"name" : "Sunbeam",
+		"description" : "Scorching Hot Raider",
+		"helptext" : "Mit den Fortschritten in der Energieeindämmung ersetzte der Sunbeam den Scorcher. Er feuert nun einen direkten Energielaser ab, der ein Ziel sofort erhitzt. Die Heizwirkung ist im Nahbereich besser."
+	},
+	"striderfunnelweb" : {
+		"name" : "Funnelweb",
+		"description" : "Geschützter Mehrzweck-Unterstützungs-Strider",
+		"helptext" : "Ein schildbrechender Cluster-Disruptor zur Feuerunterstützung, ein Drohnenschwarm zum Angreifen von Feinden und Reparieren von Verbündeten, ein Nanohüllen-Emitter zur Verstärkung der Panzerung deiner Armee und ein massiver Flächenschild. Das ist die Bewaffnung des Funnelweb. Eine Reihe von Werkzeugen, die die Effektivität jeder Armee massiv steigern können."
+	},
+	"cloakriot" : {
+		"name" : "Assailant",
+		"description" : "Tarnkappen-Maschinengewehr-Bot",
+		"helptext" : "Der Assailant wurde als Spezialeinheit konzipiert und ist mit einer Chaingun bewaffnet. Er ähnelt dem älteren Reaver-Modell, ist jedoch getarnt und verfügt über eine einzelne schwere Waffe anstelle von zwei mittleren Waffen. Leider verbraucht der Mikroplasmagenerator viel Strom, sodass er sich nur noch getarnt automatisch reparieren kann."
+	},
+	"chickenspire" : {
+		"name" : "Großer Turm",
+		"description" : "Ultimative Hühnerartillerie-Bedrohung",
+		"helptext" : "Der Große Turm ist die ultimative Antwort des Hühnerstocks auf Langstreckenbombardements. Dieses massive biologische Artilleriegeschütz kann unglaubliche Mengen tödlicher explosiver Sporen auf jeden abfeuern, der das unglückliche Schicksal hat, dem Hühnerstock gegenüberzutreten. Vorsicht, denn eine Hühnerbedrohung zu unterschätzen ist ärgerlich, denn den Großen Turm zu erlegen, ist etwas, das man nur einmal macht."
+	},
+	"turretemp" : {
+		"name" : "Pulse",
+		"description" : "EMP-Geschützturm",
+		"helptext" : "Der Pulse ist mit einer leichten Bolterkanone ausgestattet, die es ihm ermöglicht, im Vergleich zu seinem Vorgänger, dem Faraday, weiter entfernte Gegner anzugreifen. Er hat zwar nicht ganz so großen Flächenschaden wie der Faraday, verursacht aber Schaden am Ziel und in der Nähe befindlichen Gegnern. Hinweis: Er kann nicht als Flugabwehrwaffe eingesetzt werden."
+	},
+	"factoryspider" : {
+		"name" : "Spinnenfabrik",
+		"description" : "Produziert Spinnen",
+		"helptext" : "Die Spinnenfabrik ist für unwegsames Gelände optimiert und setzt vor allem auf Reichweite und Manövrierfähigkeit statt auf rohe Gewalt. Wichtige Einheiten: Floh, Zwielicht, Einsiedler, Krabbe."
+	},
+	"chicken_dragon" : {
+		"name" : "Weißer Drache",
+		"description" : "Ultimative Angriffshühnerbedrohung",
+		"helptext" : "Der Weiße Drache ist die ultimative Antwort des Hühnerschwarms auf direkte Bodenangriffe. Er überragt alles außer einem Superläufer. Sein unglaublich starker Panzer und seine unzähligen Hilfsorgane ermöglichen es ihm, selbst der Feuerkraft einer Superwaffe standzuhalten. Vorsicht, denn eine Hühnerbedrohung zu unterschätzen ist ärgerlich, denn den Weißen Drachen unterschätzt man nur einmal."
+	},
+	"chickens" : {
+		"name" : "Curassow",
+		"description" : "Scharmützlerhuhn",
+		"helptext" : "Die messerscharfen Projektile des Spikers können selbst dickste Panzerung durchschlagen. Obwohl er nur über geringe Gesundheit verfügt, stellt er eine ernstzunehmende Bedrohung für Luft- und Bodeneinheiten dar. Kontere mit allem, was seine Reichweite zuverlässig übersteigt."
+	},
+	"striderdante" : {
+		"name" : "Vulcan",
+		"description" : "Angriffs-/Aufruhr-Strider",
+		"helptext" : "Der Vulcan ist eine schwere Kampfeinheit, die darauf spezialisiert ist, sich ihrem Ziel zu nähern und es zu schmelzen. Sein großflächiger Flammenwerfer und seine übermäßigen Mengen an Hitzestrahlen sind nicht außergewöhnlich, aber seine Brandraketen können in einer Salve von zwanzig Schuss abgefeuert werden, die ein weites Gelände verwüstet."
+	},
+	"dynassault1" : {
+		"name" : "Belagerungskommandant",
+		"description" : "Artilleriekommandant",
+		"helptext" : "Der Belagerungskommandant ist trotz seiner Langsamkeit, Schwerfälligkeit und schwachen Panzerung hervorragend im Fernkampf. Obwohl seine anfängliche Bewaffnung größtenteils schwach ist, kann er später aufgerüstet werden, um schwerere Varianten seines bestehenden Arsenals einzusetzen und in seinem Einsatzgebiet Chaos zu verursachen."
+	},
+	"dynriot1" : {
+		"name" : "Aufruhrkommandant",
+		"description" : "Massenkontrollkommandant",
+		"helptext" : "Der unantastbare Aufruhrkommandant nutzt die stärkste Panzerung, die je einem Kommandanten verliehen wurde, um ihn im Kampf zu schützen. Er ist schwer bewaffnet und kann schnell eine zweite Waffe erhalten. Besiege ihn mit Langstreckenwaffen oder Lösungen zur Abwehr schwerer Waffen."
+	},
+	"chickenbroodqueen" : {
+		"name" : "Brutprinzessin",
+		"description" : "Artillerie/Spawner Hühnerbedrohung",
+		"helptext" : "Die Brutprinzessin ist das ultimative Werkzeug des Hühnerstocks, um seine Horden im Kampf zu unterstützen. Mit weitreichenden Sporenbombardements, einem enorm starken Flächenschild und der Fähigkeit, unterwegs neue Hühner zu gebären, kann die Brutprinzessin den ohnehin schon riesigen Schwarm des Stocks verstärken. Vorsicht, denn die Brutprinzessin zu unterschätzen ist ärgerlich, denn man wird sie nur einmal erlegen."
+	},
+	"cloakaa" : {
+		"name" : "Gremlin",
+		"description" : "Getarnter Flugabwehr-Bot",
+		"helptext" : "Der Gremlin ist schnell und für seinen Preis recht robust. Er ist eine gute, preisgünstige mobile Flugabwehr. Er kann sich tarnen und bietet so unerwarteten Schutz vor Luftangriffen oder entkommt schutzlosen Bodentruppen."
+	},
+	"vehheavyarty" : {
+		"name" : "Impaler",
+		"description" : "Taktische Bombardierungsartillerie",
+		"helptext" : "Der Impaler feuert einen taktischen Marschflugkörper mit hohem Schaden und hoher Präzision auf große Entfernung ab. Dank seines hohen Bogens kann er jedes Hindernis überfliegen, die Flugzeit ist dadurch jedoch so lang, dass er gegen bewegliche Ziele nutzlos ist. Setzen Sie den Impaler ein, um gezielt Gebäude zu zerstören."
+	},
+	"zenith" : {
+		"name" : "Zenith",
+		"description" : "Meteor-Controller – Global enthüllt bei 95%% Fertigstellung",
+		"helptext" : "Der Zenith ist die letzte Option bei Konflikteskalation. Der höchste Punkt der Macht, über den keine andere Waffe hinausreicht. Diese Waffe kann selbst die verschanztesten Feinde vernichten und selbst die stärkste Pattsituation durchbrechen. Es gibt keine Befestigungen, keinen Energieschild, keine Verteidigungsmethode, die die Gigatonnen an Asteroiden aufhalten könnte, die der Zenith vom Himmel schleudert. Sollten Sie jemals am falschen Ende dieser Waffe landen, mögen die Götter Ihnen gnädig sein … und dem Planeten, auf dem Sie sich befinden."
+	},
+	"vehaa" : {
+		"name" : "Gatekeeper",
+		"description" : "Schnelles Flugabwehrfahrzeug",
+		"helptext" : "Die verbesserte Disruptorrakete des Gatekeepers verlangsamt Luftziele, damit andere Flugabwehreinheiten den Angriff beenden können."
+	},
+	"spiderskirm" : {
+		"name" : "Twilight",
+		"description" : "Scharmützler Spider (Indirektes Linienfeuer)",
+		"helptext" : "Getreu der Doktrin der Spider Factory können der Twilight und seine Raketenbewaffnung selbst in unwegsamem Gelände eingesetzt werden. Seine Raketen werden in einem sehr steilen Winkel abgefeuert, um Hindernissen auszuweichen und Disruptorbomben auf ihr Ziel niederprasseln zu lassen."
+	},
+	"fakeunit_los" : {
+		"name" : "LOS-Anbieter",
+		"description" : "Weiß alles und sieht alles",
+		"helptext" : "Kilrogg wäre stolz!"
+	},
+	"los_menace" : {
+		"name" : "Sichtlinien-Provider für Hühnerbedrohungen",
+		"description" : "Ich finde es nur fair~",
+		"helptext" : "Irgendwo müssen Schmetterlinge sein (möchtest du sie teilen?)~"
+	},
+	"los_superwep" : {
+		"name" : "Sichtlinien-Provider für Superwaffen",
+		"description" : "Unser letzter Angriff~",
+		"helptext" : "Die Welt sieht so klein aus, wenn man die Sonne in den Händen hält~"
+	},
+	"tele_beacon" : {
+		"name" : "Lampe",
+		"description" : "Teleport Bridge Entry Beacon, Rechtsklick zum Teleportieren.",
+		"helptext" : "Dies ist Djinns Eingangssignal. Rechtsklick darauf, um Einheiten zum übergeordneten Djinn zu teleportieren."
+	},
+	"singularity": {
+		"Name": "Wake",
+		"Beschreibung": "Kompaktes Singularitätsgerät",
+		"Hilfetext": "Der Wake ist ein kompakter Singularitätsgenerator, der Materie zu seinem Detonationspunkt zieht. Projektile, Wracks, Bäume, Felsen, Einheiten – alles wird in einen kompakten Punkt gesaugt und beim Kollaps der Singularität wieder ausgespuckt."
+	},
+	"dynstrike1" : {
+		"name" : "Ghost Commander",
+		"description" : "Heimlicher Kommandant",
+		"helptext" : "Das Ghost Chassis ist ein flexibler, schneller und getarnter Kommandant, der in feindliche Basen eindringen und wertvolle Ziele ausschalten oder mit Hochalphawaffen schwere Ziele aus der Ferne belästigen kann. Es ist jedoch von Unterstützungsmodulen ausgeschlossen. Es verfügt über eine integrierte Tarnvorrichtung und eignet sich hervorragend für Hit-and-Run-Taktiken. Es ist jedoch etwas anfällig für Angriffe."
+	},
+	"empmissile" : {
+		"name" : "Shockley",
+		"description" : "EMP-Rakete",
+		"helptext" : "Der Shockley setzt Einheiten in einem kleinen Bereich bis zu 45 Sekunden lang außer Gefecht."
+	},
+	"striderhub" : {
+		"name" : "Strider Hub",
+		"description" : "Baut Strider",
+		"helptext" : "Der Strider Hub setzt Strider ein, die riesigen Mechas, die auf dem Schlachtfeld Ehrfurcht und Furcht einflößen. Im Gegensatz zu einer normalen Fabrik wird der Hub nur benötigt, um ein Projekt zu starten, nicht um es zu beenden."
+	},
+	"amphcon" : {
+		"name" : "Conch",
+		"description" : "Amphibischer Bauroboter, gepanzert im Leerlauf",
+		"helptext" : "Der Conch ist ein robuster Konstrukteur, der sowohl in der Tiefsee als auch an Land bauen oder bergen kann."
+	},
+	"spiderriot" : {
+		"name" : "Kommando",
+		"description" : "Schwere Kampfspinne",
+		"helptext" : "Not macht erfinderisch, und die Erfinder der Kommando-Gelände-Kampfspinne brauchten sie dringend. In die Berge getrieben und von Zombie-Naniten-infizierten Einheiten umzingelt, wurden die ersten Kommandospinnen aus nichts als Schrott gebaut. Doch sie erwiesen sich als so erfolgreich, dass fast jede Streitmacht der Galaxis eine Kopie ihrer Baupläne besitzt."
+	},
+	"spiderassault" : {
+		"name" : "Einsiedler",
+		"description" : "Gelände-Angriffsbot",
+		"helptext" : "Der Einsiedler hält unglaublich viel aus und eignet sich als Schutzschild für die schwächeren, aber schlagkräftigeren Einsiedler."
+	},
+	"turretantiheavy" : {
+		"name" : "Azimuth",
+		"description" : "Anti-Heavy Tachyonic Beam Artillery",
+		"helptext" : "Von vielen als 'Langstrecken-Ultimatum' bezeichnet, macht der Azimuth seinem Spitznamen alle Ehre. Seine Waffe erzeugt eine Rückkopplungsschleife zwischen ihm und seinem Ziel, wodurch er an Feuerkraft gewinnt, je länger er auf das Ziel fixiert ist. Versuche nicht, ihn mit roher Gewalt zu bekämpfen, da sein Schaden sogar den des mittlerweile veralteten Starlight-Planetenenergiemeißels übertreffen kann und wird. Bekämpfe ihn stattdessen mit Schwärmen schwächerer Einheiten, da er eine lange Rekalibrierungszeit zwischen den Schüssen benötigt, oder indem du die Einheit eliminierst, die ihn anvisiert."
+	},
+	"jumparty" : {
+		"name" : "Firewall",
+		"description" : "Gebietsverweigerungsartillerie (Linie)",
+		"helptext" : "Die Firewall verschießt einen Kanister mit instabilem Napalmgemisch, der sich bei Annäherung an das Ziel in einer Linienformation auflöst. Dadurch erzeugt sie Napalmlinien und blockiert so effektiv ein Gebiet für einen sich nähernden Feind."
+	},
+	"spideraa" : {
+		"name" : "Lynx",
+		"description" : "Schwere AA-Laserspinne",
+		"helptext" : "Eine geländegängige Flugabwehreinheit, die andere Spiders mit ihrem weitreichenden, hochwirksamen Laser gegen Luftangriffe unterstützt. Sie muss kurz auf ein Ziel zielen, bevor sie ihren Hochenergielaser abfeuert. Achtung: Sie benötigt freie Sicht auf das Ziel und ist daher in der Nähe von Hügeln nutzlos."
+	},
+	"chicken_pigeon" : {
+		"name" : "Falke",
+		"description" : "Fliegendes Huhn",
+		"helptext" : "Die Taube ist ein einfaches fliegendes Huhn, das seine Beute mit säurehaltigem Speichel besprüht, um sie leichter verdaulich zu machen. Sie stellt eine große Bedrohung für statische oder stationäre Einheiten dar, die hohen Schaden erleiden. Am besten kontert man mit Flugabwehr mit größerer Reichweite, um sie zu töten, bevor sie in Reichweite kommt."
+	},
+	"cloakheavyraid" : {
+		"name" : "Assassine",
+		"description" : "Verstohlener Raider",
+		"helptext" : "Die Assassine ist eine Weiterentwicklung der Sense. Sie ist etwas schneller und regeneriert sich im getarnten Zustand. Sie verursacht außerdem mehr Schaden mit ihrer Klinge, allerdings geht dies auf Kosten einer etwas schlechteren Tarnvorrichtung. Sie muss nun aus den Schatten treten, um anzugreifen."
+	},
+	"jumpblackhole" : {
+		"name" : "Platzhalter",
+		"description" : "Schwarzlochwerfer",
+		"helptext" : "Der Platzhalter ist eine Unterstützungseinheit. Seine Projektile erzeugen ein Vakuum, das nahe Einheiten ansaugt, sie gruppiert und an Ort und Stelle hält, um sie zu erledigen."
+	},
+	"vehcon" : {
+		"name" : "Bloom",
+		"description" : "Baufahrzeug",
+		"helptext" : "Der Bloom ist hochmobil und widerstandsfähig. Er kann sich schnell über ein großes Gebiet ausbreiten. Außerdem verfügt er über Verteidigungsdrohnen, um seine Sicherheit zu gewährleisten."
+	},
+	"amphtele" : {
+		"name" : "Djinn",
+		"description" : "Amphibische Teleportbrücke",
+		"helptext" : "Djinn ist hervorragend geeignet, große Landarmeen über Gewässer zu bewegen. Im Einsatz teleportiert er Einheiten aus der Umgebung seines vorab platzierten statischen Signals zu ihrem aktuellen Standort. Die Teleportation ist einseitig, daher sollte das Ziel sicher sein."
+	},
+	"shipcon" : {
+		"name" : "Mariner",
+		"description" : "Konstruktionsschiff",
+		"helptext" : "Das Konstruktionsschiff ist zwar teuer, verfügt aber über extrem hohe Nanoenergie, kombiniert mit robuster Panzerung und guter Geschwindigkeit."
+	},
+	"shipscout" : {
+		"name" : "Kutter",
+		"description" : "Picket Ship (Entwaffnungsaufklärer)",
+		"helptext" : "Dieses günstige, schnelle und zerbrechliche Picket Ship eignet sich gut als Aufklärer und Späher für teurere Schiffe. In großer Zahl sind seine Entwaffnungsraketen gegen größere Ziele effektiv."
+	},
+	"shiptorpraider" : {
+		"name" : "Swell",
+		"description" : "U-Boot-Abwehr-Scharmützler",
+		"helptext" : "Die Swell feuert eine 3-Schuss-Salve mittlerer Torpedos ab. Sie können zwar verfolgen, können ihr Ziel aber nur treffen, solange es weit entfernt ist. Auf kürzere Distanz kann man ihren Angriffen durch Beschuss ausweichen."
+	},
+	"shipskirm" : {
+		"name" : "Crest",
+		"description" : "Kreuzfahrtartillerie-Plattform",
+		"helptext" : "Dieses Raketenboot feuert Marschflugkörper auf große Entfernung ab, um weit entfernte Ziele zu bombardieren."
+	},
+	"subraider" : {
+		"name" : "Seawolf",
+		"description" : "Angriffs-U-Boot (Stealth Raider)",
+		"helptext" : "Dieses getarnte, schnelle und zerbrechliche U-Boot kann ungeschützte Ziele schnell angreifen. Durch langsamen Schaden kann es einzelne Einheiten effektiv zerstören. Vorsicht vor U-Boot-Abwehrwaffen, insbesondere vor Torpedobooten und Zerstörern."
+	},
+	"subtacmissile" : {
+		"name" : "Charybdis",
+		"description" : "Taktische MIRV-SLBM-Plattform, Entladungsgeschwindigkeit 24 m/s, 50 Sekunden Vorrat",
+		"helptext" : "Das taktische Nuklearraketen-U-Boot bietet eine Präzisionswaffe für Distanzangriffe in Form taktischer SLBMs. Es ist nicht gegen direkte Angriffe wehrbar und sollte Feindkontakte vermeiden."
+	},
+	"shipriot" : {
+		"name" : "Kingstad",
+		"description" : "Zerstörer (Raider/Riot)",
+		"helptext" : "FIXME: Beschreibung hinzufügen"
+	},
+	"shipassault" : {
+		"name" : "Tsunami",
+		"description" : "Angriffs-Schlachtkreuzer",
+		"helptext" : "Dieser Kreuzer verfügt über zwei leistungsstarke Plasma-Anti-Oberflächen-Kanonen mittlerer Reichweite, die sich für den Angriff auf kleinere Schiffe eignen. Er ist langsam und schwerfällig, also haltet Ausschau nach potenziellen Angreifern wie Raidern und U-Booten."
+	},
+	"shiparty" : {
+		"name" : "Dominion",
+		"description" : "Artilleriekreuzer, muss zum Feuern anhalten",
+		"helptext" : "Die Dominion ist ein Artilleriekreuzer, der sowohl tauchfähige Ziele als auch befestigte Küstenstellungen angreifen kann. Ihre Geschosse durchdringen selbst die härteste Panzerung, sind aber relativ langsam."
+	},
+	"shipaa" : {
+		"name" : "Unterströmung",
+		"description" : "Flugabwehrfregatte",
+		"helptext" : "Mit ihren leistungsstarken Zwillings-Luftabwehrlaserbatterien schützt die Unterströmung Ihre Flotte vor Luftangriffen. Ihre beiden Hochleistungslaser können nahe Flugzeuge mit erstaunlicher Geschwindigkeit durchschlagen, sind aber gegen entfernte Ziele weniger nützlich."
+	},
+	"shipheavyarty" : {
+		"name" : "Shogun",
+		"description" : "Schlachtschiff (Schwere Artillerie)",
+		"helptext" : "Eine einzige Salve von einem dieser Schiffe schlägt fast jedes Oberflächenziel nieder. Die psychologischen Effekte des Mündungsfeuers und des Rückstoßes des Schiffes im Wasser sind beeindruckend genug, ganz zu schweigen von den Auswirkungen eines direkten Treffers. Achtung: Schlachtschiffe sind nicht für den alleinigen Einsatz gedacht, da sie über keine Luftabwehr und U-Boot-Abwehr verfügen."
+	},
+	"factorygunship" : {
+		"name" : "Kampfschifffabrik",
+		"description" : "Produziert Kampfschiffe",
+		"helptext" : "Die Kampfschifffabrik ist für die Luftnahunterstützung konzipiert. Sie umfasst eine Auswahl an Transportern zum Transport von Landeinheiten sowie Kampfschiffe, die verschiedene offensive und defensive Aufgaben übernehmen können."
+	},
+	"turretheavy" : {
+		"name" : "Bastion",
+		"description" : "Mittelstrecken-Verteidigungsfestung",
+		"helptext" : "Bewaffnet mit einer schweren Plasmakanone und einem Hitzestrahl bildet die Bastion einen zentralen Verteidigungspunkt gegen feindliche Angriffe. Sie kann sich verbarrikadieren, um Angriffen durch Langstreckenartillerie oder Luftangriffe standzuhalten und den erlittenen Schaden auf ein Viertel zu reduzieren. Dabei kann sie ihre Waffen jedoch nicht abfeuern."
+	},
+	"turretimpulse" : {
+		"name" : "Newton",
+		"description" : "Schwerkraftturm",
+		"helptext" : "Der Newton ist mit einem experimentellen Gravitonprojektor bewaffnet. Diese Waffe verursacht praktisch keinen direkten Schaden, kann aber Einheiten auf den Newton zu oder von ihm weg stoßen. Sie können sie auch gegen Ihre eigenen Einheiten einsetzen, achten Sie jedoch auf Eigenbeschuss."
+	},
+	"assaultcruiser" : {
+		"name" : "Vanquisher",
+		"description" : "Schwerer Kreuzer (Angriff)",
+		"helptext" : "Der Vanquisher-Kreuzer verfügt über exzellente Panzerung und tödliche Feuerkraft im Nahkampf. Seine Gauss-Kanonen schneiden Oberflächenziele wie Butter, während seine Raketen ihn gegen Feinde über und unter der Wasseroberfläche unterstützen. Seine geringe Reichweite und mangelnde Luftabwehr machen ihn anfällig für Distanzeinheiten und Flugzeuge."
+	},
+	"shieldfelon" : {
+		"name" : "Guardian",
+		"description" : "Shielded Riot/Skirmisher Bot",
+		"helptext" : "Der Guardian ist ein modernisierter Felon mit einer größeren, schwereren Schildblase. Er unterscheidet sich jedoch von seinem Vorgängermodell durch die Anwendung von Keksian Discharges zur Erzeugung bogenförmiger Energieblitze. Diese Blitze suchen sich nahe Ziele aus, verursachen Schaden und springen auf weitere nahe Ziele über."
+	},
+	"seismic" : {
+		"name" : "Erdbeben",
+		"description" : "Seismische Rakete",
+		"helptext" : "Das Erdbeben erzeugt eine starke seismische Schockwelle, die ein weites Gelände glättet und dabei Einheiten nur minimalen Schaden zufügt."
+	},
+	"missileslow" : {
+		"name" : "Geist",
+		"description" : "Aufklärungsrakete",
+		"helptext" : "Der Geist erzeugt beim Überqueren des Schlachtfelds einen kleinen Sichtbereich. Jede getroffene Einheit wird für kurze Zeit enttarnt. Kontere, indem du Schilde vor dir platzierst."
+	},
+	"striderscorpion" : {
+		"name" : "Skorpion",
+		"description" : "Getarnter Infiltrations-Schreiter",
+		"helptext" : "Der Skorpion lähmt Gegner mit seinem Blitzstich und zermalmt sie anschließend mit seinen Partikelstrahlklauen. Sein robuster Panzer hält den meisten feindlichen Angriffen stand und kann den Skorpion zudem transparent machen."
+	},
+	"vehcapture" : {
+		"name" : "Dominatrix",
+		"description" : "Fahrzeug erobern",
+		"helptext" : "Die Dominatrix nimmt Gegner gefangen und bringt sie gegen ihre ehemaligen Verbündeten auf. Mehrere Dominatrix können ein einzelnes Ziel schneller erobern, wobei jedoch nur eine die Kontrolle übernimmt. Nachdem die Dominatrix die Kontrolle über eine Einheit übernommen hat, kann sie 12 Sekunden lang nicht feuern. Wird eine Dominatrix zerstört, werden alle von ihr kontrollierten Einheiten befreit."
+	},
+	"factorytank" : {
+		"name" : "Panzergießerei",
+		"description" : "Produziert schwere Kettenfahrzeuge",
+		"helptext" : "Die Panzergießerei ist das Nonplusultra in Sachen roher Gewalt – nichts ist so effektiv wie ein anhaltender Artilleriebeschuss, gefolgt von einem entscheidenden Vorstoß mit den größten Panzern im Feld. Wichtige Einheiten: Abgesandter, Barbar, Oger, Zyklop."
+	},
+	"striderbantha" : {
+		"name" : "Mogul",
+		"description" : "Schwere lasergelenkte Raketenplattform",
+		"helptext" : "Der Mogul wurde als Plattform für den Einsatz schwerer Kanistersalven aus unvorstellbaren Entfernungen entwickelt und ist das derzeit schwerste mobile Artilleriegeschütz der Galaxie. Sein Streuraketenfeuer kann ein Gebiet verwüsten. Erwarten Sie jedoch nicht viel gegen nahe Feinde. Er ist nur mäßig bewaffnet und eignet sich nur für direkte Feuergefechte."
+	},
+	"shiplightcarrier" : {
+		"name" : "Siren",
+		"description" : "Riot Carrier-Cruiser",
+		"helptext" : "TBA"
+	},
+	"shipcarrier" : {
+		"name" : "Empireas",
+		"description" : "Marine-Superträger (Starrflügel), produziert steuerbare Bomber, lagert Entwaffnungsraketen mit 5 m/s",
+		"helptext" : "Ein Träger ist mehr als nur ein schwimmender Flugplatz, und ein Superträger ist noch viel mehr. Unter dem relativ dünnen Rumpf der Empíreas verbirgt sich eine Maschinerie, die dieses Schiff zum Herzstück einer Marine-Einsatzgruppe macht. Ausgestattet mit einem fortschrittlichen Radar, einem Atomwaffenabfangsystem, einem Entwaffnungsraketensilo und einer Reihe von Drohnen, die Verbündete reparieren und den Feind in die Knie zwingen, ist die Empíreas eines der wertvollsten Schiffe jeder Flotte. Doch Vorsicht: All diese fortschrittliche Maschinerie hat ihren Preis. Die Überlebensfähigkeit der Empíreas ist gefährdet. Stellen Sie daher sicher, dass Sie sie stets mit Eskorten decken."
+	},
+	"turretaaflak" : {
+		"name" : "Crucible",
+		"description" : "Flak-Luftabwehrartillerie",
+		"helptext" : "Die Crucible ersetzte die Thresher kurz vor den Koalitionskriegen, die die Galaxie verwüsteten. Sie nutzt ihre Reichweite und die Ansammlung von Flak-Submunition, um ein Gebiet mit kleinen Explosionen zu fluten. Obwohl dies auf Distanz nicht besonders effektiv ist, richtet es im Nahkampf erheblichen Schaden an."
+	},
+	"factoryjump" : {
+		"name" : "Jumpbot Factory",
+		"description" : "Produziert mit Sprungdüsen ausgerüstete Läufer",
+		"helptext" : "Die geheimnisvolle Jumpbot Factory bietet einzigartige taktische Möglichkeiten, um in Messerkämpfen schnell Distanzen zu überwinden oder Hügel und Flüsse zu überwinden und sich einen Weg durch die feindlichen Linien zu bahnen. Wichtige Einheiten: Brandstifter, Moderator, Jack, Feuerläufer, Jugglenaut"
+	},
+	"jumpsumo" : {
+		"name" : "Gravitas",
+		"description" : "Schwerer Aufruhrspringer",
+		"helptext" : "Der Gravitas besteht aus zwei Schwerkraftmanipulationsgeräten, die auf einer 15,95 Kilotonnen schweren, soliden Panzerung befestigt sind. Das ultimative Bollwerk an vorderster Front. Er kann feindliche Formationen mit Schwerkraftfeldern zerstören, die stark genug sind, um Einheiten auseinanderzureißen, während er mit seiner absolut undurchdringlichen Panzerung feindliches Feuer absorbiert. Obwohl seine automatischen Reparatursysteme von Trotz ihres veralteten Designs kann sie aufgrund ihrer schieren Größe den meisten Waffenbeschuss abwehren. Und wenn es hart auf hart kommt, kann sie durch Überlastung der Hydrauliksysteme einen Sprung ausführen ... und mit der Wucht einer taktischen Atombombe abstürzen. Hügel werden eingeebnet und alles, was die Schockwelle überlebt hat, in die Luft geschleudert."
+
+	},
+	"jumpscout" : {
+		"name" : "Welpe",
+		"description" : "Laufende Rakete",
+		"helptext" : "Diese schnelle Selbstmordeinheit eignet sich gut für Überfälle und das Beschießen leicht gepanzerter Ziele. Steht sie neben Wracks, zieht sie automatisch Metall aus ihnen, um sich zu replizieren, ganz im Stil von Grey Goo."
+	},
+	"turretaalaser" : {
+		"name" : "Corona",
+		"description" : "Kurzstrecken-Anti-Drohnen-Laserstellung",
+		"helptext" : "Die Corona schützt vor Drohnen und kleinen, schnell manövrierfähigen Fahrzeugen, indem sie eine Reihe von Impulslasern auf Ziele abfeuert. Zwar hat sie nicht die Reichweite von Raketenwerfern, gleicht dies aber durch ihren hohen Schaden pro Sekunde und ihre Feuerrate aus."
+	},
+	"hovercon" : {
+		"name" : "Spike",
+		"description" : "Express-Bau-Luftkissenfahrzeug",
+		"helptext" : "Der Spike ist ein verbesserter Quill mit einem übersteuerten Nanofabrikator. Dieser verleiht ihm zwar zunächst einen starken Bauschub, lässt aber aufgrund von Überhitzung schnell nach. Dadurch eignet sich der Spike besonders gut für die schnelle Bergung von Trümmern an der Front."
+	},
+	"jumpaa" : {
+		"name" : "Feuersturm",
+		"description" : "Schwerer Flugabwehr-Jumper",
+		"helptext" : "Der Feuersturm ist die Flugabwehreinheit der Sprungjet-Fabrik. Seine beiden Hitzestrahlen können intensive Hitzewellen freisetzen und selbst die Panzerung der stärksten Lufteinheiten auf kurze Distanz durchbrennen. Darüber hinaus ist er mit Flusswellenraketen bewaffnet, die feindliche Flugmuster stören und sie näher heranziehen oder ihre Flucht verhindern können. Neben seiner verheerenden Nahkampfwaffe kann der Feuersturm auch über das Schlachtfeld springen und so potenzielle Beute einholen oder feindlichen Bombern entkommen. Dies bedeutet jedoch auch, dass der Feuersturm sehr viel Metall kostet und damit zu den teuersten mobilen Flugabwehreinheiten zählt."
+	},
+	"tankheavyraid" : {
+		"name" : "Donnerschlag",
+		"description" : "Blitzkrawall-Panzer",
+		"helptext" : "Der Donnerschlag-Panzer ist eines der wenigen Beispiele für ein Update eines Fabmods aus den Koalitionskriegen und basiert auf den jüngsten Entwicklungen bei Keksian Discharges. Sein X-09 Fulminator sendet extrem energiereiche Entladungen aus, die von nahegelegener Materie abprallen. Dadurch ist er ein äußerst effizienter Panzer gegen mehrere leichte Einheiten. Vorsicht ist geboten im Kampf gegen ihn in Wäldern oder umkämpften Gebieten, da er durch die Ausnutzung von Wracks oder nahegelegenen Einheiten Reichweite gewinnen kann."
+	},
+	"staticheavyradar" : {
+		"name" : "Erweitertes Radar",
+		"description" : "Über-dem-Horizont-Radar",
+		"helptext" : "Der erweiterte Radarturm nutzt die OTH-Technologie (Über-dem-Horizont-Radar), um die Radarabdeckung und Sicht deutlich zu verbessern. Er reagiert weniger geländeempfindlich als das Basismodell und kann über kleine Hügel hinwegsehen."
+	},
+	"amphimpulse" : {
+		"name" : "Ripple",
+		"description" : "Amphibischer Riot-Bot",
+		"helptext" : "Der Ripple nutzt zwei leistungsstarke Schallkanonen, um Einheiten über oder unter Wasser zu treffen. Der Aufprall einer Schallkanone erzeugt einen Hochdruckbereich, der zusätzlichen Schaden verursacht und Einheiten leicht zurückdrängt. Dies ist nützlich im Kampf gegen viele leichtere Einheiten in Engpässen, ist aber gegen schwerere Einheiten ungeeignet."
+	},
+	"fakeunit" : {
+		"name" : "Gefälschtes Radarsignal",
+		"description" : "Erstellt durch Störgeräte.",
+		"helptext" : "Gefälschte Einheit für technische Zwecke."
+	},
+	"shieldshield" : {
+		"name" : "Aspis",
+		"description" : "Bereichsschildläufer",
+		"helptext" : "Der Aspis schützt umliegende Einheiten mit seinem Bereichsschild, indem er feindliche Projektile zerstört. Er verbindet sich automatisch mit anderen Einheiten mit Schild, um die Ladung zu teilen. Der Bereichsschild stoppt keine Einheiten, sondern fängt nur Projektile in seinem Umkreis ab. Gegner können also unter den Schild gelangen und auf die Einheiten im Inneren schießen. Das Aufladen und Aufrechterhalten von Bereichsschilden kostet Energie."
+	},
+	"jumpraid" : {
+		"name" : "Arsonist",
+		"description" : "Raider/Riot Jumper",
+		"helptext" : "Ausgestattet mit der besten Chemie, die es gibt, und entwickelt mit dem einzigen Ziel, alles in seinem Weg niederzubrennen, ist der Arsonist ein furchterregender Gegner. Sein primärer Flammenwerfer schmilzt durch Metall wie Butter, während seine weitreichenden Flammenwerfer alles wahllos in Brand setzen. Und wenn man denkt, es kann nicht schlimmer kommen, zeigt der Arsonist sein Ass im Ärmel – einen Molotowcocktail, eine Waffe, die ihren Namen nicht wegen ihres Designs oder ihrer Form, sondern wegen ihrer schier brutalen Effektivität erhielt."
+	},
+	"tankheavyarty" : {
+		"name" : "Orion",
+		"description" : "Ultraschwerer Artilleriepanzer",
+		"helptext" : "Das Prinzip des Orion ist einfach: Je größer die Kanone, desto größer die Zerstörung. Und nun erleben Sie, wie dieses Prinzip auf die Spitze getrieben wird: Ein Panzer mit der größten Kanone, die eine mobile Einheit aufstellen kann. Die Verwüstungskanone des Orion kann Feinde auf dem ganzen Kontinent auslöschen. Endlich haben wir genug Geschütz."
+	},
+	"tankraid" : {
+		"name" : "Trailblazer",
+		"description" : "Raider-Panzer (muss zum Feuern langsamer werden)",
+		"helptext" : "Eine einzigartige Mischung aus der Kampfdoktrin schwerer Panzer und den Rollen eines Raiders. Als schwerer Panzer verfügt der Trailblazer über hohe Feuerkraft und Panzerung, was seine Manövrierfähigkeit stark einschränkt. Um dem entgegenzuwirken, kann der Trailblazer sein Napalm-Maschinengewehr als Booster einsetzen, wodurch er hohe Geschwindigkeiten erreichen kann, im Kampf aber langsamer wird."
+	},
+	"cloakcon" : {
+		"name" : "Mirage",
+		"description" : "Getarnter Konstruktionsbot",
+		"helptext" : "Der Mirage verfügt über einen Störsender mittlerer Reichweite und eine Tarnvorrichtung für den heimlichen Ausbau und die Basiserhaltung. Er kann außerdem ein Tarnfeld mittlerer Reichweite aktivieren, dessen Aufrechterhaltung im Gegensatz zu den zuvor genannten Fähigkeiten Energie kostet."
+	},
+	"turretsunlance" : {
+		"name" : "Tracer",
+		"description" : "Scharfschützenturm – Benötigt 75 Energie",
+		"helptext" : "Der Tracer wurde kurz nach Beginn der Koalitionskriege in Dienst gestellt. Er wurde entwickelt, um der Bedrohung durch die ständig wachsende Artilleriereichweite mit seiner X-32 (Experimentalwaffe 32)-Scharfschützenkanone entgegenzuwirken. Er eignet sich am besten für den Einsatz an vorderster Front, wo er langsame Ziele aus der Ferne ausschalten kann. Vorsicht: Auf kurze Distanz ist er praktisch nutzlos."
+	},
+	"shieldassault" : {
+		"name" : "Vindicator",
+		"description" : "Schild-Scharmützler/Angriffsbot",
+		"helptext" : "Der Steward ersetzte das veraltete Thug-Design nach dessen kläglichem Versagen gegen die Koalition. Seine mangelhaften Plasmakanonen wurden durch einen stärkeren Beschleuniger ersetzt, was zu verbesserter Reichweite und höherem Schaden führte. Der Ward verfügt über eine hohe Schildregeneration, was jedoch seinen Preis hat."
+	},
+	"amphriot" : {
+		"name" : "Froth",
+		"description" : "Amphibischer Aufruhrbot",
+		"helptext" : "Der Vierfach-Granatwerfer des Froth ermöglicht es ihm, schnell vier ungenaue Granaten auf sich nähernde Angreifer abzufeuern. Er funktioniert auch unter Wasser recht gut und kann Oberflächenschiffe von unten angreifen, wenn auch sehr ungenau. Kontern Sie mit Lufteinheiten oder Scharmützlern, die eine größere Reichweite haben."
+	},
+	"planecon" : {
+		"name" : "Kran",
+		"description" : "Bauflugzeug",
+		"helptext" : "Der Kran fliegt schnell über jedes Gelände, ist aber anfällig für Flugabwehr. Obwohl er im Vergleich zu anderen Konstrukteuren über eine relativ geringe Nano-Power verfügt, kann er an vielen schwer erreichbaren Stellen bauen und das Territorium eines Luftspielers nichtlinear erweitern. Dank seiner Mobilität eignet er sich ideal für die Bergung von Wracks und andere wiederkehrende Aufgaben."
+	},
+	"pistin" : {
+		"name" : "Pistin",
+		"description" : "Einsetzbarer Reparatur-/Betäubungsturm",
+		"helptext" : "Der Pistin wurde von der Nanodrehmaschine der Wespe aus Schrott hergestellt und ist ein vielseitiger Turm, der für alles eingesetzt werden kann, vom Betäuben einzelner Angreifer über die Reparatur einer Armee bis hin zur Befestigung einer Stellung gegen feindliche Angriffe. Obwohl er nicht besonders leistungsstark ist, kann es oft nicht schaden, einen oder hundert davon einzusetzen, da er praktisch kostenlos ist."
+	},
+	"gunshipraid" : {
+		"name" : "Whirlwind",
+		"description" : "Raider Gunship",
+		"helptext" : "Der Whirlwind ist ein leichtes Kampfschiff. Seine hohe Geschwindigkeit und sein ordentlicher Schaden eignen ihn hervorragend, um feindliche Wirtschaftseinheiten oder ungenaue Einheiten wie Angriffseinheiten schnell auszuschalten. Er fliegt jedoch dicht über dem Boden und hat eine geringe Reichweite, sodass selbst andere Raider ihn auf Augenhöhe angreifen können. Wie jeder Raider sollte der Whirlwind Aufstände und statische Verteidigung vermeiden."
+	},
+	"shieldraid" : {
+		"name" : "Warden",
+		"description" : "Geschützter Leichtlaser-Raider",
+		"helptext" : "Der Warden wurde auf dem Chassis eines Banditen gebaut, verfügte aber über einen Schild und einen orangefarbenen Mikropulser. In Gruppen können sie aufgrund ihrer Fähigkeit, Schilde zu verbinden, besonders gefährlich sein."
+	},
+	"amphraid" : {
+		"name" : "Surge",
+		"description" : "Amphibischer Raider-Bot",
+		"helptext" : "Der Surge ist ein Raider mittlerer Stärke, der Solarenergie zur Plasmaerzeugung nutzt. Obwohl er anfangs einen hohen Schaden pro Sekunde hat, entlädt sich seine Batterie schnell. Setze Hit-and-Run-Taktiken ein, um die Effektivität zu maximieren."
+	},
+	"amphskirm" : {
+		"name" : "Milta",
+		"description" : "Amphibischer leichter Plänkler/Artillerie",
+		"helptext" : "Die Sägekopftorpedos der Milta können als Mörser mit großer Reichweite oder gegen seegestützte Bedrohungen eingesetzt werden. Der Sägekopf trägt drei Schallemitter, die Schaden verursachen und Einheiten zurückstoßen. Er ist an Land recht ungenau und eignet sich daher am besten als leichtes Artilleriegeschütz."
+	},
+	"planefighter" : {
+		"name" : "Deserter",
+		"description" : "Jagdbomber für frühe Eingreiftruppen",
+		"helptext" : "Der Deserter Mk4 wurde kurz nach dem Aufkommen von Streumunition entwickelt und ersetzte die veraltete Swift-Variante. Er wurde für Aufklärung und frühe Eingreiftruppen entwickelt und kann schnell am Einsatzort sein und seine Streuraketen abfeuern. Er ist unglaublich schnell, verliert jedoch nach dem Einsatz seiner Ladung deutlich an Geschwindigkeit."
+	},
+	"dronecarry" : {
+		"name" : "Coatl",
+		"description" : "Trägergestützte Drohne",
+		"helptext" : "Gull ist derzeit noch nicht fertiggestellt und kann sich noch ändern."
+	},
+	"dronecarrybomber" : {
+		"name" : "Heron",
+		"description" : "Trägergestützter Bomber",
+		"helptext" : "Die Heron ist die Hauptkomponente des Luftgeschwaders von Empíreas. Ein relativ kleiner Bomber, der speziell für trägergestützte Operationen entwickelt wurde. Durch den Verzicht auf Geschwindigkeit, Kommando- und Kontrollmöglichkeiten und praktisch alles, was nicht unbedingt notwendig ist, ist die Heron in der Lage, mit einer Bombe mit gemischter Nutzlast, die Ziele sowohl beschädigen als auch entschärfen kann, weit über ihre Gewichtsklasse hinaus zu zuschlagen."
+	},
+	"turretheavylaser" : {
+		"name" : "Rampart",
+		"description" : "Plasmabomber mittlerer Reichweite",
+		"helptext" : "Der Rampant ist ein Plasmaturm mittlerer Reichweite. Seine drei rotierenden Kanonen können fast jede kleine Einheit zerstören, aber seine niedrige Feuerrate macht ihn ohne Unterstützung anfällig für Angriffe durch Schwärme."
+	},
+	"hoversonic" : {
+		"name" : "Morningstar",
+		"description" : "U-Boot-Abwehr-Luftkissenfahrzeug",
+		"helptext" : "Der Morningstar ist mit einer Schallimpulskanone ausgestattet, der es völlig egal ist, ob sich das Ziel über oder unter Wasser befindet."
+	},
+	"chicken_tiamat" : {
+		"name" : "Tiamat",
+		"description" : "Ultimatives Angriffshuhn",
+		"helptext" : "Das ultimative Angriffshuhn, die Tiamat, ist eine feuerspeiende, eisenkieferige, sporenspeiende Monstrosität, die weder Furcht noch Gnade kennt. Sie besitzt sogar einen Schleimschild, der sie und umstehende Hühner vor Schaden schützt."
+	},
+	"bomberstrike" : {
+		"name" : "Heretic",
+		"description" : "Abstandsbomber (Anti-Struktur)",
+		"helptext" : "Die Heretic feuert eine nukleare ALCM ab, die aus sicherer Entfernung abgefeuert werden kann. Vorsicht: Sie ist furchtbar gegen schnell bewegliche Einheiten. Terraformierte Mauern kann sie jedoch durchdringen."
+	},
+	"staticrearm" : {
+		"name" : "Airpad",
+		"description" : "Repariert und rüstet Flugzeuge mit 20 Basispunkten auf",
+		"helptext" : "Die zweite Airpad-Generation rüstet und repariert Flugzeuge jetzt mit 20 Baupunkten (geteilt zwischen den Flugzeugen) auf, statt nur mit 2,5. Mehrere Flugzeuge können die Aufrüstungsgeschwindigkeit verlangsamen, daher empfiehlt es sich, einige Rejuvenatoren in der Nähe zu bauen."
+	},
+	"dynrecon1" : {
+		"name" : "Aufklärungskommandant",
+		"description" : "Kommandant mit hoher Mobilität",
+		"helptext" : "Der Aufklärungskommandant konzentriert sich auf Mobilität und Einzelziel-DPS. Er verfügt über Sprungdüsen, mit denen er normalerweise unerreichbare Orte erreichen oder sich im Feld schnell neu positionieren kann. Wie sein Name schon sagt, kann er auch seine Sensorfähigkeiten verbessern und einen Enttarnungsimpuls aktivieren."
+	},
+	"gunshipemp" : {
+		"name" : "Gnat",
+		"description" : "Anti-Heavy EMP Drone",
+		"helptext" : "Die Gnat kann eingesetzt werden, um gegnerische Einheiten lahmzulegen. Sie ist eine exzellente Verteidigungseinheit und kann in Kombination mit Banshees oder anderen Einheiten den Gegner aufhalten, um Zeit zu gewinnen, ihn zu töten. Offensiv kann sie selbst stark befestigte Gebiete lahmlegen, ist aber durch Streikposten relativ leicht zu zerstören."
+	},
+	"bomberriot" : {
+		"name" : "Firebrand",
+		"description" : "Feuriger Streubomber",
+		"helptext" : "Das veraltete Phoenix-Design wurde aufgrund seines Erfolgs als Flugzeug zur Gebietsabwehr während der Folsom-Krise durch die Firebrand ersetzt. Die Firebrand wirft eine Serie von drei Napalmbomben mit Luftdetonation auf eine Armee oder ein Gebiet ab. Dadurch entstehen heftige Brände, die leichtere Einheiten oder abgeschirmte Ziele zerstören."
+	},
+	"missilekinetic" : {
+		"name" : "Apogee",
+		"description" : "Kinetisches Tötungsfahrzeug",
+		"helptext" : "Die Apogee ist eine kostengünstige kinetische Schlagwaffe, die in den Weltraum fliegt und dann hart auf ein Ziel herabstürzt und dabei massiven Schaden verursacht. Ihr Flächenschaden lässt zwar zu wünschen übrig, aber sie ist günstig und kann oft eingesetzt werden, was sie gegen Schilde einigermaßen gut macht."
+	},
+	"striderarty" : {
+		"name" : "Merlin",
+		"description" : "Schwerer Sättigungsartillerie-Strider",
+		"helptext" : "Die Merlin ist ein MLRS-Strider. Sie kann eine Raketensalve abfeuern, die fast alles im Zielgebiet garantiert zerstört, und sich anschließend schnell hinter verbündete Streitkräfte zurückziehen."
+	},
+	"gunshipheavytrans" : {
+		"name" : "Breacher",
+		"description" : "Angriffstransporter",
+		"helptext" : "Der Breacher erlangte seinen Platz als allgegenwärtiges Fabrikschiff nach dem Untergang der Koalition. Die Koalitionstruppen hatten ihr Hercules-Fabrikschiff mit einem Schildmodul ausgestattet, um Landezonen abzudecken. Nach dem Krieg übernahm die Allianz dieses Modell und modifizierte die Laser zu einer zuverlässigeren Schockkanone namens L-Saw (Light Surface Assault Weapon). Die L-Saw ist zwar ungenau, kann aber Oberflächenziele und sogar Lufteinheiten unterdrücken. Darüber hinaus wurde die Panzerung des Hercules-Fabrikschiffs verstärkt, um tiefe Vorstöße in feindliches Gebiet zu überstehen."
+	},
+	"planescout" : {
+		"name" : "Agitator",
+		"description" : "Area-Stör-Spionageflugzeug",
+		"helptext" : "Der Agitator verfügt über verbesserte Sensoren im Vergleich zu seinem Vorgänger, der Owl. Er kann ein Gebiet stören und feindliche Radare daran hindern, Aktivitäten in einem Gebiet zu erfassen. Außerdem kann er feindliche Einheiten unter Wasser ausspionieren."
+	},
+	"planelightscout" : {
+		"name" : "Fenix",
+		"description" : "Hi-Tech-Jäger",
+		"helptext" : "Der Fenix ​​ist ein geschützter Jäger, der sowohl Boden- als auch Lufteinheiten angreifen kann. Obwohl er in seiner Funktion dem schwereren, massigeren Hades ähnelt, ist der Fenix ​​kein Jäger für lange Kampfeinsätze. Er verfügt jedoch über einige Vorteile: einen starken Schild, eine leistungsstarke Laseranlage und eine ausreichend große Batterieanlage für beide Einheiten. Bei schwacher Batterie muss er zum Aufladen zu einem Reparaturplatz zurückkehren."
+	},
+	"amphfloater" : {
+		"name" : "Bully",
+		"description" : "Amphibien-Angriffsbot",
+		"helptext" : "Der Bully ist die bevorzugte Angriffseinheit der Amphibienfabrik. Er ist mit einem schweren Angriffsdisruptor bewaffnet, der seine Gegner mit einer Masse langsamer Geschosse verlangsamt. Er kann sowohl unter Wasser als auch schwimmend angreifen, ist jedoch beim Feuern unter Wasser gegenüber Oberflächenzielen etwas ungenau."
+	},
+	"amphsupport" : {
+		"name" : "Riptide",
+		"description" : "Einsetzbare amphibische Artillerieunterstützung (muss zum Feuern anhalten)",
+		"helptext" : "Mit der Entwicklung der Seekriegsführung während der Koalitionskriege begann die Riptide ihre Dienstzeit als einfacher Modifizierungsschritt des Bulkhead-Designs zur Verbesserung der amphibischen Angriffstruppen. Sie begann als einfaches Mörsersystem und erhielt schließlich größere Plasmageneratoren. Dies ermöglichte eine größere Reichweite und mehr Schaden auf Kosten der Panzerung."
+	},
+	"dynknight1" : {
+		"name" : "Commander",
+		"description" : "Mobiler Angriffskommandant",
+		"helptext" : "Das Chassis des Knight Commander ist eine ausgewogene Kommandoplattform, die die meisten Module aufnehmen kann und über ordentliche Geschwindigkeit, Panzerung und Regeneration verfügt."
+	},
+	"supernova_base" : {
+		"name" : "Supernova-Uplink",
+		"description" : "Supernova-Basisstation",
+		"helptext" : "Der Supernova-Verteidigungssatellit ist ein Energiesatellit, der auf einem weltraumgestützten Satellitensystem montiert ist und Ziele völlig ungestraft treffen kann. Diese Uplink-Station versorgt ihn mit der Energie, die er zum Abfeuern seines tödlichen Lasers und zur Versorgung seiner Antriebssysteme benötigt. Sollte die Uplink-Station ausfallen oder außer Gefecht gesetzt werden, z. B. durch einen EMP, eine Entwaffnung oder eine Trennung vom Netz, stellt der Satellit seine Funktion ein."
 	},
 	"supernova_satellite" : {
-		"name" : "Supernova-Abwehrsatellit",
+		"name" : "Supernova-Verteidigungssatellit",
 		"description" : "Laserverstärker-Superwaffe",
-		"helptext" : "Der Supernova Verteidigungssatellit bezieht reine Energie von seiner Uplink-Station, um einen massiven Laser, der unter ihm montiert ist, sowie seine Manöverdüsen anzutreiben. Dieser Laser feuert in 4 Stufen und seine Feuerkraft nimmt mit der Zeit zu. Er wurde von einem Starlight abgeleitet und so verbessert, dass er über seinem Ziel schwebt, um seinen tödlichen Laser abzufeuern, anstatt von der Basisstation abzuprallen."
+		"helptext" : "Der Supernova-Verteidigungssatellit bezieht reine Energie von seiner Uplink-Station, um einen massiven, unter ihm montierten Laser sowie seine Manövrierdüsen anzutreiben. Dieser Laser feuert in vier Stufen und steigert seine Feuerkraft mit zunehmender Feuerdauer. Er wurde von einem Starlight entwickelt und so optimiert, dass er über seinem Ziel schwebt und seinen tödlichen Laser abfeuert, anstatt von der Basisstation abzuprallen."
 	}
 }
