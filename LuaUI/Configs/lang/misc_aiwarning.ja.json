@@ -1,0 +1,5 @@
+{
+	"ai_warning": "警告: AIホスト %{name} %{reason}！以下のAIは復帰するまでアイドル状態のままです:"
+	"ai_warning_disconnected": "切断されました"
+	"ai_warning_left_prematurely": "まだロードされていないか、途中で終了しました"
+}
