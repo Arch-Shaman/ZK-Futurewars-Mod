@@ -180,9 +180,9 @@
 		"helptext" : "The Limpet can dodge most slow projectiles thanks to its agility and small size, allowing it to get close to enemy units in order to detonate, slowing and damaging them."
 	},
 	"factoryveh" : {
-		"name" : "Rover Assembly Plant",
+		"name" : "Vehicle Assembly Plant",
 		"description" : "Produces Light Wheeled Vehicles",
-		"helptext" : "A traditional favourite, the Rover Assembly is the ideal blitzkrieg fac with its fast, highly aggressive units. Those units that lack speed make up for it with copious firepower. Comes equipped with a drone autofabricator for defense. Key Units: Flare, Sunbeam, Ravager, Striker, Slasher"
+		"helptext" : "A traditional favourite, the Vehicle Assembly Plant is the ideal blitzkrieg fac with its fast, highly aggressive units. Those units that lack speed make up for it with copious firepower. Comes equipped with a drone autofabricator for defense. Key Units: Flare, Sunbeam, Ravager, Striker, Slasher"
 	},
 	"turretgauss" : {
 		"name" : "Hardpoint",
@@ -296,7 +296,7 @@
 	},
 	"vehriot" : {
 		"name" : "Striker",
-		"description" : "Riot Rover",
+		"description" : "Riot vehicle",
 		"helptext" : "The Striker is armed with a canister cannon. It can shred a single target or spread its damage across multiple nearby targets."
 	},
 	"staticshield" : {
@@ -485,7 +485,7 @@
 		"helptext" : "Construction plates increase the production capacity of nearby factories by acting as an independent build queue. Plates are the cheapest way to increase unit production, eschewing the versatility of Caretaker for greater efficiency. Be warned, a plate will not function without a nearby factory of the appropriate type."
 	},
 	"plateveh" : {
-		"name" : "Rover Plate",
+		"name" : "Vehicle Plate",
 		"description" : "Parallel Unit Production",
 		"helptext" : "Construction plates increase the production capacity of nearby factories by acting as an independent build queue. Plates are the cheapest way to increase unit production, eschewing the versatility of Caretaker for greater efficiency. Be warned, a plate will not function without a nearby factory of the appropriate type."
 	},
@@ -601,7 +601,7 @@
 	},
 	"veharty" : {
 		"name" : "Badger",
-		"description" : "Artillery Minelayer Rover",
+		"description" : "Minelayer Artillery Vehicle",
 		"helptext" : "The Badger lays mines which are fairly effective but have a limited lifespan from a distance (rather haphazardly). The Badger outranges most defenses comfortably, but is lightly armored and cannot flee easily so keep it screened with friendly units, possibly assisted by your own mines."
 	},
 	"striderantiheavy" : {
@@ -616,7 +616,7 @@
 	},
 	"vehsupport" : {
 		"name" : "Fractal",
-		"description" : "Fire Support HEAT Rover (must stop to fire)",
+		"description" : "Fire Support HEAT vehicle (must stop to fire)",
 		"helptext" : "The Fractal's main gun practically shoots another gun - A powerful partical shotgun whose recoil tears itself and the missile it is mounted on into pieces while dealing large amounts of damage at whatever it's aimed at. It is weak against area shields which can intercept the missile before it can fire it's shotgun."
 	},
 	"grebe" : {
@@ -627,7 +627,7 @@
 	"hoverarty" : {
 		"name" : "Lance",
 		"description" : "Anti-Heavy Artillery Hovercraft",
-		"helptext" : "The Lance's weapon, nicknamed 'the Blue Laser of Death', has the power and accuracy to skewer most units with a single shot. Use it against high armor units, but keep it behind the front lines - it has light armor and can't run from danger."
+		"helptext" : "The Lance's weapon, nicknamed 'the death beam', has the power and accuracy to skewer most units with a single shot. Use it against high armor units, but keep it behind the front lines - it has light armor and can't run from danger."
 	},
 	"shieldbomb" : {
 		"name" : "Parcel",
@@ -686,7 +686,7 @@
 	},
 	"vehassault" : {
 		"name" : "Ravager",
-		"description" : "Assault Rover",
+		"description" : "Assault vehicle",
 		"helptext" : "The modern Ravager has undergone several iterations before reaching what it currently is. Sporting a new Thermoregenerative plasma generator that recycles the heat generated from creating plasma to produce more plasma, a Ravager unit can eventually start pumbling targets with damage equivalent to a raider unit. In addition, it can emergency boost out of situations or to intercept hostile units at the cost of slowing for a few seconds."
 	},
 	"raveparty" : {
@@ -761,7 +761,7 @@
 	},
 	"energygeo" : {
 		"name" : "Geothermal Generator",
-		"description" : "Powerplant: +8e, increases over time",
+		"description" : "Powerplant: +8e, increases over time (Hazardous)",
 		"helptext" : "Geothermal plants start boring into the ground to trap energy and become increasingly efficient over time. They can only be built on geovents on the map, which limits their effectiveness. They explode quite violently when destroyed, so avoid placing anything directly adjacent."
 	},
 	"energyprosperity" : {
@@ -807,7 +807,7 @@
 	"vehscout" : {
 		"name" : "Flare",
 		"description" : "Disruptive Scout",
-		"helptext" : "The Flare replaced the Dart in the early turn of the century. Now repurposed as a light drone carrier and disruptor, it enables other rovers to fight more effectively. Be warned though, it won't win battles on its own and is fairly costly."
+		"helptext" : "The Flare replaced the Dart in the early turn of the century. Now repurposed as a light drone carrier and disruptor, it enables other vehicles to fight more effectively. Be warned though, it won't win battles on its own and is fairly costly."
 	},
 	"factoryhover" : {
 		"name" : "Hovercraft Platform",
@@ -937,7 +937,7 @@
 	"vehheavyarty" : {
 		"name" : "Impaler",
 		"description" : "Tactical Bombardment Artillery",
-		"helptext" : "The Impaler fires vertically a high damage, high accuracy tactical missile at long range. Its high arc makes it able to fire over any obstacle, however that makes the flight time so high that it's useless against moving targets. Use the Impaler to kill specific buildings."
+		"helptext" : "The Impaler fires a high damage, high accuracy tactical cruise missile at long range. Its high arc makes it able to fire over any obstacle, however that makes the flight time so high that it's useless against moving targets. Use the Impaler to kill specific buildings."
 	},
 	"zenith" : {
 		"name" : "Zenith",
@@ -946,7 +946,7 @@
 	},
 	"vehaa" : {
 		"name" : "Gatekeeper",
-		"description" : "Fast Anti-Air Rover",
+		"description" : "Fast Anti-Air vehicle",
 		"helptext" : "The Gatekeeper's improved disruptor missile slows air targets down for other AA units to finish the job."
 	},
 	"spiderskirm" : {
@@ -1041,7 +1041,7 @@
 	},
 	"vehcon" : {
 		"name" : "Bloom",
-		"description" : "Construction Rover",
+		"description" : "Construction vehicle",
 		"helptext" : "Highly mobile and capable of taking a beating, the Bloom can quickly expand over a large area. Also comes with defensive drones to ensure its safety."
 	},
 	"amphtele" : {
@@ -1146,7 +1146,7 @@
 	},
 	"vehcapture" : {
 		"name" : "Dominatrix",
-		"description" : "Capture Rover",
+		"description" : "Capture vehicle",
 		"helptext" : "The Dominatrix captures enemies, turning them against their former allies. Multiple Dominatrix can capture a single target faster, although only one becomes the controller. After taking control of a unit the Dominatrix cannot fire for 12 seconds. If a Dominatrix is destroyed all units it controls are freed."
 	},
 	"factorytank" : {
