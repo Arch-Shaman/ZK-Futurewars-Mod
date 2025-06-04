@@ -2,7 +2,7 @@
 	"morph_complete" : "モーフ完了: %{old} -> %{new}",
 	"nuclear_launch_detected" : "警告： 核ミサイル発射",
 	"geospot" : "地熱噴出口\nここに地熱発電機を置くことができます。",
-	"build_eta" : "ETA:",
+	"build_eta" : "推定構築時間:",
 	"lvl" : "lvl",
 	"builds_at" : "%{desc}, %{bp} metal/secでビルド",
 	"repairs_at" : "%{desc}、%{bp}ビルドパワーで修理",
