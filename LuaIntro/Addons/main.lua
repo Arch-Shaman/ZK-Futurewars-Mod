@@ -40,7 +40,7 @@ do
 	local config = VFS.Include("LuaUI/config/ZK_data.lua")
 	if config then
 		Spring.Echo("Localization initialized. Language is " .. config["EPIC Menu"].lang)
-		lang = config["EPIC Menu"].lang
+		lang = string.lower(config["EPIC Menu"].lang)
 	else
 		Spring.Echo("[NGLS] No config! Localization defaulting to en.")
 	end
@@ -54,7 +54,7 @@ do
 end
 
 local function IsCJK(lang) -- CJK and thai do not have spaces! Use the alternative method.
-	return lang == "ko" or lang == "zh" or lang == "ja" or lang == "tw" or lang == "th"
+	return lang == "ko" or lang == "zh" or lang == "ja" or lang == "zh_tw" or lang == "th"
 end
 
 local function CalculateDescent(fontSize) -- adds padding to text for characters that dip below the baseline
