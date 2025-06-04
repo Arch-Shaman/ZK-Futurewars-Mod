@@ -6,6 +6,7 @@ local langs = {
 	{ lang = 'de', flag = 'de', name = 'Deutsch' },
 	{ lang = 'tr', flag = 'tr', name = 'Türkçe' },
 	{ lang = 'zh', flag = 'cn', name = '簡體中文' },
+	{ lang = 'ja', flag = 'jp', name = '日本語'},
 --	{ lang = 'zh_TW', flag = 'tw', name = '繁體中文' }, -- currently unsupported, needs massive re-translation
 	{ lang = 'th', flag = 'th', name = "ภาษาไทย"},
 }
