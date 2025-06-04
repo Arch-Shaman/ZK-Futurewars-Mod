@@ -146,21 +146,24 @@ local function ApplyHeavyBarrel(modules, sharedData)
 		["commweapon_shotgun_disrupt"] = true,
 	}
 	sharedData.heavyBarrels = (sharedData.heavyBarrels or 0) + 1
-	if sharedData.weapon1 and acceptableWeapons[sharedData.weapon1] and sharedData.heavyBarrels > 0 then
+	Spring.Echo("Weapon1: " .. sharedData.weapon1)
+	if sharedData.weapon1 and acceptableWeapons[sharedData.weapon1] and sharedData.heavyBarrels > 0 and not sharedData.heavyBarrelAppliedTo1 then
 		if shotguns[sharedData.weapon1] then
+			Spring.Echo("Applying shotgun to 1")
 			sharedData.reloadOverride1 = 3.0
 			sharedData.burstOverride1 = 2
 			sharedData.burstRateOverride1 = 0.1
 			sharedData.projectileBonus1 = 5
-			sharedData.sprayAngleOverride1 = 2000
+			sharedData.sprayAngleOverride1 = math.rad(15.986328125)
 		else
 			local weaponDef = WeaponDefs["0_" .. sharedData.weapon1]
 			if sharedData.weapon1 == "commweapon_sunburst" then
-				sharedData.sprayAngleOverride1 = 1550
-				sharedData.accuracyOverride1 = 1550 
+				Spring.Echo("Applying sunburst to 1")
+				sharedData.sprayAngleOverride1 = math.rad(8.514404296875)
+				sharedData.accuracyOverride1 = math.rad(8.514404296875)
 				sharedData.burstOverride1 = 3
 				sharedData.burstRateOverride1 = 2/30
-				sharedData.reloadOverride1 = RoundToNearestFrame(weaponDef.reload * 1.8)
+				sharedData.reloadOverride1 = 27.0
 			else
 				sharedData.burstOverride1 = 12
 				sharedData.burstRateOverride1 = 2/30
@@ -168,22 +171,26 @@ local function ApplyHeavyBarrel(modules, sharedData)
 			end
 		end
 		sharedData.heavyBarrels = sharedData.heavyBarrels - 1
+		sharedData.heavyBarrelAppliedTo1 = true
 	end
+	Spring.Echo("Weapon2: " .. tostring(sharedData.weapon2))
 	if sharedData.weapon2 and acceptableWeapons[sharedData.weapon2] and sharedData.heavyBarrels > 0 then
 		if shotguns[sharedData.weapon2] then
+			Spring.Echo("Applying shotgun to 2")
 			sharedData.reloadOverride2 = 3.0
 			sharedData.burstOverride2 = 2
 			sharedData.burstRateOverride2 = 0.1
 			sharedData.projectileBonus2 = 5
-			sharedData.sprayAngleOverride2 = 2000
+			sharedData.sprayAngleOverride2 = math.rad(15.986328125)
 		else
 			local weaponDef = WeaponDefs["0_" .. sharedData.weapon2]
 			if sharedData.weapon2 == "commweapon_sunburst" then
-				sharedData.sprayAngleOverride2 = 1550
-				sharedData.accuracyOverride2 = 1550
+				Spring.Echo("Applying sunburst to 2")
+				sharedData.sprayAngleOverride2 = math.rad(8.514404296875)
+				sharedData.accuracyOverride2 = math.rad(8.514404296875)
 				sharedData.burstOverride2 = 3
 				sharedData.burstRateOverride2 = 0.2
-				sharedData.reloadOverride2 = RoundToNearestFrame(weaponDef.reload * 1.8)
+				sharedData.reloadOverride2 = 27.0
 			else
 				sharedData.burstOverride2 = 12
 				sharedData.burstRateOverride2 = 2/30
@@ -1317,6 +1324,38 @@ local moduleDefs = {
 			if commwars then
 				sharedData.extrastorage = (sharedData.extrastorage or 0) + 10000
 			end
+		end
+	},
+	{
+		name = "module_heavy_barrel",
+		humanName = "Heavy Barrel Replacement",
+		description = "Blah blah.",
+		image = moduleImagePath .. "module_high_caliber_barrel.png",
+		limit = 1,
+		cost = 500 * COST_MULT,
+		requireChassis = {"strike"},
+		requireOneOf = {"commweapon_shotgun", "commweapon_heavyrifle", "commweapon_sunburst"},
+		requireLevel = 4,
+		slotType = "module",
+		effectPriority = 2,
+		applicationFunction = function (modules, sharedData)
+			ApplyHeavyBarrel(modules, sharedData)
+		end
+	},
+	{
+		name = "module_heavy_barrel2",
+		humanName = "Heavy Barrel Replacement",
+		description = "Blah blah.",
+		image = moduleImagePath .. "module_high_caliber_barrel.png",
+		limit = 1,
+		cost = 500 * COST_MULT,
+		requireChassis = {"strike"},
+		requireTwoOf = {"commweapon_shotgun", "commweapon_heavyrifle", "commweapon_sunburst"},
+		requireLevel = 4,
+		slotType = "module",
+		effectPriority = 2,
+		applicationFunction = function (modules, sharedData)
+			ApplyHeavyBarrel(modules, sharedData)
 		end
 	},
 	{

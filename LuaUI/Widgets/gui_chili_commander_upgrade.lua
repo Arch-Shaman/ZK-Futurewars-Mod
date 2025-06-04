@@ -130,6 +130,7 @@ local translationOverrides = {
 	["module_heavyprojector_second"] = "module_heavyprojector",
 	["module_shotgunlaser_second"] = "module_shotgunlaser",
 	["module_heavyordinance_second"] = "module_heavyordinance",
+	["module_heavy_barrel2"] = "module_heavy_barrel",
 	["nulladvweapon"] = "nullbasicweapon",
 }
 
