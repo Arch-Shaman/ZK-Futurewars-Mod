@@ -198,7 +198,7 @@ local function DoExtraWeaponStuff(extraInfo, weaponNum, wd, weaponID)
 	end
 	if ei.sprayAngleBonus or ei.sprayAngleOverride then
 		local baseSprayAngle = ei.sprayAngleOverride or wd.sprayAngle
-		local bonus = ei.sprayAngleBonus + 1
+		local bonus = (ei.sprayAngleBonus or 0) + 1
 		if bonus < 0 then bonus = 0 end
 		local newSprayAngle = math.max(baseSprayAngle * bonus, 0)
 		Spring.SetUnitWeaponState(unitID, weaponID, "sprayAngle", newSprayAngle)
