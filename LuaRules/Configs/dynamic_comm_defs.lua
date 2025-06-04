@@ -133,7 +133,7 @@ local function ApplyHeavyOrdinance2(modules, sharedData)
 	end
 end
 
-local function ApplyHeavyBarrel(modules, sharedData, weaponNum)
+local function ApplyHeavyBarrel(modules, sharedData)
 	local acceptableWeapons = {
 		["commweapon_shotgun"] = true,
 		["commweapon_heavyrifle"] = true,
@@ -145,18 +145,52 @@ local function ApplyHeavyBarrel(modules, sharedData, weaponNum)
 		["commweapon_shotgun"] = true,
 		["commweapon_shotgun_disrupt"] = true,
 	}
-	if weaponNum == 1 then
-		if sharedData.weapon1 and acceptableWeapons[sharedData.weapon1] then
-			if shotguns[sharedData.weapon1] then
-				sharedData.reloadOverride1 = 3.0
-				sharedData.burstOverride1 = 2
-				sharedData.burstRateOverride1 = 0.1
-				sharedData.projectileBonus1 = 5
-				sharedData.sprayAngleOverride1 = 2000
+	sharedData.heavyBarrels = (sharedData.heavyBarrels or 0) + 1
+	if sharedData.weapon1 and acceptableWeapons[sharedData.weapon1] and sharedData.heavyBarrels > 0 then
+		if shotguns[sharedData.weapon1] then
+			sharedData.reloadOverride1 = 3.0
+			sharedData.burstOverride1 = 2
+			sharedData.burstRateOverride1 = 0.1
+			sharedData.projectileBonus1 = 5
+			sharedData.sprayAngleOverride1 = 2000
+		else
+			local weaponDef = WeaponDefs["0_" .. sharedData.weapon1]
+			if sharedData.weapon1 == "commweapon_sunburst" then
+				sharedData.sprayAngleOverride1 = 1550
+				sharedData.accuracyOverride1 = 1550 
+				sharedData.burstOverride1 = 3
+				sharedData.burstRateOverride1 = 2/30
+				sharedData.reloadOverride1 = RoundToNearestFrame(weaponDef.reload * 1.8)
+			else
+				sharedData.burstOverride1 = 12
+				sharedData.burstRateOverride1 = 2/30
+				sharedData.reloadOverride1 = 3.5
 			end
 		end
-	else
-		
+		sharedData.heavyBarrels = sharedData.heavyBarrels - 1
+	end
+	if sharedData.weapon2 and acceptableWeapons[sharedData.weapon2] and sharedData.heavyBarrels > 0 then
+		if shotguns[sharedData.weapon2] then
+			sharedData.reloadOverride2 = 3.0
+			sharedData.burstOverride2 = 2
+			sharedData.burstRateOverride2 = 0.1
+			sharedData.projectileBonus2 = 5
+			sharedData.sprayAngleOverride2 = 2000
+		else
+			local weaponDef = WeaponDefs["0_" .. sharedData.weapon2]
+			if sharedData.weapon2 == "commweapon_sunburst" then
+				sharedData.sprayAngleOverride2 = 1550
+				sharedData.accuracyOverride2 = 1550
+				sharedData.burstOverride2 = 3
+				sharedData.burstRateOverride2 = 0.2
+				sharedData.reloadOverride2 = RoundToNearestFrame(weaponDef.reload * 1.8)
+			else
+				sharedData.burstOverride2 = 12
+				sharedData.burstRateOverride2 = 2/30
+				sharedData.reloadOverride2 = 3.5
+			end
+		end
+		sharedData.heavyBarrels = sharedData.heavyBarrels - 1
 	end
 end
 
