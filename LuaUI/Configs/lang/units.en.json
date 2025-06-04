@@ -550,9 +550,9 @@
 		"helptext" : "The common chicken, also known as Novacula maxillas is an invasive species of strange rectiles that have appeared on this planet. The common chicken can nourish itself when it attacks other units, including robots!"
 	},
 	"chicken_sporeshooter" : {
-		"name" : "Helspawn",
+		"name" : "Hellspawn",
 		"description" : "Shielded Assault Chicken",
-		"helptext" : "The Sporeshooter shoots spores to drop aircraft and hit land targets from a distance. Can climb walls for surprise attacks."
+		"helptext" : "The Hellspawn shoots spores to drop aircraft and hit land targets from a distance. It can climb walls for surprise attacks."
 	},
 	"turretaafar" : {
 		"name" : "Hailstorm",
