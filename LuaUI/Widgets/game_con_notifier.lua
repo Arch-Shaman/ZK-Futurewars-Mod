@@ -142,10 +142,11 @@ local function DoTheThing()
 			effectiveFrame = gameFrame * 3 -- have AIs lower priority than players.
 		elseif isAI and not functional then
 			needsCons[teamID] = nil -- this AI is broken and will never be fixable. Don't bother. (FIXME: change in the future!). Pray to engine lords for your success.
+			effectiveFrame = 9999999999999999999999999 -- skip
 		else
 			local isAFK = IsTeamAFK(teamID)
 			if isTeamAFK(teamID) then -- pick AFK human teams last.
-				effectiveFrame = 99999999
+				effectiveFrame = 9999999999999999999999999 -- never pick them, actually.
 			end
 		end
 		if effectiveFrame < longestWaiter then
