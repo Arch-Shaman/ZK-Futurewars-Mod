@@ -144,6 +144,7 @@ local missiles = {
 	
 
 local flamerWeaponDefs = {}
+local PUBLIC = {public = true}
 -------------------
 -- Resource tracking
 
@@ -199,9 +200,10 @@ local function getMeanDamageExcept(excludeTeam)
 	return (count>0) and (mean/count) or 0
 end
 
-local function getMaxVal(valList)
+local function getMaxVal(valList, award)
 	local winTeam, maxVal = false,0
 	for team,val in pairs(valList) do
+		Spring.SetTeamRulesParam(team, award .. "_score", val, PUBLIC)
 		if val and val > maxVal then
 			winTeam = team
 			maxVal = val
@@ -352,7 +354,7 @@ local function ProcessAwardData()
 			maxVal = expUnitExp
 			winningTeam = expUnitTeam
 		else
-			winningTeam, maxVal = getMaxVal(data)
+			winningTeam, maxVal = getMaxVal(data, awardType)
 		end
 		if winningTeam then
 			local compare
