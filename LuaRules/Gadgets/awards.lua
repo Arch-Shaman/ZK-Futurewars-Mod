@@ -144,7 +144,6 @@ local missiles = {
 	
 
 local flamerWeaponDefs = {}
-
 -------------------
 -- Resource tracking
 
@@ -343,24 +342,19 @@ local function AddAwardPoints( awardType, teamID, amount )
 end
 
 local function ProcessAwardData()
-
 	for awardType, data in pairs(awardData) do
 		local winningTeam
 		local maxVal
 		local easyFactor = awardEasyFactors[awardType] or 1
 		local absolute = awardAbsolutes[awardType]
 		local message
-
 		if awardType == 'vet' then
 			maxVal = expUnitExp
 			winningTeam = expUnitTeam
 		else
 			winningTeam, maxVal = getMaxVal(data)
-
 		end
-
 		if winningTeam then
-
 			local compare
 			if absolute then
 				compare = absolute
@@ -452,7 +446,9 @@ function gadget:AllowUnitBuildStep(builderID, builderTeam, unitID, unitDefID, pa
 	if bp < 1.0 then
 		AddAwardPoints('assistant', builderTeam, part * UnitDefs[unitDefID].metalCost)
 	else
-		AddAwardPoints('repair', builderTeam, part * UnitDefs[unitDefID].metalCost)
+		local _, maxHealth = Spring.GetUnitHealth(unitID)
+		local healthMetalRatio = maxHealth / UnitDefs[unitDefID].metalCost
+		AddAwardPoints('repair', builderTeam, part * healthMetalRatio)
 	end
 	return true
 end
@@ -607,9 +603,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		or (attackerTeam == unitTeam)
 		or (attackerTeam == gaiaTeamID)
 		then return end
-
 	local costdamage = (damage / maxHP) * GetUnitCost(unitID, unitDefID)
-
 	if not spAreTeamsAllied(attackerTeam, unitTeam) then
 		local isMissile = missiles[attackerDefID] ~= nil
 		if paralyzer then
@@ -630,25 +624,18 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 			end
 			-- Static Weapons
 			if (not ad.canMove) then
-
 				-- bignukes, zenith, starlight
-				if staticO_big[ad.name] then
+				if staticO_big[ad.name] then -- not lrpc, tacnuke, emp missile
 					AddAwardPoints( 'nux', attackerTeam, costdamage )
-
-				-- not lrpc, tacnuke, emp missile
-				elseif not staticO_small[ad.name] and not isMissile then
+				elseif not staticO_small[ad.name] and not isMissile then -- defenses that aren't missiles.
 					AddAwardPoints( 'shell', attackerTeam, costdamage )
 				end
-			
 			elseif kamikaze[ad.name] then
 				AddAwardPoints( 'kam', attackerTeam, costdamage )
-
 			elseif ad.canFly and not (ad.customParams.dontcount or ad.customParams.is_drone) then
 				AddAwardPoints( 'air', attackerTeam, costdamage )
-
 			elseif boats[attackerDefID] then
 				AddAwardPoints( 'navy', attackerTeam, costdamage )
-
 			elseif comms[attackerDefID] then
 				AddAwardPoints( 'comm', attackerTeam, costdamage )
 			elseif ad.customParams.is_drone then
