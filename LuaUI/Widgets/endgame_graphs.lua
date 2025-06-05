@@ -419,15 +419,13 @@ getEngineArrays = function(statNameData, labelCaption)
 
 	--Applies label of the selected graph at bottom of window
 	local statistic = statNameData
-	Spring.Echo("Statistic: " .. statistic)
 	curGraph.statNameData = statNameData
 	if type(statNameData) ~= "string" then
 		local statIndex = usingAllyteams and 1 or 2
 		statistic = statNameData[statIndex][1]
 		labelCaption = statNameData[statIndex][2]
 	end
-	
-		curGraph.caption = labelCaption
+	curGraph.caption = labelCaption
 	graphLabel:SetCaption(labelCaption)
 	graphTime:SetCaption("Total Time: " .. formatTime(totalTime))
 	-- If there's not at least two data points then don't draw the graph, labels, intervals, or players
@@ -470,11 +468,11 @@ getEngineArrays = function(statNameData, labelCaption)
 					stats[i] = {}
 					if hiddenStats[statistic] and (gameOver or (spectating and specFullView)) then
 						local value = GetHiddenTeamRulesParam(teamID, "stats_history_" .. statistic .. "_" .. i)
-						Spring.Echo("Value: " .. tostring(value))
+						--Spring.Echo("Value: " .. tostring(value))
 						stats[i][statistic] = GetHiddenTeamRulesParam(teamID, "stats_history_" .. statistic .. "_" .. i) or 0
 					else
 						local value = Spring.GetTeamRulesParam(teamID, "stats_history_" .. statistic .. "_" .. i)
-						Spring.Echo("Value: " .. tostring(value))
+						--Spring.Echo("Value: " .. tostring(value))
 						stats[i][statistic] = Spring.GetTeamRulesParam(teamID, "stats_history_" .. statistic .. "_" .. i) or 0
 					end
 				end
