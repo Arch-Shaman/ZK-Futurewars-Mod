@@ -145,6 +145,7 @@ local missiles = {
 
 local flamerWeaponDefs = {}
 local PUBLIC = {public = true}
+local bestCostByTeam = {}
 -------------------
 -- Resource tracking
 
@@ -559,6 +560,12 @@ end
 
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, killerTeam)
 	local experience = spGetUnitExperience(unitID)
+	local bestTeamCost = bestCostByTeam[unitTeam] or 0
+	if experience > bestTeamCost then -- track each teams veterancy award. This way we can translate via luaui.
+		Spring.SetTeamRulesParam(unitTeam, "vet_score", experience, PUBLIC)
+		Spring.SetTeamRulesParam(unitTeam, "vet_unit", unitDefID, PUBLIC)
+		bestCostByTeam[unitTeam] = experience
+	end
 	if experience > expUnitExp and (experience*UnitDefs[unitDefID].metalCost > 1000) and not (UnitDefs[unitDefID].customParams.dontcount or UnitDefs[unitDefID].metalCost == 0) then
 		expUnitExp = experience
 		expUnitTeam = unitTeam
