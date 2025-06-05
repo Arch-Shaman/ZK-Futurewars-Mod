@@ -74,6 +74,7 @@ local awardAbsolutes = {
 	vet         = 3,
 	shield      = 10000,
 	missile     = 1000,
+	attrition   = 1,
 }
 
 local awardEasyFactors = {
@@ -332,6 +333,9 @@ end
 local function AddAwardPoints( awardType, teamID, amount )
 	if (teamID and (teamID ~= gaiaTeamID)) then
 		awardData[awardType][teamID] = awardData[awardType][teamID] + (amount or 0)
+		--if awardType == 'attrition' then
+		--	Spring.Echo("Awarding " .. amount .. " attrition points")
+		--end
 		--if awardType == 'economist' then
 			--Spring.Echo("New value: " .. awardData[awardType][teamID])
 		--end
@@ -360,14 +364,14 @@ local function ProcessAwardData()
 			local compare
 			if absolute then
 				compare = absolute
-
 			else
 				compare = getMeanDamageExcept(winningTeam) * easyFactor
 			end
-
 			--if reclaimTeam and maxReclaim > getMeanMetalIncome() * minReclaimRatio then
 			if maxVal > compare then
-				maxVal = floor(maxVal)
+				if awardType ~= 'attrition' then -- do not floor the attrition award, it has its own formatting. This just makes every award 100%, which is not what we want.
+					maxVal = floor(maxVal)
+				end
 				local maxValWrite = comma_value(maxVal)
 
 				if awardType == 'cap' then
@@ -418,6 +422,9 @@ local function ProcessAwardData()
 					message = 'Damage shielded: ' .. maxValWrite
 				elseif awardType == 'missile' then
 					message = 'Damaged Value : ' .. maxValWrite
+				elseif awardType == 'attrition' then
+					--Spring.Echo("Attrition rate: " .. maxVal .. "\"" .. comma_value(string.format("%.2f%%", maxVal * 100)) .. "\"")
+					message = 'Attrition rate: ' .. comma_value(string.format("%.2f%%", maxVal * 100))
 				else
 					message = 'Damaged value: '.. maxValWrite
 				end
@@ -451,7 +458,6 @@ function gadget:AllowUnitBuildStep(builderID, builderTeam, unitID, unitDefID, pa
 end
 
 function gadget:Initialize()
-	
 	--_G.resourceInfo = resourceInfo
 	GG.Awards = {AddAwardPoints = AddAwardPoints}
 	local tempTeamList = Spring.GetTeamList()

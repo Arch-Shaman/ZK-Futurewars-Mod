@@ -418,7 +418,10 @@ end
 
 function gadget:GameOver()
 	gadget:GameFrame(450) -- fake history frame to snapshot end state
-
+	for teamID, attritionRate in pairs(unitAttritionByTeamHax) do
+		Spring.Echo("Attrition rate for teamID " .. teamID .. ": " .. tostring(attritionRate))
+		GG.Awards.AddAwardPoints('attrition', teamID, attritionRate)
+	end
 	Spring.SetGameRulesParam("gameover_frame", Spring.GetGameFrame())
 	Spring.SetGameRulesParam("gameover_second", math.floor(Spring.GetGameSeconds()))
 	Spring.SetGameRulesParam("gameover_historyframe", stats_index - 1)
