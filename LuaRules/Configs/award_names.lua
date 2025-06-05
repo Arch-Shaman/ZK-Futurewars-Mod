@@ -36,4 +36,5 @@ return {
 	drone       = 'Drone Director',
 	missile     = 'Missile Marauder',
 	commwars    = 'Commander Conquerer',
+	attrition   = 'Attrition Ace',
 }
