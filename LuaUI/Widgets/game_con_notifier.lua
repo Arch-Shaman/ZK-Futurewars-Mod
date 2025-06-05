@@ -26,6 +26,12 @@ local function SendGameMessage(str)
 	Spring.Echo("game_message: " .. str)
 end
 
+local function GetAIName(teamID)
+    local _, name = Spring.GetAIInfo(teamID)
+    local fallbackName = Spring.GetTeamRulesParam(teamID, "initAIName") or "Unknown AI"
+    return name or "<Broken> " .. fallbackName
+end
+
 local function IsTeamAFK(teamID)
 	local playerList = Spring.GetPlayerList(teamID)
 	--Spring.Echo("Number of players: " .. tostring(#playerList))
@@ -77,6 +83,11 @@ local function GetTeamName(teamID)
 	end
 end
 
+local function IsTeamAI(teamID) -- Creates a fallback. Probably should be a Utility function
+	local _, _, _, isAiTeam = Spring.GetTeamInfo(teamID, false)
+	return isAiTeam or Spring.GetTeamRulesParam(teamID, "initAI")
+end
+
 local function IsFunctionalAI(teamID)
 	local isAI = select(4, Spring.GetTeamInfo(teamID))
 	local isOriginallyAI = Spring.GetTeamRulesParam(teamID, "initAI")
@@ -91,10 +102,13 @@ end
 local function OnButtonClick(teamID, isAI)
 	local playerName
 	if isAI then
-		_, playerName = Spring.GetAIInfo(teamID)
+		playerName = GetAIName(teamID) or "Unknown"
 	else
 		local teamLeader = select(2, Spring.GetTeamInfo(teamID))
 		playerName = Spring.GetPlayerInfo(teamLeader)
+		if not playerName then -- for some reason, we've failed to pass the isAI check. This is weird and probably should never happen.
+			playerName = GetAIName(teamID) or "Unknown"
+		end
 	end
 	local selection = WG.ConTracker.GetIdleCons()
 	local selected
