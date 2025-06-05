@@ -70,10 +70,12 @@ end
 
 local function GetTeamName(teamID)
 	local playerList = Spring.GetPlayerList(teamID)
-	local _, leader, _, isAI = Spring.GetTeamInfo(target, false)
-	local name = select(1,Spring.GetPlayerInfo(leader, false))
+	local _, leader, _, isAI = Spring.GetTeamInfo(teamID, false)
+	local name
 	if isAI then
-		name = select(2,Spring.GetAIInfo(target))
+		name = GetAIName(teamID)
+	else
+		name = select(1,Spring.GetPlayerInfo(leader, false))
 	end
 	name = GetTeamInColor(teamID) .. name .. ColorToInColor({1, 1, 1, 1}) -- Colorize
 	if #playerList > 1 then
@@ -100,15 +102,9 @@ local function IsFunctionalAI(teamID)
 end
 
 local function OnButtonClick(teamID, isAI)
-	local playerName
-	if isAI then
-		playerName = GetAIName(teamID) or "Unknown"
-	else
-		local teamLeader = select(2, Spring.GetTeamInfo(teamID))
-		playerName = Spring.GetPlayerInfo(teamLeader)
-		if not playerName then -- for some reason, we've failed to pass the isAI check. This is weird and probably should never happen.
-			playerName = GetAIName(teamID) or "Unknown"
-		end
+	local playerName, isSquad = GetTeamName(teamID)
+	if isSquad then
+		playerName = playerName .. "'s squad"
 	end
 	local selection = WG.ConTracker.GetIdleCons()
 	local selected
