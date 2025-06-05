@@ -154,7 +154,7 @@ local function DoTheThing()
 			pickedAI = isAI
 		end
 	end
-	if teamID == -1 then return end
+	if pickedTeam == -1 then return end
 	OnButtonClick(pickedTeam, pickedAI)
 end
 
