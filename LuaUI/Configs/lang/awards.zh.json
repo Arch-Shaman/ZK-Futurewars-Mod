@@ -20,6 +20,7 @@
 	"cap": "傀儡大师",
 	"cap_desc": "通过支援指挥官的捕获射线或施虐狂捕获敌方单位获得。",
 	"cap_yourscore": "您捕获了价值 %{score} 金属的单位。",
+	"cap_score" : "捕获敌人价值 %{score} 金属。",
 	"comm": "大师和指挥官",
 	"comm_desc": "使用指挥官造成伤害即可获得。",
 	"comm_yourscore": "您使用指挥官造成了 %{score} 点伤害。",

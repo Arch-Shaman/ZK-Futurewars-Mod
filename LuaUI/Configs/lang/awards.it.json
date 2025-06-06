@@ -20,6 +20,7 @@
 	"cap" : "Maestro di Burattini",
 	"cap_desc" : "Ottenuto catturando unità nemiche tramite il Raggio di Cattura del Comandante di Supporto o le Dominatrici.",
 	"cap_yourscore" : "Hai catturato unità per un valore di %{score} metallo.",
+	"cap_score" : "%{score} metallo di nemici catturati.",
 	"comm" : "Maestro e Comandante",
 	"comm_desc": "Ottenuto infliggendo danni usando i comandanti.",
 	"comm_yourscore": "Hai inflitto %{score} danni usando i tuoi comandanti.",

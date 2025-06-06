@@ -20,6 +20,7 @@
 	"cap": "Mestre das Marionetes",
 	"cap_desc": "Ganho ao capturar unidades inimigas com o Raio de Captura do Comandante de Suporte ou com as Dominatrixes.",
 	"cap_yourscore": "Você capturou %{score} de metal em unidades.",
+	"cap_score" : "%{score} de metal em inimigos capturados.",
 	"comm": "Mestre e Comandante",
 	"comm_desc": "Ganho ao causar dano usando comandantes.",
 	"comm_yourscore": "Você causou %{score} de dano usando seus comandantes.",

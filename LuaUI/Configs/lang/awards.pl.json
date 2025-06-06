@@ -20,6 +20,7 @@
 	"cap" : "Mistrz marionetek",
 	"cap_desc" : "Zdobywa się je, przechwytując jednostki wroga za pomocą promienia przechwytującego dowódcy wsparcia lub dominatrix.",
 	"cap_yourscore" : "Zdobyto jednostki o wartości %{score} metalu.",
+	"cap_score" : "Wartość metalu schwytanych wrogów wynosi %{score}.",
 	"comm" : "Mistrz i dowódca",
 	"comm_desc" : "Zdobywa się je, zadając obrażenia za pomocą dowódców.",
 	"comm_yourscore" : "Zadano %{score} obrażeń za pomocą dowódców.",

@@ -20,6 +20,7 @@
 	"cap" : "Le maître des marionnettes",
 	"cap_desc" : "Obtenu en capturant des unités ennemies via le rayon de capture du commandant de soutien ou les dominatrices.",
 	"cap_yourscore" : "Vous avez capturé %{score} d'unités en métal.",
+	"cap_score" : "%{score} de métal d'ennemis capturés.",
 	"comm" : "Master and Commander",
 	"comm_desc" : "Gagner en infligeant des dégâts avec les commandants",
 	"comm_yourscore" : "Vous avez infligé %{score} de dégâts avec vos commandants",

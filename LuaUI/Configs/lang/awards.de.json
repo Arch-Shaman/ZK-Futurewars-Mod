@@ -20,6 +20,7 @@
 	"cap" : "Meister der Puppen",
 	"cap_desc" : "Verdient durch die Eroberung feindlicher Einheiten entweder durch den Eroberungsstrahl des Unterstützungskommandanten oder durch Dominas.",
 	"cap_yourscore" : "Du hast Einheiten im Wert von %{score} Metall erobert.",
+	"cap_score" : "Gefangene Feinde im Wert von %{score} Metall.",
 	"comm" : "Meister und Kommandant",
 	"comm_desc": "Verdient durch Schadensverursachung mit Kommandanten.", 
 	"comm_yourscore": "Du hast mit deinen Kommandanten %{score} Schaden verursacht.", 

@@ -20,6 +20,7 @@
 	"cap" : "Master of Puppets",
 	"cap_desc" : "Earned by capturing enemy units either via Support Commander's Capture Ray or Dominatrixes.",
 	"cap_yourscore" : "You captured %{score} metal worth of units.",
+	"cap_score" : "%{score} metal worth of enemies captured.",
 	"comm" : "Master and Commander",
 	"comm_desc" : "Earned by dealing damage using commanders.",
 	"comm_yourscore" : "You did %{score} damage using your commanders.",

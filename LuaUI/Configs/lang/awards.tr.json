@@ -20,6 +20,7 @@
 	"cap" : "Kuklaların Efendisi",
 	"cap_desc" : "Düşman birimlerini Destek Komutanının Yakalama Işını veya Kadın Egemenler aracılığıyla ele geçirerek kazanılır.",
 	"cap_yourscore" : "%{score} değerinde birim ele geçirdiniz.",
+	"cap_score" : "Ele geçirilen düşmanın metal değeri %{score} oldu.",
 	"comm" : "Usta ve Komutan",
 	"comm_desc" : "Komutanları kullanarak hasar vererek kazanılır.",
 	"comm_yourscore" : "Komutanlarınızı kullanarak %{score} hasar verdiniz.",
