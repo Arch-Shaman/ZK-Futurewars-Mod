@@ -2,7 +2,7 @@
 	"air" : "Airforce General",
 	"air_desc" : "Earned by damaging enemy units with aircraft.",
 	"air_yourscore" : "You did %{score} damage with aircraft.",
-	"air_score" : "Damage done by air units: %{score}"
+	"air_score" : "Damage done by air units: %{score}",
 	"apm" : "APM",
 	"apm_mousespeed" : "Mouse Speed\n(Pixels/sec)",
 	"apm_clickrate" : "Click Rate\n(Mouse Clicks/min)",
@@ -48,7 +48,7 @@
 	"emp_desc" : "Earned by dealing EMP damage to enemy units.",
 	"emp_yourscore" : "You did %{score} emp damage to enemy units.",
 	"emp_score" : "%{score} emp damage dealt",
-	"exitlobby" : "Exit to lobby"
+	"exitlobby" : "Exit to lobby",
 	"fire" : "Master Grill-Chef",
 	"fire_desc" : "Earned by dealing fire damage to enemy units.",
 	"fire_yourscore" : "You did %{score} fire damage to enemy units.",
@@ -61,7 +61,7 @@
 	"head_score" : "%{score} commanders killed",
 	"heart" : "Queen Heart Breaker",
 	"heart_desc" : "Earned by dealing damage to the chicken queen.",
-	"heard_yourscore" : "You did %{score} damage to the queen.",
+	"heart_yourscore" : "You did %{score} damage to the queen.",
 	"heart_score" : "%{score} damage dealt to the Chicken Queen",
 	"kam" : "Blaze of Glory",
 	"kam_desc" : "Earned by dealing damage using suicide units.",
@@ -81,7 +81,7 @@
 	"menace_score" : "%{score} damage dealt to menaces.",
 	"missile" : "Missile Marauder",
 	"missile_desc" : "Earned by dealing damage using missile silo missiles.",
-	"missile_yourscore" : "You did %{score} damage using tactical missiles."
+	"missile_yourscore" : "You did %{score} damage using tactical missiles.",
 	"missile_score" : "%{score} damage dealt using tactical missiles.",
 	"nux" : "Apocalyptic Achievement",
 	"nux_desc" : "Earned by dealing damage using superweapons.",
