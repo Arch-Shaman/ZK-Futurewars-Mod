@@ -251,16 +251,28 @@ function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDef
 		unitLostTallyByTeam[teamID] = unitLostTallyByTeam[teamID] + 1
 	end
 	if attackerTeam and not spAreTeamsAllied(attackerTeam, teamID) then
+		unitValueKilledByTeamHax[attackerTeam] = unitValueKilledByTeamHax[attackerTeam] + cost
+		
+		if canTeamSeeUnit(attackerTeam, unitID) then
+			unitValueKilledByTeamNonhax[attackerTeam] = unitValueKilledByTeamNonhax[attackerTeam] + cost
+		end
+	end
+	if attackerTeam then
 		local lostValue = unitValueLostByTeam[attackerTeam] or 1
 		if lostValue == 0 then
 			lostValue = 1 -- prevent NAN.
 		end
-		unitValueKilledByTeamHax[attackerTeam] = unitValueKilledByTeamHax[attackerTeam] + cost
 		unitAttritionByTeamHax[attackerTeam] = unitValueKilledByTeamHax[attackerTeam] / lostValue
 		if canTeamSeeUnit(attackerTeam, unitID) then
-			unitValueKilledByTeamNonhax[attackerTeam] = unitValueKilledByTeamNonhax[attackerTeam] + cost
 			unitAttritionByTeamNonhax[attackerTeam] = unitValueKilledByTeamNonhax[attackerTeam] / lostValue
 		end
+	else -- unit died through other means EG suicide
+		local lostValue = unitValueLostByTeam[teamID] or 1
+		if lostValue == 0 then
+			lostValue = 1 -- prevent NAN.
+		end
+		unitAttritionByTeamHax[teamID] = unitValueKilledByTeamHax[teamID] / lostValue
+		unitAttritionByTeamNonhax[teamID] = unitValueKilledByTeamNonhax[teamID] / lostValue
 	end
 end
 
