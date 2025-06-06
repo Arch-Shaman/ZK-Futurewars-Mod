@@ -204,7 +204,7 @@ end
 local function getMaxVal(valList, award)
 	local winTeam, maxVal = false,0
 	for team,val in pairs(valList) do
-		Spring.SetTeamRulesParam(team, award .. "_score", val, PUBLIC)
+		Spring.SetGameRulesParam(team .. "_" .. award .. "_score", val, PUBLIC)
 		if val and val > maxVal then
 			winTeam = team
 			maxVal = val
@@ -366,7 +366,7 @@ local function ProcessAwardData()
 			end
 			--if reclaimTeam and maxReclaim > getMeanMetalIncome() * minReclaimRatio then
 			if maxVal > compare then
-				if awardType ~= 'attrition' then -- do not floor the attrition award, it has its own formatting. This just makes every award 100%, which is not what we want.
+				if awardType ~= 'attrition' and awardType ~= 'vet' then -- do not floor the attrition award, it has its own formatting. This just makes every award 100%, which is not what we want.
 					maxVal = floor(maxVal)
 				end
 				local maxValWrite = comma_value(maxVal)
@@ -405,6 +405,7 @@ local function ProcessAwardData()
 					message = maxVal .. ' Nests wiped out'
 				elseif awardType == 'vet' then
 					local vetName = UnitDefs[expUnitDefID] and UnitDefs[expUnitDefID].humanName
+					Spring.SetGameRulesParam("vet_unitdef", UnitDefs[expUnitDefID].name, public)
 					local expUnitExpRounded = floor(expUnitExp * 100)
 					message = vetName ..', '.. expUnitExpRounded .. "% cost made"
 				elseif awardType == 'repair' then
@@ -429,6 +430,7 @@ local function ProcessAwardData()
 		end --if winningTeam
 		if message then
 			awardAward(winningTeam, awardType, message)
+			Spring.SetGameRulesParam(awardType .. "_rawscore", maxVal, PUBLIC)
 		end
 
 	end
@@ -562,8 +564,8 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, _, _, killerTeam)
 	local experience = spGetUnitExperience(unitID)
 	local bestTeamCost = bestCostByTeam[unitTeam] or 0
 	if experience > bestTeamCost then -- track each teams veterancy award. This way we can translate via luaui.
-		Spring.SetTeamRulesParam(unitTeam, "vet_score", experience, PUBLIC)
-		Spring.SetTeamRulesParam(unitTeam, "vet_unit", UnitDefs[unitDefID].name, PUBLIC)
+		Spring.SetGameRulesParam(unitTeam .. "_vet_score", experience, PUBLIC)
+		Spring.SetGameRulesParam(unitTeam .. "_vet_unit", UnitDefs[unitDefID].name, PUBLIC)
 		bestCostByTeam[unitTeam] = experience
 	end
 	if experience > expUnitExp and (experience*UnitDefs[unitDefID].metalCost > 1000) and not (UnitDefs[unitDefID].customParams.dontcount or UnitDefs[unitDefID].metalCost == 0) then
