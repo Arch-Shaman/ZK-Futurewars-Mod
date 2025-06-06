@@ -842,7 +842,7 @@
 	"staticarty" : {
 		"name" : "Garmr-Kanone",
 		"description" : "Taktische Artilleriebatterie",
-		"helptext" : "Die Garmr-Kanone ist ein taktisches Artilleriegeschütz, das schweres Plasma frontal abfeuern kann. Geschwindigkeit und Reichweite steigen je nach Overdrive-Level. Im Gegensatz zum Liberator kann sie direkt feuern und dabei ihre FENIX-Granaten abfeuern, um den Schaden auf eine kleinere Gruppe von Einheiten zu konzentrieren. Im Modus "Hohe Flugbahn" feuert sie Tempest-Granaten ab, die sich in kleinere Fragmente aufspalten, bevor sie beim Aufprall erneut zersplittern. Nutze den Modus "Hohe Flugbahn" gegen Schilde und Verteidigungsgruppen und den Modus "Niedrige Flugbahn" gegen schwere und mittlere Ziele."
+		"helptext" : "Die Garmr-Kanone ist ein taktisches Artilleriegeschütz, das schweres Plasma frontal abfeuern kann. Geschwindigkeit und Reichweite steigen je nach Overdrive-Level. Im Gegensatz zum Liberator kann sie direkt feuern und dabei ihre FENIX-Granaten abfeuern, um den Schaden auf eine kleinere Gruppe von Einheiten zu konzentrieren. Im Modus \"Hohe Flugbahn\" feuert sie Tempest-Granaten ab, die sich in kleinere Fragmente aufspalten, bevor sie beim Aufprall erneut zersplittern. Nutze den Modus \"Hohe Flugbahn\" gegen Schilde und Verteidigungsgruppen und den Modus \"Niedrige Flugbahn\" gegen schwere und mittlere Ziele."
 	},
 	"wolverine_mine" : {
 		"name" : "Disperser",
