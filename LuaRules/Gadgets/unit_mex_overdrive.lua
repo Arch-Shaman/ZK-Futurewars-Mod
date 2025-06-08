@@ -1494,7 +1494,14 @@ function gadget:GameFrame(n)
 						for j = 1, allyTeamData.teams do
 							if freeSpace[j] then
 								local recieveID = allyTeamData.team[j]
-								Spring.ShareTeamResource(sendID, recieveID, "metal", shareToSend[i] * freeSpace[j] * shareFactorPerSpace)
+								local toShare = shareToSend[i] * freeSpace[j] * shareFactorPerSpace
+								Spring.ShareTeamResource(sendID, recieveID, "metal", toShare)
+								if GG.EndgameGraphs thenMore actions
+									GG.EndgameGraphs.AddTeamMetalShared(sendID, toShare)
+								end
+								if GG.EndgameGraphs then
+									GG.EndgameGraphs.AddTeamMetalShared(recieveID, -toShare)
+								end
 							end
 						end
 						if excessFactor ~= 0 and GG.EndgameGraphs then
