@@ -152,6 +152,8 @@ end
 --utilities
 
 local teamNames = {}
+local teamDeaths = {}
+local teamKills = {}
 
 --formats final stat to fit in label
 local function numFormat(label)
@@ -187,7 +189,7 @@ local function formatTime(seconds)
 	return hours .. ":" .. minutes .. ":" .. seconds
 end
 
-local function drawIntervals(graphMin, graphMax)
+local function drawIntervals(graphMin, graphMax, wantsPerc)
 	for i = 1, 4 do
 		local line = Chili.Line:New{
 			parent = graphPanel,
@@ -197,12 +199,14 @@ local function drawIntervals(graphMin, graphMax)
 			width = "100%",
 		}
 		if graphMin and graphMax then
+			local cap =  numFormat(((graphMax - graphMin)*i)/5 + graphMin)
+			if wantsPerc then cap = cap .. "%" end
 			local label = Chili.Label:New{
 				parent = graphPanel,
 				x = 5,
 				bottom = (i/5*100 + 1) .. "%",
 				width = "100%",
-				caption = numFormat(((graphMax - graphMin)*i)/5 + graphMin),
+				caption = cap,
 				objectOverrideFont = WG.GetFont(),
 			}
 		end
@@ -301,7 +305,7 @@ end
 --draw graphs
 
 --Total package of graph: Draws graph and labels for each nonSpec player
-local function drawGraph(graphArray, graphMin, graphMax, teamID, team_num, isHighlighted)
+local function drawGraph(graphArray, graphMin, graphMax, teamID, team_num, isHighlighted, wantsPerc)
 	if #graphArray == 0 then
 		return
 	end
@@ -314,6 +318,7 @@ local function drawGraph(graphArray, graphMin, graphMax, teamID, team_num, isHig
 	local teamColor = {r,g,b,a}
 	local teamColorDark = {r*0.32,g*0.32,b*0.32,a}
 	local lineLabel = numFormat(graphArray[#graphArray])
+	if wantsPerc then lineLabel = lineLabel .. "%" end
 
 	local name = ""
 	if usingAllyteams then
@@ -346,7 +351,6 @@ local function drawGraph(graphArray, graphMin, graphMax, teamID, team_num, isHig
 		caption = lineLabel,
 		font = {color = (isHighlighted and teamColor) or teamColorDark},
 	}
-
 	--adds player to Legend
 	if team_num then
 		local label2 = Chili.Button:New{
@@ -448,12 +452,19 @@ getEngineArrays = function(statNameData, labelCaption)
 	local teamScores = {}
 	local graphMax = 0
 	local graphMin = 0
+	local kills = {}
+	local deaths = {}
 	local gaia = usingAllyteams
 		and select(6, Spring.GetTeamInfo(gaiaTeamID, false))
 		or gaiaTeamID
 
 	for i = 1, #teams do
 		local teamID = teams[i]
+		local _, _, _, _, _, allyTeamID = Spring.GetTeamInfo(teamID)
+		if not kills[allyTeamID] and statistic == "attrition" then
+			kills[allyTeamID] = {}
+			deaths[allyTeamID] = {}
+		end
 		if Spring.GetTeamStatsHistory(teamID, 0, graphLength) then
 
 			local effectiveTeam = usingAllyteams
@@ -465,7 +476,11 @@ getEngineArrays = function(statNameData, labelCaption)
 			if rulesParamStats[statistic] then
 				stats = {}
 				for i = 0, graphLength do
-					stats[i] = {}
+					stats[i] = stats[i] or {}
+					if statistic == "attrition" then
+						kills[allyTeamID][i] = (kills[allyTeamID][i] or 0) + Spring.GetTeamRulesParam(teamID, "stats_history_" .. "unit_value_killed" .. "_" .. i)
+						deaths[allyTeamID][i] = (deaths[allyTeamID][i] or 0) + Spring.GetTeamRulesParam(teamID, "stats_history_" .. "unit_value_lost" .. "_" .. i)
+					end
 					if hiddenStats[statistic] and (gameOver or (spectating and specFullView)) then
 						local value = GetHiddenTeamRulesParam(teamID, "stats_history_" .. statistic .. "_" .. i)
 						--Spring.Echo("Value: " .. tostring(value))
@@ -475,12 +490,31 @@ getEngineArrays = function(statNameData, labelCaption)
 						--Spring.Echo("Value: " .. tostring(value))
 						stats[i][statistic] = Spring.GetTeamRulesParam(teamID, "stats_history_" .. statistic .. "_" .. i) or 0
 					end
+					if statistic == "attrition" then
+						stats[i][statistic] = stats[i][statistic] * 100
+						if stats[i][statistic] > 5000 then
+							stats[i][statistic] = 5000
+						end
+					end
 				end
 			else
 				stats = Spring.GetTeamStatsHistory(teamID, 0, graphLength)
 			end
 			for b = 1, graphLength do
-				teamScores[effectiveTeam][b] = (teamScores[effectiveTeam][b] or 0) + (stats and stats[b][statistic] or 0)
+				if statistic == "attrition" and usingAllyteams then
+					if deaths[effectiveTeam][b] == 0 and kills[effectiveTeam][b] == 0 then 
+						teamScores[effectiveTeam][b] = 0
+					else
+						if deaths[effectiveTeam][b] == 0 then deaths[effectiveTeam][b] = 1 end
+						teamScores[effectiveTeam][b] = (kills[effectiveTeam][b] / deaths[effectiveTeam][b]) * 100
+						if teamScores[effectiveTeam][b] > 20000 and b < 6 then
+							teamScores[effectiveTeam][b] = 20000
+						end
+					end
+					Spring.Echo(tostring(effectiveTeam) .. ": K " .. kills[effectiveTeam][b] .. " / " .. deaths[effectiveTeam][b] .. " , " .. tostring(teamScores[effectiveTeam][b]))
+				else
+					teamScores[effectiveTeam][b] = (teamScores[effectiveTeam][b] or 0) + (stats and stats[b][statistic] or 0)
+				end
 				if graphMax < teamScores[effectiveTeam][b] then
 					graphMax = teamScores[effectiveTeam][b]
 				end
@@ -506,11 +540,11 @@ getEngineArrays = function(statNameData, labelCaption)
 	local team_i = 1
 	for teamID, v in pairs(teamScores) do
 		if teamID ~= gaia and teamID ~= highlightID then
-			drawGraph(v, graphMin, graphMax*1.005, teamID, TeamToPosition(teamID), not highlightID)
+			drawGraph(v, graphMin, graphMax*1.005, teamID, TeamToPosition(teamID), not highlightID, statistic == "attrition")
 		end
 	end
 	if highlightID then
-		local graph = drawGraph(teamScores[highlightID], graphMin, graphMax*1.005, highlightID, TeamToPosition(highlightID), true)
+		local graph = drawGraph(teamScores[highlightID], graphMin, graphMax*1.005, highlightID, TeamToPosition(highlightID), true, statistic == "attrition")
 		if graph then
 			graph:BringToFront()
 		end
@@ -521,7 +555,7 @@ getEngineArrays = function(statNameData, labelCaption)
 
 	graphPanel:Invalidate()
 	graphPanel:UpdateClientArea()
-	drawIntervals(graphMin, graphMax)
+	drawIntervals(graphMin, graphMax, statistic == "attrition")
 end
 
 --------------------------------------------------------------------------------
