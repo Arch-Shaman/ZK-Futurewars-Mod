@@ -1496,7 +1496,7 @@ function gadget:GameFrame(n)
 								local recieveID = allyTeamData.team[j]
 								local toShare = shareToSend[i] * freeSpace[j] * shareFactorPerSpace
 								Spring.ShareTeamResource(sendID, recieveID, "metal", toShare)
-								if GG.EndgameGraphs thenMore actions
+								if GG.EndgameGraphs then
 									GG.EndgameGraphs.AddTeamMetalShared(sendID, toShare)
 								end
 								if GG.EndgameGraphs then
