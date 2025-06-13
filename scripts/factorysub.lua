@@ -9,7 +9,7 @@ local arms = piece 'arms'
 local pad = piece 'pad'
 local pontoon = piece 'pontoon'
 
-local emitPieces = {piece('emitter1', 'emitter2', 'emitter3', 'emitter4', 'emitter5', 'emitter6', 'emitter7', 'emitter8', )}
+local emitPieces = {piece('emitter1', 'emitter2', 'emitter3', 'emitter4', 'emitter5', 'emitter6', 'emitter7', 'emitter8')}
 
 local smokePiece = {base}
 
