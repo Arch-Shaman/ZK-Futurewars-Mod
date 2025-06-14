@@ -87,7 +87,7 @@ tankheavyarty = {
 			},
 			explosionGenerator      = "custom:NUKE_150",
 			edgeEffectiveness		= 0.1,
-			fireTolerance           = 1820, -- 10 degrees
+			fireTolerance           = 910, -- 5 degrees
 			impulseBoost            = 2,
 			impulseFactor           = 1.3,
 			interceptedByShieldType = 1,
@@ -100,6 +100,7 @@ tankheavyarty = {
 			soundStart              = "weapon/cannon/behe_fire2",
 			size                    = 15,
 			turret                  = true,
+			tolerance               = 910,
 			weaponType              = "Cannon",
 			weaponVelocity          = 3000,
 		},
