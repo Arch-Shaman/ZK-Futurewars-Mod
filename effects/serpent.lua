@@ -7,7 +7,7 @@ return
 			class              = [[CSimpleParticleSystem]],
 			count              = 1,
 			ground             = false,
-			water              = false,
+			water              = true,
 			underwater		   = true,
 			properties = {
 				airdrag            = 0.6,
@@ -109,7 +109,7 @@ return
 			},
 		},
 		splosh = {
-			air                = true,
+			air                = false,
 			class              = [[CSimpleParticleSystem]],
 			count              = 1,
 			ground             = false,
@@ -137,7 +137,7 @@ return
 			},
 		},
 		splosh2 = {
-			air                = true,
+			air                = false,
 			class              = [[CSimpleParticleSystem]],
 			count              = 1,
 			ground             = true,

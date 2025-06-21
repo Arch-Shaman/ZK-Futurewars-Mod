@@ -16,6 +16,18 @@ local smokePiece = {base}
 -- Signal definitions
 local SIG_BUILD = 2
 
+function script.AimWeapon()
+	return true
+end
+
+function script.QueryWeapon()
+	return base
+end
+
+function script.AimFromWeapon()
+	return base
+end
+
 --[[
 local function PadAdjust()
 	Signal(SIG_BUILD)
