@@ -112,6 +112,7 @@ local function ToggleCommand(unitID, cmdParams)
 		commandDescription.params[1] = state
 		spEditUnitCmdDesc(unitID, cmdDescID, { params = commandDescription.params})
 	end
+	--Spring.Echo("ChangeUnitState " .. unitID .. ": " .. tostring(state == 1))
 	unitStates[unitID] = state == 1
 end
 
@@ -140,13 +141,12 @@ function gadget:UnitCreated(unitID, unitDefID)
 end
 
 function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
-	if (cmdID ~= CMD_AUTOJUMP) then
+	if (cmdID ~= CMD_AUTOJUMP) then -- this probably doesn't fire off, but adding just in case.
 		return true  -- command was not used
 	end
-	if unitStates[unitID] == nil then
-		return false
+	if canJumpDefs[unitDefID] then
+		ToggleCommand(unitID, cmdParams)
 	end
-	ToggleCommand(unitID, cmdParams)
 	return false
 end
 
@@ -181,21 +181,34 @@ function gadget:GameFrame(f)
 		for id, data in IterableMap.Iterator(units) do
 			if data.nextupdate < f then
 				local canJump = (spGetUnitRulesParam(id, "jumpReload") or 1) >= 1 and (spGetUnitRulesParam(id, "disarmed") or 0) == 0 and not spGetUnitIsStunned(id)
-				if canJump and unitStates[id] ~= false then
+				--Spring.Echo("FallAvoidance: " .. id .. ": " .. tostring(unitStates[id]))
+				if canJump and unitStates[id] then
+					--Spring.Echo("Checking for fall damage for unit " .. id)
 					local x, y, z = spGetUnitPosition(id)
 					local gy = spGetGroundHeight(x, z)
+					local overWater = false
+					if gy < -10 then -- don't count sea floor.
+						gy = 0
+						overWater = true
+					end
 					local currentheight = y - gy
 					if debugMode then
 						spEcho("GroundHeight: " .. currentheight)
 					end
-					if not GG.GetUnitFallDamageImmunity(id) and currentheight >= 1 and data.inAir then
+					local willTakeFallDamage = overWater or GG.GetUnitFallDamageImmunity(id)
+					willTakeFallDamage = not willTakeFallDamage -- invert because we're checking if we're over water or immune to fall damage.
+					if willTakeFallDamage and currentheight >= 1 and data.inAir then
 						local vx, vy, vz = spGetUnitVelocity(id)
-						local minimumFallingHeight = vy * -10
+						local minimumFallingHeight = vy * -1.5
+						if minimumFallingHeight > 50 then 
+							minimumFallingHeight = 50
+						end
 						--Spring.Echo("min height: " .. minimumFallingHeight) 
 						if debugMode then
 							spEcho("Velocity: " .. vx .. ", " .. vy .. ", " .. vz)
 						end
-						if vy <= minimumDownwardVelocity and currentheight <= minimumFallingHeight then
+						local wantsJump = currentheight <= minimumFallingHeight or (currentheight <= -vy and -vy > 2)
+						if vy <= minimumDownwardVelocity and wantsJump then
 							local distance = spGetUnitRulesParam(id, "comm_jumprange_bonus") or 1
 							distance = distance * wantedDefs[data.unitdef]
 							local jumped = DoJump(id, x, y, z, vx, vz, distance)
