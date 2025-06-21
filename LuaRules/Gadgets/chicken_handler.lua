@@ -125,8 +125,8 @@ local data = {
 	chickens = {},
 	menaces = {},
 
-	waveSchedule = math.huge,	-- wave spawns when this gameframe is reached
-	graceSchedule = math.huge,
+	waveSchedule = 99999,	-- wave spawns when this gameframe is reached
+	graceSchedule = 99999, -- these initialization values must not be infinite because 2025.04.10 blocks inf values from gamerulesparams.
 	waveActive = false,
 	waveNumber = 0,
 	waveChickens = {{"chicken", 1}},
@@ -190,6 +190,11 @@ end
 --
 -- Utility
 --
+
+local function UpdateUnitMaxHealth(unitID, maxHealth)
+	spSetUnitMaxHealth(unitID, maxHealth)
+	spSetUnitHealth(unitID, maxHealth)
+end
 
 local margins = 10
 local mapx = Game.mapSizeX - margins
@@ -593,8 +598,7 @@ local function createWithHyperevo(unitName, evo, ...)
 		hpMult = evo^1.5
 		dmgMult = evo
 		rangeMult = 1 + tier/10
-		spSetUnitMaxHealth(unitID, unitDef.health * hpMult)
-		spSetUnitHealth(unitID, math.huge)
+		UpdateUnitMaxHealth(unitID, untiDef.health * hpMult)
 		local cost = unitDef.metalCost * evo
 		spSetUnitCosts(unitID, {buildTime = cost, metalCost = cost, energyCost = cost})
 		GG.UnitModelRescale(unitID, rangeMult)
@@ -1016,7 +1020,7 @@ local function SpawnMenace()
 	end
 
 	if unitID then
-		spSetUnitHealth(unitID, math.huge)
+		--spSetUnitHealth(unitID, 99999999) -- probably not needed.
 
 		data.menaces[unitID] = {
 			startTime = time,
