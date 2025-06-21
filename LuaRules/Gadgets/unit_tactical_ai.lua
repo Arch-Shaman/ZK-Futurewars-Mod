@@ -504,8 +504,6 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 		
 		UpdateIdleAgressionState(unitID, behaviour, unitData, frame, enemy, typeKnown and enemyUnitDef, behaviour.swarmEnemyDefaultRange, pointDis, ux, uz, ex, ez)
 	end
-	
-	local jumpRange = UnitDefs[myunitdef].customParams.jump_range
 	if canJump and jumpEnabled and pointDis < jumpRange * 0.95 and pointDis > behaviour.minJumpRange * jumpRange then
 		local vx, vy, vz = spGetUnitVelocity(enemy)
 		local timescale = math.ceil(pointDis / UnitDefs[myunitdef].customParams.jump_speed) -- estimate the time to get to the point and multiply velocity by it to get predicted location.
