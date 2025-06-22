@@ -73,9 +73,9 @@ local commandDescription = {
 
 local velocityCoef = 5
 local minimumDownwardVelocity = -0.15
-local minimumUpwardVelocity = 0.85
-local minimumDownwardVelocityForFalling = -0.85
-local minimumRisingHeight = 5
+local minimumUpwardVelocity = 0.25
+local minimumDownwardVelocityForFalling = -0.25
+local minimumRisingHeight = 3.1406
 -- The actual value is around 3.140525698661803977174145074968 for a lv3 recon commander to take fall damage.
 
 local function GetPoints(angle, x, z, dist)
@@ -83,7 +83,7 @@ local function GetPoints(angle, x, z, dist)
 end	
 
 local function IssueJumpOrder(unitID, x, y, z, vx, vz, distance)
-	Spring.Echo("Fallavoidance: " .. unitID .. "IssueJumpOrder: " .. vx .. ", " .. vz)
+	--Spring.Echo("Fallavoidance: " .. unitID .. "IssueJumpOrder: " .. vx .. ", " .. vz)
 	local cx, cy, cz
 	cy = y
 	local absoluteX, absoluteZ = math.abs(vx), math.abs(vz)
@@ -203,6 +203,7 @@ function gadget:GameFrame(f)
 				if canJump and jumpEnabled then
 					--Spring.Echo("Checking for fall damage for unit " .. id)
 					local x, y, z = spGetUnitPosition(id)
+					local vx, vy, vz = spGetUnitVelocity(id)
 					local gy = spGetGroundHeight(x, z)
 					local overWater = false
 					if gy < -10 then -- don't count sea floor.
@@ -215,17 +216,16 @@ function gadget:GameFrame(f)
 					end
 					local willTakeFallDamage = overWater or GG.GetUnitFallDamageImmunity(id)
 					willTakeFallDamage = not willTakeFallDamage -- invert because we're checking if we're over water or immune to fall damage.
-					if not CheckForOutsideOfMapBoundaries(id, x, y, z vx, vz, data.unitdef) and willTakeFallDamage and currentheight >= 1 and data.inAir then
-						local vx, vy, vz = spGetUnitVelocity(id)
-						local minimumFallingHeight = vy * -10
-						if minimumFallingHeight > 20 then 
-							minimumFallingHeight = 20
+					if not CheckForOutsideOfMapBoundaries(id, x, y, z, vx, vz, data.unitdef) and willTakeFallDamage and currentheight >= 1 and data.inAir then
+						local minimumFallingHeight = vy * -20
+						if minimumFallingHeight > 30 then 
+							minimumFallingHeight = 30
 						end
 						--Spring.Echo("min height: " .. minimumFallingHeight) 
 						if debugMode then
 							spEcho("Velocity: " .. vx .. ", " .. vy .. ", " .. vz)
 						end
-						local wantsJump = currentheight <= minimumFallingHeight or (currentheight <= -vy and vy > -1)
+						local wantsJump = currentheight <= minimumFallingHeight or currentheight <= -vy
 						if vy <= minimumDownwardVelocity and wantsJump then
 							local jumped = IssueJumpOrder(id, x, y, z, vx, vz, CalculateJumpRange(data.unitdef, id))
 							data.inAir = not jumped
@@ -235,7 +235,6 @@ function gadget:GameFrame(f)
 							end
 						end
 					elseif currentheight >= minimumRisingHeight and not data.inAir then
-						local vx, vy, vz = spGetUnitVelocity(id)
 						data.inAir = vy >= minimumUpwardVelocity or vy <= minimumDownwardVelocityForFalling
 					end
 				else
