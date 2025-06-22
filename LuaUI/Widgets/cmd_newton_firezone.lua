@@ -1,4 +1,4 @@
-local versionNum = '0.308'
+local versionNum = '0.309'
 
 function widget:GetInfo()
 	return {
@@ -106,7 +106,15 @@ local transportPredictLevel = 1
 local transportPredictionSpeedSq = 5^2
 
 options_path = 'Settings/Interface/Falling Units'--/Formations'
-options_order = { 'lbl_newton', 'predictNewton', 'alwaysDrawZones', 'jumpOnPrediction', 'lbl_transports', 'predictDrop', 'transportSpeed'}
+options_order = { 
+	'lbl_newton', 
+	'predictNewton', 
+	'alwaysDrawZones', 
+	--'jumpOnPrediction', 
+	'lbl_transports', 
+	'predictDrop', 
+	'transportSpeed'
+}
 options = {
 	lbl_newton = { name = 'Newton Launchers', type = 'label'},
 	predictNewton = {
@@ -141,12 +149,12 @@ options = {
 			alwaysDrawFireZones = self.value
 		end,
 	},
-	jumpOnPrediction = {
+	--[[jumpOnPrediction = {
 		name = "Jump on prediction",
 		desc = "Enable to have jumpjet units jump to the predicted land location.",
 		type = 'bool',
-		value = true,
-	},
+		value = false,
+	},]] -- no longer needed -- fw has gadgetified jump.
 	lbl_transports = { name = 'Transports', type = 'label'},
 	predictDrop = {
 		type='radioButton',
@@ -568,7 +576,7 @@ local function AddTrajectoryEstimate(unitID, unitDefID, offset)
 	queueTrajectoryEstimate[frame] = queueTrajectoryEstimate[frame] or {}
 	queueTrajectoryEstimate[frame][unitID] = true
 	
-	if options.jumpOnPrediction.value and jumpUnitDefIDs[unitDefID] then
+	--[[if options.jumpOnPrediction.value and jumpUnitDefIDs[unitDefID] then
 		local cmdID, cmdOpts, cmdTag, cp_1, cp_2, cp_3 = Spring.GetUnitCurrentCommand(unitID)
 		if (cmdID == CMD_RAW_MOVE or cmdID == CMD.MOVE) and cp_3 then
 			prevMove[unitID] = prevMove[unitID] or {}
@@ -576,7 +584,7 @@ local function AddTrajectoryEstimate(unitID, unitDefID, offset)
 			prevMove[unitID][2] = cp_2
 			prevMove[unitID][3] = cp_3
 		end
-	end
+	end]]
 end
 
 local function UpdateTransportedUnits()
@@ -835,12 +843,12 @@ function EstimateCrashLocation(victimID, transportID)
 		victimLandingLocation[victimID] = {future_locationX, future_height, future_locationZ}
 	end
 	
-	if options.jumpOnPrediction.value and jumpUnitDefIDs[defID] then
+	--[[if options.jumpOnPrediction.value and jumpUnitDefIDs[defID] then
 		local groundHeight = spGetGroundHeight( x, z)
 		if y - groundHeight > 50 then
 			IssueJumpCommand(victimID, x,y,z, future_locationX, future_height, future_locationZ)
 		end
-	end
+	end]]
 end
 
 function widget:Initialize()
