@@ -213,6 +213,16 @@ local function ApplyShotgunModule(modules, sharedData)
 	end
 end
 
+local function ApplyDronelordModule(modules, sharedData)
+	-- replace drones with their "plus" version
+	local dronenames = {"drones", "droneheavyslows", "dronecon", "droneassault"}
+	for _, name in pairs(dronenames) do
+		sharedData[name.."plus"] = sharedData[name]
+		sharedData[name] = 0
+	end
+	sharedData.dronerange = (sharedData.dronerange or 1) + 2
+end
+
 local moduleDefs = {
 	-- Empty Module Slots
 	{
@@ -1599,10 +1609,24 @@ local moduleDefs = {
 		applicationFunction = function (modules, sharedData)
 			sharedData.extradroneslots = (sharedData.extradroneslots or 1) + 1
 			sharedData.dronebuildmod = (sharedData.dronebuildmod or 1) + 0.5
-			sharedData.drone = (sharedData.drone or 0) + 2
+			sharedData.drones = (sharedData.drones or 0) + 2
 			sharedData.droneheavyslows = (sharedData.droneheavyslows or 1) + 1
 			sharedData.dronecon = (sharedData.dronecon or 0) + 1
 		end
+	},
+	{
+		name = "module_dronelord",
+		humanName = "Drone Lord",
+		description = "Upgrades drone stats",
+		image = moduleImagePath .. "module_dronepackage.png",
+		limit = 1,
+		cost = 2000 * COST_MULT,
+		requireChassis = {"support"},
+		requireLevel = 20,
+		slotType = "module",
+		requireOneOf = {"module_drone_package"},
+		effectPriority = 6,
+		applicationFunction = ApplyDronelordModule
 	},
 	{
 		name = "module_jumpreload",
