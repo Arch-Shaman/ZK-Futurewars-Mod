@@ -94,7 +94,7 @@ local function ResetTurnRadius()
 end
 
 function script.BlockShot(num, targetID)
-	if GG.OverkillPrevention_CheckBlockNoFire(unitID, targetID, OKP_DAMAGE, 40, false, false, false) then
+	if GG.OverkillPrevention_CheckBlockNoFire(unitID, targetID, OKP_DAMAGE, 550, false, false, false) then
 		-- Remove attack command on blocked target, if it is followed by another attack command. This is commands queued in an area.
 		local cmdID, _, cmdTag, cp_1, cp_2 = Spring.GetUnitCurrentCommand(unitID)
 		if cmdID == CMD.ATTACK and (not cp_2) and cp_1 == targetID then
@@ -106,7 +106,7 @@ function script.BlockShot(num, targetID)
 		end
 		return true
 	end
-	return GG.Script.OverkillPreventionCheck(unitID, targetID, OKP_DAMAGE, 550, 40, 0, true, false, 0.8)
+	return GG.Script.OverkillPreventionCheck(unitID, targetID, OKP_DAMAGE, 550, 550, 0, true, false, 0.8)
 end
 
 local explodables = {tail, enginel, enginer, wingl, wingr}
