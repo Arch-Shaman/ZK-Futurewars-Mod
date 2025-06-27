@@ -310,3 +310,12 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 		weaponDef.cameraShake = 0
 	end
 end
+
+if Spring.GetModOptions().techk == "1" then
+	for _, weaponDef in pairs(WeaponDefs) do
+		if weaponDef.weapontype == "MissileLauncher" and weaponDef.flighttime
+				and weaponDef.name ~= "Napalm Rocket Salvo" then
+			weaponDef.flighttime = weaponDef.flighttime * 2
+		end
+	end
+end
