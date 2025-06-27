@@ -361,6 +361,14 @@ local options = {
 		def         = false,
 	},
 	{
+		key         = "techk",
+		name        = "Tech-K",
+		desc        = "Adds a tech level system",
+		type        = "bool",
+		section     = "experimental",
+		def         = false,
+	},
+	{
 		key         = "groundunitygravity",
 		name        = "Ground Unit Gravity",
 		desc        = "I have no idea what this does, but it sounds funny.",
