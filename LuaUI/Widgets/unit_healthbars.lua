@@ -1356,9 +1356,20 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+local function IsUnitMorphing(unitID)
+	if not UnitMorphs then
+		return false
+	end
+	if UnitMorphs[unitID] then
+		return not UnitMorphs[unitID].combatMorph
+	else
+		return false
+	end
+end
+
 function widget:Initialize()
 	WG.InitializeTranslation (languageChanged, GetInfo().name)
-
+	WG.IsUnitMorphing = IsUnitMorphing
 	--// catch f9
 	Spring.SendCommands({"showhealthbars 0"})
 	Spring.SendCommands({"showrezbars 0"})
