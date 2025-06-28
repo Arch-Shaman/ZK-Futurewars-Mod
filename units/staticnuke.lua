@@ -232,7 +232,7 @@ return {
 				featureDead      = "HEAP",
 				footprintX       = 6,
 				footprintZ       = 8,
-				object           = "staticnuke_dead.s3o",
+				object           = "staticnuke_dead.dae",
 			},
 			HEAP  = {
 				blocking         = false,
