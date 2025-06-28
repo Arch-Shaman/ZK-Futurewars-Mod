@@ -158,7 +158,7 @@ local function GetGridTooltip(unitID, ud)
 	return WG.Translate("interface", "grid") .. ": " .. math.round(gridCurrent,2) .. "/" .. math.round(gridMaximum,2) .. " E => " .. math.round(gridMetal,2) .. " M " .. windStr
 end
 
-local function GetMexTooltip(unitID)
+local function GetMexTooltip(unitID, ud)
 	local metalMult = Spring.GetUnitRulesParam(unitID, "overdrive_proportion")
 	if not metalMult then return end
 
@@ -403,7 +403,116 @@ end
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 
+if Spring.GetModOptions().techk == "1" and WG then
+	local function GetTechLevel(unitID)
+		if unitID then
+			return Spring.GetUnitRulesParam(unitID, "tech_level") or 1
+		end
+		return (WG.SelectedTechLevel or 1)
+	end
+	
+	Spring.Utilities.GetUnitMaxHealth = function(unitID, unitDefID, healthOverride)
+		if healthOverride then
+			return healthOverride * math.pow(2, GetTechLevel(unitID) - 1)
+		end
+		local ud = UnitDefs[unitDefID]
+		return ud.health * math.pow(2, GetTechLevel(unitID) - 1)
+	end
+	
+	Spring.Utilities.GetUnitCost = function(unitID, unitDefID)
+		unitDefID = unitDefID or Spring.GetUnitDefID(unitID)
+		if not (unitDefID and buildTimes[unitDefID]) then
+			return 50
+		end
+		local cost = buildTimes[unitDefID]
+		if unitID then
+			if variableCostUnit[unitDefID] then
+				cost = Spring.GetUnitRulesParam(unitID, "comm_cost") or Spring.GetUnitRulesParam(unitID, "terraform_estimate")
+			else
+				cost = cost * ((GG and (GG.att_CostMult[unitID] or 1)) or (Spring.GetUnitRulesParam(unitID, "costMult") or 1))
+			end
+		else
+			cost = cost * math.pow(2, (WG.SelectedTechLevel or 1) - 1)
+		end
+		if not cost then
+			Spring.Echo("TECHK, Spring.Utilities.GetUnitCost nil cost, unitID", unitID, "unitDefID", unitDefID)
+			error("TECHK, Spring.Utilities.GetUnitCost nil cost")
+		end
+		return cost
+	end
+
+	Spring.Utilities.GetHumanName = function(ud, unitID)
+		if not ud then
+			return ""
+		end
+		
+		local prefix = ""
+		local level = GetTechLevel(unitID)
+		local preLevel = level
+		while preLevel > 7 do
+			prefix = prefix .. "Über "
+			preLevel = preLevel - 7
+		end
+		while preLevel > 3 do
+			prefix = prefix .. "Super "
+			preLevel = preLevel - 3
+		end
+		while preLevel > 1 do
+			prefix = prefix .. "Adv. "
+			preLevel = preLevel - 1
+		end
+
+		if unitID then
+			local name = Spring.GetUnitRulesParam(unitID, "comm_name")
+			if name then
+				local level = Spring.GetUnitRulesParam(unitID, "comm_level")
+				if level then
+					return prefix .. name .. " " .. WG.Translate("interface", "lvl") .. " " .. (level + 1)
+				else
+					return prefix .. name
+				end
+			end
+		end
+
+		local name_override = ud.customParams.statsname or ud.name
+		return prefix .. (WG.Translate ("units", name_override .. ".name") or ud.humanName)
+	end
+
+	Spring.Utilities.GetDescription = function(ud, unitID)
+		if not ud then
+			return ""
+		end
+
+		local name_override = ud.customParams.statsname or ud.name
+		local desc = WG.Translate ("units", name_override .. ".description") or ud.tooltip
+		local isValidUnit = Spring.ValidUnitID(unitID)
+		if isValidUnit then
+			local tech = GetTechLevel(unitID) or 1
+			local customTooltip = GetCustomTooltip(unitID, ud, math.pow(3, tech - 1))
+			if customTooltip then
+				return customTooltip
+			end
+		end
+		
+		local buildSpeed = spGetUnitBuildSpeed(unitID, ud.id)
+		if buildSpeed > 0 then
+			if not unitID then
+				local mult = math.pow(2, (WG.SelectedTechLevel or 1) - 1)
+				buildSpeed = buildSpeed * mult
+			end
+			return WG.Translate("interface", "builds_at", {desc = desc, bp = math.round(buildSpeed, 1)}) or desc
+		end
+		return desc
+	end
+end
+
+-------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
+
 function Spring.Utilities.UnitEcho(unitID, st)
+	if type(st) == "boolean" then
+		st = st and "T" or "F"
+	end
 	st = st or unitID
 	if Spring.ValidUnitID(unitID) then
 		local x,y,z = Spring.GetUnitPosition(unitID)

@@ -38,7 +38,8 @@ local handledUnitDefIDs = {
 	[UnitDefNames["turretheavylaser"].id] = 2,
 	[UnitDefNames["amphassault"].id] = 2,
 	[UnitDefNames["planeheavyfighter"].id] = 2,
-	[UnitDefNames["hoverassault"].id] =2,
+	[UnitDefNames["hoverassault"].id] = 2,
+	[UnitDefNames["dronecarrybomber"].id] = 2,
 
 	-- Static only OKP below
 	[UnitDefNames["amphfloater"].id] = 2,
