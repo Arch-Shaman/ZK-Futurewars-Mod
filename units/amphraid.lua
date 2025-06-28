@@ -103,7 +103,7 @@ return {
 				featureDead      = "HEAP",
 				footprintX       = 3,
 				footprintZ       = 3,
-				object           = "wreck2x2b.s3o",
+				object           = "amphraid_dead.dae",
 			},
 			HEAP      = {
 				blocking         = false,
