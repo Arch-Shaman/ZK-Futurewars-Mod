@@ -8,13 +8,14 @@ return {
 		brakeRate           = 0.24,
 		buildCostMetal      = 5,
 		builder             = true,
+		buildDistance       = 120,
 		canAssist           = false,
 		buildPic            = "dronecon.png",
 		canBeAssisted       = false,
 		canFly              = true,
 		canGuard            = true,
 		canMove             = true,
-		canReclaim          = false,
+		canReclaim          = true,
 		canPatrol           = true,
 		canSubmerge         = false,
 		category            = "GUNSHIP DRONE",
@@ -67,8 +68,8 @@ return {
 				shieldPower             = 3000, --2000
 				shieldPowerRegen        = 50, --20
 				shieldPowerRegenEnergy  = 12,
-				shieldRadius            = 200, --150
-				shieldRepulser          = true,
+				shieldRadius            = 250, --150
+				shieldRepulser          = false,
 				shieldStartingPower     = 3000, --2000
 				smartShield             = true,
 				visibleShield           = false,

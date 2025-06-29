@@ -17,7 +17,7 @@ return {
 		canSubmerge         = false,
 		category            = "GUNSHIP DRONE",
 		collide             = false,
-		cruiseAlt           = 125,
+		cruiseAlt           = 200,
 		explodeAs           = "TINY_BUILDINGEX",
 		floater             = true,
 		footprintX          = 2,
@@ -83,7 +83,7 @@ return {
 				laserFlareSize          = 4.33,
 				minIntensity            = 1,
 				noSelfDamage            = true,
-				range                   = 320, --250
+				range                   = 350, --320 --250
 				reloadtime              = 1.2, --2.0
 				rgbColor                = "0.3 0 0.4",
 				soundStart              = "weapon/laser/heavy_laser5",

@@ -17,7 +17,7 @@ return {
 		canSubmerge         = false,
 		category            = "GUNSHIP DRONE",
 		collide             = false,
-		cruiseAlt           = 130,
+		cruiseAlt           = 150,
 		explodeAs           = "TINY_BUILDINGEX",
 		floater             = true,
 		footprintX          = 2,
@@ -44,7 +44,7 @@ return {
 			explosiongenerators = {},
 		},
 		sightDistance       = 900, --600
-		turnRate            = 1200, --792
+		turnRate            = 1000, --792
 		upright             = true,
 		weapons             = {
 			{
@@ -67,14 +67,16 @@ return {
 				cegtag                  = "gluon_tiny",
 				customParams            = {
 					armorpiercing = 0.4, --0.25
+					shield_disruption = 2*30,
+					shield_damage = 500,
 				},
 				damage                  = {
-					default = 300.1,
+					default = 250.1,
 				},
 				explosionGenerator      = "custom:FLASH64",
 				interceptedByShieldType = 1,
 				noSelfDamage            = true,
-				range                   = 380, --310
+				range                   = 390, --310
 				reloadtime              = 2,
 				sizeDecay				= -0.2,
 				size                    = 10,
@@ -85,7 +87,7 @@ return {
 				soundStart              = "weapon/cannon/cannonfire_viper",
 				turret                  = true,
 				weaponType              = "Cannon",
-				weaponVelocity          = 950, --650
+				weaponVelocity          = 900, --650
 			},
 		},
 	} 
