@@ -1,5 +1,5 @@
 return { 
-	droneheavyslow = {
+	droneheavyslowplus = {
 		unitname            = "droneheavyslowplus",
 		name                = "Viper v2",
 		description         = "Advanced Battle Drone",

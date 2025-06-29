@@ -1,5 +1,5 @@
 return { 
-	dronelight = {
+	dronelightplus = {
 		unitname            = "dronelightplus",
 		name                = "Firefly v2",
 		description         = "Attack Drone",

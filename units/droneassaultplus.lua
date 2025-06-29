@@ -1,5 +1,5 @@
 return { 
-	droneassault = {
+	droneassaultplus = {
 		unitname            = "droneassaultplus",
 		name                = "Python v2",
 		description         = "Assault Drone",

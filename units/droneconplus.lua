@@ -1,5 +1,5 @@
 return { 
-	dronecon = {
+	droneconplus = {
 		unitname            = "droneconplus",
 		name                = "Responder v2",
 		description         = "Repair Drone",
