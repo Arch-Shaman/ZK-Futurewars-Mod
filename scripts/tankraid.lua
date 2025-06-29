@@ -325,20 +325,28 @@ local function DeathAnim(num)
 	if inBuild then
 		return
 	end
-	EmitSfx(turret, 1024)
-	Sleep(33)
+	--EmitSfx(turret, 1024)
+	--Sleep(33)
 	local px, py, pz = Spring.GetUnitPosition(unitID)
 	Spring.PlaySoundFile("Sounds/explosion/tankraid_deathexplo.wav", 80.0, px, py, pz, 0, 0, 0, "battle")
-	EmitSfx(base, 1024)
-	EmitSfx(deathanimtab[math.random(5,7)], GG.Script.UNIT_SFX1)
-	EmitSfx(deathanimtab[math.random(1,4)], GG.Script.UNIT_SFX1)
+	--EmitSfx(base, 1024)
+	--EmitSfx(deathanimtab[math.random(5,7)], GG.Script.UNIT_SFX1)
+	--EmitSfx(deathanimtab[math.random(1,4)], GG.Script.UNIT_SFX1)
+	Spring.SpawnProjectile(WeaponDefNames["tankraid_deathexplo"].id, {
+		pos = {px, py + 5, pz},
+		["end"] = {px, py, pz},
+		speed = {0, 0, 0},
+		ttl = 10,
+		gravity = 1,
+		team = Spring.GetGaiaTeamID(),
+		owner = unitID,
+	})
 	for i = 1, num do
-		EmitSfx(deathanimtab[math.random(5,7)], GG.Script.UNIT_SFX2)
-		EmitSfx(deathanimtab[math.random(1,4)], GG.Script.UNIT_SFX2)
+		--EmitSfx(deathanimtab[math.random(5,7)], GG.Script.UNIT_SFX2)
+		--EmitSfx(deathanimtab[math.random(1,4)], GG.Script.UNIT_SFX2)
 		px, py, pz = Spring.GetUnitPosition(unitID)
-		Spring.SpawnProjectile(WeaponDefNames["tankraid_deathexplo"].id, {
+		Spring.SpawnProjectile(WeaponDefNames["tankraid_deathexplo_spawner"].id, {
 			pos = {px, py + 5, pz},
-			["end"] = {px, py, pz},
 			speed = {0, 0, 0},
 			ttl = 10,
 			gravity = 1,
@@ -348,7 +356,7 @@ local function DeathAnim(num)
 		if num < 3 then
 			Sleep(math.random() * 300)
 		else
-			Sleep(50)
+			Sleep(33)
 		end
 	end
 end
