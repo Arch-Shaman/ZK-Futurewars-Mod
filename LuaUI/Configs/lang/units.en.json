@@ -892,7 +892,7 @@
 	"turretemp" : {
 		"name" : "Pulse",
 		"description" : "EMP Turret",
-		"helptext" : "The Pulse is armed with a light Bolter cannon, which allows it to engage more distant foes compared to its predecessor, Faraday. It doesn't have quite as much AOE as a Faraday, but deals damage to the target and nearby foes. Be aware: It can not be used as an AA weapon."
+		"helptext" : "The Pulse is armed with a light Bolter cannon, which allows it to engage more distant foes compared to its predecessor, Faraday. It doesn't have quite as much AOE as a Faraday, but deals damage to the target and nearby foes. Be aware: It it less reliable as an AA weapon."
 	},
 	"factoryspider" : {
 		"name" : "Spider Factory",
