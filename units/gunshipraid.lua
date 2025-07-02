@@ -68,7 +68,7 @@ return {
 				name                    = "Light Modulated Laser System",
 				areaOfEffect            = 8,
 				avoidFeature            = false,
-				beamTime                = 4/30,
+				beamTime                = 1/30,
 				collideFriendly         = false,
 				coreThickness           = 1.3,
 				craterBoost             = 0,
