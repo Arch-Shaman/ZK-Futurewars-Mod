@@ -892,7 +892,7 @@
 	"turretemp" : {
 		"name" : "Pulse",
 		"description" : "EMP-Geschützturm",
-		"helptext" : "Der Pulse ist mit einer leichten Bolterkanone ausgestattet, die es ihm ermöglicht, im Vergleich zu seinem Vorgänger, dem Faraday, weiter entfernte Gegner anzugreifen. Er hat zwar nicht ganz so großen Flächenschaden wie der Faraday, verursacht aber Schaden am Ziel und in der Nähe befindlichen Gegnern. Hinweis: Er kann nicht als Flugabwehrwaffe eingesetzt werden."
+		"helptext" : "Der Pulse ist mit einer leichten Bolterkanone ausgestattet, die es ihm ermöglicht, im Vergleich zu seinem Vorgänger, dem Faraday, weiter entfernte Gegner anzugreifen. Er hat zwar nicht ganz so viel Flächenschaden wie der Faraday, verursacht aber Schaden am Ziel und in der Nähe befindlichen Gegnern. Achtung: Als Flugabwehrwaffe ist er nicht sehr effektiv."
 	},
 	"factoryspider" : {
 		"name" : "Spinnenfabrik",

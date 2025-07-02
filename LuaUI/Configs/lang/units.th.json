@@ -852,7 +852,7 @@
 	"turretemp" : {
 		"name" : "Pulse",
 		"description" : "EMP Turret",
-		"helptext" : "The Pulse is armed with a light Bolter cannon, which allows it to engage more distant foes compared to its predecessor, Faraday. It doesn't have quite as much AOE as a Faraday, but deals damage to the target and nearby foes. Be aware: It can not be used as an AA weapon."
+		"helptext" : "Pulse ติดตั้งปืนใหญ่ Bolter น้ำหนักเบา ซึ่งทำให้สามารถโจมตีศัตรูที่อยู่ไกลออกไปได้ดีกว่ารุ่นก่อนอย่าง Faraday แม้จะไม่มี AOE มากเท่า Faraday แต่สามารถสร้างความเสียหายให้กับเป้าหมายและศัตรูที่อยู่ใกล้เคียงได้ โปรดทราบ: มันไม่มีประสิทธิภาพมากนักในการใช้เป็นอาวุธต่อต้านอากาศยาน"
 	},
 	"factoryspider" : {
 		"name" : "Spider Factory",

@@ -760,9 +760,9 @@
 		"helptext" : "Artyleria dalekiego zasięgu."
 	},
 	"turretemp" : {
-		"name" : "Faraday",
+		"name" : "Pulse",
 		"description" : "Wieżyczka paralizacyjna",
-		"helptext" : "Faraday to wieżyczka uzbrojona w mocne działko EMP. Doskonale współpracuje z innymi wieżyczkami, lecz sama jest bezużyteczna. Kiedy nie atakuje, otrzymuje tylko ćwierć obrażeń."
+		"helptext" : "Pulse jest uzbrojony w lekkie działo Bolter, które pozwala mu atakować bardziej odległych wrogów w porównaniu do swojego poprzednika, Faraday. Nie ma aż tak dużego AOE jak Faraday, ale zadaje obrażenia celowi i pobliskim wrogom. Uważaj: nie jest zbyt skuteczny jako broń AA."
 	},
 	"factoryspider" : {
 		"name" : "Fabryka pająków",
