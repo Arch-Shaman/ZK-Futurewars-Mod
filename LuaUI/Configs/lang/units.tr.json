@@ -760,9 +760,9 @@
         "helptext": "Uzun menzil statik topçu"
     },
     "turretemp": {
-        "name": "Faraday",
+        "name": "Pulse",
         "description": "EMD Tareti",
-        "helptext": "Faraday güçlü bir EMD kulesidir. Hasar ve etki alanı yüksektir. Diğer kulelerin etkisini büyük ölçüde arttırır, fakat neredeyse hiç işe yaramaz. Kapalıyken hasar alındığında çeyreğe düşürür . Sıçrama hasarına dikkat edin, düşmana çok yakınsa kendi birimlerinizi felç edebilir."
+        "helptext": "Pulse, selefi Faraday'a kıyasla daha uzaktaki düşmanlarla savaşmasına olanak tanıyan hafif bir Bolter topuyla donatılmıştır. Bir Faraday kadar fazla AOE'ye sahip değildir, ancak hedefe ve yakındaki düşmanlara hasar verir. Dikkat edin: Bir AA silahı olarak çok etkili değildir."
     },
     "factoryspider": {
         "name": "Böcek Fabrikası",
