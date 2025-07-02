@@ -2610,6 +2610,13 @@ local moduleDefs = {
 	},
 }
 
+for i = 1, #moduleDefs do
+	if moduleDefs[i].name == "efficiency" and allowCommEco then
+		moduleDefs[i].requireChassis = nil
+	end
+	moduleDefNames[moduleDefs[i].name] = i
+end
+
 for name, data in pairs(skinDefs) do
 	moduleDefs[#moduleDefs + 1] = {
 		name = "skin_" .. name,
@@ -2627,13 +2634,6 @@ for name, data in pairs(skinDefs) do
 			sharedData.skinOverride = name
 		end
 	}
-end
-
-for i = 1, #moduleDefs do
-	if moduleDefs[i].name == "efficiency" and allowCommEco then
-		moduleDefs[i].requireChassis[2] = "support"
-	end
-	moduleDefNames[moduleDefs[i].name] = i
 end
 
 ------------------------------------------------------------------------
