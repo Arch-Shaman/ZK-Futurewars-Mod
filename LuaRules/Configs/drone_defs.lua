@@ -430,6 +430,50 @@ local unitRulesCarrierDefs = {
 		maxBuild = 6,
 		offsets = {0, 50, 0}
 	},
+	droneplus = {
+		drone = UnitDefNames.dronelightplus.id,
+		reloadTime = 1,
+		maxDrones = 1,
+		spawnSize = 100,
+		range = 600,
+		maxChaseRange = 800,
+		buildTime = 20,
+		maxBuild = 6,
+		offsets = {0, 50, 0}
+	},
+	droneheavyslowplus = {
+		drone = UnitDefNames.droneheavyslowplus.id,
+		reloadTime = 1,
+		maxDrones = 1,
+		spawnSize = 100,
+		range = 600,
+		maxChaseRange = 800,
+		buildTime = 20,
+		maxBuild = 6,
+		offsets = {0, 50, 0}
+	},
+	droneconplus = {
+		drone = UnitDefNames.droneconplus.id,
+		reloadTime = 1,
+		maxDrones = 1,
+		spawnSize = 100,
+		range = 600,
+		maxChaseRange = 800,
+		buildTime = 20,
+		maxBuild = 6,
+		offsets = {0, 50, 0}
+	},
+	droneassaultplus = {
+		drone = UnitDefNames.droneassaultplus.id,
+		reloadTime = 1,
+		maxDrones = 1,
+		spawnSize = 100,
+		range = 600,
+		maxChaseRange = 800,
+		buildTime = 20,
+		maxBuild = 6,
+		offsets = {0, 50, 0}
+	},
 }
 
 --[[
@@ -473,6 +517,10 @@ local thingsWhichAreDrones = {
 	[UnitDefNames.dronecon.id] = true,
 	[UnitDefNames.droneassault.id] = true,
 	[UnitDefNames.dronecarry.id] = true,
+	[UnitDefNames.dronelightplus.id] = true,
+	[UnitDefNames.droneheavyslowplus.id] = true,
+	[UnitDefNames.droneconplus.id] = true,
+	[UnitDefNames.droneassaultplus.id] = true,
 }
 
 local function ProcessCarrierDef(carrierData)
