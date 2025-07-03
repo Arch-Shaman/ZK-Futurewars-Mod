@@ -142,6 +142,14 @@ local options = {
 		section= 'a_important',
 		def    = false,
 	},
+		{
+		key    = 'requirewreckmodule',
+		name   = 'Require morph for commanders to always drop wrecks',
+		desc   = "Makes commanders need to morph a module in order to always drop a wreck. By default, commanders get this feature for free.",
+		type   = 'bool',
+		section= 'a_important',
+		def    = false,
+	},
 	{
 		key     = 'mutespec',
 		name    = 'Mute Spectators',

@@ -48,13 +48,19 @@ local defaultProfiles = {
 	[7] = "dyntrainer_riot",
 }
 
+local freeWreckModule = true
+
 do
 	local modoptions = Spring.GetModOptions()
 	if tonumber(modoptions.zombies) == 1 then
 		zombies = true
 	end
+	if tonumber(modoptions.requirewreckmodule) or 0 == 1 then
+		freeWreckModule = false
+	end
 end
 
+local recentlyResurrected = {} -- do on the next frame.
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -243,6 +249,12 @@ local defaultaddons = {
 	},
 }
 
+if freeWreckModule then
+	for i = 1, #defaultaddons do
+		defaultaddons[i][#defaultaddons[i] + 1] = "module_resmodule"
+	end
+end
+
 local function GetCommanderChassisDefaultWeapon(type)
 	--Spring.Echo(type)
 	return defaultweapon[type]
@@ -400,6 +412,9 @@ local function ApplyModuleEffects(unitID, data, totalCost, images, chassis)
 	if data.reconPulse then
 		spSetUnitRulesParam(unitID, "commander_reconpulse", 1, INLOS)
 		StartReconPulse(unitID)
+	end
+	if data.alwaysDropWreck then
+		spSetUnitRulesParam(unitID, "commander_alwaysdropwreck", 1, INLOS)
 	end
 	if data.cloakregen then
 		GG.AddCloakRegenOverride(unitID, data.cloakregen)
@@ -1071,6 +1086,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 						profileID
 					)
 				end
+				ApplyModuleEffectsFromUnitRulesParams(unitID)
 				GG.ReinitCloak(unitID, unitDefID)
 				return
 			end

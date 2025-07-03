@@ -231,5 +231,7 @@
 	"module_faster_lockon_name" : "Coprocessori di aggancio",
 	"module_faster_lockon_desc" : "Migliora la velocità di acquisizione del bersaglio del 10%% ma riduce le tolleranze di puntamento del 15%%. Al livello massimo, riduce il tempo di mira a 4,2 s. Influisce sui fucili a scossa.",
 	"module_aimtolerance_name" : "Ottimizzazione dell'algoritmo di telemetria",
-	"module_aimtolerance_desc" : "Riduce la portata di base del 7,25%% (moltiplicativo). Migliora il tempo di mira del 15%%. Al livello massimo, ciò equivale a circa 575 di portata e 2,3 s di tempo di mira."
+	"module_aimtolerance_desc" : "Riduce la portata di base del 7,25%% (moltiplicativo). Migliora il tempo di mira del 15%%. Al livello massimo, ciò equivale a circa 575 di portata e 2,3 s di tempo di mira.",
+	"module_resmodule_name" : "Modulo di garanzia del recupero",
+	"module_resmodule_desc" : "Integra nanobot nell'armatura di questo comandante che reagiscono ai danni critici, garantendo la generazione di un relitto resuscitabile in caso di morte del comandante."
 }

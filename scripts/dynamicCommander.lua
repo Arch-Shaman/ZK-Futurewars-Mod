@@ -653,7 +653,16 @@ local function SetUpFeatureRules(featureID)
 end
 
 local function SpawnWreck(wreckLevel)
+	local isAlwaysResable = Spring.GetUnitRulesParam(unitID, "commander_alwaysdropwreck")
+	Spring.Echo("IsAlwaysResable: " .. tostring(isAlwaysResable))
 	local makeRezzable = (wreckLevel == 1)
+	if isAlwaysResable then
+		makeRezzable = true
+	end
+	Spring.Echo("makeRezzable: " .. tostring(makeRezzable))
+	if makeRezzable then
+		wreckLevel = 1
+	end
 	local wreckDef = FeatureDefs[Spring.GetUnitRulesParam(unitID, commWreckUnitRulesParam[wreckLevel])]
 	local x, y, z = Spring.GetUnitPosition(unitID)
 	

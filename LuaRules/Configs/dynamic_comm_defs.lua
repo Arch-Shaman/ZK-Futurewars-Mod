@@ -261,7 +261,21 @@ local moduleDefs = {
 		slotType = "adv_weapon",
 		effectPriority = 1,
 	},
-	
+	{
+		name = "module_resmodule",
+		humanName = "Wreck Integrity Assurance",
+		description = "Wrecks will always be resurrectable. Will be invalidated by detpacks.",
+		prohibitingModules = {"module_detpack"},
+		image = moduleImagePath .. "module_resurrect.png",
+		limit = 1,
+		cost = 750 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+		effectPriority = 0,
+		applicationFunction = function (modules, sharedData)
+			sharedData.alwaysDropWreck = true
+		end
+	},
 	-- Weapons
 	{
 		name = "commweapon_beamlaser",

@@ -231,5 +231,7 @@
 	"module_faster_lockon_name" : "Koprocesory namierzania",
 	"module_faster_lockon_desc" : "Poprawia prędkość wykrywania celu o 10%%, ale zmniejsza tolerancję celowania o 15%%. Na maksymalnym poziomie skraca czas celowania do 4,2 s. Dotyczy karabinów udarowych.",
 	"module_aimtolerance_name" : "Optymalizacja algorytmu dalmierza",
-	"module_aimtolerance_desc" : "Zmniejsza zasięg podstawowy o 7,25%% (mnożnik). Poprawia czas celowania o 15%%. Na maksymalnym poziomie odpowiada to zasięgowi ~575 i czasowi celowania 2,3 s."
+	"module_aimtolerance_desc" : "Zmniejsza zasięg podstawowy o 7,25%% (mnożnik). Poprawia czas celowania o 15%%. Na maksymalnym poziomie odpowiada to zasięgowi ~575 i czasowi celowania 2,3 s.",
+	"module_resmodule_name" : "Moduł Zapewnienia Odzyskania",
+	"module_resmodule_desc" : "Umieszcza nanoboty w pancerzu tego dowódcy, które reagują na krytyczne obrażenia, gwarantując, że w przypadku śmierci dowódcy pojawi się wrak nadający się do wskrzeszenia."
 }

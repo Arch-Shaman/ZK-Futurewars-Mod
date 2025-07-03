@@ -231,5 +231,7 @@
 	"module_faster_lockon_name" : "Lock-on co-processors",
 	"module_faster_lockon_desc" : "Improves target acquisition speed by 10%% but reduces targeting tolerances by 15%%. At max level, this reduces aim time to 4.2s. Affects shock rifles.",
 	"module_aimtolerance_name" : "Rangefinding Algorithm Optimization",
-	"module_aimtolerance_desc" : "Reduces base range by 7.25%% (multiplicative). Improves aim time by 15%%. At max level, this equates to ~575 range and 2.3s of aim time."
+	"module_aimtolerance_desc" : "Reduces base range by 7.25%% (multiplicative). Improves aim time by 15%%. At max level, this equates to ~575 range and 2.3s of aim time.",
+	"module_resmodule_name" : "Recovery Assurance Module",
+	"module_resmodule_desc" : "Embeds nanobots in this commander's armor that react to critical damage, guaranteeing a resurrectable wreck will spawn if the commander dies."
 }
