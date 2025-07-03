@@ -137,7 +137,7 @@ local options = {
 	{
 		key    = 'commeco',
 		name   = 'Enable Efficient Resourcing',
-		desc   = "Support commander regains Efficient Resourcing Module.",
+		desc   = "Allows any commander to morph Efficient Resourcing Module.",
 		type   = 'bool',
 		section= 'a_important',
 		def    = false,
