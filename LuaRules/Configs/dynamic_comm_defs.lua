@@ -1,3 +1,6 @@
+--NB: FW modules are localized. Any new module must have entries added to modules.xx.json located in luaui/configs/lang !
+--The keys there are <name>_name and <name>_desc . Failure to do so will result in the commander upgrade menu crashing.
+
 -- mission editor compatibility
 Spring.GetModOptions = Spring.GetModOptions or function() return {} end
 
