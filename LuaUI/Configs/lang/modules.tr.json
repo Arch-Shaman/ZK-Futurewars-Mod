@@ -231,5 +231,7 @@
 	"module_aimtolerance_name" : "Mesafe Bulma Algoritması Optimizasyonu",
 	"module_aimtolerance_desc" : "Temel menzili 7,25%% oranında azaltır (çarpansal). Nişan alma süresini 15%% oranında iyileştirir. Maksimum seviyede, bu ~575 menzile ve 2,3 saniyelik nişan alma süresine eşittir.",
 	"module_resmodule_name" : "Kurtarma Güvence Modülü",
-	"module_resmodule_desc" : "Bu komutanın zırhına kritik hasara tepki veren nanobotlar yerleştirir ve komutan ölürse yeniden diriltilebilir bir enkazın ortaya çıkmasını garanti eder."
+	"module_resmodule_desc" : "Bu komutanın zırhına kritik hasara tepki veren nanobotlar yerleştirir ve komutan ölürse yeniden diriltilebilir bir enkazın ortaya çıkmasını garanti eder.",
+	"module_dronelord_name" : "Drone efendisi",
+	"module_dronelord_desc" : "Drone üreticisini daha kaliteli modeller üretecek şekilde yükseltir. Tüm dronlar için hızı, sağlığı, hasarı, yeniden yükleme sürelerini ve görüş mesafesini büyük ölçüde iyileştirir."
 }

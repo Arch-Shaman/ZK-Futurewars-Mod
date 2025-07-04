@@ -233,5 +233,7 @@
 	"module_aimtolerance_name" : "Optimierung des Entfernungsmessungsalgorithmus",
 	"module_aimtolerance_desc" : "Reduziert die Basisreichweite um 7,25%% (multiplikativ). Verbessert die Zielzeit um 15%%. Auf dem höchsten Level entspricht dies einer Reichweite von ~575 und einer Zielzeit von 2,3 s.",
 	"module_resmodule_name" : "Wiederherstellungssicherungsmodul",
-	"module_resmodule_desc" : "Integriert Nanobots in die Rüstung dieses Kommandanten, die auf kritischen Schaden reagieren und so garantieren, dass beim Tod des Kommandanten ein wiederauferstehungsfähiges Wrack entsteht."
+	"module_resmodule_desc" : "Integriert Nanobots in die Rüstung dieses Kommandanten, die auf kritischen Schaden reagieren und so garantieren, dass beim Tod des Kommandanten ein wiederauferstehungsfähiges Wrack entsteht.",
+	"module_dronelord_name" : "Drohnenlord",
+	"module_dronelord_desc" : "Verbessert den Drohnenhersteller, um Modelle höherer Qualität zu produzieren. Verbessert Geschwindigkeit, Gesundheit, Schaden, Nachladezeit und Sichtweite aller Drohnen erheblich."
 }

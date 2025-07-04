@@ -165,6 +165,9 @@ local function OnLocaleChanged()
 			--spring.echo("No override needed")
 			name = WG.Translate("interface", internalName .. "_name")
 		end
+		if not name then
+			name = def.humanName .. " (\255\255\061\061ERROR: MISSING LOCALIZATION! REPORT THIS!\255\255\255\031)"
+		end
 		WG.ModuleTranslations[internalName].name = name
 		local descStringName = internalName .. "_desc"
 		local desc = name .. "\n" .. cost .. def.cost .. "\n"
@@ -257,7 +260,7 @@ local function GetModuleDescription(moduleData) -- dynamically updated.
 				local extradps = "" -- damagemult, rangemult
 				local dps = ""
 				local projectiles = wd.projectiles or 1
-				local burst = wd.burst or 1
+				local burst = wd.salvoSize or 1
 				local damage = wd.damages[1] * burst * projectiles 
 				if customparams.extra_damage_mult then -- emp
 					--spring.echo("EMP")

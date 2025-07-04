@@ -233,5 +233,7 @@
 	"module_aimtolerance_name" : "Optimisation de l'algorithme de télémétrie",
 	"module_aimtolerance_desc" : "Réduit la portée de base de 7,25%% (multiplicatif). Améliore le temps de visée de 15%%. Au niveau maximum, cela équivaut à environ 575 de portée et 2,3 s de temps de visée. Affecte les fusils à choc.",
 	"module_resmodule_name" : "Module d'assurance de récupération",
-	"module_resmodule_desc" : "Intègre des nanobots dans l'armure de ce commandant qui réagissent aux dégâts critiques, garantissant qu'une épave ressuscitable apparaîtra si le commandant meurt."
+	"module_resmodule_desc" : "Intègre des nanobots dans l'armure de ce commandant qui réagissent aux dégâts critiques, garantissant qu'une épave ressuscitable apparaîtra si le commandant meurt.",
+	"module_dronelord_name" : "Seigneur des drones",
+	"module_dronelord_desc" : "Améliore le fabricant de drones pour produire des modèles de meilleure qualité. Améliore considérablement la vitesse, la santé, les dégâts, le temps de rechargement et la portée de vue de tous les drones."
 }

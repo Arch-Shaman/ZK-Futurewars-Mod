@@ -232,5 +232,7 @@
 	"module_aimtolerance_name" : "测距算法优化",
 	"module_aimtolerance_desc" : "将基本射程减少 7.25%%（乘法）。将瞄准时间提高 15%%。在最高等级下,这相当于 ~575 的射程和 2.3 秒的瞄准时间。",
 	"module_resmodule_name" : "恢复保障模块",
-	"module_resmodule_desc" : "该指挥官的装甲中嵌入纳米机器人，可对致命伤害做出反应，确保指挥官死亡后可复活的残骸。"
+	"module_resmodule_desc" : "该指挥官的装甲中嵌入纳米机器人，可对致命伤害做出反应，确保指挥官死亡后可复活的残骸。",
+	"module_dronelord_name" : "无人机领主",
+	"module_dronelord_desc" : "升级无人机制造商，生产更高质量的模型。大幅提升所有无人机的速度、生命值、伤害、装填时间和视距。"
 }

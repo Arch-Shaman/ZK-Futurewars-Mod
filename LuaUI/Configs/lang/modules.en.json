@@ -233,5 +233,7 @@
 	"module_aimtolerance_name" : "Rangefinding Algorithm Optimization",
 	"module_aimtolerance_desc" : "Reduces base range by 7.25%% (multiplicative). Improves aim time by 15%%. At max level, this equates to ~575 range and 2.3s of aim time.",
 	"module_resmodule_name" : "Recovery Assurance Module",
-	"module_resmodule_desc" : "Embeds nanobots in this commander's armor that react to critical damage, guaranteeing a resurrectable wreck will spawn if the commander dies."
+	"module_resmodule_desc" : "Embeds nanobots in this commander's armor that react to critical damage, guaranteeing a resurrectable wreck will spawn if the commander dies.",
+	"module_dronelord_name" : "Drone Lord",
+	"module_dronelord_desc" : "Upgrades the drone fabricator to produce higher quality models. Vastly improves speed, health, damage, reload times, and sight distance for all drones."
 }
