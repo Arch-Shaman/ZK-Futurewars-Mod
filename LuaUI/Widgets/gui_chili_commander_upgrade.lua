@@ -165,6 +165,9 @@ local function OnLocaleChanged()
 			--spring.echo("No override needed")
 			name = WG.Translate("interface", internalName .. "_name")
 		end
+		if not name then
+			name = def.humanName .. " (\255\255\061\061ERROR: MISSING LOCALIZATION! REPORT THIS!\255\255\255\031)"
+		end
 		WG.ModuleTranslations[internalName].name = name
 		local descStringName = internalName .. "_desc"
 		local desc = name .. "\n" .. cost .. def.cost .. "\n"
