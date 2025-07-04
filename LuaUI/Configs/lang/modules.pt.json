@@ -233,5 +233,7 @@
 	"module_aimtolerance_name" : "Otimização do algoritmo de alcance",
 	"module_aimtolerance_desc" : "Reduz o alcance base em 7,25%% (multiplicativo). Melhora o tempo de mira em 15%%. No nível máximo, isso equivale a ~575 de alcance e 2,3s de tempo de mira.",
 	"module_resmodule_name" : "Módulo de Garantia de Recuperação",
-	"module_resmodule_desc" : "Incorpora nanorrobôs na armadura deste comandante que reagem a danos críticos, garantindo que um naufrágio ressuscitável seja gerado caso o comandante morra."
+	"module_resmodule_desc" : "Incorpora nanorrobôs na armadura deste comandante que reagem a danos críticos, garantindo que um naufrágio ressuscitável seja gerado caso o comandante morra.",
+	"module_dronelord_name": "Senhor dos Drones",
+	"module_dronelord_desc": "Aprimora o fabricante de drones para produzir modelos de maior qualidade. Melhora significativamente a velocidade, a saúde, o dano, o tempo de recarga e a distância de visão de todos os drones."
 }
