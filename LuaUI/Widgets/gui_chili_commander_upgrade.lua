@@ -31,6 +31,8 @@ local StackPanel
 local LayoutPanel
 local Image
 local screen0
+local topLabel
+local morphRateLabel
 
 local localization = {}
 
@@ -89,6 +91,7 @@ local moduleTextColor = {.8,.8,.8,.9}
 
 local damageBooster = 1
 local rangeBooster = 1
+local morphBuildPower = 0.1
 
 local commanderUnitDefID = {}
 for i = 1, #UnitDefs do
@@ -145,6 +148,23 @@ local function GetWeaponTemplate()
 	waterCapableTemplate = "\n\255\255\255\031- \255\031\255\255" .. WG.Translate("interface", "weapon_water_capable") .. "\255\255\255\255"
 end
 
+local function GetTimeString(val)
+	if val < 60 then return string.format("00:%02d", val) end
+	local seconds = val%60
+	local minutes = (val - seconds) / 60
+	local hours = 0
+	if minutes > 60 then
+		hours = math.floor(minutes / 60)
+		minutes = minutes % 60
+		if hours < 10 then hours = "0" .. hours end
+	end
+	if hours > 0 then
+		return hours .. string.format(":%02d:02d", minutes, seconds)
+	else
+		return string.format("%02d:%02d", minutes, seconds)
+	end
+end
+
 local function comma_value(amount)
 	local formatted = amount .. ''
 	local k
@@ -161,6 +181,9 @@ local function OnLocaleChanged()
 	acceptText = WG.Translate("interface", "commupgrade_accept")
 	cancelText = WG.Translate("interface", "commupgrade_cancel")
 	viewText   = WG.Translate("interface", "commupgrade_view")
+	if topLabel then
+		topLabel:SetCaption(WG.Translate("interface", "modules"))
+	end
 	local cost = WG.Translate("interface", "commodule_cost")
 	local limit = WG.Translate("interface", "commodule_limit")
 	local hp = WG.Translate("interface", "acronyms_hp")
@@ -182,7 +205,9 @@ local function OnLocaleChanged()
 		end
 		WG.ModuleTranslations[internalName].name = name
 		local descStringName = internalName .. "_desc"
-		local desc = name .. "\n" .. cost .. def.cost .. "\n"
+		local desc = name .. "\n" .. cost .. comma_value(def.cost or 0)
+		if def.cost > 0 then desc = desc .. " [+_time_]" end
+		desc = desc .. "\n"
 		if def.slotType ~= "basic_weapon" and def.slotType ~= "adv_weapon" then
 			desc = desc .. limit .. ": "
 			local moduleLimit = def.limit
@@ -251,20 +276,20 @@ local newButtons = {}
 
 local function GetModuleDescription(moduleData) -- dynamically updated.
 	local isShield = moduleData.name:find("shield") ~= nil
+	local costTime = moduleData.cost / morphBuildPower
+	local name = moduleData.name
+	local description = WG.ModuleTranslations[name].desc:gsub("_time_", GetTimeString(costTime))
 	if moduleData.slotType == "module" and not isShield then
-		return WG.ModuleTranslations[moduleData.name].desc
+		return description
 	else -- dynamically generated.
-		local name = moduleData.name
 		if not isShield then
 			--spring.echo("GetModuleDescription::InternalName: " .. tostring(name))
-			
 			local wd
 			if name == "commweapon_heatray_recon" then
 				wd = WeaponDefNames["0_commweapon_heatray"]
 			else
 				wd = WeaponDefNames["0_" .. name]
 			end
-			local description = WG.ModuleTranslations[name].desc
 			if wd then
 				local aoe = wd.damageAreaOfEffect
 				local reload = wd.reload
@@ -335,16 +360,16 @@ local function GetModuleDescription(moduleData) -- dynamically updated.
 				if aoe > 16 and not wd.impactOnly then
 					description = description:gsub("_aoe_", aoe)
 				end
-				return description
+				return description:gsub("_time_", GetTimeString(costTime))
 			else
 				--spring.echo("Failed to load weapondef for " .. moduleData.name)
 			end
 		else -- this is a shield.
-			local description = WG.ModuleTranslations[name].desc
 			local wd = WeaponDefNames["0_" .. name]
+			local cp = wd.customParams
 			local shieldHealth = comma_value(wd.shieldPower)
-			local regenCost = comma_value(wd.shieldPowerRegenEnergy)
-			local shieldRegen = comma_value(wd.shieldPowerRegen)
+			local regenCost = comma_value(cp.shield_drain or 0)
+			local shieldRegen = comma_value(cp.shield_rate or 0)
 			local radius = comma_value(wd.shieldRadius)
 			return description:gsub("%%shieldregen%%", shieldRegen):gsub("%%shieldregencost%%", regenCost):gsub("%%shield_hp%%", shieldHealth):gsub("%%radius%%", radius)
 		end
@@ -428,7 +453,7 @@ local function CreateModuleSelectionWindow()
 	}
 	
 	local fakeSelectionWindow = Panel:New{
-		x = 0,
+		x = 75,
 		width = 20,
 		y = 0,
 		height = 20,
@@ -443,9 +468,9 @@ local function CreateModuleSelectionWindow()
 	local selectionWindowMain = Window:New{
 		name = "ModuleSelectionWindow",
 		fontsize = 20,
-		x = 200,
+		x = 370,
 		y = minimapHeight,
-		clientWidth = 500,
+		clientWidth = 575,
 		clientHeight = 500,
 		minWidth = 0,
 		minHeight = 0,
@@ -527,8 +552,8 @@ local function ShowModuleSelection(moduleSet, supressButton)
 	
 	-- Column updating works without Invalidate
 	panel.columns = columns
-	window:Resize(columns*BUTTON_SIZE + 10, rows*BUTTON_SIZE + 10)
-	fakeWindow:Resize(columns*BUTTON_SIZE + 10, rows*BUTTON_SIZE + 10)
+	window:Resize(columns*BUTTON_SIZE + 10 + 75, rows*BUTTON_SIZE + 10)
+	fakeWindow:Resize(columns*BUTTON_SIZE + 10 + 75, rows*BUTTON_SIZE + 10)
 	
 	-- Display window if not already shown
 	if not selectionWindow.windowShown then
@@ -831,12 +856,13 @@ end
 -- Main Module Window Handling
 
 local mainWindowShown = false
-local mainWindow, timeLabel, costLabel, morphBuildPower
+local mainWindow, timeLabel, costLabel
 
 function UpdateMorphCost(newCost)
 	newCost = (newCost or 0) + morphBaseCost
-	costLabel:SetCaption(math.floor(newCost))
-	timeLabel:SetCaption(math.floor(newCost/morphBuildPower))
+	costLabel:SetCaption(comma_value(math.floor(newCost)))
+	timeLabel:SetCaption(GetTimeString(math.floor(newCost/morphBuildPower)))
+	morphRateLabel:SetCaption(comma_value(morphBuildPower))
 end
 
 local function HideMainWindow()
@@ -860,9 +886,9 @@ local function CreateMainWindow()
 		fontsize = 20,
 		x = 0,
 		y = minimapHeight,
-		width = 201,
+		width = 270,
 		height = 332,
-		minWidth = 201,
+		minWidth = 270,
 		minHeight = 332,
 		resizable = false,
 		draggable = false,
@@ -876,14 +902,14 @@ local function CreateMainWindow()
 	mainWindowShown = true
 
 	-- The rest of the window is organized top to bottom
-	local topLabel = Chili.Label:New{
+	topLabel = Chili.Label:New{
 		x      = 0,
 		right  = 0,
 		y      = 0,
 		height = 35,
 		valign = "center",
 		align  = "center",
-		caption = "Modules",
+		caption = WG.Translate("interface", "modules"),
 		autosize = false,
 		font   = {size = 20, outline = true, color = {.8,.8,.8,.9}, outlineWidth = 2, outlineWeight = 2},
 		parent = mainWindow,
@@ -907,7 +933,7 @@ local function CreateMainWindow()
 	
 	local timeImage = Image:New{
 		x = 15,
-		bottom  = 75,
+		bottom  = 85,
 		file ='LuaUI/images/clock.png',
 		height = 24,
 		width = 24,
@@ -918,7 +944,7 @@ local function CreateMainWindow()
 	timeLabel = Chili.Label:New{
 		x = 42,
 		right  = 0,
-		bottom  = 80,
+		bottom  = 87,
 		valign = "top",
 		align  = "left",
 		caption = 0,
@@ -928,8 +954,8 @@ local function CreateMainWindow()
 	}
 	
 	local costImage = Image:New{
-		x = 92,
-		bottom  = 75,
+		x = 15,
+		bottom  = 60,
 		file ='LuaUI/images/costIcon.png',
 		height = 24,
 		width = 24,
@@ -937,10 +963,32 @@ local function CreateMainWindow()
 		parent = mainWindow,
 	}
 	
-	costLabel = Chili.Label:New{
-		x = 118,
+	local rateLabel = Image:New{
+		x = 137,
+		bottom  = 85,
+		file = 'LuaUI/Images/commands/Bold/buildsmall.png',
+		height = 24,
+		width = 24,
+		keepAspect = true,
+		parent = mainWindow,
+	}
+	
+	morphRateLabel = Chili.Label:New{
+		x = 162,
 		right  = 0,
-		bottom  = 80,
+		bottom  = 87,
+		valign = "top",
+		align  = "left",
+		caption = 0,
+		autosize = false,
+		font     = {size = 24, outline = true, color = cyan, outlineWidth = 2, outlineWeight = 2},
+		parent = mainWindow,
+	}
+	
+	costLabel = Chili.Label:New{
+		x = 42,
+		right  = 0,
+		bottom  = 62,
 		valign = "top",
 		align  = "left",
 		caption = 0,
@@ -951,10 +999,10 @@ local function CreateMainWindow()
 	
 	local acceptButton = Button:New{
 		caption = "",
-		x = 4,
+		x = 6,
 		bottom = 5,
-		width = 55,
-		height = 55,
+		width = 75,
+		height = 50,
 		padding = {0, 0, 0, 0},
 		backgroundColor = {0.5,0.5,0.5,0.5},
 		tooltip = acceptText,
@@ -970,10 +1018,10 @@ local function CreateMainWindow()
 	
 	viewAlreadyOwnedButton = Button:New{
 		caption = "",
-		x = 63,
+		x = 85,
 		bottom = 5,
-		width = 55,
-		height = 55,
+		width = 75,
+		height = 50,
 		padding = {0, 0, 0, 0},
 		backgroundColor = {0.5,0.5,0.5,0.5},
 		tooltip =  viewText,
@@ -987,10 +1035,10 @@ local function CreateMainWindow()
 	
 	local cancelButton = Button:New{
 		caption = "",
-		x = 121,
+		x = 164,
 		bottom = 5,
-		width = 55,
-		height = 55,
+		width = 75,
+		height = 50,
 		padding = {0, 0, 0, 0},
 		backgroundColor = {0.5,0.5,0.5,0.5},
 		tooltip = cancelText,
