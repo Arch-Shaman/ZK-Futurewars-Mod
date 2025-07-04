@@ -257,7 +257,7 @@ local function GetModuleDescription(moduleData) -- dynamically updated.
 				local extradps = "" -- damagemult, rangemult
 				local dps = ""
 				local projectiles = wd.projectiles or 1
-				local burst = wd.burst or 1
+				local burst = wd.salvoSize or 1
 				local damage = wd.damages[1] * burst * projectiles 
 				if customparams.extra_damage_mult then -- emp
 					--spring.echo("EMP")
