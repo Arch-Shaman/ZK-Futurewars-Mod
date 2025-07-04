@@ -140,7 +140,7 @@ local acceptText, cancelText, viewText
 local function GetWeaponTemplate()
 	weaponTemplate = "\n\255\255\061\061" .. WG.Translate("interface", "module_weapon_notes") .. ":\n\255\255\255\031- " .. WG.Translate("interface", "stats_range") .. ":\255\255\255\255_range_"
 	weaponTemplate = weaponTemplate .. "\n\255\255\255\031- " .. WG.Translate("interface", "acronyms_dps") ..  ":\255\255\255\255_dps_\n"
-	shieldTemplate = "\n\255\255\255\031" .. WG.Translate("interface", "shield_hp") ..  ":\255\255\255\255 %shield_hp% " ..  WG.Translate("interface", "health") .. "\n\255\255\255\031" .. WG.Translate("interface", "regen") .. ":\255\255\255\255 %shieldregen% " .. WG.Translate("interface", "health") .. " / " .. WG.Translate("interface", "acronyms_second") .. "\n\255\255\255\031"  .. WG.Translate("interface", "shield_regencost") .. ": \255\255\255\255 %shieldregencost%" .. " " .. string.lower(WG.Translate("interface", "energy")) .. " / " .. WG.Translate("interface", "acronyms_second")
+	shieldTemplate = "\n\255\255\255\031" .. WG.Translate("interface", "shield_hp") ..  ":\255\255\255\255 %shield_hp% " ..  WG.Translate("interface", "health") .. "\n\255\255\255\031" .. WG.Translate("interface", "regen") .. ":\255\255\255\255 %shieldregen% " .. WG.Translate("interface", "health") .. " / " .. WG.Translate("interface", "acronyms_second") .. "\n\255\255\255\031"  .. WG.Translate("interface", "shield_regencost") .. ": \255\255\255\255 %shieldregencost%" .. " " .. string.lower(WG.Translate("interface", "energy")) .. " / " .. WG.Translate("interface", "acronyms_second") .. "\n\255\255\255\031" .. WG.Translate("interface", "radius") .. ":\255\255\255\255 %radius%"
 	aoeTemplate = "\n\255\255\255\031- " .. WG.Translate("interface", "stats_aoe") .. ":\255\255\255\255 _aoe_\n"
 	waterCapableTemplate = "\n\255\255\255\031- \255\031\255\255" .. WG.Translate("interface", "weapon_water_capable") .. "\255\255\255\255"
 end
@@ -345,7 +345,8 @@ local function GetModuleDescription(moduleData) -- dynamically updated.
 			local shieldHealth = comma_value(wd.shieldPower)
 			local regenCost = comma_value(wd.shieldPowerRegenEnergy)
 			local shieldRegen = comma_value(wd.shieldPowerRegen)
-			return description:gsub("%%shieldregen%%", shieldRegen):gsub("%%shieldregencost%%", regenCost):gsub("%%shield_hp%%", shieldHealth)
+			local radius = comma_value(wd.shieldRadius)
+			return description:gsub("%%shieldregen%%", shieldRegen):gsub("%%shieldregencost%%", regenCost):gsub("%%shield_hp%%", shieldHealth):gsub("%%radius%%", radius)
 		end
 	end
 end
