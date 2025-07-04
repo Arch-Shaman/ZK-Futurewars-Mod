@@ -137,7 +137,15 @@ local options = {
 	{
 		key    = 'commeco',
 		name   = 'Enable Efficient Resourcing',
-		desc   = "Support commander regains Efficient Resourcing Module.",
+		desc   = "Allows any commander to morph Efficient Resourcing Module.",
+		type   = 'bool',
+		section= 'a_important',
+		def    = false,
+	},
+		{
+		key    = 'requirewreckmodule',
+		name   = 'Require morph for commanders to always drop wrecks',
+		desc   = "Makes commanders need to morph a module in order to always drop a wreck. By default, commanders get this feature for free.",
 		type   = 'bool',
 		section= 'a_important',
 		def    = false,

@@ -231,5 +231,7 @@
 	"module_faster_lockon_name" : "Coprocesseurs de verrouillage",
 	"module_faster_lockon_desc" : "Améliore la vitesse d'acquisition de la cible de 10%%, mais réduit les tolérances de ciblage de 15%%. Au niveau maximum, cela réduit le temps de visée à 4,2 s. Affecte les fusils à choc.",
 	"module_aimtolerance_name" : "Optimisation de l'algorithme de télémétrie",
-	"module_aimtolerance_desc" : "Réduit la portée de base de 7,25%% (multiplicatif). Améliore le temps de visée de 15%%. Au niveau maximum, cela équivaut à environ 575 de portée et 2,3 s de temps de visée. Affecte les fusils à choc."
+	"module_aimtolerance_desc" : "Réduit la portée de base de 7,25%% (multiplicatif). Améliore le temps de visée de 15%%. Au niveau maximum, cela équivaut à environ 575 de portée et 2,3 s de temps de visée. Affecte les fusils à choc.",
+	"module_resmodule_name" : "Module d'assurance de récupération",
+	"module_resmodule_desc" : "Intègre des nanobots dans l'armure de ce commandant qui réagissent aux dégâts critiques, garantissant qu'une épave ressuscitable apparaîtra si le commandant meurt."
 }

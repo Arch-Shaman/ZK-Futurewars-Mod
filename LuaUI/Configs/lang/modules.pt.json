@@ -231,5 +231,7 @@
 	"module_faster_lockon_name" : "Coprocessadores de bloqueio",
 	"module_faster_lockon_desc" : "Melhora a velocidade de aquisição de alvo em 10%%, mas reduz as tolerâncias de mira em 15%%. No nível máximo, isso reduz o tempo de mira para 4,2s. Afeta rifles de choque.",
 	"module_aimtolerance_name" : "Otimização do algoritmo de alcance",
-	"module_aimtolerance_desc" : "Reduz o alcance base em 7,25%% (multiplicativo). Melhora o tempo de mira em 15%%. No nível máximo, isso equivale a ~575 de alcance e 2,3s de tempo de mira."
+	"module_aimtolerance_desc" : "Reduz o alcance base em 7,25%% (multiplicativo). Melhora o tempo de mira em 15%%. No nível máximo, isso equivale a ~575 de alcance e 2,3s de tempo de mira.",
+	"module_resmodule_name" : "Módulo de Garantia de Recuperação",
+	"module_resmodule_desc" : "Incorpora nanorrobôs na armadura deste comandante que reagem a danos críticos, garantindo que um naufrágio ressuscitável seja gerado caso o comandante morra."
 }

@@ -230,5 +230,7 @@
 	"module_faster_lockon_name" : "锁定协处理器",
 	"module_faster_lockon_desc" : "“增加 10%% 的目标捕获速度，但减少 15%% 的瞄准误差。在最高等级下，这会将瞄准时间缩短至 4.2 秒。影响狙击步枪。”",
 	"module_aimtolerance_name" : "测距算法优化",
-	"module_aimtolerance_desc" : "将基本射程减少 7.25%%（乘法）。将瞄准时间提高 15%%。在最高等级下,这相当于 ~575 的射程和 2.3 秒的瞄准时间。"
+	"module_aimtolerance_desc" : "将基本射程减少 7.25%%（乘法）。将瞄准时间提高 15%%。在最高等级下,这相当于 ~575 的射程和 2.3 秒的瞄准时间。",
+	"module_resmodule_name" : "恢复保障模块",
+	"module_resmodule_desc" : "该指挥官的装甲中嵌入纳米机器人，可对致命伤害做出反应，确保指挥官死亡后可复活的残骸。"
 }

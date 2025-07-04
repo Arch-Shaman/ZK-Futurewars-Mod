@@ -261,7 +261,21 @@ local moduleDefs = {
 		slotType = "adv_weapon",
 		effectPriority = 1,
 	},
-	
+	{
+		name = "module_resmodule",
+		humanName = "Wreck Integrity Assurance",
+		description = "Wrecks will always be resurrectable. Will be invalidated by detpacks.",
+		prohibitingModules = {"module_detpack"},
+		image = moduleImagePath .. "module_resurrect.png",
+		limit = 1,
+		cost = 750 * COST_MULT,
+		requireLevel = 1,
+		slotType = "module",
+		effectPriority = 0,
+		applicationFunction = function (modules, sharedData)
+			sharedData.alwaysDropWreck = true
+		end
+	},
 	-- Weapons
 	{
 		name = "commweapon_beamlaser",
@@ -2610,6 +2624,13 @@ local moduleDefs = {
 	},
 }
 
+for i = 1, #moduleDefs do
+	if moduleDefs[i].name == "efficiency" and allowCommEco then
+		moduleDefs[i].requireChassis = nil
+	end
+	moduleDefNames[moduleDefs[i].name] = i
+end
+
 for name, data in pairs(skinDefs) do
 	moduleDefs[#moduleDefs + 1] = {
 		name = "skin_" .. name,
@@ -2627,13 +2648,6 @@ for name, data in pairs(skinDefs) do
 			sharedData.skinOverride = name
 		end
 	}
-end
-
-for i = 1, #moduleDefs do
-	if moduleDefs[i].name == "efficiency" and allowCommEco then
-		moduleDefs[i].requireChassis[2] = "support"
-	end
-	moduleDefNames[moduleDefs[i].name] = i
 end
 
 ------------------------------------------------------------------------

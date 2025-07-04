@@ -231,5 +231,7 @@
 	"module_faster_lockon_name" : "Co-Prozessoren sperren",
 	"module_faster_lockon_desc" : "Verbessert die Zielerfassungsgeschwindigkeit um 10%%, reduziert aber die Zieltoleranzen um 15%%. Auf der höchsten Stufe reduziert dies die Zielzeit auf 4,2 s. Betrifft Schockgewehre.",
 	"module_aimtolerance_name" : "Optimierung des Entfernungsmessungsalgorithmus",
-	"module_aimtolerance_desc" : "Reduziert die Basisreichweite um 7,25%% (multiplikativ). Verbessert die Zielzeit um 15%%. Auf dem höchsten Level entspricht dies einer Reichweite von ~575 und einer Zielzeit von 2,3 s."
+	"module_aimtolerance_desc" : "Reduziert die Basisreichweite um 7,25%% (multiplikativ). Verbessert die Zielzeit um 15%%. Auf dem höchsten Level entspricht dies einer Reichweite von ~575 und einer Zielzeit von 2,3 s.",
+	"module_resmodule_name" : "Wiederherstellungssicherungsmodul",
+	"module_resmodule_desc" : "Integriert Nanobots in die Rüstung dieses Kommandanten, die auf kritischen Schaden reagieren und so garantieren, dass beim Tod des Kommandanten ein wiederauferstehungsfähiges Wrack entsteht."
 }
