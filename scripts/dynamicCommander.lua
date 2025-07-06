@@ -157,7 +157,7 @@ end
 
 local function DoExtraWeaponStuff(extraInfo, weaponNum, wd, weaponID)
 	local INLOS = {inlos = true}
-	local ei = extraInfo
+	local ei = extraInfo or {reloadBonus = 0, accuracyBonus = 1, projectileSpeedBonus = 0, projectileBonus = 0}
 	if ei.reloadBonus ~= 0 or ei.reloadOverride then
 		local reloadBonus
 		if ei.reloadBonus < 0 then
@@ -265,9 +265,13 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 	local maxRange = 0
 	local otherRange = false
 	if weapon1 then
-		local baserange = extraInfo[1].rangeOverride or tonumber(WeaponDefs[weaponDef1.weaponDefID].range)
+		local baserange = (extraInfo and extraInfo[1].rangeOverride) or tonumber(WeaponDefs[weaponDef1.weaponDefID].range)
 		isManual[weapon1] = weaponDef1.manualFire
-		local damageBooster = math.max(1 + extraInfo[1].damageBoost, 0.01)
+		local damageBooster = 1
+		if extraInfo and extraInfo[1] then
+			damageBooster = 1 + extraInfo[1].damageBoost
+			if damageBooster < 0.01 then damageBooster = 0.01 end
+		end
 		local range = baserange*rangeMult
 		if weaponDef1.manualFire then
 			otherRange = range
@@ -276,20 +280,20 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 		end
 		Spring.SetUnitWeaponState(unitID, weapon1, "range", range)
 		Spring.SetUnitWeaponDamages(unitID, weapon1, "dynDamageRange", range)
-		
-		
+		if damageBooster ~= 1 then
 		local damages = WeaponDefs[weaponDef1.weaponDefID].damages
-		for k, v in pairs(damages) do
-			if type(k) == "number" then
-				Spring.SetUnitWeaponDamages(unitID, weapon1, k, (v * damageBooster) * damageMult)
+			for k, v in pairs(damages) do
+				if type(k) == "number" then
+					Spring.SetUnitWeaponDamages(unitID, weapon1, k, (v * damageBooster) * damageMult)
+				end
 			end
 		end
 		Spring.SetUnitRulesParam(unitID, weapon1 .. "_actual_dmgboost", damageBooster * damageMult)
-		DoExtraWeaponStuff(extraInfo[1], 1, wd1, weapon1)
+		DoExtraWeaponStuff(extraInfo and extraInfo[1] or nil, 1, wd1, weapon1)
 	end
 	
 	if weapon2 then
-		local baserange = extraInfo[2].rangeOverride or tonumber(WeaponDefs[weaponDef2.weaponDefID].range) -- why does this need ToNumber?
+		local baserange = extraInfo and extraInfo[2].rangeOverride or tonumber(WeaponDefs[weaponDef2.weaponDefID].range) -- why does this need ToNumber?
 		isManual[weapon2] = weaponDef2.manualFire
 		local range = baserange*rangeMult
 		if maxRange then
@@ -306,15 +310,21 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 		end
 		Spring.SetUnitWeaponState(unitID, weapon2, "range", range)
 		Spring.SetUnitWeaponDamages(unitID, weapon2, "dynDamageRange", range)
-		local damageBooster = math.max(1 + extraInfo[2].damageBoost, 0.01)
-		local damages = WeaponDefs[weaponDef2.weaponDefID].damages
-		for k, v in pairs(damages) do
-			if type(k) == "number" then
-				Spring.SetUnitWeaponDamages(unitID, weapon2, k, (v * damageBooster) * damageMult)
+		local damageBooster = 1
+		if extraInfo and extraInfo[2].damageBooster then
+			damageBooster = 1 + extraInfo[2].damageBoost
+			if damageBooster < 0.01 then damageBooster = 0.01 end
+		end
+		if damageBooster ~= 1 then
+			local damages = WeaponDefs[weaponDef2.weaponDefID].damages
+			for k, v in pairs(damages) do
+				if type(k) == "number" then
+					Spring.SetUnitWeaponDamages(unitID, weapon2, k, (v * damageBooster) * damageMult)
+				end
 			end
 		end
 		Spring.SetUnitRulesParam(unitID, weapon2 .. "_actual_dmgboost", damageBooster * damageMult)
-		DoExtraWeaponStuff(extraInfo[2], 2, wd2, weapon2)
+		DoExtraWeaponStuff(extraInfo and extraInfo[2], 2, wd2, weapon2)
 	end
 	
 	if weapon1 then

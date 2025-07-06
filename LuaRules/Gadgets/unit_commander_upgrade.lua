@@ -745,7 +745,8 @@ local function InitializeDynamicCommander(unitID, level, chassis, totalCost, nam
 	end
 	
 	if moduleEffectData.areaCloak then
-		unitCreatedCloakShield = true
+		--unitCreatedCloakShield = true
+		GG.AddCloakShieldUnit(unitID, commanderCloakShieldDef)
 	end
 	if level == 1 and not moduleEffectData.weapon1 then
 		local default = GetCommanderChassisDefaultWeapon(chassis)
@@ -1086,7 +1087,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 						profileID
 					)
 				end
-				ApplyModuleEffectsFromUnitRulesParams(unitID)
+				--ApplyModuleEffectsFromUnitRulesParams(unitID)
 				GG.ReinitCloak(unitID, unitDefID)
 				return
 			end
