@@ -36,6 +36,7 @@ local spRemoveUnitCmdDesc = Spring.RemoveUnitCmdDesc
 local spSetUnitStealth = Spring.SetUnitStealth
 local spGetUnitHealth = Spring.GetUnitHealth
 local CMD_UPGRADE_STOP = Spring.Utilities.CMD.UPGRADE_STOP
+local GaiaTeamID = Spring.GetGaiaTeamID()
 local zombies = false
 
 local defaultProfiles = {
@@ -1031,6 +1032,55 @@ local function GetCommanderInfoFromWreck(featureID, unitID)
 	return modules, totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID
 end
 
+local function CreateZombieCommanderFromFeature(featureID, x, y, z, unitDef, facing)
+	local unitDefID = UnitDefNames[unitDef].id
+	Spring.Echo("Spawning " .. unitDef .. " ( " .. unitDefID .. ")")
+	local unitID = Spring.CreateUnit(unitDef, x, y, z, facing, GaiaTeamID)
+	if not unitID then
+		Spring.Echo("[unit_commander_upgrade]: Failed to resurrect commander from featureID " .. featureID)
+		return
+	end
+	local modules, totalCost, level, name, baseWreckID, baseHeapID, profileID, chassisID = GetCommanderInfoFromWreck(featureID, unitID)
+	local profileID = profileID or GG.ModularCommAPI.GetProfileIDByBaseDefID(unitDefID)
+	local commProfileInfo = GG.ModularCommAPI.GetCommProfileInfo(profileID)
+	local moduleEffects = GetModuleEffectsData(modules, level, chassisID)
+	if commProfileInfo then
+		InitializeDynamicCommander(
+			unitID,
+			level,
+			chassisID,
+			totalCost,
+			name,
+			unitDefID,
+			baseWreckID,
+			baseHeapID,
+			modules,
+			moduleEffects,
+			commProfileInfo.images,
+			profileID
+		)
+	else
+		InitializeDynamicCommander(
+			unitID,
+			level,
+			chassisID,
+			totalCost,
+			name,
+			unitDefID,
+			baseWreckID,
+			baseHeapID,
+			modules,
+			moduleEffects,
+			{},
+			profileID
+		)
+	end
+	--ApplyModuleEffectsFromUnitRulesParams(unitID)
+	GG.ReinitCloak(unitID, unitDefID)
+	Spring.DestroyFeature(featureID)
+	return unitID
+end
+
 function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 	local isCommander = UnitDefs[unitDefID].customParams.commtype or UnitDefs[unitDefID].customParams.level or UnitDefs[unitDefID].customParams.dynamic_comm
 	if not isCommander then -- filter out the normal units
@@ -1363,6 +1413,7 @@ function gadget:Initialize()
 	GG.Upgrades_CreateUpgradedUnit         = Upgrades_CreateUpgradedUnit
 	GG.Upgrades_CreateStarterDyncomm       = Upgrades_CreateStarterDyncomm
 	GG.Upgrades_GetValidAndMorphAttributes = Upgrades_GetValidAndMorphAttributes
+	GG.CreateZombieCommanderFromFeature    = CreateZombieCommanderFromFeature
 	
 	-- load active units
 	for _, unitID in ipairs(Spring.GetAllUnits()) do
