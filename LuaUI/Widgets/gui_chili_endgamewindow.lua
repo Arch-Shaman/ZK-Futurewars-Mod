@@ -195,7 +195,7 @@ end
 local function MakeAwardPanel(awardType, record)
 	local desc = awardDescs[awardType] -- localized via OnLocaleChanged
 	if desc == awardType then
-		desc = WG.Translate("interface", awardType) -- might not have initialized yet.
+		desc = WG.Translate("interface", awardType .. "_name") -- might not have initialized yet.
 	end
 	local fontsize, recordFontSize
 	if WG.lang == 'ja' then
@@ -204,7 +204,7 @@ local function MakeAwardPanel(awardType, record)
 		fontsize = GetBestFitFontSize(desc, 180, 16)
 	end
 	local descLen = desc:len()
-	Spring.Echo(awardType .. " Desc Length: " .. descLen .. ", " .. fontsize)
+	--Spring.Echo(awardType .. " Desc Length: " .. descLen .. ", " .. fontsize)
 	local score = Spring.GetGameRulesParam(awardType .. "_rawscore")
 	if score then -- precaution.
 		if awardType == 'attrition' or awardType == 'vet' then
@@ -706,7 +706,7 @@ end
 
 local function OnLocaleChange()
 	for k, _ in pairs(awardDescs) do
-		awardDescs[k] = WG.Translate("interface", k)
+		awardDescs[k] = WG.Translate("interface", k .. "_name")
 	end
 	if awardButton then
 		awardButton:SetCaption(WG.Translate("interface", "awards"))
