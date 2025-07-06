@@ -179,7 +179,7 @@ local function GetBestFitFontSize(text, width, wantedSize)
 	local fits = false
 	local currentSize = wantedSize
 	while not fits do
-		Spring.Echo("CheckSize: " .. checkFont:GetTextWidth(text, 1) * currentSize)
+		--Spring.Echo("CheckSize: " .. checkFont:GetTextWidth(text, 1) * currentSize)
 		fits = checkFont:GetTextWidth(text, 1) * currentSize < width - 2
 		if not fits then
 			currentSize = currentSize - 1
@@ -198,7 +198,7 @@ local function MakeAwardPanel(awardType, record)
 		desc = WG.Translate("interface", awardType .. "_name") -- might not have initialized yet.
 	end
 	local fontsize, recordFontSize
-	if WG.lang == 'ja' then
+	if WG.IsCurrentLocaleCJK() then
 		fontsize = GetBestFitFontSizeCJK(desc, 180, 16)
 	else
 		fontsize = GetBestFitFontSize(desc, 180, 16)
@@ -224,7 +224,7 @@ local function MakeAwardPanel(awardType, record)
 		end
 	end
 	local recordLength = record:len()
-	if WG.lang == 'ja' then
+	if WG.IsCurrentLocaleCJK() then
 		recordFontSize = GetBestFitFontSizeCJK(record, 180, 16)
 	else
 		recordFontSize = GetBestFitFontSize(record, 180, 16)
