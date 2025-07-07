@@ -99,9 +99,11 @@ return {
 					singu_ceg	= "black_hole_300",
 					light_color = "1 1 1",
 					light_radius = 500,
+					--shield_damage = 1001, -- seems to be busted.
+					norealdamage = 1,
 				},
 				damage                  = {
-					default = 0,
+					default = 1000,
 				},
 				explosionGenerator      = "custom:FLASHSMALLUNITEX",
 				explosionSpeed          = 50,
@@ -143,16 +145,18 @@ return {
 					singu_ceg	= "gravitywell_200",
 					light_color = "1 1 1",
 					light_radius = 500,
+					--shield_damage = 1001, -- seems to be busted?
+					norealdamage = 1,
 				},
 				damage                  = {
-					default = 0,
+					default = 1000,
 				},
 				explosionGenerator      = "custom:FLASHSMALLUNITEX",
 				explosionSpeed          = 50,
 				impulseBoost            = 150,
 				impulseFactor           = -2.5,
 				intensity               = 0.9,
-				interceptedByShieldType = 0,
+				interceptedByShieldType = 1,
 				myGravity               = 0.1,
 				projectiles             = 1,
 				range                   = 600,

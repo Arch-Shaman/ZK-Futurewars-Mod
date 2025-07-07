@@ -6,7 +6,7 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local version = "0.1.3"
+local version = "0.1.4"
 
 function gadget:GetInfo()
 	return {
@@ -23,6 +23,7 @@ end
 --SYNCED-------------------------------------------------------------------
 
 -- changelog
+-- 7 July 2025   - 0.1.4. Compatibility for FW commanders.
 -- 6 august 2014 - 0.1.3. Some magic which might fix crash. (At least it fixed the original zombie gadget)
 -- 7 april 2014 - 0.1.2. Added permaslow option. Default on. 50% is max slow for now.
 -- 5 april 2014 - 0.1.1. Sfx, gfx, factory orders added. Slow down upon reclaim added. Thanks Anarchid.
@@ -297,8 +298,13 @@ function gadget:GameFrame(f)
 						partialReclaim = currentMetal/maxMetal
 					end
 				end
-				spDestroyFeature(featureID)
-				local unitID = spCreateUnit(resName, x, y, z, face, GaiaTeamID)
+				local unitID
+				if Spring.GetFeatureRulesParam(featureID, "comm_module_count") then -- this is a commander. Tell unit_commander_upgrade to handle it.
+					unitID = GG.CreateZombieCommanderFromFeature(featureID, x, y, z, resName, face)
+				else
+					spDestroyFeature(featureID)
+					unitID = spCreateUnit(resName, x, y, z, face, GaiaTeamID)
+				end
 				if (unitID) then
 					local size = UnitDefNames[resName].xsize
 					spSpawnCEG("resurrect", x, y, z, 0, 0, 0, size)

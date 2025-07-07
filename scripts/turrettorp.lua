@@ -10,9 +10,18 @@ local spGetUnitPosition = Spring.GetUnitPosition
 local spPlaySoundFile = Spring.PlaySoundFile
 local waterFire = false
 local smokePiece = {base}
+local torpsRemaining = 5
+local torpsMax = 5
+local aimSpeed = math.rad(120)
+local init = false
 
 -- Signal definitions
 local SIG_AIM = 2
+
+local gameSpeed = Game.gameSpeed
+local scriptReload = include("scriptReload.lua")
+local RELOAD_TIME = tonumber(WeaponDefs[UnitDefs[unitDefID].weapons[1].weaponDef].customParams.script_reload) * gameSpeed
+local SleepAndUpdateReload = scriptReload.SleepAndUpdateReload
 
 local function Bob(rot)
 	while true do
@@ -27,46 +36,61 @@ local function Bob(rot)
 	end
 end
 
+local function FireAndReload()
+	scriptReload.GunStartReload(5 - torpsRemaining)
+	torpsRemaining = torpsRemaining - 1
+	SleepAndUpdateReload(num, 6.5 * gameSpeed)
+	torpsRemaining = torpsRemaining + 1
+end
+
 function script.Create()
-	local x,_,z = spGetUnitBasePosition(unitID)
-	local y = spGetGroundHeight(x,z)
+	scriptReload.SetupScriptReload(3, RELOAD_TIME)
+	local x, _, z = spGetUnitBasePosition(unitID)
+	local y = spGetGroundHeight(x, z)
+	Turn(arm1, z_axis, math.rad(-70), math.rad(80))
+	Turn(arm2, z_axis, math.rad(70), math.rad(80))
+	Move(base, y_axis, 20, 25)
 	if y > 0 then
 		Turn(arm1, z_axis, math.rad(-70), math.rad(80))
 		Turn(arm2, z_axis, math.rad(70), math.rad(80))
 		Move(base, y_axis, 20, 25)
-	elseif y > -19 then
-		StartThread(Bob, 0)
 	else
 		waterFire = true
-		StartThread(Bob, math.rad(180))
-		Turn(base, x_axis, math.rad(180))
-		Move(base, y_axis, 48)
-		Turn(arm1, x_axis, math.rad(180))
-		Turn(arm2, x_axis, math.rad(180))
+		--StartThread(Bob, math.rad(180))
+		--Turn(base, x_axis, math.rad(180))
+		--Move(base, y_axis, 48)
+		--Turn(arm1, x_axis, math.rad(180))
+		--Turn(arm2, x_axis, math.rad(180))
 		--Turn(turret, x_axis, 0)
 	end
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
+	init = true
 end
 
 function script.AimWeapon(num, heading, pitch)
+	if num == 2 and waterFire then return false end -- above water "torpedo mortar"
+	if num == 1 and not waterFire then return false end -- underwater "torpedo launcher"
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
-	if waterFire then
-		Turn(turret, y_axis, math.pi - heading, math.rad(120))
-	else
-		Turn(turret, y_axis, heading, math.rad(120))
+	if num == 1 then
+		Turn(turret, x_axis, -pitch, aimSpeed)
 	end
+	Turn(turret, y_axis, heading, aimSpeed)
 	WaitForTurn(turret, y_axis)
+	WaitForTurn(turret, x_axis)
 	return true
 end
 
 function script.FireWeapon(num)
-	local px, py, pz = spGetUnitPosition(unitID)
-	if waterFire then
-		spPlaySoundFile("sounds/weapon/torpedo.wav", 10, px, py, pz)
-	else
-		spPlaySoundFile("sounds/weapon/torp_land.wav", 10, px, py, pz)
-	end
+	StartThread(FireAndReload)
+end
+
+function script.BlockShot(num, targetID)
+	if not init then return true end
+	if num == 2 and waterFire then return true end
+	if num == 1 and not waterFire then return true end
+	if torpsRemaining == 0 then return true end
+	return GG.Script.OverkillPreventionCheck(unitID, targetID, 125, 550, 90, 1.3, 100, 1.5)
 end
 
 function script.AimFromWeapon(num)

@@ -11,6 +11,7 @@ local langs = {
 	{ lang = 'pt', flag = 'pt', name = 'Português'},
 --	{ lang = 'zh_TW', flag = 'tw', name = '繁體中文' }, -- currently unsupported, needs massive re-translation
 	{ lang = 'th', flag = 'th', name = "ภาษาไทย"},
+	{ lang = 'vi', flag = 'vn', name = "tiếng Việt"},
 }
 
 local flagByLang, langByFlag = {}, {}
