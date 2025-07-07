@@ -141,6 +141,11 @@ local function Translate (db, text, data)
 	return translations[db].i18n(text, data)
 end
 
+local function IsCJKLang()
+	return langValue == "ja" or langValue == "zh" or langValue == "zh_cn" or langValue == "tw" or langValue == "zh_tw" or langValue == "ko"
+end
+
+WG.IsCurrentLocaleCJK = IsCJKLang
 WG.lang = lang
 WG.InitializeTranslation = addListener
 WG.ShutdownTranslation = shutdownTranslation

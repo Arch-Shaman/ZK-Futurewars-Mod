@@ -227,13 +227,28 @@ local function IsMissileCruiseDone(id) -- other gadgets can look up if the missi
 	return data ~= nil
 end
 
-local function ForceUpdate(id, x, y, z)
+local function ForceUpdate(id, x, y, z, t)
 	local data = IterableMap.Get(missiles, id)
 	if data then
 		if type(data.target) == "table" then
 			data.target[1] = x
 			data.target[2] = y
 			data.target[3] = z
+		end
+		if t then -- force update.
+			data.type = t
+			if t == 'ground' then
+				data.type = 'ground'
+				data.target = {[1] = x, [2] = y, [3] = z}
+			else
+				data.type = t
+				data.target = x
+				data.unguided = false
+				data.originaltarget = x
+				data.altitudestayframes = 0
+				data.cruising = false
+				data.takeoff = true
+			end
 		end
 	end
 end	

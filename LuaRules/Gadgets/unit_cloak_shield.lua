@@ -176,7 +176,9 @@ end
 
 
 local function AddCloakShieldUnit(unitID, cloakShieldDef)
-	AddCloakShieldCmdDesc(unitID, cloakShieldDef)
+	if not FindUnitCmdDesc(unitID, CMD_CLOAK_SHIELD) then
+		AddCloakShieldCmdDesc(unitID, cloakShieldDef)
+	end
 	local data = {
 		id      = unitID,
 		def     = cloakShieldDef,
@@ -267,8 +269,14 @@ end
 
 --------------------------------------------------------------------------------
 
+function GG.AddCloakShieldUnit(unitID, cloakShieldDef, addCommand)
+	if cloakShieldDef then
+		AddCloakShieldUnit(unitID, cloakShieldDef, addCommand)
+	end
+end
+
 function gadget:UnitCreated(unitID, unitDefID, unitTeam)
-	local cloakShieldDef = cloakShieldDefs[unitDefID] or GG.Upgrades_UnitCloakShieldDef(unitID)
+	local cloakShieldDef = cloakShieldDefs[unitDefID]
 	if (not cloakShieldDef) then
 		return
 	end
@@ -541,8 +549,7 @@ function gadget:AllowCommand_GetWantedUnitDefID()
 	return true
 end
 
-function gadget:AllowCommand(unitID, unitDefID, teamID,
-							               cmdID, cmdParams, cmdOptions)
+function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
 	if (cmdID ~= CMD_CLOAK_SHIELD) then
 		return true  -- command was not used
 	end

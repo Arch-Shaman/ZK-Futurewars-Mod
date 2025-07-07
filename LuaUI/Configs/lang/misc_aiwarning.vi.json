@@ -1,0 +1,5 @@
+{
+	"ai_warning" : "WARNING: AI Host %{name} %{reason}! The following AIs will remain idle until they return:",
+	"ai_warning_disconnected" : "disconnected",
+	"ai_warning_left_prematurely" : "has not loaded yet or left prematurely"
+}
