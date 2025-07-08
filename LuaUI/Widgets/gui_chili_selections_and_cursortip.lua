@@ -1203,6 +1203,9 @@ local function GetBarWithImage(parentControl, name, initY, imageFile, color, col
 			color = colorFunc(currentValue/maxValue)
 			bar.color = color
 		end
+		if maxValue == 0 then
+			maxValue = 1
+		end
 		bar:SetValue(currentValue/maxValue)
 	end
 	
