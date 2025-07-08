@@ -77,24 +77,23 @@ end
 local messages = {
 	shield_bar = "shield",
 	health_bar = "health",
-	building = "building",
-	morph = "morph",
-	stockpile = "stockpile",
-	paralyze = "paralyze",
-	disarm = "disarm",
-	capture = "capture",
-	capture_reload = "capture reload",
+	building_bar = "building",
+	morph_bar = "morph",
+	stockpile_bar = "stockpile",
+	paralyze_bar = "paralyze",
+	disarm_bar = "disarm",
+	capture_bar = "capture",
 	water_tank = "water tank",
-	teleport = "teleport",
-	teleport_pw = "teleport",
-	ability = "ability",
-	reload = "reload",
-	reammo = "reammo",
-	slow = "slow",
-	goo = "goo",
-	jump = "jump",
-	reclaim = "reclaim",
-	resurrect = "resurrect",
+	teleport_bar = "teleport",
+	ability_bar = "ability",
+	reload_bar = "reload",
+	reammo_bar = "reammo",
+	slow_bar = "slow",
+	goo_bar = "goo",
+	jump_bar = "jump",
+	reclaim_bar = "reclaim",
+	resurrect_bar = "resurrect",
+	-- future wars --
 	aim = "aim",
 	battery = "battery",
 	engioverdrive = "Fab Overdrive",
@@ -107,7 +106,7 @@ local messages = {
 
 local function languageChanged ()
 	for key, value in pairs(messages) do
-		messages[key] = WG.Translate ("interface", key)
+		messages[key] = WG.Translate("interface", key)
 	end
 end
 
@@ -710,7 +709,7 @@ local function ProcessWeapon(unitID, weaponID, ci, addPercent)
 			if (reloadFrame > gameFrame + 6) or ((not reloadOverride) and (GetUnitRulesParam(unitID, "reloadPaused") ~= 1)) then -- UPDATE_PERIOD in unit_attributes.lua
 				reload = 1 - ((reloadFrame-gameFrame)/gameSpeed) / reloadTime
 				if (reload >= 0) then
-					barDrawer.AddBar(addTitle and messages.reload, reload, "reload", (addPercent and floor(reload*100) .. '%'))
+					barDrawer.AddBar(addTitle and messages.reload_bar, reload, "reload", (addPercent and floor(reload*100) .. '%'))
 				end
 			end
 		end
@@ -801,13 +800,13 @@ function DrawUnitInfos(unitID, unitDefID)
 
 	--// BUILD
 	if (build < 1) then
-		barDrawer.AddBar(addTitle and messages.building, build, "build", (addPercent and floor(build*100) .. '%'))
+		barDrawer.AddBar(addTitle and messages.building_bar, build, "build", (addPercent and floor(build*100) .. '%'))
 	end
 
 	--// MORPHING
 	if (morph) then
 		local build = morph.progress
-		barDrawer.AddBar(addTitle and messages.morph, build, "build", (addPercent and floor(build*100) .. '%'))
+		barDrawer.AddBar(addTitle and messages.morph_bar, build, "build", (addPercent and floor(build*100) .. '%'))
 	end
 	
 	--// STOCKPILE
@@ -819,7 +818,7 @@ function DrawUnitInfos(unitID, unitDefID)
 			stockpileBuild = GetUnitRulesParam(unitID, "gadgetStockpile")
 		end
 		if numStockpiled and stockpileBuild and (numStockpileQued ~= 0) then
-			barDrawer.AddBar(addTitle and messages.stockpile, stockpileBuild, "stock", (addPercent and floor(stockpileBuild*100) .. '%'))
+			barDrawer.AddBar(addTitle and messages.stockpile_bar, stockpileBuild, "stock", (addPercent and floor(stockpileBuild*100) .. '%'))
 		end
 	else
 		numStockpiled = false
@@ -847,7 +846,7 @@ function DrawUnitInfos(unitID, unitDefID)
 			end
 		end
 		local empcolor_index = (stunned and ((blink and "emp_b") or "emp_p")) or ("emp")
-		barDrawer.AddBar(addTitle and messages.paralyze, emp, empcolor_index, infotext)
+		barDrawer.AddBar(addTitle and messages.paralyze_bar, emp, empcolor_index, infotext)
 	end
 	local sensorStealDuration = 0
 	local sensorTagDuration = 0
@@ -869,12 +868,12 @@ function DrawUnitInfos(unitID, unitDefID)
 		local disarmProp = (disarmFrame - gameFrame)/1200
 		if disarmProp < 1 then
 			if (not paraTime) and disarmProp > emp + 0.014 then -- 16 gameframes of emp time
-				barDrawer.AddBar(addTitle and messages.disarm, disarmProp, "disarm", (addPercent and floor(disarmProp*100) .. '%'))
+				barDrawer.AddBar(addTitle and messages.disarm_bar, disarmProp, "disarm", (addPercent and floor(disarmProp*100) .. '%'))
 			end
 		else
 			local disarmTime = (disarmFrame - gameFrame - 1200)/gameSpeed
 			if (not paraTime) or disarmTime > paraTime + 0.5 then
-				barDrawer.AddBar(addTitle and messages.disarm, 1, ((blink and "disarm_b") or "disarm_p") or ("disarm"), floor(disarmTime) .. messages.acronyms_second)
+				barDrawer.AddBar(addTitle and messages.disarm_bar, 1, ((blink and "disarm_b") or "disarm_p") or ("disarm"), floor(disarmTime) .. messages.acronyms_second)
 				if not stunned then
 					disarmUnits[#disarmUnits+1] = unitID
 				end
@@ -884,7 +883,7 @@ function DrawUnitInfos(unitID, unitDefID)
 	
 	--// CAPTURE (set by capture gadget)
 	if ((capture or -1) > 0) then
-		barDrawer.AddBar(addTitle and messages.capture, capture, "capture", (addPercent and floor(capture*100) .. '%'))
+		barDrawer.AddBar(addTitle and messages.capture_bar, capture, "capture", (addPercent and floor(capture*100) .. '%'))
 	end
 	
 	--// CAPTURE RECHARGE
@@ -892,7 +891,7 @@ function DrawUnitInfos(unitID, unitDefID)
 		local captureReloadState = GetUnitRulesParam(unitID, "captureRechargeFrame")
 		if (captureReloadState and captureReloadState > 0) then
 			local capture = 1-(captureReloadState-gameFrame)/captureReloadTime
-			barDrawer.AddBar(addTitle and messages.capture_reload, capture, "reload", (addPercent and floor(capture*100) .. '%'))
+			barDrawer.AddBar(addTitle and messages.capture_bar_reload, capture, "reload", (addPercent and floor(capture*100) .. '%'))
 		end
 	end
 	
@@ -920,7 +919,7 @@ function DrawUnitInfos(unitID, unitDefID)
 			prog = 1 - TeleportEnd
 		end
 		if prog < 1 then
-			barDrawer.AddBar(addTitle and messages.teleport, prog, "tele", (addPercent and floor(prog*100) .. '%'))
+			barDrawer.AddBar(addTitle and messages.teleport_bar, prog, "tele", (addPercent and floor(prog*100) .. '%'))
 		end
 	end
 	local tempArmor = GetUnitRulesParam(unitID, "temporaryarmor")
@@ -937,7 +936,7 @@ function DrawUnitInfos(unitID, unitDefID)
 		if TeleportEnd then
 			local prog = 1 - (TeleportEnd - gameFrame)/TELEPORT_CHARGE_NEEDED
 			if prog < 1 then
-				barDrawer.AddBar(addTitle and messages.teleport, prog, "tele_pw", (addPercent and floor(prog*100) .. '%'))
+				barDrawer.AddBar(addTitle and messages.teleport_bar, prog, "tele_pw", (addPercent and floor(prog*100) .. '%'))
 			end
 		end
 	end
@@ -951,7 +950,7 @@ function DrawUnitInfos(unitID, unitDefID)
 			local special = 1-(specialReloadState-gameFrame)/(ci.specialReload/slow)	-- don't divide by gamespeed, since specialReload is also in gameframes
 			local per = (addPercent and floor(special*100)) or 0
 			per = math.max(0, per) -- do not allow it to go below 0%.
-			barDrawer.AddBar(addTitle and messages.ability, special, "reload2", (addPercent and floor(special*100) .. '%'))
+			barDrawer.AddBar(addTitle and messages.ability_bar, special, "reload2", (addPercent and floor(special*100) .. '%'))
 		end
 	end
 	
@@ -999,7 +998,7 @@ function DrawUnitInfos(unitID, unitDefID)
 	if ci.canReammo then
 		local reammoProgress = GetUnitRulesParam(unitID, "reammoProgress")
 		if reammoProgress then
-			barDrawer.AddBar(addTitle and messages.reammo, reammoProgress, "reammo", (addPercent and floor(reammoProgress*100) .. '%'))
+			barDrawer.AddBar(addTitle and messages.reammo_bar, reammoProgress, "reammo", (addPercent and floor(reammoProgress*100) .. '%'))
 		end
 	end
 	
@@ -1023,7 +1022,7 @@ function DrawUnitInfos(unitID, unitDefID)
 						if (reloadFrame > gameFrame + 6) or ((not reloadOverride) and (GetUnitRulesParam(unitID, "reloadPaused") ~= 1)) then -- UPDATE_PERIOD in unit_attributes.luaa
 							reload = 1 - ((reloadFrame-gameFrame)/gameSpeed) / reloadTime
 							if (reload >= 0) then
-								barDrawer.AddBar(addTitle and messages.reload, reload, "reload", (addPercent and floor(reload*100) .. '%'))
+								barDrawer.AddBar(addTitle and messages.reload_bar, reload, "reload", (addPercent and floor(reload*100) .. '%'))
 							end
 						end
 					end
@@ -1046,7 +1045,7 @@ function DrawUnitInfos(unitID, unitDefID)
 					if (reloadFrame > gameFrame + 6) or ((not reloadOverride) and (GetUnitRulesParam(unitID, "reloadPaused") ~= 1)) then -- UPDATE_PERIOD in unit_attributes.luaa
 						reload = 1 - ((reloadFrame-gameFrame)/gameSpeed) / ci.reloadTime[loop];
 						if (reload >= 0) then
-							barDrawer.AddBar(addTitle and messages.reload, reload, "reload", (addPercent and floor(reload*100) .. '%'))
+							barDrawer.AddBar(addTitle and messages.reload_bar, reload, "reload", (addPercent and floor(reload*100) .. '%'))
 						end
 					end
 				end
@@ -1065,7 +1064,7 @@ function DrawUnitInfos(unitID, unitDefID)
 					local reloadTime = math.ceil(((tonumber(weaponDef.customParams.script_reload) or 10) * 30) / speed) / 30 -- frame math
 					if reloadTime >= options.minReloadTime.value then
 						if (reloadProgress >= 0) then
-							barDrawer.AddBar(addTitle and messages.reload, reloadProgress, "reload", (addPercent and floor(reloadProgress*100) .. '%'))
+							barDrawer.AddBar(addTitle and messages.reload_bar, reloadProgress, "reload", (addPercent and floor(reloadProgress*100) .. '%'))
 						end
 					end
 				end
@@ -1079,7 +1078,7 @@ function DrawUnitInfos(unitID, unitDefID)
 					local reloadTime = math.ceil(((tonumber(weaponDef.customParams.script_reload) or 10) * 30) / speed) / 30 -- frame math
 					if reloadTime >= options.minReloadTime.value then
 						if (reloadProgress >= 0) then
-							barDrawer.AddBar(addTitle and messages.reload, reloadProgress, "reload", (addPercent and floor(reloadProgress*100) .. '%'))
+							barDrawer.AddBar(addTitle and messages.reload_bar, reloadProgress, "reload", (addPercent and floor(reloadProgress*100) .. '%'))
 						end
 					end
 				end
@@ -1093,7 +1092,7 @@ function DrawUnitInfos(unitID, unitDefID)
 						local reloadTime = math.ceil(((tonumber(weaponDef.customParams.script_reload) or 10) * 30) / speed) / 30 -- frame math
 						if reloadTime >= options.minReloadTime.value then
 							if (reloadProgress >= 0) then
-								barDrawer.AddBar(addTitle and messages.reload, reloadProgress, "reload", (addPercent and floor(reloadProgress*100) .. '%'))
+								barDrawer.AddBar(addTitle and messages.reload_bar, reloadProgress, "reload", (addPercent and floor(reloadProgress*100) .. '%'))
 							end
 						end
 					end
@@ -1113,7 +1112,7 @@ function DrawUnitInfos(unitID, unitDefID)
 				if reloadTime >= options.minReloadTime.value then
 					--Spring.Echo("Reload: " .. reload)
 					if (reload >= 0) then
-						barDrawer.AddBar(addTitle and messages.reload, reload, "reload", (addPercent and floor(reload*100) .. '%'))
+						barDrawer.AddBar(addTitle and messages.reload_bar, reload, "reload", (addPercent and floor(reload*100) .. '%'))
 					end
 				end
 			end
@@ -1134,7 +1133,7 @@ function DrawUnitInfos(unitID, unitDefID)
 					local barText = string.format("%i/%i", scriptLoaded, maxLoaded) -- .. ' | ' .. floor(reload*100) .. '%'
 					reload = Spring.GetUnitRulesParam(unitID, "scriptReloadPercentage") or (1 - ((reloadFrame - gameFrame)/gameSpeed) / reloadTime)
 					if (reload >= 0) then
-						barDrawer.AddBar(addTitle and messages.reload, reload, "reload", (addPercent and barText))
+						barDrawer.AddBar(addTitle and messages.reload_bar, reload, "reload", (addPercent and barText))
 					end
 				end
 			end
@@ -1151,9 +1150,9 @@ function DrawUnitInfos(unitID, unitDefID)
 	local slowState = GetUnitRulesParam(unitID, "slowState")
 	if (slowState and (slowState > 0)) then
 		if slowState > 0.5 then
-			barDrawer.AddBar(addTitle and messages.slow, 1, "slow", (addPercent and floor((slowState - 0.5)*25) .. messages.acronyms_second))
+			barDrawer.AddBar(addTitle and messages.slow_bar, 1, "slow", (addPercent and floor((slowState - 0.5)*25) .. messages.acronyms_second))
 		else
-			barDrawer.AddBar(addTitle and messages.slow, slowState*2, "slow", (addPercent and floor(slowState*100) .. '%'))
+			barDrawer.AddBar(addTitle and messages.slow_bar, slowState*2, "slow", (addPercent and floor(slowState*100) .. '%'))
 		end
 	end
 	
@@ -1161,7 +1160,7 @@ function DrawUnitInfos(unitID, unitDefID)
 	if ci.canGoo then
 		local gooState = GetUnitRulesParam(unitID, "gooState")
 		if (gooState and (gooState > 0)) then
-			barDrawer.AddBar(addTitle and messages.goo, gooState, "goo", (addPercent and floor(gooState*100) .. '%'))
+			barDrawer.AddBar(addTitle and messages.goo_bar, gooState, "goo", (addPercent and floor(gooState*100) .. '%'))
 		end
 	end
 	
@@ -1169,7 +1168,7 @@ function DrawUnitInfos(unitID, unitDefID)
 	if ci.canJump then
 		local jumpReload = GetUnitRulesParam(unitID, "jumpReload")
 		if (jumpReload and (jumpReload > 0) and (jumpReload < 1)) then
-			barDrawer.AddBar(addTitle and messages.jump, jumpReload, "jump", (addPercent and floor(jumpReload*100) .. '%'))
+			barDrawer.AddBar(addTitle and messages.jump_bar, jumpReload, "jump", (addPercent and floor(jumpReload*100) .. '%'))
 		end
 	end
 
@@ -1248,12 +1247,12 @@ function DrawFeatureInfos(featureID, featureDefID, addPercent, addTitle, fx, fy,
 
 	--// RESURRECT
 	if (resurrect > 0) then
-		barDrawer.AddBar(addTitle and messages.resurrect, resurrect, "resurrect", (addPercent and floor(resurrect*100) .. '%'))
+		barDrawer.AddBar(addTitle and messages.resurrect_bar, resurrect, "resurrect", (addPercent and floor(resurrect*100) .. '%'))
 	end
 
 	--// RECLAIMING
 	if (reclaimLeft > 0 and reclaimLeft < 1) then
-		barDrawer.AddBar(addTitle and messages.reclaim, reclaimLeft, "reclaim", (addPercent and floor(reclaimLeft*100) .. '%'))
+		barDrawer.AddBar(addTitle and messages.reclaim_bar, reclaimLeft, "reclaim", (addPercent and floor(reclaimLeft*100) .. '%'))
 	end
 
 	if barDrawer.HasBars() then
