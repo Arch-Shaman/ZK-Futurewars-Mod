@@ -8,6 +8,8 @@
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+local _, scarNames = VFS.Include("gamedata/scars.lua", nil, VFS.GAME)
+
 local resources = {
 	graphics = {
 		smoke = {
@@ -24,14 +26,7 @@ local resources = {
 			'smoke/smoke10.tga',
 			'smoke/smoke11.tga',
 		},
-
-		scars = {
-			'unknown/enlarge/scar1.png',
-			'unknown/enlarge/scar2.png',
-			'unknown/enlarge/scar3.png',
-			'unknown/enlarge/scar4.png',
-		},
-
+		scars = scarNames,
 		trees = {
 			bark='Bark.bmp',
 			leaf='bleaf.bmp',
