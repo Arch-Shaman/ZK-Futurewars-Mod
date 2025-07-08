@@ -2931,6 +2931,10 @@ local chassisDefs = {
 		levelDefs = levelDefGenerator("dynknight", GetKnightCloneModulesString, 3)
 	},
 }
+local chassisNameByID = {}
+for k, v in pairs(chassisDefs) do
+	chassisNameByID[k] = v.name
+end
 
 local chassisDefByBaseDef = {}
 if UnitDefNames then
@@ -2948,102 +2952,22 @@ end
 -- Processing
 ------------------------------------------------------------------------
 
-for i = 1, #moduleDefs do -- Add name, cost, dps, etc
-	if not moduleDefs[i].isDeco then -- IMPORTANT NOTE: This is proccessed **BEFORE** weapondefs_post!!!!!!! (Mitä vitua?)
-		local name = moduleDefs[i].name
-		if moduleDefs[i].override then
-			name = moduleDefs[i].override
-		end
-		--Spring.Echo("[Modular Comms] ModuleDefs: Proccessing description for " .. tostring(name))
-		-- HANDLED IN LUAUI NOW WITH LOCALIZATION!
-		--[[
-		moduleDefs[i].description = moduleDefs[i].humanName ..":\nCost: " .. moduleDefs[i].cost .. "m" .. "\n" .. moduleDefs[i].description
-		local wd
-		
-		if name:find("commweapon") or name:find("shield") then
-			if VFS.FileExists("gamedata\\modularcomms\\weapons\\" .. name .. ".lua") then
-				--Spring.Echo("Loading future wars file")
-				_, wd = VFS.Include("gamedata\\modularcomms\\weapons\\" .. name .. ".lua")
-			elseif VFS.FileExists("gamedata\\modularcomms\\weapons\\" .. name:gsub("commweapon_", "") .. ".lua") then
-				--Spring.Echo("Falling back to base game")
-				_, wd = VFS.Include("gamedata\\modularcomms\\weapons\\" .. name:gsub("commweapon_", "") .. ".lua")
-			end
-			--if VFS.FileExists("gamedata\\modularcomms\\weapons\\" .. string.gsub(name:gsub("commweapon_", ""), "_", "") .. ".lua") then
-				--_, wd = VFS.Include("gamedata\\modularcomms\\weapons\\" .. string.gsub(name:gsub("commweapon_", ""), "_", "") .. ".lua")
-			--end
-		end
-		if wd and not name:find("shield") then 
-			local projectiles = wd.projectiles or 1
-			local burst = wd.burst or 1
-			local damage = wd.damage.default * burst * projectiles
-			--Spring.Echo("Calculate DPS: " .. projectiles .. "projectiles, " .. burst .. " bursts, " .. tostring(wd.damage.default) .. " damage = " .. damage .. ", Reload: " .. wd.reloadtime)
-			local customparams = wd.customParams or wd.customparams or {}
-			moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\061\061Weapon Notes:\n\255\255\255\031- Range:\255\255\255\255 " .. wd.range .. "\n\255\255\255\031- DPS:\255\255\255\255 "
-			if customparams.extra_damage_mult then -- lightning gun
-				local extradmg = tonumber(customparams.extra_damage_mult) or 0
-				local extradps = (extradmg * damage) / wd.reloadtime
-				extradps = "\255\51\179\255" .. string.format("%.1f", extradps) .. "P\255\255\255\255"
-				moduleDefs[i].description = moduleDefs[i].description .. "\255\255\255\255 " .. string.format("%.1f", damage / wd.reloadtime) .. " + " .. extradps
-			elseif customparams.is_capture then -- capture
-				moduleDefs[i].description = moduleDefs[i].description .. "\255\153\255\153 " .. string.format("%.1f", damage / wd.reloadtime) .. "C"
-			elseif customparams.setunitsonfire then -- napalm
-				local burntime = tonumber(customparams.burntime) or 0
-				burntime = burntime / 30 -- convert to seconds
-				moduleDefs[i].description = moduleDefs[i].description .. "\255\255\77\0 " .. string.format("%.1f", damage / wd.reloadtime) .. " (" .. string.format("%.1f", burntime) .. "s)"
-			elseif customparams.disarmDamageOnly or customparams.disarmdamageonly then -- pure disarm damage.
-				moduleDefs[i].description = moduleDefs[i].description .. "\255\128\128\128" .. string.format("%.1f", damage / wd.reloadtime) .. "D"
-			elseif wd.paralyzeTime == nil and wd.paralyzetime == nil then -- normal weapon
-				moduleDefs[i].description = moduleDefs[i].description .. "\255\255\255\255 " .. string.format("%.1f", damage / wd.reloadtime)
-			else -- pure paralyzer
-				moduleDefs[i].description = moduleDefs[i].description .. "\255\51\179\255 " .. string.format("%.1f", damage / wd.reloadtime) .. "P"
-			end
-			local isDisarmOnly = customparams.disarmDamageOnly or customparams.disarmdamageonly or 0
-			if (customparams.disarmDamageMult or customparams.disarmdamagemult) and isDisarmOnly == 0 then
-				local disarm = (customparams.disarmDamageMult or customparams.disarmdamagemult) or 0
-				local disarmdps = (damage * tonumber(disarm)) / wd.reloadtime
-				if disarmdps > 0 then
-					disarmdps = "\255\128\128\128" .. string.format("%.1f", disarmdps) .. "D"
-					moduleDefs[i].description = moduleDefs[i].description .. " + " .. disarmdps
-				end
-			end
-			if customparams.timeslow_damagefactor then
-				local slow = damage * (tonumber(customparams.timeslow_damagefactor) or 0)
-				if slow > 0 then
-					local slowdps = string.format("%.1f", slow / wd.reloadtime)
-					moduleDefs[i].description = moduleDefs[i].description .. " + \255\255\031\255" .. slowdps .. "S" .. "\255\255\255\255"
-				end
-			end
-			if wd.paralyzeTime or wd.paralyzetime then
-				local stuntime = wd.paralyzeTime or wd.paralyzetime or 0
-				if stuntime ~= 0 then
-					moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\255\031- Stun time:\255\255\255\255" .. stuntime .. "s"
-				end
-			end
-			if not (wd.impactonly or wd.impactOnly) then
-				local aoe = customparams.areaofeffectoverride or wd.areaOfEffect or wd.areaofeffect
-				moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\255\031- AoE:\255\255\255\255 " .. aoe .. "m"
-			end
-			if wd.waterweapon or wd.waterWeapon then
-				moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\255\031- \255\031\255\255WATER CAPABLE\255\255\255\255"
-			end
-		elseif wd and name:find("shield") then
-			moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\255\031Shield Radius:\255\255\255\255 " .. wd.shieldRadius .. "\n\255\255\255\031Shield HP:\255\255\255\255 " .. wd.shieldPower .. "\n\255\255\255\031Shield Regen:\255\255\255\255 " .. wd.shieldPowerRegen .. "\n\255\255\255\031Shield Regen Cost:\255\255\255\255 " .. wd.shieldPowerRegenEnergy
-		elseif not name:find("null") then
-			moduleDefs[i].description = moduleDefs[i].description .. "\n\255\255\061\061Limit: " .. tostring(moduleDefs[i].limit) .. "\255\255\255\255" -- why does this have a boolean?
-		end]]
-		if disabledModules[name] then
-			moduleDefs[i].requireChassis = {"banned"}
-		end
-		--Spring.Echo("Final description: " .. moduleDefs[i].description)
-	end
-end
+local modulesByChassis = {
+	strike = {}, 
+	riot = {}, 
+	recon = {}, 
+	support = {}, 
+	assault = {}, 
+	knight = {},
+}
+local emptyModules = {}
+local requiredTable = {"requireOneOf", "requireTwoOf", "prohibitingModules"}
 
--- Transform from human readable format into number indexed format
 for i = 1, #moduleDefs do
+	-- Transform from human readable format into number indexed format
 	local data = moduleDefs[i]
-	
 	-- Required modules are a list of moduleDefIDs
-	for _,list in pairs{"requireOneOf", "requireTwoOf", "prohibitingModules"} do
+	for _,list in pairs(requiredTable) do
 		if data[list] then
 			local newRequire = {}
 			for j = 1, #data[list] do
@@ -3055,27 +2979,41 @@ for i = 1, #moduleDefs do
 			data[list] = newRequire
 		end
 	end
-	
 	-- Required chassis is a map indexed by chassisDefID
 	if data.requireChassis then
 		local newRequire = {}
 		for j = 1, #data.requireChassis do
-			for k = 1, #chassisDefs do
-				if chassisDefs[k].name == data.requireChassis[j] then
-					newRequire[k] = true
-					break
-				end
-			end
+			newRequire[chassisDefNames[data.requireChassis[j]]] = true
 		end
 		data.requireChassis = newRequire
 	end
-end
-
--- Find empty modules so slots can find their appropriate empty module
-local emptyModules = {}
-for i = 1, #moduleDefs do
+	-- Find empty modules so slots can find their appropriate empty module
 	if moduleDefs[i].emptyModule then
 		emptyModules[moduleDefs[i].slotType] = i
+	end
+	
+	if not data.isDeco then -- IMPORTANT NOTE: This is proccessed **BEFORE** weapondefs_post!
+		local name = moduleDefs[i].name
+		if data.override then
+			name = data.override
+		end
+		if disabledModules[name] then
+			data.requireChassis = {"banned"}	
+		else
+			-- produce a list of valid modules per chassis for luarules AIs.
+			if data.requireChassis then
+				for chassisID, _ in pairs(data.requireChassis) do
+					local chassis = chassisNameByID[chassisID]
+					Spring.Echo("Adding '" .. name .. "' to '" .. tostring(chassis) .. "'.")
+					local count = #modulesByChassis[chassis]
+					modulesByChassis[chassis][count + 1] = i
+				end
+			else
+				for chassisName, data in pairs(modulesByChassis) do
+					data[#data + 1] = i
+				end
+			end
+		end
 	end
 end
 
@@ -3215,4 +3153,4 @@ local utilities = {
 -- Return Values
 ------------------------------------------------------------------------
 
-return moduleDefs, chassisDefs, utilities, LEVEL_BOUND, chassisDefByBaseDef, moduleDefNames, chassisDefNames
+return moduleDefs, chassisDefs, utilities, LEVEL_BOUND, chassisDefByBaseDef, moduleDefNames, chassisDefNames, modulesByChassis
