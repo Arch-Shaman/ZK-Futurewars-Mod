@@ -164,7 +164,7 @@ function GG.AimDelay_CommAttemptToFire(unitID, weaponNum, heading, pitch, delay,
 		unitData.pitch = pitch
 		unitData.forcereset = false
 		unitData.lastAimFrame = frame
-		Spring.Echo("Aiming error, returning false")
+		--Spring.Echo("Aiming error, returning false")
 		spSetUnitRulesParam(unitID, "aimdelay", unitData.delayedUntil, LOS_ACCESS) -- Tell LUAUI this unit is currently aiming!
 		return false
 	end
