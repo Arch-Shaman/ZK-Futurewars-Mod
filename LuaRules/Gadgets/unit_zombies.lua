@@ -6,7 +6,7 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local version = "0.1.4"
+local version = "0.1.5"
 
 function gadget:GetInfo()
 	return {
@@ -23,6 +23,7 @@ end
 --SYNCED-------------------------------------------------------------------
 
 -- changelog
+-- 8 July 2025   - 0.1.5. Optimization for zombie commands, add special AI for commanders.
 -- 7 July 2025   - 0.1.4. Compatibility for FW commanders.
 -- 6 august 2014 - 0.1.3. Some magic which might fix crash. (At least it fixed the original zombie gadget)
 -- 7 april 2014 - 0.1.2. Added permaslow option. Default on. 50% is max slow for now.
@@ -76,7 +77,10 @@ local zombies_to_spawn = {}
 local zombiesToSpawnList = {}
 local zombiesToSpawnMap = {}
 local zombiesToSpawnCount = 0
-local zombies = {}
+local zombies = IterableMap.New()
+local IterableMap = Spring.Utilities.IterableMap
+local zombieCommanders = IterableMap.New()
+local zombieFactories = IterableMap.New()
 
 local ZOMBIE_SOUNDS = {
 	"sounds/misc/zombie_1.wav",
@@ -204,12 +208,30 @@ end
 -- reclaiming zombies 'causes delay in rez, basically you have to have about ZOMBIES_REZ_SPEED/2 or bigger BP to reclaim faster than it resurrects...
 -- TODO do more math to figure out how to perform it better?
 function gadget:AllowFeatureBuildStep(builderID, builderTeam, featureID, featureDefID, part)
-	if (zombies_to_spawn[featureID]) then
+	if zombies_to_spawn[featureID] then
 		local base_time = reclaimed_data[featureID]
 		base_time[3] = base_time[3] - part
 		zombies_to_spawn[featureID] = base_time[1] + base_time[2] * (1+base_time[3]) * 32
 	end
 	return true
+end
+
+local function AssignOrderToUnit(unitID)
+	local unitDefID = (not spGetUnitIsDead(unitID)) and spGetUnitDefID(unitID)
+	if not unitID then
+		return
+	end
+	local unitDef = UnitDefs[unitDefID]
+	if unitDef.buildSpeed > 0 then
+		local randomNum = math.random(1, 100)
+		return
+	end
+	if Spring.GetUnitCurrentCommand(unitID) then -- Unit Already has an order.
+		return
+	end
+	if unitDef.canAttack then
+		
+	end
 end
 
 -- in halloween gadget, sometimes giving order to unit would result in crash because unit happened to be dead at the time order was given
@@ -250,12 +272,12 @@ local function BringingDownTheHeavens(unitID)
 	end
 	if (UnitDefs[unitDefID].isFactory) then
 		OpenAllClownSlots(unitID, unitDefID) -- give factory something to do
-		zombies[unitID] = nil -- no need to update factory orders anymore
+		IterableMap.Remove(zombies, unitID) -- no need to update factory orders anymore
 	end
 end
 
 local function CheckZombieOrders()	-- i can't rely on Idle because if for example unit is unloaded it doesnt count as idle... weird
-	for unitID, _ in pairs(zombies) do
+	for unitID, _ in IterableMap.Iterator(zombies) do
 		local queueSize = spGetCommandQueue(unitID, 0)
 		if not (queueSize) or not (queueSize > 0) then -- oh
 			BringingDownTheHeavens(unitID)
@@ -278,6 +300,16 @@ end
 
 function gadget:GameFrame(f)
 	gameframe = f
+	if f%10 == 0 then -- update commander orders, do dgun.
+		for unitID, data in IterableMap.Iterator(zombieCommanders) do
+			if not data.isMorphing and math.random(1, 100) > 65 then -- 35% every 10 frames to start morphing
+				
+			end
+			if data.dgunAvailable then
+				
+			end
+		end
+	end
 	if (f%32) == 0 then
 		local spSpawnCEG = Spring.SpawnCEG -- putting the localization here because cannot localize in global scope since spring 97
 		local index = 1
@@ -299,8 +331,11 @@ function gadget:GameFrame(f)
 					end
 				end
 				local unitID
+				local isCommander = false
 				if Spring.GetFeatureRulesParam(featureID, "comm_module_count") then -- this is a commander. Tell unit_commander_upgrade to handle it.
 					unitID = GG.CreateZombieCommanderFromFeature(featureID, x, y, z, resName, face)
+					IterableMap.Add(zombieCommanders, unitID, {dgunAvailable = false, isMorphing = false})
+					isCommander = true
 				else
 					spDestroyFeature(featureID)
 					unitID = spCreateUnit(resName, x, y, z, face, GaiaTeamID)
@@ -316,6 +351,9 @@ function gadget:GameFrame(f)
 							Spring.SetUnitHealth(unitID, health*partialReclaim)
 							--spSetUnitRulesParam(unitID, "zombie_partialReclaim", partialReclaim, PRIVATE_ACCESS)
 						end
+					end
+					if not isCommander then
+						IterableMap.Add(zombies, unitID, true)
 					end
 				end
 			else
@@ -346,14 +384,15 @@ end
 -- settings gaiastorage before frame 1 somehow doesnt work, well i can guess why...
 
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
-	if zombies[unitID] then
-		zombies[unitID] = nil
+	if unitTeam == GaiaTeamID then
+		IterableMap.Remove(zombies, unitID)
+		IterableMap.Remove(zombieCommanders, unitID)
 	end
 end
 
 function gadget:UnitTaken(unitID, unitDefID, teamID, newTeamID)
-	if zombies[unitID] and newTeamID ~= GaiaTeamID then
-		zombies[unitID] = nil
+	if IterableMap.InMap(zombies, unitID) and newTeamID ~= GaiaTeamID then
+		IterableMap.Remove(zombies, unitID)
 		-- taking away zombie from zombie team unpermaslows it
 		if ZOMBIES_PERMA_SLOW then
 			SetZombieSlow(unitID, false)
@@ -403,11 +442,11 @@ local function ReInit(reinit)
 	mapHeight = Game.mapSizeZ
 	if not (defined) then
 		UnitFinished = function(unitID, unitDefID, teamID, builderID)
-			if (teamID == GaiaTeamID) and not (zombies[unitID]) then
+			if (teamID == GaiaTeamID) and not IterableMap.InMap(zombies, unitID) then
 				spGiveOrderToUnit(unitID, CMD_REPEAT, {1}, 0)
 				spGiveOrderToUnit(unitID, CMD_MOVE_STATE, {2}, 0)
 				BringingDownTheHeavens(unitID)
-				zombies[unitID] = true
+				IterableMap.Add(zombies, unitID, true)
 				if ZOMBIES_PERMA_SLOW then
 					local maxHealth = select(2, spGetUnitHealth(unitID))
 					if maxHealth then
