@@ -233,7 +233,7 @@ function script.Create()
 	needsBattery = dyncomm.SetUpBattery()
 	magazine = dyncomm.SetUpMagazine()
 	if magazine then
-		scriptMagazine.SetupScriptMagazine(magazine, 33) -- run every frame for commanders
+		scriptMagazine:SetupScriptMagazine(magazine, 33) -- run every frame for commanders
 	end
 --	Turn(larm, x_axis, math.rad(30))
 --	Turn(rarm, x_axis, math.rad(-10))
@@ -360,7 +360,7 @@ function script.FireWeapon(num)
 	end
 	if magazine and magazine[weaponNum] then
 		Spring.Echo("Shot")
-		scriptMagazine.Reload(weaponNum)
+		scriptMagazine:Reload(weaponNum)
 	end
 end
 
@@ -379,7 +379,7 @@ function script.BlockShot(num, targetID)
 	end
 	local mag = false
 	if magazine and magazine[weaponNum] then
-		mag = not scriptMagazine.CanFire(weaponNum)
+		mag = not scriptMagazine:CanFire(weaponNum)
 	end
 	if mag then Spring.Echo("Blocked") end
 	return okp or radarcheck or battery or mag

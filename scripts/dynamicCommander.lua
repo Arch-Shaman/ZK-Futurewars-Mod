@@ -16,7 +16,7 @@ local weaponDef1
 local weaponDef2
 
 --local scriptReload = include("scriptReload.lua")
-local scriptMagazine = include("scriptMagazine.lua")
+--local scriptMagazine = include("scriptMagazine.lua")
 
 local commWreckUnitRulesParam = {"comm_baseWreckID", "comm_baseHeapID"}
 local moduleWreckNamePrefix = {"module_wreck_", "module_heap_"}
