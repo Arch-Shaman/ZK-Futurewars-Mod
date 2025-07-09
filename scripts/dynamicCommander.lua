@@ -511,25 +511,25 @@ local function SetUpMagazineThread()
 		-- TODO: add additional "magazineFactor" for this reload time?
 		magazine[1] = {}
 		magazine[1].size = tonumber(wep1.customParams["magazine_size"])
-		magazine[1].reload = (tonumber(wep1.customParams["magazine_reload"]) or Spring.GetUnitWeaponState(unitID, 1, "reloadTime"))*30 -- in frames
+		magazine[1].reload = (tonumber(wep1.customParams["magazine_reload"]) or Spring.GetUnitWeaponState(unitID, 1, "reloadTime"))*Game.gameSpeed -- in frames
 		magazine[1].mode = tonumber(wep1.customParams["magazine_mode"]) or 0
 		needsMagazine = true
 	end
 	if wep2 ~= nil and (tonumber(wep2.customParams["magazine_size"]) or 0) > 1 then
 		magazine[2] = {}
 		magazine[2].size = tonumber(wep2.customParams["magazine_size"])
-		magazine[2].reload = (tonumber(wep2.customParams["magazine_reload"]) or Spring.GetUnitWeaponState(unitID, 2, "reloadTime"))*30
+		magazine[2].reload = (tonumber(wep2.customParams["magazine_reload"]) or Spring.GetUnitWeaponState(unitID, 2, "reloadTime"))*Game.gameSpeed
 		magazine[2].mode = tonumber(wep2.customParams["magazine_mode"]) or 0
 		needsMagazine = true
 	end
 	if needsMagazine then
-		scriptMagazine.SetupScriptMagazine(magazine, 33) -- run every frame for commanders
 		return magazine
 	end
 end
 
 local function SetUpMagazine()
-	StartThread(SetUpMagazineThread)
+	--StartThread(SetUpMagazineThread)
+	return SetUpMagazineThread()
 end
 
 local function Create()
@@ -738,6 +738,7 @@ end
 
 return {
 	SetUpBattery      = SetUpBattery,
+	SetUpMagazine     = SetUpMagazine,
 	GetPace           = GetPace,
 	GetScale          = GetScale,
 	GetWeapon         = GetWeapon,

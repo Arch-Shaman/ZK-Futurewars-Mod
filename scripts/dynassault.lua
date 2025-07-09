@@ -232,6 +232,9 @@ function script.Create()
 	Hide(lnanoflare)
 	needsBattery = dyncomm.SetUpBattery()
 	magazine = dyncomm.SetUpMagazine()
+	if magazine then
+		scriptMagazine.SetupScriptMagazine(magazine, 33) -- run every frame for commanders
+	end
 --	Turn(larm, x_axis, math.rad(30))
 --	Turn(rarm, x_axis, math.rad(-10))
 --	Turn(rhand, x_axis, math.rad(41))
@@ -355,6 +358,10 @@ function script.FireWeapon(num)
 	if dyncomm.IsManualFire(num) then
 		priorityAim = false
 	end
+	if magazine and magazine[weaponNum] then
+		Spring.Echo("Shot")
+		scriptMagazine.Reload(weaponNum)
+	end
 end
 
 function script.BlockShot(num, targetID)
@@ -374,14 +381,12 @@ function script.BlockShot(num, targetID)
 	if magazine and magazine[weaponNum] then
 		mag = not scriptMagazine.CanFire(weaponNum)
 	end
+	if mag then Spring.Echo("Blocked") end
 	return okp or radarcheck or battery or mag
 end
 
 function script.Shot(num)
 	local weaponNum = dyncomm.GetWeapon(num)
-	if magazine and magazine[weaponNum] then
-		scriptMagazine.Reload(weaponNum)
-	end
 	if weaponNum == 1 then
 		dyncomm.EmitWeaponShotSfx(rcannon_flare, num)
 	elseif weaponNum == 2 then

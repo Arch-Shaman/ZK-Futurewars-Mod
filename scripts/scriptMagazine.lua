@@ -8,6 +8,7 @@ local ALLY_ACCESS = {allied = true}
 local externalFunctions = {}
 
 local sleeptime
+local factor
 
 local config
 local weapons
@@ -22,21 +23,20 @@ local active = {}
 
 -- todo: sequential mode (only one shot can reload at a time)
 -- todo: whole mag mode (replenish whole magazine, but shooting resets cooldown)
-function externalFunctions.SetupScriptMagazine(newMagazines, newSleeptime)
+function externalFunctions.SetupScriptMagazine(newMagazines, newSleeptime, newFactor)
+	Spring.Utilities.TableEcho(newMagazines)
 	sleeptime = newSleeptime or sleeptime or 100
+	factor = newFactor or math.max(1,math.floor(sleeptime/33))
 	config = newMagazines
+	totalLoaded = 0
 	weapons = {}
 	for i,j in pairs(config) do
 		table.insert(weapons, i)
-		loaded[i] = j[1]
+		loaded[i] = j.size
 		totalLoaded = totalLoaded + j.size
 		reloadStartFrame[i] = {}
 		penaltyTime[i] = {}
-		loaded = {}
 		active[i] = 0
-		for k=0, j.size-1 do
-			loaded[i] = true
-		end
 	end
 end
 
@@ -122,7 +122,7 @@ function externalFunctions.SleepAndUpdateReload(weapon, shot, reloadDuration)
 		local stunnedOrInbuild = Spring.GetUnitIsStunned(unitID)
 		local reloadMult = (stunnedOrInbuild and 0) or (Spring.GetUnitRulesParam(unitID, "totalReloadSpeedChange") or 1)
 
-		reloadTimer = reloadTimer + reloadMult * 3
+		reloadTimer = reloadTimer + reloadMult * factor
 
 		if percentageSet and (reloadMult == 1.0) then
 			percentageSet = false
@@ -150,15 +150,23 @@ end
 
 function externalFunctions.Reload(weapon, shot)
 	shot = shot or active[weapon]
+	Spring.Echo("Reload "..weapon.." - "..(shot or "nil"))
+	Spring.Utilities.TableEcho(reloadStartFrame)
 	StartThread(ReloadThread, weapon, shot)
 end
 
-function externalFunctions.CanShoot(weapon, shot)
+function externalFunctions.CanFire(weapon, shot)
+	--Spring.Echo("CanFire "..weapon.." - "..(shot or "nil"))
+	--Spring.Echo("active: "..(active[weapon] or "nil"))
+	--Spring.Echo(type(weapon))
+	--Spring.Echo(active[1])
+	--Spring.Echo(active["1"])
+	--Spring.Utilities.TableEcho(active)
 	shot = shot or active[weapon]
 	return not reloadStartFrame[weapon][shot]
 end
 
---function externalFunctions.CanShootAny(weapon)
+--function externalFunctions.CanFireAny(weapon)
 --	return not reloadStartFrame[weapon][active[weapon]]
 --end
 
