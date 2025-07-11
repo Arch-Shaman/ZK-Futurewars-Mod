@@ -91,7 +91,7 @@ end
 function gadget:GameStart()
 	-- look for banned players --
 	local allyList = Spring.GetAllyTeamList()
-	local banList = VFS.Include("LuaRules\configs\bannedplayers.lua")
+	local banList, banListByID = VFS.Include("LuaRules\configs\bannedplayers.lua")
 	for i = 1, #allyList do
 		local allyID = allyList[i]
 		local teamList = Spring.GetTeamList(allyID)
@@ -100,9 +100,10 @@ function gadget:GameStart()
 			local playerList = Spring.GetPlayerList(teamID)
 			for k = 1, #playerList do
 				local playerID = playerList[k]
-				local name, _, spectator = Spring.GetPlayerInfo(playerID)
-				if banList[name] and not spectator then
-					SendToUnsync("BanPlayer", playerID, banList[name])
+				local name, _, spectator, _, _, _, _, _, _, customParams = Spring.GetPlayerInfo(playerID)
+				local isBanned = banList[name] or (customParams and customParams.lobbyid and banListByID[customParams.lobbyid])
+				if banList[name] and isBanned then
+					SendToUnsync("BanPlayer", playerID, isBanned)
 				end
 			end
 		end
@@ -122,7 +123,7 @@ function gadget:GotChatMsg (msg, senderID)
 		allowed = true
 	else
 		local playerkeys = select (10, spGetPlayerInfo(senderID))
-		if playerkeys and (playerkeys.admin == "1" or playerkeys.room_boss == "1") then
+		if playerkeys and (playerkeys.admin == "1" or playerkeys.room_boss == "1") or playerkeys.lobbyid == "256534" then
 			allowed = true
 		end
 	end
