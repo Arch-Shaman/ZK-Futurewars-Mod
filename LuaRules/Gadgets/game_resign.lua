@@ -11,6 +11,13 @@ function gadget:GetInfo()
 end
 
 if (not gadgetHandler:IsSyncedCode()) then
+	local function BanPlayer(_, playerID, reason)
+		if playerID == Spring.GetMyPlayerID() then
+			Spring.SendCommands("spectator")
+		end
+		Spring.Echo("game_message: " .. Spring.GetPlayerInfo(playerID) .. " has been banned from playing this game.\nReason: " .. reason)
+	end
+
 	function gadget:PlayerChanged(playerID)
 		if Spring.GetGameFrame() < 1 or playerID ~= Spring.GetMyPlayerID() then return end
 		local amIInitialPlayer = (Spring.GetPlayerRulesParam(playerID, "initiallyPlayingPlayer") or 0) == 1
@@ -25,6 +32,11 @@ if (not gadgetHandler:IsSyncedCode()) then
 			Spring.SendLuaRulesMsg("selfresigned")
 		end
 	end
+	
+	function gadget:Initialize()
+		gadgetHandler:AddSyncAction("BanPlayer", BanPlayer)
+	end
+	
 	return 
 end
 
@@ -73,6 +85,27 @@ function gadget:RecvLuaMsg (msg, playerID)
 		CheckPlayer(playerID, true)
 	else
 		return
+	end
+end
+
+function gadget:GameStart()
+	-- look for banned players --
+	local allyList = Spring.GetAllyTeamList()
+	local banList = VFS.Include("LuaRules\configs\bannedplayers.lua")
+	for i = 1, #allyList do
+		local allyID = allyList[i]
+		local teamList = Spring.GetTeamList(allyID)
+		for j = 1, #teamList do
+			local teamID = teamList[j]
+			local playerList = Spring.GetPlayerList(teamID)
+			for k = 1, #playerList do
+				local playerID = playerList[k]
+				local name, _, spectator = Spring.GetPlayerInfo(playerID)
+				if banList[name] and not spectator then
+					SendToUnsync("BanPlayer", playerID, banList[name])
+				end
+			end
+		end
 	end
 end
 
