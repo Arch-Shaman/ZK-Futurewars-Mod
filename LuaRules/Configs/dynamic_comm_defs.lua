@@ -2635,6 +2635,7 @@ for i = 1, #moduleDefs do
 end
 
 for name, data in pairs(skinDefs) do
+	moduleDefNames["skin_" .. name] = #moduleDefs + 1
 	moduleDefs[#moduleDefs + 1] = {
 		name = "skin_" .. name,
 		humanName = data.humanName,
@@ -2646,7 +2647,7 @@ for name, data in pairs(skinDefs) do
 		requireLevel = 0,
 		slotType = "decoration",
 		isDeco = true,
-		effectPriority = 5,
+		effectPriority = 0,
 		applicationFunction = function (modules, sharedData)
 			sharedData.skinOverride = name
 		end
