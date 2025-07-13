@@ -484,7 +484,10 @@ function widget:UnitEnteredLos(unitID, unitTeam)
 		-- if this is defence we knew about, we don't need to poll the position for los anymore
 		defNeedingLosChecks[unitID] = nil
 	end
-	UnitDetected(unitID, Spring.GetUnitDefID(unitID), false)
+	local transport = Spring.GetUnitTransporter(unitID)
+	if not transport then
+		UnitDetected(unitID, Spring.GetUnitDefID(unitID), false)
+	end
 end
 
 function widget:UnitLeftLos(unitID, unitTeam)
@@ -695,6 +698,14 @@ local function SetupChiliStuff()
 		end
 		global_command_button = GCB.AddCommand("LuaUI/Images/defense_ranges/defense_colors.png", "Defence Ranges", ToggleWindow)
 	end
+end
+
+function widget:UnitLoaded(unitID, unitDefID, unitTeam, transportID, transportTeam)
+	widget:UnitDestroyed(unitID)
+end
+
+function widget:UnitUnloaded(unitID, unitDefID, unitTeam, transportID, transportTeam)
+	UnitDetected(unitID, unitDefID, false)
 end
 
 function widget:Initialize()
