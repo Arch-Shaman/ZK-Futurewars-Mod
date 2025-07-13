@@ -26,7 +26,7 @@ local weaponDef = {
 	},
 
 	damage                  = {
-		default = 1200.01,
+		default = 400,
 	},
 
 	explosionGenerator      = "custom:spectre_hit",
@@ -46,7 +46,7 @@ local weaponDef = {
 	soundStart              = "weapon/gauss_fire",
 	turret                  = true,
 	weaponType              = "Cannon",
-	weaponVelocity          = 1000,
+	weaponVelocity          = 550,
 }
 
 return name, weaponDef
