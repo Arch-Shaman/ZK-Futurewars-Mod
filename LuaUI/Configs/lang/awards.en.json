@@ -92,7 +92,7 @@
 	"ouch_desc" : "Earned by taking health damage.",
 	"ouch_yourscore" : "You took %{score} damage.",
 	"ouch_score" : "%{score} damage taken",
-	"pwn_name" : "Complete Annihalation",
+	"pwn_name" : "Complete Annihilation",
 	"pwn_desc" : "Earned by dealing damage to enemy units.",
 	"pwn_yourscore" : "You dealt %{score} damage to enemy units.",
 	"pwn_score" : "%{score} damage dealt",
