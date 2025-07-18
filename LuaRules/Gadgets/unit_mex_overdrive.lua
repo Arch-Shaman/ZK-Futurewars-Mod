@@ -125,6 +125,7 @@ local paybackDefs = { -- cost is how much to pay back
 	[UnitDefNames["energysingu"].id] = {cost = UnitDefNames["energysingu"].metalCost*PAYBACK_FACTOR},
 	[UnitDefNames["energygeo"].id] = {cost = UnitDefNames["energygeo"].metalCost*PAYBACK_FACTOR},
 	[UnitDefNames["energyheavygeo"].id] = {cost = UnitDefNames["energyheavygeo"].metalCost*PAYBACK_FACTOR},
+	[UnitDefNames["staticenergyrtg"].id] = {cost = UnitDefNames["staticenergyrtg"].metalCost * PAYBACK_FACTOR},
 }
 
 local spammedError = false
