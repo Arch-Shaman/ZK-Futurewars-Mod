@@ -13,6 +13,7 @@ local fwCMDS = {
 	SWEEPFIRE_CANCEL = 38887,
 	SWEEPFIRE_MINES = 38888,
 	FIRECYCLE = 38889, -- cmd_firecycle gadget
+	AUTOEXPAND = 38890,
 	OVERRECLAIM = 38950,
 	AUTOJUMP = 39382, -- Tactical AI / Jump Fall Avoidance
 	ARMORSTATE = 39383, -- Bastion / Azimuth command.
