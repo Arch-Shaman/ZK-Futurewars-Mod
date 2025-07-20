@@ -70,7 +70,7 @@ return {
 				areaOfEffect            = 8,
 				accuracy				= 550,
 				coreThickness           = 0.35,
-				beamTime                = 1/30,
+				beamTime                = 3/30,
 				craterBoost             = 0,
 				craterMult              = 0,
 				customParams        = {
@@ -83,7 +83,7 @@ return {
 					sweepfire_fastupdate = 1,
 				},
 				damage                  = {
-					default = 2.3,
+					default = 6.9,
 				},
 				duration                = 2/30,
 				explosionGenerator      = "custom:beamweapon_hit_orange",
@@ -95,7 +95,7 @@ return {
 				leadLimit               = 0,
 				noSelfDamage            = true,
 				range                   = 240,
-				reloadtime              = 1/30,
+				reloadtime              = 3/30,
 				rgbColor                = "1 0.27059 0",
 				soundStart              = "weapon/laser/orange_micropulse",
 				soundstartvolume	    = 30,
