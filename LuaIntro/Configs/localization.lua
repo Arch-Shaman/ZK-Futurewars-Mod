@@ -21,7 +21,7 @@ local strings = {
 		[12] = "Some units are equipped with a MIRV capable weapon system. Use the nuclear trefoil symbol button found in the command card to place submunition targets for your weapons.",
 		[13] = "Assassins and Ghost Commanders (with a certain weapon system unlocked at level 4) can teleport, even while cloaked. Teleportation devices, however, do not work while wet.",
 		[14] = "Air power is war power. Never neglect your air force or anti-air. You never know when a surprise air switch will happen.",
-		[15] = "'Storage' structures are a myth perpetuated by anti-federation propagandists who want to ruin our way of life. All construction units and structures, including factories, Athenas, and Commanders are equipped with resource storages. Report anyone stating otherwise to your nearest loyalty assurance officer.",
+		[15] = "'Storage' structures are a myth perpetuated by anti-federation propagandists who want to ruin our way of life. All construction units and structures, including factories, Athenas, and Commanders are equipped with resource storages. Typically this is 15x their build power. Report anyone stating otherwise to your nearest loyalty assurance officer.",
 		[16] = "Lurkers are armed with a special radar absorbing armor that prevents them from showing up on enemy radar. Use this to your advantage to launch surprise raids against them!",
 	},
 	["ar"] = {
@@ -46,7 +46,7 @@ local strings = {
 		[12] = "بعض الوحدات مُجهزة بنظام أسلحة قادر على حمل صواريخ متعددة الرؤوس (MIRV). استخدم زر رمز البرسيم النووي الموجود في بطاقة الأوامر لتحديد أهداف الذخائر الصغيرة لأسلحتك.",
 		[13] = "يستطيع القتلة وقادة الأشباح (الذين يُفتح لهم نظام أسلحة معين عند المستوى الرابع) الانتقال الآني، حتى وهم مُتخفّون. مع ذلك، لا تعمل أجهزة الانتقال الآني في حالة البلل.",
 		[14] = "القوة الجوية قوة حربية. لا تهمل أبدًا سلاحك الجوي أو سلاحك المضاد للطائرات. لا تدري متى قد يحدث تغيير جوي مفاجئ",
-		[15] = "هياكل 'التخزين' خرافة يروج لها دعاة مناهضون للاتحاد، يسعون إلى تدمير أسلوب حياتنا. جميع وحدات وهياكل البناء، بما في ذلك المصانع، ووحدات أثينا، ووحدات القادة، مجهزة بمخازن موارد. أبلغ عن أي شخص يُصرّح بخلاف ذلك إلى أقرب مسؤول ضمان ولاء.",
+		[15] = "هياكل 'التخزين' خرافة يروج لها دعاة مناهضة للاتحاد، ويريدون تدمير أسلوب حياتنا. جميع وحدات وهياكل البناء، بما في ذلك المصانع، والأثينا، والقادة، مجهزة بمخازن موارد. عادةً ما تكون هذه المخازن 15 ضعفًا من قدرتها على البناء. أبلغ عن أي شخص يُصرّح بخلاف ذلك إلى أقرب مسؤول ضمان ولاء.",
 		[16] = "المُتربصون مُسلَّحون بدرع خاص لامتصاص الرادار يمنعهم من الظهور على رادار العدو. استغل هذا الدرع لشن غارات مفاجئة عليهم!",
 	},
 	["de"] = {
@@ -71,7 +71,7 @@ local strings = {
 		[12] = "Einige Einheiten sind mit einem MIRV-fähigen Waffensystem ausgestattet. Verwenden Sie die Schaltfläche mit dem nuklearen Kleeblattsymbol auf der Kommandokarte, um Submunitionsziele für Ihre Waffen zu platzieren.",
 		[13] = "Assassinen und Ghost Commander (mit einem bestimmten Waffensystem, das auf Level 4 freigeschaltet wird) können sich auch getarnt teleportieren. Teleportationsgeräte funktionieren jedoch nicht, wenn sie nass sind.",
 		[14] = "Luftmacht ist Kriegsmacht. Vernachlässigen Sie niemals Ihre Luftwaffe oder Flugabwehr. Man weiß nie, wann es zu einem überraschenden Luftwaffenwechsel kommt.",
-		[15] = "„Lager“-Strukturen sind ein Mythos, der von föderationsfeindlichen Propagandisten verbreitet wird, die unsere Lebensweise zerstören wollen. Alle Baueinheiten und Strukturen, einschließlich Fabriken, Athenas und Kommandanten, sind mit Ressourcenlagern ausgestattet. Melden Sie jeden, der etwas anderes behauptet, Ihrem nächstgelegenen Loyalitätsbeauftragten.", 
+		[15] = "„Lager“-Strukturen sind ein Mythos, der von föderationsfeindlichen Propagandisten verbreitet wird, die unsere Lebensweise zerstören wollen. Alle Baueinheiten und -strukturen, einschließlich Fabriken, Athenas und Kommandanten, sind mit Ressourcenlagern ausgestattet. Diese erhöhen in der Regel die 15-fache Bauleistung. Melden Sie alle, die etwas anderes behaupten, Ihrem nächstgelegenen Loyalitätsbeauftragten.", 
 		[16] = "Lurker sind mit einer speziellen radarabsorbierenden Panzerung ausgestattet, die verhindert, dass sie auf dem feindlichen Radar erscheinen. Nutzen Sie dies zu Ihrem Vorteil, um Überraschungsangriffe auf sie zu starten!",
 	},
 	["fr"] = {
@@ -96,7 +96,7 @@ local strings = {
 		[12] = "Certaines unités sont équipées d'un système d'arme compatible MIRV. Utilisez le bouton en forme de trèfle nucléaire situé sur la carte de commandement pour placer des cibles de sous-munitions pour vos armes.",
 		[13] = "Les Assassins et les Commandants Fantômes (avec un système d'armes spécifique débloqué au niveau 4) peuvent se téléporter, même camouflés. Cependant, les dispositifs de téléportation ne fonctionnent pas lorsqu'ils sont mouillés.",
 		[14] = "La puissance aérienne est une puissance de guerre. Ne négligez jamais votre force aérienne ou votre défense antiaérienne. On ne sait jamais quand un changement de position aérien surprise peut se produire.",
-		[15] = "Les structures de «stockage» sont un mythe perpétué par des propagandistes anti-fédération qui veulent ruiner notre mode de vie. Toutes les unités et structures de construction, y compris les usines, les Athénas et les commandants, sont équipées de stockages de ressources. Signalez toute affirmation contraire à votre agent de loyauté le plus proche.",
+		[15] = "Les structures de « stockage » sont un mythe perpétué par des propagandistes anti-fédération qui veulent ruiner notre mode de vie. Toutes les unités et structures de construction, y compris les usines, les Athénas et les commandants, sont équipées de réserves de ressources. Celles-ci représentent généralement 15 fois leur puissance de construction. Signalez toute affirmation contraire à votre agent de loyauté le plus proche.",
 		[16] = "Les Lurkers sont équipés d'une armure spéciale absorbant les radars, ce qui les empêche d'être repérés par les ennemis. Utilisez-la à votre avantage pour lancer des raids surprise contre eux !",
 	},
 	["hi"] = {
@@ -121,7 +121,7 @@ local strings = {
 		[12] = "कुछ इकाइयाँ MIRV सक्षम हथियार प्रणाली से सुसज्जित हैं। अपने हथियारों के लिए सबम्यूनिशन लक्ष्य रखने के लिए कमांड कार्ड में पाए जाने वाले परमाणु ट्रेफ़ॉइल प्रतीक बटन का उपयोग करें।",
 		[13] = "हत्यारे और भूत कमांडर (स्तर 4 पर अनलॉक की गई एक निश्चित हथियार प्रणाली के साथ) क्लोक्ड होने पर भी टेलीपोर्ट कर सकते हैं। हालाँकि, टेलीपोर्टेशन डिवाइस गीले होने पर काम नहीं करते हैं।",
 		[14] = "वायु शक्ति युद्ध शक्ति है। अपनी वायु सेना या वायु-विरोधी सेना को कभी नज़रअंदाज़ न करें। आप कभी नहीं जानते कि अचानक हवाई हमला कब हो जाए।",
-		[15] = "'भंडारण' संरचनाएँ संघ-विरोधी प्रचारकों द्वारा फैलाई गई एक मिथक हैं जो हमारे जीवन के तरीके को बर्बाद करना चाहते हैं। कारखानों, एथेना और कमांडरों सहित सभी निर्माण इकाइयाँ और संरचनाएँ संसाधन भंडारण से सुसज्जित हैं। यदि कोई व्यक्ति इसके विपरीत कहता है तो अपने निकटतम वफादारी आश्वासन अधिकारी को रिपोर्ट करें।",
+		[15] = "'भंडारण' संरचनाएँ संघ-विरोधी प्रचारकों द्वारा फैलाई गई एक मिथक हैं जो हमारी जीवनशैली को बर्बाद करना चाहते हैं। सभी निर्माण इकाइयाँ और संरचनाएँ, जिनमें कारखाने, एथेना और कमांडर शामिल हैं, संसाधन भंडारण से सुसज्जित हैं। आमतौर पर यह उनकी निर्माण क्षमता का 15 गुना होता है। अगर कोई इसके विपरीत दावा करता है, तो अपने नज़दीकी वफ़ादारी आश्वासन अधिकारी को इसकी सूचना दें।",
 		[16] = "लुकर्स एक विशेष रडार अवशोषित कवच से लैस होते हैं जो उन्हें दुश्मन के रडार पर दिखाई देने से रोकता है। उनके खिलाफ आश्चर्यजनक छापे मारने के लिए इसका लाभ उठाएं!",
 	},
 	["it"] = {
@@ -146,7 +146,7 @@ local strings = {
 		[12] = "Alcune unità sono equipaggiate con un sistema d'arma compatibile con MIRV. Usa il pulsante con il simbolo del trifoglio nucleare che si trova sulla scheda comando per piazzare bersagli per le submunizioni delle tue armi.",
 		[13] = "Assassini e Comandanti Fantasma (con un certo sistema d'arma sbloccato al livello 4) possono teletrasportarsi, anche se occultati. I dispositivi di teletrasporto, tuttavia, non funzionano se bagnati.",
 		[14] = "La potenza aerea è potenza di guerra. Non trascurare mai la tua aeronautica o la tua contraerea. Non si sa mai quando avverrà un inaspettato scambio d'aria.",
-		[15] = "Le strutture di 'deposito' sono un mito perpetuato dai propagandisti anti-federali che vogliono rovinare il nostro stile di vita. Tutte le unità e le strutture di costruzione, comprese fabbriche, Athenas e Comandanti, sono dotate di depositi di risorse. Segnalate chiunque affermi il contrario al vostro più vicino responsabile della garanzia di fedeltà.",
+		[15] = "Le strutture di 'deposito' sono un mito perpetuato dai propagandisti anti-federali che vogliono rovinare il nostro stile di vita. Tutte le unità e le strutture di costruzione, comprese fabbriche, Athena e Comandanti, sono dotate di depositi di risorse. In genere, questo è pari a 15 volte la loro potenza di costruzione. Segnalate chiunque affermi il contrario al vostro più vicino responsabile della garanzia di fedeltà.",
 		[16] = "I Lurker sono armati con una speciale armatura che assorbe i radar e impedisce loro di apparire sui radar nemici. Usala a tuo vantaggio per lanciare incursioni a sorpresa contro di loro!"
 	},
 	["ja"] = {
@@ -171,7 +171,7 @@ local strings = {
 		[12] = "一部のユニットはMIRV（多弾頭ミサイル）対応の兵器システムを装備しています。コマンドカードにある核兵器の三つ葉シンボルボタンを使って、兵器の子弾頭を設置しましょう。",
 		[13] = "アサシンとゴーストコマンダー（レベル4で特定の兵器システムをアンロック）は、クローク中でもテレポートできます。ただし、テレポート装置は濡れていると機能しません。",
 		[14] = "航空戦力は戦争の力です。航空戦力や対空戦力を決して軽視してはいけません。いつ突然の空中切り替えが起こるかは分かりません。",
-		[15] = "『貯蔵』構造物は、私たちの生活を破壊しようとする反連邦プロパガンダによって広められた神話です。工場、アテナ、司令官を含むすべての建設ユニットと構造物には、資源貯蔵庫が装備されています。これと異なる主張をする者は、最寄りの忠誠保証担当者に報告してください。",
+		[15] = "「貯蔵庫」構造物は、私たちの生活を破壊しようとする反連邦プロパガンダによって広められた神話です。工場、アテナ、司令官を含むすべての建設ユニットと構造物には、資源貯蔵庫が備えられています。通常、これは建設パワーの15倍です。これと異なる主張をしている方は、最寄りの忠誠保証担当者に報告してください。",
 		[16] = "ラーカーは敵のレーダーに映らない特殊なレーダー吸収装甲を装備しています。これを利用して奇襲攻撃を仕掛けましょう！",
 	},
 	["pl"] = {
@@ -196,7 +196,7 @@ local strings = {
 		[12] = "Niektóre jednostki są wyposażone w system uzbrojenia zdolny do użycia MIRV. Użyj przycisku z symbolem koniczyny nuklearnej znajdującego się na karcie poleceń, aby umieścić cele dla subamunicji dla swojej broni.",
 		[13] = "Zabójcy i Dowódcy Duchów (z pewnym systemem uzbrojenia odblokowanym na 4 poziomie) mogą się teleportować, nawet będąc zamaskowanymi. Urządzenia teleportacyjne nie działają jednak, gdy są mokre.",
 		[14] = "Siła powietrzna to siła wojenna. Nigdy nie zaniedbuj swoich sił powietrznych lub przeciwlotniczy. Nigdy nie wiesz, kiedy nastąpi niespodziewana zmiana powietrza.",
-		[15] = "Struktury 'magazynowe' to mit podtrzymywany przez antyfederacyjnych propagandystów, którzy chcą zniszczyć nasz styl życia. Wszystkie jednostki budowlane i struktury, w tym fabryki, Athenas i Commanders, są wyposażone w magazyny zasobów. Zgłoś każdego, kto twierdzi inaczej, najbliższemu oficerowi ds. zapewniania lojalności.",
+		[15] = "Konstrukcje „magazynowe” to mit podtrzymywany przez propagandystów antyfederacyjnych, którzy chcą zniszczyć nasz styl życia. Wszystkie jednostki i konstrukcje budowlane, w tym fabryki, Atheny i Dowódcy, są wyposażone w magazyny zasobów. Zazwyczaj jest to 15-krotnie większa moc konstrukcyjna. Osoby twierdzące inaczej należy zgłosić najbliższemu pracownikowi ds. zapewnienia lojalności.",
 		[16] = "Lurkers są uzbrojeni w specjalny pancerz pochłaniający radar, który zapobiega ich pojawieniu się na radarze wroga. Wykorzystaj to na swoją korzyść, aby przeprowadzić na nich niespodziewane rajdy!",
 	},
 	["pt"] = {
@@ -221,7 +221,7 @@ local strings = {
 		[12] = "Algumas unidades são equipadas com um sistema de armas com capacidade MIRV. Use o botão com o símbolo do trevo nuclear encontrado no cartão de comando para posicionar alvos de submunição para suas armas.",
 		[13] = "Assassinos e Comandantes Fantasmas (com um determinado sistema de armas desbloqueado no nível 4) podem se teletransportar, mesmo camuflados. Dispositivos de teletransporte, no entanto, não funcionam enquanto estiverem molhados.",
 		[14] = "Poder aéreo é poder de guerra. Nunca negligencie sua força aérea ou antiaérea. Nunca se sabe quando uma troca aérea surpresa acontecerá.",
-		[15] = "Estruturas de 'armazenamento' são um mito perpetuado por propagandistas antifederação que querem arruinar nosso modo de vida. Todas as unidades e estruturas de construção, incluindo fábricas, Atenas e Comandantes, são equipadas com armazenamentos de recursos. Denuncie qualquer pessoa que afirme o contrário ao seu agente de garantia de lealdade mais próximo.",
+		[15] = "Estruturas de 'armazenamento' são um mito perpetuado por propagandistas antifederação que querem arruinar nosso modo de vida. Todas as unidades e estruturas de construção, incluindo fábricas, Atenas e Comandantes, são equipadas com armazenamentos de recursos. Normalmente, isso representa 15 vezes o seu poder de construção. Denuncie qualquer pessoa que diga o contrário ao agente de garantia de lealdade mais próximo.",
 		[16] = "Os Lurkers são armados com uma armadura especial que absorve radar, impedindo-os de aparecer no radar inimigo. Use isso a seu favor para lançar ataques surpresa contra eles!",
 	},
 	["ru"] = {
@@ -246,7 +246,7 @@ local strings = {
 		[12] = "Некоторые юниты оснащены вооружением с индивидуальной системой наведения. Используйте кнопку с символом ядерного трилистника, которая находится на командной карте, чтобы размещать цели для суббоеприпасов для вашего оружия.",
 		[13] = "Убийцы и командиры-призраки (с определенной системой оружия, разблокированной на уровне 4) могут телепортироваться, даже будучи замаскированными. Однако устройства телепортации не работают под водой.",
 		[14] = "Воздушная мощь — это военная мощь. Никогда не пренебрегайте своими воздушными силами или противовоздушная оборона. Никогда не знаешь, когда произойдет неожиданное воздушная атака.",
-		[15] = "Строения «хранилищ» — миф, увековеченный антифедеративными пропагандистами, которые хотят разрушить наш образ жизни. Все строительные подразделения и сооружения, включая фабрики, Афины и Командиры, оснащены хранилищами ресурсов. Сообщите о любом человеке, который утверждает обратное, ближайшему офицеру по обеспечению лояльности.",
+		[15] = "«Складские» сооружения — миф, насаждаемый антифедеративными пропагандистами, желающими разрушить наш образ жизни. Все строительные юниты и сооружения, включая фабрики, «Афины» и «Командоры», оснащены хранилищами ресурсов. Как правило, это в 15 раз больше их строительной мощности. Сообщите о любом, кто утверждает обратное, ближайшему офицеру по обеспечению лояльности.",
 		[16] = "Луркеры вооружены специальной броней, поглощающей радиолокационные лучи, которая не позволяет радарам противника обнаруживать их. Используйте это в своих интересах, чтобы устраивать внезапные набеги на них!",
 	},
 	["tr"] = {
@@ -271,7 +271,7 @@ local strings = {
 		[12] = "Bazı birimler MIRV yeteneğine sahip bir silah sistemiyle donatılmıştır. Silahlarınız için alt mühimmat hedefleri yerleştirmek için komuta kartında bulunan nükleer yonca sembolü düğmesini kullanın.",
 		[13] = "Suikastçılar ve Hayalet Komutanlar (4. seviyede belirli bir silah sistemi kilidi açılmış) gizlenmiş olsalar bile ışınlanabilirler. Ancak ışınlanma cihazları ıslakken çalışmaz.",
 		[14] = "Hava gücü savaş gücüdür. Hava kuvvetlerinizi veya hava savunmanızı asla ihmal etmeyin. Sürpriz bir hava değişiminin ne zaman gerçekleşeceğini asla bilemezsiniz.",
-		[15] = "'Depolama' yapıları, yaşam tarzımızı mahvetmek isteyen federasyon karşıtı propagandacılar tarafından yayılan bir efsanedir. Fabrikalar, Athenalar ve Komutanlar dahil tüm inşaat birimleri ve yapıları kaynak depolarıyla donatılmıştır. Aksi yönde bir şey söyleyen herkesi en yakın sadakat güvence görevlisine bildirin.",
+		[15] = "'Depolama' yapıları, yaşam tarzımızı mahvetmek isteyen federasyon karşıtı propagandacılar tarafından yayılan bir efsanedir. Fabrikalar, Athenalar ve Komutanlar dahil tüm inşaat birimleri ve yapıları kaynak depolarıyla donatılmıştır. Genellikle bu, inşa güçlerinin 15 katıdır. Aksini söyleyen herkesi en yakın sadakat güvence görevlisine bildirin.",
 		[16] = "Gizli kişiler, düşman radarında görünmelerini engelleyen özel bir radar emici zırhla donatılmıştır. Bunu, onlara karşı sürpriz baskınlar başlatmak için kendi avantajınıza kullanın!",
 	},
 	["th"] = {
@@ -296,7 +296,7 @@ local strings = {
 		[12] = "หน่วยบางหน่วยติดตั้งระบบอาวุธที่สามารถใช้งาน MIRV ได้ ใช้ปุ่มสัญลักษณ์รูปสามแฉกนิวเคลียร์ที่พบในการ์ดคำสั่งเพื่อวางเป้าหมายอาวุธย่อยสำหรับอาวุธของคุณ",
 		[13] = "นักฆ่าและผู้บัญชาการผี (ที่มีระบบอาวุธบางอย่างที่ปลดล็อกที่ระดับ 4) สามารถเทเลพอร์ตได้ แม้จะอยู่ในผ้าคลุมตัวก็ตาม อย่างไรก็ตาม อุปกรณ์เทเลพอร์ตจะไม่ทำงานเมื่อเปียก",
 		[14] = "พลังทางอากาศคือพลังแห่งสงคราม อย่าละเลยกองทัพอากาศหรือหน่วยต่อต้านอากาศยานของคุณ ไม่มีทางรู้เลยว่าเมื่อไหร่จะเกิดการสลับอากาศกะทันหัน",
-		[15] = "โครงสร้าง 'คลังเก็บของ' เป็นตำนานที่ผู้ต่อต้านสหพันธ์เผยแพร่เพื่อทำลายวิถีชีวิตของเรา หน่วยก่อสร้างและโครงสร้างทั้งหมด รวมถึงโรงงาน เอเธน่า และผู้บัญชาการ ต่างก็มีคลังเก็บของทรัพยากร รายงานใครก็ตามที่ระบุเป็นอย่างอื่นให้เจ้าหน้าที่รับรองความภักดีที่อยู่ใกล้คุณทราบ",
+		[15] = "โครงสร้าง 'คลังเก็บของ' เป็นตำนานที่ถูกเผยแพร่โดยพวกต่อต้านสหพันธรัฐที่ต้องการทำลายวิถีชีวิตของเรา หน่วยก่อสร้างและสิ่งก่อสร้างทั้งหมด รวมถึงโรงงาน อะธีนา และผู้บัญชาการ ล้วนมีคลังเก็บของทรัพยากร ซึ่งโดยทั่วไปแล้วจะมีพลังสร้างมากกว่า 15 เท่า โปรดรายงานผู้ที่แจ้งเป็นอย่างอื่นต่อเจ้าหน้าที่รับรองความภักดีที่ใกล้ที่สุด",
 		[16] = "ผู้แอบซุ่มมีเกราะพิเศษที่ดูดซับเรดาร์ซึ่งป้องกันไม่ให้พวกเขาปรากฏตัวบนเรดาร์ของศัตรู ใช้สิ่งนี้ให้เป็นประโยชน์เพื่อโจมตีพวกมันแบบกะทันหัน!",
 	},
 	["vi"] = {
@@ -346,7 +346,7 @@ local strings = {
 		[12] = "一些单位配备了可携带多弹头分导式多弹头的武器系统。使用指挥卡上的核三叶草符号按钮，为你的武器放置子母弹目标。",
 		[13] = "刺客和幽灵指挥官（在4级解锁特定武器系统）可以传送，即使在隐形状态下也可以。然而，传送装置在潮湿状态下无法工作。",
 		[14] = "空中力量就是战争力量。永远不要忽视你的空军或防空力量。你永远不知道什么时候会出现一个突袭性的空中切换。会发生。",
-		[15] = "‘储存’建筑是反联邦宣传者散布的谎言，他们想要毁掉我们的生活方式。所有建筑单位和建筑，包括工厂、雅典娜和指挥官，都配备了资源储存设施。如果有人声称存在相反的情况，请向最近的忠诚保证官举报。",
+		[15] = "“储存”建筑是反联邦宣传者散布的谎言，他们妄图毁掉我们的生活方式。所有建筑单位和建筑，包括工厂、雅典娜和指挥官，都配备了资源储存设施。通常情况下，资源储存设施的建造能力是其建造能力的15倍。如有任何人声称存在此类情况，请向最近的忠诚保证官举报。",
 		[16] = "潜伏者装备有特殊的雷达吸收装甲，可以防止他们出现在敌方雷达上。利用这一点对他们发动突然袭击！"
 	},
 	["zh-tw"] = {
@@ -371,7 +371,7 @@ local strings = {
 		[12] = "一些單位配備了可攜帶多彈頭分導式多彈頭的武器系統。使用指揮卡上的核三葉草符號按鈕，為你的武器放置子彈藥目標。",
 		[13] = "刺客和幽靈指揮官（在4級解鎖特定武器系統）可以傳送，即使在隱身狀態下也可以。然而，傳送裝置在潮濕狀態下無法運作。",
 		[14] = "空中力量就是戰爭力量。永遠不要忽視你的空軍或防空力量。你永遠不知道什麼時候會發生突然的空中切換。",
-		[15] = "『儲存』建築是反聯邦宣傳者散佈的謊言，他們想要毀掉我們的生活方式。所有建築單位和建築，包括工廠、雅典娜和指揮官，都配備了資源儲存設施。任何聲稱並非如此的人，請向最近的忠誠保證官員報告。",
+		[15] = "「儲存」建築是反聯邦宣傳者散播的謊言，他們妄圖毀掉我們的生活方式。所有建築單位和建築，包括工廠、雅典娜和指揮官，都配備了資源儲存設施。通常情況下，資源儲存設施的建造能力是其建造能力的15倍。如有任何人聲稱存在此類情況，請向最近的忠誠保證官舉報。",
 		[16] = "潛伏者裝備有特殊的雷達吸收裝甲，可以防止他們出現在敵方雷達上。利用這一點對他們發動突襲！"
 	},
 }
