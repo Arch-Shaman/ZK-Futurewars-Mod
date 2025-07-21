@@ -14,30 +14,57 @@ function gadget:GetInfo()
 	} 
 end
 
-local IterableMap = Spring.Utilities.IterableMap
+-- speedups --
+local spGetGameRulesParam = Spring.GetGameRulesParam
+local sqrt = math.sqrt
+local spTestBuildOrder = Spring.TestBuildOrder
+local spGetGroundHeight = Spring.GetGroundHeight
+local spGetTeamResources = Spring.GetTeamResources
+local spEcho = Spring.Echo
+local spMarkerAddPoint = Spring.MarkerAddPoint
+local spGetUnitCommandCount = Spring.GetUnitCommandCount
+local spGetUnitTransporter = Spring.GetUnitTransporter
+local spGiveOrderToUnit = Spring.GiveOrderToUnit
+local spGetUnitCommands = Spring.GetUnitCommands
+local spGiveOrderArrayToUnitArray = Spring.GiveOrderArrayToUnitArray
+local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
+local spGetUnitPosition = Spring.GetUnitPosition
+local spGetUnitDefID = Spring.GetUnitDefID
+local spGetUnitLosState = Spring.GetUnitLosState
+local spMarkerAddLine = Spring.MarkerAddLine
+local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc
+local spGetUnitTeam = Spring.GetUnitTeam
+local spFindUnitCmdDesc = Spring.FindUnitCmdDesc
+local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
 local spLosInfo = Spring.Utilities.LosInfo
-local handled = IterableMap.New()
-local forceupdatecons = IterableMap.New()
-local wantedUnitDefs = {}
-local metalSpots = {}
-local mexDefs = {}
+local IterableMap = Spring.Utilities.IterableMap
 local CMD_AUTOEXPAND = Spring.Utilities.CMD.AUTOEXPAND
-local averageRTGOutput = 0.32
+
+-- Config --
+local averageRTGOutput = 0.32 -- higher makes RTG more spammed.
+local energyBuffer = energyDefs[2].energy * 3 -- 3 solars worth.
 local energyDefs = {
 	[1] = {energy = tonumber(UnitDefNames["staticenergyrtg"].customParams.income_energy) * averageRTGOutput, defID = UnitDefNames["staticenergyrtg"].id, cost = UnitDefNames["staticenergyrtg"].metalCost, isWind = false, gridSize = tonumber(UnitDefNames["staticenergyrtg"].customParams.pylonrange) or 10},
 	[2] = {energy = tonumber(UnitDefNames["energysolar"].customParams.income_energy), defID = UnitDefNames["energysolar"].id, cost = UnitDefNames["energysolar"].metalCost, isWind = false, gridSize = tonumber(UnitDefNames["energysolar"].customParams.pylonrange) or 10},
 	[3] = {energy = tonumber(UnitDefNames["energywind"].customParams.income_energy), defID = UnitDefNames["energywind"].id, cost = UnitDefNames["energywind"].metalCost, isWind = true, gridSize = tonumber(UnitDefNames["energywind"].customParams.pylonrange) or 10},
 }
 
-local watchedEnergyDefs = {
+local watchedEnergyDefs = { -- TODO: Automatically update this table.
 	[UnitDefNames["staticenergyrtg"].id] = true,
 	[UnitDefNames["energysolar"].id] = true,
 	[UnitDefNames["energywind"].id] = true,
 }
 
+-- Variables --
 local incomeMultMetal = 1
 local incomeMultEnergy = 1
-local energyBuffer = energyDefs[2].energy * 3 -- 3 solars worth.
+local handled = IterableMap.New()
+local forceupdatecons = IterableMap.New()
+local wantedUnitDefs = {}
+local metalSpots = {}
+local mexDefs = {}
+
+
 local mexToSpotID = {}
 local mexDefIDs = {}
 local averageIncome = 1
@@ -64,13 +91,13 @@ for i = 1, #UnitDefs do
 	local cp = ud.customParams
 	local canBuild = ud.buildSpeed and ud.buildSpeed > 0
 	local isMobile = ud.speed > 0.2
-	if canBuild then
-		Spring.Echo("[Autoexpand]: UnitDef " .. ud.name .. ": " .. tostring(isMobile) .. ", " .. tostring(ud.canAssist))
-	end
+	--[[if canBuild then
+		spEcho("[Autoexpand]: UnitDef " .. ud.name .. ": " .. tostring(isMobile) .. ", " .. tostring(ud.canAssist))
+	end]]
 	if isMobile and canBuild and ud.canAssist then
 		local commander = cp and (cp.level ~= nil or cp.is_commander ~= nil or cp.commtype ~= nil)
 		if not commander then -- commanders do not get autoexpand state because these should be player controlled units.
-			Spring.Echo("[Autoexpand]: Adding " .. ud.name .. " to wanted list")
+			spEcho("[Autoexpand]: Adding con to autoexpand: " .. ud.name .. ".")
 			wantedUnitDefs[i] = true
 		end
 	end
@@ -96,8 +123,6 @@ local windInitialized = false
 -- Includes --
 VFS.Include("LuaRules/Configs/cai/accessory/targetReachableTester.lua")
 include("LuaRules/Configs/constants.lua") -- mainly for HIDDEN_STORAGE
--- speedups --
-local spGetGameRulesParam = Spring.GetGameRulesParam
 
 local function GetMexSpotsFromGameRules()
 	local mexCount = spGetGameRulesParam("mex_count")
@@ -128,11 +153,11 @@ local function InitializeWindParameters()
 	windGroundMin = spGetGameRulesParam("WindGroundMin")
 	windGroundSlope = spGetGameRulesParam("WindSlope")
 	windMinBound = spGetGameRulesParam("WindMinBound")
-	tidalHeight = Spring.GetGameRulesParam("tidalHeight")
+	tidalHeight = spGetGameRulesParam("tidalHeight")
 end
 
 local function Distance(x1, y1, x2, y2)
-	return math.sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)))
+	return sqrt(((x2 - x1) * (x2 - x1)) + ((y2 - y1) * (y2 - y1)))
 end
 
 local function GetGridPreplacementPoint(radius, x, z, targetx, targetz)
@@ -145,7 +170,7 @@ local function GetGridPreplacementPoint(radius, x, z, targetx, targetz)
 end
 
 local function CanUnitBePlacedHere(unitDefID, x, y, z, facing, checkForFeature)
-	local blocking, feature = Spring.TestBuildOrder(unitDefID, x, y, z, facing)
+	local blocking, feature = spTestBuildOrder(unitDefID, x, y, z, facing)
 	if checkForFeature then
 		return blocking == 3 -- Recoil engine now has 3 for "free", 2 for "blocked by feature"
 	else
@@ -167,7 +192,7 @@ local function GetClosestValidConstructionSpot(x, z, unitDefID, facing, magMax, 
 	repeat -- 1 right, 1 up, 2 left, 2 down, 3 right, 3 up
 		nx = x + offsetX
 		nz = z + offsetZ
-		ny = Spring.GetGroundHeight(nx, nz)
+		ny = spGetGroundHeight(nx, nz)
 		canBePlacedHere = CanUnitBePlacedHere(unitDefID, nx, ny, nz, facing, false)
 		if canBePlacedHere then
 			return nx, ny, nz
@@ -194,7 +219,7 @@ local function GetClosestValidConstructionSpot(x, z, unitDefID, facing, magMax, 
 			movesLeft = movesLeft - 1
 		end
 	until canBePlacedHere or aborted
-	return x, Spring.GetGroundHeight(x, z), z -- aborted, return original position.
+	return x, spGetGroundHeight(x, z), z -- aborted, return original position.
 end
 
 local function CalculateWindIncome(x, z)
@@ -202,7 +227,7 @@ local function CalculateWindIncome(x, z)
 		InitializeWindParameters()
 		windInitialized = true
 	end
-	local y = Spring.GetGroundHeight(x, z)
+	local y = spGetGroundHeight(x, z)
 	if y then
 		if y <= tidalHeight then
 			return energyDefs[3].energy
@@ -236,21 +261,21 @@ local function CalculateWindAverage(x, z, magMax)
 	local total = 0
 	local numberOfPlacements = 0
 	local validLocations = {}
-	Spring.Echo("WindDef is " .. windDef)
+	--spEcho("WindDef is " .. windDef)
 	repeat -- 1 right, 1 up, 2 left, 2 down, 3 right, 3 up
 		nx = x + offsetX
 		nz = z + offsetZ
-		ny = Spring.GetGroundHeight(nx, nz)
+		ny = spGetGroundHeight(nx, nz)
 		canBePlacedHere = CanUnitBePlacedHere(windDef, nx, ny, nz, facing, false)
 		if canBePlacedHere then
 			local income = CalculateWindIncome(nx, nz)
-			--Spring.MarkerAddPoint(nx, ny, nz, income, true)
+			--spMarkerAddPoint(nx, ny, nz, income, true)
 			validLocations[#validLocations + 1] = {nx, ny, nz}
 			numberOfPlacements = numberOfPlacements + 1
 			total = total + CalculateWindIncome(nx, nz)
-			--Spring.Echo("Wind valid! " .. numberOfPlacements .. ", " .. total)
+			--spEcho("Wind valid! " .. numberOfPlacements .. ", " .. total)
 		else
-			--Spring.MarkerAddPoint(nx, ny, nz, "InvalidWindPosition", true)
+			--spMarkerAddPoint(nx, ny, nz, "InvalidWindPosition", true)
 		end
 		if movesLeft == 0 and not (mag == magMax and movesLeft == 0 and dir == 4) then 
 			spiralChangeNumber = spiralChangeNumber + 1
@@ -274,13 +299,13 @@ local function CalculateWindAverage(x, z, magMax)
 			movesLeft = movesLeft - 1
 		end
 	until aborted
-	Spring.Echo("Wind average: " .. total / numberOfPlacements .. ", " .. total .. ", " .. numberOfPlacements)
+	--spEcho("Wind average: " .. total / numberOfPlacements .. ", " .. total .. ", " .. numberOfPlacements)
 	return validLocations, total / numberOfPlacements
 end
 
 local function GetStorageRatio(currentLevel, storage)
 	storage = storage - HIDDEN_STORAGE
-	Spring.Echo("TeamStorage: " .. storage)
+	--spEcho("TeamStorage: " .. storage)
 	return currentLevel / storage
 end
 
@@ -288,39 +313,39 @@ local minStorage = 500
 local minStorageRatio = 0.85
 
 local function QuickEnergyCheck(teamID) -- done between energy builds
-	local _, _, _, metalIncome = Spring.GetTeamResources(teamID, "metal")
-	local currentLevel, storage, _, energyIncome = Spring.GetTeamResources(teamID, "energy")
+	local _, _, _, metalIncome = spGetTeamResources(teamID, "metal")
+	local currentLevel, storage, _, energyIncome = spGetTeamResources(teamID, "energy")
 	local energyStorageLevel = GetStorageRatio(currentLevel, storage)
 	metalIncome = metalIncome + energyBuffer
 	local netIncome = energyIncome - metalIncome
-	Spring.Echo("[AutoExpand] QEC: Energy income: " .. netIncome)
+	--spEcho("[AutoExpand] QEC: Energy income: " .. netIncome)
 	return netIncome < 0 and energyStorageLevel <= minStorageRatio and currentLevel < minStorage
 end
 	
 local function CheckIfEnergyIsNeeded(x, z, metalProduction, teamID, data)
-	local _, _, _, metalIncome = Spring.GetTeamResources(teamID, "metal")
-	local currentLevel, storage, _, energyIncome = Spring.GetTeamResources(teamID, "energy")
+	local _, _, _, metalIncome = spGetTeamResources(teamID, "metal")
+	local currentLevel, storage, _, energyIncome = spGetTeamResources(teamID, "energy")
 	local energyStorageLevel = GetStorageRatio(currentLevel, storage)
 	metalIncome = metalIncome + metalProduction + energyBuffer
 	local netIncome = energyIncome - metalIncome
-	Spring.Echo("[AutoExpand] CheckEnergy: Energy income: " .. netIncome .. "(" .. metalIncome .. ", " .. energyIncome .. ")")
+	--spEcho("[AutoExpand] CheckEnergy: Energy income: " .. netIncome .. "(" .. metalIncome .. ", " .. energyIncome .. ")")
 	local validPlacements
 	if netIncome < 0 and energyStorageLevel <= minStorageRatio and currentLevel < minStorage then -- needs energy
 		local neededEnergy = metalIncome - energyIncome
 		local selected = -1
 		local lowestCost = 999999
 		local needed = 9999
-		Spring.Echo("[Autoexpand] Energy is too low! Amount: " .. neededEnergy .. "Checking for cheapest def...")
+		--spEcho("[Autoexpand] Energy is too low! Amount: " .. neededEnergy .. "Checking for cheapest def...")
 		for i = 1, #energyDefs do
 			local def = energyDefs[i]
 			local energy = energyDefs[i].energy
 			if def.isWind then
 				validPlacements, energy = CalculateWindAverage(x, z, 3)
-				Spring.Echo("Wind average: " .. energy)
+				--spEcho("Wind average: " .. energy)
 			end
 			local numberNeeded = math.ceil(neededEnergy / energy)
 			local approximatedCost = numberNeeded * def.cost
-			Spring.Echo(UnitDefs[def.defID].name .. ": " .. approximatedCost)
+			--spEcho(UnitDefs[def.defID].name .. ": " .. approximatedCost)
 			if approximatedCost < lowestCost then
 				lowestCost = approximatedCost
 				needed = numberNeeded
@@ -341,9 +366,9 @@ local function CheckIfEnergyIsNeeded(x, z, metalProduction, teamID, data)
 end
 
 local function CheckUnitIsIdle(unitID) -- checks if a unit is idle.
-	local cmdQueueCount = Spring.GetUnitCommandCount(unitID)
+	local cmdQueueCount = spGetUnitCommandCount(unitID)
 	if cmdQueueCount > 0 then return false end
-	local transported = Spring.GetUnitTransporter(unitID)
+	local transported = spGetUnitTransporter(unitID)
 	return transported == nil
 end
 
@@ -368,7 +393,7 @@ local function EvaluateMex(unitID, unitSpeed, unitX, unitY, unitZ, spot)
 		if result then
 			local income = spot.metal
 			if income == 0 then
-				Spring.Echo("No income")
+				--spEcho("No income")
 				return 9999999 
 			end
 			local incomeMult = CalculateMexIncomeMult(income)
@@ -376,13 +401,13 @@ local function EvaluateMex(unitID, unitSpeed, unitX, unitY, unitZ, spot)
 			local estimatedTimeToArrival = distance / unitSpeed -- in seconds
 			local arrivalTimeMult = estimatedTimeToArrival * 10 -- in terms of how many mexes could be built in this time. Calculated by average bp (7.5) divided by mex cost (75). This makes distant supermexes less worthwhile compared to nearby mexes.
 			if arrivalTimeMult < 0.1 then arrivalTimeMult = 0.1 end
-			--Spring.Echo("EvaluateMex: " .. distance .. ", ArrivalTime: " .. arrivalTimeMult .. ", IncomeMult: " .. incomeMult)
+			--spEcho("EvaluateMex: " .. distance .. ", ArrivalTime: " .. arrivalTimeMult .. ", IncomeMult: " .. incomeMult)
 			return distance * incomeMult * arrivalTimeMult
 		else
 			if Distance(unitX, unitZ, x, z) <= 120 then -- unreachable because of "low distance".	
 				return 0
 			else -- actually might be unreachable
-				Spring.Echo("Target Unreachable")
+				--spEcho("Target Unreachable")
 				return 9999999
 			end
 		end
@@ -390,7 +415,7 @@ local function EvaluateMex(unitID, unitSpeed, unitX, unitY, unitZ, spot)
 	return 9999999
 end
 
-local debugPathing = true
+local debugPathing = false
 
 local function AreTheseMexesTheSame(x1, z1, x2, z2)
 	local xDiff = x1 - x2
@@ -404,11 +429,11 @@ local function AreTheseMexesTheSame(x1, z1, x2, z2)
 end
 
 local function DivertCon(unitID, mexID)
-	local orderCount = Spring.GetUnitCommandCount(unitID)
+	local orderCount = spGetUnitCommandCount(unitID)
 	if orderCount == 1 then
-		Spring.Echo("[AutoExpand]::DivertCon: One order only. Stopping.")
-		Spring.GiveOrderToUnit(unitID, CMD.STOP, {}, 0)
-		Spring.GiveOrderToUnit(unitID, CMD.STOP, {}, 0)
+		--spEcho("[AutoExpand]::DivertCon: One order only. Stopping.")
+		spGiveOrderToUnit(unitID, CMD.STOP, {}, 0)
+		spGiveOrderToUnit(unitID, CMD.STOP, {}, 0)
 		IterableMap.Add(forceupdatecons, unitID, true)
 	else
 		local mexDefID = mexDefIDs[1]
@@ -416,12 +441,12 @@ local function DivertCon(unitID, mexID)
 		local wantedX = spot.x
 		local wantedY = spot.y
 		local wantedZ = spot.z
-		local commandQueue = Spring.GetUnitCommands(unitID, 10)
+		local commandQueue = spGetUnitCommands(unitID, 10)
 		local removed = false
 		local newQueue = {}
 		for i = 1, #commandQueue do
 			local cmd = commandQueue[i]
-			Spring.Echo(cmd.id)
+			--spEcho(cmd.id)
 			local params = cmd.params
 			if cmd.id == mexDefID then
 				local params = cmd.params
@@ -432,10 +457,10 @@ local function DivertCon(unitID, mexID)
 				newQueue[#newQueue + 1] = {cmd.id, cmd.params, 0}
 			end
 			if i == #commandQueue and #newQueue == #commandQueue then -- this is so far down the queue that it doesn't matter.
-				Spring.Echo("[AutoExpand]::DivertCon: Unable to find mex order. Not removed!")
+				--spEcho("[AutoExpand]::DivertCon: Unable to find mex order. Not removed!")
 				return
 			end
-			Spring.GiveOrderArrayToUnitArray({unitID}, newQueue)
+			spGiveOrderArrayToUnitArray({unitID}, newQueue)
 		end
 	end
 	IterableMap.Add(forceupdatecons, unitID, true)
@@ -445,9 +470,9 @@ local function GetNearestUnclaimedMexToUnit(unitID, data)
 	local lastMexID = data.lastMexID or -1
 	local lowestDist = 9999999
 	local selectedID = -1
-	local allyTeam = Spring.GetUnitAllyTeam(unitID)
-	local x, y, z = Spring.GetUnitPosition(unitID)
-	local speed = UnitDefs[Spring.GetUnitDefID(unitID)].speed
+	local allyTeam = spGetUnitAllyTeam(unitID)
+	local x, y, z = spGetUnitPosition(unitID)
+	local speed = UnitDefs[spGetUnitDefID(unitID)].speed
 	for i = 1, #metalSpots do
 		local spot = metalSpots[i]
 		local claimed = false
@@ -455,7 +480,7 @@ local function GetNearestUnclaimedMexToUnit(unitID, data)
 		if spot.claimedByAllyTeam ~= -1 then -- this is a potentially claimed mex
 			if allyTeam == spot.claimedByAllyTeam then 
 				claimed = true
-			elseif IsKnownClaim(Spring.GetUnitLosState(spot.mexID, allyTeam, true)) then
+			elseif IsKnownClaim(spGetUnitLosState(spot.mexID, allyTeam, true)) then
 				claimed = true
 			else
 				claimed = false
@@ -466,20 +491,20 @@ local function GetNearestUnclaimedMexToUnit(unitID, data)
 		local dist = EvaluateMex(unitID, speed, x, y, z, spot)
 		if not claimed and potentiallyClaimed then
 			local con2 = spot.claimants[allyTeam]
-			local x2, y2, z2 = Spring.GetUnitPosition(con2)
-			local con2Dist = EvaluateMex(con2, UnitDefs[Spring.GetUnitDefID(con2)].speed, x2, y2, z2, spot)
+			local x2, y2, z2 = spGetUnitPosition(con2)
+			local con2Dist = EvaluateMex(con2, UnitDefs[spGetUnitDefID(con2)].speed, x2, y2, z2, spot)
 			local data2 = IterableMap.Get(handled, con2)
-			Spring.Echo("[DivertCon]: " .. con2Dist .. ", " .. dist .. ", building: " .. tostring(data2.currentlyBuilding == i))
+			--spEcho("[DivertCon]: " .. con2Dist .. ", " .. dist .. ", building: " .. tostring(data2.currentlyBuilding == i))
 			local currentlyBuilding = data2.currentlyBuilding or -1
 			if con2Dist <= dist or currentlyBuilding == i then
-				Spring.Echo("No diversion.")
+				--spEcho("No diversion.")
 				claimed = true
 			end
 		end	
 		if not claimed then
 			local dist = EvaluateMex(unitID, speed, x, y, z, spot)
 			--[[if debugPathing then
-				Spring.MarkerAddPoint(spot.x, 1, spot.z, "val: " .. dist .. "[Raw: " .. Distance(x, z, spot.x, spot.z) .. "]", true)
+				spMarkerAddPoint(spot.x, 1, spot.z, "val: " .. dist .. "[Raw: " .. Distance(x, z, spot.x, spot.z) .. "]", true)
 			end]]
 			if dist < lowestDist then
 				selectedID = i
@@ -497,12 +522,12 @@ local function GetNearestUnclaimedMexToUnit(unitID, data)
 		data.target = selectedID
 		local selectedSpot = metalSpots[selectedID]
 		if selectedSpot.claimants[allyTeam] and selectedSpot.claimants[allyTeam] ~= -1 then
-			Spring.Echo("Diverting con " .. selectedSpot.claimants[allyTeam])
+			--spEcho("Diverting con " .. selectedSpot.claimants[allyTeam])
 			DivertCon(selectedSpot.claimants[allyTeam], selectedID)
 		end
 		selectedSpot.claimants[allyTeam] = unitID
 		if debugPathing then
-			Spring.MarkerAddLine(x, y, z, selectedSpot.x, selectedSpot.y, selectedSpot.z)
+			spMarkerAddLine(x, y, z, selectedSpot.x, selectedSpot.y, selectedSpot.z)
 		end
 		return selectedSpot.x, selectedSpot.z
 	end
@@ -513,7 +538,7 @@ function gadget:Initialize()
 	if #metalSpots == 0 then
 		wantedUnitDefs = {} -- throw out, we're not adding autoexpand to any unit.
 		mexDefs = {} -- clear these too.
-		Spring.Echo("[Autoexpansion] Removed gadget due to metal map! No metal spots detected!")
+		spEcho("[Autoexpansion] Removed gadget due to metal map! No metal spots detected!")
 		gadgetHandler:RemoveGadget()
 	end
 end
@@ -536,12 +561,12 @@ local function QueueEnergyForUnit(unitID, data, wantedX, wantedZ)
 			local validPlacements = wantedEnergy.validPlacements
 			if validPlacements then
 				local placement = validPlacements[#validPlacements]
-				Spring.GiveOrderToUnit(unitID, -wantedEnergy.def, {placement[1], placement[2], placement[3]}, 0)
+				spGiveOrderToUnit(unitID, -wantedEnergy.def, {placement[1], placement[2], placement[3]}, 0)
 				validPlacements[#validPlacements] = nil
 			else
 				local x, y, z = GetClosestValidConstructionSpot(wantedX, wantedZ, wantedEnergy.def, 1, 4)
 				if x then
-					Spring.GiveOrderToUnit(unitID, -wantedEnergy.def, {x, y, z}, CMD.OPT_SHIFT)
+					spGiveOrderToUnit(unitID, -wantedEnergy.def, {x, y, z}, CMD.OPT_SHIFT)
 				end
 			end
 		end
@@ -553,14 +578,14 @@ local function StartNewExpansion(unitID, data, forceRemoval)
 	data.state = "expanding"
 	if x then
 		if forceRemoval then
-			local commandQueue = Spring.GetUnitCommandCount(unitID)
+			local commandQueue = spGetUnitCommandCount(unitID)
 			if commandQueue == 1 then
-				Spring.GiveOrderToUnit(unitID, -mexDefIDs[1], {x, Spring.GetGroundHeight(x, z), z}, 0)
+				spGiveOrderToUnit(unitID, -mexDefIDs[1], {x, spGetGroundHeight(x, z), z}, 0)
 			else
-				Spring.GiveOrderToUnit(unitID, -mexDefIDs[1], {x, Spring.GetGroundHeight(x, z), z}, CMD.OPT_SHIFT)
+				spGiveOrderToUnit(unitID, -mexDefIDs[1], {x, spGetGroundHeight(x, z), z}, CMD.OPT_SHIFT)
 			end
 		else
-			Spring.GiveOrderToUnit(unitID, -mexDefIDs[1], {x, Spring.GetGroundHeight(x, z), z}, CMD.OPT_SHIFT)
+			spGiveOrderToUnit(unitID, -mexDefIDs[1], {x, spGetGroundHeight(x, z), z}, CMD.OPT_SHIFT)
 		end
 	end
 end
@@ -570,15 +595,15 @@ local function UpdateConsTryingToExpand(mexSpotID, claimedAllyTeam)
 	local claimant = spot.claimants[claimedAllyTeam] or -1
 	for allyTeamID, unitID in pairs(spot.claimants) do
 		if allyTeamID ~= claimedAllyTeam then
-			local losState = Spring.GetUnitLosState(spot.mexID, allyTeamID)
+			local losState = spGetUnitLosState(spot.mexID, allyTeamID)
 			if IsKnownClaim(losState) then
-				local x, _, z = Spring.GetUnitPosition(unitID)
+				local x, _, z = spGetUnitPosition(unitID)
 				--[[if spLosInfo.IsInLOS(losState) and Distance(x, z, spot.x, spot.z) < 300 and spot.mexID then
-					Spring.GiveOrderToUnit(unitID, CMD.RECLAIM, {spot.mexID}, 0) -- go fuck with the enemy constructor.
+					spGiveOrderToUnit(unitID, CMD.RECLAIM, {spot.mexID}, 0) -- go fuck with the enemy constructor.
 				else
-					Spring.GiveOrderToUnit(unitID, CMD.STOP, {}, 0) -- order this unit to stop. This will force an update next check cycle.
+					spGiveOrderToUnit(unitID, CMD.STOP, {}, 0) -- order this unit to stop. This will force an update next check cycle.
 				end]]
-				Spring.GiveOrderToUnit(unitID, CMD.STOP, {}, 0)
+				spGiveOrderToUnit(unitID, CMD.STOP, {}, 0)
 				local data = IterableMap.Get(handled, unitID)
 				if data then
 					StartNewExpansion(unitID, data)
@@ -592,10 +617,10 @@ end
 function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 	if wantedUnitDefs[unitDefID] then
 		-- add command
-		Spring.Echo("Adding command to unitID " .. unitID)
-		Spring.InsertUnitCmdDesc(unitID, 123456, autoExpandCMD)
+		--spEcho("Adding command to unitID " .. unitID)
+		spInsertUnitCmdDesc(unitID, 123456, autoExpandCMD)
 	elseif mexDefs[unitDefID] then
-		local allyTeam = Spring.GetUnitAllyTeam(unitID)
+		local allyTeam = spGetUnitAllyTeam(unitID)
 		local mexID
 		local data
 		if builderID then
@@ -606,17 +631,17 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 			data.state = "building"
 			data.currentlyBuilding = mexID
 		else -- not a mex we're expanding to
-			local x, _, z = Spring.GetUnitPosition(unitID)
+			local x, _, z = spGetUnitPosition(unitID)
 			mexID = FindMexSpot(x, z)
 		end
 		local spot = metalSpots[mexID]
 		mexToSpotID[unitID] = mexID
 		spot.mexID = unitID
 		spot.claimedByAllyTeam = allyTeam
-		UpdateConsTryingToExpand(mexID, Spring.GetUnitAllyTeam(unitID))
+		UpdateConsTryingToExpand(mexID, spGetUnitAllyTeam(unitID))
 		if builderID then
 			if data and QuickEnergyCheck(unitTeam) then
-				CheckIfEnergyIsNeeded(spot.x, spot.z, spot.metal, Spring.GetUnitTeam(builderID), data)
+				CheckIfEnergyIsNeeded(spot.x, spot.z, spot.metal, spGetUnitTeam(builderID), data)
 				QueueEnergyForUnit(builderID, data, spot.x, spot.z)
 			elseif data then
 				StartNewExpansion(builderID, data)
@@ -632,7 +657,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 				targetX = metalSpots[data.target].x
 				targetZ = metalSpots[data.target].z
 			else
-				targetX, _, targetZ = Spring.GetUnitPosition(builderID)
+				targetX, _, targetZ = spGetUnitPosition(builderID)
 			end
 			QueueEnergyForUnit(builderID, data, targetX, targetZ)
 		else -- energy conditions have changed, update plan accordingly.
@@ -644,14 +669,14 @@ end
 
 function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	if mexDefs[unitDefID] then
-		local allyTeam = Spring.GetUnitAllyTeam(unitID)
+		local allyTeam = spGetUnitAllyTeam(unitID)
 		local spot, mexID
 		if mexToSpotID[unitID] then
 			spot = metalSpots[mexToSpotID[unitID]]
 			mexID = mexToSpotID[unitID]
 		else
-			local allyTeam = Spring.GetUnitAllyTeam(unitID)
-			local x, _, z = Spring.GetUnitPosition(unitID)
+			local allyTeam = spGetUnitAllyTeam(unitID)
+			local x, _, z = spGetUnitPosition(unitID)
 			mexID = FindMexSpot(x, z)
 			spot = metalSpots[mexID]
 			mexToSpotID[unitID] = mexID
@@ -667,7 +692,7 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 				QueueEnergyForUnit(builderID, data, spot.x, spot.z)
 			end
 		end
-		UpdateConsTryingToExpand(mexID, Spring.GetUnitAllyTeam(unitID))
+		UpdateConsTryingToExpand(mexID, spGetUnitAllyTeam(unitID))
 	end
 end
 
@@ -690,7 +715,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
 	end
 	if IterableMap.InMap(handled, unitID) then
 		local data = IterableMap.Get(handled, unitID)
-		RemoveExpander(Spring.GetUnitAllyTeam(unitID), data)
+		RemoveExpander(spGetUnitAllyTeam(unitID), data)
 		IterableMap.Remove(handled, unitID)
 	end
 end
@@ -701,9 +726,9 @@ local function AddUnitToAutoexpand(unitID)
 	}
 	IterableMap.Add(handled, unitID, data)
 	if CheckUnitIsIdle(unitID) then
-		local teamID = Spring.GetUnitTeam(unitID)
+		local teamID = spGetUnitTeam(unitID)
 		if QuickEnergyCheck(teamID) then
-			local x, _, z = Spring.GetUnitPosition(unitID)
+			local x, _, z = spGetUnitPosition(unitID)
 			CheckIfEnergyIsNeeded(x, z, 0, teamID, data)
 		else
 			StartNewExpansion(unitID, data)
@@ -713,21 +738,21 @@ end
 
 local function RemoveUnitFromAutoexpansion(unitID)
 	local data = IterableMap.Get(handled, unitID)
-	local allyTeam = Spring.GetUnitAllyTeam(unitID)
+	local allyTeam = spGetUnitAllyTeam(unitID)
 	RemoveExpander(allyTeam, data)
 	IterableMap.Remove(handled, unitID)
 end
 
 local function ToggleCommand(unitID, cmdParams)
-	Spring.Echo("ToggleCommand")
-	local def = Spring.GetUnitDefID(unitID)
+	--spEcho("ToggleCommand")
+	local def = spGetUnitDefID(unitID)
 	if wantedUnitDefs[def] then
 		local state = cmdParams[1]
-		Spring.Echo("New State: " .. state)
-		local cmdDescID = Spring.FindUnitCmdDesc(unitID, CMD_AUTOEXPAND)
+		--spEcho("New State: " .. state)
+		local cmdDescID = spFindUnitCmdDesc(unitID, CMD_AUTOEXPAND)
 		if (cmdDescID) then
 			autoExpandCMD.params[1] = state
-			Spring.EditUnitCmdDesc(unitID, cmdDescID, { params = autoExpandCMD.params})
+			spEditUnitCmdDesc(unitID, cmdDescID, { params = autoExpandCMD.params})
 			if state == 1 and not IterableMap.InMap(handled, unitID) then -- on
 				AddUnitToAutoexpand(unitID)
 			elseif state == 0 then -- off
@@ -753,7 +778,7 @@ function gadget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 		local data = IterableMap.Get(handled, unitID)
 		if data.target then
 			local spot = metalSpots[data.target]
-			local allyTeam = Spring.GetUnitAllyTeam(unitID)
+			local allyTeam = spGetUnitAllyTeam(unitID)
 			if (not spot.mexID) or spot.mexID == -1 then
 				spot.claimants[allyTeam] = nil
 			end
@@ -768,12 +793,12 @@ function gadget:GameFrame(f)
 		StartNewExpansion(unitID, data, true)
 	end
 	if f%45 == 35 then -- Check for idle cons every so often to ensure they're doing their part for MANAGED DEMOCRACY.
-		Spring.Echo("[autoexpand]: Checking cons " .. f)
+		--spEcho("[autoexpand]: Checking cons " .. f)
 		for unitID, data in IterableMap.Iterator(handled) do
 			if CheckUnitIsIdle(unitID) then
-				local teamID = Spring.GetUnitTeam(unitID)
+				local teamID = spGetUnitTeam(unitID)
 				if QuickEnergyCheck(teamID) then
-					local x, _, z = Spring.GetUnitPosition(unitID)
+					local x, _, z = spGetUnitPosition(unitID)
 					CheckIfEnergyIsNeeded(x, z, 0, teamID, data)
 					QueueEnergyForUnit(unitID, data, x, z)
 				else
