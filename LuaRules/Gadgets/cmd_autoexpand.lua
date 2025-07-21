@@ -42,6 +42,7 @@ local CMD_AUTOEXPAND = Spring.Utilities.CMD.AUTOEXPAND
 
 -- Config --
 local averageRTGOutput = 0.32 -- higher makes RTG more spammed.
+local checkPathing = false
 local energyDefs = {
 	[1] = {energy = tonumber(UnitDefNames["staticenergyrtg"].customParams.income_energy) * averageRTGOutput, defID = UnitDefNames["staticenergyrtg"].id, cost = UnitDefNames["staticenergyrtg"].metalCost, isWind = false, gridSize = tonumber(UnitDefNames["staticenergyrtg"].customParams.pylonrange) or 10},
 	[2] = {energy = tonumber(UnitDefNames["energysolar"].customParams.income_energy), defID = UnitDefNames["energysolar"].id, cost = UnitDefNames["energysolar"].metalCost, isWind = false, gridSize = tonumber(UnitDefNames["energysolar"].customParams.pylonrange) or 10},
@@ -389,7 +390,12 @@ local function EvaluateMex(unitID, unitSpeed, unitX, unitY, unitZ, spot)
 	if spot then
 		local x = spot.x
 		local z = spot.z
-		local result = IsTargetReallyReachable(unitID, x, spot.y, z, unitX, unitY, unitZ)
+		local result
+		if checkPathing then
+			result = true
+		else
+			result = IsTargetReallyReachable(unitID, x, spot.y, z, unitX, unitY, unitZ)
+		end
 		if result then
 			local income = spot.metal
 			if income == 0 then
