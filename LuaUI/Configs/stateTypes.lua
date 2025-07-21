@@ -37,6 +37,7 @@ local stateData = {
 	[Spring.Utilities.CMD.FIRECYCLE] = 2,
 	[Spring.Utilities.CMD.ARMORSTATE] = 2,
 	[Spring.Utilities.CMD.QUEUE_MODE] = 2,
+	[Spring.Utilities.CMD.AUTOEXPAND] = 2,
 }
 
 local specialHandling = {
