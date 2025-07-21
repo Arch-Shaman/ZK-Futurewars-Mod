@@ -42,12 +42,12 @@ local CMD_AUTOEXPAND = Spring.Utilities.CMD.AUTOEXPAND
 
 -- Config --
 local averageRTGOutput = 0.32 -- higher makes RTG more spammed.
-local energyBuffer = energyDefs[2].energy * 3 -- 3 solars worth.
 local energyDefs = {
 	[1] = {energy = tonumber(UnitDefNames["staticenergyrtg"].customParams.income_energy) * averageRTGOutput, defID = UnitDefNames["staticenergyrtg"].id, cost = UnitDefNames["staticenergyrtg"].metalCost, isWind = false, gridSize = tonumber(UnitDefNames["staticenergyrtg"].customParams.pylonrange) or 10},
 	[2] = {energy = tonumber(UnitDefNames["energysolar"].customParams.income_energy), defID = UnitDefNames["energysolar"].id, cost = UnitDefNames["energysolar"].metalCost, isWind = false, gridSize = tonumber(UnitDefNames["energysolar"].customParams.pylonrange) or 10},
 	[3] = {energy = tonumber(UnitDefNames["energywind"].customParams.income_energy), defID = UnitDefNames["energywind"].id, cost = UnitDefNames["energywind"].metalCost, isWind = true, gridSize = tonumber(UnitDefNames["energywind"].customParams.pylonrange) or 10},
 }
+local energyBuffer = energyDefs[2].energy * 3 -- 3 solars worth.
 
 local watchedEnergyDefs = { -- TODO: Automatically update this table.
 	[UnitDefNames["staticenergyrtg"].id] = true,
