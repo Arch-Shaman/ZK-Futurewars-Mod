@@ -1,0 +1,5 @@
+VI:
+
+"Attrition_name" : Need Better Translation. Currently, Expert of Attrition Warfare.
+"Drone_name" : Drone is kept unstranslated for brevity. The full translation is 'Máy bay không người lái', literally 'Unmanned Aerial Craft'
+"econimist_desc" : I renamed overdrive to acceleration for the time being because the raw translation can have negative implications that could discorage players

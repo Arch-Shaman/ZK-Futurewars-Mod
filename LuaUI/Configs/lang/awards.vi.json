@@ -12,7 +12,7 @@
 	"assistant_desc" : "Dành được bằng cánh hỗ trợ đồng đội trong việc xây dựng hoặc tặng kim loại cho đồng đội.",
 	"assistant_yourscore" : "Bạn đã dùng %{score} kim loại để hỗ trợ đồng đội.",
 	"assistant_score" : "%{score} kim loại đã dược dùng để hỗ trợ đồng đội",
-	"attrition_name" : "Chuyên Gia Chiến Tranh Tiêu Hao", -- Need Better Translation. Currently, Expert of Attrition Warfare.
+	"attrition_name" : "Chuyên Gia Chiến Tranh Tiêu Hao",
 	"attrition_desc" : "Dành được bằng việc tiêu diệt nhiều giá trị kim loại của địch hơn giá trị kim loại bị tiêu diệt của mình. Điểm được tính dùng tỉ lệ giữa kim loại đã tiêu diệt và kim loại bị tiêu diệt.",
 	"attrition_yourscore" : "Tỉ lệ tiêu hao của bạn là %{score}.",
 	"attrition_score" : "Tỉ lệ tiêu hao: %{score}",
@@ -37,12 +37,12 @@
 	"chickenWin_score" : "Điểm số: %{score}",
 	"defeat" : "Bại Trận!",
 	"draw_result" : "Hòa Trận!",
-	"drone_name" : "Người Quản Lý Drone", -- Drone is kept unstranslated for brevity. The full translation is 'Máy bay không người lái', literally 'Unmanned Aerial Craft'
+	"drone_name" : "Người Quản Lý Drone",
 	"drone_desc" : "Dành được bằng cách gây Sát thương dùng drones.",
 	"drone_yourscore" : "Bạn đã gây ra %{score} Sát thương dùng drones.",
 	"drone_score" : "%{score} Sát thương gây ra dùng drones",
 	"economist_name" : "Cường Lực Kinh Tế",
-	"economist_desc" : "Dành được bằng cách sản xuất kim loại thông qua quá trình Tăng Tốc.", -- I renamed overdrive to acceleration for the time being because the raw translation can have negative implications that could discorage players
+	"economist_desc" : "Dành được bằng cách sản xuất kim loại thông qua quá trình Tăng Tốc.",
 	"economist_yourscore" : "Tăng Tốc của bạn đóng góp %{score} kim loại cho nhóm.",
 	"economist_score" : "%{score} kim loại đã được tạo ra nhờ Tăng Tốc",
 	"emp_name" : "Phù Thủy Xung Điện Từ",
