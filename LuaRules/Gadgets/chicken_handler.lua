@@ -598,7 +598,7 @@ local function createWithHyperevo(unitName, evo, ...)
 		hpMult = evo^1.5
 		dmgMult = evo
 		rangeMult = 1 + tier/10
-		UpdateUnitMaxHealth(unitID, untiDef.health * hpMult)
+		UpdateUnitMaxHealth(unitID, unitDef.health * hpMult)
 		local cost = unitDef.metalCost * evo
 		spSetUnitCosts(unitID, {buildTime = cost, metalCost = cost, energyCost = cost})
 		GG.UnitModelRescale(unitID, rangeMult)

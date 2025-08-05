@@ -47,7 +47,8 @@ local tooltips = {
 	FIRECYCLE = "Spread napalm (_STATE_)\nSets whether this unit should prioritize spreading burning status.",
 	ARMORSTATE = "Hunker (_STATE_)\n Hunker down to reduce damage but lose access to weapons.",
 	AMMOSTATE = "Selected Ammo: _STATE_\n_DESCRIPTION_",
-	QUEUEMODE = "Rally Point Edit Mode: _STATE_\nThis controls whether or not the commands will be used for rally point or for unit control."
+	QUEUEMODE = "Rally Point Edit Mode: _STATE_\nThis controls whether or not the commands will be used for rally point or for unit control.",
+	AUTOEXPAND = "Automatic Expansion: _STATE_\nConstructor will seek out new expansion and balance energy demand (with a 9 energy buffer).",
 }
 
 local tooltipsAlternate = {
@@ -168,6 +169,13 @@ local commandDisplayConfig = {
 			tooltips.FIRECYCLE:gsub("_STATE_", "Disabled"),
 			tooltips.FIRECYCLE:gsub("_STATE_", "Enabled"),
 		}
+	},
+	[SUC.AUTOEXPAND] = {
+		texture = {imageDir .. 'states/autoexpand_off.png', imageDir .. 'states/autoexpand_on.png'},
+		stateTooltip = {
+			tooltips.AUTOEXPAND:gsub("_STATE_", "Disabled"),
+			tooltips.AUTOEXPAND:gsub("_STATE_", "Enabled"),
+		},
 	},
 	[SUC.MISC_PRIORITY] = {
 		texture = {imageDir .. 'states/wrench_low_other.png', imageDir .. 'states/wrench_med_other.png', imageDir .. 'states/wrench_high_other.png'},

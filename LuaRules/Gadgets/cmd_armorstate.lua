@@ -105,3 +105,7 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
 	ToggleCommand(unitID, cmdParams)
 	return false  -- command was used
 end
+
+function gadget:AllowCommand_GetWantedCommand()
+	return {[CMD_ARMORSTATE] = true}
+end

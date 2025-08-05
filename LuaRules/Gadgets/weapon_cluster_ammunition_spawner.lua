@@ -307,7 +307,7 @@ local function SpawnSubProjectiles(id, wd)
 	projAttributes["team"] = team
 	local targetoverride
 	local forceupdate = false
-	local ownerDefID = spGetUnitDefID(owner) or projectiledata.proOwnerDefID
+	local ownerDefID = (owner and spGetUnitDefID(owner)) or projectiledata.proOwnerDefID
 	if projConfig.usertarget then
 		targetoverride = projectiletargets[id] or {}
 		forceupdate = true

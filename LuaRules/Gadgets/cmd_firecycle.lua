@@ -48,7 +48,7 @@ for i = 1, #UnitDefs do
 	end
 end
 
-local sweapfire_desc = {
+local firecycle_desc = {
 	id      = CMD_FIRECYCLE,
 	type    = CMDTYPE.ICON_MODE,
 	name	= 'Fire Cycle',
@@ -86,8 +86,8 @@ local function ToggleCommand(unitID, cmdParams)
 	local cmdDescID = spFindUnitCmdDesc(unitID, CMD_FIRECYCLE)
 	
 	if (cmdDescID) then
-		sweapfire_desc.params[1] = state
-		spEditUnitCmdDesc(unitID, cmdDescID, { params = sweapfire_desc.params})
+		firecycle_desc.params[1] = state
+		spEditUnitCmdDesc(unitID, cmdDescID, { params = firecycle_desc.params})
 	end
 	unitStates[unitID] = state == 1
 end
@@ -103,6 +103,10 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
 	return false  -- command was used
 end
 
+function gadget:AllowCommand_GetWantedCommand()
+	return {[CMD_FIRECYCLE] = true}
+end
+
 function gadget:UnitDestroyed(unitID)
 	unitStates[unitID] = nil
 end
@@ -110,7 +114,7 @@ end
 function gadget:UnitCreated(unitID, unitDefID, teamID)
 	if wantedDefs[unitDefID] then
 		unitStates[unitID] = false
-		spInsertUnitCmdDesc(unitID, sweapfire_desc)
+		spInsertUnitCmdDesc(unitID, firecycle_desc)
 		ToggleCommand(unitID, {0}, {})
 	end
 end
@@ -140,7 +144,7 @@ end
 
 local function AddUnitOverride(unitID) -- for commanders.
 	unitStates[unitID] = false
-	spInsertUnitCmdDesc(unitID, sweapfire_desc)
+	spInsertUnitCmdDesc(unitID, firecycle_desc)
 	ToggleCommand(unitID, {0}, {})
 end
 

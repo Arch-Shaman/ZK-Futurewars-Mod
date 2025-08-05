@@ -64,6 +64,7 @@ local configList = {
 	{cmdID = SUC.ARMORSTATE            , state = true, default = true, name = "Hunker Down"},
 	{cmdID = SUC.OVERRECLAIM           , state = true, default = true, name = "Overreclaim Prevention"},
 	{cmdID = SUC.QUEUE_MODE            , state = true, default = true, name = "Rally Point Edit Mode"},
+	{cmdID = SUC.AUTOEXPAND            , state = true, default = true, name = "Autoexpand"},
 
 	{label = "Advanced States (hidden by default)"},
 	{cmdID = SUC.DISABLE_ATTACK        , state = true, default = false, name = "Allow Attack Commands"},
@@ -90,6 +91,7 @@ local defaultValues = {
 	[SUC.UNIT_SET_TARGET_CIRCLE] = true,
 	[SUC.UNIT_CANCEL_TARGET] = true,
 	[SUC.EXCLUDE_PAD] = true,
+	[SUC.AUTOEXPAND] = true,
 	--[SUC.EMBARK] = true,
 	--[SUC.STOP_PRODUCTION] = true,
 	
