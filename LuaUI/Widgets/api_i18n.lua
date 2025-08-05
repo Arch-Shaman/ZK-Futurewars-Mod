@@ -151,6 +151,8 @@ WG.InitializeTranslation = addListener
 WG.ShutdownTranslation = shutdownTranslation
 WG.Translate = Translate
 
+VFS.Include("LuaUI/Includes/TextUtils.lua")
+
 for db in pairs(translations) do
 	translations[db] = initializeTranslation (db)
 end
