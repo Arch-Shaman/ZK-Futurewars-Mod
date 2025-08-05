@@ -31,7 +31,7 @@ return {
 		iconType            = "scoutplane",
 		idleAutoHeal        = 30,
 		idleTime            = 90,
-		health              = 820,
+		health              = 410,
 		maxSlope            = 18,
 		speed               = 430,
 		movestate           = 2,
@@ -74,7 +74,7 @@ return {
 					light_radius = 0,
 				},
 				damage                  = {
-					default = 60.01,
+					default = 30.01,
 				},
 				dance                   = 60,
 				explosionGenerator      = "custom:goo_v2_green",

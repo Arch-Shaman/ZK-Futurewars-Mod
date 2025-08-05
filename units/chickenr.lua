@@ -25,7 +25,7 @@ return {
 		explodeAs           = "NOWEAPON",
 		footprintX          = 2,
 		footprintZ          = 2,
-		health              = 785,
+		health              = 393,
 		highTrajectory      = 1,
 		iconType            = "chickenr",
 		idleAutoHeal        = 20,
@@ -93,7 +93,7 @@ return {
 				},
 							
 				damage                  = {
-					default = 850,
+					default = 425,
 				},
 
 				explosionGenerator      = "custom:goo_v2_green",

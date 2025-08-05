@@ -33,7 +33,7 @@ return {
 		floater             = true,
 		footprintX          = 2,
 		footprintZ          = 2,
-		health              = 36400,
+		health              = 18200,
 		hoverattack         = true,
 		iconType            = "heavygunship",
 		idleAutoHeal        = 20,
@@ -103,7 +103,7 @@ return {
 				},
 
 				damage                  = {
-					default = 250,
+					default = 125,
 				},
 
 				explosionGenerator      = "custom:goo_v2_green",
@@ -145,7 +145,7 @@ return {
 				},
 				
 				damage                  = {
-					default  = 600,
+					default  = 300,
 				},
 
 				dance                   = 120,
@@ -195,7 +195,7 @@ return {
 				},
 
 				damage                  = {
-					default = 250,
+					default = 125,
 				},
 
 				dance                   = 90,

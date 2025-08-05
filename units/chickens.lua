@@ -25,7 +25,7 @@ return {
 		explodeAs           = "NOWEAPON",
 		footprintX          = 2,
 		footprintZ          = 2,
-		health              = 2050,
+		health              = 1025,
 		iconType            = "chickens",
 		idleAutoHeal        = 30,
 		idleTime            = 120,
@@ -101,7 +101,7 @@ return {
 					--blastwave_spawncegfreq = 5,
 				},
 				damage                  = {
-					default = 136.01,
+					default = 68.01,
 				},
 				explosionGenerator      = "custom:EMG_HIT",
 				highTrajectory			= 1,
@@ -146,7 +146,7 @@ return {
 					--blastwave_spawncegfreq = 5,
 				},
 				damage                  = {
-					default = 68.01,
+					default = 34.01,
 				},
 				explosionGenerator      = "custom:EMG_HIT",
 				highTrajectory			= 1,

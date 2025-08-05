@@ -24,7 +24,7 @@ local chickend = {
 	floater                       = true,
 	footprintX                    = 3,
 	footprintZ                    = 3,
-	health                        = 2400,
+	health                        = 1200,
 	iconType                      = "defense",
 	idleAutoHeal                  = 20,
 	idleTime                      = 300,
@@ -74,8 +74,8 @@ local chickend = {
 			},
 
 			damage                  = {
-				default = 75,
-				planes  = 75,
+				default = 38,
+				planes  = 38,
 			},
 			dance                   = 60,
 			explosionGenerator      = "custom:goo_v2_red",
@@ -118,13 +118,13 @@ local chickend_improved = MergeWithDefault(chickend, {
 	},
 	energyMake = 30,
 	buildTime = 750,
-	health = 12400,
+	health = 6200,
 	idleAutoHeal = 100,
 	weaponDefs = {
 		HIGHSPORES = {
 			damage = {
-				default = 225,
-				planes  = 225,
+				default = 113,
+				planes  = 113,
 			},
 			range = 884,
 		},
@@ -138,13 +138,13 @@ local chickend_advanced = MergeWithDefault(chickend, {
 	},
 	energyMake = 140,
 	buildTime = 3500,
-	health = 75800,
+	health = 37900,
 	idleAutoHeal = 600,
 	weaponDefs = {
 		HIGHSPORES = {
 			damage = {
-				default = 750,
-				planes  = 750,
+				default = 375,
+				planes  = 375,
 			},
 			range = 1360,
 		},

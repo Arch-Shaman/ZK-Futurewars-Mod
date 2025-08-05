@@ -26,7 +26,7 @@ return {
 		explodeAs           = "CHICKENWURM_DEATH",
 		footprintX          = 4,
 		footprintZ          = 4,
-		health              = 16800,
+		health              = 8400,
 		iconType            = "spidergeneric",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
@@ -86,7 +86,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 42.1,
+					default = 21.1,
 				},
 				edgeEffectiveness       = 0.8,
 				explosionGenerator      = "custom:napalm_phoenix",
@@ -127,7 +127,7 @@ return {
 				},
 
 				damage                  = {
-					default = 50,
+					default = 25,
 				},
 
 				edgeeffectiveness       = 0.5,

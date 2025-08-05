@@ -23,7 +23,7 @@ return {
 		explodeAs             = "DODO_DEATH",
 		footprintX            = 2,
 		footprintZ            = 2,
-		health                = 1500,
+		health                = 750,
 		iconType              = "chickendodo",
 		idleAutoHeal          = 20,
 		idleTime              = 300,
@@ -72,8 +72,8 @@ return {
 				soundhit = "weapon/chickens/dodo_die",
 				explosionScar = false,
 				damage = {
-					default = 1600,
-					chicken = 50,
+					default = 800,
+					chicken = 25,
 				},
 				customParams = {
 					nofriendlyfire = 1,

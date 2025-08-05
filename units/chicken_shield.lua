@@ -26,7 +26,7 @@ return {
 			chicken_spawncost = 4900,
 		},
 
-		health              = 20000,
+		health              = 10000,
 		explodeAs           = "NOWEAPON",
 		footprintX          = 4,
 		footprintZ          = 4,
@@ -100,7 +100,7 @@ return {
 				},
 				
 				damage                  = {
-					default  = 600,
+					default  = 300,
 				},
 
 				dance                   = 120,
@@ -153,12 +153,12 @@ return {
 				shieldBadColor          = "1.0 1 0.1 1",
 				shieldGoodColor         = "0.1 1.0 0.1 1",
 				shieldInterceptType     = 3,
-				shieldPower             = 79500,
+				shieldPower             = 39750,
 				shieldPowerRegen        = 360,
 				shieldPowerRegenEnergy  = 0,
 				shieldRadius            = 550,
 				shieldRepulser          = false,	
-				shieldStartingPower     = 79500,
+				shieldStartingPower     = 39750,
 				smartShield             = true,
 				visibleShield           = false,
 				visibleShieldRepulse    = false,
@@ -184,7 +184,7 @@ return {
 				},
 
 				damage                  = {
-					default = 700,
+					default = 350,
 				},
 
 				dance                   = 90,

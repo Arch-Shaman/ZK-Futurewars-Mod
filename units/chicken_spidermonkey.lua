@@ -29,7 +29,7 @@ return {
 		idleAutoHeal        = 20,
 		idleTime            = 300,
 		leaveTracks         = true,
-		health              = 10000,
+		health              = 5000,
 		maxSlope            = 90,
 		waterline           = 22,
 		movementClass       = "ATKBOT3",
@@ -86,7 +86,7 @@ return {
 				},
 
 				damage                  = {
-					default = 300,
+					default = 150,
 				},
 				edgeeffectiveness       = 0.6,
 				explosionGenerator      = "custom:goo_v2_purple_large",
@@ -130,7 +130,7 @@ return {
 				},
 				
 				damage                  = {
-					default  = 200,
+					default  = 100,
 				},
 
 				dance                   = 120,

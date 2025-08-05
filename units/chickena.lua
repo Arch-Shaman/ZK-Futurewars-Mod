@@ -27,7 +27,7 @@ return {
 		explodeAs           = "NOWEAPON",
 		footprintX          = 4,
 		footprintZ          = 4,
-		health              = 21700,
+		health              = 10800,
 		iconType            = "chickena",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
@@ -84,7 +84,7 @@ return {
 				},
 
 				damage                  = {
-					default = 1000.1,
+					default = 500.1,
 				},
 
 				explosionGenerator      = "custom:NONE",

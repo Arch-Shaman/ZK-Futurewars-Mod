@@ -28,7 +28,7 @@ return {
 		idleAutoHeal        = 20,
 		idleTime            = 180,
 		leaveTracks         = true,
-		health              = 500,
+		health              = 250,
 		maxSlope            = 90,
 		maxWaterDepth       = 5000,
 		speed               = 200,
@@ -86,7 +86,7 @@ return {
 					light_radius = 0,
 				},
 				damage                  = {
-					default = 30.01,
+					default = 15.01,
 				},
 
 				explosionGenerator      = "custom:NONE",
@@ -120,7 +120,7 @@ return {
 				},
 
 				damage                  = {
-					default = 10.01,
+					default = 5.01,
 				},
 
 				duration                = 0.1,

@@ -44,7 +44,7 @@ return {
 		explodeAs           = "NOWEAPON",
 		footprintX          = 4,
 		footprintZ          = 4,
-		health              = 21600,
+		health              = 5400,
 		highTrajectory      = 1,
 		iconType            = "walkerlrarty",
 		idleAutoHeal        = 20,
@@ -144,7 +144,7 @@ return {
 				},
 
 				damage                  = {
-					default = 7000.1,
+					default = 3500.1,
 				},
 
 				edgeeffectiveness       = 0.5,
@@ -174,7 +174,7 @@ return {
 				},
 
 				damage                  = {
-					default = 500.1,
+					default = 250.1,
 				},
 
 				edgeeffectiveness       = 0.25,
@@ -193,7 +193,7 @@ return {
 				craterMult              = 1,
 
 				damage                  = {
-					default = 2000.1,
+					default = 1000.1,
 				},
 
 				edgeeffectiveness       = 0.5,
@@ -220,7 +220,7 @@ return {
 				},
 
 				damage                  = {
-					default = 2500.1,
+					default = 1250.1,
 				},
 
 				explosionGenerator      = "custom:blobber_goo",
@@ -237,7 +237,7 @@ return {
 				craterMult              = 0.5,
 
 				damage                  = {
-					default = 45000,
+					default = 22500,
 				},
 
 				explosionGenerator      = "custom:POWERPLANT_EXPLOSION",
@@ -262,7 +262,7 @@ return {
 				},
 
 				damage                  = {
-					default = 2000.1,
+					default = 1000.1,
 				},
 
 				explosionGenerator      = "custom:riotballplus2_purple",

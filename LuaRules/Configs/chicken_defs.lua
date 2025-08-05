@@ -77,7 +77,7 @@ maxBurrows = 50	-- Amount of burrows to have at queenTime
 
 waveSizeMult = 1	-- multiplier on wave size
 chickenWaveExponent = 2
-baseWaveSize = 200
+baseWaveSize = 400
 waveSizePerValue = 0.0004	-- wave size per human value
 waveSizePerPlayer = 100	-- wave size per human team
 waveSizeBase = -100

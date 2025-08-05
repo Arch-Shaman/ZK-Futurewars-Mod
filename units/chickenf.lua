@@ -32,7 +32,7 @@ return {
 		floater             = true,
 		footprintX          = 1,
 		footprintZ          = 1,
-		health              = 7400,
+		health              = 3700,
 		iconType            = "chickenf",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
@@ -85,7 +85,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 2000,
+					default = 1000,
 				},
 
 				explosionGenerator      = "custom:100rlexplode",

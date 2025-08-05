@@ -21,7 +21,7 @@ return {
 		floater             = false,
 		footprintX          = 2,
 		footprintZ          = 2,
-		health              = 180,
+		health              = 90,
 		iconType            = "chicken",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
@@ -83,8 +83,8 @@ return {
 				craterMult              = 0,
 
 				damage                  = {
-					default = 40,
-					planes  = 40,
+					default = 20,
+					planes  = 20,
 				},
 
 				explosionGenerator      = "custom:NONE",

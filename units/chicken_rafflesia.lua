@@ -25,7 +25,7 @@ local chicken_rafflesia = {
 	idleAutoHeal                  = 50,
 	idleTime                      = 600,
 	levelGround                   = false,
-	health                        = 32800,
+	health                        = 16400,
 	maxSlope                      = 36,
 	speed                         = 0,
 	maxWaterDepth                 = 20,
@@ -113,7 +113,7 @@ local chicken_rafflesia = {
 			},
 
 			damage                  = {
-				default = 750,
+				default = 375,
 			},
 
 			dance                   = 60,
