@@ -25,7 +25,7 @@ return {
 		explodeAs           = "NOWEAPON",
 		footprintX          = 3,
 		footprintZ          = 3,
-		health              = 5800,
+		health              = 2900,
 		iconType            = "chickenc",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
@@ -83,7 +83,7 @@ return {
 				craterMult              = 0,
 
 				damage                  = {
-					default = 100,
+					default = 50,
 				},
 
 				explosionGenerator      = "custom:goo_v2_green",
@@ -125,7 +125,7 @@ return {
 				},
 
 				damage                  = {
-					default  = 150,
+					default  = 75,
 				},
 
 				dance                   = 120,

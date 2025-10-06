@@ -32,7 +32,7 @@ return {
 		explodeAs           = "NOWEAPON",
 		footprintX          = 4,
 		footprintZ          = 4,
-		health              = 79500,
+		health              = 39750,
 		iconType            = "t3generic",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
@@ -104,7 +104,7 @@ return {
 					mass = 350.5,
 				},
 				damage                  = {
-					default = 1000,
+					default = 500,
 				},
 				explosionGenerator      = "custom:DGUNTRACE",
 				heightMod               = 1,
@@ -145,12 +145,12 @@ return {
 				shieldBadColor          = "1.0 1 0.1 1",
 				shieldGoodColor         = "0.1 1.0 0.1 1",
 				shieldInterceptType     = 3,
-				shieldPower             = 91200,
+				shieldPower             = 45600,
 				shieldPowerRegen        = 360,
 				shieldPowerRegenEnergy  = 0,
 				shieldRadius            = 400,
 				shieldRepulser          = false,	
-				shieldStartingPower     = 91200,
+				shieldStartingPower     = 45600,
 				smartShield             = true,
 				visibleShield           = false,
 				visibleShieldRepulse    = false,
@@ -178,7 +178,7 @@ return {
 				},
 				
 				damage                  = {
-					default  = 1500,
+					default  = 750,
 				},
 
 				dance                   = 120,
@@ -228,8 +228,8 @@ return {
 				},
 
 				damage                  = {
-					default = 400,
-					planes  = 400,
+					default = 200,
+					planes  = 200,
 				},
 
 				dance                   = 90,

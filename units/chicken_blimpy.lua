@@ -30,7 +30,7 @@ return {
 		floater             = true,
 		footprintX          = 4,
 		footprintZ          = 4,
-		health              = 164000,
+		health              = 82000,
 		iconType            = "bomberassault",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
@@ -167,8 +167,8 @@ return {
 				},
 
 				damage                  = {
-					default = 500,
-					planes  = 500,
+					default = 250,
+					planes  = 250,
 				},
 
 				explosionGenerator      = "custom:330rlexplode",

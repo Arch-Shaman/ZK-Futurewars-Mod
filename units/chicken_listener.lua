@@ -23,7 +23,7 @@ return {
 		floater             = false,
 		footprintX          = 4,
 		footprintZ          = 4,
-		health              = 700,
+		health              = 350,
 		iconType            = "chicken",
 		idleAutoHeal        = 20,
 		idleTime            = 300,

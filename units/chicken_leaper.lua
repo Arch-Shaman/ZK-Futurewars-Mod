@@ -23,7 +23,7 @@ return {
 		floater             = false,
 		footprintX          = 3,
 		footprintZ          = 3,
-		health              = 3000,
+		health              = 1500,
 		iconType            = "chickenleaper",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
@@ -76,8 +76,8 @@ return {
 				craterMult              = 0,
 
 				damage                  = {
-					default = 300,
-					planes  = 300,
+					default = 150,
+					planes  = 150,
 				},
 
 				duration                = 0.0333,

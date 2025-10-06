@@ -29,7 +29,7 @@ return {
 		explodeAs           = "NOWEAPON",
 		footprintX          = 3,
 		footprintZ          = 3,
-		health              = 35000,
+		health              = 17500,
 		iconType            = "spiderskirm",
 		idleAutoHeal        = 20,
 		idleTime            = 300,
@@ -102,7 +102,7 @@ return {
 					armorpiercing = 0.3,
 				},
 				damage                  = {
-					default = 100,
+					default = 50,
 				},
 				duration                = 0.01,
 				explosionGenerator      = "custom:SMOKE",
@@ -142,7 +142,7 @@ return {
 				},
 
 				damage                  = {
-					default = 10,
+					default = 5,
 				},
 
 				exteriorShield          = true,
@@ -152,12 +152,12 @@ return {
 				shieldBadColor          = "1.0 1 0.1 1",
 				shieldGoodColor         = "0.1 1.0 0.1 1",
 				shieldInterceptType     = 3,
-				shieldPower             = 56800,
+				shieldPower             = 28400,
 				shieldPowerRegen        = 360,
 				shieldPowerRegenEnergy  = 0,
 				shieldRadius            = 250,
 				shieldRepulser          = false,
-				shieldStartingPower     = 32800,
+				shieldStartingPower     = 16400,
 				smartShield             = true,
 				visibleShield           = false,
 				visibleShieldRepulse    = false,
