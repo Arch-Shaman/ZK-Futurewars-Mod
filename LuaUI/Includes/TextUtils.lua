@@ -8,7 +8,7 @@ local function GetBestFitFontSizeJapanese(text, width, wantedSize) -- Japanese i
 	local length = 0
 	while not fits do
 		for i = 1, #array do
-			length = length + (checkFont:GetTextWidth(text, 1) * currentSize)
+			length = length + (gl.GetTextWidth(text, 1) * currentSize)
 		end
 		if length > width then
 			currentSize = currentSize - 1
@@ -25,8 +25,8 @@ local function GetBestFitFontSize(text, width, wantedSize)
 	local fits = false
 	local currentSize = wantedSize
 	while not fits do
-		--Spring.Echo("CheckSize: " .. checkFont:GetTextWidth(text, 1) * currentSize)
-		fits = checkFont:GetTextWidth(text, 1) * currentSize < width - 2
+		--Spring.Echo("CheckSize: " .. gl.GetTextWidth(text, 1) * currentSize)
+		fits = gl.GetTextWidth(text, 1) * currentSize < width - 2
 		if not fits then
 			currentSize = currentSize - 1
 		end
@@ -114,25 +114,10 @@ local function CalculateDimensions(text, startingFontSize, maxWidth, maxHeight, 
 	textLines[1] = ""
 	local descentSize = CalculateDescent(startingFontSize)
 	local ret = {}
-	local lines = {}
-	for s in text:gmatch("[^\n]+") do -- preprocess
-		Spring.Echo("Lines " .. #lines + 1 .. ": " .. s)
-		lines[#lines + 1] = s
-	end
-	local currentLine = lines[1]
-	local lineCount = 1
 	while calculating do
 		for word in text:gmatch("%S+") do
 			local wordWidth = gl.GetTextWidth(word) * fontSize
-			local foundInCurrentLine = currentLine:find(word)
-			Spring.Echo("Word: " .. word)
-			Spring.Echo("Found in current line: " .. tostring(foundInCurrentLine))
-			Spring.Echo("Current line number: " .. lineCount)
-			if wordWidth + currentX > maxWidth or not foundInCurrentLine then
-				if not foundInCurrentLine then
-					lineCount = lineCount + 1
-					currentLine = lines[lineCount]
-				end
+			if wordWidth + currentX > maxWidth then
 				textLines[#textLines + 1] = word .. " "
 				currentX = startingX + wordWidth + spaceWidth
 				currentY = currentY + (gl.GetTextHeight(textLines[#textLines - 1]) * fontSize) + descentSize
@@ -141,8 +126,6 @@ local function CalculateDimensions(text, startingFontSize, maxWidth, maxHeight, 
 						Spring.Echo("Error: Text can never fit in the designated box! Aborting.")
 						return
 					end
-					lineCount = 1
-					currentLine = lines[lineCount]
 					fontSize = fontSize - 1
 					currentY = startingY
 					currentX = startingX
@@ -181,6 +164,20 @@ local function CalculateFontSizeBox(text, startingFontSize, maxWidth, maxHeight,
 	end
 end
 
+local function CalculateMultiLineTextBox(text, startingFontSize, maxWidth)
+	Spring.Echo("Width: " .. maxWidth)
+	local lowest = startingFontSize
+	for line in text:gmatch("[^\r\n]+") do
+		local size = GetBestFitForLine(text, maxWidth, startingFontSize)
+		Spring.Echo(line .. ": " .. size .. ", " .. gl.GetTextWidth(line, 1) * size)
+		if size < lowest then
+			lowest = size
+		end
+	end
+	Spring.Echo("Wanted size: " .. lowest)
+	return lowest
+end
+
 local function CalculateFontSizeObject(text, startingFontSize, textBox)
 	if not textBox then
 		Spring.Echo("[CalculateFontSizeObject]: No object supplied. Error. text: '" .. text .. "', startingFontSize: " .. startingFontSize)
@@ -190,7 +187,7 @@ local function CalculateFontSizeObject(text, startingFontSize, textBox)
 	local h = textBox.height
 	local x = textBox.x
 	local z = textBox.y
-	Spring.Echo("x: " .. tostring(x) .. ", " .. tostring(z) .. ", " .. w .. ", " .. h)
+	Spring.Echo("x: " .. tostring(x) .. ", " .. tostring(z))
 	local str, fontSize, _ = CalculateFontSizeBox(text, startingFontSize, w, h, x, z)
 	textBox:SetCaption(str)
 	textBox.fontSize = fontSize
@@ -201,4 +198,5 @@ WG.TextUtils = {
 	CalculateFontSizeBox = CalculateFontSizeBox,
 	CalculateFontSizeLine = GetBestFitForLine,
 	CalculateFontSizeObject = CalculateFontSizeObject,
+	CalculateMultiLineText = CalculateMultiLineTextBox,
 }

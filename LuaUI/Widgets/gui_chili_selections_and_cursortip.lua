@@ -298,6 +298,16 @@ local ctrlFilterUnits = false
 
 options_path = 'Settings/HUD Panels/Tooltip'
 local selPath = 'Settings/HUD Panels/Selected Units Panel'
+local translations = {
+	["selected_units"] = "Selected Units",
+	["value"] = "Value",
+	["health"] = "Health",
+	["shields"] = "Shields",
+	["buildpower"] = "Buildpower",
+	["metal"] = "metal",
+	["energy"] = "energy",
+	["burst_damage"] = "burst_damage",
+}
 
 options_order = {
 	--tooltip
@@ -545,6 +555,44 @@ local function Format(amount, displaySign)
 		formatted = amount .. ""
 	end
 	return formatted
+end
+
+local function FormatLargeNumber(number, displaySign)
+	local ret = number
+	local divisor = 1
+	local ending = ""
+	local isNegative = false
+	if number < 0 then
+		number = number * -1
+		isNegative = true
+	end
+	if number > 10000 then
+		divisor = 1000
+		ending = "k"
+	end
+	if number >= 1000000 then
+		divisor = 1000000
+		ending = "M"
+	end
+	if number >= 1000000000 then
+		divisor = 1000000000
+		ending = "B"
+	end
+	if number >= 1000000000000 then
+		divisor = 1000000000000
+		ending = "T"
+	end
+	if divisor > 1 then
+		ret = strFormat("%.2f", number / divisor) .. ending
+	end
+	if displaySign and number > 0 and not isNegative then
+		ret = "+" .. ret
+	end
+	if isNegative then
+		ret = "-" .. ret
+	end
+	Spring.Echo(number .. ", " .. ret)
+	return ret
 end
 
 local function FormatPlusMinus(num)
@@ -1635,13 +1683,13 @@ local function GetSelectionStatsDisplay(parentControl)
 	local selectedUnits
 	local selectedUnitDefID = {}
 	local visible = true
-	
 	local statLabel = Chili.Label:New{
 		name = "statLabel",
 		x = 0,
 		y = 3,
 		right = 0,
 		valign  = 'top',
+		--fontSize = 3,
 		objectOverrideFont = WG.GetFont(STATS_FONT),
 		parent = holder,
 	}
@@ -1703,28 +1751,30 @@ local function GetSelectionStatsDisplay(parentControl)
 			end
 		end
 		
-		local unitInfoString = WG.Translate("interface", "selected_units") .. ": " .. Format(total_count) .. "\n" ..
-			WG.Translate("interface", "value") .. ": " .. Format(total_cost) .. " / " ..  Format(total_finishedcost) .. "\n" ..
-			WG.Translate("interface", "health") .. ": " .. Format(total_hp) .. " / " ..  Format(total_maxhp) .. "\n"
+		local unitInfoString = translations["selected_units"] .. ": " .. Format(total_count) .. "\n" ..
+			translations["value"] .. ": " .. Format(total_cost) .. " / " ..  Format(total_finishedcost) .. "\n" ..
+			translations["health"] .. ": " .. Format(total_hp) .. " / " ..  Format(total_maxhp) .. "\n"
 		
 		if total_maxShield ~= 0 then
-			unitInfoString = unitInfoString .. WG.Translate("interface", "shields") .. ": " .. Format(total_shield) .. " / " ..  Format(total_maxShield) .. "\n"
+			unitInfoString = unitInfoString .. translations["shields"] .. ": " .. Format(total_shield) .. " / " ..  Format(total_maxShield) .. "\n"
 		end
 		if total_totalbp ~= 0 then
 			unitInfoString = unitInfoString ..
-				WG.Translate("interface", "buildpower") .. ": " .. Format(total_usedbp) .. " / " .. Format(total_totalbp) .. "\n"
+				translations["buildpower"] .. ": " .. Format(total_usedbp) .. " / " .. Format(total_totalbp) .. "\n"
 		end
 		if total_metalincome ~= 0 or total_metaldrain ~= 0 or total_energyincome ~= 0 or total_energydrain ~= 0 then
 			unitInfoString = unitInfoString ..
-				WG.Translate("interface", "metal") .. ": " .. FormatPlusMinus(total_metalincome) .. white .. " / " ..  FormatPlusMinus(-total_metaldrain) .. white .. "\n" ..
-				WG.Translate("interface", "energy") .. ": " .. FormatPlusMinus(total_energyincome) .. white .. " / " ..  FormatPlusMinus(-total_energydrain) .. white .. "\n"
+				translations["metal"] .. ": " .. FormatPlusMinus(total_metalincome) .. white .. " / " ..  FormatPlusMinus(-total_metaldrain) .. white .. "\n" ..
+				translations["energy"] .. ": " .. FormatPlusMinus(total_energyincome) .. white .. " / " ..  FormatPlusMinus(-total_energydrain) .. white .. "\n"
 		end
 		if burstClass and total_totalburst ~= 0 then
 			unitInfoString = unitInfoString ..
-				WG.Translate("interface", "burst_damage") .. ": " .. ((unreliableBurst and "~") or "") .. Format(total_totalburst) .. "\n"
+				translations["burst_damage"] .. ": " .. ((unreliableBurst and "~") or "") .. Format(total_totalburst) .. "\n"
 		end
-		
+		statLabel.height = 90
+		Spring.Echo("unitInfoString: " .. unitInfoString)
 		statLabel:SetCaption(unitInfoString)
+		--statLabel:SetCaption(unitInfoString)
 	end
 	
 	--updates values that don't change over time for group info
@@ -1788,6 +1838,29 @@ local function GetSelectionStatsDisplay(parentControl)
 	function externalFunctions.SetVisibile(newVisible)
 		visible = newVisible
 		holder:SetVisibility(newVisible)
+	end
+	
+	function externalFunctions.LanguageChange()
+		local testString = translations["selected_units"] .. ": " .. FormatLargeNumber(27500) .. "\n" ..
+			translations["value"] .. ": " .. FormatLargeNumber(999999999) .. " / " ..  FormatLargeNumber(999999999) .. "\n" ..
+			translations["health"] .. ": " .. FormatLargeNumber(999999999) .. " / " ..  FormatLargeNumber(999999999) .. "\n" ..
+			translations["shields"] .. ": " .. FormatLargeNumber(99999999) .. " / " ..  FormatLargeNumber(999999999) .. "\n" ..
+			translations["buildpower"] .. ": " .. FormatLargeNumber(9999999) .. " / " .. FormatLargeNumber(9999999) .. "\n" ..
+			translations["metal"] .. ": " .. FormatLargeNumber(99999999, true) .. white .. " / " ..  FormatLargeNumber(-9999999, true) .. white .. "\n" ..
+			translations["energy"] .. ": " .. FormatLargeNumber(99999999, true) .. white .. " / " ..  FormatLargeNumber(-99999999, true) .. white .. "\n" ..
+			translations["burst_damage"] .. ": ~" .. FormatLargeNumber(999999999) .. "\n"
+		local estiamtedFontSize = WG.TextUtils.CalculateMultiLineText(testString, 16, GROUP_STATS_WIDTH + 5)
+		statLabel:Dispose()
+		statLabel = Chili.Label:New{
+			name = "statLabel",
+			x = 0,
+			y = 3,
+			right = 0,
+			valign  = 'top',
+			--fontSize = 3,
+			objectOverrideFont = WG.GetFont(estiamtedFontSize),
+			parent = holder,
+		}
 	end
 	
 	return externalFunctions
@@ -2796,6 +2869,7 @@ local function GetSelectionWindow()
 	function externalFunctions.LanguageChange()
 		singleUnitDisplay.LanguageChange()
 		multiUnitDisplay.LanguageChange()
+		selectionStatsDisplay.LanguageChange()
 	end
 
 	function externalFunctions.ShowSingleUnit(unitID)
@@ -2992,7 +3066,11 @@ function widget:Initialize()
 		if tooltipWindow.LanguageChange then
 			tooltipWindow.LanguageChange()
 		end
+		for k, v in pairs(translations) do
+			translations[k] = WG.Translate("interface", k)
+		end
 		selectionWindow.LanguageChange()
+		--selectionStatsDisplay.LanguageChange()
 	end
 
 	LanguageUpdate()
