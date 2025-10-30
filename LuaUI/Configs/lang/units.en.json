@@ -182,7 +182,7 @@
 	"factoryveh" : {
 		"name" : "Vehicle Assembly Plant",
 		"description" : "Produces Light Wheeled Vehicles",
-		"helptext" : "A traditional favourite, the Vehicle Assembly Plant is the ideal blitzkrieg fac with its fast, highly aggressive units. Those units that lack speed make up for it with copious firepower. Comes equipped with a drone autofabricator for defense. Key Units: Flare, Sunbeam, Ravager, Striker, Slasher"
+		"helptext" : "A traditional favourite, the Vehicle Assembly Plant is the ideal blitzkrieg fac with its fast, highly aggressive units. Those units that lack speed make up for it with copious firepower. Comes equipped with a drone autofabricator for defense. Key Units: Flare, Sunbeam, Ravager, Striker, Fractal"
 	},
 	"turretgauss" : {
 		"name" : "Hardpoint",
@@ -812,7 +812,7 @@
 	"factoryhover" : {
 		"name" : "Hovercraft Platform",
 		"description" : "Produces Hovercraft",
-		"helptext" : "The Hovercraft Platform is fast and deadly, offering the ability to cross sea and plains alike and outmaneuver the enemy. Key units: Dagger, Halberd, Scalpel, Mace, Lance"
+		"helptext" : "The Hovercraft Platform is fast and deadly, offering the ability to cross sea and plains alike and outmaneuver the enemy. Key units: Spear, Bayonet, Blade, Longsword, Lance"
 	},
 	"gunshipassault" : {
 		"name" : "Dusk",
@@ -897,7 +897,7 @@
 	"factoryspider" : {
 		"name" : "Spider Factory",
 		"description" : "Produces Spiders",
-		"helptext" : "Optimized for rough terrain, the Spider Factory relies primarily on range and maneuverability rather than brute force. Key units: Flea, Twilight, Hermit, Crab"
+		"helptext" : "Optimized for rough terrain, the Spider Factory relies primarily on range and maneuverability rather than brute force. Key units: Wolf, Twilight, Hermit, Crab"
 	},
 	"chicken_dragon" : {
 		"name" : "White Dragon",
@@ -1152,7 +1152,7 @@
 	"factorytank" : {
 		"name" : "Tank Foundry Plant",
 		"description" : "Produces Heavy Tracked Vehicles",
-		"helptext" : "The Tank Foundry is the ultimate in brute force methods - nothing gets the job done quite like a sustained artillery barrage followed by a decisive push with the largest tanks in the field. Key units: Emissary, Barbarian, Ogre, Cyclops"
+		"helptext" : "The Tank Foundry is the ultimate in brute force methods - nothing gets the job done quite like a sustained artillery barrage followed by a decisive push with the largest tanks in the field. Key units: Polisher, Barbarian, Cobbler, Colossus"
 	},
 	"striderbantha" : {
 		"name" : "Mogul",
@@ -1177,7 +1177,7 @@
 	"factoryjump" : {
 		"name" : "Jumpbot Factory",
 		"description" : "Produces Jumpjet Equipped Walkers",
-		"helptext" : "The esoteric Jumpbot Factory offers unique tactical options for rapidly closing the distance in a knife fight, or getting over hills and rivers to cut a path through enemy lines. Key units: Arsonist, Moderator, Jack, Firewalker, Jugglenaut"
+		"helptext" : "The esoteric Jumpbot Factory offers unique tactical options for rapidly closing the distance in a knife fight, or getting over hills and rivers to cut a path through enemy lines. Key units: Arsonist, Mediator, Jack, Firewall, Gravitas"
 	},
 	"jumpsumo" : {
 		"name" : "Gravitas",
