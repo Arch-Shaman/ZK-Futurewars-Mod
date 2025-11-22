@@ -16,7 +16,7 @@ local oneClickWepDefNames = {
 		{ functionToCall = "Sprint", reloadTime = 600, name = "Sprint", useSpecialReloadFrame = true, tooltip = "Sprint: Increase speed by 100% for 3 seconds, slow down by 20% afterward for 17s. 20sec cooldown.", texture = "LuaUI/Images/Commands/Bold/sprint.png",},
 	},
 	gunshipkrow = {
-		{ functionToCall = "ClusterBomb", reloadTime = 854, name = "Annhilator Beam", tooltip = "Annhilator Beam: Activates a massive death laser to erase ground-loving plebs from exsitance.", weaponToReload = 3, texture = "LuaUI/Images/Commands/Bold/bomb.png",},
+		{ functionToCall = "ClusterBomb", reloadTime = 854, name = "Annhilator Beam", tooltip = "Annhilator Beam: Activates a massive death laser to erase ground-loving plebs from exsitance.", weaponToReload = 3, texture = "LuaUI/Images/Commands/Bold/laser.png",},
 	},
 	--hoverdepthcharge = {
 	--	{ functionToCall = "ShootDepthcharge", reloadTime = 256, name = "Drop Depthcharge", tooltip = "Drop Depthcharge: Drops a on the sea surface or ground.", weaponToReload = 1, texture = "LuaUI/Images/Commands/Bold/dgun.png",},
