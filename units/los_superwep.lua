@@ -19,6 +19,11 @@ return {
 		customParams          = {
 			dontcount         = 1,
 			dontkill          = 1,
+			area_cloak = 1,
+			area_cloak_upkeep = 0,
+			area_cloak_radius = 50,
+			area_cloak_grow_rate = 500,
+			area_cloak_decloak_distance = 150,
 			completely_hidden = 1, -- for widget-senpai not to notice me >w<
 			singuimmune = 1,
 		},
