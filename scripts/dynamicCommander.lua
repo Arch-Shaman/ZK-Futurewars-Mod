@@ -280,7 +280,7 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 		end
 		Spring.SetUnitWeaponState(unitID, weapon1, "range", range)
 		Spring.SetUnitWeaponDamages(unitID, weapon1, "dynDamageRange", range)
-		if damageBooster ~= 1 then
+		if damageBooster ~= 1 or damageMult ~= 1 then
 		local damages = WeaponDefs[weaponDef1.weaponDefID].damages
 			for k, v in pairs(damages) do
 				if type(k) == "number" then
@@ -315,7 +315,7 @@ local function UpdateWeapons(weaponName1, weaponName2, shieldName, rangeMult, da
 			damageBooster = 1 + extraInfo[2].damageBoost
 			if damageBooster < 0.01 then damageBooster = 0.01 end
 		end
-		if damageBooster ~= 1 then
+		if damageBooster ~= 1 or damageMult ~= 1 then
 			local damages = WeaponDefs[weaponDef2.weaponDefID].damages
 			for k, v in pairs(damages) do
 				if type(k) == "number" then
