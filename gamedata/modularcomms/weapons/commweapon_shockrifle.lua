@@ -2,14 +2,14 @@ local name = "commweapon_shockrifle"
 local weaponDef = {
 	name                    = "Sniper Rifle",
 	areaOfEffect            = 16,
-	colormap                = "0 0 0 0   0 0 0.2 0.2   0 0 0.5 0.5   0 0 0.7 0.7   0 0 1 1   0 0 1 1",
 	craterBoost             = 0,
 	craterMult              = 0,
+    cegTag                  = [[sniperrifle]],
 
 	customParams            = {
 		is_unit_weapon = 1,
 		slot = "5",
-		light_radius = 0,
+		light_radius = 200,
 		reaim_time = 1,
 		reveal_unit = 12,
 		use_okp = 1,
@@ -29,7 +29,7 @@ local weaponDef = {
 		default = 400,
 	},
 
-	explosionGenerator      = "custom:spectre_hit",
+	explosionGenerator      = "custom:sniper_hit",
 	impactOnly              = true,
 	impulseBoost            = 0,
 	impulseFactor           = 0.4,
@@ -38,7 +38,7 @@ local weaponDef = {
 	noExplode				= true,
 	range                   = 1250,
 	reloadtime              = 9,
-	rgbColor                = "1 0.2 0.2",
+	rgbColor                = "1 1 0.2",
 	separation              = 0.5,
 	size                    = 5,
 	sizeDecay               = 0,

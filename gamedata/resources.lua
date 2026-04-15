@@ -145,6 +145,7 @@ local resources = {
 			orangesmoke2= "pd/smokeorange.tga",
 			orangesmoke3= "gpl/smoke_orange.png",
 			pinknovaexplo= "cc/pinknovaexplo.tga",
+			yellownovaexplo= "cc/yellownovaexplo.tga",
 			greennovaexplo= "Shaman/greennova.tga",
 			plasma= "gpl/plasma.tga",
 			plasma0029= "other/plasma0029.tga",
