@@ -24,6 +24,7 @@ local weaponDef = {
 
 	explosionGenerator      = "custom:gauss_hit_m",
 	groundbounce            = 1,
+	flighttime                = 6, 
 	impactOnly              = true,
 	impulseBoost            = 0,
 	impulseFactor           = 0,
@@ -46,7 +47,7 @@ local weaponDef = {
 	waterbounce             = 1,
 	waterweapon				= true,
 	weaponType              = "Cannon",
-	weaponVelocity          = 2200,
+	weaponVelocity          = 800,
 }
 
 return name, weaponDef
