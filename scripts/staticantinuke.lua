@@ -63,26 +63,26 @@ function script.QueryWeapon(weaponNum) return missile end
 function script.AimWeapon(weaponNum, heading, pitch)
 	Signal(SIG_AIM)
 	SetSignalMask(SIG_AIM)
-	if not open then StartThread(Open) end
-	while not open or (spGetUnitRulesParam(unitID, "lowpower") == 1) do
-		Sleep(100)
-	end
 	--StartThread(RestoreAfterDelay)
 	return true
 end
 
 function script.BlockShot()
-	return spGetUnitRulesParam(unitID, "lowpower") == 1 or not open
+	local noPower = spGetUnitRulesParam(unitID, "lowpower") == 1
+	if not noPower then
+		GG.NotifyAntiTargeting(unitID)
+	end
+	return noPower
 end
 
 function script.FireWeapon(weaponNum)
 	Hide(missile)
 	Sleep(500)
-	if open then Close() end
-	while open do
-		Sleep(33)
-	end
-	StartThread(Open)
+	--if open then Close() end
+	--while open do
+		--Sleep(33)
+	--end
+	--StartThread(Open)
 end
 
 function script.Killed(recentDamage, maxHealth)
