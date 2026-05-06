@@ -76,6 +76,7 @@ return {
 				flightTime              = 180,
 				impulseBoost            = 0.5,
 				impulseFactor           = 0.2,
+				interceptSolo           = false,
 				interceptedByShieldType = 65,
 				model                   = "staticnuke_projectile.s3o", -- crblmsslr.s3o is being removed in the future, so let's future proof this.
 				noSelfDamage            = false,

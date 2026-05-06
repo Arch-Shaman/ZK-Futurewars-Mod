@@ -77,6 +77,7 @@ return {
 				flightTime              = 180,
 				impulseBoost            = 1.5,
 				impulseFactor           = 1.2,
+				interceptSolo           = false,
 				interceptedByShieldType = 65,
 				model                   = "w_mirv_payload.dae",
 				noSelfDamage            = false,
