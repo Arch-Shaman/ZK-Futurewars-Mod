@@ -71,7 +71,7 @@ local UPARM_JUMP_RELEASE_SPEED = math.rad(240)
 local LARM_JUMP_RELEASE_ANGLE = math.rad(90)
 local LARM_JUMP_RELEASE_SPEED = math.rad(360)
 
-local RESTORE_DELAY = 6000
+local RESTORE_DELAY = 3000
 
 
 --------------------------------------------------------------------------------
@@ -317,6 +317,7 @@ function script.AimWeapon(num, heading, pitch)
 		WaitForTurn(torso, y_axis)
 		WaitForTurn(luparm, x_axis)
 		WaitForTurn(ruparm, x_axis)
+		StartThread(RestoreAfterDelay)
 	end
 	return true
 end
