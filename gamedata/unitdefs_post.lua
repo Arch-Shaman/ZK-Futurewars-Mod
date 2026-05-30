@@ -425,7 +425,7 @@ for name, ud in pairs(UnitDefs) do
 		ud.repairspeed = ud.workertime * 3
 		ud.health = ud.health * 3
 		ud.autoheal = (ud.autoheal or 0) * 3
-		ud.radardistance = 10000000
+		ud.radardistance = 100000
 		ud.radaremitheight = 100000
 	end
 	
