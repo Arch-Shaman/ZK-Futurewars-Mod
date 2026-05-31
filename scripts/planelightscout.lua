@@ -20,11 +20,11 @@ local weaponDef = UnitDefNames["planelightscout"].weapons[3].weaponDef
 local costToFire = tonumber(WeaponDefs[weaponDef].customParams.batterydrain) or 1
 
 function script.StopMoving()
-	StartThread(GG.TakeOffFuncs.TakeOffThread, takeoffHeight, SIG_TAKEOFF)
+	StartThread(GG.TakeOffFuncs.TakeOffThread, unitID, takeoffHeight, SIG_TAKEOFF)
 end
 
 function script.Create()
-	StartThread(GG.TakeOffFuncs.TakeOffThread, takeoffHeight, SIG_TAKEOFF)
+	StartThread(GG.TakeOffFuncs.TakeOffThread, unitID, takeoffHeight, SIG_TAKEOFF)
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
 end
 
