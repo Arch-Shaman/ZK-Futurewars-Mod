@@ -115,6 +115,10 @@ do
 			color = {1, 0.13, 0},
 			class = GROUND,
 		},
+		turretsunlance = {
+			color = {1, 0.3, 0.2},
+			class = GROUND,
+		},
 		turrettorp = {
 			color = {1, 0, 0},
 			class = GROUND,

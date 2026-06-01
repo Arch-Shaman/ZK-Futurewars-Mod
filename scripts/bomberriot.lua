@@ -90,13 +90,13 @@ function OnAmmoTypeChange(newAmmo)
 end
 
 function script.StopMoving()
-	StartThread(GG.TakeOffFuncs.TakeOffThread, takeoffHeight, SIG_TAKEOFF)
+	StartThread(GG.TakeOffFuncs.TakeOffThread, unitID, takeoffHeight, SIG_TAKEOFF)
 end
 
 function script.Create()
 	SetInitialBomberSettings()
 	StartThread(GG.Script.SmokeUnit, unitID, smokePiece)
-	StartThread(GG.TakeOffFuncs.TakeOffThread, takeoffHeight, SIG_TAKEOFF)
+	StartThread(GG.TakeOffFuncs.TakeOffThread, unitID, takeoffHeight, SIG_TAKEOFF)
 	--StartThread(Lights)
 end
 

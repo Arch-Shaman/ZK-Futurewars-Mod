@@ -14,9 +14,9 @@ local torpsRemaining = 5
 local torpsMax = 5
 local aimSpeed = math.rad(120)
 local init = false
-
 -- Signal definitions
 local SIG_AIM = 2
+shotNum = 0
 
 local gameSpeed = Game.gameSpeed
 local scriptReload = include("scriptReload.lua")
@@ -36,15 +36,18 @@ local function Bob(rot)
 	end
 end
 
-local function FireAndReload()
-	scriptReload.GunStartReload(5 - torpsRemaining)
-	torpsRemaining = torpsRemaining - 1
+local function FireAndReload(num)
+	scriptReload.GunStartReload(num)
 	SleepAndUpdateReload(num, 6.5 * gameSpeed)
+	shotNum = (shotNum + 1)%5
+	if scriptReload.GunLoaded(num) then
+		shotNum = 0
+	end
 	torpsRemaining = torpsRemaining + 1
 end
 
 function script.Create()
-	scriptReload.SetupScriptReload(3, RELOAD_TIME)
+	scriptReload.SetupScriptReload(torpsMax, RELOAD_TIME)
 	local x, _, z = spGetUnitBasePosition(unitID)
 	local y = spGetGroundHeight(x, z)
 	Turn(arm1, z_axis, math.rad(-70), math.rad(80))
@@ -82,13 +85,12 @@ function script.AimWeapon(num, heading, pitch)
 end
 
 function script.FireWeapon(num)
-	StartThread(FireAndReload)
+	torpsRemaining = torpsRemaining - 1
+	StartThread(FireAndReload, shotNum)
 end
 
 function script.BlockShot(num, targetID)
 	if not init then return true end
-	if num == 2 and waterFire then return true end
-	if num == 1 and not waterFire then return true end
 	if torpsRemaining == 0 then return true end
 	return GG.Script.OverkillPreventionCheck(unitID, targetID, 125, 550, 90, 1.3, 100, 1.5)
 end
