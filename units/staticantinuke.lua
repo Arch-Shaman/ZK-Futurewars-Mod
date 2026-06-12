@@ -51,7 +51,7 @@ return {
 		floater                       = true,
 		weapons                       = {
 			{
-				def = "AMD_ROCKET",
+				def = "laser_render",
 			},
 		},
 		weaponDefs                    = {
