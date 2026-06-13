@@ -3,7 +3,7 @@ include "constants.lua"
 --------------------------------------------------------------------------------
 -- pieces
 --------------------------------------------------------------------------------
-local base, door1, door2, brace, missile, aimpoint = piece('base', 'door1', 'door2', 'brace', 'missile', 'aimpoint')
+local base, door1, door2, gun, aimpoint = piece('base', 'door1', 'door2', 'gun', 'aimpoint')
 
 local smokePiece = {base}
 
@@ -30,17 +30,20 @@ local function Open()
 	Turn(door2, z_axis, math.rad(90), math.rad(45))
 	WaitForTurn(door1, z_axis)
 	
-	Turn(brace, x_axis, math.rad(90), math.rad(45))
-	WaitForTurn(brace, x_axis)
+	Move(gun, y_axis, 5, 5)
+	Move(door1, y_axis, -15, 15)
+	Move(door2, y_axis, -15, 15)
+	Sleep(1000)
 	open = true
 end
 
 local function Close()
 	Signal(SIG_OPEN)
 	SetSignalMask(SIG_OPEN)
-	Turn(brace, x_axis, 0, math.rad(45))
-	WaitForTurn(brace, x_axis)
-	Show(missile)
+	Move(gun, y_axis, 0, 5)
+	Move(door1, y_axis, 0, 15)
+	Move(door2, y_axis, 0, 15)
+	Sleep(1000)
 	Turn(door1, z_axis, 0, math.rad(45))
 	Turn(door2, z_axis, 0, math.rad(45))
 	WaitForTurn(door1, z_axis)
@@ -58,7 +61,7 @@ local function RestoreAfterDelay()
 end
 
 function script.AimFromWeapon(weaponNum)	return aimpoint end
-function script.QueryWeapon(weaponNum) return missile end
+function script.QueryWeapon(weaponNum) return gun end
 
 function script.AimWeapon(weaponNum, heading, pitch)
 	Signal(SIG_AIM)
@@ -76,7 +79,6 @@ function script.BlockShot()
 end
 
 function script.FireWeapon(weaponNum)
-	Hide(missile)
 	Sleep(500)
 	--if open then Close() end
 	--while open do
@@ -91,25 +93,25 @@ function script.Killed(recentDamage, maxHealth)
 		Explode(base, SFX.NONE)
 		Explode(door1, SFX.NONE)
 		Explode(door2, SFX.NONE)
-		Explode(brace, SFX.SMOKE)
+		Explode(gun, SFX.SMOKE)
 		return 1
 	elseif severity <= .50 then
 		Explode(base, SFX.NONE)
 		Explode(door1, SFX.SHATTER)
 		Explode(door2, SFX.SHATTER)
-		Explode(brace, SFX.SMOKE)
+		Explode(gun, SFX.SMOKE)
 		return 1
 	elseif severity <= .99 then
 		Explode(base, SFX.SHATTER)
 		Explode(door1, SFX.SMOKE + SFX.FIRE)
 		Explode(door2, SFX.SMOKE + SFX.FIRE)
-		Explode(brace, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
+		Explode(gun, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
 		return 2
 	else
 		Explode(base, SFX.SHATTER)
 		Explode(door1, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
 		Explode(door2, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
-		Explode(brace, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
+		Explode(gun, SFX.SMOKE + SFX.FIRE + SFX.EXPLODE)
 		return 2
 	end
 end
