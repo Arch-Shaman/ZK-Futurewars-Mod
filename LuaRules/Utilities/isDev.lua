@@ -2,6 +2,7 @@ local devs = {
 	Shaman = true,
 	LeojEspino = true,
 	Stuff = true,
+	garfild888 = true,
 }
 
 local function IsFWDev(name)
