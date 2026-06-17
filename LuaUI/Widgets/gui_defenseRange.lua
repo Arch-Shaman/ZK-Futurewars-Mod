@@ -654,14 +654,14 @@ local function SetupChiliStuff()
 	checkboxes.allynuke    = Checkbox:New { x = 26, y = 76,  noFont = true}
 	checkboxes.enemynuke   = Checkbox:New { x = 50, y = 76,  noFont = true}
 	checkboxes.specnuke    = Checkbox:New { x = 74, y = 76,  noFont = true}
-	checkboxes.allycloak   = Checkbox:New { x = 26, y = 100, noFont = true}
-	checkboxes.enemycloak  = Checkbox:New { x = 50, y = 100, noFont = true}
-	checkboxes.speccloak   = Checkbox:New { x = 74, y = 100, noFont = true}
+	checkboxes.allycloak   = Checkbox:New { x = 26, y = 148, noFont = true}
+	checkboxes.enemycloak  = Checkbox:New { x = 50, y = 148, noFont = true}
+	checkboxes.speccloak   = Checkbox:New { x = 74, y = 148, noFont = true}
 	-- no allyshield
-	checkboxes.enemyshield = Checkbox:New { x = 50, y = 124, noFont = true}
+	checkboxes.enemyshield = Checkbox:New { x = 50, y = 100, noFont = true}
 	-- no specshield
 	-- no allyradar
-	checkboxes.enemyradar  = Checkbox:New { x = 50, y = 148, noFont = true}
+	checkboxes.enemyradar  = Checkbox:New { x = 50, y = 124, noFont = true}
 	-- no specradar
 
 	local function OnCheckboxChangeFunc(self)
