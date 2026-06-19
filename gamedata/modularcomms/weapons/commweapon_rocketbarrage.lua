@@ -6,7 +6,7 @@ local weaponDef = {
 	cegTag                  = "rocket_trail_bar_flameboosted",
 	craterBoost             = 0,
 	craterMult              = 0,
-	burst					= 6,
+	burst					= 1,--6
 	burstrate				= 0.1,
 	projectiles				= 4,
 	cameraShake				= 0,
@@ -27,6 +27,8 @@ local weaponDef = {
 		cruise_nolock = 1,
 		reveal_unit = 10,
 		onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER",
+		magazine_size = "6",
+		magazine_reload = "7.2"
 	},
 
 	damage                  = {
@@ -43,7 +45,7 @@ local weaponDef = {
 	interceptedByShieldType = 10,
 	model                   = "wep_b_fabby.s3o",
 	range                   = 800,
-	reloadtime              = 7.2,
+	reloadtime              = 0.5, --7.2
 	smokeTrail              = false,
 	soundHit                = "weapon/missile/sabot_hit",
 	soundHitVolume          = 5,
