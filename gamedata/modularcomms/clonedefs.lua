@@ -432,6 +432,33 @@ local copy = {
 	},
 }
 
+local telestats = {
+	mainstats = {
+	},
+	customparams = {
+		[0] = {
+
+				},
+		[1] = {
+				teleporter = 1,
+				teleporter_throughput = 200,
+				teleporter_beacon_spawn_time = 1
+				},
+		[2] = {
+				teleporter = 1,
+				teleporter_throughput = 600,
+				teleporter_beacon_spawn_time = 1
+				},
+		[3] = {
+				teleporter = 1,
+				teleporter_throughput = 200,
+				teleporter_beacon_spawn_time = 3
+				},
+	},
+	heapmodel = {
+	}
+}
+
 for sourceName, copyTable in pairs(copy) do
 	for cloneName, stats in pairs(copyTable) do
 		-- some further modification
