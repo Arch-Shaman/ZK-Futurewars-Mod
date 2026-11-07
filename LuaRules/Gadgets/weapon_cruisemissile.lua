@@ -9,7 +9,7 @@ function gadget:GetInfo()
 		author    = "Shaman",
 		date      = "11/26/2020",
 		license   = "CC-0",
-		layer     = 0,
+		layer     = -1,
 		enabled   = true,
 	}
 end
@@ -253,7 +253,7 @@ local function ForceUpdate(id, x, y, z, t)
 	end
 end	
 
-local function GetTargetPosition(id, allyteam)
+local function GetTargetPosition(id)
 	local data = IterableMap.Get(missiles, id)
 	if data and data.target then
 		return data.target.x, data.target.y, data.target.z
