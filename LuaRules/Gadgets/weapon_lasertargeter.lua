@@ -171,10 +171,10 @@ function gadget:UnitDestroyed(unitID)
 end
 
 local function SetMissileTarget(missileID, x, y, z)
-	if not GG.GetMissileCruising(missileID) then
+	if not GG.CruiseMissiles.GetMissileCruising(missileID) then
 		spSetProjectileTarget(missileID, x, y, z)
 	else
-		GG.ForceCruiseUpdate(missileID, x, y, z)
+		GG.CruiseMissiles.ForceCruiseUpdate(missileID, x, y, z)
 	end
 end
 

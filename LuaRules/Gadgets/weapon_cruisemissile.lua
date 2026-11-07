@@ -1,7 +1,3 @@
-if not gadgetHandler:IsSyncedCode() then -- no unsynced nonsense
-	return
-end
-
 function gadget:GetInfo()
 	return {
 		name      = "Cruise Missile Trajectory",
@@ -13,6 +9,55 @@ function gadget:GetInfo()
 		enabled   = true,
 	}
 end
+
+if not gadgetHandler:IsSyncedCode() then -- Intercommunications for starburst predict
+	local missiles = {}
+	
+	local function UpdateMissileTarget(_, projectileID, x, y, z, cruising)
+		if missiles[projectileID] then
+			missiles[projectileID].x = x
+			missiles[projectileID].y = y
+			missiles[projectileID].z = z
+		else
+			missiles[projectileID] = {x = x, y = y, z = z, cruising = cruising}
+		end
+	end
+	
+	local function UpdateMissileCruising(_, projectileID, state)
+		if missiles[projectileID] then
+			missiles[projectileID].cruising = state
+		end
+	end
+	
+	local function DestroyMissile(_, projectileID)
+		missiles[projectileID] = nil
+	end
+	
+	local function IsCruiseMissileCruising(projectileID)
+		if missiles[projectileID] then
+			return missiles[projectileID].cruising
+		else
+			Spring.Echo("Missing " .. projectileID)
+			return true
+		end
+	end
+	
+	local function GetCruiseTarget(projectileID)
+		if missiles[projectileID] then
+			return missiles[projectileID][1], missiles[projectileID][2], missiles[projectileID][3]
+		end
+		Spring.Echo("Missing " .. projectileID)
+	end
+	
+	function gadget:Initialize()
+		GG.CruiseMissilesUnsynced = {GetCruiseTarget = GetCruiseTarget}
+		gadgetHandler:AddSyncAction("UpdateMissileTarget", UpdateMissileTarget)
+		gadgetHandler:AddSyncAction("DestroyMissile", DestroyMissile)
+		gadgetHandler:AddSyncAction("UpdateMissileCruising", UpdateMissileCruising)
+	end
+	return
+end
+
 
 local IterableMap = Spring.Utilities.IterableMap
 
@@ -234,6 +279,7 @@ local function ForceUpdate(id, x, y, z, t)
 			data.target[1] = x
 			data.target[2] = y
 			data.target[3] = z
+			SendToUnsynced("UpdateMissileTarget", id, x, y, z)
 		end
 		if t then -- force update.
 			data.type = t
@@ -267,6 +313,7 @@ local function SetMissileUnguided(id, unitID)
 	if data then
 		data.type = 'ground'
 		data.target[1], data.target[2], data.target[3] = GetMissileDestination(id, spGetUnitAllyTeam(unitID), true)
+		SendToUnsynced("UpdateMissileTarget", id, data.target[1], data.target[2], data.target[3])
 		data.unguided = true
 	end
 end
@@ -303,6 +350,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local _, py = spGetProjectilePosition(proID)
 		py = max(py, ty)
 		IterableMap.Add(missiles, proID, {unguided = false, target = target, originaltarget = originalTarget, useprediction = config[wep].useprediction, altitudestayframes = 0, type = type, cruising = config[wep].noascension, takeoff = not config[wep].noascension, lastknownposition = last, configid = wep, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0, offset = {}})
+		SendToUnsynced("UpdateMissileTarget", proID, target[1], target[2], target[3])
 		if config[wep].radius then
 			ProccessOffset(wep, proID)
 		end
@@ -318,16 +366,21 @@ function gadget:ProjectileDestroyed(proID)
 	local data = IterableMap.Get(missiles, proID)
 	if data then
 		data.destroyed = true
+		SendToUnsynced("DestroyMissile", id)
 	end
 end
 
+local CruiseMissileFunctions = {
+	ForceCruiseUpdate = ForceUpdate,
+	GetMissileCruising = IsMissileCruiseDone,
+	GetCruiseTarget = GetTargetPosition,
+	SetCruiseMissileUnguided = SetMissileUnguided,
+	ForceMissileToCruise = ForceMissileToCruise,
+	GetMissileCruiseProgress = GetMissileCruiseProgress
+}
+
 function gadget:Initialize()
-	GG.ForceCruiseUpdate = ForceUpdate
-	GG.GetMissileCruising = IsMissileCruiseDone
-	GG.GetCruiseTarget = GetTargetPosition
-	GG.SetCruiseMissileUnguided = SetMissileUnguided
-	GG.ForceMissileToCruise = ForceMissileToCruise
-	GG.GetMissileCruiseProgress = GetMissileCruiseProgress
+	GG.CruiseMissiles = CruiseMissileFunctions
 end
 
 function gadget:GameFrame(f)
@@ -389,6 +442,7 @@ function gadget:GameFrame(f)
 							--spEcho("Torpedo is now cruising")
 							data.takeoff = false
 							data.cruising = true
+							SendToUnsynced("UpdateMissileCruising", projectile, 1)
 						end
 						if data.cruising then
 							--spEcho("Distance to target: " .. distance .. " / " .. mindist)
@@ -427,6 +481,7 @@ function gadget:GameFrame(f)
 						--spEcho("Taking off: " .. cy .. " / " .. wantedheight)
 					end
 					if data.takeoff and ((cy >= wantedheight - 40 and not missileconfig.airlaunched and not missileconfig.droptoalt) or (cy <= wantedheight + 20 and missileconfig.airlaunched and not missileconfig.droptoalt) or (cy <= wantedheight and missileconfig.droptoalt)) then -- end ascent
+						SendToUnsynced("UpdateMissileCruising", projectile, 1)
 						data.takeoff = false
 						data.cruising = true
 						--spEcho("No longer taking off")
@@ -450,7 +505,8 @@ function gadget:GameFrame(f)
 								local t = math.min(math.ceil(d/v), missileconfig.predicttime) -- time it takes to get to the location
 								data.target[1] = targetx + (tvx * t)
 								data.target[2] = targety
-								data.target[3] = targetz + (tvz * t) 
+								data.target[3] = targetz + (tvz * t)
+								SendToUnsynced("UpdateMissileTarget", projectile, data.target[1], data.target[2], data.target[3])
 								x, z = data.target[1], data.target[3]
 								data.lastknownposition = data.target
 							end
