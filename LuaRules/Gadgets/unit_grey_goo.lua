@@ -19,7 +19,7 @@ end
 
 --SYNCED
 
-local REVERSE_COMPAT = not Spring.Utilities.IsCurrentVersionNewerThan(104, 1120)
+local REVERSE_COMPAT = not Script.IsEngineMinVersion(104, 0, 1120)
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

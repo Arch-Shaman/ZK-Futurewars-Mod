@@ -143,8 +143,8 @@ return {
 				},
 				
 				damage                  = {
-					default = 750.5,
-					planes  = 750.5,
+					default = 750,
+					planes  = 750,
 				},
 	
 				dance                   = 20,

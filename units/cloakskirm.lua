@@ -100,7 +100,7 @@ return {
 					script_burst = "3",
 				},
 				damage                  = {
-					default = 100.01,
+					default = 100,
 				},
 				fireStarter             = 70,
 				flightTime              = 9,
@@ -191,7 +191,7 @@ return {
 					reload_move_mod_time = 3,
 				},
 				damage                  = {
-					default = 550.01,
+					default = 550,
 				},
 				fireStarter             = 70,
 				flightTime              = 12,

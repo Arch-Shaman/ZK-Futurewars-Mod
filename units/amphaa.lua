@@ -84,7 +84,7 @@ return {
 				},
 				dance					= 55,
 				damage					= {
-					default					= 100.1,
+					default					= 100,
 				},
 				explosionGenerator		= "custom:FLASH2",
 				fireStarter				= 70,

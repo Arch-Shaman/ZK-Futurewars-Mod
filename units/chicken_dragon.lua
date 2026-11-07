@@ -200,7 +200,7 @@ return {
 
 				damage                  = {
 					default    = 100,
-					chicken    = 0.001,
+					chicken    = 0,
 					planes     = 100,
 				},
 
@@ -238,7 +238,6 @@ return {
 				
 				damage                  = {
 					default = 100,
-					planes  = 100,
 				},
 
 				dance                   = 90,
@@ -286,7 +285,6 @@ return {
 				
 				damage                  = {
 					default = 100,
-					planes  = 100,
 				},
 
 				dance                   = 90,

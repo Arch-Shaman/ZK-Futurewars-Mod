@@ -86,7 +86,7 @@ return {
 					light_radius = 0,
 				},
 				damage                  = {
-					default = 15.01,
+					default = 15,
 				},
 
 				explosionGenerator      = "custom:NONE",

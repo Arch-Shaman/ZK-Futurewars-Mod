@@ -83,7 +83,7 @@ return {
 					stays_underwater = 1, -- stop warning me about a nonused weapondef!
 				},
 				damage                  = {
-					default = 48.01,
+					default = 48,
 				},
 				edgeEffectiveness       = 0.6,
 				explosionGenerator      = "custom:TORPEDO_HIT_SMALL_WEAK",

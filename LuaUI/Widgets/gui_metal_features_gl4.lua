@@ -33,7 +33,7 @@ local spGetActiveCmdDesc = Spring.GetActiveCmdDesc
 local spGetGameFrame = Spring.GetGameFrame
 local spValidFeatureID = Spring.ValidFeatureID
 
-local BAR_COMPAT = Spring.Utilities.IsCurrentVersionNewerThan(105, 500)
+local BAR_COMPAT = Script.IsEngineMinVersion(105, 0, 500)
 local internalEnabled = true
 local hideWithUi = true
 

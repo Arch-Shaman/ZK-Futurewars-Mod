@@ -84,7 +84,7 @@ return {
 					isflak = 1,
 				},
 				damage                  = {
-					default = 10.1,
+					default = 10,
 				},
 				explosionGenerator      = "custom:emg_hit_le",
 				impactOnly              = false,

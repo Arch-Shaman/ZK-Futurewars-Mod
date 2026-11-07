@@ -74,7 +74,7 @@ return {
 					light_radius = 0,
 				},
 				damage                  = {
-					default = 30.01,
+					default = 30,
 				},
 				dance                   = 60,
 				explosionGenerator      = "custom:goo_v2_green",

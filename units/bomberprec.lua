@@ -156,7 +156,7 @@ return {
 				customParams = {
 				},
 				damage                  = {
-					default = 400.1,
+					default = 400,
 				},
 				edgeEffectiveness       = 0.6,
 				explosionGenerator      = "custom:TORPEDO_HIT",
@@ -198,7 +198,7 @@ return {
 				craterBoost             = 0,
 				craterMult              = 0,
 				damage                  = {
-					default = 2700.01,
+					default = 2700,
 				},
 				customParams              = {
 					light_camera_height = 2500,

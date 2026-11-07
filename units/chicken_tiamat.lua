@@ -13,7 +13,6 @@ return {
 		canMove             = true,
 		canPatrol           = true,
 		category            = "LAND FIREPROOF",
-
 		customParams        = {
 			chicken = "uwu",	
 			chicken_shield = ">w<",
@@ -28,7 +27,6 @@ return {
 			singuimmune = 1,
 			chicken_spawncost = 7200,
 		},
-
 		explodeAs           = "NOWEAPON",
 		footprintX          = 4,
 		footprintZ          = 4,
@@ -45,7 +43,6 @@ return {
 		objectName          = "chickenbroodqueen.s3o",
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
-
 		sfxtypes            = {
 			explosiongenerators = {
 				"custom:blood_spray",
@@ -67,7 +64,6 @@ return {
 		turnRate            = 967,
 		upright             = false,
 		workerTime          = 0,
-
 		weapons             = {
 			{
 				def                = "DISINTEGRATOR",
@@ -87,8 +83,6 @@ return {
 				def = "SHIELD",
 			},
 		},
-
-
 		weaponDefs          = {
 			DISINTEGRATOR = {
 				name                    = "Disintegrator",
@@ -129,15 +123,12 @@ return {
 			SHIELD       = {
 				name                    = "Shield",
 				craterMult              = 0,
-
 				customParams            = {
 					unlinked = true,
 				},
-				
 				damage                  = {
 					default = 10,
 				},
-
 				exteriorShield          = true,
 				impulseFactor           = 0,
 				interceptedByShieldType = 3,
@@ -220,18 +211,14 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams            = {
 					light_radius = 0,
 					armorpiercing = 0.5,
 					combatrange = 150,
 				},
-
 				damage                  = {
 					default = 200,
-					planes  = 200,
 				},
-
 				dance                   = 90,
 				explosionGenerator      = "custom:goo_v2_red",
 				fireStarter             = 0,

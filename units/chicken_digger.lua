@@ -84,7 +84,6 @@ return {
 
 				damage                  = {
 					default = 20,
-					planes  = 20,
 				},
 
 				explosionGenerator      = "custom:NONE",

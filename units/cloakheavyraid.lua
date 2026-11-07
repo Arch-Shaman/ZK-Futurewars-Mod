@@ -92,7 +92,7 @@ return {
 					armorpiercing = 1,
 				},
 				damage                  = {
-					default = 280.1,
+					default = 280,
 				},
 				explosionGenerator      = "custom:scythe_hit",
 				explosionScar			= false,

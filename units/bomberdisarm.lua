@@ -98,7 +98,7 @@ return {
 					blastwave_impulse = 0,
 				},
 				damage                  = {
-					default        = 100.1,
+					default        = 100,
 				},
 				edgeEffectiveness       = 0.4,
 				explosionGenerator      = "custom:disarm_explosion_600",

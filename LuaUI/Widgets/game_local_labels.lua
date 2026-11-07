@@ -10,6 +10,17 @@ function widget:GetInfo()
   }
 end
 
+local spGetPlayerInfo = Spring.GetPlayerInfo
+local spGetTeamInfo = Spring.GetTeamInfo
+local spGetTeamUnitsByDefs = Spring.GetTeamUnitsByDefs
+local spGetPlayerList = Spring.GetPlayerList
+local spGetAIInfo = Spring.GetAIInfo
+local spGetUnitTeam = Spring.GetUnitTeam
+local spGetGroundHeight = Spring.GetGroundHeight
+local spMarkerAddPoint = Spring.MarkerAddPoint
+local wgTranslate = WG.Translate
+local myPlayerID = Spring.GetMyPlayerID
+
 local function GetRoundedString(str, place)
 	return string.format("%." .. place .. "f", str)
 end
@@ -18,32 +29,32 @@ local airFactoryDef = UnitDefNames["factoryplane"].id
 local airPlateDef = UnitDefNames["plateplane"].id
 
 local function DoIEvenHaveAir()
-	return #Spring.GetTeamUnitsByDefs(Spring.GetMyTeamID(), {airFactoryDef, airPlateDef}) > 0
+	return #spGetTeamUnitsByDefs(Spring.GetMyTeamID(), {airFactoryDef, airPlateDef}) > 0
 end
 
 local function GetNameOfTeam(teamID)
-	local _, teamLeader, _, isAI = Spring.GetTeamInfo(teamID)
+	local _, teamLeader, _, isAI = spGetTeamInfo(teamID)
 	if not isAI then
-		local teamSize = #Spring.GetPlayerList(teamID, true)
+		local teamSize = #spGetPlayerList(teamID, true)
 		if teamSize > 1 then
-			return Spring.GetPlayerInfo(teamLeader) .. "'s squad" -- TODO: Localize
+			return spGetPlayerInfo(teamLeader) .. "'s squad" -- TODO: Localize
 		else
-			return Spring.GetPlayerInfo(teamLeader)
+			return spGetPlayerInfo(teamLeader)
 		end
 	else
-		local _, name = Spring.GetAIInfo(teamID)
+		local _, name = spGetAIInfo(teamID)
 		return name
 	end
 end
 
 local function GetTeamNameFromUnitID(unitID)
-	local teamID = Spring.GetUnitTeam(unitID)
+	local teamID = spGetUnitTeam(unitID)
 	return GetNameOfTeam(teamID)
 end
 
 local function AddFakeLabel(playerID, text, x, z) -- ProConsoleAddFakeMsg(playerID, txt)
-	local y = Spring.GetGroundHeight(x, z)
-	Spring.MarkerAddPoint(x, y, z, text, true, playerID)
+	local y = spGetGroundHeight(x, z)
+	spMarkerAddPoint(x, y, z, text, true, playerID)
 end
 
 --             AddLocalizedLabel(playerID, context, x, z, unitDef, unitID, unitTeamID, extrainfo)
@@ -53,22 +64,22 @@ local function AddLocalizedLabel(playerID, num, x, z, unitDef, unitID, teamID, e
 		teamName = GetNameOfTeam(teamID)
 	end
 	local str
-	local unitName = unitDef and (WG.Translate("units", UnitDefs[unitDef].name .. ".name") or UnitDefs[unitDef].humanName)
+	local unitName = unitDef and (wgTranslate("units", UnitDefs[unitDef].name .. ".name") or UnitDefs[unitDef].humanName)
 	if not unitName then
-		unitName = WG.Translate("interface", "radardot")
+		unitName = wgTranslate("interface", "radardot")
 	end
-	Spring.Echo("unitName: " .. tostring(unitName) .. ", " .. tostring(extrainfo) .. ", " .. num)
+	--Spring.Echo("unitName: " .. tostring(unitName) .. ", " .. tostring(extrainfo) .. ", " .. num)
 	if num == 36 then -- special support neeeded 
-		str = WG.Translate("interface", "localizedlabel_36", {power = extrainfo})
+		str = wgTranslate("interface", "localizedlabel_36", {power = extrainfo})
 	elseif num == 8 then
-		str = WG.Translate("interface", "localizedlabel_8", {teamname = teamName, health = extrainfo})
+		str = wgTranslate("interface", "localizedlabel_8", {teamname = teamName, health = extrainfo})
 	elseif num == 10 or num == 11 or num == 5 then
-		str = WG.Translate("interface", "localizedlabel_"..num, {teamname = teamName, unitname = unitName, progress = extrainfo})
+		str = wgTranslate("interface", "localizedlabel_"..num, {teamname = teamName, unitname = unitName, progress = extrainfo})
 	else
-		str = WG.Translate("interface", "localizedlabel_"..num, {teamname = teamName, unitname = unitName, health=extrainfo})
+		str = wgTranslate("interface", "localizedlabel_"..num, {teamname = teamName, unitname = unitName, health=extrainfo})
 	end
 	if num == 27 or num == 26 then
-		if Spring.GetMyPlayerID() == playerID or DoIEvenHaveAir() then
+		if myPlayerID == playerID or DoIEvenHaveAir() then
 			AddFakeLabel(playerID, str, x, z)
 		end
 	else
@@ -77,7 +88,9 @@ local function AddLocalizedLabel(playerID, num, x, z, unitDef, unitID, teamID, e
 end
 
 local function AddLocalizedMessage(playerID, num, teamID, health)
-	WG.ProConsoleAddFakeMsg(playerID, WG.Translate("interface", "localizedlabel_" .. num))
+	WG.ProConsoleAddFakeMsg(playerID, wgTranslate("interface", "localizedlabel_" .. num))
+	local name, _ = spGetPlayerInfo(playerID)
+	Spring.SendLuaMenuMsg("textToSpeechSay_" .. (playerName or "unknown") .. " " .. (caption or ""))
 end
 
 local function CheckForGrid(unitID, unitDefID)
@@ -121,7 +134,7 @@ local function GetContextFromMousePos(contextNum)
 	local buildDef = activeCommand and activeCommand < 0 and activeCommand * -1
 	if not x or not z then return end
 	if x < 0 or z < 0 or x > Game.mapSizeX or z > Game.mapSizeZ then return end -- Don't do things for out of bounds!
-	local playerID = Spring.GetMyPlayerID()
+	local playerID = myPlayerID
 	if returntype == "feature" then
 		SendOutLabel(39, nil, nil, nil, nil, x, z)
 		return
@@ -155,14 +168,14 @@ local function GetContextFromMousePos(contextNum)
 			local isEnemy = unitAllyTeam ~= Spring.GetMyAllyTeamID()
 			local unitName = unitDefID and UnitDefs[unitDefID].humanName or "radar dot"
 			local teamName = GetTeamNameFromUnitID(unitID)
-			local unitTeam = Spring.GetUnitTeam(unitID)
+			local unitTeam = spGetUnitTeam(unitID)
 			local unitHealth, maxHealth, _, _, conProgress = Spring.GetUnitHealth(unitID)
 			local healthPerc = unitHealth and (unitHealth / maxHealth) or 1.0
 			local isMyUnit = unitTeam == Spring.GetMyTeamID()
 			local isStructure = unitDefID and (UnitDefs[unitDefID].isBuilding or UnitDefs[unitDefID].speed < 3)
 			local _, isStunned = Spring.GetUnitIsStunned(unitID) 
 			if not unitDefID then
-				local groundHeight = Spring.GetGroundHeight(x, z)
+				local groundHeight = spGetGroundHeight(x, z)
 				local _, y, _ = Spring.GetUnitPosition(unitID)
 				if groundHeight < 0 then groundHeight = 0 end -- water exists!
 				if y - groundHeight > 25 then -- probably flying
@@ -236,7 +249,7 @@ local function GetContextFromMousePos(contextNum)
 			local unitDefID = Spring.GetUnitDefID(unitID)
 			local unitAllyTeam = Spring.GetUnitAllyTeam(unitID)
 			local isEnemy = unitAllyTeam ~= Spring.GetMyAllyTeamID()
-			local unitTeam = Spring.GetUnitTeam(unitID)
+			local unitTeam = spGetUnitTeam(unitID)
 			local unitHealth, maxHealth, _, _, conProgress = Spring.GetUnitHealth(unitID)
 			local healthPerc = unitHealth and (unitHealth / maxHealth) or 1.0
 			local isMyUnit = unitTeam == Spring.GetMyTeamID()
@@ -271,7 +284,7 @@ local function GetContextFromMousePos(contextNum)
 			local unitAllyTeam = Spring.GetUnitAllyTeam(unitID)
 			local isEnemy = unitAllyTeam ~= Spring.GetMyAllyTeamID()
 			local teamName = GetTeamNameFromUnitID(unitID)
-			local unitTeam = Spring.GetUnitTeam(unitID)
+			local unitTeam = spGetUnitTeam(unitID)
 			local unitHealth, maxHealth, _, _, conProgress = Spring.GetUnitHealth(unitID)
 			local healthPerc = unitHealth and (unitHealth / maxHealth) or 1.0
 			local isMyUnit = unitTeam == Spring.GetMyTeamID()
@@ -292,7 +305,7 @@ local function GetContextFromMousePos(contextNum)
 			local isEnemy = unitAllyTeam ~= Spring.GetMyAllyTeamID()
 			local unitName = unitDefID and UnitDefs[unitDefID].humanName or "radar dot"
 			local teamName = GetTeamNameFromUnitID(unitID)
-			local unitTeam = Spring.GetUnitTeam(unitID)
+			local unitTeam = spGetUnitTeam(unitID)
 			local unitHealth, maxHealth, _, _, conProgress = Spring.GetUnitHealth(unitID)
 			local healthPerc = unitHealth and (unitHealth / maxHealth) or 1.0
 			local isMyUnit = unitTeam == Spring.GetMyTeamID()
@@ -311,7 +324,7 @@ local function GetContextFromMousePos(contextNum)
 			local unitDefID = Spring.GetUnitDefID(unitID)
 			local unitAllyTeam = Spring.GetUnitAllyTeam(unitID)
 			local isEnemy = unitAllyTeam ~= Spring.GetMyAllyTeamID()
-			local unitTeam = Spring.GetUnitTeam(unitID)
+			local unitTeam = spGetUnitTeam(unitID)
 			if isEnemy then
 				if unitDefID and UnitDefs[unitDefID].isAirUnit then
 					SendOutLabel(28, unitID, unitDefID, unitTeam, nil, x, z)
@@ -330,7 +343,7 @@ local function GetContextFromMousePos(contextNum)
 			local unitDefID = Spring.GetUnitDefID(unitID)
 			local unitAllyTeam = Spring.GetUnitAllyTeam(unitID)
 			local isEnemy = unitAllyTeam ~= Spring.GetMyAllyTeamID()
-			local unitTeam = Spring.GetUnitTeam(unitID)
+			local unitTeam = spGetUnitTeam(unitID)
 			if isEnemy then
 				SendOutLabel(32, unitID, unitDefID, unitTeam, nil, x, z)
 			else

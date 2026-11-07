@@ -95,7 +95,7 @@ return {
 					groundnoexplode = 1,
 				},
 				damage                  = {
-					default = 1200.01,
+					default = 1200,
 				},
 				explosionGenerator      = "custom:gauss_hit_m",
 				fireTolerance           = 512, -- 2.8 degrees

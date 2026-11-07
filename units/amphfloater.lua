@@ -86,7 +86,7 @@ return {
 					light_radius = 40,
 				},
 				damage                  = {
-					default = 56.1,
+					default = 56,
 				},
 				sprayAngle				= 1100,
 				explosionGenerator      = "custom:flashslowwithsparks",

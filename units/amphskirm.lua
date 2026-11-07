@@ -79,7 +79,7 @@ return {
 					damage_vs_shield = 200,
 				},
 				damage                  = {
-					default = 5.01,
+					default = 5,
 				},
 				edgeEffectiveness       = 0.6,
 				explosionGenerator      = "custom:sonic_80",
@@ -124,7 +124,7 @@ return {
 					light_radius = 180,
 				},
 				damage                  = {
-					default = 130.01,
+					default = 130,
 				},
 				explosionGenerator      = "custom:INGEBORG",
 				impulseBoost            = 0,
@@ -174,7 +174,7 @@ return {
 					--keepinwater = 1,
 				},
 				damage                  = {
-					default = 130.01,
+					default = 130,
 				},
 				edgeEffectiveness       = 0.99,
 				explosionGenerator      = "custom:TORPEDO_HIT",
