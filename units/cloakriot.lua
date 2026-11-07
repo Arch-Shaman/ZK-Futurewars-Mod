@@ -108,7 +108,7 @@ return {
 					cloakstrike = 1.5,
 				},
 				damage                  = {
-					default = 41.61,
+					default = 42,
 				},
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = "custom:EMG_HIT_HE",

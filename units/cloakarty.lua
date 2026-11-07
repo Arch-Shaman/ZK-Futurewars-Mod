@@ -87,7 +87,7 @@ return {
 					reveal_unit = 8,
 				},
 				damage                  = {
-					default = 200.1,
+					default = 200,
 				},
 				edgeEffectiveness       = 0.05,
 				paralyzeTime            = 1,

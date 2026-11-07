@@ -84,11 +84,7 @@ return {
 				onlyTargetCategory = "FIXEDWING LAND SINK TURRET SHIP SWIM FLOAT GUNSHIP HOVER",
 			},
 		},
-
-
 		weaponDefs          = {
-
-		
 			GOO          = {
 				name                    = "Blob",
 				areaOfEffect            = 96,
@@ -96,16 +92,13 @@ return {
 				burstrate               = 0.033,
 				craterBoost             = 0,
 				craterMult              = 0,
-							
 				customParams            = {
 					light_radius = 0,
 					armorpiercing = 0.15,
 				},
-
 				damage                  = {
 					default = 125,
 				},
-
 				explosionGenerator      = "custom:goo_v2_green",
 				impulseBoost            = 0,
 				impulseFactor           = 0.4,
@@ -136,18 +129,15 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
-				
 				customParams            = {
 					light_radius = 0,
 					armorpiercing = 0.2,
 					isaa = ">w<",
 					combatrange = 500,
 				},
-				
 				damage                  = {
 					default  = 300,
 				},
-
 				dance                   = 120,
 				explosionGenerator      = "custom:goo_v2_blue",
 				explosionScar           = false,
@@ -187,17 +177,14 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
-				
 				customParams            = {
 					light_radius = 0,
 					armorpiercing = 0.4,
 					combatrange = 500,
 				},
-
 				damage                  = {
 					default = 125,
 				},
-
 				dance                   = 90,
 				explosionGenerator      = "custom:goo_v2_red",
 				fireStarter             = 0,

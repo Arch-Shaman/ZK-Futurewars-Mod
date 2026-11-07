@@ -72,7 +72,7 @@ return {
 					combatrange = 150,
 				},
 				damage                  = {
-					default = 20.1,
+					default = 20,
 				},
 				explosionGenerator      = "custom:drone_flash17",
 				fireStarter             = 100,

@@ -12,7 +12,6 @@ return {
 		canMove             = true,
 		canPatrol           = true,
 		category            = "LAND SINK",
-
 		customParams        = {
 			chicken = "uwu",
 			chicken_wants_bogus_defs = "uwu",
@@ -23,7 +22,6 @@ return {
 			singuimmune = 1,
 			chicken_spawncost = 650,
 		},
-
 		explodeAs           = "NOWEAPON",
 		footprintX          = 4,
 		footprintZ          = 4,
@@ -41,7 +39,6 @@ return {
 		power               = 1,
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
-
 		sfxtypes            = {
 			explosiongenerators = {
 				"custom:blood_spray",
@@ -61,7 +58,6 @@ return {
 		turnRate            = 967,
 		upright             = false,
 		workerTime          = 0,
-
 		weapons             = {
 			{
 				def                = "WEAPON",
@@ -70,23 +66,18 @@ return {
 				onlyTargetCategory = "SWIM LAND SINK TURRET FLOAT SHIP HOVER SUB SHIP FIXEDWING GUNSHIP",
 			},
 		},
-
-
 		weaponDefs          = {
 			WEAPON     = {
 				name                    = "Claws",
 				areaOfEffect            = 8,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams = {
 					armorpiercing = 1,
 				},
-
 				damage                  = {
-					default = 500.1,
+					default = 500,
 				},
-
 				explosionGenerator      = "custom:NONE",
 				impactOnly              = true,
 				impulseBoost            = 0,

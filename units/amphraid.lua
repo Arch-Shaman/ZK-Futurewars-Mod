@@ -73,7 +73,7 @@ return {
 					armorpiercing = 0.75,
 				},
 				damage                  = {
-					default = 85.1,
+					default = 85,
 				},
 				explosionGenerator      = "custom:70rlexplode_blue",
 				impactOnly              = false,

@@ -91,7 +91,7 @@ return {
 					armorpiercing = 0.50,
 				},
 				damage                  = {
-					default = 400.1,
+					default = 400,
 				},
 				edgeEffectiveness       = 0.1,
 				explosionGenerator      = "custom:bigbulletimpact",
@@ -124,7 +124,7 @@ return {
 					bogus = 1,
 				},
 				damage                  = {
-					default = 165.1,
+					default = 165,
 				},
 				edgeEffectiveness       = 0.1,
 				explosionGenerator      = "custom:INGEBORG",

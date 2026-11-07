@@ -454,7 +454,7 @@ local function CheckProjectile(id)
 	local wd = projectile.def or spGetProjectileDefID(id)
 	local projConfig = config[wd]
 	if debugMode then spEcho("isCheckedDuringCruise: " .. tostring(projConfig["block_check_during_cruise"])) end
-	if projConfig["block_check_during_cruise"] and GG.GetMissileCruising(id) then -- some weapons don't want CAS to check during cruise.
+	if projConfig["block_check_during_cruise"] and GG.CruiseMissiles.GetMissileCruising(id) then -- some weapons don't want CAS to check during cruise.
 		if debugMode then spEcho(id .. " got blocked due to Cruising") end
 		return
 	end
@@ -712,7 +712,7 @@ function gadget:GameFrame(f)
 		for i = 1, forceupdatetargets.count do
 			local data = forceupdatetargets.data[i]
 			spSetProjectileTarget(data.id, data.x, data.y, data.z)
-			GG.ForceCruiseUpdate(data.id, data.x, data.y, data.z)
+			GG.CruiseMissiles.ForceCruiseUpdate(data.id, data.x, data.y, data.z)
 		end
 		forceupdatetargets.count = 0
 	end

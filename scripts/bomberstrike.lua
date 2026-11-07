@@ -121,9 +121,9 @@ local function DeathThread()
 		}
 	local p = Spring.SpawnProjectile(weaponID, params)
 	GG.PlayFogHiddenSound("weapon/missile/tacnuke_airlaunch", 7, x, y, z)
-	GG.ForceMissileToCruise(p, unitID, weaponID)
+	GG.CruiseMissiles.ForceMissileToCruise(p, unitID, weaponID)
 	Sleep(33)
-	GG.SetCruiseMissileUnguided(p, unitID)
+	GG.CruiseMissiles.SetCruiseMissileUnguided(p, unitID)
 end
 
 function OnStartingCrash()

@@ -101,7 +101,7 @@ return {
 					--blastwave_spawncegfreq = 5,
 				},
 				damage                  = {
-					default = 68.01,
+					default = 68,
 				},
 				explosionGenerator      = "custom:EMG_HIT",
 				highTrajectory			= 1,
@@ -146,7 +146,7 @@ return {
 					--blastwave_spawncegfreq = 5,
 				},
 				damage                  = {
-					default = 34.01,
+					default = 34,
 				},
 				explosionGenerator      = "custom:EMG_HIT",
 				highTrajectory			= 1,

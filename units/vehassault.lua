@@ -89,7 +89,7 @@ return {
 					recycle_maxbonus = 8,
 				},
 				damage                  = {
-					default = 180.01,
+					default = 180,
 				},
 				explosionGenerator      = "custom:INGEBORG",
 				mygravity				= 0.04,
