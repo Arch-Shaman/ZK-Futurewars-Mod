@@ -101,12 +101,12 @@ local function TransformMeteor(weaponDefID, proID, meteorTeamID, meteorOwnerID, 
 	})
 	if x then
 		Spring.SetProjectileTarget(newProID, x, y, z)
-		GG.ForceCruiseUpdate(newProID, x, y, z)
+		GG.CruiseMissiles.ForceCruiseUpdate(newProID, x, y, z)
 	else
 		local x, y, z = Spring.GetProjectilePosition(newProID)
 		y = Spring.GetGroundHeight(x, z)
 		Spring.SetProjectileTarget(newProID, x, y, z)
-		GG.ForceCruiseUpdate(newProID, x, y, z)
+		GG.CruiseMissiles.ForceCruiseUpdate(newProID, x, y, z)
 	end
 	
 	
