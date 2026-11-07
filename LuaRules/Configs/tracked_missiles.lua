@@ -43,6 +43,11 @@ local trackedMissiles = {
 		fadeIn = lowAltFadeIn,
 		radiusMult = 0.9,
 	},
+	[WeaponDefNames.singularity_singularity_weapon.id] = {
+		color = whiteDefault,
+		humanName = "Singularity Missile",
+		fadeIn = highAltFadeIn
+	},
 	-- Zeno
 	[WeaponDefNames.missileslow_weapon.id] = {
 		color = purpleDefault,
