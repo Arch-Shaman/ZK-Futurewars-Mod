@@ -21,7 +21,7 @@ end
 local spGetGroundHeight     = Spring.GetGroundHeight
 local spGetGameFrame        = Spring.GetGameFrame
 local spInsertUnitCmdDesc   = Spring.InsertUnitCmdDesc
-local spGetCommandQueue     = Spring.GetCommandQueue
+local spGetUnitCommandCount = Spring.GetUnitCommandCount
 local spGetUnitDefID        = Spring.GetUnitDefID
 local spGetUnitPosition     = Spring.GetUnitPosition
 local spGetUnitVelocity     = Spring.GetUnitVelocity
@@ -186,7 +186,7 @@ local function GetUnitOrderState(unitID, unitData, cmdID, cmdOpts, cp_1, cp_2, c
 		return false -- no queue and on hold position.
 	end
 	if (holdPos and cmdID == CMD_ATTACK and Spring.Utilities.CheckBit(DEBUG_NAME, cmdOpts, CMD.OPT_INTERNAL)) then
-		if spGetCommandQueue(unitID, 0) == 1 then
+		if spGetUnitCommandCount(unitID) == 1 then
 			return false -- set to hold position and is auto-acquiring target
 		end
 	end
@@ -254,7 +254,7 @@ local function ClearOrder(unitID, unitData, cmdID, cmdTag, cp_1, cp_2, cp_3)
 	if unitData.receivedOrder then
 		if (cmdID and (cmdID == CMD_MOVE or cmdID == CMD_RAW_MOVE)) then -- if I am moving
 			if (cp_1 == unitData.cx) and (cp_2 == unitData.cy) and (cp_3 == unitData.cz) then -- if I was given this move command by this gadget
-				spGiveOrderToUnit(unitID, CMD_REMOVE, {cmdTag}, 0 )
+				spGiveOrderToUnit(unitID, CMD_REMOVE, cmdTag, 0 )
 				GG.StopRawMoveUnit(unitID, true)
 			end
 		end
@@ -468,7 +468,7 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 		
 		if move then
 			spGiveOrderToUnit(unitID, CMD_INSERT, {0, CMD_RAW_MOVE, CMD_OPT_INTERNAL, cx, cy, cz }, CMD.OPT_ALT )
-			spGiveOrderToUnit(unitID, CMD_REMOVE, {cmdTag}, 0 )
+			spGiveOrderToUnit(unitID, CMD_REMOVE, cmdTag, 0 )
 		else
 			spGiveOrderToUnit(unitID, CMD_INSERT, {0, CMD_RAW_MOVE, CMD_OPT_INTERNAL, cx, cy, cz }, CMD.OPT_ALT )
 		end
@@ -545,7 +545,7 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 		GG.recursion_GiveOrderToUnit = true
 		if move then
 			cx, cy, cz = GiveClampedOrderToUnit(unitID, CMD_INSERT, {0, CMD_RAW_MOVE, CMD_OPT_INTERNAL, cx, cy, cz }, CMD.OPT_ALT )
-			spGiveOrderToUnit(unitID, CMD_REMOVE, {cmdTag}, 0 )
+			spGiveOrderToUnit(unitID, CMD_REMOVE, cmdTag, 0 )
 		else
 			cx, cy, cz = GiveClampedOrderToUnit(unitID, CMD_INSERT, {0, CMD_RAW_MOVE, CMD_OPT_INTERNAL, cx, cy, cz }, CMD.OPT_ALT )
 		end
@@ -585,7 +585,7 @@ local function DoSwarmEnemy(unitID, behaviour, unitData, enemy, enemyUnitDef, ty
 		GG.recursion_GiveOrderToUnit = true
 		if move then
 			cx, cy, cz = GiveClampedOrderToUnit(unitID, CMD_INSERT, {0, CMD_RAW_MOVE, CMD_OPT_INTERNAL, cx, cy, cz }, CMD.OPT_ALT )
-			spGiveOrderToUnit(unitID, CMD_REMOVE, {cmdTag}, 0 )
+			spGiveOrderToUnit(unitID, CMD_REMOVE, cmdTag, 0 )
 		else
 			cx, cy, cz = GiveClampedOrderToUnit(unitID, CMD_INSERT, {0, CMD_RAW_MOVE, CMD_OPT_INTERNAL, cx, cy, cz }, CMD.OPT_ALT )
 		end
