@@ -255,8 +255,8 @@ end
 
 local function GetTargetPosition(id, allyteam)
 	local data = IterableMap.Get(missiles, id)
-	if data then
-		return GetMissileDestination(id, allyteam)
+	if data and data.target then
+		return data.target.x, data.target.y, data.target.z
 	else
 		return nil
 	end
