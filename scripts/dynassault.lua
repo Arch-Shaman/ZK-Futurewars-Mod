@@ -5,6 +5,8 @@ _G.dyncomm = dyncomm
 
 local spSetUnitShieldState = Spring.SetUnitShieldState
 
+local scriptMagazine = include("scriptMagazine.lua")
+
 --------------------------------------------------------------------------------
 -- pieces
 --------------------------------------------------------------------------------
@@ -45,6 +47,7 @@ local SIG_RESTORE_TORSO = 32
 local TORSO_SPEED_YAW = math.rad(300)
 local ARM_SPEED_PITCH = math.rad(180)
 local needsBattery = false
+local magazine = nil
 
 local PACE = 1.8
 local BASE_VELOCITY = UnitDefNames.benzcom1.speed or 1.25*30
@@ -228,6 +231,10 @@ function script.Create()
 	Hide(rcannon_flare)
 	Hide(lnanoflare)
 	needsBattery = dyncomm.SetUpBattery()
+	magazine = dyncomm.SetUpMagazine()
+	if magazine then
+		scriptMagazine:SetupScriptMagazine(magazine, 33) -- run every frame for commanders
+	end
 --	Turn(larm, x_axis, math.rad(30))
 --	Turn(rarm, x_axis, math.rad(-10))
 --	Turn(rhand, x_axis, math.rad(41))
@@ -351,6 +358,10 @@ function script.FireWeapon(num)
 	if dyncomm.IsManualFire(num) then
 		priorityAim = false
 	end
+	if magazine and magazine[weaponNum] then
+		Spring.Echo("Shot")
+		scriptMagazine:Reload(weaponNum)
+	end
 end
 
 function script.BlockShot(num, targetID)
@@ -366,7 +377,12 @@ function script.BlockShot(num, targetID)
 	if needsBattery then
 		battery = GG.BatteryManagement.CanFire(unitID, weaponNum)
 	end
-	return okp or radarcheck or battery
+	local mag = false
+	if magazine and magazine[weaponNum] then
+		mag = not scriptMagazine:CanFire(weaponNum)
+	end
+	if mag then Spring.Echo("Blocked") end
+	return okp or radarcheck or battery or mag
 end
 
 function script.Shot(num)

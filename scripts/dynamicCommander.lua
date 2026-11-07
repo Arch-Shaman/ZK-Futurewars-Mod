@@ -15,6 +15,9 @@ local weaponCegs = {}
 local weaponDef1
 local weaponDef2
 
+--local scriptReload = include("scriptReload.lua")
+--local scriptMagazine = include("scriptMagazine.lua")
+
 local commWreckUnitRulesParam = {"comm_baseWreckID", "comm_baseHeapID"}
 local moduleWreckNamePrefix = {"module_wreck_", "module_heap_"}
 
@@ -489,6 +492,46 @@ local function SetUpBattery()
 	StartThread(SetUpBatteryThread)
 end
 
+local function SetUpMagazineThread()
+	local weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
+	while weaponname1 == nil do -- dynamic comm not set up yet
+		weaponname1 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_1")
+		Sleep(33)
+	end
+	local weaponname2 = Spring.GetUnitRulesParam(unitID, "comm_weapon_name_2")
+	local efficiency = Spring.GetUnitRulesParam(unitID, "comm_battery_efficiency") or 1
+	local wep1 = WeaponDefs[unitWeaponNames[weaponname1].weaponDefID]
+	local wep2 = weaponname2 and WeaponDefs[unitWeaponNames[weaponname2].weaponDefID] or nil
+	local magazine = {}
+	local needsMagazine = false
+	if (tonumber(wep1.customParams["magazine_size"]) or 0) > 1 then
+		-- magsize, magreload, mode
+		-- magreload defaults to weapon reload
+		-- mode: 0=parallel, 1=sequential (unimplemented), 2=whole magazine (unimplemented)
+		-- TODO: add additional "magazineFactor" for this reload time?
+		magazine[1] = {}
+		magazine[1].size = tonumber(wep1.customParams["magazine_size"])
+		magazine[1].reload = (tonumber(wep1.customParams["magazine_reload"]) or Spring.GetUnitWeaponState(unitID, 1, "reloadTime"))*Game.gameSpeed -- in frames
+		magazine[1].mode = tonumber(wep1.customParams["magazine_mode"]) or 0
+		needsMagazine = true
+	end
+	if wep2 ~= nil and (tonumber(wep2.customParams["magazine_size"]) or 0) > 1 then
+		magazine[2] = {}
+		magazine[2].size = tonumber(wep2.customParams["magazine_size"])
+		magazine[2].reload = (tonumber(wep2.customParams["magazine_reload"]) or Spring.GetUnitWeaponState(unitID, 2, "reloadTime"))*Game.gameSpeed
+		magazine[2].mode = tonumber(wep2.customParams["magazine_mode"]) or 0
+		needsMagazine = true
+	end
+	if needsMagazine then
+		return magazine
+	end
+end
+
+local function SetUpMagazine()
+	--StartThread(SetUpMagazineThread)
+	return SetUpMagazineThread()
+end
+
 local function Create()
 	-- copy the dgun command table because we sometimes need to reinsert it
 	local cmdID = Spring.FindUnitCmdDesc(unitID, CMD.MANUALFIRE)
@@ -695,6 +738,7 @@ end
 
 return {
 	SetUpBattery      = SetUpBattery,
+	SetUpMagazine     = SetUpMagazine,
 	GetPace           = GetPace,
 	GetScale          = GetScale,
 	GetWeapon         = GetWeapon,
