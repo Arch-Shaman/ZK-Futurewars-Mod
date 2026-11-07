@@ -98,7 +98,7 @@ return {
 					damage_vs_shield = 200,
 				},
 				damage                  = {
-					default = 55.01,
+					default = 55,
 				},
 				cegTag                  = "sonicarcher",
 				cylinderTargeting       = 1,

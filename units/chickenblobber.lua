@@ -34,13 +34,11 @@ return {
 		canMove             = true,
 		canPatrol           = true,
 		category            = "LAND",
-
 		customParams        = {
 			chicken = "uwu",
 			model_rescale = 1.5,
 			chicken_spawncost = 3600,
 		},
-
 		explodeAs           = "NOWEAPON",
 		footprintX          = 4,
 		footprintZ          = 4,
@@ -58,16 +56,12 @@ return {
 		objectName          = "chickenblobber.s3o",
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
-		
-
 		sfxtypes            = {
-
 			explosiongenerators = {
 				"custom:blood_spray",
 				"custom:blood_explode",
 				"custom:dirt",
 			},
-
 		},
 		sightDistance       = 1200,
 		sonarDistance       = 1200,
@@ -81,7 +75,6 @@ return {
 		turnRate            = 1289,
 		upright             = false,
 		waterline           = 24,
-
 		weapons             = {
 			{
 				def                = "RED",
@@ -131,22 +124,18 @@ return {
 				slaveTo            = 1,
 			},
 		},
-
 		weaponDefs          = {
 			RED = MergeWithDefault(ravepartyBase, {
 				name                    = "Red Killer",
 				areaOfEffect            = 192,
 				craterBoost             = 4,
 				craterMult              = 3,
-
 				customParams              = {
 					armorpiercing = 1,
 				},
-
 				damage                  = {
-					default = 3500.1,
+					default = 3500,
 				},
-
 				edgeeffectiveness       = 0.5,
 				explosionGenerator      = "custom:NUKE_150",
 				impulseBoost            = 0.5,
@@ -161,22 +150,18 @@ return {
 				craterAreaOfEffect      = 80,
 				craterBoost             = 0.25,
 				craterMult              = 0.5,
-
 				customParams              = {
 					setunitsonfire = "1",
 					burntime = 480,
 					burnchance = 1,
-
 					area_damage = 1,
 					area_damage_radius = 400,
 					area_damage_dps = 100,
 					area_damage_duration = 8,
 				},
-
 				damage                  = {
-					default = 250.1,
+					default = 250,
 				},
-
 				edgeeffectiveness       = 0.25,
 				explosionGenerator      = "custom:napalm_drp",
 				impulseBoost            = 0.2,
@@ -184,18 +169,15 @@ return {
 				rgbColor                = "0.9 0.3 0",
 				soundHit                = "weapon/missile/nalpalm_missile_hit",
 			}, true),
-
 			YELLOW = MergeWithDefault(ravepartyBase, {
 				name                    = "Yellow Slammer",
 				areaOfEffect            = 384,
 				craterBoost             = 0.25,
 				craterBoost             = 0.5,
 				craterMult              = 1,
-
 				damage                  = {
-					default = 1000.1,
+					default = 1000,
 				},
-
 				edgeeffectiveness       = 0.5,
 				explosionGenerator      = "custom:330rlexplode",
 				explosionSpeed          = 500,
@@ -204,13 +186,11 @@ return {
 				rgbColor                = "0.7 0.7 0",
 				soundHit                = "weapon/cannon/earthshaker",
 			}, true),
-
 			GREEN = MergeWithDefault(ravepartyBase, {
 				name                    = "Green Stamper",
 				areaOfEffect            = 384,
 				craterBoost             = 32,
 				craterMult              = 1,
-
 				customParams            = {
 					gatherradius = "540",
 					smoothradius = "300",
@@ -218,28 +198,23 @@ return {
 					smoothexponent = "0.8",
 					movestructures = "1",
 				},
-
 				damage                  = {
-					default = 1250.1,
+					default = 1250,
 				},
-
 				explosionGenerator      = "custom:blobber_goo",
 				impulseBoost            = 0.7,
 				impulseFactor           = 0.5,
 				rgbColor                = "0.1 1 0.1",
 				soundHit                = "weapon/ex_large4",
 			}, true),
-
 			BLUE = MergeWithDefault(ravepartyBase, {
 				name                    = "Blue Shocker",
 				areaOfEffect            = 320,
 				craterBoost             = 0.25,
 				craterMult              = 0.5,
-
 				damage                  = {
 					default = 22500,
 				},
-
 				explosionGenerator      = "custom:POWERPLANT_EXPLOSION",
 				impulseBoost            = 0,
 				impulseFactor           = 0,
@@ -248,23 +223,19 @@ return {
 				rgbColor                = "0.1 0.1 1",
 				soundHit                = "weapon/more_lightning",
 			}, true),
-
 			PURPLE = MergeWithDefault(ravepartyBase, {
 				name                    = "Blue Shocker",
 				areaOfEffect            = 320,
 				craterBoost             = 0.25,
 				craterMult              = 0.5,
-
 				customparams = {
 					timeslow_damagefactor = 10,
 					nofriendlyfire = "needs hax",
 					timeslow_overslow_frames = 2*30, --2 seconds before slow decays
 				},
-
 				damage                  = {
-					default = 1000.1,
+					default = 1000,
 				},
-
 				explosionGenerator      = "custom:riotballplus2_purple",
 				explosionScar           = false,
 				explosionSpeed          = 6.5,

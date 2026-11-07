@@ -78,8 +78,6 @@ return {
 				onlyTargetCategory = "FIXEDWING GUNSHIP",
 			},
 		},
-
-
 		weaponDefs          = {
 			AEROSPORES  = {
 				name                    = "Anti-Air Spores",
@@ -91,18 +89,15 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
-				
 				customParams            = {
 					light_radius = 0,
 					armorpiercing = 0.2,
 					isaa = ">w<",
 					combatrange = 750,
 				},
-				
 				damage                  = {
 					default  = 300,
 				},
-
 				dance                   = 120,
 				explosionGenerator      = "custom:goo_v2_blue_large",
 				explosionScar           = false,
@@ -137,15 +132,12 @@ return {
 			SHIELD      = {
 				name                    = "Shield",
 				craterMult              = 0,
-
 				customParams            = {
 					unlinked = true,
 				},
-				
 				damage                  = {
 					default = 10,
 				},
-
 				exteriorShield          = true,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,
@@ -177,16 +169,13 @@ return {
 				collideFriendly         = false,
 				craterBoost             = 0,
 				craterMult              = 0,
-
 				customParams            = {
 					light_radius = 0,
 					armorpiercing = 0.3,
 				},
-
 				damage                  = {
 					default = 350,
 				},
-
 				dance                   = 90,
 				explosionGenerator      = "custom:goo_v2_green_large",
 				fireStarter             = 0,

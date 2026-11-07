@@ -69,7 +69,7 @@ return {
 					light_radius = 160,
 				},
 				damage                  = {
-					default = 130.01,
+					default = 130,
 				},
 				edgeEffectiveness       = 0.5,
 				explosionGenerator      = "custom:bomb_hit_40",

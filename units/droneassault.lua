@@ -67,7 +67,7 @@ return {
 					armorpiercing = 0.25,
 				},
 				damage                  = {
-					default = 300.1,
+					default = 300,
 				},
 				explosionGenerator      = "custom:FLASH64",
 				interceptedByShieldType = 1,

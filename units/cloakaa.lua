@@ -85,7 +85,7 @@ return {
 					light_radius = 120,
 				},
 				damage                  = {
-					default = 44.01,
+					default = 44,
 				},
 				duration                = 0.075,
 				beamDecay 				= 0.38,

@@ -167,7 +167,7 @@ return {
 				},
 
 				damage                  = {
-					default = 150.01,
+					default = 150,
 				},
 
 				edgeEffectiveness		= 1/3,

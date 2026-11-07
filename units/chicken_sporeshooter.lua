@@ -12,7 +12,6 @@ return {
 		canMove             = true,
 		canPatrol           = true,
 		category            = "LAND",
-
 		customParams        = {
 			chicken = "uwu",
 			chicken_shield = ">w<",
@@ -25,7 +24,6 @@ return {
 			singuimmune = 1,
 			chicken_spawncost = 3900,
 		},
-
 		explodeAs           = "NOWEAPON",
 		footprintX          = 3,
 		footprintZ          = 3,
@@ -42,7 +40,6 @@ return {
 		objectName          = "chicken_sporeshooter.s3o",
 		reclaimable         = false,
 		selfDestructAs      = "NOWEAPON",
-
 		sfxtypes            = {
 			explosiongenerators = {
 				"custom:blood_spray",
@@ -62,7 +59,6 @@ return {
 		turnRate            = 1440,
 		upright             = false,
 		workerTime          = 0,
-
 		weapons             = {
 			{
 				def                = "FLAMETHROWER",
@@ -74,7 +70,6 @@ return {
 				def = "SHIELD",
 			},
 		},
-
 		weaponDefs          = {
 			FLAMETHROWER = {
 				name                    = "Primordial Fire",
@@ -136,15 +131,12 @@ return {
 			SHIELD      = {
 				name                    = "Shield",
 				craterMult              = 0,
-
 				customParams            = {
 					unlinked = true,
 				},
-
 				damage                  = {
 					default = 5,
 				},
-
 				exteriorShield          = true,
 				impulseFactor           = 0,
 				interceptedByShieldType = 1,

@@ -91,7 +91,7 @@ return {
 				},
 				cylinderTargeting      = 0,
 				damage                  = {
-					default        = 660.1,
+					default        = 660,
 				},
 				duration                = 10,
 				explosionGenerator      = "custom:lightningplosion_nopost",

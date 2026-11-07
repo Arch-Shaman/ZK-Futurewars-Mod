@@ -86,7 +86,7 @@ return {
 				},
 				
 				damage                  = {
-					default = 21.1,
+					default = 21,
 				},
 				edgeEffectiveness       = 0.8,
 				explosionGenerator      = "custom:napalm_phoenix",

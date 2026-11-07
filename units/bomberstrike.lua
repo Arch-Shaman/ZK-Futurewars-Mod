@@ -74,7 +74,7 @@ return {
 					cruise_minterrainheight = 120, -- only avoid terrain if the difference between the terrain and our altitude is below this.
 				},
 				damage                  = {
-					default = 3000.1,
+					default = 3000,
 				},
 				fireStarter             = 70,
 				flightTime              = 8,

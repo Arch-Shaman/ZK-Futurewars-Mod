@@ -121,7 +121,6 @@ return {
 
 				damage                  = {
 					default = 1,
-					planes  = 1,
 				},
 
 				explosionGenerator      = "custom:none",
@@ -168,7 +167,6 @@ return {
 
 				damage                  = {
 					default = 250,
-					planes  = 250,
 				},
 
 				explosionGenerator      = "custom:330rlexplode",

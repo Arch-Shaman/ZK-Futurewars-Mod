@@ -124,7 +124,6 @@ local chickend_improved = MergeWithDefault(chickend, {
 		HIGHSPORES = {
 			damage = {
 				default = 113,
-				planes  = 113,
 			},
 			range = 884,
 		},
@@ -144,7 +143,6 @@ local chickend_advanced = MergeWithDefault(chickend, {
 		HIGHSPORES = {
 			damage = {
 				default = 375,
-				planes  = 375,
 			},
 			range = 1360,
 		},

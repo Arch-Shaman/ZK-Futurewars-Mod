@@ -71,7 +71,7 @@ return {
 					light_radius = 150,
 				},
 				damage                  = {
-					default = 250.01,
+					default = 250,
 				},
 				explosionGenerator      = "custom:flash2purple",
 				fireStarter             = 30,

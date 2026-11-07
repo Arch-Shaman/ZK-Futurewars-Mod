@@ -80,7 +80,7 @@ return {
 					script_burst = "2",
 				},
 				damage                  = {
-					default = 700.1,
+					default = 700,
 				},
 				explosionGenerator      = "custom:70rlexplode",
 				impulseBoost            = 0,

@@ -77,7 +77,6 @@ return {
 
 				damage                  = {
 					default = 150,
-					planes  = 150,
 				},
 
 				duration                = 0.0333,

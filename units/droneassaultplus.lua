@@ -71,7 +71,7 @@ return {
 					shield_damage = 500,
 				},
 				damage                  = {
-					default = 250.1,
+					default = 250,
 				},
 				explosionGenerator      = "custom:FLASH64",
 				interceptedByShieldType = 1,

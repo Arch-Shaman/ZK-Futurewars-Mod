@@ -91,7 +91,7 @@ return {
 					armorpiercing = 0.2,
 				},
 				damage                  = {
-					default = 600.1,
+					default = 600,
 				},
 				explosionGenerator      = "custom:gauss_hit_m",
 				groundbounce            = 1,
