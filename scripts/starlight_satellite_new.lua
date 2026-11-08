@@ -17,6 +17,14 @@ local LaserD = piece('LaserD')
 local Satellite = piece('Satellite')
 local SatelliteMuzzle = piece('SatelliteMuzzle')
 
+local firepoints = {
+	[1] = LaserA,
+	[2] = LaserB,
+	[3] = LaserC,
+	[4] = LaserD,
+}
+
+
 local InnerLimbs = {LimbA1,LimbB1,LimbC1,LimbD1}
 local OuterLimbs = {LimbA2,LimbB2,LimbC2,LimbD2}
 
@@ -67,16 +75,35 @@ local function CheckLevel()
 	end
 end
 
-local function GetFixedAngle(x1, y1, z1, x2, y2, z2, relativePosition)
-    local currentFacing, _ = Spring.GetUnitRotation(unitID)
+local quarter = math.rad(90)
+local halfRot = math.rad(180)
+local full = math.rad(360)
+local cuaToRad = full / 65536
 
-	local dx = x1 - x2
-	local dy = y1 - y2
-	local dz = z1 - z2
+local function GetFixedAngle(pieceX, pieceY, pieceZ, targetX, targetY, targetZ, num)
+	local headingRad = (Spring.GetUnitHeading(unitID) * cuaToRad + halfRot) % full
+	Spring.Echo(num .. ": ")
+	Spring.Echo("Facing: " .. math.deg(headingRad) .. "°")
+    --local currentFacing, _ = Spring.GetUnitRotation(unitID)
+	local dx = targetX - pieceX
+	local dy = targetY - pieceY
+	local dz = targetZ - pieceZ
+	Spring.Echo("DX: " .. dx)
+	Spring.Echo("DY: " .. dy)
+	Spring.Echo("DZ: " .. dz)
+	Spring.Echo("piece X: " .. pieceX)
+	Spring.Echo("piece Y: " .. pieceY)
+	Spring.Echo("piece Z: " .. pieceZ)
+	Spring.Echo("Target X: " .. targetX .. ", " .. targetY .. ", " .. targetZ)
+	
 	local distance = math.sqrt((dx * dx) + (dz * dz))
-    local pitch = Spring.Utilities.Vector.Angle(dy, distance)
-	local heading = Spring.Utilities.Vector.Angle(dz, dx)
-    return pitch, heading
+    local pitch = math.atan2(dy, distance)
+	local heading = math.atan2(dx, -dz)
+	local relative = (heading - headingRad + halfRot) % full - halfRot
+	Spring.Echo("Pitch: " .. pitch)
+	Spring.Echo("Heading: " .. heading)
+	Spring.Echo("Distance: " .. distance)
+    return pitch, relative
 end
 
 local aimPoints = {
@@ -207,15 +234,15 @@ function script.AimWeapon(num, head)
 	end
 	if not tx then return end -- silently fail because we have no target!
 	if num == 1 then
-		local cx, cy, cz = Spring.GetUnitPiecePosDir(unitID, LimbA2)
+		local cx, cy, cz = Spring.GetUnitPiecePosDir(unitID, firepoints[1])
 		if not cx then return end
 		
 		states[num] = false -- is aiming
 		Signal(SIG_AIM1)
 		SetSignalMask(SIG_AIM1)
-		local pitch, heading = GetFixedAngle(cx, cy, cz, tx, ty, tz, relativePosition[1])
-		Turn(LimbA2, z_axis, heading, rotationRate)
-		Turn(LimbA2, x_axis, pitch, rotationRate * 2)
+		local pitch, heading = GetFixedAngle(cx, cy, cz, tx, ty, tz,1)
+		Turn(LimbA1, y_axis, pitch, rotationRate * 2)
+		Turn(LimbA2, y_axis, heading, rotationRate)
 		--Turn(LimbA2, y_axis, -pitch, rotationRate)
 		WaitForTurn(LimbA2, x_axis)
 		WaitForTurn(LimbA2, y_axis)
@@ -223,42 +250,42 @@ function script.AimWeapon(num, head)
 		states[num] = true
 		return true
 	elseif num == 2 then
-		local cx, cy, cz = Spring.GetUnitPiecePosDir(unitID, LimbB2)
+		local cx, cy, cz = Spring.GetUnitPiecePosDir(unitID, firepoints[2])
 		if not cx then return end
 		states[2] = false
 		Signal(SIG_AIM2)
 		SetSignalMask(SIG_AIM2)
-		local pitch, heading = GetFixedAngle(cx, cy, cz, tx, ty, tz, relativePosition[1])
-		Turn(LimbB2, z_axis, heading, rotationRate)
-		Turn(LimbB2, x_axis, pitch, rotationRate * 2)
+		local pitch, heading = GetFixedAngle(cx, cy, cz, tx, ty, tz, 2)
+		Turn(LimbB1, y_axis, pitch, rotationRate * 2)
+		Turn(LimbB2, y_axis, heading, rotationRate)
 		WaitForTurn(LimbB2, x_axis)
 		WaitForTurn(LimbB2, y_axis)
 		WaitForTurn(LimbB2, z_axis)
 		states[2] = true
 		return true
 	elseif num == 3 then
-		local cx, cy, cz = Spring.GetUnitPiecePosDir(unitID, LimbC2)
+		local cx, cy, cz = Spring.GetUnitPiecePosDir(unitID, firepoints[3])
 		if not cx then return end
 		states[3] = false
 		Signal(SIG_AIM3)
 		SetSignalMask(SIG_AIM3)
-		local pitch, heading = GetFixedAngle(cx, cy, cz, tx, ty, tz, relativePosition[1])
-		Turn(LimbC2, z_axis, heading, rotationRate)
-		Turn(LimbC2, x_axis, pitch, rotationRate * 2)
+		local pitch, heading = GetFixedAngle(cx, cy, cz, tx, ty, tz, 3)
+		Turn(LimbC1, y_axis, pitch, rotationRate * 2)
+		Turn(LimbC2, y_axis, heading, rotationRate)
 		WaitForTurn(LimbC2, x_axis)
 		WaitForTurn(LimbC2, y_axis)
 		WaitForTurn(LimbC2, z_axis)
 		states[3] = true
 		return true
 	elseif num == 4 then
-		local cx, cy, cz = Spring.GetUnitPiecePosDir(unitID, LimbD2)
+		local cx, cy, cz = Spring.GetUnitPiecePosDir(unitID, firepoints[4])
 		if not cx then return end
 		states[4] = false
 		Signal(SIG_AIM4)
 		SetSignalMask(SIG_AIM4)
-		local pitch, heading = GetFixedAngle(cx, cy, cz, tx, ty, tz, relativePosition[1])
-		Turn(LimbD2, z_axis, heading, rotationRate)
-		Turn(LimbD2, x_axis, pitch, rotationRate * 2)
+		local pitch, heading = GetFixedAngle(cx, cy, cz, tx, ty, tz, 4)
+		Turn(LimbD1, y_axis, pitch, rotationRate * 2)
+		Turn(LimbD2, y_axis, heading, rotationRate)
 		WaitForTurn(LimbD2, x_axis)
 		WaitForTurn(LimbD2, y_axis)
 		WaitForTurn(LimbD2, z_axis)
@@ -279,13 +306,6 @@ local weapondefsbylevel = {
 	[2] = WeaponDefNames["supernova_satellite_laser"].id,
 	[3] = WeaponDefNames["supernova_satellite_cutter"].id,
 	[4] = WeaponDefNames["supernova_satellite_deathlaser"].id
-}
-
-local firepoints = {
-	[1] = LaserA,
-	[2] = LaserB,
-	[3] = LaserC,
-	[4] = LaserD,
 }
 
 local function FinalFireThread()
