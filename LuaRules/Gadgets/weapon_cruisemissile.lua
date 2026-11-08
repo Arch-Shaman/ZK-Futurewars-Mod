@@ -62,6 +62,7 @@ end
 
 
 local IterableMap = Spring.Utilities.IterableMap
+local trackedMissiles = include("LuaRules/Configs/tracked_missiles.lua")
 
 local config = {} -- stores the config for weapondefs.
 local missiles = IterableMap.New()
@@ -352,7 +353,13 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local _, py = spGetProjectilePosition(proID)
 		py = max(py, ty)
 		IterableMap.Add(missiles, proID, {unguided = false, target = target, originaltarget = originalTarget, useprediction = config[wep].useprediction, altitudestayframes = 0, type = type, cruising = config[wep].noascension, takeoff = not config[wep].noascension, lastknownposition = last, configid = wep, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0, offset = {}})
-		SendToUnsynced("UpdateMissileTarget", proID, target[1], target[2], target[3], false)
+		if trackedMissiles[wep] then
+			if type(target) ~= "Table" then
+				local x, y, z = spGetUnitPosition(target)
+				target = {x, y, z}
+			end
+			SendToUnsynced("UpdateMissileTarget", proID, target[1], target[2], target[3], false)
+		end
 		if config[wep].radius then
 			ProccessOffset(wep, proID)
 		end
