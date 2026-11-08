@@ -14,6 +14,7 @@ if not gadgetHandler:IsSyncedCode() then -- Intercommunications for starburst pr
 	local missiles = {}
 	
 	local function UpdateMissileTarget(_, projectileID, x, y, z, cruising)
+		--Spring.Echo("UpdateMissileTarget: " .. tostring(x) .. "," .. tostring(y) .. ", " .. tostring(z))
 		if missiles[projectileID] then
 			missiles[projectileID].x = x
 			missiles[projectileID].y = y
@@ -44,7 +45,8 @@ if not gadgetHandler:IsSyncedCode() then -- Intercommunications for starburst pr
 	
 	local function GetCruiseTarget(projectileID)
 		if missiles[projectileID] then
-			return missiles[projectileID][1], missiles[projectileID][2], missiles[projectileID][3]
+			--Spring.Echo("GetCruiseTarget: " .. tostring(missiles[projectileID][1]) .. ", " .. tostring(missiles[projectileID][2]) .. ", " .. tostring(missiles[projectileID][3]))
+			return missiles[projectileID].x, missiles[projectileID].y, missiles[projectileID].z
 		end
 		Spring.Echo("Missing " .. projectileID)
 	end
@@ -350,7 +352,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		local _, py = spGetProjectilePosition(proID)
 		py = max(py, ty)
 		IterableMap.Add(missiles, proID, {unguided = false, target = target, originaltarget = originalTarget, useprediction = config[wep].useprediction, altitudestayframes = 0, type = type, cruising = config[wep].noascension, takeoff = not config[wep].noascension, lastknownposition = last, configid = wep, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0, offset = {}})
-		SendToUnsynced("UpdateMissileTarget", proID, target[1], target[2], target[3])
+		SendToUnsynced("UpdateMissileTarget", proID, target[1], target[2], target[3], false)
 		if config[wep].radius then
 			ProccessOffset(wep, proID)
 		end

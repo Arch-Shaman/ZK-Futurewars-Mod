@@ -21,7 +21,6 @@ local u_CHAR = string.byte('u')
 
 local trackedMissiles = include("LuaRules/Configs/tracked_missiles.lua")
 
-
 if gadgetHandler:IsSyncedCode() then
 --
 -- Synced code, only here to forward to unsynced
@@ -100,6 +99,7 @@ local turnRate = {}
 local accel = {}
 
 local sqrt = math.sqrt
+local cruiseMissileCache = include("LuaRules/Configs/TrackedCruiseCache.lua")
 
 function StarburstPredictPrecache(weaponDefID)
 	local weaponDef = WeaponDefs[weaponDefID]
@@ -145,15 +145,26 @@ function StarburstPredict(projectileID, weaponDefID, curFrame, targetPosition)
 	local wd = WeaponDefs[weaponDefID]
 	-- Initial projectile values
 	local ix,iy,iz,idx,idy,idz,age = GetProjectileParameters(projectileID, weaponDefID, curFrame)
+	local isCruiseMissile = false
 	if not ix then
 		return false -- Projectile has died.
 	end
 	local x,y,z,dx,dy,dz = ix,iy,iz,idx,idy,idz
 	-- Target location
 	local tx,ty,tz
+	local uptime = uptime[weaponDefID]
 	if wd.customParams.cruisealt then -- cruise missile
 		tx,ty,tz = GG.CruiseMissilesUnsynced.GetCruiseTarget(projectileID)
-		Spring.Echo("Target: " .. tostring(tx) .. ", " .. tostring(ty) .. ", " .. tostring(tz))
+		isCruiseMissile = true
+		--Spring.Echo("Target: " .. tostring(tx) .. ", " .. tostring(ty) .. ", " .. tostring(tz))
+		local upTime = 0
+		local cache = cruiseMissileCache[weaponDefID]
+		local xDiff = tx - x
+		local zDiff = tz - z
+		local distance = math.sqrt((xDiff * xDiff) + (zDiff + zDiff))
+		local cruiseTime = ((distance - cache.sprintDist) / (tonumber(wd.customParams.weaponvelocity) / 30)) + cache.sprintTime
+		local estimatedImpactFrame = curFrame + cache.riseTime + cache.turnTime + cache.descentToImpact + cruiseTime -- purposefully crude estimation.
+		return tx, ty, tz, estimatedImpactFrame
 	else
 		if targetPosition then
 			tx,ty,tz = unpack(targetPosition)

@@ -216,6 +216,11 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 	if weaponDef.weaponvelocity then
 		weaponDef.customparams.weaponvelocity = weaponDef.weaponvelocity -- For attack AOE widget
 	end
+	if weaponDef.startvelocity then -- I hate spring.
+		weaponDef.customparams.startvelocity = weaponDef.startvelocity
+	else
+		weaponDef.customparams.startvelocity = 0 -- default value is 0.
+	end
 	if weaponDef.dyndamageexp and (weaponDef.dyndamageexp > 0) then
 		weaponDef.customparams.dyndamageexp = weaponDef.dyndamageexp
 	end
