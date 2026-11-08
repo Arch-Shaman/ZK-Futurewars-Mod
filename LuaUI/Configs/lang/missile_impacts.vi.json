@@ -1,0 +1,15 @@
+{
+    "impact_time" : "Thời gian còn lại đến khi va chạm:",
+    "tacnuke_label" : "Vũ khí hạt nhân chiến thuật",
+    "inbound_label" : "Đang tiếp cận",
+    "napalm_label" : "Phun rải napalm",
+    "kinetic_label" : "Tấn công động năng",
+	"emp_label" : "Vụ nổ EMP",
+    "nuke_label" : "Tên lửa hành trình hạt nhân",
+    "danger_label" : "NGUY HIỂM::",
+    "scout_label" : "Tên lửa trinh sát",
+	"quake_label" : "Máy san phẳng địa hình",
+    "singularity_label" : "Tên lửa Singularity",
+    "seconds" : "Giây",
+    "second" : "Giây"
+}

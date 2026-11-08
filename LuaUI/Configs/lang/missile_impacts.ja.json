@@ -1,0 +1,15 @@
+{
+    "impact_time" : "着弾までの時間 ::",
+    "tacnuke_label" : "戦術核兵器",
+    "inbound_label" : "飛来中",
+    "napalm_label" : "ナパーム散布",
+    "kinetic_label" : "キネティック攻撃",
+	"emp_label" : "EMPバースト",
+    "nuke_label" : "核巡航ミサイル",
+    "danger_label" : "危険::",
+    "scout_label" : "偵察ミサイル",
+	"quake_label" : "地形平坦化",
+    "singularity_label" : "特異点ミサイル",
+    "seconds" : "秒",
+    "second" : "秒"
+}

@@ -1,0 +1,15 @@
+{
+    "impact_time" : "Tempo rimanente all'impatto::",
+    "tacnuke_label" : "Arma nucleare tattica",
+    "inbound_label" : "In arrivo",
+    "napalm_label" : "Dispersione di napalm",
+    "kinetic_label" : "Attacco cinetico",
+	"emp_label" : "Impulso EMP",
+    "nuke_label" : "Missile da crociera nucleare",
+    "danger_label" : "PERICOLO::",
+    "scout_label" : "Missile da ricognizione",
+	"quake_label" : "Livellatore di terreno",
+    "singularity_label" : "Missile a singolarità",
+    "seconds" : "Secondi",
+    "second" : "Secondo"
+}

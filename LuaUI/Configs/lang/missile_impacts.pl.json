@@ -1,0 +1,15 @@
+{
+    "impact_time" : "Czas do uderzenia:",
+    "tacnuke_label" : "Taktyczna broń jądrowa",
+    "inbound_label" : "Nadlatujący",
+    "napalm_label" : "Rozproszenie napalmu",
+    "kinetic_label" : "Uderzenie kinetyczne",
+	"emp_label" : "Wybuch elektromagnetyczny",
+    "nuke_label" : "Jądrowy pocisk manewrujący",
+    "danger_label" : "NIEBEZPIECZEŃSTWO:",
+    "scout_label" : "Pocisk rozpoznawczy",
+	"quake_label" : "Wyrównywacz terenu",
+    "singularity_label" : "Pocisk osobliwościowy",
+    "seconds" : "Sekundy",
+    "second" : "Sekunda"
+}

@@ -1,0 +1,15 @@
+{
+	"impact_time" : "Time until Impact:",
+	"tacnuke_label" : "Tactical Nuke",
+	"inbound_label" : "Inbound",
+	"napalm_label" : "Napalm Dispersement",
+	"kinetic_label" : "Kinetic Strike",
+	"emp_label" : "EMP Burst",
+	"nuke_label" : "Nuclear Cruise Missile",
+	"danger_label" : "DANGER::",
+	"scout_label" : "Reconnaissance Missile",
+	"quake_label" : "Terrain Flattener",
+	"singularity_label" : "Singularity Missile",
+	"seconds" : "Seconds",
+	"second" : "Second"
+}
