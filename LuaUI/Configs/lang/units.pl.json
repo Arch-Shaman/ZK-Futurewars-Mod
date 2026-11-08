@@ -242,7 +242,7 @@
 	"amphaa" : {
 		"name" : "Angler",
 		"description" : "Amfibijny bot przeciwlotniczy",
-		"helptext" : "Angler to amfibia przeciwlownicza, która najlepiej sprawuje się przeciwko bombowcom Raven.  Anglery są w stanie wypłynąć na powierzchnię i parami je zestrzeliwać."
+		"helptext" : "Angler to amfibia przeciwlownicza, która najlepiej sprawuje się przeciwko bombowcom Divinity.  Anglery są w stanie wypłynąć na powierzchnię i parami je zestrzeliwać."
 	},
 	"tankaa" : {
 		"name" : "Ettin",
@@ -355,9 +355,9 @@
 		"helptext" : "Węzeł energetyczny pozwala rozszerzyć siatkę energetyczną, by pomóc dostarczyć energię z generatorów do kopalni lub wieżyczek. Pamiętaj, że na małe dystanse bardziej opłaca się użyć rzędu lekkich elektrowni (tj. paneli słonecznych lub turbin)."
 	},
 	"bomberprec" : {
-		"name" : "Raven",
+		"name" : "Divinity",
 		"description" : "Bombowiec precyzyjny",
-		"helptext" : "Raven to bombowiec precyzyjny. Świetnie nadaje się do bombardowania ważnych celów, ale przenosi na pokładzie tylko jedną bombę i musi skorzystać z lądowiska, by można było go ponownie użyć."
+		"helptext" : "Divinity to bombowiec precyzyjny. Świetnie nadaje się do bombardowania ważnych celów, ale przenosi na pokładzie tylko jedną bombę i musi skorzystać z lądowiska, by można było go ponownie użyć."
 	},
 	"chicken_shield" : {
 		"name" : "Blooper",
