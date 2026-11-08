@@ -1,0 +1,15 @@
+{
+    "impact_time" : "Çarpışmaya Kalan Süre:",
+    "tacnuke_label" : "Taktik Nükleer Silah",
+    "inbound_label" : "Yaklaşan",
+    "napalm_label" : "Napalm Dağılımı",
+    "kinetic_label" : "Kinetik Saldırı",
+	"emp_label" : "EMP Patlaması",
+    "nuke_label" : "Nükleer Seyir Füzesi",
+    "danger_label" : "TEHLİKE::",
+    "scout_label" : "Keşif Füzesi",
+	"quake_label" : "Arazi Düzleştirici",
+    "singularity_label" : "Singularity Füzesi",
+    "seconds" : "Saniye",
+    "second" : "Saniye"
+}

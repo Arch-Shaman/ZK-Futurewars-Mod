@@ -1,0 +1,15 @@
+{
+    "impact_time" : "Zeit bis zum Aufprall::",
+    "tacnuke_label" : "Taktische Atomwaffe",
+    "inbound_label" : "Anflug",
+    "napalm_label" : "Napalm-Abwurf",
+    "kinetic_label" : "Kinetischer Angriff",
+	"emp_label" : "EMP-Impuls",
+    "nuke_label" : "Nukleare Marschflugkörper",
+    "danger_label" : "GEFAHR::",
+    "scout_label" : "Aufklärungsrakete",
+	"quake_label" : "Geländegleichmacher",
+    "singularity_label" : "Singularitätsrakete",
+    "seconds" : "Sekunden",
+    "second" : "Sekunde"
+}

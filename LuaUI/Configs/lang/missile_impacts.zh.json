@@ -1,0 +1,15 @@
+{
+    "impact_time" : "撞击前剩余时间：",
+    "tacnuke_label" : "战术核武器",
+    "inbound_label" : "来袭",
+    "napalm_label" : "凝固汽油弹散布",
+    "kinetic_label" : "动能打击",
+	"emp_label" : "电磁脉冲爆破",
+    "nuke_label" : "核巡航导弹",
+    "danger_label" : "危险::",
+    "scout_label" : "侦察导弹",
+	"quake_label" : "地形平整器",
+    "singularity_label" : "奇点导弹",
+    "seconds" : "秒",
+    "second" : "秒"
+}

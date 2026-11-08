@@ -161,9 +161,9 @@ function StarburstPredict(projectileID, weaponDefID, curFrame, targetPosition)
 		local cache = cruiseMissileCache[weaponDefID]
 		local xDiff = tx - x
 		local zDiff = tz - z
-		local distance = math.sqrt((xDiff * xDiff) + (zDiff + zDiff))
-		local cruiseTime = ((distance - cache.sprintDist) / (tonumber(wd.customParams.weaponvelocity) / 30)) + cache.sprintTime
-		local estimatedImpactFrame = curFrame + cache.riseTime + cache.turnTime + cache.descentToImpact + cruiseTime -- purposefully crude estimation.
+		local distance = math.sqrt((xDiff * xDiff) + (zDiff + zDiff)) - tonumber(wd.customparams.cruisedist) - cache.sprintDist
+		local cruiseTime = (distance / (tonumber(wd.customParams.weaponvelocity) / 30)) + cache.sprintTime
+		local estimatedImpactFrame = curFrame + cache.riseTime + cache.turnTime + cache.descentToImpact + cruiseTime
 		return tx, ty, tz, estimatedImpactFrame
 	else
 		if targetPosition then
