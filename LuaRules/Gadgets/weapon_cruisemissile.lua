@@ -325,36 +325,36 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	local wep = weaponDefID or spGetProjectileDefID(proID) -- needed for bursts.
 	local originalTarget
 	if config[wep] then
-		local type, target = spGetProjectileTarget(proID)
+		local targetType, target = spGetProjectileTarget(proID)
 		local ty = 0
-		--spEcho("Type: " .. type)
-		type = GetTargetType(type)
-		--spEcho("Type: " .. type)
-		if type == "feature" then -- don't bother tracking features.
+		targetType = GetTargetType(targetType)
+		--spEcho("Type: " .. targetType)
+		if targetType == "feature" then -- don't bother tracking features.
 			local x, y, z = spGetFeaturePosition(target)
 			ty = y
 			target = {x, y, z}
-			type = 'ground'
+			targetType = 'ground'
 		end
-		if type == "unit" then -- nontracking missiles get the initial unit position.
+		if targetType == "unit" then -- nontracking missiles get the initial unit position.
 			local x, y, z = spGetUnitPosition(target)
 			ty = y
 			last = {x, y, z}
 			if not config[wep].track then
-				type = 'ground'
+				targetType = 'ground'
 				originalTarget = target
 				target = last
 			end
 		end
-		if type == "projectile" then
+		if targetType == "projectile" then
 			return -- don't cruise for projectiles
 		end
 		local allyteam = spGetUnitAllyTeam(proOwnerID)
 		local _, py = spGetProjectilePosition(proID)
 		py = max(py, ty)
-		IterableMap.Add(missiles, proID, {unguided = false, target = target, originaltarget = originalTarget, useprediction = config[wep].useprediction, altitudestayframes = 0, type = type, cruising = config[wep].noascension, takeoff = not config[wep].noascension, lastknownposition = last, configid = wep, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0, offset = {}})
+		IterableMap.Add(missiles, proID, {unguided = false, target = target, originaltarget = originalTarget, useprediction = config[wep].useprediction, altitudestayframes = 0, type = targetType, cruising = config[wep].noascension, takeoff = not config[wep].noascension, lastknownposition = last, configid = wep, allyteam = allyteam, wantedalt = py + config[wep].altitude, updates = 0, offset = {}})
 		if trackedMissiles[wep] then
-			if type(target) ~= "Table" then
+			--Spring.Echo(type(target))
+			if type(target) ~= "table" then
 				local x, y, z = spGetUnitPosition(target)
 				target = {x, y, z}
 			end
