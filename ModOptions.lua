@@ -184,6 +184,17 @@ local options = {
 		def    = '',
 	},
 	{
+		key    = 'mergeresourceshare',
+		name   = 'Commshare Resource Share',
+		desc   = 'Merged players recieve this much extra resource share per additional player.',
+		type   = 'number',
+		section= 'a_important',
+		def=1,
+		min=0,
+		max=1,
+		step=0.05,
+	},
+	{
 		key    = 'ai_resourcecheat',
 		name   = 'AI Cheat Multiplier',
 		desc   = "Multiplies AI resources, allowing them to cheat. Also impacts buildspeed. Note: AI will become crazy at high mults!",
@@ -369,6 +380,14 @@ local options = {
 		def         = false,
 	},
 	{
+		key         = "aiusetechk",
+		name        = "AIs Use Tech-K",
+		desc        = "Diverts some AI metal income for automatic upgrades of factories and mexes. This lets any AI approximate an understanding of Tech-K with minimal cheating.",
+		type        = "bool",
+		section     = "experimental",
+		def         = true,
+	},
+	{
 		key         = "techk",
 		name        = "Tech-K",
 		desc        = "Adds a tech level system",
@@ -546,6 +565,14 @@ local options = {
 					-- (step <= 0) means that there is no quantization
 	},
 	{
+		key = "overdrivesharingscheme",
+		name = "Economy returns investment",
+		desc = "Resource gathering buildings return their cost over time to the players who build them rather than equally to the whole team.",
+		type = 'bool',
+		section= 'experimental',
+		def = true,
+	},
+	{
 		key    = 'energymult',
 		name   = 'Energy Production Multiplier',
 		desc   = 'Useful for speed games without relying on map units.',
@@ -711,6 +738,28 @@ local options = {
 		min     = 0.1,
 		max     = 8.0,
 		step    = 0.1,
+	},
+	{
+		key     = 'mapgen_seed',
+		name    = 'Random Map Seed',
+		desc    = 'Random seed for random map generation. A random map must be selected from the map list.',
+		type    = 'number',
+		section = 'mapsettings',
+		def     = 0,
+		min     = 0,
+		max     = 10000000,
+		step    = 1,
+	},
+	{
+		key     = 'wind_seed',
+		name    = 'Wind Seed',
+		desc    = 'Random seed for wind rate throughout the game.',
+		type    = 'number',
+		section = 'mapsettings',
+		def     = 0,
+		min     = 0,
+		max     = 10000000,
+		step    = 1,
 	},
 	{
 		key    = 'allowfpsmode',
@@ -986,6 +1035,39 @@ local options = {
 		min    = 0,
 		max    = 10,
 		step   = 1,
+	},
+	{
+		key     = "pathfinder",
+		name    = "Pathfinder type",
+		desc    = "Sets the pathfinding system used by units.",
+		type    = "list",
+		def     = "qtpfs",
+		section = "experimental",
+		items  = {
+			{
+				key  = 'standard',
+				name = 'Standard',
+				desc = 'Standard pathfinder',
+			},
+			--{ https://github.com/ZeroK-RTS/Zero-K/issues/5523
+			--	key  = 'random', 
+			--	name = 'Random',
+			--	desc = 'Randomly pick a pathfinder',
+			--},
+			{
+				key  = 'qtpfs',
+				name = 'QTPFS',
+				desc = 'New Quadtree Pathfinding System (experimental)',
+			},
+		},
+	},
+	{
+		key     = "luapathrequest",
+		name    = "Allow Lua Path Requests",
+		desc    = "When enabled, the game will probably desync. Don't do it.",
+		type = "bool",
+		def	= false,
+		section = "experimental",
 	},
 --[[
   {
