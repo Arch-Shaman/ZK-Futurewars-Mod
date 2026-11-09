@@ -257,7 +257,7 @@
 	"amphaa" : {
 		"name" : "Angler",
 		"description" : "Amphibischer Flugabwehr-Bot",
-		"helptext" : "Angler ist ein amphibischer Flugabwehr-Bot, der dem Erzfeind der Fabrik, Raven, entgegenwirken soll. Zwei von ihnen können zusammen an die Oberfläche schweben und einen einzelnen Raven töten."
+		"helptext" : "Angler ist ein amphibischer Flugabwehr-Bot, der dem Erzfeind der Fabrik, Divinity, entgegenwirken soll. Zwei von ihnen können zusammen an die Oberfläche schweben und einen einzelnen Divinity töten."
 	},
 	"staticrepair" : {
 		"name" : "Verjünger",

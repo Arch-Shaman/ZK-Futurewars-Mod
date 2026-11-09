@@ -232,7 +232,7 @@
 	"amphaa" : {
 		"name" : "Angler",
 		"description" : "Amphibious Anti-Air Bot",
-		"helptext" : "Angler is amphibious anti-air bot designed to counter the factory's nemesis - Raven. Two of them together can float to the surface and kill a single Raven."
+		"helptext" : "Angler is amphibious anti-air bot designed to counter the factory's nemesis - Divinity. Two of them together can float to the surface and kill a single Divinity."
 	},
 	"staticrepair" : {
 		"name" : "Rejuvenator",
