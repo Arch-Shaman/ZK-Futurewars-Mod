@@ -24,6 +24,15 @@ Spring.Echo("pfForceSingleThreaded", pfForceSingleThreaded)
 Spring.Echo("forceSingleThreaded", forceSingleThreaded)
 Spring.Echo("Memory limit: " .. luaallocation)
 
+local pathExperiment = false
+local pathfinder = Spring.GetModOptions().pathfinder or "qtpfs"
+if Script.IsEngineMinVersion and Script.IsEngineMinVersion(2025, 3, 0) and (pathfinder == "qtpfs") then
+  pathExperiment = true
+  Spring.Echo("pathfinderSelection pathWithQtpfs")
+else
+  Spring.Echo("pathfinderSelection pathWithOld")
+end
+
 local modrules  = {
 	
 	movement = {
@@ -147,7 +156,7 @@ local modrules  = {
 	},
   
 	system = {
-		pathFinderSystem = 0, --(Spring.GetModOptions() and (Spring.GetModOptions().pathfinder == "qtpfs") and 1) or 0, -- QTPFS causes desync https://springrts.com/mantis/view.php?id=5936
+		pathFinderSystem = (pathExperiment and 1) or 0,
 		pathFinderUpdateRate = 0.0000001,
 		pathFinderRawDistMult = 100000,
 		pfForceSingleThreaded = forceSingleThreaded,
