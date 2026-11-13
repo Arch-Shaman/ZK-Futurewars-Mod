@@ -410,21 +410,6 @@ local moduleDefs = {
 		end
 	},
 	{
-		name = "commweapon_telebeacon",
-		humanName = "Wormhole Bridge Generator",
-		description = "Creates a beacon that allows nearby units to be teleported to commander's location",
-		image = moduleImagePath .. "commweapon_microrift.png",
-		limit = 1,
-		cost = 100 * COST_MULT,
-		requireChassis = {"strike"},
-		requireLevel = 3,
-		slotType = "adv_weapon",
-		effectPriority = 1,
-		applicationFunction = function (modules, sharedData)
-			sharedData.telebeacon = 1
-		end
-	},
-	{
 		name = "commweapon_taclaser",
 		humanName = "Flare Tactical Laser",
 		description = "Miniture tachyon emitter designed to snipe units from afar. Requires unimpeded path to enemy making it poor in hilly regions.",
@@ -2094,7 +2079,7 @@ local moduleDefs = {
 		cost = 100 * COST_MULT,
 		requireLevel = 6,
 		slotType = "module",
-		requireChassis = {"strike", "knight"},
+		requireChassis = {"strike"},
 		prohibitingModules = {"module_autoloader"},
 		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
@@ -2277,7 +2262,7 @@ local moduleDefs = {
 		cost = 800 * COST_MULT,
 		requireLevel = 10,
 		slotType = "module",
-		requireChassis = {"strike", "knight"},
+		requireChassis = {"strike"},
 		prohibitingModules = {"module_alphastrike"},
 		effectPriority = 4,
 		applicationFunction = function (modules, sharedData)
@@ -2565,7 +2550,7 @@ local moduleDefs = {
 		cost = 100 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
-		requireChassis = {"support", "knight"},
+		requireChassis = {"support"},
 		prohibitingModules = {"module_aimtolerance"},
 		requireOneOf = {"commweapon_shockrifle"},
 		effectPriority = 4,
@@ -2589,7 +2574,7 @@ local moduleDefs = {
 		cost = 100 * COST_MULT,
 		requireLevel = 2,
 		slotType = "module",
-		requireChassis = {"support", "knight"},
+		requireChassis = {"support"},
 		prohibitingModules = {"module_faster_lockon"},
 		requireOneOf = {"commweapon_shockrifle"},
 		effectPriority = 1,

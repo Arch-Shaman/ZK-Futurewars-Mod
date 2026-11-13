@@ -39,7 +39,8 @@ return {
 			outline_y = 110,
 			outline_yoff = 31.25,
 			--initcloaked = "1"
-			teleporter = nil,
+			teleporter = 1,
+			teleporter_throughput = 100,
 			teleporter_beacon_spawn_time = 1
 		},
 		energyStorage          = 500,

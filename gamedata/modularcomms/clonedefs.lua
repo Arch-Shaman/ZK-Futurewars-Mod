@@ -433,32 +433,30 @@ local copy = {
 }
 
 local telestats = {
-	tele_no = {
-		customparams = {
-			teleporter = nil
-		},
+	mainstats = {
 	},
-	tele_base = {
-		customparams = {
-			teleporter = 1,
-			teleporter_throughput = 200,
-			teleporter_beacon_spawn_time = 1
-		},
+	customparams = {
+		[0] = {
+
+				},
+		[1] = {
+				teleporter = 1,
+				teleporter_throughput = 200,
+				teleporter_beacon_spawn_time = 1
+				},
+		[2] = {
+				teleporter = 1,
+				teleporter_throughput = 600,
+				teleporter_beacon_spawn_time = 1
+				},
+		[3] = {
+				teleporter = 1,
+				teleporter_throughput = 200,
+				teleporter_beacon_spawn_time = 3
+				},
 	},
-	tele_fast = {
-		customparams = {
-			teleporter = 1,
-			teleporter_throughput = 200,
-			teleporter_beacon_spawn_time = 3
-		},
-	},
-	tele_wide = {
-		customparams = {
-			teleporter = 1,
-			teleporter_throughput = 600,
-			teleporter_beacon_spawn_time = 1
-		},
-	},
+	heapmodel = {
+	}
 }
 
 for sourceName, copyTable in pairs(copy) do
@@ -481,17 +479,9 @@ for sourceName, copyTable in pairs(copy) do
 			for statName, value in pairs(stats.mainstats or {}) do
 				UnitDefs[cloneName][statName] = value
 			end
-
 			for statName, value in pairs(stats.customparams or {}) do
 				UnitDefs[cloneName].customparams[statName] = value
 			end
-
-		-- if sharedData.telebeacon > 0 then
-
-		-- 		for statName, value in pairs(stats.customparams or {}) do
-		-- 			UnitDefs[cloneName].customparams[statName] = value
-		-- 		end
-
 			UnitDefs[cloneName].trackwidth = UnitDefs[cloneName].trackwidth * (0.9 + 0.1*(stats.level))
 			-- features
 			UnitDefs[cloneName].featuredefs.dead.object = stats.wreckmodel
@@ -501,13 +491,9 @@ for sourceName, copyTable in pairs(copy) do
 			UnitDefs[cloneName].featuredefs.heap.footprintx = UnitDefs[cloneName].footprintx
 			UnitDefs[cloneName].featuredefs.heap.footprintz = UnitDefs[cloneName].footprintz
 		end
-
-
-
 		local icon = stats.icon or "commander"
 		UnitDefs[cloneName].customparams.level = stats.level
 		UnitDefs[cloneName].name = (UnitDefs[cloneName].name) .. " - Level " .. stats.level
 		UnitDefs[cloneName].icontype = icon..stats.level
 	end
 end
-
