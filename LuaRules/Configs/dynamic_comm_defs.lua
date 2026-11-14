@@ -91,20 +91,22 @@ local function ApplyDisintegratorUpgrade(modules, sharedData)
 	end
 end
 
-local function ApplyHeavyOrdinance1(modules, sharedData)
+-- Replaced by individual modules
+local function ApplyHeavyOrdinance(modules, sharedData)    
 	local upgrade = {
 		["commweapon_artillery_heavy"] = "commweapon_artillery_heavy_nuclear",
 		["commweapon_rocketbarrage"] = "commweapon_rocketbarrage_nuclear",
-		["commweapon_rocketlauncher"] = "commweapon_rocketlauncher_nuclear",
+		-- ["commweapon_rocketlauncher"] = "commweapon_rocketlauncher_nuclear",
 		["commweapon_artillery_light"] = "commweapon_artillery_light_nuclear",
-		["commweapon_taclaser"] = "commweapon_megalaser",
+		-- ["commweapon_taclaser"] = "commweapon_megalaser",
 	}
+
 	local wantsfireatradar = {
 		["commweapon_artillery_heavy_nuclear"] = true,
 		["commweapon_rocketbarrage_nuclear"] = false,
-		["commweapon_rocketlauncher_nuclear"] = false,
+		-- ["commweapon_rocketlauncher_nuclear"] = false,
 		["commweapon_artillery_light_nuclear"] = false,
-		["commweapon_megalaser"] = true,
+		-- ["commweapon_megalaser"] = true,
 	}
 	if sharedData.weapon1 and upgrade[sharedData.weapon1] then
 		sharedData.weapon1 = upgrade[sharedData.weapon1]
@@ -115,22 +117,35 @@ local function ApplyHeavyOrdinance1(modules, sharedData)
 	end
 end
 	
-local function ApplyHeavyOrdinance2(modules, sharedData)
+local function HeavyApply_Nuke(modules, sharedData)    
 	local upgrade = {
-		["commweapon_artillery_heavy"] = "commweapon_artillery_heavy_nuclear",
-		["commweapon_rocketbarrage"] = "commweapon_rocketbarrage_nuclear",
 		["commweapon_rocketlauncher"] = "commweapon_rocketlauncher_nuclear",
-		["commweapon_artillery_light"] = "commweapon_artillery_light_nuclear",
+	}
+
+	local wantsfireatradar = {
+		["commweapon_rocketlauncher_nuclear"] = false,
+	}
+	if sharedData.weapon1 and upgrade[sharedData.weapon1] then
+		sharedData.weapon1 = upgrade[sharedData.weapon1]
+		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon1]
+	elseif sharedData.weapon2 and upgrade[sharedData.weapon2] then
+		sharedData.weapon2 = upgrade[sharedData.weapon2]
+		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon2]
+	end
+end
+
+local function HeavyApply_Laser(modules, sharedData)    
+	local upgrade = {
 		["commweapon_taclaser"] = "commweapon_megalaser",
 	}
+
 	local wantsfireatradar = {
-		["commweapon_artillery_heavy_nuclear"] = true,
-		["commweapon_rocketbarrage_nuclear"] = false,
 		["commweapon_rocketlauncher_nuclear"] = false,
-		["commweapon_artillery_light_nuclear"] = false,
-		["commweapon_megalaser"] = true,
 	}
-	if sharedData.weapon2 and upgrade[sharedData.weapon2] then
+	if sharedData.weapon1 and upgrade[sharedData.weapon1] then
+		sharedData.weapon1 = upgrade[sharedData.weapon1]
+		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon1]
+	elseif sharedData.weapon2 and upgrade[sharedData.weapon2] then
 		sharedData.weapon2 = upgrade[sharedData.weapon2]
 		sharedData.wantsfireatradar = sharedData.wantsfireatradar or wantsfireatradar[sharedData.weapon2]
 	end
@@ -921,11 +936,67 @@ local moduleDefs = {
 		limit = 1,
 		cost = 1500 * COST_MULT,
 		requireChassis = {"assault"},
-		requireOneOf = {"commweapon_artillery_heavy", "commweapon_taclaser", "commweapon_rocketbarrage", "commweapon_rocketlauncher", "commweapon_artillery_light"},
+		requireOneOf = {"commweapon_artillery_heavy", "commweapon_rocketbarrage", "commweapon_artillery_light"},
 		requireLevel = 6,
 		slotType = "module",
 		effectPriority = 2,
-		applicationFunction = ApplyHeavyOrdinance1
+		applicationFunction = ApplyHeavyOrdinance
+	},
+	{
+		name = "module_heavy_nuke1",
+		humanName = "Strategic Nuclear Ordinance",
+		description = "Refits Eos launcher to allow deployment of full-sized nukes over long distance to devastate hostile armies and bases alike",
+		image = moduleImagePath .. "commweapon_artillery_heavy_nuclear.png",
+		limit = 1,
+		cost = 1500 * COST_MULT,
+		requireChassis = {"assault"},
+		requireOneOf = {"commweapon_rocketlauncher"},
+		requireLevel = 6,
+		slotType = "module",
+		effectPriority = 2,
+		applicationFunction = HeavyApply_Nuke
+	},
+	{
+		name = "module_heavy_nuke2",
+		humanName = "Strategic Nuclear Ordinance",
+		description = "Refits Eos launcher to allow deployment of full-sized nukes over long distance to devastate hostile armies and bases alike",
+		image = moduleImagePath .. "commweapon_artillery_heavy_nuclear.png",
+		limit = 1,
+		cost = 1500 * COST_MULT,
+		requireChassis = {"assault"},
+		requireTwoOf = {"commweapon_rocketlauncher"},
+		requireLevel = 6,
+		slotType = "module",
+		effectPriority = 2,
+		applicationFunction = HeavyApply_Nuke
+	},
+	{
+		name = "module_heavy_laser1",
+		humanName = "Fusion Pumped Emitter",
+		description = "Upgrades Flare laser to immensely more powerful Brilliant Star laser, capable of cutting straight through the mountains to reach your enemies",
+		image = moduleImagePath .. "commweapon_megalaser.png",
+		limit = 1,
+		cost = 1500 * COST_MULT,
+		requireChassis = {"assault"},
+		requireOneOf = {"commweapon_taclaser"},
+		requireLevel = 6,
+		slotType = "module",
+		effectPriority = 2,
+		applicationFunction = HeavyApply_Laser
+	},
+	{
+		name = "module_heavy_laser2",
+		humanName = "Fusion Pumped Emitter",
+		description = "Upgrades Flare laser to immensely more powerful Brilliant Star laser, capable of cutting straight through the mountains to reach your enemies",
+		image = moduleImagePath .. "commweapon_megalaser.png",
+		limit = 1,
+		cost = 1500 * COST_MULT,
+		requireChassis = {"assault"},
+		requireTwoOf = {"commweapon_taclaser"},
+		requireLevel = 6,
+		slotType = "module",
+		effectPriority = 2,
+		applicationFunction = HeavyApply_Laser
 	},
 	{
 		name = "module_heavydgun",
@@ -977,11 +1048,11 @@ local moduleDefs = {
 		limit = 1,
 		cost = 1200 * COST_MULT,
 		requireChassis = {"assault"},
-		requireTwoOf = {"commweapon_artillery_heavy", "commweapon_taclaser", "commweapon_rocketbarrage", "commweapon_rocketlauncher"},
+		requireTwoOf = {"commweapon_artillery_heavy", "commweapon_rocketbarrage", "commweapon_artillery_light"},
 		requireLevel = 7,
 		slotType = "module",
 		effectPriority = 2,
-		applicationFunction = ApplyHeavyOrdinance2
+		applicationFunction = ApplyHeavyOrdinance
 	},
 	{
 		name = "module_heavyprojector_second",
@@ -3076,6 +3147,10 @@ local function ModuleIsValid(level, chassis, slotAllows, moduleDefID, alreadyOwn
 		return false
 	end
 	if data.requireTwoOf and CountModulesInSet(data.requireTwoOf, alreadyOwned, alreadyOwned2) < 2 then
+		return false
+	end
+
+	if data.requireDual and sharedData.weapon1 == sharedData.weapon2 then
 		return false
 	end
 	
