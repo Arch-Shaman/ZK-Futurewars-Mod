@@ -945,7 +945,7 @@ local moduleDefs = {
 	{
 		name = "module_heavy_nuke1",
 		humanName = "Strategic Nuclear Ordinance",
-		description = "Refits Eos launcher to allow deployment of full-sized nukes over long distance to devastate hostile armies and bases alike",
+		description = "Refits Eos launcher to allow deployment of full-sized nukes over long distance to devastate hostile armies and bases alike.",
 		image = moduleImagePath .. "commweapon_artillery_heavy_nuclear.png",
 		limit = 1,
 		cost = 1500 * COST_MULT,
@@ -959,7 +959,7 @@ local moduleDefs = {
 	{
 		name = "module_heavy_nuke2",
 		humanName = "Strategic Nuclear Ordinance",
-		description = "Refits Eos launcher to allow deployment of full-sized nukes over long distance to devastate hostile armies and bases alike",
+		description = "Refits Eos launcher to allow deployment of full-sized nukes over long distance to devastate hostile armies and bases alike.",
 		image = moduleImagePath .. "commweapon_artillery_heavy_nuclear.png",
 		limit = 1,
 		cost = 1500 * COST_MULT,
@@ -973,7 +973,7 @@ local moduleDefs = {
 	{
 		name = "module_heavy_laser1",
 		humanName = "Fusion Pumped Emitter",
-		description = "Upgrades Flare laser to immensely more powerful Brilliant Star laser, capable of cutting straight through the mountains to reach your enemies",
+		description = "Upgrades Flare laser to immensely more powerful Brilliant Star laser, capable of cutting straight through the mountains to reach your enemies.",
 		image = moduleImagePath .. "commweapon_megalaser.png",
 		limit = 1,
 		cost = 1500 * COST_MULT,
@@ -987,7 +987,7 @@ local moduleDefs = {
 	{
 		name = "module_heavy_laser2",
 		humanName = "Fusion Pumped Emitter",
-		description = "Upgrades Flare laser to immensely more powerful Brilliant Star laser, capable of cutting straight through the mountains to reach your enemies",
+		description = "Upgrades Flare laser to immensely more powerful Brilliant Star laser, capable of cutting straight through the mountains to reach your enemies.",
 		image = moduleImagePath .. "commweapon_megalaser.png",
 		limit = 1,
 		cost = 1500 * COST_MULT,
