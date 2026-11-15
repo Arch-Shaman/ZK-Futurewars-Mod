@@ -375,7 +375,7 @@ function gadget:ProjectileDestroyed(proID)
 	local data = IterableMap.Get(missiles, proID)
 	if data then
 		data.destroyed = true
-		SendToUnsynced("DestroyMissile", id)
+		SendToUnsynced("DestroyMissile", proID)
 	end
 end
 
