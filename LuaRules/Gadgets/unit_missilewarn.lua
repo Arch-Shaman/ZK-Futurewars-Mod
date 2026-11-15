@@ -17,6 +17,7 @@ end
 -- Protocol numbers and which missiles to handle are used in both synced and unsynced
 local MAGIC_FIRED     = 'missile_fired'
 local MAGIC_DESTROYED = 'missile_destroyed'
+local MAGIC_RESTART = 'missileImpacts_reload'
 local u_CHAR = string.byte('u')
 
 local trackedMissiles = include("LuaRules/Configs/tracked_missiles.lua")
@@ -40,6 +41,12 @@ end
 
 function gadget:ProjectileDestroyed(proID, proOwnerID, weaponID)
 	SendToUnsynced(MAGIC_DESTROYED, proID, proOwnerID, weaponID)
+end
+
+function gadget:RecvLuaMsg(msg, playerID)
+	if msg == "MissileImpacts reload" then
+		SendToUnsynced(MAGIC_RESTART, playerID)
+	end
 end
 
 else
@@ -161,7 +168,7 @@ function StarburstPredict(projectileID, weaponDefID, curFrame, targetPosition)
 		local cache = cruiseMissileCache[weaponDefID]
 		local xDiff = tx - x
 		local zDiff = tz - z
-		local distance = math.sqrt((xDiff * xDiff) + (zDiff + zDiff)) - tonumber(wd.customParams.cruisedist) - cache.sprintDist
+		local distance = math.sqrt((xDiff * xDiff) + (zDiff + zDiff)) - cache.sprintDist
 		local cruiseTime = (distance / (tonumber(wd.customParams.weaponvelocity) / 30)) + cache.sprintTime
 		local estimatedImpactFrame = curFrame + cache.riseTime + cache.turnTime + cache.descentToImpact + cruiseTime
 		return tx, ty, tz, estimatedImpactFrame
@@ -283,6 +290,7 @@ local scriptMissileDestroyed   = Script.LuaUI.MissileDestroyed
 local curFrame = -1
 
 local projectilesTracked = {}
+local projectileStorage = {}
 
 local deferredProjectiles = {}
 -- ProjectileCreated is too early in a projectile's lifetime to reliably read parameters from
@@ -335,8 +343,8 @@ local function ProjectileCreatedDeferred(proID, proOwnerID, weaponDefID)
 			rt = frame + (rt - frame) * mult
 		end
 	end
-	
-	scriptMissileFired(proID, proOwnerID, weaponDefID, rx, ry, rz, rt, targetID)
+	projectileStorage[proID] = {owner = proOwnerID, weaponDef = weaponDefID, rx = rx, ry = ry, rz = rz, rt = rt, targetID = targetID, triggerFrame = Spring.GetGameFrame()}
+	scriptMissileFired(proID, proOwnerID, weaponDefID, rx, ry, rz, rt, targetID, triggerFrame)
 end
 
 local function ProjectileDestroyed(proID, proOwnerID, weaponID)
@@ -347,6 +355,7 @@ local function ProjectileDestroyed(proID, proOwnerID, weaponID)
 		return
 	end
 	scriptMissileDestroyed(proID, proOwnerID, weaponID)
+	projectileStorage[proID] = nil
 	projectilesTracked[proID] = nil
 end
 
@@ -356,6 +365,13 @@ function gadget:RecvFromSynced(magic, proID, proOwnerID, weaponID)
 		ProjectileCreated(proID, proOwnerID, weaponID)
 	elseif magic == MAGIC_DESTROYED then
 		ProjectileDestroyed(proID, proOwnerID, weaponID)
+	elseif magic == MAGIC_RESTART then
+		if proID == Spring.GetMyPlayerID() then -- this is me -- do not do this for other players.
+			for k, v in pairs(projectileStorage) do -- luaUI reloaded, resend so player can get events.
+			--  scriptMissileFired(proID, proOwnerID, weaponDefID, rx, ry, rz, rt, targetID, triggerFrame)
+				scriptMissileFired(k, v.owner, v.weaponDef, v.rx, v.ry, v.rz, v.rt, v.targetID, v.triggerFrame)
+			end
+		end
 	else
 		return false
 	end
