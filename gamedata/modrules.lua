@@ -22,7 +22,7 @@ if (modoptions and (modoptions.mtpath == 0 or modoptions.mtpath == "0")) then
 end
 Spring.Echo("pfForceSingleThreaded", pfForceSingleThreaded)
 Spring.Echo("forceSingleThreaded", forceSingleThreaded)
-Spring.Echo("Memory limit: " .. luaallocation)
+Spring.Echo("Memory limit: " .. luaallocation .. "MB")
 
 local pathExperiment = true
 local pathfinder = Spring.GetModOptions().pathfinder or "qtpfs"
