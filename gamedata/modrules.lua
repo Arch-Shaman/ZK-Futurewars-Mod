@@ -24,13 +24,13 @@ Spring.Echo("pfForceSingleThreaded", pfForceSingleThreaded)
 Spring.Echo("forceSingleThreaded", forceSingleThreaded)
 Spring.Echo("Memory limit: " .. luaallocation)
 
-local pathExperiment = false
+local pathExperiment = true
 local pathfinder = Spring.GetModOptions().pathfinder or "qtpfs"
 if Script.IsEngineMinVersion and Script.IsEngineMinVersion(2025, 3, 0) and (pathfinder == "qtpfs") then
-  pathExperiment = true
-  Spring.Echo("pathfinderSelection pathWithQtpfs")
+	pathExperiment = true
+	Spring.Echo("pathfinderSelection pathWithQtpfs (Enforced)")
 else
-  Spring.Echo("pathfinderSelection pathWithOld")
+	Spring.Echo("pathfinderSelection pathWithOld - Disabled (Due to desyncs on current engine)")
 end
 
 local modrules  = {
@@ -156,13 +156,14 @@ local modrules  = {
 	},
   
 	system = {
-		pathFinderSystem = (pathExperiment and 1) or 0,
-		pathFinderUpdateRate = 0.0000001,
-		pathFinderRawDistMult = 100000,
-		pfForceSingleThreaded = forceSingleThreaded,
 		allowTake = false,
 		enableSmoothMesh = false,
 		LuaAllocLimit = luaallocation,
+		pathFinderSystem = (pathExperiment and 1) or 0,
+		pathFinderUpdateRate = (pathExperiment and 1) or 0.0000001,
+		pathFinderRawDistMult = 100000,
+		pfForceSingleThreaded = forceSingleThreaded,
+		pfForceUpdateSingleThreaded = forceSingleThreaded,
 	},
 }
 --------------------------------------------------------------------------------
