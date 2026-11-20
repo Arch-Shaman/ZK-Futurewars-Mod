@@ -145,7 +145,11 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 	if not (weaponDef.customparams.reaim_time or string.find(defname, "chicken")) then
 		weaponDef.customparams.reaim_time = 5
 	end
-
+	-- WARNING THIS CODE WILL BREAK WIDGET EVENTS IF REMOVED --
+	if weaponDef.customparams.disarmdamagemult or weaponDef.paralyzetime then
+		weaponDef.customparams.overstun_time = weaponDef.customparams.overstun_time or 1
+	end
+	-- END WARNING
 	-- Hack for flamer
 	if weaponDef.cegtag == "flamer" then
 		weaponDef.cegtag = "napalmtrail_halfsize"
@@ -275,10 +279,15 @@ for defname, weaponDef in pairs(WeaponDefs) do -- In ZK's version this is a seri
 	if weaponDef.impactonly then
 		weaponDef.edgeeffectiveness = 1
 	end
-	-- ???
-	if weaponDef.paralyzetime and not weaponDef.paralyzer then
-		weaponDef.customparams.extra_paratime = weaponDef.paralyzetime
+	-- If this code does not exist, crashes api_widget_events.
+	if weaponDef.paralyzetime then
+		if not weaponDef.paralyzer then
+			weaponDef.customparams.extra_paratime = weaponDef.paralyzetime
+		end
+		weaponDef.customparams.emp_paratime = weaponDef.paralyzetime
+		weaponDef.paralyzetime = weaponDef.paralyzetime + math.ceil(weaponDef.customparams.overstun_time)
 	end
+	-- End code that crashes
 	if not weaponDef.predictboost then
 		weaponDef.predictboost = 1
 	end
