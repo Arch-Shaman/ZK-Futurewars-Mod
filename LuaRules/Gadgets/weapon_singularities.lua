@@ -16,6 +16,7 @@ end
 
 local IterableMap = Spring.Utilities.IterableMap
 
+local debugMode = false
 local sqrt = math.sqrt
 local max = math.max
 local min = math.min
@@ -84,7 +85,14 @@ for i = 1, #WeaponDefs do
 		singuDef.edgeEffect = tonumber(cp.singu_edgeeffect) or 0
 		singuDef.baseEffect = tonumber(cp.singu_baseeffect) or 0.25
 		singuDef.nodamageimmunity = cp.singu_nodamageimmunity and true or false
+		if debugMode then
+			Spring.Echo("singularity weaponDefID: " .. i .. ":")
+			for k, v in pairs(singuDef) do
+				Spring.Echo(k .. ": " .. tostring(v))
+			end
+		end
 		singularitydefs[i] = singuDef
+		Script.SetWatchExplosion(i, true)
 	end
 	projectileMasses[i] = getProjMass(WeaponDefs[i])
 end
@@ -245,6 +253,9 @@ GG.AddSingularity = AddSingularity
 
 function gadget:Explosion(weaponDefID, px, py, pz, AttackerID, ProjectileID)
 	if singularitydefs[weaponDefID] and ProjectileID then
+		if debugMode then
+			Spring.Echo(weaponDefID .. ": Explosion")
+		end
 		local def = singularitydefs[weaponDefID]
 		local bonus = (AttackerID and Spring.ValidUnitID(AttackerID) and spGetUnitRulesParam(AttackerID, "comm_damage_mult")) or 1
 		AddSingularity(px, py, pz, weaponDefID, {strength = def.strength * bonus})
